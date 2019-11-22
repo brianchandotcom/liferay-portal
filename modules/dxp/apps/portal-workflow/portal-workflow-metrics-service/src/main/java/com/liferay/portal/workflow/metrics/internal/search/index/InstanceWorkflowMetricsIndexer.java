@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -56,10 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true,
-	service = {Indexer.class, InstanceWorkflowMetricsIndexer.class}
-)
+@Component(immediate = true, service = InstanceWorkflowMetricsIndexer.class)
 public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	public Document createDocument(KaleoInstance kaleoInstance) {

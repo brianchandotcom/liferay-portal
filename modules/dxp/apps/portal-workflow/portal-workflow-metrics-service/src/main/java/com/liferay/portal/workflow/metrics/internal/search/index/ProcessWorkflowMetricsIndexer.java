@@ -22,24 +22,19 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true,
-	service = {Indexer.class, ProcessWorkflowMetricsIndexer.class}
-)
+@Component(immediate = true, service = ProcessWorkflowMetricsIndexer.class)
 public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	@Override
@@ -115,14 +110,6 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
 
 		return document;
-	}
-
-	@Activate
-	@Override
-	protected void activate() throws Exception {
-		super.activate();
-
-		_instanceWorkflowMetricsIndexer.createIndex();
 	}
 
 	@Override

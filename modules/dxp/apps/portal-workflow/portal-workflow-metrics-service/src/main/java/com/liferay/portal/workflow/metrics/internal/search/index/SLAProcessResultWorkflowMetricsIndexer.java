@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -68,8 +67,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true,
-	service = {Indexer.class, SLAProcessResultWorkflowMetricsIndexer.class}
+	immediate = true, service = SLAProcessResultWorkflowMetricsIndexer.class
 )
 public class SLAProcessResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {

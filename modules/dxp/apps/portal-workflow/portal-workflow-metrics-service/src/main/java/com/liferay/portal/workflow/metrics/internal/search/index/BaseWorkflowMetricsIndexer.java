@@ -15,29 +15,15 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
-import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
-import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
-import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -53,16 +39,11 @@ import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetri
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 import org.apache.commons.codec.digest.DigestUtils;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -71,7 +52,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Inácio Nery
  */
-public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
+public abstract class BaseWorkflowMetricsIndexer {
 
 	public void addDocument(Document document) {
 		if (searchEngineAdapter == null) {
@@ -93,61 +74,8 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_updateDocument(document);
 	}
 
-	@Override
-	public String getClassName() {
-		Class<? extends BaseWorkflowMetricsIndexer> clazz = getClass();
-
-		return clazz.getName();
-	}
-
 	public void updateDocument(Document document) {
 		_updateDocument(document);
-	}
-
-	@Activate
-	protected void activate() throws Exception {
-		createIndex();
-	}
-
-	protected void createIndex() throws PortalException {
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(getIndexName());
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		if (indicesExistsIndexResponse.isExists()) {
-			return;
-		}
-
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			getIndexName());
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			StringUtil.read(getClass(), "/META-INF/search/mappings.json"));
-
-		createIndexRequest.setSource(
-			JSONUtil.put(
-				"mappings",
-				JSONUtil.put(getIndexType(), jsonObject.get(getIndexType()))
-			).put(
-				"settings",
-				JSONFactoryUtil.createJSONObject(
-					StringUtil.read(
-						getClass(), "/META-INF/search/settings.json"))
-			).toString());
-
-		searchEngineAdapter.execute(createIndexRequest);
-
-		if (!_INDEX_ON_STARTUP) {
-			for (Company company : companyLocalService.getCompanies()) {
-				reindex(company.getCompanyId());
-			}
-		}
 	}
 
 	protected String digest(Serializable... parts) {
@@ -158,42 +86,6 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		}
 
 		return DigestUtils.sha256Hex(sb.toString());
-	}
-
-	@Override
-	protected final void doDelete(Object t) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final Document doGetDocument(Object object) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final Summary doGetSummary(
-			Document document, Locale locale, String snippet,
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final void doReindex(Object object) throws Exception {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected final void doReindex(String className, long classPK)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected void doReindex(String[] ids) throws Exception {
-		reindex(GetterUtil.getLong(ids[0]));
 	}
 
 	protected abstract String getIndexName();
@@ -286,9 +178,6 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 	}
 
 	@Reference
-	protected CompanyLocalService companyLocalService;
-
-	@Reference
 	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
 
 	@Reference
@@ -321,8 +210,5 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 		searchEngineAdapter.execute(updateDocumentRequest);
 	}
-
-	private static final boolean _INDEX_ON_STARTUP = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
 
 }

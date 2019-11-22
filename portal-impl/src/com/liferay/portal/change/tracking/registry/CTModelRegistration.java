@@ -14,21 +14,17 @@
 
 package com.liferay.portal.change.tracking.registry;
 
-import java.util.Map;
-
 /**
  * @author Preston Crary
  */
 public class CTModelRegistration {
 
 	public CTModelRegistration(
-		Class<?> modelClass, String tableName, String primaryColumnName,
-		Map<String, Integer> tableColumnsMap) {
+		Class<?> modelClass, String tableName, String primaryColumnName) {
 
 		_modelClass = modelClass;
 		_tableName = tableName;
 		_primaryColumnName = primaryColumnName;
-		_tableColumnsMap = tableColumnsMap;
 	}
 
 	public Class<?> getModelClass() {
@@ -39,17 +35,12 @@ public class CTModelRegistration {
 		return _primaryColumnName;
 	}
 
-	public Map<String, Integer> getTableColumnsMap() {
-		return _tableColumnsMap;
-	}
-
 	public String getTableName() {
 		return _tableName;
 	}
 
 	private final Class<?> _modelClass;
 	private final String _primaryColumnName;
-	private final Map<String, Integer> _tableColumnsMap;
 	private final String _tableName;
 
 }

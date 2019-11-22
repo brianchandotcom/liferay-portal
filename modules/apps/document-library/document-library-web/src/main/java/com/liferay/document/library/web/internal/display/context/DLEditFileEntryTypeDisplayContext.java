@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,15 +51,13 @@ public class DLEditFileEntryTypeDisplayContext {
 	public DLEditFileEntryTypeDisplayContext(
 		DDM ddm, DDMStorageLinkLocalService ddmStorageLinkLocalService,
 		DDMStructureLocalService ddmStructureLocalService, Language language,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletRequest liferayPortletRequest) {
 
 		_ddm = ddm;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 	}
 
 	public String getAvailableFields() {
@@ -69,7 +66,7 @@ public class DLEditFileEntryTypeDisplayContext {
 		return ddmDisplay.getAvailableFields();
 	}
 
-	public boolean getFieldNameEditionDisabled() {
+	public boolean isFieldNameEditionDisabled() {
 		DDMStructure ddmStructure = _getDDMStructure();
 
 		if (ddmStructure == null) {
@@ -80,7 +77,7 @@ public class DLEditFileEntryTypeDisplayContext {
 			_ddmStorageLinkLocalService.getStructureStorageLinksCount(
 				ddmStructure.getStructureId());
 
-		if ((ddmStructure != null) && (structureStorageLinksCount > 0)) {
+		if (structureStorageLinksCount > 0) {
 			return true;
 		}
 
@@ -102,8 +99,8 @@ public class DLEditFileEntryTypeDisplayContext {
 				definition)
 		).map(
 			JSONArray::toString
-		).orElseGet(
-			() -> StringPool.BLANK
+		).orElse(
+			StringPool.BLANK
 		);
 	}
 
@@ -175,7 +172,7 @@ public class DLEditFileEntryTypeDisplayContext {
 				Stream.of(
 					_availableLocales
 				).map(
-					locale -> _language.getLanguageId(locale)
+					_language::getLanguageId
 				).collect(
 					Collectors.toList()
 				));
@@ -210,6 +207,5 @@ public class DLEditFileEntryTypeDisplayContext {
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

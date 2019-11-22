@@ -73,9 +73,7 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 				new DLEditFileEntryTypeDisplayContext(
 					_ddm, _ddmStorageLinkLocalService,
 					_ddmStructureLocalService, _language,
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)) {
-				});
+					_portal.getLiferayPortletRequest(renderRequest)));
 
 			long fileEntryTypeId = ParamUtil.getLong(
 				renderRequest, "fileEntryTypeId");

@@ -24,6 +24,7 @@ String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONAr
 String availableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
 
 DLEditFileEntryTypeDisplayContext.TranslationManagerInfo translationManagerInfo = dlEditFileEntryTypeDisplayContext.getTranslationManagerInfo();
+
 String availableLocalesString = translationManagerInfo.getAvailableLocalesString();
 %>
 
@@ -225,7 +226,7 @@ String availableLocalesString = translationManagerInfo.getAvailableLocalesString
 		availableFields: availableFields,
 		boundingBox: '#<portlet:namespace />formBuilder',
 		enableEditing: false,
-		fieldNameEditionDisabled: <%= dlEditFileEntryTypeDisplayContext.getFieldNameEditionDisabled() %>,
+		fieldNameEditionDisabled: <%= dlEditFileEntryTypeDisplayContext.isFieldNameEditionDisabled() %>,
 
 		<c:if test="<%= Validator.isNotNull(fieldsJSONArrayString) %>">
 			fields: <%= fieldsJSONArrayString %>,

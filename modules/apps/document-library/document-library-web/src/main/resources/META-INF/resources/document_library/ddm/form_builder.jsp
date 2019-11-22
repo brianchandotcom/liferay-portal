@@ -21,7 +21,7 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 
 String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONArrayString();
 
-String scopeAvailableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
+String availableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 
@@ -211,10 +211,10 @@ String availableLocalesString = translationManagerInfo.getAvailableLocalesString
 		}
 	};
 
-	<c:if test="<%= Validator.isNotNull(scopeAvailableFields) %>">
+	<c:if test="<%= Validator.isNotNull(availableFields) %>">
 		availableFields = A.Object.getValue(
 			window,
-			'<%= HtmlUtil.escapeJS(scopeAvailableFields) %>'.split('.')
+			'<%= HtmlUtil.escapeJS(availableFields) %>'.split('.')
 		);
 
 		if (A.Lang.isFunction(availableFields)) {

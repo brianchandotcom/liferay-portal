@@ -235,7 +235,7 @@ public class SiteAdminDisplayContext {
 	}
 
 	public String getOpenGraphImageURL() {
-		SiteSEOEntry siteSEOEntry = getSiteSEOEntry();
+		SiteSEOEntry siteSEOEntry = _getSiteSEOEntry();
 
 		if ((siteSEOEntry == null) ||
 			(siteSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
@@ -296,7 +296,7 @@ public class SiteAdminDisplayContext {
 		return portletURL;
 	}
 
-	public SiteSEOEntry getSiteSEOEntry() {
+	private SiteSEOEntry _getSiteSEOEntry() {
 		return SiteSEOEntryLocalServiceUtil.fetchSiteSEOEntryByGroupId(
 			_getGroupId());
 	}
@@ -360,7 +360,7 @@ public class SiteAdminDisplayContext {
 	}
 
 	public boolean isOpenGraphEnabled() {
-		SiteSEOEntry siteSEOEntry = getSiteSEOEntry();
+		SiteSEOEntry siteSEOEntry = _getSiteSEOEntry();
 
 		if (siteSEOEntry != null) {
 			return siteSEOEntry.isOpenGraphEnabled();

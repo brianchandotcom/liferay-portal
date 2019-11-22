@@ -39,20 +39,11 @@ public interface WorkflowSupport {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public default void checkInFileEntry(
+	public void checkInFileEntry(
 			long userId, FileEntry fileEntry,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
 			ServiceContext serviceContext)
-		throws PortalException {
-
-		boolean majorVersion = false;
-
-		if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
-			majorVersion = true;
-		}
-
-		checkInFileEntry(userId, fileEntry, majorVersion, serviceContext);
-	}
+		throws PortalException;
 
 	public void revertFileEntry(
 			long userId, FileEntry fileEntry, ServiceContext serviceContext)
@@ -69,19 +60,10 @@ public interface WorkflowSupport {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public default void updateFileEntry(
+	public void updateFileEntry(
 			long userId, FileEntry fileEntry,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
 			ServiceContext serviceContext)
-		throws PortalException {
-
-		boolean majorVersion = false;
-
-		if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
-			majorVersion = true;
-		}
-
-		updateFileEntry(userId, fileEntry, majorVersion, serviceContext);
-	}
+		throws PortalException;
 
 }

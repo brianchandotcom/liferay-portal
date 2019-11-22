@@ -565,10 +565,6 @@ public class DataFactory {
 		return _commerceCurrencyModel;
 	}
 
-	public CompanyModel getCompanyModel() {
-		return _companyModel;
-	}
-
 	public long getCounterNext() {
 		return _counter.get();
 	}
@@ -1077,14 +1073,6 @@ public class DataFactory {
 	}
 
 	public void initCompanyModel() {
-		_companyModel = new CompanyModelImpl();
-
-		_companyModel.setCompanyId(_companyId);
-		_companyModel.setAccountId(_accountId);
-		_companyModel.setWebId("liferay.com");
-		_companyModel.setMx("liferay.com");
-		_companyModel.setActive(true);
-
 		_accountModel = new AccountModelImpl();
 
 		_accountModel.setAccountId(_accountId);
@@ -1589,6 +1577,18 @@ public class DataFactory {
 		blogsStatsUserModel.setLastPostDate(new Date());
 
 		return blogsStatsUserModel;
+	}
+
+	public CompanyModel newCompanyModel() {
+		CompanyModel companyModel = new CompanyModelImpl();
+
+		companyModel.setCompanyId(_companyId);
+		companyModel.setAccountId(_accountId);
+		companyModel.setWebId("liferay.com");
+		companyModel.setMx("liferay.com");
+		companyModel.setActive(true);
+
+		return companyModel;
 	}
 
 	public ContactModel newContactModel(UserModel userModel) {
@@ -4503,7 +4503,6 @@ public class DataFactory {
 	private CommerceChannelModel _commerceChannelModel;
 	private CommerceCurrencyModel _commerceCurrencyModel;
 	private final long _companyId;
-	private CompanyModel _companyModel;
 	private final SimpleCounter _counter;
 	private List<CPDefinitionLocalizationModel> _cpDefinitionLocalizationModels;
 	private List<CPDefinitionModel> _cpDefinitionModels;

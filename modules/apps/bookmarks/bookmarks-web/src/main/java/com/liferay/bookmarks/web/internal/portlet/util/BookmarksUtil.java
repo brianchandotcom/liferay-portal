@@ -24,7 +24,6 @@ import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.bookmarks.util.comparator.EntryNameComparator;
 import com.liferay.bookmarks.util.comparator.EntryPriorityComparator;
 import com.liferay.bookmarks.util.comparator.EntryURLComparator;
-import com.liferay.bookmarks.util.comparator.EntryVisitsComparator;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -261,9 +260,6 @@ public class BookmarksUtil {
 		}
 		else if (orderByCol.equals("url")) {
 			orderByComparator = new EntryURLComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("visits")) {
-			orderByComparator = new EntryVisitsComparator(orderByAsc);
 		}
 
 		return orderByComparator;

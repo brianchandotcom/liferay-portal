@@ -13,18 +13,18 @@
 		font-size: 12px;
 	}
 
+	.col {
+		border: solid 1px $sectionBuilderGrayColor;
+		flex: 1;
+		margin: 2px;
+		padding: 0;
+	}
+
 	.row {
 		border: solid 2px $sectionBuilderGrayColor;
 		border-radius: 2px;
 		height: 40px;
 		margin: 0;
 		padding: 2px;
-	}
-
-	.col {
-		border: solid 1px $sectionBuilderGrayColor;
-		flex: 1;
-		margin: 2px;
-		padding: 0;
 	}
 }

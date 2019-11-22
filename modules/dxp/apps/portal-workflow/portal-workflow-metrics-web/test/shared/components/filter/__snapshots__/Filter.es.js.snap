@@ -101,6 +101,7 @@ exports[`Should render component with search wrapper 1`] = `
             onChange={[Function]}
             placeholder="search-for"
             type="text"
+            value=""
           />
           <span
             className="input-group-inset-item input-group-inset-item-after"

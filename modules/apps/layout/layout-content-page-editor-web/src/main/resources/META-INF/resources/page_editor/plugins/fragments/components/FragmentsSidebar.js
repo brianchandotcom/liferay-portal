@@ -20,7 +20,7 @@ import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import FragmentCard from './FragmentCard';
-import Layouts from './Layouts';
+import LayoutElements from './LayoutElements';
 
 export default function FragmentsSidebar() {
 	const {fragments} = useContext(StoreContext);
@@ -55,7 +55,7 @@ export default function FragmentsSidebar() {
 			<SidebarPanelContent>
 				<SearchForm onChange={setSearchValue} value={searchValue} />
 
-				{!searchValue.length && <Layouts />}
+				{!searchValue.length && <LayoutElements />}
 
 				{filtererdFragments.map(fragmentCollection => (
 					<div key={fragmentCollection.fragmentCollectionId}>

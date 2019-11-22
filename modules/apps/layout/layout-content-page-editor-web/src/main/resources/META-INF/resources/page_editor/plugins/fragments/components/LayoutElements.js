@@ -17,7 +17,7 @@ import React from 'react';
 
 import Collapse from '../../../common/components/Collapse';
 
-const layouts = [
+const layoutElements = [
 	{
 		columns: ['12'],
 		label: Liferay.Language.get('container')
@@ -28,12 +28,12 @@ const layouts = [
 	}
 ];
 
-const LayoutCard = ({label, layoutColumns}) => {
+const LayoutElementCard = ({label, layoutColumns}) => {
 	return (
 		<button
 			aria-label={label}
 			className={classNames(
-				'page-editor__fragments__layout-card-preview',
+				'page-editor__fragments__layout-element-card-preview',
 				'card',
 				'card-interactive',
 				'card-interactive-secondary',
@@ -54,23 +54,26 @@ const LayoutCard = ({label, layoutColumns}) => {
 				</div>
 				<div className="card-title pt-3 text-truncate" title={label}>
 					{label}
-			</div>
+				</div>
 			</div>
 		</button>
 	);
 };
 
-export default function Layouts() {
+export default function LayoutElements() {
 	return (
 		<>
-			<Collapse label={Liferay.Language.get('layouts')} open={false}>
+			<Collapse
+				label={Liferay.Language.get('layout-elements')}
+				open={false}
+			>
 				<div className="d-flex flex-wrap justify-content-between">
-					{layouts.map(layout => {
+					{layoutElements.map(layoutElement => {
 						return (
-							<LayoutCard
-								key={layout.columns.join()}
-								label={layout.label}
-								layoutColumns={layout.columns}
+							<LayoutElementCard
+								key={layoutElement.columns.join()}
+								label={layoutElement.label}
+								layoutColumns={layoutElement.columns}
 							/>
 						);
 					})}

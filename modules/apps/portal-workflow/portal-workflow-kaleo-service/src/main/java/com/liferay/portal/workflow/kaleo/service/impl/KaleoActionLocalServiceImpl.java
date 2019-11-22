@@ -16,18 +16,34 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoActionLocalServiceBaseImpl;
 
+import java.io.Serializable;
+
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -110,12 +126,51 @@ public class KaleoActionLocalServiceImpl
 
 	@Override
 	public List<KaleoAction> getKaleoActions(
+		long companyId, String kaleoClassName, long kaleoClassPK) {
+
+		return doSearch(
+			companyId,
+			HashMapBuilder.put(
+				"kaleoClassName", (Serializable)kaleoClassName
+			).put(
+				"kaleoClassPK", kaleoClassPK
+			).build());
+	}
+
+	@Override
+	public List<KaleoAction> getKaleoActions(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType) {
+
+		return doSearch(
+			companyId,
+			HashMapBuilder.put(
+				"executionType", (Serializable)executionType
+			).put(
+				"kaleoClassName", kaleoClassName
+			).put(
+				"kaleoClassPK", kaleoClassPK
+			).build());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getKaleoActions(long, String, long)}
+	 */
+	@Deprecated
+	@Override
+	public List<KaleoAction> getKaleoActions(
 		String kaleoClassName, long kaleoClassPK) {
 
 		return kaleoActionPersistence.findByKCN_KCPK(
 			kaleoClassName, kaleoClassPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getKaleoActions(long, String, long, String)}
+	 */
+	@Deprecated
 	@Override
 	public List<KaleoAction> getKaleoActions(
 		String kaleoClassName, long kaleoClassPK, String executionType) {
@@ -123,5 +178,51 @@ public class KaleoActionLocalServiceImpl
 		return kaleoActionPersistence.findByKCN_KCPK_ET(
 			kaleoClassName, kaleoClassPK, executionType);
 	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, Map<String, Serializable> searchAttributes) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttributes(searchAttributes);
+		searchContext.setCompanyId(companyId);
+
+		return searchContext;
+	}
+
+	protected List<KaleoAction> doSearch(
+		long companyId, Map<String, Serializable> searchAttributes) {
+
+		try {
+			Indexer<KaleoAction> indexer = IndexerRegistryUtil.getIndexer(
+				KaleoAction.class.getName());
+
+			Hits hits = indexer.search(
+				buildSearchContext(companyId, searchAttributes));
+
+			return Stream.of(
+				hits.getDocs()
+			).map(
+				document -> GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK))
+			).map(
+				kaleoActionPersistence::fetchByPrimaryKey
+			).filter(
+				Objects::nonNull
+			).collect(
+				Collectors.toList()
+			);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoActionLocalServiceImpl.class);
 
 }

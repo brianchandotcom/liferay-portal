@@ -193,8 +193,8 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 			);
 		}
 
-		return ({value}) => (
-			<StringRenderer value={getOptionLabel(options, value[0] || '')} />
+		return ({value = []}) => (
+			<StringRenderer value={getOptionLabel(options, value[0])} />
 		);
 	}
 

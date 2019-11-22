@@ -606,6 +606,10 @@ public class PropsValues {
 	public static final String DATABASE_MYSQL_ENGINE = PropsUtil.get(
 		PropsKeys.DATABASE_MYSQL_ENGINE);
 
+	public static final boolean DATABASE_PARTITIONING_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DATABASE_PARTITIONING_ENABLED));
+
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX =
 		PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX);
 

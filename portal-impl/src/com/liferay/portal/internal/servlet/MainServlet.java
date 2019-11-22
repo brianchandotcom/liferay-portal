@@ -14,6 +14,7 @@
 
 package com.liferay.portal.internal.servlet;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -762,6 +764,10 @@ public class MainServlet extends HttpServlet {
 			_log.debug("Initialize companies");
 		}
 
+		if (PropsValues.DATABASE_PARTITIONING_ENABLED) {
+			_initDataPartitioningCompanyCounter();
+		}
+
 		ServletContext servletContext = getServletContext();
 
 		try {
@@ -774,6 +780,17 @@ public class MainServlet extends HttpServlet {
 		finally {
 			CompanyThreadLocal.setCompanyId(
 				PortalInstances.getDefaultCompanyId());
+		}
+	}
+
+	private void _initDataPartitioningCompanyCounter() {
+		long nextCompanyId = CounterLocalServiceUtil.increment(
+			CompanyConstants.DATA_PARTITIONING_COUNTER_NAME);
+
+		if (nextCompanyId == 1) {
+			CounterLocalServiceUtil.reset(
+				CompanyConstants.DATA_PARTITIONING_COUNTER_NAME,
+				CounterLocalServiceUtil.increment()-1);
 		}
 	}
 

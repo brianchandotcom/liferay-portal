@@ -21,7 +21,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Company selCompany = (Company)request.getAttribute(WebKeys.SEL_COMPANY);
 
-long companyId = BeanParamUtil.getLong(selCompany, request, "companyId");
+long companyId = 0;
+
+if (PropsValues.DATABASE_PARTITIONING_ENABLED && (selCompany == null)) {
+	companyId = (Long)request.getAttribute("nextCompanyId");
+}
+else {
+	companyId = BeanParamUtil.getLong(selCompany, request, "companyId");
+}
 
 VirtualHost virtualHost = null;
 
@@ -51,11 +58,19 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 	<aui:model-context bean="<%= selCompany %>" model="<%= Company.class %>" />
 
 	<aui:fieldset-group>
+		<c:if test="<%= PropsValues.DATABASE_PARTITIONING_ENABLED && (selCompany == null) %>">
+			<div class="alert alert-info">
+				<liferay-ui:message arguments="<%= companyId %>" key="since-data-partitioning-is-currently-enabled-the-companyId-x-has-been-reserved-so-you-can-configure-a-partition-at-database-level-in-advance" />
+			</div>
+		</c:if>
+
 		<aui:fieldset>
+			<c:if test="<%= (selCompany != null) || (companyId != 0) %>">
+				<aui:input name="id" type="resource" value="<%= String.valueOf(companyId) %>" />
+			</c:if>
+
 			<c:choose>
 				<c:when test="<%= selCompany != null %>">
-					<aui:input name="id" type="resource" value="<%= String.valueOf(companyId) %>" />
-
 					<aui:input name="web-id" type="resource" value="<%= selCompany.getWebId() %>" />
 				</c:when>
 				<c:otherwise>

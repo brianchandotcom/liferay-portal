@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -1441,6 +1443,10 @@ import org.osgi.service.component.annotations.Reference;
 
 						Blob blob = ${entity.name}${entityColumn.methodName}BlobModel.get${entityColumn.methodName}Blob();
 
+						if (Validator.isNull(blob)) {
+							return _EMPTY_INPUT_STREAM;
+						}
+
 						InputStream inputStream = blob.getBinaryStream();
 
 						if (_useTempFile) {
@@ -1975,6 +1981,8 @@ import org.osgi.service.component.annotations.Reference;
 		protected File _file;
 
 		private boolean _useTempFile;
+
+		private static final InputStream _EMPTY_INPUT_STREAM = new UnsyncByteArrayInputStream(new byte[0]);
 	</#if>
 
 	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !dependencyInjectorDS>

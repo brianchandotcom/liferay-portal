@@ -16,10 +16,8 @@ package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.State;
@@ -161,7 +159,6 @@ public class NodeWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		assertReindex(
-			_nodeWorkflowMetricsIndexer,
 			LinkedHashMapBuilder.put(
 				"workflow-metrics-nodes", 4
 			).put(
@@ -176,10 +173,5 @@ public class NodeWorkflowMetricsIndexerTest
 			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 	}
-
-	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer))"
-	)
-	private Indexer<Object> _nodeWorkflowMetricsIndexer;
 
 }

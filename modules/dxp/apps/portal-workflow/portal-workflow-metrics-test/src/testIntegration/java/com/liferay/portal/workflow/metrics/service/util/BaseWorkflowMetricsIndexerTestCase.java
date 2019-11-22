@@ -32,12 +32,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -223,8 +217,8 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected void assertReindex(
-			Indexer<?> indexer, Map<String, Integer> indexNamesMap,
-			String[] indexTypes, Object... parameters)
+			Map<String, Integer> indexNamesMap, String[] indexTypes,
+			Object... parameters)
 		throws Exception {
 
 		if (searchEngineAdapter == null) {
@@ -233,21 +227,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 		String[] indexNames = ArrayUtil.toStringArray(indexNamesMap.keySet());
 
-		for (int i = 0; i < indexNames.length; i++) {
-			retryAssertCount(
-				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
-				ArrayUtil.append(new Object[] {"deleted", false}, parameters));
-		}
-
-		clearIndices(indexNames, indexTypes, parameters);
-
-		for (int i = 0; i < indexNames.length; i++) {
-			retryAssertCount(
-				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
-				ArrayUtil.append(new Object[] {"deleted", true}, parameters));
-		}
-
-		indexer.reindex(
+		_workflowMetricsIndexer.reindex(
 			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 		for (int i = 0; i < indexNames.length; i++) {
@@ -258,8 +238,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected void assertReindex(
-			Indexer<?> indexer, String[] indexNames, String[] indexTypes,
-			Object... parameters)
+			String[] indexNames, String[] indexTypes, Object... parameters)
 		throws Exception {
 
 		Map<String, Integer> indexNamesMap = Stream.of(
@@ -269,7 +248,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			Map::putAll
 		);
 
-		assertReindex(indexer, indexNamesMap, indexTypes, parameters);
+		assertReindex(indexNamesMap, indexTypes, parameters);
 	}
 
 	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
@@ -285,74 +264,19 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	protected void clearIndices(
-		String[] indexNames, String[] indexTypes, Object... parameters) {
-
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		for (int i = 0; i < indexNames.length; i++) {
-			SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-			String indexName = indexNames[i];
-
-			searchSearchRequest.setIndexNames(indexName);
-
-			BooleanQuery booleanQuery = queries.booleanQuery();
-
-			for (int j = 0; j < parameters.length; j = j + 2) {
-				booleanQuery.addMustQueryClauses(
-					queries.term(
-						String.valueOf(parameters[j]), parameters[j + 1]));
-			}
-
-			searchSearchRequest.setQuery(booleanQuery);
-
-			String indexType = indexTypes[i];
-
-			searchSearchRequest.setTypes(indexType);
-
-			SearchSearchResponse searchSearchResponse =
-				searchEngineAdapter.execute(searchSearchRequest);
-
-			Stream.of(
-				searchSearchResponse
-			).map(
-				SearchSearchResponse::getSearchHits
-			).map(
-				SearchHits::getSearchHits
-			).flatMap(
-				List::stream
-			).map(
-				SearchHit::getDocument
-			).map(
-				_documentBuilderFactory::builder
-			).map(
-				documentBuilder -> {
-					documentBuilder.setValue("deleted", true);
-
-					return documentBuilder.build();
-				}
-			).forEach(
-				document -> {
-					UpdateDocumentRequest updateDocumentRequest =
-						new UpdateDocumentRequest(
-							indexName, document.getString("uid"), document);
-
-					updateDocumentRequest.setType(indexType);
-
-					searchEngineAdapter.execute(updateDocumentRequest);
-				}
-			);
-		}
-	}
-
 	protected KaleoInstance completeKaleoInstance(KaleoInstance kaleoInstance)
 		throws Exception {
 
 		return _kaleoInstanceLocalService.completeKaleoInstance(
 			kaleoInstance.getKaleoInstanceId());
+	}
+
+	protected KaleoInstanceToken completeKaleoInstanceToken(
+			KaleoInstance kaleoInstance)
+		throws Exception {
+
+		return _kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
+			kaleoInstance.getRootKaleoInstanceTokenId());
 	}
 
 	protected void completeKaleoTaskInstanceToken(KaleoInstance kaleoInstance)
@@ -546,5 +470,10 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Inject(
+		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndexer))"
+	)
+	private Indexer<Object> _workflowMetricsIndexer;
 
 }

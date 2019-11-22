@@ -25,8 +25,6 @@ const DATA_MAP = resultsDataToMap(
 	getMockResultsData(10, 0, '', false).documents
 );
 
-const onAddResultSubmit = jest.fn();
-
 function renderTestSearchBar(props) {
 	return render(
 		<SearchBar
@@ -44,12 +42,8 @@ function renderTestSearchBar(props) {
 }
 
 describe('SearchBar', () => {
-	afterEach(() => {
-		jest.clearAllMocks();
-	});
-
-	it('has an add result button when onAddResultSubmit is defined', () => {
-		const {getByText} = renderTestSearchBar({onAddResultSubmit});
+	it('does has an add result button when onAddResultSubmit is defined', () => {
+		const {getByText} = renderTestSearchBar({onAddResultSubmit: jest.fn()});
 
 		expect(getByText('add-result')).toBeInTheDocument();
 	});
@@ -60,30 +54,33 @@ describe('SearchBar', () => {
 		expect(queryByText('add-result')).toBeNull();
 	});
 
-	it('shows what is selected using selectedIds', () => {
-		const {getByText, queryByText} = renderTestSearchBar({
-			onAddResultSubmit,
+	it('hides the add result button with selectedIds', () => {
+		const {queryByText} = renderTestSearchBar({
+			onAddResultSubmit: jest.fn(),
+			selectedIds: [102]
+		});
+
+		expect(queryByText('add-result')).toBeNull();
+	});
+
+	it('shows what is selected with selectedIds', () => {
+		const {getByText} = renderTestSearchBar({
 			selectedIds: [102, 103]
 		});
 
 		expect(getByText('x-items-selected')).toBeInTheDocument();
-		expect(queryByText('add-result')).toBeNull();
 	});
 
-	it('shows only one selected using selectedId', () => {
-		const {getByText, queryByText} = renderTestSearchBar({
-			onAddResultSubmit,
+	it('shows only one selected with selectedIds', () => {
+		const {getByText} = renderTestSearchBar({
 			selectedIds: [102]
 		});
 
 		expect(getByText('x-item-selected')).toBeInTheDocument();
-		expect(queryByText('add-result')).toBeNull();
 	});
 
 	it('shows no items selected with empty selectedIds', () => {
-		const {getByText, queryByText} = renderTestSearchBar({
-			onAddResultSubmit
-		});
+		const {getByText, queryByText} = renderTestSearchBar();
 
 		expect(getByText('select-items')).toBeInTheDocument();
 		expect(queryByText('x-items-selected')).toBeNull();

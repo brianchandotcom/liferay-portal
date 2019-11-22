@@ -42,6 +42,26 @@ function renderTestAddResultModal(props) {
 	);
 }
 
+/**
+ * Function that triggers the search in the modal, in order to see
+ * list of results.
+ * @param {function} getByTestId The query for the modal.
+ */
+async function openResultsList(getByTestId) {
+	await waitForElement(() => getByTestId(MODAL_ID));
+
+	const input = getByPlaceholderText(
+		getByTestId(MODAL_ID),
+		'search-the-engine'
+	);
+
+	fireEvent.change(input, {target: {value: 'test'}});
+
+	fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+
+	await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+}
+
 describe('AddResultModal', () => {
 	beforeEach(() => {
 		fetch.mockResponse(JSON.stringify(getMockResultsData()));
@@ -82,17 +102,7 @@ describe('AddResultModal', () => {
 			onAddResultSubmit
 		});
 
-		await waitForElement(() => getByTestId(MODAL_ID));
-
-		const modal = getByTestId(MODAL_ID);
-
-		const input = getByPlaceholderText(modal, 'search-the-engine');
-
-		fireEvent.change(input, {target: {value: 'test'}});
-
-		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await openResultsList(getByTestId);
 
 		fireEvent.click(
 			getByTestId('100').querySelector('.custom-control-input')
@@ -114,17 +124,9 @@ describe('AddResultModal', () => {
 	it('shows the results in the modal after enter key is pressed', async () => {
 		const {getByTestId} = renderTestAddResultModal();
 
-		await waitForElement(() => getByTestId(MODAL_ID));
+		await openResultsList(getByTestId);
 
 		const modal = getByTestId(MODAL_ID);
-
-		const input = getByPlaceholderText(modal, 'search-the-engine');
-
-		fireEvent.change(input, {target: {value: 'test'}});
-
-		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
 		expect(modal).toHaveTextContent('100 This is a Document Example');
 		expect(modal).toHaveTextContent('109 This is a Web Content Example');
@@ -133,17 +135,9 @@ describe('AddResultModal', () => {
 	it('does not show the prompt in the modal after enter key is pressed', async () => {
 		const {getByTestId} = renderTestAddResultModal();
 
-		await waitForElement(() => getByTestId(MODAL_ID));
+		await openResultsList(getByTestId);
 
 		const modal = getByTestId(MODAL_ID);
-
-		const input = getByPlaceholderText(modal, 'search-the-engine');
-
-		fireEvent.change(input, {target: {value: 'test'}});
-
-		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
 		expect(modal).not.toHaveTextContent('sorry-there-are-no-results-found');
 	});
@@ -165,17 +159,9 @@ describe('AddResultModal', () => {
 
 		const {getByTestId} = renderTestAddResultModal({onAddResultSubmit});
 
-		await waitForElement(() => getByTestId(MODAL_ID));
+		await openResultsList(getByTestId);
 
 		const modal = getByTestId(MODAL_ID);
-
-		const input = getByPlaceholderText(modal, 'search-the-engine');
-
-		fireEvent.change(input, {target: {value: 'test'}});
-
-		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
 		fetch.mockResponse(JSON.stringify(getMockResultsData(10, 10)));
 
@@ -200,15 +186,9 @@ describe('AddResultModal', () => {
 			onAddResultSubmit
 		});
 
-		await waitForElement(() => getByTestId(MODAL_ID));
+		await openResultsList(getByTestId);
 
 		const modal = getByTestId(MODAL_ID);
-
-		const input = getByPlaceholderText(modal, 'search-the-engine');
-
-		fireEvent.change(input, {target: {value: 'test'}});
-
-		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
 
 		fetch.mockResponse(JSON.stringify(getMockResultsData(50, 0)));
 

@@ -24,7 +24,6 @@ jest.mock('react-dnd', () => ({
 /* eslint-enable no-unused-vars */
 
 const HIDE_BUTTON_LABEL = 'hide-result';
-
 const UNPIN_BUTTON_LABEL = 'unpin-result';
 
 const onBlurFn = jest.fn();
@@ -69,56 +68,36 @@ describe('Item', () => {
 		jest.clearAllMocks();
 	});
 
-	it('shows the appropriate subtext', () => {
+	it.each`
+		name             | selector                   | text
+		${'subtext'}     | ${'list-group-subtext'}    | ${['Test TestApr 18 2018, 11:04 AM', '[Web Content]']}
+		${'title'}       | ${'text-truncate-inline'}  | ${['This is a Web Content Example']}
+		${'description'} | ${'list-item-description'} | ${['Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod']}
+		${'view count'}  | ${'click-count'}           | ${['289']}
+	`('shows the appropriate $name', ({selector, text}) => {
 		const {container} = renderTestItem();
 
-		const subtitles = container.querySelectorAll('.list-group-subtext');
-
-		expect(subtitles[0]).toHaveTextContent(
-			'Test TestApr 18 2018, 11:04 AM'
-		);
-		expect(subtitles[1]).toHaveTextContent('[Web Content]');
-	});
-
-	it('shows the appropriate title', () => {
-		const {container} = renderTestItem();
-
-		expect(
-			container.querySelector('.text-truncate-inline')
-		).toHaveTextContent('This is a Web Content Example');
-	});
-
-	it('shows the appropriate description', () => {
-		const {container} = renderTestItem();
-
-		expect(
-			container.querySelector('.list-item-description')
-		).toHaveTextContent(
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
+		text.forEach((txt, idx) =>
+			expect(
+				container.querySelectorAll(`.${selector}`)[idx]
+			).toHaveTextContent(txt)
 		);
 	});
 
-	it('shows the appropriate view count', () => {
-		const {getByText} = renderTestItem();
+	it.each`
+		fcn              | title                 | fcnName
+		${onClickHideFn} | ${HIDE_BUTTON_LABEL}  | ${'onClickHideFn'}
+		${onClickPinFn}  | ${UNPIN_BUTTON_LABEL} | ${'onClickPinFn'}
+	`(
+		'calls the $fcnName function when the button gets clicked on',
+		({fcn, title}) => {
+			const {container} = renderTestItem();
 
-		expect(getByText('289', {exact: false})).toBeInTheDocument();
-	});
+			fireEvent.click(within(container).getByTitle(title));
 
-	it('calls the onClickHide function when its button gets clicked on', () => {
-		const {container} = renderTestItem();
-
-		fireEvent.click(within(container).getByTitle(HIDE_BUTTON_LABEL));
-
-		expect(onClickHideFn.mock.calls.length).toBe(1);
-	});
-
-	it('calls the onClickPin function when its button gets clicked on', () => {
-		const {container} = renderTestItem();
-
-		fireEvent.click(within(container).getByTitle(UNPIN_BUTTON_LABEL));
-
-		expect(onClickPinFn.mock.calls.length).toBe(1);
-	});
+			expect(fcn.mock.calls.length).toBe(1);
+		}
+	);
 
 	it('calls the onFocus event when focused', () => {
 		const {getByTestId} = renderTestItem();
@@ -139,7 +118,7 @@ describe('Item', () => {
 	it('does not call onFocus when a button within is focused', () => {
 		const {getByTitle} = renderTestItem();
 
-		fireEvent.focus(getByTitle('unpin-result'));
+		fireEvent.focus(getByTitle(UNPIN_BUTTON_LABEL));
 
 		expect(onFocusFn.mock.calls.length).toBe(0);
 	});

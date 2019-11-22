@@ -14,6 +14,11 @@ import React from 'react';
 
 import ItemDropdown from '../../../../src/main/resources/META-INF/resources/js/components/list/ItemDropdown.es';
 
+const HIDE_BUTTON_LABEL = 'hide-result';
+const PIN_BUTTON_LABEL = 'pin-result';
+const SHOW_BUTTON_LABEL = 'show-result';
+const UNPIN_BUTTON_LABEL = 'unpin-result';
+
 const onClickHide = jest.fn();
 const onClickPin = jest.fn();
 
@@ -28,107 +33,52 @@ function renderTestItemDropdown(props) {
 }
 
 describe('ItemDropdown', () => {
-	it('has option to unpin visible', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			pinned: true
-		});
-
-		expect(getByText('unpin-result')).not.toBeNull();
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
-	it('has option to unpin multiple visible', () => {
+	it.each`
+		hidden   | pinned   | expected              | description
+		${false} | ${true}  | ${UNPIN_BUTTON_LABEL} | ${'unpin a pinned result'}
+		${false} | ${false} | ${PIN_BUTTON_LABEL}   | ${'pin a visible result'}
+		${true}  | ${false} | ${PIN_BUTTON_LABEL}   | ${'pin a hidden result'}
+		${false} | ${false} | ${HIDE_BUTTON_LABEL}  | ${'hide a visible result'}
+		${true}  | ${false} | ${SHOW_BUTTON_LABEL}  | ${'show a hidden result'}
+	`('shows option to $description', ({expected, hidden, pinned}) => {
 		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			itemCount: 2,
-			pinned: true
+			hidden,
+			pinned
 		});
 
-		expect(getByText('unpin-results')).not.toBeNull();
+		expect(getByText(expected)).not.toBeNull();
 	});
 
-	it('has option to pin visible', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			pinned: false
-		});
+	it.each`
+		hidden   | pinned   | itemCount | expected              | description
+		${false} | ${true}  | ${2}      | ${UNPIN_BUTTON_LABEL} | ${'unpin multiple pinned results'}
+		${false} | ${false} | ${2}      | ${PIN_BUTTON_LABEL}   | ${'pin multiple visible results'}
+		${true}  | ${false} | ${2}      | ${PIN_BUTTON_LABEL}   | ${'pin multiple hidden results'}
+		${false} | ${false} | ${2}      | ${HIDE_BUTTON_LABEL}  | ${'hide multiple visible results'}
+		${true}  | ${false} | ${2}      | ${SHOW_BUTTON_LABEL}  | ${'show multiple hidden results'}
+	`(
+		'shows option to $description',
+		({expected, hidden, itemCount, pinned}) => {
+			const {getByText} = renderTestItemDropdown({
+				hidden,
+				itemCount,
+				pinned
+			});
 
-		expect(getByText('pin-result')).not.toBeNull();
-	});
-
-	it('has option to pin multiple visible', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			itemCount: 2,
-			pinned: false
-		});
-
-		expect(getByText('pin-results')).not.toBeNull();
-	});
-
-	it('has option to hide visible', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			pinned: false
-		});
-
-		expect(getByText('hide-result')).not.toBeNull();
-	});
-
-	it('has option to hide multiple visible', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			itemCount: 2,
-			pinned: false
-		});
-
-		expect(getByText('hide-results')).not.toBeNull();
-	});
-
-	it('has option to show hidden', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: true,
-			pinned: false
-		});
-
-		expect(getByText('show-result')).not.toBeNull();
-	});
-
-	it('has option to show multiple hidden', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: true,
-			itemCount: 2,
-			pinned: false
-		});
-
-		expect(getByText('show-results')).not.toBeNull();
-	});
-
-	it('has option to pin hidden', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: true,
-			pinned: false
-		});
-
-		expect(getByText('pin-result')).not.toBeNull();
-	});
-
-	it('has option to pin multiple hidden', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: true,
-			itemCount: 2,
-			pinned: false
-		});
-
-		expect(getByText('pin-results')).not.toBeNull();
-	});
+			expect(getByText(`${expected}s`)).not.toBeNull();
+		}
+	);
 
 	it('does not have option to show/hide when onClickHide is missing', () => {
 		const {queryByText} = render(
 			<ItemDropdown hidden={false} onClickPin={jest.fn()} pinned={true} />
 		);
-		expect(queryByText('show-result')).toBeNull();
-		expect(queryByText('hide-result')).toBeNull();
+		expect(queryByText(SHOW_BUTTON_LABEL)).toBeNull();
+		expect(queryByText(HIDE_BUTTON_LABEL)).toBeNull();
 	});
 
 	it('shows the dropdown buttons when clicked on', () => {
@@ -139,29 +89,25 @@ describe('ItemDropdown', () => {
 
 		fireEvent.click(getByTitle('actions'));
 
-		expect(getByText('pin-result')).not.toBeNull();
-		expect(getByText('hide-result')).not.toBeNull();
+		expect(getByText(PIN_BUTTON_LABEL)).not.toBeNull();
+		expect(getByText(HIDE_BUTTON_LABEL)).not.toBeNull();
 	});
 
-	it('calls the onClickHide function when it gets clicked on', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			pinned: false
-		});
+	it.each`
+		fcn            | title                | fcnName
+		${onClickHide} | ${HIDE_BUTTON_LABEL} | ${'onClickHide'}
+		${onClickPin}  | ${PIN_BUTTON_LABEL}  | ${'onClickPin'}
+	`(
+		'calls the $fcnName function when the button gets clicked on',
+		({fcn, title}) => {
+			const {getByText} = renderTestItemDropdown({
+				hidden: false,
+				pinned: false
+			});
 
-		fireEvent.click(getByText('hide-result'));
+			fireEvent.click(getByText(title));
 
-		expect(onClickHide.mock.calls.length).toBe(1);
-	});
-
-	it('calls the onClickPin function when it gets clicked on', () => {
-		const {getByText} = renderTestItemDropdown({
-			hidden: false,
-			pinned: false
-		});
-
-		fireEvent.click(getByText('pin-result'));
-
-		expect(onClickPin.mock.calls.length).toBe(1);
-	});
+			expect(fcn.mock.calls.length).toBe(1);
+		}
+	);
 });

@@ -32,25 +32,12 @@ function testText(text) {
 }
 
 describe('ItemDragPreview', () => {
-	it('displays the title', () => {
-		testText(MOCK_DOCUMENT.title);
-	});
-
-	it('displays the description', () => {
-		testText(MOCK_DOCUMENT.description);
-	});
-
-	it('displays the author', () => {
-		testText(MOCK_DOCUMENT.author);
-	});
-
-	it('displays the clicks', () => {
-		testText(`${MOCK_DOCUMENT.clicks}`);
-	});
-
-	it('displays the date', () => {
-		testText(`${MOCK_DOCUMENT.date}`);
-	});
+	it.each(['title', 'description', 'author', 'clicks', 'date'])(
+		'displays the %s',
+		element => {
+			testText(`${MOCK_DOCUMENT[element]}`);
+		}
+	);
 
 	it('displays the drag handle', () => {
 		const {getByTestId} = render(<ItemDragPreview {...MOCK_DOCUMENT} />);

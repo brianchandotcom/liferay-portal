@@ -21,22 +21,16 @@ import ResultRankingsForm from '../../../src/main/resources/META-INF/resources/j
 import {
 	FETCH_HIDDEN_DOCUMENTS_URL,
 	FETCH_SEARCH_DOCUMENTS_URL,
-	FETCH_VISIBLE_DOCUMENTS_URL
+	FETCH_VISIBLE_DOCUMENTS_URL,
+	FORM_NAME
 } from '../mocks/data.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const FORM_NAME = 'testForm';
-
-const HIDDEN_IDS_ADDED_INPUT_SELECTOR = '#hiddenIdsAdded';
-
-const HIDDEN_IDS_REMOVED_INPUT_SELECTOR = '#hiddenIdsRemoved';
-
 const HIDE_BUTTON_LABEL = 'hide-result';
-
-const INACTIVE_INPUT_SELECTOR = '#inactive';
-
+const PIN_BUTTON_LABEL = 'pin-result';
 const SHOW_BUTTON_LABEL = 'show-result';
+const UNPIN_BUTTON_LABEL = 'unpin-result';
 
 function renderTestResultRankingsForm(props) {
 	return render(
@@ -62,35 +56,55 @@ describe('ResultRankingsForm', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders the results ranking items after loading', async () => {
-		const {getByTestId} = renderTestResultRankingsForm();
+	it.each`
+		tab          | expected
+		${'visible'} | ${['100', '101', '102', '103', '104', '105', '106', '107', '108', '109']}
+		${'hidden'}  | ${['200', '201', '202', '203', '204', '205', '206', '207', '208', '209']}
+	`(
+		'renders the results ranking items after loading in the $tab tab',
+		async ({expected, tab}) => {
+			const {getByTestId, getByText} = renderTestResultRankingsForm();
 
-		await waitForElement(() => getByTestId('100'));
+			fireEvent.click(getByText(tab));
 
-		expect(getByTestId('100')).toBeInTheDocument();
-		expect(getByTestId('109')).toBeInTheDocument();
-	});
+			await waitForElement(() => getByTestId(expected[0]));
 
-	it('renders the results ranking items after loading hidden tab', async () => {
-		const {getByTestId, getByText} = renderTestResultRankingsForm();
+			expected.forEach(id => {
+				expect(getByTestId(id)).toBeInTheDocument();
+			});
+		}
+	);
 
-		fireEvent.click(getByText('hidden'));
-
-		await waitForElement(() => getByTestId('200'));
-
-		expect(getByTestId('200')).toBeInTheDocument();
-		expect(getByTestId('209')).toBeInTheDocument();
-	});
-
-	it('includes the initial aliases', async () => {
+	it.each`
+		initialAliases             | addedAliases | expected                           | description
+		${['one', 'two', 'three']} | ${[]}        | ${['one', 'two', 'three']}         | ${'initial aliases'}
+		${[]}                      | ${['one']}   | ${['one']}                         | ${'added alias'}
+		${['one', 'two', 'three']} | ${['four']}  | ${['one', 'two', 'three', 'four']} | ${'added alias with initial'}
+		${[]}                      | ${[' ']}     | ${[]}                              | ${'blank alias'}
+		${[]}                      | ${[' one ']} | ${['one']}                         | ${'trimmed alias'}
+		${['one', 'two', 'three']} | ${['one']}   | ${['one', 'two', 'three']}         | ${'no duplicate aliases'}
+	`('renders $description', ({addedAliases, expected, initialAliases}) => {
 		const {container} = renderTestResultRankingsForm({
-			initialAliases: ['one', 'two', 'three']
+			initialAliases
 		});
+
+		const input = container.querySelector('.form-control-inset');
+
+		addedAliases.forEach(alias => {
+			fireEvent.change(input, {target: {value: alias}});
+
+			fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+		});
+
+		expect(input.getAttribute('value')).toBe('');
+
 		const tagsElement = container.querySelectorAll('.label-item-expand');
 
-		expect(tagsElement[0]).toHaveTextContent('one');
-		expect(tagsElement[1]).toHaveTextContent('two');
-		expect(tagsElement[2]).toHaveTextContent('three');
+		expect(tagsElement).toHaveLength(expected.length);
+
+		tagsElement.forEach((element, idx) => {
+			expect(element).toHaveTextContent(expected[idx]);
+		});
 	});
 
 	it('removes an initial alias after clicking delete', async () => {
@@ -108,121 +122,71 @@ describe('ResultRankingsForm', () => {
 		expect(tagsElement[0]).not.toHaveTextContent('one');
 	});
 
-	it('renders blank aliases', () => {
-		const {container} = renderTestResultRankingsForm();
+	it.each`
+		id       | button               | selector
+		${'100'} | ${HIDE_BUTTON_LABEL} | ${'#hiddenIdsAdded'}
+		${'200'} | ${SHOW_BUTTON_LABEL} | ${'#hiddenIdsRemoved'}
+	`('updates the $selector', async ({button, id, selector}) => {
+		const {
+			container,
+			getByTestId,
+			getByText
+		} = renderTestResultRankingsForm();
 
-		const input = container.querySelector('.form-control-inset');
+		if (selector.includes('Removed')) {
+			fireEvent.click(getByText('hidden'));
+		}
 
-		fireEvent.change(input, {target: {value: ' '}});
+		await waitForElement(() => getByTestId(id));
 
-		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+		fireEvent.click(within(getByTestId(id)).getByTitle(button));
 
-		const tagsElement = container.querySelectorAll('.label-item-expand');
-
-		expect(tagsElement.length).toBe(0);
-
-		expect(input.getAttribute('value')).not.toEqual(' ');
+		expect(container.querySelector(selector).value).toEqual(id);
 	});
 
-	it('does not allow duplicate aliases', () => {
-		const {container} = renderTestResultRankingsForm({
-			initialAliases: ['one', 'two', 'three']
-		});
-		const input = container.querySelector('.form-control-inset');
+	it.each`
+		id       | button               | newButton            | selector
+		${'100'} | ${HIDE_BUTTON_LABEL} | ${SHOW_BUTTON_LABEL} | ${'#hiddenIdsAdded'}
+		${'200'} | ${SHOW_BUTTON_LABEL} | ${HIDE_BUTTON_LABEL} | ${'#hiddenIdsRemoved'}
+	`(
+		'updates the $selector back',
+		async ({button, id, newButton, selector}) => {
+			const {
+				container,
+				getByTestId,
+				getByText
+			} = renderTestResultRankingsForm();
 
-		fireEvent.change(input, {target: {value: 'one'}});
+			const order = selector.includes('Removed')
+				? ['hidden', 'visible']
+				: ['visible', 'hidden'];
 
-		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+			fireEvent.click(getByText(order[0]));
 
-		const tagsElement = container.querySelectorAll('.label-item-expand');
+			await waitForElement(() => getByTestId(id));
 
-		expect(tagsElement.length).toBe(3);
+			fireEvent.click(within(getByTestId(id)).getByTitle(button));
 
-		expect(input.getAttribute('value')).not.toEqual('one');
-	});
+			fireEvent.click(getByText(order[1]));
 
-	it('updates the hiddenAdded', async () => {
+			fireEvent.click(within(getByTestId(id)).getByTitle(newButton));
+
+			expect(container.querySelector(selector).value).toEqual('');
+		}
+	);
+
+	it.each`
+		id       | button                | expected
+		${'105'} | ${PIN_BUTTON_LABEL}   | ${'100,101,102,103,104,105'}
+		${'100'} | ${UNPIN_BUTTON_LABEL} | ${'101,102,103,104'}
+	`('updates the pinnedIds by $button', async ({button, expected, id}) => {
 		const {container, getByTestId} = renderTestResultRankingsForm();
 
-		await waitForElement(() => getByTestId('100'));
+		await waitForElement(() => getByTestId(id));
 
-		fireEvent.click(
-			within(getByTestId('100')).getByTitle(HIDE_BUTTON_LABEL)
-		);
+		fireEvent.click(within(getByTestId(id)).getByTitle(button));
 
-		expect(
-			container.querySelector(HIDDEN_IDS_ADDED_INPUT_SELECTOR).value
-		).toEqual('100');
-	});
-
-	it('updates the hiddenAdded back', async () => {
-		const {
-			container,
-			getByTestId,
-			getByText
-		} = renderTestResultRankingsForm();
-
-		await waitForElement(() => getByTestId('105'));
-
-		fireEvent.click(
-			within(getByTestId('105')).getByTitle(HIDE_BUTTON_LABEL)
-		);
-
-		fireEvent.click(getByText('hidden'));
-
-		fireEvent.click(
-			within(getByTestId('105')).getByTitle(SHOW_BUTTON_LABEL)
-		);
-
-		expect(
-			container.querySelector(HIDDEN_IDS_ADDED_INPUT_SELECTOR).value
-		).toEqual('');
-	});
-
-	it('updates the hiddenRemoved', async () => {
-		const {
-			container,
-			getByTestId,
-			getByText
-		} = renderTestResultRankingsForm();
-
-		fireEvent.click(getByText('hidden'));
-
-		await waitForElement(() => getByTestId('200'));
-
-		fireEvent.click(
-			within(getByTestId('200')).getByTitle(SHOW_BUTTON_LABEL)
-		);
-
-		expect(
-			container.querySelector(HIDDEN_IDS_REMOVED_INPUT_SELECTOR).value
-		).toEqual('200');
-	});
-
-	it('updates the hiddenRemoved back', async () => {
-		const {
-			container,
-			getByTestId,
-			getByText
-		} = renderTestResultRankingsForm();
-
-		fireEvent.click(getByText('hidden'));
-
-		await waitForElement(() => getByTestId('200'));
-
-		fireEvent.click(
-			within(getByTestId('200')).getByTitle(SHOW_BUTTON_LABEL)
-		);
-
-		fireEvent.click(getByText('visible'));
-
-		fireEvent.click(
-			within(getByTestId('200')).getByTitle(HIDE_BUTTON_LABEL)
-		);
-
-		expect(
-			container.querySelector(HIDDEN_IDS_REMOVED_INPUT_SELECTOR).value
-		).toEqual('');
+		expect(container.querySelector('#pinnedIds').value).toEqual(expected);
 	});
 
 	it('fetches more results after clicking on load more button', async () => {
@@ -260,28 +224,19 @@ describe('ResultRankingsForm', () => {
 		expect(pinnedIdsEndIndexInput.value).toBe('4');
 	});
 
-	it('updates the state to inactive', async () => {
-		const {container, getByLabelText} = renderTestResultRankingsForm();
-
-		fireEvent.click(getByLabelText('active'));
-
-		expect(getByLabelText('inactive')).toBeInTheDocument();
-
-		expect(container.querySelector(INACTIVE_INPUT_SELECTOR).value).toEqual(
-			'true'
-		);
-	});
-
-	it('updates the state to active', async () => {
+	it.each`
+		state         | newState      | expected
+		${'active'}   | ${'inactive'} | ${true}
+		${'inactive'} | ${'active'}   | ${false}
+	`('updates the state to $newState', async ({expected, newState, state}) => {
 		const {container, getByLabelText} = renderTestResultRankingsForm({
-			initialInactive: true
+			initialInactive: !expected
 		});
-		fireEvent.click(getByLabelText('inactive'));
 
-		expect(getByLabelText('active')).toBeInTheDocument();
+		fireEvent.click(getByLabelText(state));
 
-		expect(container.querySelector(INACTIVE_INPUT_SELECTOR).value).toEqual(
-			'false'
-		);
+		expect(getByLabelText(newState)).toBeInTheDocument();
+
+		expect(container.querySelector('#inactive').value).toBe(`${expected}`);
 	});
 });

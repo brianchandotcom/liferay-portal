@@ -821,7 +821,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		_updateSiteSEOEntry(
 			portal.getUserId(actionRequest), liveGroup.getGroupId(),
-			openGraphImageFileEntryId, openGraphEnabled, serviceContext);
+			openGraphEnabled, openGraphImageFileEntryId, serviceContext);
 
 		// Settings
 
@@ -1150,12 +1150,12 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected UserService userService;
 
 	private void _updateSiteSEOEntry(
-			long userId, long groupId, long openGraphImageFileEntryId,
-			boolean openGraphEnabled, ServiceContext serviceContext)
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		siteSEOEntryLocalService.updateSiteSEOEntry(
-			userId, groupId, openGraphImageFileEntryId, openGraphEnabled,
+			userId, groupId, openGraphEnabled, openGraphImageFileEntryId,
 			serviceContext);
 	}
 

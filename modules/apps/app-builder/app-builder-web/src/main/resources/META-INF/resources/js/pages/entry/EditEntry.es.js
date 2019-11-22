@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import React, {useContext, useEffect, useCallback, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
@@ -45,16 +46,34 @@ export const EditEntry = ({dataDefinitionId, dataRecordId, ddmForm}) => {
 				dataRecord.dataRecordValues[fieldName] = value;
 			});
 
+			const openSuccessToast = isNew => {
+				const message = isNew
+					? Liferay.Language.get('entry-added')
+					: Liferay.Language.get('entry-updated');
+
+				openToast({
+					message,
+					title: Liferay.Language.get('success'),
+					type: 'success'
+				});
+			};
+
 			if (dataRecordId !== '0') {
 				updateItem(
 					`/o/data-engine/v1.0/data-records/${dataRecordId}`,
 					dataRecord
-				).then(onCancel);
+				).then(() => {
+					openSuccessToast(false);
+					onCancel();
+				});
 			} else {
 				addItem(
 					`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
 					dataRecord
-				).then(onCancel);
+				).then(() => {
+					openSuccessToast(true);
+					onCancel();
+				});
 			}
 		});
 	}, [dataDefinitionId, dataRecordId, ddmForm, onCancel]);

@@ -409,7 +409,7 @@ definition {
 		task ("Configure the fragment") {
 			PageEditor.gotoConfiguration(fragmentName = "Spacer");
 
-			PageEditor.configureFragment(height = "Medium");
+			PageEditor.configureFragment(height = "4");
 		}
 
 		task ("View the fragment style") {

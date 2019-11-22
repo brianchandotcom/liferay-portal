@@ -234,8 +234,8 @@ public class SiteAdminDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
-	public String getOpenGraphImageURL(long groupId) {
-		SiteSEOEntry siteSEOEntry = getSelSiteSEOEntry(groupId);
+	public String getOpenGraphImageURL() {
+		SiteSEOEntry siteSEOEntry = getSiteSEOEntry();
 
 		if ((siteSEOEntry == null) ||
 			(siteSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
@@ -296,8 +296,9 @@ public class SiteAdminDisplayContext {
 		return portletURL;
 	}
 
-	public SiteSEOEntry getSelSiteSEOEntry(long groupId) {
-		return SiteSEOEntryLocalServiceUtil.fetchSiteSEOEntryByGroupId(groupId);
+	public SiteSEOEntry getSiteSEOEntry() {
+		return SiteSEOEntryLocalServiceUtil.fetchSiteSEOEntryByGroupId(
+			_getGroupId());
 	}
 
 	public int getUserGroupsCount(Group group) {
@@ -358,14 +359,27 @@ public class SiteAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isOpenGraphEnabled(long groupId) {
-		SiteSEOEntry selSiteSEOEntry = getSelSiteSEOEntry(groupId);
+	public boolean isOpenGraphEnabled() {
+		SiteSEOEntry siteSEOEntry = getSiteSEOEntry();
 
-		if (selSiteSEOEntry != null) {
-			return selSiteSEOEntry.isOpenGraphEnabled();
+		if (siteSEOEntry != null) {
+			return siteSEOEntry.isOpenGraphEnabled();
 		}
 
 		return false;
+	}
+
+	private long _getGroupId() {
+		Group liveGroup = (Group)_httpServletRequest.getAttribute(
+			"site.liveGroup");
+
+		if (liveGroup != null) {
+			return liveGroup.getGroupId();
+		}
+
+		Group group = (Group)_httpServletRequest.getAttribute("site.group");
+
+		return group.getGroupId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

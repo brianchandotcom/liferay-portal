@@ -1035,11 +1035,33 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target name="setup-profile-dxp">
-		<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
-			<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
-			<arg value="-Dprofile.dxp.branch.name=${build.setup.profile.dxp.branch.name}" />
-			<arg value="-Dprofile.dxp.repository.url=${build.setup.profile.dxp.repository.url}" />
-		</gradle-execute>
+		<if>
+			<and>
+				<isset property="env.JENKINS_HOME" />
+				<equals arg1="${build.setup.profile.dxp.branch.name}" arg2="master-private" />
+				<equals arg1="${build.setup.profile.dxp.repository.url}" arg2="git@github.com:liferay/liferay-portal-ee.git" />
+			</and>
+			<then>
+				<retry retrycount="5" retrydelay="3000">
+					<sequential>
+						<delete failonerror="false" file="${user.home}/.ssh/known_hosts" />
+
+						<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
+							<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
+							<arg value="-Dprofile.dxp.branch.name=master-private" />
+							<arg value="-Dprofile.dxp.repository.url=git@github-dev.liferay.com:liferay/liferay-portal-ee.git" />
+						</gradle-execute>
+					</sequential>
+				</retry>
+			</then>
+			<else>
+				<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
+					<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
+					<arg value="-Dprofile.dxp.branch.name=${build.setup.profile.dxp.branch.name}" />
+					<arg value="-Dprofile.dxp.repository.url=${build.setup.profile.dxp.repository.url}" />
+				</gradle-execute>
+			</else>
+		</if>
 
 		<condition else="${git.working.branch.name}-private" property="to.branch.name" value="${git.working.branch.name}">
 			<antelope:endswith string="${git.working.branch.name}" with="-private" />

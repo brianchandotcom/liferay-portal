@@ -32,7 +32,7 @@ class Filter extends React.Component {
 		this.state = {
 			expanded: false,
 			items: props.items || [],
-			searchTerm: null
+			searchTerm: ''
 		};
 
 		this.toggleDropDown = () => this.setExpanded(!this.state.expanded);
@@ -43,7 +43,10 @@ class Filter extends React.Component {
 
 		this.onClickOutside = handleClickOutside(() => {
 			if (this.state.expanded) {
-				this.setExpanded(false);
+				this.setState({
+					expanded: false,
+					searchTerm: ''
+				});
 
 				if (this.itemChanged) {
 					pushToHistory(this.filterQuery, this.props);
@@ -176,7 +179,7 @@ class Filter extends React.Component {
 	}
 
 	render() {
-		const {expanded, items} = this.state;
+		const {expanded, items, searchTerm} = this.state;
 		const {
 			buttonClassName = 'btn-secondary btn-sm',
 			children,
@@ -243,6 +246,7 @@ class Filter extends React.Component {
 					<FilterSearch
 						filteredItems={this.filteredItems}
 						onChange={this.onSearchChange.bind(this)}
+						searchTerm={searchTerm}
 						totalCount={items.length}
 					>
 						<ul className="list-unstyled">

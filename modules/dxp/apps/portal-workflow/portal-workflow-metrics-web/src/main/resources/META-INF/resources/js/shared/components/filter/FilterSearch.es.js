@@ -15,7 +15,13 @@ import Icon from '../Icon.es';
 
 export default class FilterSearch extends React.Component {
 	render() {
-		const {children, filteredItems, onChange, totalCount} = this.props;
+		const {
+			children,
+			filteredItems,
+			onChange,
+			searchTerm,
+			totalCount
+		} = this.props;
 
 		const emptyResults = filteredItems.length === 0;
 		const searchEnabled = totalCount > 12;
@@ -33,6 +39,7 @@ export default class FilterSearch extends React.Component {
 										'search-for'
 									)}
 									type="text"
+									value={searchTerm}
 								/>
 
 								<span className="input-group-inset-item input-group-inset-item-after">

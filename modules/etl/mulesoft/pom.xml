@@ -43,8 +43,15 @@
 		</plugins>
 	</build>
 	<parent>
-		<groupId>org.mule.extensions</groupId>
-		<artifactId>mule-modules-parent</artifactId>
-		<version>1.1.3</version>
+		<groupId>org.mule.connectors</groupId>
+		<artifactId>mule-certified-parent</artifactId>
+		<version>1.4.1</version>
 	</parent>
+	<repositories>
+		<repository>
+			<id>mule-releases</id>
+			<name>Nexus Public Releases</name>
+			<url>https://repository-master.mulesoft.org/nexus/content/repositories/releases/</url>
+		</repository>
+	</repositories>
 </project>

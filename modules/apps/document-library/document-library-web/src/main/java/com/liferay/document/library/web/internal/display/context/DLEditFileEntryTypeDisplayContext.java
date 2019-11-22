@@ -62,12 +62,22 @@ public class DLEditFileEntryTypeDisplayContext {
 	}
 
 	public String getAvailableFields() {
+		if (_availableFields != null) {
+			return _availableFields;
+		}
+
 		DDMDisplay ddmDisplay = new DLDDMDisplay();
 
-		return ddmDisplay.getAvailableFields();
+		_availableFields = ddmDisplay.getAvailableFields();
+
+		return _availableFields;
 	}
 
 	public String getFieldsJSONArrayString() {
+		if (_fieldsJSONArrayString != null) {
+			return _fieldsJSONArrayString;
+		}
+
 		DDMStructure ddmStructure = _getDDMStructure();
 
 		long ddmStructureId = BeanParamUtil.getLong(
@@ -76,7 +86,7 @@ public class DLEditFileEntryTypeDisplayContext {
 		String definition = BeanParamUtil.getString(
 			ddmStructure, _liferayPortletRequest, "definition");
 
-		return Optional.ofNullable(
+		_fieldsJSONArrayString = Optional.ofNullable(
 			_ddm.getDDMFormFieldsJSONArray(
 				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId),
 				definition)
@@ -85,6 +95,8 @@ public class DLEditFileEntryTypeDisplayContext {
 		).orElse(
 			StringPool.BLANK
 		);
+
+		return _fieldsJSONArrayString;
 	}
 
 	public String getLocalesMap() {
@@ -127,15 +139,22 @@ public class DLEditFileEntryTypeDisplayContext {
 	}
 
 	public Locale[] getAvailableLocales() throws PortalException {
+		if (_availableLocales != null) {
+			return _availableLocales;
+		}
+
 		DDMForm ddmForm = _getDDMForm();
 
 		if (ddmForm == null) {
-			return new Locale[]{LocaleUtil.getSiteDefault()};
+			_availableLocales = new Locale[]{LocaleUtil.getSiteDefault()};
+		}
+		else {
+			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+			_availableLocales = availableLocales.toArray(new Locale[0]);
 		}
 
-		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
-
-		return availableLocales.toArray(new Locale[0]);
+		return _availableLocales;
 	}
 
 	public String getAvailableLocalesString() throws PortalException {
@@ -194,10 +213,13 @@ public class DLEditFileEntryTypeDisplayContext {
 			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 	}
 
+	private String _availableFields;
+	private Locale[] _availableLocales;
 	private final DDM _ddm;
 	private DDMForm _ddmForm;
 	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
+	private String _fieldsJSONArrayString;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
 

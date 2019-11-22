@@ -18,12 +18,6 @@
 
 <%
 DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
-
-String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONArrayString();
-
-String availableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
-
-String availableLocalesString = dlEditFileEntryTypeDisplayContext.getAvailableLocalesString();
 %>
 
 <liferay-util:html-top>
@@ -208,10 +202,10 @@ String availableLocalesString = dlEditFileEntryTypeDisplayContext.getAvailableLo
 		}
 	};
 
-	<c:if test="<%= Validator.isNotNull(availableFields) %>">
+	<c:if test="<%= Validator.isNotNull(dlEditFileEntryTypeDisplayContext.getAvailableFields()) %>">
 		availableFields = A.Object.getValue(
 			window,
-			'<%= HtmlUtil.escapeJS(availableFields) %>'.split('.')
+			'<%= HtmlUtil.escapeJS(dlEditFileEntryTypeDisplayContext.getAvailableFields()) %>'.split('.')
 		);
 
 		if (A.Lang.isFunction(availableFields)) {
@@ -226,8 +220,8 @@ String availableLocalesString = dlEditFileEntryTypeDisplayContext.getAvailableLo
 		enableEditing: false,
 		fieldNameEditionDisabled: <%= dlEditFileEntryTypeDisplayContext.isFieldNameEditionDisabled() %>,
 
-		<c:if test="<%= Validator.isNotNull(fieldsJSONArrayString) %>">
-			fields: <%= fieldsJSONArrayString %>,
+		<c:if test="<%= Validator.isNotNull(dlEditFileEntryTypeDisplayContext.getFieldsJSONArrayString()) %>">
+			fields: <%= dlEditFileEntryTypeDisplayContext.getFieldsJSONArrayString() %>,
 		</c:if>
 
 		portletNamespace: '<portlet:namespace />',
@@ -236,8 +230,8 @@ String availableLocalesString = dlEditFileEntryTypeDisplayContext.getAvailableLo
 		readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
 		srcNode: '#<portlet:namespace />formBuilderContent',
 		translationManager: {
-			<c:if test="<%=  Validator.isNotNull(availableLocalesString) %>">
-				availableLocales: <%= availableLocalesString %>,
+			<c:if test="<%=  Validator.isNotNull(dlEditFileEntryTypeDisplayContext.getAvailableLocalesString()) %>">
+				availableLocales: <%= dlEditFileEntryTypeDisplayContext.getAvailableLocalesString() %>,
 			</c:if>
 
 			boundingBox: '#<portlet:namespace />translationManager',

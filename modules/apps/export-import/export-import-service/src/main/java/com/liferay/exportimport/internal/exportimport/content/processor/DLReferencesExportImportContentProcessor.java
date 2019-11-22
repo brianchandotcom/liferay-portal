@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.HashMap;
@@ -746,8 +745,5 @@ public class DLReferencesExportImportContentProcessor
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

@@ -68,7 +68,7 @@
 		<!-- Other fields -->
 
 		<column name="openGraphImageFileEntryId" type="long" />
-		<column name="openGraphSiteEnabled" type="boolean" />
+		<column name="openGraphEnabled" type="boolean" />
 
 		<!-- Finder methods -->
 

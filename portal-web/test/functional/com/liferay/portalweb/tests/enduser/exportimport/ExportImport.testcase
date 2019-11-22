@@ -2006,6 +2006,97 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
+	@description = "This is a use case for LPS-88571."
+	@priority = "3"
+	test ImportSiteWithMissingReferenceOfPreloadedEntry {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Global");
+
+		DMNavigator.gotoDocumentType();
+
+		LAR.exportPortlet(
+			larFileName = "Global.DM.portlet.lar",
+			siteScopeName = "Global");
+
+		JSONGroup.addGroup(groupName = "Site A");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");
+
+		LAR.importPortlet(
+			larFileName = "Global.DM.portlet.lar",
+			siteName = "Site A");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.viewCP(
+			dmDocumentTypeName = "Google Drive Shortcut",
+			dmDocumentTypeScope = "Global");
+
+		DMDocumentType.viewCP(
+			dmDocumentTypeName = "Google Drive Shortcut",
+			dmDocumentTypeScope = "Current Site");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Global");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.deletePG(dmDocumentTypeName = "Google Drive Shortcut");
+
+		Portlet.viewEmptyMessage(message = "There are no results.");
+
+		JSONGroup.addGroup(groupName = "Site B");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site B",
+			layoutName = "Asset Publisher Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site B",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site B");
+
+		AssetPublisherPortlet.configureAddSiteScopes(otherSite = "Site A");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Site B");
+
+		AssetPublisherPortlet.configureAssetTypePG(
+			selectedAsset = "Document",
+			selectMoreThanOneSubtype = "true");
+
+		SitePages.openPagesAdmin(siteURLKey = "Site B");
+
+		LAR.exportSiteCP();
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.deleteAllCP();
+
+		JSONGroup.addGroup(groupName = "Site C");
+
+		SitePages.openPagesAdmin(siteURLKey = "Site C");
+
+		LAR.importSiteCP(
+			importValidationMissingItem = "Document Type",
+			larFileName = "${larFileName}",
+			siteName = "Site C");
+	}
+
 	@description = "This is a use case for LPS-97544 and LPS-90886."
 	@priority = "3"
 	test ImportStagedSiteWithCircularReference {

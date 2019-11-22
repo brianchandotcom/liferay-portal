@@ -68,6 +68,7 @@ class FragmentEntryLinkListRow extends Component {
 		};
 
 		if (
+			config &&
 			config.backgroundImage &&
 			(config.backgroundImage.mappedField ||
 				config.backgroundImage.fieldId)
@@ -495,6 +496,7 @@ class FragmentEntryLinkListRow extends Component {
 	_updateMappedBackgroundFieldValue() {
 		if (
 			this.getAssetFieldValueURL &&
+			this.row.config &&
 			this.row.config.backgroundImage &&
 			editableIsMappedToInfoItem(this.row.config.backgroundImage)
 		) {

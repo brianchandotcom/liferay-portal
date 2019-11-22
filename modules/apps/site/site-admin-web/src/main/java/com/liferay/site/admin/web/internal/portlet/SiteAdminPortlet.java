@@ -629,6 +629,10 @@ public class SiteAdminPortlet extends MVCPortlet {
 		String[] virtualHostLanguageIds = ParamUtil.getStringValues(
 			actionRequest, parameterPrefix + "LanguageId[]");
 
+		if (virtualHostnames.length != virtualHostLanguageIds.length) {
+			throw new AvailableLocaleException();
+		}
+
 		for (int i = 0; i < virtualHostnames.length; i++) {
 			String virtualHostname = virtualHostnames[i];
 

@@ -19,6 +19,11 @@
 	<td>//tr[1]//div[contains(@class,'lfr-icon-menu')]/a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DOCUMENT_TYPES_TABLE_SCOPE</td>
+	<td>//td[contains(.,'${key_dmDocumentTypeScope}')]/../td[contains(.,'${key_dmDocumentTypeName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

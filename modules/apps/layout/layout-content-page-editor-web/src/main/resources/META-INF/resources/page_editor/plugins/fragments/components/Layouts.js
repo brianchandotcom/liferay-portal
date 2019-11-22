@@ -19,22 +19,12 @@ import Collapse from '../../../common/components/Collapse';
 
 const layouts = [
 	{
-		columns: ['12']
+		columns: ['12'],
+		label: Liferay.Language.get('container')
 	},
 	{
-		columns: ['6', '6']
-	},
-	{
-		columns: ['8', '4']
-	},
-	{
-		columns: ['4', '8']
-	},
-	{
-		columns: ['4', '4', '4']
-	},
-	{
-		columns: ['3', '3', '3', '3']
+		columns: ['4', '4', '4'],
+		label: Liferay.Language.get('columns')
 	}
 ];
 

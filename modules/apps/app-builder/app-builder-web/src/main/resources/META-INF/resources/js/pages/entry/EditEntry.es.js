@@ -32,25 +32,31 @@ export const EditEntry = ({dataDefinitionId, dataRecordId, ddmForm}) => {
 		const {pages} = ddmForm;
 		const visitor = new PagesVisitor(pages);
 
-		const dataRecord = {
-			dataRecordValues: {}
-		};
+		ddmForm.validate().then(validForm => {
+			if (!validForm) {
+				return;
+			}
 
-		visitor.mapFields(({fieldName, value}) => {
-			dataRecord.dataRecordValues[fieldName] = value;
+			const dataRecord = {
+				dataRecordValues: {}
+			};
+
+			visitor.mapFields(({fieldName, value}) => {
+				dataRecord.dataRecordValues[fieldName] = value;
+			});
+
+			if (dataRecordId !== '0') {
+				updateItem(
+					`/o/data-engine/v1.0/data-records/${dataRecordId}`,
+					dataRecord
+				).then(onCancel);
+			} else {
+				addItem(
+					`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
+					dataRecord
+				).then(onCancel);
+			}
 		});
-
-		if (dataRecordId !== '0') {
-			updateItem(
-				`/o/data-engine/v1.0/data-records/${dataRecordId}`,
-				dataRecord
-			).then(onCancel);
-		} else {
-			addItem(
-				`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
-				dataRecord
-			).then(onCancel);
-		}
 	}, [dataDefinitionId, dataRecordId, ddmForm, onCancel]);
 
 	useEffect(() => {

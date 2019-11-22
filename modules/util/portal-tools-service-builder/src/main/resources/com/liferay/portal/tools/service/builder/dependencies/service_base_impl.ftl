@@ -1979,9 +1979,9 @@ import org.osgi.service.component.annotations.Reference;
 		@Reference
 		protected File _file;
 
-		private boolean _useTempFile;
-
 		private static final InputStream _EMPTY_INPUT_STREAM = new UnsyncByteArrayInputStream(new byte[0]);
+
+		private boolean _useTempFile;
 	</#if>
 
 	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !dependencyInjectorDS>

@@ -76,24 +76,6 @@ public class LiferayWorkflowCapability
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #checkInFileEntry(long, FileEntry, DLVersionNumberIncrease,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, boolean majorVersion,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		checkInFileEntry(
-			userId, fileEntry,
-			DLVersionNumberIncrease.fromMajorVersion(majorVersion),
-			serviceContext);
-	}
-
 	@Override
 	public void checkInFileEntry(
 			long userId, FileEntry fileEntry,
@@ -127,24 +109,6 @@ public class LiferayWorkflowCapability
 		throws PortalException {
 
 		_startWorkflowInstance(userId, fileEntry, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateFileEntry(long, FileEntry, DLVersionNumberIncrease,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void updateFileEntry(
-			long userId, FileEntry fileEntry, boolean majorVersion,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		updateFileEntry(
-			userId, fileEntry,
-			DLVersionNumberIncrease.fromMajorVersion(majorVersion),
-			serviceContext);
 	}
 
 	@Override

@@ -28,17 +28,6 @@ public interface WorkflowSupport {
 			long userId, FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateFileEntry(long, FileEntry, DLVersionNumberIncrease,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, boolean majorVersion,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public void checkInFileEntry(
 			long userId, FileEntry fileEntry,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
@@ -47,17 +36,6 @@ public interface WorkflowSupport {
 
 	public void revertFileEntry(
 			long userId, FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateFileEntry(long, FileEntry, DLVersionNumberIncrease,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public void updateFileEntry(
-			long userId, FileEntry fileEntry, boolean majorVersion,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateFileEntry(

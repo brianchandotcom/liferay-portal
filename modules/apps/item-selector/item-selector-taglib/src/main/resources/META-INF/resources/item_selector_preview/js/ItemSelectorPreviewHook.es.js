@@ -1,5 +1,19 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Carousel from './Carousel.es';
@@ -29,6 +43,35 @@ const ItemSelectorPreview = ({
 	const [itemList, setItemList] = useState(items);
 
 	const infoButtonRef = React.createRef();
+
+	useEffect(() => {
+		document.documentElement.addEventListener('keydown', handleOnKeyDown);
+
+		const sidenavToggle = infoButtonRef.current;
+
+		if (sidenavToggle) {
+			Liferay.SideNavigation.initialize(sidenavToggle, {
+				container: '.sidenav-container',
+				position: 'right',
+				typeMobile: 'fixed',
+				width: '320px'
+			});
+		}
+
+		const updateCurrentItemHandler = Liferay.on(
+			'updateCurrentItem',
+			updateCurrentItem
+		);
+
+		return () => {
+			document.documentElement.removeEventListener(
+				'keydown',
+				handleOnKeyDown
+			);
+
+			Liferay.detach(updateCurrentItemHandler);
+		};
+	}, [handleOnKeyDown, infoButtonRef, updateCurrentItem]);
 
 	const close = () => {
 		ReactDOM.unmountComponentAtNode(container);
@@ -155,6 +198,11 @@ const ItemSelectorPreview = ({
 		setCurrentItem(editedItem);
 		setCurrentItemIndex(itemList.length - 1);
 		setItemList(itemList);
+	};
+
+	const updateCurrentItem = ({url, value}) => {
+		//TODO check if it is mounted
+		setCurrentItem({...currentItem, url, value});
 	};
 
 	return (

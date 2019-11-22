@@ -137,7 +137,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 								JSONUtil.put(
 									"id", "canonicalURL"
 								).put(
-									"type", "canonicalURL"
+									"type", "url"
 								),
 								JSONUtil.put(
 									"id", "descriptionSEO"
@@ -153,9 +153,9 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						data.put(
 						"defaultValues",
 							JSONUtil.put(
-								"canonicalURL", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-							).put(
 								"title", layoutsAdminDisplayContext.getPageTitle()
+							).put(
+								"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
 							));
 
 						data.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());

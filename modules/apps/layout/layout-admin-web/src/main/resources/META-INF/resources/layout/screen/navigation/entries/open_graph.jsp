@@ -125,9 +125,9 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 					data.put(
 						"defaultValues",
 							JSONUtil.put(
-								"canonicalURL", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-							).put(
 								"title", layoutsAdminDisplayContext.getPageTitle()
+							).put(
+								"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
 							));
 
 					data.put("displayType", "og");

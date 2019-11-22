@@ -79,7 +79,7 @@ const PreviewSeoContainer = ({
 	);
 	const [imgUrl, setImgUrl] = useState(defaultValues['imgUrl']);
 	const [title, setTitle] = useState(defaultValues['title']);
-	const [url, setUrl] = useState(defaultValues['canonicalURL']);
+	const [url, setUrl] = useState(defaultValues['url']);
 
 	const isMounted = useIsMounted();
 

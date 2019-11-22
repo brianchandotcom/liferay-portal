@@ -97,10 +97,10 @@ public class SiteSEOEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", openGraphImageFileEntryId=");
-		sb.append(openGraphImageFileEntryId);
 		sb.append(", openGraphEnabled=");
 		sb.append(openGraphEnabled);
+		sb.append(", openGraphImageFileEntryId=");
+		sb.append(openGraphImageFileEntryId);
 		sb.append("}");
 
 		return sb.toString();
@@ -145,9 +145,9 @@ public class SiteSEOEntryCacheModel
 			siteSEOEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		siteSEOEntryImpl.setOpenGraphEnabled(openGraphEnabled);
 		siteSEOEntryImpl.setOpenGraphImageFileEntryId(
 			openGraphImageFileEntryId);
-		siteSEOEntryImpl.setOpenGraphEnabled(openGraphEnabled);
 
 		siteSEOEntryImpl.resetOriginalValues();
 
@@ -170,9 +170,9 @@ public class SiteSEOEntryCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		openGraphImageFileEntryId = objectInput.readLong();
-
 		openGraphEnabled = objectInput.readBoolean();
+
+		openGraphImageFileEntryId = objectInput.readLong();
 	}
 
 	@Override
@@ -204,9 +204,9 @@ public class SiteSEOEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(openGraphImageFileEntryId);
-
 		objectOutput.writeBoolean(openGraphEnabled);
+
+		objectOutput.writeLong(openGraphImageFileEntryId);
 	}
 
 	public long mvccVersion;
@@ -218,7 +218,7 @@ public class SiteSEOEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long openGraphImageFileEntryId;
 	public boolean openGraphEnabled;
+	public long openGraphImageFileEntryId;
 
 }

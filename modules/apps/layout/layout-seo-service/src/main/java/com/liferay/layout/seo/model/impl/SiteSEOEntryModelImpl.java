@@ -78,9 +78,8 @@ public class SiteSEOEntryModelImpl
 		{"siteSEOEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
-		{"openGraphImageFileEntryId", Types.BIGINT},
-		{"openGraphEnabled", Types.BOOLEAN}
+		{"modifiedDate", Types.TIMESTAMP}, {"openGraphEnabled", Types.BOOLEAN},
+		{"openGraphImageFileEntryId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,12 +95,12 @@ public class SiteSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("openGraphEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SiteSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,openGraphImageFileEntryId LONG,openGraphEnabled BOOLEAN)";
+		"create table SiteSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,openGraphEnabled BOOLEAN,openGraphImageFileEntryId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table SiteSEOEntry";
 
@@ -155,9 +154,9 @@ public class SiteSEOEntryModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setOpenGraphEnabled(soapModel.isOpenGraphEnabled());
 		model.setOpenGraphImageFileEntryId(
 			soapModel.getOpenGraphImageFileEntryId());
-		model.setOpenGraphEnabled(soapModel.isOpenGraphEnabled());
 
 		return model;
 	}
@@ -346,18 +345,18 @@ public class SiteSEOEntryModelImpl
 			"modifiedDate",
 			(BiConsumer<SiteSEOEntry, Date>)SiteSEOEntry::setModifiedDate);
 		attributeGetterFunctions.put(
+			"openGraphEnabled", SiteSEOEntry::getOpenGraphEnabled);
+		attributeSetterBiConsumers.put(
+			"openGraphEnabled",
+			(BiConsumer<SiteSEOEntry, Boolean>)
+				SiteSEOEntry::setOpenGraphEnabled);
+		attributeGetterFunctions.put(
 			"openGraphImageFileEntryId",
 			SiteSEOEntry::getOpenGraphImageFileEntryId);
 		attributeSetterBiConsumers.put(
 			"openGraphImageFileEntryId",
 			(BiConsumer<SiteSEOEntry, Long>)
 				SiteSEOEntry::setOpenGraphImageFileEntryId);
-		attributeGetterFunctions.put(
-			"openGraphEnabled", SiteSEOEntry::getOpenGraphEnabled);
-		attributeSetterBiConsumers.put(
-			"openGraphEnabled",
-			(BiConsumer<SiteSEOEntry, Boolean>)
-				SiteSEOEntry::setOpenGraphEnabled);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -532,17 +531,6 @@ public class SiteSEOEntryModelImpl
 
 	@JSON
 	@Override
-	public long getOpenGraphImageFileEntryId() {
-		return _openGraphImageFileEntryId;
-	}
-
-	@Override
-	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
-		_openGraphImageFileEntryId = openGraphImageFileEntryId;
-	}
-
-	@JSON
-	@Override
 	public boolean getOpenGraphEnabled() {
 		return _openGraphEnabled;
 	}
@@ -556,6 +544,17 @@ public class SiteSEOEntryModelImpl
 	@Override
 	public void setOpenGraphEnabled(boolean openGraphEnabled) {
 		_openGraphEnabled = openGraphEnabled;
+	}
+
+	@JSON
+	@Override
+	public long getOpenGraphImageFileEntryId() {
+		return _openGraphImageFileEntryId;
+	}
+
+	@Override
+	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
+		_openGraphImageFileEntryId = openGraphImageFileEntryId;
 	}
 
 	@Override
@@ -609,9 +608,9 @@ public class SiteSEOEntryModelImpl
 		siteSEOEntryImpl.setUserName(getUserName());
 		siteSEOEntryImpl.setCreateDate(getCreateDate());
 		siteSEOEntryImpl.setModifiedDate(getModifiedDate());
+		siteSEOEntryImpl.setOpenGraphEnabled(isOpenGraphEnabled());
 		siteSEOEntryImpl.setOpenGraphImageFileEntryId(
 			getOpenGraphImageFileEntryId());
-		siteSEOEntryImpl.setOpenGraphEnabled(isOpenGraphEnabled());
 
 		siteSEOEntryImpl.resetOriginalValues();
 
@@ -739,10 +738,10 @@ public class SiteSEOEntryModelImpl
 			siteSEOEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		siteSEOEntryCacheModel.openGraphEnabled = isOpenGraphEnabled();
+
 		siteSEOEntryCacheModel.openGraphImageFileEntryId =
 			getOpenGraphImageFileEntryId();
-
-		siteSEOEntryCacheModel.openGraphEnabled = isOpenGraphEnabled();
 
 		return siteSEOEntryCacheModel;
 	}
@@ -835,8 +834,8 @@ public class SiteSEOEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _openGraphImageFileEntryId;
 	private boolean _openGraphEnabled;
+	private long _openGraphImageFileEntryId;
 	private long _columnBitmask;
 	private SiteSEOEntry _escapedModel;
 

@@ -287,8 +287,8 @@ public interface SiteSEOEntryLocalService
 		throws PortalException;
 
 	public SiteSEOEntry updateSiteSEOEntry(
-			long userId, long groupId, long openGraphImageFileEntryId,
-			boolean openGraphEnabled, ServiceContext serviceContext)
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

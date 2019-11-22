@@ -40,9 +40,9 @@ public class SiteSEOEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setOpenGraphEnabled(model.isOpenGraphEnabled());
 		soapModel.setOpenGraphImageFileEntryId(
 			model.getOpenGraphImageFileEntryId());
-		soapModel.setOpenGraphEnabled(model.isOpenGraphEnabled());
 
 		return soapModel;
 	}
@@ -168,14 +168,6 @@ public class SiteSEOEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getOpenGraphImageFileEntryId() {
-		return _openGraphImageFileEntryId;
-	}
-
-	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
-		_openGraphImageFileEntryId = openGraphImageFileEntryId;
-	}
-
 	public boolean getOpenGraphEnabled() {
 		return _openGraphEnabled;
 	}
@@ -188,6 +180,14 @@ public class SiteSEOEntrySoap implements Serializable {
 		_openGraphEnabled = openGraphEnabled;
 	}
 
+	public long getOpenGraphImageFileEntryId() {
+		return _openGraphImageFileEntryId;
+	}
+
+	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
+		_openGraphImageFileEntryId = openGraphImageFileEntryId;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _siteSEOEntryId;
@@ -197,7 +197,7 @@ public class SiteSEOEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _openGraphImageFileEntryId;
 	private boolean _openGraphEnabled;
+	private long _openGraphImageFileEntryId;
 
 }

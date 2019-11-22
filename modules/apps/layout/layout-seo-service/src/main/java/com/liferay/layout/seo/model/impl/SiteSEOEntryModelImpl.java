@@ -80,7 +80,7 @@ public class SiteSEOEntryModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"openGraphImageFileEntryId", Types.BIGINT},
-		{"openGraphSiteEnabled", Types.BOOLEAN}
+		{"openGraphEnabled", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,11 +97,11 @@ public class SiteSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("openGraphSiteEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("openGraphEnabled", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SiteSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,openGraphImageFileEntryId LONG,openGraphSiteEnabled BOOLEAN)";
+		"create table SiteSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,openGraphImageFileEntryId LONG,openGraphEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table SiteSEOEntry";
 
@@ -157,7 +157,7 @@ public class SiteSEOEntryModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setOpenGraphImageFileEntryId(
 			soapModel.getOpenGraphImageFileEntryId());
-		model.setOpenGraphSiteEnabled(soapModel.isOpenGraphSiteEnabled());
+		model.setOpenGraphEnabled(soapModel.isOpenGraphEnabled());
 
 		return model;
 	}
@@ -353,11 +353,11 @@ public class SiteSEOEntryModelImpl
 			(BiConsumer<SiteSEOEntry, Long>)
 				SiteSEOEntry::setOpenGraphImageFileEntryId);
 		attributeGetterFunctions.put(
-			"openGraphSiteEnabled", SiteSEOEntry::getOpenGraphSiteEnabled);
+			"openGraphEnabled", SiteSEOEntry::getOpenGraphEnabled);
 		attributeSetterBiConsumers.put(
-			"openGraphSiteEnabled",
+			"openGraphEnabled",
 			(BiConsumer<SiteSEOEntry, Boolean>)
-				SiteSEOEntry::setOpenGraphSiteEnabled);
+				SiteSEOEntry::setOpenGraphEnabled);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -543,19 +543,19 @@ public class SiteSEOEntryModelImpl
 
 	@JSON
 	@Override
-	public boolean getOpenGraphSiteEnabled() {
-		return _openGraphSiteEnabled;
+	public boolean getOpenGraphEnabled() {
+		return _openGraphEnabled;
 	}
 
 	@JSON
 	@Override
-	public boolean isOpenGraphSiteEnabled() {
-		return _openGraphSiteEnabled;
+	public boolean isOpenGraphEnabled() {
+		return _openGraphEnabled;
 	}
 
 	@Override
-	public void setOpenGraphSiteEnabled(boolean openGraphSiteEnabled) {
-		_openGraphSiteEnabled = openGraphSiteEnabled;
+	public void setOpenGraphEnabled(boolean openGraphEnabled) {
+		_openGraphEnabled = openGraphEnabled;
 	}
 
 	@Override
@@ -611,7 +611,7 @@ public class SiteSEOEntryModelImpl
 		siteSEOEntryImpl.setModifiedDate(getModifiedDate());
 		siteSEOEntryImpl.setOpenGraphImageFileEntryId(
 			getOpenGraphImageFileEntryId());
-		siteSEOEntryImpl.setOpenGraphSiteEnabled(isOpenGraphSiteEnabled());
+		siteSEOEntryImpl.setOpenGraphEnabled(isOpenGraphEnabled());
 
 		siteSEOEntryImpl.resetOriginalValues();
 
@@ -742,7 +742,7 @@ public class SiteSEOEntryModelImpl
 		siteSEOEntryCacheModel.openGraphImageFileEntryId =
 			getOpenGraphImageFileEntryId();
 
-		siteSEOEntryCacheModel.openGraphSiteEnabled = isOpenGraphSiteEnabled();
+		siteSEOEntryCacheModel.openGraphEnabled = isOpenGraphEnabled();
 
 		return siteSEOEntryCacheModel;
 	}
@@ -836,7 +836,7 @@ public class SiteSEOEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _openGraphImageFileEntryId;
-	private boolean _openGraphSiteEnabled;
+	private boolean _openGraphEnabled;
 	private long _columnBitmask;
 	private SiteSEOEntry _escapedModel;
 

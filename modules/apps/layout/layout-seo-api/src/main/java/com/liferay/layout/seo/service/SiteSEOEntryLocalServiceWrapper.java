@@ -358,12 +358,12 @@ public class SiteSEOEntryLocalServiceWrapper
 	@Override
 	public com.liferay.layout.seo.model.SiteSEOEntry updateSiteSEOEntry(
 			long userId, long groupId, long openGraphImageFileEntryId,
-			boolean openSiteGraphEnabled,
+			boolean openGraphEnabled,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _siteSEOEntryLocalService.updateSiteSEOEntry(
-			userId, groupId, openGraphImageFileEntryId, openSiteGraphEnabled,
+			userId, groupId, openGraphImageFileEntryId, openGraphEnabled,
 			serviceContext);
 	}
 

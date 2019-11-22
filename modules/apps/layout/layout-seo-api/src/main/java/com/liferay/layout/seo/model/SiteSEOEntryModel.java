@@ -236,24 +236,24 @@ public interface SiteSEOEntryModel
 	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId);
 
 	/**
-	 * Returns the open graph site enabled of this site seo entry.
+	 * Returns the open graph enabled of this site seo entry.
 	 *
-	 * @return the open graph site enabled of this site seo entry
+	 * @return the open graph enabled of this site seo entry
 	 */
-	public boolean getOpenGraphSiteEnabled();
+	public boolean getOpenGraphEnabled();
 
 	/**
-	 * Returns <code>true</code> if this site seo entry is open graph site enabled.
+	 * Returns <code>true</code> if this site seo entry is open graph enabled.
 	 *
-	 * @return <code>true</code> if this site seo entry is open graph site enabled; <code>false</code> otherwise
+	 * @return <code>true</code> if this site seo entry is open graph enabled; <code>false</code> otherwise
 	 */
-	public boolean isOpenGraphSiteEnabled();
+	public boolean isOpenGraphEnabled();
 
 	/**
-	 * Sets whether this site seo entry is open graph site enabled.
+	 * Sets whether this site seo entry is open graph enabled.
 	 *
-	 * @param openGraphSiteEnabled the open graph site enabled of this site seo entry
+	 * @param openGraphEnabled the open graph enabled of this site seo entry
 	 */
-	public void setOpenGraphSiteEnabled(boolean openGraphSiteEnabled);
+	public void setOpenGraphEnabled(boolean openGraphEnabled);
 
 }

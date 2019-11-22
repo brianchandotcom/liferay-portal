@@ -127,7 +127,7 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 	);
 };
 
-const OptionsRenderer = ({displayType, options, values}) => {
+const OptionsRenderer = ({displayType, options, values = []}) => {
 	const labels = values.map(value => getOptionLabel(options, value));
 
 	if (displayType === 'list') {
@@ -193,8 +193,8 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 			);
 		}
 
-		return ({value}) => (
-			<StringRenderer value={getOptionLabel(options, value[0] || '')} />
+		return ({value = []}) => (
+			<StringRenderer value={getOptionLabel(options, value[0])} />
 		);
 	}
 

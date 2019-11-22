@@ -28,13 +28,10 @@ const layouts = [
 	}
 ];
 
-const LayoutCard = ({layoutColumns}) => {
+const LayoutCard = ({label, layoutColumns}) => {
 	return (
 		<button
-			aria-label={Liferay.Util.sub(
-				Liferay.Language.get('layout-of-x'),
-				layoutColumns.join('-')
-			)}
+			aria-label={label}
 			className={classNames(
 				'page-editor__fragments__layout-card-preview',
 				'card',
@@ -55,6 +52,9 @@ const LayoutCard = ({layoutColumns}) => {
 						))}
 					</div>
 				</div>
+				<div className="card-title pt-3 text-truncate" title={label}>
+					{label}
+			</div>
 			</div>
 		</button>
 	);
@@ -69,6 +69,7 @@ export default function Layouts() {
 						return (
 							<LayoutCard
 								key={layout.columns.join()}
+								label={layout.label}
 								layoutColumns={layout.columns}
 							/>
 						);

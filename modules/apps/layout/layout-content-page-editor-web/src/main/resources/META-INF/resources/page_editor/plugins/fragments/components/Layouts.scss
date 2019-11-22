@@ -8,6 +8,11 @@
 	margin-bottom: $pageEditorSpacing * 2;
 	width: calc(50% - #{$pageEditorSpacing});
 
+	.card-title {
+		color: $sectionBuilderGrayColor;
+		font-size: 12px;
+	}
+
 	.row {
 		border: solid 2px $sectionBuilderGrayColor;
 		border-radius: 2px;

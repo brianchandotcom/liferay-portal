@@ -36,6 +36,6 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="openGraphImageFileEntryId" type="long" />
-		<field name="openGraphSiteEnabled" type="boolean" />
+		<field name="openGraphEnabled" type="boolean" />
 	</model>
 </model-hints>

@@ -54,7 +54,7 @@ public class SiteSEOEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
 			"openGraphImageFileEntryId", getOpenGraphImageFileEntryId());
-		attributes.put("openGraphSiteEnabled", isOpenGraphSiteEnabled());
+		attributes.put("openGraphEnabled", isOpenGraphEnabled());
 
 		return attributes;
 	}
@@ -122,11 +122,10 @@ public class SiteSEOEntryWrapper
 			setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
 		}
 
-		Boolean openGraphSiteEnabled = (Boolean)attributes.get(
-			"openGraphSiteEnabled");
+		Boolean openGraphEnabled = (Boolean)attributes.get("openGraphEnabled");
 
-		if (openGraphSiteEnabled != null) {
-			setOpenGraphSiteEnabled(openGraphSiteEnabled);
+		if (openGraphEnabled != null) {
+			setOpenGraphEnabled(openGraphEnabled);
 		}
 	}
 
@@ -181,6 +180,16 @@ public class SiteSEOEntryWrapper
 	}
 
 	/**
+	 * Returns the open graph enabled of this site seo entry.
+	 *
+	 * @return the open graph enabled of this site seo entry
+	 */
+	@Override
+	public boolean getOpenGraphEnabled() {
+		return model.getOpenGraphEnabled();
+	}
+
+	/**
 	 * Returns the open graph image file entry ID of this site seo entry.
 	 *
 	 * @return the open graph image file entry ID of this site seo entry
@@ -188,16 +197,6 @@ public class SiteSEOEntryWrapper
 	@Override
 	public long getOpenGraphImageFileEntryId() {
 		return model.getOpenGraphImageFileEntryId();
-	}
-
-	/**
-	 * Returns the open graph site enabled of this site seo entry.
-	 *
-	 * @return the open graph site enabled of this site seo entry
-	 */
-	@Override
-	public boolean getOpenGraphSiteEnabled() {
-		return model.getOpenGraphSiteEnabled();
 	}
 
 	/**
@@ -261,13 +260,13 @@ public class SiteSEOEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this site seo entry is open graph site enabled.
+	 * Returns <code>true</code> if this site seo entry is open graph enabled.
 	 *
-	 * @return <code>true</code> if this site seo entry is open graph site enabled; <code>false</code> otherwise
+	 * @return <code>true</code> if this site seo entry is open graph enabled; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isOpenGraphSiteEnabled() {
-		return model.isOpenGraphSiteEnabled();
+	public boolean isOpenGraphEnabled() {
+		return model.isOpenGraphEnabled();
 	}
 
 	/**
@@ -331,6 +330,16 @@ public class SiteSEOEntryWrapper
 	}
 
 	/**
+	 * Sets whether this site seo entry is open graph enabled.
+	 *
+	 * @param openGraphEnabled the open graph enabled of this site seo entry
+	 */
+	@Override
+	public void setOpenGraphEnabled(boolean openGraphEnabled) {
+		model.setOpenGraphEnabled(openGraphEnabled);
+	}
+
+	/**
 	 * Sets the open graph image file entry ID of this site seo entry.
 	 *
 	 * @param openGraphImageFileEntryId the open graph image file entry ID of this site seo entry
@@ -338,16 +347,6 @@ public class SiteSEOEntryWrapper
 	@Override
 	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
 		model.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
-	}
-
-	/**
-	 * Sets whether this site seo entry is open graph site enabled.
-	 *
-	 * @param openGraphSiteEnabled the open graph site enabled of this site seo entry
-	 */
-	@Override
-	public void setOpenGraphSiteEnabled(boolean openGraphSiteEnabled) {
-		model.setOpenGraphSiteEnabled(openGraphSiteEnabled);
 	}
 
 	/**

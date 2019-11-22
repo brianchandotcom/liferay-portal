@@ -42,7 +42,7 @@ public class SiteSEOEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setOpenGraphImageFileEntryId(
 			model.getOpenGraphImageFileEntryId());
-		soapModel.setOpenGraphSiteEnabled(model.isOpenGraphSiteEnabled());
+		soapModel.setOpenGraphEnabled(model.isOpenGraphEnabled());
 
 		return soapModel;
 	}
@@ -176,16 +176,16 @@ public class SiteSEOEntrySoap implements Serializable {
 		_openGraphImageFileEntryId = openGraphImageFileEntryId;
 	}
 
-	public boolean getOpenGraphSiteEnabled() {
-		return _openGraphSiteEnabled;
+	public boolean getOpenGraphEnabled() {
+		return _openGraphEnabled;
 	}
 
-	public boolean isOpenGraphSiteEnabled() {
-		return _openGraphSiteEnabled;
+	public boolean isOpenGraphEnabled() {
+		return _openGraphEnabled;
 	}
 
-	public void setOpenGraphSiteEnabled(boolean openGraphSiteEnabled) {
-		_openGraphSiteEnabled = openGraphSiteEnabled;
+	public void setOpenGraphEnabled(boolean openGraphEnabled) {
+		_openGraphEnabled = openGraphEnabled;
 	}
 
 	private long _mvccVersion;
@@ -198,6 +198,6 @@ public class SiteSEOEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _openGraphImageFileEntryId;
-	private boolean _openGraphSiteEnabled;
+	private boolean _openGraphEnabled;
 
 }

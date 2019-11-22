@@ -38,6 +38,8 @@ public interface Registry {
 
 	public Filter getFilter(String filterString) throws RuntimeException;
 
+	public long getLastModified(ClassLoader classLoader);
+
 	public Registry getRegistry() throws SecurityException;
 
 	public <T> T getService(ServiceReference<T> serviceReference);

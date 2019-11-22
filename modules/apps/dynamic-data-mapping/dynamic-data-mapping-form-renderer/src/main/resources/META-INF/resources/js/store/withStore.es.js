@@ -22,7 +22,6 @@ import handleFieldEdited from './actions/handleFieldEdited.es';
 import handleFieldFocused from './actions/handleFieldFocused.es';
 import handleFieldRemoved from './actions/handleFieldRemoved.es';
 import handleFieldRepeated from './actions/handleFieldRepeated.es';
-import handleFormSubmitted from './actions/handleFormSubmitted.es';
 import handlePaginationItemClicked from './actions/handlePaginationItemClicked.es';
 import handlePaginationNextClicked from './actions/handlePaginationNextClicked.es';
 import handlePaginationPreviousClicked from './actions/handlePaginationPreviousClicked.es';
@@ -148,6 +147,25 @@ export default Component => {
 			return evaluate(null, this.getEvaluatorContext());
 		}
 
+		validate() {
+			return this.evaluate().then(evaluatedPages => {
+				let validForm = true;
+				const visitor = new PagesVisitor(evaluatedPages);
+
+				visitor.mapFields(({valid}) => {
+					if (!valid) {
+						validForm = false;
+					}
+				});
+
+				if (!validForm) {
+					this.dispatch('pageValidationFailed', this.activePage);
+				}
+
+				return Promise.resolve(validForm);
+			});
+		}
+
 		getChildContext() {
 			return {
 				dispatch: this.dispatch.bind(this),
@@ -219,15 +237,13 @@ export default Component => {
 		_handleFormSubmitted(event) {
 			event.preventDefault();
 
-			handleFormSubmitted(this.getEvaluatorContext()).then(validForm => {
+			this.validate().then(validForm => {
 				if (validForm) {
 					Liferay.Util.submitForm(event.target);
 
 					Liferay.fire('ddmFormSubmit', {
 						formId: this.getFormId()
 					});
-				} else {
-					this.dispatch('pageValidationFailed', this.activePage);
 				}
 			});
 		}

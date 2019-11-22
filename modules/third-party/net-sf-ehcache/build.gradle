@@ -28,7 +28,7 @@ jarPatched {
 	from {
 		zipTree(
 			configurations.compileOnly.find {
-				it.name.contains "ehcache"
+				it.name.startsWith "ehcache-"
 			})
 	}
 }

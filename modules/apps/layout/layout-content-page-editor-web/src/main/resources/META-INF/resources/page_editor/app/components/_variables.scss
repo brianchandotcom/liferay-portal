@@ -3,11 +3,17 @@
 //
 
 $defaultTransitionDuration: 0.5s;
+$topperShowDelay: 0.3s;
+$topperShowDuration: 0.2s;
 
 //
 // Colors
 //
 
+$dragSourceBackgroundColor: #e1ebff;
+$dragSourceColor: #0b5fff;
+$dropTargetColor: #0b5fff;
+$fragmentEntryLinkErrorBorderColor: #da1414;
 $sidebarBorderColor: #e7e7ed;
 $sidebarButtonBackgroundColor: #393a4a;
 $sidebarButtonColor: #a7a9bc;
@@ -15,6 +21,11 @@ $sidebarButtonHoverColor: #fff;
 $sidebarButtonSeparatorColor: #6b6c7e;
 $sidebarContentBackgroundColor: #fff;
 $toolbarBorderColor: fade_out(#dcdcdc, 0.5);
+$topperActiveBackgroundColor: #004ad7;
+$topperActiveBorderColor: #004ad7;
+$topperBackgroundColor: #0b5fff;
+$topperBorderColor: #0b5fff;
+$topperColor: #fff;
 
 //
 // Layout
@@ -27,9 +38,21 @@ $sidebarContentWidth: 280px;
 $toolbarBorderWidth: 1px;
 $toolbarHeight: 64px;
 
+$topperBorderRadius: 2px;
+$topperBorderWidth: 1px;
+$topperFocusedBorderWidth: 2px;
+$topperHoveredBorderWidth: 2px;
+
+$dropTargetWidth: 5px;
+$fragmentsEditorSpacing: 8px;
+
 //
 // z-indexes, ordered numerically.
 //
 
+$topperZIndex: -1;
+$topperActiveZIndex: 3;
+$topperHoverZIndex: 3;
 $zIndexToolbar: 971;
 $zIndexSidebar: 972;
+$dragSourceZIndex: 977;

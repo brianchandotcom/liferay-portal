@@ -111,98 +111,70 @@ public class MetadataTypeBuilderTest {
 
 	@Test
 	public void testBuildMetadataType_BigDecimalField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "bigDecimalField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"bigDecimalField");
 
 		Assert.assertTrue(fieldMetadataType instanceof NumberType);
 	}
 
 	@Test
 	public void testBuildMetadataType_BinaryField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "binaryField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"binaryField");
 
 		Assert.assertTrue(fieldMetadataType instanceof BinaryType);
 	}
 
 	@Test
 	public void testBuildMetadataType_BooleanField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "booleanField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"booleanField");
 
 		Assert.assertTrue(fieldMetadataType instanceof BooleanType);
 	}
 
 	@Test
 	public void testBuildMetadataType_ByteField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "byteField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"byteField");
 
 		Assert.assertTrue(fieldMetadataType instanceof NumberType);
 	}
 
 	@Test
 	public void testBuildMetadataType_DateField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "dateField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"dateField");
 
 		Assert.assertTrue(fieldMetadataType instanceof DateType);
 	}
 
 	@Test
 	public void testBuildMetadataType_DateTimeField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "dateTimeField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"dateTimeField");
 
 		Assert.assertTrue(fieldMetadataType instanceof DateTimeType);
 	}
 
 	@Test
 	public void testBuildMetadataType_DictionaryField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "dictionaryField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"dictionaryField");
 
 		Assert.assertTrue(fieldMetadataType instanceof ObjectType);
 
@@ -214,56 +186,40 @@ public class MetadataTypeBuilderTest {
 
 	@Test
 	public void testBuildMetadataType_DoubleField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "doubleField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"doubleField");
 
 		Assert.assertTrue(fieldMetadataType instanceof NumberType);
 	}
 
 	@Test
 	public void testBuildMetadataType_FloatField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "floatField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"floatField");
 
 		Assert.assertTrue(fieldMetadataType instanceof NumberType);
 	}
 
 	@Test
 	public void testBuildMetadataType_IntegerField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "integerField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"integerField");
 
 		Assert.assertTrue(fieldMetadataType instanceof NumberType);
 	}
 
 	@Test
 	public void testBuildMetadataType_LongField() throws Exception {
-		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
-
 		MetadataType fieldMetadataType = _getFieldMetadataType(
-			entityMetadataType, "longField");
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET),
+			"longField");
 
 		Assert.assertTrue(fieldMetadataType instanceof NumberType);
 	}
@@ -271,10 +227,8 @@ public class MetadataTypeBuilderTest {
 	@Test
 	public void testBuildMetadataType_NestedArrayField() throws Exception {
 		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET);
 
 		MetadataType nestedEntityArrayMetadataType = _getFieldMetadataType(
 			entityMetadataType, "nestedEntityArrayField");
@@ -296,10 +250,8 @@ public class MetadataTypeBuilderTest {
 	@Test
 	public void testBuildMetadataType_NestedEntityField() throws Exception {
 		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET);
 
 		MetadataType nestedEntityMetadataType = _getFieldMetadataType(
 			entityMetadataType, "nestedEntityField");
@@ -328,10 +280,8 @@ public class MetadataTypeBuilderTest {
 	@Test
 	public void testBuildMetadataType_PageEntity() throws Exception {
 		MetadataType pageEntityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities", OASConstants.OPERATION_GET);
 
 		Assert.assertTrue(pageEntityMetadataType instanceof ObjectType);
 
@@ -355,10 +305,8 @@ public class MetadataTypeBuilderTest {
 	@Test
 	public void testBuildMetadataType_RequiredFields() throws Exception {
 		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET);
 
 		DefaultObjectType defaultObjectType =
 			(DefaultObjectType)entityMetadataType;
@@ -378,10 +326,8 @@ public class MetadataTypeBuilderTest {
 	@Test
 	public void testBuildMetadataType_StringField() throws Exception {
 		MetadataType entityMetadataType =
-			_metadataTypeBuilder.buildMetadataType(
-				null, "/entities/{id}", OASConstants.OPERATION_GET,
-				OASConstants.
-					PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+			_getResponseDefaultContentApplicationJsonSchema(
+				"/entities/{id}", OASConstants.OPERATION_GET);
 
 		MetadataType fieldMetadataType = _getFieldMetadataType(
 			entityMetadataType, "stringField");
@@ -408,10 +354,8 @@ public class MetadataTypeBuilderTest {
 
 		setUp();
 
-		return _metadataTypeBuilder.buildMetadataType(
-			null, endpoint, OASConstants.OPERATION_GET,
-			OASConstants.
-				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
+		return _getResponseDefaultContentApplicationJsonSchema(
+			endpoint, OASConstants.OPERATION_GET);
 	}
 
 	private MetadataType _getFieldMetadataType(
@@ -436,6 +380,16 @@ public class MetadataTypeBuilderTest {
 		QName qName = objectKeyType.getName();
 
 		return qName.toString();
+	}
+
+	private MetadataType _getResponseDefaultContentApplicationJsonSchema(
+			String path, String httpMethod)
+		throws Exception {
+
+		return _metadataTypeBuilder.buildMetadataType(
+			null, path, httpMethod,
+			OASConstants.
+				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
 	private MetadataTypeBuilder _metadataTypeBuilder;

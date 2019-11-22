@@ -22,8 +22,9 @@ import com.liferay.mule.internal.oas.OASConstants;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,14 +56,9 @@ public class MetadataKeysBuilderTest {
 	public void testBuildDELETEEndpointMetadataKeys() {
 		MetadataKeysBuilder metadataKeysBuilder = new MetadataKeysBuilder();
 
-		Set<MetadataKey> metadataKeys = metadataKeysBuilder.getMetadataKeys(
-			_openAPISpecJsonNode, OASConstants.OPERATION_DELETE);
-
-		Set<String> metadataKeyIds = new HashSet<>();
-
-		for (MetadataKey metadataKey : metadataKeys) {
-			metadataKeyIds.add(metadataKey.getId());
-		}
+		Set<String> metadataKeyIds = _toMetadataKeyIdSet(
+			metadataKeysBuilder.getMetadataKeys(
+				_openAPISpecJsonNode, OASConstants.OPERATION_DELETE));
 
 		Assert.assertTrue(
 			metadataKeyIds.contains("/endpoint/with/delete/and/get/operation"));
@@ -82,14 +78,9 @@ public class MetadataKeysBuilderTest {
 	public void testBuildGETEndpointMetadataKeys() {
 		MetadataKeysBuilder metadataKeysBuilder = new MetadataKeysBuilder();
 
-		Set<MetadataKey> metadataKeys = metadataKeysBuilder.getMetadataKeys(
-			_openAPISpecJsonNode, OASConstants.OPERATION_GET);
-
-		Set<String> metadataKeyIds = new HashSet<>();
-
-		for (MetadataKey metadataKey : metadataKeys) {
-			metadataKeyIds.add(metadataKey.getId());
-		}
+		Set<String> metadataKeyIds = _toMetadataKeyIdSet(
+			metadataKeysBuilder.getMetadataKeys(
+				_openAPISpecJsonNode, OASConstants.OPERATION_GET));
 
 		Assert.assertTrue(
 			metadataKeyIds.contains("/endpoint/with/delete/and/get/operation"));
@@ -103,14 +94,9 @@ public class MetadataKeysBuilderTest {
 	public void testBuildPATCHEndpointMetadataKeys() {
 		MetadataKeysBuilder metadataKeysBuilder = new MetadataKeysBuilder();
 
-		Set<MetadataKey> metadataKeys = metadataKeysBuilder.getMetadataKeys(
-			_openAPISpecJsonNode, OASConstants.OPERATION_PATCH);
-
-		Set<String> metadataKeyIds = new HashSet<>();
-
-		for (MetadataKey metadataKey : metadataKeys) {
-			metadataKeyIds.add(metadataKey.getId());
-		}
+		Set<String> metadataKeyIds = _toMetadataKeyIdSet(
+			metadataKeysBuilder.getMetadataKeys(
+				_openAPISpecJsonNode, OASConstants.OPERATION_PATCH));
 
 		Assert.assertTrue(
 			metadataKeyIds.contains("/endpoint/with/get/and/patch/operation"));
@@ -120,17 +106,22 @@ public class MetadataKeysBuilderTest {
 	public void testBuildPOSTEndpointMetadataKeys() {
 		MetadataKeysBuilder metadataKeysBuilder = new MetadataKeysBuilder();
 
-		Set<MetadataKey> metadataKeys = metadataKeysBuilder.getMetadataKeys(
-			_openAPISpecJsonNode, OASConstants.OPERATION_POST);
-
-		Set<String> metadataKeyIds = new HashSet<>();
-
-		for (MetadataKey metadataKey : metadataKeys) {
-			metadataKeyIds.add(metadataKey.getId());
-		}
+		Set<String> metadataKeyIds = _toMetadataKeyIdSet(
+			metadataKeysBuilder.getMetadataKeys(
+				_openAPISpecJsonNode, OASConstants.OPERATION_POST));
 
 		Assert.assertTrue(
 			metadataKeyIds.contains("/endpoint/with/get/and/post/operation"));
+	}
+
+	private Set<String> _toMetadataKeyIdSet(Set<MetadataKey> metadataKeys) {
+		Stream<MetadataKey> stream = metadataKeys.stream();
+
+		return stream.map(
+			MetadataKey::getId
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	private static final String _OPERATION_HEAD = "head";

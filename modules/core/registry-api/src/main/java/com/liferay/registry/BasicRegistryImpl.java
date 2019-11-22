@@ -87,6 +87,11 @@ public class BasicRegistryImpl implements Registry {
 	}
 
 	@Override
+	public long getLastModified(ClassLoader classLoader) {
+		return 0;
+	}
+
+	@Override
 	public Registry getRegistry() throws SecurityException {
 		return this;
 	}

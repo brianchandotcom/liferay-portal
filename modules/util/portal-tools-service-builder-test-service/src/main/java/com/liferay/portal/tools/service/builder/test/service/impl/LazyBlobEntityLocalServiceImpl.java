@@ -14,28 +14,42 @@
 
 package com.liferay.portal.tools.service.builder.test.service.impl;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity;
 import com.liferay.portal.tools.service.builder.test.service.base.LazyBlobEntityLocalServiceBaseImpl;
 
 /**
- * The implementation of the lazy blob entity local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LazyBlobEntityLocalServiceBaseImpl
+ * @author Kyle Miho
  */
 public class LazyBlobEntityLocalServiceImpl
 	extends LazyBlobEntityLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityLocalServiceUtil</code>.
-	 */
+	@Override
+	public LazyBlobEntity addLazyBlobEntity(
+		long groupId, byte[] bytes, ServiceContext serviceContext) {
+
+		long lazyBlobEntityId = counterLocalService.increment();
+
+		LazyBlobEntity lazyBlobEntity = lazyBlobEntityPersistence.create(
+			lazyBlobEntityId);
+
+		lazyBlobEntity.setUuid(serviceContext.getUuid());
+		lazyBlobEntity.setGroupId(groupId);
+
+		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+			new UnsyncByteArrayInputStream(bytes);
+
+		OutputBlob outputBlob = new OutputBlob(
+			unsyncByteArrayInputStream, bytes.length);
+
+		lazyBlobEntity.setBlob1(outputBlob);
+		lazyBlobEntity.setBlob2(outputBlob);
+
+		lazyBlobEntityPersistence.update(lazyBlobEntity);
+
+		return lazyBlobEntity;
+	}
 
 }

@@ -31,5 +31,5 @@ create table SiteSEOEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	openGraphImageFileEntryId LONG,
-	openGraphSiteEnabled BOOLEAN
+	openGraphEnabled BOOLEAN
 );

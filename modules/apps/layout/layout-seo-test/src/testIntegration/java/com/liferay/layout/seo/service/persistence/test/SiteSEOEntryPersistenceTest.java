@@ -142,7 +142,7 @@ public class SiteSEOEntryPersistenceTest {
 
 		newSiteSEOEntry.setOpenGraphImageFileEntryId(RandomTestUtil.nextLong());
 
-		newSiteSEOEntry.setOpenGraphSiteEnabled(RandomTestUtil.randomBoolean());
+		newSiteSEOEntry.setOpenGraphEnabled(RandomTestUtil.randomBoolean());
 
 		_siteSEOEntries.add(_persistence.update(newSiteSEOEntry));
 
@@ -176,8 +176,8 @@ public class SiteSEOEntryPersistenceTest {
 			existingSiteSEOEntry.getOpenGraphImageFileEntryId(),
 			newSiteSEOEntry.getOpenGraphImageFileEntryId());
 		Assert.assertEquals(
-			existingSiteSEOEntry.isOpenGraphSiteEnabled(),
-			newSiteSEOEntry.isOpenGraphSiteEnabled());
+			existingSiteSEOEntry.isOpenGraphEnabled(),
+			newSiteSEOEntry.isOpenGraphEnabled());
 	}
 
 	@Test
@@ -242,7 +242,7 @@ public class SiteSEOEntryPersistenceTest {
 			"SiteSEOEntry", "mvccVersion", true, "uuid", true, "siteSEOEntryId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"openGraphImageFileEntryId", true, "openGraphSiteEnabled", true);
+			"openGraphImageFileEntryId", true, "openGraphEnabled", true);
 	}
 
 	@Test
@@ -506,7 +506,7 @@ public class SiteSEOEntryPersistenceTest {
 
 		siteSEOEntry.setOpenGraphImageFileEntryId(RandomTestUtil.nextLong());
 
-		siteSEOEntry.setOpenGraphSiteEnabled(RandomTestUtil.randomBoolean());
+		siteSEOEntry.setOpenGraphEnabled(RandomTestUtil.randomBoolean());
 
 		_siteSEOEntries.add(_persistence.update(siteSEOEntry));
 

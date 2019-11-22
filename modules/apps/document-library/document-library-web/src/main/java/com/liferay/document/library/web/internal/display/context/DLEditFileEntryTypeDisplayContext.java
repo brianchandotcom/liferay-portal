@@ -28,11 +28,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,6 +68,48 @@ public class DLEditFileEntryTypeDisplayContext {
 		_availableFields = ddmDisplay.getAvailableFields();
 
 		return _availableFields;
+	}
+
+	public Locale[] getAvailableLocales() throws PortalException {
+		if (_availableLocales != null) {
+			return _availableLocales;
+		}
+
+		DDMForm ddmForm = _getDDMForm();
+
+		if (ddmForm == null) {
+			_availableLocales = new Locale[] {LocaleUtil.getSiteDefault()};
+		}
+		else {
+			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+			_availableLocales = availableLocales.toArray(new Locale[0]);
+		}
+
+		return _availableLocales;
+	}
+
+	public String getAvailableLocalesString() throws PortalException {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			Stream.of(
+				getAvailableLocales()
+			).map(
+				_language::getLanguageId
+			).collect(
+				Collectors.toList()
+			));
+
+		return jsonArray.toString();
+	}
+
+	public String getDefaultLanguageId() throws PortalException {
+		DDMForm ddmForm = _getDDMForm();
+
+		if (ddmForm == null) {
+			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+		}
+
+		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 	}
 
 	public String getFieldsJSONArrayString() {
@@ -120,6 +159,19 @@ public class DLEditFileEntryTypeDisplayContext {
 		return jsonObject.toString();
 	}
 
+	public boolean isChangeableDefaultLanguage() throws PortalException {
+		DDMForm ddmForm = _getDDMForm();
+
+		if ((ddmForm == null) ||
+			Objects.equals(
+				LocaleUtil.getSiteDefault(), ddmForm.getDefaultLocale())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isFieldNameEditionDisabled() {
 		DDMStructure ddmStructure = _getDDMStructure();
 
@@ -136,61 +188,6 @@ public class DLEditFileEntryTypeDisplayContext {
 		}
 
 		return false;
-	}
-
-	public Locale[] getAvailableLocales() throws PortalException {
-		if (_availableLocales != null) {
-			return _availableLocales;
-		}
-
-		DDMForm ddmForm = _getDDMForm();
-
-		if (ddmForm == null) {
-			_availableLocales = new Locale[]{LocaleUtil.getSiteDefault()};
-		}
-		else {
-			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
-
-			_availableLocales = availableLocales.toArray(new Locale[0]);
-		}
-
-		return _availableLocales;
-	}
-
-	public String getAvailableLocalesString() throws PortalException {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-			Stream.of(
-				getAvailableLocales()
-			).map(
-				_language::getLanguageId
-			).collect(
-				Collectors.toList()
-			));
-
-		return jsonArray.toString();
-	}
-
-	public String getDefaultLanguageId() throws PortalException {
-		DDMForm ddmForm = _getDDMForm();
-
-		if (ddmForm == null) {
-			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-		}
-
-		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
-	}
-
-	public boolean isChangeableDefaultLanguage() throws PortalException {
-		DDMForm ddmForm = _getDDMForm();
-
-		if ((ddmForm == null) ||
-			Objects.equals(
-				LocaleUtil.getSiteDefault(), ddmForm.getDefaultLocale())) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private DDMForm _getDDMForm() throws PortalException {

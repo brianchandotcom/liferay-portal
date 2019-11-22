@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -44,9 +45,12 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 			ExecutionType executionType, ExecutionContext executionContext)
 		throws PortalException {
 
+		ServiceContext serviceContext = executionContext.getServiceContext();
+
 		List<KaleoAction> kaleoActions =
 			_kaleoActionLocalService.getKaleoActions(
-				kaleoClassName, kaleoClassPK, executionType.getValue());
+				serviceContext.getCompanyId(), kaleoClassName, kaleoClassPK,
+				executionType.getValue());
 
 		for (KaleoAction kaleoAction : kaleoActions) {
 			long startTime = System.currentTimeMillis();
@@ -62,8 +66,7 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 
 				_kaleoInstanceLocalService.updateKaleoInstance(
 					kaleoInstanceToken.getKaleoInstanceId(),
-					executionContext.getWorkflowContext(),
-					executionContext.getServiceContext());
+					executionContext.getWorkflowContext(), serviceContext);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -74,7 +77,7 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 				_kaleoLogLocalService.addActionExecutionKaleoLog(
 					executionContext.getKaleoInstanceToken(), kaleoAction,
 					startTime, System.currentTimeMillis(), comment,
-					executionContext.getServiceContext());
+					serviceContext);
 			}
 		}
 	}

@@ -71,7 +71,8 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 		T node = createNode(kaleoNode);
 
 		Set<Action> actions = buildActions(
-			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId());
+			kaleoNode.getCompanyId(), KaleoNode.class.getName(),
+			kaleoNode.getKaleoNodeId());
 
 		node.setActions(actions);
 
@@ -155,11 +156,11 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 	}
 
 	protected Set<Action> buildActions(
-		String kaleoClassName, long kaleoClassPK) {
+		long companyId, String kaleoClassName, long kaleoClassPK) {
 
 		List<KaleoAction> kaleoActions =
 			kaleoActionLocalService.getKaleoActions(
-				kaleoClassName, kaleoClassPK);
+				companyId, kaleoClassName, kaleoClassPK);
 
 		Set<Action> actions = new HashSet<>();
 
@@ -296,7 +297,8 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 			}
 
 			Set<Action> timerActions = buildActions(
-				KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId());
+				kaleoTimer.getCompanyId(), KaleoTimer.class.getName(),
+				kaleoTimer.getKaleoTimerId());
 
 			timer.setActions(timerActions);
 

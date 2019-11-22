@@ -296,11 +296,6 @@ public class SiteAdminDisplayContext {
 		return portletURL;
 	}
 
-	private SiteSEOEntry _getSiteSEOEntry() {
-		return SiteSEOEntryLocalServiceUtil.fetchSiteSEOEntryByGroupId(
-			_getGroupId());
-	}
-
 	public int getUserGroupsCount(Group group) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -380,6 +375,11 @@ public class SiteAdminDisplayContext {
 		Group group = (Group)_httpServletRequest.getAttribute("site.group");
 
 		return group.getGroupId();
+	}
+
+	private SiteSEOEntry _getSiteSEOEntry() {
+		return SiteSEOEntryLocalServiceUtil.fetchSiteSEOEntryByGroupId(
+			_getGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

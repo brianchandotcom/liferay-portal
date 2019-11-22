@@ -40,6 +40,7 @@ definition {
 	}
 
 	macro _viewActivities {
+		var key_workflowActivityComment = "${workflowActivityComment}";
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
 
 		AssertClick(
@@ -51,7 +52,7 @@ definition {
 			value1 = "Activities");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MyWorkflowTasksTask#ACTIVITIES_LINE_1",
+			locator1 = "MyWorkflowTasksTask#ACTIVITIES_LINE",
 			value1 = "${workflowActivityComment}");
 	}
 

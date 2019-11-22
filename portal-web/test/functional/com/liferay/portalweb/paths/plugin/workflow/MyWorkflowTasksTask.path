@@ -57,6 +57,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVITIES_LINE</td>
+	<td>//div[@class='task-activity']//td[contains(.,'${key_workflowActivityComment}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVITIES_LINE_1</td>
 	<td>xpath=(//div[@class='task-activity']//tbody/tr/td[1])[1]</td>
 	<td></td>

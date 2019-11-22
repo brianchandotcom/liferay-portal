@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
@@ -43,6 +44,8 @@ const ItemSelectorPreview = ({
 	const [itemList, setItemList] = useState(items);
 
 	const infoButtonRef = React.createRef();
+
+	const isMounted = useIsMounted();
 
 	useEffect(() => {
 		document.documentElement.addEventListener('keydown', handleOnKeyDown);
@@ -147,6 +150,8 @@ const ItemSelectorPreview = ({
 	};
 
 	const handleOnKeyDown = e => {
+		if (!isMounted()) return;
+
 		switch (e.which || e.keyCode) {
 			case KEY_CODE.LEFT:
 				handleClickPrevious();
@@ -201,8 +206,9 @@ const ItemSelectorPreview = ({
 	};
 
 	const updateCurrentItem = ({url, value}) => {
-		//TODO check if it is mounted
-		setCurrentItem({...currentItem, url, value});
+		if (isMounted()) {
+			setCurrentItem({...currentItem, url, value});
+		}
 	};
 
 	return (

@@ -14,6 +14,7 @@
 
 package com.liferay.account.internal.model.listener.test;
 
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -23,6 +24,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,6 +35,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,6 +61,55 @@ public class RoleModelListenerTest {
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+	}
+
+	@Test
+	public void testDeleteCompany() throws Exception {
+		List<Long> requiredRoleIds = Stream.of(
+			AccountRoleConstants.REQUIRED_ROLE_NAMES
+		).map(
+			requiredRoleName -> _roleLocalService.fetchRole(
+				_company.getCompanyId(), requiredRoleName)
+		).map(
+			Role::getRoleId
+		).collect(
+			Collectors.toList()
+		);
+
+		_companyLocalService.deleteCompany(_company);
+
+		_company = null;
+
+		for (long requiredRoleId : requiredRoleIds) {
+			Assert.assertNull(_roleLocalService.fetchRole(requiredRoleId));
+		}
+	}
+
+	@Test
+	public void testDeleteDefaultAccountRole() throws Exception {
+		for (String requiredRoleName :
+				AccountRoleConstants.REQUIRED_ROLE_NAMES) {
+
+			try {
+				_roleLocalService.deleteRole(
+					_roleLocalService.getRole(
+						_company.getCompanyId(), requiredRoleName));
+
+				Assert.fail(
+					"Allowed to delete default role: " + requiredRoleName);
+			}
+			catch (ModelListenerException mle) {
+				Throwable throwable = mle.getCause();
+
+				Assert.assertTrue(throwable instanceof RequiredRoleException);
+
+				String message = throwable.getMessage();
+
+				Assert.assertTrue(
+					message.startsWith("Cannot delete default account role: "));
+				Assert.assertTrue(message.endsWith(requiredRoleName));
+			}
+		}
 	}
 
 	@Test(expected = ModelListenerException.class)

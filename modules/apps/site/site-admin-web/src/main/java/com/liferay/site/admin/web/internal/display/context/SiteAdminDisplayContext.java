@@ -358,11 +358,11 @@ public class SiteAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isOpenGraphSiteEnabled(long groupId) {
+	public boolean isOpenGraphEnabled(long groupId) {
 		SiteSEOEntry selSiteSEOEntry = getSelSiteSEOEntry(groupId);
 
 		if (selSiteSEOEntry != null) {
-			return selSiteSEOEntry.isOpenGraphSiteEnabled();
+			return selSiteSEOEntry.isOpenGraphEnabled();
 		}
 
 		return false;

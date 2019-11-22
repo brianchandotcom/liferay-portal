@@ -17,14 +17,11 @@ package com.liferay.portal.workflow.kaleo.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -36,7 +33,8 @@ import org.junit.runner.RunWith;
  * @author Jorge Díaz
  */
 @RunWith(Arquillian.class)
-public class KaleoTaskInstanceTokenServiceTest {
+public class KaleoTaskInstanceTokenServiceTest
+	extends BaseKaleoLocalServiceTestCase {
 
 	@ClassRule
 	@Rule
@@ -52,12 +50,7 @@ public class KaleoTaskInstanceTokenServiceTest {
 
 			RoleLocalServiceUtil.clearUserRoles(user.getUserId());
 
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-			serviceContext.setUserId(user.getUserId());
-
-			int count = KaleoTaskInstanceTokenLocalServiceUtil.searchCount(
+			int count = kaleoTaskInstanceTokenLocalService.searchCount(
 				RandomTestUtil.randomString(), RandomTestUtil.randomStrings(10),
 				false, true, serviceContext);
 

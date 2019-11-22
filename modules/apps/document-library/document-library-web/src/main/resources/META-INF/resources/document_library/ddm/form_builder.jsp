@@ -23,14 +23,12 @@ String fieldsJSONArrayString = dlEditFileEntryTypeDisplayContext.getFieldsJSONAr
 
 String availableFields = dlEditFileEntryTypeDisplayContext.getAvailableFields();
 
-Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-
 DLEditFileEntryTypeDisplayContext.TranslationManagerInfo translationManagerInfo = dlEditFileEntryTypeDisplayContext.getTranslationManagerInfo();
 String availableLocalesString = translationManagerInfo.getAvailableLocalesString();
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/ddm.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="separator"><!-- --></div>

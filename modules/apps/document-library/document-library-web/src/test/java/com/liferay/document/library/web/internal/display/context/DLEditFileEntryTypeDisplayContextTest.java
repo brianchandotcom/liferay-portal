@@ -139,7 +139,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 	}
 
 	@Test
-	public void testGetTranslationManagerInfo() throws Exception {
+	public void testGetDefaultLanguageId() throws Exception {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
@@ -154,9 +154,41 @@ public class DLEditFileEntryTypeDisplayContextTest {
 
 		Assert.assertEquals(
 			"pt_BR", dlEditFileEntryTypeDisplayContext.getDefaultLanguageId());
+	}
+
+	@Test
+	public void testGetAvailableLocalesString() throws Exception {
+		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
+			new DLEditFileEntryTypeDisplayContext(
+				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
+				_language,
+				new MockPortletRenderRequest(
+					new MockHttpServletRequestBuilder().withAttribute(
+						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
+						_getRandomDDMStructure()
+					).withParameter(
+						"definition", RandomTestUtil.randomString()
+					).build()));
+
 		Assert.assertEquals(
 			"[\"pt_BR\"]",
 			dlEditFileEntryTypeDisplayContext.getAvailableLocalesString());
+	}
+
+	@Test
+	public void testIsChangeableDefaultLanguage() throws Exception {
+		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
+			new DLEditFileEntryTypeDisplayContext(
+				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
+				_language,
+				new MockPortletRenderRequest(
+					new MockHttpServletRequestBuilder().withAttribute(
+						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
+						_getRandomDDMStructure()
+					).withParameter(
+						"definition", RandomTestUtil.randomString()
+					).build()));
+
 		Assert.assertEquals(
 			true,
 			dlEditFileEntryTypeDisplayContext.isChangeableDefaultLanguage());

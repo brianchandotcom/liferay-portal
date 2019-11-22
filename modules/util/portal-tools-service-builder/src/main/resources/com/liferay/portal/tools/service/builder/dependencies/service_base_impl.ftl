@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -1443,7 +1442,7 @@ import org.osgi.service.component.annotations.Reference;
 
 						Blob blob = ${entity.name}${entityColumn.methodName}BlobModel.get${entityColumn.methodName}Blob();
 
-						if (Validator.isNull(blob)) {
+						if (blob == null) {
 							return _EMPTY_INPUT_STREAM;
 						}
 

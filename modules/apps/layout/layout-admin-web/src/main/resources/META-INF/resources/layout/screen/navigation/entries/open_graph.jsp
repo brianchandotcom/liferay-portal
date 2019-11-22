@@ -125,6 +125,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 					data.put(
 						"defaultValues",
 							JSONUtil.put(
+								"description", selLayout.getDescription(locale)
+							).put(
 								"title", layoutsAdminDisplayContext.getPageTitle()
 							).put(
 								"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()

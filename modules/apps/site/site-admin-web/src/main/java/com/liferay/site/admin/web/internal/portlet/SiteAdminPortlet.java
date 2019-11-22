@@ -815,10 +815,10 @@ public class SiteAdminPortlet extends MVCPortlet {
 			}
 		}
 
-		long openGraphImageFileEntryId = ParamUtil.getLong(
-			actionRequest, "openGraphImageFileEntryId");
 		boolean openGraphEnabled = ParamUtil.getBoolean(
 			actionRequest, "openGraphEnabled");
+		long openGraphImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "openGraphImageFileEntryId");
 
 		_updateSiteSEOEntry(
 			portal.getUserId(actionRequest), liveGroup.getGroupId(),

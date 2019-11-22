@@ -91,7 +91,7 @@ export const addFieldToColumn = (
 
 	if (rowIndex >= numberOfRows) {
 		pages = addRow(pages, numberOfRows, pageIndex);
-	} else if (!isEmptyRow(pages, pageIndex, rowIndex)) {
+	} else if (!isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)) {
 		pages = addRow(pages, rowIndex, pageIndex);
 	}
 
@@ -99,27 +99,32 @@ export const addFieldToColumn = (
 
 	return visitor.mapColumns(
 		(column, currentColumnIndex, currentRowIndex, currentPageIndex) => {
-			let newColumn = column;
-
 			if (
 				currentColumnIndex === columnIndex &&
 				currentRowIndex === rowIndex &&
 				currentPageIndex === pageIndex
 			) {
-				newColumn = {
+				return {
 					...column,
 					fields: [...column.fields, field]
 				};
 			}
 
-			return newColumn;
+			return column;
 		}
+	);
+};
+
+export const isEmptyColumn = (pages, pageIndex, rowIndex, columnIndex) => {
+	return (
+		pages[pageIndex].rows[rowIndex].columns[columnIndex].fields.length === 0
 	);
 };
 
 export const isEmptyRow = (pages, pageIndex, rowIndex) => {
 	return pages[pageIndex].rows[rowIndex].columns.every(
-		({fields}) => fields.length === 0
+		(column, columnIndex) =>
+			isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)
 	);
 };
 

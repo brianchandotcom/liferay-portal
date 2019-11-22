@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -143,14 +142,10 @@ public class MergeCentralGitSubrepositoryUtil {
 			Properties buildProperties =
 				JenkinsResultsParserUtil.getBuildProperties();
 
-			try {
-				JenkinsResultsParserUtil.sendEmail(
-					message, "jenkins", "Merge Central Git Subrepository",
-					buildProperties.getProperty(
-						"email.list[merge-central-subrepository]"));
-			}
-			catch (TimeoutException te) {
-			}
+			JenkinsResultsParserUtil.sendEmail(
+				message, "jenkins", "Merge Central Git Subrepository",
+				buildProperties.getProperty(
+					"email.list[merge-central-subrepository]"));
 
 			throw new RuntimeException(message);
 		}

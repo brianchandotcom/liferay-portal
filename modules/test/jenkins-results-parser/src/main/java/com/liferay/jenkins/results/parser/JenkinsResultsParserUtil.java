@@ -2009,32 +2009,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void sendEmail(
-			String body, String from, String subject, String to)
-		throws IOException, TimeoutException {
+		String body, String from, String subject, String to) {
 
-		File file = new File("/tmp/" + body.hashCode() + ".txt");
+		String hostname = getHostName(null);
 
-		write(file, body);
-
-		try {
-			StringBuffer sb = new StringBuffer();
-
-			sb.append("cat ");
-			sb.append(getCanonicalPath(file));
-			sb.append(" | mail -v -s ");
-			sb.append("\"");
-			sb.append(subject);
-			sb.append("\" -r \"");
-			sb.append(from);
-			sb.append("\" \"");
-			sb.append(to);
-			sb.append("\"");
-
-			executeBashCommands(sb.toString());
-		}
-		finally {
-			file.delete();
-		}
+		NotificationUtil.sendEmail(
+			combine(from, "@", hostname), from, to, subject, body);
 	}
 
 	public static void setBuildProperties(

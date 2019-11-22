@@ -46,7 +46,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1332,15 +1331,9 @@ public abstract class BaseBuild implements Build {
 			if ((notificationRecipients != null) &&
 				!notificationRecipients.isEmpty()) {
 
-				try {
-					JenkinsResultsParserUtil.sendEmail(
-						message, "jenkins", "Build Reinvoked",
-						reinvokeRule.notificationRecipients);
-				}
-				catch (IOException | TimeoutException e) {
-					throw new RuntimeException(
-						"Unable to send reinvoke notification", e);
-				}
+				JenkinsResultsParserUtil.sendEmail(
+					message, "jenkins", "Build Reinvoked",
+					reinvokeRule.notificationRecipients);
 			}
 		}
 
@@ -1445,15 +1438,9 @@ public abstract class BaseBuild implements Build {
 		if ((notificationRecipients != null) &&
 			!notificationRecipients.isEmpty()) {
 
-			try {
-				JenkinsResultsParserUtil.sendEmail(
-					message, "jenkins", "Slave Offline",
-					slaveOfflineRule.notificationRecipients);
-			}
-			catch (IOException | TimeoutException e) {
-				throw new RuntimeException(
-					"Unable to send offline slave notification", e);
-			}
+			JenkinsResultsParserUtil.sendEmail(
+				message, "jenkins", "Slave Offline",
+				slaveOfflineRule.notificationRecipients);
 		}
 	}
 

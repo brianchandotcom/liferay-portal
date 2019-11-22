@@ -12,6 +12,7 @@
  * details.
  */
 
+import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
@@ -98,9 +99,22 @@ const ListEntries = withRouter(({history, location}) => {
 						name: Liferay.Language.get('edit')
 					},
 					{
-						action: confirmDelete(
-							'/o/data-engine/v1.0/data-records/'
-						),
+						action: item =>
+							confirmDelete('/o/data-engine/v1.0/data-records/')(
+								item
+							).then(confirmed => {
+								if (confirmed) {
+									openToast({
+										message: Liferay.Language.get(
+											'entry-deleted'
+										),
+										title: Liferay.Language.get('success'),
+										type: 'success'
+									});
+								}
+
+								return Promise.resolve(confirmed);
+							}),
 						name: Liferay.Language.get('delete')
 					}
 				]}

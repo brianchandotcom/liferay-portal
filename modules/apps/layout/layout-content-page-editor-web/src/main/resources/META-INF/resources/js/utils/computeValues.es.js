@@ -72,19 +72,11 @@ export function getComputedEditableValue(editableValue, configuration = {}) {
 
 		const segmentedValue = editableValue[prefixedExperienceKey];
 
-		if (segmentedValue) {
-			result.value = _getTranslatedValue(
-				segmentedValue,
-				selectedLanguageId,
-				defaultLanguageId
-			);
-		} else {
-			const preferedTranslatedValue = editableValue[selectedLanguageId];
-
-			result.value = isNullOrUndefined(preferedTranslatedValue)
-				? editableValue[defaultLanguageId]
-				: editableValue[selectedExperienceId];
-		}
+		result.value = _getTranslatedValue(
+			segmentedValue || editableValue,
+			selectedLanguageId,
+			defaultLanguageId
+		);
 	} else {
 		result.value = _getTranslatedValue(
 			editableValue,

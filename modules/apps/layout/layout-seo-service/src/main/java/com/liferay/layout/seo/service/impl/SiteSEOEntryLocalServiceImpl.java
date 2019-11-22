@@ -43,8 +43,8 @@ public class SiteSEOEntryLocalServiceImpl
 
 	@Override
 	public SiteSEOEntry updateSiteSEOEntry(
-			long userId, long groupId, long openGraphImageFileEntryId,
-			boolean openGraphEnabled, ServiceContext serviceContext)
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		SiteSEOEntry siteSEOEntry = siteSEOEntryPersistence.fetchByGroupId(

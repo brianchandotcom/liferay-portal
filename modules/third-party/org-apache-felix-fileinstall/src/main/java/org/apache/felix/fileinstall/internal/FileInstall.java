@@ -114,6 +114,7 @@ public class FileInstall implements BundleActivator, ServiceTrackerCustomizer
             set(ht, DirectoryWatcher.FRAGMENT_SCOPE);
             set(ht, DirectoryWatcher.DISABLE_NIO2);
             set(ht, DirectoryWatcher.SUBDIR_MODE);
+            set(ht, DirectoryWatcher.WEB_START_LEVEL);
 
             // check if dir is an array of dirs
             String dirs = ht.get(DirectoryWatcher.DIR);
@@ -437,3 +438,4 @@ public class FileInstall implements BundleActivator, ServiceTrackerCustomizer
     }
 
 }
+/* @generated */

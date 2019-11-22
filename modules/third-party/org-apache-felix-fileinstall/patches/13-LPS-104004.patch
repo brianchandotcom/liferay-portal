@@ -1,0 +1,78 @@
+diff --git a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+index 4cd876d..824fc7e 100644
+--- a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
++++ b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+@@ -30,6 +30,7 @@ import java.net.URL;
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collection;
++import java.util.Dictionary;
+ import java.util.HashMap;
+ import java.util.HashSet;
+ import java.util.Iterator;
+@@ -110,6 +111,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
+     public final static String FRAGMENT_SCOPE = "felix.fileinstall.fragmentRefreshScope";
+     public final static String DISABLE_NIO2 = "felix.fileinstall.disableNio2";
+     public final static String SUBDIR_MODE = "felix.fileinstall.subdir.mode";
++    public final static String WEB_START_LEVEL = "felix.fileinstall.web.start.level";
+ 
+     public final static String SCOPE_NONE = "none";
+     public final static String SCOPE_MANAGED = "managed";
+@@ -140,6 +142,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
+     String optionalScope;
+     boolean disableNio2;
+     int frameworkStartLevel;
++    int webStartLevel;
+ 
+     // Map of all installed artifacts
+     final Map<File, Artifact> currentManagedArtifacts = new HashMap<File, Artifact>();
+@@ -188,6 +191,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
+         fragmentScope = properties.get(FRAGMENT_SCOPE);
+         optionalScope = properties.get(OPTIONAL_SCOPE);
+         disableNio2 = getBoolean(properties, DISABLE_NIO2, false);
++        webStartLevel = getInt(properties, WEB_START_LEVEL, startLevel);
+         this.context.addBundleListener(this);
+ 
+         if (disableNio2) {
+@@ -1063,9 +1067,18 @@ public class DirectoryWatcher extends Thread implements BundleListener
+             Util.storeChecksum(b, checksum, context);
+             modified.set(true);
+ 
++            Dictionary<String, String> headers = b.getHeaders("");
++
++            String header = headers.get("Web-ContextPath");
++
++            BundleStartLevel bundleStartLevel = b.adapt(BundleStartLevel.class);
++
+             // Set default start level at install time, the user can override it if he wants
+-            if (startLevel != 0) {
+-                b.adapt(BundleStartLevel.class).setStartLevel(startLevel);
++            if (header != null) {
++                bundleStartLevel.setStartLevel(webStartLevel);
++            }
++            else if (startLevel != 0) {
++                bundleStartLevel.setStartLevel(startLevel);
+             }
+ 
+             return b;
+diff --git a/org/apache/felix/fileinstall/internal/FileInstall.java b/org/apache/felix/fileinstall/internal/FileInstall.java
+index 5ccaecd..5074519 100644
+--- a/org/apache/felix/fileinstall/internal/FileInstall.java
++++ b/org/apache/felix/fileinstall/internal/FileInstall.java
+@@ -114,6 +114,7 @@ public class FileInstall implements BundleActivator, ServiceTrackerCustomizer
+             set(ht, DirectoryWatcher.FRAGMENT_SCOPE);
+             set(ht, DirectoryWatcher.DISABLE_NIO2);
+             set(ht, DirectoryWatcher.SUBDIR_MODE);
++            set(ht, DirectoryWatcher.WEB_START_LEVEL);
+ 
+             // check if dir is an array of dirs
+             String dirs = ht.get(DirectoryWatcher.DIR);
+@@ -436,4 +437,5 @@ public class FileInstall implements BundleActivator, ServiceTrackerCustomizer
+         }
+     }
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file

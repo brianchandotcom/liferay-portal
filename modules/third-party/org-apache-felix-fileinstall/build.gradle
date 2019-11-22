@@ -23,6 +23,7 @@ patch {
 	fileNames "org/apache/felix/fileinstall/internal/BundleTransformer.java"
 	fileNames "org/apache/felix/fileinstall/internal/ConfigInstaller.java"
 	fileNames "org/apache/felix/fileinstall/internal/DirectoryWatcher.java"
+	fileNames "org/apache/felix/fileinstall/internal/FileInstall.java"
 	fileNames "org/apache/felix/fileinstall/internal/Util.java"
 	fileNames "org/apache/felix/utils/properties/InterpolationHelper.java"
 	fileNames "OSGI-INF/metatype/metatype.xml"

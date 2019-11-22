@@ -39,6 +39,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
@@ -250,9 +251,7 @@ public class ProcessResourceImpl
 		}
 
 		if (Validator.isNotNull(title)) {
-			booleanQuery.addMustQueryClauses(
-				_queries.term(
-					Field.getSortableFieldName(_getTitleFieldName()), title));
+			booleanQuery.addMustQueryClauses(_createTitleBooleanQuery(title));
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -303,6 +302,17 @@ public class ProcessResourceImpl
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
 			_createProcessIdTermsQuery(processIds));
+	}
+
+	private BooleanQuery _createTitleBooleanQuery(String title) {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		StringQuery stringQuery = _queries.string(title + StringPool.STAR);
+
+		stringQuery.setDefaultField(_getTitleFieldName());
+
+		return booleanQuery.addShouldQueryClauses(
+			stringQuery, _queries.match(_getTitleFieldName(), title));
 	}
 
 	private TermsAggregationResult _getInstanceTermsAggregationResult(

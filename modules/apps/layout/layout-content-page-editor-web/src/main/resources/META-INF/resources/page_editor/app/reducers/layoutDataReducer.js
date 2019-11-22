@@ -14,6 +14,7 @@
 
 import {TYPES} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
 
 function addItemReducer(items, action) {
@@ -66,6 +67,49 @@ function addItemReducer(items, action) {
 	};
 }
 
+function moveItemReducer(items, action) {
+	const {itemId, position, siblingId} = action;
+
+	const item = items[itemId];
+	const itemParentId = items[item.parentId];
+
+	if (itemParentId.children.includes(itemId)) {
+		const itemIndex = itemParentId.children.findIndex(
+			child => child === itemId
+		);
+
+		itemParentId.children.splice(itemIndex, 1);
+	}
+
+	const siblingItem = items[siblingId];
+	let currentItem;
+
+	if (siblingItem.type === LAYOUT_DATA_ITEM_TYPES.column) {
+		currentItem = siblingItem;
+	} else {
+		currentItem = items[siblingItem.parentId];
+	}
+
+	const children = [...currentItem.children];
+	const siblingIndex = children.findIndex(child => child === siblingId);
+
+	children.splice(siblingIndex + position, 0, itemId);
+
+	return {
+		...items,
+
+		[itemId]: {
+			...item,
+			parentId: currentItem.itemId
+		},
+
+		[currentItem.itemId]: {
+			...currentItem,
+			children,
+		}
+	};
+}
+
 function removeItemReducer(items, action) {
 	const {itemId} = action;
 	let newItems = items;
@@ -103,6 +147,17 @@ export default function layoutDataReducer(state, action) {
 				layoutData: {
 					...state.layoutData,
 					items: addItemReducer(state.layoutData.items, action)
+				}
+			};
+
+			break;
+
+		case TYPES.MOVE_ITEM:
+			nextState = {
+				...state,
+				layoutData: {
+					...state.layoutData,
+					items: moveItemReducer(state.layoutData.items, action)
 				}
 			};
 

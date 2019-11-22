@@ -12,16 +12,18 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
-const UnsafeHTML = React.forwardRef(
-	({TagName = 'div', className = '', markup}, ref) => (
-		<TagName
-			className={className}
-			dangerouslySetInnerHTML={{__html: markup}}
-			ref={ref}
-		/>
-	)
-);
+import {StoreContext} from '../../app/store/index';
 
-export default UnsafeHTML;
+const Permission = ({children}) => {
+	const {hasUpdatePermissions} = useContext(StoreContext);
+
+	if (hasUpdatePermissions) {
+		return children;
+	}
+
+	return null;
+};
+
+export default Permission;

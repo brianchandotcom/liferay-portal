@@ -35,8 +35,6 @@ definition {
 	}
 
 	macro addFriendlyURLLocalizedPG {
-		Navigator.gotoNavTab(navTab = "General");
-
 		PortletEntry.changeLocale(
 			fieldName = "Friendly URL",
 			locale = "${friendlyUrlLocalized}");

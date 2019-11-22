@@ -397,6 +397,32 @@ definition {
 			locator1 = "Account#DOMAIN_TABLE_NAME");
 	}
 
+	@priority = "4"
+	test RemoveUserFromAccount {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is a test to remove account user.",
+			accountName = "Remove Account User");
+
+		Navigator.gotoNavItem(navItem = "Users");
+
+		Accounts.addUsers(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+		AccountUsers.removeUser(
+			emptyMessage = "There are no users associated with this account.",
+			userFirstName = "userfn");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

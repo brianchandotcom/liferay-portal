@@ -1277,10 +1277,14 @@ public class LayoutsAdminDisplayContext {
 
 				Group liveGroup = scopeGroup.getLiveGroup();
 
+				LayoutSet liveGroupLayoutSet = liveGroup.getPublicLayoutSet();
+
+				if (layoutSet.isPrivateLayout()) {
+					liveGroupLayoutSet = liveGroup.getPrivateLayoutSet();
+				}
+
 				virtualHostName = PortalUtil.getVirtualHostname(
-					layoutSet.isPrivateLayout() ?
-					liveGroup.getPrivateLayoutSet() :
-					liveGroup.getPublicLayoutSet());
+					liveGroupLayoutSet);
 			}
 		}
 		catch (PortalException pe) {

@@ -74,7 +74,8 @@ const ItemSelectorPreview = ({
 
 			Liferay.detach(updateCurrentItemHandler);
 		};
-	}, [handleOnKeyDown, infoButtonRef, updateCurrentItem]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const close = () => {
 		ReactDOM.unmountComponentAtNode(container);

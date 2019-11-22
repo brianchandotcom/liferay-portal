@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.language;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringPool;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,12 +62,16 @@ public class UTF8Control extends ResourceBundle.Control {
 
 		urlConnection.setUseCaches(!reload);
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		long classLoaderLastModified = registry.getLastModified(classLoader);
+
 		if (!reload) {
 			CachedResourceBundle cachedResourceBundle =
 				_cachedResourceBundles.get(url);
 
 			if ((cachedResourceBundle != null) &&
-				(urlConnection.getLastModified() <=
+				(classLoaderLastModified <=
 					cachedResourceBundle.getLastModified())) {
 
 				return cachedResourceBundle.getResourceBundle();
@@ -78,7 +84,7 @@ public class UTF8Control extends ResourceBundle.Control {
 
 			CachedResourceBundle cachedResourceBundle =
 				new CachedResourceBundle(
-					resourceBundle, urlConnection.getLastModified());
+					resourceBundle, classLoaderLastModified);
 
 			_cachedResourceBundles.put(url, cachedResourceBundle);
 

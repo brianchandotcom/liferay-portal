@@ -168,11 +168,6 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 			"nextRowId", fragmentEntryLinks.size()
 		);
 
-		if (!fragmentEntryLinks.isEmpty()) {
-			jsonObject.put(
-				"nextRowId", String.valueOf(fragmentEntryLinks.size() - 1));
-		}
-
 		jsonObject.put("structure", structureJSONArray);
 
 		return jsonObject;

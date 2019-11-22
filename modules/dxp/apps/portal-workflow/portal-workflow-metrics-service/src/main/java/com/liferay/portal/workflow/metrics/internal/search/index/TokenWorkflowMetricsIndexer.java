@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -45,10 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(
-	immediate = true,
-	service = {Indexer.class, TokenWorkflowMetricsIndexer.class}
-)
+@Component(immediate = true, service = TokenWorkflowMetricsIndexer.class)
 public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	public Document createDocument(

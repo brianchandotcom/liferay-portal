@@ -40,9 +40,6 @@ public class KaleoLogSearchRegistrar {
 				modelSearchDefinition.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.UID, "kaleoLogId");
-				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
-					KaleoInstanceTokenField.ASSET_DESCRIPTION,
-					KaleoInstanceTokenField.ASSET_TITLE);
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 			});

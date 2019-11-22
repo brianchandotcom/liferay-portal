@@ -325,7 +325,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_checkUTF8(file, fileName);
 
-		String newContent = parse(file, fileName, content, modifiedMessages);
+		String newContent = StringUtil.replace(
+			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+
+		if (!content.equals(newContent)) {
+			modifiedMessages.add(file.toString() + " (ReturnCharacter)");
+		}
+
+		newContent = parse(file, fileName, newContent, modifiedMessages);
 
 		SourceChecksResult sourceChecksResult = _processSourceChecks(
 			file, fileName, absolutePath, newContent, sourceChecks,
@@ -644,7 +651,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		File file = new File(absolutePath);
 
-		String content = FileUtil.read(file);
+		String content = FileUtil.read(file, false);
 
 		if (!_sourceFormatterArgs.isIncludeGeneratedFiles() &&
 			hasGeneratedTag(content)) {

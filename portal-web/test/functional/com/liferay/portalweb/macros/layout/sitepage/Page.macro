@@ -939,13 +939,17 @@ definition {
 			value1 = "${description}");
 
 		if (isSet(truncatedHTMLTitle)) {
-			ScrollWebElementIntoView(locator1 = "//h4[contains(.,'Open Graph')]");
+			ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
+
+			ProductMenuHelper.closeProductMenu();
 
 			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES");
 		}
 
 		if (isSet(truncatedURL)) {
-			ScrollWebElementIntoView(locator1 = "//h4[contains(.,'Open Graph')]");
+			ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
+
+			ProductMenuHelper.closeProductMenu();
 
 			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES");
 		}

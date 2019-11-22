@@ -142,7 +142,7 @@ public class MergeCentralGitSubrepositoryUtil {
 			Properties buildProperties =
 				JenkinsResultsParserUtil.getBuildProperties();
 
-			JenkinsResultsParserUtil.sendEmail(
+			NotificationUtil.sendEmail(
 				message, "jenkins", "Merge Central Git Subrepository",
 				buildProperties.getProperty(
 					"email.list[merge-central-subrepository]"));

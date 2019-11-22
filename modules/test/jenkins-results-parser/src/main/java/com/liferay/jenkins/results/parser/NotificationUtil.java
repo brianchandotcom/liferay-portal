@@ -39,6 +39,16 @@ import javax.mail.internet.MimeMultipart;
 public class NotificationUtil {
 
 	public static void sendEmail(
+		String body, String from, String subject, String to) {
+
+		String hostname = JenkinsResultsParserUtil.getHostName(null);
+
+		sendEmail(
+			JenkinsResultsParserUtil.combine(from, "@", hostname), from, to,
+			subject, body);
+	}
+
+	public static void sendEmail(
 		String senderEmail, String senderName, String recipientEmail,
 		String subject, String body) {
 

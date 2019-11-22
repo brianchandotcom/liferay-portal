@@ -2008,15 +2008,6 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static void sendEmail(
-		String body, String from, String subject, String to) {
-
-		String hostname = getHostName(null);
-
-		NotificationUtil.sendEmail(
-			combine(from, "@", hostname), from, to, subject, body);
-	}
-
 	public static void setBuildProperties(
 		Hashtable<Object, Object> buildProperties) {
 

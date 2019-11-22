@@ -1331,7 +1331,7 @@ public abstract class BaseBuild implements Build {
 			if ((notificationRecipients != null) &&
 				!notificationRecipients.isEmpty()) {
 
-				JenkinsResultsParserUtil.sendEmail(
+				NotificationUtil.sendEmail(
 					message, "jenkins", "Build Reinvoked",
 					reinvokeRule.notificationRecipients);
 			}
@@ -1438,7 +1438,7 @@ public abstract class BaseBuild implements Build {
 		if ((notificationRecipients != null) &&
 			!notificationRecipients.isEmpty()) {
 
-			JenkinsResultsParserUtil.sendEmail(
+			NotificationUtil.sendEmail(
 				message, "jenkins", "Slave Offline",
 				slaveOfflineRule.notificationRecipients);
 		}

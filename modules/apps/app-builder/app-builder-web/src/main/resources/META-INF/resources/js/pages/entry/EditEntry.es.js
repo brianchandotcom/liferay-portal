@@ -22,12 +22,21 @@ import Button from '../../components/button/Button.es';
 import {ControlMenuBase} from '../../components/control-menu/ControlMenu.es';
 import {addItem, updateItem} from '../../utils/client.es';
 
-export const EditEntry = ({dataDefinitionId, dataRecordId, ddmForm}) => {
+export const EditEntry = ({
+	dataDefinitionId,
+	dataRecordId,
+	ddmForm,
+	redirect
+}) => {
 	const {basePortletURL} = useContext(AppContext);
 
 	const onCancel = useCallback(() => {
-		Liferay.Util.navigate(basePortletURL);
-	}, [basePortletURL]);
+		if (redirect) {
+			Liferay.Util.navigate(redirect);
+		} else {
+			Liferay.Util.navigate(basePortletURL);
+		}
+	}, [basePortletURL, redirect]);
 
 	const onSave = useCallback(() => {
 		const {pages} = ddmForm;
@@ -90,7 +99,7 @@ export const EditEntry = ({dataDefinitionId, dataRecordId, ddmForm}) => {
 	return (
 		<>
 			<ControlMenuBase
-				backURL={`${basePortletURL}/#/`}
+				backURL={redirect ? redirect : `${basePortletURL}/#/`}
 				title={Liferay.Language.get('edit-entry')}
 				url={location.href}
 			/>

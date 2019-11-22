@@ -101,39 +101,28 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 				<div>
 
 					<%
-					Map<String, Object> data = new HashMap<>();
-
-					data.put(
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
 						"targets",
-						JSONUtil.putAll(
-							JSONUtil.put(
-								"id", "openGraphImageURL"
-							).put(
-								"type", "imgUrl"
-							),
-							JSONUtil.put(
-								"id", "openGraphDescription"
-							).put(
-								"type", "description"
-							),
-							JSONUtil.put(
-								"id", "openGraphTitle"
-							).put(
-								"type", "title"
-							)));
-
-					data.put(
+						Arrays.<Object>asList(
+								HashMapBuilder.<String, String>put(
+									"id", "openGraphImageURL"
+								).put("type", "imgUrl").build(),
+								HashMapBuilder.<String, String>put(
+									"id", "openGraphDescription"
+								).put("type", "description").build(),
+								HashMapBuilder.<String, String>put(
+									"id", "openGraphTitle"
+								).put("type", "title").build())
+					).put(
 						"defaultValues",
-							JSONUtil.put(
-								"description", selLayout.getDescription(locale)
-							).put(
-								"title", layoutsAdminDisplayContext.getPageTitle()
-							).put(
-								"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-							));
-
-					data.put("displayType", "og");
-					data.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
+						HashMapBuilder.<String, String>put(
+							"description", selLayout.getDescription(locale)
+						).put(
+							"title", layoutsAdminDisplayContext.getPageTitle()
+						).put(
+							"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+						).build()
+					).put("displayType", "og").put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()).build();
 					%>
 
 					<react:component

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -191,6 +192,29 @@ public class AccountRoleLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteAccountRoleByObject() throws Exception {
+		AccountRole accountRole = _setUpDeleteAccountRoleTestCase();
+
+		_accountRoleLocalService.deleteAccountRole(accountRole);
+
+		_accountRoles.remove(accountRole);
+
+		_assertUserGroupRolesDeleted(accountRole);
+	}
+
+	@Test
+	public void testDeleteAccountRoleByPrimaryKey() throws Exception {
+		AccountRole accountRole = _setUpDeleteAccountRoleTestCase();
+
+		_accountRoleLocalService.deleteAccountRole(
+			accountRole.getAccountRoleId());
+
+		_accountRoles.remove(accountRole);
+
+		_assertUserGroupRolesDeleted(accountRole);
+	}
+
+	@Test
 	public void testGetAccountRoles() throws Exception {
 		List<AccountRole> accountRoles =
 			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
@@ -281,6 +305,15 @@ public class AccountRoleLocalServiceTest {
 				_accountEntry1.getAccountEntryId(), actionKey));
 	}
 
+	private void _assertUserGroupRolesDeleted(AccountRole accountRole)
+		throws Exception {
+
+		long[] roleIds = _getRoleIds(_users.get(0));
+
+		Assert.assertFalse(
+			ArrayUtil.contains(roleIds, accountRole.getRoleId()));
+	}
+
 	private long[] _getRoleIds(User user) throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -299,6 +332,25 @@ public class AccountRoleLocalServiceTest {
 			AccountRole::getRoleId);
 
 		return ArrayUtil.contains(accountRoleIds, roleId);
+	}
+
+	private AccountRole _setUpDeleteAccountRoleTestCase() throws Exception {
+		AccountRole accountRole = _addAccountRole(
+			_accountEntry1.getAccountEntryId(), RandomTestUtil.randomString());
+
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
+
+		_accountRoleLocalService.associateUser(
+			_accountEntry1.getAccountEntryId(), accountRole.getAccountRoleId(),
+			user.getUserId());
+
+		long[] roleIds = _getRoleIds(user);
+
+		Assert.assertTrue(ArrayUtil.contains(roleIds, accountRole.getRoleId()));
+
+		return accountRole;
 	}
 
 	@DeleteAfterTestRun
@@ -331,6 +383,9 @@ public class AccountRoleLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

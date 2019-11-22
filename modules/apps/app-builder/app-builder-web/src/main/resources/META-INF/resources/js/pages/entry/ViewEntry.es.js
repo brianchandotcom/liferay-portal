@@ -120,7 +120,8 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 				dataDefinitionId: dataDefinition.id,
 				dataLayoutId: dataLayout.id,
 				dataRecordId: dataRecord.id,
-				mvcPath: '/edit_entry.jsp'
+				mvcPath: '/edit_entry.jsp',
+				redirect: location.href
 			})
 		);
 	};

@@ -820,12 +820,12 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		long openGraphImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "openGraphImageFileEntryId");
-		boolean openSiteGraphEnabled = ParamUtil.getBoolean(
-			actionRequest, "openSiteGraphEnabled");
+		boolean openGraphEnabled = ParamUtil.getBoolean(
+			actionRequest, "openGraphEnabled");
 
 		_updateSiteSEOEntry(
 			portal.getUserId(actionRequest), liveGroup.getGroupId(),
-			openGraphImageFileEntryId, openSiteGraphEnabled, serviceContext);
+			openGraphImageFileEntryId, openGraphEnabled, serviceContext);
 
 		// Settings
 
@@ -1155,11 +1155,11 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	private void _updateSiteSEOEntry(
 			long userId, long groupId, long openGraphImageFileEntryId,
-			boolean openSiteGraphEnabled, ServiceContext serviceContext)
+			boolean openGraphEnabled, ServiceContext serviceContext)
 		throws PortalException {
 
 		siteSEOEntryLocalService.updateSiteSEOEntry(
-			userId, groupId, openGraphImageFileEntryId, openSiteGraphEnabled,
+			userId, groupId, openGraphImageFileEntryId, openGraphEnabled,
 			serviceContext);
 	}
 

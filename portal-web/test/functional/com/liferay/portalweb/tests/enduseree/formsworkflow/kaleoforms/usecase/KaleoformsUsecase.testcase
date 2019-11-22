@@ -4993,7 +4993,13 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow._viewActivities(
-			workflowActivityComment = "Test Test completed the task review. Process is approved.",
+			workflowActivityComment = "Test Test completed the task review.",
+			workflowAssetTitle = "Kaleo Forms Process");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow._viewActivities(
+			workflowActivityComment = "Process is approved.",
 			workflowAssetTitle = "Kaleo Forms Process");
 	}
 

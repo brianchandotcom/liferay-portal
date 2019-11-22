@@ -263,11 +263,38 @@ public class KaleoActionLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
+			long companyId, String kaleoClassName, long kaleoClassPK) {
+
+		return getService().getKaleoActions(
+			companyId, kaleoClassName, kaleoClassPK);
+	}
+
+	public static java.util.List
+		<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
+			long companyId, String kaleoClassName, long kaleoClassPK,
+			String executionType) {
+
+		return getService().getKaleoActions(
+			companyId, kaleoClassName, kaleoClassPK, executionType);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoActions(long, String, long)}
+	 */
+	@Deprecated
+	public static java.util.List
+		<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
 			String kaleoClassName, long kaleoClassPK) {
 
 		return getService().getKaleoActions(kaleoClassName, kaleoClassPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoActions(long, String, long, String)}
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
 			String kaleoClassName, long kaleoClassPK, String executionType) {

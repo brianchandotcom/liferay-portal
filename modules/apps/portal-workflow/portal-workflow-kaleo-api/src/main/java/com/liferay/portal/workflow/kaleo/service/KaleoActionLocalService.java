@@ -72,6 +72,7 @@ public interface KaleoActionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoAction addKaleoAction(KaleoAction kaleoAction);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public KaleoAction addKaleoAction(
 			String kaleoClassName, long kaleoClassPK,
 			long kaleoDefinitionVersionId, String kaleoNodeName, Action action,
@@ -221,8 +222,27 @@ public interface KaleoActionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoAction> getKaleoActions(
+		long companyId, String kaleoClassName, long kaleoClassPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoAction> getKaleoActions(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoActions(long, String, long)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoAction> getKaleoActions(
 		String kaleoClassName, long kaleoClassPK);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getKaleoActions(long, String, long, String)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoAction> getKaleoActions(
 		String kaleoClassName, long kaleoClassPK, String executionType);

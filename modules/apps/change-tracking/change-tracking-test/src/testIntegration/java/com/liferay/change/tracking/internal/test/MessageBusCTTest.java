@@ -171,9 +171,7 @@ public class MessageBusCTTest {
 
 		Assert.assertTrue(messages.toString(), messages.isEmpty());
 
-		Message receivedMessage = _testMessageListener.getReceivedMessage();
-
-		Assert.assertEquals(message.getPayload(), receivedMessage.getPayload());
+		Assert.assertSame(message, _testMessageListener.getReceivedMessage());
 	}
 
 	@Test

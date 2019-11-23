@@ -179,8 +179,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
 			!_layoutClassedModelUsagePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				ParamUtil.getLong(httpServletRequest, "p_l_id"),
+				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
 				ActionKeys.UPDATE)) {
 
 			return false;

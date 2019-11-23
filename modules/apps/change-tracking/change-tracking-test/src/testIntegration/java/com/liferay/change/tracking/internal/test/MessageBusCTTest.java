@@ -206,6 +206,28 @@ public class MessageBusCTTest {
 		Message receivedMessage = _testMessageListener.getReceivedMessage();
 
 		Assert.assertEquals(message.getPayload(), receivedMessage.getPayload());
+
+		List<Message> messages = _ctMessageLocalService.getMessages(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertSame(messages.toString(), 1, messages.size());
+
+		Message deserializedMessage = messages.get(0);
+
+		Assert.assertEquals(
+			_TEST_SYNC_DESTINATION_NAME,
+			deserializedMessage.getDestinationName());
+		Assert.assertEquals(
+			message.getPayload(), deserializedMessage.getPayload());
+
+		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
+
+		messages = _ctMessageLocalService.getMessages(
+			_ctCollection.getCtCollectionId());
+
+		Assert.assertTrue(messages.toString(), messages.isEmpty());
+
+		_ctCollection = null;
 	}
 
 	private ServiceRegistration<Destination> _registerDestination(

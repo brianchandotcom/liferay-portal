@@ -112,10 +112,13 @@ public class MessageBusCTTest {
 
 		Assert.assertSame(messages.toString(), 1, messages.size());
 
-		Message deSerializedMessage = messages.get(0);
+		Message deserializedMessage = messages.get(0);
 
 		Assert.assertEquals(
-			message.getPayload(), deSerializedMessage.getPayload());
+			_TEST_ASYNC_DESTINATION_NAME,
+			deserializedMessage.getDestinationName());
+		Assert.assertEquals(
+			message.getPayload(), deserializedMessage.getPayload());
 	}
 
 	@Test
@@ -124,11 +127,13 @@ public class MessageBusCTTest {
 
 		message.setPayload(_TEST_MESSAGE_PAYLOAD);
 
+		String nonExistDestinationName = "Non-existed Destination";
+
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
 
-			_messageBus.sendMessage("Non-existed Destination", message);
+			_messageBus.sendMessage(nonExistDestinationName, message);
 		}
 
 		List<Message> messages = _ctMessageLocalService.getMessages(
@@ -136,10 +141,12 @@ public class MessageBusCTTest {
 
 		Assert.assertSame(messages.toString(), 1, messages.size());
 
-		Message deSerializedMessage = messages.get(0);
+		Message deserializedMessage = messages.get(0);
 
 		Assert.assertEquals(
-			message.getPayload(), deSerializedMessage.getPayload());
+			nonExistDestinationName, deserializedMessage.getDestinationName());
+		Assert.assertEquals(
+			message.getPayload(), deserializedMessage.getPayload());
 	}
 
 	@Test

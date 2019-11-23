@@ -27,7 +27,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
-import com.liferay.layout.util.permission.LayoutClassedModelUsagePermissionUtil;
+import com.liferay.layout.util.permission.LayoutClassedModelUsagePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -298,7 +298,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout,
 					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
-				LayoutClassedModelUsagePermissionUtil.contains(
+				_layoutClassedModelUsagePermission.contains(
 					permissionChecker, layout.getPlid(), ActionKeys.UPDATE)) {
 
 				return true;
@@ -346,6 +346,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private LayoutClassedModelUsagePermission
+		_layoutClassedModelUsagePermission;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

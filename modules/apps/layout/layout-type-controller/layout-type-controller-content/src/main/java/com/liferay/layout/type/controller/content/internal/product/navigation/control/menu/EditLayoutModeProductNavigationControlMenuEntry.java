@@ -18,7 +18,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.layout.util.permission.LayoutClassedModelUsagePermissionUtil;
+import com.liferay.layout.util.permission.LayoutClassedModelUsagePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -178,7 +178,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
-			!LayoutClassedModelUsagePermissionUtil.contains(
+			!_layoutClassedModelUsagePermission.contains(
 				themeDisplay.getPermissionChecker(),
 				ParamUtil.getLong(httpServletRequest, "p_l_id"),
 				ActionKeys.UPDATE)) {
@@ -191,6 +191,10 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private LayoutClassedModelUsagePermission
+		_layoutClassedModelUsagePermission;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

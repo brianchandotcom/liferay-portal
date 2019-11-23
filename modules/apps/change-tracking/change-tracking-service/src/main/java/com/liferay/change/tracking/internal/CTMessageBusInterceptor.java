@@ -17,15 +17,11 @@ package com.liferay.change.tracking.internal;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Objects;
 
@@ -60,22 +56,10 @@ public class CTMessageBusInterceptor implements MessageBusInterceptor {
 
 		message.setDestinationName(destinationName);
 
-		try {
-			_ctMessageLocalService.addCTMessage(ctCollectionId, message);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to intercept message ", message.toString(),
-					" for collection id ", String.valueOf(ctCollectionId)),
-				pe);
-		}
+		_ctMessageLocalService.addCTMessage(ctCollectionId, message);
 
 		return true;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTMessageBusInterceptor.class);
 
 	@Reference
 	private CTMessageLocalService _ctMessageLocalService;

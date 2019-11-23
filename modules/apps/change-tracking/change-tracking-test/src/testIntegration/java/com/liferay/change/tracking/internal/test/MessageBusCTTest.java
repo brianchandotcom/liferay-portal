@@ -119,6 +119,8 @@ public class MessageBusCTTest {
 			deserializedMessage.getDestinationName());
 		Assert.assertEquals(
 			message.getPayload(), deserializedMessage.getPayload());
+
+		Assert.assertNull(_testMessageListener.getReceivedMessage());
 	}
 
 	@Test
@@ -147,6 +149,8 @@ public class MessageBusCTTest {
 			nonExistDestinationName, deserializedMessage.getDestinationName());
 		Assert.assertEquals(
 			message.getPayload(), deserializedMessage.getPayload());
+
+		Assert.assertNull(_testMessageListener.getReceivedMessage());
 	}
 
 	@Test

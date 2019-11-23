@@ -68,7 +68,7 @@ public class CTMessageLocalServiceImpl extends CTMessageLocalServiceBaseImpl {
 			ctCollectionId);
 
 		if (ctMessages.isEmpty()) {
-			Collections.emptyList();
+			return Collections.emptyList();
 		}
 
 		List<Message> messages = new ArrayList<>(ctMessages.size());

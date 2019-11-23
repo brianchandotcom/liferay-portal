@@ -59,9 +59,7 @@ public class CTMessageLocalServiceImpl extends CTMessageLocalServiceBaseImpl {
 		ctMessage.setCtCollectionId(ctCollectionId);
 		ctMessage.setMessageContent(_jsonFactory.serialize(message));
 
-		ctMessagePersistence.updateImpl(ctMessage);
-
-		return ctMessage;
+		return ctMessagePersistence.update(ctMessage);
 	}
 
 	@Override

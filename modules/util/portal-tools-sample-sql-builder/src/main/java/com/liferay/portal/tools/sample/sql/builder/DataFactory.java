@@ -1272,7 +1272,7 @@ public class DataFactory {
 			_defaultJournalDDMTemplateModel);
 	}
 
-	public void initGroupModels() throws Exception {
+	public void initGroupModels() {
 		long groupClassNameId = getClassNameId(Group.class);
 
 		_commerceChannelGroupModel = newGroupModel(
@@ -2272,7 +2272,7 @@ public class DataFactory {
 		return friendlyURLEntryModel;
 	}
 
-	public GroupModel newGroupModel(UserModel userModel) throws Exception {
+	public GroupModel newGroupModel(UserModel userModel) {
 		return newGroupModel(
 			_counter.get(), getClassNameId(User.class), userModel.getUserId(),
 			userModel.getScreenName(), false);
@@ -3980,9 +3980,8 @@ public class DataFactory {
 	}
 
 	protected GroupModel newGroupModel(
-			long groupId, long classNameId, long classPK, String name,
-			boolean site)
-		throws Exception {
+		long groupId, long classNameId, long classPK, String name,
+		boolean site) {
 
 		GroupModel groupModel = new GroupModelImpl();
 

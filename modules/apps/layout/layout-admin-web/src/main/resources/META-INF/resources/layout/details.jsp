@@ -35,22 +35,13 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <%
-StringBuilder friendlyURLBase = new StringBuilder();
+String friendlyURLBase = StringPool.BLANK;
 %>
 
 <c:if test="<%= !group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() %>">
 
 	<%
-	friendlyURLBase.append(themeDisplay.getPortalURL());
-
-	LayoutSet layoutSet = selLayout.getLayoutSet();
-
-	TreeMap<String, String> virtualHostnames = layoutSet.getVirtualHostnames();
-
-	if (virtualHostnames.isEmpty() || !_matchesHostname(friendlyURLBase, virtualHostnames)) {
-		friendlyURLBase.append(group.getPathFriendlyURL(layoutsAdminDisplayContext.isPrivateLayout(), themeDisplay));
-		friendlyURLBase.append(HttpUtil.decodeURL(group.getFriendlyURL()));
-	}
+	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();
 	%>
 
 	<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="friendlyURL">
@@ -218,15 +209,3 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		});
 	}
 </aui:script>
-
-<%!
-private boolean _matchesHostname(StringBuilder friendlyURLBase, TreeMap<String, String> virtualHostnames) {
-	for (String virtualHostname : virtualHostnames.keySet()) {
-		if (friendlyURLBase.indexOf(virtualHostname) != -1) {
-			return true;
-		}
-	}
-
-	return false;
-}
-%>

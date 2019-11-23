@@ -113,6 +113,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -543,6 +544,31 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public String getFriendlyURLBase() {
+		StringBuilder friendlyURLBase = new StringBuilder();
+
+		friendlyURLBase.append(_themeDisplay.getPortalURL());
+
+		Layout selLayout = getSelLayout();
+
+		LayoutSet layoutSet = selLayout.getLayoutSet();
+
+		TreeMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (virtualHostnames.isEmpty() ||
+			!_matchesHostname(friendlyURLBase, virtualHostnames)) {
+
+			Group group = getGroup();
+
+			friendlyURLBase.append(
+				group.getPathFriendlyURL(isPrivateLayout(), _themeDisplay));
+			friendlyURLBase.append(HttpUtil.decodeURL(group.getFriendlyURL()));
+		}
+
+		return friendlyURLBase.toString();
 	}
 
 	public String getFullPageTitle() throws PortalException {
@@ -1940,6 +1966,19 @@ public class LayoutsAdminDisplayContext {
 
 		for (Layout layout : selLayout.getAncestors()) {
 			if (plid == layout.getPlid()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _matchesHostname(
+		StringBuilder friendlyURLBase,
+		TreeMap<String, String> virtualHostnames) {
+
+		for (String virtualHostname : virtualHostnames.keySet()) {
+			if (friendlyURLBase.indexOf(virtualHostname) != -1) {
 				return true;
 			}
 		}

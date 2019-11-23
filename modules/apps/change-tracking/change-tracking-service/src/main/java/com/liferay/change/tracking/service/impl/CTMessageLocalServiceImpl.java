@@ -17,7 +17,6 @@ package com.liferay.change.tracking.service.impl;
 import com.liferay.change.tracking.model.CTMessage;
 import com.liferay.change.tracking.service.base.CTMessageLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Message;
 
@@ -48,9 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CTMessageLocalServiceImpl extends CTMessageLocalServiceBaseImpl {
 
 	@Override
-	public CTMessage addCTMessage(long ctCollectionId, Message message)
-		throws PortalException {
-
+	public CTMessage addCTMessage(long ctCollectionId, Message message) {
 		long ctMessageId = counterLocalService.increment(
 			CTMessage.class.getName());
 

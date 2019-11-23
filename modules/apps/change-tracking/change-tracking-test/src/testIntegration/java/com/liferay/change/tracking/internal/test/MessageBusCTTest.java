@@ -74,10 +74,9 @@ public class MessageBusCTTest {
 
 	@Before
 	public void setUp() {
-		_ctCollection = _ctCollectionLocalService.createCTCollection(
-			_counterLocalService.increment(CTCollection.class.getName()));
-
-		_ctCollectionLocalService.addCTCollection(_ctCollection);
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			_ctCollectionLocalService.createCTCollection(
+				_counterLocalService.increment(CTCollection.class.getName())));
 
 		_asyncDestinationServiceRegistration = _registerDestination(
 			_TEST_ASYNC_DESTINATION_NAME,

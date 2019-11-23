@@ -47,9 +47,8 @@ public class CTMessageLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTMessage addCTMessage(
-			long ctCollectionId,
-			com.liferay.portal.kernel.messaging.Message message)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long ctCollectionId,
+		com.liferay.portal.kernel.messaging.Message message) {
 
 		return _ctMessageLocalService.addCTMessage(ctCollectionId, message);
 	}

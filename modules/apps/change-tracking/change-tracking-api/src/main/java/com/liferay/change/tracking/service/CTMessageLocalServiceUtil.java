@@ -51,9 +51,8 @@ public class CTMessageLocalServiceUtil {
 	}
 
 	public static com.liferay.change.tracking.model.CTMessage addCTMessage(
-			long ctCollectionId,
-			com.liferay.portal.kernel.messaging.Message message)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long ctCollectionId,
+		com.liferay.portal.kernel.messaging.Message message) {
 
 		return getService().addCTMessage(ctCollectionId, message);
 	}

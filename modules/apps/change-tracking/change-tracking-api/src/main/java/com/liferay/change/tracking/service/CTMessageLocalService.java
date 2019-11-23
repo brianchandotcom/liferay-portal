@@ -71,8 +71,7 @@ public interface CTMessageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTMessage addCTMessage(CTMessage ctMessage);
 
-	public CTMessage addCTMessage(long ctCollectionId, Message message)
-		throws PortalException;
+	public CTMessage addCTMessage(long ctCollectionId, Message message);
 
 	/**
 	 * Creates a new ct message with the primary key. Does not add the ct message to the database.

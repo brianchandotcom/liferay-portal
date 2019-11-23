@@ -75,7 +75,7 @@ public class MessageBusCTTest {
 	@Before
 	public void setUp() {
 		_ctCollection = _ctCollectionLocalService.createCTCollection(
-			_counterLocalService.increment());
+			_counterLocalService.increment(CTCollection.class.getName()));
 
 		_ctCollectionLocalService.addCTCollection(_ctCollection);
 

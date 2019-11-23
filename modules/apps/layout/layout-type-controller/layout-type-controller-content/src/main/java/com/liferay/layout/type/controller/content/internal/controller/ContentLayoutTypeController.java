@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -293,9 +293,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		PermissionChecker permissionChecker, Layout layout) {
 
 		try {
-			if (LayoutPermissionUtil.contains(
+			if (_layoutPermission.contains(
 					permissionChecker, layout, ActionKeys.UPDATE) ||
-				LayoutPermissionUtil.contains(
+				_layoutPermission.contains(
 					permissionChecker, layout,
 					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
 				_layoutClassedModelUsagePermission.contains(
@@ -357,6 +357,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private Portal _portal;

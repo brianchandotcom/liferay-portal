@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.layout.util.permission;
+package com.liferay.layout.internal.permission;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.model.LayoutClassedModelUsage;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.layout.util.permission.LayoutClassedModelUsagePermission;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -25,23 +26,29 @@ import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 
 import java.util.List;
 
-/**
- * @author Rubén Pulido
- */
-public class LayoutClassedModelUsagePermissionUtil {
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-	public static boolean contains(
+/**
+ * @author Jürgen Kappler
+ */
+@Component(service = LayoutClassedModelUsagePermission.class)
+public class LayoutClassedModelUsagePermissionImpl
+	implements LayoutClassedModelUsagePermission {
+
+	@Override
+	public boolean contains(
 		PermissionChecker permissionChecker, long plid, String actionId) {
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			LayoutClassedModelUsageLocalServiceUtil.
+			_layoutClassedModelUsageLocalService.
 				getLayoutClassedModelUsagesByPlid(plid);
 
 		try {
 			for (LayoutClassedModelUsage layoutClassedModelUsage :
 					layoutClassedModelUsages) {
 
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 					layoutClassedModelUsage.getClassNameId(),
 					layoutClassedModelUsage.getClassPK());
 
@@ -64,6 +71,13 @@ public class LayoutClassedModelUsagePermissionUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutClassedModelUsagePermissionUtil.class);
+		LayoutClassedModelUsagePermissionImpl.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 }

@@ -89,13 +89,9 @@ public class MessageBusCTTest {
 
 	@After
 	public void tearDown() {
-		if (_asyncDestinationServiceRegistration != null) {
-			_asyncDestinationServiceRegistration.unregister();
-		}
+		_asyncDestinationServiceRegistration.unregister();
 
-		if (_syncDestinationServiceRegistration != null) {
-			_syncDestinationServiceRegistration.unregister();
-		}
+		_syncDestinationServiceRegistration.unregister();
 	}
 
 	@Test

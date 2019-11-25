@@ -101,16 +101,16 @@ const ExperienceItem = ({
 						</strong>
 
 						<span className="audience d-block text-truncate">
-							<span className="text-secondary">
-								{Liferay.Language.get('audience')}{' '}
+							<span className="mr-1 text-secondary">
+								{Liferay.Language.get('audience')}
 							</span>
 							{experience.segmentsEntryName}
 						</span>
 
 						{experience.segmentsExperimentStatus && (
 							<div>
-								<span className="font-weight-normal text-secondary">
-									{Liferay.Language.get('test')}{' '}
+								<span className="font-weight-normal mr-1 text-secondary">
+									{Liferay.Language.get('test')}
 								</span>
 
 								<ExperimentLabel

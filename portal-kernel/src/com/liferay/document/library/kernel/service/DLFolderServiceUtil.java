@@ -88,12 +88,25 @@ public class DLFolderServiceUtil {
 			groupId, folderId, status);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFileEntriesAndFileShortcutsCount(long, long, String[], int)}
+	 */
+	@Deprecated
 	public static int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getFileEntriesAndFileShortcutsCount(
 			groupId, folderId, status, mimeTypes);
+	}
+
+	public static int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFileEntriesAndFileShortcutsCount(
+			groupId, folderId, mimeTypes, status);
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFolder getFolder(
@@ -116,6 +129,24 @@ public class DLFolderServiceUtil {
 		return getService().getFolderIds(groupId, folderId);
 	}
 
+	public static java.util.List
+		<com.liferay.document.library.kernel.model.DLFolder> getFolders(
+				long groupId, long parentFolderId, boolean includeMountfolders,
+				int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFolder> obc)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFolders(
+			groupId, parentFolderId, includeMountfolders, status, start, end,
+			obc);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFolders(long, long, boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFolder> getFolders(
 				long groupId, long parentFolderId, int status,
@@ -142,6 +173,22 @@ public class DLFolderServiceUtil {
 
 	public static java.util.List<Object>
 			getFoldersAndFileEntriesAndFileShortcuts(
+				long groupId, long folderId, boolean includeMountFolders,
+				int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, includeMountFolders, status, start, end, obc);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersAndFileEntriesAndFileShortcuts(long, long, boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
+	public static java.util.List<Object>
+			getFoldersAndFileEntriesAndFileShortcuts(
 				long groupId, long folderId, int status,
 				boolean includeMountFolders, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator<?> obc)
@@ -151,6 +198,11 @@ public class DLFolderServiceUtil {
 			groupId, folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersAndFileEntriesAndFileShortcuts(long, long, String[], boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public static java.util.List<Object>
 			getFoldersAndFileEntriesAndFileShortcuts(
 				long groupId, long folderId, int status, String[] mimeTypes,
@@ -160,6 +212,18 @@ public class DLFolderServiceUtil {
 
 		return getService().getFoldersAndFileEntriesAndFileShortcuts(
 			groupId, folderId, status, mimeTypes, includeMountFolders, start,
+			end, obc);
+	}
+
+	public static java.util.List<Object>
+			getFoldersAndFileEntriesAndFileShortcuts(
+				long groupId, long folderId, String[] mimeTypes,
+				boolean includeMountFolders, int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator<?> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, mimeTypes, includeMountFolders, status, start,
 			end, obc);
 	}
 
@@ -197,6 +261,11 @@ public class DLFolderServiceUtil {
 			groupId, folderId, status, includeMountFolders);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, int)}
+	 */
+	@Deprecated
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
@@ -204,6 +273,15 @@ public class DLFolderServiceUtil {
 
 		return getService().getFoldersAndFileEntriesAndFileShortcutsCount(
 			groupId, folderId, status, mimeTypes, includeMountFolders);
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFoldersAndFileEntriesAndFileShortcutsCount(
+			groupId, folderId, mimeTypes, includeMountFolders, status);
 	}
 
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -233,6 +311,20 @@ public class DLFolderServiceUtil {
 		return getService().getFoldersCount(groupId, parentFolderId);
 	}
 
+	public static int getFoldersCount(
+			long groupId, long parentFolderId, boolean includeMountfolders,
+			int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getFoldersCount(
+			groupId, parentFolderId, includeMountfolders, status);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
 	public static int getFoldersCount(
 			long groupId, long parentFolderId, int status,
 			boolean includeMountfolders)

@@ -559,6 +559,18 @@ public class DLFolderLocalServiceUtil {
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFolder> getFolders(
 			long groupId, long parentFolderId, boolean includeMountfolders,
+			int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.document.library.kernel.model.DLFolder> obc) {
+
+		return getService().getFolders(
+			groupId, parentFolderId, includeMountfolders, status, start, end,
+			obc);
+	}
+
+	public static java.util.List
+		<com.liferay.document.library.kernel.model.DLFolder> getFolders(
+			long groupId, long parentFolderId, boolean includeMountfolders,
 			int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.document.library.kernel.model.DLFolder> obc) {
@@ -567,6 +579,11 @@ public class DLFolderLocalServiceUtil {
 			groupId, parentFolderId, includeMountfolders, start, end, obc);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFolders(long, long, boolean, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFolder> getFolders(
 			long groupId, long parentFolderId, int status,
@@ -620,6 +637,19 @@ public class DLFolderLocalServiceUtil {
 			groupId, parentFolderId, includeMountfolders);
 	}
 
+	public static int getFoldersCount(
+		long groupId, long parentFolderId, boolean includeMountfolders,
+		int status) {
+
+		return getService().getFoldersCount(
+			groupId, parentFolderId, includeMountfolders, status);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
 	public static int getFoldersCount(
 		long groupId, long parentFolderId, int status,
 		boolean includeMountfolders) {

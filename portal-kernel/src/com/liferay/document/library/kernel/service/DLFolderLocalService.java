@@ -401,8 +401,18 @@ public interface DLFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFolder> getFolders(
 		long groupId, long parentFolderId, boolean includeMountfolders,
+		int status, int start, int end, OrderByComparator<DLFolder> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders,
 		int start, int end, OrderByComparator<DLFolder> obc);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFolders(long, long, boolean, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFolder> getFolders(
 		long groupId, long parentFolderId, int status,
@@ -431,6 +441,16 @@ public interface DLFolderLocalService
 	public int getFoldersCount(
 		long groupId, long parentFolderId, boolean includeMountfolders);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(
+		long groupId, long parentFolderId, boolean includeMountfolders,
+		int status);
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(
 		long groupId, long parentFolderId, int status,

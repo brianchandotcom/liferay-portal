@@ -142,6 +142,11 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFileEntriesAndFileShortcutsCount(long, long, String[], int)}
+	 */
+	@Deprecated
 	public static int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes)
 		throws RemoteException {
@@ -150,6 +155,24 @@ public class DLFolderServiceSoap {
 			int returnValue =
 				DLFolderServiceUtil.getFileEntriesAndFileShortcutsCount(
 					groupId, folderId, status, mimeTypes);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes, int status)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DLFolderServiceUtil.getFileEntriesAndFileShortcutsCount(
+					groupId, folderId, mimeTypes, status);
 
 			return returnValue;
 		}
@@ -212,6 +235,35 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.document.library.kernel.model.DLFolderSoap[]
+			getFolders(
+				long groupId, long parentFolderId, boolean includeMountfolders,
+				int status, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.document.library.kernel.model.DLFolder> obc)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.document.library.kernel.model.DLFolder>
+				returnValue = DLFolderServiceUtil.getFolders(
+					groupId, parentFolderId, includeMountfolders, status, start,
+					end, obc);
+
+			return com.liferay.document.library.kernel.model.DLFolderSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFolders(long, long, boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolderSoap[]
 			getFolders(
 				long groupId, long parentFolderId, int status,
@@ -278,6 +330,11 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, int)}
+	 */
+	@Deprecated
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
@@ -289,6 +346,27 @@ public class DLFolderServiceSoap {
 					getFoldersAndFileEntriesAndFileShortcutsCount(
 						groupId, folderId, status, mimeTypes,
 						includeMountFolders);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, int status)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DLFolderServiceUtil.
+					getFoldersAndFileEntriesAndFileShortcutsCount(
+						groupId, folderId, mimeTypes, includeMountFolders,
+						status);
 
 			return returnValue;
 		}
@@ -359,6 +437,29 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static int getFoldersCount(
+			long groupId, long parentFolderId, boolean includeMountfolders,
+			int status)
+		throws RemoteException {
+
+		try {
+			int returnValue = DLFolderServiceUtil.getFoldersCount(
+				groupId, parentFolderId, includeMountfolders, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
 	public static int getFoldersCount(
 			long groupId, long parentFolderId, int status,
 			boolean includeMountfolders)

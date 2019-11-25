@@ -160,8 +160,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 	if (openGraphImageButton) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
-			buttonAddLabel: '<liferay-ui:message key="done" />',
 			eventName: '<portlet:namespace />openGraphImageSelectedItem',
+			singleSelect: true,
 			title: '<liferay-ui:message key="open-graph-image" />',
 			url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
 		});

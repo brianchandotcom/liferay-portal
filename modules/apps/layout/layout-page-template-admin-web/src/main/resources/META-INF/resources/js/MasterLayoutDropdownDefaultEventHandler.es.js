@@ -55,8 +55,8 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 
 	updateMasterLayoutPreview(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
-			buttonAddLabel: Liferay.Language.get('ok'),
 			eventName: this.ns('changePreview'),
+			singleSelect: true,
 			title: Liferay.Language.get('master-page-thumbnail'),
 			url: itemData.itemSelectorURL
 		});

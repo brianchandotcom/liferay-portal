@@ -156,6 +156,7 @@ name = HtmlUtil.escapeJS(name);
 			function(ItemSelectorDialog) {
 				var itemSelectorDialog = new ItemSelectorDialog.default({
 					eventName: editor.name + 'selectDocument',
+					singleSelect: true,
 					title: '<liferay-ui:message key="select-item" />',
 					url: linkHref
 				});

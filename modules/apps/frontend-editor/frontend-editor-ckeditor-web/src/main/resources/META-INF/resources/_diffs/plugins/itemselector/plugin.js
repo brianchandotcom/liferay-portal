@@ -201,6 +201,7 @@
 					ItemSelectorDialog => {
 						itemSelectorDialog = new ItemSelectorDialog.default({
 							eventName,
+							singleSelect: true,
 							url,
 							zIndex: CKEDITOR.getNextZIndex()
 						});

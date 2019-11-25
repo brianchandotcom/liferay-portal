@@ -130,6 +130,7 @@ SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbar
 	var addAssignees = function(event) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<portlet:namespace />selectMember',
+			singleSelect: true,
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-assignees-to-x" />',
 			url: '<%= selectMembersURL %>'

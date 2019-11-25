@@ -238,6 +238,7 @@ AUI.add(
 									eventName: instance.get(
 										'itemSelectorEventName'
 									),
+									singleSelect: true,
 									url: instance.get('itemSelectorURL')
 								}
 							);

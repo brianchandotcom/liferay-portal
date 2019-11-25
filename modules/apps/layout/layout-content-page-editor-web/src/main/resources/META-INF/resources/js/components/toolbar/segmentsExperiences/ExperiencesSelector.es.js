@@ -333,8 +333,8 @@ const ExperiencesSelectorWrapper = () => {
 	});
 	const classPK = useSelector(state => state.classPK);
 	const experiences = useSelector(state => {
-		return Object.entries(state.availableSegmentsExperiences)
-			.map(([, experience]) => {
+		return Object.values(state.availableSegmentsExperiences)
+			.map(experience => {
 				const segment =
 					state.availableSegmentsEntries[experience.segmentsEntryId];
 
@@ -349,8 +349,8 @@ const ExperiencesSelectorWrapper = () => {
 		state => state.hasUpdatePermissions
 	);
 	const segments = useSelector(state =>
-		Object.entries(state.availableSegmentsEntries)
-			.map(([, segment]) => segment)
+		Object.values(state.availableSegmentsEntries)
+			.map(segment => segment)
 			.filter(
 				segment =>
 					segment.segmentsEntryId !== state.defaultSegmentsEntryId

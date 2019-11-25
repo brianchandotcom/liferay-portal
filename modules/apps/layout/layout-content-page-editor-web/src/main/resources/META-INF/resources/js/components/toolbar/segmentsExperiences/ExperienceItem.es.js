@@ -20,6 +20,7 @@ import React from 'react';
 
 import {STATUS_DRAFT} from '../../../utils/ExperimentsStatus.es';
 import ExperimentLabel from './ExperiementLabel.es';
+import Popover from './Popover.es';
 import {ExperienceType} from './types.es.js';
 
 const ExperienceItem = ({
@@ -34,6 +35,8 @@ const ExperienceItem = ({
 	onPriorityIncrease,
 	onSelect
 }) => {
+	const iconRef = React.useRef();
+	const [showtoolTip, setShowtoolTip] = React.useState(false);
 	const handleSelect = () => onSelect(experience.segmentsExperienceId);
 	const handlePriorityIncrease = () =>
 		onPriorityIncrease(
@@ -92,11 +95,33 @@ const ExperienceItem = ({
 							{experience.name}
 
 							{experience.hasLockedSegmentsExperiment && (
-								<ClayIcon
-									className="text-secondary"
-									small="true"
-									symbol="lock"
-								/>
+								<>
+									<ClayIcon
+										className="ml-2 text-secondary"
+										onMouseEnter={() =>
+											setShowtoolTip(true)
+										}
+										onMouseLeave={() =>
+											setShowtoolTip(false)
+										}
+										ref={iconRef}
+										small="true"
+										symbol="lock"
+									/>
+
+									{showtoolTip && (
+										<Popover
+											anchor={iconRef}
+											header={Liferay.Language.get(
+												'experience-locked'
+											)}
+										>
+											{Liferay.Language.get(
+												'experience-locked-message'
+											)}
+										</Popover>
+									)}
+								</>
 							)}
 						</strong>
 

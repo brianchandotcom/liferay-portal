@@ -34,9 +34,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectMasterPageVerticalCard implements VerticalCard {
+public class SelectLayoutPageTemplateEntryMasterPageVerticalCard
+	implements VerticalCard {
 
-	public SelectMasterPageVerticalCard(
+	public SelectLayoutPageTemplateEntryMasterPageVerticalCard(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 

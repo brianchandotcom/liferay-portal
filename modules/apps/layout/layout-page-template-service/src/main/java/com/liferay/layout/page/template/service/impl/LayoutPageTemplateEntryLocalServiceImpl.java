@@ -139,6 +139,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPrototypeId, plid, 0, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,

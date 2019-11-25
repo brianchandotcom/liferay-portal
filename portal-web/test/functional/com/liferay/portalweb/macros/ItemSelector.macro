@@ -254,6 +254,16 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro viewPreview {
+		AssertElementPresent(
+			key_footer = "${footer}",
+			locator1 = "ItemSelector#VIEWER_FOOTER");
+
+		AssertElementPresent(
+			key_imageFileName = "${imageFileName}",
+			locator1 = "ItemSelector#VIEWER_FOOTER_IMAGE");
+	}
+
 	macro viewWikiAttachment {
 		var key_imageFileName = "${imageFileName}";
 

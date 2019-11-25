@@ -631,16 +631,6 @@ public interface WikiPageLocalService
 			String newParentTitle)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #movePageFromTrash(long, long, String, long, String)} *
-	 */
-	@Deprecated
-	public WikiPage movePageFromTrash(
-			long userId, long nodeId, String title, String newParentTitle,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public WikiPage movePageToTrash(long userId, long nodeId, String title)
 		throws PortalException;
 

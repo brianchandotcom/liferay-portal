@@ -914,20 +914,6 @@ public class WikiPageLocalServiceUtil {
 			userId, nodeId, title, newNodeId, newParentTitle);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #movePageFromTrash(long, long, String, long, String)} *
-	 */
-	@Deprecated
-	public static com.liferay.wiki.model.WikiPage movePageFromTrash(
-			long userId, long nodeId, String title, String newParentTitle,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().movePageFromTrash(
-			userId, nodeId, title, newParentTitle, serviceContext);
-	}
-
 	public static com.liferay.wiki.model.WikiPage movePageToTrash(
 			long userId, long nodeId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {

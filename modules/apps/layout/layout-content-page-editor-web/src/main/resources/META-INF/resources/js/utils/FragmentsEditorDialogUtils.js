@@ -99,7 +99,6 @@ function openInfoItemSelector(
 	const state = getState();
 
 	const itemSelectorDialog = new ItemSelectorDialog({
-		buttonAddLabel: Liferay.Language.get('done'),
 		eventName: `${state.portletNamespace}selectInfoItem`,
 		title: Liferay.Language.get('select'),
 		url: infoItemSelectorURL

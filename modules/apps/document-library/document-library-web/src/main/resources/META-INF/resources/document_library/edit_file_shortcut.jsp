@@ -72,7 +72,6 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 
 	if (selectToFileEntryButton) {
 		var itemSelectorDialog = new ItemSelectorDialog.default({
-			buttonAddLabel: '<liferay-ui:message key="done" />',
 			eventName: '<portlet:namespace />toFileEntrySelectedItem',
 			title: '<liferay-ui:message arguments="file" key="select-x" />',
 			url: '<%= dlEditFileShortcutDisplayContext.getItemSelectorURL() %>'

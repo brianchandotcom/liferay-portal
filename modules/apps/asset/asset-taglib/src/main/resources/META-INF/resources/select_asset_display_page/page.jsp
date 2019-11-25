@@ -95,7 +95,6 @@
 
 	chooseSpecificDisplayPage.addEventListener('click', function(event) {
 		const itemSelectorDialog = new ItemSelectorDialog.default({
-			buttonAddLabel: '<liferay-ui:message key="done" />',
 			eventName: '<%= selectAssetDisplayPageDisplayContext.getEventName() %>',
 			title: '<liferay-ui:message key="select-page" />',
 			url:

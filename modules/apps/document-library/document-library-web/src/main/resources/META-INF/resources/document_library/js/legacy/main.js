@@ -394,9 +394,6 @@ AUI.add(
 							ItemSelectorDialog => {
 								var itemSelectorDialog = new ItemSelectorDialog.default(
 									{
-										buttonAddLabel: Liferay.Language.get(
-											'select'
-										),
 										eventName: instance.ns(
 											'selectFileEntryType'
 										),

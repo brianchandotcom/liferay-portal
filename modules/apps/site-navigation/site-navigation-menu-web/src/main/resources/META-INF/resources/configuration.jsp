@@ -332,7 +332,6 @@ else {
 			);
 
 			const itemSelectorDialog = new ItemSelectorDialog.default({
-				buttonAddLabel: '<liferay-ui:message key="done" />',
 				eventName:
 					'<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
 				title:

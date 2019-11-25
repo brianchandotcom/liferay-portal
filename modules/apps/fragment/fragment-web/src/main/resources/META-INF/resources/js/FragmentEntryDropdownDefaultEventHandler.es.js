@@ -102,7 +102,6 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 
 	updateFragmentEntryPreview(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
-			buttonAddLabel: Liferay.Language.get('ok'),
 			eventName: this.ns('changePreview'),
 			title: Liferay.Language.get('fragment-thumbnail'),
 			url: itemData.itemSelectorURL

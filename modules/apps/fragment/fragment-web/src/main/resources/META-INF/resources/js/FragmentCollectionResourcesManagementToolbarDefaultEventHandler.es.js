@@ -17,7 +17,6 @@ import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 class FragmentCollectionResourcesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addFragmentCollectionResource(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
-			buttonAddLabel: Liferay.Language.get('ok'),
 			eventName: this.ns('uploadFragmentCollectionResource'),
 			title: Liferay.Language.get('upload-fragment-collection-resource'),
 			url: itemData.itemSelectorURL

@@ -65,7 +65,6 @@ class LayoutPageTemplateEntryDropdownDefaultEventHandler extends DefaultEventHan
 
 	updateLayoutPageTemplateEntryPreview(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
-			buttonAddLabel: Liferay.Language.get('ok'),
 			eventName: this.ns('changePreview'),
 			title: Liferay.Language.get('page-template-thumbnail'),
 			url: itemData.itemSelectorURL

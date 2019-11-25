@@ -35,7 +35,6 @@
 					event.preventDefault();
 
 					const itemSelectorDialog = new ItemSelectorDialog.default({
-						buttonAddLabel: '<liferay-ui:message key="done" />',
 						eventName: '<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
 						title: '<liferay-ui:message key="select-layout" />',
 						url: '<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>'

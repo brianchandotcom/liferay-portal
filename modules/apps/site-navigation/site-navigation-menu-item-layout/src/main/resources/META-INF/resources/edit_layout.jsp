@@ -93,7 +93,6 @@ if (selLayout != null) {
 			'frontend-js-web/liferay/ItemSelectorDialog.es',
 			function(ItemSelectorDialog) {
 				const itemSelectorDialog = new ItemSelectorDialog.default({
-					buttonAddLabel: '<liferay-ui:message key="done" />',
 					eventName: '<%= eventName %>',
 					title: '<liferay-ui:message key="select-layout" />',
 					url: '<%= itemSelectorURL.toString() %>'

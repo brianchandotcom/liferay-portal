@@ -159,7 +159,6 @@ renderResponse.setTitle(title);
 									event.preventDefault();
 
 									const itemSelectorDialog = new ItemSelectorDialog.default({
-										buttonAddLabel: '<liferay-ui:message key="done" />',
 										eventName: '<portlet:namespace />selectFolder',
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
 

@@ -101,6 +101,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_mode = null;
 		_plid = 0;
 		_showPreview = false;
+		_structureJSONArray = null;
 	}
 
 	@Override
@@ -173,6 +174,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	}
 
 	private JSONArray _getStructureJSONArray() {
+		if (_structureJSONArray != null) {
+			return _structureJSONArray;
+		}
+
 		try {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
 
@@ -182,7 +187,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 						layout.getMasterLayoutPlid());
 
 			if (masterLayoutPageTemplateEntry == null) {
-				return _getDefaultStructureJSONArray();
+				_structureJSONArray = _getDefaultStructureJSONArray();
+
+				return _structureJSONArray;
 			}
 
 			LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
@@ -196,12 +203,16 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 				SegmentsExperienceConstants.ID_DEFAULT);
 
 			if (Validator.isNull(data)) {
-				return _getDefaultStructureJSONArray();
+				_structureJSONArray = _getDefaultStructureJSONArray();
+
+				return _structureJSONArray;
 			}
 
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-			return dataJSONObject.getJSONArray("structure");
+			_structureJSONArray = dataJSONObject.getJSONArray("structure");
+
+			return _structureJSONArray;
 		}
 		catch (Exception e) {
 			_log.error("Unable to get structure JSON array", e);
@@ -220,5 +231,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private String _mode;
 	private long _plid;
 	private boolean _showPreview;
+	private JSONArray _structureJSONArray;
 
 }

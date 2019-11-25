@@ -69,8 +69,9 @@ sb.append("/js/modal/openDisplayPageModal.es as openDisplayPageModal");
 
 			openDisplayPageModal.default({
 				formSubmitURL: data.addDisplayPageUrl,
-				mappingTypes:
-					'<%= selectDisplayPageMasterLayoutDisplayContext.getMappingTypesJSONArray() %>',
+				mappingTypes: JSON.parse(
+					'<%= selectDisplayPageMasterLayoutDisplayContext.getMappingTypesJSONArray() %>'
+				),
 				namespace: '<portlet:namespace />',
 				spritemap:
 					'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',

@@ -57,7 +57,7 @@ const ExperienceItem = ({
 
 		const confirmationMessage = experienceHasRunningExperiment
 			? Liferay.Language.get(
-					'delete-experince-with-running-test-confirmation-message'
+					'delete-experience-with-running-test-confirmation-message'
 			  )
 			: Liferay.Language.get('do-you-want-to-delete-this-experience');
 

@@ -14,8 +14,8 @@
 
 import {TYPES} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 function addItemReducer(items, action) {
 	const {config, itemId, itemType, parentId} = action;
@@ -105,7 +105,7 @@ function moveItemReducer(items, action) {
 
 		[currentItem.itemId]: {
 			...currentItem,
-			children,
+			children
 		}
 	};
 }

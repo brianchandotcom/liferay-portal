@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,6 +46,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -130,6 +132,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		throws Exception {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		breadcrumbEntries.add(_getSiteBreadcrumb(_httpServletRequest));
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
@@ -328,6 +332,28 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			_httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	private BreadcrumbEntry _getSiteBreadcrumb(
+			HttpServletRequest httpServletRequest)
+		throws PortletException {
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("groupType", "site");
+		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			PortalUtil.getLocale(httpServletRequest), getClass());
+
+		breadcrumbEntry.setTitle(
+			LanguageUtil.get(resourceBundle, "workspaces"));
+
+		breadcrumbEntry.setURL(portletURL.toString());
+
+		return breadcrumbEntry;
 	}
 
 	private String _getTitle(Locale locale) {

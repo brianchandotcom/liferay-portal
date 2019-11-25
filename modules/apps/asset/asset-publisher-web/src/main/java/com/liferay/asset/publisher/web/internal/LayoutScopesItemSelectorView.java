@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.io.IOException;
@@ -112,7 +112,7 @@ public class LayoutScopesItemSelectorView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
-			new SiteItemSelectorReturnType());
+			new GroupItemSelectorReturnType());
 
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;

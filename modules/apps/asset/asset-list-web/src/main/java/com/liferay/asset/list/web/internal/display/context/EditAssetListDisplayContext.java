@@ -75,7 +75,7 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
-import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
+import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.ArrayList;
@@ -587,7 +587,7 @@ public class EditAssetListDisplayContext {
 			new SiteItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new SiteItemSelectorReturnType());
+			new GroupItemSelectorReturnType());
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),

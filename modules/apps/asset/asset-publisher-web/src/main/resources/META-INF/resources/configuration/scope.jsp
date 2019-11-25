@@ -125,7 +125,7 @@ ItemSelector itemSelector = (ItemSelector)request.getAttribute(AssetPublisherWeb
 
 ItemSelectorCriterion itemSelectorCriterion = new SiteItemSelectorCriterion();
 
-itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new SiteItemSelectorReturnType());
+itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new GroupItemSelectorReturnType());
 
 PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, itemSelectorCriterion);
 

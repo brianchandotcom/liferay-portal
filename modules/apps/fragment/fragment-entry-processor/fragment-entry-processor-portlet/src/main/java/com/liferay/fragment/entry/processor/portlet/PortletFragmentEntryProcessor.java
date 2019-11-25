@@ -178,6 +178,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 
 			String alias = tagName.substring(11);
+
 			String portletName = _portletRegistry.getPortletName(alias);
 
 			if (Validator.isNull(portletName)) {
@@ -187,7 +188,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
-			if (originalFragmentEntryLink == null) {
+			if ((originalFragmentEntryLink == null) &&
+				(fragmentEntryLink.getOriginalFragmentEntryLinkId() > 0)) {
+
 				originalFragmentEntryLink =
 					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 						fragmentEntryLink.getOriginalFragmentEntryLinkId());

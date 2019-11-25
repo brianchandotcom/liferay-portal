@@ -76,7 +76,7 @@ class ItemSelectorDialog extends Component {
 			destroyOnHide: true,
 			modal: true,
 			zIndex: this.zIndex
-		}
+		};
 
 		const dialogFooter = [
 			{
@@ -129,8 +129,7 @@ class ItemSelectorDialog extends Component {
 				.one('#addButton');
 
 			Liferay.Util.toggleDisabled(addButton, !currentItem);
-		}
-		else {
+		} else {
 			this._selectedItem = currentItem;
 			this.close();
 		}
@@ -181,7 +180,6 @@ ItemSelectorDialog.STATE = {
 	 * @type {String}
 	 */
 	eventName: Config.string().required(),
-
 
 	/**
 	 * Enables multiple selection of items.

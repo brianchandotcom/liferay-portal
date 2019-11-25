@@ -14,6 +14,9 @@
 
 package com.liferay.depot.web.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalServiceUtil;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -22,6 +25,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -36,6 +41,14 @@ public class DepotAdminSitesDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public List<DepotEntryGroupRel> getDepotEntryGroupRels() {
+		DepotEntry depotEntry = (DepotEntry)_liferayPortletRequest.getAttribute(
+			DepotAdminWebKeys.DEPOT_ENTRY);
+
+		return DepotEntryGroupRelLocalServiceUtil.getDepotEntryGroupRels(
+			depotEntry);
 	}
 
 	public PortletURL getItemSelectorURL() {

@@ -19,7 +19,7 @@
 <%
 DepotAdminSitesDisplayContext depotAdminSitesDisplayContext = new DepotAdminSitesDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
+List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.getDepotEntryGroupRels();
 %>
 
 <div class="sheet-section">
@@ -42,10 +42,6 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 	</h3>
 
 	<aui:input name="toGroupId" type="hidden" />
-
-	<%
-	List<DepotEntryGroupRel> depotEntryGroupRels = DepotEntryGroupRelLocalServiceUtil.getDepotEntryGroupRels(depotEntry);
-	%>
 
 	<liferay-ui:search-container
 		compactEmptyResultsMessage="<%= true %>"

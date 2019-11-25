@@ -131,6 +131,8 @@
 					<section class="master-fragment-entry-link">
 						{call com.liferay.layout.content.page.editor.web.MasterFragmentEntryLinkContent.render}
 							{param content: $fragmentEntryLink.content/}
+							{param editableValues: $fragmentEntryLink.editableValues/}
+							{param store: $store/}
 						{/call}
 					</section>
 				{/if}

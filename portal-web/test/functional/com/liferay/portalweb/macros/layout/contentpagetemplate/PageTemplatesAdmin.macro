@@ -18,6 +18,10 @@ definition {
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Blank");
 		}
 
+		if ("${menuItem}" == "Content Page Template") {
+			LexiconCard.clickCard(card = "Blank");
+		}
+
 		PortletEntry.inputName(name = "${pageTemplateName}");
 
 		Button.clickSave();

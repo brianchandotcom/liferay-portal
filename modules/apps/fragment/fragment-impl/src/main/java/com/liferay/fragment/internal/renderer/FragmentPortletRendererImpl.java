@@ -19,11 +19,12 @@ import com.liferay.fragment.internal.constants.PortletFragmentEntryProcessorWebK
 import com.liferay.fragment.internal.display.context.PortletFragmentEntryProcessorDisplayContext;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants;
+import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
-
-import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -61,12 +62,15 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 			portletFragmentEntryProcessorDisplayContext);
 
 		try {
-			_jspRenderer.renderJSP(
-				_servletContext, httpServletRequest, pipingServletResponse,
-				"/portlet.jsp");
+			RuntimeTag.doTag(
+				portletName, instanceId, StringPool.BLANK,
+				PortletPreferencesFactoryConstants.
+					SETTINGS_SCOPE_PORTLET_INSTANCE,
+				defaultPreferences, false, null, httpServletRequest,
+				pipingServletResponse);
 		}
-		catch (IOException ioe) {
-			throw new FragmentEntryContentException(ioe);
+		catch (Exception e) {
+			throw new FragmentEntryContentException(e);
 		}
 
 		return unsyncStringWriter.toString();

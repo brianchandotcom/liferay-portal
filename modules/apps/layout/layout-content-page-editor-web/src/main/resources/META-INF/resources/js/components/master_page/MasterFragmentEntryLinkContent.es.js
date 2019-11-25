@@ -18,9 +18,22 @@ import {closest, globalEval} from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {editableIsMapped} from '../../utils/FragmentsEditorGetUtils.es';
+import {computeEditableValue} from '../../utils/computeValues.es';
+import {
+	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+} from '../../utils/constants';
+import EditableBackgroundImageFragmentProcessor from '../fragment_processors/EditableBackgroundImageProcessor.es';
+import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './MasterFragmentEntryLinkContent.soy';
 
 class MasterFragmentEntryLinkContent extends Component {
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
 	rendered() {
 		requestAnimationFrame(() => {
 			if (this.content) {
@@ -29,6 +42,57 @@ class MasterFragmentEntryLinkContent extends Component {
 		});
 	}
 
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	syncLanguageId(newLanguageId) {
+		if (!this._editables || !newLanguageId || !this.defaultLanguageId) {
+			return;
+		}
+
+		this._editables.forEach(editable => {
+			const mapped = editableIsMapped(editable.editableValues);
+
+			if (!mapped) {
+				const value = computeEditableValue(editable.editableValues, {
+					defaultLanguageId: this.defaultLanguageId,
+					selectedLanguageId: newLanguageId
+				});
+
+				if (editable.type === 'backgroundImage') {
+					const value = computeEditableValue(
+						editable.editableValues,
+						{
+							defaultLanguageId: this.defaultLanguageId,
+							selectedLanguageId: newLanguageId
+						}
+					);
+
+					EditableBackgroundImageFragmentProcessor.render(
+						editable.element,
+						value
+					);
+				} else {
+					const processor =
+						FragmentProcessors[editable.type] ||
+						FragmentProcessors.fallback;
+
+					editable.element.innerHTML = processor.render(
+						editable.content,
+						value,
+						editable.editableValues
+					);
+				}
+			}
+		});
+	}
+
+	/**
+	 * Prevents clicks on links
+	 * @private
+	 * @review
+	 */
 	_handleMasterFragmentEntryLinkContentClick(event) {
 		const element = event.srcElement;
 
@@ -42,7 +106,66 @@ class MasterFragmentEntryLinkContent extends Component {
 			this.refs.content.innerHTML = content;
 
 			globalEval.runScriptsInElement(this.refs.content);
+
+			if (this.editableValues) {
+				this._createEditables();
+			}
 		}
+	}
+
+	/**
+	 * Creates instances of a fragment editable field for each editable.
+	 */
+	_createEditables() {
+		const backgroundImageEditables = Array.from(
+			this.refs.content.querySelectorAll('[data-lfr-background-image-id]')
+		).map(element => {
+			const editableId = element.dataset.lfrBackgroundImageId;
+			const editableValues =
+				this.editableValues[
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+				] &&
+				this.editableValues[BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR][
+					editableId
+				]
+					? this.editableValues[
+							BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+					  ][editableId]
+					: {
+							defaultValue: ''
+					  };
+
+			return {
+				editableValues,
+				element,
+				type: 'backgroundImage'
+			};
+		});
+
+		const editableFields = Array.from(
+			this.refs.content.querySelectorAll('lfr-editable')
+		).map(editable => {
+			const editableValues =
+				this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
+				this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+					editable.id
+				]
+					? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+							editable.id
+					  ]
+					: {
+							defaultValue: editable.innerHTML
+					  };
+
+			return {
+				content: editable.innerHTML,
+				editableValues,
+				element: editable,
+				type: editable.getAttribute('type')
+			};
+		});
+
+		this._editables = [...backgroundImageEditables, ...editableFields];
 	}
 }
 
@@ -60,10 +183,24 @@ MasterFragmentEntryLinkContent.STATE = {
 				? content.value.content
 				: content;
 		})
-		.value('')
+		.value(''),
+	/**
+	 * Editable values
+	 * @default undefined
+	 * @instance
+	 * @memberOf MasterFragmentEntryLinkContent
+	 * @review
+	 * @type {!object}
+	 */
+	editableValues: Config.object().required()
 };
 
-Soy.register(MasterFragmentEntryLinkContent, templates);
+const ConnectedFragmentEditableField = getConnectedComponent(
+	MasterFragmentEntryLinkContent,
+	['defaultLanguageId', 'languageId']
+);
 
-export {MasterFragmentEntryLinkContent};
-export default MasterFragmentEntryLinkContent;
+Soy.register(ConnectedFragmentEditableField, templates);
+
+export {ConnectedFragmentEditableField, MasterFragmentEntryLinkContent};
+export default ConnectedFragmentEditableField;

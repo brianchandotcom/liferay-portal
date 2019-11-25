@@ -53,7 +53,7 @@ function Container({data}) {
 export default function(data) {
 	return (
 		<DragDropContextProvider backend={HTML5Backend}>
-			<Container data={data} />;
+			<Container data={data} />
 		</DragDropContextProvider>
 	);
 }

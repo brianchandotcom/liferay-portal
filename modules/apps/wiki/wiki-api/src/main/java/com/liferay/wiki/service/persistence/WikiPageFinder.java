@@ -99,10 +99,6 @@ public interface WikiPageFinder {
 		boolean before, int start, int end);
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> findByModifiedDate(
-		long groupId, long nodeId, java.util.Date modifiedDate, boolean before,
-		int start, int end);
-
-	public java.util.List<com.liferay.wiki.model.WikiPage> findByModifiedDate(
 		long groupId, long nodeId, java.sql.Timestamp modifiedDate,
 		boolean before, int start, int end);
 

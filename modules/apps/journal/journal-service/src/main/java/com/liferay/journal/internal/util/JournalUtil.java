@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.model.JournalArticle;
@@ -233,6 +234,31 @@ public class JournalUtil {
 
 					articleURL = portletURL.toString();
 				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
+
+		if (Validator.isNull(articleURL)) {
+			try {
+				articleURL = PortalUtil.getControlPanelFullURL(
+					article.getGroupId(), portletId, null);
+
+				StringBundler sb = new StringBundler(9);
+				JournalFolder folder = article.getFolder();
+
+				sb.append(articleURL);
+				sb.append("&_");
+				sb.append(JournalPortletKeys.JOURNAL);
+				sb.append("_group=");
+				sb.append(folder.getGroupId());
+				sb.append("&_");
+				sb.append(JournalPortletKeys.JOURNAL);
+				sb.append("_folderId=");
+				sb.append(folder.getFolderId());
+
+				articleURL = sb.toString();
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);

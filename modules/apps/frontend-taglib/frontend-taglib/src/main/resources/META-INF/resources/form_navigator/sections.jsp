@@ -133,7 +133,7 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 			Liferay.once('<portlet:namespace />formReady', function(event) {
 				var hasFocusField = focusField.length;
 
-				if (!sectionContent.hasClass('in')) {
+				if (!sectionContent.hasClass('show')) {
 					if (hasFocusField) {
 						sectionContent.one('shown.bs.collapse', function() {
 							Liferay.Util.focusFormField(focusField);

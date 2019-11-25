@@ -25,14 +25,14 @@
 		<div class="dialog-body">
 			<div class="lfr-image-editor-image-container" id="{$id}ImageContainer">
 				<img class="hide img-responsive" src="{$image}">
-				<canvas class="fade {$imageEditorReady ? 'in' : ''} image-preview"></canvas>
+				<canvas class="fade {$imageEditorReady ? 'show' : ''} image-preview"></canvas>
 
 				{call ImageEditorLoading.render data="all"}
 					{param ref: 'loading' /}
 				{/call}
 			</div>
 
-			<div class="fade {$imageEditorReady ? 'in' : ''} lfr-image-editor-tools-container">
+			<div class="fade {$imageEditorReady ? 'show' : ''} lfr-image-editor-tools-container">
 				{call .tools data="all"}
 					{param getImageEditorCanvas: $getImageEditorCanvas /}
 					{param getImageEditorImageData: $getImageEditorImageData /}
@@ -42,7 +42,7 @@
 				{/call}
 			</div>
 
-			<div class="fade {$imageEditorReady and not $selectedTool ? 'in' : ''} lfr-image-editor-history-container">
+			<div class="fade {$imageEditorReady and not $selectedTool ? 'show' : ''} lfr-image-editor-history-container">
 				<div class="btn-group" role="group">
 					<a class="btn btn-link btn-monospaced {$history and $history.canUndo ? '' : 'disabled'}" data-onclick="undo" href="javascript:;" title="{msg desc=""}undo{/msg}">
 						<svg class="lexicon-icon">

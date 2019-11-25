@@ -121,9 +121,23 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFileEntriesAndFileShortcutsCount(long, long, String[], int)}
+	 */
+	@Deprecated
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes)
+		throws PortalException {
+
+		return getFileEntriesAndFileShortcutsCount(
+			groupId, folderId, mimeTypes, status);
+	}
+
+	@Override
+	public int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes, int status)
 		throws PortalException {
 
 		if (!ModelResourcePermissionHelper.contains(
@@ -182,9 +196,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public List<DLFolder> getFolders(
-			long groupId, long parentFolderId, int status,
-			boolean includeMountfolders, int start, int end,
-			OrderByComparator<DLFolder> obc)
+			long groupId, long parentFolderId, boolean includeMountfolders,
+			int status, int start, int end, OrderByComparator<DLFolder> obc)
 		throws PortalException {
 
 		if (!ModelResourcePermissionHelper.contains(
@@ -203,6 +216,23 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, false, parentFolderId, false, status, start, end, obc);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFolders(long, long, boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
+	@Override
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders, int start, int end,
+			OrderByComparator<DLFolder> obc)
+		throws PortalException {
+
+		return getFolders(
+			groupId, parentFolderId, includeMountfolders, status, start, end,
+			obc);
+	}
+
 	@Override
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end,
@@ -216,9 +246,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status,
-			boolean includeMountFolders, int start, int end,
-			OrderByComparator<?> obc)
+			long groupId, long folderId, boolean includeMountFolders,
+			int status, int start, int end, OrderByComparator<?> obc)
 		throws PortalException {
 
 		if (!ModelResourcePermissionHelper.contains(
@@ -235,10 +264,43 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long, boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
+	@Override
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator<?> obc)
+		throws PortalException {
+
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, includeMountFolders, status, start, end, obc);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long, String[], boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
+			OrderByComparator<?> obc)
+		throws PortalException {
+
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, mimeTypes, includeMountFolders, status, start,
+			end, obc);
+	}
+
+	@Override
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, int status, int start, int end,
 			OrderByComparator<?> obc)
 		throws PortalException {
 
@@ -320,10 +382,25 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, null, includeMountFolders, queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, int)}
+	 */
+	@Deprecated
 	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders)
+		throws PortalException {
+
+		return getFoldersAndFileEntriesAndFileShortcutsCount(
+			groupId, folderId, mimeTypes, includeMountFolders, status);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, String[] mimeTypes,
+			boolean includeMountFolders, int status)
 		throws PortalException {
 
 		if (!ModelResourcePermissionHelper.contains(
@@ -392,8 +469,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 	@Override
 	public int getFoldersCount(
-			long groupId, long parentFolderId, int status,
-			boolean includeMountfolders)
+			long groupId, long parentFolderId, boolean includeMountfolders,
+			int status)
 		throws PortalException {
 
 		if (!ModelResourcePermissionHelper.contains(
@@ -410,6 +487,21 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderPersistence.filterCountByG_M_P_H_S(
 			groupId, false, parentFolderId, false, status);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
+	@Override
+	public int getFoldersCount(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders)
+		throws PortalException {
+
+		return getFoldersCount(
+			groupId, parentFolderId, includeMountfolders, status);
 	}
 
 	@Override

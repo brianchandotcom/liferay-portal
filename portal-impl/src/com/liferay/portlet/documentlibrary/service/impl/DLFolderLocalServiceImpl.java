@@ -371,6 +371,20 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	public List<DLFolder> getFolders(
 		long groupId, long parentFolderId, boolean includeMountfolders,
+		int status, int start, int end, OrderByComparator<DLFolder> obc) {
+
+		if (includeMountfolders) {
+			return dlFolderPersistence.findByG_P_H_S(
+				groupId, parentFolderId, false, status, start, end, obc);
+		}
+
+		return dlFolderPersistence.findByG_M_P_H_S(
+			groupId, false, parentFolderId, false, status, start, end, obc);
+	}
+
+	@Override
+	public List<DLFolder> getFolders(
+		long groupId, long parentFolderId, boolean includeMountfolders,
 		int start, int end, OrderByComparator<DLFolder> obc) {
 
 		if (includeMountfolders) {
@@ -382,19 +396,20 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, false, parentFolderId, false, start, end, obc);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFolders(long, long, boolean, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	public List<DLFolder> getFolders(
 		long groupId, long parentFolderId, int status,
 		boolean includeMountfolders, int start, int end,
 		OrderByComparator<DLFolder> obc) {
 
-		if (includeMountfolders) {
-			return dlFolderPersistence.findByG_P_H_S(
-				groupId, parentFolderId, false, status, start, end, obc);
-		}
-
-		return dlFolderPersistence.findByG_M_P_H_S(
-			groupId, false, parentFolderId, false, status, start, end, obc);
+		return getFolders(
+			groupId, parentFolderId, includeMountfolders, status, start, end,
+			obc);
 	}
 
 	@Override
@@ -442,8 +457,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	@Override
 	public int getFoldersCount(
-		long groupId, long parentFolderId, int status,
-		boolean includeMountfolders) {
+		long groupId, long parentFolderId, boolean includeMountfolders,
+		int status) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return getFoldersCount(
@@ -456,6 +471,20 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		return dlFolderPersistence.countByG_M_P_H_S(
 			groupId, false, parentFolderId, false, status);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
+	@Override
+	public int getFoldersCount(
+		long groupId, long parentFolderId, int status,
+		boolean includeMountfolders) {
+
+		return getFoldersCount(
+			groupId, parentFolderId, includeMountfolders, status);
 	}
 
 	@Override

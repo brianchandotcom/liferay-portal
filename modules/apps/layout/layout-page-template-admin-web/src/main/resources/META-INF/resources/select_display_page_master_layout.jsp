@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 
 				<li class="card-page-item col-md-4 col-sm-6">
 					<clay:vertical-card
-						verticalCard="<%= new SelectLayoutPageTemplateEntryMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
+						verticalCard="<%= new SelectDisplayPageMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
 					/>
 				</li>
 
@@ -59,7 +59,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 </div>
 
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal" sandbox="<%= true %>">
-	var addPageTemplateClickHandler = dom.delegate(
+	var addDisplayPageClickHandler = dom.delegate(
 		document.body,
 		'click',
 		'.add-master-page-action-option',
@@ -82,7 +82,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 	);
 
 	function handleDestroyPortlet() {
-		addPageTemplateClickHandler.removeListener();
+		addDisplayPageClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

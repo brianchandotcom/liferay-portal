@@ -45,6 +45,7 @@ page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.
 page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.LayoutPageTemplateEntryVerticalCard" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.LayoutPrototypeVerticalCard" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.MasterLayoutVerticalCard" %><%@
+page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.SelectDisplayPageMasterLayoutVerticalCard" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.SelectLayoutPageTemplateEntryMasterLayoutVerticalCard" %><%@
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys" %><%@
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants" %><%@

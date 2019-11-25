@@ -224,14 +224,7 @@ if (calendarDisplayContext != null) {
 	defaultCalendar = calendarDisplayContext.getDefaultCalendar(groupCalendars, userCalendars);
 }
 
-TimeZone userTimeZone = null;
-
-if ((calendarBooking != null) && calendarBooking.isAllDay()) {
-	userTimeZone = TimeZone.getTimeZone(StringPool.UTC);
-}
-else {
-	userTimeZone = TimeZone.getTimeZone(timeZoneId);
-}
+TimeZone userTimeZone = TimeZone.getTimeZone(timeZoneId);
 
 TimeZone utcTimeZone = TimeZone.getTimeZone(StringPool.UTC);
 

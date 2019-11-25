@@ -177,9 +177,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			String alias = StringUtil.replace(
-				tagName, "lfr-widget-", StringPool.BLANK);
-
+			String alias = tagName.substring(11);
 			String portletName = _portletRegistry.getPortletName(alias);
 
 			if (Validator.isNull(portletName)) {

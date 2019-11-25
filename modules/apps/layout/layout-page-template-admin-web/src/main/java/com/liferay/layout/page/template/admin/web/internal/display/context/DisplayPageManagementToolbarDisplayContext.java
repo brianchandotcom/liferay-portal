@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,13 +29,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,33 +104,20 @@ public class DisplayPageManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		PortletURL addDisplayPageURL = liferayPortletResponse.createActionURL();
-
-		addDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template/add_display_page");
-		addDisplayPageURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
-		addDisplayPageURL.setParameter(
-			"type",
-			String.valueOf(
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
-
 		return new CreationMenu() {
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						Map<String, Object> dropDownItemData =
-							HashMapBuilder.<String, Object>put(
-								"action", "addDisplayPage"
-							).put(
-								"addDisplayPageURL",
-								addDisplayPageURL.toString()
-							).put(
-								"mappingTypes", _getMappingTypesJSONArray()
-							).build();
+						PortletURL selectMasterLayoutURL =
+							liferayPortletResponse.createRenderURL();
 
-						dropdownItem.setData(dropDownItemData);
+						selectMasterLayoutURL.setParameter(
+							"mvcPath",
+							"/select_display_page_master_layout.jsp");
+						selectMasterLayoutURL.setParameter(
+							"redirect", _themeDisplay.getURLCurrent());
+
+						dropdownItem.setHref(selectMasterLayoutURL.toString());
 
 						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 					});

@@ -177,7 +177,7 @@ paths:
                                 format: binary
                                 type: string
                     description:
-                        ''
+                        ""
             tags: ["ExportTask"]
     /export-task/{exportTaskId}:
         # @review

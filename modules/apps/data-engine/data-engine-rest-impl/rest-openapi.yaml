@@ -13,13 +13,13 @@ components:
                     type: integer
                 dataDefinitionFields:
                     items:
-                        $ref: '#/components/schemas/DataDefinitionField'
+                        $ref: "#/components/schemas/DataDefinitionField"
                     type: array
                 dataDefinitionKey:
                     type: string
                 dataDefinitionRules:
                     items:
-                        $ref: '#/components/schemas/DataDefinitionRule'
+                        $ref: "#/components/schemas/DataDefinitionRule"
                     type: array
                 dateCreated:
                     format: date-time
@@ -80,7 +80,7 @@ components:
                     type: string
                 nestedDataDefinitionFields:
                     items:
-                        $ref: '#/components/schemas/DataDefinitionField'
+                        $ref: "#/components/schemas/DataDefinitionField"
                     type:
                         array
                 readOnly:
@@ -140,7 +140,7 @@ components:
                     type: string
                 dataLayoutPages:
                     items:
-                        $ref: '#/components/schemas/DataLayoutPage'
+                        $ref: "#/components/schemas/DataLayoutPage"
                     type:
                         array
                 dateCreated:
@@ -183,7 +183,7 @@ components:
             properties:
                 dataLayoutRows:
                     items:
-                        $ref: '#/components/schemas/DataLayoutRow'
+                        $ref: "#/components/schemas/DataLayoutRow"
                     type:
                         array
                 description:
@@ -217,7 +217,7 @@ components:
             properties:
                 dataLayoutColumns:
                     items:
-                        $ref: '#/components/schemas/DataLayoutColumn'
+                        $ref: "#/components/schemas/DataLayoutColumn"
                     type:
                         array
             type: object

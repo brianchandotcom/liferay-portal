@@ -38,7 +38,7 @@ components:
                     type: number
                 experimentVariants:
                     items:
-                        $ref: '#/components/schemas/ExperimentVariant'
+                        $ref: "#/components/schemas/ExperimentVariant"
                     type: array
                 status:
                     readOnly: true

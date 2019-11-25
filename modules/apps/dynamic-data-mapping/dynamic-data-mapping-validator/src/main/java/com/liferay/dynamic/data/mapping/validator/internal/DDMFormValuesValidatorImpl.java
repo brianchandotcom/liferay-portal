@@ -139,22 +139,22 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			}
 
 			if (dataType.equals(FieldConstants.BOOLEAN)) {
-				ddmExpression.setBooleanVariableValue(
+				ddmExpression.setVariable(
 					ddmFormFieldName,
 					GetterUtil.getBoolean(value.getString(locale)));
 			}
 			else if (dataType.equals(FieldConstants.DOUBLE)) {
-				ddmExpression.setDoubleVariableValue(
+				ddmExpression.setVariable(
 					ddmFormFieldName,
 					GetterUtil.getDouble(value.getString(locale)));
 			}
 			else if (dataType.equals(FieldConstants.INTEGER)) {
-				ddmExpression.setIntegerVariableValue(
+				ddmExpression.setVariable(
 					ddmFormFieldName,
 					GetterUtil.getInteger(value.getString(locale)));
 			}
 			else {
-				ddmExpression.setStringVariableValue(
+				ddmExpression.setVariable(
 					ddmFormFieldName, value.getString(locale));
 			}
 

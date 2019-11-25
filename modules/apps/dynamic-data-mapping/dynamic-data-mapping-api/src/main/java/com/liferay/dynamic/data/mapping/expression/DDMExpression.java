@@ -42,47 +42,6 @@ public interface DDMExpression<T> {
 		return Collections.emptyMap();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public default void setBooleanVariableValue(
-		String variableName, Boolean variableValue) {
-
-		setVariable(variableName, variableValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public default void setDoubleVariableValue(
-		String variableName, Double variableValue) {
-
-		setVariable(variableName, variableValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public default void setIntegerVariableValue(
-		String variableName, Integer variableValue) {
-
-		setVariable(variableName, variableValue);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public default void setStringVariableValue(
-			String variableName, String variableValue)
-		throws DDMExpressionException {
-
-		setVariable(variableName, variableValue);
-	}
-
 	public void setVariable(String name, Object value);
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.segments.simulation.web.internal.display.context;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 
@@ -66,7 +69,7 @@ public class SegmentsSimulationDisplayContext {
 		}
 
 		_segmentsEntries = SegmentsEntryServiceUtil.getSegmentsEntries(
-			_themeDisplay.getScopeGroupId(), true);
+			_getStagingAwareGroupId(), true);
 
 		return _segmentsEntries;
 	}
@@ -93,6 +96,33 @@ public class SegmentsSimulationDisplayContext {
 		return _showEmptyMessage;
 	}
 
+	private long _getStagingAwareGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		long groupId = _themeDisplay.getScopeGroupId();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (stagingGroupHelper.isStagingGroup(groupId) &&
+			!stagingGroupHelper.isStagedPortlet(
+				groupId, SegmentsPortletKeys.SEGMENTS)) {
+
+			Group group = stagingGroupHelper.fetchLiveGroup(groupId);
+
+			if (group != null) {
+				groupId = group.getGroupId();
+			}
+		}
+
+		_groupId = groupId;
+
+		return groupId;
+	}
+
+	private Long _groupId;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private List<SegmentsEntry> _segmentsEntries;
 	private Boolean _showEmptyMessage;

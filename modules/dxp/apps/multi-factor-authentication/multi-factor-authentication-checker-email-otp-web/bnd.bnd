@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Multi Factor Authentication Checker Email OTP Web
+Bundle-SymbolicName: com.liferay.multi.factor.authentication.checker.email.otp.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /multi-factor-authentication-checker-email-otp-web

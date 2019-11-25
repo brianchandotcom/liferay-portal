@@ -1570,20 +1570,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return page;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #movePageFromTrash(long, long, String, long, String)} *
-	 */
-	@Deprecated
-	@Override
-	public WikiPage movePageFromTrash(
-			long userId, long nodeId, String title, String newParentTitle,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return movePageFromTrash(userId, nodeId, title, nodeId, newParentTitle);
-	}
-
 	@Override
 	public WikiPage movePageToTrash(long userId, long nodeId, String title)
 		throws PortalException {

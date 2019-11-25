@@ -53,13 +53,13 @@ import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.file.DeleteSpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.jvm.tasks.Jar;
@@ -340,27 +340,10 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			});
 
-		Task cleanTask = GradleUtil.getTask(
+		Delete deleteCleanTask = (Delete)GradleUtil.getTask(
 			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
 
-		cleanTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					project.delete(
-						new Action<DeleteSpec>() {
-
-							@Override
-							public void execute(DeleteSpec deleteSpec) {
-								deleteSpec.delete(
-									testClassesIntegrationDir.getParentFile());
-							}
-
-						});
-				}
-
-			});
+		deleteCleanTask.delete(testClassesIntegrationDir.getParentFile());
 	}
 
 	@SuppressWarnings({"rawtypes", "serial", "unused"})

@@ -14,6 +14,8 @@ String gitRepositoryURL = System.getProperty("profile.dxp.repository.url", "git@
 File gitRepositoryDir = new File(projectDir.parentFile, "git-clone-profile-dxp")
 
 checkoutDXPScript {
+	dependsOn removeDXPScript
+
 	doLast {
 		logger.lifecycle "git clone --branch={} --depth=1 --no-checkout --single-branch {} {}", gitBranchName, gitRepositoryURL, gitRepositoryDir.name
 

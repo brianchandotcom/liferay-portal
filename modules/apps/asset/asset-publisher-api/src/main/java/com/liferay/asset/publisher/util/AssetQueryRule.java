@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.internal.util;
+package com.liferay.asset.publisher.util;
 
 import com.liferay.petra.lang.HashUtil;
 

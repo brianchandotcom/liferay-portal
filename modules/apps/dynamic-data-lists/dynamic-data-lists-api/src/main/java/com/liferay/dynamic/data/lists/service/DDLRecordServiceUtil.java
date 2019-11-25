@@ -65,34 +65,6 @@ public class DDLRecordServiceUtil {
 	}
 
 	/**
-	 * Adds a record referencing the record set.
-	 *
-	 * @param groupId the primary key of the record's group
-	 * @param recordSetId the primary key of the record set
-	 * @param displayIndex the index position in which the record is
-	 displayed in the spreadsheet view
-	 * @param fields the record values. See <code>Fields</code> in the
-	 <code>dynamic.data.mapping.api</code> module.
-	 * @param serviceContext the service context to be applied. This can
-	 set the UUID, guest permissions, and group permissions for
-	 the record.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #addRecord(long, long, int, DDMFormValues, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
-			long groupId, long recordSetId, int displayIndex,
-			com.liferay.dynamic.data.mapping.storage.Fields fields,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addRecord(
-			groupId, recordSetId, displayIndex, fields, serviceContext);
-	}
-
-	/**
 	 * Deletes the record and its resources.
 	 *
 	 * @param recordId the primary key of the record to be deleted
@@ -182,39 +154,6 @@ public class DDLRecordServiceUtil {
 
 		return getService().updateRecord(
 			recordId, majorVersion, displayIndex, ddmFormValues,
-			serviceContext);
-	}
-
-	/**
-	 * Updates a record, replacing its display index and values.
-	 *
-	 * @param recordId the primary key of the record
-	 * @param majorVersion whether this update is a major change. Major
-	 changes causes the increment of the major version number.
-	 * @param displayIndex the index position in which the record is
-	 displayed in the spreadsheet view
-	 * @param fields the record values. See <code>Fields</code> in the
-	 <code>dynamic.data.mapping.api</code> module.
-	 * @param mergeFields whether to merge the new fields with the existing
-	 ones; otherwise replace the existing fields
-	 * @param serviceContext the service context to be applied. This can
-	 set the record modified date.
-	 * @return the record
-	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #updateRecord(long, boolean, int, DDMFormValues,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
-			long recordId, boolean majorVersion, int displayIndex,
-			com.liferay.dynamic.data.mapping.storage.Fields fields,
-			boolean mergeFields,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updateRecord(
-			recordId, majorVersion, displayIndex, fields, mergeFields,
 			serviceContext);
 	}
 

@@ -171,7 +171,7 @@
 		label: string,
 		paddingSize: string
 	]>}
-	{@param selectedPaddingSize: string}
+	{@param? selectedPaddingSize: string}
 	{@param? handleContainerPaddingOptionChange: any}
 
 	<div class="form-group-item">
@@ -200,11 +200,11 @@
  * Container padding option
  */
 {template .containerPaddingOption}
-	{@param paddingOption: [
+	{@param? paddingOption: [
 		label: string,
 		paddingSize: string
 	]}
-	{@param selectedPaddingSize: string}
+	{@param? selectedPaddingSize: string}
 
 	{let $optionAttributes kind="attributes"}
 		value="{$paddingOption.paddingSize}"

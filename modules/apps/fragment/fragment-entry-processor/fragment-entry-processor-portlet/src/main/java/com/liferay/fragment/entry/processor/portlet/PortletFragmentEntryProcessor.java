@@ -332,12 +332,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		String defaultPortletId = _getPortletId(
 			portletName, fragmentEntryLink.getNamespace(), id, new long[0]);
 
+		long plid = _getPlid(fragmentEntryLink);
+
 		PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				fragmentEntryLink.getCompanyId(),
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				_getPlid(fragmentEntryLink), defaultPortletId,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, defaultPortletId,
 				defaultPreferences);
 
 		String portletId = _getPortletId(
@@ -356,8 +357,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					fragmentEntryLink.getCompanyId(),
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					_getPlid(fragmentEntryLink), portletId,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
 					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 
 			_updateLayoutPortletSetup(

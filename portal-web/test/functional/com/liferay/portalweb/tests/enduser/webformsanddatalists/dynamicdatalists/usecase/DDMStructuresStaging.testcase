@@ -82,9 +82,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-		WebContentTemplates.viewTableEntryCP(
+		WebContentTemplates.viewCardsEntryCP(
 			templateName = "WC Template Name",
 			templateSmallImage = "true");
 
@@ -105,9 +105,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-		WebContentTemplates.viewTableEntryCP(
+		WebContentTemplates.viewCardsEntryCP(
 			templateName = "WC Template Name",
 			templateSmallImage = "true");
 	}

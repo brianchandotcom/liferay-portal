@@ -82,6 +82,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEWER_FOOTER</td>
+	<td>//div[contains(@class,'footer')]/div[contains(.,'${key_footer}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWER_FOOTER_IMAGE</td>
+	<td>//div[contains(@class,'footer')]/span[contains(.,'${key_imageFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWER_INFO</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-info-panel-open')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWER_LEFT</td>
+	<td>//div[contains(@class,'pull-left')]/button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWER_RIGHT</td>
+	<td>//div[contains(@class,'pull-right')]/button[*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

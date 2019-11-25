@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EYE_PREVIEW</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FLAG</td>
 	<td>//div[contains(@class,'taglib-flags')]</td>
 	<td></td>

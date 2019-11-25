@@ -27,11 +27,11 @@ import {
 	EDIT_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
-} from '../../../../src/main/resources/META-INF/resources/js/actions/actions.es';
-import ExperienceSelector from '../../../../src/main/resources/META-INF/resources/js/components/toolbar/segmentsExperiences/ExperiencesSelector.es';
-import StateProvider from '../../../../src/main/resources/META-INF/resources/js/store/StateProvider.es';
-import StoreContext from '../../../../src/main/resources/META-INF/resources/js/store/StoreContext.es';
-import Store from '../../../../src/main/resources/META-INF/resources/js/store/store.es';
+} from '../../../../../src/main/resources/META-INF/resources/js/actions/actions.es';
+import ExperienceSelector from '../../../../../src/main/resources/META-INF/resources/js/components/toolbar/segmentsExperiences/ExperiencesSelector.es';
+import StateProvider from '../../../../../src/main/resources/META-INF/resources/js/store/StateProvider.es';
+import StoreContext from '../../../../../src/main/resources/META-INF/resources/js/store/StoreContext.es';
+import Store from '../../../../../src/main/resources/META-INF/resources/js/store/store.es';
 
 import '@testing-library/jest-dom/extend-expect';
 

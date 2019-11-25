@@ -15,20 +15,15 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 
 import NodeList from './NodeList';
 import TreeviewContext from './TreeviewContext';
 import useFocus from './useFocus';
 import useKeyboardNavigation from './useKeyboardNavigation';
 
-export default function NodeListItem({
-	NodeComponent,
-	node
-}) {
-	const {dispatch, state} = useContext(TreeviewContext);
-
-	const {focusedNodeId} = state;
+export default function NodeListItem({NodeComponent, node}) {
+	const {dispatch} = useContext(TreeviewContext);
 
 	const focusable = useFocus(node.id);
 
@@ -45,7 +40,7 @@ export default function NodeListItem({
 	const symbol = node.expanded ? 'hr' : 'plus';
 
 	const toggleExpanded = () => {
-		dispatch({type: 'TOGGLE_EXPANDED', nodeId: node.id});
+		dispatch({nodeId: node.id, type: 'TOGGLE_EXPANDED'});
 	};
 
 	return (
@@ -56,13 +51,6 @@ export default function NodeListItem({
 					return;
 				}}
 				onDoubleClick={toggleExpanded}
-				onFocus={event => {
-					return;
-					// event.stopPropagation();
-					// if (focusedNodeId && focusedNodeId !== node.id) {
-					// 	dispatch({type: 'FOCUS', nodeId: node.id});
-					// }
-				}}
 				onKeyDown={handleKeyDown}
 				ref={focusable}
 				tabIndex="-1"
@@ -96,10 +84,7 @@ export default function NodeListItem({
 					className="lfr-treeview-node-list-item__children"
 					id={childrenId}
 				>
-					<NodeList
-						NodeComponent={NodeComponent}
-						nodes={children}
-					/>
+					<NodeList NodeComponent={NodeComponent} nodes={children} />
 				</div>
 			)}
 		</>

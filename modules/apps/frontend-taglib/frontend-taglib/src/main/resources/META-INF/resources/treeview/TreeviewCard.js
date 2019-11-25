@@ -13,19 +13,22 @@
  */
 
 import ClayCard from '@clayui/card';
-import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+
 // import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 
 import TreeviewContext from './TreeviewContext';
 
+// TODO: sort this out
 // BUG: the classNames import above isn't working:
 //  Error: Unsatisfied dependency: frontend-js-react-web$classnames found in module frontend-taglib@5.0.0/treeview/TreeviewCard
 function classNames({focused, selected}) {
-	return [focused && 'focused', selected && 'selected'].filter(Boolean).join(' ');
+	return [focused && 'focused', selected && 'selected']
+		.filter(Boolean)
+		.join(' ');
 }
 
 export default function TreeviewCard({node}) {
@@ -48,27 +51,27 @@ export default function TreeviewCard({node}) {
 				})}
 				horizontal
 				onClick={() => {
-					dispatch({type: 'TOGGLE_SELECT', nodeId: node.id});
+					dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'});
 				}}
 				role="treeitem"
 				selectable={true}
 			>
-					<ClayCard.Body>
-						<ClayCard.Row>
-							<div className="autofit-col">
-								<ClaySticker inline>
-									<ClayIcon symbol={node.icon} />
-								</ClaySticker>
-							</div>
-						</ClayCard.Row>
-
-						<div className="autofit-col autofit-col-expand autofit-col-gutters">
-							<ClayCard.Description displayType="title">
-								{node.name}
-							</ClayCard.Description>
+				<ClayCard.Body>
+					<ClayCard.Row>
+						<div className="autofit-col">
+							<ClaySticker inline>
+								<ClayIcon symbol={node.icon} />
+							</ClaySticker>
 						</div>
-						{path}
-					</ClayCard.Body>
+					</ClayCard.Row>
+
+					<div className="autofit-col autofit-col-expand autofit-col-gutters">
+						<ClayCard.Description displayType="title">
+							{node.name}
+						</ClayCard.Description>
+					</div>
+					{path}
+				</ClayCard.Body>
 			</ClayCard>
 		</div>
 	);

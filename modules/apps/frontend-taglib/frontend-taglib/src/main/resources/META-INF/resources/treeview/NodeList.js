@@ -27,9 +27,7 @@ export default function NodeList({
 	onFocus,
 	tabIndex = -1
 }) {
-	const {dispatch, state} = useContext(TreeviewContext);
-
-	const {focusedNodeId} = state;
+	const {dispatch} = useContext(TreeviewContext);
 
 	const rootNodeId = nodes[0] && nodes[0].id;
 
@@ -46,13 +44,17 @@ export default function NodeList({
 		<div
 			className="lfr-treeview-node-list"
 			onBlur={() => {
-				onBlur && onBlur(event);
+				if (onBlur) {
+					onBlur();
+				}
 			}}
-			onDoubleClick={() =>
-				dispatch({type: 'TOGGLE_EXPANDED', nodeId: rootNodeId})
-			}
+			onDoubleClick={() => {
+				dispatch({nodeId: rootNodeId, type: 'TOGGLE_EXPANDED'});
+			}}
 			onFocus={event => {
-				onFocus && onFocus(event);
+				if (onFocus) {
+					onFocus(event);
+				}
 			}}
 			onKeyDown={handleKeyDown}
 			ref={focusable}

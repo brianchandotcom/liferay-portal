@@ -62,8 +62,8 @@ export default function useKeyboardNavigation(nodeId) {
 		({keyCode}) => {
 			if (focusedNodeId === nodeId && HANDLED_KEY_CODES.has(keyCode)) {
 				dispatch({
-					type: KEY_CODES_TO_ACTIONS[keyCode],
-					nodeId
+					nodeId,
+					type: KEY_CODES_TO_ACTIONS[keyCode]
 				});
 			}
 		},

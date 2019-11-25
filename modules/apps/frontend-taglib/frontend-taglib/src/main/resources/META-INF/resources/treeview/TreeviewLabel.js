@@ -27,12 +27,16 @@ export default function TreeviewLabel({node}) {
 				checked={node.selected}
 				className="sr-only"
 				id={inputId}
-				onChange={() => dispatch({type: 'TOGGLE_SELECT', nodeId: node.id})}
+				onChange={() =>
+					dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'})
+				}
 				type="checkbox"
 			/>
 
 			<label
-				className={node.selected ? 'font-weight-bold' : 'font-weight-normal'}
+				className={
+					node.selected ? 'font-weight-bold' : 'font-weight-normal'
+				}
 				htmlFor={inputId}
 			>
 				{node.name}

@@ -12,7 +12,7 @@
 <!--CUSTOM_OBJECTS_LISTING_SCREEN-->
 <tr>
 	<td>BUTTON_ADD</td>
-	<td>//*[contains(@class,'lexicon-icon-plus')]</td>
+	<td>//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 
@@ -25,7 +25,7 @@
 
 <tr>
 	<td>ITEM_ON_THE_TABLE</td>
-	<td>//table[contains(@class,'table')]//a[contains(text(),'${value1}')]</td>
+	<td>//table[contains(@class,'table')]//*[contains(text(),'${value1}')]</td>
 	<td></td>
 </tr>
 

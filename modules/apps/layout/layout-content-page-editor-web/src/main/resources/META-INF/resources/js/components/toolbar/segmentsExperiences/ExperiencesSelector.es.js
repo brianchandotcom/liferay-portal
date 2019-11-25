@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
@@ -326,45 +326,54 @@ ExperiencesSelector.propTypes = {
  * Renders `ExperienceSelector` component with props gathered from the state
  */
 const ExperiencesSelectorWrapper = () => {
-	const activeExperience = useSelector(state => {
-		const activeExperienceId = state.segmentsExperienceId;
+	const {
+		activeExperience,
+		availableSegmentsEntries,
+		availableSegmentsExperiences,
+		classPK,
+		defaultSegmentsEntryId,
+		editSegmentsEntryURL,
+		hasSegmentsPermission,
+		hasUpdatePermissions,
+		lockedActiveExperience,
+		portletNamespace,
+		selectedSegmentsEntryId
+	} = useSelector(state => {
+		return {
+			activeExperience:
+				state.availableSegmentsExperiences[state.segmentsExperienceId],
+			availableSegmentsEntries: state.availableSegmentsEntries,
+			availableSegmentsExperiences: state.availableSegmentsExperiences,
+			classPK: state.classPK,
+			defaultSegmentsEntryId: state.defaultSegmentsEntryId,
+			editSegmentsEntryURL: state.editSegmentsEntryURL,
+			hasSegmentsPermission: state.hasEditSegmentsEntryPermission,
+			hasUpdatePermissions: state.hasUpdatePermissions,
+			lockedActiveExperience: state.lockedSegmentsExperience,
+			portletNamespace: state.portletNamespace,
+			selectedSegmentsEntryId: state.selectedSegmentsEntryId
+		};
+	});
 
-		return state.availableSegmentsExperiences[activeExperienceId];
-	});
-	const classPK = useSelector(state => state.classPK);
-	const experiences = useSelector(state => {
-		return Object.values(state.availableSegmentsExperiences)
-			.map(experience => {
-				const segment =
-					state.availableSegmentsEntries[experience.segmentsEntryId];
+	const experiences = useMemo(
+		() =>
+			Object.values(availableSegmentsExperiences)
+				.map(experience => {
+					const segment =
+						availableSegmentsEntries[experience.segmentsEntryId];
 
-				return {...experience, segmentsEntryName: segment.name};
-			})
-			.sort((a, b) => b.priority - a.priority);
-	});
-	const hasSegmentsPermission = useSelector(state => {
-		return state.hasEditSegmentsEntryPermission;
-	});
-	const hasUpdatePermissions = useSelector(
-		state => state.hasUpdatePermissions
+					return {...experience, segmentsEntryName: segment.name};
+				})
+				.sort((a, b) => b.priority - a.priority),
+		[availableSegmentsEntries, availableSegmentsExperiences]
 	);
-	const segments = useSelector(state =>
-		Object.values(state.availableSegmentsEntries)
-			.map(segment => segment)
-			.filter(
-				segment =>
-					segment.segmentsEntryId !== state.defaultSegmentsEntryId
-			)
-	);
-	const editSegmentsEntryURL = useSelector(
-		state => state.editSegmentsEntryURL
-	);
-	const lockedActiveExperience = useSelector(
-		state => state.lockedSegmentsExperience
-	);
-	const portletNamespace = useSelector(state => state.portletNamespace);
-	const selectedSegmentsEntryId = useSelector(
-		state => state.selectedSegmentsEntryId
+
+	const segments = useMemo(
+		() =>
+			Object.values(availableSegmentsEntries).filter(
+				segment => segment.segmentsEntryId !== defaultSegmentsEntryId
+			),
+		[availableSegmentsEntries, defaultSegmentsEntryId]
 	);
 
 	return (

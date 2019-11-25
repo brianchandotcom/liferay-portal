@@ -29,9 +29,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102531."
+	@description = "This is a test for LPS-96797."
 	@priority = "5"
-	test CannotCreateContentWithExistingStructureViaInlineFieldWithoutMappingRequiredField {
+	test CreateContentWithExistingStructureViaInlineFieldWithoutMappingRequiredField {
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentCreationContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "contentCreationEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";

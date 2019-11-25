@@ -5,17 +5,19 @@ gradle.liferayWorkspace {
 	bundleUrl = uri("bundlesDir/bundle.zip")
 }
 
+String errorMessage = ""
+
+gradle.taskGraph.afterTask { Task task, TaskState taskState ->
+	if (task.name.equals("downloadBundle")) {
+		errorMessage = taskState.failure.cause.message
+		taskState.failure = null
+	}
+}
+
 runGradleTest {
+	dependsOn downloadBundle
+
 	doLast {
-		String errorMessage = ""
-
-		try {
-			downloadBundle.execute()
-		}
-		catch (Exception e) {
-			errorMessage = e.cause.message
-		}
-
 		assert errorMessage.endsWith(" cannot be the same")
 	}
 }

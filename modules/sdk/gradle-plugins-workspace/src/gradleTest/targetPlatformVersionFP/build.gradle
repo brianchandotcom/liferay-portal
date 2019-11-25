@@ -9,16 +9,9 @@ allprojects {
 }
 
 runGradleTest {
+	dependsOn eclipseClasspath
+
 	doLast {
-		String errorMessage = ""
-
-		try {
-			tasks.eclipseClasspath.execute()
-		}
-		catch (Exception e) {
-			errorMessage = e.cause.message
-		}
-
-		assert errorMessage.contains("release.dxp.bom")
+		assert configurations.targetPlatformBoms.dependencies[0].name.equals("release.dxp.bom.third.party")
 	}
 }

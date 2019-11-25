@@ -57,11 +57,6 @@ public class MemberExpressionImpl implements MemberExpression {
 	}
 
 	@Override
-	public List<String> getResourcePath() {
-		return _resourcePath;
-	}
-
-	@Override
 	public String toString() {
 		return _expression.toString();
 	}

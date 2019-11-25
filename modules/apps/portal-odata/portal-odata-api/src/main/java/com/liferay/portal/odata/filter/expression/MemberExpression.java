@@ -14,8 +14,6 @@
 
 package com.liferay.portal.odata.filter.expression;
 
-import java.util.List;
-
 /**
  * Represents a member expression node in the expression tree. This expression
  * is used to describe access paths to properties.
@@ -35,15 +33,5 @@ public interface MemberExpression extends Expression {
 		throw new UnsupportedOperationException(
 			"Unsupported method getExpression");
 	}
-
-	/**
-	 * Returns the member expression's resource path.
-	 *
-	 * @return     the resource path
-	 * @deprecated As of Judson (7.1.x)
-	 * @review
-	 */
-	@Deprecated
-	public List<String> getResourcePath();
 
 }

@@ -86,10 +86,9 @@ public class BookmarksEntryModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"folderId", Types.BIGINT},
 		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"url", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"visits", Types.INTEGER}, {"priority", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"priority", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -110,7 +109,6 @@ public class BookmarksEntryModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("visits", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
@@ -120,7 +118,7 @@ public class BookmarksEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BookmarksEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,visits INTEGER,priority INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table BookmarksEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,priority INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BookmarksEntry";
 
@@ -185,7 +183,6 @@ public class BookmarksEntryModelImpl
 		model.setName(soapModel.getName());
 		model.setUrl(soapModel.getUrl());
 		model.setDescription(soapModel.getDescription());
-		model.setVisits(soapModel.getVisits());
 		model.setPriority(soapModel.getPriority());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
@@ -403,10 +400,6 @@ public class BookmarksEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"description",
 			(BiConsumer<BookmarksEntry, String>)BookmarksEntry::setDescription);
-		attributeGetterFunctions.put("visits", BookmarksEntry::getVisits);
-		attributeSetterBiConsumers.put(
-			"visits",
-			(BiConsumer<BookmarksEntry, Integer>)BookmarksEntry::setVisits);
 		attributeGetterFunctions.put("priority", BookmarksEntry::getPriority);
 		attributeSetterBiConsumers.put(
 			"priority",
@@ -709,17 +702,6 @@ public class BookmarksEntryModelImpl
 	@Override
 	public void setDescription(String description) {
 		_description = description;
-	}
-
-	@JSON
-	@Override
-	public int getVisits() {
-		return _visits;
-	}
-
-	@Override
-	public void setVisits(int visits) {
-		_visits = visits;
 	}
 
 	@JSON
@@ -1102,7 +1084,6 @@ public class BookmarksEntryModelImpl
 		bookmarksEntryImpl.setName(getName());
 		bookmarksEntryImpl.setUrl(getUrl());
 		bookmarksEntryImpl.setDescription(getDescription());
-		bookmarksEntryImpl.setVisits(getVisits());
 		bookmarksEntryImpl.setPriority(getPriority());
 		bookmarksEntryImpl.setLastPublishDate(getLastPublishDate());
 		bookmarksEntryImpl.setStatus(getStatus());
@@ -1298,8 +1279,6 @@ public class BookmarksEntryModelImpl
 			bookmarksEntryCacheModel.description = null;
 		}
 
-		bookmarksEntryCacheModel.visits = getVisits();
-
 		bookmarksEntryCacheModel.priority = getPriority();
 
 		Date lastPublishDate = getLastPublishDate();
@@ -1433,7 +1412,6 @@ public class BookmarksEntryModelImpl
 	private String _name;
 	private String _url;
 	private String _description;
-	private int _visits;
 	private int _priority;
 	private Date _lastPublishDate;
 	private int _status;

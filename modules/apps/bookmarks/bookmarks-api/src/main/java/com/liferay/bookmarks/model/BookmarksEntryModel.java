@@ -298,20 +298,6 @@ public interface BookmarksEntryModel
 	public void setDescription(String description);
 
 	/**
-	 * Returns the visits of this bookmarks entry.
-	 *
-	 * @return the visits of this bookmarks entry
-	 */
-	public int getVisits();
-
-	/**
-	 * Sets the visits of this bookmarks entry.
-	 *
-	 * @param visits the visits of this bookmarks entry
-	 */
-	public void setVisits(int visits);
-
-	/**
 	 * Returns the priority of this bookmarks entry.
 	 *
 	 * @return the priority of this bookmarks entry

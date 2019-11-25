@@ -45,7 +45,6 @@ public class BookmarksEntrySoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setUrl(model.getUrl());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setVisits(model.getVisits());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
@@ -222,14 +221,6 @@ public class BookmarksEntrySoap implements Serializable {
 		_description = description;
 	}
 
-	public int getVisits() {
-		return _visits;
-	}
-
-	public void setVisits(int visits) {
-		_visits = visits;
-	}
-
 	public int getPriority() {
 		return _priority;
 	}
@@ -292,7 +283,6 @@ public class BookmarksEntrySoap implements Serializable {
 	private String _name;
 	private String _url;
 	private String _description;
-	private int _visits;
 	private int _priority;
 	private Date _lastPublishDate;
 	private int _status;

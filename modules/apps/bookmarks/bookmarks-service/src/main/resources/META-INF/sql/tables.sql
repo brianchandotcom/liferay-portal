@@ -13,7 +13,6 @@ create table BookmarksEntry (
 	name VARCHAR(255) null,
 	url STRING null,
 	description STRING null,
-	visits INTEGER,
 	priority INTEGER,
 	lastPublishDate DATE null,
 	status INTEGER,

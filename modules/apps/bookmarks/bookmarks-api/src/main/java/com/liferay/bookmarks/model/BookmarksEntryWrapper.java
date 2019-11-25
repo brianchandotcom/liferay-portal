@@ -57,7 +57,6 @@ public class BookmarksEntryWrapper
 		attributes.put("name", getName());
 		attributes.put("url", getUrl());
 		attributes.put("description", getDescription());
-		attributes.put("visits", getVisits());
 		attributes.put("priority", getPriority());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
@@ -152,12 +151,6 @@ public class BookmarksEntryWrapper
 
 		if (description != null) {
 			setDescription(description);
-		}
-
-		Integer visits = (Integer)attributes.get("visits");
-
-		if (visits != null) {
-			setVisits(visits);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");
@@ -475,13 +468,8 @@ public class BookmarksEntryWrapper
 		return model.getUuid();
 	}
 
-	/**
-	 * Returns the visits of this bookmarks entry.
-	 *
-	 * @return the visits of this bookmarks entry
-	 */
 	@Override
-	public int getVisits() {
+	public long getVisits() {
 		return model.getVisits();
 	}
 
@@ -833,16 +821,6 @@ public class BookmarksEntryWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
-	}
-
-	/**
-	 * Sets the visits of this bookmarks entry.
-	 *
-	 * @param visits the visits of this bookmarks entry
-	 */
-	@Override
-	public void setVisits(int visits) {
-		model.setVisits(visits);
 	}
 
 	@Override

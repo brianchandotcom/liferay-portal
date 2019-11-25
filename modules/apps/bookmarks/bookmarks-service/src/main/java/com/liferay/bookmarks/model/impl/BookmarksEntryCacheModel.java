@@ -77,7 +77,7 @@ public class BookmarksEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,8 +107,6 @@ public class BookmarksEntryCacheModel
 		sb.append(url);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", visits=");
-		sb.append(visits);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", lastPublishDate=");
@@ -195,7 +193,6 @@ public class BookmarksEntryCacheModel
 			bookmarksEntryImpl.setDescription(description);
 		}
 
-		bookmarksEntryImpl.setVisits(visits);
 		bookmarksEntryImpl.setPriority(priority);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -248,8 +245,6 @@ public class BookmarksEntryCacheModel
 		name = objectInput.readUTF();
 		url = objectInput.readUTF();
 		description = objectInput.readUTF();
-
-		visits = objectInput.readInt();
 
 		priority = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
@@ -320,8 +315,6 @@ public class BookmarksEntryCacheModel
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeInt(visits);
-
 		objectOutput.writeInt(priority);
 		objectOutput.writeLong(lastPublishDate);
 
@@ -353,7 +346,6 @@ public class BookmarksEntryCacheModel
 	public String name;
 	public String url;
 	public String description;
-	public int visits;
 	public int priority;
 	public long lastPublishDate;
 	public int status;

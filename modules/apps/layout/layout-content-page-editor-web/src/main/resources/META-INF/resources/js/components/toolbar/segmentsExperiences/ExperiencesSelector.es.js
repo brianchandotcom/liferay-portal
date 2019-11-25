@@ -258,6 +258,7 @@ const ExperiencesSelector = ({
 
 			<button
 				className="align-items-end btn btn-secondary btn-sm d-inline-flex form-control-select justify-content-between mr-2 text-left text-truncate"
+				id={`${portletNamespace}SegmentsExperienceSelector`}
 				onBlur={handleDropdownButtonBlur}
 				onClick={handleDropdownButtonClick}
 				type="button"

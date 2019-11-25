@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 
 import {StoreContext} from '../../app/store/index';
 

@@ -132,19 +132,30 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			);
 		});
 
-		dom.delegate(document.body, 'click', '.disconnect-site-button', function(
-			event
-		) {
-			if (
-				confirm(
-					'<liferay-ui:message key="removing-this-site-connection-will-not-allow-the-site-to-consume-data-from-this-repository-directly" />'
-				)
-			) {
-				submitForm(
-					document.hrefFm,
-					event.delegateTarget.getAttribute('data-href')
-				);
+		var delegateHandler = dom.delegate(
+			document.body,
+			'click',
+			'.disconnect-site-button',
+			function(event) {
+				if (
+					confirm(
+						'<liferay-ui:message key="removing-this-site-connection-will-not-allow-the-site-to-consume-data-from-this-repository-directly" />'
+					)
+				) {
+					submitForm(
+						document.hrefFm,
+						event.delegateTarget.getAttribute('data-href')
+					);
+				}
 			}
-		});
+		);
+
+		var onDestroyPortlet = function() {
+			delegateHandler.removeListener();
+
+			Liferay.detach('destroyPortlet', onDestroyPortlet);
+		};
+
+		Liferay.on('destroyPortlet', onDestroyPortlet);
 	</aui:script>
 </div>

@@ -22,7 +22,7 @@ import {useDrag, useDrop} from 'react-dnd';
 import {Permission} from '../../common/index';
 import {moveItem} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../config/index';
+import {getConfig} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import updateLayoutData from '../thunks/updateLayoutData';
@@ -402,7 +402,7 @@ const LayoutDataItem = React.forwardRef(({item, layoutData}, ref) => {
 });
 
 export default function PageEditor() {
-	const {portletNamespace} = useContext(ConfigContext);
+	const {portletNamespace} = getConfig();
 
 	const dispatch = useContext(DispatchContext);
 

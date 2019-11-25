@@ -61,16 +61,11 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			keyProperty="depotEntryGroupRelId"
 			modelVar="depotEntryGroupRel"
 		>
-
-			<%
-			Group toGroup = GroupServiceUtil.getGroup(depotEntryGroupRel.getToGroupId());
-			%>
-
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
 			>
-				<%= HtmlUtil.escape(toGroup.getDescriptiveName(locale)) %>
+				<%= HtmlUtil.escape(depotAdminSitesDisplayContext.getSiteName(depotEntryGroupRel)) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text>
@@ -112,7 +107,8 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 						destroyOnHide: true,
 						modal: true
 					},
-					eventName: '<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
+					eventName:
+						'<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
 					id: '<portlet:namespace />selectSite',
 					title: '<liferay-ui:message key="select-site" />',
 					uri:

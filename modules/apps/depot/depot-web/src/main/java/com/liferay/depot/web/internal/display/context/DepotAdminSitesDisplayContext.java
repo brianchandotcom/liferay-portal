@@ -21,12 +21,18 @@ import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -66,6 +72,18 @@ public class DepotAdminSitesDisplayContext {
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
 			_liferayPortletResponse.getNamespace() + "selectSite",
 			itemSelectorCriterion);
+	}
+
+	public String getSiteName(DepotEntryGroupRel depotEntryGroupRel)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getLanguageId(_liferayPortletRequest));
+
+		Group group = GroupServiceUtil.getGroup(
+			depotEntryGroupRel.getToGroupId());
+
+		return group.getDescriptiveName(locale);
 	}
 
 	private final LiferayPortletRequest _liferayPortletRequest;

@@ -7313,8 +7313,6 @@ jdbc.counter.minIdle=0
 
 browser.launcher.url=
 
-index.on.startup=true
-
 setup.wizard.enabled=false
 
 mail.send.blacklist=

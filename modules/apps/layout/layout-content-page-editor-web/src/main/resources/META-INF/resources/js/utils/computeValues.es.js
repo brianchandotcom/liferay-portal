@@ -88,6 +88,12 @@ export function getComputedEditableValue(editableValue, configuration = {}) {
 		}
 	}
 
+	if (!result.value) {
+		result.value = isNullOrUndefined(selectedLanguageId)
+			? editableValue[defaultLanguageId]
+			: editableValue[selectedLanguageId];
+	}
+
 	return result;
 }
 

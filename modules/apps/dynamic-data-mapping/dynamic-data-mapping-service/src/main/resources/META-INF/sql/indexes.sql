@@ -55,8 +55,11 @@ create index IX_B7158C0A on DDMStructureLayout (structureVersionId);
 create index IX_A90FF72A on DDMStructureLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_C9A0402C on DDMStructureLayout (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create unique index IX_E43143A3 on DDMStructureLink (classNameId, classPK, structureId);
-create index IX_17692B58 on DDMStructureLink (structureId);
+create index IX_4C181B39 on DDMStructureLink (classNameId, classPK, ctCollectionId);
+create unique index IX_C8DE7401 on DDMStructureLink (classNameId, classPK, structureId, ctCollectionId);
+create index IX_7E340866 on DDMStructureLink (classNameId, ctCollectionId);
+create index IX_A2D51B64 on DDMStructureLink (ctCollectionId);
+create index IX_FD8251B6 on DDMStructureLink (structureId, ctCollectionId);
 
 create index IX_9B5D9F76 on DDMStructureVersion (ctCollectionId);
 create index IX_5F887AE4 on DDMStructureVersion (structureId, ctCollectionId);
@@ -81,8 +84,10 @@ create index IX_C64F367F on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], companyId, c
 create index IX_17F6EC05 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_147A0D41 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create unique index IX_6F3B3E9C on DDMTemplateLink (classNameId, classPK);
-create index IX_85278170 on DDMTemplateLink (templateId);
+create unique index IX_79ED5CFA on DDMTemplateLink (classNameId, classPK, ctCollectionId);
+create index IX_8C969985 on DDMTemplateLink (classNameId, ctCollectionId);
+create index IX_E8A223E5 on DDMTemplateLink (ctCollectionId);
+create index IX_CFC177CE on DDMTemplateLink (templateId, ctCollectionId);
 
 create index IX_6A4E3B55 on DDMTemplateVersion (ctCollectionId);
 create index IX_4E55E73E on DDMTemplateVersion (templateId, ctCollectionId);

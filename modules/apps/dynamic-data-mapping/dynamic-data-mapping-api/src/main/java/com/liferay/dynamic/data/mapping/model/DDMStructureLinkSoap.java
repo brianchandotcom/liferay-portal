@@ -31,6 +31,7 @@ public class DDMStructureLinkSoap implements Serializable {
 		DDMStructureLinkSoap soapModel = new DDMStructureLinkSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setStructureLinkId(model.getStructureLinkId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
@@ -105,6 +106,14 @@ public class DDMStructureLinkSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getStructureLinkId() {
 		return _structureLinkId;
 	}
@@ -146,6 +155,7 @@ public class DDMStructureLinkSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _structureLinkId;
 	private long _companyId;
 	private long _classNameId;

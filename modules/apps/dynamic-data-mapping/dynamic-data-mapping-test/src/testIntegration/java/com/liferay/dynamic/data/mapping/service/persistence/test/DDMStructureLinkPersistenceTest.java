@@ -125,6 +125,8 @@ public class DDMStructureLinkPersistenceTest {
 
 		newDDMStructureLink.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDMStructureLink.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDMStructureLink.setCompanyId(RandomTestUtil.nextLong());
 
 		newDDMStructureLink.setClassNameId(RandomTestUtil.nextLong());
@@ -141,6 +143,9 @@ public class DDMStructureLinkPersistenceTest {
 		Assert.assertEquals(
 			existingDDMStructureLink.getMvccVersion(),
 			newDDMStructureLink.getMvccVersion());
+		Assert.assertEquals(
+			existingDDMStructureLink.getCtCollectionId(),
+			newDDMStructureLink.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDMStructureLink.getStructureLinkId(),
 			newDDMStructureLink.getStructureLinkId());
@@ -214,9 +219,9 @@ public class DDMStructureLinkPersistenceTest {
 
 	protected OrderByComparator<DDMStructureLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMStructureLink", "mvccVersion", true, "structureLinkId", true,
-			"companyId", true, "classNameId", true, "classPK", true,
-			"structureId", true);
+			"DDMStructureLink", "mvccVersion", true, "ctCollectionId", true,
+			"structureLinkId", true, "companyId", true, "classNameId", true,
+			"classPK", true, "structureId", true);
 	}
 
 	@Test
@@ -465,6 +470,8 @@ public class DDMStructureLinkPersistenceTest {
 		DDMStructureLink ddmStructureLink = _persistence.create(pk);
 
 		ddmStructureLink.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddmStructureLink.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmStructureLink.setCompanyId(RandomTestUtil.nextLong());
 

@@ -75,10 +75,12 @@ public class DDMStructureLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", structureLinkId=");
 		sb.append(structureLinkId);
 		sb.append(", companyId=");
@@ -99,6 +101,7 @@ public class DDMStructureLinkCacheModel
 		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl();
 
 		ddmStructureLinkImpl.setMvccVersion(mvccVersion);
+		ddmStructureLinkImpl.setCtCollectionId(ctCollectionId);
 		ddmStructureLinkImpl.setStructureLinkId(structureLinkId);
 		ddmStructureLinkImpl.setCompanyId(companyId);
 		ddmStructureLinkImpl.setClassNameId(classNameId);
@@ -113,6 +116,8 @@ public class DDMStructureLinkCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 
 		structureLinkId = objectInput.readLong();
 
@@ -129,6 +134,8 @@ public class DDMStructureLinkCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(structureLinkId);
 
 		objectOutput.writeLong(companyId);
@@ -141,6 +148,7 @@ public class DDMStructureLinkCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long structureLinkId;
 	public long companyId;
 	public long classNameId;

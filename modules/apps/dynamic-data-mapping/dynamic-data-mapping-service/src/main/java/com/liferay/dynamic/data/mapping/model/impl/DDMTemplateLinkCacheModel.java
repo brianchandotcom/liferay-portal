@@ -75,10 +75,12 @@ public class DDMTemplateLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", templateLinkId=");
 		sb.append(templateLinkId);
 		sb.append(", companyId=");
@@ -99,6 +101,7 @@ public class DDMTemplateLinkCacheModel
 		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
 
 		ddmTemplateLinkImpl.setMvccVersion(mvccVersion);
+		ddmTemplateLinkImpl.setCtCollectionId(ctCollectionId);
 		ddmTemplateLinkImpl.setTemplateLinkId(templateLinkId);
 		ddmTemplateLinkImpl.setCompanyId(companyId);
 		ddmTemplateLinkImpl.setClassNameId(classNameId);
@@ -113,6 +116,8 @@ public class DDMTemplateLinkCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 
 		templateLinkId = objectInput.readLong();
 
@@ -129,6 +134,8 @@ public class DDMTemplateLinkCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(templateLinkId);
 
 		objectOutput.writeLong(companyId);
@@ -141,6 +148,7 @@ public class DDMTemplateLinkCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long templateLinkId;
 	public long companyId;
 	public long classNameId;

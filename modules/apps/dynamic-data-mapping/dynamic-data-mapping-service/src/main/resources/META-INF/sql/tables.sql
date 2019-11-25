@@ -172,11 +172,13 @@ create table DDMStructureLayout (
 
 create table DDMStructureLink (
 	mvccVersion LONG default 0 not null,
-	structureLinkId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	structureLinkId LONG not null,
 	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
-	structureId LONG
+	structureId LONG,
+	primary key (structureLinkId, ctCollectionId)
 );
 
 create table DDMStructureVersion (
@@ -237,11 +239,13 @@ create table DDMTemplate (
 
 create table DDMTemplateLink (
 	mvccVersion LONG default 0 not null,
-	templateLinkId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	templateLinkId LONG not null,
 	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
-	templateId LONG
+	templateId LONG,
+	primary key (templateLinkId, ctCollectionId)
 );
 
 create table DDMTemplateVersion (

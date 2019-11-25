@@ -206,6 +206,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureLink">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="structureLinkId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="classNameId" type="long" />
@@ -287,6 +288,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMTemplateLink">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="templateLinkId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="classNameId" type="long" />

@@ -237,6 +237,33 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			long classNameId, long classTypeId, String name, int type,
+			long masterLayoutPlid, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Layout page template entry
+
+		validate(classNameId, classTypeId, groupId, serviceContext.getLocale());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			addLayoutPageTemplateEntry(
+				userId, groupId, layoutPageTemplateCollectionId, classNameId,
+				classTypeId, name, type, 0, false, 0, 0, masterLayoutPlid,
+				status, serviceContext);
+
+		// Dynamic data mapping structure link
+
+		_ddmStructureLinkLocalService.addStructureLink(
+			classNameLocalService.getClassNameId(LayoutPageTemplateEntry.class),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			classTypeId);
+
+		return layoutPageTemplateEntry;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addLayoutPageTemplateEntry(long, long, long, String, int,

@@ -66,6 +66,24 @@ public class LayoutPageTemplateEntryServiceImpl
 			serviceContext);
 	}
 
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateCollectionId, long classNameId,
+			long classTypeId, String name, long masterLayoutPlid, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			getUserId(), groupId, layoutPageTemplateCollectionId, classNameId,
+			classTypeId, name,
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+			masterLayoutPlid, status, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addLayoutPageTemplateEntry(long, long, String, int, long,

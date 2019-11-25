@@ -75,7 +75,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 				mainFieldName: 'name',
 				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
 				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				spritemap:
+					'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 			});
 		}
 	);

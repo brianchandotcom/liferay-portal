@@ -58,7 +58,7 @@ definition {
 		SiteSelector.selectSite(site = "${depotName}");
 	}
 
-	macro gotoDepotViaSiteNavigation {
+	macro gotoDepotViaSpaceIcon {
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
 		ProductMenuHelper.openWorkspace();

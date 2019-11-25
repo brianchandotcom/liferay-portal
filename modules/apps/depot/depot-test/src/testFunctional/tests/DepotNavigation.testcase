@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a user can redirect to the repository via site navigation."
+	@description = "This ensures that a user can redirect to the repository via personal menu."
 	@priority = "5"
 	test AccessViaPersonalMenu {
 		DepotNavigator.openDepotAdmin();
@@ -42,7 +42,7 @@ definition {
 			value1 = "Test Depot Name");
 	}
 
-	@description = "This ensures that a user can redirect to the repository via personal menu."
+	@description = "This ensures that a user can redirect to the repository via Space icon."
 	@priority = "5"
 	test AccessViaSiteNavigation {
 		DepotNavigator.openDepotAdmin();
@@ -53,7 +53,7 @@ definition {
 
 		Navigator.openURL();
 
-		DepotNavigator.gotoDepotViaSiteNavigation(depotName = "Test Depot Name");
+		DepotNavigator.gotoDepotViaSpaceIcon(depotName = "Test Depot Name");
 
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 

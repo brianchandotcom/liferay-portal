@@ -191,7 +191,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			liferayPortletResponse.createRenderURL();
 
 		selectMasterLayoutURL.setParameter(
-			"mvcPath", "/select_master_layout.jsp");
+			"mvcPath", "/select_layout_page_template_entry_master_layout.jsp");
 		selectMasterLayoutURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
 		selectMasterLayoutURL.setParameter(

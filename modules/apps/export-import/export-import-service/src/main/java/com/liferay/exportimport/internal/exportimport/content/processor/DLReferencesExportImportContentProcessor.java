@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -129,7 +130,9 @@ public class DLReferencesExportImportContentProcessor
 		sb.replace(beginPos + 1, endPos, urlParams);
 	}
 
-	protected String getDLReference(String content, int beginPos, int endPos) {
+	protected ObjectValuePair<String, Integer> getDLReferenceEndPosObjectValuePair(
+		String content, int beginPos, int endPos) {
+
 		String[] stopStrings = _DL_REFERENCE_LEGACY_STOP_STRINGS;
 
 		if (!isLegacyURL(content, beginPos)) {
@@ -142,7 +145,8 @@ public class DLReferencesExportImportContentProcessor
 			return null;
 		}
 
-		return content.substring(beginPos, endPos);
+		return new ObjectValuePair<>(
+			content.substring(beginPos, endPos), endPos);
 	}
 
 	protected Map<String, String[]> getDLReferenceParameters(
@@ -152,7 +156,12 @@ public class DLReferencesExportImportContentProcessor
 
 		Map<String, String[]> map = new HashMap<>();
 
-		String dlReference = getDLReference(content, beginPos, endPos);
+		ObjectValuePair<String, Integer> dlReferenceEndPosObjectValuePair =
+			getDLReferenceEndPosObjectValuePair(content, beginPos, endPos);
+
+		String dlReference = dlReferenceEndPosObjectValuePair.getKey();
+
+		endPos = dlReferenceEndPosObjectValuePair.getValue();
 
 		while (dlReference.contains(StringPool.AMPERSAND_ENCODED)) {
 			dlReference = StringUtil.replace(
@@ -598,7 +607,8 @@ public class DLReferencesExportImportContentProcessor
 				getDLReferenceParameters(
 					groupId, content, beginPos + pathContext.length(), endPos);
 
-			String dlReference = getDLReference(content, beginPos, endPos);
+			ObjectValuePair<String, Integer> dlReferenceEndPosObjectValuePair =
+				getDLReferenceEndPosObjectValuePair(content, beginPos, endPos);
 
 			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
@@ -673,7 +683,7 @@ public class DLReferencesExportImportContentProcessor
 							new NoSuchFileEntryException());
 
 					eicve.setDlReferenceParameters(dlReferenceParameters);
-					eicve.setDlReference(dlReference);
+					eicve.setDlReference(dlReferenceEndPosObjectValuePair.getKey());
 					eicve.setType(
 						ExportImportContentValidationException.
 							FILE_ENTRY_NOT_FOUND);

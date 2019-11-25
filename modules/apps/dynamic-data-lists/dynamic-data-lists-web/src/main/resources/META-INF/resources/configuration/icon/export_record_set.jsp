@@ -25,7 +25,7 @@ long recordSetId = ParamUtil.getLong(request, renderResponse.getNamespace() + "r
 </liferay-portlet:resourceURL>
 
 <%
-StringBundler sb = new StringBundler(6);
+StringBundler sb = new StringBundler(5);
 
 sb.append("javascript:");
 sb.append(renderResponse.getNamespace());

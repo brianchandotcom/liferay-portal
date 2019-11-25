@@ -11,22 +11,25 @@ definition {
 			value1 = "URL");
 
 		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
+		AssertElementNotPresent(locator1 = "ItemSelector#URL_IMAGE_PREVIEW");
+
+		AssertVisible(
+			key_text = "Add",
+			locator1 = "Button#ANY_DISABLED");
 
 		Type(
 			locator1 = "TextInput#URL",
 			value1 = "${imageSourceURL}");
 
-		AssertClick(
-			locator1 = "Button#ENTER",
-			value1 = "Enter");
+		AssertElementPresent.pauseAssertVisible(
+			imageSourceURL = "${imageSourceURL}",
+			locator1 = "ItemSelector#URL_IMAGE_SOURCE");
 
-		AssertElementPresent(locator1 = "ItemSelector#URL_IMAGE_SOURCE");
+		AssertClick(
+			locator1 = "Button#ADD",
+			value1 = "Add");
 
 		SelectFrameTop(value1 = "relative=top");
-
-		AssertClick(
-			locator1 = "ItemSelector#ADD_BUTTON",
-			value1 = "Add");
 	}
 
 	macro gotoItemSelectorViaAlloyEditor {

@@ -154,7 +154,11 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 			JSONObject structureJSONObject = JSONUtil.put(
 				"columns", JSONUtil.put(columnJSONObject)
 			).put(
+				"config", JSONFactoryUtil.createJSONObject()
+			).put(
 				"rowId", String.valueOf(i)
+			).put(
+				"type", "1"
 			);
 
 			structureJSONArray.put(structureJSONObject);

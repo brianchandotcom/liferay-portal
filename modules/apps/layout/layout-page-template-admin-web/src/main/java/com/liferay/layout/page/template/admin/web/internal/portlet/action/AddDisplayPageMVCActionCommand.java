@@ -130,6 +130,9 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
 
+		long masterLayoutPlid = ParamUtil.getLong(
+			actionRequest, "masterLayoutPlid");
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			serviceContext.getLocale(), AddDisplayPageMVCActionCommand.class);
 
@@ -137,8 +140,8 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
-					layoutPageTemplateCollectionId, name,
-					WorkflowConstants.STATUS_DRAFT, classNameId, classTypeId,
+					layoutPageTemplateCollectionId, classNameId, classTypeId,
+					name, masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
 			return JSONUtil.put(

@@ -548,106 +548,6 @@ definition {
 		Bookmark.viewNoCategoryCP(vocabularyName = "Vocabulary Name");
 	}
 
-	@Description ="This is for LPS-103807. Validate if select a required category when entering the page name not based on a page template."
-	@priority ="5"
-	test CanSelectRequiredCategoryWhenEnterPageNameWithBlankPageTemplate {
-		property testray.component.names = "Categories";
-
-		task ("Add a vocabulary with required for page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addWithAssociatedAssetTypeCP(
-				assetType = "Page",
-				required = "true",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a page with blank page template and select a required category") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(
-				categoryName = "Category Name",
-				pageName = "Test Content Page Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Assert there is a success message") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Navigate to the Pages Administration") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
-		}
-
-		task ("Assert the page exist") {
-			SitePages.togglePrivacy(privacy = "Public Pages");
-
-			AssertVisible(
-				key_itemName = "Test Content Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
-		}
-	}
-
-	@Description ="This is for LPS-103807. Validate if select a required category when entering the page name based on a page template."
-	@priority ="5"
-	test CanSelectRequiredCategoryWhenEnterPageNameWithWidgetPageTemplate {
-		property testray.component.names = "Categories";
-
-		task ("Add a vocabulary with required for page") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.addWithAssociatedAssetTypeCP(
-				assetType = "Page",
-				required = "true",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a page with widget page template and select a required category") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			SitePages.addPublicPage(
-				categoryName = "Category Name",
-				pageName = "Test Widget Page Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Assert there is a success message") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Navigate to the Pages Administration") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
-		}
-
-		task ("Assert the page exist") {
-			SitePages.togglePrivacy(privacy = "Public Pages");
-
-			AssertVisible(
-				key_itemName = "Test Widget Page Name",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
-		}
-	}
-
 	@priority = "4"
 	test DeletePartialCategory {
 		property testray.component.names = "Categories,Permissions,Roles";
@@ -1324,6 +1224,106 @@ definition {
 		Search.searchCP(searchTerm = "Null");
 
 		Vocabulary.viewSearchResultsCP(nullResult = "true");
+	}
+
+	@Description ="This is for LPS-101409. Validate if select a required category when entering the page name not based on a page template."
+	@priority ="5"
+	test SelectRequiredCategoryWhenEnterPageNameWithBlankPageTemplate {
+		property testray.component.names = "Categories";
+
+		task ("Add a vocabulary with required for page") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Page",
+				required = "true",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a page with blank page template and select a required category") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				categoryName = "Category Name",
+				pageName = "Test Content Page Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Assert there is a success message") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Navigate to the Pages Administration") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				panel = "Site Administration",
+				portlet = "Pages");
+		}
+
+		task ("Assert the page exist") {
+			SitePages.togglePrivacy(privacy = "Public Pages");
+
+			AssertVisible(
+				key_itemName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+		}
+	}
+
+	@Description ="This is for LPS-101409. Validate if select a required category when entering the page name based on a page template."
+	@priority ="5"
+	test SelectRequiredCategoryWhenEnterPageNameWithWidgetPageTemplate {
+		property testray.component.names = "Categories";
+
+		task ("Add a vocabulary with required for page") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Page",
+				required = "true",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a page with widget page template and select a required category") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.addPublicPage(
+				categoryName = "Category Name",
+				pageName = "Test Widget Page Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Assert there is a success message") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Navigate to the Pages Administration") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				panel = "Site Administration",
+				portlet = "Pages");
+		}
+
+		task ("Assert the page exist") {
+			SitePages.togglePrivacy(privacy = "Public Pages");
+
+			AssertVisible(
+				key_itemName = "Test Widget Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+		}
 	}
 
 	@priority = "4"

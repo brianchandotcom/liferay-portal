@@ -129,6 +129,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -1461,7 +1463,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
 		return wikiPageFinder.findByModifiedDate(
-			groupId, nodeId, cal.getTime(), false, start, end);
+			groupId, nodeId, new Timestamp(cal.getTimeInMillis()), false, start,
+			end);
 	}
 
 	@Override

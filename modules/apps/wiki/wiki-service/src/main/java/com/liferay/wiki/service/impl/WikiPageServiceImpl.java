@@ -57,6 +57,8 @@ import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import java.io.File;
 import java.io.InputStream;
 
+import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -596,7 +598,8 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		calendar.add(Calendar.WEEK_OF_YEAR, -1);
 
 		return wikiPageFinder.findByModifiedDate(
-			groupId, nodeId, calendar.getTime(), false, start, end);
+			groupId, nodeId, new Timestamp(calendar.getTimeInMillis()), false,
+			start, end);
 	}
 
 	@Override

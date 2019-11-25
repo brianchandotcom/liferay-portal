@@ -91,7 +91,7 @@ const mockState = {
 const RenderSegmentsExperienceSelector = (initialState, reducer = () => {}) => {
 	const store = new Store(
 		{
-			...mockState
+			...initialState
 		},
 		reducer
 	);

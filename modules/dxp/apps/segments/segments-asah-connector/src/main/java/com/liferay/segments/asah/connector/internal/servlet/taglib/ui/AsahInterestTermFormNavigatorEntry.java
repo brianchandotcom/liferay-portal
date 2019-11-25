@@ -118,7 +118,9 @@ public class AsahInterestTermFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, AssetListEntry assetListEntry) {
-		if (!AsahUtil.isAnalyticsEnabled(user.getCompanyId())) {
+		if (!AsahUtil.isAnalyticsEnabled(
+				user.getCompanyId(), assetListEntry.getGroupId())) {
+
 			return false;
 		}
 

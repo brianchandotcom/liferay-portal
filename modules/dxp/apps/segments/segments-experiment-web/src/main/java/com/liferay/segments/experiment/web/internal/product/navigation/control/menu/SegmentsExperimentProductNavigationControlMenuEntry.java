@@ -261,7 +261,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, "hide-panel"));
 
 		if (!SegmentsExperimentUtil.isAnalyticsEnabled(
-				themeDisplay.getCompanyId()) &&
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) &&
 			hidePanel) {
 
 			return false;

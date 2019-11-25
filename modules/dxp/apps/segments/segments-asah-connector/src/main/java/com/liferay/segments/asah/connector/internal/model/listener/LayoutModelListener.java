@@ -83,7 +83,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private boolean _isSkipEvent(Layout layout) {
-		if (AsahUtil.isSkipAsahEvent(layout.getCompanyId())) {
+		if (AsahUtil.isSkipAsahEvent(
+				layout.getCompanyId(), layout.getGroupId())) {
+
 			return true;
 		}
 

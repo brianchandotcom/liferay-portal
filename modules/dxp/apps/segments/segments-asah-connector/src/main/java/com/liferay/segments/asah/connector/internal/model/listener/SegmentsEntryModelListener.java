@@ -50,7 +50,9 @@ public class SegmentsEntryModelListener
 	public void onAfterUpdate(SegmentsEntry segmentsEntry)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(segmentsEntry.getCompanyId())) {
+		if (AsahUtil.isSkipAsahEvent(
+				segmentsEntry.getCompanyId(), segmentsEntry.getGroupId())) {
+
 			return;
 		}
 

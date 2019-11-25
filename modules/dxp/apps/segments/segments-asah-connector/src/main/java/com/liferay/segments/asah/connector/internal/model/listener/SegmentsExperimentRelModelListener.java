@@ -101,7 +101,10 @@ public class SegmentsExperimentRelModelListener
 			SegmentsExperimentRel segmentsExperimentRel)
 		throws PortalException {
 
-		if (AsahUtil.isSkipAsahEvent(segmentsExperimentRel.getCompanyId())) {
+		if (AsahUtil.isSkipAsahEvent(
+				segmentsExperimentRel.getCompanyId(),
+				segmentsExperimentRel.getGroupId())) {
+
 			return;
 		}
 

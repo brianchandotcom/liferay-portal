@@ -46,7 +46,10 @@ public class SegmentsExperimentModelListener
 	public void onAfterUpdate(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(segmentsExperiment.getCompanyId())) {
+		if (AsahUtil.isSkipAsahEvent(
+				segmentsExperiment.getCompanyId(),
+				segmentsExperiment.getGroupId())) {
+
 			return;
 		}
 
@@ -66,7 +69,10 @@ public class SegmentsExperimentModelListener
 	public void onBeforeCreate(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(segmentsExperiment.getCompanyId())) {
+		if (AsahUtil.isSkipAsahEvent(
+				segmentsExperiment.getCompanyId(),
+				segmentsExperiment.getGroupId())) {
+
 			return;
 		}
 
@@ -86,7 +92,10 @@ public class SegmentsExperimentModelListener
 	public void onBeforeRemove(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(segmentsExperiment.getCompanyId())) {
+		if (AsahUtil.isSkipAsahEvent(
+				segmentsExperiment.getCompanyId(),
+				segmentsExperiment.getGroupId())) {
+
 			return;
 		}
 

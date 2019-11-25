@@ -58,7 +58,7 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 				WebKeys.THEME_DISPLAY);
 
 		if (!SegmentsExperimentUtil.isAnalyticsEnabled(
-				themeDisplay.getCompanyId())) {
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
 			return;
 		}

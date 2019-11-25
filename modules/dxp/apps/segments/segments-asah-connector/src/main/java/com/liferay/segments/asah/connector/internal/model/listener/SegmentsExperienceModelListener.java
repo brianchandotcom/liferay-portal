@@ -52,7 +52,10 @@ public class SegmentsExperienceModelListener
 	public void onAfterUpdate(SegmentsExperience segmentsExperience)
 		throws ModelListenerException {
 
-		if (AsahUtil.isSkipAsahEvent(segmentsExperience.getCompanyId())) {
+		if (AsahUtil.isSkipAsahEvent(
+				segmentsExperience.getCompanyId(),
+				segmentsExperience.getGroupId())) {
+
 			return;
 		}
 

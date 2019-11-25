@@ -57,8 +57,8 @@ export const EditEntry = ({
 
 			const openSuccessToast = isNew => {
 				const message = isNew
-					? Liferay.Language.get('entry-added')
-					: Liferay.Language.get('entry-updated');
+					? Liferay.Language.get('an-entry-was-added')
+					: Liferay.Language.get('an-entry-was-updated');
 
 				openToast({
 					message,

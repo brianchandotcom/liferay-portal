@@ -104,7 +104,7 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 		}).then(confirmed => {
 			if (confirmed) {
 				openToast({
-					message: Liferay.Language.get('entry-deleted'),
+					message: Liferay.Language.get('an-entry-was-deleted'),
 					title: Liferay.Language.get('success'),
 					type: 'success'
 				});

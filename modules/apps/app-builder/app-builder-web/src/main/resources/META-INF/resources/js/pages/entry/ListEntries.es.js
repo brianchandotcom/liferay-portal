@@ -106,7 +106,7 @@ const ListEntries = withRouter(({history, location}) => {
 								if (confirmed) {
 									openToast({
 										message: Liferay.Language.get(
-											'entry-deleted'
+											'an-entry-was-deleted'
 										),
 										title: Liferay.Language.get('success'),
 										type: 'success'

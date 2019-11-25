@@ -901,6 +901,10 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+				).put(
+					"masterPage",
+					layout.getMasterLayoutPlid() ==
+						fragmentEntryLink.getClassPK()
 				).putAll(
 					_getFragmentEntrySoyContext(
 						fragmentEntryLink, fragmentEntry, content)

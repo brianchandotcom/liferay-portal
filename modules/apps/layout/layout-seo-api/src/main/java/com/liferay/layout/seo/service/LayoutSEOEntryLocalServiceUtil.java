@@ -231,6 +231,13 @@ public class LayoutSEOEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static void getCustomTagsDDMStructure(
+			com.liferay.portal.kernel.model.Company company)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().getCustomTagsDDMStructure(company);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

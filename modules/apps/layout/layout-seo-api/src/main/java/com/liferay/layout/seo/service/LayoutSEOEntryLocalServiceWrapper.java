@@ -246,6 +246,14 @@ public class LayoutSEOEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void getCustomTagsDDMStructure(
+			com.liferay.portal.kernel.model.Company company)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutSEOEntryLocalService.getCustomTagsDDMStructure(company);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

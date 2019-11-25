@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Scheduler Service
+Bundle-SymbolicName: com.liferay.scheduler.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

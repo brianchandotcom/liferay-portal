@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Scheduler API
+Bundle-SymbolicName: com.liferay.scheduler.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.scheduler.exception,\
+	com.liferay.scheduler.model,\
+	com.liferay.scheduler.service,\
+	com.liferay.scheduler.service.persistence

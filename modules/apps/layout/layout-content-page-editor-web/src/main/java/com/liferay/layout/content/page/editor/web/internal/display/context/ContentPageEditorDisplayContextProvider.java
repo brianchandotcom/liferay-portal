@@ -25,6 +25,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class ContentPageEditorDisplayContextProvider {
 			return new ContentPageLayoutEditorDisplayContext(
 				httpServletRequest, renderResponse, _commentManager,
 				_getContentPageEditorSidebarPanels(),
-				_fragmentRendererController);
+				_fragmentRendererController, _stagingGroupHelper);
 		}
 
 		long classPK = GetterUtil.getLong(
@@ -122,5 +123,8 @@ public class ContentPageEditorDisplayContextProvider {
 	private ServiceTrackerList
 		<ContentPageEditorSidebarPanel, ContentPageEditorSidebarPanel>
 			_serviceTrackerList;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

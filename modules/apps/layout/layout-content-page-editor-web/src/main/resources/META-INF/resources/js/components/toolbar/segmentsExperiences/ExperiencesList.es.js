@@ -34,14 +34,14 @@ const ExperiencesList = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const _selectExperience = id => {
+	const selectExperience = id => {
 		dispatch({
 			segmentsExperienceId: id,
 			type: SELECT_SEGMENTS_EXPERIENCE
 		});
 	};
 
-	const _decreasePriority = (id, priority) => {
+	const decreasePriority = (id, priority) => {
 		dispatch({
 			direction: 'down',
 			priority,
@@ -50,7 +50,7 @@ const ExperiencesList = ({
 		});
 	};
 
-	const _increasePriority = (id, priority) => {
+	const increasePriority = (id, priority) => {
 		dispatch({
 			direction: 'up',
 			priority,
@@ -59,7 +59,7 @@ const ExperiencesList = ({
 		});
 	};
 
-	const _deleteExperience = id => {
+	const deleteExperience = id => {
 		dispatch({
 			segmentsExperienceId: id,
 			type: DELETE_SEGMENTS_EXPERIENCE
@@ -87,11 +87,11 @@ const ExperiencesList = ({
 						key={experience.segmentsExperienceId}
 						lockedDecreasePriority={lockedDecreasePriority}
 						lockedIncreasePriority={lockedIncreasePriority}
-						onDeleteExperience={_deleteExperience}
+						onDeleteExperience={deleteExperience}
 						onEditExperience={onEditExperience}
-						onPriorityDecrease={_decreasePriority}
-						onPriorityIncrease={_increasePriority}
-						onSelect={_selectExperience}
+						onPriorityDecrease={decreasePriority}
+						onPriorityIncrease={increasePriority}
+						onSelect={selectExperience}
 					/>
 				);
 			})}

@@ -48,7 +48,7 @@ const ExperienceModal = ({
 	const [requiredNameError, setRequiredNameError] = useState(false);
 	const [requiredSegmentError, setRequiredSegmentError] = useState(false);
 
-	const _handleFormSubmit = event => {
+	const handleFormSubmit = event => {
 		event.preventDefault();
 
 		const validName = _getValidValue(name);
@@ -66,7 +66,7 @@ const ExperienceModal = ({
 		}
 	};
 
-	const _handleNameChange = event => {
+	const handleNameChange = event => {
 		const {value} = event.target;
 
 		if (!_getValidValue(value)) {
@@ -77,7 +77,7 @@ const ExperienceModal = ({
 
 		setName(event.target.value);
 	};
-	const _handleNewSegmentClick = event => {
+	const handleNewSegmentClick = event => {
 		event.preventDefault();
 
 		onNewSegmentClick({
@@ -86,7 +86,7 @@ const ExperienceModal = ({
 			segmentId: selectedSegmentId
 		});
 	};
-	const _handleSegmentChange = event => {
+	const handleSegmentChange = event => {
 		const {value} = event.target;
 
 		if (!_getValidValue(value)) {
@@ -120,7 +120,7 @@ const ExperienceModal = ({
 					autoComplete="off"
 					className="mb-3"
 					noValidate
-					onSubmit={_handleFormSubmit}
+					onSubmit={handleFormSubmit}
 				>
 					{errorMessage && (
 						<ClayAlert
@@ -144,7 +144,7 @@ const ExperienceModal = ({
 						<ClayInput
 							autoFocus
 							id={nameInputId}
-							onChange={_handleNameChange}
+							onChange={handleNameChange}
 							placeholder={Liferay.Language.get(
 								'experience-name'
 							)}
@@ -178,7 +178,7 @@ const ExperienceModal = ({
 							<ClaySelect
 								disabled={segments.length === 0}
 								id={segmentSelectId}
-								onChange={_handleSegmentChange}
+								onChange={handleSegmentChange}
 								value={selectedSegmentId}
 							>
 								{segments.length ? (
@@ -205,7 +205,7 @@ const ExperienceModal = ({
 								<ClayButton
 									className="flex-shrink-0 ml-2"
 									displayType="secondary"
-									onClick={_handleNewSegmentClick}
+									onClick={handleNewSegmentClick}
 									type="button"
 								>
 									{Liferay.Language.get('new-segment')}
@@ -235,7 +235,7 @@ const ExperienceModal = ({
 
 						<ClayButton
 							displayType="primary"
-							onClick={_handleFormSubmit}
+							onClick={handleFormSubmit}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>

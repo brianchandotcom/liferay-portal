@@ -124,10 +124,10 @@ const ExperiencesSelector = ({
 		}
 	}, 100);
 
-	const _handleDropdownButtonClick = () => debouncedSetOpen(!open);
-	const _handleDropdownButtonBlur = () => debouncedSetOpen(false);
-	const _handleDropdownBlur = () => debouncedSetOpen(false);
-	const _handleDropdownFocus = () => debouncedSetOpen(true);
+	const handleDropdownButtonClick = () => debouncedSetOpen(!open);
+	const handleDropdownButtonBlur = () => debouncedSetOpen(false);
+	const handleDropdownBlur = () => debouncedSetOpen(false);
+	const handleDropdownFocus = () => debouncedSetOpen(true);
 
 	const _handleNewSegmentClick = ({
 		experienceId,
@@ -164,17 +164,17 @@ const ExperiencesSelector = ({
 		}
 	}, [classPK, selectedSegmentsEntryId]);
 
-	const _openEditModal = ({name, segmentsEntryId, segmentsExperienceId}) => {
+	const openEditModal = ({name, segmentsEntryId, segmentsExperienceId}) => {
 		setEditingExperience({name, segmentsEntryId, segmentsExperienceId});
 		debouncedSetOpen(true);
 		setOpenModal(true);
 	};
-	const _openCreateModal = () => {
+	const openCreateModal = () => {
 		debouncedSetOpen(true);
 		setOpenModal(true);
 	};
 
-	const _handleExperienceCreation = ({
+	const handleExperienceCreation = ({
 		name,
 		segmentsEntryId,
 		segmentsExperienceId
@@ -257,8 +257,8 @@ const ExperiencesSelector = ({
 
 			<button
 				className="align-items-end btn btn-secondary btn-sm d-inline-flex form-control-select justify-content-between mr-2 text-left text-truncate"
-				onBlur={_handleDropdownButtonBlur}
-				onClick={_handleDropdownButtonClick}
+				onBlur={handleDropdownButtonBlur}
+				onClick={handleDropdownButtonClick}
 				type="button"
 			>
 				<span className="text-truncate">{activeExperience.name}</span>
@@ -269,13 +269,13 @@ const ExperiencesSelector = ({
 			{open && (
 				<div
 					className="dropdown-menu p-4 rounded toggled"
-					onBlur={_handleDropdownBlur}
-					onFocus={_handleDropdownFocus}
+					onBlur={handleDropdownBlur}
+					onFocus={handleDropdownFocus}
 					tabIndex="-1"
 				>
 					<ExperienceDropdownHeader
 						canCreateExperiences={canCreateExperiences}
-						onNewExperience={_openCreateModal}
+						onNewExperience={openCreateModal}
 						showEmptyStateMessage={showEmptyStateMessage}
 					/>
 
@@ -284,7 +284,7 @@ const ExperiencesSelector = ({
 							activeExperienceId={activeExperienceId}
 							experiences={experiences}
 							hasUpdatePermissions={hasUpdatePermissions}
-							onEditExperience={_openEditModal}
+							onEditExperience={openEditModal}
 						/>
 					)}
 				</div>
@@ -300,7 +300,7 @@ const ExperiencesSelector = ({
 					onClose={onModalClose}
 					onErrorDismiss={() => setEditingExperience({error: null})}
 					onNewSegmentClick={_handleNewSegmentClick}
-					onSubmit={_handleExperienceCreation}
+					onSubmit={handleExperienceCreation}
 					segmentId={editingExperience.segmentsEntryId}
 					segments={segments}
 				/>

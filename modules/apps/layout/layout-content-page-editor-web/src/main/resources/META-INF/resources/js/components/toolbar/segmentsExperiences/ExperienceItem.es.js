@@ -34,23 +34,23 @@ const ExperienceItem = ({
 	onPriorityIncrease,
 	onSelect
 }) => {
-	const _handleSelect = () => onSelect(experience.segmentsExperienceId);
-	const _handlePriorityIncrease = () =>
+	const handleSelect = () => onSelect(experience.segmentsExperienceId);
+	const handlePriorityIncrease = () =>
 		onPriorityIncrease(
 			experience.segmentsExperienceId,
 			experience.priority
 		);
-	const _handlePriorityDecrease = () =>
+	const handlePriorityDecrease = () =>
 		onPriorityDecrease(
 			experience.segmentsExperienceId,
 			experience.priority
 		);
-	const _handleExperienceEdit = () => {
+	const handleExperienceEdit = () => {
 		const {name, segmentsEntryId, segmentsExperienceId} = experience;
 
 		onEditExperience({name, segmentsEntryId, segmentsExperienceId});
 	};
-	const _handleExperienceDelete = () => {
+	const handleExperienceDelete = () => {
 		const experienceHasRunningExperiment =
 			experience.segmentsExperimentStatus &&
 			experience.segmentsExperimentStatus.value === STATUS_DRAFT;
@@ -65,7 +65,7 @@ const ExperienceItem = ({
 
 		if (confirmed) onDeleteExperience(experience.segmentsExperienceId);
 	};
-	const _handleExperimentNavigation = event => {
+	const handleExperimentNavigation = event => {
 		event.preventDefault();
 
 		Liferay.Util.Session.set(
@@ -85,7 +85,7 @@ const ExperienceItem = ({
 			<span className="overflow-hidden p-2 w-100">
 				<button
 					className="align-items-baseline btn btn-unstyled d-flex justify-content-between p-2 text-dark title w-100"
-					onClick={_handleSelect}
+					onClick={handleSelect}
 				>
 					<span className="d-flex flex-column flex-grow-1 text-truncate">
 						<strong className="text-truncate">
@@ -136,7 +136,7 @@ const ExperienceItem = ({
 						disabled={lockedIncreasePriority}
 						displayType="unstyled"
 						monospaced
-						onClick={_handlePriorityIncrease}
+						onClick={handlePriorityIncrease}
 						small="true"
 						symbol="angle-up"
 						title={Liferay.Language.get('prioritize-experience')}
@@ -147,7 +147,7 @@ const ExperienceItem = ({
 						disabled={lockedDecreasePriority}
 						displayType="unstyled"
 						monospaced
-						onClick={_handlePriorityDecrease}
+						onClick={handlePriorityDecrease}
 						small="true"
 						symbol="angle-down"
 						title={Liferay.Language.get('deprioritize-experience')}
@@ -157,7 +157,7 @@ const ExperienceItem = ({
 						className="mx-2 text-secondary"
 						displayType="unstyled"
 						monospaced
-						onClick={_handleExperienceEdit}
+						onClick={handleExperienceEdit}
 						small="true"
 						symbol="pencil"
 						title={Liferay.Language.get('edit-experience')}
@@ -167,7 +167,7 @@ const ExperienceItem = ({
 						className="mx-2 text-secondary"
 						displayType="unstyled"
 						monospaced
-						onClick={_handleExperienceDelete}
+						onClick={handleExperienceDelete}
 						small="true"
 						symbol="times-circle"
 						title={Liferay.Language.get('delete-experience')}
@@ -181,7 +181,7 @@ const ExperienceItem = ({
 						<a
 							className="btn btn-borderless btn-monospaced btn-sm btn-unstyled mr-0 mx-2 text-secondary"
 							href={experience.segmentsExperimentURL}
-							onClick={_handleExperimentNavigation}
+							onClick={handleExperimentNavigation}
 							title={Liferay.Language.get('go-to-test-details')}
 						>
 							<ClayIcon symbol="test" />

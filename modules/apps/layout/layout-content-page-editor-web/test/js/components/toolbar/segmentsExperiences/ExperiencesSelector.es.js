@@ -79,6 +79,7 @@ const mockState = {
 		}
 	},
 	classPK: 'test-classPK',
+	defaultSegmentsExperienceId: '0',
 	editSegmentsEntryURL: 'https://test-url.com/',
 	hasEditSegmentsEntryPermission: true,
 	hasUpdatePermissions: true,
@@ -114,11 +115,11 @@ describe('ExperienceSelector', () => {
 	it('renders a list of Experiences ordered by priority', async () => {
 		const {
 			getAllByRole,
-			getByRole,
-			getByText
+			getByLabelText,
+			getByRole
 		} = RenderSegmentsExperienceSelector(mockState);
 
-		const dropDownButton = getByText('Default Experience');
+		const dropDownButton = getByLabelText('experience');
 
 		userEvent.click(dropDownButton);
 
@@ -152,7 +153,7 @@ describe('ExperienceSelector', () => {
 			getByText
 		} = RenderSegmentsExperienceSelector(mockState, mockReducer);
 
-		const dropDownButton = getByText('Default Experience');
+		const dropDownButton = getByLabelText('experience');
 
 		userEvent.click(dropDownButton);
 
@@ -195,11 +196,11 @@ describe('ExperienceSelector', () => {
 
 		const {
 			getAllByTitle,
-			getByRole,
-			getByText
+			getByLabelText,
+			getByRole
 		} = RenderSegmentsExperienceSelector(mockState, mockReducer);
 
-		const dropDownButton = getByText('Default Experience');
+		const dropDownButton = getByLabelText('experience');
 
 		userEvent.click(dropDownButton);
 
@@ -229,11 +230,11 @@ describe('ExperienceSelector', () => {
 
 		const {
 			getAllByTitle,
-			getByRole,
-			getByText
+			getByLabelText,
+			getByRole
 		} = RenderSegmentsExperienceSelector(mockState, mockReducer);
 
-		const dropDownButton = getByText('Default Experience');
+		const dropDownButton = getByLabelText('experience');
 
 		userEvent.click(dropDownButton);
 
@@ -266,11 +267,11 @@ describe('ExperienceSelector', () => {
 
 		const {
 			getAllByTitle,
-			getByRole,
-			getByText
+			getByLabelText,
+			getByRole
 		} = RenderSegmentsExperienceSelector(mockState, mockReducer);
 
-		const dropDownButton = getByText('Default Experience');
+		const dropDownButton = getByLabelText('experience');
 
 		userEvent.click(dropDownButton);
 

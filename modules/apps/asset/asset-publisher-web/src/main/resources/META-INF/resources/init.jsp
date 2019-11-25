@@ -65,6 +65,7 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" 
 page import="com.liferay.info.list.provider.InfoListProvider" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
+page import="com.liferay.item.selector.criteria.GroupItemSelectorReturnType" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -112,7 +113,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
-page import="com.liferay.item.selector.criteria.GroupItemSelectorReturnType" %><%@
 page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 

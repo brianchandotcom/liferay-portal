@@ -5,8 +5,8 @@
 				{
 					"dataType": "string",
 					"defaultValue": "3",
-					"label": "vertical-space",
-					"name": "verticalSpace",
+					"label": "bottom-spacing",
+					"name": "bottomSpacing",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [

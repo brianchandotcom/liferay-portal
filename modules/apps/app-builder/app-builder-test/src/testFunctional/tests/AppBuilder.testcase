@@ -32,6 +32,8 @@ definition {
 
 			AppBuilderAdmin.teardownAppBuilder();
 
+			Page.tearDownCP();
+
 		}
 	}
 
@@ -414,6 +416,54 @@ definition {
 		AppBuilderAdmin.save();
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "123");
+	}
+
+	@description = "Publish my app as a widget and submit entry"
+	@priority = "5"
+	test PublishAppAsWidgetAndSubmitEntry {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "My Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text Field",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Widget App",
+			deployOption = "Widget",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Widget App");
+
+		AppBuilderAdmin.add();
+
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "Content of form deployed as widget.");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

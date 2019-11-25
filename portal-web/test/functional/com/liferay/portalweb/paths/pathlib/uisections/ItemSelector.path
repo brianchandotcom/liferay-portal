@@ -146,8 +146,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>URL_IMAGE_PREVIEW</td>
+	<td>//div[contains(@class,'aspect-ratio')]//img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>URL_IMAGE_SOURCE</td>
-	<td>//div[@class='image-viewer-base-image-list']//img[contains(@src,'${imageSourceURL}')]</td>
+	<td>//div[contains(@class,'aspect-ratio')]//img[contains(@src,'${imageSourceURL}')]</td>
 	<td></td>
 </tr>
 </tbody>

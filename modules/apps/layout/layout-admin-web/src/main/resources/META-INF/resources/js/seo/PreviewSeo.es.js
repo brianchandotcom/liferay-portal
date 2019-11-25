@@ -127,11 +127,11 @@ const PreviewSeoContainer = ({
 
 			const node = document.getElementById(`${portletNamespace}${id}`);
 
-			if (node) node.addEventListener('input', listener);
+			node.addEventListener('input', listener);
 
 			setPreviewState({
 				type,
-				value: node && node.value
+				value: node.value,
 			});
 
 			return {listener, node, type};
@@ -148,16 +148,15 @@ const PreviewSeoContainer = ({
 				inputs.forEach(({node, type}) =>
 					setPreviewState({
 						type,
-						value: node && node.value
+						value: node.value
 					})
 				);
 			}
 		);
 
 		return () => {
-			inputs.forEach(
-				({listener, node}) =>
-					node && node.removeEventListener('input', listener)
+			inputs.forEach(({listener, node}) =>
+				node.removeEventListener('input', listener)
 			);
 
 			Liferay.detach(inputLocalizedLocaleChangedHandle);

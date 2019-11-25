@@ -16,7 +16,7 @@ package com.liferay.asset.publisher.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.petra.lang.HashUtil;
+import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -25,7 +25,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -420,87 +419,5 @@ public class AssetPublisherUtilTest {
 
 	@Inject
 	private AssetPublisherHelper _assetPublisherHelper;
-
-	private class AssetQueryRule {
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (!(obj instanceof AssetQueryRule)) {
-				return false;
-			}
-
-			AssetQueryRule assetQueryRule = (AssetQueryRule)obj;
-
-			if ((_contains == assetQueryRule._contains) &&
-				(_andOperator == assetQueryRule._andOperator) &&
-				Objects.equals(_name, assetQueryRule._name)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public String[] getValues() {
-			return _values;
-		}
-
-		@Override
-		public int hashCode() {
-			int hash = HashUtil.hash(0, _contains);
-
-			hash = HashUtil.hash(hash, _andOperator);
-
-			return HashUtil.hash(hash, _name);
-		}
-
-		public boolean isAndOperator() {
-			return _andOperator;
-		}
-
-		public boolean isContains() {
-			return _contains;
-		}
-
-		public void setAndOperator(boolean andOperator) {
-			_andOperator = andOperator;
-		}
-
-		public void setContains(boolean contains) {
-			_contains = contains;
-		}
-
-		public void setName(String name) {
-			_name = name;
-		}
-
-		public void setValues(String[] values) {
-			_values = values;
-		}
-
-		private AssetQueryRule(
-			boolean contains, boolean andOperator, String name,
-			String[] values) {
-
-			_contains = contains;
-			_andOperator = andOperator;
-			_name = name;
-			_values = values;
-		}
-
-		private boolean _andOperator;
-		private boolean _contains;
-		private String _name;
-		private String[] _values;
-
-	}
 
 }

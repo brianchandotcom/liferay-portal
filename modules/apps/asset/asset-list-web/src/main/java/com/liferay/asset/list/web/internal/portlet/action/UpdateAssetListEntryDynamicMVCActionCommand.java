@@ -15,11 +15,11 @@
 package com.liferay.asset.list.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
-import com.liferay.asset.kernel.model.AssetQueryRule;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
+import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;

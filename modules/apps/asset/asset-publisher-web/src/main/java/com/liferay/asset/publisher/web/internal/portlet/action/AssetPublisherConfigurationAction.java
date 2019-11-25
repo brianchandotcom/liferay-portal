@@ -23,6 +23,7 @@ import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
@@ -30,7 +31,6 @@ import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDi
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
-import com.liferay.asset.publisher.web.internal.util.AssetQueryRule;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;

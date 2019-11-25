@@ -17,11 +17,11 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -51,8 +51,6 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 
 	@Override
 	public Map<String, String> getData() {
-		Map<String, String> data = new HashMap<>();
-
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
@@ -74,11 +72,10 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 			"masterLayoutPlid",
 			String.valueOf(_layoutPageTemplateEntry.getPlid()));
 
-		data.put(
+		return HashMapBuilder.put(
 			"add-layout-page-template-entry-url",
-			addLayoutPageTemplateEntryURL.toString());
-
-		return data;
+			addLayoutPageTemplateEntryURL.toString()
+		).build();
 	}
 
 	@Override

@@ -606,9 +606,6 @@ public class DLReferencesExportImportContentProcessor
 				getDLReferenceParameters(
 					groupId, content, beginPos + pathContext.length(), endPos);
 
-			ObjectValuePair<String, Integer> dlReferenceEndPosObjectValuePair =
-				getDLReferenceEndPosObjectValuePair(content, beginPos, endPos);
-
 			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 
 			if (fileEntry == null) {
@@ -682,7 +679,15 @@ public class DLReferencesExportImportContentProcessor
 							new NoSuchFileEntryException());
 
 					eicve.setDlReferenceParameters(dlReferenceParameters);
-					eicve.setDlReference(dlReferenceEndPosObjectValuePair.getKey());
+
+					ObjectValuePair<String, Integer>
+						dlReferenceEndPosObjectValuePair =
+							getDLReferenceEndPosObjectValuePair(
+								content, beginPos, endPos);
+
+					eicve.setDlReference(
+						dlReferenceEndPosObjectValuePair.getKey());
+
 					eicve.setType(
 						ExportImportContentValidationException.
 							FILE_ENTRY_NOT_FOUND);

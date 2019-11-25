@@ -347,6 +347,50 @@ definition {
 		Depot.viewDefaultCP();
 	}
 
+	@description = "This ensures that all depots can be deleted in the list view when the user selects all."
+	@priority = "4"
+	test SelectAllAndDeleteInListView {
+		DepotNavigator.openDepotAdmin();
+
+		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
+			Depot.addDepot(
+				depotDescription = "This is the description of a depot",
+				depotName = "${depotName}");
+
+			DepotNavigator.openDepotAdmin();
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		PortletEntry.selectAll();
+
+		Depot.deleteCP(deletions = "true");
+
+		Depot.viewDefaultCP();
+	}
+
+	@description = "This ensures that all depots can be deleted in the table view when the user selects all."
+	@priority = "4"
+	test SelectAllAndDeleteInTableView {
+		DepotNavigator.openDepotAdmin();
+
+		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
+			Depot.addDepot(
+				depotDescription = "This is the description of a depot",
+				depotName = "${depotName}");
+
+			DepotNavigator.openDepotAdmin();
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		PortletEntry.selectAll();
+
+		Depot.deleteCP(deletions = "true");
+
+		Depot.viewDefaultCP();
+	}
+
 	@description = "This ensures that a depot can be added."
 	@priority = "5"
 	test Smoke {

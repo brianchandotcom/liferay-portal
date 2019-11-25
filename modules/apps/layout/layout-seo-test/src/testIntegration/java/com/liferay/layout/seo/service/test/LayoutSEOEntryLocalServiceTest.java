@@ -15,20 +15,26 @@
 package com.liferay.layout.seo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.seo.service.constants.LayoutSEOCustomTagsConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -54,6 +60,7 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_company = CompanyTestUtil.addCompany();
 		_group = GroupTestUtil.addGroup();
 		_layout = _layoutLocalService.getLayout(TestPropsValues.getPlid());
 	}
@@ -134,6 +141,16 @@ public class LayoutSEOEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetCustomTagsDDMStructure() throws Exception {
+		_layoutSEOEntryLocalService.getCustomTagsDDMStructure(_company);
+		DDMStructure ddmStructure = _ddmStructureManager.getStructure(
+			_company.getGroupId(), _portal.getClassNameId(LayoutSEOEntry.class),
+			LayoutSEOCustomTagsConstants.SEO_CUSTOM_TAG_KEY);
+
+		Assert.assertNotNull(ddmStructure);
+	}
+
+	@Test
 	public void testUpdateLayoutSEOEntry() throws PortalException {
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
@@ -205,6 +222,12 @@ public class LayoutSEOEntryLocalServiceTest {
 	}
 
 	@DeleteAfterTestRun
+	private Company _company;
+
+	@Inject
+	private DDMStructureManager _ddmStructureManager;
+
+	@DeleteAfterTestRun
 	private Group _group;
 
 	private Layout _layout;
@@ -214,5 +237,8 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

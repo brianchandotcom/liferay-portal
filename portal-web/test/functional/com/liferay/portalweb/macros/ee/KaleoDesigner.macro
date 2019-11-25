@@ -529,22 +529,20 @@ definition {
 	}
 
 	macro viewButtons {
-		AssertTextEquals(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		ScrollWebElementIntoView(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
 
-		AssertTextEquals(
-			locator1 = "KaleoDesigner#SAVE_BUTTON",
-			value1 = "Save");
+		ScrollWebElementIntoView(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 
 		if ("${cancelButton}" == "true") {
-			AssertTextEquals(
-				locator1 = "Button#CANCEL",
-				value1 = "Cancel");
+			ScrollWebElementIntoView(
+				key_text = "Cancel",
+				locator1 = "Button#ANY");
 
-			AssertClick(
-				locator1 = "Button#CANCEL",
-				value1 = "Cancel");
+			Button.click(button = "Cancel");
 		}
 	}
 

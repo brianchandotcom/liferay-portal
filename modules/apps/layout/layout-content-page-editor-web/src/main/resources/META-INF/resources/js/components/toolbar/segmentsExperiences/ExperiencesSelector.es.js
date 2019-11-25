@@ -93,6 +93,7 @@ ExperienceDropdownHeader.propTypes = {
 const ExperiencesSelector = ({
 	activeExperience,
 	classPK,
+	defaultSegmentsExperienceId,
 	editSegmentsEntryURL,
 	experiences,
 	hasSegmentsPermission,
@@ -282,6 +283,9 @@ const ExperiencesSelector = ({
 					{experiences.length > 1 && (
 						<ExperiencesList
 							activeExperienceId={activeExperienceId}
+							defaultSegmentsExperienceId={
+								defaultSegmentsExperienceId
+							}
 							experiences={experiences}
 							hasUpdatePermissions={hasUpdatePermissions}
 							onEditExperience={openEditModal}
@@ -332,6 +336,7 @@ const ExperiencesSelectorWrapper = () => {
 		availableSegmentsExperiences,
 		classPK,
 		defaultSegmentsEntryId,
+		defaultSegmentsExperienceId,
 		editSegmentsEntryURL,
 		hasSegmentsPermission,
 		hasUpdatePermissions,
@@ -346,6 +351,7 @@ const ExperiencesSelectorWrapper = () => {
 			availableSegmentsExperiences: state.availableSegmentsExperiences,
 			classPK: state.classPK,
 			defaultSegmentsEntryId: state.defaultSegmentsEntryId,
+			defaultSegmentsExperienceId: state.defaultSegmentsExperienceId,
 			editSegmentsEntryURL: state.editSegmentsEntryURL,
 			hasSegmentsPermission: state.hasEditSegmentsEntryPermission,
 			hasUpdatePermissions: state.hasUpdatePermissions,
@@ -380,6 +386,7 @@ const ExperiencesSelectorWrapper = () => {
 		<ExperiencesSelector
 			activeExperience={activeExperience}
 			classPK={classPK}
+			defaultSegmentsExperienceId={defaultSegmentsExperienceId}
 			editSegmentsEntryURL={editSegmentsEntryURL}
 			experiences={experiences}
 			hasSegmentsPermission={hasSegmentsPermission}

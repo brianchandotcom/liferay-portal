@@ -24,10 +24,9 @@ import useDispatch from '../../../store/hooks/useDispatch.es';
 import ExperienceItem from './ExperienceItem.es';
 import {ExperienceType} from './types.es';
 
-const DEFAULT_EXPERIENCE_ID = '0';
-
 const ExperiencesList = ({
 	activeExperienceId,
+	defaultSegmentsExperienceId,
 	experiences,
 	hasUpdatePermissions,
 	onEditExperience
@@ -76,7 +75,8 @@ const ExperiencesList = ({
 
 				const editable =
 					hasUpdatePermissions &&
-					experience.segmentsExperienceId !== DEFAULT_EXPERIENCE_ID &&
+					experience.segmentsExperienceId !==
+						defaultSegmentsExperienceId &&
 					!experience.hasLockedSegmentsExperiment;
 
 				return (

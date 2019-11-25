@@ -131,9 +131,15 @@ describe('ExperienceSelector', () => {
 		/**
 		 * Experiences are ordered by priority
 		 */
-		within(listedExperiences[0]).getByText('Experience #1');
-		within(listedExperiences[1]).getByText('Experience #2');
-		within(listedExperiences[2]).getByText('Default Experience');
+		expect(
+			within(listedExperiences[0]).getByText('Experience #1')
+		).toBeInTheDocument();
+		expect(
+			within(listedExperiences[1]).getByText('Experience #2')
+		).toBeInTheDocument();
+		expect(
+			within(listedExperiences[2]).getByText('Default Experience')
+		).toBeInTheDocument();
 	});
 
 	it('dispatches expected action when editing an Experience', async () => {

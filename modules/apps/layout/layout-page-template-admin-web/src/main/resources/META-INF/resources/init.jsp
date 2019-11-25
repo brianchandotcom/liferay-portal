@@ -40,6 +40,7 @@ page import="com.liferay.layout.page.template.admin.web.internal.display.context
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.LayoutPrototypeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.MasterLayoutDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.MasterLayoutManagementToolbarDisplayContext" %><%@
+page import="com.liferay.layout.page.template.admin.web.internal.display.context.SelectDisplayPageMasterLayoutDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.DisplayPageVerticalCard" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.LayoutPageTemplateEntryVerticalCard" %><%@

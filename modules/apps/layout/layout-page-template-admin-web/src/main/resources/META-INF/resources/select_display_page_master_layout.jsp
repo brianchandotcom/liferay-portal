@@ -17,18 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+SelectDisplayPageMasterLayoutDisplayContext selectDisplayPageMasterLayoutDisplayContext = new SelectDisplayPageMasterLayoutDisplayContext(request);
+
 String redirect = ParamUtil.getString(request, "redirect");
-
-List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = new ArrayList<>();
-
-LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.createLayoutPageTemplateEntry(0);
-
-layoutPageTemplateEntry.setName(LanguageUtil.get(request, "blank"));
-layoutPageTemplateEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-masterLayoutPageTemplateEntries.add(layoutPageTemplateEntry);
-
-masterLayoutPageTemplateEntries.addAll(LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(scopeGroupId, LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -41,7 +32,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 		<ul class="card-page card-page-equal-height">
 
 			<%
-			for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : masterLayoutPageTemplateEntries) {
+			for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : selectDisplayPageMasterLayoutDisplayContext.getMasterLayoutPageTemplateEntries()) {
 			%>
 
 				<li class="card-page-item col-md-4 col-sm-6">

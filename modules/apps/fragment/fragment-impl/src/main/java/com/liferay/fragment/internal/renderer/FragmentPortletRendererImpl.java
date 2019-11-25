@@ -15,10 +15,7 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.fragment.internal.constants.PortletFragmentEntryProcessorWebKeys;
-import com.liferay.fragment.internal.display.context.PortletFragmentEntryProcessorDisplayContext;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -26,12 +23,10 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -51,16 +46,6 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
 			httpServletResponse, unsyncStringWriter);
 
-		PortletFragmentEntryProcessorDisplayContext
-			portletFragmentEntryProcessorDisplayContext =
-				new PortletFragmentEntryProcessorDisplayContext(
-					defaultPreferences, instanceId, portletName);
-
-		httpServletRequest.setAttribute(
-			PortletFragmentEntryProcessorWebKeys.
-				PORTLET_FRAGMENT_ENTRY_PROCESSOR_DISPLAY_CONTEXT,
-			portletFragmentEntryProcessorDisplayContext);
-
 		try {
 			RuntimeTag.doTag(
 				portletName, instanceId, StringPool.BLANK,
@@ -75,14 +60,5 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 
 		return unsyncStringWriter.toString();
 	}
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.fragment.impl)",
-		unbind = "-"
-	)
-	private ServletContext _servletContext;
 
 }

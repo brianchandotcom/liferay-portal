@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaModuleExtendedObjectClassDefinitionCheck" files="src/main/java/com/liferay/multi/factor/authentication/checker/email/otp/web/internal/configuration/EmailOTPConfiguration\.java" />
+	</source-check>
+</suppressions>

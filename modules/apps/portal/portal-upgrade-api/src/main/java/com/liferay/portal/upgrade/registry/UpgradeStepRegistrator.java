@@ -25,15 +25,6 @@ public interface UpgradeStepRegistrator {
 
 	public interface Registry {
 
-		/**
-		 * @deprecated As of Judson (7.1.x), replaced by {@link
-		 *             #register(String, String, UpgradeStep[])}
-		 */
-		@Deprecated
-		public void register(
-			String bundleSymbolicName, String fromSchemaVersionString,
-			String toSchemaVersionString, UpgradeStep... upgradeSteps);
-
 		public void register(
 			String fromSchemaVersionString, String toSchemaVersionString,
 			UpgradeStep... upgradeSteps);

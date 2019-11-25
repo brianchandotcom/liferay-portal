@@ -15,30 +15,7 @@
 import {fetch} from 'frontend-js-web';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ADD_FRAGMENT_ENTRY_LINK_AND_ITEM} from './types';
-
-function addFragmentEntryLinkAndItem({
-	fragmentEntryLink,
-	itemId,
-	itemType,
-	parentId,
-	position
-}) {
-	const {fragmentEntryLinkId} = fragmentEntryLink;
-
-	return {
-		config: {
-			fragmentEntryLinkId
-		},
-		fragmentEntryLink,
-		fragmentEntryLinkId,
-		itemId,
-		itemType,
-		parentId,
-		position,
-		type: ADD_FRAGMENT_ENTRY_LINK_AND_ITEM
-	};
-}
+import addFragmentEntryLinkAndItem from '../actions/addFragmentEntryLinkAndItem';
 
 export default function addFragment({
 	config,

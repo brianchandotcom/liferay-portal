@@ -18,11 +18,11 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 import {useDrag} from 'react-dnd';
 
-import addFragment from '../../../app/actions/addFragment';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../../app/config/index';
 import {DispatchContext} from '../../../app/reducers/index';
 import {StoreContext} from '../../../app/store/index';
+import addFragment from '../../../app/thunks/addFragment';
 
 const ImagePreview = ({imagePreviewURL}) => {
 	if (imagePreviewURL) {

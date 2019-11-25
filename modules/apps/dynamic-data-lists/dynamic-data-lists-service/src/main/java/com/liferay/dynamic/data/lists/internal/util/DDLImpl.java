@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -242,31 +243,53 @@ public class DDLImpl implements DDL {
 			ddmStructure.getStructureId(), serviceContext);
 
 		if (record != null) {
+			if (mergeFields) {
+				DDLRecordVersion recordVersion =
+					record.getLatestRecordVersion();
+
+				DDMFormValues existingDDMFormValues =
+					_storageEngine.getDDMFormValues(
+						recordVersion.getDDMStorageId());
+
+				Fields existingFields = _ddmFormValuesToFieldsConverter.convert(
+					recordSet.getDDMStructure(), existingDDMFormValues);
+
+				fields = _ddm.mergeFields(fields, existingFields);
+			}
+
 			if (checkPermission) {
 				record = _ddlRecordService.updateRecord(
 					recordId, majorVersion,
-					DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
-					mergeFields, serviceContext);
+					DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
+					_fieldsToDDMFormValuesConverter.convert(
+						recordSet.getDDMStructure(), fields),
+					serviceContext);
 			}
 			else {
 				record = _ddlRecordLocalService.updateRecord(
 					serviceContext.getUserId(), recordId, majorVersion,
-					DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
-					mergeFields, serviceContext);
+					DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
+					_fieldsToDDMFormValuesConverter.convert(
+						recordSet.getDDMStructure(), fields),
+					serviceContext);
 			}
 		}
 		else {
 			if (checkPermission) {
 				record = _ddlRecordService.addRecord(
 					serviceContext.getScopeGroupId(), recordSetId,
-					DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
+					DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
+					_fieldsToDDMFormValuesConverter.convert(
+						recordSet.getDDMStructure(), fields),
 					serviceContext);
 			}
 			else {
 				record = _ddlRecordLocalService.addRecord(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), recordSetId,
-					DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields,
+					DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
+					_fieldsToDDMFormValuesConverter.convert(
+						recordSet.getDDMStructure(), fields),
 					serviceContext);
 			}
 		}
@@ -402,6 +425,13 @@ public class DDLImpl implements DDL {
 	}
 
 	@Reference(unbind = "-")
+	protected void setFieldsToDDMFormValuesConverter(
+		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter) {
+
+		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		_layoutService = layoutService;
 	}
@@ -417,6 +447,7 @@ public class DDLImpl implements DDL {
 	private DDM _ddm;
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private DLAppLocalService _dlAppLocalService;
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private LayoutService _layoutService;
 	private StorageEngine _storageEngine;
 

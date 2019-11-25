@@ -65,7 +65,7 @@ describe('FragmentsSidebar', () => {
 		expect(getByText('layout-elements')).toBeInTheDocument();
 		expect(getByLabelText('search-form')).toBeInTheDocument();
 
-		expect(queryByText('Button')).toBe(null);
+		expect(queryByText('Button')).not.toBeInTheDocument();
 	});
 
 	it('expands a category on click and closes it when clicking it again', () => {
@@ -86,7 +86,7 @@ describe('FragmentsSidebar', () => {
 			'false'
 		);
 
-		expect(queryByText('Button')).toBe(null);
+		expect(queryByText('Button')).not.toBeInTheDocument();
 	});
 
 	it('finds an element when you search it', () => {
@@ -99,7 +99,7 @@ describe('FragmentsSidebar', () => {
 
 		expect(getByText('Button')).toBeInTheDocument();
 
-		expect(queryByText('Heading')).toBe(null);
+		expect(queryByText('Heading')).not.toBeInTheDocument();
 	});
 
 	it('expands all categories when you type something in search form and hides layout elements', () => {
@@ -113,6 +113,6 @@ describe('FragmentsSidebar', () => {
 			getByText('Basic Components').getAttribute('aria-expanded')
 		).toBe('true');
 
-		expect(queryByText('layout-elements')).toBe(null);
+		expect(queryByText('layout-elements')).not.toBeInTheDocument();
 	});
 });

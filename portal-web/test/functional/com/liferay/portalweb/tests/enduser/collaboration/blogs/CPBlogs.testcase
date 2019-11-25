@@ -194,38 +194,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@ignore = "true"
-	@priority = "4"
-	test AddBlogsEntryWithInlineImageViaURL {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
-
-		ItemSelector.gotoItemSelectorViaAlloyEditor();
-
-		ItemSelector.addFromURL(
-			imageSourceURL = "https://dummyimage.com/600x400/000/fff.jpg",
-			navTab = "URL");
-
-		Pause(locator1 = "1000");
-
-		PortletEntry.publish();
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewInlineImage(uploadFileName = "https://dummyimage.com/600x400/000/fff.jpg");
-	}
-
 	@priority = "4"
 	test AddBlogsEntryWithSubtitle {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");

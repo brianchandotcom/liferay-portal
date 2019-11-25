@@ -97,7 +97,7 @@ const ExperiencesSelector = ({
 	experiences,
 	hasSegmentsPermission,
 	hasUpdatePermissions,
-	lockedActiveExperience,
+	lockedActiveExperience = false,
 	portletNamespace,
 	segments,
 	selectedSegmentsEntryId
@@ -316,7 +316,7 @@ ExperiencesSelector.propTypes = {
 	experiences: PropTypes.arrayOf(PropTypes.shape(ExperienceType)),
 	hasSegmentsPermission: PropTypes.bool.isRequired,
 	hasUpdatePermissions: PropTypes.bool.isRequired,
-	lockedActiveExperience: PropTypes.bool.isRequired,
+	lockedActiveExperience: PropTypes.bool,
 	portletNamespace: PropTypes.string.isRequired,
 	segments: PropTypes.arrayOf(PropTypes.shape(SegmentType)),
 	selectedSegmentsEntryId: PropTypes.string

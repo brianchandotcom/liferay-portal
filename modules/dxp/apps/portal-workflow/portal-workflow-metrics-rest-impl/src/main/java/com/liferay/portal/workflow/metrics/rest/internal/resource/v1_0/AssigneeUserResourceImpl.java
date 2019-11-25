@@ -174,6 +174,15 @@ public class AssigneeUserResourceImpl
 			slaTaskResultsBooleanQuery, tokensBooleanQuery);
 	}
 
+	private BooleanQuery _createCountFilterBooleanQuery() {
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-tokens"));
+
+		return booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+	}
+
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, long processId,
 		String[] taskKeys, Set<Long> userIds) {
@@ -219,6 +228,7 @@ public class AssigneeUserResourceImpl
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("instanceCompleted", completed),
 			_queries.term("processId", processId));
 	}
 
@@ -255,6 +265,7 @@ public class AssigneeUserResourceImpl
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("completed", completed),
 			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("instanceCompleted", completed),
 			_queries.term("processId", processId));
 	}
 
@@ -270,23 +281,21 @@ public class AssigneeUserResourceImpl
 			"assigneeId", "assigneeId");
 
 		FilterAggregation countFilterAggregation = _aggregations.filter(
-			"countFilter", _resourceHelper.createTokensBooleanQuery(completed));
+			"countFilter", _createCountFilterBooleanQuery());
 
 		countFilterAggregation.addChildrenAggregations(
 			_aggregations.avg("durationTaskAvg", "duration"),
 			_aggregations.valueCount("taskCount", "taskId"));
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
-			"onTime",
-			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
+			"onTime", _resourceHelper.createMustNotBooleanQuery());
 
 		onTimeFilterAggregation.addChildAggregation(
 			_resourceHelper.
 				createOnTimeTaskByAssigneeScriptedMetricAggregation());
 
 		FilterAggregation overdueFilterAggregation = _aggregations.filter(
-			"overdue",
-			_resourceHelper.createInstanceCompletedBooleanQuery(completed));
+			"overdue", _resourceHelper.createMustNotBooleanQuery());
 
 		overdueFilterAggregation.addChildAggregation(
 			_resourceHelper.

@@ -38,6 +38,8 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${uploadFileName}");
 
+			Click(locator1 = "Button#ADD");
+
 			SelectFrameTop(value1 = "relative=top");
 
 			Button.click(button = "Save");

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
@@ -41,8 +40,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -332,23 +329,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		long groupId = fragmentEntryLink.getGroupId();
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			groupId = serviceContext.getScopeGroupId();
-		}
-
-		Group group = _groupLocalService.getGroup(groupId);
-
 		String defaultPortletId = _getPortletId(
 			portletName, fragmentEntryLink.getNamespace(), id, new long[0]);
 
 		PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				fragmentEntryLink.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				_getPlid(fragmentEntryLink), defaultPortletId,
 				defaultPreferences);
@@ -360,13 +347,15 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		List<com.liferay.portal.kernel.model.PortletPreferences>
 			portletPreferencesList =
 				_portletPreferencesLocalService.getPortletPreferences(
-					group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					fragmentEntryLink.getCompanyId(),
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId);
 
 		if (ListUtil.isNotEmpty(portletPreferencesList)) {
 			jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					group.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+					fragmentEntryLink.getCompanyId(),
+					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 					_getPlid(fragmentEntryLink), portletId,
 					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));

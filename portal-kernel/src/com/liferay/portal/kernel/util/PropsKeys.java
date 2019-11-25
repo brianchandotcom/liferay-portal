@@ -651,11 +651,11 @@ public interface PropsKeys {
 	public static final String DATABASE_ORDER_BY_MAX_COLUMNS =
 		"database.order.by.max.columns";
 
-	public static final String DATABASE_STRING_INDEX_MAX_LENGTH =
-		"database.string.index.max.length";
-
 	public static final String DATABASE_PARTITIONING_ENABLED =
 		"database.partitioning.enabled";
+
+	public static final String DATABASE_STRING_INDEX_MAX_LENGTH =
+		"database.string.index.max.length";
 
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX =
 		"default.admin.email.address.prefix";

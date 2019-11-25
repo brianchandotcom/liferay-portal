@@ -336,12 +336,11 @@ public class PartitionClient {
 	private static void _initConnection() throws Exception {
 		String url = _readProperty(_properties, "jdbc.default.url");
 
-		Matcher matcher = _jdbcUrlDbTypePattern.matcher(url);
+		Matcher matcher = _jdbcUrlPattern.matcher(url);
 
 		if (!matcher.find()) {
 			throw new Exception(
-				"Invalid jdbc url, follow the pattern " +
-					_JDBC_URL_DBTYPE_REGEX);
+				"Invalid jdbc url, follow the pattern " + _JDBC_URL_REGEX);
 		}
 
 		_dbType = matcher.group(1);
@@ -574,7 +573,7 @@ public class PartitionClient {
 
 	private static final String _JDBC_INDEX_NAME = "INDEX_NAME";
 
-	private static final String _JDBC_URL_DBTYPE_REGEX = "jdbc:(.*?):.*";
+	private static final String _JDBC_URL_REGEX = "jdbc:(.*):.*";
 
 	private static final List<Long> _companyIds = new ArrayList<>();
 	private static final List<String> _companyIdTableNames = new ArrayList<>();
@@ -582,8 +581,8 @@ public class PartitionClient {
 	private static ConsoleReader _consoleReader;
 	private static DatabaseMetaData _databaseMetaData;
 	private static String _dbType;
-	private static final Pattern _jdbcUrlDbTypePattern = Pattern.compile(
-		_JDBC_URL_DBTYPE_REGEX);
+	private static final Pattern _jdbcUrlPattern = Pattern.compile(
+		_JDBC_URL_REGEX);
 	private static String _normalizedCompanyId;
 	private static PrintStream _printStream;
 	private static Properties _properties;

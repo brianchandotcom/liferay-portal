@@ -239,7 +239,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 				counterLocalService.reset(
 					CompanyConstants.DATA_PARTITIONING_COUNTER_NAME,
-					counterLocalService.increment()-1);
+					counterLocalService.increment() - 1);
 			}
 			else {
 				companyId = counterLocalService.increment();

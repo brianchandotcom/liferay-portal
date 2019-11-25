@@ -790,7 +790,7 @@ public class MainServlet extends HttpServlet {
 		if (nextCompanyId == 1) {
 			CounterLocalServiceUtil.reset(
 				CompanyConstants.DATA_PARTITIONING_COUNTER_NAME,
-				CounterLocalServiceUtil.increment()-1);
+				CounterLocalServiceUtil.increment() - 1);
 		}
 	}
 

@@ -132,7 +132,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			);
 		});
 
-		dom.delegate(document.body, 'click', '.disconnect-site-button', function(
+		var delegateHandler = dom.delegate(document.body, 'click', '.disconnect-site-button', function(
 			event
 		) {
 			if (
@@ -146,5 +146,13 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 				);
 			}
 		});
+
+		var onDestroyPortlet = function() {
+			delegateHandler.removeListener();
+
+			Liferay.detach('destroyPortlet', onDestroyPortlet);
+		};
+
+		Liferay.on('destroyPortlet', onDestroyPortlet);
 	</aui:script>
 </div>

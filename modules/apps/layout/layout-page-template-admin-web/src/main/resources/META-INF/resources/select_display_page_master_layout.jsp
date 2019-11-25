@@ -49,7 +49,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 	</div>
 </div>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal" sandbox="<%= true %>">
+<%
+StringBundler sb = new StringBundler(3);
+
+sb.append("metal-dom/src/all/dom as dom, ");
+sb.append(npmResolvedPackageName);
+sb.append("/js/modal/openDisplayPageModal.es as openDisplayPageModal");
+%>
+
+<aui:script require="<%= sb.toString() %>" sandbox="<%= true %>">
 	var addDisplayPageClickHandler = dom.delegate(
 		document.body,
 		'click',
@@ -59,15 +67,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 
 			event.preventDefault();
 
-			openSimpleInputModal.default({
-				dialogTitle: '<liferay-ui:message key="add-page-template" />',
-				formSubmitURL: data.addLayoutPageTemplateEntryUrl,
-				mainFieldLabel: '<liferay-ui:message key="name" />',
-				mainFieldName: 'name',
-				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+			openDisplayPageModal.default({
+				formSubmitURL: data.addDisplayPageUrl,
+				mappingTypes:
+					'<%= selectDisplayPageMasterLayoutDisplayContext.getMappingTypesJSONArray() %>',
 				namespace: '<portlet:namespace />',
 				spritemap:
-					'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+					'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+				title: '<liferay-ui:message key="add-display-page-template" />'
 			});
 		}
 	);

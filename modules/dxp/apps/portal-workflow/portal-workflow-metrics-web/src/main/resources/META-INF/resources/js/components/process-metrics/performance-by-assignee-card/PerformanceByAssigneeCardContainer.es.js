@@ -31,6 +31,15 @@ const Container = ({processId, query}) => {
 		[processId, query]
 	);
 
+	let processStepsKey;
+	if (
+		processSteps &&
+		processSteps.length &&
+		processSteps[0].key !== 'allSteps'
+	) {
+		processStepsKey = processSteps[0].key;
+	}
+
 	const fetchData = processId => {
 		const requestUrl = `/processes/${processId}/assignee-users`;
 		const params = {
@@ -40,12 +49,8 @@ const Container = ({processId, query}) => {
 			sort: 'durationTaskAvg:desc'
 		};
 
-		if (
-			processSteps &&
-			processSteps.length &&
-			processSteps[0].key !== 'allSteps'
-		) {
-			params.taskKeys = processSteps[0].key;
+		if (processStepsKey) {
+			params.taskKeys = processStepsKey;
 		}
 
 		if (timeRange) {
@@ -76,6 +81,7 @@ const Container = ({processId, query}) => {
 				data={data}
 				defaultDelta={defaultDelta}
 				processId={processId}
+				processStepsKey={processStepsKey}
 			/>
 		</PromisesResolver>
 	);

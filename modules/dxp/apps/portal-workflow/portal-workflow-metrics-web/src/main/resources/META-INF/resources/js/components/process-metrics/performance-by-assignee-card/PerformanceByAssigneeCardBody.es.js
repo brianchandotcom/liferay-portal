@@ -20,7 +20,7 @@ import PromisesResolver from '../../../shared/components/request/PromisesResolve
 import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
 import PerformanceByAssigneeCard from './PerformanceByAssigneeCard.es';
 
-const Body = ({data, defaultDelta, processId}) => {
+const Body = ({data, defaultDelta, processId, processStepsKey}) => {
 	const {items, totalCount} = data;
 
 	return (
@@ -65,6 +65,7 @@ const Body = ({data, defaultDelta, processId}) => {
 					<PerformanceByAssigneeCard.Footer
 						defaultDelta={defaultDelta}
 						processId={processId}
+						processStepsKey={processStepsKey}
 						totalCount={totalCount}
 					/>
 				) : null}
@@ -73,12 +74,18 @@ const Body = ({data, defaultDelta, processId}) => {
 	);
 };
 
-const Footer = ({defaultDelta, processId, totalCount}) => {
+const Footer = ({defaultDelta, processId, processStepsKey, totalCount}) => {
+	const filters =
+		processStepsKey && processStepsKey !== 'allSteps'
+			? {taskKeys: [processStepsKey]}
+			: {};
+
 	const viewAllAssigneesUrl = `/performance/assignee/${processId}/${defaultDelta}/1/durationTaskAvg:desc/`;
+
 	return (
 		<Panel.Footer elementClasses="fixed-bottom">
 			<div className="mb-1 text-right">
-				<ChildLink to={viewAllAssigneesUrl}>
+				<ChildLink query={{filters}} to={viewAllAssigneesUrl}>
 					<button className="border-0 btn btn-secondary btn-sm">
 						<span className="mr-2" data-testid="viewAllAssignees">
 							{`${Liferay.Language.get(

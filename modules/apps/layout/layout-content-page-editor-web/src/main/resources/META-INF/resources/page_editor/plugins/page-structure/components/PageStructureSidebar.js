@@ -12,28 +12,19 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import React from 'react';
+import React, {useContext} from 'react';
 
-import AppContext from '../../../core/AppContext';
+import {StoreContext} from '../../../app/store/index';
+import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 
-const {useContext} = React;
-
-export default function PageStructureSidebar({title}) {
-	const {dispatch} = useContext(AppContext);
+export default function PageStructureSidebar() {
+	const {fragmentEntryLinks, layoutData} = useContext(StoreContext);
 
 	return (
 		<>
-			<h1>{title}</h1>
-			<ul>
-				<li>
-					<ClayButton
-						onClick={() => dispatch({type: 'A CUSTOM ACTION'})}
-					>
-						Action
-					</ClayButton>
-				</li>
-			</ul>
+			<SidebarPanelHeader>
+				{Liferay.Language.get('page-structure')}
+			</SidebarPanelHeader>
 		</>
 	);
 }

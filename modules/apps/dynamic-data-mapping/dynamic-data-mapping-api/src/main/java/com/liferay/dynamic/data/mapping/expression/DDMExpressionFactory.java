@@ -22,24 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMExpressionFactory {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DDMExpressionFactory#createExpression(
-	 *             CreateExpressionRequest)}
-	 */
-	@Deprecated
-	public default DDMExpression<Boolean> createBooleanDDMExpression(
-			String ddmExpressionString)
-		throws DDMExpressionException {
-
-		CreateExpressionRequest createExpressionRequest =
-			CreateExpressionRequest.Builder.newBuilder(
-				ddmExpressionString
-			).build();
-
-		return createExpression(createExpressionRequest);
-	}
-
 	public <T> DDMExpression<T> createExpression(
 			CreateExpressionRequest createExpressionRequest)
 		throws DDMExpressionException;

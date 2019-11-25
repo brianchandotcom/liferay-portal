@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
@@ -70,8 +71,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 		try {
 			DDMExpression<Boolean> ddmExpression =
-				_ddmExpressionFactory.createBooleanDDMExpression(
-					visibilityExpression);
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						visibilityExpression
+					).build());
 
 			Map<String, VariableDependencies> variableDependencies =
 				ddmExpression.getVariableDependenciesMap();

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -100,8 +101,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 
 		try {
-			_ddmExpressionFactory.createBooleanDDMExpression(
-				ddmExpressionString);
+			_ddmExpressionFactory.createExpression(
+				CreateExpressionRequest.Builder.newBuilder(
+					ddmExpressionString
+				).build());
 		}
 		catch (DDMExpressionException ddmee) {
 			throw new MustSetValidFormRuleExpression(
@@ -286,8 +289,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		try {
 			if (ddmFormFieldValidation.getParameterLocalizedValue() == null) {
-				_ddmExpressionFactory.createBooleanDDMExpression(
-					ddmFormFieldValidationExpression.getValue());
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						ddmFormFieldValidationExpression.getValue()
+					).build());
 			}
 			else {
 				String value = ddmFormFieldValidationExpression.getValue();
@@ -296,10 +301,12 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 					ddmFormFieldValidation.getParameterLocalizedValue();
 
 				for (Locale locale : locales) {
-					_ddmExpressionFactory.createBooleanDDMExpression(
-						StringUtil.replace(
-							value, "{parameter}",
-							parameterLocalizedValue.getString(locale)));
+					_ddmExpressionFactory.createExpression(
+						CreateExpressionRequest.Builder.newBuilder(
+							StringUtil.replace(
+								value, "{parameter}",
+								parameterLocalizedValue.getString(locale))
+						).build());
 				}
 			}
 		}
@@ -321,8 +328,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		}
 
 		try {
-			_ddmExpressionFactory.createBooleanDDMExpression(
-				visibilityExpression);
+			_ddmExpressionFactory.createExpression(
+				CreateExpressionRequest.Builder.newBuilder(
+					visibilityExpression
+				).build());
 		}
 		catch (DDMExpressionException ddmee) {
 			throw new MustSetValidVisibilityExpression(

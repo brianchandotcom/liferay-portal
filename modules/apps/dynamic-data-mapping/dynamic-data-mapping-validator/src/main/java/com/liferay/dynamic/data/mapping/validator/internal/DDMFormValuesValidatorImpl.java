@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
@@ -122,17 +123,19 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				LocalizedValue parameterLocalizedValue =
 					ddmFormFieldValidation.getParameterLocalizedValue();
 
-				ddmExpression =
-					_ddmExpressionFactory.createBooleanDDMExpression(
+				ddmExpression = _ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
 						StringUtil.replace(
 							ddmFormFieldValidationExpression.getValue(),
 							"{parameter}",
-							parameterLocalizedValue.getString(locale)));
+							parameterLocalizedValue.getString(locale))
+					).build());
 			}
 			else {
-				ddmExpression =
-					_ddmExpressionFactory.createBooleanDDMExpression(
-						ddmFormFieldValidationExpression.getValue());
+				ddmExpression = _ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						ddmFormFieldValidationExpression.getValue()
+					).build());
 			}
 
 			if (dataType.equals(FieldConstants.BOOLEAN)) {

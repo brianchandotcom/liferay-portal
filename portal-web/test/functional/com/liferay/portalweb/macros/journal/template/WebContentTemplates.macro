@@ -251,6 +251,21 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no results.");
 	}
 
+	@summary = "Assert that the cards entry for template '${templateName}' is present"
+	macro viewCardsEntryCP {
+		var key_ddlTemplateName = "${templateName}";
+
+		AssertTextEquals(
+			locator1 = "DDMSelectTemplate#TEMPLATE_CARDS_NAME",
+			value1 = "${templateName}");
+
+		if (isSet(templateSmallImage)) {
+			AssertVisible(
+				locator1 = "DDMSelectTemplate#TEMPLATE_CARDS_SMALL_IMAGE",
+				value1 = "${templateSmallImage}");
+		}
+	}
+
 	@summary = "Assert that certain template attributes are present for the template '${templateName}'"
 	macro viewCP {
 		var key_ddlStructureName = "${structureName}";

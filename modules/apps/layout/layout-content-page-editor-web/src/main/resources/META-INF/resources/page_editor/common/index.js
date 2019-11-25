@@ -13,5 +13,6 @@
  */
 
 export {default as Collapse} from './components/Collapse';
+export {default as Permission} from './components/Permission';
 export {default as SearchForm} from './components/SearchForm';
 export {default as SidebarPanelHeader} from './components/SidebarPanelHeader';

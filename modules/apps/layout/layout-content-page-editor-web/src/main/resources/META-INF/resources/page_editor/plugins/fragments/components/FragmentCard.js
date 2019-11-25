@@ -15,7 +15,14 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
+import {useDrag} from 'react-dnd';
+
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {getConfig} from '../../../app/config/index';
+import {DispatchContext} from '../../../app/reducers/index';
+import {StoreContext} from '../../../app/store/index';
+import addFragment from '../../../app/thunks/addFragment';
 
 const ImagePreview = ({imagePreviewURL}) => {
 	if (imagePreviewURL) {
@@ -33,7 +40,42 @@ const ImagePreview = ({imagePreviewURL}) => {
 	);
 };
 
-export default function FragmentCard({imagePreviewURL, name}) {
+export default function FragmentCard({
+	fragmentGroupId,
+	fragmentKey,
+	imagePreviewURL,
+	name
+}) {
+	const config = getConfig();
+	const dispatch = useContext(DispatchContext);
+	const store = useContext(StoreContext);
+
+	const [, drag] = useDrag({
+		end(_item, monitor) {
+			const result = monitor.getDropResult();
+
+			if (!result) {
+				return;
+			}
+
+			const {parentId, position} = result;
+
+			dispatch(
+				addFragment({
+					config,
+					fragmentGroupId,
+					fragmentKey,
+					parentId,
+					position,
+					store
+				})
+			);
+		},
+		item: {
+			type: LAYOUT_DATA_ITEM_TYPES.fragment
+		}
+	});
+
 	return (
 		<div
 			className={classNames(
@@ -44,6 +86,7 @@ export default function FragmentCard({imagePreviewURL, name}) {
 				'selector-button',
 				'overflow-hidden'
 			)}
+			ref={drag}
 		>
 			<ImagePreview imagePreviewURL={imagePreviewURL} />
 

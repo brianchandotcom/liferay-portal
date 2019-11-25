@@ -14,8 +14,9 @@
 
 import React from 'react';
 
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+// Commented out to avoid lint errors
+// import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+// import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 const INITIAL_STATE = {
 	/**
@@ -67,21 +68,23 @@ function transformServerData(data) {
 	return {
 		...data,
 
-		fragments: data.elements,
+		fragments: data.elements
 
-		layoutData: {
-			items: {
-				main: {
-					children: [],
-					config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
-					itemId: 'main',
-					parentId: null,
-					type: LAYOUT_DATA_ITEM_TYPES.root
-				}
-			},
+		// This needs to be commented or uncommented
+		// depending if you want the data to be mocked or not.
+		// layoutData: {
+		// 	items: {
+		// 		main: {
+		// 			children: [],
+		// 			config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
+		// 			itemId: 'main',
+		// 			parentId: null,
+		// 			type: LAYOUT_DATA_ITEM_TYPES.root
+		// 		}
+		// 	},
 
-			rootItems: {main: 'main'},
-			version: 1
-		}
+		// 	rootItems: {main: 'main'},
+		// 	version: 1
+		// }
 	};
 }

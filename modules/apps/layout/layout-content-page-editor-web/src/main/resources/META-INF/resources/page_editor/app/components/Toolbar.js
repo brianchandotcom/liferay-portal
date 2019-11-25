@@ -21,7 +21,7 @@ import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
-import {ConfigContext} from '../config/index';
+import {getConfig} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import UnsafeHTML from './UnsafeHTML';
@@ -31,7 +31,7 @@ const {discard, publish} = Actions;
 const {Suspense, useCallback, useContext, useRef} = React;
 
 function ToolbarBody() {
-	const config = useContext(ConfigContext);
+	const config = getConfig();
 
 	const {
 		availableLanguages,
@@ -198,7 +198,7 @@ class ErrorBoundary extends React.Component {
 }
 
 export default function Toolbar() {
-	const {toolbarId} = useContext(ConfigContext);
+	const {toolbarId} = getConfig();
 
 	const isMounted = useIsMounted();
 

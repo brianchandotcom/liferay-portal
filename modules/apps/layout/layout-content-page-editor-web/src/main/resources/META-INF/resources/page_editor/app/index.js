@@ -13,10 +13,12 @@
  */
 
 import React from 'react';
+import {DragDropContextProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import useThunk from '../core/hooks/useThunk';
 import App from './components/App';
-import {ConfigContext, getConfig} from './config/index';
+import {setConfig} from './config/index';
 import {DispatchContext, reducer} from './reducers/index';
 import {StoreContext, getInitialState} from './store/index';
 
@@ -31,23 +33,25 @@ const {useReducer} = React;
  * function that returns a component).
  */
 function Container({data}) {
-	const config = getConfig(data);
+	setConfig(data);
 
-	const [store, dispatch] = useThunk(
-		useReducer(reducer, [data, config], getInitialState)
+	const [state, dispatch] = useThunk(
+		useReducer(reducer, data, getInitialState)
 	);
 
 	return (
-		<ConfigContext.Provider value={config}>
-			<StoreContext.Provider value={store}>
-				<DispatchContext.Provider value={dispatch}>
-					<App />
-				</DispatchContext.Provider>
-			</StoreContext.Provider>
-		</ConfigContext.Provider>
+		<StoreContext.Provider value={state}>
+			<DispatchContext.Provider value={dispatch}>
+				<App />
+			</DispatchContext.Provider>
+		</StoreContext.Provider>
 	);
 }
 
 export default function(data) {
-	return <Container data={data} />;
+	return (
+		<DragDropContextProvider backend={HTML5Backend}>
+			<Container data={data} />
+		</DragDropContextProvider>
+	);
 }

@@ -12,16 +12,15 @@
  * details.
  */
 
-import React from 'react';
+import {MOVE_ITEM as type} from './types';
 
-const UnsafeHTML = React.forwardRef(
-	({TagName = 'div', className = '', markup}, ref) => (
-		<TagName
-			className={className}
-			dangerouslySetInnerHTML={{__html: markup}}
-			ref={ref}
-		/>
-	)
-);
+const ACTION = {type};
 
-export default UnsafeHTML;
+export default function moveItem({itemId, position, siblingId}) {
+	return {
+		...ACTION,
+		itemId,
+		position,
+		siblingId
+	};
+}

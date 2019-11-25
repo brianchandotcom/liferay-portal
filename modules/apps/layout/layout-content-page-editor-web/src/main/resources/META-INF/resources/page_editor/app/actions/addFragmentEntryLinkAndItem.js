@@ -12,16 +12,27 @@
  * details.
  */
 
-import React from 'react';
+import {ADD_FRAGMENT_ENTRY_LINK_AND_ITEM} from './types';
 
-const UnsafeHTML = React.forwardRef(
-	({TagName = 'div', className = '', markup}, ref) => (
-		<TagName
-			className={className}
-			dangerouslySetInnerHTML={{__html: markup}}
-			ref={ref}
-		/>
-	)
-);
+export default function addFragmentEntryLinkAndItem({
+	fragmentEntryLink,
+	itemId,
+	itemType,
+	parentId,
+	position
+}) {
+	const {fragmentEntryLinkId} = fragmentEntryLink;
 
-export default UnsafeHTML;
+	return {
+		config: {
+			fragmentEntryLinkId
+		},
+		fragmentEntryLink,
+		fragmentEntryLinkId,
+		itemId,
+		itemType,
+		parentId,
+		position,
+		type: ADD_FRAGMENT_ENTRY_LINK_AND_ITEM
+	};
+}

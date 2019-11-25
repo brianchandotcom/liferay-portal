@@ -12,21 +12,28 @@
  * details.
  */
 
-import React from 'react';
-
 const DEFAULT_CONFIG = {
 	toolbarId: 'pageEditorToolbar'
 };
 
-export const ConfigContext = React.createContext(DEFAULT_CONFIG);
+let computedConfig = DEFAULT_CONFIG;
+
+/**
+ * Returns existing computed config, which defaults to DEFAULT_CONFIG
+ * if no data has been given through setConfig function.
+ * @return {object}
+ */
+export function getConfig() {
+	return computedConfig;
+}
 
 /**
  * Extracts the immutable parts from the server data.
  *
  * Unlike data in the store, this config does not change over the lifetime of
- * the app.
+ * the app, so we can safely store is as a variable.
  */
-export function getConfig(data) {
+export function setConfig(data) {
 	const {
 		availableLanguages,
 		defaultLanguageId,
@@ -56,7 +63,7 @@ export function getConfig(data) {
 		toolbarPlugins: getToolbarPlugins(data)
 	};
 
-	return {
+	computedConfig = {
 		...DEFAULT_CONFIG,
 		...copiedItems,
 		...syntheticItems

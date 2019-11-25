@@ -13,8 +13,12 @@
  */
 
 import classNames from 'classnames';
-import React from 'react';
+import React, {useContext} from 'react';
+import {useDrag} from 'react-dnd';
 
+import addItem from '../../../app/actions/addItem';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {DispatchContext} from '../../../app/reducers/index';
 import Collapse from '../../../common/components/Collapse';
 
 const layouts = [
@@ -39,6 +43,33 @@ const layouts = [
 ];
 
 const LayoutCard = ({layoutColumns}) => {
+	const dispatch = useContext(DispatchContext);
+
+	const [, drag] = useDrag({
+		end(item, monitor) {
+			// TODO: Figure out what should go in this config object
+			const config = {};
+
+			const {parentId, position} = monitor.getDropResult();
+
+			const itemId = `layout-${Date.now()}`;
+			const itemType = item.type;
+
+			dispatch(
+				addItem({
+					config,
+					itemId,
+					itemType,
+					parentId,
+					position
+				})
+			);
+		},
+		item: {
+			type: LAYOUT_DATA_ITEM_TYPES.container
+		}
+	});
+
 	return (
 		<button
 			aria-label={Liferay.Util.sub(
@@ -52,6 +83,7 @@ const LayoutCard = ({layoutColumns}) => {
 				'card-interactive-secondary',
 				'selector-button'
 			)}
+			ref={drag}
 			type="button"
 		>
 			<div className="card-body px-2 py-3" role="image">

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.site.item.selector.criterion;
+package com.liferay.item.selector.criteria.group.criterion;
 
-import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
+import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
- * @author Julio Camarero
+ * @author Adolfo Pérez
  */
-public class SiteItemSelectorCriterion extends GroupItemSelectorCriterion {
+public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 }

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+DepotAdminSitesDisplayContext depotAdminSitesDisplayContext = new DepotAdminSitesDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
 DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 %>
 
@@ -101,18 +103,6 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 		/>
 	</liferay-ui:search-container>
 
-	<%
-	String eventName = liferayPortletResponse.getNamespace() + "selectSite";
-
-	ItemSelector itemSelector = (ItemSelector)request.getAttribute(DepotAdminWebKeys.ITEM_SELECTOR);
-
-	ItemSelectorCriterion itemSelectorCriterion = new SiteItemSelectorCriterion();
-
-	itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
-
-	PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, itemSelectorCriterion);
-	%>
-
 	<aui:script require="metal-dom/src/all/dom as dom">
 		var addConnectedSiteButton = document.querySelector(
 			'#<portlet:namespace />addConnectedSiteButton'
@@ -126,10 +116,11 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 						destroyOnHide: true,
 						modal: true
 					},
-					eventName: '<%= eventName %>',
+					eventName: '<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
 					id: '<portlet:namespace />selectSite',
 					title: '<liferay-ui:message key="select-site" />',
-					uri: '<%= itemSelectorURL.toString() %>'
+					uri:
+						'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>'
 				},
 				function(event) {
 					var toGroupIdInput = document.querySelector(

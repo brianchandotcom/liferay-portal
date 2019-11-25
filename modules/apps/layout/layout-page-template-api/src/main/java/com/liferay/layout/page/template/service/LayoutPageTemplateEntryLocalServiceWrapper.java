@@ -99,6 +99,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			previewFileEntryId, plid, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
@@ -128,6 +134,20 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			userId, groupId, layoutPageTemplateCollectionId, classNameId,
 			classTypeId, name, type, previewFileEntryId, defaultTemplate,
 			layoutPrototypeId, plid, masterLayoutPlid, status, serviceContext);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			addLayoutPageTemplateEntry(
+				long userId, long groupId, long layoutPageTemplateCollectionId,
+				long classNameId, long classTypeId, String name, int type,
+				long masterLayoutPlid, int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, classNameId,
+			classTypeId, name, type, masterLayoutPlid, status, serviceContext);
 	}
 
 	/**

@@ -14,8 +14,8 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import addFragmentEntryLinkAndItem from '../actions/addFragmentEntryLinkAndItem';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 export default function addFragment({
 	config,

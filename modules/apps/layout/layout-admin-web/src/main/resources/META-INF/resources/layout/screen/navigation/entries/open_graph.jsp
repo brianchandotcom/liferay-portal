@@ -101,44 +101,42 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 				<div>
 
 					<%
-					Map<String, Object> dataOG = new HashMap<>();
-
-					dataOG.put(
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
 						"targets",
-						JSONUtil.putAll(
-							JSONUtil.put(
-								"defaultValue", layoutsAdminDisplayContext.getOpenGraphImageURL()
-							).put(
+						Arrays.asList(
+							HashMapBuilder.put(
 								"id", "openGraphImageURL"
 							).put(
 								"type", "imgUrl"
-							),
-							JSONUtil.put(
-								"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-							).put(
-								"id", "canonicalURL"
-							).put(
-								"type", "canonicalURL"
-							),
-							JSONUtil.put(
+							).build(),
+							HashMapBuilder.put(
 								"id", "openGraphDescription"
 							).put(
 								"type", "description"
-							),
-							JSONUtil.put(
-								"defaultValue", layoutsAdminDisplayContext.getPageTitle()
-							).put(
+							).build(),
+							HashMapBuilder.put(
 								"id", "openGraphTitle"
 							).put(
 								"type", "title"
-							)));
-
-					dataOG.put("displayType", "og");
-					dataOG.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
+							).build())
+					).put(
+						"defaultValues",
+						HashMapBuilder.<String, String>put(
+							"description", selLayout.getDescription(locale)
+						).put(
+							"title", layoutsAdminDisplayContext.getPageTitle()
+						).put(
+							"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+						).build()
+					).put(
+						"displayType", "og"
+					).put(
+						"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()
+					).build();
 					%>
 
 					<react:component
-						data="<%= dataOG %>"
+						data="<%= data %>"
 						module="js/seo/PreviewSeo.es"
 					/>
 				</div>

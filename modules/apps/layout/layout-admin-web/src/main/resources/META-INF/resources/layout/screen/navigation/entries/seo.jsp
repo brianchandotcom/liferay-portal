@@ -129,32 +129,34 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 					<div>
 
 						<%
-						Map<String, Object> data = new HashMap<>();
-
-						data.put(
+						Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							"defaultValues",
+							HashMapBuilder.put(
+								"title", layoutsAdminDisplayContext.getPageTitle()
+							).put(
+								"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+							).build()
+						).put(
 							"targets",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-								).put(
+							Arrays.asList(
+								HashMapBuilder.put(
 									"id", "canonicalURL"
 								).put(
-									"type", "canonicalURL"
-								),
-								JSONUtil.put(
+									"type", "url"
+								).build(),
+								HashMapBuilder.put(
 									"id", "descriptionSEO"
 								).put(
 									"type", "description"
-								),
-								JSONUtil.put(
-									"defaultValue", layoutsAdminDisplayContext.getPageTitle()
-								).put(
+								).build(),
+								HashMapBuilder.put(
 									"id", "title"
 								).put(
 									"type", "title"
-								)));
-
-						data.put("titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix());
+								).build())
+						).put(
+							"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()
+						).build();
 						%>
 
 						<react:component

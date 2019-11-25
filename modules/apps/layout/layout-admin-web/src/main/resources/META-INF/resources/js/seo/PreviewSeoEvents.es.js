@@ -12,14 +12,12 @@
  * details.
  */
 
-function PreviewSeoFireChange(portletNamespace, data) {
+const PreviewSeoFireChange = (portletNamespace, data) =>
 	Liferay.fire(`${portletNamespace}PreviewSeo:changed`, {data});
-}
 
-function PreviewSeoOnChange(portletNamespace, cb) {
+const PreviewSeoOnChange = (portletNamespace, cb) =>
 	Liferay.on(`${portletNamespace}PreviewSeo:changed`, event => {
 		cb(event.data);
 	});
-}
 
 export {PreviewSeoFireChange, PreviewSeoOnChange};

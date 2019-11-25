@@ -143,9 +143,26 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					this.closeItemSelectorPreview();
 				}),
 				itemSelectorUploader.after('itemUploadComplete', itemData => {
+					const itemFile = itemData.file;
+					const itemFileUrl = itemFile.url;
+					let itemFileValue = itemFile.resolvedValue;
+
+					if (!itemFileValue) {
+						const imageValue = {
+							fileEntryId: itemFile.fileEntryId,
+							groupId: itemFile.groupId,
+							title: itemFile.title,
+							type: itemFile.type,
+							url: itemFileUrl,
+							uuid: itemFile.uuid
+						};
+
+						itemFileValue = JSON.stringify(imageValue);
+					}
+
 					Liferay.fire('updateCurrentItem', {
-						url: itemData.file.url,
-						value: itemData.file.resolvedValue
+						url: itemFileUrl,
+						value: itemFileValue
 					});
 				}),
 				itemSelectorUploader.after(

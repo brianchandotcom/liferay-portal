@@ -240,7 +240,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		throws PortalException {
 
 		return getFolders(
-			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, true,
+			groupId, parentFolderId, true, WorkflowConstants.STATUS_APPROVED,
 			start, end, obc);
 	}
 
@@ -464,7 +464,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		throws PortalException {
 
 		return getFoldersCount(
-			groupId, parentFolderId, WorkflowConstants.STATUS_APPROVED, true);
+			groupId, parentFolderId, true, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

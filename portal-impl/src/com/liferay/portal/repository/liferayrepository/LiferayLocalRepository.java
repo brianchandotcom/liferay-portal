@@ -450,8 +450,8 @@ public class LiferayLocalRepository
 		int end, OrderByComparator<Folder> obc) {
 
 		List<DLFolder> dlFolders = dlFolderLocalService.getFolders(
-			getGroupId(), toFolderId(parentFolderId), status,
-			includeMountfolders, start, end,
+			getGroupId(), toFolderId(parentFolderId), includeMountfolders,
+			status, start, end,
 			DLFolderOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFolders(dlFolders);
@@ -500,8 +500,8 @@ public class LiferayLocalRepository
 		long parentFolderId, int status, boolean includeMountfolders) {
 
 		return dlFolderLocalService.getFoldersCount(
-			getGroupId(), toFolderId(parentFolderId), status,
-			includeMountfolders);
+			getGroupId(), toFolderId(parentFolderId), includeMountfolders,
+			status);
 	}
 
 	@Override

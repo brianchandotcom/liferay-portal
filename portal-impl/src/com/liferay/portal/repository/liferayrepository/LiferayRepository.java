@@ -411,7 +411,7 @@ public class LiferayRepository
 		throws PortalException {
 
 		return dlFolderService.getFileEntriesAndFileShortcutsCount(
-			getGroupId(), toFolderId(folderId), status, mimeTypes);
+			getGroupId(), toFolderId(folderId), mimeTypes, status);
 	}
 
 	@Override
@@ -531,8 +531,8 @@ public class LiferayRepository
 		throws PortalException {
 
 		List<DLFolder> dlFolders = dlFolderService.getFolders(
-			getGroupId(), toFolderId(parentFolderId), status,
-			includeMountfolders, start, end,
+			getGroupId(), toFolderId(parentFolderId), includeMountfolders,
+			status, start, end,
 			DLFolderOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFolders(dlFolders);
@@ -546,7 +546,7 @@ public class LiferayRepository
 
 		List<Object> dlFoldersAndDLFileEntriesAndDLFileShortcuts =
 			dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
-				getGroupId(), toFolderId(folderId), status, includeMountFolders,
+				getGroupId(), toFolderId(folderId), includeMountFolders, status,
 				start, end, obc);
 
 		return RepositoryModelUtil.toRepositoryEntries(
@@ -645,8 +645,8 @@ public class LiferayRepository
 		throws PortalException {
 
 		return dlFolderService.getFoldersCount(
-			getGroupId(), toFolderId(parentFolderId), status,
-			includeMountfolders);
+			getGroupId(), toFolderId(parentFolderId), includeMountfolders,
+			status);
 	}
 
 	@Override

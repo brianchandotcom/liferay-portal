@@ -78,32 +78,32 @@ class ItemSelectorDialog extends Component {
 			zIndex: this.zIndex
 		};
 
-		const dialogFooter = [
-			{
-				cssClass: 'btn-link close-modal',
-				id: 'cancelButton',
-				label: this.buttonCancelLabel,
-				on: {
-					click: () => {
-						this.close();
+		if (!this.singleSelect) {
+			const dialogFooter = [
+				{
+					cssClass: 'btn-link close-modal',
+					id: 'cancelButton',
+					label: this.buttonCancelLabel,
+					on: {
+						click: () => {
+							this.close();
+						}
+					}
+				},
+				{
+					cssClass: 'btn-primary',
+					disabled: true,
+					id: 'addButton',
+					label: this.buttonAddLabel,
+					on: {
+						click: () => {
+							this._selectedItem = this._currentItem;
+							this.close();
+						}
 					}
 				}
-			},
-			{
-				cssClass: 'btn-primary',
-				disabled: true,
-				id: 'addButton',
-				label: this.buttonAddLabel,
-				on: {
-					click: () => {
-						this._selectedItem = this._currentItem;
-						this.close();
-					}
-				}
-			}
-		];
+			];
 
-		if (this.multiSelection) {
 			dialogConfig['toolbars.footer'] = dialogFooter;
 		}
 
@@ -120,7 +120,10 @@ class ItemSelectorDialog extends Component {
 	_onItemSelected(event) {
 		const currentItem = event.data;
 
-		if (this.multiSelection) {
+		if (this.singleSelect) {
+			this._selectedItem = currentItem;
+			this.close();
+		} else {
 			const dialog = Liferay.Util.getWindow(this.eventName);
 
 			const addButton = dialog
@@ -129,9 +132,6 @@ class ItemSelectorDialog extends Component {
 				.one('#addButton');
 
 			Liferay.Util.toggleDisabled(addButton, !currentItem);
-		} else {
-			this._selectedItem = currentItem;
-			this.close();
 		}
 
 		this._currentItem = currentItem;
@@ -182,13 +182,6 @@ ItemSelectorDialog.STATE = {
 	eventName: Config.string().required(),
 
 	/**
-	 * Enables multiple selection of items.
-	 * @type {boolean}
-	 */
-
-	multiSelection: Config.bool().value(false),
-
-	/**
 	 * The selected item(s) in the dialog.
 	 *
 	 * @instance
@@ -199,6 +192,13 @@ ItemSelectorDialog.STATE = {
 		Config.object(),
 		Config.arrayOf(Config.object())
 	]),
+
+	/**
+	 * Enables single selection of item.
+	 * @type {boolean}
+	 */
+
+	singleSelect: Config.bool().value(false),
 
 	/**
 	 * Dialog's title.

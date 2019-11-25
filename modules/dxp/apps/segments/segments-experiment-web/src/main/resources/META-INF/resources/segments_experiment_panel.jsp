@@ -16,16 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExperimentDisplayContext)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT);
+%>
+
 <c:choose>
 	<c:when test="<%= SegmentsExperimentUtil.isAnalyticsEnabled(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
-
-		<%
-		SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExperimentDisplayContext)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT);
-
-		String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-experiment-root";
-		%>
-
-		<div id="<%= segmentsExperimentRootId %>">
+		<div id="<%= renderResponse.getNamespace() + "-segments-experiment-root" %>">
 			<div class="inline-item my-5 p-5 w-100">
 				<span aria-hidden="true" class="loading-animation"></span>
 			</div>
@@ -47,14 +44,28 @@
 
 			<p><liferay-ui:message key="connect-to-analytics-cloud-help" /></p>
 
-			<liferay-ui:icon
-				label="<%= true %>"
-				linkCssClass="btn btn-primary btn-sm mb-4"
-				markupView="lexicon"
-				message="start-free-trial"
-				target="_blank"
-				url="<%= SegmentsExperimentUtil.ANALYTICS_CLOUD_TRIAL_URL %>"
-			/>
+			<c:choose>
+				<c:when test="<%= SegmentsExperimentUtil.isAnalyticsEnabled(themeDisplay.getCompanyId()) %>">
+					<liferay-ui:icon
+						label="<%= true %>"
+						linkCssClass="btn btn-primary btn-sm mb-4"
+						markupView="lexicon"
+						message="open-analytics-cloud"
+						target="_blank"
+						url="<%= segmentsExperimentDisplayContext.getLiferayAnalyticsURL(themeDisplay.getCompanyId()) %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:icon
+						label="<%= true %>"
+						linkCssClass="btn btn-primary btn-sm mb-4"
+						markupView="lexicon"
+						message="start-free-trial"
+						target="_blank"
+						url="<%= SegmentsExperimentUtil.ANALYTICS_CLOUD_TRIAL_URL %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 
 			<portlet:actionURL name="/hide_segments_experiment_panel" var="hideSegmentsExperimentPanelURL">
 				<portlet:param name="redirect" value="<%= themeDisplay.getLayoutFriendlyURL(layout) %>" />

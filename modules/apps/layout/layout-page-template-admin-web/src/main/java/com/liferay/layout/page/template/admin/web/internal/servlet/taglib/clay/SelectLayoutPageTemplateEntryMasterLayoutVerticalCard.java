@@ -58,29 +58,25 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			_httpServletRequest, "layoutPageTemplateCollectionId");
 
-		try {
-			PortletURL addLayoutPageTemplateEntryURL =
-				_renderResponse.createActionURL();
+		PortletURL addLayoutPageTemplateEntryURL =
+			_renderResponse.createActionURL();
 
-			addLayoutPageTemplateEntryURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"/layout_page_template/add_layout_page_template_entry");
-			addLayoutPageTemplateEntryURL.setParameter(
-				"redirect", _themeDisplay.getURLCurrent());
-			addLayoutPageTemplateEntryURL.setParameter("backURL", redirect);
-			addLayoutPageTemplateEntryURL.setParameter(
-				"layoutPageTemplateCollectionId",
-				String.valueOf(layoutPageTemplateCollectionId));
-			addLayoutPageTemplateEntryURL.setParameter(
-				"masterLayoutPlid",
-				String.valueOf(_layoutPageTemplateEntry.getPlid()));
+		addLayoutPageTemplateEntryURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/add_layout_page_template_entry");
+		addLayoutPageTemplateEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		addLayoutPageTemplateEntryURL.setParameter("backURL", redirect);
+		addLayoutPageTemplateEntryURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(layoutPageTemplateCollectionId));
+		addLayoutPageTemplateEntryURL.setParameter(
+			"masterLayoutPlid",
+			String.valueOf(_layoutPageTemplateEntry.getPlid()));
 
-			data.put(
-				"add-layout-page-template-entry-url",
-				addLayoutPageTemplateEntryURL.toString());
-		}
-		catch (Exception e) {
-		}
+		data.put(
+			"add-layout-page-template-entry-url",
+			addLayoutPageTemplateEntryURL.toString());
 
 		return data;
 	}

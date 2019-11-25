@@ -59,7 +59,7 @@ public class DBInspector {
 	}
 
 	public boolean hasColumn(String tableName, String columnName)
-		throws Exception {
+		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 

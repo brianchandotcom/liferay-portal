@@ -657,6 +657,9 @@ public interface PropsKeys {
 	public static final String DATABASE_STRING_INDEX_MAX_LENGTH =
 		"database.string.index.max.length";
 
+	public static final String DATABASE_UNIQUE_INDEXES_ADD_COMPANYID =
+		"database.unique.indexes.add.companyId";
+
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX =
 		"default.admin.email.address.prefix";
 

@@ -610,6 +610,10 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DATABASE_PARTITIONING_ENABLED));
 
+	public static final boolean DATABASE_UNIQUE_INDEXES_ADD_COMPANYID =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.DATABASE_UNIQUE_INDEXES_ADD_COMPANYID));
+
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX =
 		PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX);
 

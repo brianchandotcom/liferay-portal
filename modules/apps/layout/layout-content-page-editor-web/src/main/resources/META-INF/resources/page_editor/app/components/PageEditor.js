@@ -21,11 +21,11 @@ import {useDrag, useDrop} from 'react-dnd';
 
 import {Permission} from '../../common/index';
 import {moveItem} from '../actions/index';
-import updateLayoutData from '../actions/updateLayoutData';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
+import updateLayoutData from '../thunks/updateLayoutData';
 import Topper, {
 	TopperProvider,
 	TopperContext,

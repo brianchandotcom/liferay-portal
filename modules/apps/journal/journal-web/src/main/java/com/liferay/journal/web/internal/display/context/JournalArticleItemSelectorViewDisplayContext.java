@@ -133,21 +133,9 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
-		breadcrumbEntries.add(_getSiteBreadcrumb(_httpServletRequest));
+		breadcrumbEntries.add(_getSiteBreadcrumb());
 
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(LanguageUtil.get(_httpServletRequest, "home"));
-
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter(
-			"folderId",
-			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-		breadcrumbEntry.setURL(portletURL.toString());
-
-		breadcrumbEntries.add(breadcrumbEntry);
+		breadcrumbEntries.add(_getHomeBreadcrumb());
 
 		JournalFolder folder = _getFolder();
 
@@ -158,6 +146,12 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		List<JournalFolder> ancestorFolders = folder.getAncestors();
 
 		Collections.reverse(ancestorFolders);
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter(
+			"folderId",
+			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 
 		for (JournalFolder ancestorFolder : ancestorFolders) {
 			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
@@ -302,6 +296,22 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _folderId;
 	}
 
+	private BreadcrumbEntry _getHomeBreadcrumb() throws PortletException {
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(LanguageUtil.get(_httpServletRequest, "home"));
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter(
+			"folderId",
+			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		breadcrumbEntry.setURL(portletURL.toString());
+
+		return breadcrumbEntry;
+	}
+
 	private String _getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -334,10 +344,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _orderByType;
 	}
 
-	private BreadcrumbEntry _getSiteBreadcrumb(
-			HttpServletRequest httpServletRequest)
-		throws PortletException {
-
+	private BreadcrumbEntry _getSiteBreadcrumb() throws PortletException {
 		PortletURL portletURL = getPortletURL();
 
 		portletURL.setParameter("groupType", "site");
@@ -346,7 +353,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			PortalUtil.getLocale(httpServletRequest), getClass());
+			_themeDisplay.getLocale(), getClass());
 
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(resourceBundle, "workspaces"));

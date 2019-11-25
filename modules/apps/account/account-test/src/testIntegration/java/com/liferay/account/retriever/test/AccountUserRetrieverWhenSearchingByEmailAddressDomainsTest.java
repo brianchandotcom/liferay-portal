@@ -73,7 +73,7 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 
 		BaseModelSearchResult<User> users =
 			_accountUserRetriever.searchAccountUsers(
-				AccountConstants.ACCOUNT_ENTRY_ID_ANY, null,
+				AccountConstants.ACCOUNT_ENTRY_ID_ANY, null, null,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, "screen-name", false);
 
@@ -116,8 +116,7 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 				null, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, "email-address", false);
 
-		Assert.assertEquals(
-			users.size(), baseModelSearchResult.getLength());
+		Assert.assertEquals(users.size(), baseModelSearchResult.getLength());
 		Assert.assertEquals(
 			ListUtil.sort(users, new UserEmailAddressComparator(true)),
 			baseModelSearchResult.getBaseModels());
@@ -162,9 +161,8 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			StringPool.BLANK,
 			RandomTestUtil.randomString() + StringPool.AT + emailAddressDomain,
-			RandomTestUtil.randomString(),
-			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

@@ -332,7 +332,7 @@ public class TransactionalPortalCacheTest {
 		TransactionalPortalCacheHelper.begin();
 
 		TransactionalPortalCache<String, String> transactionalPortalCache =
-			new TransactionalPortalCache(_portalCache);
+			new TransactionalPortalCache(_portalCache, false);
 
 		TransactionalPortalCacheHelper.put(
 			transactionalPortalCache, _KEY_1, _VALUE_1, 0, false);

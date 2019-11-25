@@ -129,8 +129,9 @@ public class DLReferencesExportImportContentProcessor
 		sb.replace(beginPos + 1, endPos, urlParams);
 	}
 
-	protected ObjectValuePair<String, Integer> getDLReferenceEndPosObjectValuePair(
-		String content, int beginPos, int endPos) {
+	protected ObjectValuePair<String, Integer>
+		getDLReferenceEndPosObjectValuePair(
+			String content, int beginPos, int endPos) {
 
 		String[] stopStrings = _DL_REFERENCE_LEGACY_STOP_STRINGS;
 

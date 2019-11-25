@@ -31,7 +31,7 @@ let container;
  * @param {string} param.spritemap
  * @param {string} param.title
  */
-export function openDisplayPageModal({
+export default function openDisplayPageModal({
 	displayPageName,
 	formSubmitURL,
 	mappingTypes,

@@ -73,25 +73,25 @@ public class RankingJSONBuilder {
 
 	public JSONObject build() {
 		return JSONUtil.put(
-			"author", getAuthor()
+			"author", _getAuthor()
 		).put(
 			"clicks", _document.getString("clicks")
 		).put(
-			"date", getDate()
+			"date", _getDate()
 		).put(
-			"description", getDescription()
+			"description", _getDescription()
 		).put(
 			"hidden", _hidden
 		).put(
-			"icon", getIcon()
+			"icon", _getIcon()
 		).put(
 			"id", _document.getString(Field.UID)
 		).put(
 			"pinned", _pinned
 		).put(
-			"title", getTitle()
+			"title", _getTitle()
 		).put(
-			"type", getType()
+			"type", _getType()
 		);
 	}
 
@@ -111,100 +111,6 @@ public class RankingJSONBuilder {
 		_pinned = pinned;
 
 		return this;
-	}
-
-	protected String getAuthor() {
-		if (_isUser()) {
-			return _document.getString("screenName");
-		}
-
-		return _document.getString(Field.USER_NAME);
-	}
-
-	protected Date getCreateDate() {
-		String dateStringFieldValue = _document.getString(Field.CREATE_DATE);
-
-		if (Validator.isNull(dateStringFieldValue)) {
-			return null;
-		}
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-
-		try {
-			return dateFormat.parse(dateStringFieldValue);
-		}
-		catch (Exception e) {
-			throw new IllegalArgumentException(
-				"Unable to parse date string: " + dateStringFieldValue, e);
-		}
-	}
-
-	protected String getDate() {
-		return _formatDate(getCreateDate());
-	}
-
-	protected String getDescription() {
-		String content = _document.getString(
-			Field.getLocalizedName(_locale, Field.CONTENT));
-
-		return StringUtil.shorten(content, 200);
-	}
-
-	protected String getIcon() {
-		if (_isFileEntry()) {
-			long entryClassPK = _document.getLong(Field.ENTRY_CLASS_PK);
-
-			try {
-				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					entryClassPK);
-
-				return _getIconFileMimeType(fileEntry.getMimeType());
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get file entry for " + entryClassPK, pe);
-				}
-
-				return "document-default";
-			}
-		}
-
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_document.getString(Field.ENTRY_CLASS_NAME));
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getIconCssClass();
-		}
-
-		return null;
-	}
-
-	protected String getTitle() {
-		String title = _document.getString(Field.TITLE + "_en_US");
-
-		if (!Validator.isBlank(title)) {
-			return title;
-		}
-
-		title = _document.getString(Field.TITLE);
-
-		if (!Validator.isBlank(title)) {
-			return title;
-		}
-
-		if (_isUser()) {
-			return _document.getString("fullName");
-		}
-
-		return _document.getString("name");
-	}
-
-	protected String getType() {
-		String entryClassName = _document.getString(Field.ENTRY_CLASS_NAME);
-
-		return _resourceActions.getModelResource(_locale, entryClassName);
 	}
 
 	private boolean _containsMimeType(String[] mimeTypes, String mimeType) {
@@ -236,6 +142,74 @@ public class RankingJSONBuilder {
 			_locale, _themeDisplay.getTimeZone());
 
 		return format.format(date);
+	}
+
+	private String _getAuthor() {
+		if (_isUser()) {
+			return _document.getString("screenName");
+		}
+
+		return _document.getString(Field.USER_NAME);
+	}
+
+	private Date _getCreateDate() {
+		String dateStringFieldValue = _document.getString(Field.CREATE_DATE);
+
+		if (Validator.isNull(dateStringFieldValue)) {
+			return null;
+		}
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+		try {
+			return dateFormat.parse(dateStringFieldValue);
+		}
+		catch (Exception e) {
+			throw new IllegalArgumentException(
+				"Unable to parse date string: " + dateStringFieldValue, e);
+		}
+	}
+
+	private String _getDate() {
+		return _formatDate(_getCreateDate());
+	}
+
+	private String _getDescription() {
+		String content = _document.getString(
+			Field.getLocalizedName(_locale, Field.CONTENT));
+
+		return StringUtil.shorten(content, 200);
+	}
+
+	private String _getIcon() {
+		if (_isFileEntry()) {
+			long entryClassPK = _document.getLong(Field.ENTRY_CLASS_PK);
+
+			try {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					entryClassPK);
+
+				return _getIconFileMimeType(fileEntry.getMimeType());
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to get file entry for " + entryClassPK, pe);
+				}
+
+				return "document-default";
+			}
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_document.getString(Field.ENTRY_CLASS_NAME));
+
+		if (assetRendererFactory != null) {
+			return assetRendererFactory.getIconCssClass();
+		}
+
+		return null;
 	}
 
 	private String _getIconFileMimeType(String mimeType) {
@@ -278,6 +252,32 @@ public class RankingJSONBuilder {
 		}
 
 		return "document-default";
+	}
+
+	private String _getTitle() {
+		String title = _document.getString(Field.TITLE + "_en_US");
+
+		if (!Validator.isBlank(title)) {
+			return title;
+		}
+
+		title = _document.getString(Field.TITLE);
+
+		if (!Validator.isBlank(title)) {
+			return title;
+		}
+
+		if (_isUser()) {
+			return _document.getString("fullName");
+		}
+
+		return _document.getString("name");
+	}
+
+	private String _getType() {
+		String entryClassName = _document.getString(Field.ENTRY_CLASS_NAME);
+
+		return _resourceActions.getModelResource(_locale, entryClassName);
 	}
 
 	private boolean _isFileEntry() {

@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -74,38 +73,6 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex,
 			ddmFormValues, serviceContext);
-	}
-
-	/**
-	 * Adds a record referencing the record set.
-	 *
-	 * @param      groupId the primary key of the record's group
-	 * @param      recordSetId the primary key of the record set
-	 * @param      displayIndex the index position in which the record is
-	 *             displayed in the spreadsheet view
-	 * @param      fields the record values. See <code>Fields</code> in the
-	 *             <code>dynamic.data.mapping.api</code> module.
-	 * @param      serviceContext the service context to be applied. This can
-	 *             set the UUID, guest permissions, and group permissions for
-	 *             the record.
-	 * @return     the record
-	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #addRecord(long, long, int, DDMFormValues, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DDLRecord addRecord(
-			long groupId, long recordSetId, int displayIndex, Fields fields,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_ddlRecordSetModelResourcePermission.check(
-			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
-
-		return ddlRecordLocalService.addRecord(
-			getGuestOrUserId(), groupId, recordSetId, displayIndex, fields,
-			serviceContext);
 	}
 
 	/**
@@ -208,43 +175,6 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		return ddlRecordLocalService.updateRecord(
 			getUserId(), recordId, majorVersion, displayIndex, ddmFormValues,
 			serviceContext);
-	}
-
-	/**
-	 * Updates a record, replacing its display index and values.
-	 *
-	 * @param      recordId the primary key of the record
-	 * @param      majorVersion whether this update is a major change. Major
-	 *             changes causes the increment of the major version number.
-	 * @param      displayIndex the index position in which the record is
-	 *             displayed in the spreadsheet view
-	 * @param      fields the record values. See <code>Fields</code> in the
-	 *             <code>dynamic.data.mapping.api</code> module.
-	 * @param      mergeFields whether to merge the new fields with the existing
-	 *             ones; otherwise replace the existing fields
-	 * @param      serviceContext the service context to be applied. This can
-	 *             set the record modified date.
-	 * @return     the record
-	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateRecord(long, boolean, int, DDMFormValues,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DDLRecord updateRecord(
-			long recordId, boolean majorVersion, int displayIndex,
-			Fields fields, boolean mergeFields, ServiceContext serviceContext)
-		throws PortalException {
-
-		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
-
-		_ddlRecordSetModelResourcePermission.check(
-			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
-
-		return ddlRecordLocalService.updateRecord(
-			getUserId(), recordId, majorVersion, displayIndex, fields,
-			mergeFields, serviceContext);
 	}
 
 	@Reference(

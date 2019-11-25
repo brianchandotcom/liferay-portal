@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.db.partition.client;
 
+import com.liferay.portal.kernel.model.CompanyConstants;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -58,6 +60,12 @@ public class PartitionClient {
 			_consoleReader = new ConsoleReader();
 
 			_initConnection();
+
+			if (action.equals(_ACTIONS[0])) {
+				_runNextCompanyIdAction();
+
+				return;
+			}
 
 			_normalizedCompanyId = _normalizeName(
 				"companyId", _databaseMetaData);
@@ -474,10 +482,10 @@ public class PartitionClient {
 
 		long start = System.currentTimeMillis();
 
-		if (action.equals(_ACTIONS[0])) {
+		if (action.equals(_ACTIONS[1])) {
 			_validateCompanyIds();
 		}
-		else if (action.equals(_ACTIONS[1])) {
+		else if (action.equals(_ACTIONS[2])) {
 			String input = _readProperty(
 				_properties, "update.unique.indexes.tables",
 				"Enter a list of tables separated by commas or an empty " +
@@ -514,6 +522,31 @@ public class PartitionClient {
 		System.out.println(
 			"Execution of " + action + " finished in " +
 				(System.currentTimeMillis() - start) + " ms");
+	}
+
+	private static void _runNextCompanyIdAction() throws SQLException {
+		long nextCompanyId = 0;
+
+		try (PreparedStatement ps = _connection.prepareStatement(
+				"select currentId from Counter where name = ?")) {
+
+			ps.setString(1, CompanyConstants.DATA_PARTITIONING_COUNTER_NAME);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					nextCompanyId = rs.getLong(1) + 1;
+				}
+			}
+		}
+
+		if (nextCompanyId != 0) {
+			System.out.println(nextCompanyId);
+		}
+		else {
+			System.out.println(
+				"Enable data partitioning in your Liferay instance first to " +
+					"initialize the companyId counter");
+		}
 	}
 
 	private static void _validateCompanyIds() throws Exception {
@@ -555,7 +588,9 @@ public class PartitionClient {
 			"All tables point to correct companyId values " + companyIdsClause);
 	}
 
-	private static final String[] _ACTIONS = {"validate", "updateIndexes"};
+	private static final String[] _ACTIONS = {
+		"nextCompanyId", "validate", "updateIndexes"
+	};
 
 	private static final String _DB_DB2 = "db2";
 

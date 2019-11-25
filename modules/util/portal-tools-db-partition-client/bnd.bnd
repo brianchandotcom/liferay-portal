@@ -2,3 +2,4 @@ Bundle-Name: Liferay Portal Tools DB Partition Client
 Bundle-SymbolicName: com.liferay.portal.tools.db.partition.client
 Bundle-Version: 1.0.0
 Main-Class: com.liferay.portal.tools.db.partition.client.PartitionClient
+-includeresource: @com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|).jar!/com/liferay/portal/kernel/model/CompanyConstants.class

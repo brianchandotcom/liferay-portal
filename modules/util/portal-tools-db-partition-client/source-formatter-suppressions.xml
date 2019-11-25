@@ -2,6 +2,7 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="JavaMultiPlusConcatCheck" files="src/main/java/com/liferay/portal/tools/db/partition/client/PartitionClient\.java" />
 		<suppress checks="StringMethodsCheck" files="src/main/java/com/liferay/portal/tools/db/partition/client/PartitionClient\.java" />
 	</source-check>
 </suppressions>

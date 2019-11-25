@@ -12,4 +12,4 @@ fi
 
 cd "$(dirname "${DB_PARTITION_PATH}")"
 
-java "$@" -cp "*" com.liferay.portal.tools.db.partition.client.PartitionClient action validate
+java "$@" -cp "*" com.liferay.portal.tools.db.partition.client.PartitionClient action nextCompanyId

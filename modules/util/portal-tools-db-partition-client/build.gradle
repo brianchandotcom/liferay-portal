@@ -1,6 +1,8 @@
 dependencies {
 	compileInclude group: "commons-io", name: "commons-io", version: "2.6"
 	compileInclude group: "jline", name: "jline", version: "2.12"
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 }
 
 deploy {

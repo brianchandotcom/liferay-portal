@@ -93,7 +93,7 @@
 
 	&.no-fragments-message {
 		background: #f7faff;
-		border: 2px dashed #b3cdff;
+		box-shadow: inset 0 0 0 2px #b3cdff;
 		padding: 10vh 0;
 		transition: box-shadow ease 0.3s;
 		will-change: box-shadow;
@@ -103,7 +103,7 @@
 		}
 
 		& > .taglib-empty-result-message-header {
-			max-width: 144px;
+			max-width: 120px;
 			padding-top: 160px;
 		}
 	}

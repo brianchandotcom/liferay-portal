@@ -22,6 +22,7 @@ import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalStructureConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.portlet.ThemeDisplayModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -204,6 +207,39 @@ public class JournalUtil {
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
 			userJobTitle);
+	}
+
+	public static String getFolderURLViewInContext(
+			JournalArticle article, String portletId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String articleURL = StringPool.BLANK;
+
+		LiferayPortletResponse liferayPortletResponse =
+			serviceContext.getLiferayPortletResponse();
+
+		if (liferayPortletResponse != null) {
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			try {
+				JournalFolder folder = article.getFolder();
+
+				if (portletURL != null) {
+					portletURL.setParameter(
+						"groupId", String.valueOf(folder.getGroupId()));
+					portletURL.setParameter(
+						"folderId", String.valueOf(folder.getFolderId()));
+
+					articleURL = portletURL.toString();
+				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
+
+		return articleURL;
 	}
 
 	public static String getJournalControlPanelLink(

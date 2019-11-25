@@ -322,8 +322,6 @@ ExperiencesSelector.propTypes = {
 	selectedSegmentsEntryId: PropTypes.string
 };
 
-const DEFAULT_SEGMNET_ID = '0';
-
 /**
  * Renders `ExperienceSelector` component with props gathered from the state
  */
@@ -353,7 +351,10 @@ const ExperiencesSelectorWrapper = () => {
 	const segments = useSelector(state =>
 		Object.entries(state.availableSegmentsEntries)
 			.map(([, segment]) => segment)
-			.filter(segment => segment.segmentsEntryId !== DEFAULT_SEGMNET_ID)
+			.filter(
+				segment =>
+					segment.segmentsEntryId !== state.defaultSegmentsEntryId
+			)
 	);
 	const editSegmentsEntryURL = useSelector(
 		state => state.editSegmentsEntryURL

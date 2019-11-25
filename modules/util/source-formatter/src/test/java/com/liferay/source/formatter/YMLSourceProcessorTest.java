@@ -61,4 +61,9 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("StyleBlock.testyaml");
 	}
 
+	@Test
+	public void testStylingCheck() throws Exception {
+		test("StylingCheck.testyaml");
+	}
+
 }

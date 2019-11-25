@@ -1380,6 +1380,7 @@ AUI.add(
 									eventName:
 										portletNamespace +
 										'selectDocumentLibrary',
+									singleSelect: true,
 									url: instance.getDocumentLibrarySelectorURL()
 								}
 							);

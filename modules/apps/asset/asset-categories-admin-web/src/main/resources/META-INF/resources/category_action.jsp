@@ -101,8 +101,8 @@ AssetCategory category = (AssetCategory)row.getObject();
 		if (moveCategoryIcon) {
 			moveCategoryIcon.addEventListener('click', function(event) {
 				const itemSelectorDialog = new ItemSelectorDialog.default({
-					buttonAddLabel: '<liferay-ui:message key="done" />',
 					eventName: '<portlet:namespace />selectCategory',
+					singleSelect: true,
 					title:
 						'<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
 					url: '<%= assetCategoriesDisplayContext.getSelectCategoryURL() %>'

@@ -50,6 +50,7 @@ function openImageSelector(callback, destroyedCallback = null) {
 
 	const itemSelectorDialog = new ItemSelectorDialog({
 		eventName: `${state.portletNamespace}selectImage`,
+		singleSelect: true,
 		title: Liferay.Language.get('select'),
 		url: state.imageSelectorURL
 	});
@@ -99,8 +100,8 @@ function openInfoItemSelector(
 	const state = getState();
 
 	const itemSelectorDialog = new ItemSelectorDialog({
-		buttonAddLabel: Liferay.Language.get('done'),
 		eventName: `${state.portletNamespace}selectInfoItem`,
+		singleSelect: true,
 		title: Liferay.Language.get('select'),
 		url: infoItemSelectorURL
 	});

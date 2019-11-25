@@ -145,6 +145,7 @@ class DocumentLibrary extends Component {
 
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: `${portletNamespace}selectDocumentLibrary`,
+			singleSelect: true,
 			url: this.getDocumentLibrarySelectorURL()
 		});
 

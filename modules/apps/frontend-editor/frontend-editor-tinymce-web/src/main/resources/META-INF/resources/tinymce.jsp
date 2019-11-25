@@ -144,6 +144,7 @@ name = HtmlUtil.escapeJS(name);
 			if (url) {
 				var openItemSelectorDialog = function(itemSelectorDialog) {
 					itemSelectorDialog.eventName = '<%= name %>selectItem';
+					itemSelectorDialog.singleSelect = true;
 					itemSelectorDialog.url = url;
 					itemSelectorDialog.zIndex =
 						tinymce.activeEditor.windowManager.windows[0].zIndex + 10;

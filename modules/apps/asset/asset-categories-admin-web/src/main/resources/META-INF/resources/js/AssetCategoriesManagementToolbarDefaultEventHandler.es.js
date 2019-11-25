@@ -29,8 +29,8 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 		const namespace = this.namespace;
 
 		const itemSelectorDialog = new ItemSelectorDialog({
-			buttonAddLabel: Liferay.Language.get('select'),
 			eventName: this.ns('selectCategory'),
+			singleSelect: true,
 			title: Liferay.Language.get('select-category'),
 			url: itemData.categoriesSelectorURL
 		});

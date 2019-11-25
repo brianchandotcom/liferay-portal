@@ -63,8 +63,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 	);
 
 	var itemSelectorDialog = new ItemSelectorDialog.default({
-		buttonAddLabel: '<liferay-ui:message key="done" />',
 		eventName: '<portlet:namespace />selectedItem',
+		singleSelect: true,
 		title: '<liferay-ui:message key="select-web-content" />',
 		url: '<%= journalContentDisplayContext.getItemSelectorURL() %>'
 	});

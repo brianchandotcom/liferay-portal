@@ -58,7 +58,7 @@ public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
 		String className =
 			BatchEngineTaskCleanerMessageListener.class.getName();
 		int scanInterval =
-			batchEngineTaskConfiguration.getCompletedTasksCleanerScanInterval();
+			batchEngineTaskConfiguration.completedTasksCleanerScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className,

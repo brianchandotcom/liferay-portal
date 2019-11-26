@@ -23,6 +23,12 @@
 </tr>
 
 <tr>
+	<td>SIDEBAR_ADVANCED_TAB</td>
+	<td>//span[contains(text(),'Advanced')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FORM_VIEW_NAME</td>
 	<td>//input[contains(@placeholder,'Untitled')]</td>
 	<td></td>
@@ -37,6 +43,42 @@
 <tr>
 	<td>SIDEBAR_FIELDS_TAB</td>
 	<td>//li[@class='nav-item']//a[contains(text(),'Fields')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_BASIC_LABEL</td>
+	<td>//input[contains(@name,'label')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_BASIC_REQUIRED</td>
+	<td>//input[contains(@name,'required')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_BASIC_HELP_TEXT</td>
+	<td>//input[contains(@name,'tip')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_ADVANCED_FIELD_NAME</td>
+	<td>//input[contains(@name,'name')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_ADVANCED_SHOW_LABEL</td>
+	<td>//input[contains(@name,'showLabel')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>SIDEBAR_ADVANCED_REPEATABLE</td>
+	<td>//input[contains(@name,'repeatable')]</td>
 	<td></td>
 </tr>
 

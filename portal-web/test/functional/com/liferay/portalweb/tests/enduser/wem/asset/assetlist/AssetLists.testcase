@@ -208,4 +208,265 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
+	@priority = "5"
+	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
+		task ("Create public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page");
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
+
+		task ("Create web content articles") {
+			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${text}",
+					groupName = "Test Site Name",
+					title = "WC WebContent Title ${text}");
+			}
+		}
+
+		for (var rule : list "Contains All,Contains Any,Does Not Contain All,Does Not Contain Any") {
+			if ("${rule}" == "Contains All") {
+				var queryAndOperator = "All";
+				var queryContains = "Contains";
+
+				task ("Create a dynamic asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("Create filter rule for asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+					AssetListsAdmin.addKeywordsFilter(
+						keyWords = "2 3",
+						queryAndOperator = "${queryAndOperator}",
+						queryContains = "${queryContains}");
+				}
+
+				task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					for (var text : list "1 2 3,1 2 3 4,2 3 4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+							value1 = "WC WebContent Title ${text}");
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH",
+							value1 = "WC WebContent Content ${text}");
+					}
+				}
+
+				task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+					for (var text : list "1,1 2,1 3 4,3 4,4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH");
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH");
+					}
+				}
+			}
+
+			else if ("${rule}" == "Contains Any") {
+				var queryAndOperator = "Any";
+				var queryContains = "Contains";
+
+				task ("Create a dynamic asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("Create filter rule for asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+					AssetListsAdmin.addKeywordsFilter(
+						keyWords = "2 3",
+						queryAndOperator = "${queryAndOperator}",
+						queryContains = "${queryContains}");
+				}
+
+				task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					for (var text : list "1 2,1 2 3,1 2 3 4,2 3 4,3 4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+							value1 = "WC WebContent Title ${text}");
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH",
+							value1 = "WC WebContent Content ${text}");
+					}
+				}
+
+				task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+					for (var text : list "1,4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH");
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH");
+					}
+				}
+			}
+
+			else if ("${rule}" == "Does Not Contain All") {
+				var queryAndOperator = "All";
+				var queryContains = "Does Not Contain";
+
+				task ("Create a dynamic asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("Create filter rule for asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+					AssetListsAdmin.addKeywordsFilter(
+						keyWords = "2 3",
+						queryAndOperator = "${queryAndOperator}",
+						queryContains = "${queryContains}");
+				}
+
+				task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					for (var text : list "1,1 2,3 4,4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+							value1 = "WC WebContent Title ${text}");
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH",
+							value1 = "WC WebContent Content ${text}");
+					}
+				}
+
+				task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+					for (var text : list "1 2 3,1 2 3 4,1 3 4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH");
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH");
+					}
+				}
+			}
+
+			else if ("${rule}" == "Does Not Contain Any") {
+				var queryAndOperator = "Any";
+				var queryContains = "Does Not Contain";
+
+				task ("Create a dynamic asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("Create filter rule for asset list") {
+					AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+					AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+					AssetListsAdmin.addKeywordsFilter(
+						keyWords = "2 3",
+						queryAndOperator = "${queryAndOperator}",
+						queryContains = "${queryContains}");
+				}
+
+				task ("Select the created dynamic asset list to be used in the asset publisher portlet") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				}
+
+				task ("View web content articles matching with dynamic asset list display in Asset Publisher") {
+					Navigator.gotoSitePage(
+						pageName = "Asset Publisher Page",
+						siteName = "Test Site Name");
+
+					for (var text : list "1,4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH",
+							value1 = "WC WebContent Title ${text}");
+
+						AssertTextEquals(
+							locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH",
+							value1 = "WC WebContent Content ${text}");
+					}
+				}
+
+				task ("View web content articles not matching with dynamic asset list not display in Asset Publisher") {
+					for (var text : list "1 2,1 2 3,1 2 3 4,2 3 4,3 4") {
+						var key_assetTitle = "WC WebContent Title ${text}";
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_TITLE_EXACT_MATCH");
+
+						AssertElementNotPresent(locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH");
+					}
+				}
+			}
+		}
+	}
+
 }

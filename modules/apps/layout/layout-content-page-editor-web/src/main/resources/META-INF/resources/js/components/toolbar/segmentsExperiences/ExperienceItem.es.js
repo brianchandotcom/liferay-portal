@@ -135,7 +135,7 @@ const ExperienceItem = ({
 						{experience.segmentsExperimentStatus && (
 							<div>
 								<span className="font-weight-normal mr-1 text-secondary">
-									{Liferay.Language.get('test')}
+									{Liferay.Language.get('ab-test')}
 								</span>
 
 								<ExperimentLabel

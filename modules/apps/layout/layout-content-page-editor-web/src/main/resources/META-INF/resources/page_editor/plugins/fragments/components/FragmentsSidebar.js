@@ -14,7 +14,7 @@
 
 import React, {useContext, useMemo, useState} from 'react';
 
-import {StoreContext} from '../../../app/store/index';
+import {ConfigContext} from '../../../app/config/index';
 import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
@@ -23,7 +23,7 @@ import FragmentCard from './FragmentCard';
 import LayoutElements from './LayoutElements';
 
 export default function FragmentsSidebar() {
-	const {fragments} = useContext(StoreContext);
+	const {fragments} = useContext(ConfigContext);
 	const [searchValue, setSearchValue] = useState('');
 
 	const filtererdFragments = useMemo(() => {

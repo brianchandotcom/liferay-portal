@@ -16,56 +16,26 @@ const DEFAULT_CONFIG = {
 	toolbarId: 'pageEditorToolbar'
 };
 
-let computedConfig = DEFAULT_CONFIG;
-
-/**
- * Returns existing computed config, which defaults to DEFAULT_CONFIG
- * if no data has been given through setConfig function.
- * @return {object}
- */
-export function getConfig() {
-	return computedConfig;
-}
-
 /**
  * Extracts the immutable parts from the server data.
  *
  * Unlike data in the store, this config does not change over the lifetime of
  * the app, so we can safely store is as a variable.
  */
-export function setConfig(data) {
-	const {
-		availableLanguages,
-		defaultLanguageId,
-		discardDraftURL,
-		lookAndFeelURL,
-		portletNamespace,
-		publishURL,
-		sidebarPanels,
-		singleSegmentsExperienceMode
-	} = data;
-
-	// Items copied over directly without modification.
-	const copiedItems = {
-		availableLanguages,
-		defaultLanguageId,
-		discardDraftURL,
-		lookAndFeelURL,
-		portletNamespace,
-		publishURL,
-		singleSegmentsExperienceMode
-	};
+export function getConfig(config) {
+	const {portletNamespace, sidebarPanels} = config;
+	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
 	const syntheticItems = {
 		sidebarPanels: partitionPanels(augmentPanelData(sidebarPanels)),
-		toolbarId: portletNamespace + DEFAULT_CONFIG.toolbarId,
-		toolbarPlugins: getToolbarPlugins(data)
+		toolbarId,
+		toolbarPlugins: getToolbarPlugins(toolbarId)
 	};
 
-	computedConfig = {
+	return {
 		...DEFAULT_CONFIG,
-		...copiedItems,
+		...config,
 		...syntheticItems
 	};
 }
@@ -120,7 +90,7 @@ function augmentPanelData(sidebarPanels) {
  * server data. In the future we may choose to encapsulate it better and
  * deal with it inside the plugin.
  */
-function getToolbarPlugins({toolbarId}) {
+function getToolbarPlugins(toolbarId) {
 	const toolbarPluginId = 'experience';
 	const selectId = `${toolbarId}_${toolbarPluginId}`;
 

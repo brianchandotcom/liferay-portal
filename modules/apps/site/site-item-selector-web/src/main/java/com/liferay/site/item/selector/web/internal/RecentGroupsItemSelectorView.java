@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.item.selector.web.internal.constants.SitesItemSelectorWebKeys;
-import com.liferay.site.item.selector.web.internal.display.context.RecentSitesItemSelectorViewDisplayContext;
+import com.liferay.site.item.selector.web.internal.renderer.RecentGroupItemSelectorViewRenderer;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
 
@@ -37,14 +35,14 @@ import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,10 +58,6 @@ public class RecentGroupsItemSelectorView
 	@Override
 	public Class<GroupItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return GroupItemSelectorCriterion.class;
-	}
-
-	public ServletContext getServletContext() {
-		return _servletContext;
 	}
 
 	@Override
@@ -89,44 +83,21 @@ public class RecentGroupsItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		servletRequest.setAttribute(
-			SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
-
-		RecentSitesItemSelectorViewDisplayContext
-			siteItemSelectorViewDisplayContext =
-				new RecentSitesItemSelectorViewDisplayContext(
-					(HttpServletRequest)servletRequest,
-					groupItemSelectorCriterion, itemSelectedEventName,
-					portletURL, _recentGroupManager);
-
-		servletRequest.setAttribute(
-			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			siteItemSelectorViewDisplayContext);
-
-		ServletContext servletContext = getServletContext();
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/view_sites.jsp");
-
-		requestDispatcher.include(servletRequest, servletResponse);
+		_recentGroupItemSelectorViewRender.renderHTML(
+			servletRequest, servletResponse, groupItemSelectorCriterion,
+			portletURL, itemSelectedEventName, search);
 	}
 
-	@Reference(unbind = "-")
-	public void setGroupURLProvider(GroupURLProvider groupURLProvider) {
-		_groupURLProvider = groupURLProvider;
+	@Activate
+	protected void activate() {
+		_recentGroupItemSelectorViewRender =
+			new RecentGroupItemSelectorViewRenderer(
+				_groupURLProvider, _recentGroupManager, _servletContext);
 	}
 
-	@Reference(unbind = "-")
-	public void setRecentGroupManager(RecentGroupManager recentGroupManager) {
-		_recentGroupManager = recentGroupManager;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+	@Deactivate
+	protected void deactivate() {
+		_recentGroupItemSelectorViewRender = null;
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -135,12 +106,21 @@ public class RecentGroupsItemSelectorView
 				new URLItemSelectorReturnType(),
 				new UUIDItemSelectorReturnType()));
 
+	@Reference
 	private GroupURLProvider _groupURLProvider;
 
 	@Reference
 	private Portal _portal;
 
+	private RecentGroupItemSelectorViewRenderer
+		_recentGroupItemSelectorViewRender;
+
+	@Reference
 	private RecentGroupManager _recentGroupManager;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

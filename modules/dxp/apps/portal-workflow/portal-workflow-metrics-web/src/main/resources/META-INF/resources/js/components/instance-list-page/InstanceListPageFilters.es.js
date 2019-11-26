@@ -72,7 +72,7 @@ const InstanceListPageFilters = ({totalCount}) => {
 		filters.push(
 			asFilterObject(
 				assignees,
-				filterKeys.assignees,
+				filterKeys.assignee,
 				Liferay.Language.get('assignees')
 			)
 		);

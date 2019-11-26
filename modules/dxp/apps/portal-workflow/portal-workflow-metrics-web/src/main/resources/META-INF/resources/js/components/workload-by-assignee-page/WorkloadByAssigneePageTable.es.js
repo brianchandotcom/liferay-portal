@@ -34,7 +34,7 @@ const Item = ({
 
 	const getFiltersQuery = slaStatus => {
 		const filterParams = {
-			[filterKeys.assignees]: [id],
+			[filterKeys.assignee]: [id],
 			[filterKeys.processStatus]: [processStatusConstants.pending],
 			[filterKeys.processStep]: taskKeys,
 			[filterKeys.slaStatus]: [slaStatus]

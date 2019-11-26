@@ -40,7 +40,7 @@ const Item = ({
 
 	const getFiltersQuery = () => {
 		const filterParams = {
-			[filterKeys.assignees]: [id],
+			[filterKeys.assignee]: [id],
 			[filterKeys.processStatus]: [processStatusConstants.pending],
 			[filterKeys.slaStatus]: [slaStatusConstants[currentTab]]
 		};

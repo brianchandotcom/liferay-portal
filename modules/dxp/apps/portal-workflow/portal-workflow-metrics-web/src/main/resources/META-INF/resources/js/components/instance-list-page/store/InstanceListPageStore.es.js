@@ -47,7 +47,7 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 		let baseURL = `/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`;
 
 		const selectedAssignees = getSelectedAssignees(
-			filters[filterKeys.assignees]
+			filters[filterKeys.assignee]
 		);
 		const selectedProcessStatuses = getSelectedProcessStatuses(
 			filters[filterKeys.processStatus]
@@ -67,7 +67,7 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 		if (selectedAssignees && selectedAssignees.length) {
 			setSearching(true);
 
-			baseURL += reduceFilters(selectedAssignees, filterKeys.assignees);
+			baseURL += reduceFilters(selectedAssignees, filterKeys.assignee);
 		}
 
 		if (selectedProcessStatuses && selectedProcessStatuses.length) {

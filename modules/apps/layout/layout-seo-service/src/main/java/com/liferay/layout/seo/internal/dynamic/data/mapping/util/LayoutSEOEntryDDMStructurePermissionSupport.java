@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.layout.seo.model.LayoutSEOEntry",
 	service = DDMStructurePermissionSupport.class
 )
-public class LayoutDDMStructurePermissionSupport
+public class LayoutSEOEntryDDMStructurePermissionSupport
 	implements DDMStructurePermissionSupport {
 
 	@Override

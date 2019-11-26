@@ -1124,6 +1124,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.PortletPreferences">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="portletPreferencesId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="ownerId" type="long" />

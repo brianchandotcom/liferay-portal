@@ -76,10 +76,12 @@ public class PortletPreferencesCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", portletPreferencesId=");
 		sb.append(portletPreferencesId);
 		sb.append(", companyId=");
@@ -105,6 +107,7 @@ public class PortletPreferencesCacheModel
 			new PortletPreferencesImpl();
 
 		portletPreferencesImpl.setMvccVersion(mvccVersion);
+		portletPreferencesImpl.setCtCollectionId(ctCollectionId);
 		portletPreferencesImpl.setPortletPreferencesId(portletPreferencesId);
 		portletPreferencesImpl.setCompanyId(companyId);
 		portletPreferencesImpl.setOwnerId(ownerId);
@@ -134,6 +137,8 @@ public class PortletPreferencesCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		portletPreferencesId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -150,6 +155,8 @@ public class PortletPreferencesCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(portletPreferencesId);
 
@@ -177,6 +184,7 @@ public class PortletPreferencesCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long portletPreferencesId;
 	public long companyId;
 	public long ownerId;

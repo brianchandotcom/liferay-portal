@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface PortletPreferencesPersistence
-	extends BasePersistence<PortletPreferences> {
+	extends BasePersistence<PortletPreferences>,
+			CTPersistence<PortletPreferences> {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

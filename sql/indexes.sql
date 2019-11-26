@@ -301,13 +301,16 @@ create index IX_96BDD537 on PortletItem (groupId, classNameId);
 create index IX_D699243F on PortletItem (groupId, name[$COLUMN_LENGTH:75$], portletId[$COLUMN_LENGTH:200$], classNameId);
 create index IX_E922D6C0 on PortletItem (groupId, portletId[$COLUMN_LENGTH:200$], classNameId);
 
-create index IX_60C49142 on PortletPreferences (companyId, ownerId, ownerType, portletId[$COLUMN_LENGTH:200$]);
-create unique index IX_C7057FF7 on PortletPreferences (ownerId, ownerType, plid, portletId[$COLUMN_LENGTH:200$]);
-create index IX_C9A3FCE2 on PortletPreferences (ownerId, ownerType, portletId[$COLUMN_LENGTH:200$]);
-create index IX_D5EDA3A1 on PortletPreferences (ownerType, plid, portletId[$COLUMN_LENGTH:200$]);
-create index IX_A3B2A80C on PortletPreferences (ownerType, portletId[$COLUMN_LENGTH:200$]);
-create index IX_D340DB76 on PortletPreferences (plid, portletId[$COLUMN_LENGTH:200$]);
-create index IX_8E6DA3A1 on PortletPreferences (portletId[$COLUMN_LENGTH:200$]);
+create index IX_F0B8A3A0 on PortletPreferences (companyId, ownerId, ownerType, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_31DA3CB8 on PortletPreferences (ownerId, ctCollectionId);
+create index IX_451D78CC on PortletPreferences (ownerId, ownerType, plid, ctCollectionId);
+create unique index IX_CB778855 on PortletPreferences (ownerId, ownerType, plid, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_258CCF40 on PortletPreferences (ownerId, ownerType, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_D48717FF on PortletPreferences (ownerType, plid, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_D6C3E66A on PortletPreferences (ownerType, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_C77A74AD on PortletPreferences (plid, ctCollectionId);
+create index IX_67E205D4 on PortletPreferences (plid, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
+create index IX_8D0717FF on PortletPreferences (portletId[$COLUMN_LENGTH:200$], ctCollectionId);
 
 create index IX_A1A8CB8B on RatingsEntry (classNameId, classPK, score);
 create unique index IX_B47E3C11 on RatingsEntry (userId, classNameId, classPK);

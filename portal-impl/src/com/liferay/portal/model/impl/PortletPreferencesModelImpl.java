@@ -69,10 +69,11 @@ public class PortletPreferencesModelImpl
 	public static final String TABLE_NAME = "PortletPreferences";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"portletPreferencesId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"ownerId", Types.BIGINT},
-		{"ownerType", Types.INTEGER}, {"plid", Types.BIGINT},
-		{"portletId", Types.VARCHAR}, {"preferences", Types.CLOB}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"portletPreferencesId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"ownerId", Types.BIGINT}, {"ownerType", Types.INTEGER},
+		{"plid", Types.BIGINT}, {"portletId", Types.VARCHAR},
+		{"preferences", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -80,6 +81,7 @@ public class PortletPreferencesModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletPreferencesId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
@@ -90,7 +92,7 @@ public class PortletPreferencesModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PortletPreferences (mvccVersion LONG default 0 not null,portletPreferencesId LONG not null primary key,companyId LONG,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null)";
+		"create table PortletPreferences (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,portletPreferencesId LONG not null,companyId LONG,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null,primary key (portletPreferencesId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table PortletPreferences";
 
@@ -147,6 +149,7 @@ public class PortletPreferencesModelImpl
 		PortletPreferences model = new PortletPreferencesImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setPortletPreferencesId(soapModel.getPortletPreferencesId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setOwnerId(soapModel.getOwnerId());
@@ -320,6 +323,12 @@ public class PortletPreferencesModelImpl
 			(BiConsumer<PortletPreferences, Long>)
 				PortletPreferences::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", PortletPreferences::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<PortletPreferences, Long>)
+				PortletPreferences::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"portletPreferencesId",
 			PortletPreferences::getPortletPreferencesId);
 		attributeSetterBiConsumers.put(
@@ -375,6 +384,17 @@ public class PortletPreferencesModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -561,6 +581,7 @@ public class PortletPreferencesModelImpl
 			new PortletPreferencesImpl();
 
 		portletPreferencesImpl.setMvccVersion(getMvccVersion());
+		portletPreferencesImpl.setCtCollectionId(getCtCollectionId());
 		portletPreferencesImpl.setPortletPreferencesId(
 			getPortletPreferencesId());
 		portletPreferencesImpl.setCompanyId(getCompanyId());
@@ -664,6 +685,8 @@ public class PortletPreferencesModelImpl
 
 		portletPreferencesCacheModel.mvccVersion = getMvccVersion();
 
+		portletPreferencesCacheModel.ctCollectionId = getCtCollectionId();
+
 		portletPreferencesCacheModel.portletPreferencesId =
 			getPortletPreferencesId();
 
@@ -765,6 +788,7 @@ public class PortletPreferencesModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _portletPreferencesId;
 	private long _companyId;
 	private long _originalCompanyId;

@@ -930,13 +930,15 @@ create table PortletItem (
 
 create table PortletPreferences (
 	mvccVersion LONG default 0 not null,
-	portletPreferencesId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	portletPreferencesId LONG not null,
 	companyId LONG,
 	ownerId LONG,
 	ownerType INTEGER,
 	plid LONG,
 	portletId VARCHAR(200) null,
-	preferences TEXT null
+	preferences TEXT null,
+	primary key (portletPreferencesId, ctCollectionId)
 );
 
 create table RatingsEntry (

@@ -91,6 +91,12 @@ export function getComputedEditableValue(editableValue, configuration = {}) {
 			: editableValue[selectedLanguageId];
 	}
 
+	if (isNullOrUndefined(result.value)) {
+		result.value = isNullOrUndefined(selectedLanguageId)
+			? editableValue[defaultLanguageId]
+			: editableValue[selectedLanguageId];
+	}
+
 	return result;
 }
 

@@ -224,17 +224,30 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				assetListEntryAssetEntryRel.setPosition(newPosition);
+				AssetListEntryAssetEntryRel
+					callbackAssetListEntryAssetEntryRel =
+						assetListEntryAssetEntryRelLocalService.
+							fetchAssetListEntryAssetEntryRel(
+								assetListEntryAssetEntryRel.
+									getAssetListEntryAssetEntryRelId());
+
+				callbackAssetListEntryAssetEntryRel.setPosition(newPosition);
 
 				assetListEntryAssetEntryRelLocalService.
 					updateAssetListEntryAssetEntryRel(
-						assetListEntryAssetEntryRel);
+						callbackAssetListEntryAssetEntryRel);
 
-				swapAssetListEntryAssetEntryRel.setPosition(position);
+				callbackAssetListEntryAssetEntryRel =
+					assetListEntryAssetEntryRelLocalService.
+						fetchAssetListEntryAssetEntryRel(
+							swapAssetListEntryAssetEntryRel.
+								getAssetListEntryAssetEntryRelId());
+
+				callbackAssetListEntryAssetEntryRel.setPosition(position);
 
 				assetListEntryAssetEntryRelLocalService.
 					updateAssetListEntryAssetEntryRel(
-						swapAssetListEntryAssetEntryRel);
+						callbackAssetListEntryAssetEntryRel);
 
 				return null;
 			});

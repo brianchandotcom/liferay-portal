@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -120,18 +121,23 @@ public class DepotItemSelectorView
 		public DepotSiteItemSelectorViewDisplayContext(
 			HttpServletRequest httpServletRequest, String itemSelectedEventName,
 			PortletURL portletURL,
-			SiteItemSelectorCriterion siteItemSelectorCriterion) {
+			GroupItemSelectorCriterion groupItemSelectorCriterion) {
 
 			_httpServletRequest = httpServletRequest;
 			_itemSelectedEventName = itemSelectedEventName;
 			_portletURL = portletURL;
-			_siteItemSelectorCriterion = siteItemSelectorCriterion;
+			_groupItemSelectorCriterion = groupItemSelectorCriterion;
 		}
 
 		@Override
 		public String getDisplayStyle() {
 			return ParamUtil.getString(
 				_httpServletRequest, "displayStyle", "icon");
+		}
+
+		@Override
+		public GroupItemSelectorCriterion getGroupItemSelectorCriterion() {
+			return _groupItemSelectorCriterion;
 		}
 
 		@Override
@@ -172,11 +178,6 @@ public class DepotItemSelectorView
 		}
 
 		@Override
-		public SiteItemSelectorCriterion getSiteItemSelectorCriterion() {
-			return _siteItemSelectorCriterion;
-		}
-
-		@Override
 		public boolean isShowChildSitesLink() {
 			return false;
 		}
@@ -191,10 +192,10 @@ public class DepotItemSelectorView
 			return true;
 		}
 
+		private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 		private final HttpServletRequest _httpServletRequest;
 		private final String _itemSelectedEventName;
 		private final PortletURL _portletURL;
-		private final SiteItemSelectorCriterion _siteItemSelectorCriterion;
 
 	}
 

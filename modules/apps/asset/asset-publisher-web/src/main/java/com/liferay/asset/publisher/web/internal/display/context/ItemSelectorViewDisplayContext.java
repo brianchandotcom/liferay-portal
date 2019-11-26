@@ -14,8 +14,8 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -29,6 +29,8 @@ public interface ItemSelectorViewDisplayContext {
 
 	public String getDisplayStyle();
 
+	public GroupItemSelectorCriterion getGroupItemSelectorCriterion();
+
 	public GroupSearch getGroupSearch() throws Exception;
 
 	public String getItemSelectedEventName();
@@ -40,8 +42,6 @@ public interface ItemSelectorViewDisplayContext {
 	public PortletURL getPortletURL() throws PortletException;
 
 	public long[] getSelectedGroupIds();
-
-	public SiteItemSelectorCriterion getSiteItemSelectorCriterion();
 
 	public boolean isShowSearch();
 

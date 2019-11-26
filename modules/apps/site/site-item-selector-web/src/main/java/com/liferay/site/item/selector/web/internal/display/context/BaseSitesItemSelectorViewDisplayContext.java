@@ -14,6 +14,7 @@
 
 package com.liferay.site.item.selector.web.internal.display.context;
 
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.item.selector.display.context.SitesItemSelectorViewDisplayContext;
 
 import javax.portlet.PortletException;
@@ -41,11 +41,11 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 
 	public BaseSitesItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
-		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		request = httpServletRequest;
-		_siteItemSelectorCriterion = siteItemSelectorCriterion;
+		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		this.portletURL = portletURL;
 	}
@@ -59,6 +59,11 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		_displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
 
 		return _displayStyle;
+	}
+
+	@Override
+	public GroupItemSelectorCriterion getGroupItemSelectorCriterion() {
+		return _groupItemSelectorCriterion;
 	}
 
 	@Override
@@ -94,11 +99,6 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 	}
 
 	@Override
-	public SiteItemSelectorCriterion getSiteItemSelectorCriterion() {
-		return _siteItemSelectorCriterion;
-	}
-
-	@Override
 	public boolean isShowChildSitesLink() {
 		return false;
 	}
@@ -117,7 +117,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 	protected final HttpServletRequest request;
 
 	private String _displayStyle;
+	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 	private final String _itemSelectedEventName;
-	private final SiteItemSelectorCriterion _siteItemSelectorCriterion;
 
 }

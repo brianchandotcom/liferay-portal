@@ -33,6 +33,7 @@ page import="com.liferay.exportimport.kernel.exception.RemoteExportException" %>
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.SystemException" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
@@ -47,7 +48,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.product.navigation.site.administration.internal.constants.SiteAdministrationWebKeys" %><%@
 page import="com.liferay.product.navigation.site.administration.internal.display.context.ContentPanelCategoryDisplayContext" %><%@
 page import="com.liferay.product.navigation.site.administration.internal.display.context.SiteAdministrationPanelCategoryDisplayContext" %><%@
-page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@

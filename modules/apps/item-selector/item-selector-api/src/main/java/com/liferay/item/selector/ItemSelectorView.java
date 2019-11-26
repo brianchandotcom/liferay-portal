@@ -46,7 +46,7 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 *
 	 * @return the item selector criterion associated to this item selector view
 	 */
-	public Class<T> getItemSelectorCriterionClass();
+	public Class<? extends T> getItemSelectorCriterionClass();
 
 	/**
 	 * Returns the item selector return types that this view supports.

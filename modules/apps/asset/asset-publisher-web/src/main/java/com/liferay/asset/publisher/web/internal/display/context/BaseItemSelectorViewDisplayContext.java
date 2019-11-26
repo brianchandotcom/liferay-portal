@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal.display.context;
 
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -43,12 +43,12 @@ public abstract class BaseItemSelectorViewDisplayContext
 	public BaseItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
 		AssetPublisherHelper assetPublisherHelper,
-		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		request = httpServletRequest;
 		_assetPublisherHelper = assetPublisherHelper;
-		_siteItemSelectorCriterion = siteItemSelectorCriterion;
+		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		this.portletURL = portletURL;
 	}
@@ -72,6 +72,11 @@ public abstract class BaseItemSelectorViewDisplayContext
 		_groupId = ParamUtil.getLong(request, "groupId");
 
 		return _groupId;
+	}
+
+	@Override
+	public GroupItemSelectorCriterion getGroupItemSelectorCriterion() {
+		return _groupItemSelectorCriterion;
 	}
 
 	@Override
@@ -136,11 +141,6 @@ public abstract class BaseItemSelectorViewDisplayContext
 	}
 
 	@Override
-	public SiteItemSelectorCriterion getSiteItemSelectorCriterion() {
-		return _siteItemSelectorCriterion;
-	}
-
-	@Override
 	public boolean isShowSearch() {
 		return true;
 	}
@@ -151,7 +151,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 	private final AssetPublisherHelper _assetPublisherHelper;
 	private String _displayStyle;
 	private Long _groupId;
+	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;
 	private final String _itemSelectedEventName;
-	private final SiteItemSelectorCriterion _siteItemSelectorCriterion;
 
 }

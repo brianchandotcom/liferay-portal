@@ -41,7 +41,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 
 	ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteAdministrationWebKeys.ITEM_SELECTOR);
 
-	ItemSelectorCriterion itemSelectorCriterion = new SiteItemSelectorCriterion();
+	ItemSelectorCriterion itemSelectorCriterion = new GroupItemSelectorCriterion();
 
 	itemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
 

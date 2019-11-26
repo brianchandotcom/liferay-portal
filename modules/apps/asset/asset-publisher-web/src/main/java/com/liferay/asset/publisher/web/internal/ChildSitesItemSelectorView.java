@@ -20,6 +20,7 @@ import com.liferay.asset.publisher.web.internal.display.context.ChildSitesItemSe
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -54,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ItemSelectorView.class
 )
 public class ChildSitesItemSelectorView
-	implements ItemSelectorView<SiteItemSelectorCriterion> {
+	implements ItemSelectorView<GroupItemSelectorCriterion> {
 
 	@Override
 	public Class<SiteItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -97,7 +98,7 @@ public class ChildSitesItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			SiteItemSelectorCriterion siteItemSelectorCriterion,
+			GroupItemSelectorCriterion siteItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 

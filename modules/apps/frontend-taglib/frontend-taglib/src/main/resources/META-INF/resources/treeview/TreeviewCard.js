@@ -15,16 +15,13 @@
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
-
-// import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import TreeviewContext from './TreeviewContext';
 
-// TODO: sort this out
-// BUG: the classNames import above isn't working:
-//  Error: Unsatisfied dependency: frontend-js-react-web$classnames found in module frontend-taglib@5.0.0/treeview/TreeviewCard
+// Cannot import classnames directly due to a loader bug; see:
+// https://github.com/izaera/liferay-portal/pull/117
 function classNames({focused, selected}) {
 	return [focused && 'focused', selected && 'selected']
 		.filter(Boolean)

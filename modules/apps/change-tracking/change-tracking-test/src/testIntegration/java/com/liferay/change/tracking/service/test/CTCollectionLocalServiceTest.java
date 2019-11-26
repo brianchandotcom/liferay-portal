@@ -95,7 +95,8 @@ public class CTCollectionLocalServiceTest {
 		Map<Long, List<ConflictInfo>> conflictInfoMap =
 			_ctCollectionLocalService.checkConflicts(_ctCollection);
 
-		Assert.assertEquals(conflictInfoMap.size(), 0, conflictInfoMap.size());
+		Assert.assertTrue(
+			conflictInfoMap.toString(), conflictInfoMap.isEmpty());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -187,8 +188,8 @@ public class CTCollectionLocalServiceTest {
 		List<ConflictInfo> conflictInfos = conflictInfoMap.remove(
 			_journalArticleClassNameId);
 
-		Assert.assertEquals(
-			conflictInfoMap.toString(), 0, conflictInfoMap.size());
+		Assert.assertTrue(
+			conflictInfoMap.toString(), conflictInfoMap.isEmpty());
 
 		Assert.assertEquals(conflictInfos.toString(), 2, conflictInfos.size());
 
@@ -221,7 +222,8 @@ public class CTCollectionLocalServiceTest {
 		Map<Long, List<ConflictInfo>> conflictInfoMap =
 			_ctCollectionLocalService.checkConflicts(_ctCollection);
 
-		Assert.assertEquals(conflictInfoMap.size(), 0, conflictInfoMap.size());
+		Assert.assertTrue(
+			conflictInfoMap.toString(), conflictInfoMap.isEmpty());
 
 		String conflictingFolderName = "conflictingFolderName";
 
@@ -272,8 +274,8 @@ public class CTCollectionLocalServiceTest {
 		List<ConflictInfo> conflictInfos = conflictInfoMap.remove(
 			_journalFolderClassNameId);
 
-		Assert.assertEquals(
-			conflictInfoMap.toString(), 0, conflictInfoMap.size());
+		Assert.assertTrue(
+			conflictInfoMap.toString(), conflictInfoMap.isEmpty());
 
 		Assert.assertEquals(conflictInfos.toString(), 1, conflictInfos.size());
 

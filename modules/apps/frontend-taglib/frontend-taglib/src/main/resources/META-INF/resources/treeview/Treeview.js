@@ -77,6 +77,9 @@ function getLastVisible(node) {
 	}
 }
 
+/**
+ * Prepares the initial reducer state given the supplied props.
+ */
 function init({
 	filterQuery,
 	initialNodes,
@@ -119,11 +122,16 @@ function init({
 	};
 }
 
+/**
+ * Given a `state` object, updates the node with `id` by passing it to `callback`.
+ *
+ * Returns an updated (non-destructive) copy of the `state.nodes`.
+ */
 function updateNode(state, id, callback) {
 	const {nodeMap} = state;
 
 	if (!nodeMap[id]) {
-		throw new Error(`Could not get node with id ${id}`); // undefined
+		throw new Error(`Could not get node with id ${id}`);
 	}
 
 	let node = callback(nodeMap[id]);
@@ -154,6 +162,9 @@ function updateNode(state, id, callback) {
 	});
 }
 
+/**
+ * Reducer function for use with `useReducer`.
+ */
 function reducer(state, action) {
 	const {filteredNodes, nodeMap} = state;
 

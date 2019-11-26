@@ -16,7 +16,7 @@ package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.AudioProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistry;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -28,60 +28,93 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	immediate = true, service = AudioDLPreviewRendererProviderFactory.class
-)
+@Component(immediate = true, service = {})
 public class AudioDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		AudioProcessor audioProcessor =
-			(AudioProcessor)_dlProcessorRegistry.getDLProcessor(
-				DLProcessorConstants.AUDIO_PROCESSOR);
+		_dlProcessorServiceTracker =
+			new ServiceTracker<DLProcessor, ServiceRegistration<?>>(
+				bundleContext, DLProcessor.class, null) {
 
-		if (audioProcessor == null) {
-			return;
-		}
+				@Override
+				public ServiceRegistration<?> addingService(
+					ServiceReference<DLProcessor> serviceReference) {
 
-		Dictionary<String, Object[]> properties = new HashMapDictionary<>();
+					DLProcessor dlProcessor = bundleContext.getService(
+						serviceReference);
 
-		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
+					if (!DLProcessorConstants.AUDIO_PROCESSOR.equals(
+							dlProcessor.getType())) {
 
-		properties.put("content.type", audioMimeTypes.toArray());
+						bundleContext.ungetService(serviceReference);
 
-		_dlPreviewRendererProviderServiceRegistration =
-			bundleContext.registerService(
-				DLPreviewRendererProvider.class,
-				new AudioDLPreviewRendererProvider(
-					_dlFileVersionPreviewLocalService, _dlURLHelper,
-					_servletContext),
-				properties);
+						return null;
+					}
+
+					AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
+
+					Set<String> audioMimeTypes =
+						audioProcessor.getAudioMimeTypes();
+
+					Dictionary<String, Object> properties =
+						new HashMapDictionary<>();
+
+					properties.put("content.type", audioMimeTypes.toArray());
+
+					Object serviceRanking = serviceReference.getProperty(
+						Constants.SERVICE_RANKING);
+
+					if (serviceRanking != null) {
+						properties.put(
+							Constants.SERVICE_RANKING, serviceRanking);
+					}
+
+					return bundleContext.registerService(
+						DLPreviewRendererProvider.class,
+						new AudioDLPreviewRendererProvider(
+							_dlFileVersionPreviewLocalService, _dlURLHelper,
+							_servletContext),
+						properties);
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<DLProcessor> serviceReference,
+					ServiceRegistration<?> serviceRegistration) {
+
+					serviceRegistration.unregister();
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			};
+
+		_dlProcessorServiceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_dlPreviewRendererProviderServiceRegistration != null) {
-			_dlPreviewRendererProviderServiceRegistration.unregister();
-		}
+		_dlProcessorServiceTracker.close();
 	}
 
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	private ServiceRegistration<DLPreviewRendererProvider>
-		_dlPreviewRendererProviderServiceRegistration;
-
-	@Reference
-	private DLProcessorRegistry _dlProcessorRegistry;
+	private ServiceTracker<DLProcessor, ServiceRegistration<?>>
+		_dlProcessorServiceTracker;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

@@ -29,25 +29,25 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface BatchEngineTaskConfiguration {
 
+	@Meta.AD(
+		deflt = "14", name = "completed-tasks-cleaner-scan-interval",
+		required = false
+	)
+	public int completedTasksCleanerScanInterval();
+
+	@Meta.AD(name = "csv-file-column-delimiter", required = false)
+	public String csvFileColumnDelimiter();
+
 	@Meta.AD(deflt = "100", name = "export-batch-size", required = false)
 	public int exportBatchSize();
 
 	@Meta.AD(deflt = "100", name = "import-batch-size", required = false)
 	public int importBatchSize();
 
-	@Meta.AD(name = "csv-file-column-delimiter", required = false)
-	public String csvFileColumnDelimiter();
-
-	@Meta.AD(deflt = "60", name = "orphan-scan-interval", required = false)
-	public int orphanScanInterval();
-
 	@Meta.AD(deflt = "30", name = "orphanage-threshold", required = false)
 	public int orphanageThreshold();
 
-	@Meta.AD(
-		deflt = "14", name = "completed-tasks-cleaner-scan-interval",
-		required = false
-	)
-	public int getCompletedTasksCleanerScanInterval();
+	@Meta.AD(deflt = "60", name = "orphan-scan-interval", required = false)
+	public int orphanScanInterval();
 
 }

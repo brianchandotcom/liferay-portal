@@ -83,6 +83,11 @@
 	<td>//div[contains(@class,'floating-toolbar')]//div[@class='btn-group']/button[contains(@class,'btn-secondary')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENTS_EDITOR_IE</td>
+	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][${key_editorNumber}]//div[contains(@class,'ace-editor')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

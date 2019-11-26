@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {STATUS_DRAFT} from '../../../utils/ExperimentsStatus.es';
-import ExperimentLabel from './ExperiementLabel.es';
+import ExperimentLabel from './ExperimentLabel.es';
 import {ExperienceType} from './types.es.js';
 
 const ExperienceItem = ({

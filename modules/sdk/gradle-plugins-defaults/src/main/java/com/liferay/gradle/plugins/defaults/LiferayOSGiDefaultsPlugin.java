@@ -2396,12 +2396,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
 
-			_configureDependenciesGroupPortal(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
-				liferayExtension, publishing);
-			_configureDependenciesGroupPortal(
-				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
-				liferayExtension, publishing);
+			if (publishing) {
+				_configureDependenciesGroupPortal(
+					project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+				_configureDependenciesGroupPortal(
+					project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+			}
 		}
 
 		_configureDependenciesTransitive(
@@ -2488,8 +2488,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureDependenciesGroupPortal(
-		final Project project, String configurationName,
-		LiferayExtension liferayExtension, boolean publishing) {
+		final Project project, String configurationName) {
 
 		final Logger logger = project.getLogger();
 
@@ -2498,200 +2497,84 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		DependencySet dependencySet = configuration.getAllDependencies();
 
-		if (publishing) {
-			dependencySet.withType(
-				ExternalModuleDependency.class,
-				new Action<ExternalModuleDependency>() {
+		dependencySet.withType(
+			ExternalModuleDependency.class,
+			new Action<ExternalModuleDependency>() {
 
-					@Override
-					public void execute(
-						ExternalModuleDependency externalModuleDependency) {
+				@Override
+				public void execute(
+					ExternalModuleDependency externalModuleDependency) {
 
-						String group = externalModuleDependency.getGroup();
+					String group = externalModuleDependency.getGroup();
 
-						if (!group.equals(_GROUP_PORTAL)) {
-							return;
-						}
-
-						String version = externalModuleDependency.getVersion();
-
-						if (!version.equals("default")) {
-							return;
-						}
-
-						String name = externalModuleDependency.getName();
-
-						String newVersion = GradleUtil.getProperty(
-							project, name + ".version", (String)null);
-
-						if (Validator.isNull(newVersion)) {
-							return;
-						}
-
-						StringBuilder sb = new StringBuilder();
-
-						sb.append(group);
-						sb.append(':');
-						sb.append(name);
-						sb.append(':');
-						sb.append(version);
-
-						String oldNotation = sb.toString();
-
-						sb.setLength(0);
-
-						sb.append(group);
-						sb.append(':');
-						sb.append(name);
-						sb.append(':');
-
-						int x = newVersion.lastIndexOf("-SNAPSHOT");
-
-						if (x != -1) {
-							sb.append("(," + newVersion.substring(0, x) + ")");
-						}
-						else {
-							sb.append("(," + newVersion + ")");
-						}
-
-						String newNotation = sb.toString();
-
-						if (logger.isLifecycleEnabled()) {
-							logger.lifecycle(
-								"Compiling files of {} with '{}' in place of " +
-									"'{}'",
-								project, newNotation, oldNotation);
-						}
-
-						ResolutionStrategy resolutionStrategy =
-							configuration.getResolutionStrategy();
-
-						DependencySubstitutions dependencySubstitutions =
-							resolutionStrategy.getDependencySubstitution();
-
-						DependencySubstitutions.Substitution substitution =
-							dependencySubstitutions.substitute(
-								dependencySubstitutions.module(oldNotation));
-
-						substitution.with(
-							dependencySubstitutions.module(newNotation));
+					if (!group.equals(_GROUP_PORTAL)) {
+						return;
 					}
 
-				});
-		}
-		else {
-			Map<String, File> portalJarFileMap = new HashMap<>();
+					String version = externalModuleDependency.getVersion();
 
-			File appServerLibGlobalDir =
-				liferayExtension.getAppServerLibGlobalDir();
-			File appServerLibPortalDir = new File(
-				liferayExtension.getAppServerPortalDir(), "WEB-INF/lib");
-
-			portalJarFileMap.put(
-				"com.liferay.portal.impl",
-				new File(appServerLibPortalDir, "portal-impl.jar"));
-			portalJarFileMap.put(
-				"com.liferay.portal.kernel",
-				new File(appServerLibGlobalDir, "portal-kernel.jar"));
-			portalJarFileMap.put(
-				"com.liferay.util.bridges",
-				new File(appServerLibPortalDir, "util-bridges.jar"));
-			portalJarFileMap.put(
-				"com.liferay.util.java",
-				new File(appServerLibPortalDir, "util-java.jar"));
-			portalJarFileMap.put(
-				"com.liferay.util.taglib",
-				new File(appServerLibPortalDir, "util-taglib.jar"));
-
-			dependencySet.withType(
-				ExternalModuleDependency.class,
-				new Action<ExternalModuleDependency>() {
-
-					@Override
-					public void execute(
-						ExternalModuleDependency externalModuleDependency) {
-
-						String group = externalModuleDependency.getGroup();
-
-						if (!group.equals(_GROUP_PORTAL)) {
-							return;
-						}
-
-						String version = externalModuleDependency.getVersion();
-
-						if (!version.equals("default")) {
-							return;
-						}
-
-						String name = externalModuleDependency.getName();
-
-						if (!portalJarFileMap.containsKey(name)) {
-							return;
-						}
-
-						File portalJarFile = portalJarFileMap.get(name);
-
-						if (!portalJarFile.exists()) {
-							return;
-						}
-
-						Map<String, String> args = new HashMap<>();
-
-						args.put("group", group);
-						args.put("module", name);
-
-						configuration.exclude(args);
+					if (!version.equals("default")) {
+						return;
 					}
 
-				});
+					String name = externalModuleDependency.getName();
 
-			ResolvableDependencies resolvableDependencies =
-				configuration.getIncoming();
+					String newVersion = GradleUtil.getProperty(
+						project, name + ".version", (String)null);
 
-			resolvableDependencies.beforeResolve(
-				new Action<ResolvableDependencies>() {
-
-					@Override
-					public void execute(
-						ResolvableDependencies resolvableDependencies) {
-
-						for (ExcludeRule excludeRule :
-								configuration.getExcludeRules()) {
-
-							String group = excludeRule.getGroup();
-
-							if (!group.equals(_GROUP_PORTAL)) {
-								return;
-							}
-
-							String name = excludeRule.getModule();
-
-							if (!portalJarFileMap.containsKey(name)) {
-								return;
-							}
-
-							File portalJarFile = portalJarFileMap.get(name);
-
-							if (!portalJarFile.exists()) {
-								return;
-							}
-
-							if (logger.isLifecycleEnabled()) {
-								logger.lifecycle(
-									"Compiling files of {} with {} as " +
-										"dependency in place of '{}:{}'",
-									project, portalJarFile.getAbsolutePath(),
-									group, name);
-							}
-
-							GradleUtil.addDependency(
-								project, configuration.getName(),
-								portalJarFile);
-						}
+					if (Validator.isNull(newVersion)) {
+						return;
 					}
 
-				});
-		}
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(group);
+					sb.append(':');
+					sb.append(name);
+					sb.append(':');
+					sb.append(version);
+
+					String oldNotation = sb.toString();
+
+					sb.setLength(0);
+
+					sb.append(group);
+					sb.append(':');
+					sb.append(name);
+					sb.append(':');
+
+					int x = newVersion.lastIndexOf("-SNAPSHOT");
+
+					if (x != -1) {
+						sb.append("(," + newVersion.substring(0, x) + ")");
+					}
+					else {
+						sb.append("(," + newVersion + ")");
+					}
+
+					String newNotation = sb.toString();
+
+					if (logger.isLifecycleEnabled()) {
+						logger.lifecycle(
+							"Compiling files of {} with '{}' in place of '{}'",
+							project, newNotation, oldNotation);
+					}
+
+					ResolutionStrategy resolutionStrategy =
+						configuration.getResolutionStrategy();
+
+					DependencySubstitutions dependencySubstitutions =
+						resolutionStrategy.getDependencySubstitution();
+
+					DependencySubstitutions.Substitution substitution =
+						dependencySubstitutions.substitute(
+							dependencySubstitutions.module(oldNotation));
+
+					substitution.with(
+						dependencySubstitutions.module(newNotation));
+				}
+
+			});
 	}
 
 	private void _configureDependenciesTransitive(

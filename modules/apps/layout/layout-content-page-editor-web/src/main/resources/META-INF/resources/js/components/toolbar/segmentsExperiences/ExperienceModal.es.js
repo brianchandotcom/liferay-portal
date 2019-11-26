@@ -113,7 +113,7 @@ const ExperienceModal = ({
 		: Liferay.Language.get('new-experience');
 
 	return (
-		<ClayModal observer={observer} size="lg">
+		<ClayModal observer={observer} size="md">
 			<ClayModal.Header>{modalTitle}</ClayModal.Header>
 			<ClayModal.Body>
 				<ClayForm

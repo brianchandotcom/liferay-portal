@@ -1223,7 +1223,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					sourceFileName, destinationFileEntry.getMimeType(),
 					destinationFileEntry.getTitle(),
 					destinationFileEntry.getDescription(), StringPool.BLANK,
-					DLAppUtil.isMajorVersion(fileVersion, previousFileVersion),
+					DLVersionNumberIncrease.fromMajorVersion(
+						DLAppUtil.isMajorVersion(
+							fileVersion, previousFileVersion)),
 					fileVersion.getContentStream(false), fileVersion.getSize(),
 					serviceContext);
 			}

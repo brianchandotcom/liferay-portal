@@ -1205,14 +1205,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 				String header = headers.get("Web-ContextPath");
 
-				if (header != null) {
-					bundleStartLevel.setStartLevel(
-						PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL);
-				}
-				else {
+				if (header == null) {
 					bundleStartLevel.setStartLevel(
 						PropsValues.
 							MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
+				}
+				else {
+					bundleStartLevel.setStartLevel(
+						PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL);
 				}
 
 				if (!_isFragmentBundle(bundle)) {

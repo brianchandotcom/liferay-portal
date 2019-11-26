@@ -68,21 +68,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			String changeLog, ServiceContext serviceContext)
 		throws PortalException;
 
-	public default void checkInFileEntry(
+	public void checkInFileEntry(
 			long userId, long fileEntryId,
 			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,
 			ServiceContext serviceContext)
-		throws PortalException {
-
-		boolean majorVersion = false;
-
-		if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
-			majorVersion = true;
-		}
-
-		checkInFileEntry(
-			userId, fileEntryId, majorVersion, changeLog, serviceContext);
-	}
+		throws PortalException;
 
 	public void checkInFileEntry(
 			long userId, long fileEntryId, String lockUuid,
@@ -234,41 +224,19 @@ public interface DocumentRepository extends CapabilityProvider {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public default FileEntry updateFileEntry(
+	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws PortalException;
 
-		boolean majorVersion = false;
-
-		if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
-			majorVersion = true;
-		}
-
-		return updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
-	}
-
-	public default FileEntry updateFileEntry(
+	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, InputStream is,
 			long size, ServiceContext serviceContext)
-		throws PortalException {
-
-		boolean majorVersion = false;
-
-		if (dlVersionNumberIncrease == DLVersionNumberIncrease.MAJOR) {
-			majorVersion = true;
-		}
-
-		return updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
-	}
+		throws PortalException;
 
 	public FileShortcut updateFileShortcut(
 			long userId, long fileShortcutId, long folderId, long toFileEntryId,

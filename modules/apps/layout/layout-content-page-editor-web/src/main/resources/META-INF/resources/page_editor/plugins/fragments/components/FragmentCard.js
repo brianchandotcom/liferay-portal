@@ -19,7 +19,7 @@ import React, {useContext} from 'react';
 import {useDrag} from 'react-dnd';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {getConfig} from '../../../app/config/index';
+import {ConfigContext} from '../../../app/config/index';
 import {DispatchContext} from '../../../app/reducers/index';
 import {StoreContext} from '../../../app/store/index';
 import addFragmentEntryLink from '../../../app/thunks/addFragmentEntryLink';
@@ -46,7 +46,7 @@ export default function FragmentCard({
 	imagePreviewURL,
 	name
 }) {
-	const config = getConfig();
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
 	const store = useContext(StoreContext);
 

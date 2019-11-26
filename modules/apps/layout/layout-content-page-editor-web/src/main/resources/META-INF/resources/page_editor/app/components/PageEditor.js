@@ -22,7 +22,7 @@ import {useDrag, useDrop} from 'react-dnd';
 import {Permission} from '../../common/index';
 import {moveItem} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {getConfig} from '../config/index';
+import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import updateLayoutData from '../thunks/updateLayoutData';
@@ -402,17 +402,15 @@ const LayoutDataItem = React.forwardRef(({item, layoutData}, ref) => {
 });
 
 export default function PageEditor() {
-	const {portletNamespace} = getConfig();
+	const {portletNamespace} = useContext(ConfigContext);
 
 	const dispatch = useContext(DispatchContext);
 
-	const {
-		classNameId,
-		classPK,
-		layoutData,
-		segmentsExperienceId,
-		updateLayoutPageTemplateDataURL
-	} = useContext(StoreContext);
+	const {classNameId, classPK, updateLayoutPageTemplateDataURL} = useContext(
+		ConfigContext
+	);
+
+	const {layoutData, segmentsExperienceId} = useContext(StoreContext);
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 

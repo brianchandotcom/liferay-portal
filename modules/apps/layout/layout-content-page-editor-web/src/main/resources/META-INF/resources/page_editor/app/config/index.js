@@ -12,9 +12,13 @@
  * details.
  */
 
+import React from 'react';
+
 const DEFAULT_CONFIG = {
 	toolbarId: 'pageEditorToolbar'
 };
+
+export const ConfigContext = React.createContext(DEFAULT_CONFIG);
 
 /**
  * Extracts the immutable parts from the server data.

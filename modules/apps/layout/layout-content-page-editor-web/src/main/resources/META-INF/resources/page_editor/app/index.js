@@ -18,7 +18,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import useThunk from '../core/hooks/useThunk';
 import App from './components/App';
-import {getConfig} from './config/index';
+import {ConfigContext, getConfig} from './config/index';
 import {DispatchContext, reducer} from './reducers/index';
 import {StoreContext, getInitialState} from './store/index';
 
@@ -40,14 +40,22 @@ function Container({data}) {
 	);
 
 	return (
-		<StoreContext.Provider value={store}>
-			<DispatchContext.Provider value={dispatch}>
-				<App />
-			</DispatchContext.Provider>
-		</StoreContext.Provider>
+		<ConfigContext.Provider value={config}>
+			<StoreContext.Provider value={store}>
+				<DispatchContext.Provider value={dispatch}>
+					<App />
+				</DispatchContext.Provider>
+			</StoreContext.Provider>
+		</ConfigContext.Provider>
 	);
 }
 
+/**
+ * Default application export.
+ *
+ * We should define contexts here instead of Container component, as Container
+ * is re-rendered when hooks change.
+ */
 export default function(data) {
 	return (
 		<DragDropContextProvider backend={HTML5Backend}>

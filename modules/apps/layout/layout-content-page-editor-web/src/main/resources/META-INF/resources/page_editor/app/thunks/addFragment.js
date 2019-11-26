@@ -26,14 +26,14 @@ export default function addFragment({
 	store
 }) {
 	return dispatch => {
-		const {portletNamespace} = config;
-
 		const {
 			addFragmentEntryLinkURL,
 			classNameId,
 			classPK,
-			segmentsExperienceId
-		} = store;
+			portletNamespace
+		} = config;
+
+		const {segmentsExperienceId} = store;
 
 		const formData = new FormData();
 		formData.append(`${portletNamespace}fragmentKey`, fragmentKey);

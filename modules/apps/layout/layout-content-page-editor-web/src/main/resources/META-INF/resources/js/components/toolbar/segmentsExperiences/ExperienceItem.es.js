@@ -132,7 +132,7 @@ const ExperienceItem = ({
 			{editable && (
 				<div className="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
 					<ClayButtonWithIcon
-						className="mx-2 text-secondary"
+						className="component-action mx-2 text-secondary"
 						disabled={lockedIncreasePriority}
 						displayType="unstyled"
 						monospaced
@@ -143,7 +143,7 @@ const ExperienceItem = ({
 					/>
 
 					<ClayButtonWithIcon
-						className="mx-2 text-secondary"
+						className="component-action mx-2 text-secondary"
 						disabled={lockedDecreasePriority}
 						displayType="unstyled"
 						monospaced
@@ -154,7 +154,7 @@ const ExperienceItem = ({
 					/>
 
 					<ClayButtonWithIcon
-						className="mx-2 text-secondary"
+						className="component-action mx-2 text-secondary"
 						displayType="unstyled"
 						monospaced
 						onClick={handleExperienceEdit}
@@ -164,7 +164,7 @@ const ExperienceItem = ({
 					/>
 
 					<ClayButtonWithIcon
-						className="mx-2 text-secondary"
+						className="component-action mx-2 text-secondary"
 						displayType="unstyled"
 						monospaced
 						onClick={handleExperienceDelete}
@@ -179,7 +179,7 @@ const ExperienceItem = ({
 				experience.segmentsExperimentURL && (
 					<div className="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
 						<a
-							className="btn btn-borderless btn-monospaced btn-sm btn-unstyled mr-0 mx-2 text-secondary"
+							className="btn btn-borderless btn-monospaced btn-sm btn-unstyled component-action mr-0 mx-2 text-secondary"
 							href={experience.segmentsExperimentURL}
 							onClick={handleExperimentNavigation}
 							title={Liferay.Language.get('go-to-test-details')}

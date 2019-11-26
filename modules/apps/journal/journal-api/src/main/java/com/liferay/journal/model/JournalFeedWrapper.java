@@ -421,26 +421,6 @@ public class JournalFeedWrapper
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getDDMRendererTemplateKey()}
-	 */
-	@Deprecated
-	@Override
-	public String getRendererTemplateId() {
-		return model.getRendererTemplateId();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getDDMStructureKey()}
-	 */
-	@Deprecated
-	@Override
-	public String getStructureId() {
-		return model.getStructureId();
-	}
-
-	/**
 	 * Returns the target layout friendly url of this journal feed.
 	 *
 	 * @return the target layout friendly url of this journal feed
@@ -458,16 +438,6 @@ public class JournalFeedWrapper
 	@Override
 	public String getTargetPortletId() {
 		return model.getTargetPortletId();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #getDDMTemplateKey()}
-	 */
-	@Deprecated
-	@Override
-	public String getTemplateId() {
-		return model.getTemplateId();
 	}
 
 	/**
@@ -721,26 +691,6 @@ public class JournalFeedWrapper
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #setDDMRendererTemplateKey(String)}
-	 */
-	@Deprecated
-	@Override
-	public void setRendererTemplateId(String rendererTemplateKey) {
-		model.setRendererTemplateId(rendererTemplateKey);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #setDDMStructureKey(String)}
-	 */
-	@Deprecated
-	@Override
-	public void setStructureId(String structureKey) {
-		model.setStructureId(structureKey);
-	}
-
-	/**
 	 * Sets the target layout friendly url of this journal feed.
 	 *
 	 * @param targetLayoutFriendlyUrl the target layout friendly url of this journal feed
@@ -758,16 +708,6 @@ public class JournalFeedWrapper
 	@Override
 	public void setTargetPortletId(String targetPortletId) {
 		model.setTargetPortletId(targetPortletId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #setDDMTemplateKey(String)}
-	 */
-	@Deprecated
-	@Override
-	public void setTemplateId(String templateKey) {
-		model.setTemplateId(templateKey);
 	}
 
 	/**

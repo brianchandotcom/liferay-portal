@@ -32,6 +32,7 @@ const Container = ({processId, query}) => {
 	);
 
 	let processStepsKey;
+
 	if (
 		processSteps &&
 		processSteps.length &&

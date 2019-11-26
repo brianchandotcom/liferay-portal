@@ -28,7 +28,7 @@ layoutPageTemplateEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 masterLayoutPageTemplateEntries.add(layoutPageTemplateEntry);
 
-masterLayoutPageTemplateEntries.addAll(LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(scopeGroupId, LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+masterLayoutPageTemplateEntries.addAll(LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(scopeGroupId, LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 
 				<li class="card-page-item col-md-4 col-sm-6">
 					<clay:vertical-card
-						verticalCard="<%= new SelectMasterPageVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
+						verticalCard="<%= new SelectMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
 					/>
 				</li>
 
@@ -75,7 +75,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 				mainFieldName: 'name',
 				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
 				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				spritemap:
+					'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 			});
 		}
 	);

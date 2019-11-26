@@ -52,11 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-		"mvc.command.name=/layout_page_template/add_master_page"
+		"mvc.command.name=/layout_page_template/add_master_layout"
 	},
 	service = MVCActionCommand.class
 )
-public class AddMasterPageMVCActionCommand extends BaseMVCActionCommand {
+public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -76,7 +76,7 @@ public class AddMasterPageMVCActionCommand extends BaseMVCActionCommand {
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, name,
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE,
+					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(

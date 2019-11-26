@@ -20,7 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
-import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterPageActionDropdownItemsProvider;
+import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterLayoutActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,10 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class MasterPageVerticalCard
+public class MasterLayoutVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
-	public MasterPageVerticalCard(
+	public MasterLayoutVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
 		RenderResponse renderResponse, RowChecker rowChecker) {
 
@@ -62,13 +62,13 @@ public class MasterPageVerticalCard
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		try {
-			MasterPageActionDropdownItemsProvider
-				masterPageActionDropdownItemsProvider =
-					new MasterPageActionDropdownItemsProvider(
+			MasterLayoutActionDropdownItemsProvider
+				masterLayoutActionDropdownItemsProvider =
+					new MasterLayoutActionDropdownItemsProvider(
 						_layoutPageTemplateEntry, _renderRequest,
 						_renderResponse);
 
-			return masterPageActionDropdownItemsProvider.
+			return masterLayoutActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
 		catch (Exception e) {
@@ -80,7 +80,7 @@ public class MasterPageVerticalCard
 	@Override
 	public String getDefaultEventHandler() {
 		return LayoutPageTemplateAdminWebKeys.
-			MASTER_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER;
+			MASTER_LAYOUT_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

@@ -91,7 +91,7 @@ public class LayoutMobileDeviceRulesFormNavigatorEntry
 		if ((layoutPageTemplateEntry != null) &&
 			Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
 
 			return false;
 		}

@@ -41,9 +41,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class MasterPageDisplayContext {
+public class MasterLayoutDisplayContext {
 
-	public MasterPageDisplayContext(
+	public MasterLayoutDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -76,24 +76,24 @@ public class MasterPageDisplayContext {
 		return _layoutPageTemplateEntryId;
 	}
 
-	public SearchContainer getMasterPagesSearchContainer() {
-		if (_masterPagesSearchContainer != null) {
-			return _masterPagesSearchContainer;
+	public SearchContainer getMasterLayoutsSearchContainer() {
+		if (_masterLayoutsSearchContainer != null) {
+			return _masterLayoutsSearchContainer;
 		}
 
-		SearchContainer masterPagesSearchContainer = new SearchContainer(
+		SearchContainer masterLayoutsSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null, "there-are-no-master-pages");
 
-		masterPagesSearchContainer.setOrderByCol(getOrderByCol());
+		masterLayoutsSearchContainer.setOrderByCol(getOrderByCol());
 
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator(
 					getOrderByCol(), getOrderByType());
 
-		masterPagesSearchContainer.setOrderByComparator(orderByComparator);
+		masterLayoutsSearchContainer.setOrderByComparator(orderByComparator);
 
-		masterPagesSearchContainer.setOrderByType(getOrderByType());
+		masterLayoutsSearchContainer.setOrderByType(getOrderByType());
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries = null;
 		int layoutPageTemplateEntriesCount = 0;
@@ -102,49 +102,51 @@ public class MasterPageDisplayContext {
 			layoutPageTemplateEntries =
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 					_themeDisplay.getScopeGroupId(), getKeywords(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE,
-					masterPagesSearchContainer.getStart(),
-					masterPagesSearchContainer.getEnd(), orderByComparator);
+					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+					masterLayoutsSearchContainer.getStart(),
+					masterLayoutsSearchContainer.getEnd(), orderByComparator);
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(), getKeywords(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE);
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_MASTER_LAYOUT);
 		}
 		else {
-			if (masterPagesSearchContainer.getStart() == 0) {
+			if (masterLayoutsSearchContainer.getStart() == 0) {
 				layoutPageTemplateEntries = new ArrayList<>();
 
-				layoutPageTemplateEntries.add(_addBlankMasterPage());
+				layoutPageTemplateEntries.add(_addBlankMasterLayout());
 			}
 
 			layoutPageTemplateEntries.addAll(
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 					_themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE,
-					masterPagesSearchContainer.getStart(),
-					masterPagesSearchContainer.getEnd(), orderByComparator));
+					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+					masterLayoutsSearchContainer.getStart(),
+					masterLayoutsSearchContainer.getEnd(), orderByComparator));
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE);
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_MASTER_LAYOUT);
 
-			if (masterPagesSearchContainer.getStart() == 0) {
+			if (masterLayoutsSearchContainer.getStart() == 0) {
 				layoutPageTemplateEntriesCount++;
 			}
 		}
 
-		masterPagesSearchContainer.setResults(layoutPageTemplateEntries);
-		masterPagesSearchContainer.setRowChecker(
+		masterLayoutsSearchContainer.setResults(layoutPageTemplateEntries);
+		masterLayoutsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		masterPagesSearchContainer.setTotal(layoutPageTemplateEntriesCount);
+		masterLayoutsSearchContainer.setTotal(layoutPageTemplateEntriesCount);
 
-		_masterPagesSearchContainer = masterPagesSearchContainer;
+		_masterLayoutsSearchContainer = masterLayoutsSearchContainer;
 
-		return _masterPagesSearchContainer;
+		return _masterLayoutsSearchContainer;
 	}
 
 	public String getOrderByCol() {
@@ -172,7 +174,7 @@ public class MasterPageDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_master_pages.jsp");
+		portletURL.setParameter("mvcPath", "/view_master_layouts.jsp");
 		portletURL.setParameter("tabs1", "master-pages");
 		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 
@@ -205,7 +207,7 @@ public class MasterPageDisplayContext {
 		return false;
 	}
 
-	private LayoutPageTemplateEntry _addBlankMasterPage() {
+	private LayoutPageTemplateEntry _addBlankMasterLayout() {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
 				createLayoutPageTemplateEntry(0);
@@ -220,7 +222,7 @@ public class MasterPageDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private Long _layoutPageTemplateEntryId;
-	private SearchContainer _masterPagesSearchContainer;
+	private SearchContainer _masterLayoutsSearchContainer;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

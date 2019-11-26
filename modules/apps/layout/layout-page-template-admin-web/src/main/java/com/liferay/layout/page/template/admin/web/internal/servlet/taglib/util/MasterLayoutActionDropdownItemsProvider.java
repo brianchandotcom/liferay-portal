@@ -49,9 +49,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class MasterPageActionDropdownItemsProvider {
+public class MasterLayoutActionDropdownItemsProvider {
 
-	public MasterPageActionDropdownItemsProvider(
+	public MasterLayoutActionDropdownItemsProvider(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -72,104 +72,105 @@ public class MasterPageActionDropdownItemsProvider {
 						_themeDisplay.getPermissionChecker(),
 						_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
 
-					add(_getEditMasterPageActionUnsafeConsumer());
+					add(_getEditMasterLayoutActionUnsafeConsumer());
 
-					add(_getUpdateMasterPagePreviewActionUnsafeConsumer());
+					add(_getUpdateMasterLayoutPreviewActionUnsafeConsumer());
 
 					if (_layoutPageTemplateEntry.getPreviewFileEntryId() > 0) {
-						add(_getDeleteMasterPagePreviewActionUnsafeConsumer());
+						add(
+							_getDeleteMasterLayoutPreviewActionUnsafeConsumer());
 					}
 
-					add(_getRenameMasterPageActionUnsafeConsumer());
+					add(_getRenameMasterLayoutActionUnsafeConsumer());
 
-					add(_getCopyMasterPageActionUnsafeConsumer());
+					add(_getCopyMasterLayoutActionUnsafeConsumer());
 				}
 
 				if (LayoutPageTemplateEntryPermission.contains(
 						_themeDisplay.getPermissionChecker(),
 						_layoutPageTemplateEntry, ActionKeys.DELETE)) {
 
-					add(_getDeleteMasterPageActionUnsafeConsumer());
+					add(_getDeleteMasterLayoutActionUnsafeConsumer());
 				}
 			}
 		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getCopyMasterPageActionUnsafeConsumer() {
+		_getCopyMasterLayoutActionUnsafeConsumer() {
 
-		PortletURL copyMasterPageURL = _renderResponse.createActionURL();
+		PortletURL copyMasterLayoutURL = _renderResponse.createActionURL();
 
-		copyMasterPageURL.setParameter(
+		copyMasterLayoutURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/layout_page_template/copy_layout_page_template_entry");
-		copyMasterPageURL.setParameter(
+		copyMasterLayoutURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
-		copyMasterPageURL.setParameter(
+		copyMasterLayoutURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		copyMasterPageURL.setParameter(
+		copyMasterLayoutURL.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "copyMasterPage");
+			dropdownItem.putData("action", "copyMasterLayout");
 			dropdownItem.putData(
-				"copyMasterPageURL", copyMasterPageURL.toString());
+				"copyMasterLayoutURL", copyMasterLayoutURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getDeleteMasterPageActionUnsafeConsumer() {
+		_getDeleteMasterLayoutActionUnsafeConsumer() {
 
-		PortletURL deleteMasterPageURL = _renderResponse.createActionURL();
+		PortletURL deleteMasterLayoutURL = _renderResponse.createActionURL();
 
-		deleteMasterPageURL.setParameter(
+		deleteMasterLayoutURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout_page_template/delete_master_page");
+			"/layout_page_template/delete_master_layout");
 
-		deleteMasterPageURL.setParameter(
+		deleteMasterLayoutURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
-		deleteMasterPageURL.setParameter(
+		deleteMasterLayoutURL.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "deleteMasterPage");
+			dropdownItem.putData("action", "deleteMasterLayout");
 			dropdownItem.putData(
-				"deleteMasterPageURL", deleteMasterPageURL.toString());
+				"deleteMasterLayoutURL", deleteMasterLayoutURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getDeleteMasterPagePreviewActionUnsafeConsumer() {
+		_getDeleteMasterLayoutPreviewActionUnsafeConsumer() {
 
-		PortletURL deleteMasterPagePreviewURL =
+		PortletURL deleteMasterLayoutPreviewURL =
 			_renderResponse.createActionURL();
 
-		deleteMasterPagePreviewURL.setParameter(
+		deleteMasterLayoutPreviewURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/layout_page_template/delete_layout_page_template_entry_preview");
 
-		deleteMasterPagePreviewURL.setParameter(
+		deleteMasterLayoutPreviewURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
-		deleteMasterPagePreviewURL.setParameter(
+		deleteMasterLayoutPreviewURL.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "deleteMasterPagePreview");
+			dropdownItem.putData("action", "deleteMasterLayoutPreview");
 			dropdownItem.putData(
-				"deleteMasterPagePreviewURL",
-				deleteMasterPagePreviewURL.toString());
+				"deleteMasterLayoutPreviewURL",
+				deleteMasterLayoutPreviewURL.toString());
 			dropdownItem.putData(
 				"layoutPageTemplateEntryId",
 				String.valueOf(
@@ -180,7 +181,7 @@ public class MasterPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditMasterPageActionUnsafeConsumer() {
+		_getEditMasterLayoutActionUnsafeConsumer() {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());
@@ -234,27 +235,27 @@ public class MasterPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getRenameMasterPageActionUnsafeConsumer() {
+		_getRenameMasterLayoutActionUnsafeConsumer() {
 
-		PortletURL updateMasterPageURL = _renderResponse.createActionURL();
+		PortletURL updateMasterLayoutURL = _renderResponse.createActionURL();
 
-		updateMasterPageURL.setParameter(
+		updateMasterLayoutURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/layout_page_template/update_layout_page_template_entry");
 
-		updateMasterPageURL.setParameter(
+		updateMasterLayoutURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
-		updateMasterPageURL.setParameter(
+		updateMasterLayoutURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		updateMasterPageURL.setParameter(
+		updateMasterLayoutURL.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "renameMasterPage");
+			dropdownItem.putData("action", "renameMasterLayout");
 			dropdownItem.putData(
 				"layoutPageTemplateEntryId",
 				String.valueOf(
@@ -263,17 +264,17 @@ public class MasterPageActionDropdownItemsProvider {
 				"layoutPageTemplateEntryName",
 				_layoutPageTemplateEntry.getName());
 			dropdownItem.putData(
-				"updateMasterPageURL", updateMasterPageURL.toString());
+				"updateMasterLayoutURL", updateMasterLayoutURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "rename"));
 		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getUpdateMasterPagePreviewActionUnsafeConsumer() {
+		_getUpdateMasterLayoutPreviewActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "updateMasterPagePreview");
+			dropdownItem.putData("action", "updateMasterLayoutPreview");
 			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
 			dropdownItem.putData(
 				"layoutPageTemplateEntryId",

@@ -67,7 +67,7 @@ function Root({children, item}) {
 
 	return (
 		<TopperProvider>
-			<div ref={drop} style={{background, height: '100%'}}>
+			<div ref={drop} style={{background, height: '100vh'}}>
 				{children}
 			</div>
 		</TopperProvider>

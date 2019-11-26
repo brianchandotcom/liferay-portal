@@ -18,7 +18,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import useThunk from '../core/hooks/useThunk';
 import App from './components/App';
-import {setConfig} from './config/index';
+import {getConfig} from './config/index';
 import {DispatchContext, reducer} from './reducers/index';
 import {StoreContext, getInitialState} from './store/index';
 
@@ -33,14 +33,14 @@ const {useReducer} = React;
  * function that returns a component).
  */
 function Container({data}) {
-	setConfig(data);
+	const config = getConfig(data.config);
 
-	const [state, dispatch] = useThunk(
-		useReducer(reducer, data, getInitialState)
+	const [store, dispatch] = useThunk(
+		useReducer(reducer, [data.state, config], getInitialState)
 	);
 
 	return (
-		<StoreContext.Provider value={state}>
+		<StoreContext.Provider value={store}>
 			<DispatchContext.Provider value={dispatch}>
 				<App />
 			</DispatchContext.Provider>

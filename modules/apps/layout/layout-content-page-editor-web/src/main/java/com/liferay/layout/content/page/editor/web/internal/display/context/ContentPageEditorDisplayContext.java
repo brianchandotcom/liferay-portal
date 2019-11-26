@@ -180,12 +180,52 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	public Map<String, Object> getEditorReactContext() throws Exception {
-		Map<String, Object> reactContext = new HashMap<>();
+		SoyContext editorSoyContext = getEditorSoyContext();
 
-		reactContext.putAll(getEditorSoyContext());
-		reactContext.putAll(getFragmentsEditorToolbarSoyContext());
-
-		return reactContext;
+		return HashMapBuilder.<String, Object>put(
+			"config",
+			HashMapBuilder.<String, Object>put(
+				"addFragmentEntryLinkURL",
+				editorSoyContext.get("addFragmentEntryLinkURL")
+			).put(
+				"availableLanguages", editorSoyContext.get("availableLanguages")
+			).put(
+				"classNameId", editorSoyContext.get("classNameId")
+			).put(
+				"classPK", editorSoyContext.get("classPK")
+			).put(
+				"defaultLanguageId", editorSoyContext.get("defaultLanguageId")
+			).put(
+				"fragments", editorSoyContext.get("elements")
+			).put(
+				"hasUpdatePermissions",
+				editorSoyContext.get("hasUpdatePermissions")
+			).put(
+				"portletNamespace", editorSoyContext.get("portletNamespace")
+			).put(
+				"sidebarPanels", editorSoyContext.get("sidebarPanels")
+			).put(
+				"updateLayoutPageTemplateDataURL",
+				editorSoyContext.get("updateLayoutPageTemplateDataURL")
+			).put(
+				"widgets", editorSoyContext.get("widgets")
+			).build()
+		).put(
+			"state",
+			HashMapBuilder.<String, Object>put(
+				"fragmentEntryLinks", editorSoyContext.get("fragmentEntryLinks")
+			).put(
+				"layoutData", editorSoyContext.get("layoutData")
+			).put(
+				"pageContents", editorSoyContext.get("pageContents")
+			).put(
+				"segmentsExperienceId",
+				editorSoyContext.get("segmentsExperienceId")
+			).put(
+				"showResolvedComments",
+				editorSoyContext.get("showResolvedComments")
+			).build()
+		).build();
 	}
 
 	public SoyContext getEditorSoyContext() throws Exception {

@@ -38,6 +38,8 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 import java.util.Collections;
 import java.util.Optional;
 
+import javax.portlet.RenderRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -93,6 +95,8 @@ public class SimilarResultsPortletSearchContributor
 		).size(
 			similarResultsPortletPreferences.getMaxItemDisplay()
 		);
+
+		setUIDRenderRequestAttribute(criteria, portletSharedSearchSettings);
 	}
 
 	protected void filterByEntryClassName(
@@ -175,6 +179,16 @@ public class SimilarResultsPortletSearchContributor
 
 		return _portal.getCurrentURL(
 			portletSharedSearchSettings.getRenderRequest());
+	}
+
+	protected void setUIDRenderRequestAttribute(
+		Criteria criteria,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		RenderRequest renderRequest =
+			portletSharedSearchSettings.getRenderRequest();
+
+		renderRequest.setAttribute(Field.UID, criteria.getUID());
 	}
 
 	@Reference

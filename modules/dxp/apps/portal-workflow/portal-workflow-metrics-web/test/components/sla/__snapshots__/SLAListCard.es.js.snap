@@ -259,7 +259,9 @@ exports[`Should remove a item 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
+              <LoadingState
+                className="border-1 pb-6 pt-6 sheet"
+              >
                 <div
                   className="border-1 pb-6 pt-6 sheet"
                   data-testid="loadingState"
@@ -666,7 +668,9 @@ exports[`Should render toast with SLA saved message 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
+              <LoadingState
+                className="border-1 pb-6 pt-6 sheet"
+              >
                 <div
                   className="border-1 pb-6 pt-6 sheet"
                   data-testid="loadingState"
@@ -945,7 +949,9 @@ exports[`Should render toast with SLA updated message 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
+              <LoadingState
+                className="border-1 pb-6 pt-6 sheet"
+              >
                 <div
                   className="border-1 pb-6 pt-6 sheet"
                   data-testid="loadingState"
@@ -1224,7 +1230,9 @@ exports[`Should test props change 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
+              <LoadingState
+                className="border-1 pb-6 pt-6 sheet"
+              >
                 <div
                   className="border-1 pb-6 pt-6 sheet"
                   data-testid="loadingState"

@@ -385,7 +385,9 @@ exports[`Should cancel dialog through SLA List 1`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
+              <LoadingState
+                className="border-1 pb-6 pt-6 sheet"
+              >
                 <div
                   className="border-1 pb-6 pt-6 sheet"
                   data-testid="loadingState"
@@ -664,7 +666,9 @@ exports[`Should cancel dialog through SLA List 2`] = `
             loading={true}
           >
             <div>
-              <LoadingState>
+              <LoadingState
+                className="border-1 pb-6 pt-6 sheet"
+              >
                 <div
                   className="border-1 pb-6 pt-6 sheet"
                   data-testid="loadingState"

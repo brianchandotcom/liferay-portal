@@ -2196,9 +2196,11 @@ exports[`Should render dashboard route children 1`] = `
                     loading={true}
                   >
                     <div>
-                      <LoadingState>
+                      <LoadingState
+                        className="border-0 pb-6 pt-6 sheet"
+                      >
                         <div
-                          className="border-1 pb-6 pt-6 sheet"
+                          className="border-0 pb-6 pt-6 sheet"
                           data-testid="loadingState"
                         >
                           <span

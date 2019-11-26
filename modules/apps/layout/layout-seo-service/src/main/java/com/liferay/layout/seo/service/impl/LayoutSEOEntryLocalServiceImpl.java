@@ -14,20 +14,13 @@
 
 package com.liferay.layout.seo.service.impl;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.layout.seo.exception.NoSuchEntryException;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.base.LayoutSEOEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 
 import java.util.Collections;
@@ -36,7 +29,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -70,21 +62,6 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		return layoutSEOEntryPersistence.fetchByG_P_L(
 			groupId, privateLayout, layoutId);
-	}
-
-	@Override
-	public void getCustomTagsDDMStructure(Company company)
-		throws PortalException {
-
-		try {
-			_addCustomTagsDDMStructure(company);
-		}
-		catch (PortalException | RuntimeException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
 	}
 
 	@Override
@@ -146,32 +123,6 @@ public class LayoutSEOEntryLocalServiceImpl
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
 
-	private void _addCustomTagsDDMStructure(Company company) throws Exception {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAddGroupPermissions(true);
-
-		Group group = groupLocalService.getCompanyGroup(company.getCompanyId());
-
-		serviceContext.setScopeGroupId(group.getGroupId());
-
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			company.getCompanyId());
-
-		serviceContext.setUserId(defaultUserId);
-
-		Class<?> clazz = getClass();
-
-		_defaultDDMStructureHelper.addDDMStructures(
-			defaultUserId, group.getGroupId(),
-			_classNameLocalService.getClassNameId(LayoutSEOEntry.class),
-			clazz.getClassLoader(),
-			"com/liferay/layout/seo/internal/instance/lifecycle/dependencies" +
-				"/custom-opengraph-meta-tags-structure.xml",
-			serviceContext);
-	}
-
 	private LayoutSEOEntry _addLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
@@ -212,14 +163,5 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

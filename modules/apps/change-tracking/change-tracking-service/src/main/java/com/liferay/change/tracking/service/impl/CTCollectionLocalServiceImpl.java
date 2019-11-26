@@ -116,18 +116,18 @@ public class CTCollectionLocalServiceImpl
 					CTService<?> ctService = _ctServiceRegistry.getCTService(
 						modelClassNameId);
 
-					if (ctService != null) {
-						return new CTConflictChecker<>(
-							ctService, _serviceTrackerMap,
-							ctCollection.getCtCollectionId(),
-							CTConstants.CT_COLLECTION_ID_PRODUCTION);
+					if (ctService == null) {
+						throw new SystemException(
+							StringBundler.concat(
+								"Unable to check conflicts for ", ctCollection,
+								" because service for ", modelClassNameId,
+								" is missing"));
 					}
 
-					throw new SystemException(
-						StringBundler.concat(
-							"Unable to check conflicts for ", ctCollection,
-							" because service for ", modelClassNameId,
-							" is missing"));
+					return new CTConflictChecker<>(
+						ctService, _serviceTrackerMap,
+						ctCollection.getCtCollectionId(),
+						CTConstants.CT_COLLECTION_ID_PRODUCTION);
 				});
 		}
 

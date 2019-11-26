@@ -9,46 +9,57 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import Filter from '../../../shared/components/filter/Filter.es';
-import {useFilterName} from '../../../shared/components/filter/hooks/useFilterName.es';
-import {useFilterResource} from '../../../shared/components/filter/hooks/useFilterResource.es';
+import Filter from '../../shared/components/filter/Filter.es';
+import {useFilterFetch} from '../../shared/components/filter/hooks/useFilterFetch.es';
+import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';
+import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 
 const ProcessStepFilter = ({
+	className,
 	dispatch,
-	filterKey = 'taskKeys',
-	options: {
-		hideControl = false,
-		multiple = true,
-		position = 'left',
-		withAllSteps = false,
-		withSelectionTitle = false
-	} = {},
+	filterKey = filterConstants.processStep.key,
+	options = {
+		hideControl: false,
+		multiple: true,
+		position: 'left',
+		withAllSteps: false,
+		withSelectionTitle: false
+	},
+	prefixKey = '',
 	processId
 }) => {
-	const {items, selectedItems} = useFilterResource(
-		dispatch,
-		filterKey,
-		`/processes/${processId}/tasks?page=0&pageSize=0`,
-		items => (withAllSteps ? [allStepsItem, ...items] : items)
+	const staticItems = useMemo(
+		() => (options.withAllSteps ? [allStepsItem] : []),
+		[options.withAllSteps]
 	);
 
+	const {items, selectedItems} = useFilterFetch(
+		dispatch,
+		filterKey,
+		prefixKey,
+		`/processes/${processId}/tasks?page=0&pageSize=0`,
+		staticItems
+	);
+
+	const defaultItem = useMemo(() => (items ? items[0] : undefined), [items]);
+
 	const filterName = useFilterName(
-		multiple,
+		options.multiple,
 		selectedItems,
 		Liferay.Language.get('process-step'),
-		withSelectionTitle
+		options.withSelectionTitle
 	);
 
 	return (
 		<Filter
+			defaultItem={defaultItem}
+			elementClasses={className}
 			filterKey={filterKey}
-			hideControl={hideControl}
 			items={items}
-			multiple={multiple}
 			name={filterName}
-			position={position}
+			{...options}
 		/>
 	);
 };

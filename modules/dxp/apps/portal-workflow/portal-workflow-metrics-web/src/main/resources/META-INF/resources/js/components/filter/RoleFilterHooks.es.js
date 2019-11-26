@@ -11,43 +11,46 @@
 
 import React from 'react';
 
-import Filter from '../../../shared/components/filter/Filter.es';
-import {useFilterName} from '../../../shared/components/filter/hooks/useFilterName.es';
-import {useFilterResource} from '../../../shared/components/filter/hooks/useFilterResource.es';
+import Filter from '../../shared/components/filter/Filter.es';
+import {useFilterFetch} from '../../shared/components/filter/hooks/useFilterFetch.es';
+import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';
+import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 
 const RoleFilter = ({
 	completed = false,
+	className,
 	dispatch,
-	filterKey = 'roleIds',
-	options: {
-		hideControl = false,
-		multiple = true,
-		position = 'left',
-		withSelectionTitle = false
-	} = {},
+	filterKey = filterConstants.roles.key,
+	options = {
+		hideControl: false,
+		multiple: true,
+		position: 'left',
+		withSelectionTitle: false
+	},
+	prefixKey = '',
 	processId
 }) => {
-	const {items, selectedItems} = useFilterResource(
+	const {items, selectedItems} = useFilterFetch(
 		dispatch,
 		filterKey,
+		prefixKey,
 		`/processes/${processId}/roles?completed=${completed}`
 	);
 
 	const filterName = useFilterName(
-		multiple,
+		options.multiple,
 		selectedItems,
 		Liferay.Language.get('role'),
-		withSelectionTitle
+		options.withSelectionTitle
 	);
 
 	return (
 		<Filter
+			elementClasses={className}
 			filterKey={filterKey}
-			hideControl={hideControl}
 			items={items}
-			multiple={multiple}
 			name={filterName}
-			position={position}
+			{...options}
 		/>
 	);
 };

@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import {parse} from '../../shared/components/router/queryString.es';
 import SearchField from '../../shared/components/search-field/SearchField.es';
+import {useFetch} from '../../shared/hooks/useFetch.es';
 import {usePageTitle} from '../../shared/hooks/usePageTitle.es';
-import {useResource} from '../../shared/hooks/useResource.es';
 import {
 	Body,
 	EmptyView,
@@ -32,12 +32,14 @@ const ProcessListPage = ({page, pageSize, query, sort}) => {
 
 	const title = search.length ? search : null;
 
-	const {data, promises} = useResource('/processes', {
+	const {data, fetchData} = useFetch('/processes', {
 		page,
 		pageSize,
 		sort: decodeURIComponent(sort),
 		title
 	});
+
+	const promises = useMemo(() => [fetchData()], [fetchData]);
 
 	return (
 		<PromisesResolver promises={promises}>

@@ -76,7 +76,11 @@ export default class ListView extends React.Component {
 			);
 
 		const loadingRender = secondaryRender =>
-			loading ? <LoadingState /> : secondaryRender;
+			loading ? (
+				<LoadingState className={`${className} pb-6 pt-6 sheet`} />
+			) : (
+				secondaryRender
+			);
 
 		return (
 			<div>

@@ -15,8 +15,8 @@ import React from 'react';
 import {filterKeys} from '../../shared/components/filter/util/filterConstants.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import SearchField from '../../shared/components/search-field/SearchField.es';
-import ProcessStepFilter from '../process-metrics/filter/ProcessStepFilterHooks.es';
-import RoleFilter from '../process-metrics/filter/RoleFilterHooks.es';
+import ProcessStepFilter from '../filter/ProcessStepFilterHooks.es';
+import RoleFilter from '../filter/RoleFilterHooks.es';
 
 const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
 	const showFiltersResult = routeParams.search || selectedFilters.length > 0;

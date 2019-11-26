@@ -9,25 +9,19 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 
+import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import {
-	filterKeys,
-	filterTitles
-} from '../../shared/components/filter/util/filterConstants.es';
-import {
-	getFilterResults,
-	getSelectedItems,
 	getFiltersParam,
 	getFilterValues
 } from '../../shared/components/filter/util/filterUtil.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import Request from '../../shared/components/request/Request.es';
 import {parse} from '../../shared/components/router/queryString.es';
-import {useFilterItemKeys} from '../../shared/hooks/useFilterItemKeys.es';
-import {useFiltersReducer} from '../../shared/hooks/useFiltersReducer.es';
+import {useFetch} from '../../shared/hooks/useFetch.es';
+import {useFilter} from '../../shared/hooks/useFilter.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
-import {useResource} from '../../shared/hooks/useResource.es';
 import {
 	TimeRangeContext,
 	TimeRangeProvider
@@ -38,28 +32,17 @@ import {Header} from './PerformanceByAssigneePageHeader.es';
 const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 	const {processId} = routeParams;
-
 	useProcessTitle(processId, Liferay.Language.get('performance-by-assignee'));
 
-	const {processStep, roles} = filterKeys;
+	const filterKeys = ['processStep', 'roles'];
+	const {
+		dispatch,
+		filterValues: {roleIds, taskKeys},
+		selectedFilters
+	} = useFilter(filterKeys);
 
-	const [filterValues, dispatch] = useFiltersReducer({processStep, roles});
-
-	const {roleIds, taskKeys} = useFilterItemKeys(
-		{processStep, roles},
-		filterValues
-	);
-	const filterResults = getFilterResults(
-		{processStep, roles},
-		{
-			processStep: filterTitles.processStep,
-			roles: filterTitles.roles
-		},
-		filterValues
-	);
-
-	const selectedFilters = getSelectedItems(filterResults);
 	const {search = null} = parse(query);
+
 	const timeRange = getSelectedTimeRange(
 		timeRangeKeys,
 		filtersParam.dateEnd,
@@ -80,8 +63,8 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 		timeRangeParams.dateStart = dateStart.toISOString();
 	}
 
-	const {data, promises} = useResource(
-		`/processes/${processId}/assignee-users?completed=true`,
+	const {data, fetchData} = useFetch(
+		`/processes/${processId}/assignee-users`,
 		{
 			completed: true,
 			keywords: search,
@@ -91,6 +74,8 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 			...timeRangeParams
 		}
 	);
+
+	const promises = useMemo(() => [fetchData()], [fetchData]);
 
 	return (
 		<PromisesResolver promises={promises}>
@@ -111,7 +96,10 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 
 const PerformanceByAssigneePage = props => {
 	const filtersParam = getFiltersParam(props.query);
-	const timeRangeKeys = getFilterValues(filterKeys.timeRange, filtersParam);
+	const timeRangeKeys = getFilterValues(
+		filterConstants.timeRange.key,
+		filtersParam
+	);
 
 	return (
 		<Request>

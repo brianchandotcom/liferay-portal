@@ -39,7 +39,9 @@ const Body = ({currentTab, processId, query}) => {
 		[processSteps]
 	);
 	const filters =
-		processStepKey !== 'allSteps' ? {taskKeys: [processStepKey]} : {};
+		processStepKey && processStepKey !== 'allSteps'
+			? {taskKeys: [processStepKey]}
+			: {};
 
 	useEffect(() => {
 		setLoading(true);

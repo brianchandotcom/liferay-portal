@@ -9,6 +9,37 @@
  * distribution rights of the Software.
  */
 
+const filterConstants = {
+	assignee: {
+		key: 'assigneeUserIds',
+		title: Liferay.Language.get('assignee')
+	},
+	processStatus: {
+		key: 'statuses',
+		title: Liferay.Language.get('process-status')
+	},
+	processStep: {
+		key: 'taskKeys',
+		title: Liferay.Language.get('process-step')
+	},
+	roles: {
+		key: 'roleIds',
+		title: Liferay.Language.get('roles')
+	},
+	slaStatus: {
+		key: 'slaStatuses',
+		title: Liferay.Language.get('sla-status')
+	},
+	timeRange: {
+		key: 'timeRange',
+		title: Liferay.Language.get('completion-period')
+	},
+	velocityUnit: {
+		key: 'velocityUnit',
+		title: Liferay.Language.get('velocity-unit')
+	}
+};
+
 const filterKeys = {
 	assignee: 'assigneeUserIds',
 	processStatus: 'statuses',
@@ -29,3 +60,4 @@ const filterTitles = {
 };
 
 export {filterKeys, filterTitles};
+export default filterConstants;

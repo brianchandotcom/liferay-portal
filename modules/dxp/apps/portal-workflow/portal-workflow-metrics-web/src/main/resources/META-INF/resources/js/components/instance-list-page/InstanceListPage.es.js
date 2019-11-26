@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useEffect, useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 
 import {getFiltersParam} from '../../shared/components/filter/util/filterUtil.es';
 import EmptyState from '../../shared/components/list/EmptyState.es';
@@ -18,7 +18,7 @@ import LoadingState from '../../shared/components/loading/LoadingState.es';
 import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import Request from '../../shared/components/request/Request.es';
-import {AppContext} from '../AppContext.es';
+import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
 import InstanceListPageFilters from './InstanceListPageFilters.es';
 import InstanceListPageItemDetail from './InstanceListPageItemDetail.es';
 import InstanceListPageTable from './InstanceListPageTable.es';
@@ -38,16 +38,7 @@ export function InstanceListPage({page, pageSize, processId, query}) {
 		timeRange = []
 	} = filters;
 
-	const {client, setTitle} = useContext(AppContext);
-
-	useEffect(() => {
-		client.get(`/processes/${processId}/title`).then(({data}) => {
-			setTitle(`${data}: ${Liferay.Language.get('all-items')}`);
-			return data;
-		});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	useProcessTitle(processId, Liferay.Language.get('all-items'));
 
 	return (
 		<Request>

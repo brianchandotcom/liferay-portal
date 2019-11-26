@@ -9,22 +9,13 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import {
-	filterKeys,
-	filterTitles
-} from '../../shared/components/filter/util/filterConstants.es';
-import {
-	getSelectedItems,
-	getFilterResults
-} from '../../shared/components/filter/util/filterUtil.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import {parse} from '../../shared/components/router/queryString.es';
-import {useFilterItemKeys} from '../../shared/hooks/useFilterItemKeys.es';
-import {useFiltersReducer} from '../../shared/hooks/useFiltersReducer.es';
+import {useFetch} from '../../shared/hooks/useFetch.es';
+import {useFilter} from '../../shared/hooks/useFilter.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
-import {useResource} from '../../shared/hooks/useResource.es';
 import {Body} from './WorkloadByAssigneePageBody.es';
 import {Header} from './WorkloadByAssigneePageHeader.es';
 
@@ -35,18 +26,16 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 	const {search = ''} = parse(query);
 	const keywords = search.length ? search : null;
 
-	const [filterValues, dispatch] = useFiltersReducer(filterKeys);
-	const {roleIds, taskKeys} = useFilterItemKeys(filterKeys, filterValues);
-	const filterResults = getFilterResults(
-		filterKeys,
-		filterTitles,
-		filterValues
-	);
+	const filterKeys = ['processStep', 'roles'];
+	const {
+		dispatch,
+		filterValues: {roleIds, taskKeys},
+		selectedFilters
+	} = useFilter(filterKeys);
 
-	const selectedFilters = getSelectedItems(filterResults);
 	const filtered = search.length > 0 || selectedFilters.length > 0;
 
-	const {data, promises} = useResource(
+	const {data, fetchData} = useFetch(
 		`/processes/${processId}/assignee-users`,
 		{
 			keywords,
@@ -55,6 +44,9 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 			...routeParams
 		}
 	);
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const promises = useMemo(() => [fetchData()], [fetchData]);
 
 	return (
 		<PromisesResolver promises={promises}>

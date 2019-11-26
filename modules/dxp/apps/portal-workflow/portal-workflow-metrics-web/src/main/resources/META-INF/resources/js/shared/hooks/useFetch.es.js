@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-import {useContext, useCallback, useState, useMemo} from 'react';
+import {useContext, useCallback, useState} from 'react';
 
 import {AppContext} from '../../components/AppContext.es';
 
-const useResource = (requestUrl, queryParams = {}) => {
+const useFetch = (requestUrl, queryParams = {}) => {
 	const {client} = useContext(AppContext);
 	const [data, setData] = useState({});
 
@@ -28,12 +28,10 @@ const useResource = (requestUrl, queryParams = {}) => {
 		[queryParamsStr, requestUrl]
 	);
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
-
 	return {
 		data,
-		promises
+		fetchData
 	};
 };
 
-export {useResource};
+export {useFetch};

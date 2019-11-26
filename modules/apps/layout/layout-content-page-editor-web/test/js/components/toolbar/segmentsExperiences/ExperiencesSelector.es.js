@@ -298,4 +298,46 @@ describe('ExperienceSelector', () => {
 			})
 		);
 	});
+
+	it('displays a help hint on the locked icon for a locked Experience', async () => {
+		const mockStateWithLockedExperience = {
+			...mockState,
+			availableSegmentsExperiences: {
+				...mockState.availableSegmentsExperiences,
+				'test-experience-id-03': {
+					active: true,
+					hasLockedSegmentsExperiment: true,
+					name: 'Experience #3',
+					priority: 5,
+					segmentsEntryId: 'test-segment-id-00',
+					segmentsExperienceId: 'test-experience-id-03',
+					segmentsExperimentStatus: {
+						label: 'running',
+						value: 3
+					},
+					segmentsExperimentURL: 'https//:locked-experience.com'
+				}
+			}
+		};
+		const {
+			getByLabelText,
+			getByRole,
+			getByText
+		} = RenderSegmentsExperienceSelector(mockStateWithLockedExperience);
+
+		const dropDownButton = getByLabelText('experience');
+
+		userEvent.click(dropDownButton);
+
+		await waitForElement(() => getByRole('list'));
+
+		const experience = getByText('Experience #3');
+
+		const lockIcon = within(experience).getByRole('presentation');
+
+		userEvent.click(lockIcon);
+
+		getByText('experience-locked-message');
+		getByText('experience-locked');
+	});
 });

@@ -102,34 +102,30 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 					<%
 					Map<String, Object> data = HashMapBuilder.<String, Object>put(
-						"targets",
-						Arrays.asList(
-							HashMapBuilder.put(
-								"id", "openGraphImageURL"
-							).put(
-								"type", "imgUrl"
-							).build(),
-							HashMapBuilder.put(
-								"id", "openGraphDescription"
-							).put(
-								"type", "description"
-							).build(),
-							HashMapBuilder.put(
-								"id", "openGraphTitle"
-							).put(
-								"type", "title"
-							).build())
-					).put(
-						"defaultValues",
-						HashMapBuilder.<String, String>put(
-							"description", selLayout.getDescription(locale)
-						).put(
-							"title", layoutsAdminDisplayContext.getPageTitle()
-						).put(
-							"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-						).build()
-					).put(
 						"displayType", "og"
+					).put(
+						"targets",
+						HashMapBuilder.put(
+							"description", HashMapBuilder.put(
+								"defaultValue", selLayout.getDescription(locale)
+							).put(
+								"id", "openGraphDescription"
+							).build()
+						).put(
+							"imgUrl", HashMapBuilder.put(
+								"id", "openGraphImageURL"
+							).build()
+						).put(
+							"title", HashMapBuilder.put(
+								"defaultValue", layoutsAdminDisplayContext.getPageTitle()
+							).put(
+								"id", "openGraphTitle"
+							).build()
+						).put(
+							"url", HashMapBuilder.put(
+								"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+							).build()
+						).build()
 					).put(
 						"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()
 					).build();

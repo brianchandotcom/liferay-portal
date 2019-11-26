@@ -143,8 +143,7 @@ page import="com.liferay.segments.exception.RequiredSegmentsExperienceException"
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
-<%@ page import="java.util.Arrays" %><%@
-page import="java.util.HashMap" %><%@
+<%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@

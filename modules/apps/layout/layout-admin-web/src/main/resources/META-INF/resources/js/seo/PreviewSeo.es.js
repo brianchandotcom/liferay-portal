@@ -68,18 +68,23 @@ PreviewSeo.propTypes = {
 };
 
 const PreviewSeoContainer = ({
-	defaultValues = {},
 	displayType,
 	portletNamespace,
 	targets,
 	titleSuffix
 }) => {
 	const [description, setDescription] = useState(
-		defaultValues['description']
+		targets['description'] && targets['description'].defaultValue
 	);
-	const [imgUrl, setImgUrl] = useState(defaultValues['imgUrl']);
-	const [title, setTitle] = useState(defaultValues['title']);
-	const [url, setUrl] = useState(defaultValues['url']);
+	const [imgUrl, setImgUrl] = useState(
+		targets['imgUrl'] && targets['imgUrl'].defaultValue
+	);
+	const [title, setTitle] = useState(
+		targets['title'] && targets['title'].defaultValue
+	);
+	const [url, setUrl] = useState(
+		targets['url'] && targets['url'].defaultValue
+	);
 
 	const isMounted = useIsMounted();
 
@@ -87,7 +92,7 @@ const PreviewSeoContainer = ({
 		const setPreviewState = ({type, value = ''}) => {
 			if (!isMounted()) return;
 
-			const defaultValue = defaultValues[type];
+			const defaultValue = targets[type] && targets[type].defaultValue;
 
 			if (value === '' && defaultValue) {
 				value = defaultValue;
@@ -117,25 +122,31 @@ const PreviewSeoContainer = ({
 			});
 		};
 
-		const inputs = targets.map(({id, type}) => {
-			const listener = event => {
-				handleInputChange({
-					event,
-					type
+		const inputs = Object.entries(targets).reduce((acc, [type, {id}]) => {
+			if (id) {
+				const listener = event => {
+					handleInputChange({
+						event,
+						type
+					});
+				};
+
+				const node = document.getElementById(
+					`${portletNamespace}${id}`
+				);
+
+				node.addEventListener('input', listener);
+
+				setPreviewState({
+					type,
+					value: node.value
 				});
-			};
 
-			const node = document.getElementById(`${portletNamespace}${id}`);
+				acc.push({listener, node, type});
+			}
 
-			node.addEventListener('input', listener);
-
-			setPreviewState({
-				type,
-				value: node.value,
-			});
-
-			return {listener, node, type};
-		});
+			return acc;
+		}, []);
 
 		const PreviewSeoOnChangeHandle = PreviewSeoOnChange(
 			portletNamespace,
@@ -162,7 +173,7 @@ const PreviewSeoContainer = ({
 			Liferay.detach(inputLocalizedLocaleChangedHandle);
 			Liferay.detach(PreviewSeoOnChangeHandle);
 		};
-	}, [defaultValues, isMounted, portletNamespace, targets]);
+	}, [isMounted, portletNamespace, targets]);
 
 	return (
 		<PreviewSeo
@@ -177,13 +188,24 @@ const PreviewSeoContainer = ({
 };
 
 PreviewSeoContainer.propTypes = {
-	defaultValues: PropTypes.object,
-	targets: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			type: PropTypes.string.isRequired
+	targets: PropTypes.shape({
+		description: PropTypes.shape({
+			defaultValue: PropTypes.string,
+			id: PropTypes.string
+		}),
+		imgUrl: PropTypes.shape({
+			defaultValue: PropTypes.string,
+			id: PropTypes.string
+		}),
+		title: PropTypes.shape({
+			defaultValue: PropTypes.string,
+			id: PropTypes.string
+		}),
+		url: PropTypes.shape({
+			defaultValue: PropTypes.string,
+			id: PropTypes.string
 		})
-	).isRequired
+	}).isRequired
 };
 
 export default function(props) {

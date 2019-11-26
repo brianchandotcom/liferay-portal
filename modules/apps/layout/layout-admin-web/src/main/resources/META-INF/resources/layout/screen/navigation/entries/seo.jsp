@@ -130,30 +130,26 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 						<%
 						Map<String, Object> data = HashMapBuilder.<String, Object>put(
-							"defaultValues",
-							HashMapBuilder.put(
-								"title", layoutsAdminDisplayContext.getPageTitle()
-							).put(
-								"url", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-							).build()
-						).put(
 							"targets",
-							Arrays.asList(
-								HashMapBuilder.put(
-									"id", "canonicalURL"
+							HashMapBuilder.put(
+								"description", HashMapBuilder.put(
+									"defaultValue", selLayout.getDescription(locale)
 								).put(
-									"type", "url"
-								).build(),
-								HashMapBuilder.put(
 									"id", "descriptionSEO"
+								).build()
+							).put(
+								"title", HashMapBuilder.put(
+									"defaultValue", layoutsAdminDisplayContext.getPageTitle()
 								).put(
-									"type", "description"
-								).build(),
-								HashMapBuilder.put(
 									"id", "title"
+								).build()
+							).put(
+								"url", HashMapBuilder.put(
+									"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
 								).put(
-									"type", "title"
-								).build())
+									"id", "canonicalURL"
+								).build()
+							).build()
 						).put(
 							"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()
 						).build();

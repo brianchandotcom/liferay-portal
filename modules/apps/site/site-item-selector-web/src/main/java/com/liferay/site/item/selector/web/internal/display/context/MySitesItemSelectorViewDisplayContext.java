@@ -14,6 +14,7 @@
 
 package com.liferay.site.item.selector.web.internal.display.context;
 
+import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -40,12 +40,12 @@ public class MySitesItemSelectorViewDisplayContext
 
 	public MySitesItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
-		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL,
 		GroupSearchProvider groupSearchProvider) {
 
 		super(
-			httpServletRequest, siteItemSelectorCriterion,
+			httpServletRequest, groupItemSelectorCriterion,
 			itemSelectedEventName, portletURL);
 
 		_groupSearchProvider = groupSearchProvider;

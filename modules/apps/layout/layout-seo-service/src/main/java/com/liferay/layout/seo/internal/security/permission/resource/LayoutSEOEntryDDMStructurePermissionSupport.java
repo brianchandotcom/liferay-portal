@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.seo.internal.dynamic.data.mapping.util;
+package com.liferay.layout.seo.internal.security.permission.resource;
 
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.layout.seo.model.LayoutSEOEntry",
 	service = DDMStructurePermissionSupport.class
 )
-public class LayoutDDMStructurePermissionSupport
+public class LayoutSEOEntryDDMStructurePermissionSupport
 	implements DDMStructurePermissionSupport {
 
 	@Override

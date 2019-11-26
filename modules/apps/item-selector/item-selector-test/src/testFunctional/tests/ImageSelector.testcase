@@ -26,9 +26,9 @@ definition {
 		}
 	}
 
-	@description = "This makes sure that multiple images can be previewed by using the keyboard."
+	@description = "This makes sure that multiple DM images can be previewed by using the keyboard."
 	@priority = "5"
-	test PreviewMultipleImages {
+	test PreviewMultipleImagesInDM {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.jpg,Document_3.jpg");

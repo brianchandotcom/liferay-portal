@@ -1124,14 +1124,6 @@
     "@clayui/icon" "^3.0.1"
     classnames "^2.2.6"
 
-"@clayui/icon@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.0.0.tgz#d73721acf20dd717ef1d0f5ba83ac253ce0e04e3"
-  integrity sha512-V+YXx9tR9lojxm8o1wm4Ju7mcMvkOJ4F0yF5J8TdYnAI7B0GoIyYVCwTTCbHQdgJofr8gXWG2MC93Q3BqRtClA==
-  dependencies:
-    classnames "^2.2.6"
-    warning "^4.0.3"
-
 "@clayui/icon@3.0.1", "@clayui/icon@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.0.1.tgz#7e5b51fbf38c8d28ed1e42d5f1de552b1e218804"
@@ -1294,13 +1286,6 @@
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@clayui/slider/-/slider-3.0.2.tgz#9d0ea5503e097f83dee4e53faea550f4534c0667"
   integrity sha512-ESelNGUTlyNcixQCwByI4jp2flu80RVWpns4u4SYAAR7wyM5lzJss9x6T7Gku4v58xk3PxsQbEW5ws1qCpze/g==
-  dependencies:
-    classnames "^2.2.6"
-
-"@clayui/sticker@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.0.1.tgz#a3a5b8fc499d50aa8f9e16f66ce240b8ba3b81c6"
-  integrity sha512-4f4xIvYgPAuEpVdH55Ynzj5ihvOGaaqOc826XS0RzbQkTwNKPkMbNPRzvePmqA7mv5qpXfhC4a+Z7hL1/TA4bA==
   dependencies:
     classnames "^2.2.6"
 

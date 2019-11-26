@@ -69,13 +69,14 @@ public class LayoutFriendlyURLModelImpl
 	public static final String TABLE_NAME = "LayoutFriendlyURL";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"layoutFriendlyURLId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"plid", Types.BIGINT},
-		{"privateLayout", Types.BOOLEAN}, {"friendlyURL", Types.VARCHAR},
-		{"languageId", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"layoutFriendlyURLId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"plid", Types.BIGINT}, {"privateLayout", Types.BOOLEAN},
+		{"friendlyURL", Types.VARCHAR}, {"languageId", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -83,6 +84,7 @@ public class LayoutFriendlyURLModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutFriendlyURLId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -99,7 +101,7 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutFriendlyURL (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table LayoutFriendlyURL (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,lastPublishDate DATE null,primary key (layoutFriendlyURLId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutFriendlyURL";
 
@@ -284,6 +286,12 @@ public class LayoutFriendlyURLModelImpl
 			"mvccVersion",
 			(BiConsumer<LayoutFriendlyURL, Long>)
 				LayoutFriendlyURL::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", LayoutFriendlyURL::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<LayoutFriendlyURL, Long>)
+				LayoutFriendlyURL::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", LayoutFriendlyURL::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -369,6 +377,16 @@ public class LayoutFriendlyURLModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -670,6 +688,7 @@ public class LayoutFriendlyURLModelImpl
 			new LayoutFriendlyURLImpl();
 
 		layoutFriendlyURLImpl.setMvccVersion(getMvccVersion());
+		layoutFriendlyURLImpl.setCtCollectionId(getCtCollectionId());
 		layoutFriendlyURLImpl.setUuid(getUuid());
 		layoutFriendlyURLImpl.setLayoutFriendlyURLId(getLayoutFriendlyURLId());
 		layoutFriendlyURLImpl.setGroupId(getGroupId());
@@ -785,6 +804,8 @@ public class LayoutFriendlyURLModelImpl
 			new LayoutFriendlyURLCacheModel();
 
 		layoutFriendlyURLCacheModel.mvccVersion = getMvccVersion();
+
+		layoutFriendlyURLCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutFriendlyURLCacheModel.uuid = getUuid();
 
@@ -933,6 +954,7 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _layoutFriendlyURLId;

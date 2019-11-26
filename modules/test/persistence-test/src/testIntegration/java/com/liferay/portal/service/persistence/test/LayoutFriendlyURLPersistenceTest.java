@@ -126,6 +126,8 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		newLayoutFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
 
+		newLayoutFriendlyURL.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newLayoutFriendlyURL.setUuid(RandomTestUtil.randomString());
 
 		newLayoutFriendlyURL.setGroupId(RandomTestUtil.nextLong());
@@ -158,6 +160,9 @@ public class LayoutFriendlyURLPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutFriendlyURL.getMvccVersion(),
 			newLayoutFriendlyURL.getMvccVersion());
+		Assert.assertEquals(
+			existingLayoutFriendlyURL.getCtCollectionId(),
+			newLayoutFriendlyURL.getCtCollectionId());
 		Assert.assertEquals(
 			existingLayoutFriendlyURL.getUuid(),
 			newLayoutFriendlyURL.getUuid());
@@ -321,10 +326,10 @@ public class LayoutFriendlyURLPersistenceTest {
 
 	protected OrderByComparator<LayoutFriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutFriendlyURL", "mvccVersion", true, "uuid", true,
-			"layoutFriendlyURLId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "plid", true, "privateLayout", true,
+			"LayoutFriendlyURL", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "layoutFriendlyURLId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "plid", true, "privateLayout", true,
 			"friendlyURL", true, "languageId", true, "lastPublishDate", true);
 	}
 
@@ -610,6 +615,8 @@ public class LayoutFriendlyURLPersistenceTest {
 		LayoutFriendlyURL layoutFriendlyURL = _persistence.create(pk);
 
 		layoutFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
+
+		layoutFriendlyURL.setCtCollectionId(RandomTestUtil.nextLong());
 
 		layoutFriendlyURL.setUuid(RandomTestUtil.randomString());
 

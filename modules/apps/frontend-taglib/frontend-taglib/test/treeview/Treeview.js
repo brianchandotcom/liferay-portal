@@ -13,11 +13,12 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import Treeview from '../../src/main/resources/META-INF/resources/treeview/Treeview';
+import TreeviewContext from '../../src/main/resources/META-INF/resources/treeview/TreeviewContext';
 
 const nodes = [
 	{
@@ -52,7 +53,7 @@ describe('Treeview', () => {
 	it('renders empty', () => {
 		const {container} = render(<Treeview nodes={[]} />);
 		const treeview = container.querySelector('.lfr-treeview-node-list');
-		expect(treeview).toBeVisible();
+		expect(treeview).toBe(null);
 	});
 
 	it('renders a list of nodes', () => {
@@ -74,7 +75,7 @@ describe('Treeview', () => {
 		fireEvent.click(getByText('Sandro'));
 		fireEvent.click(getByText('Victor'));
 
-		expect(onSelectedNodesChange).toBeCalledWith(nodes);
+		expect(onSelectedNodesChange).toBeCalledWith(new Set(['1', '2']));
 	});
 
 	it('marks the initialSelectedNodeIds as selected', () => {
@@ -156,17 +157,27 @@ describe('Treeview', () => {
 
 		const {getByText} = render(
 			<Treeview
-				NodeComponent={({node, onNodeSelected, selectedNodeIds}) => (
-					<button
-						data-icon={node.icon}
-						data-selected={selectedNodeIds.includes(node.id)}
-						data-size={node.size}
-						onClick={() => onNodeSelected(node.id)}
-						type="button"
-					>
-						Super {node.name}
-					</button>
-				)}
+				NodeComponent={({node}) => {
+					const {dispatch} = useContext(TreeviewContext);
+
+					return (
+						<button
+							data-icon={node.icon}
+							data-selected={node.selected}
+							data-size={node.size}
+							onClick={() =>
+								dispatch({
+									nodeId: node.id,
+									type: 'TOGGLE_SELECT'
+								})
+							}
+							type="button"
+						>
+							Super {node.name}
+						</button>
+					);
+				}}
+				initialSelectedNodeIds={[]}
 				nodes={[node]}
 			/>
 		);

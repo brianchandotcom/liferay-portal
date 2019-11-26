@@ -25,6 +25,9 @@ public class CompanyConstants {
 
 	public static final String AUTH_TYPE_SN = "screenName";
 
+	public static final String DATA_PARTITIONING_COUNTER_NAME =
+		"data.partitioning.company";
+
 	public static final long SYSTEM = 0;
 
 	public static final String SYSTEM_STRING = String.valueOf(SYSTEM);

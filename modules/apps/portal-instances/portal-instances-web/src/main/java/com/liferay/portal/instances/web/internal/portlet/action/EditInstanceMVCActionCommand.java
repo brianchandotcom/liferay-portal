@@ -79,7 +79,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 				deleteInstance(actionRequest);
 			}
 			else {
-				updateInstance(actionRequest);
+				updateInstance(actionRequest, cmd);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -131,7 +131,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
-	protected void updateInstance(ActionRequest actionRequest)
+	protected void updateInstance(ActionRequest actionRequest, String cmd)
 		throws Exception {
 
 		long companyId = ParamUtil.getLong(actionRequest, "companyId");
@@ -142,7 +142,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers", 0);
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
-		if (companyId <= 0) {
+		if (cmd.equals(Constants.ADD)) {
 
 			// Add instance
 

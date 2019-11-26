@@ -231,7 +231,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Company company = companyPersistence.fetchByWebId(webId);
 
 		if (company == null) {
-			long companyId = counterLocalService.increment();
+			long companyId;
+
+			if (PropsValues.DATABASE_PARTITIONING_ENABLED) {
+				companyId = counterLocalService.increment(
+					CompanyConstants.DATA_PARTITIONING_COUNTER_NAME);
+
+				counterLocalService.reset(
+					CompanyConstants.DATA_PARTITIONING_COUNTER_NAME,
+					counterLocalService.increment() - 1);
+			}
+			else {
+				companyId = counterLocalService.increment();
+			}
 
 			company = companyPersistence.create(companyId);
 

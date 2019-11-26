@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.SimpleCounter;
 
 import java.io.File;
@@ -326,6 +327,12 @@ public abstract class BaseDB implements DB {
 
 			for (String sql : sqls) {
 				sql = buildSQL(applyMaxStringIndexLengthLimitation(sql));
+
+				if (PropsValues.DATABASE_UNIQUE_INDEXES_ADD_COMPANYID &&
+					!sql.contains("companyId")) {
+
+					sql = addCompanyId(con, sql);
+				}
 
 				sql = SQLTransformer.transform(sql.trim());
 
@@ -626,6 +633,30 @@ public abstract class BaseDB implements DB {
 		for (int i = 0; i < templateTypes.length; i++) {
 			_sqlTypes.put(StringUtil.trim(templateTypes[i]), getSQLTypes()[i]);
 		}
+	}
+
+	protected String addCompanyId(Connection con, String uniqueIndexDefinition)
+		throws SQLException {
+
+		Matcher matcher = _createUniqueIndexPattern.matcher(
+			uniqueIndexDefinition);
+
+		if (matcher.find()) {
+			String tableName = matcher.group(1);
+
+			DBInspector dbInspector = new DBInspector(con);
+
+			if (dbInspector.hasColumn(tableName, "companyId")) {
+				int lastIndex = uniqueIndexDefinition.lastIndexOf(')');
+
+				uniqueIndexDefinition =
+					uniqueIndexDefinition.substring(0, lastIndex) +
+						", companyId" +
+							uniqueIndexDefinition.substring(lastIndex);
+			}
+		}
+
+		return uniqueIndexDefinition;
 	}
 
 	protected String applyMaxStringIndexLengthLimitation(String template) {
@@ -1260,6 +1291,8 @@ public abstract class BaseDB implements DB {
 
 	private static final Pattern _columnLengthPattern = Pattern.compile(
 		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
+	private static final Pattern _createUniqueIndexPattern = Pattern.compile(
+		"create unique index IX_.* on (.*) ?\\(.*");
 	private static final Pattern _templatePattern;
 	private static final Pattern _timestampPattern = Pattern.compile(
 		"SPECIFIC_TIMESTAMP_\\d+");

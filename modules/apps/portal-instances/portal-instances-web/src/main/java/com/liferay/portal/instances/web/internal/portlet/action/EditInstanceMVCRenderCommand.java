@@ -14,9 +14,11 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -82,12 +85,22 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		if (companyId > 0) {
 			company = _companyLocalService.getCompanyById(companyId);
 		}
+		else if (PropsValues.DATABASE_PARTITIONING_ENABLED) {
+			long nextCompanyId = _counterLocalService.increment(
+				CompanyConstants.DATA_PARTITIONING_COUNTER_NAME);
+
+			httpServletRequest.setAttribute(
+				"nextCompanyId", Long.valueOf(nextCompanyId));
+		}
 
 		httpServletRequest.setAttribute(WebKeys.SEL_COMPANY, company);
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private Portal _portal;

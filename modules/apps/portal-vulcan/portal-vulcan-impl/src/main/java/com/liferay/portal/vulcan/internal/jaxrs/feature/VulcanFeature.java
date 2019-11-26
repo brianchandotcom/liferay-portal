@@ -40,6 +40,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperCon
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.XmlMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.dynamic.feature.StatusDynamicFeature;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFilterExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFormatExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonMappingExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonParseExceptionMapper;
@@ -99,6 +100,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(JSONMessageBodyReader.class);
 		featureContext.register(JSONMessageBodyWriter.class);
 		featureContext.register(JsonParseExceptionMapper.class);
+		featureContext.register(InvalidFilterExceptionMapper.class);
 		featureContext.register(InvalidFormatExceptionMapper.class);
 		featureContext.register(LogContainerRequestFilter.class);
 		featureContext.register(MultipartBodyMessageBodyReader.class);

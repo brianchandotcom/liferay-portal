@@ -32,7 +32,6 @@ import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.ext.Provider;
 
@@ -118,7 +117,7 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 				ParamUtil.getString(httpServletRequest, "filter"));
 		}
 		catch (ExpressionVisitException eve) {
-			throw new BadRequestException(eve.getMessage(), eve);
+			throw new InvalidFilterException(eve.getMessage(), eve);
 		}
 		catch (InvalidFilterException ife) {
 			throw ife;

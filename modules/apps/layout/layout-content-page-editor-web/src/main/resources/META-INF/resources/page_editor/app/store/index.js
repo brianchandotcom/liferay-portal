@@ -15,8 +15,8 @@
 import React from 'react';
 
 // Commented out to avoid lint errors
-// import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-// import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 const INITIAL_STATE = {
 	/**
@@ -63,28 +63,29 @@ export function getInitialState([data, config]) {
 }
 
 function transformServerData(data) {
+	let layoutData = data.layoutData;
+
+	if (!layoutData.version) {
+		layoutData = {
+			items: {
+				main: {
+					children: [],
+					config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
+					itemId: 'main',
+					parentId: null,
+					type: LAYOUT_DATA_ITEM_TYPES.root
+				}
+			},
+
+			rootItems: {main: 'main'},
+			version: 1
+		};
+	}
+
 	// Currently nothing happening here, but keeping this around so that we have
 	// a place to massage the server data into shape.
 	return {
 		...data,
-
-		fragments: data.elements
-
-		// This needs to be commented or uncommented
-		// depending if you want the data to be mocked or not.
-		// layoutData: {
-		// 	items: {
-		// 		main: {
-		// 			children: [],
-		// 			config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
-		// 			itemId: 'main',
-		// 			parentId: null,
-		// 			type: LAYOUT_DATA_ITEM_TYPES.root
-		// 		}
-		// 	},
-
-		// 	rootItems: {main: 'main'},
-		// 	version: 1
-		// }
+		layoutData
 	};
 }

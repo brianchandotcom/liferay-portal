@@ -65,6 +65,12 @@
 </tr>
 
 <tr>
+	<td>SIDEBAR_BASIC_HELP_TEXT</td>
+	<td>//input[contains(@name,'placeholder')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>SIDEBAR_ADVANCED_FIELD_NAME</td>
 	<td>//input[contains(@name,'name')]</td>
 	<td></td>

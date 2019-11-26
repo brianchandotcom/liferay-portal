@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.UUID;
 
@@ -31,8 +32,8 @@ import java.util.UUID;
 public class LayoutDataConverter {
 
 	public static String convert(String data) {
-		if (data == null) {
-			return "";
+		if (Validator.isNull(data)) {
+			return StringPool.BLANK;
 		}
 
 		JSONObject inputDataJSONObject = null;
@@ -58,6 +59,12 @@ public class LayoutDataConverter {
 
 		JSONArray structureJSONArray = inputDataJSONObject.getJSONArray(
 			"structure");
+
+		if (structureJSONArray == null) {
+			return data;
+		}
+
+		UUID mainUUID = UUID.randomUUID();
 
 		for (int i = 0; i < structureJSONArray.length(); i++) {
 			JSONObject inputRowJSONObject = structureJSONArray.getJSONObject(i);

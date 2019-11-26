@@ -9,12 +9,12 @@ There are two types of data partitioning:
 
 - **Logical Partitioning:** Liferay provides this feature via its portal
 instance concept. A portal instance is a logical set of data grouped by the
-*companyId* column. This facility provides data security at the portal level. 
+*companyId* column. This facility provides data security at the portal level.
 Essentially, a user (e.g. Portal Administrator could never see data from a
 portal instance for which they do not have access. Data for all instances would
 remain in a single database instance (aka schema, tablespace, etc)
 - **Physical Partitioning:** it allows to store in different partitions the data
-separated logically. This feature is provided by the database vendors at table 
+separated logically. This feature is provided by the database vendors at table
 level.
 
 From Liferay 7.3, we can easily combine both solutions having logical and
@@ -28,7 +28,7 @@ documentation offered by your database's vendor to enable data partitioning.
 The following links provide that information but be sure that they apply to the
 database version you are currently using:
 
-- **DB2 11.1:** https://www.ibm.com/support/knowledgecenter/en/SSEPGG_11.1.0/com.ibm.db2.luw.admin.partition.doc/doc/c0021560.html 
+- **DB2 11.1:** https://www.ibm.com/support/knowledgecenter/en/SSEPGG_11.1.0/com.ibm.db2.luw.admin.partition.doc/doc/c0021560.html
 - **MariaDB:** https://mariadb.com/kb/en/library/partitioning-tables/
 - **MS SQLServer 2017:** https://docs.microsoft.com/en-us/sql/relational-databases/partitions/partitioned-tables-and-indexes?view=sql-server-2017
 - **Mysql 8:** https://dev.mysql.com/doc/refman/8.0/en/partitioning-overview.html
@@ -63,7 +63,7 @@ Run the scripts again after the data is valid. Take into account that
 either)
 
 5. [optional] Some databases require having the partition key (*companyId*) in
-every unique index including primary keys. If that's the case, Run 
+every unique index including primary keys. If that's the case, Run
 `updateindexes.sh` or `updateindexes.bat` to add the *companyId* column to the
 required indexes in the tables to partition.
 
@@ -74,12 +74,12 @@ instructions
 	- **database.partitioning.enabled=true**
 	- [optional] **database.unique.indexes.add.companyId=true** (only if having
 	the *companyId* in unique indexes is required)
-	
+
 ---
 **Make a database backup before activating data partitioning or modifying the
 data partitioning is required**
 ---
-	
+
 ### Add a new virtual instance (Company)
 
 The creation of a new virtual instance (Company) once partitioning is enabled
@@ -137,7 +137,7 @@ facilitate this task since the field will be automatically populated for every
 new record.
 
 2. [optional] Some databases require having the partition key (*companyId*) in
-every unique index including primary keys. If that's the case, you can run 
+every unique index including primary keys. If that's the case, you can run
 `updateindexes.sh` or `updateindexes.bat` to add the *companyId* column to the
 required indexes in that table.
 

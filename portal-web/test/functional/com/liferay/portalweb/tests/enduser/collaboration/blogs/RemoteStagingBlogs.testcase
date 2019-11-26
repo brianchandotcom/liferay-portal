@@ -227,7 +227,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = "30000");
+		Pause(locator1 = "10000");
 
 		Staging.gotoPublishToLive();
 

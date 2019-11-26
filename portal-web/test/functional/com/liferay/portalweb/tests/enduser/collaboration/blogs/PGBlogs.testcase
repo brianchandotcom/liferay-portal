@@ -1619,7 +1619,7 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = "30000");
+		Pause(locator1 = "10000");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

@@ -85,4 +85,12 @@ definition {
 			value1 = "${fieldLabel}");
 	}
 
+	macro closeSidebar(){
+		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR")
+	}
+
+	macro openSidebar(){
+		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR")
+	}
+
 }

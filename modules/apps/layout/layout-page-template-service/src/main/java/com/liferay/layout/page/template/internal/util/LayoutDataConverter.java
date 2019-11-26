@@ -56,8 +56,6 @@ public class LayoutDataConverter {
 
 		JSONArray mainChildrenJSONArray = JSONFactoryUtil.createJSONArray();
 
-		UUID mainUUID = UUID.randomUUID();
-
 		JSONArray structureJSONArray = inputDataJSONObject.getJSONArray(
 			"structure");
 
@@ -67,9 +65,9 @@ public class LayoutDataConverter {
 			JSONArray columnsJSONArray = inputRowJSONObject.getJSONArray(
 				"columns");
 
-			String type = inputRowJSONObject.getString("type");
+			if (inputRowJSONObject.getInt("type") ==
+					FragmentConstants.TYPE_COMPONENT) {
 
-			if (type.equals(String.valueOf(FragmentConstants.TYPE_COMPONENT))) {
 				UUID containerUUID = UUID.randomUUID();
 
 				mainChildrenJSONArray.put(containerUUID);
@@ -118,9 +116,7 @@ public class LayoutDataConverter {
 					}
 
 					JSONObject columnConfigJSONObject = JSONUtil.put(
-						"size",
-						Integer.valueOf(
-							inputColumnJSONObject.getString("size")));
+						"size", inputColumnJSONObject.getInt("size"));
 
 					JSONObject columnJSONObject = _getItemJSONObject(
 						columnChildrenJSONArray, columnConfigJSONObject,
@@ -135,7 +131,8 @@ public class LayoutDataConverter {
 					inputRowJSONObject.getJSONObject("config");
 
 				JSONObject rowConfigJSONObject = JSONUtil.put(
-					"gutters", inputRowConfigJSONObject.get("columnSpacing")
+					"gutters",
+					inputRowConfigJSONObject.getBoolean("columnSpacing")
 				).put(
 					"verticalAlign", "top"
 				);
@@ -149,18 +146,17 @@ public class LayoutDataConverter {
 
 				JSONObject containerConfigJSONObject = JSONUtil.put(
 					"backgroundColorCssClass",
-					inputRowConfigJSONObject.get("backgroundColorCssClass")
+					inputRowConfigJSONObject.getString(
+						"backgroundColorCssClass", null)
 				).put(
 					"backgroundImage",
-					inputRowConfigJSONObject.get("backgroundImage")
+					inputRowConfigJSONObject.getJSONObject("backgroundImage")
 				).put(
 					"paddingHorizontal",
-					Integer.valueOf(
-						inputRowConfigJSONObject.getString("paddingHorizontal"))
+					inputRowConfigJSONObject.getInt("paddingHorizontal")
 				).put(
 					"paddingVertical",
-					Integer.valueOf(
-						inputRowConfigJSONObject.getString("paddingVertical"))
+					inputRowConfigJSONObject.getInt("paddingVertical")
 				).put(
 					"type",
 					inputRowConfigJSONObject.getString("containerType", null)
@@ -210,7 +206,7 @@ public class LayoutDataConverter {
 		).put(
 			"rootItems", JSONUtil.put("main", mainUUID.toString())
 		).put(
-			"version", latestVersion
+			"version", _LATEST_VERSION
 		);
 
 		return outputDataJSONObject.toJSONString();

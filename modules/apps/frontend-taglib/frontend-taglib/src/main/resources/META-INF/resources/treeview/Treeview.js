@@ -449,43 +449,49 @@ function reducer(state, action) {
 		case 'TOGGLE_SELECT': {
 			const id = action.nodeId;
 
-			const {multiSelection} = state;
+			if (!nodeMap[id].disabled) {
+				const {multiSelection} = state;
 
-			let {selectedNodeIds} = state;
+				let {selectedNodeIds} = state;
 
-			if (selectedNodeIds.has(id)) {
-				selectedNodeIds = new Set(
-					[...selectedNodeIds].filter(selectedId => selectedId !== id)
-				);
-			} else if (multiSelection) {
-				selectedNodeIds = new Set([...selectedNodeIds, id]);
-			} else {
-				selectedNodeIds = new Set([id]);
+				if (selectedNodeIds.has(id)) {
+					selectedNodeIds = new Set(
+						[...selectedNodeIds].filter(
+							selectedId => selectedId !== id
+						)
+					);
+				} else if (multiSelection) {
+					selectedNodeIds = new Set([...selectedNodeIds, id]);
+				} else {
+					selectedNodeIds = new Set([id]);
+				}
+
+				return {
+					...state,
+					focusedNodeId: id,
+					nodes: state.nodes.map(node =>
+						visit(
+							node,
+							node => {
+								if (
+									node.selected !==
+									selectedNodeIds.has(node.id)
+								) {
+									return {
+										...node,
+										selected: !node.selected
+									};
+								} else {
+									return node;
+								}
+							},
+							nodeMap
+						)
+					),
+					selectedNodeIds
+				};
 			}
-
-			return {
-				...state,
-				focusedNodeId: id,
-				nodes: state.nodes.map(node =>
-					visit(
-						node,
-						node => {
-							if (
-								node.selected !== selectedNodeIds.has(node.id)
-							) {
-								return {
-									...node,
-									selected: !node.selected
-								};
-							} else {
-								return node;
-							}
-						},
-						nodeMap
-					)
-				),
-				selectedNodeIds
-			};
+			break;
 		}
 
 		case 'EXIT':

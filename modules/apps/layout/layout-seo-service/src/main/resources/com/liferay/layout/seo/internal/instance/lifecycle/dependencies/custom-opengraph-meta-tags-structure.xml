@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>custom-opengraph-meta-tags</name>
+		<description>custom-opengraph-meta-tags</description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"[$LOCALE_DEFAULT$]"
+					],
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldNamespace": "ddm",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "key"
+							},
+							"localizable": true,
+							"name": "key",
+							"nestedFields": [
+								{
+									"dataType": "string",
+									"fieldNamespace": "ddm",
+									"indexType": "keyword",
+									"label": {
+										"[$LOCALE_DEFAULT$]": "value"
+									},
+									"localizable": true,
+									"name": "value",
+									"predefinedValue": {
+										"[$LOCALE_DEFAULT$]": ""
+									},
+									"readOnly": false,
+									"repeatable": false,
+									"required": false,
+									"showLabel": true,
+									"tip": {
+										"[$LOCALE_DEFAULT$]": ""
+									},
+									"type": "text"
+								}
+							],
+							"predefinedValue": {
+								"[$LOCALE_DEFAULT$]": ""
+							},
+							"readOnly": false,
+							"repeatable": true,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"[$LOCALE_DEFAULT$]": ""
+							},
+							"type": "text"
+						}
+					],
+					"successPage": {
+						"body": {},
+						"enabled": false,
+						"title": {}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": ["key", "value"],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Custom OpenGraph Meta Tags"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.lang.reflect.Method;
@@ -34,7 +35,6 @@ import java.net.UnknownHostException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 /**
@@ -77,7 +77,9 @@ public class JarUtil {
 			}
 		}
 
-		Path path = Paths.get(libPath, name);
+		File file = new File(libPath, name);
+
+		Path path = file.toPath();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(StringBundler.concat("Downloading ", url, " to ", path));

@@ -4,4 +4,8 @@ task runGradleTest
 
 runGradleTest {
 	dependsOn build
+
+	doLast {
+		assert !build.state.didWork
+	}
 }

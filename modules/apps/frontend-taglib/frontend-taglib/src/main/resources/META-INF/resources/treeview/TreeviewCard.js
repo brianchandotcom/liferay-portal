@@ -20,10 +20,18 @@ import React, {useContext} from 'react';
 
 import TreeviewContext from './TreeviewContext';
 
-// Cannot import classnames directly due to a loader bug; see:
-// https://github.com/izaera/liferay-portal/pull/117
-function classNames({focused, selected}) {
-	return [focused && 'focused', selected && 'selected']
+/**
+ * Local version of `classnames()` required due to loader bug which prevents us
+ * from importing the shared version.
+ *
+ * See: https://github.com/liferay/liferay-amd-loader/issues/225
+ */
+function classNames({disabled, focused, selected}) {
+	return [
+		disabled && 'disabled',
+		focused && 'focused',
+		selected && 'selected'
+	]
 		.filter(Boolean)
 		.join(' ');
 }
@@ -43,6 +51,7 @@ export default function TreeviewCard({node}) {
 		<div className="p-2">
 			<ClayCard
 				className={classNames({
+					disabled: node.disabled,
 					focused: node.id === focusedNodeId,
 					selected: node.selected
 				})}

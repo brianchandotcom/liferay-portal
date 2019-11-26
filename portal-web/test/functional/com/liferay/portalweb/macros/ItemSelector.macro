@@ -44,6 +44,21 @@ definition {
 		Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
 	}
 
+	macro gotoPreviewViaSelectFile {
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		AssertClick(
+			key_navTab = "${navTab}",
+			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+			value1 = "${navTab}");
+
+		Click(locator1 = "Icon#EYE_PREVIEW");
+	}
+
 	macro searchBlogImages {
 		var key_imageFileName = "${imageFileName}";
 

@@ -35,18 +35,7 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsNavigator.gotoSelectFile();
-
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		AssertClick(
-			key_navTab = "Documents and Media",
-			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Documents and Media");
-
-		Click(locator1 = "Icon#EYE_PREVIEW");
+		ItemSelector.gotoPreviewViaSelectFile(navTab = "Documents and Media");
 
 		ItemSelector.viewPreview(
 			footer = "1 of 3",

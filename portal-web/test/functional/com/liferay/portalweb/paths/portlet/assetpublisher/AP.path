@@ -73,6 +73,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ABSTRACT_TITLE_EXACT_MATCH</td>
+	<td>//section[@class='portlet']//h4/*[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ABSTRACT_GENERIC_TITLE_1</td>
 	<td>//h4/*[contains(@class,'asset-title')]</td>
 	<td></td>
@@ -95,6 +100,11 @@
 <tr>
 	<td>ASSET_ABSTRACT_DESCRIPTION</td>
 	<td>//section[@class='portlet']//h4/*[contains(@class,'asset-title')][contains(.,'${key_assetTitle}')]/../../../div[contains(@class,'asset-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ABSTRACT_DESCRIPTION_EXACT_MATCH</td>
+	<td>//section[@class='portlet']//h4/*[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']/../../../div[contains(@class,'asset-content')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -28,11 +28,9 @@ public class ConstraintResolverHelperImpl<T extends CTModel<T>>
 	implements ConstraintResolverHelper<T> {
 
 	public ConstraintResolverHelperImpl(
-		CTService<T> ctService, long sourceCTCollectionId,
-		long targetCTCollectionId) {
+		CTService<T> ctService, long targetCTCollectionId) {
 
 		_ctService = ctService;
-		_sourceCollectionId = sourceCTCollectionId;
 		_targetCTCollectionId = targetCTCollectionId;
 	}
 
@@ -51,14 +49,9 @@ public class ConstraintResolverHelperImpl<T extends CTModel<T>>
 
 	@Override
 	public T getSourceCTModel() {
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					_sourceCollectionId)) {
-
-			return _ctService.updateWithUnsafeFunction(
-				ctPersistence -> ctPersistence.fetchByPrimaryKey(
-					_sourcePrimaryKey));
-		}
+		return _ctService.updateWithUnsafeFunction(
+			ctPersistence -> ctPersistence.fetchByPrimaryKey(
+				_sourcePrimaryKey));
 	}
 
 	@Override
@@ -79,7 +72,6 @@ public class ConstraintResolverHelperImpl<T extends CTModel<T>>
 	}
 
 	private final CTService<T> _ctService;
-	private final long _sourceCollectionId;
 	private long _sourcePrimaryKey;
 	private final long _targetCTCollectionId;
 	private long _targetPrimaryKey;

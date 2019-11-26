@@ -144,7 +144,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		ConstraintResolverHelperImpl<T> constraintResolverHelperImpl =
 			new ConstraintResolverHelperImpl<>(
-				_ctService, _sourceCollectionId, _targetCTCollectionId);
+				_ctService, _targetCTCollectionId);
 
 		Set<Map.Entry<Long, Long>> attemptedPrimaryKeys = new HashSet<>();
 		Set<Map.Entry<Long, Long>> resolvedPrimaryKeys = new HashSet<>(

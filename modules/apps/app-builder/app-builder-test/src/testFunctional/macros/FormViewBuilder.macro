@@ -37,6 +37,16 @@ definition {
 		FormViewBuilder.save();
 	}
 
+	macro setFieldLabel {
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
+	macro setFieldRequired {
+		Click(locator1 = "FormViewBuilder#SIDEBAR_FIELD_REQUIRED");
+	}
+
 	macro addFormViewAndValidateFieldLabel {
 
 		FormViewBuilder.addFormView(

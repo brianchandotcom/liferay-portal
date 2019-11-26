@@ -345,11 +345,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	}
 
 	private BreadcrumbEntry _getSiteBreadcrumb() throws PortletException {
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter("groupType", "site");
-		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
-
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -357,6 +352,11 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(resourceBundle, "workspaces"));
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("groupType", "site");
+		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
 
 		breadcrumbEntry.setURL(portletURL.toString());
 

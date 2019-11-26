@@ -87,10 +87,10 @@ public class AccountRoleLocalServiceImpl
 
 		accountRole = super.deleteAccountRole(accountRole);
 
+		roleLocalService.deleteRole(accountRole.getRoleId());
+
 		userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
 			accountRole.getRoleId());
-
-		roleLocalService.deleteRole(accountRole.getRoleId());
 
 		return accountRole;
 	}
@@ -101,10 +101,10 @@ public class AccountRoleLocalServiceImpl
 
 		AccountRole accountRole = super.deleteAccountRole(accountRoleId);
 
+		roleLocalService.deleteRole(accountRole.getRoleId());
+
 		userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
 			accountRole.getRoleId());
-
-		roleLocalService.deleteRole(accountRole.getRoleId());
 
 		return accountRole;
 	}
@@ -120,10 +120,10 @@ public class AccountRoleLocalServiceImpl
 		for (AccountRole accountRole :
 				accountRolePersistence.findByCompanyId(companyId)) {
 
+			accountRolePersistence.remove(accountRole);
+
 			userGroupRoleLocalService.deleteUserGroupRolesByRoleId(
 				accountRole.getRoleId());
-
-			accountRolePersistence.remove(accountRole);
 		}
 	}
 

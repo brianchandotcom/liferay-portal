@@ -20,8 +20,12 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -474,7 +478,17 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		String definition = StringUtil.read(definitionURL.openStream());
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
+		DDMFormDeserializerDeserializeRequest.Builder
+			ddmFormDeserializerDeserializeRequestBuilder =
+				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+					definition);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_jsonDDMFormDeserializer.deserialize(
+					ddmFormDeserializerDeserializeRequestBuilder.build());
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		ddmForm = _ddm.updateDDMFormDefaultLocale(ddmForm, siteDefaultLocale);
 
@@ -483,8 +497,18 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 		String layout = StringUtil.read(layoutURL.openStream());
 
+		DDMFormLayoutDeserializerDeserializeRequest.Builder
+			ddmFormLayoutDeserializerDeserializeRequestBuilder =
+				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
+					layout);
+
+		DDMFormLayoutDeserializerDeserializeResponse
+			ddmFormLayoutDeserializerDeserializeResponse =
+				_jsonDDMFormLayoutDeserializer.deserialize(
+					ddmFormLayoutDeserializerDeserializeRequestBuilder.build());
+
 		DDMFormLayout ddmFormLayout =
-			_ddmFormLayoutJSONDeserializer.deserialize(layout);
+			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
 
 		return _ddmStructureLocalService.addStructure(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
@@ -942,12 +966,6 @@ public class PorygonSiteInitializer implements SiteInitializer {
 	private DDM _ddm;
 
 	@Reference
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-
-	@Reference
-	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
-
-	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -970,6 +988,12 @@ public class PorygonSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(target = "(ddm.form.deserializer.type=json)")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
+	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

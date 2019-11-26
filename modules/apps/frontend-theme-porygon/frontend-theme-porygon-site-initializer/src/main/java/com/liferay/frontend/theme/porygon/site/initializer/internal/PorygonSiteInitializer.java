@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -476,12 +475,10 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		URL definitionURL = _bundle.getEntry(
 			_PATH + "/journal/structures/porygon_entry/definition.json");
 
-		String definition = StringUtil.read(definitionURL.openStream());
-
 		DDMFormDeserializerDeserializeRequest.Builder
 			ddmFormDeserializerDeserializeRequestBuilder =
 				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-					definition);
+					StringUtil.read(definitionURL.openStream()));
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
@@ -495,26 +492,22 @@ public class PorygonSiteInitializer implements SiteInitializer {
 		URL layoutURL = _bundle.getEntry(
 			_PATH + "/journal/structures/porygon_entry/layout.json");
 
-		String layout = StringUtil.read(layoutURL.openStream());
-
 		DDMFormLayoutDeserializerDeserializeRequest.Builder
 			ddmFormLayoutDeserializerDeserializeRequestBuilder =
 				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
-					layout);
+					StringUtil.read(layoutURL.openStream()));
 
 		DDMFormLayoutDeserializerDeserializeResponse
 			ddmFormLayoutDeserializerDeserializeResponse =
 				_jsonDDMFormLayoutDeserializer.deserialize(
 					ddmFormLayoutDeserializerDeserializeRequestBuilder.build());
 
-		DDMFormLayout ddmFormLayout =
-			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
-
 		return _ddmStructureLocalService.addStructure(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			_portal.getClassNameId(JournalArticle.class), "PORYGON_ENTRY",
-			nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			nameMap, descriptionMap, ddmForm,
+			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout(),
 			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT,
 			serviceContext);
 	}

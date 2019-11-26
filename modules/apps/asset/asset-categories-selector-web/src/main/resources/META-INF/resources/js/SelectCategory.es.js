@@ -19,21 +19,46 @@ import ClayIcon from '@clayui/icon';
 import Treeview from 'frontend-taglib/treeview/Treeview';
 import React, {useState, useCallback, useRef} from 'react';
 
-function SelectCategory({itemSelectorSaveEvent, multiSelection, namespace, nodes}) {
+function visit(nodes, callback) {
+	nodes.forEach(node => {
+		callback(node);
+
+		if (node.children) {
+			visit(node.children, callback);
+		}
+	});
+}
+
+function SelectCategory({
+	itemSelectorSaveEvent,
+	multiSelection,
+	namespace,
+	nodes
+}) {
 	const [filterQuery, setFilterQuery] = useState('');
 
 	const selectedNodesRef = useRef(null);
 
-	const handleQueryChange = useCallback(
-		event => {
-			const value = event.target.value;
+	const handleQueryChange = useCallback(event => {
+		const value = event.target.value;
 
-			setFilterQuery(value);
-		}, []
-	);
+		setFilterQuery(value);
+	}, []);
 
 	const handleSelectionChange = selectedNodes => {
 		const data = {};
+
+		// Mark newly selected nodes as selected.
+		visit(nodes, node => {
+			if (selectedNodes.has(node.id)) {
+				data[node.id] = {
+					categoryId: node.vocabulary ? 0 : node.id,
+					nodePath: node.nodePath,
+					value: node.name,
+					vocabularyId: node.vocabulary ? node.id : 0
+				};
+			}
+		});
 
 		// Mark unselected nodes as unchecked.
 		if (selectedNodesRef.current) {
@@ -41,34 +66,24 @@ function SelectCategory({itemSelectorSaveEvent, multiSelection, namespace, nodes
 				if (!selectedNodes.has(id)) {
 					data[id] = {
 						...node,
-						unchecked: true,
+						unchecked: true
 					};
 				}
 			});
 		}
 
-		const visit = node => {
-			// Mark newly selected nodes as selected.
-			if (selectedNodes.has(node.id)) {
-				data[node.id] = {
-					categoryId: node.vocabulary ? 0 : node.id,
-					nodePath: node.nodePath,
-					value: node.name,
-					vocabularyId: node.vocabulary ? node.id : 0,
-				};
-
-				if (node.children) {
-					node.children.forEach(visit);
-				}
-			}
-		};
-
-		nodes.forEach(visit);
-
 		selectedNodesRef.current = data;
 
 		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {data});
 	};
+
+	const initialSelectedNodeIds = [];
+
+	visit(nodes, node => {
+		if (node.selected) {
+			initialSelectedNodeIds.push(node.id);
+		}
+	});
 
 	return (
 		<div className="select-category">
@@ -100,6 +115,7 @@ function SelectCategory({itemSelectorSaveEvent, multiSelection, namespace, nodes
 						<Treeview
 							NodeComponent={Treeview.Card}
 							filterQuery={filterQuery}
+							initialSelectedNodeIds={initialSelectedNodeIds}
 							multiSelection={multiSelection}
 							nodes={nodes}
 							onSelectedNodesChange={handleSelectionChange}

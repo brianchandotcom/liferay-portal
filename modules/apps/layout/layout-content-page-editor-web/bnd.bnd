@@ -9,7 +9,5 @@ Require-Capability:\
 	liferay.resource.bundle;\
 		filter:="(bundle.symbolic.name=com.liferay.frontend.editor.lang)",\
 	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))",\
-	soy;\
-		filter:="(type=layout-taglib)"
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /layout-content-page-editor-web

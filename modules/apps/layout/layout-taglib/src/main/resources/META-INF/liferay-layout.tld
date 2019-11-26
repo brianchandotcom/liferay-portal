@@ -206,7 +206,7 @@
 	<tag>
 		<description></description>
 		<name>select-layout</name>
-		<tag-class>com.liferay.layout.taglib.servlet.taglib.soy.SelectLayoutTag</tag-class>
+		<tag-class>com.liferay.layout.taglib.servlet.taglib.react.SelectLayoutTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>

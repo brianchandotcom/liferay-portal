@@ -155,7 +155,10 @@ const ExperienceModal = ({
 
 						{requiredNameError && (
 							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation" />
+								<ClayForm.FeedbackIndicator
+									className="mr-1"
+									symbol="exclamation-full"
+								/>
 								{Liferay.Language.get(
 									'an-experience-name-is-required'
 								)}

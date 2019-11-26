@@ -1776,7 +1776,7 @@
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="PortletPreferences" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="PortletPreferences" remote-service="true">
 
 		<!-- PK fields -->
 

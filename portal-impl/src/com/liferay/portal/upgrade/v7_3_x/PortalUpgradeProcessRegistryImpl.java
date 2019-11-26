@@ -46,7 +46,8 @@ public class PortalUpgradeProcessRegistryImpl
 			new UpgradeCTModel(
 				"AssetCategory", "AssetCategoryProperty", "AssetEntry",
 				"AssetLink", "AssetTag", "AssetVocabulary", "Layout",
-				"LayoutFriendlyURL", "ResourcePermission"));
+				"LayoutFriendlyURL", "PortletPreferences",
+				"ResourcePermission"));
 	}
 
 }

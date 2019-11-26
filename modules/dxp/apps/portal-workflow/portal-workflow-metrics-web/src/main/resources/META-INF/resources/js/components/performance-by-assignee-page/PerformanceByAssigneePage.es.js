@@ -18,8 +18,8 @@ import {
 import {
 	getFilterResults,
 	getSelectedItems,
-	getFilterValues,
-	getFiltersParam
+	getFiltersParam,
+	getFilterValues
 } from '../../shared/components/filter/util/filterUtil.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import Request from '../../shared/components/request/Request.es';
@@ -29,19 +29,20 @@ import {useFiltersReducer} from '../../shared/hooks/useFiltersReducer.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
 import {useResource} from '../../shared/hooks/useResource.es';
 import {
-	TimeRangeProvider,
-	TimeRangeContext
+	TimeRangeContext,
+	TimeRangeProvider
 } from '../process-metrics/filter/store/TimeRangeStore.es';
 import {Body} from './PerformanceByAssigneePageBody.es';
 import {Header} from './PerformanceByAssigneePageHeader.es';
 
 const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
-	const {processId} = routeParams;
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
+	const {processId} = routeParams;
 
 	useProcessTitle(processId, Liferay.Language.get('performance-by-assignee'));
 
 	const {search = ''} = parse(query);
+
 	const keywords = search.length ? search : null;
 
 	const [filterValues, dispatch] = useFiltersReducer(filterKeys);
@@ -53,9 +54,8 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 	);
 
 	const selectedFilters = getSelectedItems(filterResults);
-	const filtered = search.length > 0 || selectedFilters.length > 0;
 
-	const isValidDate = date => date && !isNaN(date);
+	const filtered = search.length > 0 || selectedFilters.length > 0;
 
 	const timeRange = getSelectedTimeRange(
 		timeRangeKeys,
@@ -63,6 +63,7 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 		filtersParam.dateStart
 	);
 
+	const isValidDate = date => date && !isNaN(date);
 	const timeRangeParams = {};
 
 	if (
@@ -71,6 +72,7 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 		isValidDate(timeRange.dateStart)
 	) {
 		const {dateEnd, dateStart} = timeRange;
+
 		timeRangeParams.dateEnd = dateEnd.toISOString();
 		timeRangeParams.dateStart = dateStart.toISOString();
 	}
@@ -119,7 +121,7 @@ const PerformanceByAssigneePage = props => {
 };
 
 PerformanceByAssigneePage.Body = Body;
-PerformanceByAssigneePage.Header = Header;
 PerformanceByAssigneePage.Container = Container;
+PerformanceByAssigneePage.Header = Header;
 
 export default PerformanceByAssigneePage;

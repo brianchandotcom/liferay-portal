@@ -29,6 +29,12 @@
 </tr>
 
 <tr>
+	<td>SIDEBAR_AUTOCOMPLETE_TAB</td>
+	<td>//span[contains(text(),'Autocomplete')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FORM_VIEW_NAME</td>
 	<td>//input[contains(@placeholder,'Untitled')]</td>
 	<td></td>
@@ -87,6 +93,13 @@
 	<td>//input[contains(@name,'repeatable')]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>SIDEBAR_AUTOCOMPLETE_AUTOCOMPLETE</td>
+	<td>//input[contains(@name,'autocomplete')]</td>
+	<td></td>
+</tr>
+
 
 
 </tbody>

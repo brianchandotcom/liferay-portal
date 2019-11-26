@@ -12,6 +12,32 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addKeywordsFilter {
+		Panel.expandPanel(panel = "Filter");
+
+		Select(
+			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
+			value1 = "Keywords");
+
+		Select(
+			locator1 = "APConfiguration#FILTER_QUERY_CONTAINS",
+			value1 = "${queryContains}");
+
+		Select(
+			locator1 = "APConfiguration#FILTER_QUERY_AND_OPERATOR",
+			value1 = "${queryAndOperator}");
+
+		Type(
+			locator1 = "AssetLists#ASSET_LIST_KEYWORDS_FIELD",
+			value1 = "${keyWords}");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			locator1 = "AssetLists#ASSET_LIST_KEYWORDS_FIELD",
+			value1 = "${keyWords}");
+	}
+
 	macro addManualSelection {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Manual Selection");
 
@@ -28,6 +54,12 @@ definition {
 		LexiconList.delete(listEntry = "${assetListTitle}");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro editAssetList {
+		AssetListsAdmin.gotoEntryMenuItem(
+			assetListTitle = "${assetListTitle}",
+			item = "Edit");
 	}
 
 	macro gotoEntryMenuItem {

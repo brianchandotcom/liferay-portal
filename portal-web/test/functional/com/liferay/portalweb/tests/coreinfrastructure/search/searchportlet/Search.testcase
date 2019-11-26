@@ -1060,6 +1060,7 @@ definition {
 	@description = "This test will assert that configurations set within the Embedded search bar will be used when searching via the Widget search bar"
 	@priority = "4"
 	test SearchDifferentScopesViaSearchWidget {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(

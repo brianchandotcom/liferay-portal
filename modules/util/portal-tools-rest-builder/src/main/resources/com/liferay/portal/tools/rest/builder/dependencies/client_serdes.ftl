@@ -1,5 +1,7 @@
 package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 
+import static ${configYAML.apiPackagePath}.client.json.BaseJSONParser.JSON_ESCAPE_STRINGS;
+
 <#list globalEnumSchemas?keys as globalEnumSchemaName>
 	import ${configYAML.apiPackagePath}.client.constant.${escapedVersion}.${globalEnumSchemaName};
 </#list>
@@ -285,9 +287,11 @@ public class ${schemaName}SerDes {
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
-		string = string.replace("\\", "\\\\");
+		for (String[] strings : JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[0], strings[1]);
+		}
 
-		return string.replace("\"", "\\\"");
+		return string;
 	}
 
 	private static String _toJSON(Map<String, ?> map) {

@@ -409,7 +409,7 @@ public interface DLFolderLocalService
 		int start, int end, OrderByComparator<DLFolder> obc);
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFolders(long, long, boolean, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -447,7 +447,7 @@ public interface DLFolderLocalService
 		int status);
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFoldersCount(long, long, boolean, int)}
 	 */
 	@Deprecated

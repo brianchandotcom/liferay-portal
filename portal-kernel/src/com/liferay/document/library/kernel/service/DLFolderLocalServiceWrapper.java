@@ -632,7 +632,7 @@ public class DLFolderLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFolders(long, long, boolean, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -705,7 +705,7 @@ public class DLFolderLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFoldersCount(long, long, boolean, int)}
 	 */
 	@Deprecated

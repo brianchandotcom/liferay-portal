@@ -143,7 +143,7 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFileEntriesAndFileShortcutsCount(long, long, String[], int)}
 	 */
 	@Deprecated
@@ -260,7 +260,7 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFolders(long, long, boolean, int, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -331,7 +331,7 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, int)}
 	 */
 	@Deprecated
@@ -456,7 +456,7 @@ public class DLFolderServiceSoap {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #getFoldersCount(long, long, boolean, int)}
 	 */
 	@Deprecated

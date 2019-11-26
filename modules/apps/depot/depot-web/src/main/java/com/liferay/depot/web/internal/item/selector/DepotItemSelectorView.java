@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.item.selector.display.context.SitesItemSelectorViewDisplayContext;
 import com.liferay.site.item.selector.renderer.SiteItemSelectorViewRenderer;
 
@@ -60,11 +59,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = ItemSelectorView.class
 )
 public class DepotItemSelectorView
-	implements ItemSelectorView<SiteItemSelectorCriterion> {
+	implements ItemSelectorView<GroupItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return SiteItemSelectorCriterion.class;
+	public Class<GroupItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return GroupItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -86,7 +85,7 @@ public class DepotItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			SiteItemSelectorCriterion siteItemSelectorCriterion,
+			GroupItemSelectorCriterion groupItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -94,7 +93,7 @@ public class DepotItemSelectorView
 			depotSiteItemSelectorViewDisplayContext =
 				new DepotSiteItemSelectorViewDisplayContext(
 					(HttpServletRequest)servletRequest, itemSelectedEventName,
-					portletURL, siteItemSelectorCriterion);
+					portletURL, groupItemSelectorCriterion);
 
 		_siteItemSelectorViewRenderer.renderHTML(
 			depotSiteItemSelectorViewDisplayContext);

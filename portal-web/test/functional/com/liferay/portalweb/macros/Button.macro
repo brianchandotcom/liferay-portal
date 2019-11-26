@@ -101,6 +101,10 @@ definition {
 	}
 
 	macro clickUpdate {
+		ScrollWebElementIntoView(
+			key_text = "Update",
+			locator1 = "Button#ANY");
+
 		Button.click(button = "Update");
 	}
 

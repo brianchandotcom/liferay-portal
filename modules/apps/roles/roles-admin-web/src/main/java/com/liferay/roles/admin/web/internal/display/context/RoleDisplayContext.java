@@ -310,7 +310,7 @@ public class RoleDisplayContext {
 	}
 
 	private static final String[] _ASSIGNEE_TYPE_NAMES = {
-		"users", "sites", "organizations", "user-groups"
+		"users", "sites", "organizations", "user-groups", "segments"
 	};
 
 	private final RoleTypeContributor _currentRoleTypeContributor;

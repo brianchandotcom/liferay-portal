@@ -14,6 +14,8 @@
 
 package com.liferay.headless.form.client.serdes.v1_0;
 
+import static com.liferay.headless.form.client.json.BaseJSONParser.JSON_ESCAPE_STRINGS;
+
 import com.liferay.headless.form.client.dto.v1_0.FormDocument;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
@@ -335,9 +337,11 @@ public class FormDocumentSerDes {
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
-		string = string.replace("\\", "\\\\");
+		for (String[] strings : JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[0], strings[1]);
+		}
 
-		return string.replace("\"", "\\\"");
+		return string;
 	}
 
 	private static String _toJSON(Map<String, ?> map) {

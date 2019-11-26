@@ -35,6 +35,11 @@ import javax.annotation.Generated;
 @Generated("")
 public abstract class BaseJSONParser<T> {
 
+	public static final String[][] JSON_ESCAPE_STRINGS = new String[][] {
+		{"\\", "\\\\"}, {"\"", "\\\""}, {"\b", "\\b"}, {"\f", "\\f"},
+		{"\n", "\\n"}, {"\r", "\\r"}, {"\t", "\\t"}
+	};
+
 	public T parseToDTO(String json) {
 		if (json == null) {
 			throw new IllegalArgumentException("JSON is null");
@@ -581,9 +586,11 @@ public abstract class BaseJSONParser<T> {
 	}
 
 	private String _unescape(String string) {
-		string = string.replace("\\\\", "\\");
+		for (String[] strings : JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[1], strings[0]);
+		}
 
-		return string.replace("\\\"", "\"");
+		return string;
 	}
 
 	private Stack<Integer> _captureStartStack;

@@ -14,6 +14,8 @@
 
 package com.liferay.headless.admin.taxonomy.client.serdes.v1_0;
 
+import static com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser.JSON_ESCAPE_STRINGS;
+
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 
@@ -176,9 +178,11 @@ public class AssetTypeSerDes {
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
-		string = string.replace("\\", "\\\\");
+		for (String[] strings : JSON_ESCAPE_STRINGS) {
+			string = string.replace(strings[0], strings[1]);
+		}
 
-		return string.replace("\"", "\\\"");
+		return string;
 	}
 
 	private static String _toJSON(Map<String, ?> map) {

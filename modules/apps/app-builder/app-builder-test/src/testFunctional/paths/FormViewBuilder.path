@@ -100,6 +100,20 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>CLOSE_SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar-header')]//*[contains(@class,'lexicon-icon-angle-left')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>OPEN_SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar-header')]//*[contains(@class,'lexicon-icon-angle-right')]</td>
+	<td></td>
+</tr>
+
+
+
 
 
 </tbody>

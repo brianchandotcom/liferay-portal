@@ -49,10 +49,6 @@ public class FragmentPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (group.isCompany()) {
-			return false;
-		}
-
 		if (_stagingGroupHelper.isLocalLiveGroup(group) ||
 			_stagingGroupHelper.isRemoteLiveGroup(group)) {
 

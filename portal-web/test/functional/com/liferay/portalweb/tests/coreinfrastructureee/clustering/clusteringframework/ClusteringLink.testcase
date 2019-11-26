@@ -6,103 +6,19 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Clustering";
 
-	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Page.tearDownCP();
-
-			BlogsEntry.tearDownCP();
-		}
-	}
-
 	@priority = "5"
-	test ClusteringLinkPortalProperties {
-		property custom.properties = "cluster.link.enabled=false";
-		property test.name.skip.portal.instance = "ClusteringLink#ClusteringLinkPortalProperties";
-
-		AssertConsoleTextNotPresent(value1 = "channelName: liferay-channel-control");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=&quot;cluster.link.enabled=false&quot; -Dupdate.properties=&quot;cluster.link.enabled=true&quot;");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Portlet.assertServerStartup();
-
-		AssertConsoleTextPresent(value1 = "channelName: liferay-channel-control");
-		AssertConsoleTextPresent(value1 = "channelName: liferay-channel-transport-0");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=&quot;cluster.link.channel.name.control=test-control-channel&quot;");
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=&quot;cluster.link.channel.name.transport.0=test-transport-channel&quot;");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Portlet.assertServerStartup();
-
-		AssertConsoleTextPresent(value1 = "channelName: test-control-channel");
-		AssertConsoleTextPresent(value1 = "channelName: test-transport-channel");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=&quot;cluster.link.channel.properties.control=tcp.xml&quot;");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Portlet.assertServerStartup();
-
-		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
-		AssertConsoleTextPresent(value1 = "properties: TCP");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=&quot;cluster.link.channel.properties.control=tcp.xml&quot; -Dupdate.properties=&quot;cluster.link.channel.properties.transport.0=tcp.xml&quot;");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Portlet.assertServerStartup();
-
-		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
-		AssertConsoleTextPresent(value1 = "properties: TCP");
-		AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface for www.google.com:80");
-
-		var ipAddress = Clustering.getClusterNodeOutgoingIPAddress(nodePort = "8080");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties.original=&quot;cluster.link.channel.properties.transport.0=tcp.xml&quot; -Dupdate.properties=&quot;cluster.link.autodetect.address=&quot;");
-
-		Portlet.startServer(deleteLiferayHome = "true");
-
-		Portlet.assertServerStartup();
+	test AutodetectClusteringAddress {
+		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.autodetect.address=";
 
 		AssertConsoleTextPresent(value1 = "bind_addr=127.0.0.1");
 		AssertConsoleTextNotPresent(value1 = "Autodetecting JGroups outgoing IP address and interface for www.google.com:80");
+	}
+
+	@priority = "5"
+	test CustomClusteringAddress {
+		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.autodetect.address=";
+
+		var ipAddress = PropsUtil.get("ip.address");
 
 		Portlet.shutdownServer();
 
@@ -115,6 +31,32 @@ definition {
 		Portlet.assertServerStartup();
 
 		AssertConsoleTextPresent(value1 = "bind_addr=${ipAddress}");
+	}
+
+	@priority = "5"
+	test CustomControlChannelPropertiesFile {
+		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.channel.properties.control=tcp.xml";
+
+		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
+		AssertConsoleTextPresent(value1 = "properties: TCP");
+	}
+
+	@priority = "5"
+	test CustomizeChannelNames {
+		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.channel.name.control=test-control-channel${line.separator}cluster.link.channel.name.transport.0=test-transport-channel";
+		property test.name.skip.portal.instance = "ClusteringLink#ClusteringLinkPortalProperties";
+
+		AssertConsoleTextPresent(value1 = "channelName: test-control-channel");
+		AssertConsoleTextPresent(value1 = "channelName: test-transport-channel");
+	}
+
+	@priority = "5"
+	test CustomTransportChannelPropertiesFile {
+		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.channel.properties.transport.0=tcp.xml";
+
+		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
+		AssertConsoleTextPresent(value1 = "properties: TCP");
+		AssertConsoleTextPresent(value1 = "Autodetecting JGroups outgoing IP address and interface for www.google.com:80");
 	}
 
 }

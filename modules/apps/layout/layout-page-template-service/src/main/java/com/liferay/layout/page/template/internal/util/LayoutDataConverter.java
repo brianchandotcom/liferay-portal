@@ -47,9 +47,7 @@ public class LayoutDataConverter {
 
 		int version = inputDataJSONObject.getInt("version");
 
-		int latestVersion = 1;
-
-		if (version == latestVersion) {
+		if (version == _LATEST_VERSION) {
 			return data;
 		}
 
@@ -235,5 +233,7 @@ public class LayoutDataConverter {
 			"type", type
 		);
 	}
+
+	private static final int _LATEST_VERSION = 1;
 
 }

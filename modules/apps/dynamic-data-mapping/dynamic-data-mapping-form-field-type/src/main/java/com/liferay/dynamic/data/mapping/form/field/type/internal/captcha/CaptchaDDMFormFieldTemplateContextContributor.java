@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
+import com.liferay.portal.template.soy.util.SoyRawData;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -68,7 +69,9 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 					_log.error(e, e);
 				}
 
-				return _soyHTMLSanitizer.sanitize(html);
+				SoyRawData soyRawData = _soyDataFactory.createSoyRawData(html);
+
+				return soyRawData.getValue();
 			}
 		).build();
 	}
@@ -105,6 +108,6 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 		CaptchaDDMFormFieldTemplateContextContributor.class);
 
 	@Reference
-	private SoyHTMLSanitizer _soyHTMLSanitizer;
+	private SoyDataFactory _soyDataFactory;
 
 }

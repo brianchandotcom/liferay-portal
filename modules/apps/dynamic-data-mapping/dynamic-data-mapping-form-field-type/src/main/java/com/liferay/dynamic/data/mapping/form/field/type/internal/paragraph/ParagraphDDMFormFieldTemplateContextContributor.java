@@ -20,7 +20,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.data.SoyDataFactory;
+import com.liferay.portal.template.soy.util.SoyRawData;
 
 import java.util.Map;
 
@@ -47,8 +48,12 @@ public class ParagraphDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"text",
-			_soyHTMLSanitizer.sanitize(
-				getText(ddmFormField, ddmFormFieldRenderingContext))
+			() -> {
+				SoyRawData soyRawData = _soyDataFactory.createSoyRawData(
+					getText(ddmFormField, ddmFormFieldRenderingContext));
+
+				return soyRawData.getValue();
+			}
 		).build();
 	}
 
@@ -66,6 +71,6 @@ public class ParagraphDDMFormFieldTemplateContextContributor
 	}
 
 	@Reference
-	private SoyHTMLSanitizer _soyHTMLSanitizer;
+	private SoyDataFactory _soyDataFactory;
 
 }

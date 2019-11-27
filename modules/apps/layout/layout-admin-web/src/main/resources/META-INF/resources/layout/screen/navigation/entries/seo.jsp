@@ -131,7 +131,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						<%
 						Map<String, Object> data = HashMapBuilder.<String, Object>put(
 							"targets",
-							HashMapBuilder.put(
+							HashMapBuilder.<String, Object>put(
 								"description", HashMapBuilder.put(
 									"defaultValue", selLayout.getDescription(locale)
 								).put(
@@ -218,7 +218,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	</div>
 </aui:form>
 
-<aui:script>
+<aui:script require='<%= npmResolvedPackageName + "/js/seo/PreviewSeoEvents.es as PreviewSeoEvents" %>'>
 	var canonicalURLEnabledCheck = document.getElementById(
 		'<portlet:namespace />canonicalURLEnabled'
 	);
@@ -233,13 +233,21 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	);
 
 	canonicalURLEnabledCheck.addEventListener('click', function(event) {
+		var disabled = !event.target.checked;
+
 		canonicalURLAlert.classList.toggle('hide');
 
-		Liferay.Util.toggleDisabled(canonicalURLField, !event.target.checked);
+		Liferay.Util.toggleDisabled(canonicalURLField, disabled);
 
-		Liferay.Util.toggleDisabled(
-			canonicalURLFieldDefaultLocale,
-			!event.target.checked
-		);
+		Liferay.Util.toggleDisabled(canonicalURLFieldDefaultLocale, disabled);
+
+		if (disabled) {
+			canonicalURLField.value = '';
+		}
+
+		PreviewSeoEvents.PreviewSeoFireChange('<portlet:namespace />', {
+			type: 'url',
+			value: canonicalURLField.value
+		});
 	});
 </aui:script>

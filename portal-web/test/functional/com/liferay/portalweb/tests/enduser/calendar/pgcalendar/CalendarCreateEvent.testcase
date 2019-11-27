@@ -843,8 +843,6 @@ definition {
 			assetTitle = "Blogs Entry Title",
 			assetType = "Blogs Entry");
 
-		CalendarEvent.selectEventIframe();
-
 		Button.clickSaveAsDraft();
 
 		Alert.viewSuccessMessage();
@@ -876,8 +874,6 @@ definition {
 			assetContent = "Starts",
 			assetTitle = "Calendar Event Title",
 			relatedAssetTitle = "Blogs Entry Title");
-
-		AssetPublisherPortlet.gotoViewInContext();
 
 		CalendarEvent.viewDetailsInPortlet(
 			calendarName = "${siteName}",

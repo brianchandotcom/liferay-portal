@@ -23,9 +23,13 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -37,6 +41,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,6 +56,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Drew Brokke
@@ -195,10 +205,39 @@ public class AccountRoleLocalServiceTest {
 
 	@Test
 	public void testDeleteAccountRole() throws Exception {
-		_testDeleteAccountRole(_accountRoleLocalService::deleteAccountRole);
-		_testDeleteAccountRole(
-			accountRole -> _accountRoleLocalService.deleteAccountRole(
-				accountRole.getAccountRoleId()));
+		Bundle bundle = FrameworkUtil.getBundle(
+			AccountRoleLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration serviceRegistration = bundleContext.registerService(
+			ModelListener.class,
+			new BaseModelListener<UserGroupRole>() {
+
+				@Override
+				public void onBeforeRemove(UserGroupRole userGroupRole)
+					throws ModelListenerException {
+
+					try {
+						userGroupRole.getRole();
+					}
+					catch (PortalException pe) {
+						throw new ModelListenerException(pe);
+					}
+				}
+
+			},
+			new HashMapDictionary<>());
+
+		try {
+			_testDeleteAccountRole(_accountRoleLocalService::deleteAccountRole);
+			_testDeleteAccountRole(
+				accountRole -> _accountRoleLocalService.deleteAccountRole(
+					accountRole.getAccountRoleId()));
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test

@@ -188,7 +188,7 @@ public abstract class BaseRoleResourceTestCase {
 	@Test
 	public void testGetProcessRolesPage() throws Exception {
 		Page<Role> page = roleResource.getProcessRolesPage(
-			testGetProcessRolesPage_getProcessId());
+			testGetProcessRolesPage_getProcessId(), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -200,7 +200,7 @@ public abstract class BaseRoleResourceTestCase {
 			Role irrelevantRole = testGetProcessRolesPage_addRole(
 				irrelevantProcessId, randomIrrelevantRole());
 
-			page = roleResource.getProcessRolesPage(irrelevantProcessId);
+			page = roleResource.getProcessRolesPage(irrelevantProcessId, null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -213,7 +213,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		Role role2 = testGetProcessRolesPage_addRole(processId, randomRole());
 
-		page = roleResource.getProcessRolesPage(processId);
+		page = roleResource.getProcessRolesPage(processId, null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 

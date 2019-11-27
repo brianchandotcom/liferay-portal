@@ -37,10 +37,11 @@ public interface RoleResource {
 		return new Builder();
 	}
 
-	public Page<Role> getProcessRolesPage(Long processId) throws Exception;
+	public Page<Role> getProcessRolesPage(Long processId, Boolean completed)
+		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessRolesPageHttpResponse(
-			Long processId)
+			Long processId, Boolean completed)
 		throws Exception;
 
 	public static class Builder {
@@ -98,9 +99,11 @@ public interface RoleResource {
 
 	public static class RoleResourceImpl implements RoleResource {
 
-		public Page<Role> getProcessRolesPage(Long processId) throws Exception {
+		public Page<Role> getProcessRolesPage(Long processId, Boolean completed)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getProcessRolesPageHttpResponse(processId);
+				getProcessRolesPageHttpResponse(processId, completed);
 
 			String content = httpResponse.getContent();
 
@@ -114,7 +117,7 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessRolesPageHttpResponse(
-				Long processId)
+				Long processId, Boolean completed)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -137,6 +140,10 @@ public interface RoleResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

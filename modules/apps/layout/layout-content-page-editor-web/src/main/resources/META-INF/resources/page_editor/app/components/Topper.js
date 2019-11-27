@@ -49,24 +49,126 @@ const TopperListItem = React.forwardRef(
 	)
 );
 
-export default function Topper({children, item, name}) {
+export default function Topper({
+	acceptDrop,
+	active: activeTopper,
+	children,
+	item,
+	layoutData,
+	name
+}) {
 	const containerRef = useRef(null);
 	const dispatch = useContext(DispatchContext);
-	const [dragHover] = useState(null);
+	const [dragHover, setDragHover] = useState(null);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
 	const selectItem = useSelectItem();
 
 	const [{isDragging}, drag] = useDrag({
+		collect: monitor => ({
+			isDragging: monitor.isDragging()
+		}),
 		end(_item, _monitor) {
-			const {itemId, position, siblingId} = _monitor.getDropResult();
+			const result = _monitor.getDropResult();
 
-			dispatch(moveItem({itemId, position, siblingId}));
+			if (!result) {
+				return;
+			}
+
+			const {itemId, position, siblingId} = result;
+
+			if (itemId !== siblingId) {
+				dispatch(moveItem({itemId, position, siblingId}));
+			}
 		},
 		item: {
 			...item,
 			type: LAYOUT_DATA_ITEM_TYPES[item.type]
+		}
+	});
+
+	const [{isOver}, drop] = useDrop({
+		accept: acceptDrop,
+		collect(_monitor) {
+			return {
+				isOver: _monitor.isOver({shallow: true})
+			};
+		},
+		drop(_item, _monitor) {
+			if (!_monitor.didDrop()) {
+				return {
+					itemId: _item.itemId,
+					itemType: _monitor.getItemType(),
+					position: dragHover,
+					siblingId: item.itemId
+				};
+			}
+		},
+		hover(_item, _monitor) {
+			const dragId = _item.itemId;
+			const dragParentId = _item.parentId;
+			const hoverId = item.itemId;
+
+			// Don't replace items with themselves
+			if (dragId === hoverId) {
+				setDragHover(null);
+
+				return;
+			}
+
+			// Determine rectangle on screen
+			const hoverBoundingRect = containerRef.current.getBoundingClientRect();
+
+			// Get vertical middle
+			const hoverMiddleY =
+				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+			// Determine mouse position
+			const clientOffset = _monitor.getClientOffset();
+
+			// Get pixels to the top
+			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+			if (dragParentId) {
+				const parentChildren = layoutData.items[dragParentId].children;
+
+				const dragIndex = parentChildren.findIndex(
+					child => child === dragId
+				);
+
+				// When dragging downwards, only move when the cursor is below 50%
+				// When dragging upwards, only move when the cursor is above 50%
+				// Dragging downwards
+				if (
+					parentChildren[dragIndex + 1] !== hoverId &&
+					hoverClientY < hoverMiddleY
+				) {
+					setDragHover(0);
+					return;
+				}
+
+				// Dragging upwards
+				if (
+					parentChildren[dragIndex - 1] !== hoverId &&
+					hoverClientY > hoverMiddleY
+				) {
+					setDragHover(1);
+					return;
+				}
+			} else {
+				if (hoverClientY < hoverMiddleY) {
+					setDragHover(0);
+					return;
+				}
+
+				if (hoverClientY > hoverMiddleY) {
+					setDragHover(1);
+					return;
+				}
+			}
+
+			setDragHover(null);
 		}
 	});
 
@@ -76,23 +178,46 @@ export default function Topper({children, item, name}) {
 		}
 	});
 
+	const styles = {
+		'fragments-editor__topper-wrapper--active': active === item.itemId,
+		'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered':
+			hover === item.itemId,
+		'fragments-editor-border-bottom': dragHover === 1 && isOver,
+		'fragments-editor-border-top': dragHover === 0 && isOver
+	};
+
+	if (!activeTopper) {
+		return React.cloneElement(children, {
+			className: classNames(
+				'fragments-editor__drag-source fragments-editor__drag-source--fragment fragments-editor__drop-target fragments-editor__topper-wrapper fragment-entry-link-wrapper',
+				children.className,
+				styles
+			),
+			ref: node => {
+				containerRef.current = node;
+				drop(node);
+
+				// Call the original ref, if any.
+				const {ref} = children;
+				if (typeof ref === 'function') {
+					ref(node);
+				}
+			}
+		});
+	}
+
 	return (
 		<div
 			className={classNames(
 				'fragments-editor__drag-source fragments-editor__drag-source--fragment fragments-editor__drop-target fragments-editor__topper-wrapper fragment-entry-link-wrapper',
-				{
-					'fragments-editor__topper-wrapper--active': isSelected(
-						item.itemId
-					),
-					'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered': isHovered(
-						item.itemId
-					),
-					'fragments-editor-border-bottom': dragHover === 1,
-					'fragments-editor-border-top': dragHover === 0
-				}
+				styles
 			)}
 			onClick={event => {
 				event.stopPropagation();
+
+				if (!acceptDrop.length || isDragging) {
+					return;
+				}
 
 				const multiSelect = event.shiftKey;
 
@@ -101,29 +226,38 @@ export default function Topper({children, item, name}) {
 			onMouseLeave={event => {
 				event.stopPropagation();
 
+				if (!acceptDrop.length || isDragging) {
+					return;
+				}
+
 				if (isHovered(item.itemId)) {
 					hoverItem(null);
 				}
 			}}
 			onMouseOver={event => {
-				if (!isDragging) {
-					event.stopPropagation();
-					hoverItem(item.itemId);
+				event.stopPropagation();
+
+				if (!acceptDrop.length || isDragging) {
+					return;
 				}
+
+				hoverItem(item.itemId);
 			}}
 			ref={containerRef}
 		>
 			<div className="fragments-editor__topper tbar">
 				<ul className="tbar-nav">
-					<TopperListItem className="pr-0" isDragHandler ref={drag}>
-						<ClayIcon
-							className="fragments-editor__topper__drag-icon fragments-editor__topper__icon"
-							symbol="drag"
-						/>
-					</TopperListItem>
-					<TopperListItem expand isDragHandler isTitle ref={drag}>
-						{name}
-					</TopperListItem>
+					<Topper.Item expand isDragHandler ref={drag}>
+						<ul className="tbar-nav">
+							<Topper.Item className="pr-0">
+								<ClayIcon
+									className="fragments-editor__topper__drag-icon fragments-editor__topper__icon"
+									symbol="drag"
+								/>
+							</Topper.Item>
+							<Topper.Item isTitle>{name}</Topper.Item>
+						</ul>
+					</Topper.Item>
 					<TopperListItem>
 						<ClayButton displayType="unstyled" small>
 							<ClayIcon

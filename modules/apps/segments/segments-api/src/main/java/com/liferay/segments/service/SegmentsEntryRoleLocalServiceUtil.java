@@ -315,6 +315,12 @@ public class SegmentsEntryRoleLocalServiceUtil {
 		return getService().getSegmentsEntryRolesCountByRoleId(roleId);
 	}
 
+	public static boolean hasSegmentEntryRole(
+		long segmentsEntryId, long roleId) {
+
+		return getService().hasSegmentEntryRole(segmentsEntryId, roleId);
+	}
+
 	/**
 	 * Updates the segments entry role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

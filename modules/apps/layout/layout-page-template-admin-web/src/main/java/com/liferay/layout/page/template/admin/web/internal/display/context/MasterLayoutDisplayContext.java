@@ -175,7 +175,7 @@ public class MasterLayoutDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_master_layouts.jsp");
-		portletURL.setParameter("tabs1", "master-pages");
+		portletURL.setParameter("tabs1", "master-layouts");
 		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 
 		String keywords = getKeywords();

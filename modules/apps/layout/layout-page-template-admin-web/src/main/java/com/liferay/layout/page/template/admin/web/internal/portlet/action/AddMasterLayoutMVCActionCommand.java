@@ -121,7 +121,7 @@ public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("tabs1", "master-pages");
+		portletURL.setParameter("tabs1", "master-layouts");
 
 		layoutFullURL = _http.setParameter(
 			layoutFullURL, "p_l_back_url", portletURL.toString());

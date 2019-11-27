@@ -96,14 +96,14 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		String tabs = ParamUtil.getString(
-			renderRequest, "tabs1", "master-pages");
+			renderRequest, "tabs1", "master-layouts");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (!Objects.equals(tabs, "master-pages") &&
+		if (!Objects.equals(tabs, "master-layouts") &&
 			(_stagingGroupHelper.isLocalLiveGroup(scopeGroup) ||
 			 _stagingGroupHelper.isRemoteLiveGroup(scopeGroup))) {
 

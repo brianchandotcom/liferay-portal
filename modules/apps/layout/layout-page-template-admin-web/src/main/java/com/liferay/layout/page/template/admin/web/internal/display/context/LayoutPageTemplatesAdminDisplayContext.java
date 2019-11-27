@@ -67,9 +67,9 @@ public class LayoutPageTemplatesAdminDisplayContext {
 					add(
 						navigationItem -> {
 							navigationItem.setActive(
-								Objects.equals(getTabs1(), "master-pages"));
+								Objects.equals(getTabs1(), "master-layouts"));
 							navigationItem.setHref(
-								getPortletURL(), "tabs1", "master-pages");
+								getPortletURL(), "tabs1", "master-layouts");
 							navigationItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "masters"));
@@ -118,7 +118,7 @@ public class LayoutPageTemplatesAdminDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", "master-pages");
+			_liferayPortletRequest, "tabs1", "master-layouts");
 
 		return _tabs1;
 	}

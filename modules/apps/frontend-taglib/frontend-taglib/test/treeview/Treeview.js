@@ -103,7 +103,7 @@ describe('Treeview', () => {
 		expect(queryByLabelText('Eudaldo')).not.toBeInTheDocument();
 	});
 
-	it('allow selecting several nodes by default', async () => {
+	it('allows selecting several nodes by default', async () => {
 		const {getByLabelText} = render(<Treeview nodes={nodes} />);
 
 		fireEvent.click(getByLabelText('Sandro'));
@@ -113,7 +113,7 @@ describe('Treeview', () => {
 		expect(getByLabelText('Victor').checked).toBe(true);
 	});
 
-	it('allow selecting only one node if multiSelection is disabled', async () => {
+	it('allows selecting only one node if multiSelection is disabled', async () => {
 		const {getByLabelText} = render(
 			<Treeview multiSelection={false} nodes={nodes} />
 		);

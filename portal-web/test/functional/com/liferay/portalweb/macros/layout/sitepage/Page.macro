@@ -918,6 +918,10 @@ definition {
 	}
 
 	macro viewPreview {
+		if (isSet(key_imageName)) {
+			AssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		}
+
 		AssertTextEquals(
 			locator1 = "SitePagesEditPage#PREVIEW_TITLE",
 			value1 = "${htmlTitle}");
@@ -928,6 +932,14 @@ definition {
 
 		var url = "${portalURL}/web/guest/${pageNameURL}";
 
+		if (isSet(siteNameURL)) {
+			var url = "${portalURL}/web/${siteNameURL}/${pageNameURL}";
+		}
+
+		if (isSet(openGraph)) {
+			var url = StringUtil.upperCase("${url}");
+		}
+
 		AssertTextEquals(
 			locator1 = "SitePagesEditPage#PREVIEW_URL",
 			value1 = "${url}");
@@ -937,19 +949,29 @@ definition {
 			value1 = "${description}");
 
 		if (isSet(truncatedHTMLTitle)) {
-			ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
-
 			ProductMenuHelper.closeProductMenu();
 
-			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES");
+			if (isSet(openGraph)) {
+				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES_OG");
+			}
+			else {
+				ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
+
+				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_TITLE_ELLIPSES");
+			}
 		}
 
 		if (isSet(truncatedURL)) {
-			ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
+			if (isSet(openGraph)) {
+				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES_OG");
+			}
+			else {
+				ScrollWebElementIntoView(locator1 = "//label[contains(.,'Change Frequency')]");
 
-			ProductMenuHelper.closeProductMenu();
+				ProductMenuHelper.closeProductMenu();
 
-			SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES");
+				SikuliAssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_URL_ELLIPSES");
+			}
 		}
 	}
 

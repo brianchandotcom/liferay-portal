@@ -187,9 +187,6 @@ public class HTMLTag extends BaseHTMLTag {
 		}
 
 		setNamespacedAttribute(httpServletRequest, "mode", getMode());
-		setNamespacedAttribute(
-			httpServletRequest, "randomNamespace",
-			PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(HTMLTag.class);

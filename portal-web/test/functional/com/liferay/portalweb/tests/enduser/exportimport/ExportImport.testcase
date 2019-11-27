@@ -31,12 +31,7 @@ definition {
 	@description = "This is a test for LPS-84223."
 	@priority = "3"
 	test DLLinkValidationInWebContent {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -50,10 +45,7 @@ definition {
 		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 		var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -163,12 +155,7 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -262,12 +249,7 @@ definition {
 	test ExportContentThenPublish {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
@@ -379,10 +361,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
@@ -483,12 +462,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "ExportWebContent.lar");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.deleteCP(
 			siteURLKey = "guest",
@@ -498,39 +472,21 @@ definition {
 			exportIndividualDeletions = "true",
 			larFileName = "ExportWebContentDeletion.lar");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		LAR.importPortlet(larFileName = "ExportWebContent.lar");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		LAR.importPortlet(
 			importDeletions = "true",
 			larFileName = "ExportWebContentDeletion.lar");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewNotPresentCP(webContentTitle = "Web Content Title");
 	}
@@ -541,12 +497,7 @@ definition {
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalDDMStructureViaInstances";
 
-		SitePages.openPagesAdmin(siteURLKey = "Global");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
+		LAR.openExportAdmin(siteScopeName = "Global");
 
 		LexiconEntry.gotoAdd();
 
@@ -583,11 +534,8 @@ definition {
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
-		SitePages.openPagesAdmin(
-			baseURL = "http://www.able.com:8080",
-			siteURLKey = "global");
-
 		LAR.importSiteCP(
+			baseURL = "http://www.able.com:8080",
 			larFileName = "${larFileName}",
 			siteName = "Global");
 
@@ -600,12 +548,7 @@ definition {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
 		property portal.release = "false";
 
-		SitePages.openPagesAdmin(siteURLKey = "Global");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
+		LAR.openExportAdmin(siteScopeName = "Global");
 
 		LexiconEntry.gotoAdd();
 
@@ -643,10 +586,6 @@ definition {
 			password = "test",
 			userEmailAddress = "test@www.able.com",
 			virtualHostsURL = "http://www.able.com:8080");
-
-		SitePages.openPagesAdmin(
-			baseURL = "http://www.able.com:8080",
-			siteURLKey = "global");
 
 		LAR.importSiteCP(
 			baseURL = "http://www.able.com:8080",
@@ -756,8 +695,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name B");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-b");
-
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
 			siteName = "Site Name B");
@@ -769,10 +706,7 @@ definition {
 	test ExportImportPortlet {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "Guest");
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 
@@ -801,10 +735,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Test Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.addPublicPage(pageName = "Test Site Page");
 
@@ -836,10 +767,7 @@ definition {
 			adtFile = "adt_blogs_basic.ftl",
 			adtType = "Blogs");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "Guest");
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 
@@ -905,10 +833,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "Guest");
 
 		SitePages.addPrivatePage(pageName = "Private Page");
 
@@ -1066,12 +991,7 @@ definition {
 			ratingResult = "Thumb Up",
 			voteCount = "1");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
+		LAR.openExportAdmin(siteURLKey = "Guest");
 
 		LexiconEntry.gotoAdd();
 
@@ -1201,8 +1121,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site B");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site B");
-
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
 			siteName = "Site B");
@@ -1279,8 +1197,6 @@ definition {
 
 		Site.deleteAllCP();
 
-		Navigator.openURL();
-
 		JSONGroup.addGroup(groupName = "Site Name C");
 
 		LAR.importSiteCP(
@@ -1331,10 +1247,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
@@ -1389,35 +1302,20 @@ definition {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportValidation";
 		property testray.component.names = "Training";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -1438,10 +1336,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
@@ -1467,12 +1362,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name A");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-a");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-a");
 
 		Staging.activateStagingCP(
 			siteName = "Site Name A",
@@ -1610,8 +1500,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name A");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-a");
-
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
 			siteName = "Site Name A");
@@ -1660,10 +1548,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Exported Site");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");
 
 		NavItem.gotoStructures();
 
@@ -1725,10 +1610,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Imported Site");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
 
 		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 
@@ -1774,12 +1656,7 @@ definition {
 	test ExportImportWithExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportWithExportTemplate";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
+		LAR.openExportAdmin(siteURLKey = "Guest");
 
 		LAR.addExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
@@ -2033,8 +1910,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site C");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site C");
-
 		LAR.importSiteCP(
 			importValidationMissingItem = "Document Type",
 			larFileName = "${larFileName}",
@@ -2054,12 +1929,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Page B");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
@@ -2185,8 +2055,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name B");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-b");
-
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
 			siteName = "Site Name B");
@@ -2230,12 +2098,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name B");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-b");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-b");
 
 		Staging.activateStagingCP(siteName = "Site Name B");
 
@@ -2269,10 +2132,7 @@ definition {
 			enableSetting = "false",
 			settingFieldName = "Validate Layout References");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -2285,17 +2145,11 @@ definition {
 
 		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 

@@ -14,8 +14,10 @@
 
 package com.liferay.layout.seo.kernel;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.ListMergeable;
 
 import java.util.List;
@@ -33,6 +35,14 @@ public interface LayoutSEOLinkManager {
 		throws PortalException {
 
 		throw new UnsupportedOperationException();
+	}
+
+	public default String getDefaultCanonicalURL(
+			Layout layout, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws ConfigurationException {
+
+		return StringPool.BLANK;
 	}
 
 	public default String getFullPageTitle(

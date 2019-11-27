@@ -61,6 +61,26 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	@Override
+	public String getDefaultCanonicalURL(
+			Layout layout, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws ConfigurationException {
+
+		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
+
+		if (Objects.equals(
+				layoutSEOCompanyConfiguration.canonicalURL(),
+				"default-language-url")) {
+
+			return canonicalURL;
+		}
+
+		return alternateURLs.getOrDefault(locale, canonicalURL);
+	}
+
+	@Override
 	public String getFullPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
@@ -150,18 +170,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			return layoutCanonicalURL;
 		}
 
-		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
-
-		if (Objects.equals(
-				layoutSEOCompanyConfiguration.canonicalURL(),
-				"default-language-url")) {
-
-			return canonicalURL;
-		}
-
-		return alternateURLs.getOrDefault(locale, canonicalURL);
+		return getDefaultCanonicalURL(
+			layout, locale, canonicalURL, alternateURLs);
 	}
 
 	private String _getLayoutCanonicalURL(Locale locale, Layout layout) {

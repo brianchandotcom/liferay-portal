@@ -401,6 +401,19 @@ public class LayoutsAdminDisplayContext {
 		return copyLayoutURL.toString();
 	}
 
+	public String getDefaultCanonicalURL() throws PortalException {
+		String completeURL = getViewLayoutURL(_selLayout);
+
+		String canonicalURL = PortalUtil.getCanonicalURL(
+			completeURL, _themeDisplay, _selLayout, false, false);
+
+		Map<Locale, String> alternateURLs = PortalUtil.getAlternateURLs(
+			canonicalURL, _themeDisplay, _selLayout);
+
+		return _layoutSEOLinkManager.getDefaultCanonicalURL(
+			_selLayout, _themeDisplay.getLocale(), canonicalURL, alternateURLs);
+	}
+
 	public String getDeleteLayoutURL(Layout layout) throws PortalException {
 		PortletURL deleteLayoutURL = _liferayPortletResponse.createActionURL();
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -48,6 +48,8 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,17 +106,17 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		String layoutFullURL = _portal.getLayoutFullURL(
 			draftLayout, themeDisplay);
 
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest,
+			LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("tabs1", "display-page-templates");
+
 		layoutFullURL = _http.setParameter(
-			layoutFullURL, "p_l_mode", Constants.EDIT);
+			layoutFullURL, "p_l_back_url", portletURL.toString());
 
-		String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			layoutFullURL = _http.setParameter(
-				layoutFullURL, "p_l_back_url", backURL);
-		}
-
-		return layoutFullURL;
+		return _http.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
 	private JSONObject _addDisplayPage(

@@ -51,8 +51,6 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 
 	@Override
 	public Map<String, String> getData() {
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			_httpServletRequest, "layoutPageTemplateCollectionId");
 
@@ -64,7 +62,6 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 			"/layout_page_template/add_layout_page_template_entry");
 		addLayoutPageTemplateEntryURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
-		addLayoutPageTemplateEntryURL.setParameter("backURL", redirect);
 		addLayoutPageTemplateEntryURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(layoutPageTemplateCollectionId));

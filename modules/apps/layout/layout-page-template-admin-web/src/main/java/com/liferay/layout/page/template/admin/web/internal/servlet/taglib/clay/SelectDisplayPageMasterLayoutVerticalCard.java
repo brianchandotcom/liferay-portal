@@ -19,7 +19,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -51,8 +50,6 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public Map<String, String> getData() {
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
 		PortletURL addDisplayPageURL = _renderResponse.createActionURL();
 
 		addDisplayPageURL.setParameter(
@@ -60,7 +57,6 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 			"/layout_page_template/add_display_page");
 		addDisplayPageURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
-		addDisplayPageURL.setParameter("backURL", redirect);
 		addDisplayPageURL.setParameter(
 			"type",
 			String.valueOf(

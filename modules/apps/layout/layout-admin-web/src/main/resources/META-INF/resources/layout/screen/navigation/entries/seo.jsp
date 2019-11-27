@@ -94,7 +94,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
 							<div id="<portlet:namespace />customCanonicalURLSettings">
-								<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>">
+								<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getDefaultCanonicalURL() %>">
 									<aui:validator name="url" />
 								</aui:input>
 							</div>
@@ -109,7 +109,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
 							<div id="<portlet:namespace />customCanonicalURLSettings">
-								<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getCanonicalLayoutURL() %>" type="text">
+								<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getDefaultCanonicalURL() %>" type="text">
 									<aui:validator name="url" />
 								</aui:input>
 							</div>
@@ -145,7 +145,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 								).build()
 							).put(
 								"url", HashMapBuilder.put(
-									"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
+									"defaultValue", layoutsAdminDisplayContext.getDefaultCanonicalURL()
 								).put(
 									"id", "canonicalURL"
 								).build()

@@ -379,9 +379,9 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		String uuid, long threadId, long groupId, long companyId, long userId,
 		String userName, Date createDate, Date modifiedDate, long categoryId,
 		long rootMessageId, long rootMessageUserId, String title,
-		int messageCount, long viewCount, long lastPostByUserId,
-		Date lastPostDate, double priority, boolean question, int status,
-		long statusByUserId, String statusByUserName, Date statusDate) {
+		int messageCount, long lastPostByUserId, Date lastPostDate,
+		double priority, boolean question, int status, long statusByUserId,
+		String statusByUserName, Date statusDate, long viewCount) {
 
 		MBThread mbThread = _mbThreadLocalService.createMBThread(threadId);
 
@@ -854,11 +854,6 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 		long entryId = _counterLocalService.increment();
 
-		long viewCount = _viewCountEntryLocalService.getViewCount(
-			assetEntry.getCompanyId(),
-			_classNameLocalService.getClassNameId(AssetEntry.class),
-			assetEntry.getEntryId());
-
 		_addAssetEntry(
 			entryId, assetEntry.getGroupId(), assetEntry.getCompanyId(),
 			assetEntry.getUserId(), assetEntry.getUserName(),
@@ -872,7 +867,11 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			assetEntry.getDescription(), assetEntry.getSummary(),
 			assetEntry.getUrl(), assetEntry.getLayoutUuid(),
 			assetEntry.getHeight(), assetEntry.getWidth(),
-			assetEntry.getPriority(), viewCount);
+			assetEntry.getPriority(),
+			_viewCountEntryLocalService.getViewCount(
+				assetEntry.getCompanyId(),
+				_classNameLocalService.getClassNameId(AssetEntry.class),
+				assetEntry.getEntryId()));
 
 		// Asset categories
 
@@ -1203,22 +1202,21 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 		long threadId = _counterLocalService.increment();
 
-		long viewCount = _viewCountEntryLocalService.getViewCount(
-			mbThread.getCompanyId(),
-			_classNameLocalService.getClassNameId(MBThread.class),
-			mbThread.getThreadId());
-
 		_addMBThread(
 			PortalUUIDUtil.generate(), threadId, mbThread.getGroupId(),
 			mbThread.getCompanyId(), mbThread.getUserId(),
 			mbThread.getUserName(), mbThread.getCreateDate(),
 			mbThread.getModifiedDate(), mbThread.getCategoryId(), 0,
 			mbThread.getRootMessageUserId(), mbThread.getTitle(),
-			mbThread.getMessageCount(), viewCount,
-			mbThread.getLastPostByUserId(), mbThread.getLastPostDate(),
-			mbThread.getPriority(), mbThread.isQuestion(), mbThread.getStatus(),
+			mbThread.getMessageCount(), mbThread.getLastPostByUserId(),
+			mbThread.getLastPostDate(), mbThread.getPriority(),
+			mbThread.isQuestion(), mbThread.getStatus(),
 			mbThread.getStatusByUserId(), mbThread.getStatusByUserName(),
-			mbThread.getStatusDate());
+			mbThread.getStatusDate(),
+			_viewCountEntryLocalService.getViewCount(
+				mbThread.getCompanyId(),
+				_classNameLocalService.getClassNameId(MBThread.class),
+				mbThread.getThreadId()));
 
 		Map<Long, Long> mbMessageIds = new HashMap<>();
 

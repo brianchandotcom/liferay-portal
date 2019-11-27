@@ -28,11 +28,15 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Role;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -61,6 +65,26 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	public void testGetProcessRolesPage() throws Exception {
+		super.testGetProcessRolesPage();
+
+		Role role1 = testGetProcessRolesPage_addRole(
+			_process.getId(), randomRole(), "COMPLETED");
+
+		Role role2 = testGetProcessRolesPage_addRole(
+			_process.getId(), randomRole(), "COMPLETED");
+
+		Page<Role> page = roleResource.getProcessRolesPage(
+			_process.getId(), true);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(role1, role2), (List<Role>)page.getItems());
+		assertValid(page);
+	}
+
+	@Override
 	protected Role randomRole() throws Exception {
 		com.liferay.portal.kernel.model.Role role1 = _addRole(
 			RoleConstants.TYPE_SITE);
@@ -77,6 +101,13 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	protected Role testGetProcessRolesPage_addRole(Long processId, Role role)
 		throws Exception {
 
+		return testGetProcessRolesPage_addRole(processId, role, "RUNNING");
+	}
+
+	protected Role testGetProcessRolesPage_addRole(
+			Long processId, Role role, String status)
+		throws Exception {
+
 		User user = UserTestUtil.addUser();
 
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
@@ -89,7 +120,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		_userLocalService.addRoleUser(role.getId(), user);
 
 		_workflowMetricsRESTTestHelper.addTask(
-			user.getUserId(), testGroup.getCompanyId(), processId);
+			user.getUserId(), testGroup.getCompanyId(),
+			() -> _workflowMetricsRESTTestHelper.addInstance(
+				testGroup.getCompanyId(), Objects.equals(status, "COMPLETED"),
+				processId),
+			processId, status);
 
 		return role;
 	}

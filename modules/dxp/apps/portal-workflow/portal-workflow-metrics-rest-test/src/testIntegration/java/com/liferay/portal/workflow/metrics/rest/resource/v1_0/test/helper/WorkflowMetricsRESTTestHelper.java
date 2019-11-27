@@ -295,6 +295,30 @@ public class WorkflowMetricsRESTTestHelper {
 	public Task addTask(
 			long assigneeId, long companyId,
 			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
+			String status)
+		throws Exception {
+
+		String randomString = RandomTestUtil.randomString();
+
+		Task task = new Task() {
+			{
+				durationAvg = 0L;
+				instanceCount = 1L;
+				key = randomString;
+				name = randomString;
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
+			}
+		};
+
+		return addTask(
+			assigneeId, companyId, instanceSuplier, processId, status, task,
+			"1.0");
+	}
+
+	public Task addTask(
+			long assigneeId, long companyId,
+			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
 			String status, Task task, String version)
 		throws Exception {
 

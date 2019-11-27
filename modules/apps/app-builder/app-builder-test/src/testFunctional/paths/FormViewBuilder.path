@@ -59,8 +59,14 @@
 </tr>
 
 <tr>
+	<td>SWITCHER_OPTION</td>
+	<td>//div[contains(@data-field-name,'${key_switcherOption}')]//span[@class='toggle-switch-bar']</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>SIDEBAR_BASIC_REQUIRED</td>
-	<td>//input[contains(@name,'required')]</td>
+	<td>//div[contains(@data-field-name,'required')]//span[@class='toggle-switch-bar']</td>
 	<td></td>
 </tr>
 
@@ -71,7 +77,7 @@
 </tr>
 
 <tr>
-	<td>SIDEBAR_BASIC_HELP_TEXT</td>
+	<td>SIDEBAR_BASIC_HELP_PLACEHOLDER</td>
 	<td>//input[contains(@name,'placeholder')]</td>
 	<td></td>
 </tr>

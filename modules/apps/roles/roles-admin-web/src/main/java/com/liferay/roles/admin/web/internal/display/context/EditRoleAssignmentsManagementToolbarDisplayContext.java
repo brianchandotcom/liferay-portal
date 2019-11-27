@@ -61,6 +61,7 @@ import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.roles.admin.web.internal.dao.search.SegmentsEntrySearchContainerFactory;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -376,6 +377,10 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 
 		if (Objects.equals(getTabs2(), "organizations")) {
 			_searchContainer = getOrganizationSearchContainer();
+		}
+		else if (Objects.equals(getTabs2(), "segments")) {
+			_searchContainer = SegmentsEntrySearchContainerFactory.create(
+				_renderRequest, _renderResponse);
 		}
 		else if (Objects.equals(getTabs2(), "sites")) {
 			_searchContainer = getGroupSearchContainer();

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.uad.test;
 
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class LayoutFriendlyURLUADTestUtil {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString(
-			FriendlyURLRandomizerBumper.INSTANCE,
+			LayoutFriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 

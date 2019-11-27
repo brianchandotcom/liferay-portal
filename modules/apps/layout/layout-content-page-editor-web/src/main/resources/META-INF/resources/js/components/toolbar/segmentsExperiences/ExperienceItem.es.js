@@ -111,7 +111,7 @@ const ExperienceItem = ({
 
 									{showtoolTip && (
 										<Popover
-											anchor={iconRef}
+											anchor={iconRef.current}
 											header={Liferay.Language.get(
 												'experience-locked'
 											)}

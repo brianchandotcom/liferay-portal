@@ -35,7 +35,7 @@ const PopoverComponent = ({anchor, children, ...rest}) => {
 	const popRef = useRef(null);
 
 	React.useLayoutEffect(() => {
-		Align.align(popRef.current, anchor.current, Align.Right, false);
+		Align.align(popRef.current, anchor, Align.Right, false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -47,7 +47,7 @@ const PopoverComponent = ({anchor, children, ...rest}) => {
 };
 
 Popover.proptypes = {
-	anchor: Proptypes.instanceOf(React.Element)
+	anchor: Proptypes.instanceOf(Element)
 };
 
 export default Popover;

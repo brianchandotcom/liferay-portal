@@ -57,23 +57,28 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
-	public Page<Role> getProcessRolesPage(Long processId) throws Exception {
-		return Page.of(_getRoles(processId));
+	public Page<Role> getProcessRolesPage(Long processId, Boolean completed)
+		throws Exception {
+
+		return Page.of(_getRoles(GetterUtil.getBoolean(completed), processId));
 	}
 
-	private BooleanQuery _createTokensBooleanQuery(long processId) {
+	private BooleanQuery _createTokensBooleanQuery(
+		boolean completed, long processId) {
+
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", "0"));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("completed", Boolean.FALSE),
+			_queries.term("completed", completed),
 			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("instanceCompleted", completed),
 			_queries.term("processId", processId));
 	}
 
-	private Set<Long> _getAssigneeIds(long processId) {
+	private Set<Long> _getAssigneeIds(boolean completed, long processId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
@@ -84,7 +89,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
-		searchSearchRequest.setQuery(_createTokensBooleanQuery(processId));
+		searchSearchRequest.setQuery(
+			_createTokensBooleanQuery(completed, processId));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -106,8 +112,10 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		);
 	}
 
-	private Set<Role> _getRoles(Long processId) throws PortalException {
-		Set<Long> assigneeIds = _getAssigneeIds(processId);
+	private Set<Role> _getRoles(boolean completed, Long processId)
+		throws PortalException {
+
+		Set<Long> assigneeIds = _getAssigneeIds(completed, processId);
 
 		if (assigneeIds.isEmpty()) {
 			return Collections.emptySet();

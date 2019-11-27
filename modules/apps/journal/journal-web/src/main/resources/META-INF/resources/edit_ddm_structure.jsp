@@ -178,7 +178,7 @@ if (ddmStructure != null) {
 					<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
 					</c:when>
 					<c:otherwise>
-						<%@ include file="/form_builder.jspf" %>
+						<%@ include file="/ddm_form_builder.jspf" %>
 					</c:otherwise>
 				</c:choose>
 			</div>

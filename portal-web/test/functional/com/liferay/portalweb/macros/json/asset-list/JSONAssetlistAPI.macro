@@ -1,7 +1,7 @@
 definition {
 
-	@summary = "Helper function to add an Asset Lists via JSON"
-	macro _addAssetLists {
+	@summary = "Directly creates an Asset List Entry using the JSON API"
+	macro _addAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${title},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();

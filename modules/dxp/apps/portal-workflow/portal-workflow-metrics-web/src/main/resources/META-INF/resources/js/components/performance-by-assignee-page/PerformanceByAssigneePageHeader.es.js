@@ -32,6 +32,7 @@ const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
 				</ClayManagementToolbar.Item>
 
 				<RoleFilter
+					completed={true}
 					dispatch={dispatch}
 					filterKey={filterKeys.roles}
 					processId={routeParams.processId}

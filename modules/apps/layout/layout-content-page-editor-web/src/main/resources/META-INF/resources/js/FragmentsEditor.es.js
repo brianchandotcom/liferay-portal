@@ -19,7 +19,7 @@ import {Config} from 'metal-state';
 
 import './components/fragment_entry_link/FragmentEntryLinkList.es';
 
-import './components/master_page/MasterFragmentEntryLinkList.es';
+import './components/master_layout/MasterFragmentEntryLinkList.es';
 
 import './components/sidebar/FragmentsEditorSidebar.es';
 

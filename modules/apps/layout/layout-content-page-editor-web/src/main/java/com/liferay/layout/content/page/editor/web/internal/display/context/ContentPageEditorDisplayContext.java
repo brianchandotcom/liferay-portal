@@ -289,8 +289,8 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"mappedInfoItems", _getMappedInfoItemsSoyContexts()
 		).put(
-			"masterPageLayoutData",
-			JSONFactoryUtil.createJSONObject(_getMasterPageLayoutData())
+			"masterLayoutData",
+			JSONFactoryUtil.createJSONObject(_getMasterLayoutData())
 		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
@@ -902,7 +902,7 @@ public class ContentPageEditorDisplayContext {
 					"fragmentEntryLinkId",
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
 				).put(
-					"masterPage",
+					"masterLayout",
 					layout.getMasterLayoutPlid() ==
 						fragmentEntryLink.getClassPK()
 				).putAll(
@@ -1114,7 +1114,7 @@ public class ContentPageEditorDisplayContext {
 		return mappedInfoItemsSoyContexts;
 	}
 
-	private String _getMasterPageLayoutData() {
+	private String _getMasterLayoutData() {
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.getMasterLayoutPlid() <= 0) {

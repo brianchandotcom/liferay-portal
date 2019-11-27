@@ -146,7 +146,7 @@ definition {
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Text Field With Autocomplete",
-			fieldValue = "United States");
+			fieldValue = "United States Virgin Islands");
 
 		Navigator.openURL();
 
@@ -159,19 +159,18 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
 
+		Form.gotoAutocompleteTab();
+
+		AssertElementPresent(
+			key_fieldName = "dataSourceType",
+			key_radioOption = "From Data Provider",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
+
+		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
+
 		Form.gotoAdvancedTab();
 
-		AssertVisible(
-			key_fieldName = "dataSourceType",
-			key_radioOption = "From Data Provider",
-			locator1 = "FormFields#RADIO_OPTION_LABEL");
-
-		Form.disableAutocompleteConfiguration();
-
-		AssertElementNotPresent(
-			key_fieldName = "dataSourceType",
-			key_radioOption = "From Data Provider",
-			locator1 = "FormFields#RADIO_OPTION_LABEL");
+		Form.gotoAutocompleteTab();
 
 		Form.closeSidebar();
 

@@ -402,14 +402,8 @@ const LayoutDataItem = React.forwardRef(({item, layoutData}, ref) => {
 });
 
 export default function PageEditor() {
-	const {portletNamespace} = useContext(ConfigContext);
-
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
-
-	const {classNameId, classPK, updateLayoutPageTemplateDataURL} = useContext(
-		ConfigContext
-	);
-
 	const {layoutData, segmentsExperienceId} = useContext(StoreContext);
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
@@ -425,26 +419,14 @@ export default function PageEditor() {
 			} else {
 				dispatch(
 					updateLayoutData({
-						classNameId,
-						classPK,
+						config,
 						layoutData,
-						portletNamespace,
-						segmentsExperienceId,
-						updateLayoutPageTemplateDataURL
+						segmentsExperienceId
 					})
 				);
 			}
 		}
-	}, [
-		classNameId,
-		classPK,
-		dispatch,
-		isMounted,
-		layoutData,
-		portletNamespace,
-		segmentsExperienceId,
-		updateLayoutPageTemplateDataURL
-	]);
+	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 
 	return <LayoutDataItem item={mainItem} layoutData={layoutData} />;
 }

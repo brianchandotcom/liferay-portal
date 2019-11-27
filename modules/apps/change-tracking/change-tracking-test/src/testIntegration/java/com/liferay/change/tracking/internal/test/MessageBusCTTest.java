@@ -193,8 +193,13 @@ public class MessageBusCTTest {
 
 		Assert.assertNull(_testMessageListener.getReceivedMessage());
 
-		_ctProcessLocalService.addCTProcess(
-			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			_ctProcessLocalService.addCTProcess(
+				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+		}
 
 		Message receivedMessage = _testMessageListener.getReceivedMessage();
 

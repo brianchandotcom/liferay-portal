@@ -25,6 +25,7 @@ definition {
 				locator1 = "TextArea#ANY",
 				value1 = "${customDescription}");
 		}
+
 		if (isSet(customImage)) {
 			var key_uploadFileName = "${uploadFileName}";
 
@@ -41,19 +42,21 @@ definition {
 			Click(locator1 = "Button#ADD");
 
 			SelectFrameTop(value1 = "relative=top");
-
-			Button.click(button = "Save");
-
-			Click(locator1 = "ControlMenu#EDIT_COG");
-
-			Navigator.gotoNavTab(navTab = "Open Graph");
-
-			AssertElementPresent(
-				key_dmDocumentURL = "${uploadFileName}",
-				locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT");
 		}
 
-		Button.click(button = "Save");
+		if (!(isSet(notSave))) {
+			Button.click(button = "Save");
+
+			if (isSet(customImage)) {
+				Click(locator1 = "ControlMenu#EDIT_COG");
+
+				Navigator.gotoNavTab(navTab = "Open Graph");
+
+				AssertElementPresent(
+					key_dmDocumentURL = "${uploadFileName}",
+					locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT");
+			}
+		}
 	}
 
 	macro viewDefaultConfiguration {

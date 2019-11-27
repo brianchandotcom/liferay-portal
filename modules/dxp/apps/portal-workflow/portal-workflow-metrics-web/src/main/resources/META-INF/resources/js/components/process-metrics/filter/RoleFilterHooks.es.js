@@ -16,6 +16,7 @@ import {useFilterName} from '../../../shared/components/filter/hooks/useFilterNa
 import {useFilterResource} from '../../../shared/components/filter/hooks/useFilterResource.es';
 
 const RoleFilter = ({
+	completed = false,
 	dispatch,
 	filterKey = 'roleIds',
 	options: {
@@ -29,7 +30,7 @@ const RoleFilter = ({
 	const {items, selectedItems} = useFilterResource(
 		dispatch,
 		filterKey,
-		`/processes/${processId}/roles`
+		`/processes/${processId}/roles?completed=${completed}`
 	);
 
 	const filterName = useFilterName(

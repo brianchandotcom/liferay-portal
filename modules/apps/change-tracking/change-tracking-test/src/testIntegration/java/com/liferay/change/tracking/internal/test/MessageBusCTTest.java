@@ -18,10 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTMessageLocalService;
+import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeClosable;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -31,14 +30,13 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -73,10 +71,19 @@ public class MessageBusCTTest {
 	}
 
 	@Before
-	public void setUp() {
-		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			_ctCollectionLocalService.createCTCollection(
-				_counterLocalService.increment(CTCollection.class.getName())));
+	public void setUp() throws Exception {
+		long ctCollectionId = _counterLocalService.increment(
+			CTCollection.class.getName());
+
+		_ctCollection = _ctCollectionLocalService.createCTCollection(
+			ctCollectionId);
+
+		_ctCollection.setUserId(TestPropsValues.getUserId());
+		_ctCollection.setName(String.valueOf(ctCollectionId));
+		_ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		_ctCollection = _ctCollectionLocalService.updateCTCollection(
+			_ctCollection);
 
 		_asyncDestinationServiceRegistration = _registerDestination(
 			_TEST_ASYNC_DESTINATION_NAME,
@@ -186,22 +193,8 @@ public class MessageBusCTTest {
 
 		Assert.assertNull(_testMessageListener.getReceivedMessage());
 
-		_backgroundTaskExecutor.execute(
-			(BackgroundTask)ProxyUtil.newProxyInstance(
-				BackgroundTask.class.getClassLoader(),
-				new Class<?>[] {BackgroundTask.class},
-				(proxy, method, args) -> {
-					if (Objects.equals("getTaskContextMap", method.getName())) {
-						return Collections.singletonMap(
-							"ctCollectionId",
-							_ctCollection.getCtCollectionId());
-					}
-					else if (Objects.equals("getUserId", method.getName())) {
-						return _ctCollection.getUserId();
-					}
-
-					return null;
-				}));
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 		Message receivedMessage = _testMessageListener.getReceivedMessage();
 
@@ -268,6 +261,9 @@ public class MessageBusCTTest {
 	private static CTMessageLocalService _ctMessageLocalService;
 
 	@Inject
+	private static CTProcessLocalService _ctProcessLocalService;
+
+	@Inject
 	private static DestinationFactory _destinationFactory;
 
 	@Inject
@@ -275,12 +271,6 @@ public class MessageBusCTTest {
 
 	private ServiceRegistration<Destination>
 		_asyncDestinationServiceRegistration;
-
-	@Inject(
-		filter = "background.task.executor.class.name=com.liferay.change.tracking.internal.background.task.CTPublishBackgroundTaskExecutor",
-		type = BackgroundTaskExecutor.class
-	)
-	private BackgroundTaskExecutor _backgroundTaskExecutor;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;

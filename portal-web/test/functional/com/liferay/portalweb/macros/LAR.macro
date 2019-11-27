@@ -370,7 +370,7 @@ definition {
 	}
 
 	macro configureExportSiteCP {
-		LAR._gotoExportSite();
+		LAR.openExportAdmin(siteScopeName = "${siteScopeName}");
 
 		LexiconEntry.gotoAdd();
 
@@ -477,7 +477,7 @@ definition {
 	}
 
 	macro exportSiteCP {
-		LAR._gotoExportSite(siteScopeName = "${siteScopeName}");
+		LAR.openExportAdmin(siteScopeName = "${siteScopeName}");
 
 		Click(locator1 = "SitePagesExport#CUSTOM_EXPORT_BUTTON");
 
@@ -549,7 +549,7 @@ definition {
 	}
 
 	macro importSiteCP {
-		LAR._gotoImportSite(
+		LAR.openImportAdmin(
 			baseURL = "${baseURL}",
 			siteName = "${siteName}");
 
@@ -577,11 +577,27 @@ definition {
 	}
 
 	macro openExportAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
+		var siteNameURL = StringUtil.replace("${siteScopeName}", " ", "-");
+		var siteNameURL = StringUtil.lowerCase("${siteNameURL}");
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
 	}
 
 	macro openImportAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
+		var siteNameURL = StringUtil.replace("${siteName}", " ", "-");
+		var siteNameURL = StringUtil.lowerCase("${siteNameURL}");
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
 	}
 
 	macro relaunchCurrentAndPreviousProcess {

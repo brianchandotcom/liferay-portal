@@ -767,12 +767,9 @@ definition {
 			locator1 = "TextInput#FRIENDLY_URL",
 			value1 = "/hello");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
-
-		LAR.exportSiteCP(larFileName = "Export");
+		LAR.exportSiteCP(
+			larFileName = "Export",
+			siteScopeName = "Export");
 
 		var larFileName = LAR.getLarFileName();
 

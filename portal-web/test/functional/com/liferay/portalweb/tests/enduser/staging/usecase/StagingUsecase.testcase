@@ -649,18 +649,10 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Import");
-
 		LAR.importSiteCP(
 			larFileName = "HR_Home_Page_Content_master.lar",
 			mirrorWithOverwriting = "true",
+			siteName = "Site Name",
 			uploadFrom = "dependencies");
 
 		Navigator.gotoStagedSitePage(

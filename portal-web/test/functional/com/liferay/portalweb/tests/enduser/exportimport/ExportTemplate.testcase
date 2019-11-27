@@ -75,7 +75,7 @@ definition {
 
 	@priority = "3"
 	test ExportWithRelaunchedProcess {
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Guest");
 
 		var key_larFileName = "${larFileName}";
 

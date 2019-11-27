@@ -78,12 +78,7 @@ definition {
 	test EditExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#EditExportTemplate";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -94,12 +89,7 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
+		LAR.openExportAdmin(siteScopeName = "guest");
 
 		LAR.addExportTemplateCP(
 			exportTemplateDescription = "Export Template Description",
@@ -133,12 +123,7 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -146,12 +131,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
+		LAR.openExportAdmin(siteScopeName = "guest");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
 
@@ -202,10 +182,7 @@ definition {
 	test EditImportedContentPageViaImportedSiteTemplate {
 		property testray.component.names = "Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
@@ -215,17 +192,11 @@ definition {
 			menuItem = "Manage",
 			rowEntry = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Page Fragments");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
 
 		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		SiteTemplates.addSitePageViaSiteTemplateCP(
 			pageName = "Test Template Content Page",
@@ -246,26 +217,17 @@ definition {
 			fragmentName = "Content",
 			id = "content");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		LAR.exportPortlet(
 			larFileName = "site-template-content-page.lar",
 			portletName = "Site Templates");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 		LAR.importPortlet(
 			larFileName = "site-template-content-page.lar",
@@ -314,9 +276,7 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -376,9 +336,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name");
 
 		var key_larFileName = "${larFileName}";
 
@@ -784,9 +742,7 @@ definition {
 			linkName = "Link to Page",
 			linkToPage = "true");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name");
 
 		var key_larFileName = "${larFileName}";
 
@@ -912,7 +868,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Link#MOVE_TO_RECYCLING_BIN");
 
-		LAR.configureExportSiteCP();
+		LAR.configureExportSiteCP(siteScopeName = "Guest");
 
 		LAR.exportWithAssertionOnSuccess();
 
@@ -956,14 +912,10 @@ definition {
 
 		SitePages.addPrivatePage(pageName = "Private Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
-
 		LAR.exportSiteCP(
 			larFileName = "ExportPrivatePage",
-			privateLayout = "true");
+			privateLayout = "true",
+			siteScopeName = "Guest");
 
 		var key_larFileName = "${larFileName}";
 
@@ -1018,9 +970,7 @@ definition {
 
 		AssetPublisherPortlet.removeSiteScope(removeSiteScopes = "Site Name A");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name A");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name A");
 
 		var key_larFileName = "${larFileName}";
 
@@ -1234,9 +1184,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site A");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site A");
 
 		var key_larFileName = "${larFileName}";
 
@@ -1281,9 +1229,7 @@ definition {
 			groupName = "Site Name A",
 			title = "Web Content Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name A");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name A");
 
 		var key_larFileName = "${larFileName1}";
 
@@ -1314,7 +1260,7 @@ definition {
 			otherSiteName = "Site Name A",
 			webContentTitle = "Web Content Title");
 
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name B");
 
 		var key_larFileName = "${larFileName2}";
 
@@ -1355,7 +1301,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Guest");
 
 		var key_larFileName = "${larFileName}";
 
@@ -1397,6 +1343,7 @@ definition {
 			themeName = "Porygon");
 
 		LAR.configureExportSiteCP(
+			siteScopeName = "Site Name",
 			uncheckLogo = "true",
 			uncheckSitePagesSettings = "true",
 			uncheckSiteTemplateSettings = "true");
@@ -1481,6 +1428,7 @@ definition {
 		LAR.configureExportSiteCP(
 			checkContentNameList = "Blogs",
 			mainContent = "Blogs",
+			siteScopeName = "Guest",
 			uncheckContentNameList = "Documents and Media",
 			uncheckSubContent = "Referenced Content");
 
@@ -1562,7 +1510,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
 
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name B");
 
 		var key_larFileName = "${larFileName}";
 
@@ -1645,9 +1593,7 @@ definition {
 			webContentTitle = "WC WebContent Title 1",
 			webContentTitleEdit = "WC WebContent Title 1");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name");
 
 		var key_larFileName = "${larFileName}";
 
@@ -1887,7 +1833,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Guest");
 
 		var downloadURL = selenium.getAttribute("//ul/li/div/h2/span/a@href");
 
@@ -2070,9 +2016,7 @@ definition {
 			selectedAsset = "Document",
 			selectMoreThanOneSubtype = "true");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site B");
-
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site B");
 
 		var key_larFileName = "${larFileName}";
 
@@ -2229,7 +2173,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Title 1");
 
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name");
 
 		var key_larFileName = "${larFileName}";
 
@@ -2274,7 +2218,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WebContent Content");
 
-		LAR.exportSiteCP();
+		LAR.exportSiteCP(siteScopeName = "Site Name A");
 
 		var key_larFileName = "${larFileName}";
 

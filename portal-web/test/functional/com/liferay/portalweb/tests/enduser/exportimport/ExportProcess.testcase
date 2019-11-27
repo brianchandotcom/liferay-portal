@@ -21,9 +21,9 @@ definition {
 
 	@priority = "4"
 	test DeleteCustomExportProcess {
-		Navigator.openURL();
-
-		LAR.exportSiteCP(larFileName = "CustomExport");
+		LAR.exportSiteCP(
+			larFileName = "CustomExport",
+			siteScopeName = "Guest");
 
 		LAR.deleteCurrentAndPreviousProcess(larFileName = "CustomExport");
 
@@ -50,18 +50,18 @@ definition {
 
 	@priority = "4"
 	test RelaunchCustomExportProcess {
-		Navigator.openURL();
-
-		LAR.exportSiteCP(larFileName = "CustomExport");
+		LAR.exportSiteCP(
+			larFileName = "CustomExport",
+			siteScopeName = "Guest");
 
 		LAR.relaunchCurrentAndPreviousProcess(larFileName = "CustomExport");
 	}
 
 	@priority = "3"
 	test ViewExportProcess {
-		Navigator.openURL();
-
-		LAR.exportSiteCP(larFileName = "CustomExport");
+		LAR.exportSiteCP(
+			larFileName = "CustomExport",
+			siteScopeName = "Guest");
 
 		Refresh();
 

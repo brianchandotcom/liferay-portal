@@ -190,7 +190,7 @@ definition {
 	@priority = "5"
 	test ImportLiveSiteToStagingSite {
 		task ("Export the first site") {
-			LAR.openExportAdmin(siteURLKey = "test-site-name-1");
+			LAR.openExportAdmin(siteScopeName = "test-site-name-1");
 
 			LexiconEntry.gotoAdd();
 

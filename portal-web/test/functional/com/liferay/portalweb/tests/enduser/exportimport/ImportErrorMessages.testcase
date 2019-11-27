@@ -9,13 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Import");
 	}
 
 	tearDown {
@@ -36,6 +29,7 @@ definition {
 			import6210buildNumber = "true",
 			importFail = "true",
 			larFileName = "6210buildNumber.lar",
+			siteName = "Guest",
 			uploadFrom = "dependencies");
 	}
 

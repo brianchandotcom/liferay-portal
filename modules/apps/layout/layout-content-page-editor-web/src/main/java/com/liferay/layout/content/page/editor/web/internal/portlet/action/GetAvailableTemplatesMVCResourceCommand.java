@@ -14,8 +14,11 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.provider.InfoObjectDDMTemplateProvider;
+import com.liferay.info.provider.InfoObjectDDMTemplateProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,6 +62,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		String className = ParamUtil.getString(resourceRequest, "className");
+		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -67,12 +71,32 @@ public class GetAvailableTemplatesMVCResourceCommand
 
 		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
 			JSONObject jsonObject = JSONUtil.put(
-				"key", infoItemRenderer.getKey()
+				"infoItemRendererKey", infoItemRenderer.getKey()
 			).put(
 				"label", infoItemRenderer.getLabel(themeDisplay.getLocale())
 			);
 
 			jsonArray.put(jsonObject);
+		}
+
+		InfoObjectDDMTemplateProvider infoObjectDDMTemplateProvider =
+			_infoObjectDDMTemplateProviderTracker.
+				getInfoObjectDDMTemplateProvider(className);
+
+		if (infoObjectDDMTemplateProvider != null) {
+			List<DDMTemplate> ddmTemplates =
+				infoObjectDDMTemplateProvider.getDDMTemplates(classPK);
+
+			ddmTemplates.forEach(
+				ddmTemplate -> {
+					JSONObject jsonObject = JSONUtil.put(
+						"ddmTemplateKey", ddmTemplate.getTemplateKey()
+					).put(
+						"label", ddmTemplate.getName(themeDisplay.getLocale())
+					);
+
+					jsonArray.put(jsonObject);
+				});
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -81,5 +105,9 @@ public class GetAvailableTemplatesMVCResourceCommand
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;
+
+	@Reference
+	private InfoObjectDDMTemplateProviderTracker
+		_infoObjectDDMTemplateProviderTracker;
 
 }

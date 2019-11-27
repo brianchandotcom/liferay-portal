@@ -18,29 +18,41 @@ import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layou
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 function addItem(items, action) {
-	const {config, itemId, itemType, parentId} = action;
+	const {config, itemId, itemType, siblingId} = action;
 	const defaultConfig = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[itemType];
-	const parentItem = items[parentId];
+	const siblingItem = items[siblingId];
 
 	if (itemId in items) {
 		return items;
 	}
 
+	let currentItem;
+
+	if (siblingItem.type === LAYOUT_DATA_ITEM_TYPES.column) {
+		currentItem = siblingItem;
+	} else {
+		currentItem = items[siblingItem.parentId];
+	}
+
 	if (process.env.NODE_ENV === 'development') {
-		if (!parentItem) {
-			console.error(`Parent item "${parentId}" does not exist`);
+		if (!currentItem) {
+			console.error(`Parent item "${currentItem.itemId}" does not exist`);
 		} else if (
 			!LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(
-				parentItem.type
+				currentItem.type
 			)
 		) {
 			console.error(
-				`Item of type "${itemType}" shouldn't be placed inside "${parentItem.type}"`
+				`Item of type "${itemType}" shouldn't be placed inside "${currentItem.type}"`
 			);
 		}
 	}
 
-	const {position = parentItem.children.length} = action;
+	const children = [...currentItem.children];
+	const {position = currentItem.children.length} = action;
+	const siblingIndex = children.findIndex(child => child === siblingId);
+
+	children.splice(siblingIndex + position, 0, itemId);
 
 	return {
 		...items,
@@ -52,17 +64,13 @@ function addItem(items, action) {
 				...config
 			},
 			itemId,
-			parentId,
+			parentId: currentItem.itemId,
 			type: itemType
 		},
 
-		[parentId]: {
-			...parentItem,
-			children: [
-				...parentItem.children.slice(0, position),
-				itemId,
-				...parentItem.children.slice(position)
-			]
+		[currentItem.itemId]: {
+			...currentItem,
+			children
 		}
 	};
 }

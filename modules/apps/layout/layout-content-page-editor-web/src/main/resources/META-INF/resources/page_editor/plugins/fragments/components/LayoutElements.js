@@ -41,7 +41,7 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 		end(item, monitor) {
 			const config = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[type];
 
-			const {parentId, position} = monitor.getDropResult();
+			const {position, siblingId} = monitor.getDropResult();
 
 			const itemId = `layout-${Date.now()}`;
 			const itemType = item.type;
@@ -51,8 +51,8 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 					config,
 					itemId,
 					itemType,
-					parentId,
-					position
+					position,
+					siblingId
 				})
 			);
 		},

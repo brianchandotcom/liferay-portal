@@ -19,8 +19,8 @@ export default function addFragment({
 	config,
 	fragmentGroupId,
 	fragmentKey,
-	parentId,
 	position,
+	siblingId,
 	store
 }) {
 	return dispatch => {
@@ -45,8 +45,9 @@ export default function addFragment({
 				addFragmentEntryLink({
 					fragmentEntryLink,
 					itemId: `thing-${Date.now()}`,
-					parentId,
-					position
+					itemType: LAYOUT_DATA_ITEM_TYPES.fragment,
+					position,
+					siblingId
 				})
 			);
 		});

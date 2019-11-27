@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_IMAGE</td>
+	<td>//div[contains(@class,'preview-seo-image')]//img[contains(@src,'${key_imageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_SERP</td>
 	<td>//div[contains(@class,'preview-seo-serp')]</td>
 	<td></td>

@@ -367,6 +367,7 @@ public interface BookmarksEntryLocalService
 	public BookmarksEntry moveEntryToTrash(long userId, long entryId)
 		throws PortalException;
 
+	@Transactional(enabled = false)
 	public BookmarksEntry openEntry(long userId, BookmarksEntry entry);
 
 	public BookmarksEntry openEntry(long userId, long entryId)

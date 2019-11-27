@@ -49,7 +49,6 @@ public interface SitesItemSelectorViewDisplayContext {
 	public PortletURL getPortletURL() throws PortletException;
 
 	/**
-	 *
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getGroupItemSelectorCriterion()}
 	 */

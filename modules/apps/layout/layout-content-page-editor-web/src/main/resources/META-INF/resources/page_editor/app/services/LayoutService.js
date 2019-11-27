@@ -12,17 +12,25 @@
  * details.
  */
 
-import LayoutService from '../services/LayoutService';
+import serviceFetch from './serviceFetch';
 
-export default function updateLayoutData({
-	config,
-	layoutData,
-	segmentsExperienceId
-}) {
-	return () =>
-		LayoutService.updateLayoutData({
-			config,
-			layoutData,
+export default {
+	/**
+	 * Updates layout's layoutData
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
+	 * @param {object} options.layoutData New layoutData
+	 * @return {Promise<void>}
+	 */
+	updateLayoutData({config, layoutData, segmentsExperienceId}) {
+		const {classNameId, classPK, updateLayoutPageTemplateDataURL} = config;
+
+		return serviceFetch(config, updateLayoutPageTemplateDataURL, {
+			classNameId,
+			classPK,
+			data: JSON.stringify(layoutData),
 			segmentsExperienceId
 		});
-}
+	}
+};

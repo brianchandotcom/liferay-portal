@@ -15,6 +15,7 @@
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useRef} from 'react';
+import {useDrop} from 'react-dnd';
 
 import FloatingToolbar from '../components/FloatingToolbar';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../config/constants/layoutDataFloatingToolbarButtons';
@@ -133,8 +134,14 @@ const LAYOUT_DATA_ITEMS = {
 
 const LAYOUT_DATA_ACCEPT_DROP_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.fragment],
-	[LAYOUT_DATA_ITEM_TYPES.container]: [LAYOUT_DATA_ITEM_TYPES.container],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [LAYOUT_DATA_ITEM_TYPES.fragment],
+	[LAYOUT_DATA_ITEM_TYPES.container]: [
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.fragment
+	],
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.container
+	],
 	[LAYOUT_DATA_ITEM_TYPES.root]: [],
 	[LAYOUT_DATA_ITEM_TYPES.row]: []
 };
@@ -200,6 +207,42 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 	);
 };
 
+const LayoutEmptyState = ({item}) => {
+	const [{isOver}, drop] = useDrop({
+		accept: [
+			LAYOUT_DATA_ITEM_TYPES.container,
+			LAYOUT_DATA_ITEM_TYPES.fragment
+		],
+		collect(_monitor) {
+			return {
+				isOver: _monitor.isOver({shallow: true})
+			};
+		},
+		drop(_item, _monitor) {
+			return {
+				itemId: _item.itemId,
+				itemType: _monitor.getItemType(),
+				position: 0,
+				siblingId: item.itemId
+			};
+		}
+	});
+
+	return (
+		<div
+			className={classNames('fragment-editor-empty-state mt-4', {
+				isOver
+			})}
+			ref={drop}
+		>
+			<div className="fragment-editor-empty-state__image taglib-empty-result-message-header"></div>
+			<div className="text-center text-muted">
+				{Liferay.Language.get('place-fragments-here')}
+			</div>
+		</div>
+	);
+};
+
 export default function PageEditor() {
 	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
@@ -228,6 +271,12 @@ export default function PageEditor() {
 			}
 		}
 	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
+
+	if (mainItem.children.length === 0) {
+		return (
+			<LayoutEmptyState item={mainItem} />
+		);
+	}
 
 	return (
 		<LayoutDataItem

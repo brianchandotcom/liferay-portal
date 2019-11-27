@@ -17,6 +17,17 @@ import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAl
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
+const LAYOUT_DATA_INSERT_INNER = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.row],
+	[LAYOUT_DATA_ITEM_TYPES.container]: [LAYOUT_DATA_ITEM_TYPES.root],
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
+		LAYOUT_DATA_ITEM_TYPES.column,
+		LAYOUT_DATA_ITEM_TYPES.root
+	],
+	[LAYOUT_DATA_ITEM_TYPES.root]: [],
+	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_ITEM_TYPES.container]
+};
+
 function addItem(items, action) {
 	const {config, itemId, itemType, siblingId} = action;
 	const defaultConfig = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[itemType];
@@ -28,7 +39,7 @@ function addItem(items, action) {
 
 	let currentItem;
 
-	if (siblingItem.type === LAYOUT_DATA_ITEM_TYPES.column) {
+	if (LAYOUT_DATA_INSERT_INNER[itemType].includes(siblingItem.type)) {
 		currentItem = siblingItem;
 	} else {
 		currentItem = items[siblingItem.parentId];
@@ -92,7 +103,7 @@ function moveItem(items, action) {
 	const siblingItem = items[siblingId];
 	let currentItem;
 
-	if (siblingItem.type === LAYOUT_DATA_ITEM_TYPES.column) {
+	if (LAYOUT_DATA_INSERT_INNER[item.type].includes(siblingItem.type)) {
 		currentItem = siblingItem;
 	} else {
 		currentItem = items[siblingItem.parentId];

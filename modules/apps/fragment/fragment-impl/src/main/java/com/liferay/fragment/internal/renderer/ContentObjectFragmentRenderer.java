@@ -195,11 +195,30 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return defaultInfoItemRenderer;
 		}
 
-		String ddmTemplateKey = jsonObject.getString("template");
+		JSONObject templateJSONObject = jsonObject.getJSONObject("template");
+
+		String ddmTemplateKey = null;
+		String infoItemRendererKey = null;
+
+		if (templateJSONObject != null) {
+			ddmTemplateKey = templateJSONObject.getString("ddmTemplateKey");
+			infoItemRendererKey = templateJSONObject.getString(
+				"infoItemRendererKey");
+		}
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			httpServletRequest.setAttribute(
 				WebKeys.JOURNAL_TEMPLATE_ID, ddmTemplateKey);
+		}
+
+		if (Validator.isNotNull(infoItemRendererKey)) {
+			InfoItemRenderer infoItemRenderer =
+				_infoItemRendererTracker.getInfoItemRenderer(
+					infoItemRendererKey);
+
+			if (infoItemRenderer != null) {
+				return infoItemRenderer;
+			}
 		}
 
 		return defaultInfoItemRenderer;

@@ -33,8 +33,6 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
-
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
 String layoutSetBranchName = StringPool.BLANK;

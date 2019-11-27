@@ -147,6 +147,17 @@ public class SegmentsEntryRoleLocalServiceImpl
 		return segmentsEntryRolePersistence.countByRoleId(roleId);
 	}
 
+	@Override
+	public boolean hasSegmentEntryRole(long segmentsEntryId, long roleId) {
+		if (segmentsEntryRolePersistence.fetchByS_R(segmentsEntryId, roleId) !=
+				null) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _reindex(long segmentsEntryId) throws PortalException {
 		SegmentsEntry segmentsEntry =
 			segmentsEntryPersistence.fetchByPrimaryKey(segmentsEntryId);

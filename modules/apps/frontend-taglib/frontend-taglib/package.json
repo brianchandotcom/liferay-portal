@@ -8,9 +8,7 @@
 		"@clayui/icon": "3.0.1",
 		"@clayui/list": "3.0.3",
 		"@clayui/modal": "3.1.2",
-		"@clayui/sticker": "3.0.2",
 		"@clayui/tabs": "3.0.3",
-		"classnames": "2.2.6",
 		"clay-dropdown": "2.19.0",
 		"clay-modal": "2.19.0",
 		"frontend-js-react-web": "*",
@@ -27,8 +25,7 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "5.0.0"
 }

@@ -6,6 +6,10 @@
 	.journal-content-article {
 		word-wrap: break-word;
 
+		blockquote {
+			margin: 1em 40px;
+		}
+
 		img,
 		.cke_widget_image {
 			max-width: 100%;

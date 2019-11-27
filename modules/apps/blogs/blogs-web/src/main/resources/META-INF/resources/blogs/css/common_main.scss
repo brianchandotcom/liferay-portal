@@ -62,6 +62,10 @@
 	.widget-mode-simple-entry .widget-content {
 		word-wrap: break-word;
 
+		blockquote {
+			margin: 1em 40px;
+		}
+
 		img,
 		.cke_widget_embedurl,
 		.cke_widget_image,

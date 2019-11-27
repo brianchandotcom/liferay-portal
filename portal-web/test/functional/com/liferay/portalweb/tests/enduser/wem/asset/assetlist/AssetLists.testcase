@@ -52,35 +52,6 @@ definition {
 		}
 	}
 
-	@description = "Assert that the JSON works for adding Asset Lists."
-	test AddAssetListViaJSON {
-		task ("Create a manual asset list via JSON") {
-			JSONAssetlist.addAssetLists(
-				groupName = "Test Site Name",
-				selectionType = "Manual",
-				title = "Manual Asset List Test");
-		}
-
-		task ("Create a dynamic asset list") {
-			JSONAssetlist.addAssetLists(
-				groupName = "Test Site Name",
-				selectionType = "Dynamic",
-				title = "Dynamic Asset List Test");
-		}
-
-		task ("Assert Asset List Entry names and types") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.viewAssetList(
-				assetListTitle = "Manual Asset List Test",
-				type = "Manual");
-
-			AssetListsAdmin.viewAssetList(
-				assetListTitle = "Dynamic Asset List Test",
-				type = "Dynamic");
-		}
-	}
-
 	@description = "Assert that the UI correctly displays a useful error message when an Asset List is added with a duplicate name."
 	@priority = "3"
 	test AddDuplicateAssetList {

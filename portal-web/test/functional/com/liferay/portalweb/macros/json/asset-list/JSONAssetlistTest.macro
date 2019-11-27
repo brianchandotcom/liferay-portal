@@ -1,0 +1,28 @@
+definition {
+
+	@summary = "Basic Smoke test for the JSON WS API macros"
+	macro runSmoke {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		//manual
+
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "${groupName}",
+			title = "Asset List Manual");
+
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "${groupName}",
+			title = "Asset List Manual 2");
+
+		//dynamic
+
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "${groupName}",
+			title = "Asset List Dynamic");
+
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "${groupName}",
+			title = "Asset List Dynamic 2");
+	}
+
+}

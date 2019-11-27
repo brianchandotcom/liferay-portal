@@ -26,6 +26,7 @@ definition {
 	test RunAllJSONMacros {
 		property portal.acceptance = "true";
 
+		JSONAssetlistTest.runSmoke(groupName = "Test Site Name");
 		JSONCategoryTest.runSmoke(groupName = "Test Site Name");
 		JSONFragmentTest.runSmoke(groupName = "Test Site Name");
 		JSONGroupTest.runSmoke();

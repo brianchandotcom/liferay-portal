@@ -64,21 +64,24 @@ public class SegmentsEntrySearchContainerFactory {
 
 		searchContainer.setOrderByType(orderByType);
 
+		long roleId = ParamUtil.getLong(renderRequest, "roleId");
 		String tabs3 = ParamUtil.getString(renderRequest, "tabs3", "current");
-
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(renderResponse));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
 		if (tabs3.equals("current")) {
-			long roleId = ParamUtil.getLong(renderRequest, "roleId");
-
 			params.put("roleIds", new long[] {roleId});
+
+			searchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(renderResponse));
 		}
+		else {
+			searchContainer.setRowChecker(
+				new SegmentsEntryRoleChecker(renderResponse, roleId));
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		BaseModelSearchResult baseModelSearchResult =
 			SegmentsEntryLocalServiceUtil.searchSegmentsEntries(

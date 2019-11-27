@@ -39,6 +39,14 @@
 	</div>
 
 	<aui:field-wrapper>
+		<aui:input label="localize-field-name" name="Property--localize-field-name--" type="toggle-switch" value="<%= propertyLocalizeFieldName %>" />
+
+		<div class="form-text">
+			<liferay-ui:message key="custom-field-localize-field-name-help" />
+		</div>
+	</aui:field-wrapper>
+
+	<aui:field-wrapper>
 		<aui:input label="visible-with-update-permission" name="Property--visible-with-update-permission--" type="toggle-switch" value="<%= propertyVisibleWithUpdatePermission %>" />
 
 		<div class="form-text">

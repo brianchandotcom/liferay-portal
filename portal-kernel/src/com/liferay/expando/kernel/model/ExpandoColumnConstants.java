@@ -144,6 +144,9 @@ public class ExpandoColumnConstants {
 
 	public static final String PROPERTY_HIDDEN = "hidden";
 
+	public static final String PROPERTY_LOCALIZE_FIELD_NAME =
+		"localize-field-name";
+
 	public static final String PROPERTY_SECRET = "secret";
 
 	public static final String PROPERTY_VISIBLE_WITH_UPDATE_PERMISSION =

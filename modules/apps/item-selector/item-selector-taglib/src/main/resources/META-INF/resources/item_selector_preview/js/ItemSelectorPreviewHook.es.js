@@ -73,8 +73,7 @@ const ItemSelectorPreview = ({
 
 			Liferay.detach(updateCurrentItemHandler);
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [itemList]);
 
 	const close = () => {
 		ReactDOM.unmountComponentAtNode(container);
@@ -129,21 +128,21 @@ const ItemSelectorPreview = ({
 
 	const handleClickNext = () => {
 		if (itemList.length > 1) {
-			const lastIndex = itemList.length - 1;
-			const shouldResetIndex = currentItemIndex === lastIndex;
-			const index = shouldResetIndex ? 0 : currentItemIndex + 1;
-
-			setCurrentItemIndex(index);
+			setCurrentItemIndex(index => {
+				const lastIndex = itemList.length - 1;
+				const shouldResetIndex = index === lastIndex;
+				return shouldResetIndex ? 0 : index + 1;
+			});
 		}
 	};
 
 	const handleClickPrevious = () => {
 		if (itemList.length > 1) {
-			const lastIndex = itemList.length - 1;
-			const shouldResetIndex = currentItemIndex === 0;
-			const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
-
-			setCurrentItemIndex(index);
+			setCurrentItemIndex(index => {
+				const lastIndex = itemList.length - 1;
+				const shouldResetIndex = index === 0;
+				return shouldResetIndex ? lastIndex : index - 1;
+			});
 		}
 	};
 

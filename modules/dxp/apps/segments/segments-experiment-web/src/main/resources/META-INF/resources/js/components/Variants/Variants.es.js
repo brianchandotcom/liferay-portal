@@ -62,6 +62,10 @@ function Variants({selectedSegmentsExperienceId}) {
 		<>
 			<h4 className="mb-3 mt-4 sheet-subtitle">
 				{Liferay.Language.get('variants')}
+				<ClayIcon
+					className="ml-1 reference-mark text-warning"
+					symbol="asterisk"
+				/>
 			</h4>
 
 			{variants.length === 1 && (

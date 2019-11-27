@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add an Asset List."
 	macro addDynamicAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 

@@ -28,17 +28,13 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -48,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -103,28 +98,6 @@ public class DisplayPageVerticalCard
 	@Override
 	public String getHref() {
 		try {
-			if (Objects.equals(
-					_layoutPageTemplateEntry.getType(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
-
-				LayoutPrototype layoutPrototype =
-					LayoutPrototypeLocalServiceUtil.fetchLayoutPrototype(
-						_layoutPageTemplateEntry.getLayoutPrototypeId());
-
-				if (layoutPrototype == null) {
-					return null;
-				}
-
-				Group layoutPrototypeGroup = layoutPrototype.getGroup();
-
-				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
-					_themeDisplay, true);
-
-				return HttpUtil.setParameter(
-					layoutFullURL, "p_l_back_url",
-					_themeDisplay.getURLCurrent());
-			}
-
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				_layoutPageTemplateEntry.getPlid());
 

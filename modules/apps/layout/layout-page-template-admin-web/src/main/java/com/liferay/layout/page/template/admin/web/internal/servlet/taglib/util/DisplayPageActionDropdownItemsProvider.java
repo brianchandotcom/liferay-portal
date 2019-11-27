@@ -31,14 +31,11 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -211,37 +208,7 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getEditDisplayPageActionUnsafeConsumer()
-		throws Exception {
-
-		if (Objects.equals(
-				_layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
-
-			LayoutPrototype layoutPrototype =
-				LayoutPrototypeLocalServiceUtil.fetchLayoutPrototype(
-					_layoutPageTemplateEntry.getLayoutPrototypeId());
-
-			if (layoutPrototype == null) {
-				return null;
-			}
-
-			Group layoutPrototypeGroup = layoutPrototype.getGroup();
-
-			return dropdownItem -> {
-				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
-					_themeDisplay, true);
-
-				layoutFullURL = HttpUtil.setParameter(
-					layoutFullURL, "p_l_back_url",
-					_themeDisplay.getURLCurrent());
-
-				dropdownItem.setHref(layoutFullURL);
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "edit"));
-			};
-		}
+		_getEditDisplayPageActionUnsafeConsumer() {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			_layoutPageTemplateEntry.getPlid());

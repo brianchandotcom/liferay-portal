@@ -109,7 +109,7 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	protected String getAllowedContentText() {
-		return "b code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
+		return "b blockquote code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
 	}
 
 	protected void populateFileBrowserURL(

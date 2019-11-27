@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistry;
 import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -165,7 +164,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	public void register(DLProcessor dlProcessor) {
 		ServiceRegistration<DLProcessor> serviceRegistration =
 			_bundleContext.registerService(
-				DLProcessor.class, dlProcessor, null);
+				DLProcessor.class, dlProcessor,
+				MapUtil.singletonDictionary("type", dlProcessor.getType()));
 
 		ServiceRegistration<DLProcessor> previousServiceRegistration =
 			_serviceRegistrations.put(dlProcessor, serviceRegistration);
@@ -226,26 +226,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 		_dlProcessorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DLProcessor.class, null,
-				new ServiceReferenceMapper<String, DLProcessor>() {
-
-					@Override
-					public void map(
-						ServiceReference<DLProcessor> serviceReference,
-						Emitter<String> emitter) {
-
-						DLProcessor dlProcessor = _bundleContext.getService(
-							serviceReference);
-
-						try {
-							emitter.emit(dlProcessor.getType());
-						}
-						finally {
-							_bundleContext.ungetService(serviceReference);
-						}
-					}
-
-				});
+				bundleContext, DLProcessor.class, "type");
 
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 

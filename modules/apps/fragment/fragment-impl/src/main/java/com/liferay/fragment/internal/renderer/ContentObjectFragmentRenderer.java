@@ -44,10 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Ferrer
  */
-@Component(
-	configurationPid = "com.liferay.fragment.internal.configuration.ContentObjectConfiguration",
-	service = FragmentRenderer.class
-)
+@Component(service = FragmentRenderer.class)
 public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 	@Override

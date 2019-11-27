@@ -32,23 +32,14 @@ const {Suspense, useCallback, useContext, useRef} = React;
 
 function ToolbarBody() {
 	const config = useContext(ConfigContext);
-
-	const {
-		availableLanguages,
-		defaultLanguageId,
-		singleSegmentsExperienceMode,
-		toolbarPlugins
-	} = config;
-
 	const dispatch = useContext(DispatchContext);
-
+	const {getInstance, register} = usePlugins();
+	const isMounted = useIsMounted();
+	const load = useLoad();
 	const store = useContext(StoreContext);
 
-	const isMounted = useIsMounted();
-
-	const load = useLoad();
-
-	const {getInstance, register} = usePlugins();
+	const {languageIcon} = config.availableLanguages[config.defaultLanguageId];
+	const {singleSegmentsExperienceMode, toolbarPlugins} = config;
 
 	const loading = useRef(() => {
 		Promise.all(
@@ -101,8 +92,6 @@ function ToolbarBody() {
 			}
 		}, [])
 	);
-
-	const {languageIcon} = availableLanguages[defaultLanguageId];
 
 	return (
 		<div className="container-fluid container-fluid-max-xl page-editor-toolbar">
@@ -198,9 +187,8 @@ class ErrorBoundary extends React.Component {
 }
 
 export default function Toolbar() {
-	const {toolbarId} = useContext(ConfigContext);
-
 	const isMounted = useIsMounted();
+	const {toolbarId} = useContext(ConfigContext);
 
 	const container = document.getElementById(toolbarId);
 

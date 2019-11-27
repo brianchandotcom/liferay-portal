@@ -15,14 +15,18 @@
 import {fetch} from 'frontend-js-web';
 
 export default function updateLayoutData({
-	classNameId,
-	classPK,
+	config,
 	layoutData,
-	portletNamespace,
-	segmentsExperienceId,
-	updateLayoutPageTemplateDataURL
+	segmentsExperienceId
 }) {
 	return _dispatch => {
+		const {
+			classNameId,
+			classPK,
+			portletNamespace,
+			updateLayoutPageTemplateDataURL
+		} = config;
+
 		const formData = new FormData();
 
 		formData.append(`${portletNamespace}classNameId`, classNameId);

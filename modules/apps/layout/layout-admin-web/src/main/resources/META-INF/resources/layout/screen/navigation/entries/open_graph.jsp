@@ -32,6 +32,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <aui:form action="<%= editOpenGraphURL %>" method="post" name="fm">
 	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />

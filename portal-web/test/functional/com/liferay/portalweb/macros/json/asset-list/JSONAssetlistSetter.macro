@@ -11,11 +11,11 @@ definition {
 	macro setType {
 		Variables.assertDefined(parameterList = "${selectionType}");
 
-		if ("${selectionType}" == "Manual") {
+		if ("${selectionType}" == "manual") {
 			var type = "1";
 		}
 
-		if ("${selectionType}" == "Dynamic") {
+		if ("${selectionType}" == "dynamic") {
 			var type = "0";
 		}
 

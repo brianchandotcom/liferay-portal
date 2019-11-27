@@ -57,7 +57,7 @@ class TranslationStatus extends Component {
 		const editableValues = Object.values(state.fragmentEntryLinks)
 			.filter(
 				fragmentEntryLink =>
-					!fragmentEntryLink.masterLayout &&
+					!fragmentEntryLink.masterPage &&
 					fragmentEntryLink.editableValues
 			)
 			.map(fragmentEntryLink => [

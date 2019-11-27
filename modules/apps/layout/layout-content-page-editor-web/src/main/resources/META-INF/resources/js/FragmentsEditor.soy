@@ -6,7 +6,7 @@
 {template .render}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
-	{@param masterLayoutData: ?}
+	{@param masterPageLayoutData: ?}
 	{@param? hasUpdatePermissions: bool}
 	{@param? id: string}
 	{@param? store: ?}
@@ -25,11 +25,11 @@
 			{param store: $store /}
 		{/call}
 
-		{if $masterLayoutData and $masterLayoutData.structure and (length($masterLayoutData.structure) > 0)}
+		{if $masterPageLayoutData and $masterPageLayoutData.structure and (length($masterPageLayoutData.structure) > 0)}
 			{call com.liferay.layout.content.page.editor.web.MasterFragmentEntryLinkList.render}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param layoutData: $layoutData /}
-				{param masterLayoutData: $masterLayoutData /}
+				{param masterPageLayoutData: $masterPageLayoutData /}
 				{param store: $store /}
 			{/call}
 		{else}

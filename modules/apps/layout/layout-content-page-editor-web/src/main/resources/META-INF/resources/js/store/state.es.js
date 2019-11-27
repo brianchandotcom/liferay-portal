@@ -548,11 +548,11 @@ const INITIAL_STATE = {
 	mappingFieldsURL: Config.string().value(''),
 
 	/**
-	 * Master layout data
+	 * Master page layout data
 	 * @review
 	 * @type {{structure: Array}}
 	 */
-	masterLayoutData: LayoutDataShape,
+	masterPageLayoutData: LayoutDataShape,
 
 	/**
 	 * @default []

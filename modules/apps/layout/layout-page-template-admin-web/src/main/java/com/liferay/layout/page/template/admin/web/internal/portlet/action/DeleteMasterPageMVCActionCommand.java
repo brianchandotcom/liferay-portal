@@ -43,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-		"mvc.command.name=/layout_page_template/delete_master_layout"
+		"mvc.command.name=/layout_page_template/delete_master_page"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteMasterPageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -126,7 +126,7 @@ public class DeleteMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteMasterLayoutMVCActionCommand.class);
+		DeleteMasterPageMVCActionCommand.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

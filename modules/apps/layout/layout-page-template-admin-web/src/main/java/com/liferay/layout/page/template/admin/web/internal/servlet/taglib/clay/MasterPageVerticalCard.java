@@ -20,7 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
-import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterLayoutActionDropdownItemsProvider;
+import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,10 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class MasterLayoutVerticalCard
+public class MasterPageVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
-	public MasterLayoutVerticalCard(
+	public MasterPageVerticalCard(
 		BaseModel<?> baseModel, RenderRequest renderRequest,
 		RenderResponse renderResponse, RowChecker rowChecker) {
 
@@ -62,13 +62,13 @@ public class MasterLayoutVerticalCard
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		try {
-			MasterLayoutActionDropdownItemsProvider
-				masterLayoutActionDropdownItemsProvider =
-					new MasterLayoutActionDropdownItemsProvider(
+			MasterPageActionDropdownItemsProvider
+				masterPageActionDropdownItemsProvider =
+					new MasterPageActionDropdownItemsProvider(
 						_layoutPageTemplateEntry, _renderRequest,
 						_renderResponse);
 
-			return masterLayoutActionDropdownItemsProvider.
+			return masterPageActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
 		catch (Exception e) {
@@ -80,7 +80,7 @@ public class MasterLayoutVerticalCard
 	@Override
 	public String getDefaultEventHandler() {
 		return LayoutPageTemplateAdminWebKeys.
-			MASTER_LAYOUT_DROPDOWN_DEFAULT_EVENT_HANDLER;
+			MASTER_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

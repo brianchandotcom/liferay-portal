@@ -95,7 +95,7 @@ if (layoutPageTemplateEntry == null) {
 }
 %>
 
-<c:if test="<%= (layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) %>">
+<c:if test="<%= (layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE) %>">
 
 	<%
 	LayoutPageTemplateEntry masterLayoutPageTemplateEntry = null;

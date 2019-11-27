@@ -44,18 +44,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class MasterLayoutManagementToolbarDisplayContext
+public class MasterPageManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public MasterLayoutManagementToolbarDisplayContext(
+	public MasterPageManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		MasterLayoutDisplayContext masterLayoutDisplayContext) {
+		MasterPageDisplayContext masterPageDisplayContext) {
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			masterLayoutDisplayContext.getMasterLayoutsSearchContainer());
+			masterPageDisplayContext.getMasterPagesSearchContainer());
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -68,7 +68,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 				add(
 					dropdownItem -> {
 						dropdownItem.putData(
-							"action", "deleteSelectedMasterLayouts");
+							"action", "deleteSelectedMasterPages");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));
@@ -86,7 +86,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 				_themeDisplay.getPermissionChecker(), layoutPageTemplateEntry,
 				ActionKeys.DELETE)) {
 
-			return "deleteSelectedMasterLayouts";
+			return "deleteSelectedMasterPages";
 		}
 
 		return StringPool.BLANK;
@@ -103,23 +103,20 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public String getComponentId() {
-		return "masterLayoutsManagementToolbar";
+		return "masterPagesManagementToolbar";
 	}
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		PortletURL addMasterLayoutURL =
-			liferayPortletResponse.createActionURL();
+		PortletURL addMasterPageURL = liferayPortletResponse.createActionURL();
 
-		addMasterLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template/add_master_layout");
-		addMasterLayoutURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
-		addMasterLayoutURL.setParameter(
+		addMasterPageURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout_page_template/add_master_page");
+		addMasterPageURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+		addMasterPageURL.setParameter(
 			"type",
 			String.valueOf(
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT));
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE));
 
 		return new CreationMenu() {
 			{
@@ -127,10 +124,9 @@ public class MasterLayoutManagementToolbarDisplayContext
 					dropdownItem -> {
 						Map<String, Object> dropDownItemData =
 							HashMapBuilder.<String, Object>put(
-								"action", "addMasterLayout"
+								"action", "addMasterPage"
 							).put(
-								"addMasterLayoutURL",
-								addMasterLayoutURL.toString()
+								"addMasterPageURL", addMasterPageURL.toString()
 							).build();
 
 						dropdownItem.setData(dropDownItemData);
@@ -143,7 +139,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public String getDefaultEventHandler() {
-		return "MASTER_LAYOUT_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+		return "MASTER_PAGE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override
@@ -155,7 +151,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return "masterLayouts";
+		return "masterPages";
 	}
 
 	@Override

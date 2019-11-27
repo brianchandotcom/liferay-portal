@@ -19,29 +19,29 @@ import {
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
 
-class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
-	copyMasterLayout(itemData) {
-		this._send(itemData.copyMasterLayoutURL);
+class MasterPageDropdownDefaultEventHandler extends DefaultEventHandler {
+	copyMasterPage(itemData) {
+		this._send(itemData.copyMasterPageURL);
 	}
 
-	deleteMasterLayout(itemData) {
+	deleteMasterPage(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			this._send(itemData.deleteMasterLayoutURL);
+			this._send(itemData.deleteMasterPageURL);
 		}
 	}
 
-	deleteMasterLayoutPreview(itemData) {
-		this._send(itemData.deleteMasterLayoutPreviewURL);
+	deleteMasterPagePreview(itemData) {
+		this._send(itemData.deleteMasterPagePreviewURL);
 	}
 
-	renameMasterLayout(itemData) {
+	renameMasterPage(itemData) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-master-page'),
-			formSubmitURL: itemData.updateMasterLayoutURL,
+			formSubmitURL: itemData.updateMasterPageURL,
 			idFieldName: 'layoutPageTemplateEntryId',
 			idFieldValue: itemData.layoutPageTemplateEntryId,
 			mainFieldLabel: Liferay.Language.get('name'),
@@ -53,7 +53,7 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 		});
 	}
 
-	updateMasterLayoutPreview(itemData) {
+	updateMasterPagePreview(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('ok'),
 			eventName: this.ns('changePreview'),
@@ -71,7 +71,7 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 					itemData.layoutPageTemplateEntryId;
 				this.one('#fileEntryId').value = itemValue.fileEntryId;
 
-				submitForm(this.one('#masterLayoutPreviewFm'));
+				submitForm(this.one('#masterPagePreviewFm'));
 			}
 		});
 
@@ -83,8 +83,8 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 }
 
-MasterLayoutDropdownDefaultEventHandler.STATE = {
+MasterPageDropdownDefaultEventHandler.STATE = {
 	spritemap: Config.string()
 };
 
-export default MasterLayoutDropdownDefaultEventHandler;
+export default MasterPageDropdownDefaultEventHandler;

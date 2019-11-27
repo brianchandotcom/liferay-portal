@@ -824,7 +824,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
 
 		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
-			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE)) {
 
 			privateLayout = true;
 			layoutType = LayoutConstants.TYPE_CONTENT;
@@ -835,7 +835,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		String typeSettings = StringPool.BLANK;
 
-		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
+		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE) ||
 			(masterLayoutPlid > 0)) {
 
 			UnicodeProperties typeSettingsProperties = new UnicodeProperties();

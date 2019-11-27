@@ -112,7 +112,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(_getSelectMasterLayoutURL());
+						dropdownItem.setHref(_getSelectMasterPageURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "content-page-template"));
 					});
@@ -186,21 +186,20 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 		return actionURL.toString();
 	}
 
-	private String _getSelectMasterLayoutURL() {
-		PortletURL selectMasterLayoutURL =
+	private String _getSelectMasterPageURL() {
+		PortletURL selectMasterPageURL =
 			liferayPortletResponse.createRenderURL();
 
-		selectMasterLayoutURL.setParameter(
-			"mvcPath", "/select_master_layout.jsp");
-		selectMasterLayoutURL.setParameter(
+		selectMasterPageURL.setParameter("mvcPath", "/select_master_page.jsp");
+		selectMasterPageURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
-		selectMasterLayoutURL.setParameter(
+		selectMasterPageURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(
 				_layoutPageTemplateDisplayContext.
 					getLayoutPageTemplateCollectionId()));
 
-		return selectMasterLayoutURL.toString();
+		return selectMasterPageURL.toString();
 	}
 
 	private final LayoutPageTemplateDisplayContext

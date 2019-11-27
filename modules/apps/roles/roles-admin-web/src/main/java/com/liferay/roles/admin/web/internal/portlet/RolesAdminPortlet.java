@@ -67,6 +67,7 @@ import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.web.internal.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.web.internal.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.web.internal.role.type.contributor.provider.RoleTypeContributorProvider;
+import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 
 import java.io.IOException;
 
@@ -299,6 +300,28 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			_groupService.addRoleGroups(roleId, addGroupIds);
 			_groupService.unsetRoleGroups(roleId, removeGroupIds);
+		}
+
+		long[] addSegmentsEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addSegmentsEntryIds"), 0L);
+
+		if (ArrayUtil.isNotEmpty(addSegmentsEntryIds)) {
+			for (long segmentsEntryId : addSegmentsEntryIds) {
+				_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+					segmentsEntryId, roleId,
+					ServiceContextFactory.getInstance(
+						Role.class.getName(), actionRequest));
+			}
+		}
+
+		long[] removeSegmentsEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeSegmentsEntryIds"), 0L);
+
+		if (ArrayUtil.isNotEmpty(removeSegmentsEntryIds)) {
+			for (long segmentsEntryId : removeSegmentsEntryIds) {
+				_segmentsEntryRoleLocalService.deleteSegmentsEntryRole(
+					segmentsEntryId, roleId);
+			}
 		}
 	}
 
@@ -746,6 +769,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;
+
+	@Reference
+	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
 
 	private ServiceTrackerList<PersonalMenuEntry, PersonalMenuEntry>
 		_serviceTrackerList;

@@ -15,11 +15,11 @@
 import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
-class MasterPageManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	addMasterPage(itemData) {
+class MasterLayoutManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	addMasterLayout(itemData) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('add-master-page'),
-			formSubmitURL: itemData.addMasterPageURL,
+			formSubmitURL: itemData.addMasterLayoutURL,
 			mainFieldLabel: Liferay.Language.get('name'),
 			mainFieldName: 'name',
 			mainFieldPlaceholder: Liferay.Language.get('name'),
@@ -28,7 +28,7 @@ class MasterPageManagementToolbarDefaultEventHandler extends DefaultEventHandler
 		});
 	}
 
-	deleteSelectedMasterPages() {
+	deleteSelectedMasterLayouts() {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
@@ -39,8 +39,8 @@ class MasterPageManagementToolbarDefaultEventHandler extends DefaultEventHandler
 	}
 }
 
-MasterPageManagementToolbarDefaultEventHandler.STATE = {
+MasterLayoutManagementToolbarDefaultEventHandler.STATE = {
 	spritemap: Config.string()
 };
 
-export default MasterPageManagementToolbarDefaultEventHandler;
+export default MasterLayoutManagementToolbarDefaultEventHandler;

@@ -108,15 +108,16 @@ public class DisplayPageManagementToolbarDisplayContext
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						PortletURL selectMasterPageURL =
+						PortletURL selectMasterLayoutURL =
 							liferayPortletResponse.createRenderURL();
 
-						selectMasterPageURL.setParameter(
-							"mvcPath", "/select_display_page_master_page.jsp");
-						selectMasterPageURL.setParameter(
+						selectMasterLayoutURL.setParameter(
+							"mvcPath",
+							"/select_display_page_master_layout.jsp");
+						selectMasterLayoutURL.setParameter(
 							"redirect", _themeDisplay.getURLCurrent());
 
-						dropdownItem.setHref(selectMasterPageURL.toString());
+						dropdownItem.setHref(selectMasterLayoutURL.toString());
 
 						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 					});

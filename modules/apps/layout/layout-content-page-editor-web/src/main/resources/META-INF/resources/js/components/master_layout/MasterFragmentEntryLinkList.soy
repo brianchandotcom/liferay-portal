@@ -6,7 +6,7 @@
 {template .render}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
-	{@param masterPageLayoutData: [
+	{@param masterLayoutData: [
 		nextColumnId: number,
 		nextRowId: number,
 		structure: list<[
@@ -36,9 +36,9 @@
 		{/if}
 	{/let}
 
-	{if $masterPageLayoutData.structure and (length($masterPageLayoutData.structure) > 0)}
+	{if $masterLayoutData.structure and (length($masterLayoutData.structure) > 0)}
 		<div class="{$entryLinksClasses}">
-			{foreach $row in $masterPageLayoutData.structure}
+			{foreach $row in $masterLayoutData.structure}
 				{if $row.config and $row.config.isDropZone}
 					{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}

@@ -92,7 +92,7 @@ public class DropZoneFragmentComponentRenderer implements FragmentRenderer {
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE)) {
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
 
 			return true;
 		}

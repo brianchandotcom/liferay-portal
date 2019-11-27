@@ -44,9 +44,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectDisplayPageMasterPageDisplayContext {
+public class SelectDisplayPageMasterLayoutDisplayContext {
 
-	public SelectDisplayPageMasterPageDisplayContext(
+	public SelectDisplayPageMasterLayoutDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
@@ -99,7 +99,7 @@ public class SelectDisplayPageMasterPageDisplayContext {
 		masterLayoutPageTemplateEntries.addAll(
 			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 				_themeDisplay.getScopeGroupId(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE,
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null));
 
@@ -133,7 +133,7 @@ public class SelectDisplayPageMasterPageDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SelectDisplayPageMasterPageDisplayContext.class);
+		SelectDisplayPageMasterLayoutDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;

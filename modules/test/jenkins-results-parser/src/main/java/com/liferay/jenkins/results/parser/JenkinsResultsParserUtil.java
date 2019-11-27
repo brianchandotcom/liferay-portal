@@ -1158,6 +1158,55 @@ public class JenkinsResultsParserUtil {
 		return properties;
 	}
 
+	public static Map<String, String> getJobParameters(String jobURL) {
+		Map<String, String> jobParameters = new HashMap<>();
+
+		try {
+			JSONObject jobJSONObject = toJSONObject(
+				combine(
+					jobURL, "/api/json?tree=actions[parameterDefinitions[",
+					"defaultParameterValue[value],name]]"));
+
+			JSONArray actionsJSONArray = jobJSONObject.getJSONArray("actions");
+
+			JSONObject actionsJSONObject = null;
+
+			for (int i = 0; i < actionsJSONArray.length(); i++) {
+				JSONObject jsonObject = actionsJSONArray.getJSONObject(i);
+
+				if (jsonObject.has("parameterDefinitions")) {
+					actionsJSONObject = jsonObject;
+
+					break;
+				}
+			}
+
+			if (actionsJSONObject == null) {
+				return jobParameters;
+			}
+
+			JSONArray parameterDefinitionsJSONArray =
+				actionsJSONObject.getJSONArray("parameterDefinitions");
+
+			for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
+				JSONObject parameterJSONObject =
+					parameterDefinitionsJSONArray.getJSONObject(i);
+
+				JSONObject defaultParameterValueJSONObject =
+					parameterJSONObject.getJSONObject("defaultParameterValue");
+
+				jobParameters.put(
+					parameterJSONObject.getString("name"),
+					defaultParameterValueJSONObject.getString("value"));
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		return jobParameters;
+	}
+
 	public static String getJobVariant(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 

@@ -39,7 +39,6 @@ const ItemSelectorPreview = ({
 	uploadItemReturnType,
 	uploadItemURL
 }) => {
-	const [currentItem, setCurrentItem] = useState(items[currentIndex]);
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [itemList, setItemList] = useState(items);
 
@@ -134,7 +133,6 @@ const ItemSelectorPreview = ({
 			const shouldResetIndex = currentItemIndex === lastIndex;
 			const index = shouldResetIndex ? 0 : currentItemIndex + 1;
 
-			setCurrentItem(itemList[index]);
 			setCurrentItemIndex(index);
 		}
 	};
@@ -145,7 +143,6 @@ const ItemSelectorPreview = ({
 			const shouldResetIndex = currentItemIndex === 0;
 			const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
 
-			setCurrentItem(itemList[index]);
 			setCurrentItemIndex(index);
 		}
 	};
@@ -201,7 +198,6 @@ const ItemSelectorPreview = ({
 
 		itemList.push(editedItem);
 
-		setCurrentItem(editedItem);
 		setCurrentItemIndex(itemList.length - 1);
 		setItemList(itemList);
 	};
@@ -211,6 +207,8 @@ const ItemSelectorPreview = ({
 			setCurrentItem({...currentItem, url, value});
 		}
 	};
+
+	const currentItem = itemList[currentItemIndex];
 
 	return (
 		<div className="fullscreen item-selector-preview">

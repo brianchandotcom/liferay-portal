@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
@@ -426,6 +427,7 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	@Override
+	@Transactional(enabled = false)
 	public BookmarksEntry openEntry(long userId, BookmarksEntry entry) {
 		_viewCountManager.incrementViewCount(
 			entry.getCompanyId(),

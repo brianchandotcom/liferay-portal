@@ -14,16 +14,24 @@
  */
 --%>
 
+<%
+boolean propertyLocalizeFieldName = GetterUtil.getBoolean(typeSettings.getProperty(ExpandoColumnConstants.PROPERTY_LOCALIZE_FIELD_NAME), true);
+%>
+
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-expand table-cell-minw-200 table-title"
 	name="name"
 >
 
 	<%
-	String localizedName = LanguageUtil.get(request, name);
+	String localizedName = name;
 
-	if (name.equals(localizedName)) {
-		localizedName = TextFormatter.format(name, TextFormatter.J);
+	if (propertyLocalizeFieldName) {
+		localizedName = LanguageUtil.get(request, name);
+
+		if (name.equals(localizedName)) {
+			localizedName = TextFormatter.format(name, TextFormatter.J);
+		}
 	}
 	%>
 

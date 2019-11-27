@@ -1217,7 +1217,7 @@ definition {
 
 	macro viewTaskHeaderTitle {
 		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
+			locator1 = "Portlet#H2_HEADER",
 			value1 = "${workflowTask}: ${kfProcessName}");
 	}
 

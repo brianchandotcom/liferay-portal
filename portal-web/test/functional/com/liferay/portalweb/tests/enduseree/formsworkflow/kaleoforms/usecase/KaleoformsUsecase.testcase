@@ -4627,8 +4627,8 @@ definition {
 			user = "Test Test");
 
 		Workflow.viewTaskHeaderTitle(
-			kfProcessName = "Kaleo Forms Process",
-			workflowTask = "Review");
+			kfProcessName = "KALEO FORMS PROCESS",
+			workflowTask = "REVIEW");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

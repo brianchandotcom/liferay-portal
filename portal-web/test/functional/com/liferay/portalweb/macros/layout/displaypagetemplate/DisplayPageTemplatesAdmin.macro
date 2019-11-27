@@ -22,8 +22,8 @@ definition {
 	macro addDisplayPage {
 		LexiconEntry.gotoAdd();
 
-		if (isSet(masterPageName)) {
-			LexiconCard.clickCard(card = "${masterPageName}");
+		if (isSet(masterLayoutName)) {
+			LexiconCard.clickCard(card = "${masterLayoutName}");
 		}
 		else {
 			LexiconCard.clickCard(card = "Blank");

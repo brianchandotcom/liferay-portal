@@ -302,30 +302,39 @@ public abstract class TopLevelBuildRunner
 			throw new RuntimeException(ioe);
 		}
 
-		String invocationURL =
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				JenkinsResultsParserUtil.combine(
-					"http://", cohortName, ".liferay.com"),
-				1);
+		String jenkinsURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
+			JenkinsResultsParserUtil.combine(
+				"http://", cohortName, ".liferay.com"),
+			1);
+
+		String jobURL = JenkinsResultsParserUtil.combine(
+			jenkinsURL, "/job/", jobName);
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(invocationURL);
-		sb.append("/job/");
-		sb.append(jobName);
+		sb.append(jobURL);
 		sb.append("/buildWithParameters?token=");
 		sb.append(buildProperties.getProperty("jenkins.authentication.token"));
 
-		for (Map.Entry<String, String> invocationParameter :
-				invocationParameters.entrySet()) {
+		Map<String, String> jobParameters =
+			JenkinsResultsParserUtil.getJobParameters(jobURL);
+
+		for (Map.Entry<String, String> entry : jobParameters.entrySet()) {
+			String jobParameterName = entry.getKey();
 
 			sb.append("&");
-			sb.append(
-				JenkinsResultsParserUtil.fixURL(invocationParameter.getKey()));
+			sb.append(JenkinsResultsParserUtil.fixURL(jobParameterName));
 			sb.append("=");
-			sb.append(
-				JenkinsResultsParserUtil.fixURL(
-					invocationParameter.getValue()));
+
+			if (invocationParameters.containsKey(jobParameterName)) {
+				sb.append(
+					JenkinsResultsParserUtil.fixURL(
+						invocationParameters.get(jobParameterName)));
+
+				continue;
+			}
+
+			sb.append(JenkinsResultsParserUtil.fixURL(entry.getValue()));
 		}
 
 		_topLevelBuild.addDownstreamBuilds(sb.toString());

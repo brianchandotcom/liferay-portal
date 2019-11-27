@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectDisplayPageMasterPageDisplayContext selectDisplayPageMasterPageDisplayContext = new SelectDisplayPageMasterPageDisplayContext(request);
+SelectDisplayPageMasterLayoutDisplayContext selectDisplayPageMasterLayoutDisplayContext = new SelectDisplayPageMasterLayoutDisplayContext(request);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -32,12 +32,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 		<ul class="card-page card-page-equal-height">
 
 			<%
-			for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : selectDisplayPageMasterPageDisplayContext.getMasterLayoutPageTemplateEntries()) {
+			for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : selectDisplayPageMasterLayoutDisplayContext.getMasterLayoutPageTemplateEntries()) {
 			%>
 
 				<li class="card-page-item col-md-4 col-sm-6">
 					<clay:vertical-card
-						verticalCard="<%= new SelectDisplayPageMasterPageVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
+						verticalCard="<%= new SelectDisplayPageMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
 					/>
 				</li>
 
@@ -70,7 +70,7 @@ sb.append("/js/modal/openDisplayPageModal.es as openDisplayPageModal");
 			openDisplayPageModal.default({
 				formSubmitURL: data.addDisplayPageUrl,
 				mappingTypes: JSON.parse(
-					'<%= selectDisplayPageMasterPageDisplayContext.getMappingTypesJSONArray() %>'
+					'<%= selectDisplayPageMasterLayoutDisplayContext.getMappingTypesJSONArray() %>'
 				),
 				namespace: '<portlet:namespace />',
 				spritemap:

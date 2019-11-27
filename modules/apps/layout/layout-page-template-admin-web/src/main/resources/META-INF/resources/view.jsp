@@ -25,7 +25,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		<liferay-util:include page="/view_display_pages.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= Objects.equals(layoutPageTemplatesAdminDisplayContext.getTabs1(), "master-pages") %>'>
-		<liferay-util:include page="/view_master_pages.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/view_master_layouts.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= Objects.equals(layoutPageTemplatesAdminDisplayContext.getTabs1(), "page-templates") && scopeGroup.isCompany() %>'>
 		<liferay-util:include page="/view_layout_prototypes.jsp" servletContext="<%= application %>" />

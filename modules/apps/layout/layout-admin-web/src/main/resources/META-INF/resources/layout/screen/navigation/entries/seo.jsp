@@ -232,16 +232,14 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		'<portlet:namespace />canonicalURLAlert'
 	);
 
-	if (canonicalURLEnabledCheck && canonicalURLField) {
-		canonicalURLEnabledCheck.addEventListener('click', function(event) {
-			if (canonicalURLAlert) {
-				canonicalURLAlert.classList.toggle('hide');
-			}
-			Liferay.Util.toggleDisabled(canonicalURLField, !event.target.checked);
-			Liferay.Util.toggleDisabled(
-				canonicalURLFieldDefaultLocale,
-				!event.target.checked
-			);
-		});
-	}
+	canonicalURLEnabledCheck.addEventListener('click', function(event) {
+		canonicalURLAlert.classList.toggle('hide');
+
+		Liferay.Util.toggleDisabled(canonicalURLField, !event.target.checked);
+
+		Liferay.Util.toggleDisabled(
+			canonicalURLFieldDefaultLocale,
+			!event.target.checked
+		);
+	});
 </aui:script>

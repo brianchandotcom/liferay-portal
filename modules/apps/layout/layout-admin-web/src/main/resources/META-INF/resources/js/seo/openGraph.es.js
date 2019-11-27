@@ -16,121 +16,108 @@ import {ItemSelectorDialog} from 'frontend-js-web';
 
 import {PreviewSeoFireChange} from './PreviewSeoEvents.es';
 
-export default function({namespace, uploadOpenGraphImageURL: url}) {
-	var openGraphImageButton = document.getElementById(
+export default function({namespace, uploadOpenGraphImageURL}) {
+	const openGraphImageButton = document.getElementById(
 		`${namespace}openGraphImageButton`
 	);
 
-	if (openGraphImageButton) {
-		var itemSelectorDialog = new ItemSelectorDialog({
-			buttonAddLabel: Liferay.Language.get('done'),
-			eventName: `${namespace}openGraphImageSelectedItem`,
-			title: Liferay.Language.get('open-graph-image'),
-			url
-		});
+	const itemSelectorDialog = new ItemSelectorDialog({
+		buttonAddLabel: Liferay.Language.get('done'),
+		eventName: `${namespace}openGraphImageSelectedItem`,
+		title: Liferay.Language.get('open-graph-image'),
+		url: uploadOpenGraphImageURL
+	});
 
-		var openGraphImageFileEntryId = document.getElementById(
-			`${namespace}openGraphImageFileEntryId`
-		);
-
-		var openGraphImageURL = document.getElementById(
-			`${namespace}openGraphImageURL`
-		);
-
-		itemSelectorDialog.on('selectedItemChange', event => {
-			var selectedItem = event.selectedItem;
-
-			if (selectedItem) {
-				var itemValue = JSON.parse(selectedItem.value);
-
-				openGraphImageFileEntryId.value = itemValue.fileEntryId;
-				openGraphImageURL.value = itemValue.url;
-
-				PreviewSeoFireChange(namespace, {
-					type: 'imgUrl',
-					value: itemValue.url
-				});
-			}
-		});
-
-		openGraphImageButton.addEventListener('click', () => {
-			itemSelectorDialog.open();
-		});
-	}
-
-	var openGraphClearImageButton = document.getElementById(
-		`${namespace}openGraphClearImageButton`
+	const openGraphImageFileEntryId = document.getElementById(
+		`${namespace}openGraphImageFileEntryId`
 	);
 
-	if (openGraphClearImageButton) {
-		openGraphClearImageButton.addEventListener('click', () => {
-			openGraphImageFileEntryId.value = '';
-			openGraphImageURL.value = '';
+	const openGraphImageURL = document.getElementById(
+		`${namespace}openGraphImageURL`
+	);
+
+	itemSelectorDialog.on('selectedItemChange', event => {
+		const selectedItem = event.selectedItem;
+
+		if (selectedItem) {
+			const itemValue = JSON.parse(selectedItem.value);
+
+			openGraphImageFileEntryId.value = itemValue.fileEntryId;
+			openGraphImageURL.value = itemValue.url;
 
 			PreviewSeoFireChange(namespace, {
 				type: 'imgUrl',
-				value: ''
+				value: itemValue.url
 			});
-		});
-	}
+		}
+	});
 
-	var openGraphTitleEnabledCheck = document.getElementById(
+	openGraphImageButton.addEventListener('click', () => {
+		itemSelectorDialog.open();
+	});
+
+	const openGraphClearImageButton = document.getElementById(
+		`${namespace}openGraphClearImageButton`
+	);
+
+	openGraphClearImageButton.addEventListener('click', () => {
+		openGraphImageFileEntryId.value = '';
+		openGraphImageURL.value = '';
+
+		PreviewSeoFireChange(namespace, {
+			type: 'imgUrl',
+			value: ''
+		});
+	});
+
+	const openGraphTitleEnabledCheck = document.getElementById(
 		`${namespace}openGraphTitleEnabled`
 	);
-	var openGraphTitleField = document.getElementById(
+	const openGraphTitleField = document.getElementById(
 		`${namespace}openGraphTitle`
 	);
-	var openGraphTitleFieldDefaultLocale = document.getElementById(
+	const openGraphTitleFieldDefaultLocale = document.getElementById(
 		`${namespace}openGraphTitle_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
 
-	if (openGraphTitleEnabledCheck && openGraphTitleField) {
-		openGraphTitleEnabledCheck.addEventListener('click', event => {
-			Liferay.Util.toggleDisabled(
-				openGraphTitleField,
-				!event.target.checked
-			);
+	openGraphTitleEnabledCheck.addEventListener('click', event => {
+		const disabled = !event.target.checked;
 
-			Liferay.Util.toggleDisabled(
-				openGraphTitleFieldDefaultLocale,
-				!event.target.checked
-			);
+		Liferay.Util.toggleDisabled(openGraphTitleField, disabled);
 
-			PreviewSeoFireChange(namespace, {
-				disabled: !event.target.checked,
-				type: 'title',
-				value: openGraphTitleField.value
-			});
+		Liferay.Util.toggleDisabled(openGraphTitleFieldDefaultLocale, disabled);
+
+		PreviewSeoFireChange(namespace, {
+			disabled,
+			type: 'title',
+			value: openGraphTitleField.value
 		});
-	}
+	});
 
-	var openGraphDescriptionEnabledCheck = document.getElementById(
+	const openGraphDescriptionEnabledCheck = document.getElementById(
 		`${namespace}openGraphDescriptionEnabled`
 	);
-	var openGraphDescriptionField = document.getElementById(
+	const openGraphDescriptionField = document.getElementById(
 		`${namespace}openGraphDescription`
 	);
-	var openGraphDescriptionFieldDefaultLocale = document.getElementById(
+	const openGraphDescriptionFieldDefaultLocale = document.getElementById(
 		`${namespace}openGraphDescription_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
 
-	if (openGraphDescriptionEnabledCheck && openGraphDescriptionField) {
-		openGraphDescriptionEnabledCheck.addEventListener('click', event => {
-			Liferay.Util.toggleDisabled(
-				openGraphDescriptionField,
-				!event.target.checked
-			);
+	openGraphDescriptionEnabledCheck.addEventListener('click', event => {
+		const disabled = !event.target.checked;
 
-			Liferay.Util.toggleDisabled(
-				openGraphDescriptionFieldDefaultLocale,
-				!event.target.checked
-			);
+		Liferay.Util.toggleDisabled(openGraphDescriptionField, disabled);
 
-			PreviewSeoFireChange(namespace, {
-				disabled: !event.target.checked,
-				type: 'description',
-				value: openGraphDescriptionField.value
-			});
+		Liferay.Util.toggleDisabled(
+			openGraphDescriptionFieldDefaultLocale,
+			disabled
+		);
+
+		PreviewSeoFireChange(namespace, {
+			disabled,
+			type: 'description',
+			value: openGraphDescriptionField.value
 		});
-	}
+	});
 }

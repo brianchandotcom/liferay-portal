@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_THUMBNAIL</td>
-	<td>//div[contains(@class,'preview-file-container')]/img</td>
+	<td>//div[@class='sidebar-body']//img[@alt='Thumbnail']</td>
 	<td></td>
 </tr>
 <tr>

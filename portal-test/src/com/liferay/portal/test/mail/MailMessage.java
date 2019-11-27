@@ -16,12 +16,9 @@ package com.liferay.portal.test.mail;
 
 import java.util.Iterator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Adam Brandizzi
  */
-@ProviderType
 public interface MailMessage {
 
 	public String getBody();

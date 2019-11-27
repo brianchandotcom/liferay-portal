@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -75,16 +74,15 @@ public class DLEditFileEntryTypeDisplayContext {
 			return _availableLocales;
 		}
 
-		DDMForm ddmForm = _getDDMForm();
-
-		if (ddmForm == null) {
-			_availableLocales = new Locale[] {LocaleUtil.getSiteDefault()};
-		}
-		else {
-			Set<Locale> availableLocales = ddmForm.getAvailableLocales();
-
-			_availableLocales = availableLocales.toArray(new Locale[0]);
-		}
+		_availableLocales = Optional.ofNullable(
+			_getDDMForm()
+		).map(
+			DDMForm::getAvailableLocales
+		).map(
+			availableLocales -> availableLocales.toArray(new Locale[0])
+		).orElseGet(
+			() -> new Locale[] {LocaleUtil.getSiteDefault()}
+		);
 
 		return _availableLocales;
 	}
@@ -103,13 +101,13 @@ public class DLEditFileEntryTypeDisplayContext {
 	}
 
 	public String getDefaultLanguageId() throws PortalException {
-		DDMForm ddmForm = _getDDMForm();
-
-		if (ddmForm == null) {
-			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-		}
-
-		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+		return Optional.ofNullable(
+			_getDDMForm()
+		).map(
+			ddmForm -> LocaleUtil.toLanguageId(ddmForm.getDefaultLocale())
+		).orElseGet(
+			() -> LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault())
+		);
 	}
 
 	public String getFieldsJSONArrayString() {
@@ -160,16 +158,14 @@ public class DLEditFileEntryTypeDisplayContext {
 	}
 
 	public boolean isChangeableDefaultLanguage() throws PortalException {
-		DDMForm ddmForm = _getDDMForm();
-
-		if ((ddmForm == null) ||
-			Objects.equals(
-				LocaleUtil.getSiteDefault(), ddmForm.getDefaultLocale())) {
-
-			return false;
-		}
-
-		return true;
+		return Optional.ofNullable(
+			_getDDMForm()
+		).map(
+			ddmForm -> !Objects.equals(
+				LocaleUtil.getSiteDefault(), ddmForm.getDefaultLocale())
+		).orElse(
+			false
+		);
 	}
 
 	public boolean isFieldNameEditionDisabled() {

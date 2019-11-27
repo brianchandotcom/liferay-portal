@@ -1,0 +1,17 @@
+definition {
+
+	@summary = "Add an Asset Lists."
+	macro addAssetLists {
+		Variables.assertDefined(parameterList = "${groupName},${selectionType},${title}");
+
+		var groupId = JSONAssetlistSetter.setGroupId(groupName = "${groupName}");
+
+		var type = JSONAssetlistSetter.setType(selectionType = "${selectionType}");
+
+		JSONAssetlistAPI._addAssetLists(
+			groupId = "${groupId}",
+			title = "${title}",
+			type = "${type}");
+	}
+
+}

@@ -1,0 +1,182 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "SEO";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This ensures that the user can customize OG tags."
+	@priority = "5"
+	test Smoke {
+		property test.name.skip.portal.instance = "OpenGraphPreview#Smoke";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "Custom Description",
+			customImage = "true",
+			customTitle = "Custom Title",
+			notSave = "true",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_1.jpg");
+
+		Page.viewPreview(
+			description = "Custom Description",
+			htmlTitle = "Custom Title - Test Site Name - ${siteName}",
+			key_imageName = "Document_1.jpg",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		Button.click(button = "Save");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Page.viewPreview(
+			description = "Custom Description",
+			htmlTitle = "Custom Title - Test Site Name - ${siteName}",
+			key_imageName = "Document_1.jpg",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+	}
+
+	@description = "This ensures that escape characters are present correctly in the preview."
+	@priority = "3"
+	test ValidateEscapeCharacters {
+		property test.name.skip.portal.instance = "OpenGraphPreview#ValidateEscapeCharacters";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = '''description@#$%^&amp;*()~`1234567890''',
+			customTitle = '''@#$%^&amp;*()~`1234567890title''',
+			notSave = "true");
+
+		Page.viewPreview(
+			description = '''description@#$%^&amp;*()~`1234567890''',
+			htmlTitle = '''@#$%^&amp;*()~`1234567890title - Test Site Name - ${siteName}''',
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		Button.click(button = "Save");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Page.viewPreview(
+			description = '''description@#$%^&amp;*()~`1234567890''',
+			htmlTitle = '''@#$%^&amp;*()~`1234567890title - Test Site Name - ${siteName}''',
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+	}
+
+	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
+	@priority = "5"
+	test ValidateLongInputs {
+		property test.name.skip.portal.instance = "OpenGraphPreview#ValidateLongInputs";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Long Test Page Name To Check The URL");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications",
+			customTitle = "Liferay Portal provides an excellent platform for building web applications",
+			notSave = "true",
+			pageName = "Long Test Page Name To Check The URL");
+
+		Page.viewPreview(
+			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
+			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - Test Site Name - ${siteName}",
+			openGraph = "true",
+			pageName = "Long Test Page Name To Check The URL",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name",
+			truncatedHTMLTitle = "true",
+			truncatedURL = "true");
+
+		Button.click(button = "Save");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Page.viewPreview(
+			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
+			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - Test Site Name - ${siteName}",
+			openGraph = "true",
+			pageName = "Long Test Page Name To Check The URL",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name",
+			truncatedHTMLTitle = "true",
+			truncatedURL = "true");
+	}
+
+}

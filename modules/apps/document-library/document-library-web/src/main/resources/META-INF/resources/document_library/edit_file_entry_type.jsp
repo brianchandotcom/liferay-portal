@@ -90,7 +90,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
-				<liferay-util:include page="/document_library/ddm/form_builder.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/document_library/ddm/ddm_form_builder.jsp" servletContext="<%= application %>" />
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="additionalMetadataFields" label="additional-metadata-fields">

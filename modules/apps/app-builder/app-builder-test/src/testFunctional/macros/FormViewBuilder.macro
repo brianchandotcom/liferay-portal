@@ -39,13 +39,45 @@ definition {
 
 	macro setFieldLabel {
 		Type(
-			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
+			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
 			value1 = "${fieldLabel}");
 	}
 
 	macro setFieldRequired {
-		Click(locator1 = "FormViewBuilder#SIDEBAR_FIELD_REQUIRED");
+		FormViewBuilder.clickOnSwitcher(propertyName = "required");
 	}
+
+	macro clickOnSwitcher {
+		Click(
+			key_switcherOption = "${propertyName}",
+			locator1 = "FormViewBuilder#SIDEBAR_BASIC_REQUIRED");
+	}
+
+	macro addOptions {
+		var optionList = "Casado,Solteiro,Divorciado";
+
+		for (var field : list "${optionList}") {
+			Type(
+				locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
+				value1 = "${fieldLabel}");
+
+			)
+			FormViewBuilder.addOption(
+				fieldType = "${field}",
+				formViewName = "My Form View with ${field} 1");
+		}
+	}
+
+	macro editOptionsRow {
+		var key_rowNumber = "${rowNumber}";
+
+		Type(
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
+
+		AssertElementPresent(locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD");
+	}
+
 
 	macro addFormViewAndValidateFieldLabel {
 
@@ -86,11 +118,11 @@ definition {
 	}
 
 	macro closeSidebar(){
-		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR")
+		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}
 
 	macro openSidebar(){
-		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR")
+		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
 	}
 
 }

@@ -698,4 +698,75 @@ definition {
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
 	}
 
+	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
+	@priority = "5"
+	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Nome completo do jogador");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Apelido");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Pé bom");
+		
+		FormViewBuilder.closeSidebar();
+
+
+
+
+
+
+/*
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+
+
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text Field",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Widget App",
+			deployOption = "Widget",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Widget App");
+
+		AppBuilderAdmin.add();
+
+		FormFields.editText(
+			fieldName = "TextField",
+			fieldValue = "Content of form deployed as widget.");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
+		*/
+	}
+
+
 }

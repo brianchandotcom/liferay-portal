@@ -14,7 +14,9 @@
 		<field name="content" type="Blob" />
 		<field name="contentType" type="String" />
 		<field name="endTime" type="Date" />
-		<field name="errorMessage" type="String" />
+		<field name="errorMessage" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
 		<field name="fieldNames" type="String" />
 		<field name="executeStatus" type="String" />
 		<field name="parameters" type="Map" />

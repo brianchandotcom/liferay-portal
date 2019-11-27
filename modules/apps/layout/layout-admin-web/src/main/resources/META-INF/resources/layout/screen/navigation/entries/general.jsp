@@ -85,7 +85,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 					if (enableLayoutButton) {
 						enableLayoutButton.addEventListener('click', function(event) {
 							<portlet:actionURL name="/layout/enable_layout" var="enableLayoutURL">
-								<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 							</portlet:actionURL>
 
@@ -100,7 +100,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 					if (deleteLayoutButton) {
 						deleteLayoutButton.addEventListener('click', function(event) {
 							<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
-								<portlet:param name="redirect" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>' />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
 								<portlet:param name="layoutSetBranchId" value="0" />
 								<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getParentPlid()) %>" />
@@ -119,7 +119,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 		</portlet:actionURL>
 
 		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' enctype="multipart/form-data" method="post" name="editLayoutFm" onSubmit="event.preventDefault();">
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 			<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />

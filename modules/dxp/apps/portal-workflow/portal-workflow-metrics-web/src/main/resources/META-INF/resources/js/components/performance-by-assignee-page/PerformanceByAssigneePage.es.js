@@ -78,7 +78,7 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 	}
 
 	const {data, promises} = useResource(
-		`/processes/${processId}/assignee-users?completed=true`,
+		`/processes/${processId}/assignee-users`,
 		{
 			completed: true,
 			keywords,

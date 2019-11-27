@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,8 +55,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
-
-import java.io.Serializable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -426,15 +423,15 @@ public class DDLRecordServiceTest {
 
 		DDLRecord record = recordTestHelper.addRecord();
 
-		Map<String, Serializable> fieldsMap =
-			HashMapBuilder.<String, Serializable>put(
-				"Name", "Joe Bloggs"
-			).put(
-				"Phone", "123456"
-			).build();
+		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			createLocalizedDDMFormFieldValue("Name", "Joe Bloggs"));
+		ddmFormValues.addDDMFormFieldValue(
+			createLocalizedDDMFormFieldValue("Phone", "123456"));
 
 		updateRecord(
-			record.getRecordId(), fieldsMap, true,
+			record.getRecordId(), ddmFormValues,
 			WorkflowConstants.ACTION_PUBLISH);
 
 		record = DDLRecordLocalServiceUtil.getRecord(record.getRecordId());
@@ -576,20 +573,6 @@ public class DDLRecordServiceTest {
 		return DDLRecordLocalServiceUtil.updateRecord(
 			TestPropsValues.getUserId(), recordId, false,
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
-			serviceContext);
-	}
-
-	protected DDLRecord updateRecord(
-			long recordId, Map<String, Serializable> fieldsMap,
-			boolean mergeFields, int workflowAction)
-		throws Exception {
-
-		ServiceContext serviceContext = DDLRecordTestUtil.getServiceContext(
-			workflowAction);
-
-		return DDLRecordLocalServiceUtil.updateRecord(
-			TestPropsValues.getUserId(), recordId,
-			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fieldsMap, mergeFields,
 			serviceContext);
 	}
 

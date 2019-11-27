@@ -21,6 +21,8 @@ import TreeviewCard from './TreeviewCard';
 import TreeviewContext from './TreeviewContext';
 import TreeviewLabel from './TreeviewLabel';
 
+import './Treeview.scss';
+
 /**
  * Adds parent, sibling and child links to make tree traversal in any
  * direction easy.

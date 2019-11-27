@@ -19,14 +19,18 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -80,8 +84,13 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 		Element entryElement = portletDataContext.getExportDataElement(
 			assetListEntrySegmentsEntryRel);
 
-		if (assetListEntrySegmentsEntryRel.getSegmentsEntryId() !=
-				SegmentsEntryConstants.ID_DEFAULT) {
+		Group group = _groupLocalService.getGroup(
+			assetListEntrySegmentsEntryRel.getGroupId());
+
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			group.isStagedPortlet(SegmentsPortletKeys.SEGMENTS) &&
+			(assetListEntrySegmentsEntryRel.getSegmentsEntryId() !=
+				SegmentsEntryConstants.ID_DEFAULT)) {
 
 			SegmentsEntry segmentsEntry =
 				_segmentsEntryLocalService.fetchSegmentsEntry(
@@ -213,6 +222,9 @@ public class AssetListEntrySegmentsEntryRelStagedModelDataHandler
 	)
 	private volatile ExportImportContentProcessor<String>
 		_assetListEntryExportImportContentProcessor;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

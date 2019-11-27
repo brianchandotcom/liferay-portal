@@ -16,13 +16,17 @@ package com.liferay.segments.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -75,14 +79,21 @@ public class SegmentsExperienceStagedModelDataHandler
 			SegmentsExperience segmentsExperience)
 		throws Exception {
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.fetchSegmentsEntry(
-				segmentsExperience.getSegmentsEntryId());
+		Group group = _groupLocalService.getGroup(
+			segmentsExperience.getGroupId());
 
-		if (segmentsEntry != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, segmentsExperience, segmentsEntry,
-				PortletDataContext.REFERENCE_TYPE_PARENT);
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			group.isStagedPortlet(SegmentsPortletKeys.SEGMENTS)) {
+
+			SegmentsEntry segmentsEntry =
+				_segmentsEntryLocalService.fetchSegmentsEntry(
+					segmentsExperience.getSegmentsEntryId());
+
+			if (segmentsEntry != null) {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, segmentsExperience, segmentsEntry,
+					PortletDataContext.REFERENCE_TYPE_PARENT);
+			}
 		}
 
 		Element segmentsExperienceElement =
@@ -178,6 +189,9 @@ public class SegmentsExperienceStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

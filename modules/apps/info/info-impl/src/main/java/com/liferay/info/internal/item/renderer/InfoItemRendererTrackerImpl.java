@@ -17,6 +17,7 @@ package com.liferay.info.internal.item.renderer;
 import com.liferay.info.internal.util.GenericsUtil;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -52,11 +56,26 @@ public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
 
 	@Override
 	public List<InfoItemRenderer> getInfoItemRenderers(String itemClassName) {
-		List<InfoItemRenderer> infoItemRenderers =
-			_itemClassNameInfoItemRenderers.get(itemClassName);
+		List<ServiceReference<InfoItemRenderer>> serviceReferences =
+			_itemClassNameInfoItemRendererServiceReferences.get(itemClassName);
 
-		if (infoItemRenderers != null) {
-			return new ArrayList<>(infoItemRenderers);
+		if (serviceReferences != null) {
+			List<InfoItemRenderer> infoItemRenderers = new ArrayList<>();
+
+			for (ServiceReference<InfoItemRenderer> serviceReference :
+					serviceReferences) {
+
+				Bundle bundle = serviceReference.getBundle();
+
+				BundleContext bundleContext = bundle.getBundleContext();
+
+				InfoItemRenderer infoItemRenderer = bundleContext.getService(
+					serviceReference);
+
+				infoItemRenderers.add(infoItemRenderer);
+			}
+
+			return infoItemRenderers;
 		}
 
 		return Collections.emptyList();
@@ -64,34 +83,65 @@ public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
+		policy = ReferencePolicy.DYNAMIC, service = InfoItemRenderer.class
 	)
-	protected void setInfoItemRenderer(InfoItemRenderer infoItemRenderer) {
+	protected void setInfoItemRenderer(
+		ServiceReference<InfoItemRenderer> serviceReference) {
+
+		Bundle bundle = serviceReference.getBundle();
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		InfoItemRenderer infoItemRenderer = bundleContext.getService(
+			serviceReference);
+
 		_infoItemRenderers.put(infoItemRenderer.getKey(), infoItemRenderer);
 
-		List<InfoItemRenderer> itemClassInfoItemRenderers =
-			_itemClassNameInfoItemRenderers.computeIfAbsent(
+		List<ServiceReference<InfoItemRenderer>> itemClassInfoItemRenderers =
+			_itemClassNameInfoItemRendererServiceReferences.computeIfAbsent(
 				GenericsUtil.getItemClassName(infoItemRenderer),
 				itemClass -> new ArrayList<>());
 
-		itemClassInfoItemRenderers.add(infoItemRenderer);
+		itemClassInfoItemRenderers.add(serviceReference);
+
+		Collections.sort(
+			itemClassInfoItemRenderers,
+			Collections.reverseOrder(
+				(serviceReference1, serviceReference2) -> {
+					Integer serviceRanking1 = GetterUtil.getInteger(
+						serviceReference1.getProperty("service.ranking"));
+					Integer serviceRanking2 = GetterUtil.getInteger(
+						serviceReference2.getProperty("service.ranking"));
+
+					return serviceRanking1.compareTo(serviceRanking2);
+				}));
 	}
 
-	protected void unsetInfoItemRenderer(InfoItemRenderer infoItemRenderer) {
+	protected void unsetInfoItemRenderer(
+		ServiceReference<InfoItemRenderer> serviceReference) {
+
+		Bundle bundle = serviceReference.getBundle();
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		InfoItemRenderer infoItemRenderer = bundleContext.getService(
+			serviceReference);
+
 		_infoItemRenderers.remove(infoItemRenderer.getKey());
 
-		List<InfoItemRenderer> itemClassInfoItemRenderers =
-			_itemClassNameInfoItemRenderers.get(
+		List<ServiceReference<InfoItemRenderer>> itemClassInfoItemRenderers =
+			_itemClassNameInfoItemRendererServiceReferences.get(
 				GenericsUtil.getItemClassName(infoItemRenderer));
 
 		if (itemClassInfoItemRenderers != null) {
-			itemClassInfoItemRenderers.remove(infoItemRenderer);
+			itemClassInfoItemRenderers.remove(serviceReference);
 		}
 	}
 
 	private final Map<String, InfoItemRenderer> _infoItemRenderers =
 		new ConcurrentHashMap<>();
-	private final Map<String, List<InfoItemRenderer>>
-		_itemClassNameInfoItemRenderers = new ConcurrentHashMap<>();
+	private final Map<String, List<ServiceReference<InfoItemRenderer>>>
+		_itemClassNameInfoItemRendererServiceReferences =
+			new ConcurrentHashMap<>();
 
 }

@@ -17,9 +17,11 @@ package com.liferay.journal.web.internal.info.item.renderer;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -28,17 +30,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = InfoItemRenderer.class)
+@Component(
+	property = "service.ranking:Integer=200", service = InfoItemRenderer.class
+)
 public class JournalArticleFullContentInfoItemRenderer
 	implements InfoItemRenderer<JournalArticle> {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "full-content");
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return LanguageUtil.get(resourceBundle, "default-template");
 	}
 
 	@Override
@@ -66,6 +75,13 @@ public class JournalArticleFullContentInfoItemRenderer
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.journal.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 	private ServletContext _servletContext;
 

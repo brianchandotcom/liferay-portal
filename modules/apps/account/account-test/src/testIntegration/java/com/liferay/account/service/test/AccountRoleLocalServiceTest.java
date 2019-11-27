@@ -22,6 +22,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -192,31 +194,11 @@ public class AccountRoleLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteAccountRoleByObject() throws Exception {
-		AccountRole accountRole = _setUpDeleteAccountRoleTestCase();
-
-		_accountRoleLocalService.deleteAccountRole(accountRole);
-
-		_accountRoles.remove(accountRole);
-
-		Assert.assertFalse(
-			ArrayUtil.contains(
-				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
-
-	}
-
-	@Test
-	public void testDeleteAccountRoleByPrimaryKey() throws Exception {
-		AccountRole accountRole = _setUpDeleteAccountRoleTestCase();
-
-		_accountRoleLocalService.deleteAccountRole(
-			accountRole.getAccountRoleId());
-
-		_accountRoles.remove(accountRole);
-
-		Assert.assertFalse(
-			ArrayUtil.contains(
-				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
+	public void testDeleteAccountRole() throws Exception {
+		_testDeleteAccountRole(_accountRoleLocalService::deleteAccountRole);
+		_testDeleteAccountRole(
+			accountRole -> _accountRoleLocalService.deleteAccountRole(
+				accountRole.getAccountRoleId()));
 	}
 
 	@Test
@@ -330,7 +312,11 @@ public class AccountRoleLocalServiceTest {
 		return ArrayUtil.contains(accountRoleIds, roleId);
 	}
 
-	private AccountRole _setUpDeleteAccountRoleTestCase() throws Exception {
+	private void _testDeleteAccountRole(
+			UnsafeFunction<AccountRole, AccountRole, PortalException>
+				deleteAccountRoleFunction)
+		throws Exception {
+
 		AccountRole accountRole = _addAccountRole(
 			_accountEntry1.getAccountEntryId(), RandomTestUtil.randomString());
 
@@ -346,7 +332,13 @@ public class AccountRoleLocalServiceTest {
 
 		Assert.assertTrue(ArrayUtil.contains(roleIds, accountRole.getRoleId()));
 
-		return accountRole;
+		deleteAccountRoleFunction.apply(accountRole);
+
+		_accountRoles.remove(accountRole);
+
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
 	}
 
 	@DeleteAfterTestRun

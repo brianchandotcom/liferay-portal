@@ -1,0 +1,25 @@
+definition {
+
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		return "${groupId}";
+	}
+
+	macro setType {
+		Variables.assertDefined(parameterList = "${selectionType}");
+
+		if ("${selectionType}" == "Manual") {
+			var type = "1";
+		}
+
+		if ("${selectionType}" == "Dynamic") {
+			var type = "0";
+		}
+
+		return "${type}";
+	}
+
+}

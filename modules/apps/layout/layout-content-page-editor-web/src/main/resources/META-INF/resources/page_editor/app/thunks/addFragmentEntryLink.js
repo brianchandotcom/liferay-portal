@@ -12,10 +12,9 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
-
 import addFragmentEntryLinkAndItem from '../actions/addFragmentEntryLinkAndItem';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import FragmentService from '../services/FragmentService';
 
 export default function addFragmentEntryLink({
 	config,
@@ -26,51 +25,32 @@ export default function addFragmentEntryLink({
 	store
 }) {
 	return dispatch => {
-		const {
-			addFragmentEntryLinkURL,
-			classNameId,
-			classPK,
-			portletNamespace
-		} = config;
-
 		const {segmentsExperienceId} = store;
 
-		const formData = new FormData();
-		formData.append(`${portletNamespace}fragmentKey`, fragmentKey);
-		formData.append(`${portletNamespace}classNameId`, classNameId);
-		formData.append(`${portletNamespace}classPK`, classPK);
-		formData.append(`${portletNamespace}groupId`, fragmentGroupId);
-		formData.append(
-			`${portletNamespace}segmentsExperienceId`,
+		FragmentService.addFragmentEntryLink({
+			config,
+			fragmentGroupId,
+			fragmentKey,
 			segmentsExperienceId
-		);
+		}).then(fragmentEntryLink => {
+			// TODO: This is a temporary "hack"
+			//       until the backend is consitent
+			//       between both "metal+soy" and "react" versions
+			fragmentEntryLink.content = {
+				value: {
+					content: fragmentEntryLink.content
+				}
+			};
 
-		fetch(addFragmentEntryLinkURL, {
-			body: formData,
-			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(fragmentEntryLink => {
-				// TODO: This is a temporary "hack"
-				//       until the backend is consitent
-				//       between both "metal+soy" and "react" versions
-				const {content} = fragmentEntryLink;
-
-				fragmentEntryLink.content = {
-					value: {
-						content
-					}
-				};
-
-				dispatch(
-					addFragmentEntryLinkAndItem({
-						fragmentEntryLink,
-						itemId: `thing-${Date.now()}`,
-						itemType: LAYOUT_DATA_ITEM_TYPES.fragment,
-						parentId,
-						position
-					})
-				);
-			});
+			dispatch(
+				addFragmentEntryLinkAndItem({
+					fragmentEntryLink,
+					itemId: `thing-${Date.now()}`,
+					itemType: LAYOUT_DATA_ITEM_TYPES.fragment,
+					parentId,
+					position
+				})
+			);
+		});
 	};
 }

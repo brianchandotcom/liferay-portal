@@ -47,7 +47,7 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 	const filtered = search.length > 0 || selectedFilters.length > 0;
 
 	const {data, promises} = useResource(
-		`/processes/${processId}/assignee-users`,
+		`/processes/${processId}/assignee-users?completed=true`,
 		{
 			completed: true,
 			keywords,

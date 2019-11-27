@@ -167,7 +167,12 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			_bundleContext.registerService(
 				DLProcessor.class, dlProcessor, null);
 
-		_serviceRegistrations.put(dlProcessor, serviceRegistration);
+		ServiceRegistration<DLProcessor> previousServiceRegistration =
+			_serviceRegistrations.put(dlProcessor, serviceRegistration);
+
+		if (previousServiceRegistration != null) {
+			previousServiceRegistration.unregister();
+		}
 	}
 
 	@Override

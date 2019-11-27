@@ -20,14 +20,19 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
+import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterLayoutActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -81,6 +86,37 @@ public class MasterLayoutVerticalCard
 	public String getDefaultEventHandler() {
 		return LayoutPageTemplateAdminWebKeys.
 			MASTER_LAYOUT_DROPDOWN_DEFAULT_EVENT_HANDLER;
+	}
+
+	@Override
+	public String getHref() {
+		try {
+			if (!LayoutPageTemplateEntryPermission.contains(
+					_themeDisplay.getPermissionChecker(),
+					_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
+
+				return null;
+			}
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				_layoutPageTemplateEntry.getPlid());
+
+			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+			String layoutFullURL = PortalUtil.getLayoutFullURL(
+				draftLayout, _themeDisplay);
+
+			layoutFullURL = HttpUtil.setParameter(
+				layoutFullURL, "p_l_mode", Constants.EDIT);
+
+			return HttpUtil.setParameter(
+				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	@Override

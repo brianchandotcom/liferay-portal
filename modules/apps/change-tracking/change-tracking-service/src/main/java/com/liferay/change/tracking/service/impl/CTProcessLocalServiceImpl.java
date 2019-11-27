@@ -21,9 +21,11 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.base.CTProcessLocalServiceBaseImpl;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -97,13 +99,19 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 				"ctProcessId", ctProcessId
 			).build();
 
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.addBackgroundTask(
-				userId, company.getGroupId(), String.valueOf(ctCollectionId),
-				null, CTPublishBackgroundTaskExecutor.class, taskContextMap,
-				null);
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
-		ctProcess.setBackgroundTaskId(backgroundTask.getBackgroundTaskId());
+			BackgroundTask backgroundTask =
+				_backgroundTaskLocalService.addBackgroundTask(
+					userId, company.getGroupId(),
+					String.valueOf(ctCollectionId), null,
+					CTPublishBackgroundTaskExecutor.class, taskContextMap,
+					null);
+
+			ctProcess.setBackgroundTaskId(backgroundTask.getBackgroundTaskId());
+		}
 
 		return ctProcessPersistence.update(ctProcess);
 	}

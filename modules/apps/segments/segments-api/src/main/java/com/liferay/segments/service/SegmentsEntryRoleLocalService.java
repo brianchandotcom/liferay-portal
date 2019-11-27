@@ -259,6 +259,9 @@ public interface SegmentsEntryRoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsEntryRolesCountByRoleId(long roleId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasSegmentEntryRole(long segmentsEntryId, long roleId);
+
 	/**
 	 * Updates the segments entry role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

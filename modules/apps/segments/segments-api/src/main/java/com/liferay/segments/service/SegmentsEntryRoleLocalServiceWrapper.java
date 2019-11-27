@@ -346,6 +346,12 @@ public class SegmentsEntryRoleLocalServiceWrapper
 			getSegmentsEntryRolesCountByRoleId(roleId);
 	}
 
+	@Override
+	public boolean hasSegmentEntryRole(long segmentsEntryId, long roleId) {
+		return _segmentsEntryRoleLocalService.hasSegmentEntryRole(
+			segmentsEntryId, roleId);
+	}
+
 	/**
 	 * Updates the segments entry role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

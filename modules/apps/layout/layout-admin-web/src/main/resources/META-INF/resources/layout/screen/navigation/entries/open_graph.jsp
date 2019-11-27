@@ -105,26 +105,27 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 						"displayType", "og"
 					).put(
 						"targets",
-						HashMapBuilder.put(
-							"description", HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
+							"description", HashMapBuilder.<String, Object>put(
+								"customizable", Boolean.TRUE
+							).put(
 								"defaultValue", selLayout.getDescription(locale)
 							).put(
 								"id", "openGraphDescription"
 							).build()
 						).put(
-							"imgUrl", HashMapBuilder.put(
-								"id", "openGraphImageURL"
-							).build()
+							"imgUrl", Collections.singletonMap("id", "openGraphImageURL")
 						).put(
-							"title", HashMapBuilder.put(
+							"title", HashMapBuilder.<String, Object>put(
+								"customizable", Boolean.TRUE
+							).put(
 								"defaultValue", layoutsAdminDisplayContext.getPageTitle()
 							).put(
 								"id", "openGraphTitle"
 							).build()
 						).put(
-							"url", HashMapBuilder.put(
-								"defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL()
-							).build()
+							"url",
+							Collections.singletonMap("defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL())
 						).build()
 					).put(
 						"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()

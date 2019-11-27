@@ -89,12 +89,16 @@ const PreviewSeoContainer = ({
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		const setPreviewState = ({type, value = ''}) => {
+		const setPreviewState = ({disabled, type, value = ''}) => {
 			if (!isMounted()) return;
 
 			const defaultValue = targets[type] && targets[type].defaultValue;
+			const customizable = targets[type] && targets[type].customizable;
 
-			if (value === '' && defaultValue) {
+			if (
+				defaultValue &&
+				((customizable && disabled) || (!customizable && !value))
+			) {
 				value = defaultValue;
 			}
 
@@ -138,6 +142,7 @@ const PreviewSeoContainer = ({
 				node.addEventListener('input', listener);
 
 				setPreviewState({
+					disabled: node.disabled,
 					type,
 					value: node.value
 				});
@@ -158,6 +163,7 @@ const PreviewSeoContainer = ({
 			() => {
 				inputs.forEach(({node, type}) =>
 					setPreviewState({
+						disabled: node.disabled,
 						type,
 						value: node.value
 					})

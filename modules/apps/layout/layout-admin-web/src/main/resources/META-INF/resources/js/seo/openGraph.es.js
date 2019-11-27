@@ -95,6 +95,12 @@ export default function({namespace, uploadOpenGraphImageURL: url}) {
 				openGraphTitleFieldDefaultLocale,
 				!event.target.checked
 			);
+
+			PreviewSeoFireChange(namespace, {
+				disabled: !event.target.checked,
+				type: 'title',
+				value: openGraphTitleField.value
+			});
 		});
 	}
 
@@ -119,6 +125,12 @@ export default function({namespace, uploadOpenGraphImageURL: url}) {
 				openGraphDescriptionFieldDefaultLocale,
 				!event.target.checked
 			);
+
+			PreviewSeoFireChange(namespace, {
+				disabled: !event.target.checked,
+				type: 'description',
+				value: openGraphDescriptionField.value
+			});
 		});
 	}
 }

@@ -502,6 +502,10 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
+		if (_tabs2.equals("segments")) {
+			return null;
+		}
+
 		return new ViewTypeItemList(getPortletURL(), _displayStyle) {
 			{
 				addCardViewTypeItem();

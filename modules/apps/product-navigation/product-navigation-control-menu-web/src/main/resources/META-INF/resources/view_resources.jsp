@@ -117,7 +117,7 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:message key="<%= panelTitle %>" />
 	</a>
 
-	<div class="collapse list-group-panel show" id="manageRecentPanel">
+	<div class="collapse in list-group-panel" id="manageRecentPanel">
 		<div class="list-group-item">
 			<ul class="<%= displayStyle.equals("descriptive") ? "tabular-list-group" : "list-unstyled row" %>">
 

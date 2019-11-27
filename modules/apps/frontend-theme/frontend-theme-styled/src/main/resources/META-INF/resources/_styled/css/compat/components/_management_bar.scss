@@ -316,7 +316,7 @@
 			}
 		}
 
-		&.show {
+		&.in {
 			overflow-y: auto;
 
 			@include media-breakpoint-up(md) {

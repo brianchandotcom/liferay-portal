@@ -33,6 +33,6 @@
 		<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
 	</a>
 
-	<div class="collapse <%= active ? "show" : StringPool.BLANK %>" id="<%= id %>">
+	<div class="collapse <%= active ? "in" : StringPool.BLANK %>" id="<%= id %>">
 		<div class="list-group-item">
 </c:if>

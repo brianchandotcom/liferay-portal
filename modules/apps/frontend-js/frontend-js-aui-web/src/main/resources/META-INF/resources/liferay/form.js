@@ -315,7 +315,7 @@ AUI.add(
 							.get('children')
 							.all('.has-error');
 
-						if (errorFields.size() > 0 && !panel.hasClass('show')) {
+						if (errorFields.size() > 0 && !panel.hasClass('in')) {
 							var panelNode = panel.getDOM();
 
 							AUI.$(panelNode).collapse('show');

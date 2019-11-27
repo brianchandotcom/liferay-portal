@@ -123,7 +123,7 @@
 						function(event) {
 							var hasFocusField = focusField.length;
 
-							if (!sectionContent.hasClass('show')) {
+							if (!sectionContent.hasClass('in')) {
 								if (hasFocusField) {
 									sectionContent.one(
 										'shown.bs.collapse',

@@ -18,7 +18,9 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -57,6 +59,59 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public Map<String, String> getDefaultParameters(
+		JenkinsMaster jenkinsMaster) {
+
+		Map<String, String> jobParameters = new HashMap<>();
+
+		try {
+			JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					getJobURL(jenkinsMaster),
+					"/api/json?tree=actions[parameterDefinitions[",
+					"defaultParameterValue[value],name]]"));
+
+			JSONArray actionsJSONArray = jobJSONObject.getJSONArray("actions");
+
+			JSONObject actionsJSONObject = null;
+
+			for (int i = 0; i < actionsJSONArray.length(); i++) {
+				JSONObject jsonObject = actionsJSONArray.getJSONObject(i);
+
+				if (jsonObject.has("parameterDefinitions")) {
+					actionsJSONObject = jsonObject;
+
+					break;
+				}
+			}
+
+			if (actionsJSONObject == null) {
+				return jobParameters;
+			}
+
+			JSONArray parameterDefinitionsJSONArray =
+				actionsJSONObject.getJSONArray("parameterDefinitions");
+
+			for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
+				JSONObject parameterJSONObject =
+					parameterDefinitionsJSONArray.getJSONObject(i);
+
+				JSONObject defaultParameterValueJSONObject =
+					parameterJSONObject.getJSONObject("defaultParameterValue");
+
+				jobParameters.put(
+					parameterJSONObject.getString("name"),
+					defaultParameterValueJSONObject.getString("value"));
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		return jobParameters;
+	}
+
+	@Override
 	public String getJobName() {
 		return _jobName;
 	}
@@ -69,6 +124,11 @@ public abstract class BaseJob implements Job {
 	@Override
 	public String getJobProperty(String key) {
 		return _jobProperties.getProperty(key);
+	}
+
+	public String getJobURL(JenkinsMaster jenkinsMaster) {
+		return JenkinsResultsParserUtil.combine(
+			jenkinsMaster.getURL(), "/job/", _jobName);
 	}
 
 	@Override
@@ -109,11 +169,6 @@ public abstract class BaseJob implements Job {
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get job JSON", ioe);
 		}
-	}
-
-	protected String getJobURL(JenkinsMaster jenkinsMaster) {
-		return JenkinsResultsParserUtil.combine(
-			jenkinsMaster.getURL(), "/job/", _jobName);
 	}
 
 	protected Set<String> getSetFromString(String string) {

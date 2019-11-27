@@ -117,30 +117,6 @@ definition {
 		Pause(locator1 = "3000");
 	}
 
-	macro _gotoExportSite {
-		if (isSet(siteScopeName)) {
-			Navigator.openSiteURL(siteName = "${siteScopeName}");
-		}
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Export");
-	}
-
-	macro _gotoImportSite {
-		if (isSet(siteName)) {
-			SitePages.openPagesAdmin(
-				baseURL = "${baseURL}",
-				siteURLKey = "${siteName}");
-		}
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Import");
-	}
-
 	macro _importSite {
 		Pause(locator1 = "15000");
 
@@ -526,10 +502,6 @@ definition {
 		echo("lar file name ${larFileName}");
 
 		return "${larFileName}";
-	}
-
-	macro gotoExport {
-		LAR._gotoExportSite(siteScopeName = "${siteScopeName}");
 	}
 
 	macro importPortlet {

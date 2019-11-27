@@ -331,17 +331,19 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processRoles(processId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processRoles(completed: ___, processId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public RolePage processRoles(@GraphQLName("processId") Long processId)
+	public RolePage processRoles(
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("completed") Boolean completed)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_roleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			roleResource -> new RolePage(
-				roleResource.getProcessRolesPage(processId)));
+				roleResource.getProcessRolesPage(processId, completed)));
 	}
 
 	/**

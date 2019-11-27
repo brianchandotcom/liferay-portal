@@ -43,6 +43,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -60,13 +61,20 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed")
+		}
+	)
 	@Path("/processes/{processId}/roles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Role")})
 	public Page<Role> getProcessRolesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId)
+				processId,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

@@ -41,7 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RoleResource {
 
-	public Page<Role> getProcessRolesPage(Long processId) throws Exception;
+	public Page<Role> getProcessRolesPage(Long processId, Boolean completed)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

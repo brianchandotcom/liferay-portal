@@ -1,9 +1,0 @@
-{
-	"config": {
-		"imports": {
-			"frontend-js-components-web": {
-				"/": ">=1.0.0"
-			}
-		}
-	}
-}

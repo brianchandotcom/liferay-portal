@@ -199,7 +199,10 @@ public class AccountRoleLocalServiceTest {
 
 		_accountRoles.remove(accountRole);
 
-		_assertUserGroupRolesDeleted(accountRole);
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
+
 	}
 
 	@Test
@@ -211,7 +214,9 @@ public class AccountRoleLocalServiceTest {
 
 		_accountRoles.remove(accountRole);
 
-		_assertUserGroupRolesDeleted(accountRole);
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
 	}
 
 	@Test
@@ -303,15 +308,6 @@ public class AccountRoleLocalServiceTest {
 				_accountEntry1.getAccountEntryGroup(),
 				AccountEntry.class.getName(),
 				_accountEntry1.getAccountEntryId(), actionKey));
-	}
-
-	private void _assertUserGroupRolesDeleted(AccountRole accountRole)
-		throws Exception {
-
-		long[] roleIds = _getRoleIds(_users.get(0));
-
-		Assert.assertFalse(
-			ArrayUtil.contains(roleIds, accountRole.getRoleId()));
 	}
 
 	private long[] _getRoleIds(User user) throws Exception {

@@ -41,6 +41,16 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
 			value1 = "${fieldLabel}");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#FIELD_LABEL_VALUE",
+			value1 = "${fieldLabel}");
+	}
+
+	macro setFieldHelpText {
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
+			value1 = "${fieldLabel}");
 	}
 
 	macro setFieldRequired {
@@ -53,29 +63,14 @@ definition {
 			locator1 = "FormViewBuilder#SIDEBAR_BASIC_REQUIRED");
 	}
 
-	macro addOptions {
-		var optionList = "Casado,Solteiro,Divorciado";
-
-		for (var field : list "${optionList}") {
-			Type(
-				locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
-				value1 = "${fieldLabel}");
-
-			)
-			FormViewBuilder.addOption(
-				fieldType = "${field}",
-				formViewName = "My Form View with ${field} 1");
-		}
-	}
-
 	macro editOptionsRow {
 		var key_rowNumber = "${rowNumber}";
 
 		Type(
-			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			locator1 = "FormViewBuilder#OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "${optionValue}");
 
-		AssertElementPresent(locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD");
+		AssertElementPresent(locator1 = "FormViewBuilder#OPTIONS_OPTION_NAME_FIELD");
 	}
 
 

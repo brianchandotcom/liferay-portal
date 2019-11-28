@@ -14,24 +14,14 @@
 
 package com.liferay.journal.web.internal.info.item.provider;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -42,45 +32,9 @@ public class JournalArticleInfoItemDDMTemplateProviderImpl
 
 	@Override
 	public List<DDMTemplate> getDDMTemplates(JournalArticle article) {
-		List<DDMStructureLink> ddmStructureLinks =
-			_ddmStructureLinkManager.getStructureLinks(
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				article.getId());
+		DDMStructure ddmStructure = article.getDDMStructure();
 
-		Stream<DDMStructureLink> stream = ddmStructureLinks.stream();
-
-		return stream.flatMap(
-			ddmStructureLink -> {
-				DDMStructure ddmStructure = _ddmStructureManager.fetchStructure(
-					ddmStructureLink.getStructureId());
-
-				try {
-					List<DDMTemplate> ddmTemplates =
-						ddmStructure.getTemplates();
-
-					return ddmTemplates.stream();
-				}
-				catch (PortalException pe) {
-					_log.error("Unable to get DDM templates", pe);
-				}
-
-				return Stream.empty();
-			}
-		).collect(
-			Collectors.toList()
-		);
+		return ddmStructure.getTemplates();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleInfoItemDDMTemplateProviderImpl.class);
-
-	@Reference
-	private DDMStructureLinkManager _ddmStructureLinkManager;
-
-	@Reference
-	private DDMStructureManager _ddmStructureManager;
-
-	@Reference
-	private Portal _portal;
 
 }

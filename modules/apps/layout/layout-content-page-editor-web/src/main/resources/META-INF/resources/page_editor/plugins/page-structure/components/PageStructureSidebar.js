@@ -42,6 +42,40 @@ export default function PageStructureSidebar() {
 		return item.type === LAYOUT_DATA_ITEM_TYPES.column ? false : true;
 	};
 
+	const visit = (item, items) => {
+		const children = [];
+
+		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+			const fragmentChildren =
+				fragmentEntryLinks[item.config.fragmentEntryLinkId]
+					.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+
+			Object.keys(fragmentChildren).forEach(childId => {
+				children.push({
+					children: [],
+					id: childId,
+					name: childId,
+					removable: false
+				});
+			});
+		} else {
+			item.children.forEach(childId => {
+				const childItem = items[childId];
+
+				const child = visit(childItem, items);
+
+				children.push(child);
+			});
+		}
+
+		return {
+			children,
+			id: item.itemId,
+			name: getName(item, fragmentEntryLinks),
+			removable: isRemovable(item)
+		};
+	};
+
 	return (
 		<>
 			<SidebarPanelHeader>

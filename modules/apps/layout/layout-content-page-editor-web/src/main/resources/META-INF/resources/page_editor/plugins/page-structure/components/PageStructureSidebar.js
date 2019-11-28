@@ -14,11 +14,33 @@
 
 import React, {useContext} from 'react';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {StoreContext} from '../../../app/store/index';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 
 export default function PageStructureSidebar() {
 	const {fragmentEntryLinks, layoutData} = useContext(StoreContext);
+
+	const getName = (item, fragmentEntryLinks) => {
+		let name;
+
+		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+			name = Liferay.Language.get('container');
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
+			name = Liferay.Language.get('column');
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
+			name = Liferay.Language.get('row');
+		}
+
+		return name;
+	};
+
+	const isRemovable = item => {
+		return item.type === LAYOUT_DATA_ITEM_TYPES.column ? false : true;
+	};
 
 	return (
 		<>

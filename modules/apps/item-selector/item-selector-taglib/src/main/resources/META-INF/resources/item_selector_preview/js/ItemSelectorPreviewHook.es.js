@@ -27,8 +27,6 @@ const KEY_CODE = {
 	RIGTH: 39
 };
 
-const TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
-
 const ItemSelectorPreview = ({
 	container,
 	currentIndex = 0,
@@ -86,12 +84,9 @@ const ItemSelectorPreview = ({
 
 	const handleClickEdit = () => {
 		const itemTitle = currentItem.title;
-
-		const editDialogTitle = Liferay.Util.sub(TPL_EDIT_DIALOG_TITLE, {
-			copy: Liferay.Language.get('copy'),
-			edit: Liferay.Language.get('edit'),
-			title: itemTitle
-		});
+		const editDialogTitle = `${Liferay.Language.get(
+			'edit'
+		)} ${itemTitle} (${Liferay.Language.get('copy')})`;
 
 		let editEntityBaseZIndex = Liferay.zIndex.WINDOW;
 

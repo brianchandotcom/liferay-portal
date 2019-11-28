@@ -903,7 +903,7 @@ public class JournalDisplayContext {
 			return _searchContainer;
 		}
 
-		if (!isSearch()) {
+		if (!isSearch() || isWebContentTabSelected()) {
 			_searchContainer = _getArticlesSearchContainer();
 
 			return _searchContainer;

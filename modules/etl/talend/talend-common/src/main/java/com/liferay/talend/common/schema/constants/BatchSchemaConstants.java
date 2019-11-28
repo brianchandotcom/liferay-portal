@@ -30,7 +30,7 @@ import org.talend.daikon.avro.SchemaConstants;
  */
 public class BatchSchemaConstants {
 
-	public static final String FIELD_ENTITY_CLASS = "entityClass";
+	public static final String FIELD_ENTITY_CLASS_NAME = "entityClassName";
 
 	public static final String FIELD_ENTITY_VERSION = "entityVersion";
 
@@ -55,7 +55,7 @@ public class BatchSchemaConstants {
 					add(field);
 
 					field = new Schema.Field(
-						FIELD_ENTITY_CLASS, AvroUtils._string(), null,
+						FIELD_ENTITY_CLASS_NAME, AvroUtils._string(), null,
 						(Object)null);
 
 					field.addProp(
@@ -90,7 +90,7 @@ public class BatchSchemaConstants {
 		IndexedRecord indexedRecord = new GenericData.Record(SCHEMA);
 
 		indexedRecord.put(_getFieldPos(FIELD_FILE_PATH), filePath);
-		indexedRecord.put(_getFieldPos(FIELD_ENTITY_CLASS), entityClass);
+		indexedRecord.put(_getFieldPos(FIELD_ENTITY_CLASS_NAME), entityClass);
 		indexedRecord.put(_getFieldPos(FIELD_ENTITY_VERSION), entityVersion);
 
 		return indexedRecord;

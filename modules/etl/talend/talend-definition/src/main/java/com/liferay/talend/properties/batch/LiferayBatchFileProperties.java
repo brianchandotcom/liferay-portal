@@ -127,7 +127,7 @@ public class LiferayBatchFileProperties
 		return batchFilePath.getStringValue();
 	}
 
-	public String getEntityClass() {
+	public String getEntityClassName() {
 		return entity.getValue();
 	}
 

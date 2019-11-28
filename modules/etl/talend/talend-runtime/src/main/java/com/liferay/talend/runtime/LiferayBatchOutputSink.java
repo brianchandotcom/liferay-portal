@@ -165,7 +165,7 @@ public class LiferayBatchOutputSink implements Source {
 		}
 
 		_batchFilePath = liferayBatchFileProperties.getBatchFilePath();
-		_entityClass = liferayBatchFileProperties.getEntityClass();
+		_entityClass = liferayBatchFileProperties.getEntityClassName();
 		_entityVersion = liferayBatchFileProperties.getEntityVersion();
 
 		return ValidationResult.OK;

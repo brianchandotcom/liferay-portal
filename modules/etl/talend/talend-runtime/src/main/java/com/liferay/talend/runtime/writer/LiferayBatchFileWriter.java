@@ -92,7 +92,7 @@ public class LiferayBatchFileWriter
 			Arrays.asList(
 				BatchSchemaConstants.asBatchSchemaIndexedRecord(
 					_liferayBatchFileProperties.getBatchFilePath(),
-					_liferayBatchFileProperties.getEntityClass(),
+					_liferayBatchFileProperties.getEntityClassName(),
 					_liferayBatchFileProperties.getEntityVersion())));
 	}
 

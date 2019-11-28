@@ -42,7 +42,7 @@ const MockContext = ({children}) => (
 describe('The workload by assignee page body should', () => {
 	let getAllByTestId;
 
-	afterEach(cleanup);
+	afterEach(() => cleanup);
 
 	beforeEach(() => {
 		const routeParams = {

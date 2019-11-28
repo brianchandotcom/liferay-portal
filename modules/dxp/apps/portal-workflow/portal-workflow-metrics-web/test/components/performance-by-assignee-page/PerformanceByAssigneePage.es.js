@@ -44,7 +44,7 @@ describe('The PerformanceByAssigneePage component having data should', () => {
 		get: jest.fn().mockResolvedValue({data})
 	};
 
-	afterEach(cleanup);
+	afterEach(() => cleanup);
 
 	const wrapper = ({children}) => (
 		<MockRouter client={clientMock}>{children}</MockRouter>

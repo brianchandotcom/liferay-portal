@@ -7,9 +7,9 @@ definition {
 
 		PortletEntry.inputName(name = "${contactName}");
 
-		Type(
-			locator1 = "ContactsCenter#CONTACT_EMAIL_ADDRESS",
-			value1 = "${emailAddress}");
+		PortletEntry.inputText(
+			fieldLabel = "Email Address",
+			text = "${emailAddress}");
 
 		Button.clickSave();
 
@@ -35,9 +35,9 @@ definition {
 		}
 
 		if (isSet(emailAddressEdit)) {
-			Type(
-				locator1 = "ContactsCenter#CONTACT_EMAIL_ADDRESS",
-				value1 = "${emailAddressEdit}");
+			PortletEntry.inputText(
+				fieldLabel = "Email Address",
+				text = "${emailAddressEdit}");
 		}
 
 		Button.clickSave();

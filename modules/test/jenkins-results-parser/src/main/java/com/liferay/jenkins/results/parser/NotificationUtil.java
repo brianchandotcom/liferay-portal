@@ -86,7 +86,7 @@ public class NotificationUtil {
 
 			BodyPart messageBodyPart = new MimeBodyPart();
 
-			messageBodyPart.setContent(body, "text/html");
+			messageBodyPart.setContent(body, "text/plain");
 
 			multipart.addBodyPart(messageBodyPart);
 

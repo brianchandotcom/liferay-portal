@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -55,6 +56,19 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
+	}
+
+	@Override
+	protected String replaceDropTableIfExistsText(Matcher matcher) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("IF EXISTS(select 1 from sysobjects where name = '$1' and ");
+		sb.append("type = 'U')\n");
+		sb.append("BEGIN\n");
+		sb.append("DROP TABLE $1\n");
+		sb.append("END");
+
+		return matcher.replaceAll(sb.toString());
 	}
 
 	private Function<String, String> _getCrossJoinFunction() {

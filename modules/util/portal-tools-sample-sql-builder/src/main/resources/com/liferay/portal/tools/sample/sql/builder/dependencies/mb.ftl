@@ -2,7 +2,7 @@
 
 <#list mbCategoryModels as mbCategoryModel>
 	${dataFactory.toInsertSQL(mbCategoryModel)}
-	${dataFactory.toInsertSQL(dataFactory.newMBMailingListModel(mbCategoryModel))}
+	${dataFactory.toInsertSQL(dataFactory.newMBMailingListModel(mbCategoryModel, sampleUserModel))}
 
 	${dataFactory.getCSVWriter("mbCategory").write(mbCategoryModel.categoryId + "," + mbCategoryModel.name + "\n")}
 

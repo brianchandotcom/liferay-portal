@@ -377,7 +377,6 @@ public class DataFactory {
 
 		initRoleModels();
 		initUserNames();
-		initUserModels();
 	}
 
 	public void closeCSVWriters() throws IOException {
@@ -642,16 +641,8 @@ public class DataFactory {
 		return _defaultJournalDDMTemplateVersionModel;
 	}
 
-	public UserModel getDefaultUserModel() {
-		return _defaultUserModel;
-	}
-
 	public long getDLFileEntryClassNameId() {
 		return getClassNameId(DLFileEntry.class);
-	}
-
-	public UserModel getGuestUserModel() {
-		return _guestUserModel;
 	}
 
 	public long getJournalArticleClassNameId() {
@@ -753,10 +744,6 @@ public class DataFactory {
 
 	public List<RoleModel> getRoleModels() {
 		return _roleModels;
-	}
-
-	public UserModel getSampleUserModel() {
-		return _sampleUserModel;
 	}
 
 	public List<Integer> getSequence(int size) {
@@ -1340,17 +1327,6 @@ public class DataFactory {
 			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
 
 		_roleModels.add(_userRoleModel);
-	}
-
-	public void initUserModels() {
-		_defaultUserModel = newUserModel(
-			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, true);
-		_guestUserModel = newUserModel(
-			_counter.get(), "Test", "Test", "Test", false);
-		_sampleUserModel = newUserModel(
-			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
-			_SAMPLE_USER_NAME, false);
 	}
 
 	public void initUserNames() throws IOException {
@@ -2009,6 +1985,12 @@ public class DataFactory {
 		return ddmTemplateVersionModelImpl;
 	}
 
+	public UserModel newDefaultUserModel() {
+		return newUserModel(
+			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, true);
+	}
+
 	public DLFileEntryMetadataModel newDLFileEntryMetadataModel(
 		long ddmStorageLinkId, long ddmStructureId,
 		DLFileVersionModel dlFileVersionModel) {
@@ -2249,6 +2231,10 @@ public class DataFactory {
 		return newGroupModel(
 			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
 			GroupConstants.GUEST, true);
+	}
+
+	public UserModel newGuestUserModel() {
+		return newUserModel(_counter.get(), "Test", "Test", "Test", false);
 	}
 
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
@@ -2605,7 +2591,7 @@ public class DataFactory {
 	}
 
 	public MBMailingListModel newMBMailingListModel(
-		MBCategoryModel mbCategoryModel) {
+		MBCategoryModel mbCategoryModel, UserModel sampleUserModel) {
 
 		MBMailingListModel mbMailingListModel = new MBMailingListModelImpl();
 
@@ -2620,8 +2606,8 @@ public class DataFactory {
 		mbMailingListModel.setCategoryId(mbCategoryModel.getCategoryId());
 		mbMailingListModel.setInProtocol("pop3");
 		mbMailingListModel.setInServerPort(110);
-		mbMailingListModel.setInUserName(_sampleUserModel.getEmailAddress());
-		mbMailingListModel.setInPassword(_sampleUserModel.getPassword());
+		mbMailingListModel.setInUserName(sampleUserModel.getEmailAddress());
+		mbMailingListModel.setInPassword(sampleUserModel.getPassword());
 		mbMailingListModel.setInReadInterval(5);
 		mbMailingListModel.setOutServerPort(25);
 
@@ -3140,6 +3126,12 @@ public class DataFactory {
 		return newResourcePermissionModels(
 			WikiPage.class.getName(),
 			String.valueOf(wikiPageModel.getResourcePrimKey()), _sampleUserId);
+	}
+
+	public UserModel newSampleUserModel() {
+		return newUserModel(
+			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
+			_SAMPLE_USER_NAME, false);
 	}
 
 	public SocialActivityModel newSocialActivityModel(
@@ -4511,7 +4503,6 @@ public class DataFactory {
 	private DDMTemplateModel _defaultJournalDDMTemplateModel;
 	private DDMTemplateVersionModel _defaultJournalDDMTemplateVersionModel;
 	private final long _defaultUserId;
-	private UserModel _defaultUserModel;
 	private final String _dlDDMStructureContent;
 	private final String _dlDDMStructureLayoutContent;
 	private List<String> _firstNames;
@@ -4519,7 +4510,6 @@ public class DataFactory {
 	private final long _globalGroupId;
 	private final long _guestGroupId;
 	private RoleModel _guestRoleModel;
-	private UserModel _guestUserModel;
 	private String _journalArticleContent;
 	private final Map<Long, String> _journalArticleResourceUUIDs =
 		new HashMap<>();
@@ -4564,7 +4554,6 @@ public class DataFactory {
 	private final SimpleCounter _resourcePermissionCounter;
 	private List<RoleModel> _roleModels;
 	private final long _sampleUserId;
-	private UserModel _sampleUserModel;
 	private Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityCounter;

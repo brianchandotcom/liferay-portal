@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -52,39 +51,37 @@ public class ImageDLPreviewRendererProvider
 	}
 
 	@Override
-	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
+	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
 		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
-			return Optional.of(
-				(httpServletRequest, httpServletResponse) -> {
-					throw new DLPreviewSizeException();
-				});
+			return (httpServletRequest, httpServletResponse) -> {
+				throw new DLPreviewSizeException();
+			};
 		}
 
 		if (!_imageProcessor.isImageSupported(fileVersion)) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(
-			(request, response) -> {
-				checkForPreviewGenerationExceptions(fileVersion);
+		return (request, response) -> {
+			checkForPreviewGenerationExceptions(fileVersion);
 
-				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher("/preview/view.jsp");
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/preview/view.jsp");
 
-				request.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+			request.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
-				requestDispatcher.include(request, response);
-			});
+			requestDispatcher.include(request, response);
+		};
 	}
 
 	@Override
-	public Optional<DLPreviewRenderer> getThumbnailDLPreviewRendererOptional(
+	public DLPreviewRenderer getThumbnailDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		return Optional.empty();
+		return null;
 	}
 
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)

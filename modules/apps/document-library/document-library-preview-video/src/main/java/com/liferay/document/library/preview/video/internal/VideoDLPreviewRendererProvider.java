@@ -38,7 +38,6 @@ import com.liferay.portal.util.PropsValues;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -62,42 +61,41 @@ public class VideoDLPreviewRendererProvider
 	}
 
 	@Override
-	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
+	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
 		if (!_videoProcessor.isVideoSupported(fileVersion)) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(
-			(request, response) -> {
-				checkForPreviewGenerationExceptions(fileVersion);
+		return (request, response) -> {
+			checkForPreviewGenerationExceptions(fileVersion);
 
-				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher("/preview/view.jsp");
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/preview/view.jsp");
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-				String videoPosterURL = _getVideoPosterURL(
-					fileVersion, themeDisplay);
+			String videoPosterURL = _getVideoPosterURL(
+				fileVersion, themeDisplay);
 
-				request.setAttribute(
-					DLPreviewVideoWebKeys.PREVIEW_FILE_URLS,
-					_getPreviewFileURLs(fileVersion, videoPosterURL, request));
+			request.setAttribute(
+				DLPreviewVideoWebKeys.PREVIEW_FILE_URLS,
+				_getPreviewFileURLs(fileVersion, videoPosterURL, request));
 
-				request.setAttribute(
-					DLPreviewVideoWebKeys.VIDEO_POSTER_URL, videoPosterURL);
+			request.setAttribute(
+				DLPreviewVideoWebKeys.VIDEO_POSTER_URL, videoPosterURL);
 
-				requestDispatcher.include(request, response);
-			});
+			requestDispatcher.include(request, response);
+		};
 	}
 
 	@Override
-	public Optional<DLPreviewRenderer> getThumbnailDLPreviewRendererOptional(
+	public DLPreviewRenderer getThumbnailDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		return Optional.empty();
+		return null;
 	}
 
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)

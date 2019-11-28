@@ -37,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -61,36 +60,35 @@ public class AudioDLPreviewRendererProvider
 	}
 
 	@Override
-	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
+	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
 		if (!_audioProcessor.isAudioSupported(fileVersion)) {
-			return Optional.empty();
+			return null;
 		}
 
-		return Optional.of(
-			(request, response) -> {
-				checkForPreviewGenerationExceptions(fileVersion);
+		return (request, response) -> {
+			checkForPreviewGenerationExceptions(fileVersion);
 
-				RequestDispatcher requestDispatcher =
-					_servletContext.getRequestDispatcher("/preview/view.jsp");
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/preview/view.jsp");
 
-				request.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+			request.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
-				request.setAttribute(
-					DLPreviewAudioWebKeys.PREVIEW_FILE_URLS,
-					_getPreviewFileURLs(fileVersion, request));
+			request.setAttribute(
+				DLPreviewAudioWebKeys.PREVIEW_FILE_URLS,
+				_getPreviewFileURLs(fileVersion, request));
 
-				requestDispatcher.include(request, response);
-			});
+			requestDispatcher.include(request, response);
+		};
 	}
 
 	@Override
-	public Optional<DLPreviewRenderer> getThumbnailDLPreviewRendererOptional(
+	public DLPreviewRenderer getThumbnailDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		return Optional.empty();
+		return null;
 	}
 
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)

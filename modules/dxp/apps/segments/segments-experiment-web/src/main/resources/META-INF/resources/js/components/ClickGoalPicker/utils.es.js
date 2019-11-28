@@ -11,7 +11,7 @@
 
 import PropTypes from 'prop-types';
 
-const TARGET_OFFSET = 10;
+const TARGET_OFFSET = 20;
 
 export const GeometryType = PropTypes.shape({
 	height: PropTypes.number.isRequired,

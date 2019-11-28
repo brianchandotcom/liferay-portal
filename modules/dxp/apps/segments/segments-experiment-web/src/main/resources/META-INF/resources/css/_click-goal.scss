@@ -1,7 +1,8 @@
 @import 'atlas-variables';
 
-$target-overlay-background-color: rgba(128, 172, 255, 0.05);
-$target-overlay-border-color: rgba(128, 172, 255, 0.4);
+$target-overlay-background-color: rgba(128, 172, 255, 0.1);
+$target-overlay-background-color-hover: rgba(128, 172, 255, 0.2);
+$target-overlay-border-color: rgb(11, 95, 255);
 
 // You would think we could use Liferay.zIndex.OVERLAY (1000) here, but
 // we can't: see _variables.scss from layout-content-page-editor-web for
@@ -32,12 +33,27 @@ $target-z-index: 900;
 
 .lfr-segments-experiment-click-goal-target-overlay {
 	background-color: $target-overlay-background-color;
-	border: 1px solid $target-overlay-border-color;
+	border: 2px solid $target-overlay-border-color;
 	cursor: pointer;
 	pointer-events: auto;
+	position: relative;
+
+	&:before {
+		border: 2px solid rgba(247, 248, 249, 1);
+		bottom: 0;
+		content: '';
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	&:hover {
+		background-color: $target-overlay-background-color-hover;
+	}
 
 	&.lfr-segments-experiment-click-goal-target-overlay-selected {
-		border-color: $gray-800;
+		border-color: $target-overlay-border-color;
 	}
 
 	&.lfr-segments-experiment-click-goal-target-overlay-editing {
@@ -57,7 +73,7 @@ $target-z-index: 900;
 }
 
 .lfr-segments-experiment-click-goal-target-topper {
-	background-color: $gray-800;
+	background-color: $target-overlay-border-color;
 	border-radius: 2px 2px 0px 0px;
 	cursor: initial;
 	pointer-events: auto;

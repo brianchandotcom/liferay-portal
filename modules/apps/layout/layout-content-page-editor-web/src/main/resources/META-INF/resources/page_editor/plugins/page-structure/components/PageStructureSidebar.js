@@ -12,12 +12,14 @@
  * details.
  */
 
+import {Treeview} from 'frontend-js-components-web';
 import React, {useContext} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {StoreContext} from '../../../app/store/index';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
+import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
 	const {fragmentEntryLinks, layoutData} = useContext(StoreContext);
@@ -76,11 +78,20 @@ export default function PageStructureSidebar() {
 		};
 	};
 
+	const nodes = visit(
+		layoutData.items[layoutData.rootItems.main],
+		layoutData.items
+	).children;
+
 	return (
 		<>
 			<SidebarPanelHeader>
 				{Liferay.Language.get('page-structure')}
 			</SidebarPanelHeader>
+
+			<div className="page-editor__page-structure px-2">
+				<Treeview NodeComponent={StructureTreeNode} nodes={nodes} />
+			</div>
 		</>
 	);
 }

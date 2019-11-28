@@ -117,8 +117,6 @@ definition {
 
 	@priority = "4"
 	test ViewDocumentAsGuest {
-		property portal.acceptance = "true";
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoRepository(dmRepositoryName = "Sharepoint Repository Name");

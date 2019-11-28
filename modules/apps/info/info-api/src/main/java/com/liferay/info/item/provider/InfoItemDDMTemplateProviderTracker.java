@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.provider;
+package com.liferay.info.item.provider;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -20,9 +20,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Pavel Savinov
  */
 @ProviderType
-public interface InfoObjectDDMTemplateProviderTracker {
+public interface InfoItemDDMTemplateProviderTracker {
 
-	public InfoObjectDDMTemplateProvider getInfoObjectDDMTemplateProvider(
+	public InfoItemDDMTemplateProvider getInfoItemDDMTemplateProvider(
 		String className);
 
 }

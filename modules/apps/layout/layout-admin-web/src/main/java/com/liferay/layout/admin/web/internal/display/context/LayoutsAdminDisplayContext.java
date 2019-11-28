@@ -36,6 +36,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.seo.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -126,11 +127,14 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-		DLURLHelper dlurlHelper, LayoutSEOLinkManager layoutSEOLinkManager,
+		DLURLHelper dlurlHelper,
+		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
+		LayoutSEOLinkManager layoutSEOLinkManager,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_dlurlHelper = dlurlHelper;
+		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -410,7 +414,7 @@ public class LayoutsAdminDisplayContext {
 		Map<Locale, String> alternateURLs = PortalUtil.getAlternateURLs(
 			canonicalURL, _themeDisplay, _selLayout);
 
-		return _layoutSEOLinkManager.getDefaultCanonicalURL(
+		return _layoutSEOCanonicalURLProvider.getDefaultCanonicalURL(
 			_selLayout, _themeDisplay.getLocale(), canonicalURL, alternateURLs);
 	}
 
@@ -2016,6 +2020,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
+	private final LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;

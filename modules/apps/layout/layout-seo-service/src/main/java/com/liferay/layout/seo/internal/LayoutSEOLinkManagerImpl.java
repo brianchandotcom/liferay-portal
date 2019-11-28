@@ -14,6 +14,7 @@
 
 package com.liferay.layout.seo.internal;
 
+import com.liferay.layout.seo.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListMergeable;
@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,26 +57,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_html.escapeAttribute(
 				_getCanonicalURL(layout, locale, canonicalURL, alternateURLs)),
 			null, LayoutSEOLink.Relationship.CANONICAL);
-	}
-
-	@Override
-	public String getDefaultCanonicalURL(
-			Layout layout, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
-		throws ConfigurationException {
-
-		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
-
-		if (Objects.equals(
-				layoutSEOCompanyConfiguration.canonicalURL(),
-				"default-language-url")) {
-
-			return canonicalURL;
-		}
-
-		return alternateURLs.getOrDefault(locale, canonicalURL);
 	}
 
 	@Override
@@ -162,7 +141,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	private String _getCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
-		throws ConfigurationException {
+		throws PortalException {
 
 		String layoutCanonicalURL = _getLayoutCanonicalURL(locale, layout);
 
@@ -170,7 +149,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			return layoutCanonicalURL;
 		}
 
-		return getDefaultCanonicalURL(
+		return _layoutSEOCanonicalURLProvider.getDefaultCanonicalURL(
 			layout, locale, canonicalURL, alternateURLs);
 	}
 
@@ -259,6 +238,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

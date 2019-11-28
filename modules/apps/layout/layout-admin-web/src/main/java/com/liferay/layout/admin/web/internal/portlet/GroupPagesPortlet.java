@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCol
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.seo.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
@@ -174,7 +175,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				new LayoutsAdminDisplayContext(
-					_dlurlHelper, _layoutSEOLinkManager,
+					_dlurlHelper, _layoutSEOCanonicalURLProvider,
+					_layoutSEOLinkManager,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 
@@ -241,6 +243,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

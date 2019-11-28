@@ -513,7 +513,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		var fragmentComment = "Title fragment comment";
+		var key_fragmentComment = "Title fragment comment";
 
 		if (!(IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY"))) {
 			Click(

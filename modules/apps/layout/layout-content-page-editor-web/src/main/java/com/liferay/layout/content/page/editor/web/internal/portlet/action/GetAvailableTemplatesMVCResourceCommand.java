@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
 import com.liferay.info.item.provider.InfoItemDDMTemplateProviderTracker;
 import com.liferay.info.display.contributor.InfoDisplayContributor;

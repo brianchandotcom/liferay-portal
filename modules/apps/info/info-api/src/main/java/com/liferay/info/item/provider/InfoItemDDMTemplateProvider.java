@@ -14,7 +14,7 @@
 
 package com.liferay.info.item.provider;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;

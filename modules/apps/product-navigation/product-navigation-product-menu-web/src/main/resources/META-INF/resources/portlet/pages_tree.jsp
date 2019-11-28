@@ -17,40 +17,14 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-Map<String, Object> data = new HashMap<>();
-
-data.put("administrationPortletNamespace", PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES));
-
-PortletURL administrationPortletURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
-
-administrationPortletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-data.put("administrationPortletURL", administrationPortletURL.toString());
-
-LiferayPortletURL findLayoutsURL = PortletURLFactoryUtil.create(request, ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU, PortletRequest.RESOURCE_PHASE);
-
-findLayoutsURL.setResourceID("/product_menu/find_layouts");
-
-data.put("findLayoutsURL", findLayoutsURL.toString());
-
-String namespace = PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU);
-
-data.put("namespace", namespace);
-data.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(liferayPortletRequest);
 
 Group group = themeDisplay.getSiteGroup();
-
-boolean privateLayout = GetterUtil.getBoolean(SessionClicks.get(request, namespace + ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT, "false"), layout.isPrivateLayout());
-
-Map<String, Object> pageTypeSelectorData = new HashMap<>();
-
-pageTypeSelectorData.put("privateLayout", privateLayout);
-pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU));
 %>
 
 <div id="<%= renderResponse.getNamespace() + "-layout-finder" %>">
 	<react:component
-		data="<%= data %>"
+		data="<%= layoutsTreeDisplayContext.getLayoutFinderData() %>"
 		module="js/LayoutFinder.es"
 		servletContext="<%= application %>"
 	/>
@@ -59,7 +33,7 @@ pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavi
 <div id="<%= renderResponse.getNamespace() + "layoutsTree" %>">
 	<div id="<%= renderResponse.getNamespace() + "-page-type" %>">
 		<react:component
-			data="<%= pageTypeSelectorData %>"
+			data="<%= layoutsTreeDisplayContext.getPageTypeSelectorData() %>"
 			module="js/PageTypeSelector.es"
 			servletContext="<%= application %>"
 		/>
@@ -68,15 +42,15 @@ pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavi
 	<liferay-layout:layouts-tree
 		groupId="<%= themeDisplay.getSiteGroupId() %>"
 		linkTemplate='<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">{label}</a>'
-		privateLayout="<%= privateLayout %>"
+		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
 		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
-		rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+		rootNodeName="<%= group.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
 		selPlid="<%= plid %>"
 		treeId="pagesTree"
 	/>
 
 	<div class="pages-administration-link">
-		<aui:a cssClass="ml-2" href="<%= administrationPortletURL.toString() %>"><%= LanguageUtil.get(request, "go-to-pages-administration") %></aui:a>
+		<aui:a cssClass="ml-2" href="<%= layoutsTreeDisplayContext.getAdministrationPortletURL() %>"><%= LanguageUtil.get(request, "go-to-pages-administration") %></aui:a>
 	</div>
 </div>
 

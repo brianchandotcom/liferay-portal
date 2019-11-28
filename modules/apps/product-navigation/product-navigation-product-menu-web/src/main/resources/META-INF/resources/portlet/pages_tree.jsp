@@ -39,9 +39,53 @@ Group group = themeDisplay.getSiteGroup();
 		/>
 	</div>
 
+	<liferay-util:buffer
+		var="linkTemplate"
+	>
+		<span class="autofit-row">
+			<span className="autofit-col">
+				<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
+					{label}
+				</a>
+			</span>
+			<span class="autofit-col autofit-col-expand">
+				<span class="d-sm-block dropdown">
+					<a class="dropdown-toggle ml-1 taglib-icon" data-toggle="dropdown" href="javascript:;">
+						<aui:icon image="ellipsis-v" markupView="lexicon" />
+
+						<span class="sr-only">
+							<liferay-ui:message key="options" />
+						</span>
+					</a>
+
+					<ul class="dropdown-menu dropdown-menu-left" role="menu">
+						<li>
+							<button class="autofit-row dropdown-item layout-action" data-action="addChildPage" data-plid="{plid}">
+								<span class="autofit-col autofit-col-expand">
+									<span class="autofit-section">
+										<liferay-ui:message key="add-child-page" />
+									</span>
+								</span>
+							</button>
+						</li>
+						<li>
+							<button class="autofit-row dropdown-item layout-action" data-action="configure" data-plid="{plid}">
+								<span class="autofit-col autofit-col-expand">
+									<span class="autofit-section">
+										<liferay-ui:message key="configure" />
+									</span>
+								</span>
+							</button>
+						</li>
+					</ul>
+				</span>
+			</span>
+		</span>
+	</liferay-util:buffer>
+
 	<liferay-layout:layouts-tree
 		groupId="<%= themeDisplay.getSiteGroupId() %>"
-		linkTemplate='<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">{label}</a>'
+		linkTemplate="<%= linkTemplate %>"
 		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
 		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
 		rootNodeName="<%= group.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
@@ -54,11 +98,21 @@ Group group = themeDisplay.getSiteGroup();
 	</div>
 </div>
 
+<liferay-frontend:component
+	componentId="<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER %>"
+	context="<%= layoutsTreeDisplayContext.getEventHandlerContext() %>"
+	module="js/PagesTreeEventHandler.es"
+/>
+
 <aui:script>
-	function destroyTreeComponent() {
+	function handleDestroyPortlet() {
 		Liferay.destroyComponent(props.namespace + 'pagesTree');
-		Liferay.detach('destroyPortlet', destroyTreeComponent);
+		Liferay.destroyComponent(
+			'<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER  %>'
+		);
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}
 
-	Liferay.on('destroyPortlet', destroyTreeComponent);
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

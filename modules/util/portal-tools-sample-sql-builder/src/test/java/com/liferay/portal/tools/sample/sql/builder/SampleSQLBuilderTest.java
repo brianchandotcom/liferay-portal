@@ -27,6 +27,7 @@ import com.liferay.portal.tools.HypersonicLoader;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
+import java.io.FileWriter;
 
 import java.net.URL;
 
@@ -83,8 +84,13 @@ public class SampleSQLBuilderTest {
 
 		_initProperties(properties, tempDir.getAbsolutePath());
 
-		try {
-			new SampleSQLBuilder(properties, new DataFactory(properties));
+		File tempPropertiesFile = File.createTempFile("test", ".properties");
+
+		try (FileWriter fileWriter = new FileWriter(tempPropertiesFile)) {
+			properties.store(fileWriter, null);
+
+			SampleSQLBuilder.main(
+				new String[] {tempPropertiesFile.getAbsolutePath()});
 
 			_loadHypersonic("../../../sql", tempDir.getAbsolutePath());
 		}
@@ -116,53 +122,52 @@ public class SampleSQLBuilderTest {
 	}
 
 	private void _initProperties(Properties properties, String outputDir) {
-		properties.put("sample.sql.db.type", "hypersonic");
-		properties.put("sample.sql.max.asset.category.count", "1");
+		properties.put(PropsKeys.DB_TYPE, "hypersonic");
+		properties.put(PropsKeys.MAX_ASSET_CATEGORY_COUNT, "1");
+		properties.put(PropsKeys.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT, "1");
+		properties.put(PropsKeys.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT, "1");
+		properties.put(PropsKeys.MAX_ASSETPUBLISHER_PAGE_COUNT, "2");
+		properties.put(PropsKeys.MAX_ASSET_TAG_COUNT, "1");
+		properties.put(PropsKeys.MAX_ASSET_VUCABULARY_COUNT, "1");
+		properties.put(PropsKeys.MAX_BLOGS_ENTRY_COMMENT_COUNT, "1");
+		properties.put(PropsKeys.MAX_BLOGS_ENTRY_COUNT, "1");
+		properties.put(PropsKeys.MAX_COMMERCE_PRODUCT_COUNT, "1");
+		properties.put(PropsKeys.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT, "1");
+		properties.put(PropsKeys.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT, "1");
+		properties.put("PropsKeys.MAX_CONTENT_LAYOUT_COUNT", "1");
+		properties.put(PropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
+		properties.put(PropsKeys.MAX_DDL_RECORD_COUNT, "1");
+		properties.put(PropsKeys.MAX_DDL_RECORD_SET_COUNT, "1");
+		properties.put(PropsKeys.MAX_DL_FILE_ENTRY_COUNT, "1");
+		properties.put(PropsKeys.MAX_DL_FILE_ENTRY_SIZE, "1");
+		properties.put(PropsKeys.MAX_DL_FOLDER_COUNT, "1");
+		properties.put(PropsKeys.MAX_DL_FOLDER_DEPTH, "1");
+		properties.put(PropsKeys.MAX_GROUP_COUNT, "1");
+		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_COUNT, "1");
+		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_PAGE_COUNT, "1");
+		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_SIZE, "1");
+		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_VERSION_COUNT, "1");
+		properties.put(PropsKeys.MAX_MB_CATEGORY_COUNT, "1");
+		properties.put(PropsKeys.MAX_MB_MESSAGE_COUNT, "1");
+		properties.put(PropsKeys.MAX_MB_THREAD_COUNT, "1");
+		properties.put(PropsKeys.MAX_USER_COUNT, "1");
+		properties.put(PropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
+		properties.put(PropsKeys.MAX_WIKI_NODE_COUNT, "1");
+		properties.put(PropsKeys.MAX_WIKI_PAGE_COMMENT_COUNT, "1");
+		properties.put(PropsKeys.MAX_WIKI_PAGE_COUNT, "1");
+		properties.put(PropsKeys.OPTIMIZE_BUFFER_SIZE, "8192");
 		properties.put(
-			"sample.sql.max.asset.entry.to.asset.category.count", "1");
-		properties.put("sample.sql.max.asset.entry.to.asset.tag.count", "1");
-		properties.put("sample.sql.max.asset.publisher.page.count", "2");
-		properties.put("sample.sql.max.asset.tag.count", "1");
-		properties.put("sample.sql.max.asset.vocabulary.count", "1");
-		properties.put("sample.sql.max.blogs.entry.comment.count", "1");
-		properties.put("sample.sql.max.blogs.entry.count", "1");
-		properties.put("sample.sql.max.commerce.product.count", "1");
-		properties.put("sample.sql.max.commerce.product.definition.count", "1");
-		properties.put("sample.sql.max.commerce.product.instance.count", "1");
-		properties.put("sample.sql.max.content.layout.count", "1");
-		properties.put("sample.sql.max.ddl.custom.field.count", "1");
-		properties.put("sample.sql.max.ddl.record.count", "1");
-		properties.put("sample.sql.max.ddl.record.set.count", "1");
-		properties.put("sample.sql.max.dl.file.entry.count", "1");
-		properties.put("sample.sql.max.dl.file.entry.size", "1");
-		properties.put("sample.sql.max.dl.folder.count", "1");
-		properties.put("sample.sql.max.dl.folder.depth", "1");
-		properties.put("sample.sql.max.group.count", "1");
-		properties.put("sample.sql.max.journal.article.count", "1");
-		properties.put("sample.sql.max.journal.article.page.count", "1");
-		properties.put("sample.sql.max.journal.article.size", "1");
-		properties.put("sample.sql.max.journal.article.version.count", "1");
-		properties.put("sample.sql.max.mb.category.count", "1");
-		properties.put("sample.sql.max.mb.message.count", "1");
-		properties.put("sample.sql.max.mb.thread.count", "1");
-		properties.put("sample.sql.max.user.count", "1");
-		properties.put("sample.sql.max.user.to.group.count", "1");
-		properties.put("sample.sql.max.wiki.node.count", "1");
-		properties.put("sample.sql.max.wiki.page.comment.count", "1");
-		properties.put("sample.sql.max.wiki.page.count", "1");
-		properties.put("sample.sql.optimize.buffer.size", "8192");
-		properties.put(
-			"sample.sql.output.csv.file.names",
+			PropsKeys.OUTPUT_CSV_FILE_NAMES,
 			"assetPublisher,blog,company,cpFriendlyURLEntry,documentLibrary," +
 				"dynamicDataList,fragment,layout,mbCategory,mbThread," +
 					"repository,wiki");
-		properties.put("sample.sql.output.dir", outputDir);
-		properties.put("sample.sql.output.merge", "true");
+		properties.put(PropsKeys.OUTPUT_DIR, outputDir);
+		properties.put(PropsKeys.OUTPUT_MERGE, "true");
 		properties.put(
-			"sample.sql.script",
+			PropsKeys.SCRIPT,
 			"com/liferay/portal/tools/sample/sql/builder/dependencies" +
 				"/sample.ftl");
-		properties.put("sample.sql.virtual.hostname", "localhost");
+		properties.put(PropsKeys.VIRTUAL_HOST_NAME, "localhost");
 	}
 
 	private void _loadHypersonic(String sqlDir, String outputDir)

@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,6 +64,23 @@ public class DateDDMFormFieldTemplateContextContributor
 			parameters.put("predefinedValue", predefinedValue);
 		}
 
+		parameters.put(
+			"months",
+			Arrays.asList(
+				CalendarUtil.getMonths(
+					LocaleThreadLocal.getThemeDisplayLocale())));
+
+		parameters.put(
+			"weekdaysShort",
+			Stream.of(
+				CalendarUtil.DAYS_ABBREVIATION
+			).map(
+				day -> LanguageUtil.get(
+					LocaleThreadLocal.getThemeDisplayLocale(), day)
+			).collect(
+				Collectors.toList()
+			));
+
 		List<Integer> years = new ArrayList<>();
 
 		Calendar calendar = Calendar.getInstance();
@@ -76,22 +94,6 @@ public class DateDDMFormFieldTemplateContextContributor
 		}
 
 		parameters.put("years", years);
-
-		parameters.put(
-			"months",
-			Arrays.asList(
-				CalendarUtil.getMonths(
-					LocaleThreadLocal.getThemeDisplayLocale())));
-
-		Stream<String> stream = Arrays.stream(CalendarUtil.DAYS_ABBREVIATION);
-
-		parameters.put(
-			"weekdaysShort",
-			Arrays.asList(
-				stream.map(
-					key -> LanguageUtil.get(
-						LocaleThreadLocal.getThemeDisplayLocale(), key)
-				).toArray()));
 
 		return parameters;
 	}

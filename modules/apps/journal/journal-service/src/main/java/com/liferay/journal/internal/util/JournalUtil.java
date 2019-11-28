@@ -23,7 +23,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalStructureConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -212,21 +211,18 @@ public class JournalUtil {
 	public static String getFolderURLViewInContext(
 		JournalArticle article, LiferayPortletResponse liferayPortletResponse) {
 
+		if (liferayPortletResponse != null) {
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			portletURL.setParameter(
+				"groupId", String.valueOf(article.getGroupId()));
+			portletURL.setParameter(
+				"folderId", String.valueOf(article.getFolderId()));
+
+			return portletURL.toString();
+		}
+
 		try {
-			JournalFolder folder = article.getFolder();
-
-			if (liferayPortletResponse != null) {
-				PortletURL portletURL =
-					liferayPortletResponse.createRenderURL();
-
-				portletURL.setParameter(
-					"groupId", String.valueOf(folder.getGroupId()));
-				portletURL.setParameter(
-					"folderId", String.valueOf(folder.getFolderId()));
-
-				return portletURL.toString();
-			}
-
 			String portletId = PortletProviderUtil.getPortletId(
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
@@ -237,10 +233,10 @@ public class JournalUtil {
 				JournalPortletKeys.JOURNAL);
 
 			articleURL = HttpUtil.addParameter(
-				articleURL, namespace + "groupId", folder.getGroupId());
+				articleURL, namespace + "groupId", article.getGroupId());
 
 			return HttpUtil.addParameter(
-				articleURL, namespace + "folderId", folder.getFolderId());
+				articleURL, namespace + "folderId", article.getFolderId());
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

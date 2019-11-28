@@ -47,7 +47,7 @@ public class LayoutsTreeDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAddLayoutURL(boolean privateLayout) {
+	public String getAddLayoutURL() {
 		PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
@@ -59,7 +59,7 @@ public class LayoutsTreeDisplayContext {
 		addLayoutURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getSiteGroupId()));
 		addLayoutURL.setParameter(
-			"privateLayout", String.valueOf(privateLayout));
+			"privateLayout", String.valueOf(isPrivateLayout()));
 
 		return addLayoutURL.toString();
 	}
@@ -76,7 +76,7 @@ public class LayoutsTreeDisplayContext {
 		return administrationPortletURL.toString();
 	}
 
-	public String getConfigureLayoutSetURL(boolean privatePages) {
+	public String getConfigureLayoutSetURL() {
 		PortletURL configureLayoutSetURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
@@ -90,9 +90,39 @@ public class LayoutsTreeDisplayContext {
 		configureLayoutSetURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
 		configureLayoutSetURL.setParameter(
-			"privateLayout", String.valueOf(privatePages));
+			"privateLayout", String.valueOf(isPrivateLayout()));
 
 		return configureLayoutSetURL.toString();
+	}
+
+	public String getConfigureLayoutURL() {
+		PortletURL configureLayoutSetURL = PortalUtil.getControlPanelPortletURL(
+			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		configureLayoutSetURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout");
+		configureLayoutSetURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		configureLayoutSetURL.setParameter(
+			"backURL", _themeDisplay.getURLCurrent());
+		configureLayoutSetURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+		configureLayoutSetURL.setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout()));
+
+		return configureLayoutSetURL.toString();
+	}
+
+	public Map<String, Object> getEventHandlerContext() {
+		return HashMapBuilder.<String, Object>put(
+			"addLayoutURL", getAddLayoutURL()
+		).put(
+			"configureLayoutURL", getConfigureLayoutURL()
+		).put(
+			"portletNamescape",
+			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
+		).build();
 	}
 
 	public Map<String, Object> getLayoutFinderData() {
@@ -127,9 +157,9 @@ public class LayoutsTreeDisplayContext {
 
 	public Map<String, Object> getPageTypeSelectorData() {
 		return HashMapBuilder.<String, Object>put(
-			"addLayoutURL", getAddLayoutURL(isPrivateLayout())
+			"addLayoutURL", getAddLayoutURL()
 		).put(
-			"configureLayoutSetURL", getConfigureLayoutSetURL(isPrivateLayout())
+			"configureLayoutSetURL", getConfigureLayoutSetURL()
 		).put(
 			"namespace", getNamespace()
 		).put(

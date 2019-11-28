@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.portlet.ThemeDisplayModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -211,9 +210,7 @@ public class JournalUtil {
 	}
 
 	public static String getFolderURLViewInContext(
-			JournalArticle article,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		JournalArticle article, LiferayPortletResponse liferayPortletResponse) {
 
 		String articleURL = StringPool.BLANK;
 

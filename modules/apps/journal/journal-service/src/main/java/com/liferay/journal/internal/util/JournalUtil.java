@@ -243,20 +243,15 @@ public class JournalUtil {
 				articleURL = PortalUtil.getControlPanelFullURL(
 					article.getGroupId(), portletId, null);
 
-				StringBundler sb = new StringBundler(9);
 				JournalFolder folder = article.getFolder();
 
-				sb.append(articleURL);
-				sb.append("&_");
-				sb.append(JournalPortletKeys.JOURNAL);
-				sb.append("_groupId=");
-				sb.append(folder.getGroupId());
-				sb.append("&_");
-				sb.append(JournalPortletKeys.JOURNAL);
-				sb.append("_folderId=");
-				sb.append(folder.getFolderId());
+				String namespace = PortalUtil.getPortletNamespace(
+					JournalPortletKeys.JOURNAL);
 
-				articleURL = sb.toString();
+				articleURL = HttpUtil.addParameter(
+					articleURL, namespace + "groupId", folder.getGroupId());
+				articleURL = HttpUtil.addParameter(
+					articleURL, namespace + "folderId", folder.getFolderId());
 			}
 			catch (PortalException pe) {
 				_log.error(pe, pe);

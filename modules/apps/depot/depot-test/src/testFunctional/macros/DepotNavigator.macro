@@ -75,14 +75,9 @@ definition {
 	macro gotoEdit {
 		var key_card = "${depotName}";
 
-		Click(
-			locator1 = "LexiconCard#CARD_ELLIPSIS",
-			value1 = "${depotName}");
-
-		AssertClick(
-			key_menuItem = "Edit",
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "Edit");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${depotName}");
 	}
 
 	macro gotoGeneral {

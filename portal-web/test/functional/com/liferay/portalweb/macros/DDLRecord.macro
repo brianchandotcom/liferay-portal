@@ -1015,15 +1015,28 @@ definition {
 			}
 		}
 
-		AssertElementPresent(locator1 = "Portlet#H2_HEADER");
+		if ("${field}" == "Date") {
+			AssertElementPresent(locator1 = "Portlet#H2_HEADER");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "DDLRecord#FIELD_1",
-			value1 = "${fieldFieldLabel}");
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${fieldFieldLabel}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "DDLRecord#FIELD_1",
-			value1 = "${ddlRecordFieldData_1}");
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${ddlRecordFieldData_1}");
+		}
+		else {
+			AssertElementPresent(locator1 = "Portlet#H2_HEADER");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${fieldFieldLabel}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDLRecord#FIELD_1",
+				value1 = "${ddlRecordFieldData}");
+		}
 
 		if (isSet(ddlRecordNestedFieldData)) {
 			var key_ddlRecordFieldData = "${ddlRecordNestedFieldData}";

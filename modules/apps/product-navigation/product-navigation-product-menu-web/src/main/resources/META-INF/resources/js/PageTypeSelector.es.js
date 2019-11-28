@@ -45,7 +45,7 @@ function PageTypeSelector(props) {
 
 	return (
 		<div className="align-items-center d-flex page-type-selector">
-			<div className="flex-fill flex-grow-1">
+			<div>
 				<select
 					className="form-control form-control-sm"
 					defaultValue={
@@ -61,7 +61,7 @@ function PageTypeSelector(props) {
 					</option>
 				</select>
 			</div>
-			<div className="text-right">
+			<div className="flex-fill flex-grow-1 text-right">
 				<ClayDropDown
 					active={active}
 					onActiveChange={setActive}

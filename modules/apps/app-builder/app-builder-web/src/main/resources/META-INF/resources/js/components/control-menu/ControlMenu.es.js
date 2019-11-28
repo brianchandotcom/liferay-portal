@@ -97,7 +97,11 @@ export const PortalControlMenu = ({backURL, title, tooltip, url}) => {
 			'.tools-control-group .taglib-icon-help'
 		);
 
-		if (tooltip && tooltipNode) {
+		if (!tooltipNode) {
+			return;
+		}
+
+		if (tooltip) {
 			tooltipNode.classList.remove('hide');
 			tooltipNode.setAttribute('title', tooltip);
 		} else {

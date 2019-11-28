@@ -47,6 +47,12 @@
 </tr>
 
 <tr>
+	<td>FIELD_LABEL_VALUE</td>
+	<td>//input[@value='${fieldLabel}']</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>SIDEBAR_FIELDS_TAB</td>
 	<td>//li[@class='nav-item']//a[contains(text(),'Fields')]</td>
 	<td></td>
@@ -115,6 +121,18 @@
 <tr>
 	<td>OPEN_SIDEBAR</td>
 	<td>//div[contains(@class,'sidebar-header')]//*[contains(@class,'lexicon-icon-angle-right')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>OPTIONS_OPTION_VALUE_FIELD</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>OPTIONS_OPTION_NAME_FIELD</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
 	<td></td>
 </tr>
 

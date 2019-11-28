@@ -71,6 +71,7 @@ const ItemSelectorPreview = ({
 
 			Liferay.detach(updateCurrentItemHandler);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [itemList]);
 
 	const close = () => {
@@ -190,7 +191,7 @@ const ItemSelectorPreview = ({
 			value: itemData.resolvedValue
 		};
 
-		const updatedItemList = [...itemList, editedItem]
+		const updatedItemList = [...itemList, editedItem];
 		setItemList(updatedItemList);
 		setCurrentItemIndex(updatedItemList.length - 1);
 	};
@@ -201,7 +202,7 @@ const ItemSelectorPreview = ({
 
 			newItemList[currentItemIndex] = {...currentItem, url, value};
 
-			setItemList(newItemList)
+			setItemList(newItemList);
 		}
 	};
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.seo.internal;
+package com.liferay.layout.seo.internal.canonical.url;
 
-import com.liferay.layout.seo.LayoutSEOCanonicalURLProvider;
+import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;

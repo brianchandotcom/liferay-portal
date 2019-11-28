@@ -14,7 +14,7 @@
 
 package com.liferay.layout.seo.internal;
 
-import com.liferay.layout.seo.LayoutSEOCanonicalURLProvider;
+import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;

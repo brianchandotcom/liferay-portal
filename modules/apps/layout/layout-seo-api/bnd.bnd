@@ -2,7 +2,7 @@ Bundle-Name: Liferay Layout SEO API
 Bundle-SymbolicName: com.liferay.layout.seo.api
 Bundle-Version: 2.0.0
 Export-Package:\
-	com.liferay.layout.seo,\
+	com.liferay.layout.seo.canonical.url,\
 	com.liferay.layout.seo.exception,\
 	com.liferay.layout.seo.model,\
 	com.liferay.layout.seo.service,\

@@ -39,28 +39,9 @@ definition {
 		AssertVisible(locator1 = "TextInput#NAME");
 
 		if (isSet(openGraph)) {
-			Navigator.gotoNavTab(navTab = "Open Graph");
-
-			var checkboxName = "Use Custom Title";
-
-			if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click(locator1 = "Checkbox#ANY_CHECKBOX");
-			}
-
-			Type(
-				locator1 = "TextInput#OPEN_GRAPH_CUSTOM_TITLE",
-				value1 = "${customTitle}");
-
-			var checkboxName = "Use Custom Description";
-
-			if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click(locator1 = "Checkbox#ANY_CHECKBOX");
-			}
-
-			Type(
-				key_text = "openGraphDescription",
-				locator1 = "TextArea#ANY",
-				value1 = "${customDescription}");
+			SitePages._configureOpenGraph(
+				customDescription = "${customDescription}",
+				customTitle = "${customTitle}");
 		}
 
 		Button.click(button = "Save");
@@ -95,6 +76,32 @@ definition {
 				}
 			}
 		}
+	}
+
+	@summary = "Configures openGraph for a site page. This should be moved outside of _addPage for stability."
+	macro _configureOpenGraph {
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		var checkboxName = "Use Custom Title";
+
+		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Click(locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Type(
+			locator1 = "TextInput#OPEN_GRAPH_CUSTOM_TITLE",
+			value1 = "${customTitle}");
+
+		var checkboxName = "Use Custom Description";
+
+		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Click(locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Type(
+			key_text = "openGraphDescription",
+			locator1 = "TextArea#ANY",
+			value1 = "${customDescription}");
 	}
 
 	macro _configurePage {

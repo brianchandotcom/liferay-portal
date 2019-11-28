@@ -377,6 +377,8 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
+		Pause(locator1 = "5000");
+
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
 			portletOption = "Configuration");

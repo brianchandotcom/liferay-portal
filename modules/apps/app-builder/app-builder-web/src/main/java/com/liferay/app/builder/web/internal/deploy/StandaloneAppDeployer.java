@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,13 +74,15 @@ public class StandaloneAppDeployer implements AppDeployer {
 			appId,
 			key -> {
 				try {
+					String appName = appBuilderApp.getName(
+						LocaleThreadLocal.getThemeDisplayLocale());
 					String portletName = _getPortletName(appId);
 
 					return new ServiceRegistration<?>[] {
 						_deployLayoutTypeController(
-							appBuilderApp.getCompanyId(), appId, portletName),
-						_deployPortlet(
-							appId, appBuilderApp.getName(), portletName),
+							appBuilderApp.getCompanyId(), appId, appName,
+							portletName),
+						_deployPortlet(appId, appName, portletName),
 						_deployLayoutTypeAccessPolicy(portletName)
 					};
 				}
@@ -206,7 +209,7 @@ public class StandaloneAppDeployer implements AppDeployer {
 	}
 
 	private ServiceRegistration<?> _deployLayoutTypeController(
-			long companyId, long appId, String portletName)
+			long companyId, long appId, String appName, String portletName)
 		throws PortalException {
 
 		Group group = _groupLocalService.fetchFriendlyURLGroup(
@@ -230,7 +233,8 @@ public class StandaloneAppDeployer implements AppDeployer {
 
 		return _bundleContext.registerService(
 			LayoutTypeController.class,
-			new AppPortletLayoutTypeController(servletContext, portletName),
+			new AppPortletLayoutTypeController(
+				servletContext, appName, portletName),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("layout.type", portletName);

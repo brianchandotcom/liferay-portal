@@ -34,13 +34,14 @@ public class AppPortletLayoutTypeController
 	}
 
 	public AppPortletLayoutTypeController(
-		ServletContext servletContext, String portletName) {
+		ServletContext servletContext, String appName, String portletName) {
 
 		this.servletContext = servletContext;
 
 		_url = StringBundler.concat(
-			"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}&p_p_id=",
-			portletName, "&p_p_state=pop_up&p_v_l_s_g_id=${liferay:pvlsgid}");
+			"${liferay:mainPath}/portal/layout?appName=", appName,
+			"&p_l_id=${liferay:plid}&portletName=", portletName,
+			"&p_p_state=pop_up");
 	}
 
 	@Override

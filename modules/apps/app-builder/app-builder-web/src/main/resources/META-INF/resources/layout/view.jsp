@@ -17,13 +17,49 @@
 <%@ include file="/layout/init.jsp" %>
 
 <%
-String ppid = ParamUtil.getString(request, "p_p_id");
-String velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "pop_up";
-String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("pop_up", true, theme.getThemeId());
+String appName = ParamUtil.getString(request, "appName");
+String portletName = ParamUtil.getString(request, "portletName");
 
-if (Validator.isNotNull(velocityTemplateContent)) {
-	RuntimePageUtil.processTemplate(request, response, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+String namespace = PortalUtil.getPortletNamespace(portletName);
+
+String mvcPath = ParamUtil.getString(request, namespace + "mvcPath");
+
+String editEntryCssClass = "";
+
+if (mvcPath.startsWith("/edit_entry.jsp")) {
+	editEntryCssClass = "edit-entry";
 }
 %>
 
-<liferay-ui:layout-common />
+<div class="app-builder-standalone">
+	<header class="app-builder-standalone-header">
+		<div class="container p-0">
+			<div class="app-builder-standalone-menu autofit-row">
+				<div class="autofit-col autofit-col-expand">
+					<a class="company-link" href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
+						<span class="company-details text-truncate">
+							<img alt="" class="company-logo" src="<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>" />
+
+							<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
+						</span>
+					</a>
+				</div>
+
+				<div class="col text-right">
+					<liferay-portlet:runtime
+						portletProviderAction="<%= PortletProvider.Action.VIEW %>"
+						portletProviderClassName="com.liferay.admin.kernel.util.PortalUserPersonalBarApplicationType$UserPersonalBar"
+					/>
+				</div>
+			</div>
+
+			<h1 class="app-builder-standalone-name <%= editEntryCssClass %>"><%= HtmlUtil.escape(appName) %></h1>
+		</div>
+	</header>
+
+	<div class="app-builder-standalone-content container <%= editEntryCssClass %> sheet">
+		<liferay-portlet:runtime
+			portletName="<%= portletName %>"
+		/>
+	</div>
+</div>

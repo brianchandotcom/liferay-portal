@@ -104,7 +104,7 @@ export const EditEntry = ({
 				url={location.href}
 			/>
 
-			<ClayButton.Group spaced>
+			<ClayButton.Group className="app-builder-form-buttons" spaced>
 				<Button onClick={onSave}>{Liferay.Language.get('save')}</Button>
 				<Button displayType="secondary" onClick={onCancel}>
 					{Liferay.Language.get('cancel')}

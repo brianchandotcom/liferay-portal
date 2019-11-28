@@ -1,0 +1,128 @@
+.app-builder-standalone {
+	background-color: #e5e5e5;
+	min-height: 100vh;
+	padding-bottom: 9.5rem;
+
+	.app-builder-standalone-content {
+		margin-top: -7rem;
+		padding-bottom: 2rem;
+
+		&.edit-entry {
+			max-width: 856px;
+		}
+
+		.app-builder-root {
+			.app-builder-control-menu {
+				background-color: #434354;
+				border: 1px solid #6b6c7e;
+				border-radius: 4px 4px 0 0;
+				margin-top: calc(-1.5rem - 1px);
+				padding: 0;
+
+				.control-menu-back-button {
+					align-items: center;
+					color: #ffffff;
+					display: inline-flex;
+					height: 40px;
+					margin: calc(1rem - 1px);
+					width: 40px;
+
+					&:hover {
+						background-color: #4d4d5f;
+						border-radius: 4px;
+					}
+				}
+
+				.control-menu-title {
+					color: #ffffff;
+					font-size: 24px;
+				}
+			}
+
+			.app-builder-form-buttons {
+				padding: 0 0.75rem;
+			}
+
+			.edit-entry {
+				padding-top: 3rem;
+
+				.app-builder-control-menu {
+					left: -2.375rem;
+					position: absolute;
+					top: calc(-5rem - 1px);
+					width: calc(100% + 4.75rem);
+				}
+			}
+
+			.loading-wrapper {
+				height: auto;
+				position: relative;
+			}
+
+			.taglib-empty-result-message {
+				margin: 6rem 0;
+			}
+
+			.view-entry {
+				background-color: #f7f8f9;
+				border-radius: 4px;
+				margin-bottom: -2rem;
+				margin-left: calc(-1.5rem - 1px);
+				margin-right: calc(-1.5rem - 1px);
+				margin-top: 0;
+				padding-bottom: 8rem;
+
+				.app-builder-upper-toolbar {
+					margin-bottom: 2rem;
+					position: relative;
+					top: 0;
+					width: auto;
+				}
+
+				.sheet {
+					margin-bottom: 2rem;
+				}
+			}
+		}
+	}
+
+	.app-builder-standalone-header {
+		background-color: #393a4a;
+		min-height: 320px;
+		padding-top: 1rem;
+		width: 100%;
+
+		.app-builder-standalone-name {
+			color: #ffffff;
+			font-size: 2.5rem;
+			font-weight: normal;
+			margin-top: 4.5rem;
+			padding: 0;
+
+			&.edit-entry {
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 856px;
+			}
+		}
+
+		.company-link {
+			color: #ffffff;
+
+			.company-details {
+				display: flex;
+
+				.company-logo {
+					max-width: 52px;
+				}
+
+				.company-name {
+					font-size: 22px;
+					font-weight: bold;
+					line-height: 52px;
+					margin-left: 1rem;
+				}
+			}
+		}
+	}
+}

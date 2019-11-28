@@ -19,7 +19,7 @@
 <div class="app-builder-root">
 	<div class="container edit-entry">
 		<div class="justify-content-center row">
-			<div class="col-lg-8">
+			<div class="col-lg-12">
 				<div class="card card-root mb-0 mt-4 shadowless-card">
 					<div class="card-body pt-0">
 						<aui:form>

@@ -1,5 +1,7 @@
 @import 'variables';
 
+@import 'standalone';
+
 .app-builder-root {
 	@import 'components';
 	@import 'pages';

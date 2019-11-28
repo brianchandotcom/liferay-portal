@@ -6,13 +6,13 @@
 
 <@insertGroup _groupModel=dataFactory.commerceChannelGroupModel />
 
-<@insertGroup _groupModel=dataFactory.globalGroupModel />
+<@insertGroup _groupModel=dataFactory.newGlobalGroupModel() />
 
 <@insertGroup _groupModel=dataFactory.guestGroupModel />
 
-<@insertGroup _groupModel=dataFactory.userPersonalSiteGroupModel />
+<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
 
-<#list dataFactory.groupModels as groupModel>
+<#list dataFactory.newGroupModels() as groupModel>
 	<#assign groupId = groupModel.groupId />
 
 	<#include "asset_publisher.ftl">

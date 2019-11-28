@@ -20,21 +20,16 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,14 +51,11 @@ import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryMenuItemCo
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -349,43 +341,21 @@ public class SharedAssetsViewDisplayContext {
 	private MenuItem _createEditMenuItem(SharingEntry sharingEntry)
 		throws PortalException {
 
-		try {
-			PortletURL editPortletURL = _getURLEdit(
-				sharingEntry, _liferayPortletRequest, _liferayPortletResponse);
+		PortletURL editPortletURL = _getURLEdit(
+			sharingEntry, _liferayPortletRequest, _liferayPortletResponse);
 
-			if (editPortletURL == null) {
-				return null;
-			}
-
-			URLMenuItem urlMenuItem = new URLMenuItem();
-
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"destroyOnHide", true
-			).put(
-				"id",
-				HtmlUtil.escape(_liferayPortletResponse.getNamespace()) +
-					"editAsset"
-			).put(
-				"title",
-				LanguageUtil.format(
-					_httpServletRequest, "edit-x",
-					HtmlUtil.escape(getTitle(sharingEntry)), false)
-			).build();
-
-			urlMenuItem.setData(data);
-
-			urlMenuItem.setLabel(LanguageUtil.get(_httpServletRequest, "edit"));
-			urlMenuItem.setMethod("get");
-
-			urlMenuItem.setURL(editPortletURL.toString());
-
-			urlMenuItem.setUseDialog(true);
-
-			return urlMenuItem;
+		if (editPortletURL == null) {
+			return null;
 		}
-		catch (WindowStateException wse) {
-			throw new SystemException(wse);
-		}
+
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(LanguageUtil.get(_httpServletRequest, "edit"));
+		urlMenuItem.setMethod("get");
+
+		urlMenuItem.setURL(editPortletURL.toString());
+
+		return urlMenuItem;
 	}
 
 	private PortletURL _getCurrentSortingURL() throws PortletException {
@@ -474,7 +444,7 @@ public class SharedAssetsViewDisplayContext {
 			SharingEntry sharingEntry,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException, WindowStateException {
+		throws PortalException {
 
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterFunction.apply(sharingEntry);
@@ -494,24 +464,7 @@ public class SharedAssetsViewDisplayContext {
 		}
 
 		portletURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		PortletURL redirectURL =
-			_liferayPortletResponse.createLiferayPortletURL(
-				_themeDisplay.getPlid(), portletDisplay.getId(),
-				PortletRequest.RENDER_PHASE, false);
-
-		redirectURL.setParameter(
-			"mvcRenderCommandName",
-			"/shared_assets/close_sharing_entry_edit_dialog");
-
-		portletURL.setParameter("redirect", redirectURL.toString());
-
-		portletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
+			"redirect", PortalUtil.getCurrentURL(_liferayPortletRequest));
 
 		return portletURL;
 	}

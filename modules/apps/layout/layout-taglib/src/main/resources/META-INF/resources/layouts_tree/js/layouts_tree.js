@@ -424,7 +424,12 @@ AUI.add(
 						}
 					},
 					formatter: A.bind(instance._formatJSONResults, instance),
-					url: themeDisplay.getPathMain() + '/portal/get_layouts'
+					url:
+						themeDisplay.getDoAsUserIdEncoded() === ''
+							? themeDisplay.getPathMain() + '/portal/get_layouts'
+							: themeDisplay.getPathMain() +
+							  '/portal/get_layouts?doAsUserId=' +
+							  themeDisplay.getDoAsUserIdEncoded()
 				};
 
 				return ioCfg;

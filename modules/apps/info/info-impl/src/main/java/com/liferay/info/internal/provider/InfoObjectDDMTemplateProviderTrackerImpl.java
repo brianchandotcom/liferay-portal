@@ -14,6 +14,7 @@
 
 package com.liferay.info.internal.provider;
 
+import com.liferay.info.internal.util.GenericsUtil;
 import com.liferay.info.provider.InfoObjectDDMTemplateProvider;
 import com.liferay.info.provider.InfoObjectDDMTemplateProviderTracker;
 import com.liferay.portal.kernel.util.Portal;
@@ -50,7 +51,8 @@ public class InfoObjectDDMTemplateProviderTrackerImpl
 		InfoObjectDDMTemplateProvider infoObjectDDMTemplateProvider,
 		Map<String, Object> properties) {
 
-		String className = (String)properties.get("model.class.name");
+		String className = GenericsUtil.getItemClassName(
+			infoObjectDDMTemplateProvider);
 
 		_infoObjectDDMTemplateProviders.put(
 			className, infoObjectDDMTemplateProvider);
@@ -60,7 +62,8 @@ public class InfoObjectDDMTemplateProviderTrackerImpl
 		InfoObjectDDMTemplateProvider infoObjectDDMTemplateProvider,
 		Map<String, Object> properties) {
 
-		String className = (String)properties.get("model.class.name");
+		String className = GenericsUtil.getItemClassName(
+			infoObjectDDMTemplateProvider);
 
 		_infoObjectDDMTemplateProviders.remove(className);
 	}

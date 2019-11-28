@@ -22,9 +22,8 @@ import java.util.List;
 /**
  * @author Pavel Savinov
  */
-public interface InfoObjectDDMTemplateProvider {
+public interface InfoObjectDDMTemplateProvider<T> {
 
-	public List<DDMTemplate> getDDMTemplates(long classPK)
-		throws PortalException;
+	public List<DDMTemplate> getDDMTemplates(T t) throws PortalException;
 
 }

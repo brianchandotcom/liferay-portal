@@ -302,7 +302,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Task task = new Task() {
 			{
-				durationAvg = 0L;
+				durationAvg = Objects.equals(status, "COMPLETED") ? 1000L : 0L;
 				instanceCount = 1L;
 				key = randomString;
 				name = randomString;

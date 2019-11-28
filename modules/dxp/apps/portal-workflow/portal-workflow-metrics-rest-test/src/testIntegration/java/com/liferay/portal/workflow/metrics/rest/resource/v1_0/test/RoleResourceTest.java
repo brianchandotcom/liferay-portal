@@ -85,6 +85,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"id", "name"};
+	}
+
+	@Override
 	protected Role randomRole() throws Exception {
 		com.liferay.portal.kernel.model.Role role1 = _addRole(
 			RoleConstants.TYPE_SITE);

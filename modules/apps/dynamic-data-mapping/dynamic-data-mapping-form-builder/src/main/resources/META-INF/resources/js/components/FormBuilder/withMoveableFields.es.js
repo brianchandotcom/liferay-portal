@@ -21,10 +21,6 @@ import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 
 const withMoveableFields = ChildComponent => {
 	class MoveableFields extends Component {
-		attached() {
-			this.createDragAndDrop();
-		}
-
 		createDragAndDrop() {
 			this._dragAndDrop = new DragDrop({
 				sources: '.moveable .ddm-drag',
@@ -107,8 +103,6 @@ const withMoveableFields = ChildComponent => {
 					target: targetIndexes
 				});
 			}
-
-			this._refreshDragAndDrop();
 		}
 
 		_handleDragStarted({source}) {

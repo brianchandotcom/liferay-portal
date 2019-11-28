@@ -1,10 +1,15 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.0.2",
+		"@clayui/drop-down": "3.1.1",
+		"@clayui/icon": "3.0.1",
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",
 		"metal-drag-drop": "3.3.1",
 		"metal-position": "2.1.2",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"prop-types": "15.7.2",
+		"react": "16.9.0"
 	},
 	"name": "site-navigation-admin-web",
 	"scripts": {

@@ -37,13 +37,21 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 					</button>
 				</li>
 				<li class="nav-item">
-					<clay:dropdown-menu
-						buttonStyle="primary"
-						dropdownItems="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
-						icon="plus"
-						style="primary"
-						triggerCssClasses="nav-btn nav-btn-monospaced"
-					/>
+					<div class="dropdown">
+						<button class="dropdown-toggle btn nav-btn nav-btn-monospaced btn-primary" type="button">
+							<clay:icon symbol="plus" />
+						</button>
+
+						<%
+						Map<String, Object> data = new HashMap<>();
+						data.put("dropdownItems", siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems());
+						%>
+
+						<react:component
+							data="<%= data %>"
+							module="js/add_menu/index"
+						/>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -91,55 +99,30 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	</div>
 </div>
 
-<liferay-frontend:contextual-sidebar
-	body="<%= StringPool.BLANK %>"
-	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
-	header="<%= StringPool.BLANK %>"
-	id='<%= renderResponse.getNamespace() + "sidebar" %>'
-	namespace="<%= renderResponse.getNamespace() %>"
-	visible="<%= false %>"
-/>
+<c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
+	<div id="<portlet:namespace />sidebar">
 
-<aui:script require="metal-dom/src/all/dom as dom">
-	var addMenuItemClickHandler = dom.delegate(
-		document.body,
-		'click',
-		'*[data-type="add-button"] .dropdown-item',
-		function(event) {
-			Liferay.Util.openInDialog(event, {
-				dialog: {
-					destroyOnHide: true
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				},
-				id: '<portlet:namespace/>addMenuItem',
-				title: event.delegateTarget.title || event.delegateTarget.innerText,
-				uri: event.delegateTarget.href
-			});
-		}
-	);
+		<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent" var="editSiteNavigationMenuItemParentURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
 
-	var destroyAddMenuItemClickHandler = function() {
-		if (addMenuItemClickHandler) {
-			addMenuItemClickHandler.removeListener();
+		<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="editSiteNavigationMenuItemURL">
+			<portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" />
+		</portlet:renderURL>
 
-			addMenuItemClickHandler = null;
-		}
+		<%
+		Map<String, Object> data = new HashMap<>();
+		data.put("editSiteNavigationMenuItemURL", editSiteNavigationMenuItemURL.toString());
+		data.put("editSiteNavigationMenuItemParentURL", editSiteNavigationMenuItemParentURL.toString());
+		data.put("id", renderResponse.getNamespace() + "sidebar" );
+		%>
 
-		Liferay.detach(
-			'<%= portletDisplay.getId() %>:portletRefreshed',
-			destroyAddMenuItemClickHandler
-		);
-		Liferay.detach('destroyPortlet', destroyAddMenuItemClickHandler);
-	};
-
-	Liferay.on(
-		'<%= portletDisplay.getId() %>:portletRefreshed',
-		destroyAddMenuItemClickHandler
-	);
-	Liferay.on('destroyPortlet', destroyAddMenuItemClickHandler);
-</aui:script>
+		<react:component
+			data="<%= data %>"
+			module="js/ContextualSidebar.es"
+		/>
+	</div>
+</c:if>
 
 <%
 StringBundler sb = new StringBundler(6);

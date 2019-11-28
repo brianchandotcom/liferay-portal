@@ -12,8 +12,9 @@
  * details.
  */
 
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Carousel from './Carousel.es';
@@ -26,51 +27,27 @@ const KEY_CODE = {
 	RIGTH: 39
 };
 
-const TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
+const ItemSelectorPreview = ({
+	container,
+	currentIndex = 0,
+	editItemURL,
+	handleSelectedItem,
+	headerTitle,
+	items,
+	uploadItemReturnType,
+	uploadItemURL
+}) => {
+	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
+	const [itemList, setItemList] = useState(items);
 
-class ItemSelectorPreview extends Component {
-	static propTypes = {
-		container: PropTypes.instanceOf(Element).isRequired,
-		currentIndex: PropTypes.number.isRequired,
-		editItemURL: PropTypes.string,
-		handleSelectedItem: PropTypes.func.isRequired,
-		headerTitle: PropTypes.string.isRequired,
-		items: PropTypes.arrayOf(
-			PropTypes.shape({
-				base64: PropTypes.string,
-				metadata: PropTypes.string,
-				returntype: PropTypes.string.isRequired,
-				title: PropTypes.string.isRequired,
-				url: PropTypes.string,
-				value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-			})
-		).isRequired,
-		uploadItemReturnType: PropTypes.string,
-		uploadItemURL: PropTypes.string
-	};
+	const infoButtonRef = React.createRef();
 
-	constructor(props) {
-		super(props);
+	const isMounted = useIsMounted();
 
-		const {currentIndex, items} = props;
-		const currentItem = items[currentIndex];
+	useEffect(() => {
+		document.documentElement.addEventListener('keydown', handleOnKeyDown);
 
-		this.state = {
-			currentItem,
-			currentItemIndex: currentIndex,
-			items
-		};
-
-		this.infoButtonRef = React.createRef();
-	}
-
-	componentDidMount() {
-		document.documentElement.addEventListener(
-			'keydown',
-			this.handleOnKeyDown.bind(this)
-		);
-
-		const sidenavToggle = this.infoButtonRef.current;
+		const sidenavToggle = infoButtonRef.current;
 
 		if (sidenavToggle) {
 			Liferay.SideNavigation.initialize(sidenavToggle, {
@@ -81,47 +58,35 @@ class ItemSelectorPreview extends Component {
 			});
 		}
 
-		this._updateCurrentItemHandler = Liferay.on(
+		const updateCurrentItemHandler = Liferay.on(
 			'updateCurrentItem',
-			this.updateCurrentItem
-		);
-	}
-
-	componentWillUnmount() {
-		document.documentElement.removeEventListener(
-			'keydown',
-			this.handleOnKeyDown.bind(this)
+			updateCurrentItem
 		);
 
-		Liferay.detach('updateCurrentItem', this._updateCurrentItemHandler);
-	}
+		return () => {
+			document.documentElement.removeEventListener(
+				'keydown',
+				handleOnKeyDown
+			);
 
-	close = () => {
-		ReactDOM.unmountComponentAtNode(this.props.container);
+			Liferay.detach(updateCurrentItemHandler);
+		};
+	}, [itemList]);
+
+	const close = () => {
+		ReactDOM.unmountComponentAtNode(container);
 	};
 
-	handleClickClose = () => {
-		this.close();
+	const handleClickDone = () => {
+		handleSelectedItem(currentItem);
+		close();
 	};
 
-	handleClickDone = () => {
-		const selectedItem = this.state.currentItem;
-
-		this.props.handleSelectedItem(selectedItem);
-
-		this.close();
-	};
-
-	handleClickEdit = () => {
-		const {currentItem} = this.state;
-
+	const handleClickEdit = () => {
 		const itemTitle = currentItem.title;
-
-		const editDialogTitle = Liferay.Util.sub(TPL_EDIT_DIALOG_TITLE, {
-			copy: Liferay.Language.get('copy'),
-			edit: Liferay.Language.get('edit'),
-			title: itemTitle
-		});
+		const editDialogTitle = `${Liferay.Language.get(
+			'edit'
+		)} ${itemTitle} (${Liferay.Language.get('copy')})`;
 
 		let editEntityBaseZIndex = Liferay.zIndex.WINDOW;
 
@@ -144,72 +109,59 @@ class ItemSelectorPreview extends Component {
 				id: 'Edit_' + itemTitle,
 				stack: false,
 				title: editDialogTitle,
-				uri: this.props.editItemURL,
+				uri: editItemURL,
 				urlParams: {
 					entityURL: currentItem.url,
 					saveFileName: itemTitle,
 					saveParamName: 'imageSelectorFileName',
-					saveURL: this.props.uploadItemURL
+					saveURL: uploadItemURL
 				}
 			},
-			this.handleSaveEdit.bind(this)
+			handleSaveEdit
 		);
 	};
 
-	handleClickNext = () => {
-		const {currentItemIndex, items} = this.state;
-
-		if (items.length > 1) {
-			const lastIndex = items.length - 1;
-			const shouldResetIndex = currentItemIndex === lastIndex;
-			const index = shouldResetIndex ? 0 : currentItemIndex + 1;
-
-			const currentItem = items[index];
-
-			this.setState({
-				currentItem,
-				currentItemIndex: index
+	const handleClickNext = () => {
+		if (itemList.length > 1) {
+			setCurrentItemIndex(index => {
+				const lastIndex = itemList.length - 1;
+				const shouldResetIndex = index === lastIndex;
+				return shouldResetIndex ? 0 : index + 1;
 			});
 		}
 	};
 
-	handleClickPrevious = () => {
-		const {currentItemIndex, items} = this.state;
-
-		if (items.length > 1) {
-			const lastIndex = items.length - 1;
-			const shouldResetIndex = currentItemIndex === 0;
-			const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
-
-			const currentItem = items[index];
-
-			this.setState({
-				currentItem,
-				currentItemIndex: index
+	const handleClickPrevious = () => {
+		if (itemList.length > 1) {
+			setCurrentItemIndex(index => {
+				const lastIndex = itemList.length - 1;
+				const shouldResetIndex = index === 0;
+				return shouldResetIndex ? lastIndex : index - 1;
 			});
 		}
 	};
 
-	handleOnKeyDown = e => {
+	const handleOnKeyDown = e => {
+		if (!isMounted()) return;
+
 		switch (e.which || e.keyCode) {
 			case KEY_CODE.LEFT:
-				this.handleClickPrevious();
+				handleClickPrevious();
 				break;
 			case KEY_CODE.RIGTH:
-				this.handleClickNext();
+				handleClickNext();
 				break;
 			case KEY_CODE.ESC:
 				e.preventDefault();
 				e.stopPropagation();
-				this.close();
+				close();
 				break;
 			default:
 				break;
 		}
 	};
 
-	handleSaveEdit = e => {
-		const {items} = this.state;
+	const handleSaveEdit = e => {
 		const itemData = e.data.file;
 
 		const editedItemMetadata = {
@@ -232,58 +184,76 @@ class ItemSelectorPreview extends Component {
 
 		const editedItem = {
 			metadata: JSON.stringify(editedItemMetadata),
-			returnType: this.props.uploadItemReturnType,
+			returnType: uploadItemReturnType,
 			title: itemData.title,
 			url: itemData.url,
 			value: itemData.resolvedValue
 		};
 
-		items.push(editedItem);
-
-		this.setState({
-			currentItem: editedItem,
-			currentItemIndex: items.length - 1,
-			items
-		});
+		const updatedItemList = [...itemList, editedItem]
+		setItemList(updatedItemList);
+		setCurrentItemIndex(updatedItemList.length - 1);
 	};
 
-	updateCurrentItem = ({url, value}) => {
-		this.setState({currentItem: {...this.state.currentItem, url, value}});
+	const updateCurrentItem = ({url, value}) => {
+		if (isMounted()) {
+			const newItemList = [...itemList];
+
+			newItemList[currentItemIndex] = {...currentItem, url, value};
+
+			setItemList(newItemList)
+		}
 	};
 
-	render() {
-		const {currentItem, currentItemIndex, items} = this.state;
-		const showEditIcon = !!this.props.editItemURL;
-		const showInfoIcon = !!currentItem.metadata;
+	const currentItem = itemList[currentItemIndex];
 
-		return (
-			<div className="fullscreen item-selector-preview">
-				<Header
-					disabledAddButton={!currentItem.url}
-					handleClickAdd={this.handleClickDone}
-					handleClickClose={this.handleClickClose}
-					handleClickEdit={this.handleClickEdit}
-					headerTitle={this.props.headerTitle}
-					infoButtonRef={this.infoButtonRef}
-					showEditIcon={showEditIcon}
-					showInfoIcon={showInfoIcon}
-				/>
+	return (
+		<div className="fullscreen item-selector-preview">
+			<Header
+				disabledAddButton={!currentItem.url}
+				handleClickAdd={handleClickDone}
+				handleClickClose={close}
+				handleClickEdit={handleClickEdit}
+				headerTitle={headerTitle}
+				infoButtonRef={infoButtonRef}
+				showEditIcon={!!editItemURL}
+				showInfoIcon={!!currentItem.metadata}
+			/>
 
-				<Carousel
-					currentItem={currentItem}
-					handleClickNext={this.handleClickNext}
-					handleClickPrevious={this.handleClickPrevious}
-					showArrows={items.length > 1}
-				/>
+			<Carousel
+				currentItem={currentItem}
+				handleClickNext={handleClickNext}
+				handleClickPrevious={handleClickPrevious}
+				showArrows={itemList.length > 1}
+			/>
 
-				<Footer
-					currentIndex={currentItemIndex}
-					title={currentItem.title}
-					totalItems={items.length}
-				/>
-			</div>
-		);
-	}
-}
+			<Footer
+				currentIndex={currentItemIndex}
+				title={currentItem.title}
+				totalItems={itemList.length}
+			/>
+		</div>
+	);
+};
+
+ItemSelectorPreview.propTypes = {
+	container: PropTypes.instanceOf(Element).isRequired,
+	currentIndex: PropTypes.number,
+	editItemURL: PropTypes.string,
+	handleSelectedItem: PropTypes.func.isRequired,
+	headerTitle: PropTypes.string.isRequired,
+	items: PropTypes.arrayOf(
+		PropTypes.shape({
+			base64: PropTypes.string,
+			metadata: PropTypes.string,
+			returntype: PropTypes.string.isRequired,
+			title: PropTypes.string.isRequired,
+			url: PropTypes.string,
+			value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		})
+	).isRequired,
+	uploadItemReturnType: PropTypes.string,
+	uploadItemURL: PropTypes.string
+};
 
 export default ItemSelectorPreview;

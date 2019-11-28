@@ -269,7 +269,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_NAME</td>
-	<td>//input[@name='experienceName']</td>
+	<td>//input[contains(@id,'segmentsExperienceName')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -652,7 +652,7 @@ definition {
 		LAR.importSiteCP(
 			larFileName = "HR_Home_Page_Content_master.lar",
 			mirrorWithOverwriting = "true",
-			siteName = "Site Name",
+			siteName = "Site Name Staging",
 			uploadFrom = "dependencies");
 
 		Navigator.gotoStagedSitePage(

@@ -12,27 +12,19 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useState, useEffect, useRef} from 'react';
-import {useDrag, useDrop} from 'react-dnd';
+import React, {useContext, useEffect, useRef} from 'react';
+import {useDrop} from 'react-dnd';
 
-import {Permission} from '../../common/index';
-import {moveItem} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import updateLayoutData from '../thunks/updateLayoutData';
-import Topper, {
-	TopperProvider,
-	TopperContext,
-	TOPPER_ACTIVE,
-	TOPPER_HOVER
-} from './Topper';
 import UnsafeHTML from './UnsafeHTML';
+import TopperBar from './TopperBar';
+import {TopperProvider} from './Topper';
 
 function Root({children, item}) {
 	const dropItem = item;
@@ -74,173 +66,6 @@ function Root({children, item}) {
 	);
 }
 
-const TopperBar = ({children, item, name}) => {
-	const containerRef = useRef(null);
-	const [dragHover, setDragHover] = useState(null);
-	const [{active, hover}, dispatch] = useContext(TopperContext);
-	const {layoutData} = useContext(StoreContext);
-	const dispatchStore = useContext(DispatchContext);
-
-	const [{isDragging}, drag] = useDrag({
-		collect: monitor => ({
-			isDragging: monitor.isDragging()
-		}),
-		end(_item, _monitor) {
-			const {itemId, position, siblingId} = _monitor.getDropResult();
-
-			dispatchStore(moveItem({itemId, position, siblingId}));
-		},
-		item: {
-			...item,
-			type: LAYOUT_DATA_ITEM_TYPES[item.type]
-		}
-	});
-
-	const [{isOver}, drop] = useDrop({
-		accept: [LAYOUT_DATA_ITEM_TYPES.fragment],
-		collect(_monitor) {
-			return {
-				isOver: _monitor.isOver({shallow: true})
-			};
-		},
-		drop(_item, _monitor) {
-			if (!_monitor.didDrop()) {
-				return {
-					itemId: _item.itemId,
-					itemType: _monitor.getItemType(),
-					position: dragHover,
-					siblingId: item.itemId
-				};
-			}
-		},
-		hover(_item, _monitor) {
-			const dragId = _item.itemId;
-			const dragParentId = _item.parentId;
-			const hoverId = item.itemId;
-
-			// Don't replace items with themselves
-			if (dragId === hoverId) {
-				setDragHover(null);
-
-				return;
-			}
-
-			// Determine rectangle on screen
-			const hoverBoundingRect = containerRef.current.getBoundingClientRect();
-
-			// Get vertical middle
-			const hoverMiddleY =
-				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-			// Determine mouse position
-			const clientOffset = _monitor.getClientOffset();
-
-			// Get pixels to the top
-			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-			const parentChildren = layoutData.items[dragParentId].children;
-
-			const dragIndex = parentChildren.findIndex(
-				child => child === dragId
-			);
-
-			// When dragging downwards, only move when the cursor is below 50%
-			// When dragging upwards, only move when the cursor is above 50%
-			// Dragging downwards
-			if (
-				parentChildren[dragIndex + 1] !== hoverId &&
-				hoverClientY < hoverMiddleY
-			) {
-				setDragHover(0);
-				return;
-			}
-
-			// Dragging upwards
-			if (
-				parentChildren[dragIndex - 1] !== hoverId &&
-				hoverClientY > hoverMiddleY
-			) {
-				setDragHover(1);
-				return;
-			}
-
-			setDragHover(null);
-		}
-	});
-
-	return (
-		<div
-			className={classNames(
-				'fragments-editor__drag-source fragments-editor__drag-source--fragment fragments-editor__drop-target fragments-editor__topper-wrapper fragment-entry-link-wrapper',
-				{
-					'fragments-editor__topper-wrapper--active':
-						active === item.itemId,
-					'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered':
-						hover === item.itemId,
-					'fragments-editor-border-bottom': dragHover === 1 && isOver,
-					'fragments-editor-border-top': dragHover === 0 && isOver
-				}
-			)}
-			onClick={event => {
-				event.stopPropagation();
-
-				dispatch({payload: item.itemId, type: TOPPER_ACTIVE});
-			}}
-			onMouseLeave={event => {
-				event.stopPropagation();
-
-				dispatch({payload: null, type: TOPPER_HOVER});
-			}}
-			onMouseOver={event => {
-				if (!isDragging) {
-					event.stopPropagation();
-
-					dispatch({payload: item.itemId, type: TOPPER_HOVER});
-				}
-			}}
-			ref={containerRef}
-		>
-			<Permission>
-				<Topper>
-					<Topper.Item className="pr-0" isDragHandler ref={drag}>
-						<ClayIcon
-							className="fragments-editor__topper__drag-icon fragments-editor__topper__icon"
-							symbol="drag"
-						/>
-					</Topper.Item>
-					<Topper.Item expand isDragHandler isTitle ref={drag}>
-						{name}
-					</Topper.Item>
-					<Topper.Item>
-						<ClayButton displayType="unstyled" small>
-							<ClayIcon
-								className="fragments-editor__topper__icon"
-								symbol="comments"
-							/>
-						</ClayButton>
-					</Topper.Item>
-					<Topper.Item>
-						<ClayButton displayType="unstyled" small>
-							<ClayIcon
-								className="fragments-editor__topper__icon"
-								symbol="times-circle"
-							/>
-						</ClayButton>
-					</Topper.Item>
-				</Topper>
-			</Permission>
-			<div
-				className={classNames('fragment-entry-link-content', {
-					dragged: isDragging
-				})}
-				ref={drop}
-			>
-				{children}
-			</div>
-		</div>
-	);
-};
-
 function Container({children, item}) {
 	const {
 		backgroundColorCssClass,
@@ -251,7 +76,22 @@ function Container({children, item}) {
 	} = item.config;
 
 	const [, drop] = useDrop({
-		accept: [LAYOUT_DATA_ITEM_TYPES.fragment, LAYOUT_DATA_ITEM_TYPES.row]
+		accept: [LAYOUT_DATA_ITEM_TYPES.fragment, LAYOUT_DATA_ITEM_TYPES.row],
+		collect(monitor) {
+			return {
+				canDrop: monitor.canDrop(),
+				isOver: monitor.isOver()
+			};
+		},
+		drop(_, monitor) {
+			if (!monitor.didDrop()) {
+				return {
+					itemType: monitor.getItemType(),
+					parentId: item.itemId,
+					position: item.children.length + 1
+				};
+			}
+		}
 	});
 
 	return (

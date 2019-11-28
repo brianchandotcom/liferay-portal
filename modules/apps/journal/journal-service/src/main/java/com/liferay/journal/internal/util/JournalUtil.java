@@ -249,7 +249,7 @@ public class JournalUtil {
 				sb.append(articleURL);
 				sb.append("&_");
 				sb.append(JournalPortletKeys.JOURNAL);
-				sb.append("_group=");
+				sb.append("_groupId=");
 				sb.append(folder.getGroupId());
 				sb.append("&_");
 				sb.append(JournalPortletKeys.JOURNAL);

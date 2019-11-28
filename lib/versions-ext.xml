@@ -1163,7 +1163,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/c3p0.jar</file-name>
-				<version>0.9.5.3</version>
+				<version>0.9.5.4</version>
 				<project-name>C3P0</project-name>
 				<project-url>http://sourceforge.net/projects/c3p0</project-url>
 				<licenses>

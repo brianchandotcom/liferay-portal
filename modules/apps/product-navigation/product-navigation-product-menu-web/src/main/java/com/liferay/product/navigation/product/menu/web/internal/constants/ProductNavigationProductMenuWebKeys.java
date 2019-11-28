@@ -21,6 +21,9 @@ public class ProductNavigationProductMenuWebKeys {
 
 	public static final String PAGES_TREE = "PAGES_TREE";
 
+	public static final String PAGES_TREE_EVENT_HANDLER =
+		"PAGES_TREE_EVENT_HANDLER";
+
 	public static final String PANEL_NAME = "PANEL_NAME";
 
 	public static final String PRIVATE_LAYOUT = "PRIVATE_LAYOUT";

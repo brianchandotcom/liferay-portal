@@ -15,6 +15,9 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.provider.InfoObjectDDMTemplateProvider;
@@ -84,8 +87,30 @@ public class GetAvailableTemplatesMVCResourceCommand
 				getInfoObjectDDMTemplateProvider(className);
 
 		if (infoObjectDDMTemplateProvider != null) {
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					className);
+
+			if (infoDisplayContributor == null) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse, jsonArray);
+
+				return;
+			}
+
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+			if (infoDisplayObjectProvider == null) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse, jsonArray);
+
+				return;
+			}
+
 			List<DDMTemplate> ddmTemplates =
-				infoObjectDDMTemplateProvider.getDDMTemplates(classPK);
+				infoObjectDDMTemplateProvider.getDDMTemplates(
+					infoDisplayObjectProvider.getDisplayObject());
 
 			ddmTemplates.forEach(
 				ddmTemplate -> {
@@ -102,6 +127,9 @@ public class GetAvailableTemplatesMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
 	}
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;

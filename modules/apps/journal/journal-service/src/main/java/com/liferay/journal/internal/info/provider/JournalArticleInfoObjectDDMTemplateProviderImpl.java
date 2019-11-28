@@ -14,9 +14,6 @@
 
 package com.liferay.journal.internal.info.provider;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
@@ -39,26 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = InfoObjectDDMTemplateProvider.class
-)
+@Component(service = InfoObjectDDMTemplateProvider.class)
 public class JournalArticleInfoObjectDDMTemplateProviderImpl
-	implements InfoObjectDDMTemplateProvider {
+	implements InfoObjectDDMTemplateProvider<JournalArticle> {
 
 	@Override
-	public List<DDMTemplate> getDDMTemplates(long classPK)
-		throws PortalException {
-
-		AssetRendererFactory<JournalArticle> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetRenderer<JournalArticle> assetRenderer =
-			assetRendererFactory.getAssetRenderer(classPK);
-
-		JournalArticle article = assetRenderer.getAssetObject();
-
+	public List<DDMTemplate> getDDMTemplates(JournalArticle article) {
 		List<DDMStructureLink> ddmStructureLinks =
 			_ddmStructureLinkManager.getStructureLinks(
 				_portal.getClassNameId(JournalArticle.class.getName()),

@@ -15,7 +15,9 @@
 package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.AudioProcessor;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
@@ -42,22 +44,16 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Alejandro Tardín
  */
+@Component(service = DLPreviewRendererProvider.class)
 public class AudioDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
-
-	public AudioDLPreviewRendererProvider(
-		AudioProcessor audioProcessor,
-		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
-		DLURLHelper dlURLHelper, ServletContext servletContext) {
-
-		_audioProcessor = audioProcessor;
-		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
-		_dlURLHelper = dlURLHelper;
-		_servletContext = servletContext;
-	}
 
 	@Override
 	public Set<String> getMimeTypes() {
@@ -116,6 +112,15 @@ public class AudioDLPreviewRendererProvider
 		}
 	}
 
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")",
+		unbind = "-"
+	)
+	protected void setDLProcessor(DLProcessor dlProcessor) {
+		_audioProcessor = (AudioProcessor)dlProcessor;
+	}
+
 	private List<String> _getPreviewFileURLs(
 			FileVersion fileVersion, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -164,10 +169,17 @@ public class AudioDLPreviewRendererProvider
 		return previewFileURLs;
 	}
 
-	private final AudioProcessor _audioProcessor;
-	private final DLFileVersionPreviewLocalService
-		_dlFileVersionPreviewLocalService;
-	private final DLURLHelper _dlURLHelper;
-	private final ServletContext _servletContext;
+	private AudioProcessor _audioProcessor;
+
+	@Reference
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"
+	)
+	private ServletContext _servletContext;
 
 }

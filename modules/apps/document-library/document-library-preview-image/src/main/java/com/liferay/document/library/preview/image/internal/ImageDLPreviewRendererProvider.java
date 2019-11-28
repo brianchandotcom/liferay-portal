@@ -15,6 +15,8 @@
 package com.liferay.document.library.preview.image.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -33,21 +35,16 @@ import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Alejandro Tardín
  */
+@Component(service = DLPreviewRendererProvider.class)
 public class ImageDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
-
-	public ImageDLPreviewRendererProvider(
-		ImageProcessor imageProcessor,
-		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
-		ServletContext servletContext) {
-
-		_imageProcessor = imageProcessor;
-		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
-		_servletContext = servletContext;
-	}
 
 	@Override
 	public Set<String> getMimeTypes() {
@@ -105,9 +102,23 @@ public class ImageDLPreviewRendererProvider
 		}
 	}
 
-	private final DLFileVersionPreviewLocalService
-		_dlFileVersionPreviewLocalService;
-	private final ImageProcessor _imageProcessor;
-	private final ServletContext _servletContext;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")",
+		unbind = "-"
+	)
+	protected void setDLProcessor(DLProcessor dlProcessor) {
+		_imageProcessor = (ImageProcessor)dlProcessor;
+	}
+
+	@Reference
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
+
+	private ImageProcessor _imageProcessor;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.image)"
+	)
+	private ServletContext _servletContext;
 
 }

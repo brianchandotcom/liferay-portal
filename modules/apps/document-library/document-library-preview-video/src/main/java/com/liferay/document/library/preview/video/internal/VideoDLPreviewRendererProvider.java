@@ -15,6 +15,8 @@
 package com.liferay.document.library.preview.video.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -43,22 +45,16 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Alejandro Tardín
  */
+@Component(service = DLPreviewRendererProvider.class)
 public class VideoDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
-
-	public VideoDLPreviewRendererProvider(
-		VideoProcessor videoProcessor,
-		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
-		DLURLHelper dlURLHelper, ServletContext servletContext) {
-
-		_videoProcessor = videoProcessor;
-		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
-		_dlURLHelper = dlURLHelper;
-		_servletContext = servletContext;
-	}
 
 	@Override
 	public Set<String> getMimeTypes() {
@@ -121,6 +117,15 @@ public class VideoDLPreviewRendererProvider
 
 			throw new DLPreviewGenerationInProcessException();
 		}
+	}
+
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")",
+		unbind = "-"
+	)
+	protected void setDLProcessor(DLProcessor dlProcessor) {
+		_videoProcessor = (VideoProcessor)dlProcessor;
 	}
 
 	private List<String> _getPreviewFileURLs(
@@ -186,10 +191,17 @@ public class VideoDLPreviewRendererProvider
 			"&videoThumbnail=1");
 	}
 
-	private final DLFileVersionPreviewLocalService
-		_dlFileVersionPreviewLocalService;
-	private final DLURLHelper _dlURLHelper;
-	private final ServletContext _servletContext;
-	private final VideoProcessor _videoProcessor;
+	@Reference
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.video)"
+	)
+	private ServletContext _servletContext;
+
+	private VideoProcessor _videoProcessor;
 
 }

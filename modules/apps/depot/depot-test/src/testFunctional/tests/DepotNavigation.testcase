@@ -62,4 +62,39 @@ definition {
 			value1 = "Test Depot Name");
 	}
 
+	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
+	@priority = "5"
+	test ViewRestrictionWhenConnectingSites {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Button.clickAdd();
+
+		SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+		AssertVisible(
+			key_navItem = "Recent",
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Recent");
+
+		AssertVisible(
+			key_navItem = "My Sites",
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "My Sites");
+
+		AssertNotVisible(
+			key_navItem = "Repositories",
+			locator1 = "NavBar#NAV_ITEM_LINK",
+			value1 = "Repositories");
+	}
+
 }

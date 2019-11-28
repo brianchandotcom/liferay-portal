@@ -22,8 +22,8 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 	);
 
 	const itemSelectorDialog = new ItemSelectorDialog({
-		buttonAddLabel: Liferay.Language.get('done'),
 		eventName: `${namespace}openGraphImageSelectedItem`,
+		singleSelect: true,
 		title: Liferay.Language.get('open-graph-image'),
 		url: uploadOpenGraphImageURL
 	});

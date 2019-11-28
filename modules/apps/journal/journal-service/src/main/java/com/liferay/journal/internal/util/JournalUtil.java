@@ -209,15 +209,14 @@ public class JournalUtil {
 	}
 
 	public static String getFolderURLViewInContext(
-		JournalArticle article, LiferayPortletResponse liferayPortletResponse) {
+		long folderId, long groupId,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		if (liferayPortletResponse != null) {
 			PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-			portletURL.setParameter(
-				"groupId", String.valueOf(article.getGroupId()));
-			portletURL.setParameter(
-				"folderId", String.valueOf(article.getFolderId()));
+			portletURL.setParameter("groupId", String.valueOf(groupId));
+			portletURL.setParameter("folderId", String.valueOf(folderId));
 
 			return portletURL.toString();
 		}
@@ -227,16 +226,16 @@ public class JournalUtil {
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
 			String articleURL = PortalUtil.getControlPanelFullURL(
-				article.getGroupId(), portletId, null);
+				groupId, portletId, null);
 
 			String namespace = PortalUtil.getPortletNamespace(
 				JournalPortletKeys.JOURNAL);
 
 			articleURL = HttpUtil.addParameter(
-				articleURL, namespace + "groupId", article.getGroupId());
+				articleURL, namespace + "groupId", groupId);
 
 			return HttpUtil.addParameter(
-				articleURL, namespace + "folderId", article.getFolderId());
+				articleURL, namespace + "folderId", folderId);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

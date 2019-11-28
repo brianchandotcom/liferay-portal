@@ -1511,7 +1511,8 @@ public class JournalArticleStagedModelDataHandler
 							String.valueOf(jsonObject.get("context")));
 
 					String articleURL = JournalUtil.getFolderURLViewInContext(
-						importedArticle,
+						importedArticle.getFolderId(),
+						importedArticle.getGroupId(),
 						serviceContext.getLiferayPortletResponse());
 
 					HashMap<String, Object> articleURLMap =

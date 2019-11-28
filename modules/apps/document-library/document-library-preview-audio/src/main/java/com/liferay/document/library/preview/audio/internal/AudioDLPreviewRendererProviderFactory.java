@@ -20,22 +20,19 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Dictionary;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -45,79 +42,37 @@ public class AudioDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_dlProcessorServiceTracker =
-			new ServiceTracker<DLProcessor, ServiceRegistration<?>>(
-				bundleContext, DLProcessor.class, null) {
+		AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
 
-				@Override
-				public ServiceRegistration<?> addingService(
-					ServiceReference<DLProcessor> serviceReference) {
+		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
 
-					DLProcessor dlProcessor = bundleContext.getService(
-						serviceReference);
-
-					if (!DLProcessorConstants.AUDIO_PROCESSOR.equals(
-							dlProcessor.getType())) {
-
-						bundleContext.ungetService(serviceReference);
-
-						return null;
-					}
-
-					AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
-
-					Set<String> audioMimeTypes =
-						audioProcessor.getAudioMimeTypes();
-
-					Dictionary<String, Object> properties =
-						new HashMapDictionary<>();
-
-					properties.put("content.type", audioMimeTypes.toArray());
-
-					Object serviceRanking = serviceReference.getProperty(
-						Constants.SERVICE_RANKING);
-
-					if (serviceRanking != null) {
-						properties.put(
-							Constants.SERVICE_RANKING, serviceRanking);
-					}
-
-					return bundleContext.registerService(
-						DLPreviewRendererProvider.class,
-						new AudioDLPreviewRendererProvider(
-							_dlFileVersionPreviewLocalService, _dlURLHelper,
-							_servletContext),
-						properties);
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<DLProcessor> serviceReference,
-					ServiceRegistration<?> serviceRegistration) {
-
-					serviceRegistration.unregister();
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			};
-
-		_dlProcessorServiceTracker.open();
+		_serviceRegistration = bundleContext.registerService(
+			DLPreviewRendererProvider.class,
+			new AudioDLPreviewRendererProvider(
+				_dlFileVersionPreviewLocalService, _dlURLHelper,
+				_servletContext),
+			MapUtil.singletonDictionary(
+				"content.type", audioMimeTypes.toArray(new String[0])));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dlProcessorServiceTracker.close();
+		_serviceRegistration.unregister();
 	}
 
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	private ServiceTracker<DLProcessor, ServiceRegistration<?>>
-		_dlProcessorServiceTracker;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")"
+	)
+	private DLProcessor _dlProcessor;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	private ServiceRegistration<DLPreviewRendererProvider> _serviceRegistration;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"

@@ -19,22 +19,19 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Dictionary;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -44,75 +41,33 @@ public class ImageDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_dlProcessorServiceTracker =
-			new ServiceTracker<DLProcessor, ServiceRegistration<?>>(
-				bundleContext, DLProcessor.class, null) {
+		ImageProcessor imageProcessor = (ImageProcessor)_dlProcessor;
 
-				@Override
-				public ServiceRegistration<?> addingService(
-					ServiceReference<DLProcessor> serviceReference) {
+		Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
 
-					DLProcessor dlProcessor = bundleContext.getService(
-						serviceReference);
-
-					if (!DLProcessorConstants.IMAGE_PROCESSOR.equals(
-							dlProcessor.getType())) {
-
-						bundleContext.ungetService(serviceReference);
-
-						return null;
-					}
-
-					ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
-
-					Set<String> imageMimeTypes =
-						imageProcessor.getImageMimeTypes();
-
-					Dictionary<String, Object> properties =
-						new HashMapDictionary<>();
-
-					properties.put("content.type", imageMimeTypes.toArray());
-
-					Object serviceRanking = serviceReference.getProperty(
-						Constants.SERVICE_RANKING);
-
-					if (serviceRanking != null) {
-						properties.put(
-							Constants.SERVICE_RANKING, serviceRanking);
-					}
-
-					return bundleContext.registerService(
-						DLPreviewRendererProvider.class,
-						new ImageDLPreviewRendererProvider(
-							_dlFileVersionPreviewLocalService, _servletContext),
-						properties);
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<DLProcessor> serviceReference,
-					ServiceRegistration<?> serviceRegistration) {
-
-					serviceRegistration.unregister();
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			};
-
-		_dlProcessorServiceTracker.open();
+		_serviceRegistration = bundleContext.registerService(
+			DLPreviewRendererProvider.class,
+			new ImageDLPreviewRendererProvider(
+				_dlFileVersionPreviewLocalService, _servletContext),
+			MapUtil.singletonDictionary(
+				"content.type", imageMimeTypes.toArray(new String[0])));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_dlProcessorServiceTracker.close();
+		_serviceRegistration.unregister();
 	}
 
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	private ServiceTracker<DLProcessor, ServiceRegistration<?>>
-		_dlProcessorServiceTracker;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
+	)
+	private DLProcessor _dlProcessor;
+
+	private ServiceRegistration<DLPreviewRendererProvider> _serviceRegistration;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.image)"

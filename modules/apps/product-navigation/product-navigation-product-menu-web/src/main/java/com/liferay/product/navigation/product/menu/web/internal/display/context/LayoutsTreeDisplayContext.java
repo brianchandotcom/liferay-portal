@@ -47,6 +47,23 @@ public class LayoutsTreeDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getAddLayoutURL(boolean privateLayout) {
+		PortletURL addLayoutURL = PortalUtil.getControlPanelPortletURL(
+			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		addLayoutURL.setParameter(
+			"mvcPath", "/select_layout_page_template_entry.jsp");
+		addLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		addLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+		addLayoutURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getSiteGroupId()));
+		addLayoutURL.setParameter(
+			"privateLayout", String.valueOf(privateLayout));
+
+		return addLayoutURL.toString();
+	}
+
 	public String getAdministrationPortletURL() {
 		PortletURL administrationPortletURL =
 			PortalUtil.getControlPanelPortletURL(
@@ -57,6 +74,25 @@ public class LayoutsTreeDisplayContext {
 			"redirect", _themeDisplay.getURLCurrent());
 
 		return administrationPortletURL.toString();
+	}
+
+	public String getConfigureLayoutSetURL(boolean privatePages) {
+		PortletURL configureLayoutSetURL = PortalUtil.getControlPanelPortletURL(
+			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		configureLayoutSetURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout_set");
+		configureLayoutSetURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		configureLayoutSetURL.setParameter(
+			"backURL", _themeDisplay.getURLCurrent());
+		configureLayoutSetURL.setParameter(
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+		configureLayoutSetURL.setParameter(
+			"privateLayout", String.valueOf(privatePages));
+
+		return configureLayoutSetURL.toString();
 	}
 
 	public Map<String, Object> getLayoutFinderData() {
@@ -91,9 +127,9 @@ public class LayoutsTreeDisplayContext {
 
 	public Map<String, Object> getPageTypeSelectorData() {
 		return HashMapBuilder.<String, Object>put(
-			"addLayoutURL", ""
+			"addLayoutURL", getAddLayoutURL(isPrivateLayout())
 		).put(
-			"configureLayoutsetURL", ""
+			"configureLayoutSetURL", getConfigureLayoutSetURL(isPrivateLayout())
 		).put(
 			"namespace", getNamespace()
 		).put(

@@ -12,10 +12,15 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 
 function PageTypeSelector(props) {
+	const [active, setActive] = useState(false);
+
 	const handleOnChange = useCallback(
 		event => {
 			const pageType = event.target.value;
@@ -27,6 +32,16 @@ function PageTypeSelector(props) {
 		},
 		[props.namespace]
 	);
+
+	const handleOnAddPageClick = useCallback(() => {
+		setActive(false);
+		Liferay.Util.navigate(props.addLayoutURL);
+	}, [props.addLayoutURL]);
+
+	const handleOnConfigureClick = useCallback(() => {
+		setActive(false);
+		Liferay.Util.navigate(props.configureLayoutSetURL);
+	}, [props.configureLayoutSetURL]);
 
 	const handleOnClick = useCallback(() => {
 		const tree = Liferay.component(`${props.namespace}pagesTree`);
@@ -57,11 +72,60 @@ function PageTypeSelector(props) {
 					{Liferay.Language.get('collapse-all')}
 				</button>
 			</div>
+			<div className="flex-fill flex-grow-1 text-right">
+				<ClayDropDown
+					active={active}
+					onActiveChange={setActive}
+					trigger={
+						<ClayButton
+							aria-haspopup="true"
+							className="dropdown-toggle"
+							displayType="unstyled"
+						>
+							<ClayIcon
+								className="inline-item inline-item-after"
+								symbol="ellipsis-v"
+							/>
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList>
+						<ClayDropDown.Item
+							className="autofit-row"
+							data-value={Liferay.Language.get('add-page')}
+							key={Liferay.Language.get('add-page')}
+							onClick={handleOnAddPageClick}
+							title={Liferay.Language.get('add-page')}
+						>
+							<span className="autofit-col autofit-col-expand">
+								<span className="autofit-section">
+									{Liferay.Language.get('add-page')}
+								</span>
+							</span>
+						</ClayDropDown.Item>
+						<ClayDropDown.Item
+							className="autofit-row"
+							data-value={Liferay.Language.get('configure')}
+							key={Liferay.Language.get('configure')}
+							onClick={handleOnConfigureClick}
+							title={Liferay.Language.get('configure')}
+						>
+							<span className="autofit-col autofit-col-expand">
+								<span className="autofit-section">
+									{Liferay.Language.get('configure')}
+								</span>
+							</span>
+						</ClayDropDown.Item>
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			</div>
 		</div>
 	);
 }
 
 PageTypeSelector.propTypes = {
+	addLayoutURL: PropTypes.string,
+	configureLayoutSetURL: PropTypes.string,
 	namespace: PropTypes.string,
 	privateLayout: PropTypes.bool
 };

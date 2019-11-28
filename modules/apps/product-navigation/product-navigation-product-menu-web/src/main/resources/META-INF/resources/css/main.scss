@@ -82,7 +82,26 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 
 	.tree-view {
+		.tree-container {
+			border-left: 1px solid #393a4a;
+			margin-left: 9px;
+			padding-left: 5px;
+		}
+
 		.tree-node {
+			.tree-hitarea {
+				background-color: #393a4a;
+				border: 1px solid #393a4a;
+				border-radius: 2px;
+				font-size: 9px;
+				padding: 1px 3px;
+				text-align: center;
+
+				& + span {
+					display: none;
+				}
+			}
+
 			.tree-label a {
 				color: #cdced9;
 			}
@@ -91,8 +110,27 @@ $product-menu-pages-administration-link-height: 72px;
 			margin-bottom: 4px;
 			margin-top: 4px;
 
-			.tree-node-selected .tree-label a {
-				color: white;
+			.tree-label {
+				.dropdown {
+					visibility: hidden;
+				}
+
+				&:hover .dropdown {
+					visibility: visible;
+				}
+
+				vertical-align: middle;
+				width: 80%;
+			}
+
+			.tree-node-selected {
+				.tree-label a {
+					color: white;
+				}
+
+				.dropdown {
+					visibility: visible !important;
+				}
 			}
 		}
 

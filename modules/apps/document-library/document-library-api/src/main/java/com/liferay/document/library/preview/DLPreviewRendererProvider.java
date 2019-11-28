@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import java.util.Optional;
 import java.util.Set;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Renders file previews in conjunction with {@link DLPreviewRenderer}.
  *
@@ -32,6 +34,7 @@ import java.util.Set;
  *
  * @author Alejandro Tardín
  */
+@ProviderType
 public interface DLPreviewRendererProvider {
 
 	public Set<String> getMimeTypes();

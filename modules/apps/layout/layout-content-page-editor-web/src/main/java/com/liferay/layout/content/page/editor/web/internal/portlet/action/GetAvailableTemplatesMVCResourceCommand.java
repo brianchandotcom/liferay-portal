@@ -115,15 +115,14 @@ public class GetAvailableTemplatesMVCResourceCommand
 			infoItemDDMTemplateProvider.getDDMTemplates(
 				infoDisplayObjectProvider.getDisplayObject());
 
-		ddmTemplates.forEach(
-			ddmTemplate -> {
-				jsonArray.put(
-					JSONUtil.put(
-						"ddmTemplateKey", ddmTemplate.getTemplateKey()
-					).put(
-						"label", ddmTemplate.getName(themeDisplay.getLocale())
-					));
-			});
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			jsonArray.put(
+				JSONUtil.put(
+					"ddmTemplateKey", ddmTemplate.getTemplateKey()
+				).put(
+					"label", ddmTemplate.getName(themeDisplay.getLocale())
+				));
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);

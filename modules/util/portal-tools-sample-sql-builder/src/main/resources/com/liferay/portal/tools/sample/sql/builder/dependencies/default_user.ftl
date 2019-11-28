@@ -9,7 +9,7 @@
 <@insertGroup _groupModel=dataFactory.newGroupModel(userModel) />
 
 <#assign
-	groupIds = [dataFactory.guestGroupModel.groupId]
+	groupIds = [guestGroupModel.groupId]
 	roleIds = [dataFactory.administratorRoleModel.roleId]
 />
 

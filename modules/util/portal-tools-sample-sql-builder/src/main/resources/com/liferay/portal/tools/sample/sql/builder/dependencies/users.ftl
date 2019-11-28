@@ -1,5 +1,5 @@
 <#assign
-	groupIds = dataFactory.getNewUserGroupIds(groupModel.groupId)
+	groupIds = dataFactory.getNewUserGroupIds(groupModel.groupId, guestGroupModel)
 	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
 
 	userModels = dataFactory.newUserModels()

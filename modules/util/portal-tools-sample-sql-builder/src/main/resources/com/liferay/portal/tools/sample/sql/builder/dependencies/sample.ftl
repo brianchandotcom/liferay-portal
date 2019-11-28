@@ -10,8 +10,6 @@
 
 <#include "default_dl_file_type.ftl">
 
-<#include "default_user.ftl">
-
 <#include "groups.ftl">
 
 <#include "roles.ftl">

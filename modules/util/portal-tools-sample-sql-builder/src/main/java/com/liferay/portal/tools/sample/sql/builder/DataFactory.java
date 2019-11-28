@@ -650,10 +650,6 @@ public class DataFactory {
 		return getClassNameId(DLFileEntry.class);
 	}
 
-	public GroupModel getGuestGroupModel() {
-		return _guestGroupModel;
-	}
-
 	public UserModel getGuestUserModel() {
 		return _guestUserModel;
 	}
@@ -714,10 +710,12 @@ public class DataFactory {
 		return _maxWikiPageCommentCount;
 	}
 
-	public List<Long> getNewUserGroupIds(long groupId) {
+	public List<Long> getNewUserGroupIds(
+		long groupId, GroupModel guestGroupModel) {
+
 		List<Long> groupIds = new ArrayList<>(_maxUserToGroupCount + 1);
 
-		groupIds.add(_guestGroupModel.getGroupId());
+		groupIds.add(guestGroupModel.getGroupId());
 
 		if ((groupId + _maxUserToGroupCount) > _maxGroupCount) {
 			groupId = groupId - _maxUserToGroupCount + 1;
@@ -1230,8 +1228,6 @@ public class DataFactory {
 	}
 
 	public void initGroupModels() {
-		long groupClassNameId = getClassNameId(Group.class);
-
 		_commerceChannelGroupModel = newGroupModel(
 			_commerceChannelGroupId, getClassNameId(CommerceChannel.class),
 			_commerceChannelModel.getCommerceChannelId(),
@@ -1241,10 +1237,6 @@ public class DataFactory {
 			_commerceCatalogGroupId, getClassNameId(CommerceCatalog.class),
 			_commerceCatalogModel.getCommerceCatalogId(),
 			_commerceCatalogModel.getName(), false);
-
-		_guestGroupModel = newGroupModel(
-			_guestGroupId, groupClassNameId, _guestGroupId,
-			GroupConstants.GUEST, true);
 	}
 
 	public void initJournalArticleContent() {
@@ -2251,6 +2243,12 @@ public class DataFactory {
 		}
 
 		return groupModels;
+	}
+
+	public GroupModel newGuestGroupModel() {
+		return newGroupModel(
+			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
+			GroupConstants.GUEST, true);
 	}
 
 	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
@@ -4520,7 +4518,6 @@ public class DataFactory {
 	private final SimpleCounter _futureDateCounter;
 	private final long _globalGroupId;
 	private final long _guestGroupId;
-	private GroupModel _guestGroupModel;
 	private RoleModel _guestRoleModel;
 	private UserModel _guestUserModel;
 	private String _journalArticleContent;

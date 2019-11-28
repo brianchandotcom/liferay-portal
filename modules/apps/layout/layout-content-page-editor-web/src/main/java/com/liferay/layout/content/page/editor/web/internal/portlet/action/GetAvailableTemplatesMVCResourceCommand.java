@@ -15,17 +15,16 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
-import com.liferay.info.item.provider.InfoItemDDMTemplateProviderTracker;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
+import com.liferay.info.item.provider.InfoItemDDMTemplateProviderTracker;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -73,56 +72,58 @@ public class GetAvailableTemplatesMVCResourceCommand
 			_infoItemRendererTracker.getInfoItemRenderers(className);
 
 		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
-			JSONObject jsonObject = JSONUtil.put(
-				"infoItemRendererKey", infoItemRenderer.getKey()
-			).put(
-				"label", infoItemRenderer.getLabel(themeDisplay.getLocale())
-			);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				JSONUtil.put(
+					"infoItemRendererKey", infoItemRenderer.getKey()
+				).put(
+					"label", infoItemRenderer.getLabel(themeDisplay.getLocale())
+				));
 		}
 
 		InfoItemDDMTemplateProvider infoItemDDMTemplateProvider =
 			_infoItemDDMTemplateProviderTracker.getInfoItemDDMTemplateProvider(
 				className);
 
-		if (infoItemDDMTemplateProvider != null) {
-			InfoDisplayContributor infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					className);
+		if (infoItemDDMTemplateProvider == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, jsonArray);
 
-			if (infoDisplayContributor == null) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse, jsonArray);
+			return;
+		}
 
-				return;
-			}
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
-			InfoDisplayObjectProvider infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+		if (infoDisplayContributor == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, jsonArray);
 
-			if (infoDisplayObjectProvider == null) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse, jsonArray);
+			return;
+		}
 
-				return;
-			}
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
 
-			List<DDMTemplate> ddmTemplates =
-				infoItemDDMTemplateProvider.getDDMTemplates(
-					infoDisplayObjectProvider.getDisplayObject());
+		if (infoDisplayObjectProvider == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, jsonArray);
 
-			ddmTemplates.forEach(
-				ddmTemplate -> {
-					JSONObject jsonObject = JSONUtil.put(
+			return;
+		}
+
+		List<DDMTemplate> ddmTemplates =
+			infoItemDDMTemplateProvider.getDDMTemplates(
+				infoDisplayObjectProvider.getDisplayObject());
+
+		ddmTemplates.forEach(
+			ddmTemplate -> {
+				jsonArray.put(
+					JSONUtil.put(
 						"ddmTemplateKey", ddmTemplate.getTemplateKey()
 					).put(
 						"label", ddmTemplate.getName(themeDisplay.getLocale())
-					);
-
-					jsonArray.put(jsonObject);
-				});
-		}
+					));
+			});
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);

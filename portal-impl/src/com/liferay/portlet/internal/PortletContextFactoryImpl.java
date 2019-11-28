@@ -16,6 +16,7 @@ package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
 
 import java.util.Map;
@@ -43,16 +44,12 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 			_pool.put(portlet.getRootPortletId(), portletContexts);
 		}
 
-		PortletContext portletContext = null;
+		PortletContext portletContext = portletContexts.get(
+			portlet.getPortletId());
 
-		if (portlet.isUndeployedPortlet()) {
-			portletContexts.remove(portlet.getPortletId());
-		}
-		else {
-			portletContext = portletContexts.get(portlet.getPortletId());
-		}
+		if ((portletContext != null) &&
+			_isSamePortletDeployedStatus(portlet, portletContext)) {
 
-		if (portletContext != null) {
 			return portletContext;
 		}
 
@@ -79,6 +76,24 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 	@Override
 	public void destroy(Portlet portlet) {
 		_pool.remove(portlet.getRootPortletId());
+	}
+
+	private boolean _isSamePortletDeployedStatus(
+		Portlet portlet, PortletContext portletContext) {
+
+		LiferayPortletContext liferayPortletContext =
+			(LiferayPortletContext)portletContext;
+
+		Portlet existingPortlet = liferayPortletContext.getPortlet();
+
+		if ((existingPortlet != null) &&
+			(portlet.isUndeployedPortlet() ==
+				existingPortlet.isUndeployedPortlet())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final Map<String, Map<String, PortletContext>> _pool =

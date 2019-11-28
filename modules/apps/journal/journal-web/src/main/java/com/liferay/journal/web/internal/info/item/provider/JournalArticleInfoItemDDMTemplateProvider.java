@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(service = InfoItemDDMTemplateProvider.class)
-public class JournalArticleInfoItemDDMTemplateProviderImpl
+public class JournalArticleInfoItemDDMTemplateProvider
 	implements InfoItemDDMTemplateProvider<JournalArticle> {
 
 	@Override

@@ -64,7 +64,6 @@ public class GetAvailableTemplatesMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		String className = ParamUtil.getString(resourceRequest, "className");
-		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -100,6 +99,8 @@ public class GetAvailableTemplatesMVCResourceCommand
 
 			return;
 		}
+
+		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
 			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);

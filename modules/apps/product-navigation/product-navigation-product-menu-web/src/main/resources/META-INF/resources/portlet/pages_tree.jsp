@@ -49,7 +49,7 @@ Group group = themeDisplay.getSiteGroup();
 				</a>
 			</span>
 			<span class="autofit-col autofit-col-expand">
-				<span class="d-sm-block dropdown">
+				<span class="d-sm-block dropdown text-right">
 					<a class="dropdown-toggle ml-1 taglib-icon" data-toggle="dropdown" href="javascript:;">
 						<aui:icon image="ellipsis-v" markupView="lexicon" />
 
@@ -62,7 +62,7 @@ Group group = themeDisplay.getSiteGroup();
 						<li>
 							<button class="autofit-row dropdown-item layout-action" data-action="addChildPage" data-plid="{plid}">
 								<span class="autofit-col autofit-col-expand">
-									<span class="autofit-section">
+									<span class="autofit-section text-left">
 										<liferay-ui:message key="add-child-page" />
 									</span>
 								</span>
@@ -71,7 +71,7 @@ Group group = themeDisplay.getSiteGroup();
 						<li>
 							<button class="autofit-row dropdown-item layout-action" data-action="configure" data-plid="{plid}">
 								<span class="autofit-col autofit-col-expand">
-									<span class="autofit-section">
+									<span class="autofit-section text-left">
 										<liferay-ui:message key="configure" />
 									</span>
 								</span>
@@ -106,7 +106,7 @@ Group group = themeDisplay.getSiteGroup();
 
 <aui:script>
 	function handleDestroyPortlet() {
-		Liferay.destroyComponent(props.namespace + 'pagesTree');
+		Liferay.destroyComponent('<%= renderResponse.getNamespace() %>pagesTree');
 		Liferay.destroyComponent(
 			'<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER  %>'
 		);

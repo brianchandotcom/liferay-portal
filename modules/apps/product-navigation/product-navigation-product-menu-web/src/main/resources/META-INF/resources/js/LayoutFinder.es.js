@@ -97,7 +97,10 @@ function LayoutFinder(props) {
 
 	return (
 		<div className="layout-finder">
-			<button className={`btn-unstyled mb-3`} onClick={handleOnClick}>
+			<button
+				className={`back-to-menu btn-sm btn-unstyled mb-3`}
+				onClick={handleOnClick}
+			>
 				<ClayIcon className={`icon-monospaced`} symbol="angle-left" />
 
 				{`${Liferay.Language.get('back-to-menu')} `}
@@ -112,7 +115,6 @@ function LayoutFinder(props) {
 
 				<input
 					autoComplete="off"
-					autoFocus
 					className="form-control form-control-sm"
 					id={`${props.namespace}-layout-finder-page-input`}
 					onChange={handleOnChange}
@@ -122,15 +124,6 @@ function LayoutFinder(props) {
 					type="text"
 					value={keywords}
 				/>
-
-				<div className="layout-finder-icon">
-					<svg
-						aria-hidden="true"
-						className={`lexicon-icon lexicon-icon-search`}
-					>
-						<use xlinkHref={`${props.spritemap}#search`} />
-					</svg>
-				</div>
 			</form>
 
 			{totalCount > 0 && (

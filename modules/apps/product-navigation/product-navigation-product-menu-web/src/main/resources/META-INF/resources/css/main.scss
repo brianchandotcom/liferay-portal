@@ -6,12 +6,24 @@ $product-menu-item-fixed-width: $product-menu-width;
 $product-menu-pages-administration-link-height: 72px;
 
 .pages-tree {
+	.dropdown-toggle {
+		color: #a7a9bc !important;
+
+		&:active {
+			color: #fff;
+		}
+	}
+
 	.layout-finder {
 		border-bottom: 1px solid #272833;
 		padding: 24px 16px 0px 16px;
 
 		input {
 			background-color: #393a4a;
+		}
+
+		.back-to-menu {
+			color: #a7a9bc;
 		}
 
 		.breadcrumb {
@@ -37,6 +49,10 @@ $product-menu-pages-administration-link-height: 72px;
 			}
 		}
 
+		.btn-sm {
+			font-size: 14px;
+		}
+
 		& .form-control:focus {
 			border-radius: 1px;
 		}
@@ -60,6 +76,10 @@ $product-menu-pages-administration-link-height: 72px;
 		padding: 16px 0px 24px 16px;
 		position: fixed;
 		width: $product-menu-item-fixed-width;
+
+		a {
+			color: #a7a9bc;
+		}
 	}
 
 	.page-type-selector {
@@ -70,29 +90,69 @@ $product-menu-pages-administration-link-height: 72px;
 		.form-control {
 			background-color: #272833;
 			border-color: #393a4a;
-		}
-
-		.collapse-all-link {
-			button {
-				color: #cdced9;
-			}
-
-			font-size: 14px;
+			color: #a7a9bc;
 		}
 	}
 
 	.tree-view {
+		.tree-container {
+			border-left: 1px solid #393a4a;
+			cursor: pointer;
+			margin-left: 6px;
+			padding-left: 14px;
+		}
+
 		.tree-node {
+			.tree-hitarea {
+				background-color: #393a4a;
+				border: 1px solid #393a4a;
+				border-radius: 2px;
+				font-size: 6px;
+				margin-right: 0px;
+				padding: 2px 2px 1px 2px;
+				text-align: center;
+
+				& + span {
+					display: none;
+				}
+			}
+
 			.tree-label a {
-				color: #cdced9;
+				color: #a7a9bc;
+
+				&:hover {
+					color: #fff;
+				}
 			}
 
 			font-size: 14px;
 			margin-bottom: 4px;
 			margin-top: 4px;
 
-			.tree-node-selected .tree-label a {
-				color: white;
+			.tree-label {
+				.dropdown {
+					visibility: hidden;
+				}
+
+				&:hover .dropdown {
+					visibility: visible;
+				}
+
+				color: #a7a9bc !important;
+				margin-left: 8px;
+				vertical-align: middle;
+				width: 86%;
+			}
+
+			.tree-node-selected {
+				.tree-label .layout-tree {
+					color: white;
+					font-weight: 600;
+				}
+
+				.dropdown {
+					visibility: visible !important;
+				}
 			}
 		}
 

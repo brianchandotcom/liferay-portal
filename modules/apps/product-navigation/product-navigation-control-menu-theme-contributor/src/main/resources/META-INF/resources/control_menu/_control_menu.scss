@@ -117,7 +117,7 @@ a.control-menu-icon,
 	}
 
 	a,
-	button {
+	button:not(.dropdown-item) {
 		color: $control-menu-level-1-link-color;
 
 		&:focus,

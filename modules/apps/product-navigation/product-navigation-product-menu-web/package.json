@@ -5,6 +5,10 @@
 		"@clayui/icon": "3.0.1",
 		"@clayui/loading-indicator": "3.0.0",
 		"frontend-js-web": "*",
+		"metal": "2.16.8",
+		"metal-dom": "2.16.8",
+		"metal-events": "2.16.8",
+		"metal-state": "2.16.8",
 		"react": "16.9.0",
 		"react-dom": "16.9.0"
 	},

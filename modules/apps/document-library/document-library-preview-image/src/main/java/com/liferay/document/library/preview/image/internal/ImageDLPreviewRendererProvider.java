@@ -16,7 +16,7 @@ package com.liferay.document.library.preview.image.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
-import com.liferay.document.library.kernel.util.ImageProcessorUtil;
+import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
@@ -39,9 +39,11 @@ public class ImageDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
 	public ImageDLPreviewRendererProvider(
+		ImageProcessor imageProcessor,
 		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
 		ServletContext servletContext) {
 
+		_imageProcessor = imageProcessor;
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 		_servletContext = servletContext;
 	}
@@ -57,7 +59,7 @@ public class ImageDLPreviewRendererProvider
 				});
 		}
 
-		if (!ImageProcessorUtil.isImageSupported(fileVersion)) {
+		if (!_imageProcessor.isImageSupported(fileVersion)) {
 			return Optional.empty();
 		}
 
@@ -92,13 +94,14 @@ public class ImageDLPreviewRendererProvider
 			throw new DLFileEntryPreviewGenerationException();
 		}
 
-		if (!ImageProcessorUtil.hasImages(fileVersion)) {
+		if (!_imageProcessor.hasImages(fileVersion)) {
 			throw new DLPreviewGenerationInProcessException();
 		}
 	}
 
 	private final DLFileVersionPreviewLocalService
 		_dlFileVersionPreviewLocalService;
+	private final ImageProcessor _imageProcessor;
 	private final ServletContext _servletContext;
 
 }

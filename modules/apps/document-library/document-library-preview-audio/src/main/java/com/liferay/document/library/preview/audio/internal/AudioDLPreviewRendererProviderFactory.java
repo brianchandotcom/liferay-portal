@@ -49,7 +49,7 @@ public class AudioDLPreviewRendererProviderFactory {
 		_serviceRegistration = bundleContext.registerService(
 			DLPreviewRendererProvider.class,
 			new AudioDLPreviewRendererProvider(
-				_dlFileVersionPreviewLocalService, _dlURLHelper,
+				audioProcessor, _dlFileVersionPreviewLocalService, _dlURLHelper,
 				_servletContext),
 			MapUtil.singletonDictionary(
 				"content.type", audioMimeTypes.toArray(new String[0])));

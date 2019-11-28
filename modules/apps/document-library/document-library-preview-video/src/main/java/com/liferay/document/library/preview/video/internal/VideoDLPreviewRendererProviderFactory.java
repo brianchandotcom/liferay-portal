@@ -49,7 +49,7 @@ public class VideoDLPreviewRendererProviderFactory {
 		_serviceRegistration = bundleContext.registerService(
 			DLPreviewRendererProvider.class,
 			new VideoDLPreviewRendererProvider(
-				_dlFileVersionPreviewLocalService, _dlURLHelper,
+				videoProcessor, _dlFileVersionPreviewLocalService, _dlURLHelper,
 				_servletContext),
 			MapUtil.singletonDictionary(
 				"content.type", videoMimeTypes.toArray(new String[0])));

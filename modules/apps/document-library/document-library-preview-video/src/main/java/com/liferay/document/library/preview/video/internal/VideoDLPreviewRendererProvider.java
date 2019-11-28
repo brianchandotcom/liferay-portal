@@ -16,7 +16,7 @@ package com.liferay.document.library.preview.video.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
-import com.liferay.document.library.kernel.util.VideoProcessorUtil;
+import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
@@ -49,9 +49,11 @@ public class VideoDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
 	public VideoDLPreviewRendererProvider(
+		VideoProcessor videoProcessor,
 		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
 		DLURLHelper dlURLHelper, ServletContext servletContext) {
 
+		_videoProcessor = videoProcessor;
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 		_dlURLHelper = dlURLHelper;
 		_servletContext = servletContext;
@@ -61,7 +63,7 @@ public class VideoDLPreviewRendererProvider
 	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
 		FileVersion fileVersion) {
 
-		if (!VideoProcessorUtil.isVideoSupported(fileVersion)) {
+		if (!_videoProcessor.isVideoSupported(fileVersion)) {
 			return Optional.empty();
 		}
 
@@ -106,7 +108,7 @@ public class VideoDLPreviewRendererProvider
 			throw new DLFileEntryPreviewGenerationException();
 		}
 
-		if (!VideoProcessorUtil.hasVideo(fileVersion)) {
+		if (!_videoProcessor.hasVideo(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 				throw new DLPreviewSizeException();
 			}
@@ -140,9 +142,8 @@ public class VideoDLPreviewRendererProvider
 				for (String dlFileEntryPreviewVideoContainer :
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
 
-					long previewFileSize =
-						VideoProcessorUtil.getPreviewFileSize(
-							fileVersion, dlFileEntryPreviewVideoContainer);
+					long previewFileSize = _videoProcessor.getPreviewFileSize(
+						fileVersion, dlFileEntryPreviewVideoContainer);
 
 					if (previewFileSize > 0) {
 						previewFileURLs.add(
@@ -183,5 +184,6 @@ public class VideoDLPreviewRendererProvider
 		_dlFileVersionPreviewLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final ServletContext _servletContext;
+	private final VideoProcessor _videoProcessor;
 
 }

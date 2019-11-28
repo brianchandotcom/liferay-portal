@@ -15,7 +15,7 @@
 package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
-import com.liferay.document.library.kernel.util.AudioProcessorUtil;
+import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
@@ -48,9 +48,11 @@ public class AudioDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
 	public AudioDLPreviewRendererProvider(
+		AudioProcessor audioProcessor,
 		DLFileVersionPreviewLocalService dlFileVersionPreviewLocalService,
 		DLURLHelper dlURLHelper, ServletContext servletContext) {
 
+		_audioProcessor = audioProcessor;
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 		_dlURLHelper = dlURLHelper;
 		_servletContext = servletContext;
@@ -60,7 +62,7 @@ public class AudioDLPreviewRendererProvider
 	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
 		FileVersion fileVersion) {
 
-		if (!AudioProcessorUtil.isAudioSupported(fileVersion)) {
+		if (!_audioProcessor.isAudioSupported(fileVersion)) {
 			return Optional.empty();
 		}
 
@@ -99,7 +101,7 @@ public class AudioDLPreviewRendererProvider
 			throw new DLFileEntryPreviewGenerationException();
 		}
 
-		if (!AudioProcessorUtil.hasAudio(fileVersion)) {
+		if (!_audioProcessor.hasAudio(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 				throw new DLPreviewSizeException();
 			}
@@ -131,7 +133,7 @@ public class AudioDLPreviewRendererProvider
 			for (String dlFileEntryPreviewAudioContainer :
 					PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
 
-				long previewFileSize = AudioProcessorUtil.getPreviewFileSize(
+				long previewFileSize = _audioProcessor.getPreviewFileSize(
 					fileVersion, dlFileEntryPreviewAudioContainer);
 
 				if (previewFileSize > 0) {
@@ -156,6 +158,7 @@ public class AudioDLPreviewRendererProvider
 		return previewFileURLs;
 	}
 
+	private final AudioProcessor _audioProcessor;
 	private final DLFileVersionPreviewLocalService
 		_dlFileVersionPreviewLocalService;
 	private final DLURLHelper _dlURLHelper;

@@ -48,7 +48,8 @@ public class ImageDLPreviewRendererProviderFactory {
 		_serviceRegistration = bundleContext.registerService(
 			DLPreviewRendererProvider.class,
 			new ImageDLPreviewRendererProvider(
-				_dlFileVersionPreviewLocalService, _servletContext),
+				imageProcessor, _dlFileVersionPreviewLocalService,
+				_servletContext),
 			MapUtil.singletonDictionary(
 				"content.type", imageMimeTypes.toArray(new String[0])));
 	}

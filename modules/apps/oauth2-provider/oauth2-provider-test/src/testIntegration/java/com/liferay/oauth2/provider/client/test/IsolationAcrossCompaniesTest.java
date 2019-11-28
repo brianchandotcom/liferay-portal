@@ -52,8 +52,35 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void test() throws Exception {
+	public void testAnnotated() throws Exception {
 		WebTarget webTarget = getWebTarget("/annotated");
+
+		String tokenString = getToken("oauthTestApplication", "host1.xyz");
+
+		Invocation.Builder builder = authorize(
+			webTarget.request(), tokenString);
+
+		builder = builder.header("Host", "host1.xyz");
+
+		Assert.assertEquals("everything.read", builder.get(String.class));
+
+		builder = authorize(webTarget.request(), tokenString);
+
+		builder = builder.header("Host", "host2.xyz");
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+
+			Response response = builder.get();
+
+			Assert.assertEquals(403, response.getStatus());
+		}
+	}
+
+	@Test
+	public void testNoScopes() throws Exception {
+		WebTarget webTarget = getWebTarget("/no-scopes");
 
 		String tokenString = getToken("oauthTestApplication", "host1.xyz");
 
@@ -89,6 +116,13 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 
 			registerJaxRsApplication(
 				new TestAnnotatedApplication(), "annotated", properties);
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("oauth2.scope.checker.type", "none");
+
+			registerJaxRsApplication(
+				new TestAnnotatedApplication(), "no-scopes", properties);
 
 			Company company1 = createCompany("host1");
 

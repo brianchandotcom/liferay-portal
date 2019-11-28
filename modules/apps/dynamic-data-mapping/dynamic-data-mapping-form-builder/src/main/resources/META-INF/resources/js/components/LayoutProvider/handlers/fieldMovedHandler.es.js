@@ -25,7 +25,6 @@ export default (props, state, {addedToPlaceholder, source, target}) => {
 		columnIndex
 	);
 	const {fields} = column;
-	const newRow = FormSupport.implAddRow(12, fields);
 
 	pages = FormSupport.removeFields(pages, pageIndex, rowIndex, columnIndex);
 
@@ -37,7 +36,7 @@ export default (props, state, {addedToPlaceholder, source, target}) => {
 			pages,
 			target.rowIndex,
 			target.pageIndex,
-			newRow
+			FormSupport.implAddRow(12, fields)
 		);
 	} else {
 		pages = FormSupport.addFieldToColumn(

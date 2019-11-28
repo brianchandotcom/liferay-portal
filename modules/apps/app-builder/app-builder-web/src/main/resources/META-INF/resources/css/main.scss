@@ -5,6 +5,17 @@
 .app-builder-root {
 	@import 'components';
 	@import 'pages';
+
+	.custom-object-app {
+		display: flex;
+		flex-flow: column;
+		height: calc(100vh - 91px);
+	}
+
+	.taglib-empty-result-message {
+		margin: auto;
+		padding: 0 2rem;
+	}
 }
 
 body.open .app-builder-upper-toolbar {

@@ -29,18 +29,20 @@ export default dragDropContext(HTML5Backend)(props => {
 			<ToastContextProvider>
 				<ClayModalProvider>
 					<Router>
-						<Switch>
-							<Route
-								component={ListCustomObjects}
-								exact
-								path="/"
-							/>
+						<div className="custom-object-app">
+							<Switch>
+								<Route
+									component={ListCustomObjects}
+									exact
+									path="/"
+								/>
 
-							<Route
-								component={ViewCustomObject}
-								path="/custom-object/:dataDefinitionId(\d+)"
-							/>
-						</Switch>
+								<Route
+									component={ViewCustomObject}
+									path="/custom-object/:dataDefinitionId(\d+)"
+								/>
+							</Switch>
+						</div>
 					</Router>
 				</ClayModalProvider>
 			</ToastContextProvider>

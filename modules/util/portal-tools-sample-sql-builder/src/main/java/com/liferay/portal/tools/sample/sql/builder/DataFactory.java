@@ -370,7 +370,6 @@ public class DataFactory {
 		initCommerceCatalogModel();
 		initCommerceChannelModel();
 		initCommerceProductModels();
-		initCompanyModel();
 		initDLFileEntryTypeModel();
 		initGroupModels();
 
@@ -392,10 +391,6 @@ public class DataFactory {
 			CommerceCatalog.class.getName(),
 			String.valueOf(_commerceCatalogModel.getCommerceCatalogId()),
 			_guestRoleModel.getRoleId(), _sampleUserId);
-	}
-
-	public AccountModel getAccountModel() {
-		return _accountModel;
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -1067,17 +1062,6 @@ public class DataFactory {
 		}
 	}
 
-	public void initCompanyModel() {
-		_accountModel = new AccountModelImpl();
-
-		_accountModel.setAccountId(_accountId);
-		_accountModel.setCompanyId(_companyId);
-		_accountModel.setCreateDate(new Date());
-		_accountModel.setModifiedDate(new Date());
-		_accountModel.setName("Liferay");
-		_accountModel.setLegalName("Liferay, Inc.");
-	}
-
 	public void initContext(Properties properties)
 		throws FileNotFoundException {
 
@@ -1430,6 +1414,19 @@ public class DataFactory {
 		}
 
 		unsyncBufferedReader.close();
+	}
+
+	public AccountModel newAccountModel() {
+		AccountModel accountModel = new AccountModelImpl();
+
+		accountModel.setAccountId(_accountId);
+		accountModel.setCompanyId(_companyId);
+		accountModel.setCreateDate(new Date());
+		accountModel.setModifiedDate(new Date());
+		accountModel.setName("Liferay");
+		accountModel.setLegalName("Liferay, Inc.");
+
+		return accountModel;
 	}
 
 	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
@@ -4475,7 +4472,6 @@ public class DataFactory {
 		new PortletPreferencesFactoryImpl();
 
 	private final long _accountId;
-	private AccountModel _accountModel;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private List<AssetCategoryModel>[] _assetCategoryModelsArray;

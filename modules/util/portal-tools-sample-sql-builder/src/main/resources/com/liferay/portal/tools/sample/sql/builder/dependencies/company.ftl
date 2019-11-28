@@ -1,12 +1,14 @@
 <#assign
-	companyModel = dataFactory.newCompanyModel() />
+	accountModel = dataFactory.newAccountModel()
+
+	companyModel = dataFactory.newCompanyModel()
 
 	virtualHostModel =  dataFactory.newVirtualHostModel()
 />
 
 ${dataFactory.toInsertSQL(companyModel)}
 
-${dataFactory.toInsertSQL(dataFactory.accountModel)}
+${dataFactory.toInsertSQL(accountModel)}
 
 ${dataFactory.toInsertSQL(virtualHostModel)}
 

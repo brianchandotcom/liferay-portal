@@ -39,6 +39,8 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${uploadFileName}");
 
+			Pause(locator1 = "3000");
+
 			Click(locator1 = "Button#ADD");
 
 			SelectFrameTop(value1 = "relative=top");

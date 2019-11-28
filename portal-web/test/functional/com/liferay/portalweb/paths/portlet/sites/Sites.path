@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>SELECT_SITE_MODAL_CARD_BODY_SITE_NAME</td>
-	<td>//div[contains(@class,'file-card')]//div[@class='card-body']//a[contains(.,'${key_siteName}')]</td>
+	<td>//div[contains(@class,'card')]//div[@class='card-body']//a[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

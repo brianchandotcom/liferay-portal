@@ -44,7 +44,7 @@ definition {
 			SelectFrameTop(value1 = "relative=top");
 		}
 
-		if (!(isSet(notSave))) {
+		if (!(isSet(dontSave))) {
 			Button.click(button = "Save");
 
 			if (isSet(customImage)) {

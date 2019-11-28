@@ -51,7 +51,7 @@ definition {
 			customDescription = "Custom Description",
 			customImage = "true",
 			customTitle = "Custom Title",
-			notSave = "true",
+			dontSave = "true",
 			pageName = "Test Page Name",
 			uploadFileName = "Document_1.jpg");
 
@@ -102,7 +102,7 @@ definition {
 		OpenGraph.configureOpenGraph(
 			customDescription = '''description@#$%^&amp;*()~`1234567890''',
 			customTitle = '''@#$%^&amp;*()~`1234567890title''',
-			notSave = "true");
+			dontSave = "true");
 
 		Page.viewPreview(
 			description = '''description@#$%^&amp;*()~`1234567890''',
@@ -149,7 +149,7 @@ definition {
 		OpenGraph.configureOpenGraph(
 			customDescription = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web applications called social applications",
 			customTitle = "Liferay Portal provides an excellent platform for building web applications",
-			notSave = "true",
+			dontSave = "true",
 			pageName = "Long Test Page Name To Check The URL");
 
 		Page.viewPreview(

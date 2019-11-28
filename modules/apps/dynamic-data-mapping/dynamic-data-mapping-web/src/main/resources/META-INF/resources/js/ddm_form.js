@@ -1636,32 +1636,38 @@ AUI.add(
 				_handleSelectButtonClick() {
 					var instance = this;
 
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
-							},
-							eventName: 'selectContent',
-							id: 'selectContent',
-							title: Liferay.Language.get('journal-article'),
-							uri: instance.getWebContentSelectorURL()
-						},
-						event => {
-							if (event.details.length > 0) {
-								var selectedWebContent = event.details[0];
+					Liferay.Loader.require(
+						'frontend-js-web/liferay/ItemSelectorDialog.es',
+						ItemSelectorDialog => {
+							var itemSelectorDialog = new ItemSelectorDialog.default(
+								{
+									eventName: 'selectContent',
+									singleSelect: true,
+									title: Liferay.Language.get('journal-article'),
+									url: instance.getWebContentSelectorURL()
+								}
+							);
 
-								instance.setValue({
-									className:
-										selectedWebContent.assetclassname,
-									classPK: selectedWebContent.assetclasspk,
-									title: selectedWebContent.assettitle || '',
-									titleMap: selectedWebContent.assettitlemap
-								});
+							itemSelectorDialog.on(
+								'selectedItemChange',
+								event => {
+									var selectedItem = event.selectedItem;
 
-								instance._hideMessage();
-							}
+									if (selectedItem) {
+										instance.setValue({
+											className:
+												selectedItem.assetclassname,
+											classPK: selectedItem.assetclasspk,
+											title: selectedItem.assettitle || '',
+											titleMap: selectedItem.assettitlemap
+										});
+
+										instance._hideMessage();
+									}
+								}
+							);
+
+							itemSelectorDialog.open();
 						}
 					);
 				},
@@ -1723,36 +1729,53 @@ AUI.add(
 				getWebContentSelectorURL() {
 					var instance = this;
 
+					var form = instance.getForm();
+
+					var webContentSelectorURL = form.get(
+						'webContentSelectorURL'
+					);
+
+					var retVal = instance.getWebContentURL(
+						'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion'
+					);
+
+					if (webContentSelectorURL) {
+						retVal = webContentSelectorURL;
+					}
+
+					return retVal;
+				},
+
+				getWebContentURL(criteria) {
+					var instance = this;
+
 					var container = instance.get('container');
 
-					var groupIdNode = A.one(
-						'#' + this.get('portletNamespace') + 'groupId'
-					);
+					var portletNamespace = instance.get('portletNamespace');
 
-					var groupId =
-						(groupIdNode && groupIdNode.getAttribute('value')) ||
-						themeDisplay.getScopeGroupId();
-
-					var webContentSelectorParameters = {
-						eventName: 'selectContent',
-						groupId,
-						p_p_auth: container.getData('assetBrowserAuthToken'),
-						p_p_id:
-							'com_liferay_asset_browser_web_portlet_AssetBrowserPortlet',
-						p_p_state: 'pop_up',
-						selectedGroupId: groupId,
-						showNonindexable: true,
-						showScheduled: true,
-						typeSelection:
-							'com.liferay.journal.model.JournalArticle'
+					var criterionJSON = {
+						desiredItemSelectorReturnTypes:
+							'com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType'
 					};
 
-					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
-						themeDisplay.getURLControlPanel(),
-						webContentSelectorParameters
+					var webContentParameters = {
+						'0_json': JSON.stringify(criterionJSON),
+						criteria,
+						itemSelectedEventName:
+							portletNamespace + 'selectWebContent',
+						p_p_auth: container.getData('itemSelectorAuthToken'),
+						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
+						p_p_mode: 'view',
+						p_p_state: 'pop_up',
+						singleSelect: 'true'
+					};
+
+					var webContentURL = Liferay.Util.PortletURL.createPortletURL(
+						themeDisplay.getLayoutRelativeControlPanelURL(),
+						webContentParameters
 					);
 
-					return webContentSelectorURL.toString();
+					return webContentURL.toString();
 				},
 
 				initializer() {

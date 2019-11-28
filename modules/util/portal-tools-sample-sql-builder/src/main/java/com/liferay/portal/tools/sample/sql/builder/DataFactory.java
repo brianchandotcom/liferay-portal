@@ -379,7 +379,6 @@ public class DataFactory {
 		initRoleModels();
 		initUserNames();
 		initUserModels();
-		initVirtualHostModel();
 	}
 
 	public void closeCSVWriters() throws IOException {
@@ -791,10 +790,6 @@ public class DataFactory {
 
 	public RoleModel getUserRoleModel() {
 		return _userRoleModel;
-	}
-
-	public VirtualHostModel getVirtualHostModel() {
-		return _virtualHostModel;
 	}
 
 	public long getWikiPageClassNameId() {
@@ -1435,14 +1430,6 @@ public class DataFactory {
 		}
 
 		unsyncBufferedReader.close();
-	}
-
-	public void initVirtualHostModel() {
-		_virtualHostModel = new VirtualHostModelImpl();
-
-		_virtualHostModel.setVirtualHostId(_counter.get());
-		_virtualHostModel.setCompanyId(_companyId);
-		_virtualHostModel.setHostname(_virtualHostName);
 	}
 
 	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
@@ -3305,6 +3292,16 @@ public class DataFactory {
 			assetEntryModel.getPrimaryKey(), 0);
 	}
 
+	public VirtualHostModel newVirtualHostModel() {
+		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
+
+		virtualHostModel.setVirtualHostId(_counter.get());
+		virtualHostModel.setCompanyId(_companyId);
+		virtualHostModel.setHostname(_virtualHostName);
+
+		return virtualHostModel;
+	}
+
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
 		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(_maxWikiNodeCount);
 
@@ -4590,7 +4587,6 @@ public class DataFactory {
 	private GroupModel _userPersonalSiteGroupModel;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
-	private VirtualHostModel _virtualHostModel;
 	private String _virtualHostName;
 
 }

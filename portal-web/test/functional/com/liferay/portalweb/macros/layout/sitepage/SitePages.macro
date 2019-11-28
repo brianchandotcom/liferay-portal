@@ -34,22 +34,9 @@ definition {
 			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
 		AssertVisible(locator1 = "TextInput#NAME");
-
-		Pause(locator1 = "1000");
-
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "internetexplorer") {
-			VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
-
-			Pause(locator1 = "10000");
-		}
-		else {
-			Alert.closeMessage(messageType = "SUCCESS");
-		}
-
-		AssertElementNotPresent(locator1 = "Message#SUCCESS");
 
 		if (isSet(openGraph)) {
 			Navigator.gotoNavTab(navTab = "Open Graph");

@@ -211,14 +211,11 @@ public class JournalUtil {
 	}
 
 	public static String getFolderURLViewInContext(
-			JournalArticle article, String portletId,
-			ServiceContext serviceContext)
+			JournalArticle article,
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
 		String articleURL = StringPool.BLANK;
-
-		LiferayPortletResponse liferayPortletResponse =
-			serviceContext.getLiferayPortletResponse();
 
 		if (liferayPortletResponse != null) {
 			PortletURL portletURL = liferayPortletResponse.createRenderURL();
@@ -242,6 +239,10 @@ public class JournalUtil {
 
 		if (Validator.isNull(articleURL)) {
 			try {
+				String portletId = PortletProviderUtil.getPortletId(
+					JournalArticle.class.getName(),
+					PortletProvider.Action.EDIT);
+
 				articleURL = PortalUtil.getControlPanelFullURL(
 					article.getGroupId(), portletId, null);
 

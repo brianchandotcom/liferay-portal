@@ -68,8 +68,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -1512,12 +1510,9 @@ public class JournalArticleStagedModelDataHandler
 						(Map)JSONFactoryUtil.looseDeserialize(
 							String.valueOf(jsonObject.get("context")));
 
-					String portletId = PortletProviderUtil.getPortletId(
-						JournalArticle.class.getName(),
-						PortletProvider.Action.EDIT);
-
 					String articleURL = JournalUtil.getFolderURLViewInContext(
-						importedArticle, portletId, serviceContext);
+						importedArticle,
+						serviceContext.getLiferayPortletResponse());
 
 					HashMap<String, Object> articleURLMap =
 						HashMapBuilder.<String, Object>put(

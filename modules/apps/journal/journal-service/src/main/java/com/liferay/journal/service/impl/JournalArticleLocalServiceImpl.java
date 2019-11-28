@@ -8108,11 +8108,8 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
 		String articleURL = JournalUtil.getFolderURLViewInContext(
-			article, portletId, serviceContext);
+			article, serviceContext.getLiferayPortletResponse());
 
 		String articleStatus = LanguageUtil.get(
 			LocaleUtil.getSiteDefault(),
@@ -8135,7 +8132,9 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("journal_article", article.getId());
 		subscriptionSender.setNotificationType(notificationType);
-		subscriptionSender.setPortletId(portletId);
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

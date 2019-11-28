@@ -212,53 +212,41 @@ public class JournalUtil {
 	public static String getFolderURLViewInContext(
 		JournalArticle article, LiferayPortletResponse liferayPortletResponse) {
 
-		String articleURL = StringPool.BLANK;
+		try {
+			JournalFolder folder = article.getFolder();
 
-		if (liferayPortletResponse != null) {
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+			if (liferayPortletResponse != null) {
+				PortletURL portletURL =
+					liferayPortletResponse.createRenderURL();
 
-			try {
-				JournalFolder folder = article.getFolder();
+				portletURL.setParameter(
+					"groupId", String.valueOf(folder.getGroupId()));
+				portletURL.setParameter(
+					"folderId", String.valueOf(folder.getFolderId()));
 
-				if (portletURL != null) {
-					portletURL.setParameter(
-						"groupId", String.valueOf(folder.getGroupId()));
-					portletURL.setParameter(
-						"folderId", String.valueOf(folder.getFolderId()));
-
-					articleURL = portletURL.toString();
-				}
+				return portletURL.toString();
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
-			}
+
+			String portletId = PortletProviderUtil.getPortletId(
+				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
+			String articleURL = PortalUtil.getControlPanelFullURL(
+				article.getGroupId(), portletId, null);
+
+			String namespace = PortalUtil.getPortletNamespace(
+				JournalPortletKeys.JOURNAL);
+
+			articleURL = HttpUtil.addParameter(
+				articleURL, namespace + "groupId", folder.getGroupId());
+
+			return HttpUtil.addParameter(
+				articleURL, namespace + "folderId", folder.getFolderId());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
-		if (Validator.isNull(articleURL)) {
-			try {
-				String portletId = PortletProviderUtil.getPortletId(
-					JournalArticle.class.getName(),
-					PortletProvider.Action.EDIT);
-
-				articleURL = PortalUtil.getControlPanelFullURL(
-					article.getGroupId(), portletId, null);
-
-				JournalFolder folder = article.getFolder();
-
-				String namespace = PortalUtil.getPortletNamespace(
-					JournalPortletKeys.JOURNAL);
-
-				articleURL = HttpUtil.addParameter(
-					articleURL, namespace + "groupId", folder.getGroupId());
-				articleURL = HttpUtil.addParameter(
-					articleURL, namespace + "folderId", folder.getFolderId());
-			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
-			}
-		}
-
-		return articleURL;
+		return StringPool.BLANK;
 	}
 
 	public static String getJournalControlPanelLink(

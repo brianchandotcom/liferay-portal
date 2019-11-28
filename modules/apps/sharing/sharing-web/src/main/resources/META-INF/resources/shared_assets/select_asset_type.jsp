@@ -49,7 +49,7 @@ SharedAssetsViewDisplayContext
 				row.setCssClass("select-action active");
 			}
 
-			Map<String, Object> rowData = new HashMap<String, Object>();
+			Map<String, Object> rowData = new HashMap<>();
 
 			rowData.put("className", sharedAssetsFilterItem.getClassName());
 

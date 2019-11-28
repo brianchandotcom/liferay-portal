@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.journal.internal.info.provider;
+package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.info.provider.InfoObjectDDMTemplateProvider;
+import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(service = InfoObjectDDMTemplateProvider.class)
-public class JournalArticleInfoObjectDDMTemplateProviderImpl
-	implements InfoObjectDDMTemplateProvider<JournalArticle> {
+@Component(service = InfoItemDDMTemplateProvider.class)
+public class JournalArticleInfoItemDDMTemplateProviderImpl
+	implements InfoItemDDMTemplateProvider<JournalArticle> {
 
 	@Override
 	public List<DDMTemplate> getDDMTemplates(JournalArticle article) {
@@ -72,7 +72,7 @@ public class JournalArticleInfoObjectDDMTemplateProviderImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleInfoObjectDDMTemplateProviderImpl.class);
+		JournalArticleInfoItemDDMTemplateProviderImpl.class);
 
 	@Reference
 	private DDMStructureLinkManager _ddmStructureLinkManager;

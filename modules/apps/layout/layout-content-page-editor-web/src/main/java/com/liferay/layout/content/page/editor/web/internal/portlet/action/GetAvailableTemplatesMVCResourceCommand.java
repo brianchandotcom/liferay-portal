@@ -15,13 +15,13 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
+import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
+import com.liferay.info.item.provider.InfoItemDDMTemplateProviderTracker;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
-import com.liferay.info.provider.InfoObjectDDMTemplateProvider;
-import com.liferay.info.provider.InfoObjectDDMTemplateProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -82,11 +82,11 @@ public class GetAvailableTemplatesMVCResourceCommand
 			jsonArray.put(jsonObject);
 		}
 
-		InfoObjectDDMTemplateProvider infoObjectDDMTemplateProvider =
-			_infoObjectDDMTemplateProviderTracker.
-				getInfoObjectDDMTemplateProvider(className);
+		InfoItemDDMTemplateProvider infoItemDDMTemplateProvider =
+			_infoItemDDMTemplateProviderTracker.getInfoItemDDMTemplateProvider(
+				className);
 
-		if (infoObjectDDMTemplateProvider != null) {
+		if (infoItemDDMTemplateProvider != null) {
 			InfoDisplayContributor infoDisplayContributor =
 				_infoDisplayContributorTracker.getInfoDisplayContributor(
 					className);
@@ -109,7 +109,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 			}
 
 			List<DDMTemplate> ddmTemplates =
-				infoObjectDDMTemplateProvider.getDDMTemplates(
+				infoItemDDMTemplateProvider.getDDMTemplates(
 					infoDisplayObjectProvider.getDisplayObject());
 
 			ddmTemplates.forEach(
@@ -132,10 +132,10 @@ public class GetAvailableTemplatesMVCResourceCommand
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemDDMTemplateProviderTracker
+		_infoItemDDMTemplateProviderTracker;
 
 	@Reference
-	private InfoObjectDDMTemplateProviderTracker
-		_infoObjectDDMTemplateProviderTracker;
+	private InfoItemRendererTracker _infoItemRendererTracker;
 
 }

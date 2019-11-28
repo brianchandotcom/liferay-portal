@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.info.internal.provider;
+package com.liferay.info.internal.item.provider;
 
 import com.liferay.info.internal.util.GenericsUtil;
-import com.liferay.info.provider.InfoObjectDDMTemplateProvider;
-import com.liferay.info.provider.InfoObjectDDMTemplateProviderTracker;
+import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
+import com.liferay.info.item.provider.InfoItemDDMTemplateProviderTracker;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
@@ -30,17 +30,15 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Pavel Savinov
  */
-@Component(
-	immediate = true, service = InfoObjectDDMTemplateProviderTracker.class
-)
-public class InfoObjectDDMTemplateProviderTrackerImpl
-	implements InfoObjectDDMTemplateProviderTracker {
+@Component(immediate = true, service = InfoItemDDMTemplateProviderTracker.class)
+public class InfoItemDDMTemplateProviderTrackerImpl
+	implements InfoItemDDMTemplateProviderTracker {
 
 	@Override
-	public InfoObjectDDMTemplateProvider getInfoObjectDDMTemplateProvider(
+	public InfoItemDDMTemplateProvider getInfoItemDDMTemplateProvider(
 		String className) {
 
-		return _infoObjectDDMTemplateProviders.get(className);
+		return _infoItemDDMTemplateProviders.get(className);
 	}
 
 	@Reference(
@@ -48,28 +46,28 @@ public class InfoObjectDDMTemplateProviderTrackerImpl
 		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void setInfoEditURLProviders(
-		InfoObjectDDMTemplateProvider infoObjectDDMTemplateProvider,
+		InfoItemDDMTemplateProvider infoItemDDMTemplateProvider,
 		Map<String, Object> properties) {
 
 		String className = GenericsUtil.getItemClassName(
-			infoObjectDDMTemplateProvider);
+			infoItemDDMTemplateProvider);
 
-		_infoObjectDDMTemplateProviders.put(
-			className, infoObjectDDMTemplateProvider);
+		_infoItemDDMTemplateProviders.put(
+			className, infoItemDDMTemplateProvider);
 	}
 
 	protected void unsetInfoEditURLProviders(
-		InfoObjectDDMTemplateProvider infoObjectDDMTemplateProvider,
+		InfoItemDDMTemplateProvider infoItemDDMTemplateProvider,
 		Map<String, Object> properties) {
 
 		String className = GenericsUtil.getItemClassName(
-			infoObjectDDMTemplateProvider);
+			infoItemDDMTemplateProvider);
 
-		_infoObjectDDMTemplateProviders.remove(className);
+		_infoItemDDMTemplateProviders.remove(className);
 	}
 
-	private final Map<String, InfoObjectDDMTemplateProvider>
-		_infoObjectDDMTemplateProviders = new ConcurrentHashMap<>();
+	private final Map<String, InfoItemDDMTemplateProvider>
+		_infoItemDDMTemplateProviders = new ConcurrentHashMap<>();
 
 	@Reference
 	private Portal _portal;

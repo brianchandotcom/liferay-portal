@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.provider;
+package com.liferay.info.item.provider;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Pavel Savinov
  */
-public interface InfoObjectDDMTemplateProvider<T> {
+public interface InfoItemDDMTemplateProvider<T> {
 
 	public List<DDMTemplate> getDDMTemplates(T t) throws PortalException;
 

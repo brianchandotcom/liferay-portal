@@ -42,8 +42,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,6 +57,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.util.CalendarFactoryImpl;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
@@ -97,7 +102,9 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	public void setUp() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
+		setUpCalendarFactoryUtil();
 		setUpDDMFormFieldTypeServicesTracker();
+		setUpFastDateFormatFactoryUtil();
 		setUpHtmlUtil();
 		setUpHttpServletRequest();
 		setUpLanguageResources();
@@ -106,6 +113,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		setUpResourceBundle();
 		setUpResourceBundleLoaderUtil();
 		setUpResourceBundleUtil();
+
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 	}
 
 	@Test
@@ -990,6 +999,12 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 	}
 
+	protected void setUpCalendarFactoryUtil() {
+		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
+
+		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
+	}
+
 	protected void setUpDDMFormFieldTypeServicesTracker() {
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			new DefaultDDMFormFieldValueAccessor();
@@ -1000,6 +1015,14 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		).thenReturn(
 			(DDMFormFieldValueAccessor<Object>)ddmFormFieldValueAccessor
 		);
+	}
+
+	protected void setUpFastDateFormatFactoryUtil() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
 	}
 
 	protected void setUpHtmlUtil() {

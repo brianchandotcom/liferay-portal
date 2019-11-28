@@ -208,7 +208,7 @@ public class JournalUtil {
 			userJobTitle);
 	}
 
-	public static String getFolderURLViewInContext(
+	public static String getJournalControlPanelLink(
 		long folderId, long groupId,
 		LiferayPortletResponse liferayPortletResponse) {
 

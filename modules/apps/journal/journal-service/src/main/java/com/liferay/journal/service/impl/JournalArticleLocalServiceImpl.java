@@ -8108,7 +8108,7 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		String articleURL = JournalUtil.getFolderURLViewInContext(
+		String articleURL = JournalUtil.getJournalControlPanelLink(
 			article.getFolderId(), article.getGroupId(),
 			serviceContext.getLiferayPortletResponse());
 

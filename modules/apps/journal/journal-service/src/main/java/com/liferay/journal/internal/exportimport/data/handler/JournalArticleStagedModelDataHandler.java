@@ -1510,7 +1510,7 @@ public class JournalArticleStagedModelDataHandler
 						(Map)JSONFactoryUtil.looseDeserialize(
 							String.valueOf(jsonObject.get("context")));
 
-					String articleURL = JournalUtil.getFolderURLViewInContext(
+					String articleURL = JournalUtil.getJournalControlPanelLink(
 						importedArticle.getFolderId(),
 						importedArticle.getGroupId(),
 						serviceContext.getLiferayPortletResponse());

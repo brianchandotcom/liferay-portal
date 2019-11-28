@@ -83,6 +83,7 @@ const Container = ({processId, query}) => {
 				defaultDelta={defaultDelta}
 				processId={processId}
 				processStepsKey={processStepsKey}
+				timeRange={timeRange}
 			/>
 		</PromisesResolver>
 	);

@@ -18,9 +18,10 @@ import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import LoadingState from '../../../shared/components/loading/LoadingState.es';
 import PromisesResolver from '../../../shared/components/request/PromisesResolver.es';
 import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
+import {formatQueryDate} from '../util/timeRangeUtil.es';
 import PerformanceByAssigneeCard from './PerformanceByAssigneeCard.es';
 
-const Body = ({data, defaultDelta, processId, processStepsKey}) => {
+const Body = ({data, defaultDelta, processId, processStepsKey, timeRange}) => {
 	const {items, totalCount} = data;
 
 	return (
@@ -66,6 +67,7 @@ const Body = ({data, defaultDelta, processId, processStepsKey}) => {
 						defaultDelta={defaultDelta}
 						processId={processId}
 						processStepsKey={processStepsKey}
+						timeRange={timeRange}
 						totalCount={totalCount}
 					/>
 				) : null}
@@ -74,11 +76,25 @@ const Body = ({data, defaultDelta, processId, processStepsKey}) => {
 	);
 };
 
-const Footer = ({defaultDelta, processId, processStepsKey, totalCount}) => {
-	const filters =
-		processStepsKey && processStepsKey !== 'allSteps'
-			? {taskKeys: [processStepsKey]}
-			: {};
+const Footer = ({
+	defaultDelta,
+	processId,
+	processStepsKey,
+	timeRange,
+	totalCount
+}) => {
+	const filters = {};
+
+	if (processStepsKey && processStepsKey !== 'allSteps') {
+		filters.taskKeys = [processStepsKey];
+	}
+
+	if (timeRange) {
+		const {dateEnd, dateStart, key} = timeRange;
+		filters.dateEnd = formatQueryDate(dateEnd);
+		filters.dateStart = formatQueryDate(dateStart);
+		filters.timeRange = key;
+	}
 
 	const viewAllAssigneesUrl = `/performance/assignee/${processId}/${defaultDelta}/1/durationTaskAvg:desc/`;
 

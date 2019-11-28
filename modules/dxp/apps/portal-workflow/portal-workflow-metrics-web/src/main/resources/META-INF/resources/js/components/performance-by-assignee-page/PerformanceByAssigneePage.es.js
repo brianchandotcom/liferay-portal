@@ -43,15 +43,19 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 
 	const {search = ''} = parse(query);
 
+	const {processStep, roles} = filterKeys;
+	const keys = {processStep, roles};
+
 	const keywords = search.length ? search : null;
 
-	const [filterValues, dispatch] = useFiltersReducer(filterKeys);
-	const {roleIds, taskKeys} = useFilterItemKeys(filterKeys, filterValues);
-	const filterResults = getFilterResults(
-		filterKeys,
-		filterTitles,
-		filterValues
-	);
+	const titles = {
+		processStep: filterTitles.processStep,
+		roles: filterTitles.roles
+	};
+
+	const [filterValues, dispatch] = useFiltersReducer(keys);
+	const {roleIds, taskKeys} = useFilterItemKeys(keys, filterValues);
+	const filterResults = getFilterResults(keys, titles, filterValues);
 
 	const selectedFilters = getSelectedItems(filterResults);
 

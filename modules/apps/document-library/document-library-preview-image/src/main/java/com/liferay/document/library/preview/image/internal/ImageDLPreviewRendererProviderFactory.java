@@ -39,7 +39,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Alejandro Tardín
  */
-@Component(enabled = false, immediate = true, service = {})
+@Component(immediate = true, service = {})
 public class ImageDLPreviewRendererProviderFactory {
 
 	@Activate

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -46,6 +47,11 @@ public class ImageDLPreviewRendererProvider
 		_imageProcessor = imageProcessor;
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 		_servletContext = servletContext;
+	}
+
+	@Override
+	public Set<String> getMimeTypes() {
+		return _imageProcessor.getImageMimeTypes();
 	}
 
 	@Override

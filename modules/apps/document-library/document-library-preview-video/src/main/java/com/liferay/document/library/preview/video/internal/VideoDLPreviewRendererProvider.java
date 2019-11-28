@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -57,6 +58,11 @@ public class VideoDLPreviewRendererProvider
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 		_dlURLHelper = dlURLHelper;
 		_servletContext = servletContext;
+	}
+
+	@Override
+	public Set<String> getMimeTypes() {
+		return _videoProcessor.getVideoMimeTypes();
 	}
 
 	@Override

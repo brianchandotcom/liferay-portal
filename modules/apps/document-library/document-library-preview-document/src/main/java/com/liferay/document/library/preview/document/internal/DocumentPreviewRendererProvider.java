@@ -28,7 +28,10 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -39,32 +42,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = {
-		"content.type=" + ContentTypes.APPLICATION_MSWORD,
-		"content.type=" + ContentTypes.APPLICATION_PDF,
-		"content.type=" + ContentTypes.APPLICATION_TEXT,
-		"content.type=" + ContentTypes.APPLICATION_VND_MS_EXCEL,
-		"content.type=" + ContentTypes.APPLICATION_VND_MS_POWERPOINT,
-		"content.type=" + ContentTypes.APPLICATION_X_PDF,
-		"content.type=" + ContentTypes.TEXT_HTML,
-		"content.type=" + ContentTypes.TEXT_PLAIN,
-		"content.type=application/rtf",
-		"content.type=application/vnd.oasis.opendocument.graphics",
-		"content.type=application/vnd.oasis.opendocument.presentation",
-		"content.type=application/vnd.oasis.opendocument.spreadsheet",
-		"content.type=application/vnd.oasis.opendocument.text",
-		"content.type=application/vnd.openxmlformats-officedocument.presentationml.presentation",
-		"content.type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-		"content.type=application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-		"content.type=application/vnd.sun.xml.calc",
-		"content.type=application/vnd.sun.xml.writer",
-		"content.type=application/wordperfect", "content.type=text/rtf"
-	},
-	service = DLPreviewRendererProvider.class
-)
+@Component(service = DLPreviewRendererProvider.class)
 public class DocumentPreviewRendererProvider
 	implements DLPreviewRendererProvider {
+
+	@Override
+	public Set<String> getMimeTypes() {
+		return _mimeTypes;
+	}
 
 	@Override
 	public Optional<DLPreviewRenderer> getPreviewDLPreviewRendererOptional(
@@ -113,6 +98,26 @@ public class DocumentPreviewRendererProvider
 			throw new DLPreviewGenerationInProcessException();
 		}
 	}
+
+	private static final Set<String> _mimeTypes = new HashSet<>(
+		Arrays.asList(
+			ContentTypes.APPLICATION_MSWORD, ContentTypes.APPLICATION_PDF,
+			ContentTypes.APPLICATION_TEXT,
+			ContentTypes.APPLICATION_VND_MS_EXCEL,
+			ContentTypes.APPLICATION_VND_MS_POWERPOINT,
+			ContentTypes.APPLICATION_X_PDF, ContentTypes.TEXT_HTML,
+			ContentTypes.TEXT_PLAIN, "application/rtf",
+			"application/vnd.oasis.opendocument.graphics",
+			"application/vnd.oasis.opendocument.presentation",
+			"application/vnd.oasis.opendocument.spreadsheet",
+			"application/vnd.oasis.opendocument.text",
+			"application/vnd.openxmlformats-officedocument.presentationml." +
+				"presentation",
+			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+			"application/vnd.openxmlformats-officedocument.wordprocessingml." +
+				"document",
+			"application/vnd.sun.xml.calc", "application/vnd.sun.xml.writer",
+			"application/wordperfect", "text/rtf"));
 
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;

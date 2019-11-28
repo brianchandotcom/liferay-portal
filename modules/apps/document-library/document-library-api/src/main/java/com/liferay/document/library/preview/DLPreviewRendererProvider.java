@@ -17,6 +17,7 @@ package com.liferay.document.library.preview;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Renders file previews in conjunction with {@link DLPreviewRenderer}.
@@ -32,6 +33,8 @@ import java.util.Optional;
  * @author Alejandro Tardín
  */
 public interface DLPreviewRendererProvider {
+
+	public Set<String> getMimeTypes();
 
 	/**
 	 * Returns the DL preview renderer responsible for rendering the file

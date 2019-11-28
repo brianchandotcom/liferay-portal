@@ -36,6 +36,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -56,6 +57,11 @@ public class AudioDLPreviewRendererProvider
 		_dlFileVersionPreviewLocalService = dlFileVersionPreviewLocalService;
 		_dlURLHelper = dlURLHelper;
 		_servletContext = servletContext;
+	}
+
+	@Override
+	public Set<String> getMimeTypes() {
+		return _audioProcessor.getAudioMimeTypes();
 	}
 
 	@Override

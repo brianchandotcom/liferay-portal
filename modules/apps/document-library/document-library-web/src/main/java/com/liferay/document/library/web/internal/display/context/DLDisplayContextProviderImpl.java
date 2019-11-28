@@ -232,7 +232,19 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		_dlPreviewRendererProviders =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DLPreviewRendererProvider.class, "content.type");
+				bundleContext, DLPreviewRendererProvider.class, null,
+				(serviceReference, emitter) -> {
+					DLPreviewRendererProvider dlPreviewRendererProvider =
+						bundleContext.getService(serviceReference);
+
+					for (String mimeType :
+							dlPreviewRendererProvider.getMimeTypes()) {
+
+						emitter.emit(mimeType);
+					}
+
+					bundleContext.ungetService(serviceReference);
+				});
 	}
 
 	@Deactivate

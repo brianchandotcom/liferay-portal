@@ -20,9 +20,6 @@ import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.portal.kernel.util.MapUtil;
-
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -42,17 +39,12 @@ public class VideoDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		VideoProcessor videoProcessor = (VideoProcessor)_dlProcessor;
-
-		Set<String> videoMimeTypes = videoProcessor.getVideoMimeTypes();
-
 		_serviceRegistration = bundleContext.registerService(
 			DLPreviewRendererProvider.class,
 			new VideoDLPreviewRendererProvider(
-				videoProcessor, _dlFileVersionPreviewLocalService, _dlURLHelper,
-				_servletContext),
-			MapUtil.singletonDictionary(
-				"content.type", videoMimeTypes.toArray(new String[0])));
+				(VideoProcessor)_dlProcessor, _dlFileVersionPreviewLocalService,
+				_dlURLHelper, _servletContext),
+			null);
 	}
 
 	@Deactivate

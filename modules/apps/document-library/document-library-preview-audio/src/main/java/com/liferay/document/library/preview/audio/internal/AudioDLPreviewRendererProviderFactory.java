@@ -20,9 +20,6 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.portal.kernel.util.MapUtil;
-
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -42,17 +39,12 @@ public class AudioDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
-
-		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
-
 		_serviceRegistration = bundleContext.registerService(
 			DLPreviewRendererProvider.class,
 			new AudioDLPreviewRendererProvider(
-				audioProcessor, _dlFileVersionPreviewLocalService, _dlURLHelper,
-				_servletContext),
-			MapUtil.singletonDictionary(
-				"content.type", audioMimeTypes.toArray(new String[0])));
+				(AudioProcessor)_dlProcessor, _dlFileVersionPreviewLocalService,
+				_dlURLHelper, _servletContext),
+			null);
 	}
 
 	@Deactivate

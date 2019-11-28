@@ -19,9 +19,6 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
-import com.liferay.portal.kernel.util.MapUtil;
-
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -41,17 +38,12 @@ public class ImageDLPreviewRendererProviderFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		ImageProcessor imageProcessor = (ImageProcessor)_dlProcessor;
-
-		Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
-
 		_serviceRegistration = bundleContext.registerService(
 			DLPreviewRendererProvider.class,
 			new ImageDLPreviewRendererProvider(
-				imageProcessor, _dlFileVersionPreviewLocalService,
+				(ImageProcessor)_dlProcessor, _dlFileVersionPreviewLocalService,
 				_servletContext),
-			MapUtil.singletonDictionary(
-				"content.type", imageMimeTypes.toArray(new String[0])));
+			null);
 	}
 
 	@Deactivate

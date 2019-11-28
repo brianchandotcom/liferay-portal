@@ -717,13 +717,39 @@ definition {
 		FormViewBuilder.setFieldLabel(fieldLabel = "Apelido");
 		FormViewBuilder.closeSidebar();
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Pé bom");
-		
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Quantidade de filhos?");
 		FormViewBuilder.closeSidebar();
 
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Pé bom");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
 
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Data de Nascimento");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
 
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "O que faz no tempo livre?");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Multiple${number}",
+				optionValue = "Multiple ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Foto");
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Envie uma foto recente de perfil.")
+		FormViewBuilder.closeSidebar();
 
 
 

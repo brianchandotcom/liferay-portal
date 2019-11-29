@@ -120,6 +120,11 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		String layoutTemplateId = typeSettingsProperties.getProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
 
+		if (Validator.isNull(layoutTemplateId)) {
+			throw new LayoutConvertException(
+				"Layout template id cannot be null");
+		}
+
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
 

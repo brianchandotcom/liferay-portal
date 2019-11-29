@@ -155,17 +155,9 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		return ArrayUtil.toLongArray(convertibleLayoutsPlids);
 	}
 
-	private Layout _convertLayout(long plid) throws Exception {
-		Layout layout = _layoutLocalService.getLayout(plid);
-
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
-			throw new LayoutConvertException(
-				"Layout with plid " + layout.getPlid() + " is not convertible");
-		}
-
-		_updatePortletDecorator(layout);
-
-		LayoutData layoutData = _getLayoutData(layout);
+	private LayoutPageTemplateStructure _addOrUpdateLayoutPageTemplateStructure(
+			Layout layout, LayoutData layoutData)
+		throws PortalException {
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
@@ -182,18 +174,30 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 				new ServiceContext()
 			);
 
-			_layoutPageTemplateStructureLocalService.
+			return _layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					serviceContext.getUserId(), layout.getGroupId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
 					layoutDataJSONObject.toString(), serviceContext);
 		}
-		else {
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructure(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid(), layoutDataJSONObject.toString());
+
+		return _layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructure(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid(), layoutDataJSONObject.toString());
+	}
+
+	private Layout _convertLayout(long plid) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			throw new LayoutConvertException(
+				"Layout with plid " + layout.getPlid() + " is not convertible");
 		}
+
+		_updatePortletDecorator(layout);
+
+		_addOrUpdateLayoutPageTemplateStructure(layout, _getLayoutData(layout));
 
 		layout = _layoutLocalService.updateType(
 			plid, LayoutConstants.TYPE_CONTENT);

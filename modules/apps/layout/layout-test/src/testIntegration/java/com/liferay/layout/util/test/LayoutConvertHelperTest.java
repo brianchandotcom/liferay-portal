@@ -75,6 +75,21 @@ public class LayoutConvertHelperTest {
 	}
 
 	@Test
+	public void testConvertPrivateLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group, true);
+
+		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
+
+		_layoutConvertHelper.convertLayout(layout.getPlid());
+
+		Layout convertedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), layout.getGroupId(), layout.isPrivateLayout());
+
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, convertedLayout.getType());
+	}
+
+	@Test
 	public void testConvertPublicLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group);
 

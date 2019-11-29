@@ -112,7 +112,45 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 	public long[] getConvertibleLayoutsPlids(long groupId)
 		throws PortalException {
 
-		return new long[0];
+		List<Long> convertibleLayoutsPlids = new ArrayList<>();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
+
+		if (groupId > 0) {
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq("groupId", groupId));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq(
+							"type", LayoutConstants.TYPE_PORTLET));
+				});
+
+			actionableDynamicQuery.setPerformActionMethod(
+				(Layout layout) -> {
+					UnicodeProperties typeSettingsProperties =
+						layout.getTypeSettingsProperties();
+
+					String layoutTemplateId =
+						typeSettingsProperties.getProperty(
+							LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
+
+					if (layoutTemplateId != null) {
+						LayoutConverter layoutConverter =
+							_layoutConverterRegistry.getLayoutConverter(
+								layoutTemplateId);
+
+						if (layoutConverter.isConvertible(layout)) {
+							convertibleLayoutsPlids.add(layout.getPlid());
+						}
+					}
+				});
+		}
+
+		actionableDynamicQuery.performActions();
+
+		return ArrayUtil.toLongArray(convertibleLayoutsPlids);
 	}
 
 	private Layout _convertLayout(long plid) throws PortalException {

@@ -58,12 +58,14 @@ const TRIGGER_HIDE_EVENTS = [
 	'mouseleave',
 	'mouseup',
 	'MSPointerUp',
+	'pointerup',
 	'touchend'
 ];
 const TRIGGER_SHOW_EVENTS = [
 	'mouseenter',
 	'mouseup',
 	'MSPointerDown',
+	'pointerdown',
 	'touchstart'
 ];
 

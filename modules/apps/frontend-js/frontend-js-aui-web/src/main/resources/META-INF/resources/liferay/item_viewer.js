@@ -12,6 +12,11 @@
  * details.
  */
 
+/**
+ * @deprecated As of Athanasius(7.3.x), replaced by ItemSelectorPreview.es.js
+ * @module liferay-item-viewer
+ */
+
 AUI.add(
 	'liferay-item-viewer',
 	A => {

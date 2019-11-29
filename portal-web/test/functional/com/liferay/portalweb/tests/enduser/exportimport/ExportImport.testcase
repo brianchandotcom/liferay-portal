@@ -63,7 +63,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
-			value1 = "Unable to validate referenced file entry because it cannot be found with the following parameters");
+			value1 = "Unable to validate referenced document because it cannot be found with the following parameters");
 	}
 
 	@priority = "4"

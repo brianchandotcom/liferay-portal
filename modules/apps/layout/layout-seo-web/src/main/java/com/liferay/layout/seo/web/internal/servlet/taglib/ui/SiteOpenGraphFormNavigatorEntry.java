@@ -106,7 +106,7 @@ public class SiteOpenGraphFormNavigatorEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.seo.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

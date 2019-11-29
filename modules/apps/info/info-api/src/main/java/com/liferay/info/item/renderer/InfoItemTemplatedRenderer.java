@@ -14,7 +14,7 @@
 
 package com.liferay.info.item.renderer;
 
-import com.liferay.info.item.template.InfoItemRendererTemplate;
+import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 

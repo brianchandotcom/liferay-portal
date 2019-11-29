@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
-import com.liferay.info.item.template.InfoItemRendererTemplate;
+import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;

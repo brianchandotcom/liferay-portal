@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.item.template;
+package com.liferay.info.item.renderer.template;
 
 /**
  * @author Eudaldo Alonso

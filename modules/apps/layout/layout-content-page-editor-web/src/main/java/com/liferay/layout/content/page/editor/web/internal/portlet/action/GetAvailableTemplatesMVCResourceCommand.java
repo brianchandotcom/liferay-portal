@@ -20,7 +20,7 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
-import com.liferay.info.item.template.InfoItemRendererTemplate;
+import com.liferay.info.item.renderer.template.InfoItemRendererTemplate;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

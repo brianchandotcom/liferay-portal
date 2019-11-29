@@ -15,8 +15,10 @@
 import {cleanup, render, fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import {DragDropContextProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {ConfigContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import WidgetsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/widgets/components/WidgetsSidebar';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -66,9 +68,11 @@ const widgets = [
 
 const RenderWidgetsSidebar = () => {
 	return (
-		<StoreContext.Provider value={{widgets}}>
-			<WidgetsSidebar />
-		</StoreContext.Provider>
+		<DragDropContextProvider backend={HTML5Backend}>
+			<ConfigContext.Provider value={{widgets}}>
+				<WidgetsSidebar />
+			</ConfigContext.Provider>
+		</DragDropContextProvider>
 	);
 };
 

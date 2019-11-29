@@ -390,6 +390,14 @@ public class EditFragmentEntryDisplayContext {
 			return _readOnly;
 		}
 
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if (fragmentEntry.isReadOnly()) {
+			_readOnly = true;
+
+			return _readOnly;
+		}
+
 		boolean readOnly = false;
 
 		FragmentCollection fragmentCollection =

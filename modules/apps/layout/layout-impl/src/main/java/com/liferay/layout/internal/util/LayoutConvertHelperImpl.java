@@ -56,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -156,27 +157,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 	private Layout _convertLayout(long plid) throws Exception {
 		Layout layout = _layoutLocalService.getLayout(plid);
 
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		String layoutTemplateId = typeSettingsProperties.getProperty(
-			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
-
-		if (Validator.isNull(layoutTemplateId)) {
-			throw new LayoutConvertException(
-				"Layout template id cannot be null");
-		}
-
-		LayoutConverter layoutConverter =
-			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
-
-		if (layoutConverter == null) {
-			throw new LayoutConvertException(
-				"No layout converter exists for layout template id " +
-					layoutTemplateId);
-		}
-
-		if (!layoutConverter.isConvertible(layout)) {
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 			throw new LayoutConvertException(
 				"Layout with plid " + layout.getPlid() + " is not convertible");
 		}
@@ -186,7 +167,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 		_updatePortletDecorator(layout);
 
-		LayoutData layoutData = layoutConverter.convert(layout);
+		LayoutData layoutData = _getLayoutData(layout);
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
@@ -257,6 +238,37 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 			filteredPortletDecorators.get(0);
 
 		return defaultPortletDecorator.getPortletDecoratorId();
+	}
+
+	private LayoutData _getLayoutData(Layout layout)
+		throws LayoutConvertException {
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		String layoutTemplateId = typeSettingsProperties.getProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID);
+
+		if (Validator.isNull(layoutTemplateId)) {
+			throw new LayoutConvertException(
+				"Layout template id cannot be null");
+		}
+
+		LayoutConverter layoutConverter =
+			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
+
+		if (layoutConverter == null) {
+			throw new LayoutConvertException(
+				"No layout converter exists for layout template id " +
+					layoutTemplateId);
+		}
+
+		if (!layoutConverter.isConvertible(layout)) {
+			throw new LayoutConvertException(
+				"Layout with plid " + layout.getPlid() + " is not convertible");
+		}
+
+		return layoutConverter.convert(layout);
 	}
 
 	private void _updatePortletDecorator(Layout layout) throws PortalException {

@@ -16,8 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = new OpenGraphSettingsDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+%>
+
 <div class="form-group" id="<portlet:namespace />idOptions">
-	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= siteAdminDisplayContext.isOpenGraphEnabled() %>" />
+	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" />
 </div>
 
 <p class="text-muted">
@@ -37,7 +41,7 @@
 
 	<div class="input-group">
 		<div class="input-group-item">
-			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= siteAdminDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
+			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
 		</div>
 
 		<div class="input-group-item input-group-item-shrink">
@@ -66,7 +70,7 @@
 			buttonAddLabel: '<liferay-ui:message key="done" />',
 			eventName: '<portlet:namespace />openGraphImageSelectedItem',
 			title: '<liferay-ui:message key="open-graph-image" />',
-			url: '<%= siteAdminDisplayContext.getItemSelectorURL() %>'
+			url: '<%= openGraphSettingsDisplayContext.getItemSelectorURL() %>'
 		});
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {

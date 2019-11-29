@@ -130,6 +130,32 @@ public class UpgradeCTModel extends UpgradeProcess {
 					"alter table ", normalizedTableName, " drop constraint ",
 					primaryKeyConstraintName));
 		}
+		else if (db.getDBType() == DBType.SQLSERVER) {
+			String primaryKeyConstraintName = null;
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					StringBundler.concat(
+						"select name from sys.key_constraints where type = ",
+						"'PK' and OBJECT_NAME(parent_object_id) = '",
+						normalizedTableName, "'"));
+				ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					primaryKeyConstraintName = rs.getString("name");
+				}
+			}
+
+			if (primaryKeyConstraintName == null) {
+				throw new UpgradeException(
+					"No primary key constraint found for " +
+						normalizedTableName);
+			}
+
+			runSQL(
+				StringBundler.concat(
+					"alter table ", normalizedTableName, " drop constraint ",
+					primaryKeyConstraintName));
+		}
 		else {
 			runSQL(
 				StringBundler.concat(

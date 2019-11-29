@@ -38,18 +38,24 @@ definition {
 	}
 
 	macro setFieldLabel {
+		var key_fieldType = "label";
 		Type(
-			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
+			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = "${fieldLabel}");
 
 		AssertTextEquals(
-			locator1 = "FormViewBuilder#FIELD_LABEL_VALUE",
+			locator1 = "FormViewBuilder#FIELD_VALUE",
 			value1 = "${fieldLabel}");
 	}
 
 	macro setFieldHelpText {
+		var key_fieldType = "tip";
 		Type(
-			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#FIELD_VALUE",
 			value1 = "${fieldLabel}");
 	}
 
@@ -118,6 +124,61 @@ definition {
 
 	macro openSidebar(){
 		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
+	}
+
+	macro editText {
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#TEXT_FIELD",
+			value1 = "${fieldValue}");
+	}
+
+	macro selectSelectOption {
+		var key_fieldName = "${fieldName}";
+		var key_selectOption = "${selectOption}";
+
+		Click(
+			locator1 = "FormViewBuilder#SELECT_FIELD",
+			value1 = "${selectOption}");
+	}
+
+	macro selectSelectWithMultipleOptions {
+		var key_fieldName = "${fieldName}";
+
+		for (var selectOption : list "${selectOptionsList}") {
+			FormFields.enableCheckbox(fieldName = "${selectOption}");
+		}
+
+	}
+
+	macro enableCheckbox {
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX", key_fieldName = "${fieldName}")) {
+			Click(
+				key_fieldName = "${fieldName}",
+				locator1 = "FormViewBuilder#CHECKBOX_LABEL");
+		}
+
+		FormViewBuilder.viewCheckboxChecked(fieldName = "${fieldName}");
+	}
+
+	macro viewCheckboxChecked {
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#CHECKBOX");
+	}
+
+	macro selectRadioOption {
+		Click(
+			key_fieldName = "${fieldName}",
+			key_radioOption = "${radioOption}",
+			locator1 = "FormFields#RADIO_OPTION_LABEL");
+	}
+
+	macro editDate {
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#DATE_FIELD",
+			value1 = "${fieldValue}");
 	}
 
 }

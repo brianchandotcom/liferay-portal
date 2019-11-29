@@ -42,13 +42,13 @@
 
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//label[contains(text(),'${fieldLabel}')]</td>
+	<td>//input[contains (@name,'${key_fieldType}')]</td>
 	<td></td>
 </tr>
 
 <tr>
-	<td>FIELD_LABEL_VALUE</td>
-	<td>//input[@value='${fieldLabel}']</td>
+	<td>FIELD_VALUE</td>
+	<td>//input[contains (@name,'${key_fieldType}') and @value='${fieldLabel}']</td>
 	<td></td>
 </tr>
 
@@ -83,7 +83,7 @@
 </tr>
 
 <tr>
-	<td>SIDEBAR_BASIC_HELP_PLACEHOLDER</td>
+	<td>SIDEBAR_BASIC_PLACEHOLDER</td>
 	<td>//input[contains(@name,'placeholder')]</td>
 	<td></td>
 </tr>
@@ -126,13 +126,55 @@
 
 <tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')]['${key_rowNumber}']//input</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>OPTIONS_OPTION_NAME_FIELD</td>
-	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')]['${key_rowNumber}']//div[contains(@class, 'key-value-editor')]</td>
+	<td></td>
+</tr>
+
+<!--FIELDS_AT_DEPLOYED_APP-->
+
+<tr>
+	<td>TEXT_FIELD</td>
+	<td>//input[contains(@name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+
+<!--SELECT-->
+<tr>
+	<td>SELECT_FIELD</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown')]//button</td>
+	<td></td>
+</tr>
+
+<!--CHECKBOX-->
+<tr>
+	<td>CHECKBOX</td>
+	<td>//input[@type='checkbox' and contains (@name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CHECKBOX_LABEL</td>
+	<td>//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+
+<!--RADIO_BUTTON-->
+<tr>
+	<td>RADIO_OPTION_LABEL</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@value,'${key_radioOption}')]</td>
+	<td></td>
+</tr>
+
+<!--DATE-->
+<tr>
+	<td>DATE_FIELD</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text']</td>
 	<td></td>
 </tr>
 

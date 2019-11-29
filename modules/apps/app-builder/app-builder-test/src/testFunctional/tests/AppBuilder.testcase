@@ -702,7 +702,7 @@ definition {
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
 		property portal.acceptance = "true";
-
+/*
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
@@ -718,7 +718,7 @@ definition {
 		FormViewBuilder.closeSidebar();
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Quantidade de filhos?");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Quantidade de filhos");
 		FormViewBuilder.closeSidebar();
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
@@ -748,8 +748,99 @@ definition {
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Foto");
-		FormViewBuilder.setFieldHelpText(fieldLabel = "Envie uma foto recente de perfil.")
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Envie uma foto recente de perfil.");
 		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.setName(formViewName = "Formulário de cadastro de jogadores");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Formulário de cadastro de jogadores");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Foto");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "O que faz no tempo livre?");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Data de Nascimento");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Pé bom");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Quantidade de filhos");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Apelido");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Nome completo do jogador");
+
+		TableViewBuilder.setName(tableViewName = "Tabela de exibição");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Tabela de exibição");
+
+		App.add(
+			appTitle = "Cadastro de Jogadores app",
+			deployOption = "Widget",
+			formViewName = "Formulário de cadastro de jogadores",
+			tableViewName = "Tabela de exibição");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Cadastro de Jogadores app");
+*/
+Navigator.gotoPage(pageName = "App Builder Page");
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Full name here");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Apelido");
+
+		FormViewBuilder.editText(
+			fieldName = "NumberOfChildren",
+			fieldValue = "2");
+
+
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Foot",
+			selectOption = "Select 2");
+
+		FormViewBuilder.selectSelectWithMultipleOptions(
+			fieldName = "FreeTime",
+			selectOptionsList = "Mult 1,Mult 2,Mult 3");
+
+		FormViewBuilder.selectRadioOption(
+			fieldName = "CivilStatus",
+			radioOption = "Married");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "05/02/2016");
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		Click(locator = "//span[contains(text(),'Document_1.jpg')]");
+
+		FormPortlet.submit();
+
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "123");
+
+		
+
+
+
 
 
 

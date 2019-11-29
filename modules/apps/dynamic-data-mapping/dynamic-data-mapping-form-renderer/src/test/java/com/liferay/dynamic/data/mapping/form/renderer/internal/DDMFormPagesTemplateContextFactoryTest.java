@@ -91,7 +91,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({ResourceBundleLoaderUtil.class, ResourceBundleUtil.class})
+@PrepareForTest(
+	{
+		LocaleThreadLocal.class, ResourceBundleLoaderUtil.class,
+		ResourceBundleUtil.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
 	"com.liferay.portal.kernel.util.ResourceBundleLoaderUtil"
@@ -109,12 +114,11 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		setUpHttpServletRequest();
 		setUpLanguageResources();
 		setUpLanguageUtil();
+		setUpLocaleThreadLocal();
 		setUpPortalUtil();
 		setUpResourceBundle();
 		setUpResourceBundleLoaderUtil();
 		setUpResourceBundleUtil();
-
-		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 	}
 
 	@Test
@@ -1062,6 +1066,16 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(language);
+	}
+
+	protected void setUpLocaleThreadLocal() {
+		mockStatic(LocaleThreadLocal.class);
+
+		when(
+			LocaleThreadLocal.getThemeDisplayLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
 	}
 
 	protected void setUpPortalUtil() {

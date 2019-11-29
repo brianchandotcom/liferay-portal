@@ -944,9 +944,11 @@ definition {
 			locator1 = "SitePagesEditPage#PREVIEW_URL",
 			value1 = "${url}");
 
-		AssertTextEquals(
-			locator1 = "SitePagesEditPage#PREVIEW_DESCRIPTION",
-			value1 = "${description}");
+		if (isSet(description)) {
+			AssertTextEquals(
+				locator1 = "SitePagesEditPage#PREVIEW_DESCRIPTION",
+				value1 = "${description}");
+		}
 
 		if (isSet(truncatedHTMLTitle)) {
 			ProductMenuHelper.closeProductMenu();

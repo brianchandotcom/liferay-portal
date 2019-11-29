@@ -199,10 +199,10 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 		_addOrUpdateLayoutPageTemplateStructure(layout, _getLayoutData(layout));
 
+		_getOrCreateDraftLayout(layout);
+
 		layout = _layoutLocalService.updateType(
 			plid, LayoutConstants.TYPE_CONTENT);
-
-		_getOrCreateDraftLayout(layout);
 
 		return _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),

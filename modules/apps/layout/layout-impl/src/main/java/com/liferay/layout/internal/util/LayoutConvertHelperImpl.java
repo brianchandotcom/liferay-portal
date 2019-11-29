@@ -175,13 +175,13 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 					layout.getGroupId(), _portal.getClassNameId(Layout.class),
 					layout.getPlid());
 
-		ServiceContext serviceContext = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).orElse(
-			new ServiceContext()
-		);
-
 		if (layoutPageTemplateStructure == null) {
+			ServiceContext serviceContext = Optional.ofNullable(
+				ServiceContextThreadLocal.getServiceContext()
+			).orElse(
+				new ServiceContext()
+			);
+
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					serviceContext.getUserId(), layout.getGroupId(),

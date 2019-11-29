@@ -14,16 +14,28 @@
 
 package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.seo.web.internal.display.context.OpenGraphSettingsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,6 +71,31 @@ public class SiteOpenGraphFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		httpServletRequest.setAttribute(
+			OpenGraphSettingsDisplayContext.class.getName(),
+			new OpenGraphSettingsDisplayContext(
+				httpServletRequest,
+				_portal.getLiferayPortletRequest(portletRequest),
+				_portal.getLiferayPortletResponse(portletResponse),
+				_dlurlHelper, _itemSelector));
+
+		super.include(httpServletRequest, httpServletResponse);
+	}
+
+	@Override
 	public boolean isVisible(User user, Group group) {
 		if ((group == null) || group.isCompany()) {
 			return false;
@@ -80,5 +117,14 @@ public class SiteOpenGraphFormNavigatorEntry
 	protected String getJspPath() {
 		return "/site/open_graph_settings.jsp";
 	}
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

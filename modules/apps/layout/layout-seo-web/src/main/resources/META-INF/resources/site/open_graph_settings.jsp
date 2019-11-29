@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = new OpenGraphSettingsDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSettingsDisplayContext)request.getAttribute(OpenGraphSettingsDisplayContext.class.getName());
 %>
 
 <div class="form-group" id="<portlet:namespace />idOptions">

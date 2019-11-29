@@ -28,6 +28,4 @@ page import="com.liferay.petra.string.StringPool" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%@ include file="/init-ext.jsp" %>

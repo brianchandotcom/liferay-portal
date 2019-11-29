@@ -127,7 +127,7 @@ public class UpgradeCTModel extends UpgradeProcess {
 
 			runSQL(
 				StringBundler.concat(
-					"sp_dropkey primary ", normalizedTableName, " ",
+					"alter table ", normalizedTableName, " drop constraint ",
 					primaryKeyConstraintName));
 		}
 		else {

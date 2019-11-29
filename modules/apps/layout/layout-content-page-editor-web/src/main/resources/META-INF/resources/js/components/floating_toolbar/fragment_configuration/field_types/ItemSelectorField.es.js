@@ -146,9 +146,9 @@ ItemSelectorField.STATE = {
 	 */
 	availableTemplates: Config.arrayOf(
 		Config.shapeOf({
-			ddmTemplateKey: Config.string().value(''),
 			infoItemRendererKey: Config.string().value(''),
-			label: Config.string()
+			label: Config.string(),
+			templateKey: Config.string().value('')
 		})
 	)
 		.internal()

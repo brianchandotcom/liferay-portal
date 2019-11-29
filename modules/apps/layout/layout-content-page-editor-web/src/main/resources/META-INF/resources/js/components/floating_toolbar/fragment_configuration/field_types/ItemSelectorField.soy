@@ -13,9 +13,9 @@
 	]}
 
 	{@param? availableTemplates: list<[
-		ddmTemplateKey: string,
 		infoItemRendererKey: string,
-		label: string
+		label: string,
+		templateKey: string
 	]>}
 	{@param? enableSelectTemplate: bool}
 	{@param? selectedClassName: string}
@@ -112,8 +112,8 @@
 		>
 			{foreach $option in $availableTemplates}
 				{let $optionAttributes kind="attributes"}
-					{if $option.ddmTemplateKey}
-						data-ddm-template-key="{$option.ddmTemplateKey}"
+					{if $option.templateKey}
+						data-template-key="{$option.templateKey}"
 					{/if}
 
 					{if $option.infoItemRendererKey}
@@ -121,7 +121,7 @@
 					{/if}
 
 					{if $selectedTemplate and
-						(($selectedTemplate.ddmTemplateKey and $selectedTemplate.ddmTemplateKey == $option.ddmTemplateKey) or
+						(($selectedTemplate.templateKey and $selectedTemplate.templateKey == $option.templateKey) or
 						 ($selectedTemplate.infoItemRendererKey and $selectedTemplate.infoItemRendererKey == $option.infoItemRendererKey))
 					}
 						selected

@@ -58,6 +58,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.ReadOnlyException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -108,7 +110,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		return new long[0];
 	}
 
-	private void _convertLayout(long selPlid) throws Exception {
+	private void _convertLayout(long selPlid) throws PortalException {
 		Layout layout = _layoutService.updateType(
 			selPlid, LayoutConstants.TYPE_CONTENT);
 
@@ -162,7 +164,12 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 			layout.getRobotsMap(), layout.getType(), layout.getTypeSettings(),
 			true, true, Collections.emptyMap(), serviceContext);
 
-		_layoutCopyHelper.copyLayout(layout, draftLayout);
+		try {
+			_layoutCopyHelper.copyLayout(layout, draftLayout);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -196,7 +203,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		return defaultPortletDecorator.getPortletDecoratorId();
 	}
 
-	private void _updatePortletDecorator(Layout layout) throws Exception {
+	private void _updatePortletDecorator(Layout layout) throws PortalException {
 		String defaultPortletDecoratorId = _getDefaultPortletDecoratorId(
 			layout);
 
@@ -223,8 +230,14 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 				continue;
 			}
 
-			jxPortletPreferences.setValue(
-				"portletSetupPortletDecoratorId", defaultPortletDecoratorId);
+			try {
+				jxPortletPreferences.setValue(
+					"portletSetupPortletDecoratorId",
+					defaultPortletDecoratorId);
+			}
+			catch (ReadOnlyException roe) {
+				throw new PortalException(roe);
+			}
 
 			portletPreferences.setPreferences(
 				PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));

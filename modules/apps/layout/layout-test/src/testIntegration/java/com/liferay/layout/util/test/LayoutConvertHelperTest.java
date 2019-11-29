@@ -104,6 +104,17 @@ public class LayoutConvertHelperTest {
 	}
 
 	@Test
+	public void testConvertLayoutsInGroup() throws Exception {
+		_addLayouts();
+
+		_assertPlids(
+			_getConvertibleLayoutsPlids(),
+			_layoutConvertHelper.convertLayouts(_group.getGroupId()));
+
+		_assertLayouts();
+	}
+
+	@Test
 	public void testConvertPrivateLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group, true);
 

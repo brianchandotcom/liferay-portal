@@ -94,7 +94,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				assetDisplayPageEntryId);
+				layoutPageTemplateEntryId);
 
 		if (layoutPageTemplateEntry != null) {
 			layoutPageTemplateEntry.setModifiedDate(new Date());
@@ -178,7 +178,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				assetDisplayPageEntryId);
+				layoutPageTemplateEntryId);
 
 		if (layoutPageTemplateEntry != null) {
 			layoutPageTemplateEntry.setModifiedDate(new Date());

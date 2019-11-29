@@ -251,6 +251,16 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
 					 k++) {
 
+					String fragmentEntryLinkId =
+						fragmentEntryLinkIdsJSONArray.getString(k);
+
+					if (fragmentEntryLinkId.equals("drop-zone")) {
+						newFragmentEntryLinkIdsJSONArray.put(
+							fragmentEntryLinkIdsJSONArray.getString(k));
+
+						continue;
+					}
+
 					FragmentEntryLink fragmentEntryLink =
 						fragmentEntryLinkMap.get(
 							fragmentEntryLinkIdsJSONArray.getLong(k));

@@ -31,7 +31,8 @@ export default function(url, listeners) {
 				Liferay.once(key, listeners[key]);
 			});
 		}
-	} else {
+	}
+	else {
 		window.location.href = url;
 	}
 }

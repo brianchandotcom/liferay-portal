@@ -57,7 +57,8 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 
 			if (index === 0 && remainingSplit > 0) {
 				split = splitValue + remainingSplit;
-			} else {
+			}
+			else {
 				split = splitValue;
 			}
 

@@ -117,7 +117,8 @@ boolean nodeInGroup = false;
 							if (pageSelectorContainer) {
 								if (nodeIdSelect.value === nodeId) {
 									pageSelectorContainer.classList.remove('hide');
-								} else {
+								}
+								else {
 									pageSelectorContainer.classList.add('hide');
 								}
 							}

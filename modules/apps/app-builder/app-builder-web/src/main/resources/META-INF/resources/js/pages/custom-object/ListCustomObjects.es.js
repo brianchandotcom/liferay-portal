@@ -86,7 +86,8 @@ export default ({history}) => {
 						newCustomObject: true
 					})
 				);
-			} else {
+			}
+			else {
 				history.push(`/custom-object/${id}/form-views/`);
 			}
 		});

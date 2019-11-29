@@ -92,7 +92,8 @@ function render(content, value, editableValues) {
 
 			if (config.buttonType && config.buttonType === 'link') {
 				link.classList.add('link');
-			} else {
+			}
+			else {
 				link.classList.add('btn');
 				link.classList.add(`btn-${config.buttonType}`);
 			}

@@ -300,7 +300,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 
 			if (grantTypeNode.hasAttribute('hidden')) {
 				continue;
-			} else {
+			}
+			else {
 				grantTypeToggleElement = grantTypeNode.children[0].children[0];
 
 				if (
@@ -440,7 +441,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			clientCredentialsSection.show();
 			allowedGrantTypesSection.addClass('col-lg-7');
 			allowedGrantTypesSection.removeClass('col-lg-12');
-		} else {
+		}
+		else {
 			clientCredentialsSection.hide();
 			allowedGrantTypesSection.addClass('col-lg-12');
 			allowedGrantTypesSection.removeClass('col-lg-7');
@@ -462,7 +464,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 		if (newValue != originalValue) {
 			padlock.one('div.closed').hide();
 			padlock.one('div.open').show();
-		} else {
+		}
+		else {
 			padlock.one('div.open').hide();
 			padlock.one('div.closed').show();
 		}
@@ -480,7 +483,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			if (lexiconIconParent) {
 				if (required) {
 					lexiconIconParent.style = 'visibility:visible;';
-				} else {
+				}
+				else {
 					lexiconIconParent.style = 'visibility:hidden;';
 				}
 			}

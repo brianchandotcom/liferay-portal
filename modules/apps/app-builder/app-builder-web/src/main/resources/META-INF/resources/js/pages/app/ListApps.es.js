@@ -185,7 +185,8 @@ export default ({
 							reject,
 							undeployModalContext
 						);
-					} else {
+					}
+					else {
 						deploy(item, true, resolve, reject);
 					}
 				}),

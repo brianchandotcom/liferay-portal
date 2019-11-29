@@ -96,7 +96,8 @@
 					redirect: '<%= scheduledEventsURL %>'
 				}
 			});
-		} else {
+		}
+		else {
 			exportImport.showNotification(dateChecker, rangeEndsLater);
 		}
 	}

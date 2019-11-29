@@ -210,7 +210,8 @@ const ExperiencesSelector = ({
 						});
 					}
 				});
-		} else {
+		}
+		else {
 			dispatch({
 				name,
 				segmentsEntryId,

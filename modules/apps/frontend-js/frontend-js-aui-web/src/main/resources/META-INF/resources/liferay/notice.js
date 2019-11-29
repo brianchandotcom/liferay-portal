@@ -122,7 +122,8 @@ AUI.add(
 				if (instance._closeText !== false) {
 					instance._closeText =
 						instance._closeText || Liferay.Language.get('close');
-				} else {
+				}
+				else {
 					instance._useCloseButton = false;
 					instance._closeText = STR_EMPTY;
 				}
@@ -134,7 +135,8 @@ AUI.add(
 						'</button>';
 
 					closeButton = notice.append(html);
-				} else {
+				}
+				else {
 					closeButton = notice.one('.close');
 				}
 
@@ -173,7 +175,8 @@ AUI.add(
 							text = hideText;
 
 							visible = 1;
-						} else {
+						}
+						else {
 							visible = 0;
 						}
 
@@ -219,7 +222,8 @@ AUI.add(
 							STR_HIDE
 						);
 					});
-				} else if (instance._timeout > -1) {
+				}
+				else if (instance._timeout > -1) {
 					instance._hideHandle = A.later(
 						instance._timeout,
 						notice,

@@ -276,7 +276,8 @@
 					['precisionTypeAdvanced', 'searchableAsKeyword'],
 					'hide'
 				);
-			} else if (
+			}
+			else if (
 				currentSelectedDataType ==
 					'<%= ExpandoColumnConstants.DATA_TYPE_DECIMAL %>' ||
 				currentSelectedDataType ==
@@ -330,11 +331,14 @@
 					formElement.removeAttribute('disabled');
 
 					formElement.classList.remove('disabled');
-				} else if (action == 'disable') {
+				}
+				else if (action == 'disable') {
 					formElement.setAttribute('disabled', 'true');
-				} else if (action == 'hide') {
+				}
+				else if (action == 'hide') {
 					formElement.classList.add('hide');
-				} else if (action == 'unhide') {
+				}
+				else if (action == 'unhide') {
 					formElement.classList.remove('hide');
 				}
 			}

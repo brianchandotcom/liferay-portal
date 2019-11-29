@@ -274,7 +274,8 @@ if (ddmStructure != null) {
 				contextualSidebarContainer.classList.remove(
 					'contextual-sidebar-visible'
 				);
-			} else {
+			}
+			else {
 				contextualSidebarContainer.classList.add(
 					'contextual-sidebar-visible'
 				);

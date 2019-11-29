@@ -155,7 +155,8 @@ AUI.add(
 							tmp < results ? tmp : results,
 							results
 						]);
-					} else {
+					}
+					else {
 						resultsContent = Lang.sub(
 							instance._resultsMessageShort,
 							[results]

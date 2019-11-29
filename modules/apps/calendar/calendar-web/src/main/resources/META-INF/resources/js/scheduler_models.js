@@ -223,7 +223,8 @@ AUI.add(
 						var currentTime = scheduler.get('currentTime');
 
 						result = endDate.getTime() < currentTime.getTime();
-					} else {
+					}
+					else {
 						result = false;
 					}
 
@@ -566,7 +567,8 @@ AUI.add(
 						var remoteServices = scheduler.get('remoteServices');
 
 						remoteServices.updateCalendarColor(calendarId, color);
-					} else {
+					}
+					else {
 						Liferay.Util.Session.set(
 							'com.liferay.calendar.web_calendar' +
 								calendarId +
@@ -688,7 +690,8 @@ AUI.add(
 						);
 
 						date = DateMath.subtract(date, DateMath.MINUTES, 1);
-					} else if (viewName === 'month') {
+					}
+					else if (viewName === 'month') {
 						date = DateMath.add(date, DateMath.WEEK, 1);
 					}
 

@@ -173,7 +173,8 @@ class MBPortlet extends PortletBase {
 
 				this.submitForm_();
 			}
-		} else {
+		}
+		else {
 			this.submitForm_();
 		}
 	}
@@ -258,7 +259,8 @@ class MBPortlet extends PortletBase {
 							),
 							attachments.deleted.length
 						) + ' &raquo';
-				} else {
+				}
+				else {
 					deletedAttachmentsElement.style.display = 'none';
 				}
 			});
@@ -315,7 +317,8 @@ class MBPortlet extends PortletBase {
 			submitForm(
 				document[this.ns('addQuickReplyFm' + this.replyToMessageId)]
 			);
-		} else {
+		}
+		else {
 			this.one('#body').value = window[this.ns('bodyEditor')].getHTML();
 
 			submitForm(document[this.ns('fm')]);

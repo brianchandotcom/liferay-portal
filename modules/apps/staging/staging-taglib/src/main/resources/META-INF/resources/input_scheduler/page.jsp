@@ -456,7 +456,8 @@
 						Array.prototype.forEach.call(tables, function(table) {
 							if (table.id !== selectedTableId) {
 								table.classList.add('hide');
-							} else {
+							}
+							else {
 								table.classList.remove('hide');
 							}
 						});

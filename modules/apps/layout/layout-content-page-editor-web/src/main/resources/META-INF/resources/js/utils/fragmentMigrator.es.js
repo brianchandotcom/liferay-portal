@@ -45,7 +45,8 @@ function editableValuesMigrator(editableValue, defaultSegmentsExperienceKey) {
 
 	if (!defaultSegmentsExperienceKey) {
 		result = jsonEditableValues;
-	} else {
+	}
+	else {
 		result = {
 			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {}
 		};

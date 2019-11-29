@@ -175,7 +175,8 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					);
 
 					Util.getWindow().destroy();
-				} else {
+				}
+				else {
 					message.show();
 				}
 			});

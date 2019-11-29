@@ -45,7 +45,8 @@ function _fixSplitArray(variants, editedIndex, indexToFix, totalSplit) {
 				nextIndexToFix,
 				100 - (correctedSplit - variants[indexToFix].split)
 			);
-		} else {
+		}
+		else {
 			variants[indexToFix] = {
 				...variants[indexToFix],
 				split: correctedSplit
@@ -68,7 +69,8 @@ function _fixSplitArray(variants, editedIndex, indexToFix, totalSplit) {
 				nextIndexToFix,
 				totalSplit - correctedSplit
 			);
-		} else {
+		}
+		else {
 			variants[indexToFix] = {
 				...variants[indexToFix],
 				split: correctedSplit
@@ -98,7 +100,8 @@ function changeSplitValue(splitVariants, variantId, value) {
 			newSplitVariants.push({...variant, split: value});
 			totalSplit += value;
 			editedIndex = i;
-		} else {
+		}
+		else {
 			newSplitVariants.push(variant);
 			totalSplit += variant.split;
 		}

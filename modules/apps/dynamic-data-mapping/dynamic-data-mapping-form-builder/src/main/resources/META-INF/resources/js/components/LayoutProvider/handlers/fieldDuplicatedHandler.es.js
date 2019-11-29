@@ -51,7 +51,8 @@ const handleFieldDuplicated = (
 						...field,
 						value: newFieldName
 					};
-				} else if (field.fieldName === 'label') {
+				}
+				else if (field.fieldName === 'label') {
 					field = {
 						...field,
 						localizedValue: {

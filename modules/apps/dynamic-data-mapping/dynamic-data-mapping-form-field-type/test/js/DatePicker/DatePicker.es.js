@@ -142,7 +142,8 @@ describe('DatePicker', () => {
 
 		if (monthBefore > 0) {
 			expect(component._month).toEqual(monthBefore - 1);
-		} else if (monthBefore == 0) {
+		}
+		else if (monthBefore == 0) {
 			expect(component._month).toEqual(11);
 		}
 	});
@@ -177,7 +178,8 @@ describe('DatePicker', () => {
 
 		if (monthBefore < 11) {
 			expect(component._month).toEqual(monthBefore + 1);
-		} else if (monthBefore == 11) {
+		}
+		else if (monthBefore == 11) {
 			expect(component._month).toEqual(0);
 		}
 	});

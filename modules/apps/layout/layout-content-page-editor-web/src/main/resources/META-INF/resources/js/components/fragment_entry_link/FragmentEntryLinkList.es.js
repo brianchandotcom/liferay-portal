@@ -95,7 +95,8 @@ class FragmentEntryLinkList extends Component {
 			dropValid =
 				targetItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.row &&
 				sourceItemData.itemId !== targetItemData.itemId;
-		} else if (
+		}
+		else if (
 			sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 		) {
 			if (
@@ -109,7 +110,8 @@ class FragmentEntryLinkList extends Component {
 						FRAGMENTS_EDITOR_ITEM_TYPES.column &&
 					targetItemData.itemType !==
 						FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
-			} else {
+			}
+			else {
 				dropValid =
 					targetItemData.itemType &&
 					sourceItemData.itemId !== targetItemData.itemId;
@@ -135,19 +137,22 @@ class FragmentEntryLinkList extends Component {
 					itemId: itemDataset.columnId,
 					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.column
 				};
-			} else if ('fragmentEntryLinkId' in itemDataset) {
+			}
+			else if ('fragmentEntryLinkId' in itemDataset) {
 				itemData = {
 					fragmentEntryLinkRowType:
 						itemDataset.fragmentEntryLinkRowType,
 					itemId: itemDataset.fragmentEntryLinkId,
 					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				};
-			} else if ('layoutRowId' in itemDataset) {
+			}
+			else if ('layoutRowId' in itemDataset) {
 				itemData = {
 					itemId: itemDataset.layoutRowId,
 					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.row
 				};
-			} else if ('fragmentEmptyList' in itemDataset) {
+			}
+			else if ('fragmentEmptyList' in itemDataset) {
 				itemData = {
 					itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragmentList
 				};
@@ -324,7 +329,8 @@ class FragmentEntryLinkList extends Component {
 					targetBorder: this.dropTargetBorder,
 					targetItemId: this.dropTargetItemId
 				};
-			} else if (
+			}
+			else if (
 				itemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 			) {
 				moveItemAction = MOVE_FRAGMENT_ENTRY_LINK;

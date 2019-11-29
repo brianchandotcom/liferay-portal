@@ -145,7 +145,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 				if (!searchContainerData.length) {
 					searchContainerData = [];
-				} else {
+				}
+				else {
 					searchContainerData = searchContainerData.split(',');
 				}
 

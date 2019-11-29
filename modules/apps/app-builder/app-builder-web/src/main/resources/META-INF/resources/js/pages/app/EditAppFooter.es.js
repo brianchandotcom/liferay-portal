@@ -94,7 +94,8 @@ export default withRouter(
 					.then(() => addSuccessToast(appId))
 					.then(onCancel)
 					.catch(() => setDeploying(false));
-			} else {
+			}
+			else {
 				addItem(
 					`/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps`,
 					app

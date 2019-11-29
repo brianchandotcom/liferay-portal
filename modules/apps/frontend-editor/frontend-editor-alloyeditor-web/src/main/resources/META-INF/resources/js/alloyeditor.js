@@ -99,12 +99,14 @@ AUI.add(
 							'Return ancestor parent form',
 							parentForm
 						);
-					} else if (attrName === 'name') {
+					}
+					else if (attrName === 'name') {
 						alterReturn = new Do.AlterReturn(
 							'Return editor namespace',
 							instance.get('namespace')
 						);
-					} else if (attrName === 'type') {
+					}
+					else if (attrName === 'type') {
 						alterReturn = new Do.AlterReturn(
 							'Return editor node name',
 							instance._srcNode.get('nodeName')
@@ -205,7 +207,8 @@ AUI.add(
 						instance._pendingData = null;
 
 						instance.getNativeEditor().setData(pendingData);
-					} else {
+					}
+					else {
 						instance._dataReady = true;
 					}
 				},
@@ -353,7 +356,8 @@ AUI.add(
 
 					if (instance.instanceReady) {
 						instance._changeLocale(localeChange);
-					} else {
+					}
+					else {
 						instance._pendingLocaleChange = localeChange;
 					}
 				},
@@ -474,7 +478,8 @@ AUI.add(
 
 					if (instance.instanceReady) {
 						instance.getNativeEditor().focus();
-					} else {
+					}
+					else {
 						instance.pendingFocus = true;
 					}
 				},
@@ -554,10 +559,12 @@ AUI.add(
 					if (instance.instanceReady) {
 						if (instance._dataReady) {
 							instance.getNativeEditor().setData(value);
-						} else {
+						}
+						else {
 							instance._pendingData = value;
 						}
-					} else {
+					}
+					else {
 						instance.set('contents', value);
 					}
 				}

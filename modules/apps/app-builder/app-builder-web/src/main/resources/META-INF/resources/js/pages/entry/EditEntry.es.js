@@ -33,7 +33,8 @@ export const EditEntry = ({
 	const onCancel = useCallback(() => {
 		if (redirect) {
 			Liferay.Util.navigate(redirect);
-		} else {
+		}
+		else {
 			Liferay.Util.navigate(basePortletURL);
 		}
 	}, [basePortletURL, redirect]);
@@ -75,7 +76,8 @@ export const EditEntry = ({
 					openSuccessToast(false);
 					onCancel();
 				});
-			} else {
+			}
+			else {
 				addItem(
 					`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
 					dataRecord

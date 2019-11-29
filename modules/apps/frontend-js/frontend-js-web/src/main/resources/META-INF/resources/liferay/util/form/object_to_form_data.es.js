@@ -40,9 +40,11 @@ export default function objectToFormData(
 					formData
 				);
 			});
-		} else if (isObject(value) && !(value instanceof File)) {
+		}
+		else if (isObject(value) && !(value instanceof File)) {
 			objectToFormData(value, formData, formKey);
-		} else {
+		}
+		else {
 			formData.append(formKey, value);
 		}
 	});

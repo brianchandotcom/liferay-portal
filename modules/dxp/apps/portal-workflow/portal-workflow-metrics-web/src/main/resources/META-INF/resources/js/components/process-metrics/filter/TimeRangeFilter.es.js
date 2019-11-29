@@ -49,7 +49,8 @@ const TimeRangeFilter = ({
 			if (clickedFilter.active) {
 				document.dispatchEvent(new Event('mousedown'));
 			}
-		} else {
+		}
+		else {
 			setShowCustomForm(false);
 		}
 

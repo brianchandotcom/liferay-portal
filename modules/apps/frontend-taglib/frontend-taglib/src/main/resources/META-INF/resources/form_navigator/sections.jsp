@@ -141,7 +141,8 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 					}
 
 					sectionContent.collapse('show');
-				} else if (hasFocusField) {
+				}
+				else if (hasFocusField) {
 					Liferay.Util.focusFormField(focusField);
 				}
 			});

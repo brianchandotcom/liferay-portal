@@ -179,7 +179,8 @@ function init(
 
 			if (type === CREATE_PROCESSOR_EVENT_TYPES.button) {
 				nativeEditor.execCommand('selectAll');
-			} else if (event) {
+			}
+			else if (event) {
 				_selectRange(event, nativeEditor);
 			}
 		})
@@ -244,7 +245,8 @@ function _selectRange(event, nativeEditor) {
 
 		ckRange.setStart(CKEDITOR.dom.node(textNode), range.offset);
 		ckRange.setEnd(CKEDITOR.dom.node(textNode), range.offset);
-	} else if (document.caretRangeFromPoint) {
+	}
+	else if (document.caretRangeFromPoint) {
 		const range = document.caretRangeFromPoint(
 			event.clientX,
 			event.clientY

@@ -38,19 +38,24 @@ function getDefaultValue(property) {
 
 	if (type === PROPERTY_TYPES.STRING && options && options.length) {
 		defaultValue = options[0].value;
-	} else if (type === PROPERTY_TYPES.DATE) {
+	}
+	else if (type === PROPERTY_TYPES.DATE) {
 		defaultValue = jsDatetoYYYYMMDD(new Date());
-	} else if (type === PROPERTY_TYPES.DATE_TIME) {
+	}
+	else if (type === PROPERTY_TYPES.DATE_TIME) {
 		const simpleDate = jsDatetoYYYYMMDD(new Date());
 
 		defaultValue = dateFns
 			.parse(simpleDate, INPUT_DATE_FORMAT)
 			.toISOString();
-	} else if (type === PROPERTY_TYPES.BOOLEAN) {
+	}
+	else if (type === PROPERTY_TYPES.BOOLEAN) {
 		defaultValue = 'true';
-	} else if (type === PROPERTY_TYPES.INTEGER) {
+	}
+	else if (type === PROPERTY_TYPES.INTEGER) {
 		defaultValue = 0;
-	} else if (type === PROPERTY_TYPES.DOUBLE) {
+	}
+	else if (type === PROPERTY_TYPES.DOUBLE) {
 		defaultValue = '0.00';
 	}
 

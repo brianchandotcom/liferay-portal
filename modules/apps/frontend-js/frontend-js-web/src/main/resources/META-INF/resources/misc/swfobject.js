@@ -148,7 +148,8 @@ deconcept.SWFObject.prototype = {
 			if (pairs.length > 0) {
 			}
 			swfNode += '/>';
-		} else {
+		}
+		else {
 			// PC IE
 			if (this.getAttribute('doExpressInstall')) {
 				this.addVariable('MMplayerType', 'ActiveX');
@@ -234,7 +235,8 @@ deconcept.SWFObjectUtil.getPlayerVersion = function() {
 					.split('.')
 			);
 		}
-	} else if (
+	}
+	else if (
 		navigator.userAgent &&
 		navigator.userAgent.indexOf('Windows CE') >= 0
 	) {
@@ -251,30 +253,35 @@ deconcept.SWFObjectUtil.getPlayerVersion = function() {
 				//				document.write("player v: "+ counter);
 
 				PlayerVersion = new deconcept.PlayerVersion([counter, 0, 0]);
-			} catch (e) {
+			}
+			catch (e) {
 				axo = null;
 			}
 		}
-	} else {
+	}
+	else {
 		// Win IE (non mobile)
 		// do minor version lookup in IE, but avoid fp6 crashing issues
 		// see http://blog.deconcept.com/2006/01/11/getvariable-setvariable-crash-internet-explorer-flash-6/
 
 		try {
 			var axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.7');
-		} catch (e) {
+		}
+		catch (e) {
 			try {
 				var axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
 				PlayerVersion = new deconcept.PlayerVersion([6, 0, 21]);
 				axo.AllowScriptAccess = 'always'; // error if player version < 6.0.47 (thanks to Michael Williams @ Adobe for this code)
-			} catch (e) {
+			}
+			catch (e) {
 				if (PlayerVersion.major == 6) {
 					return PlayerVersion;
 				}
 			}
 			try {
 				axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-			} catch (e) {}
+			}
+			catch (e) {}
 		}
 		if (axo != null) {
 			PlayerVersion = new deconcept.PlayerVersion(

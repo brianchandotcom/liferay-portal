@@ -197,7 +197,8 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 						methodObj.actionMethodNames = data;
 						callback(actionMethodNames);
 					});
-			} else {
+			}
+			else {
 				callback(actionMethodNames);
 			}
 		}

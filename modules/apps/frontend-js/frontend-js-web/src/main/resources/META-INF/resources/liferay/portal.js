@@ -165,7 +165,8 @@
 				instance._hideTooltipTask = hideTooltipTask;
 
 				instance._cached = cached;
-			} else {
+			}
+			else {
 				cached.setAttrs(tooltipConfig);
 			}
 

@@ -69,7 +69,8 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 
 				if (fileExtensionSelect.val() === 'csv' && <%= showCSVWarning %>) {
 					csvWarning.show();
-				} else {
+				}
+				else {
 					csvWarning.hide();
 				}
 			};

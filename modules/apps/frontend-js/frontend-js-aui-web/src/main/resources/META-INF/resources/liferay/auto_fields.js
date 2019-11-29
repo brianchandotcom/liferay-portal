@@ -103,9 +103,11 @@ AUI.add(
 							tag == 'textarea'
 						) {
 							item.val('');
-						} else if (type == 'checkbox' || type == 'radio') {
+						}
+						else if (type == 'checkbox' || type == 'radio') {
 							item.attr('checked', false);
-						} else if (tag == 'select') {
+						}
+						else if (tag == 'select') {
 							var selectedIndex = 0;
 
 							if (item.getAttribute('showEmptyOption')) {
@@ -159,7 +161,8 @@ AUI.add(
 
 					if (instance.url) {
 						clonedRow = instance._createCloneFromURL(clone, guid);
-					} else {
+					}
+					else {
 						clonedRow = instance._createCloneFromMarkup(
 							clone,
 							guid,
@@ -207,7 +210,8 @@ AUI.add(
 								item.attr('checked', '');
 								item.attr('value', guid);
 								item.attr('id', newName);
-							} else if (
+							}
+							else if (
 								inputNodeName == 'button' ||
 								inputNodeName == 'div' ||
 								inputNodeName == 'span'
@@ -215,7 +219,8 @@ AUI.add(
 								if (oldName) {
 									item.attr('id', newName);
 								}
-							} else {
+							}
+							else {
 								item.attr('name', newName);
 								item.attr('id', newName);
 							}
@@ -569,7 +574,8 @@ AUI.add(
 
 							contentBox.append(instance._fieldIndexes);
 						}
-					} else {
+					}
+					else {
 						instance._fieldIndexes = A.all([]);
 					}
 
@@ -582,7 +588,8 @@ AUI.add(
 
 							if (link.hasClass('add-row')) {
 								instance.addRow(currentRow);
-							} else if (link.hasClass('delete-row')) {
+							}
+							else if (link.hasClass('delete-row')) {
 								link.fire('change');
 
 								instance.deleteRow(currentRow);
@@ -597,7 +604,8 @@ AUI.add(
 
 						if (item.hasClass('lfr-form-row')) {
 							formRow = item;
-						} else {
+						}
+						else {
 							formRow = baseContainer.clone();
 							firstChild = formRow.one('> div');
 							firstChild.append(item);
@@ -674,7 +682,8 @@ AUI.add(
 					if (filter) {
 						serializedData =
 							filter.call(instance, visibleRows) || [];
-					} else {
+					}
+					else {
 						visibleRows.each(item => {
 							var formField = item.one('input, textarea, select');
 

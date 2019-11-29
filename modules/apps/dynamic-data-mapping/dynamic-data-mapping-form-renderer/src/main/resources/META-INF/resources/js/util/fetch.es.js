@@ -42,7 +42,8 @@ export const makeFetch = ({
 
 			if (sessionStatus === 'expired' || error.status === 401) {
 				window.location.reload();
-			} else {
+			}
+			else {
 				throw error;
 			}
 		});
@@ -53,11 +54,14 @@ export const convertToFormData = body => {
 
 	if (body instanceof FormData) {
 		requestBody = body;
-	} else if (body instanceof HTMLFormElement) {
+	}
+	else if (body instanceof HTMLFormElement) {
 		requestBody = new FormData(body);
-	} else if (typeof body === 'object') {
+	}
+	else if (typeof body === 'object') {
 		requestBody = objectToFormData(body);
-	} else {
+	}
+	else {
 		requestBody = body;
 	}
 

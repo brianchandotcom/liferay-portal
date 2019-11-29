@@ -111,7 +111,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 							refresh:
 								'<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
 						});
-					} else {
+					}
+					else {
 						new Liferay.Alert({
 							delay: {
 								hide: 500,

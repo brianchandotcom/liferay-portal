@@ -49,7 +49,8 @@ class Flags extends PortletBase {
 			reason =
 				this.refs.modal.refs.otherReason.value ||
 				Liferay.Language.get('no-reason-specified');
-		} else {
+		}
+		else {
 			reason = this.refs.modal.refs.reason.value;
 		}
 

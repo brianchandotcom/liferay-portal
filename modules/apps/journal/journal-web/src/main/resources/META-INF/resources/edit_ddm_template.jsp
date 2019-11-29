@@ -137,7 +137,8 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 				contextualSidebarContainer.classList.remove(
 					'contextual-sidebar-visible'
 				);
-			} else {
+			}
+			else {
 				contextualSidebarContainer.classList.add(
 					'contextual-sidebar-visible'
 				);

@@ -164,7 +164,8 @@ class SiteNavigationMenuEditor extends State {
 
 			if (!over && nested) {
 				insertAtPosition(nearestMenuItem, sourceMenuItem, 0);
-			} else {
+			}
+			else {
 				const nearestMenuItemParent = getParent(nearestMenuItem);
 
 				const nearestMenuItemIndex =
@@ -255,7 +256,8 @@ class SiteNavigationMenuEditor extends State {
 
 		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
 			this.selectedMenuItem = menuItem;
-		} else if (event.key === KEYS.ARROW_LEFT) {
+		}
+		else if (event.key === KEYS.ARROW_LEFT) {
 			const menuItemParentIndex = getSiblings(menuItemParent).indexOf(
 				menuItemParent
 			);
@@ -271,17 +273,20 @@ class SiteNavigationMenuEditor extends State {
 			}
 
 			layoutModified = true;
-		} else if (event.key === KEYS.ARROW_UP && menuItemIndex > 0) {
+		}
+		else if (event.key === KEYS.ARROW_UP && menuItemIndex > 0) {
 			insertAtPosition(menuItemParent, menuItem, menuItemIndex - 1);
 
 			layoutModified = true;
-		} else if (event.key === KEYS.ARROW_RIGHT && menuItemIndex > 0) {
+		}
+		else if (event.key === KEYS.ARROW_RIGHT && menuItemIndex > 0) {
 			const previousSibling = getSiblings(menuItem)[menuItemIndex - 1];
 
 			insertAtPosition(previousSibling, menuItem, Infinity);
 
 			layoutModified = true;
-		} else if (event.key === KEYS.ARROW_DOWN) {
+		}
+		else if (event.key === KEYS.ARROW_DOWN) {
 			insertAtPosition(menuItemParent, menuItem, menuItemIndex + 2);
 
 			layoutModified = true;

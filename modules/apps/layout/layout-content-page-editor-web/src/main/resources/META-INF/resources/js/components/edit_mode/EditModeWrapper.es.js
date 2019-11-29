@@ -195,7 +195,8 @@ class EditModeWrapper extends Component {
 		return change => {
 			if (change.newVal !== null) {
 				this._url.searchParams.set(key, change.newVal);
-			} else {
+			}
+			else {
 				this._url.searchParams.delete(key);
 			}
 
@@ -219,7 +220,8 @@ class EditModeWrapper extends Component {
 
 			if (sidebarPanel) {
 				wrapper.classList.add(WRAPPER_CLASSES.padded);
-			} else {
+			}
+			else {
 				wrapper.classList.remove(WRAPPER_CLASSES.padded);
 			}
 		}

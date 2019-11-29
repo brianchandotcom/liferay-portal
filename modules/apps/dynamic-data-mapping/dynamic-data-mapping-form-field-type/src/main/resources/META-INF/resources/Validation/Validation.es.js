@@ -121,7 +121,8 @@ class Validation extends Component {
 
 			if (selectedValidation) {
 				parameterMessage = selectedValidation.parameterMessage;
-			} else {
+			}
+			else {
 				selectedValidation = {
 					name: this.validations[0].name,
 					parameterMessage: this.validations[0].parameterMessage,

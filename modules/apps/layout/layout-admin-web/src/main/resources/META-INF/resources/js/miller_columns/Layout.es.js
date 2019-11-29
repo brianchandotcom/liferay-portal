@@ -118,7 +118,8 @@ class Layout extends Component {
 
 			if (typeof this._layoutColumnsScrollLeft === 'number') {
 				layoutColumns.scrollLeft = this._layoutColumnsScrollLeft;
-			} else {
+			}
+			else {
 				layoutColumns.scrollLeft = layoutColumns.scrollWidth;
 			}
 
@@ -202,7 +203,8 @@ class Layout extends Component {
 
 		if (targetType === DROP_TARGET_ITEM_TYPES.column) {
 			this._setColumnHoveredData(sourceItemPlid, targetId);
-		} else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
+		}
+		else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 			this._setItemHoveredData(position, sourceItemPlid, targetId);
 
 			if (
@@ -262,7 +264,8 @@ class Layout extends Component {
 				layoutColumns = dropData.layoutColumns;
 				parentPlid = dropData.newParentPlid;
 				priority = dropData.priority;
-			} else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
+			}
+			else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 				const targetItem = getItem(layoutColumns, targetId);
 
 				layoutColumns = clearPath(
@@ -287,7 +290,8 @@ class Layout extends Component {
 					layoutColumns = dropData.layoutColumns;
 					parentPlid = dropData.newParentPlid;
 					priority = dropData.priority;
-				} else {
+				}
+				else {
 					const dropData = dropItemNextToItem(
 						layoutColumns,
 						this._draggingItem,
@@ -382,7 +386,8 @@ class Layout extends Component {
 
 		if (itemUrl) {
 			navigate(itemUrl);
-		} else {
+		}
+		else {
 			const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
 
 			const item = getItem(this.layoutColumns, itemPlid);
@@ -738,7 +743,8 @@ class Layout extends Component {
 					[lastColumnIndex],
 					children
 				);
-			} else {
+			}
+			else {
 				nextLayoutColumns = setIn(
 					nextLayoutColumns,
 					[nextLayoutColumns.length],

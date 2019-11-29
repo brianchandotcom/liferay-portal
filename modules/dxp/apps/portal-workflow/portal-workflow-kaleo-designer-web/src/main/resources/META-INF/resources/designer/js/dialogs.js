@@ -29,7 +29,8 @@ AUI.add(
 
 				if (form && !instance._forms[randomId]) {
 					instance._forms[randomId] = form;
-				} else if (!form && instance._forms[randomId]) {
+				}
+				else if (!form && instance._forms[randomId]) {
 					form = instance._forms[randomId];
 				}
 

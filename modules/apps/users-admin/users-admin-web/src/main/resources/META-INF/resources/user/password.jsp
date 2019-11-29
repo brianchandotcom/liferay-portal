@@ -210,7 +210,8 @@ else {
 
 						focusInput = reminderQueryCustomQuestionInput;
 					}
-				} else {
+				}
+				else {
 					focusInput = '#<portlet:namespace />reminderQueryAnswer';
 				}
 
@@ -221,7 +222,8 @@ else {
 				if (customQuestionDiv) {
 					if (!customQuestion) {
 						customQuestionDiv.classList.add('hide');
-					} else {
+					}
+					else {
 						customQuestionDiv.classList.remove('hide');
 					}
 				}

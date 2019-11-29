@@ -58,7 +58,8 @@ AUI.add(
 
 					if (floated === 'left' || floated === 'right') {
 						dragMethod = '_onDragHorizontal';
-					} else {
+					}
+					else {
 						dragMethod = '_onDrag';
 					}
 

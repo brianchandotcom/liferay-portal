@@ -179,7 +179,8 @@ class FragmentsEditor extends Component {
 			}
 
 			this._removeEditionListeners();
-		} else if (value !== previousValue) {
+		}
+		else if (value !== previousValue) {
 			this._addEditionListeners();
 		}
 	}
@@ -253,7 +254,8 @@ class FragmentsEditor extends Component {
 					appendItem: this._shiftPressed
 				})
 			);
-		} else if (
+		}
+		else if (
 			(dom.closest(event.target, WRAPPER_SELECTOR) ||
 				event.target === document.querySelector(WRAPPER_SELECTOR)) &&
 			!dom.closest(event.target, SIDEBAR_SELECTOR)
@@ -307,7 +309,8 @@ class FragmentsEditor extends Component {
 				hoveredItemId = fragment.dataset.fragmentsEditorItemId;
 				hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
 			}
-		} else if (targetItems.length > 1) {
+		}
+		else if (targetItems.length > 1) {
 			targetItems.forEach(targetItem => {
 				targetItem.classList.add(ITEM_CLASS);
 				targetItem.classList.add(HOVERED_ITEM_CLASS);
@@ -320,7 +323,8 @@ class FragmentsEditor extends Component {
 				hoveredItemType,
 				type: UPDATE_HOVERED_ITEM
 			});
-		} else {
+		}
+		else {
 			this.store.dispatch({
 				type: CLEAR_HOVERED_ITEM
 			});

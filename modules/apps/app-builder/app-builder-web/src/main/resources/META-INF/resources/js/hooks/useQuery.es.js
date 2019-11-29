@@ -44,7 +44,8 @@ export const toQueryString = (object, queryString = '') => {
 	Object.keys(object).forEach(key => {
 		if (object[key]) {
 			params.set(key, object[key]);
-		} else {
+		}
+		else {
 			params.delete(key);
 		}
 	});

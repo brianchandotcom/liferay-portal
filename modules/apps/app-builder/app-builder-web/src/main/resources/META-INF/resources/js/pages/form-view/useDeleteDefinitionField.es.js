@@ -30,7 +30,8 @@ export default ({dataLayoutBuilder}) => {
 			const indexes = getIndexesFromFieldName(dataLayout, fieldName);
 
 			dataLayoutBuilder.dispatch('fieldDeleted', {indexes});
-		} else {
+		}
+		else {
 			dispatch(deleteDefinitionField(fieldName));
 		}
 	};

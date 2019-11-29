@@ -71,7 +71,8 @@ function addFragment(
 			dropTargetItemId,
 			fragmentColumn.fragmentEntryLinkIds.length
 		);
-	} else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
+	}
+	else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 		const fragmentColumn = getFragmentColumn(
 			layoutData.structure,
 			dropTargetItemId
@@ -89,7 +90,8 @@ function addFragment(
 			fragmentColumn.columnId,
 			position
 		);
-	} else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
+	}
+	else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 		const position = getDropRowPosition(
 			layoutData.structure,
 			dropTargetItemId,
@@ -102,7 +104,8 @@ function addFragment(
 			fragmentEntryLinkRowType,
 			position
 		);
-	} else {
+	}
+	else {
 		nextData = _addSingleFragmentRow(
 			layoutData,
 			fragmentEntryLink,
@@ -151,7 +154,8 @@ function updateFragmentEntryLinkCommentReducer(state, action) {
 						? {...action.comment, children: comment.children}
 						: comment
 				);
-			} else {
+			}
+			else {
 				nextComments = [...comments, action.comment];
 			}
 
@@ -784,7 +788,8 @@ function _duplicateFragment(
 			fragmentColumn.columnId,
 			position + 1
 		);
-	} else {
+	}
+	else {
 		const position =
 			getFragmentRowIndex(
 				layoutData.structure,
@@ -823,7 +828,8 @@ function _getDropFragmentPosition(
 	if (targetPosition > -1 && targetBorder) {
 		if (targetBorder === FRAGMENTS_EDITOR_ITEM_BORDERS.top) {
 			position = targetPosition;
-		} else {
+		}
+		else {
 			position = targetPosition + 1;
 		}
 	}
@@ -868,7 +874,8 @@ function _removeFragment(
 		nextData = updateIn(layoutData, ['structure'], structure =>
 			remove(structure, rowIndex)
 		);
-	} else {
+	}
+	else {
 		nextData = updateIn(
 			layoutData,
 			[

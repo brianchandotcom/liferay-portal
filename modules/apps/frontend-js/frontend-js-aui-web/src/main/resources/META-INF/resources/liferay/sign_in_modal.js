@@ -62,7 +62,8 @@ AUI.add(
 						instance._hasSignInForm
 					) {
 						instance._loadDOM();
-					} else {
+					}
+					else {
 						instance._loadIO();
 					}
 				},
@@ -96,7 +97,8 @@ AUI.add(
 						.then(response => {
 							if (response) {
 								instance._setModalContent(response);
-							} else {
+							}
+							else {
 								instance._redirectPage();
 							}
 						})
@@ -164,7 +166,8 @@ AUI.add(
 								bodyNode.setContent(content);
 							}
 						);
-					} else {
+					}
+					else {
 						dialog.bodyNode.setContent(content);
 
 						dialog.show();

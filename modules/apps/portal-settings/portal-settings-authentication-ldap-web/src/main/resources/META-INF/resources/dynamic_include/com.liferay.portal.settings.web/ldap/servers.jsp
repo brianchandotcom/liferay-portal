@@ -159,7 +159,8 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 
 				if (action === 'raise') {
 					parentNode.insertBefore(ldapServer, swapLdapServer);
-				} else {
+				}
+				else {
 					parentNode.insertBefore(swapLdapServer, ldapServer);
 				}
 			}

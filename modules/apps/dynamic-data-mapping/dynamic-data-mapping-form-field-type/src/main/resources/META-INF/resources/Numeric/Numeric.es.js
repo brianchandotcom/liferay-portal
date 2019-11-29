@@ -86,7 +86,8 @@ class Numeric extends Component {
 	syncVisible(visible) {
 		if (visible) {
 			this.applyMask();
-		} else {
+		}
+		else {
 			this.disposeMask();
 		}
 	}

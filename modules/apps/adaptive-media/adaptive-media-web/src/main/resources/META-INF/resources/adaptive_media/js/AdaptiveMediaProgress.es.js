@@ -92,7 +92,8 @@ const AdaptiveMediaProgress = ({
 							`${namespace}icon-disable-${uuid}`
 						)
 					);
-				} else {
+				}
+				else {
 					delay(updateProgress, intervalSpeed);
 				}
 			});

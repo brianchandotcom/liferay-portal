@@ -218,7 +218,8 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 					if (nameMap) {
 						defaultLanguageName = nameMap[defaultLanguage];
 					}
-				} catch (e) {}
+				}
+				catch (e) {}
 			}
 
 			new A.Alert({

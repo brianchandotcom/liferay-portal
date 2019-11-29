@@ -77,7 +77,8 @@ name = HtmlUtil.escapeJS(name);
 
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
-		} else {
+		}
+		else {
 			data =
 				'<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
@@ -137,7 +138,8 @@ name = HtmlUtil.escapeJS(name);
 		focus: function() {
 			if (window['<%= name %>'].instanceReady) {
 				tinyMCE.editors['<%= name %>'].focus();
-			} else {
+			}
+			else {
 				window['<%= name %>'].pendingFocus = true;
 			}
 		},
@@ -147,7 +149,8 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			} else {
+			}
+			else {
 				data = tinyMCE.editors['<%= name %>'].getBody().innerHTML;
 			}
 
@@ -163,7 +166,8 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			} else {
+			}
+			else {
 				var editorBody = tinyMCE.editors['<%= name %>'].getBody();
 
 				data = editorBody.textContent || editorBody.innerText;
@@ -257,7 +261,8 @@ name = HtmlUtil.escapeJS(name);
 		setHTML: function(value) {
 			if (window['<%= name %>'].instanceReady) {
 				tinyMCE.editors['<%= name %>'].setContent(value);
-			} else {
+			}
+			else {
 				document.getElementById('<%= name %>').innerHTML = value;
 			}
 		},

@@ -266,7 +266,8 @@ AUI().use('escape', 'aui-lang', A => {
 
 			if (parameterKey && parameterValue) {
 				instance._enableAddParameterButton();
-			} else {
+			}
+			else {
 				instance._disableAddParameterButton();
 			}
 		},

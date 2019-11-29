@@ -36,7 +36,8 @@ AUI.add(
 						imagePreview,
 						region
 					);
-				} else {
+				}
+				else {
 					var naturalSize = instance._getImgNaturalSize(imagePreview);
 
 					var scaleX = naturalSize.width / imagePreview.width();

@@ -166,7 +166,8 @@ AUI.add(
 
 						if (widthNode) {
 							dialogWidth = widthNode.val();
-						} else {
+						}
+						else {
 							dialogWidth = instance._simulationDeviceNode.width();
 
 							dialogAutoWidth = true;
@@ -178,7 +179,8 @@ AUI.add(
 
 						if (heightNode) {
 							dialogHeight = heightNode.val();
-						} else {
+						}
+						else {
 							dialogHeight = instance._simulationDeviceNode.height();
 
 							dialogAutoHeight = true;
@@ -442,7 +444,8 @@ AUI.add(
 								);
 							}
 						);
-					} else {
+					}
+					else {
 						var dialogBoundingBox = dialog.get(STR_BOUNDING_BOX);
 
 						dialogBoundingBox.toggleClass(STR_ROTATED, rotation);

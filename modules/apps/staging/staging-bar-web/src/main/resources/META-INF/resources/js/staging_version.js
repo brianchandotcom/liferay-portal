@@ -197,7 +197,8 @@ AUI.add(
 					.then(() => {
 						if (event.incomplete) {
 							location.href = event.currentURL;
-						} else {
+						}
+						else {
 							Liferay.fire('updatedLayout');
 						}
 					})

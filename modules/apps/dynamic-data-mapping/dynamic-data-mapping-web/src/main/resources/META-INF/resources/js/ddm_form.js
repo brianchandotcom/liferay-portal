@@ -311,7 +311,8 @@ AUI.add(
 
 					if (next[key] === value) {
 						fieldInfo = next;
-					} else {
+					}
+					else {
 						var children =
 							next.fields ||
 							next.nestedFields ||
@@ -352,7 +353,8 @@ AUI.add(
 
 				if (instance.get('readOnly')) {
 					retVal = true;
-				} else {
+				}
+				else {
 					var form = instance.getForm();
 
 					if (
@@ -499,7 +501,8 @@ AUI.add(
 						currentTarget.hasClass('lfr-ddm-repeatable-add-button')
 					) {
 						instance.repeat();
-					} else if (
+					}
+					else if (
 						currentTarget.hasClass(
 							'lfr-ddm-repeatable-delete-button'
 						)
@@ -897,7 +900,8 @@ AUI.add(
 
 						if (instance.originalField) {
 							field.originalField = instance.originalField;
-						} else {
+						}
+						else {
 							field.originalField = instance;
 						}
 
@@ -956,7 +960,8 @@ AUI.add(
 						instance.setLabel(
 							fieldDefinition.label[instance.getDefaultLocale()]
 						);
-					} else {
+					}
+					else {
 						instance.setLabel(fieldDefinition.label[locale]);
 					}
 				},
@@ -1032,7 +1037,8 @@ AUI.add(
 										instance.get('displayLocale')
 									];
 							}
-						} else {
+						}
+						else {
 							value = instance.getValue();
 						}
 
@@ -1100,7 +1106,8 @@ AUI.add(
 						) {
 							localizationMap[locale] = value;
 						}
-					} else {
+					}
+					else {
 						localizationMap = value;
 					}
 
@@ -1328,7 +1335,8 @@ AUI.add(
 						);
 
 						datePicker.selectDates(date);
-					} else {
+					}
+					else {
 						datePicker.selectDates('');
 					}
 				}
@@ -1355,7 +1363,8 @@ AUI.add(
 
 						if (currentTarget.test('.select-button')) {
 							instance._handleSelectButtonClick(event);
-						} else if (currentTarget.test('.clear-button')) {
+						}
+						else if (currentTarget.test('.clear-button')) {
 							instance._handleClearButtonClick(event);
 						}
 					}
@@ -1488,7 +1497,8 @@ AUI.add(
 					if (Lang.isString(value)) {
 						if (value !== '') {
 							value = JSON.parse(value);
-						} else {
+						}
+						else {
 							value = {};
 						}
 					}
@@ -1541,7 +1551,8 @@ AUI.add(
 
 					if (!parsedValue.title && !parsedValue.uuid) {
 						value = '';
-					} else {
+					}
+					else {
 						value = JSON.stringify(parsedValue);
 					}
 
@@ -1619,7 +1630,8 @@ AUI.add(
 
 						if (currentTarget.test('.select-button')) {
 							instance._handleSelectButtonClick(event);
-						} else if (currentTarget.test('.clear-button')) {
+						}
+						else if (currentTarget.test('.clear-button')) {
 							instance._handleClearButtonClick(event);
 						}
 					}
@@ -1704,7 +1716,8 @@ AUI.add(
 					if (Lang.isString(value)) {
 						if (value !== '') {
 							value = JSON.parse(value);
-						} else {
+						}
+						else {
 							value = {};
 						}
 					}
@@ -1775,7 +1788,8 @@ AUI.add(
 
 					if (!parsedValue.className && !parsedValue.classPK) {
 						value = '';
-					} else {
+					}
+					else {
 						value = JSON.stringify(parsedValue);
 					}
 
@@ -1954,7 +1968,8 @@ AUI.add(
 
 					if (prepend) {
 						container.prepend(entryNode);
-					} else {
+					}
+					else {
 						container.append(entryNode);
 					}
 
@@ -2112,7 +2127,8 @@ AUI.add(
 
 								lastLayout =
 									selectedLayoutPath[lastLayoutIndex];
-							} else {
+							}
+							else {
 								clickedLastElement = true;
 
 								var groupId = lastLayout.groupId;
@@ -2185,7 +2201,8 @@ AUI.add(
 
 						if (currentTarget.test('.select-button')) {
 							instance._handleSelectButtonClick(event);
-						} else {
+						}
+						else {
 							instance._handleClearButtonClick(event);
 						}
 					}
@@ -2244,7 +2261,8 @@ AUI.add(
 								privateLayout,
 								instance._renderLayouts
 							);
-						} else if (
+						}
+						else if (
 							currentTarget.getData('nodeType') === 'leaf'
 						) {
 							var inputRadioNode = currentTarget
@@ -2261,7 +2279,8 @@ AUI.add(
 								privateLayout
 							});
 						}
-					} else if (event.target.hasClass('lfr-ddm-page-radio')) {
+					}
+					else if (event.target.hasClass('lfr-ddm-page-radio')) {
 						instance.set('selectedLayout', {
 							groupId,
 							label,
@@ -2335,7 +2354,8 @@ AUI.add(
 									)
 								);
 							}
-						} else if (
+						}
+						else if (
 							scrollHeight - (scrollTop + innerHeight) <=
 							1
 						) {
@@ -2476,7 +2496,8 @@ AUI.add(
 							instance._handleModalScroll,
 							instance
 						);
-					} else if (instance._clearedModal) {
+					}
+					else if (instance._clearedModal) {
 						instance._navbar.one('.active').removeClass('active');
 
 						var activeClass = privateLayout
@@ -2574,7 +2595,8 @@ AUI.add(
 						) {
 							listNode.set('scrollTop', 60);
 						}
-					} else {
+					}
+					else {
 						for (index = 0; index < total; index++) {
 							instance._addListElement(
 								layouts[index],
@@ -2638,7 +2660,8 @@ AUI.add(
 								instance._hideLoader();
 							}
 						);
-					} else {
+					}
+					else {
 						listNode.addClass('top-ended');
 
 						instance._requestInitialLayouts(
@@ -2756,7 +2779,8 @@ AUI.add(
 										callback.call(instance, layouts);
 									}
 								});
-						} else if (cache) {
+						}
+						else if (cache) {
 							callback.call(instance, cache.layouts);
 						}
 					}
@@ -2785,7 +2809,8 @@ AUI.add(
 
 					if (cache) {
 						callback.call(instance, cache.layouts);
-					} else {
+					}
+					else {
 						var selectedLayout = instance.get('selectedLayout');
 
 						const data = new URLSearchParams({
@@ -2945,7 +2970,8 @@ AUI.add(
 						};
 
 						instance._cache[key] = cache;
-					} else {
+					}
+					else {
 						var cachedLayouts = cache.layouts || [];
 
 						if (cache.start > start) {
@@ -2982,7 +3008,8 @@ AUI.add(
 					if (Lang.isString(value)) {
 						if (value) {
 							value = JSON.parse(value);
-						} else {
+						}
+						else {
 							value = {};
 						}
 					}
@@ -3046,7 +3073,8 @@ AUI.add(
 						}
 
 						value = JSON.stringify(parsedValue);
-					} else {
+					}
+					else {
 						layoutNameNode.val('');
 
 						value = '';
@@ -3125,7 +3153,8 @@ AUI.add(
 					if (value.data) {
 						imagePreviewURL =
 							themeDisplay.getPathContext() + value.data;
-					} else if (value.uuid) {
+					}
+					else if (value.uuid) {
 						imagePreviewURL = [
 							themeDisplay.getPathContext(),
 							'documents',
@@ -3195,7 +3224,8 @@ AUI.add(
 						instance.viewer._syncPlaying = function() {
 							if (this.get('playing')) {
 								this._player.setHTML(TPL_PLAYER_PAUSE);
-							} else {
+							}
+							else {
 								this._player.setHTML(TPL_PLAYER_PLAY);
 							}
 						};
@@ -3318,7 +3348,8 @@ AUI.add(
 						parsedValue.alt = altNode.val();
 
 						value = JSON.stringify(parsedValue);
-					} else {
+					}
+					else {
 						value = '';
 					}
 
@@ -3360,7 +3391,8 @@ AUI.add(
 						altNode.val(parsedValue.alt);
 
 						value = JSON.stringify(parsedValue);
-					} else {
+					}
+					else {
 						value = '';
 					}
 
@@ -3392,7 +3424,8 @@ AUI.add(
 					if (notEmpty) {
 						altNode.val(parsedValue.alt || '');
 						titleNode.val(parsedValue.title || '');
-					} else {
+					}
+					else {
 						altNode.val('');
 						titleNode.val('');
 					}
@@ -3516,7 +3549,8 @@ AUI.add(
 								instance,
 								arguments
 							);
-						} else {
+						}
+						else {
 							var localizationMap = instance.get(
 								'localizationMap'
 							);
@@ -3661,7 +3695,8 @@ AUI.add(
 							var displayLocale = instance.get('displayLocale');
 
 							fieldOptions[0].label[displayLocale] = '';
-						} else {
+						}
+						else {
 							fieldOptions.unshift(
 								instance._getPlaceholderOption()
 							);
@@ -3706,7 +3741,8 @@ AUI.add(
 						selectedItems._nodes.length > 0
 					) {
 						value = selectedItems.val();
-					} else {
+					}
+					else {
 						value = [];
 					}
 
@@ -3743,7 +3779,8 @@ AUI.add(
 					if (Lang.isString(value)) {
 						if (value !== '') {
 							value = JSON.parse(value);
-						} else {
+						}
+						else {
 							value = [''];
 						}
 					}
@@ -3897,7 +3934,8 @@ AUI.add(
 									field.getRuleInputName()
 								] = originalFieldRules;
 							}
-						} else if (event.type === 'liferay-ddm-field:remove') {
+						}
+						else if (event.type === 'liferay-ddm-field:remove') {
 							delete validatorRules[field.getRuleInputName()];
 
 							var inputNode = field.getInputNode();
@@ -4161,7 +4199,8 @@ AUI.add(
 							if (newFieldLocalizations[defaultLocale]) {
 								localizationValue =
 									newFieldLocalizations[defaultLocale];
-							} else if (
+							}
+							else if (
 								defaultLocale ===
 									repeatedField.get('displayLocale') &&
 								repeatedField.getValue()
@@ -4244,7 +4283,8 @@ AUI.add(
 							ddPlugins.push({
 								fn: A.Plugin.DDWinScroll
 							});
-						} else {
+						}
+						else {
 							ddPlugins.push(
 								{
 									cfg: {
@@ -4320,7 +4360,8 @@ AUI.add(
 						instance.repeatableInstances[
 							treeName
 						] = repeatableInstance;
-					} else {
+					}
+					else {
 						repeatableInstance.add(fieldContainer);
 					}
 

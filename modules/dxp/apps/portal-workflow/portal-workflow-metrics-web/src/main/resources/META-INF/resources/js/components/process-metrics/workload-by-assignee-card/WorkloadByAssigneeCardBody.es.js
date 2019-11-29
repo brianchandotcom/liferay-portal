@@ -133,9 +133,11 @@ const getRequestUrl = (currentTab, processId, processSteps) => {
 
 	if (currentTab === 'overdue') {
 		requestUrl += `&sort=overdueTaskCount:desc`;
-	} else if (currentTab === 'onTime') {
+	}
+	else if (currentTab === 'onTime') {
 		requestUrl += '&sort=onTimeTaskCount:desc';
-	} else {
+	}
+	else {
 		requestUrl += '&sort=taskCount:desc';
 	}
 

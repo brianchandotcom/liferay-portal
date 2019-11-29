@@ -167,7 +167,8 @@ function moveItemInside(
 				[targetColumnIndex + 1, nextColumn.length],
 				sourceItem
 			);
-		} else {
+		}
+		else {
 			nextLayoutColumns = setIn(
 				nextLayoutColumns,
 				[targetColumnIndex + 1],

@@ -97,12 +97,14 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 						fieldClassList.contains('show-extra-info'))
 				) {
 					fieldContainerClassList.remove('hide');
-				} else if (
+				}
+				else if (
 					displayStyle === 'abstracts' &&
 					fieldClassList.contains('abstract-length')
 				) {
 					fieldContainerClassList.remove('hide');
-				} else {
+				}
+				else {
 					fieldContainerClassList.add('hide');
 				}
 			}

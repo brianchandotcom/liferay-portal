@@ -166,7 +166,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 			if (!searchContainerData.length) {
 				searchContainerData = [];
-			} else {
+			}
+			else {
 				searchContainerData = searchContainerData.split(',');
 			}
 

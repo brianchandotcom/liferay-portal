@@ -108,10 +108,12 @@ class SidebarElementsDragDrop extends State {
 			if (targetIsColumn) {
 				dropTargetItemId = data.columnId;
 				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.column;
-			} else if (targetIsFragment) {
+			}
+			else if (targetIsFragment) {
 				dropTargetItemId = data.fragmentEntryLinkId;
 				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
-			} else if (targetIsRow) {
+			}
+			else if (targetIsRow) {
 				dropTargetItemId = data.layoutRowId;
 				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.row;
 			}

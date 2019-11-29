@@ -315,7 +315,8 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 		if (dateChecker.validRange) {
 			submitForm(document.<portlet:namespace />publishPagesFm);
-		} else {
+		}
+		else {
 			exportImport.showNotification(dateChecker);
 		}
 	}

@@ -104,7 +104,8 @@ export const PortalControlMenu = ({backURL, title, tooltip, url}) => {
 		if (tooltip) {
 			tooltipNode.classList.remove('hide');
 			tooltipNode.setAttribute('title', tooltip);
-		} else {
+		}
+		else {
 			tooltipNode.classList.add('hide');
 		}
 	}, [tooltip]);

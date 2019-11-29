@@ -56,7 +56,8 @@ class GoogleMapsGeocoder extends State {
 					lng: geolocation.lng()
 				}
 			};
-		} else {
+		}
+		else {
 			result.data = {
 				address: '',
 				location

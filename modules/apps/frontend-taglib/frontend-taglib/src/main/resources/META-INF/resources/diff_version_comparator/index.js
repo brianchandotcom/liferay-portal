@@ -126,7 +126,8 @@ function Comparator({
 
 		if (cached) {
 			setDiff(cached);
-		} else {
+		}
+		else {
 			fetch(diffURL)
 				.then(res => res.text())
 				.then(text => {

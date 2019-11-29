@@ -74,7 +74,8 @@ AUI.add(
 			if (_enabled) {
 				if (Poller.isSupportsComet()) {
 					_receive();
-				} else {
+				}
+				else {
 					_timerId = setTimeout(_receive, Poller.getDelay());
 				}
 			}
@@ -146,7 +147,8 @@ AUI.add(
 
 				if (!meta.suspendPolling) {
 					_thawConnection();
-				} else {
+				}
+				else {
 					_freezeConnection();
 				}
 			}
@@ -251,7 +253,8 @@ AUI.add(
 			getDelay() {
 				if (_customDelay !== null) {
 					_requestDelay = _customDelay;
-				} else if (_delayIndex <= _maxDelay) {
+				}
+				else if (_delayIndex <= _maxDelay) {
 					_requestDelay = _delays[_delayIndex];
 					_delayAccessCount++;
 
@@ -301,7 +304,8 @@ AUI.add(
 			setCustomDelay(delay) {
 				if (delay === null) {
 					_customDelay = delay;
-				} else {
+				}
+				else {
 					_customDelay = delay / 1000;
 				}
 			},

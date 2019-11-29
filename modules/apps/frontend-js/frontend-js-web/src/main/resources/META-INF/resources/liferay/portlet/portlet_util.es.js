@@ -80,7 +80,8 @@ const decodeUpdateString = function(pageRenderState, updateString) {
 				}
 			});
 		}
-	} catch (e) {
+	}
+	catch (e) {
 		// Do nothing
 	}
 
@@ -121,7 +122,8 @@ const encodeFormAsString = function(portletId, form) {
 						parameters.push(parameter);
 					}
 				});
-			} else if (
+			}
+			else if (
 				(type !== 'CHECKBOX' && type !== 'RADIO') ||
 				element.checked
 			) {
@@ -155,13 +157,15 @@ const encodeParameter = function(name, values) {
 				encodeURIComponent(name) +
 				VALUE_DELIM +
 				VALUE_ARRAY_EMPTY;
-		} else {
+		}
+		else {
 			values.forEach(value => {
 				str += TOKEN_DELIM + encodeURIComponent(name);
 
 				if (value === null) {
 					str += VALUE_DELIM + VALUE_NULL;
-				} else {
+				}
+				else {
 					str += VALUE_DELIM + encodeURIComponent(value);
 				}
 			});
@@ -196,19 +200,22 @@ const generateActionUrl = function(portletId, url, form) {
 			const formData = new FormData(form);
 
 			request.body = formData;
-		} else {
+		}
+		else {
 			const formAsString = encodeFormAsString(portletId, form);
 			const method = form.method ? form.method.toUpperCase() : 'GET';
 
 			if (method === 'GET') {
 				if (url.indexOf('?') >= 0) {
 					url += `&${formAsString}`;
-				} else {
+				}
+				else {
 					url += `?${formAsString}`;
 				}
 
 				request.url = url;
-			} else {
+			}
+			else {
 				request.body = formAsString;
 				request.headers = {
 					'Content-Type': 'application/x-www-form-urlencoded'
@@ -250,12 +257,14 @@ const generateParameterString = function(
 
 				if (type === PUBLIC_RENDER_PARAM_KEY) {
 					str += encodeParameter(group, values);
-				} else if (type === RENDER_PARAM_KEY) {
+				}
+				else if (type === RENDER_PARAM_KEY) {
 					str += encodeParameter(
 						portletId + RENDER_PARAM_KEY + name,
 						values
 					);
-				} else {
+				}
+				else {
 					str += encodeParameter(portletId + name, values);
 				}
 			}
@@ -401,18 +410,22 @@ const getUrl = function(
 						VALUE_DELIM +
 						encodeURIComponent(resourceId);
 				}
-			} else if (type === 'RENDER' && portletId !== null) {
+			}
+			else if (type === 'RENDER' && portletId !== null) {
 				url = decodeURIComponent(portletData.encodedRenderURL);
-			} else if (type === 'RENDER') {
+			}
+			else if (type === 'RENDER') {
 				url = decodeURIComponent(pageRenderState.encodedCurrentURL);
-			} else if (type === 'ACTION') {
+			}
+			else if (type === 'ACTION') {
 				url = decodeURIComponent(portletData.encodedActionURL);
 				url +=
 					TOKEN_DELIM +
 					HUB_ACTION_KEY +
 					VALUE_DELIM +
 					encodeURIComponent(AJAX_ACTION_VALUE);
-			} else if (type === 'PARTIAL_ACTION') {
+			}
+			else if (type === 'PARTIAL_ACTION') {
 				url = decodeURIComponent(portletData.encodedActionURL);
 				url +=
 					TOKEN_DELIM +
@@ -663,7 +676,8 @@ const stateChanged = function(pageRenderState, newState, portletId) {
 				newState.windowState !== oldState.windowState
 			) {
 				result = true;
-			} else {
+			}
+			else {
 				// Has a parameter changed or been added?
 
 				const newKeys = Object.keys(newState.parameters);
@@ -713,11 +727,13 @@ const validateArguments = function(args = [], min = 0, max = 1, types = []) {
 		throw new TypeError(
 			`Too few arguments provided: Number of arguments: ${args.length}`
 		);
-	} else if (args.length > max) {
+	}
+	else if (args.length > max) {
 		throw new TypeError(
 			`Too many arguments provided: ${[].join.call(args, ', ')}`
 		);
-	} else if (Array.isArray(types)) {
+	}
+	else if (Array.isArray(types)) {
 		let i = Math.min(args.length, types.length) - 1;
 
 		for (i; i >= 0; i--) {
@@ -864,7 +880,8 @@ const validateState = function(state = {}, portletData = {}) {
 		throw new TypeError(
 			`Invalid parameters. portletMode is ${typeof portletMode}`
 		);
-	} else {
+	}
+	else {
 		const allowedPortletModes = portletData.allowedPM;
 
 		if (!allowedPortletModes.includes(portletMode.toLowerCase())) {
@@ -880,7 +897,8 @@ const validateState = function(state = {}, portletData = {}) {
 		throw new TypeError(
 			`Invalid parameters. windowState is ${typeof windowState}`
 		);
-	} else {
+	}
+	else {
 		const allowedWindowStates = portletData.allowedWS;
 
 		if (!allowedWindowStates.includes(windowState.toLowerCase())) {

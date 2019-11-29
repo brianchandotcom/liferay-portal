@@ -216,7 +216,8 @@ AUI.add(
 
 					if (instance._confirmChanges) {
 						instance.saveState();
-					} else {
+					}
+					else {
 						var currentRecurrence = instance.get(
 							'currentSavedState'
 						);
@@ -533,7 +534,8 @@ AUI.add(
 						if (item.val() == dayOfWeek) {
 							item.set('checked', true);
 							item.set('disabled', true);
-						} else if (item.get('disabled')) {
+						}
+						else if (item.get('disabled')) {
 							item.set('disabled', false);
 
 							if (!repeatCheckbox.get('checked')) {

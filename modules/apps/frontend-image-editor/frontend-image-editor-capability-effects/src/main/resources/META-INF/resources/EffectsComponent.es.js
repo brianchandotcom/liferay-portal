@@ -159,7 +159,8 @@ class EffectsComponent extends Component {
 
 				if (!missingEffects.length) {
 					resolve();
-				} else {
+				}
+				else {
 					this.getImageEditorImageData()
 						.then(imageData =>
 							this.process(imageData, missingEffects[0])

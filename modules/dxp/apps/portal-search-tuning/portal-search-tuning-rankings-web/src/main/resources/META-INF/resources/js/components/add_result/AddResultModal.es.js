@@ -148,7 +148,8 @@ function AddResultModal({
 	function _handleAllCheckbox() {
 		if (_getCurrentResultSelectedIds().length > 0) {
 			_deselectAll();
-		} else {
+		}
+		else {
 			_selectAll();
 		}
 	}
@@ -289,7 +290,8 @@ function AddResultModal({
 					title={Liferay.Language.get('search-the-engine')}
 				/>
 			);
-		} else if (error) {
+		}
+		else if (error) {
 			emptyState = (
 				<ClayEmptyState
 					actionLabel={Liferay.Language.get('try-again')}

@@ -135,7 +135,8 @@ function deleteIn(object, keyPath) {
 
 	if (keyPath.length === 1) {
 		delete newObject[lastKey];
-	} else {
+	}
+	else {
 		newObject = updateIn(object, newKeyPath, lastItem => {
 			const newLastItem =
 				lastItem instanceof Array ? [...lastItem] : {...lastItem};
@@ -291,7 +292,8 @@ function updateIn(object, keyPath, updater, defaultValue) {
 			updater,
 			defaultValue
 		);
-	} else {
+	}
+	else {
 		const nextValue =
 			typeof target[nextKey] === 'undefined'
 				? defaultValue
@@ -329,7 +331,8 @@ function updateUsedWidgets(widgets, portletIds) {
 				!portlet.instanceable
 			) {
 				portlet.used = true;
-			} else {
+			}
+			else {
 				portlet.used = false;
 			}
 

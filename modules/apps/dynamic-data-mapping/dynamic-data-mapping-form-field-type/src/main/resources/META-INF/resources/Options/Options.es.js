@@ -91,7 +91,8 @@ class Options extends Component {
 
 		if (localizedValue && localizedValue[editingLanguageId]) {
 			return localizedValue[editingLanguageId];
-		} else if (localizedValue && localizedValue[defaultLanguageId]) {
+		}
+		else if (localizedValue && localizedValue[defaultLanguageId]) {
 			return localizedValue[defaultLanguageId];
 		}
 
@@ -358,7 +359,8 @@ class Options extends Component {
 					  }
 					: option;
 			});
-		} else {
+		}
+		else {
 			options = [
 				...options,
 				{

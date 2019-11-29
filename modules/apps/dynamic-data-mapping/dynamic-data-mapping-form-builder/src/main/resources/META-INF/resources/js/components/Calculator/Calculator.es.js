@@ -153,7 +153,8 @@ class Calculator extends Component {
 
 		if (tokenValue === 'backspace') {
 			this.removeTokenFromExpression();
-		} else {
+		}
+		else {
 			this.addTokenToExpression(tokenType, tokenValue);
 		}
 	}

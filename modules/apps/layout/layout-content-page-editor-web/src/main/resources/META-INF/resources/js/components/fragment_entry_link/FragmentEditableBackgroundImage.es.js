@@ -97,7 +97,8 @@ class FragmentEditableBackgroundImage extends Component {
 				'fragments-editor__background-image-editable--active'
 			);
 			this._createFloatingToolbar();
-		} else {
+		}
+		else {
 			this._active = false;
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--active'
@@ -122,7 +123,8 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--mapped'
 			);
-		} else {
+		}
+		else {
 			this._renderBackgroundImage();
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--mapped'
@@ -160,7 +162,8 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--hovered'
 			);
-		} else {
+		}
+		else {
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--hovered'
 			);
@@ -198,7 +201,8 @@ class FragmentEditableBackgroundImage extends Component {
 
 		if (this._floatingToolbar) {
 			this._floatingToolbar.setState(config);
-		} else {
+		}
+		else {
 			this._floatingToolbar = new FloatingToolbar(config);
 		}
 	}
@@ -330,7 +334,8 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--highlighted'
 			);
-		} else {
+		}
+		else {
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--highlighted'
 			);

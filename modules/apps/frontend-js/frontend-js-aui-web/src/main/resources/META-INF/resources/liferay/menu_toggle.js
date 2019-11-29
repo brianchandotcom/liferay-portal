@@ -88,7 +88,8 @@ AUI.add(
 								);
 							}
 						}
-					} else {
+					}
+					else {
 						menuFilter.reset();
 					}
 				},
@@ -145,7 +146,8 @@ AUI.add(
 
 					if (eventOutside.indexOf('pointerup') > -1) {
 						eventOutside = 'mouseup';
-					} else if (eventOutside.indexOf('touchend') > -1) {
+					}
+					else if (eventOutside.indexOf('touchend') > -1) {
 						eventOutside = 'mouseover';
 					}
 
@@ -227,14 +229,16 @@ AUI.add(
 									}
 								}
 							);
-						} else if (handle) {
+						}
+						else if (handle) {
 							handle.detach();
 
 							handle = null;
 						}
 
 						Liferay.Data[handleId] = handle;
-					} else {
+					}
+					else {
 						var data = {};
 
 						data[handleId] = open ? 'open' : 'closed';

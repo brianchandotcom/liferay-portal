@@ -34,7 +34,8 @@ function createSetValueReducer(keyPath) {
 			if (!nextState.lockedSegmentsExperience) {
 				nextState = setIn(nextState, path, action.value);
 			}
-		} else {
+		}
+		else {
 			nextState = deleteIn(nextState, path);
 		}
 

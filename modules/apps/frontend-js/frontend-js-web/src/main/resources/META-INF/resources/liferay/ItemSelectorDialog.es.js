@@ -123,7 +123,8 @@ class ItemSelectorDialog extends Component {
 		if (this.singleSelect) {
 			this._selectedItem = currentItem;
 			this.close();
-		} else {
+		}
+		else {
 			const dialog = Liferay.Util.getWindow(this.eventName);
 
 			const addButton = dialog

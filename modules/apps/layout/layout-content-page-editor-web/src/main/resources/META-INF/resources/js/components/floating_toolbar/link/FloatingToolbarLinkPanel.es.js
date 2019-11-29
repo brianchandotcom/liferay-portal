@@ -177,7 +177,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			) {
 				this._loadFields();
 			}
-		} else {
+		}
+		else {
 			this._loadFields();
 		}
 	}
@@ -271,7 +272,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 		if (fieldId === '') {
 			this._clearRowConfig();
-		} else {
+		}
+		else {
 			const config = {
 				classNameId: this._selectedInfoItem.classNameId,
 				classPK: this._selectedInfoItem.classPK,
@@ -283,7 +285,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 				this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content
 			) {
 				config.fieldId = fieldId;
-			} else if (
+			}
+			else if (
 				this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
 			) {
 				config.mappedField = fieldId;
@@ -296,7 +299,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 				this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
 			) {
 				this._mappedFieldValue = '';
-			} else {
+			}
+			else {
 				this._getMappedValue(fieldId).then(fieldValue => {
 					if (typeof fieldValue === 'string') {
 						this._mappedFieldValue = fieldValue;
@@ -375,7 +379,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			}
 
 			promise = this.fetch(this.mappingFieldsURL, data);
-		} else if (
+		}
+		else if (
 			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content &&
 			this._selectedInfoItem.classNameId &&
 			this._selectedInfoItem.classPK
@@ -394,7 +399,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 						['text', 'url'].includes(field.type)
 					);
 				});
-		} else if (this._fields.length) {
+		}
+		else if (this._fields.length) {
 			this._clearFields();
 		}
 	}

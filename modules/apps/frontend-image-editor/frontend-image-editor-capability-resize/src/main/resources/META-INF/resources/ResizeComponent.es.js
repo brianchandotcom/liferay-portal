@@ -96,7 +96,8 @@ class ResizeComponent extends Component {
 				this.imageHeight = parseInt(newValue / this.imageRatio_, 10);
 				this.imageHeightInput_.value = this.imageHeight;
 			}
-		} else {
+		}
+		else {
 			this.imageHeight = newValue;
 
 			if (this.lockProportions) {

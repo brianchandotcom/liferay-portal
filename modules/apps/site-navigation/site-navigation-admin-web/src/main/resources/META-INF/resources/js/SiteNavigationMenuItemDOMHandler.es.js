@@ -155,7 +155,8 @@ const isSelected = function(menuItem) {
 const setDragging = function(menuItem, dragging = false) {
 	if (dragging) {
 		addClasses(menuItem, MENU_ITEM_DRAGGING_CLASSNAME);
-	} else {
+	}
+	else {
 		removeClasses(menuItem, MENU_ITEM_DRAGGING_CLASSNAME);
 	}
 };

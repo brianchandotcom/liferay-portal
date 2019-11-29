@@ -29,7 +29,8 @@ function addItemReducer(items, action) {
 	if (process.env.NODE_ENV === 'development') {
 		if (!parentItem) {
 			console.error(`Parent item "${parentId}" does not exist`);
-		} else if (
+		}
+		else if (
 			!LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(
 				parentItem.type
 			)
@@ -86,7 +87,8 @@ function moveItemReducer(items, action) {
 
 	if (siblingItem.type === LAYOUT_DATA_ITEM_TYPES.column) {
 		currentItem = siblingItem;
-	} else {
+	}
+	else {
 		currentItem = items[siblingItem.parentId];
 	}
 
@@ -127,7 +129,8 @@ function removeItemReducer(items, action) {
 					children: parentItem.children.filter(id => id !== itemId)
 				}
 			};
-		} else {
+		}
+		else {
 			newItems = {...newItems};
 		}
 

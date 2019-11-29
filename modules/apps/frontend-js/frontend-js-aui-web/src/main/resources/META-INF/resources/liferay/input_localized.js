@@ -272,7 +272,8 @@ AUI.add(
 
 					if (editor) {
 						value = editor.getHTML();
-					} else {
+					}
+					else {
 						input = input || event.currentTarget;
 
 						value = input.val();
@@ -575,7 +576,8 @@ AUI.add(
 
 					if (editor) {
 						editor.setHTML(value);
-					} else {
+					}
+					else {
 						inputPlaceholder.val(value);
 
 						inputPlaceholder.attr(

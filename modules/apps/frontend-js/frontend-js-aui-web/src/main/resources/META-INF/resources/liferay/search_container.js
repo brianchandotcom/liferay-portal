@@ -51,7 +51,8 @@ AUI.add(
 
 				if (instance._cache[id]) {
 					searchContainer = instance._cache[id];
-				} else {
+				}
+				else {
 					searchContainer = new SearchContainer({
 						id
 					}).render();
@@ -157,7 +158,8 @@ AUI.add(
 						});
 
 						obj = row;
-					} else {
+					}
+					else {
 						obj = A.one(obj);
 					}
 

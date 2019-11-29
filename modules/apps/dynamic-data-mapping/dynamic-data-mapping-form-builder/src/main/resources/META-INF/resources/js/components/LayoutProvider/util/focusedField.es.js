@@ -43,7 +43,8 @@ export const updateFocusedFieldName = (
 
 	if (normalizedFieldName !== '') {
 		newFieldName = fieldNameGenerator(value, fieldName);
-	} else {
+	}
+	else {
 		newFieldName = fieldNameGenerator(label, fieldName);
 	}
 
@@ -198,7 +199,8 @@ export const updateFocusedField = (
 				value
 			)
 		};
-	} else if (fieldName === 'label') {
+	}
+	else if (fieldName === 'label') {
 		focusedField = {
 			...focusedField,
 			...updateFocusedFieldLabel(
@@ -209,7 +211,8 @@ export const updateFocusedField = (
 				value
 			)
 		};
-	} else if (fieldName === 'name') {
+	}
+	else if (fieldName === 'name') {
 		focusedField = {
 			...focusedField,
 			...updateFocusedFieldName(
@@ -219,12 +222,14 @@ export const updateFocusedField = (
 				value
 			)
 		};
-	} else if (fieldName === 'options') {
+	}
+	else if (fieldName === 'options') {
 		focusedField = {
 			...focusedField,
 			...updateFocusedFieldOptions(editingLanguageId, focusedField, value)
 		};
-	} else {
+	}
+	else {
 		focusedField = {
 			...focusedField,
 			...updateFocusedFieldProperty(

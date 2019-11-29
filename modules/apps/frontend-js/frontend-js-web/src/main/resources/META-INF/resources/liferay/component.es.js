@@ -39,7 +39,8 @@ const _createPromiseWrapper = function(value) {
 			promise: Promise.resolve(value),
 			resolve() {}
 		};
-	} else {
+	}
+	else {
 		let promiseResolve;
 
 		const promise = new Promise(resolve => {
@@ -175,7 +176,8 @@ const _onStartNavigate = function(event) {
 			data: componentsCache,
 			owner: LIFERAY_COMPONENT
 		});
-	} else {
+	}
+	else {
 		componentsCache = {};
 	}
 };
@@ -209,7 +211,8 @@ const component = function(id, value, componentConfig) {
 		}
 
 		retVal = component;
-	} else {
+	}
+	else {
 		if (components[id] && value !== null) {
 			delete componentConfigs[id];
 			delete componentPromiseWrappers[id];
@@ -226,7 +229,8 @@ const component = function(id, value, componentConfig) {
 		if (value === null) {
 			delete componentConfigs[id];
 			delete componentPromiseWrappers[id];
-		} else {
+		}
+		else {
 			componentConfigs[id] = componentConfig;
 
 			Liferay.fire(id + ':registered');
@@ -235,7 +239,8 @@ const component = function(id, value, componentConfig) {
 
 			if (componentPromiseWrapper) {
 				componentPromiseWrapper.resolve(value);
-			} else {
+			}
+			else {
 				componentPromiseWrappers[id] = _createPromiseWrapper(value);
 			}
 		}
@@ -257,7 +262,8 @@ const componentReady = function() {
 
 	if (arguments.length === 1) {
 		component = arguments[0];
-	} else {
+	}
+	else {
 		component = [];
 
 		for (var i = 0; i < arguments.length; i++) {
@@ -267,7 +273,8 @@ const componentReady = function() {
 
 	if (Array.isArray(component)) {
 		componentPromise = Promise.all(component.map(id => componentReady(id)));
-	} else {
+	}
+	else {
 		let componentPromiseWrapper = componentPromiseWrappers[component];
 
 		if (!componentPromiseWrapper) {

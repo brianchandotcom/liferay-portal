@@ -32,7 +32,8 @@ const register = function(portletId) {
 	return new Promise((resolve, reject) => {
 		if (validatePortletId(pageRenderState, portletId)) {
 			resolve(new PortletInit(portletId));
-		} else {
+		}
+		else {
 			reject(new Error('Invalid portlet ID'));
 		}
 	});

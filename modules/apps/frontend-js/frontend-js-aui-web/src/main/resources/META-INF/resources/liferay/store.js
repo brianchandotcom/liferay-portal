@@ -37,12 +37,14 @@ AUI.add(
 				if (Array.isArray(key)) {
 					method = 'getAll';
 				}
-			} else {
+			}
+			else {
 				method = 'set';
 
 				if (isObject(key)) {
 					method = 'setAll';
-				} else if (arguments.length == 1) {
+				}
+				else if (arguments.length == 1) {
 					method = null;
 				}
 			}
@@ -87,7 +89,8 @@ AUI.add(
 						config.data[key].forEach(value => {
 							body.append(key, value);
 						});
-					} else {
+					}
+					else {
 						body.set(key, config.data[key]);
 					}
 				});
@@ -102,7 +105,8 @@ AUI.add(
 					.then(response => {
 						if (config.dataType === 'json') {
 							return response.json();
-						} else {
+						}
+						else {
 							return response.text();
 						}
 					})
@@ -116,7 +120,8 @@ AUI.add(
 									data = JSON.parse(
 										data.substring(TOKEN_SERIALIZE.length)
 									);
-								} catch (e) {}
+								}
+								catch (e) {}
 							}
 						}
 

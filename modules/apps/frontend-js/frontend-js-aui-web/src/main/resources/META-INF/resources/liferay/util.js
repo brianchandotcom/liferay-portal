@@ -105,7 +105,8 @@
 						Util.enableFormButtons,
 						[inputs, form]
 					);
-				} else {
+				}
+				else {
 					Util._submitLocked = true;
 				}
 
@@ -116,7 +117,8 @@
 				if (searchParamsIndex === -1) {
 					baseURL = action;
 					queryString = '';
-				} else {
+				}
+				else {
 					baseURL = action.slice(0, searchParamsIndex);
 					queryString = action.slice(searchParamsIndex + 1);
 				}
@@ -255,7 +257,8 @@
 						);
 					})
 					.join('&');
-			} else {
+			}
+			else {
 				params = String(params).trim();
 			}
 
@@ -275,7 +278,8 @@
 
 				if (loc.indexOf('?') == -1) {
 					params = '?' + params;
-				} else {
+				}
+				else {
 					params = '&' + params;
 				}
 
@@ -306,7 +310,8 @@
 						'input[name=' +
 						name.join('], input[name=') +
 						STR_RIGHT_SQUARE_BRACKET;
-				} else {
+				}
+				else {
 					selector = 'input[name=' + name + STR_RIGHT_SQUARE_BRACKET;
 				}
 
@@ -430,7 +435,8 @@
 				A.getWin().on('unload', () => {
 					inputs.attr('disabled', false);
 				});
-			} else if (A.UA.safari) {
+			}
+			else if (A.UA.safari) {
 				A.use('node-event-html5', A => {
 					A.getWin().on('pagehide', () => {
 						Util.enableFormButtons(inputs, form);
@@ -465,7 +471,8 @@
 
 				if (match == ']]>') {
 					str = ']]&gt;';
-				} else if (match == '<![CDATA[') {
+				}
+				else if (match == '<![CDATA[') {
 					str = '&lt;![CDATA[';
 				}
 
@@ -498,7 +505,8 @@
 
 				if (!form.length || focusable) {
 					el.focus();
-				} else {
+				}
+				else {
 					var portletName = form.data('fm-namespace');
 
 					var formReadyEventName = portletName + 'formReady';
@@ -570,10 +578,12 @@
 					if (getterString) {
 						if (name.indexOf(attributeGetter) === 0) {
 							name = name.substr(attributeGetter.length);
-						} else {
+						}
+						else {
 							continue;
 						}
-					} else if (getterFn) {
+					}
+					else if (getterFn) {
 						value = attributeGetter(value, name, attrs);
 
 						if (value === false) {
@@ -615,7 +625,8 @@
 					fallback,
 					options
 				);
-			} else if (fallback) {
+			}
+			else if (fallback) {
 				fallback();
 			}
 		},
@@ -669,7 +680,8 @@
 						}
 
 						parentThemeDisplay = parentWindow.themeDisplay;
-					} catch (e) {
+					}
+					catch (e) {
 						break;
 					}
 
@@ -678,7 +690,8 @@
 						window.name === 'simulationDeviceIframe'
 					) {
 						break;
-					} else if (
+					}
+					else if (
 						!parentThemeDisplay.isStatePopUp() ||
 						parentWindow == parentWindow.parent
 					) {
@@ -961,7 +974,8 @@
 
 			if (box.prop('selectedIndex') == -1) {
 				box.prop('selectedIndex', 0);
-			} else {
+			}
+			else {
 				var selectedItems = box.find('option:selected');
 
 				if (down) {
@@ -977,11 +991,13 @@
 
 							if (itemIndex === lastIndex) {
 								box.prepend(item);
-							} else {
+							}
+							else {
 								item.insertAfter(item.next());
 							}
 						});
-				} else {
+				}
+				else {
 					selectedItems.get().forEach(item => {
 						item = $(item);
 
@@ -989,7 +1005,8 @@
 
 						if (itemIndex === 0) {
 							box.append(item);
-						} else {
+						}
+						else {
 							item.insertBefore(item.prev());
 						}
 					});
@@ -1102,7 +1119,8 @@
 				el.focus();
 
 				el.setSelectionRange(selectionStart, selectionEnd);
-			} else if (el.createTextRange) {
+			}
+			else if (el.createTextRange) {
 				var textRange = el.createTextRange();
 
 				textRange.collapse(true);
@@ -1486,7 +1504,8 @@
 					if (Lang.isFunction(onSuccess)) {
 						onSuccess();
 					}
-				} catch (e) {
+				}
+				catch (e) {
 					if (Lang.isFunction(onError)) {
 						onError(e);
 					}
@@ -1574,7 +1593,8 @@
 				);
 
 				dialog.show();
-			} else {
+			}
+			else {
 				var destroyDialog = function(event) {
 					var dialogId = config.id;
 
@@ -1686,7 +1706,8 @@
 				);
 
 				dialog.show();
-			} else {
+			}
+			else {
 				var destroyDialog = function(event) {
 					var dialogId = config.id;
 
@@ -1846,7 +1867,8 @@
 
 			if (redirect) {
 				openingWindow.Liferay.Util.navigate(redirect);
-			} else {
+			}
+			else {
 				var refresh = event.refresh;
 
 				if (refresh && openingWindow) {

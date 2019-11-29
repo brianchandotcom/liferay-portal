@@ -227,7 +227,8 @@ class FragmentEntryLinkListRow extends Component {
 			this.row.type !== FRAGMENTS_EDITOR_ROW_TYPES.sectionRow
 		) {
 			this._createFloatingToolbar();
-		} else {
+		}
+		else {
 			this._disposeFloatingToolbar();
 		}
 
@@ -299,7 +300,8 @@ class FragmentEntryLinkListRow extends Component {
 
 		if (this._floatingToolbar) {
 			this._floatingToolbar.setState(config);
-		} else {
+		}
+		else {
 			this._floatingToolbar = new FloatingToolbar(config);
 		}
 	}
@@ -417,7 +419,8 @@ class FragmentEntryLinkListRow extends Component {
 					.slice(columnIndex)
 					.map(column => parseInt(column.size, 10) || 1)
 					.reduce((size, columnSize) => size + columnSize, 0);
-		} else {
+		}
+		else {
 			this._resizeHighlightedColumn =
 				this._resizeRowColumns
 					.slice(0, nextColumnIndex)
@@ -514,7 +517,8 @@ class FragmentEntryLinkListRow extends Component {
 					this._mappedBackgroundFieldValue = fieldValue.url;
 				}
 			});
-		} else {
+		}
+		else {
 			this._mappedBackgroundFieldValue = null;
 		}
 	}

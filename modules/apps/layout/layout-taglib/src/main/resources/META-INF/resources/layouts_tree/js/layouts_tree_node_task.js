@@ -56,7 +56,8 @@ AUI.add(
 
 					if (checked) {
 						instance.uncheck();
-					} else {
+					}
+					else {
 						instance.check();
 					}
 				}

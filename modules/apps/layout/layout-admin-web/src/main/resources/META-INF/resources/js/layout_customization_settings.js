@@ -189,7 +189,8 @@ AUI.add(
 						);
 
 						instance._customizationsHandle = customizationsHandle;
-					} else {
+					}
+					else {
 						customizationsHandle.detach();
 
 						instance._customizationsHandle = null;

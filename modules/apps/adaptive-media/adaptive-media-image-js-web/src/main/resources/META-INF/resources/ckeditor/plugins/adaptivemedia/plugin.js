@@ -67,7 +67,8 @@
 					fileEntryAttributeName,
 					itemValue.fileEntryId
 				);
-			} else {
+			}
+			else {
 				imgEl.setAttribute('src', imageSrc);
 			}
 
@@ -117,7 +118,8 @@
 				});
 
 				pictureEl = CKEDITOR.dom.element.createFromHtml(pictureHtml);
-			} catch (e) {}
+			}
+			catch (e) {}
 
 			return pictureEl;
 		},
@@ -148,7 +150,8 @@
 					selectedItem,
 					fileEntryAttributeName
 				);
-			} else {
+			}
+			else {
 				el = instance._getImgElement(
 					imageSrc,
 					selectedItem,
@@ -186,7 +189,8 @@
 							region: element.getClientRect()
 						}
 					});
-				} else {
+				}
+				else {
 					editor.execCommand('enter');
 				}
 			}

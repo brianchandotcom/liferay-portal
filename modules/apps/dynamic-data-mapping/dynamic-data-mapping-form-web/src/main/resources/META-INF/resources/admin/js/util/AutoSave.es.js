@@ -97,7 +97,8 @@ class AutoSave extends Component {
 				this._pendingRequest
 					.then(() => this.saveIfNeeded())
 					.catch(() => {});
-			} else if (
+			}
+			else if (
 				this.hasUnsavedChanges() &&
 				!stateSyncronizer.isEmpty()
 			) {

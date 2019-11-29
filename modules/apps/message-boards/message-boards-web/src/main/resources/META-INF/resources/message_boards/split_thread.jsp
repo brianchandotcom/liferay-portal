@@ -146,7 +146,8 @@ if (portletTitleBasedNavigation) {
 		if (categoryId == 0) {
 			nameEl.href =
 				'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view" /></portlet:renderURL>';
-		} else {
+		}
+		else {
 			nameEl.href =
 				'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view_category" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' +
 				categoryId;
@@ -163,7 +164,8 @@ if (portletTitleBasedNavigation) {
 			document.getElementById(
 				'<portlet:namespace />explanationPost'
 			).style.display = '';
-		} else {
+		}
+		else {
 			document.getElementById(
 				'<portlet:namespace />explanationPost'
 			).style.display = 'none';

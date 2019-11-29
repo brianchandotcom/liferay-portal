@@ -48,7 +48,8 @@ export const normalizeSettingsContextPages = (
 				value: generatedFieldName,
 				visible: true
 			};
-		} else if (fieldName === 'label') {
+		}
+		else if (fieldName === 'label') {
 			field = {
 				...field,
 				localizedValue: {
@@ -58,12 +59,14 @@ export const normalizeSettingsContextPages = (
 				type: 'text',
 				value: fieldType.label
 			};
-		} else if (fieldName === 'type') {
+		}
+		else if (fieldName === 'type') {
 			field = {
 				...field,
 				value: fieldType.name
 			};
-		} else if (fieldName === 'validation') {
+		}
+		else if (fieldName === 'validation') {
 			field = {
 				...field,
 				validation: {
@@ -90,15 +93,19 @@ export const getFieldProperties = (
 		({fieldName, localizable, localizedValue = {}, type, value}) => {
 			if (localizable && localizedValue[editingLanguageId]) {
 				properties[fieldName] = localizedValue[editingLanguageId];
-			} else if (localizable && localizedValue[defaultLanguageId]) {
+			}
+			else if (localizable && localizedValue[defaultLanguageId]) {
 				properties[fieldName] = localizedValue[defaultLanguageId];
-			} else if (type == 'options') {
+			}
+			else if (type == 'options') {
 				if (!value[editingLanguageId] && value[defaultLanguageId]) {
 					properties[fieldName] = value[defaultLanguageId];
-				} else {
+				}
+				else {
 					properties[fieldName] = value[editingLanguageId];
 				}
-			} else {
+			}
+			else {
 				properties[fieldName] = value;
 			}
 		}

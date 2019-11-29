@@ -47,7 +47,8 @@ function BulkStatus({
 				.then(response => {
 					if (response.actionInProgress) {
 						dispatch({type: 'check'});
-					} else {
+					}
+					else {
 						dispatch({type: 'success'});
 					}
 				})
@@ -65,9 +66,11 @@ function BulkStatus({
 				() => dispatch({type: 'initialDelayCompleted'}),
 				waitingTime
 			);
-		} else if (state.current === STATES.LONG_POLLING) {
+		}
+		else if (state.current === STATES.LONG_POLLING) {
 			statusCallback();
-		} else if (state.current === STATES.NOTIFY) {
+		}
+		else if (state.current === STATES.NOTIFY) {
 			openToast(state.toast);
 
 			dispatch({type: 'notificationCompleted'});

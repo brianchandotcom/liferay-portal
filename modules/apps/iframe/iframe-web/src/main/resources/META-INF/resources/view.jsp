@@ -87,7 +87,8 @@
 						'endNavigate',
 						<portlet:namespace />monitorIframe
 					);
-				} catch (e) {
+				}
+				catch (e) {
 					return true;
 				}
 
@@ -101,7 +102,8 @@
 					url = url.substring(baseSrc.length);
 
 					<portlet:namespace />updateHash(url);
-				} else if (
+				}
+				else if (
 					!(url == iframeSrc || url == iframeSrc + '/') &&
 					!hasBaseSrc
 				) {

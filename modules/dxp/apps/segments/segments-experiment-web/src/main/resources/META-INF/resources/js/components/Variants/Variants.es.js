@@ -164,7 +164,8 @@ function Variants({selectedSegmentsExperienceId}) {
 
 				if (variantExperienceId === selectedSegmentsExperienceId) {
 					navigateToExperience(experiment.segmentsExperienceId);
-				} else {
+				}
+				else {
 					dispatch(updateVariants(newVariants));
 					dispatch(reviewVariants());
 				}

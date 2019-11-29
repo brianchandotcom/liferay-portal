@@ -313,12 +313,14 @@ AUI.add(
 
 					if (KeyMap.isKey(keyCode, 'ENTER')) {
 						instance.choose();
-					} else {
+					}
+					else {
 						var index = -1;
 
 						if (KeyMap.isKey(keyCode, 'LEFT')) {
 							index = selectedIndex - 1;
-						} else if (KeyMap.isKey(keyCode, 'RIGHT')) {
+						}
+						else if (KeyMap.isKey(keyCode, 'RIGHT')) {
 							index = selectedIndex + 1;
 						}
 

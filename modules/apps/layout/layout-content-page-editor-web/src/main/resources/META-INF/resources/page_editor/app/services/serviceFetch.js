@@ -63,7 +63,8 @@ export default function serviceFetch(config, url, body = {}) {
 			if (typeof body === 'object') {
 				if ('exception' in body) {
 					throw new Error(body.exception);
-				} else if ('error' in body) {
+				}
+				else if ('error' in body) {
 					throw new Error(body.error);
 				}
 			}

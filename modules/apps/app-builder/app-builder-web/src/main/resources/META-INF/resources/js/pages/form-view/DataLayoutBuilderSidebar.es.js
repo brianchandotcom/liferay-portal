@@ -115,7 +115,8 @@ const SettingsSidebarBody = () => {
 			const dispatchEvent = (type, payload) => {
 				if (hasFocusedCustomObjectField && type === 'fieldEdited') {
 					dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
-				} else if (!hasFocusedCustomObjectField) {
+				}
+				else if (!hasFocusedCustomObjectField) {
 					dataLayoutBuilder.dispatch(type, payload);
 				}
 			};
@@ -129,7 +130,8 @@ const SettingsSidebarBody = () => {
 					formRef.current
 				)
 			);
-		} else {
+		}
+		else {
 			const {pages} = filteredSettingsContext;
 
 			form.setState({pages}, () => {

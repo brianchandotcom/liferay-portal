@@ -65,7 +65,8 @@ export default function render(renderFunction, renderData, container) {
 			</ClayIconSpriteContext.Provider>,
 			container
 		);
-	} else {
+	}
+	else {
 		Liferay.once('SPAReady', () => {
 			render(renderFunction, renderData, container);
 		});

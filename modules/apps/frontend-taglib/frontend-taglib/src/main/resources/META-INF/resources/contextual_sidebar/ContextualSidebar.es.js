@@ -100,7 +100,8 @@ class ContextualSidebar extends Component {
 			document.body.classList.add('contextual-sidebar-visible');
 
 			Liferay.SideNavigation.hide(this._productMenuToggle);
-		} else {
+		}
+		else {
 			document.body.classList.remove('contextual-sidebar-visible');
 		}
 	}

@@ -37,7 +37,8 @@ function deepClone(objectToClone) {
 	if (typeof cloned == 'object' && cloned !== null) {
 		if (Array.isArray(cloned)) {
 			cloned = objectToClone.map(arrayItem => deepClone(arrayItem));
-		} else {
+		}
+		else {
 			cloned = {...cloned};
 
 			Object.keys(cloned).forEach(clonedKey => {
@@ -132,7 +133,8 @@ function getDropRowPosition(structure, targetRowId, targetBorder) {
 	if (targetPosition > -1 && targetBorder) {
 		if (targetBorder === FRAGMENTS_EDITOR_ITEM_BORDERS.top) {
 			position = targetPosition;
-		} else {
+		}
+		else {
 			position = targetPosition + 1;
 		}
 	}
@@ -201,7 +203,8 @@ function getItemMoveDirection(keycode) {
 
 	if (keycode === ARROW_UP_KEYCODE) {
 		direction = MOVE_ITEM_DIRECTIONS.UP;
-	} else if (keycode === ARROW_DOWN_KEYCODE) {
+	}
+	else if (keycode === ARROW_DOWN_KEYCODE) {
 		direction = MOVE_ITEM_DIRECTIONS.DOWN;
 	}
 
@@ -243,7 +246,8 @@ function getItemPath(itemId, itemType, structure) {
 					)
 				];
 			}
-		} else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
+		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 			const column = []
 				.concat(...structure.map(row => row.columns))
 				.find(
@@ -261,7 +265,8 @@ function getItemPath(itemId, itemType, structure) {
 					)
 				];
 			}
-		} else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.column) {
+		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.column) {
 			const row = structure.find(row =>
 				row.columns.find(column => column.columnId === itemId)
 			);
@@ -343,7 +348,8 @@ function getTargetBorder(direction) {
 
 	if (direction === MOVE_ITEM_DIRECTIONS.UP) {
 		targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
-	} else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
+	}
+	else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
 		targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.bottom;
 	}
 

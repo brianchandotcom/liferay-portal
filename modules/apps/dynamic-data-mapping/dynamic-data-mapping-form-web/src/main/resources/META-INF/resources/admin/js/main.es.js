@@ -117,7 +117,8 @@ class Form extends Component {
 								newValue
 							) {
 								this.showAddButton();
-							} else {
+							}
+							else {
 								this.hideAddButton();
 							}
 						}),
@@ -182,7 +183,8 @@ class Form extends Component {
 		if (showPublishAlert) {
 			if (published) {
 				this._showPublishedAlert(this._createFormURL());
-			} else {
+			}
+			else {
 				this._showUnpublishedAlert();
 			}
 		}
@@ -567,10 +569,12 @@ class Form extends Component {
 
 			if (this.refs.ruleBuilder.isViewMode()) {
 				this.showAddButton();
-			} else {
+			}
+			else {
 				this.hideAddButton();
 			}
-		} else {
+		}
+		else {
 			formBasicInfo.classList.remove('hide');
 			formBuilderButtons.classList.remove('hide');
 
@@ -588,7 +592,8 @@ class Form extends Component {
 
 			if (defaultLanguageId === editingLanguageId) {
 				this.showAddButton();
-			} else {
+			}
+			else {
 				this.hideAddButton();
 			}
 		}
@@ -605,7 +610,8 @@ class Form extends Component {
 			this.refs.ruleBuilder.showRuleCreation();
 
 			this.hideAddButton();
-		} else {
+		}
+		else {
 			this.openSidebar();
 		}
 	}
@@ -623,7 +629,8 @@ class Form extends Component {
 			editor.create();
 
 			promise = Promise.resolve(CKEDITOR.instances[editorName]);
-		} else {
+		}
+		else {
 			promise = new Promise(resolve => {
 				Liferay.on('editorAPIReady', event => {
 					if (event.editorName === editorName) {
@@ -672,7 +679,8 @@ class Form extends Component {
 
 		if (requireAuthentication) {
 			formURL = Liferay.DDM.FormSettings.restrictedFormURL;
-		} else {
+		}
+		else {
 			formURL = Liferay.DDM.FormSettings.sharedFormURL;
 		}
 
@@ -692,7 +700,8 @@ class Form extends Component {
 
 		if (settingsDDMForm) {
 			promise = Promise.resolve(settingsDDMForm);
-		} else {
+		}
+		else {
 			promise = Liferay.componentReady('settingsDDMForm');
 		}
 
@@ -929,7 +938,8 @@ class Form extends Component {
 
 		if (savedAsDraft) {
 			message = Liferay.Language.get('draft-x');
-		} else {
+		}
+		else {
 			message = Liferay.Language.get('saved-x');
 		}
 
@@ -950,7 +960,8 @@ class Form extends Component {
 				'title',
 				Liferay.Language.get('copy-url')
 			);
-		} else {
+		}
+		else {
 			shareFormIcon.classList.add('ddm-btn-disabled');
 			shareFormIcon.setAttribute(
 				'title',

@@ -127,13 +127,15 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 						) {
 							<portlet:namespace />doDeleteUserGroups(ids);
 						}
-					} else {
+					}
+					else {
 						var message;
 
 						if (ids && ids.toString().split(',').length > 1) {
 							message =
 								'<%= UnicodeLanguageUtil.get(request, "one-or-more-user-groups-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-user-groups-by-automatically-unassociating-the-deactivated-users") %>';
-						} else {
+						}
+						else {
 							message =
 								'<%= UnicodeLanguageUtil.get(request, "the-selected-user-group-is-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-user-group-by-automatically-unassociating-the-deactivated-users") %>';
 						}
@@ -143,7 +145,8 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 						}
 					}
 				});
-			} else if (
+			}
+			else if (
 				confirm(
 					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
 				)

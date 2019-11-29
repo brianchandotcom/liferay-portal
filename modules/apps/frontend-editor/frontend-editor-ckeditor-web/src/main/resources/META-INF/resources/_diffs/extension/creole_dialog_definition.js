@@ -39,7 +39,8 @@ CKEDITOR.on('dialogDefinition', event => {
 
 			dialogDefinition.minHeight = 40;
 			dialogDefinition.minWidth = 210;
-		} else if (dialogName === 'table' || dialogName === 'tableProperties') {
+		}
+		else if (dialogName === 'table' || dialogName === 'tableProperties') {
 			infoTab = dialogDefinition.getContents('info');
 
 			infoTab.remove('cmbAlign');
@@ -55,7 +56,8 @@ CKEDITOR.on('dialogDefinition', event => {
 
 			dialogDefinition.minHeight = 180;
 			dialogDefinition.minWidth = 210;
-		} else if (dialogName === 'image') {
+		}
+		else if (dialogName === 'image') {
 			dialogDefinition.removeContents('Link');
 			dialogDefinition.removeContents('advanced');
 		}

@@ -129,7 +129,8 @@ AUI.add(
 
 					if (trigger.hasClass(CSS_EXTENDED)) {
 						trigger.removeClass(CSS_BTN_PRIMARY);
-					} else {
+					}
+					else {
 						trigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 
 						var portlet = trigger.ancestor(CSS_PORTLET);
@@ -235,7 +236,8 @@ AUI.add(
 					});
 
 					instance._overlay = overlay;
-				} else {
+				}
+				else {
 					overlay.set('align.node', trigger);
 				}
 
@@ -415,7 +417,8 @@ AUI.add(
 
 					if (cssClass.indexOf(CSS_EXTENDED) > -1) {
 						trigger.addClass(CSS_BTN_PRIMARY);
-					} else {
+					}
+					else {
 						trigger.get(PARENT_NODE).addClass(CSS_OPEN);
 
 						var portlet = trigger.ancestor(CSS_PORTLET);
@@ -644,7 +647,8 @@ AUI.add(
 						if (portlet) {
 							portlet.removeClass(CSS_OPEN);
 						}
-					} else {
+					}
+					else {
 						menuInstance._closeActiveMenu();
 
 						return;

@@ -60,7 +60,8 @@
 				setTimeout(function() {
 					<portlet:namespace />addDragAndDropListener();
 				}, 5000);
-			} else {
+			}
+			else {
 				Liferay.Layout.on(['drag:end', 'drag:start'], function() {
 					AUI().debounce(<portlet:namespace />resizeIFrame(), 500);
 				});

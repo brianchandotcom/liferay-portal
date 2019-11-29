@@ -93,9 +93,11 @@ const TooltipProvider = () => {
 
 		if (state.current === STATES.WAIT_SHOW) {
 			dispose = delay(() => dispatch({type: 'showDelayCompleted'}), 500);
-		} else if (state.current === STATES.WAIT_HIDE) {
+		}
+		else if (state.current === STATES.WAIT_HIDE) {
 			dispose = delay(() => dispatch({type: 'hideDelayCompleted'}), 100);
-		} else if (state.current === STATES.WAIT_RESHOW) {
+		}
+		else if (state.current === STATES.WAIT_RESHOW) {
 			dispose = delay(() => dispatch({type: 'showDelayCompleted'}), 100);
 		}
 

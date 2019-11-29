@@ -104,7 +104,8 @@ name = namespace + name;
 
 	if (Liferay.Maps.gmapsReady) {
 		createMap();
-	} else {
+	}
+	else {
 		Liferay.once('gmapsReady', createMap);
 	}
 </aui:script>

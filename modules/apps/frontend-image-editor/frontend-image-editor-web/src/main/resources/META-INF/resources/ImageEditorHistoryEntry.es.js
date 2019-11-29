@@ -31,7 +31,8 @@ class ImageEditorHistoryEntry {
 
 			if (image.url && !image.data) {
 				this.loadData_(image.url).then(imageData => resolve(imageData));
-			} else {
+			}
+			else {
 				resolve(image.data);
 			}
 		});

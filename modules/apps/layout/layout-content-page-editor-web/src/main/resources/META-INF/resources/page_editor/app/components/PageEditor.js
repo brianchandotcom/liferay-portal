@@ -358,12 +358,14 @@ function Fragment({item}) {
 
 	if (typeof fragmentEntryLink.content === 'string') {
 		markup = fragmentEntryLink.content;
-	} else if (
+	}
+	else if (
 		fragmentEntryLink.content.value &&
 		fragmentEntryLink.content.value.content
 	) {
 		markup = fragmentEntryLink.content.value.content;
-	} else {
+	}
+	else {
 		markup = `<div>No markup from ${item.config.fragmentEntryLinkId}</div>`;
 	}
 
@@ -416,7 +418,8 @@ export default function PageEditor() {
 			// Only run this after first render
 			if (!shouldUpdateLayoutData.current) {
 				shouldUpdateLayoutData.current = true;
-			} else {
+			}
+			else {
 				dispatch(
 					updateLayoutData({
 						config,

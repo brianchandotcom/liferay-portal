@@ -216,7 +216,8 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 
 				if (foundVisibleSection) {
 					noResultsNode.remove();
-				} else {
+				}
+				else {
 					paletteDataContainer.appendChild(noResultsNode);
 				}
 			});
@@ -312,7 +313,8 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 					visible: false,
 					zIndex: 10000
 				});
-			} else {
+			}
+			else {
 				richEditor.unplug(ACPlugin);
 			}
 		}

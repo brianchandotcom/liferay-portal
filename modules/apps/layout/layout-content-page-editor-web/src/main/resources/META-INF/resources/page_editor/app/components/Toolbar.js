@@ -63,7 +63,8 @@ function ToolbarBody() {
 						throw new Error(
 							`Failed to get instance from ${pluginEntryPoint}`
 						);
-					} else if (isMounted()) {
+					}
+					else if (isMounted()) {
 						if (typeof plugin.activate === 'function') {
 							plugin.activate();
 						}
@@ -87,7 +88,8 @@ function ToolbarBody() {
 		useCallback(({instance}) => {
 			if (typeof instance.renderToolbarSection === 'function') {
 				return instance.renderToolbarSection();
-			} else {
+			}
+			else {
 				return null;
 			}
 		}, [])
@@ -180,7 +182,8 @@ class ErrorBoundary extends React.Component {
 	render() {
 		if (this.state.hasError) {
 			return null;
-		} else {
+		}
+		else {
 			return this.props.children;
 		}
 	}

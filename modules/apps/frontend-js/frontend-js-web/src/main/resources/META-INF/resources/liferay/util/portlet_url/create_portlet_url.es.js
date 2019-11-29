@@ -73,7 +73,8 @@ export default function createPortletURL(basePortletURL, parameters = {}) {
 	) {
 		if (basePortletURL.indexOf('/') !== 0) {
 			basePortletURL = `${Liferay.ThemeDisplay.getPortalURL()}/${basePortletURL}`;
-		} else {
+		}
+		else {
 			basePortletURL =
 				Liferay.ThemeDisplay.getPortalURL() + basePortletURL;
 		}
@@ -102,7 +103,8 @@ export default function createPortletURL(basePortletURL, parameters = {}) {
 
 		if (reservedParameters.has(key)) {
 			param = key;
-		} else {
+		}
+		else {
 			param = `${namespace}${key}`;
 		}
 

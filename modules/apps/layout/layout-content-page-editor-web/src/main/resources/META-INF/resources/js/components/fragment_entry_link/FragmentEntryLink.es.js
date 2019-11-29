@@ -121,7 +121,8 @@ class FragmentEntryLink extends Component {
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 		) {
 			this._createFloatingToolbar();
-		} else {
+		}
+		else {
 			this._disposeFloatingToolbar();
 		}
 	}
@@ -192,7 +193,8 @@ class FragmentEntryLink extends Component {
 
 		if (this._floatingToolbar) {
 			this._floatingToolbar.setState(config);
-		} else {
+		}
+		else {
 			this._floatingToolbar = new FloatingToolbar(config);
 		}
 	}
@@ -299,7 +301,8 @@ class FragmentEntryLink extends Component {
 					this.store,
 					this.layoutData.structure
 				);
-			} else {
+			}
+			else {
 				const column = getFragmentColumn(
 					this.layoutData.structure,
 					this.fragmentEntryLinkId

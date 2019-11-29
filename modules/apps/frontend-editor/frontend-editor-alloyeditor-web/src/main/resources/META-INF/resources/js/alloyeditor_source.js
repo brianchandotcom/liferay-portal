@@ -136,7 +136,8 @@ AUI.add(
 						fullScreenEditor.set('value', host.getHTML());
 
 						fullScreenDialog.show();
-					} else {
+					}
+					else {
 						Liferay.Util.openWindow(
 							{
 								dialog: {
@@ -265,7 +266,8 @@ AUI.add(
 						host.setHTML(content);
 
 						instance._toggleEditorModeUI();
-					} else if (editor) {
+					}
+					else if (editor) {
 						var currentContent = event.content || host.getHTML();
 
 						if (currentContent !== editor.get(STR_VALUE)) {
@@ -273,7 +275,8 @@ AUI.add(
 						}
 
 						instance._toggleEditorModeUI();
-					} else {
+					}
+					else {
 						instance._createSourceEditor();
 					}
 				},

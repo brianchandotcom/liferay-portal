@@ -154,7 +154,8 @@ class KeyboardFocusManager extends EventEmitter {
 		if (core.isNumber(size)) {
 			if (position < 0) {
 				position = size - 1;
-			} else if (position >= size) {
+			}
+			else if (position >= size) {
 				position = 0;
 			}
 		}

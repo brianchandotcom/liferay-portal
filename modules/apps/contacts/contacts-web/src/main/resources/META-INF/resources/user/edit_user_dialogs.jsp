@@ -139,7 +139,8 @@ if (extension) {
 								'</span>'
 						);
 					}
-				} else {
+				}
+				else {
 					Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
 
 					var redirect = data.redirect;

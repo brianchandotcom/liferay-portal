@@ -271,7 +271,8 @@ AUI.add(
 										'desc',
 										''
 									);
-								} else {
+								}
+								else {
 									instance.passwordPrompt(
 										accountId,
 										inboxFolderId
@@ -403,7 +404,8 @@ AUI.add(
 
 				if (autoLoad) {
 					instance.messagesContainer.io.set('showLoading', false);
-				} else {
+				}
+				else {
 					instance._displayContainer(instance.messagesContainer);
 
 					if (pageNumber == 1) {
@@ -567,7 +569,8 @@ AUI.add(
 								window[instance.namespace + 'editor'] = null;
 
 								delete window[instance.namespace + 'editor'];
-							} catch (e) {}
+							}
+							catch (e) {}
 						}
 					},
 					uri: themeDisplay.getLayoutURL() + '/-/mail/compose'

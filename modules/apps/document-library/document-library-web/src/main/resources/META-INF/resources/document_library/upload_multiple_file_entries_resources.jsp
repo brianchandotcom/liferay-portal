@@ -259,7 +259,8 @@ else {
 											if (selectedFilesCount === fileNodes.length) {
 												selectedFilesText =
 													'<%= UnicodeLanguageUtil.get(request, "all-files-selected") %>';
-											} else {
+											}
+											else {
 												selectedFilesText = Liferay.Util.sub(
 													'<%= UnicodeLanguageUtil.get(request, "x-files-selected") %>',
 													selectedFilesCount

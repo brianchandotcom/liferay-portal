@@ -143,7 +143,8 @@ renderResponse.setTitle(role.getTitle(locale));
 
 				if (selectedItem.type === 'users') {
 					data.addUserIds = selectedItem.value;
-				} else {
+				}
+				else {
 					data.addGroupIds = selectedItem.value;
 				}
 
@@ -170,7 +171,8 @@ renderResponse.setTitle(role.getTitle(locale));
 
 		if (assigneeType === 'users') {
 			data.removeUserIds = ids;
-		} else {
+		}
+		else {
 			data.removeGroupIds = ids;
 		}
 

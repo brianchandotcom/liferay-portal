@@ -67,7 +67,8 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 	searchNodes_(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
-		} else {
+		}
+		else {
 			this.nodes = this.originalNodes;
 		}
 
@@ -76,7 +77,8 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 		if (filterValue !== '') {
 			this.viewType = 'flat';
 			this.nodes = this.filterSiblingNodes_(this.nodes, filterValue);
-		} else {
+		}
+		else {
 			this.viewType = 'tree';
 		}
 	}

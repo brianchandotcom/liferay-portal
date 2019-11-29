@@ -66,9 +66,11 @@ class Tokenizer {
 
 			if (this.isDigit(char)) {
 				numberBuffer.push(char);
-			} else if (char === '.') {
+			}
+			else if (char === '.') {
 				numberBuffer.push(char);
-			} else if (this.isLeftBracket(char)) {
+			}
+			else if (this.isLeftBracket(char)) {
 				if (numberBuffer.length) {
 					emptyNumberBuffer();
 
@@ -82,11 +84,13 @@ class Tokenizer {
 						emptyVariableBuffer();
 
 						break;
-					} else {
+					}
+					else {
 						variableBuffer.push(char);
 					}
 				} while (inputBuffer.length);
-			} else if (this.isLetter(char)) {
+			}
+			else if (this.isLetter(char)) {
 				if (numberBuffer.length) {
 					emptyNumberBuffer();
 
@@ -104,11 +108,13 @@ class Tokenizer {
 				}
 
 				emptyFunctionBuffer();
-			} else if (this.isOperator(char)) {
+			}
+			else if (this.isOperator(char)) {
 				emptyNumberBuffer();
 
 				result.push(new Token(Token.OPERATOR, char));
-			} else if (this.isLeftParenthesis(char)) {
+			}
+			else if (this.isLeftParenthesis(char)) {
 				if (numberBuffer.length) {
 					emptyNumberBuffer();
 
@@ -116,11 +122,13 @@ class Tokenizer {
 				}
 
 				result.push(new Token(Token.LEFT_PARENTHESIS, char));
-			} else if (this.isRightParenthesis(char)) {
+			}
+			else if (this.isRightParenthesis(char)) {
 				emptyNumberBuffer();
 
 				result.push(new Token(Token.RIGHT_PARENTHESIS, char));
-			} else {
+			}
+			else {
 				throw new Error(`Unsupported character ${char}`);
 			}
 		}

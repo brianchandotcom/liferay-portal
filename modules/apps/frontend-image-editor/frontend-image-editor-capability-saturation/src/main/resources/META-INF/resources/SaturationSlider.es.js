@@ -68,7 +68,8 @@ class SaturationSlider extends Component {
 		const constrain = Position.getRegion(this.refs.rail, true);
 		if (region.left < constrain.left) {
 			region.left = constrain.left;
-		} else if (region.left > constrain.right) {
+		}
+		else if (region.left > constrain.right) {
 			region.left -= region.left - constrain.right;
 		}
 		region.right = region.left + region.width;
@@ -122,7 +123,8 @@ class SaturationSlider extends Component {
 				const handleRegion = Position.getRegion(this.refs.handle);
 				if (event.offsetX < handleRegion.left) {
 					this.value -= 1;
-				} else {
+				}
+				else {
 					this.value += 1;
 				}
 			}

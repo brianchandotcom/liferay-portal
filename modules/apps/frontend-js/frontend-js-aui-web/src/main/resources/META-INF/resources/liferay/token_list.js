@@ -34,7 +34,8 @@ AUI().add(
 				getTokenText(str, values) {
 					if ('html' in values) {
 						str = values.html;
-					} else {
+					}
+					else {
 						str = A.Escape.html(str);
 					}
 
@@ -87,7 +88,8 @@ AUI().add(
 
 						if (Array.isArray(token)) {
 							instance._buffer = buffer.concat(token);
-						} else {
+						}
+						else {
 							buffer.push(token);
 						}
 

@@ -74,7 +74,8 @@ AUI.add(
 								'x-items-are-ready-to-be-moved-to-x'
 							);
 						}
-					} else {
+					}
+					else {
 						moveText = Liferay.Language.get(
 							'x-item-is-ready-to-be-moved'
 						);
@@ -264,7 +265,8 @@ AUI.add(
 								},
 								node
 							);
-						} else {
+						}
+						else {
 							selectedItems = searchContainerSelect.getCurrentPageSelectedElements();
 						}
 					}

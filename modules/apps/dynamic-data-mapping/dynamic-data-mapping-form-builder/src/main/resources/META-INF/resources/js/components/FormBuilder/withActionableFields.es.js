@@ -96,7 +96,8 @@ class Actions extends Component {
 
 		if (expanded) {
 			fieldContainer.classList.add('expanded');
-		} else {
+		}
+		else {
 			fieldContainer.classList.remove('expanded');
 		}
 	}
@@ -112,7 +113,8 @@ class Actions extends Component {
 			const indexes = getFieldIndexes(pages, fieldName);
 
 			dispatch('fieldClicked', indexes);
-		} else if (!this.expanded && !disabled) {
+		}
+		else if (!this.expanded && !disabled) {
 			this.expanded = true;
 		}
 	}
@@ -266,7 +268,8 @@ const withActionableFields = ChildComponent => {
 				const {fieldName} = focusedField;
 
 				this.showActions(selectedFieldActions, fieldName);
-			} else {
+			}
+			else {
 				selectedFieldActions.props.visible = false;
 			}
 

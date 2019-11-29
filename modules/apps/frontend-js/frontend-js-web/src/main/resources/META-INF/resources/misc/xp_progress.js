@@ -105,7 +105,8 @@ function startBar(bn) {
 			eval(t.action);
 			t.ctr = 0;
 		}
-	} else {
+	}
+	else {
 		t.style.left = parseInt(t.style.left) + t.h + 1 + 'px';
 	}
 }
@@ -113,7 +114,8 @@ function startBar(bn) {
 function togglePause() {
 	if (this.tid == 0) {
 		this.tid = setInterval('startBar(' + this.N + ')', this.speed);
-	} else {
+	}
+	else {
 		clearInterval(this.tid);
 		this.tid = 0;
 	}

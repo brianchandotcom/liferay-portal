@@ -52,7 +52,8 @@
 			});
 
 			retVal = nodes;
-		} else {
+		}
+		else {
 			if (typeof name === 'string') {
 				instance.data('fm.' + name, value);
 			}

@@ -61,7 +61,8 @@ class RuleList extends Component {
 
 				if (rule['logical-operator']) {
 					logicalOperator = rule['logical-operator'].toLowerCase();
-				} else if (rule.logicalOperator) {
+				}
+				else if (rule.logicalOperator) {
 					logicalOperator = rule.logicalOperator.toLowerCase();
 				}
 
@@ -85,12 +86,14 @@ class RuleList extends Component {
 								inputLabel,
 								outputLabel
 							};
-						} else if (action.action == 'jump-to-page') {
+						}
+						else if (action.action == 'jump-to-page') {
 							newAction = {
 								...action,
 								label: this._getJumpToPageLabel(rule, action)
 							};
-						} else {
+						}
+						else {
 							newAction = {
 								...action,
 								label: this._getFieldLabel(action.target)
@@ -185,17 +188,21 @@ class RuleList extends Component {
 
 		if (operand.type === 'field') {
 			label = this._getFieldLabel(operand.value);
-		} else if (operand.type === 'user') {
+		}
+		else if (operand.type === 'user') {
 			label = Liferay.Language.get('user');
-		} else if (operand.type !== 'field') {
+		}
+		else if (operand.type !== 'field') {
 			const fieldType = this._getFieldType(operands[0].value);
 
 			if (fieldType == 'select' || fieldType === 'radio') {
 				label = this._getOptionLabel(operands[0].value, operand.value);
-			} else {
+			}
+			else {
 				label = operand.value;
 			}
-		} else {
+		}
+		else {
 			label = operand.value;
 		}
 
@@ -284,7 +291,8 @@ class RuleList extends Component {
 			this.emit('ruleEdited', {
 				ruleId: cardId
 			});
-		} else if (data.item.settingsItem == 'delete') {
+		}
+		else if (data.item.settingsItem == 'delete') {
 			this.emit('ruleDeleted', {
 				ruleId: cardId
 			});

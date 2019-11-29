@@ -163,7 +163,8 @@ const Sharing = ({
 					.then(() => {
 						setSelectedItems(items);
 					});
-			} else {
+			}
+			else {
 				setEmailAddressErrorMessage(
 					Liferay.Language.get('please-enter-a-valid-email-address')
 				);
@@ -172,7 +173,8 @@ const Sharing = ({
 
 				setSelectedItems(items);
 			}
-		} else {
+		}
+		else {
 			setSelectedItems(items);
 		}
 	};

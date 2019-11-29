@@ -476,7 +476,8 @@ AUI.add(
 										instance.get('rootNode'),
 										data.exception
 									);
-								} else {
+								}
+								else {
 									CalendarUtil.setEventAttrs(
 										schedulerEvent,
 										data

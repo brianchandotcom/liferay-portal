@@ -291,7 +291,8 @@ AUI.add(
 									currentTarget,
 									getSocialActivitySettingMappingCallback
 								);
-							} else if (currentTarget.test(SELECTOR_INPUT)) {
+							}
+							else if (currentTarget.test(SELECTOR_INPUT)) {
 								instance._updateCheckboxStatus(event);
 							}
 						}, 250),
@@ -586,7 +587,8 @@ AUI.add(
 
 					if (!collapsed) {
 						node = instance.bodyNode;
-					} else {
+					}
+					else {
 						instance._toggleLimitFields(item, false);
 					}
 
@@ -616,7 +618,8 @@ AUI.add(
 						actionsNode.insert(actionsConjunction, children.last());
 
 						actionsConjunction.show();
-					} else {
+					}
+					else {
 						actionsConjunction.hide();
 
 						instance.headerNode.toggle(childrenSize == 1);
@@ -630,7 +633,8 @@ AUI.add(
 
 					if (currentTarget.test(SELECTOR_SETTINGS_ICON_CLOSE)) {
 						instance._toggleField(event, true);
-					} else {
+					}
+					else {
 						var collapsed = !currentTarget.hasClass(
 							CSS_SETTINGS_ICON_EXPANDED
 						);
@@ -772,7 +776,8 @@ AUI.add(
 							limitEnabledKey = STR_PARTICIPATION_LIMIT_ENABLED;
 							limitPeriodKey = STR_PARTICIPATION_LIMIT_PERIOD;
 							limitValueKey = STR_PARTICIPATION_LIMIT_VALUE;
-						} else if (counter.name != 'contribution') {
+						}
+						else if (counter.name != 'contribution') {
 							continue;
 						}
 

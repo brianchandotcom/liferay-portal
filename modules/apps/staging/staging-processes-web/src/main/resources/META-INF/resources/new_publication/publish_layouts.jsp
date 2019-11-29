@@ -152,10 +152,12 @@
 				confirm(
 					'<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>'
 				) && submitForm(form);
-			} else {
+			}
+			else {
 				submitForm(form);
 			}
-		} else {
+		}
+		else {
 			exportImport.showNotification(dateChecker);
 		}
 	}
@@ -242,7 +244,8 @@
 			savedConfigurations.hide();
 
 			customConfiguration.show();
-		} else if (dataValue === 'saved') {
+		}
+		else if (dataValue === 'saved') {
 			customConfiguration.hide();
 
 			savedConfigurations.show();

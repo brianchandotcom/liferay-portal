@@ -30,7 +30,8 @@ export default ({newCustomObject}) => {
 	const onCancel = () => {
 		if (newCustomObject) {
 			Liferay.Util.navigate(basePortletURL);
-		} else {
+		}
+		else {
 			Liferay.Util.navigate(listUrl);
 		}
 	};

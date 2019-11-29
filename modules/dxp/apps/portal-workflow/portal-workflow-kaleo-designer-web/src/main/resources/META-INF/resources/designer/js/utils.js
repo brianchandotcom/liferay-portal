@@ -82,7 +82,8 @@ AUI.add(
 
 			try {
 				jsonObj = JSON.parse(val);
-			} catch (e) {}
+			}
+			catch (e) {}
 
 			return jsonObj;
 		};
@@ -94,7 +95,8 @@ AUI.add(
 
 			try {
 				jsonString = JSON.stringify(val);
-			} catch (e) {}
+			}
+			catch (e) {}
 
 			return jsonString;
 		};

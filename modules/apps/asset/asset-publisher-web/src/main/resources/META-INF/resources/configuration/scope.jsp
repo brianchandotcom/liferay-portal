@@ -154,7 +154,8 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 
 			if (!searchContainerData.length) {
 				searchContainerData = [];
-			} else {
+			}
+			else {
 				searchContainerData = searchContainerData.split(',');
 			}
 

@@ -55,7 +55,8 @@ export default (evaluatorContext, dispatch) => {
 				page: activePageUpdated,
 				title: pages[activePageUpdated].title
 			});
-		} else {
+		}
+		else {
 			dispatch('pageValidationFailed', activePage);
 		}
 	});

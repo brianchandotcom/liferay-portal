@@ -179,7 +179,8 @@ class FragmentEditor extends PortletBase {
 						type: 'danger'
 					});
 				});
-		} else {
+		}
+		else {
 			alert(Liferay.Language.get('fragment-html-is-invalid'));
 		}
 	}

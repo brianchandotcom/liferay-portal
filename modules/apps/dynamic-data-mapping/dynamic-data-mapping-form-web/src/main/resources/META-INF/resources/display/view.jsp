@@ -286,7 +286,8 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 					if (<portlet:namespace />form) {
 						<portlet:namespace />initForm();
-					} else {
+					}
+					else {
 						Liferay.componentReady(
 							'<%= ddmFormDisplayContext.getContainerId() %>'
 						).then(function(component) {

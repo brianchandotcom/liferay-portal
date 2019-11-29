@@ -95,14 +95,16 @@ export default function Editor({
 				if (ready) {
 					newEditor.destroy();
 					setEditor(null);
-				} else {
+				}
+				else {
 					instanceReadyEventHandler.removeListener();
 
 					newEditor.get('nativeEditor').once('instanceReady', () => {
 						newEditor.destroy();
 					});
 				}
-			} catch (_err) {
+			}
+			catch (_err) {
 				// https://github.com/liferay/alloy-editor/issues/1306
 			}
 		};

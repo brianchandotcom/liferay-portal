@@ -73,7 +73,8 @@ class MasterFragmentEntryLinkContent extends Component {
 						editable.element,
 						value
 					);
-				} else {
+				}
+				else {
 					const processor =
 						FragmentProcessors[editable.type] ||
 						FragmentProcessors.fallback;

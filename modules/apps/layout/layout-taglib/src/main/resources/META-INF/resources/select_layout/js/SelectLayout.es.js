@@ -90,7 +90,8 @@ class SelectLayout extends Component {
 	_searchNodes(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
-		} else {
+		}
+		else {
 			this.nodes = this.originalNodes;
 		}
 
@@ -99,7 +100,8 @@ class SelectLayout extends Component {
 		if (filterValue !== '') {
 			this.viewType = SelectLayout.VIEW_TYPES.flat;
 			this.nodes = this._filterSiblingNodes(this.nodes, filterValue);
-		} else {
+		}
+		else {
 			this.viewType = SelectLayout.VIEW_TYPES.tree;
 		}
 	}
@@ -130,7 +132,8 @@ class SelectLayout extends Component {
 
 		if (this.followURLOnTitleClick) {
 			Liferay.Util.getOpener().document.location.href = data.url;
-		} else {
+		}
+		else {
 			this.emit(this.itemSelectorSaveEvent, {
 				data
 			});

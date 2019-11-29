@@ -126,7 +126,8 @@ AUI.add(
 						if (openerInFrame) {
 							if (IE9) {
 								instance._syncWindowsUI();
-							} else if (IE11) {
+							}
+							else if (IE11) {
 								instance._resetFocus(modal);
 							}
 						}
@@ -312,7 +313,8 @@ AUI.add(
 					instance._register(modal);
 
 					instance._bindWindowHooks(modal, config);
-				} else {
+				}
+				else {
 					if (!config.zIndex && modal.hasPlugin('zindex')) {
 						delete modalConfig.zIndex;
 					}
@@ -338,7 +340,8 @@ AUI.add(
 					modal.iframe._onLoadIframe = function() {
 						try {
 							originalFn.call(this);
-						} catch (err) {}
+						}
+						catch (err) {}
 					};
 
 					modal.get('boundingBox').addClass('dialog-iframe-modal');
@@ -415,7 +418,8 @@ AUI.add(
 
 					if (autoSizeNode) {
 						height = autoSizeNode.get('offsetHeight');
-					} else {
+					}
+					else {
 						height = DOM.winHeight();
 					}
 
@@ -423,7 +427,8 @@ AUI.add(
 
 					if (modal.get('height') === 'auto') {
 						modal._fillMaxHeight(height);
-					} else {
+					}
+					else {
 						modal.set('height', height);
 					}
 				}
@@ -436,7 +441,8 @@ AUI.add(
 
 						if (autoSizeNode) {
 							width = autoSizeNode.get('offsetWidth');
-						} else {
+						}
+						else {
 							width = DOM.winWidth();
 						}
 
@@ -444,10 +450,12 @@ AUI.add(
 
 						if (width != widthInitial) {
 							modal.set('width', width);
-						} else {
+						}
+						else {
 							setWidth(modal, widthInitial);
 						}
-					} else {
+					}
+					else {
 						setWidth(modal, modal.get('width'));
 					}
 				}

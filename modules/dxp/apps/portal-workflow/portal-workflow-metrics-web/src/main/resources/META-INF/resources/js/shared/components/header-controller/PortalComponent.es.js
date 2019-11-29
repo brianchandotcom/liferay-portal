@@ -28,7 +28,8 @@ export default class PortalComponent extends React.Component {
 		if (replace) {
 			if (container.children.length) {
 				container.removeChild(container.children[0]);
-			} else {
+			}
+			else {
 				container.innerHTML = '';
 			}
 		}

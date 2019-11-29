@@ -199,13 +199,15 @@ AUI.add(
 						if (aspectRatio) {
 							if (cropHeight < cropWidth) {
 								cropWidth = cropHeight;
-							} else {
+							}
+							else {
 								cropHeight = cropWidth;
 							}
 
 							if (aspectRatio > 1) {
 								cropHeight = cropWidth / aspectRatio;
-							} else {
+							}
+							else {
 								cropWidth = cropHeight * aspectRatio;
 							}
 						}
@@ -221,7 +223,8 @@ AUI.add(
 								x: 0,
 								y: 0
 							});
-						} else {
+						}
+						else {
 							imageCropper = new A.ImageCropper({
 								cropHeight,
 								cropWidth,

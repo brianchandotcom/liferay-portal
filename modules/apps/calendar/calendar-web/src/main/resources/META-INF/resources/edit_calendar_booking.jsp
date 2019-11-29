@@ -879,7 +879,8 @@ while (manageableCalendarsIterator.hasNext()) {
 				A.one('#<portlet:namespace />publishButton').setContent(
 					'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-publication")) %>'
 				);
-			} else {
+			}
+			else {
 				A.one('#<portlet:namespace />approvalProcessAlert').toggleClass(
 					'hide',
 					true
@@ -924,12 +925,14 @@ while (manageableCalendarsIterator.hasNext()) {
 					function(result) {
 						if (result) {
 							<portlet:namespace />calendarListDeclined.add(calendar);
-						} else {
+						}
+						else {
 							<portlet:namespace />calendarListPending.add(calendar);
 						}
 					}
 				);
-			} else {
+			}
+			else {
 				<portlet:namespace />calendarListPending.add(calendar);
 			}
 		};
@@ -981,7 +984,8 @@ while (manageableCalendarsIterator.hasNext()) {
 			startTimeMinutes = 0;
 			endTimeHours = 23;
 			endTimeMinutes = 59;
-		} else {
+		}
+		else {
 			placeholderSchedulerEvent.set('allDay', false);
 
 			endDateContainer.show();

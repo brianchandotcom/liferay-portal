@@ -120,7 +120,8 @@ class SLAListCard extends React.Component {
 		if (status === AppStatus.slaUpdated || status === AppStatus.slaSaved) {
 			if (status === AppStatus.slaUpdated) {
 				openSuccessToast(Liferay.Language.get('sla-was-updated'));
-			} else {
+			}
+			else {
 				openSuccessToast(Liferay.Language.get('sla-was-saved'));
 			}
 

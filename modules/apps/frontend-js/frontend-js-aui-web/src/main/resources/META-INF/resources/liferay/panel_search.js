@@ -126,11 +126,13 @@ AUI.add(
 
 							instance._collapsedCategories = null;
 						}
-					} else if (query === '*') {
+					}
+					else if (query === '*') {
 						categories.show();
 
 						instance._setItemsVisibility(true);
-					} else {
+					}
+					else {
 						categories.hide();
 
 						instance._setItemsVisibility(false);

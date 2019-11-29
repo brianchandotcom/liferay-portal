@@ -187,7 +187,8 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 		if (dateChecker.validRange) {
 			submitForm(form, form.attr('action'), false);
-		} else {
+		}
+		else {
 			exportImport.showNotification(dateChecker);
 		}
 	});

@@ -74,7 +74,8 @@ function getLastVisible(node) {
 
 	if (!node.expanded || !childCount) {
 		return node;
-	} else {
+	}
+	else {
 		return getLastVisible(node.children[childCount - 1]);
 	}
 }
@@ -231,7 +232,8 @@ function reducer(state, action) {
 							break;
 						}
 					}
-				} else {
+				}
+				else {
 					while (node) {
 						if (node.id !== action.nodeId) {
 							// Not the first iteration and we found a match: done.
@@ -286,7 +288,8 @@ function reducer(state, action) {
 							break;
 						}
 					}
-				} else {
+				}
+				else {
 					while (node) {
 						if (node.id !== action.nodeId) {
 							break;
@@ -298,7 +301,8 @@ function reducer(state, action) {
 							);
 
 							break;
-						} else {
+						}
+						else {
 							// Go to parent.
 							node = nodeMap[node.parentId];
 							break;
@@ -323,13 +327,15 @@ function reducer(state, action) {
 
 				if (filteredNodes) {
 					lastId = nodes[lastIndex] && nodes[lastIndex].id;
-				} else {
+				}
+				else {
 					let node = nodes[lastIndex];
 
 					while (node) {
 						if (node.children.length && node.expanded) {
 							node = node.children[node.children.length - 1];
-						} else {
+						}
+						else {
 							break;
 						}
 					}
@@ -422,7 +428,8 @@ function reducer(state, action) {
 								};
 							})
 						};
-					} else if (node.parentId) {
+					}
+					else if (node.parentId) {
 						return {
 							...state,
 							focusedNodeId: node.parentId
@@ -449,7 +456,8 @@ function reducer(state, action) {
 								};
 							})
 						};
-					} else if (node.children.length) {
+					}
+					else if (node.children.length) {
 						return {
 							...state,
 							focusedNodeId: node.children[0].id
@@ -473,9 +481,11 @@ function reducer(state, action) {
 							selectedId => selectedId !== id
 						)
 					);
-				} else if (multiSelection) {
+				}
+				else if (multiSelection) {
 					selectedNodeIds = new Set([...selectedNodeIds, id]);
-				} else {
+				}
+				else {
 					selectedNodeIds = new Set([id]);
 				}
 
@@ -494,7 +504,8 @@ function reducer(state, action) {
 										...node,
 										selected: !node.selected
 									};
-								} else {
+								}
+								else {
 									return node;
 								}
 							},
@@ -536,7 +547,8 @@ function visit(node, callback, nodeMap) {
 
 		if (nextChildren) {
 			nextChildren.push(updated);
-		} else if (updated !== child) {
+		}
+		else if (updated !== child) {
 			nextChildren = children.slice(0, i).concat([updated]);
 		}
 	}

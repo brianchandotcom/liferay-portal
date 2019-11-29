@@ -150,7 +150,8 @@ AUI.add(
 							'transform',
 							'matrix(1,0,0,1,2,2)'
 						);
-					} else {
+					}
+					else {
 						icon.setAttribute('height', '34px');
 						icon.setAttribute('width', '34px');
 						instance.boundary.set(
@@ -271,7 +272,8 @@ AUI.add(
 							parentModel,
 							arguments
 						);
-					} else {
+					}
+					else {
 						returnValue = model.concat(parentModel);
 					}
 
@@ -394,7 +396,8 @@ AUI.add(
 							parentModel,
 							arguments
 						);
-					} else {
+					}
+					else {
 						returnValue = model.concat(parentModel);
 					}
 

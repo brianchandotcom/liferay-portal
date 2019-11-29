@@ -162,7 +162,8 @@ class RuleEditor extends Component {
 				.catch(error => {
 					throw new Error(error);
 				});
-		} else {
+		}
+		else {
 			promise = Promise.resolve(this.actions[index]);
 		}
 
@@ -193,7 +194,8 @@ class RuleEditor extends Component {
 
 		if (fieldType == 'list') {
 			list = ['checkbox_multiple', 'radio', 'select'];
-		} else if (fieldType == 'text') {
+		}
+		else if (fieldType == 'text') {
 			list = [
 				'checkbox_multiple',
 				'date',
@@ -202,7 +204,8 @@ class RuleEditor extends Component {
 				'select',
 				'text'
 			];
-		} else if (fieldType == 'number') {
+		}
+		else if (fieldType == 'number') {
 			list = ['numeric'];
 		}
 
@@ -231,11 +234,13 @@ class RuleEditor extends Component {
 
 		if (id === undefined) {
 			actions[index].target = '';
-		} else if (id === '') {
+		}
+		else if (id === '') {
 			actions[index].inputs = {};
 			actions[index].outputs = {};
 			actions[index].hasRequiredInputs = false;
-		} else if (
+		}
+		else if (
 			previousTarget !== id &&
 			actions[index].action == 'calculate'
 		) {
@@ -604,7 +609,8 @@ class RuleEditor extends Component {
 
 		if (fieldName === 'user') {
 			dataType = 'user';
-		} else {
+		}
+		else {
 			const selectedField = this.actionsFieldOptions.find(
 				field => field.value === fieldName
 			);
@@ -701,10 +707,12 @@ class RuleEditor extends Component {
 							: action;
 					});
 				}
-			} else {
+			}
+			else {
 				newActions.push({action: fieldName});
 			}
-		} else {
+		}
+		else {
 			newActions = this._clearAction(index);
 		}
 
@@ -821,7 +829,8 @@ class RuleEditor extends Component {
 				const operands = [firstOperand];
 
 				conditions.push({operands});
-			} else {
+			}
+			else {
 				if (fieldName !== conditions[index].operands[0].value) {
 					conditions[index].operator = '';
 					this._clearSecondOperandValue(conditions, index);
@@ -829,7 +838,8 @@ class RuleEditor extends Component {
 
 				conditions[index].operands[0] = firstOperand;
 			}
-		} else {
+		}
+		else {
 			conditions = this._clearAllConditionFieldValues(index);
 		}
 
@@ -930,7 +940,8 @@ class RuleEditor extends Component {
 			conditions = this._clearSecondOperandValue(conditions, index);
 
 			conditions[index].operator = operatorValue;
-		} else {
+		}
+		else {
 			conditions[index].operator = operatorValue;
 		}
 
@@ -963,7 +974,8 @@ class RuleEditor extends Component {
 
 		if (value && typeof value == 'object' && value[0]) {
 			fieldValue = value[0];
-		} else if (value && typeof value == 'string') {
+		}
+		else if (value && typeof value == 'string') {
 			fieldValue = value;
 		}
 
@@ -1026,14 +1038,16 @@ class RuleEditor extends Component {
 
 		if (value[0] == '') {
 			conditions = this._clearSecondOperandValue(conditions, index);
-		} else if (secondOperand && secondOperand.dataType != valueType) {
+		}
+		else if (secondOperand && secondOperand.dataType != valueType) {
 			conditions[index].operands[1].type = '';
 			conditions[index].operands[1].value = '';
 		}
 
 		if (secondOperand) {
 			secondOperand.type = secondOperandType;
-		} else if (value[0] !== '') {
+		}
+		else if (value[0] !== '') {
 			conditions[index].operands.push({
 				type: secondOperandType,
 				value: ''
@@ -1080,7 +1094,8 @@ class RuleEditor extends Component {
 
 		if (previousTarget !== id && actions[index].action == 'auto-fill') {
 			this.populateDataProviderOptions(id, index);
-		} else {
+		}
+		else {
 			this.populateActionTargetValue(id, index);
 		}
 	}
@@ -1174,12 +1189,14 @@ class RuleEditor extends Component {
 					inputs,
 					outputs
 				};
-			} else if (actionType == 'calculate') {
+			}
+			else if (actionType == 'calculate') {
 				newAction = {
 					...newAction,
 					expression
 				};
-			} else if (actionType == 'jump-to-page') {
+			}
+			else if (actionType == 'jump-to-page') {
 				newAction = {
 					...newAction,
 					source: `${source}`,
@@ -1348,7 +1365,8 @@ class RuleEditor extends Component {
 				!targetFieldExists
 			) {
 				action.target = '';
-			} else if (action.action == 'auto-fill') {
+			}
+			else if (action.action == 'auto-fill') {
 				action = {
 					...action,
 					calculatorFields: []
@@ -1421,7 +1439,8 @@ class RuleEditor extends Component {
 
 				if (action == '') {
 					allFieldsFilled = false;
-				} else if (target == '') {
+				}
+				else if (target == '') {
 					allFieldsFilled = false;
 				}
 			});
@@ -1436,7 +1455,8 @@ class RuleEditor extends Component {
 					allFieldsFilled =
 						this._validateInputOutputs(autofillActions) &&
 						this._validateActionsCalculateFilling(calculateActions);
-				} else if (autofillActions && autofillActions.length > 0) {
+				}
+				else if (autofillActions && autofillActions.length > 0) {
 					allFieldsFilled =
 						this._validateActionsAutoFill(
 							autofillActions,
@@ -1446,7 +1466,8 @@ class RuleEditor extends Component {
 							autofillActions,
 							'outputs'
 						);
-				} else if (calculateActions && calculateActions.length > 0) {
+				}
+				else if (calculateActions && calculateActions.length > 0) {
 					allFieldsFilled = this._validateActionsCalculateFilling(
 						calculateActions
 					);
@@ -1466,7 +1487,8 @@ class RuleEditor extends Component {
 
 			if (operands[0].value == '' || !operator) {
 				return false;
-			} else if (
+			}
+			else if (
 				operator &&
 				this._isBinary(operator) &&
 				!(operands[1] && !!operands[1].value && operands[1].value != '')

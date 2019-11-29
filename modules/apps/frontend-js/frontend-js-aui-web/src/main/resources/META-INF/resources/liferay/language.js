@@ -32,7 +32,8 @@
 			if (extraParams) {
 				if (typeof extraParams == 'string') {
 					url += extraParams;
-				} else if (Array.isArray(extraParams)) {
+				}
+				else if (Array.isArray(extraParams)) {
 					url += extraParams.join('/');
 				}
 			}

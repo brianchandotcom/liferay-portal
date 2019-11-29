@@ -144,7 +144,8 @@ class CardsTreeview extends Treeview {
 			path.push(0);
 
 			nextNodeObj = this.getNodeObj(path);
-		} else {
+		}
+		else {
 			while (!nextNodeObj && path.length > 0) {
 				path[path.length - 1]++;
 
@@ -172,7 +173,8 @@ class CardsTreeview extends Treeview {
 			path.pop();
 
 			prevNodeObj = this.getNodeObj(path);
-		} else {
+		}
+		else {
 			path[path.length - 1]--;
 
 			prevNodeObj = this.getNodeObj(path);
@@ -206,10 +208,12 @@ class CardsTreeview extends Treeview {
 		if (this.multiSelection) {
 			if (node.selected) {
 				this.deselectNode_(node);
-			} else {
+			}
+			else {
 				this.selectNode_(node);
 			}
-		} else if (!node.selected) {
+		}
+		else if (!node.selected) {
 			this.deselectAll_();
 			this.selectNode_(node);
 		}
@@ -236,15 +240,19 @@ class CardsTreeview extends Treeview {
 			this.setNodeExpandedState_(node, {
 				expanded: false
 			});
-		} else if (event.keyCode === 38) {
+		}
+		else if (event.keyCode === 38) {
 			this.focusPrevNode_(node);
-		} else if (event.keyCode === 39) {
+		}
+		else if (event.keyCode === 39) {
 			this.setNodeExpandedState_(node, {
 				expanded: true
 			});
-		} else if (event.keyCode === 40) {
+		}
+		else if (event.keyCode === 40) {
 			this.focusNextNode_(node);
-		} else if (event.keyCode === 13 || event.keyCode === 32) {
+		}
+		else if (event.keyCode === 13 || event.keyCode === 32) {
 			this.handleNodeClicked_(event);
 		}
 	}

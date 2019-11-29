@@ -117,7 +117,8 @@ CKEDITOR.plugins.link = {
 				if (selectedElement.is('a')) {
 					selectedLink = selectedElement;
 				}
-			} else {
+			}
+			else {
 				var range = selection.getRanges(true)[0];
 
 				range.shrink(CKEDITOR.SHRINK_TEXT);
@@ -126,7 +127,8 @@ CKEDITOR.plugins.link = {
 
 				selectedLink = root.getAscendant('a', true);
 			}
-		} catch (e) {}
+		}
+		catch (e) {}
 
 		return selectedLink;
 	}

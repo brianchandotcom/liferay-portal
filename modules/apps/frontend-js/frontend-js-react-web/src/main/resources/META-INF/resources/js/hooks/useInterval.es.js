@@ -28,7 +28,8 @@ export default function useInterval() {
 			const handle = setInterval(() => {
 				if (isMounted()) {
 					fn();
-				} else {
+				}
+				else {
 					clearInterval(handle);
 				}
 			}, ms);

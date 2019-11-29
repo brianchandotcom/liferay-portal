@@ -58,7 +58,8 @@ export const handleResizeRight = (
 				...nextColumn,
 				size: Math.min(nextColumn.size + newSize, 12)
 			};
-		} else if (targetColumn > currentPosition) {
+		}
+		else if (targetColumn > currentPosition) {
 			if (nextColumn.size === 1 && nextColumn.fields.length === 0) {
 				newCurrentColumn = {
 					...currentColumn,
@@ -71,7 +72,8 @@ export const handleResizeRight = (
 					rowIndex,
 					columnIndex + 1
 				);
-			} else if (nextColumn.size > newSize) {
+			}
+			else if (nextColumn.size > newSize) {
 				newCurrentColumn = {
 					...currentColumn,
 					size: currentColumn.size + newSize
@@ -93,7 +95,8 @@ export const handleResizeRight = (
 				newNextColumn
 			);
 		}
-	} else if (
+	}
+	else if (
 		currentColumn.size > currentPosition - targetColumn &&
 		targetColumn < currentPosition
 	) {
@@ -179,7 +182,8 @@ export const handleResizeLeft = (state, source, targetColumn) => {
 				size: currentColumn.size + 1
 			}
 		);
-	} else if (previousColumn) {
+	}
+	else if (previousColumn) {
 		const newSize = Math.abs(previousColumnPosition - targetColumn);
 
 		if (
@@ -188,7 +192,8 @@ export const handleResizeLeft = (state, source, targetColumn) => {
 		) {
 			currentColumn.size += newSize;
 			previousColumn.size -= newSize;
-		} else if (
+		}
+		else if (
 			previousColumnPosition < targetColumn &&
 			currentColumn.size > newSize
 		) {
@@ -211,7 +216,8 @@ export const handleResizeLeft = (state, source, targetColumn) => {
 			columnIndex - 1,
 			previousColumn
 		);
-	} else if (columnIndex === 0 && targetColumn > 0) {
+	}
+	else if (columnIndex === 0 && targetColumn > 0) {
 		newPages = FormSupport.addColumn(
 			newPages,
 			columnIndex,
@@ -256,7 +262,8 @@ export const handleColumnResized = (state, source, column, direction) => {
 	if (currentColumn) {
 		if (direction === 'left') {
 			newPages = handleResizeLeft(state, source, column);
-		} else {
+		}
+		else {
 			newPages = handleResizeRight(state, sourceIndexes, column + 1);
 		}
 	}

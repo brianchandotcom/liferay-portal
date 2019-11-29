@@ -114,7 +114,8 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 					classNameIds: Liferay.Util.listSelect(currentClassNameIdsSelect)
 				}
 			});
-		} else {
+		}
+		else {
 			submitForm(form);
 		}
 	}

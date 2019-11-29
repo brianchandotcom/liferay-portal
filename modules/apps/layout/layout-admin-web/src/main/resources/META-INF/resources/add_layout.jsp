@@ -146,7 +146,8 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 						id: '<portlet:namespace />addLayoutDialog',
 						redirect: redirectURL.toString()
 					});
-				} else {
+				}
+				else {
 					new Liferay.Alert({
 						delay: {
 							hide: 3000,

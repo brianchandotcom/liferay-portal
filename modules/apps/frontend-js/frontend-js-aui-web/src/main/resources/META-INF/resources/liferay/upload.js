@@ -445,7 +445,8 @@ AUI.add(
 						});
 
 						instance._fileListTPL.render(files, fileListContent);
-					} else if (instance._allRowIdsCheckbox) {
+					}
+					else if (instance._allRowIdsCheckbox) {
 						instance._allRowIdsCheckbox.attr('checked', true);
 					}
 				},
@@ -470,11 +471,14 @@ AUI.add(
 
 						if (size === 0) {
 							error = strings.zeroByteSizeText;
-						} else if (name.length > 240) {
+						}
+						else if (name.length > 240) {
 							error = strings.invalidFileNameText;
-						} else if (maxFileSize > 0 && size > maxFileSize) {
+						}
+						else if (maxFileSize > 0 && size > maxFileSize) {
 							error = instance._invalidFileSizeText;
-						} else if (
+						}
+						else if (
 							maxUploadRequestSize > 0 &&
 							size > maxUploadRequestSize
 						) {
@@ -483,7 +487,8 @@ AUI.add(
 
 						if (error) {
 							item.error = error;
-						} else {
+						}
+						else {
 							file = item;
 						}
 
@@ -560,9 +565,11 @@ AUI.add(
 
 					if (currentTarget.hasClass('select-file')) {
 						instance._onSelectFileClick(currentTarget);
-					} else if (currentTarget.hasClass('delete-button')) {
+					}
+					else if (currentTarget.hasClass('delete-button')) {
 						instance._onDeleteFileClick(currentTarget);
-					} else if (currentTarget.hasClass('cancel-button')) {
+					}
+					else if (currentTarget.hasClass('cancel-button')) {
 						instance._onCancelFileClick(currentTarget);
 					}
 				},
@@ -744,7 +751,8 @@ AUI.add(
 									li
 								);
 							});
-					} else {
+					}
+					else {
 						instance._handleDeleteResponse(failureResponse, li);
 					}
 				},
@@ -774,7 +782,8 @@ AUI.add(
 								uploadQueue.addToQueueBottom,
 								uploadQueue
 							);
-						} else {
+						}
+						else {
 							uploader.uploadAll();
 						}
 					}
@@ -817,7 +826,8 @@ AUI.add(
 
 					try {
 						data = JSON.parse(data);
-					} catch (e) {}
+					}
+					catch (e) {}
 
 					if (
 						data.status &&
@@ -837,10 +847,12 @@ AUI.add(
 							li.placeBefore(newLiNode);
 
 							li.remove(true);
-						} else {
+						}
+						else {
 							instance._fileListContent.prepend(newLiNode);
 						}
-					} else {
+					}
+					else {
 						if (li) {
 							if (data.warningMessages) {
 								file.selected = true;
@@ -852,7 +864,8 @@ AUI.add(
 								li.placeBefore(newLiNode);
 
 								li.remove(true);
-							} else if (data.name) {
+							}
+							else if (data.name) {
 								file.selected = true;
 								file.temp = true;
 								file.name = data.name;
@@ -873,7 +886,8 @@ AUI.add(
 								li.placeBefore(newLiNode);
 
 								li.remove(true);
-							} else {
+							}
+							else {
 								li.replaceClass(
 									'file-uploading',
 									'pending-file upload-complete selectable selected'
@@ -938,7 +952,8 @@ AUI.add(
 							strings.uploadingFileXofXText,
 							[position, filesTotal]
 						);
-					} else {
+					}
+					else {
 						currentListText = strings.uploadingText;
 
 						instance._fileListContent
@@ -1079,7 +1094,8 @@ AUI.add(
 								.then(response =>
 									instance._formatTempFiles(response)
 								);
-						} else {
+						}
+						else {
 							tempFileURL.method(
 								tempFileURL.params,
 								A.bind('_formatTempFiles', instance)
@@ -1106,7 +1122,8 @@ AUI.add(
 
 					if (firstLi) {
 						firstLi.placeBefore(fileListHTML);
-					} else {
+					}
+					else {
 						fileListContent.append(fileListHTML);
 					}
 
@@ -1156,7 +1173,8 @@ AUI.add(
 
 					if (!instance.get('multipleFiles')) {
 						infoTitle.html('');
-					} else if (infoTitle) {
+					}
+					else if (infoTitle) {
 						var listText =
 							message ||
 							Lang.sub(strings.xFilesReadyText, [listLength]);
@@ -1230,12 +1248,14 @@ AUI.add(
 											'data-title'
 										);
 									}
-								} else if (
+								}
+								else if (
 									selectedFilesCount === totalFilesCount
 								) {
 									selectedFilesText =
 										strings.allFilesSelectedText;
-								} else if (selectedFilesCount > 1) {
+								}
+								else if (selectedFilesCount > 1) {
 									selectedFilesText = Lang.sub(
 										strings.xFilesSelectedText,
 										[selectedFilesCount]
@@ -1440,7 +1460,8 @@ AUI.add(
 					) {
 						if (fallback) {
 							fallback.show();
-						} else {
+						}
+						else {
 							instance
 								.one('#fileUpload')
 								.append(
@@ -1456,7 +1477,8 @@ AUI.add(
 								event.preventDefault();
 							}
 						);
-					} else {
+					}
+					else {
 						var maxFileSize = Liferay.Util.formatStorage(
 							instance.get('maxFileSize')
 						);

@@ -100,13 +100,15 @@ export default function formatXML(content, options = {}) {
 
 				inComment = commentCounter !== 0;
 			}
-		} else if (REGEX_DECLARATIVE_CLOSE.test(item)) {
+		}
+		else if (REGEX_DECLARATIVE_CLOSE.test(item)) {
 			result += item;
 
 			commentCounter--;
 
 			inComment = commentCounter !== 0;
-		} else if (
+		}
+		else if (
 			REGEX_ELEMENT.exec(items[index - 1]) &&
 			REGEX_ELEMENT_CLOSE.exec(item) &&
 			REGEX_ELEMENT_NAMESPACED.exec(items[index - 1]) ==
@@ -120,42 +122,53 @@ export default function formatXML(content, options = {}) {
 			if (!inComment) {
 				--level;
 			}
-		} else if (
+		}
+		else if (
 			REGEX_ELEMENT_OPEN.test(item) &&
 			!REGEX_TAG_CLOSE.test(item) &&
 			!REGEX_TAG_SINGLE_CLOSE.test(item)
 		) {
 			if (inComment) {
 				result += item;
-			} else {
+			}
+			else {
 				result += indent(level++, newLine, tagIndent) + item;
 			}
-		} else if (
+		}
+		else if (
 			REGEX_ELEMENT_OPEN.test(item) &&
 			REGEX_TAG_CLOSE.test(item)
 		) {
 			if (inComment) {
 				result += item;
-			} else {
+			}
+			else {
 				result += indent(level, newLine, tagIndent) + item;
 			}
-		} else if (REGEX_TAG_CLOSE.test(item)) {
+		}
+		else if (REGEX_TAG_CLOSE.test(item)) {
 			if (inComment) {
 				result += item;
-			} else {
+			}
+			else {
 				result += indent(--level, newLine, tagIndent) + item;
 			}
-		} else if (REGEX_TAG_SINGLE_CLOSE.test(item)) {
+		}
+		else if (REGEX_TAG_SINGLE_CLOSE.test(item)) {
 			if (inComment) {
 				result += item;
-			} else {
+			}
+			else {
 				result += indent(level, newLine, tagIndent) + item;
 			}
-		} else if (REGEX_DIRECTIVE.test(item)) {
+		}
+		else if (REGEX_DIRECTIVE.test(item)) {
 			result += indent(level, newLine, tagIndent) + item;
-		} else if (REGEX_NAMESPACE_XML) {
+		}
+		else if (REGEX_NAMESPACE_XML) {
 			result += indent(level, newLine, tagIndent) + item;
-		} else {
+		}
+		else {
 			result += item;
 		}
 

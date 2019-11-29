@@ -76,7 +76,8 @@ const FragmentComment = props => {
 
 				if (showResolvedComments) {
 					props.onEdit(comment);
-				} else if (!resolved) {
+				}
+				else if (!resolved) {
 					setShowResolveMask(true);
 					hideComment(() => props.onEdit(comment));
 				}

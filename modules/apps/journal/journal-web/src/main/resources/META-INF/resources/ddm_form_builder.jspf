@@ -107,7 +107,8 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 		if (formEditor && !checkViewTabActive()) {
 			content = formEditor.get(STR_VALUE);
-		} else {
+		}
+		else {
 			content = formBuilder.getContent();
 		}
 
@@ -157,10 +158,12 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 			displayWarning(
 				'<liferay-ui:message key="you-cannot-remove-default-attributes" />'
 			);
-		} else {
+		}
+		else {
 			try {
 				content = JSON.parse(content);
-			} catch (e) {
+			}
+			catch (e) {
 				displayWarning(
 					'<liferay-ui:message key="you-have-entered-invalid-json" />'
 				);
@@ -201,7 +204,8 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var switchToView = function() {
 		if (formEditor) {
 			reloadFormBuilderData(formEditor.get(STR_VALUE));
-		} else if (formBuilder) {
+		}
+		else if (formBuilder) {
 			reloadFormBuilderData(formBuilder.getContent());
 		}
 	};
@@ -255,7 +259,8 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var afterShowTab = function(event) {
 		if (checkViewTabActive()) {
 			switchToView();
-		} else {
+		}
+		else {
 			switchToSource();
 		}
 	};

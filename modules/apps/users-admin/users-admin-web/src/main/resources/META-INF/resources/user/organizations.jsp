@@ -206,7 +206,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 				if (!searchContainerData.length) {
 					searchContainerData = [];
-				} else {
+				}
+				else {
 					searchContainerData = searchContainerData.split(',');
 				}
 

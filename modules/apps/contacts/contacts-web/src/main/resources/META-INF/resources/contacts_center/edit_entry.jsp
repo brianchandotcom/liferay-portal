@@ -115,7 +115,8 @@ if (entryId > 0) {
 
 						message.html(data.message);
 					}
-				} else {
+				}
+				else {
 					Liferay.component('contactsCenter').renderEntry(data);
 
 					Liferay.component('contactsCenter').closePopup();

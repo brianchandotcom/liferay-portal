@@ -391,7 +391,8 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 									values.item(index).attr('disabled', false);
 								}
 							});
-						} else {
+						}
+						else {
 							values.attr('disabled', true);
 						}
 					}

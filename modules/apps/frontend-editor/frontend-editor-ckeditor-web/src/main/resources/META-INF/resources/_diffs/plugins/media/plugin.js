@@ -307,7 +307,8 @@
 
 				if (instance.isElementType(element, 'audio')) {
 					type = 'audio';
-				} else if (instance.isElementType(element, 'video')) {
+				}
+				else if (instance.isElementType(element, 'video')) {
 					type = 'video';
 				}
 
@@ -325,7 +326,8 @@
 
 						if (instance.isElementType(element, 'audio')) {
 							type = 'audio';
-						} else if (instance.isElementType(element, 'video')) {
+						}
+						else if (instance.isElementType(element, 'video')) {
 							type = 'video';
 						}
 
@@ -379,7 +381,8 @@
 
 			if (video) {
 				callerInstance.commitContent(divNode, extraStyles);
-			} else {
+			}
+			else {
 				callerInstance.commitContent(divNode);
 			}
 
@@ -404,7 +407,8 @@
 				newFakeImage.replace(callerInstance.fakeImage);
 
 				editor.getSelection().selectElement(newFakeImage);
-			} else {
+			}
+			else {
 				editor.insertHtml(newFakeImage.getOuterHtml());
 			}
 		},

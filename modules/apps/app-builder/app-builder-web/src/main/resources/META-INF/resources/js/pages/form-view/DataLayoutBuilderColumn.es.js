@@ -49,7 +49,8 @@ export default ({node}) => {
 						indexes
 					})
 				);
-			} else if (type === DRAG_CUSTOM_OBJECT_FIELD) {
+			}
+			else if (type === DRAG_CUSTOM_OBJECT_FIELD) {
 				dataLayoutBuilder.dispatch(
 					'fieldAdded',
 					dropCustomObjectField({
@@ -85,13 +86,15 @@ export default ({node}) => {
 
 		if (canDrop && classList.contains('ddm-empty-page')) {
 			classList.add('target-droppable');
-		} else {
+		}
+		else {
 			classList.remove('target-droppable');
 		}
 
 		if (overTarget) {
 			classList.add('target-over');
-		} else {
+		}
+		else {
 			classList.remove('target-over');
 		}
 	}, [canDrop, node, overTarget]);

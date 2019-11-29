@@ -112,7 +112,8 @@ AUI.add(
 
 				if (comments && !instance._comments[randomId]) {
 					instance._comments[randomId] = comments;
-				} else if (!comments && instance._comments[randomId]) {
+				}
+				else if (!comments && instance._comments[randomId]) {
 					comments = instance._comments[randomId];
 				}
 
@@ -124,7 +125,8 @@ AUI.add(
 
 				if (content && !instance._content[randomId]) {
 					instance._content[randomId] = content;
-				} else if (!content && instance._content[randomId]) {
+				}
+				else if (!content && instance._content[randomId]) {
 					content = instance._content[randomId];
 				}
 
@@ -136,7 +138,8 @@ AUI.add(
 
 				if (form && !instance._forms[randomId]) {
 					instance._forms[randomId] = form;
-				} else if (!form && instance._forms[randomId]) {
+				}
+				else if (!form && instance._forms[randomId]) {
 					form = instance._forms[randomId];
 				}
 
@@ -170,7 +173,8 @@ AUI.add(
 
 				if (comments && !instance._comments[randomId]) {
 					instance._comments[randomId] = comments;
-				} else if (!comments && instance._comments[randomId]) {
+				}
+				else if (!comments && instance._comments[randomId]) {
 					comments = instance._comments[randomId];
 				}
 

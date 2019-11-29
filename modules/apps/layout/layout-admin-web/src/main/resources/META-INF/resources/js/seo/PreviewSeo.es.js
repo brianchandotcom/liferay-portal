@@ -104,11 +104,14 @@ const PreviewSeoContainer = ({
 
 			if (type === 'description') {
 				setDescription(value);
-			} else if (type === 'title') {
+			}
+			else if (type === 'title') {
 				setTitle(value);
-			} else if (type === 'url') {
+			}
+			else if (type === 'url') {
 				setUrl(value);
-			} else if (type === 'imgUrl') {
+			}
+			else if (type === 'imgUrl') {
 				setImgUrl(value);
 			}
 		};

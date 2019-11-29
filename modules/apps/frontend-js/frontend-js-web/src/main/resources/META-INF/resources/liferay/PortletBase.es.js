@@ -79,11 +79,14 @@ class PortletBase extends Component {
 
 		if (body instanceof FormData) {
 			requestBody = body;
-		} else if (body instanceof HTMLFormElement) {
+		}
+		else if (body instanceof HTMLFormElement) {
 			requestBody = new FormData(body);
-		} else if (typeof body === 'object') {
+		}
+		else if (typeof body === 'object') {
 			requestBody = objectToFormData(this.ns(body));
-		} else {
+		}
+		else {
 			requestBody = body;
 		}
 

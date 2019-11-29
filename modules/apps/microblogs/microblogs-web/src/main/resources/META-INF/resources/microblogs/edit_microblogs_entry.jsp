@@ -395,7 +395,8 @@ if (comment) {
 
 			if (query) {
 				event.query = query[0].substr(1);
-			} else {
+			}
+			else {
 				event.preventDefault();
 			}
 
@@ -487,7 +488,8 @@ if (comment) {
 						highlighterContent.removeClass('textbox');
 
 						createTextarea('#<portlet:namespace />autocompleteContent');
-					} else {
+					}
+					else {
 						contentInput.focus();
 					}
 				});

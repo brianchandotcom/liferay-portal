@@ -64,13 +64,17 @@
 
 		if (windowWidth >= screenLg) {
 			region = 'lg';
-		} else if (windowWidth >= screenMd) {
+		}
+		else if (windowWidth >= screenMd) {
 			region = 'md';
-		} else if (windowWidth >= screenSm) {
+		}
+		else if (windowWidth >= screenSm) {
 			region = 'sm';
-		} else if (windowWidth >= screenXs) {
+		}
+		else if (windowWidth >= screenXs) {
 			region = 'xs';
-		} else {
+		}
+		else {
 			region = 'xxs';
 		}
 
@@ -114,7 +118,8 @@
 
 			if (instance.options.useDelegate) {
 				instance._onDelegateClickTrigger();
-			} else {
+			}
+			else {
 				instance._onClickTrigger();
 			}
 
@@ -155,7 +160,8 @@
 
 			if (desktop && type === 'fixed-push') {
 				return 'desktop-fixed-push';
-			} else if (!desktop && typeMobile === 'fixed-push') {
+			}
+			else if (!desktop && typeMobile === 'fixed-push') {
 				return 'mobile-fixed-push';
 			}
 
@@ -386,7 +392,8 @@
 
 			if (!bootstrap.Util.supportsTransitionEnd()) {
 				complete.call(instance);
-			} else {
+			}
+			else {
 				el.one(transitionEnd, function() {
 					complete();
 				}).emulateTransitionEnd(SideNavigation.TRANSITION_DURATION);
@@ -413,7 +420,8 @@
 
 					menu.css(positionDirection, width);
 				}
-			} else {
+			}
+			else {
 				instance.showSidenav();
 				instance.setHeight();
 			}
@@ -484,7 +492,8 @@
 				for (var i = 0; i < attribute.length; i++) {
 					els.css(attribute[i], '');
 				}
-			} else {
+			}
+			else {
 				els.css(attribute, '');
 			}
 		},
@@ -509,7 +518,8 @@
 			if (options.useDelegate) {
 				doc.off('click.lexicon.sidenav', instance.togglerSelector);
 				doc.data(instance.dataTogglerSelector, null);
-			} else {
+			}
+			else {
 				container.off('click.lexicon.sidenav');
 			}
 
@@ -523,7 +533,8 @@
 
 			if (instance.useDataAttribute) {
 				instance.hideSimpleSidenav();
-			} else {
+			}
+			else {
 				instance.toggleNavigation(false);
 			}
 		},
@@ -738,7 +749,8 @@
 
 			if (options.heightType === 'equalHeight') {
 				instance.setEqualHeight();
-			} else if (options.heightType === 'fullHeight') {
+			}
+			else if (options.heightType === 'fullHeight') {
 				instance.setFullHeight();
 			}
 		},
@@ -748,7 +760,8 @@
 
 			if (instance.useDataAttribute) {
 				instance.showSimpleSidenav();
-			} else {
+			}
+			else {
 				instance.toggleNavigation(true);
 			}
 		},
@@ -813,7 +826,8 @@
 					if (navigationStartX > contentStartX) {
 						padding = navigationStartX - contentStartX;
 					}
-				} else if (
+				}
+				else if (
 					(options.rtl && options.position === 'left') ||
 					(!options.rtl && sidenavRight)
 				) {
@@ -885,7 +899,8 @@
 
 			if (instance.useDataAttribute) {
 				instance.toggleSimpleSidenav();
-			} else {
+			}
+			else {
 				instance.toggleNavigation();
 			}
 		},
@@ -913,7 +928,8 @@
 					toggler,
 					type: 'openStart.lexicon.sidenav'
 				});
-			} else {
+			}
+			else {
 				container.trigger({
 					toggler,
 					type: 'closedStart.lexicon.sidenav'
@@ -934,7 +950,8 @@
 						toggler,
 						type: 'closed.lexicon.sidenav'
 					});
-				} else {
+				}
+				else {
 					toggler.addClass('open').removeClass('sidenav-transition');
 
 					container.trigger({
@@ -978,7 +995,8 @@
 
 			if (simpleSidenavClosed) {
 				instance.showSimpleSidenav();
-			} else {
+			}
+			else {
 				instance.hideSimpleSidenav();
 			}
 		},
@@ -990,7 +1008,8 @@
 
 			if (instance.useDataAttribute) {
 				closed = instance._isSimpleSidenavClosed();
-			} else {
+			}
+			else {
 				var container = $(instance.options.container);
 
 				closed = container.hasClass('sidenav-transition')
@@ -1057,19 +1076,22 @@
 					if (methodRetVal !== data && methodRetVal !== undefined) {
 						if (methodRetVal.jquery) {
 							retVal = retVal.pushStack(methodRetVal.get());
-						} else {
+						}
+						else {
 							retVal = methodRetVal;
 						}
 
 						return false;
 					}
-				} else if (returnInstance) {
+				}
+				else if (returnInstance) {
 					retVal = null;
 
 					return false;
 				}
 			});
-		} else {
+		}
+		else {
 			this.each(function() {
 				initialize($(this), options, selector);
 			});

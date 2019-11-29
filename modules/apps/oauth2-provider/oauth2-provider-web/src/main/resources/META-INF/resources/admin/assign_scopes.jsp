@@ -307,7 +307,8 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 				) {
 					<portlet:namespace />stickyScopeAliases.push(scopeAlias);
 				}
-			} else {
+			}
+			else {
 				var index = <portlet:namespace />getArrayIndexOfStickyScopeAlias(
 					scopeAlias
 				);

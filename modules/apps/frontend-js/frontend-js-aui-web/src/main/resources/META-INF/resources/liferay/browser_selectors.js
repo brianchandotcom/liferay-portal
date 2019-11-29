@@ -110,7 +110,8 @@ YUI.add(
 							UA.browser = UA.ie;
 							UA.ie = docMode;
 						}
-					} else if (UA.gecko) {
+					}
+					else if (UA.gecko) {
 						UAX.netscape = getVersion(
 							/(Netscape|Navigator)\/([^\s]*)/,
 							userAgent
@@ -121,12 +122,14 @@ YUI.add(
 							/Firefox\/([^\s]*)/,
 							userAgent
 						);
-					} else if (UA.webkit) {
+					}
+					else if (UA.webkit) {
 						UAX.safari = getVersion(
 							/Version\/([^\s]*) Safari/,
 							userAgent
 						);
-					} else {
+					}
+					else {
 						UAX.icab = getVersion(
 							/iCab(?:\/|\s)?([^\s]*)/,
 							userAgent
@@ -144,7 +147,8 @@ YUI.add(
 						if (linux) {
 							UA.os = 'linux';
 							UAX.linux = linux;
-						} else if (sun) {
+						}
+						else if (sun) {
 							UA.os = 'sun';
 							UAX.sun = sun;
 						}
@@ -187,7 +191,8 @@ YUI.add(
 									/\.(\d).*/,
 									'-$1'
 								);
-							} else {
+							}
+							else {
 								uaVersionMinor += '-0';
 							}
 
@@ -208,13 +213,17 @@ YUI.add(
 
 					if (UA.ie) {
 						UA.renderer = 'trident';
-					} else if (UA.edge) {
+					}
+					else if (UA.edge) {
 						UA.renderer = 'edgeHTML';
-					} else if (UA.gecko) {
+					}
+					else if (UA.gecko) {
 						UA.renderer = 'gecko';
-					} else if (UA.webkit) {
+					}
+					else if (UA.webkit) {
 						UA.renderer = 'webkit';
-					} else if (UA.opera) {
+					}
+					else if (UA.opera) {
 						UA.renderer = 'presto';
 					}
 

@@ -200,13 +200,15 @@ if (portletTitleBasedNavigation) {
 													if (originalFileName === item.fileName) {
 														childHTML =
 															'<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
-													} else {
+													}
+													else {
 														childHTML =
 															'<span class="card-bottom success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' +
 															item.fileName +
 															')</span>';
 													}
-												} else {
+												}
+												else {
 													cssClass = 'upload-error';
 
 													childHTML =
@@ -228,7 +230,8 @@ if (portletTitleBasedNavigation) {
 
 											if (commonFileMetadataContainer.io) {
 												commonFileMetadataContainer.io.start();
-											} else {
+											}
+											else {
 												commonFileMetadataContainer.load(
 													'<%= uploadMultipleFileEntries %>'
 												);

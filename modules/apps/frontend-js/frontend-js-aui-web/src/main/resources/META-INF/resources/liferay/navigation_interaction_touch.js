@@ -55,7 +55,8 @@ AUI.add(
 
 							handle.detach();
 						});
-					} else {
+					}
+					else {
 						Liferay.fire('hideNavigationMenu', mapHover);
 
 						if (handle) {

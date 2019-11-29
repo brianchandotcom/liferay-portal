@@ -170,7 +170,8 @@ const EditTableView = ({
 				`/o/data-engine/v1.0/data-list-views/${dataListViewId}`,
 				dataListView
 			).then(() => history.goBack());
-		} else {
+		}
+		else {
 			addItem(
 				`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-list-views`,
 				dataListView
@@ -203,7 +204,8 @@ const EditTableView = ({
 					}));
 				}
 			);
-		} else {
+		}
+		else {
 			getDataDefinition.then(dataDefinition => {
 				setState(prevState => ({
 					...prevState,

@@ -179,7 +179,8 @@ name = HtmlUtil.escapeJS(name);
 
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
-		} else {
+		}
+		else {
 			data =
 				'<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
@@ -369,7 +370,8 @@ name = HtmlUtil.escapeJS(name);
 
 			if (alloyEditor && alloyEditor.instanceReady) {
 				data = alloyEditor.getHTML();
-			} else {
+			}
+			else {
 				data = getInitialContent();
 			}
 
@@ -391,7 +393,8 @@ name = HtmlUtil.escapeJS(name);
 
 			if (alloyEditor && alloyEditor.instanceReady) {
 				data = alloyEditor.getText();
-			} else {
+			}
+			else {
 				data = getInitialContent();
 			}
 

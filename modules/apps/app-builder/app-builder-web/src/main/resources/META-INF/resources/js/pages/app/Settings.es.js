@@ -53,7 +53,8 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 									deploymentType,
 									type: ADD_DEPLOYMENT
 								});
-							} else {
+							}
+							else {
 								dispatch({
 									deploymentType,
 									type: REMOVE_DEPLOYMENT

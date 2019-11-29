@@ -60,7 +60,8 @@ AUI.add(
 
 				if (caretIndex === value.length) {
 					value += instance.TPL_CARET;
-				} else {
+				}
+				else {
 					if (instance.get('caretAtTerm')) {
 						caretIndex =
 							instance._getPrevTrigger(value, caretIndex).index +

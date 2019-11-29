@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.util.LayoutConvertHelper;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -37,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"mvc.command.name=/layout/convert_layout"
 	},
-	service = AopService.class
+	service = MVCActionCommand.class
 )
 public class ConvertLayoutMVCActionCommand
 	extends BaseMVCActionCommand implements MVCActionCommand {

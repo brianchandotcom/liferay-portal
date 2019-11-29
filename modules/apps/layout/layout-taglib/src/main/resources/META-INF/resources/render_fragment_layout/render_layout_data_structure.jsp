@@ -66,11 +66,9 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 
 						for (int j = 0; j < columnsJSONArray.length(); j++) {
 							JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-						%>
 
-							<%
 							String size = columnJSONObject.getString("size");
-							%>
+						%>
 
 							<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : StringPool.BLANK %>">
 

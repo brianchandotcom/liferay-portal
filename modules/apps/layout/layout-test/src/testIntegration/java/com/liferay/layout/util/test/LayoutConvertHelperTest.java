@@ -36,6 +36,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -144,6 +146,16 @@ public class LayoutConvertHelperTest {
 			LayoutConstants.TYPE_CONTENT, convertedLayout.getType());
 	}
 
+	@Test
+	public void testGetConvertibleLayouts() throws Exception {
+		_addLayouts();
+
+		_assertPlids(
+			_getConvertibleLayoutsPlids(),
+			_layoutConvertHelper.getConvertibleLayoutsPlids(
+				_group.getGroupId()));
+	}
+
 	private void _addLayouts() throws Exception {
 		_contentLayout = LayoutTestUtil.addLayout(_group);
 
@@ -180,16 +192,6 @@ public class LayoutConvertHelperTest {
 			LayoutConstants.TYPE_PORTLET, _publicLayout.getType());
 	}
 
-	@Test
-	public void testGetConvertibleLayouts() throws Exception {
-		_addLayouts();
-
-		_assertPlids(
-			_getConvertibleLayoutsPlids(),
-			_layoutConvertHelper.getConvertibleLayoutsPlids(
-				_group.getGroupId()));
-	}
-
 	private void _assertLayouts() throws PortalException {
 		_contentLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			_contentLayout.getUuid(), _contentLayout.getGroupId(),
@@ -224,7 +226,9 @@ public class LayoutConvertHelperTest {
 			Assert.assertTrue(ArrayUtil.contains(actualPlids, plid));
 		}
 
-		Assert.assertEquals(expectedPlids.length, actualPlids.length);
+		Assert.assertEquals(
+			Arrays.toString(actualPlids), expectedPlids.length,
+			actualPlids.length);
 	}
 
 	private long[] _getConvertibleLayoutsPlids() {

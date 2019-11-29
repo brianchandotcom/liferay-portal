@@ -16,7 +16,6 @@
 package com.liferay.layout.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.LayoutConstants;
 
 /**
  * @author Rubén Pulido

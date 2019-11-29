@@ -107,13 +107,10 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 										JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
 
 										for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
-												String fragmentEntryLinkIdString = fragmentEntryLinkIdsJSONArray.getString(k);
-
-												boolean isFragmentEntryLinkDropZone = fragmentEntryLinkIdString.equals("drop-zone");
 										%>
 
 											<c:choose>
-												<c:when test="<%= isFragmentEntryLinkDropZone %>">
+												<c:when test="<%= Objects.equals(fragmentEntryLinkIdsJSONArray.getString(k), "drop-zone") %>">
 
 													<%
 													LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), themeDisplay.getPlid(), true);
@@ -161,6 +158,7 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 													%>
 
 													<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+
 												</c:otherwise>
 											</c:choose>
 

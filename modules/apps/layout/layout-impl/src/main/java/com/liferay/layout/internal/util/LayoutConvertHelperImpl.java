@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -89,9 +90,13 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 		for (long curSelPlid : plids) {
 			try {
-				_convertLayout(curSelPlid);
+				Callable<Layout> callable = new ConvertLayoutCallable(
+					curSelPlid);
 
-				convertedLayoutsPlids.add(curSelPlid);
+				Layout layout = TransactionInvokerUtil.invoke(
+					_transactionConfig, callable);
+
+				convertedLayoutsPlids.add(layout.getPlid());
 			}
 			catch (Throwable t) {
 				if (_log.isWarnEnabled()) {

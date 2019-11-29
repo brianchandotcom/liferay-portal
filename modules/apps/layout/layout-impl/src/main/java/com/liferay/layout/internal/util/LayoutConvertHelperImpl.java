@@ -123,6 +123,12 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
 
+		if (layoutConverter == null) {
+			throw new LayoutConvertException(
+				"No layout converter exists for layout template id " +
+					layoutTemplateId);
+		}
+
 		if (!layoutConverter.isConvertible(layout)) {
 			throw new LayoutConvertException(
 				"Layout with plid " + layout.getPlid() + " is not convertible");

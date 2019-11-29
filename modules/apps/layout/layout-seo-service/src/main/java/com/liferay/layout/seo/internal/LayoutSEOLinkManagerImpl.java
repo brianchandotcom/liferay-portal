@@ -19,7 +19,9 @@ import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfigurati
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -135,7 +137,19 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
 
-		return layoutSEOCompanyConfiguration.enableOpenGraph();
+		if (!layoutSEOCompanyConfiguration.enableOpenGraph()) {
+			return false;
+		}
+
+		LayoutSEOSite layoutSEOSite =
+			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
+				layout.getGroupId());
+
+		if ((layoutSEOSite != null) && layoutSEOSite.isOpenGraphEnabled()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getCanonicalURL(
@@ -244,6 +258,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
+	@Reference
+	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 
 	@Reference
 	private Portal _portal;

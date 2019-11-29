@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>TAGS_SELECT_BUTTON</td>
-	<td>//div[contains(@id,'assetTagsSelector')]//button[contains(.,'Select')]</td>
+	<td>//div[contains(@class,'tags-selector')]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

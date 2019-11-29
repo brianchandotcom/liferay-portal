@@ -17,6 +17,8 @@ package com.liferay.layout.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutConvertHelper;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -102,6 +106,91 @@ public class LayoutConvertHelperTest {
 
 		Assert.assertEquals(
 			LayoutConstants.TYPE_CONTENT, convertedLayout.getType());
+	}
+
+	private void _addLayouts() throws Exception {
+		_contentLayout = LayoutTestUtil.addLayout(_group);
+
+		_contentLayout.setType(LayoutConstants.TYPE_CONTENT);
+
+		_contentLayout = _layoutLocalService.updateLayout(_contentLayout);
+
+		_corruptedLayout = LayoutTestUtil.addLayout(_group);
+
+		_layoutLocalService.updateLayout(
+			_corruptedLayout.getGroupId(), _corruptedLayout.isPrivateLayout(),
+			_corruptedLayout.getLayoutId(), StringPool.BLANK);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.setProperty(
+			LayoutConstants.CUSTOMIZABLE_LAYOUT, Boolean.TRUE.toString());
+
+		_nonConvertibleLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), typeSettingsProperties.toString());
+
+		_privateLayout = LayoutTestUtil.addLayout(_group, true);
+		_publicLayout = LayoutTestUtil.addLayout(_group, false);
+
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, _contentLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, _corruptedLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, _nonConvertibleLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, _privateLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, _publicLayout.getType());
+	}
+
+	private void _assertLayouts() throws PortalException {
+		_contentLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			_contentLayout.getUuid(), _contentLayout.getGroupId(),
+			_contentLayout.isPrivateLayout());
+		_corruptedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			_corruptedLayout.getUuid(), _corruptedLayout.getGroupId(),
+			_corruptedLayout.isPrivateLayout());
+		_nonConvertibleLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			_nonConvertibleLayout.getUuid(), _nonConvertibleLayout.getGroupId(),
+			_nonConvertibleLayout.isPrivateLayout());
+		_privateLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			_privateLayout.getUuid(), _privateLayout.getGroupId(),
+			_privateLayout.isPrivateLayout());
+		_publicLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			_publicLayout.getUuid(), _publicLayout.getGroupId(),
+			_publicLayout.isPrivateLayout());
+
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, _contentLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, _corruptedLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, _nonConvertibleLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, _privateLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, _publicLayout.getType());
+	}
+
+	private void _assertPlids(long[] expectedPlids, long[] actualPlids) {
+		for (long plid : expectedPlids) {
+			Assert.assertTrue(ArrayUtil.contains(actualPlids, plid));
+		}
+
+		Assert.assertEquals(expectedPlids.length, actualPlids.length);
+	}
+
+	private long[] _getConvertibleLayoutsPlids() {
+		return new long[] {_privateLayout.getPlid(), _publicLayout.getPlid()};
+	}
+
+	private long[] _getLayoutsPlids() {
+		return new long[] {
+			_contentLayout.getPlid(), _corruptedLayout.getPlid(),
+			_nonConvertibleLayout.getPlid(), _privateLayout.getPlid(),
+			_publicLayout.getPlid()
+		};
 	}
 
 	private Layout _contentLayout;

@@ -114,12 +114,6 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 	private void _convertLayout(long plid) throws PortalException {
 		Layout layout = _layoutLocalService.getLayout(plid);
 
-		ServiceContext serviceContext = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).orElse(
-			new ServiceContext()
-		);
-
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
@@ -148,6 +142,12 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(), _portal.getClassNameId(Layout.class),
 					layout.getPlid());
+
+		ServiceContext serviceContext = Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).orElse(
+			new ServiceContext()
+		);
 
 		if (layoutPageTemplateStructure == null) {
 			_layoutPageTemplateStructureLocalService.

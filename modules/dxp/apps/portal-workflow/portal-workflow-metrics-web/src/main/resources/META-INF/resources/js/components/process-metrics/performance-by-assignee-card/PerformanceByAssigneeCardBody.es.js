@@ -91,6 +91,7 @@ const Footer = ({
 
 	if (timeRange) {
 		const {dateEnd, dateStart, key} = timeRange;
+
 		filters.dateEnd = formatQueryDate(dateEnd);
 		filters.dateStart = formatQueryDate(dateStart);
 		filters.timeRange = key;

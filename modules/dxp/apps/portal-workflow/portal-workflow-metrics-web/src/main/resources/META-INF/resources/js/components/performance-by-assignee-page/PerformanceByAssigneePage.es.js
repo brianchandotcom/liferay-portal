@@ -41,26 +41,25 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 
 	useProcessTitle(processId, Liferay.Language.get('performance-by-assignee'));
 
-	const {search = ''} = parse(query);
-
 	const {processStep, roles} = filterKeys;
-	const keys = {processStep, roles};
 
-	const keywords = search.length ? search : null;
+	const [filterValues, dispatch] = useFiltersReducer({processStep, roles});
 
-	const titles = {
-		processStep: filterTitles.processStep,
-		roles: filterTitles.roles
-	};
-
-	const [filterValues, dispatch] = useFiltersReducer(keys);
-	const {roleIds, taskKeys} = useFilterItemKeys(keys, filterValues);
-	const filterResults = getFilterResults(keys, titles, filterValues);
+	const {roleIds, taskKeys} = useFilterItemKeys(
+		{processStep, roles},
+		filterValues
+	);
+	const filterResults = getFilterResults(
+		{processStep, roles},
+		{
+			processStep: filterTitles.processStep,
+			roles: filterTitles.roles
+		},
+		filterValues
+	);
 
 	const selectedFilters = getSelectedItems(filterResults);
-
-	const filtered = search.length > 0 || selectedFilters.length > 0;
-
+	const {search = null} = parse(query);
 	const timeRange = getSelectedTimeRange(
 		timeRangeKeys,
 		filtersParam.dateEnd,
@@ -85,7 +84,7 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 		`/processes/${processId}/assignee-users?completed=true`,
 		{
 			completed: true,
-			keywords,
+			keywords: search,
 			roleIds,
 			taskKeys,
 			...routeParams,
@@ -97,12 +96,15 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 		<PromisesResolver promises={promises}>
 			<PerformanceByAssigneePage.Header
 				dispatch={dispatch}
-				routeParams={{...routeParams, search: keywords}}
+				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
 				totalCount={data.totalCount}
 			/>
 
-			<PerformanceByAssigneePage.Body data={data} filtered={filtered} />
+			<PerformanceByAssigneePage.Body
+				data={data}
+				filtered={search || selectedFilters.length > 0}
+			/>
 		</PromisesResolver>
 	);
 };

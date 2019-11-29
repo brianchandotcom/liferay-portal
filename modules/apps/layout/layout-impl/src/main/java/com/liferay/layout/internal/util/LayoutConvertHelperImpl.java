@@ -111,8 +111,8 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		return new long[0];
 	}
 
-	private void _convertLayout(long selPlid) throws PortalException {
-		Layout layout = _layoutLocalService.getLayout(selPlid);
+	private void _convertLayout(long plid) throws PortalException {
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
@@ -135,7 +135,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		}
 
 		layout = _layoutLocalService.updateType(
-			selPlid, LayoutConstants.TYPE_CONTENT);
+			plid, LayoutConstants.TYPE_CONTENT);
 
 		_updatePortletDecorator(layout);
 

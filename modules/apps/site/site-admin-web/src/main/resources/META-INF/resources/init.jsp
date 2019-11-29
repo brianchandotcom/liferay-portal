@@ -115,7 +115,6 @@ page import="com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil" 
 page import="com.liferay.site.admin.web.internal.configuration.SiteAdminConfiguration" %><%@
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys" %><%@
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys" %><%@
-page import="com.liferay.site.admin.web.internal.display.context.OpenGraphSettingsDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.display.context.SelectSiteInitializerDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminManagementToolbarDisplayContext" %><%@

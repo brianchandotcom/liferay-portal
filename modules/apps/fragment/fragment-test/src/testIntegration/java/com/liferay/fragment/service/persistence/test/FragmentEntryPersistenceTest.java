@@ -158,6 +158,8 @@ public class FragmentEntryPersistenceTest {
 
 		newFragmentEntry.setType(RandomTestUtil.nextInt());
 
+		newFragmentEntry.setReadOnly(RandomTestUtil.randomBoolean());
+
 		newFragmentEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		newFragmentEntry.setStatus(RandomTestUtil.nextInt());
@@ -219,6 +221,8 @@ public class FragmentEntryPersistenceTest {
 			newFragmentEntry.getPreviewFileEntryId());
 		Assert.assertEquals(
 			existingFragmentEntry.getType(), newFragmentEntry.getType());
+		Assert.assertEquals(
+			existingFragmentEntry.isReadOnly(), newFragmentEntry.isReadOnly());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingFragmentEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newFragmentEntry.getLastPublishDate()));
@@ -371,9 +375,9 @@ public class FragmentEntryPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentEntryKey", true, "name", true, "previewFileEntryId", true,
-			"type", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"type", true, "readOnly", true, "lastPublishDate", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -659,6 +663,8 @@ public class FragmentEntryPersistenceTest {
 		fragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
 		fragmentEntry.setType(RandomTestUtil.nextInt());
+
+		fragmentEntry.setReadOnly(RandomTestUtil.randomBoolean());
 
 		fragmentEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

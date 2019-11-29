@@ -33,6 +33,7 @@ create table FragmentEntry (
 	configuration TEXT null,
 	previewFileEntryId LONG,
 	type_ INTEGER,
+	readOnly BOOLEAN,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

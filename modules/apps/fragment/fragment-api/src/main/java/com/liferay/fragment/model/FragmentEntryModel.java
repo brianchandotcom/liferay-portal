@@ -354,6 +354,27 @@ public interface FragmentEntryModel
 	public void setType(int type);
 
 	/**
+	 * Returns the read only of this fragment entry.
+	 *
+	 * @return the read only of this fragment entry
+	 */
+	public boolean getReadOnly();
+
+	/**
+	 * Returns <code>true</code> if this fragment entry is read only.
+	 *
+	 * @return <code>true</code> if this fragment entry is read only; <code>false</code> otherwise
+	 */
+	public boolean isReadOnly();
+
+	/**
+	 * Sets whether this fragment entry is read only.
+	 *
+	 * @param readOnly the read only of this fragment entry
+	 */
+	public void setReadOnly(boolean readOnly);
+
+	/**
 	 * Returns the last publish date of this fragment entry.
 	 *
 	 * @return the last publish date of this fragment entry

@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -269,6 +271,10 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutConvertHelperImpl.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

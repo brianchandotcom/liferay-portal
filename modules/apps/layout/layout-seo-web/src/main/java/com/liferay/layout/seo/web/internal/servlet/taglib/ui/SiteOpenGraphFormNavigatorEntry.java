@@ -16,6 +16,7 @@ package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.web.internal.display.context.OpenGraphSettingsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -90,7 +91,7 @@ public class SiteOpenGraphFormNavigatorEntry
 				httpServletRequest,
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse),
-				_dlurlHelper, _itemSelector));
+				_dlurlHelper, _itemSelector, _openGraphConfiguration));
 
 		super.include(httpServletRequest, httpServletResponse);
 	}
@@ -123,6 +124,9 @@ public class SiteOpenGraphFormNavigatorEntry
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private OpenGraphConfiguration _openGraphConfiguration;
 
 	@Reference
 	private Portal _portal;

@@ -22,7 +22,9 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.layout.seo.model.LayoutSEOSite;
+import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -45,12 +47,14 @@ public class OpenGraphSettingsDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, DLURLHelper dlurlHelper,
-		ItemSelector itemSelector) {
+		ItemSelector itemSelector,
+		OpenGraphConfiguration openGraphConfiguration) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_dlurlHelper = dlurlHelper;
 		_itemSelector = itemSelector;
+		_openGraphConfiguration = openGraphConfiguration;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -95,32 +99,26 @@ public class OpenGraphSettingsDisplayContext {
 		}
 	}
 
-	public boolean isOpenGraphEnabled() {
-		LayoutSEOSite layoutSEOSite = _getLayoutSEOSite();
-
-		if (layoutSEOSite != null) {
-			return layoutSEOSite.isOpenGraphEnabled();
-		}
-
-		return false;
+	public boolean isOpenGraphEnabled() throws PortalException {
+		return _openGraphConfiguration.isOpenGraphEnabled(_getGroup());
 	}
 
-	private long _getGroupId() {
+	private Group _getGroup() {
 		Group liveGroup = (Group)_httpServletRequest.getAttribute(
 			"site.liveGroup");
 
 		if (liveGroup != null) {
-			return liveGroup.getGroupId();
+			return liveGroup;
 		}
 
-		Group group = (Group)_httpServletRequest.getAttribute("site.group");
-
-		return group.getGroupId();
+		return (Group)_httpServletRequest.getAttribute("site.group");
 	}
 
 	private LayoutSEOSite _getLayoutSEOSite() {
+		Group group = _getGroup();
+
 		return LayoutSEOSiteLocalServiceUtil.fetchLayoutSEOSiteByGroupId(
-			_getGroupId());
+			group.getGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -130,6 +128,7 @@ public class OpenGraphSettingsDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final OpenGraphConfiguration _openGraphConfiguration;
 	private final ThemeDisplay _themeDisplay;
 
 }

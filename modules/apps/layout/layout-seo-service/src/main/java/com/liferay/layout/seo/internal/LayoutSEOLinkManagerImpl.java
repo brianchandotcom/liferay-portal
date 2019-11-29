@@ -15,19 +15,16 @@
 package com.liferay.layout.seo.internal;
 
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
-import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
-import com.liferay.layout.seo.model.LayoutSEOSite;
+import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
-import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -133,23 +130,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Override
 	public boolean isOpenGraphEnabled(Layout layout) throws PortalException {
-		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
-
-		if (!layoutSEOCompanyConfiguration.enableOpenGraph()) {
-			return false;
-		}
-
-		LayoutSEOSite layoutSEOSite =
-			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
-				layout.getGroupId());
-
-		if ((layoutSEOSite != null) && layoutSEOSite.isOpenGraphEnabled()) {
-			return true;
-		}
-
-		return false;
+		return _openGraphConfiguration.isOpenGraphEnabled(layout.getGroup());
 	}
 
 	private String _getCanonicalURL(
@@ -245,9 +226,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
 	private Html _html;
 
 	@Reference
@@ -260,7 +238,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
-	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
+	private OpenGraphConfiguration _openGraphConfiguration;
 
 	@Reference
 	private Portal _portal;

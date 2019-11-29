@@ -163,9 +163,6 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 				"Layout with plid " + layout.getPlid() + " is not convertible");
 		}
 
-		layout = _layoutLocalService.updateType(
-			plid, LayoutConstants.TYPE_CONTENT);
-
 		_updatePortletDecorator(layout);
 
 		LayoutData layoutData = _getLayoutData(layout);
@@ -197,6 +194,9 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 					layout.getGroupId(), _portal.getClassNameId(Layout.class),
 					layout.getPlid(), layoutDataJSONObject.toString());
 		}
+
+		layout = _layoutLocalService.updateType(
+			plid, LayoutConstants.TYPE_CONTENT);
 
 		_getOrCreateDraftLayout(layout);
 

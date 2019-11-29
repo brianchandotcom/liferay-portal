@@ -26,7 +26,7 @@ definition {
 
 			DDLDataDefinition.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			UserGroup.tearDownCP();
 

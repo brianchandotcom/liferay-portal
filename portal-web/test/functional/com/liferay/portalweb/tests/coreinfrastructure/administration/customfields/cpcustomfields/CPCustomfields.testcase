@@ -20,7 +20,7 @@ definition {
 		else {
 			CustomFields.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

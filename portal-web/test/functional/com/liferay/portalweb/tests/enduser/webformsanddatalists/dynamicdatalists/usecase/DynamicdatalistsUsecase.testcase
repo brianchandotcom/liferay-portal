@@ -30,7 +30,7 @@ definition {
 
 			DMDocument.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Page.tearDownCP();
 

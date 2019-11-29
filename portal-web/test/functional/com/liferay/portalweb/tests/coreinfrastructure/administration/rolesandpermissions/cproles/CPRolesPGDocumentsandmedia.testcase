@@ -20,7 +20,7 @@ definition {
 		else {
 			User.firstLoginPG();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Role.tearDownCP();
 

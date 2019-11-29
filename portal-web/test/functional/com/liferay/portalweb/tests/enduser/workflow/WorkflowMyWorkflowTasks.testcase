@@ -40,7 +40,7 @@ definition {
 
 			Workflow.tearDownSiteWorkflow();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Role.tearDownCP();
 		}

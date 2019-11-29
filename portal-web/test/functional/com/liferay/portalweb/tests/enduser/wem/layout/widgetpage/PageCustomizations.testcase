@@ -24,7 +24,7 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Site.tearDownCP();
 

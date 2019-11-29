@@ -38,7 +38,7 @@ definition {
 		else {
 			BlogsEntry.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Page.tearDownCP();
 		}

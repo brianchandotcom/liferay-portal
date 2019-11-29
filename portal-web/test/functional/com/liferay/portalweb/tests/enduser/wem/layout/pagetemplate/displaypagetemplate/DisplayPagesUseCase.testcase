@@ -46,7 +46,7 @@ definition {
 
 			Button.click(button = "Save");
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

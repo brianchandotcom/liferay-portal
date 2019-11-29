@@ -30,7 +30,7 @@ definition {
 
 			Role.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Site.tearDownCP();
 		}

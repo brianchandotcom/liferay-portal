@@ -26,7 +26,7 @@ definition {
 
 			Site.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

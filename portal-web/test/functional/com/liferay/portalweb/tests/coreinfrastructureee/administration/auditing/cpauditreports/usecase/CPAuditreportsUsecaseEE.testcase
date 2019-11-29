@@ -20,7 +20,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Role.tearDownCP();
 		}

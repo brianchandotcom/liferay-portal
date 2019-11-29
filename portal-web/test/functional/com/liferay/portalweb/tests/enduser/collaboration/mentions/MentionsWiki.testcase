@@ -84,7 +84,7 @@ definition {
 		else {
 			WikiPage.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Page.tearDownCP();
 		}

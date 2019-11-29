@@ -32,7 +32,7 @@ definition {
 
 			Page.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Role.tearDownCP();
 		}

@@ -21,7 +21,7 @@ definition {
 		else {
 			Workflow.tearDownPortalWorkflow();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

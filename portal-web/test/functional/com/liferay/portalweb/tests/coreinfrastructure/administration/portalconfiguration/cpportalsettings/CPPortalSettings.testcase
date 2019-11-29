@@ -21,7 +21,7 @@ definition {
 		else {
 			PortalSettings.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Role.tearDownCP();
 

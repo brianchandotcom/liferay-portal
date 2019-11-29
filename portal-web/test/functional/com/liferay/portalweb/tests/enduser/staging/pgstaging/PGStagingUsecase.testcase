@@ -23,7 +23,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			Organization.tearDownCP(orgName = "Staging Organization Name");
 

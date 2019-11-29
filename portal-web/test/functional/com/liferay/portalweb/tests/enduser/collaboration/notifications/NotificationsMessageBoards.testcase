@@ -69,7 +69,7 @@ definition {
 
 			NotificationsPortlet.tearDownUserDeliveries();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

@@ -27,7 +27,7 @@ definition {
 
 			MessageboardsThread.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 
 			WebContent.tearDownCP();
 

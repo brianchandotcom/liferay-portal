@@ -24,7 +24,7 @@ definition {
 
 			UserGroup.tearDownCP();
 
-			User.tearDownCP();
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 

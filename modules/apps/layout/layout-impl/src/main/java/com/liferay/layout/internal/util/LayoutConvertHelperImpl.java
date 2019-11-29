@@ -79,7 +79,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 	@Override
 	public long[] convertLayouts(long groupId) throws PortalException {
-		return new long[0];
+		return convertLayouts(getConvertibleLayoutsPlids(groupId));
 	}
 
 	@Override

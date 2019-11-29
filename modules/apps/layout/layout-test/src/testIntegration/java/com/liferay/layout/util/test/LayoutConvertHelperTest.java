@@ -93,6 +93,17 @@ public class LayoutConvertHelperTest {
 	}
 
 	@Test
+	public void testConvertLayouts() throws Exception {
+		_addLayouts();
+
+		_assertPlids(
+			_getConvertibleLayoutsPlids(),
+			_layoutConvertHelper.convertLayouts(_getLayoutsPlids()));
+
+		_assertLayouts();
+	}
+
+	@Test
 	public void testConvertPrivateLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group, true);
 

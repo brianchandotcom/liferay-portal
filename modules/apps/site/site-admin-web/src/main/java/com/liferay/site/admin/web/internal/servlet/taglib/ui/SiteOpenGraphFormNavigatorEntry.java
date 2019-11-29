@@ -17,6 +17,7 @@ package com.liferay.site.admin.web.internal.servlet.taglib.ui;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -35,11 +36,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = FormNavigatorEntry.class
 )
 public class SiteOpenGraphFormNavigatorEntry
-	extends BaseSiteFormNavigatorEntry {
+	extends BaseJSPFormNavigatorEntry<Group> {
 
 	@Override
 	public String getCategoryKey() {
 		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
+	}
+
+	@Override
+	public String getFormNavigatorId() {
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
 
 	@Override

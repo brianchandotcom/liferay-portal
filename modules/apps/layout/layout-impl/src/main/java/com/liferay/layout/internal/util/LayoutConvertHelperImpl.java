@@ -215,7 +215,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 		List<PortletDecorator> filteredPortletDecorators =
 			portletDecoratorsStream.filter(
-				portletDecorator -> portletDecorator.isDefaultPortletDecorator()
+				PortletDecorator::isDefaultPortletDecorator
 			).collect(
 				Collectors.toList()
 			);

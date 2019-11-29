@@ -25,8 +25,8 @@ public class UpgradeDDLRecord extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			"update DDLRecord set recordSetVersion = " +
-				DDLRecordSetConstants.VERSION_DEFAULT);
+			"update DDLRecord set recordSetVersion = '" +
+				DDLRecordSetConstants.VERSION_DEFAULT + "'");
 	}
 
 }

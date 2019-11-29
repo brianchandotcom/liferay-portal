@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.internal.search.bar.portlet.shared.search;
+package com.liferay.depot.web.internal.search.bar.portlet.shared.search;
 
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.model.DepotEntryGroupRelModel;
@@ -89,7 +89,7 @@ public class DepotSearchBarPortletSharedSearchContributor
 	}
 
 	@Reference(
-		target = "(&(javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR + ")(!(component.name=com.liferay.depot.internal.search.bar.portlet.shared.search.DepotSearchBarPortletSharedSearchContributor)))"
+		target = "(&(javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR + ")(!(component.name=com.liferay.depot.web.internal.search.bar.portlet.shared.search.DepotSearchBarPortletSharedSearchContributor)))"
 	)
 	private PortletSharedSearchContributor
 		_defaultSearchBarPortletSharedSearchContributor;

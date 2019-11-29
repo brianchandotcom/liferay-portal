@@ -369,10 +369,6 @@ definition {
 
 			LexiconCard.clickCard(card = "${imageFileName}");
 
-			SelectFrame(value1 = "relative=top");
-
-			Click(locator1 = "Button#DONE");
-
 			AssertElementPresent(
 				key_contentName = "${imageFileName}",
 				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
@@ -454,7 +450,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		SelectFrameTop();
+		// SelectFrame(locator1 = "IFrame#DIALOG");
 
 		Click(locator1 = "Button#ADD");
 

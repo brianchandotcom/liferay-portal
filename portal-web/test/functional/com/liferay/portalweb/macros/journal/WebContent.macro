@@ -855,12 +855,6 @@ definition {
 			LexiconCard.clickCard(card = "${pageName}");
 		}
 
-		SelectFrameTop();
-
-		Button.clickDone();
-
-		SelectFrame(value1 = "relative=top");
-
 		if ("${pageType}" == "Public Pages") {
 			AssertTextEquals(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",

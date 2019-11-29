@@ -487,6 +487,8 @@ public class PDFProcessorTest {
 
 		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
 			"service.ranking", 1000
+		).put(
+			"type", DLProcessorConstants.PDF_PROCESSOR
 		).build();
 
 		_dlProcessorServiceRegistration = registry.registerService(

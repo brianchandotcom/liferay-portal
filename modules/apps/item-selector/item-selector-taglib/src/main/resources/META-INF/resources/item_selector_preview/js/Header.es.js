@@ -43,7 +43,7 @@ const Header = ({
 							</ClayButton>
 						</li>
 						<li className="d-none d-sm-inline-flex nav-item">
-							<strong>{headerTitle} </strong>
+							<strong>{headerTitle}</strong>
 						</li>
 					</ul>
 				</div>

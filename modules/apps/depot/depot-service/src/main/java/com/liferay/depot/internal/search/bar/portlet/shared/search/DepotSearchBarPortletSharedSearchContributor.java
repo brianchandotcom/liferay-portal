@@ -21,6 +21,7 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet",
+		"javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR,
 		"service.ranking:Integer=100"
 	},
 	service = PortletSharedSearchContributor.class
@@ -88,7 +89,7 @@ public class DepotSearchBarPortletSharedSearchContributor
 	}
 
 	@Reference(
-		target = "(&(javax.portlet.name=com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet)(!(component.name=com.liferay.depot.internal.search.bar.portlet.shared.search.DepotSearchBarPortletSharedSearchContributor)))"
+		target = "(&(javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR + ")(!(component.name=com.liferay.depot.internal.search.bar.portlet.shared.search.DepotSearchBarPortletSharedSearchContributor)))"
 	)
 	private PortletSharedSearchContributor
 		_defaultSearchBarPortletSharedSearchContributor;

@@ -22,6 +22,7 @@ const MAX_LENGTH_DESCIPTION = 160;
 
 const PreviewSeo = ({
 	description = '',
+	direction = 'ltr',
 	displayType = 'serp',
 	imgUrl = '',
 	title = '',
@@ -39,7 +40,10 @@ const PreviewSeo = ({
 	];
 
 	return (
-		<div className={`preview-seo preview-seo-${displayType}`}>
+		<div
+			className={`preview-seo preview-seo-${displayType}`}
+			dir={direction}
+		>
 			{imgUrl && (
 				<div className="aspect-ratio aspect-ratio-191-to-100 preview-seo-image">
 					<img
@@ -60,6 +64,7 @@ const PreviewSeo = ({
 };
 PreviewSeo.propTypes = {
 	description: PropTypes.string,
+	direction: PropTypes.oneOf(['ltr', 'rtl']),
 	displayType: PropTypes.string,
 	imgUrl: PropTypes.string,
 	title: PropTypes.string,
@@ -78,6 +83,9 @@ const PreviewSeoContainer = ({
 	);
 	const [imgUrl, setImgUrl] = useState(
 		targets['imgUrl'] && targets['imgUrl'].defaultValue
+	);
+	const [language, setLanguage] = useState(
+		Liferay.ThemeDisplay.getLanguageId()
 	);
 	const [title, setTitle] = useState(
 		targets['title'] && targets['title'].defaultValue
@@ -160,7 +168,14 @@ const PreviewSeoContainer = ({
 
 		const inputLocalizedLocaleChangedHandle = Liferay.on(
 			'inputLocalized:localeChanged',
-			() => {
+			event => {
+				const newLanguage =
+					event.item && event.item.getAttribute('data-value');
+
+				if (newLanguage) {
+					setLanguage(newLanguage);
+				}
+
 				inputs.forEach(({node, type}) =>
 					setPreviewState({
 						disabled: node.disabled,
@@ -184,6 +199,7 @@ const PreviewSeoContainer = ({
 	return (
 		<PreviewSeo
 			description={description}
+			direction={Liferay.Language.direction[language]}
 			displayType={displayType}
 			imgUrl={imgUrl}
 			title={title}

@@ -88,10 +88,9 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 	public long[] convertLayouts(long[] plids) {
 		List<Long> convertedLayoutsPlids = new ArrayList<>();
 
-		for (long curSelPlid : plids) {
+		for (long plid : plids) {
 			try {
-				Callable<Layout> callable = new ConvertLayoutCallable(
-					curSelPlid);
+				Callable<Layout> callable = new ConvertLayoutCallable(plid);
 
 				Layout layout = TransactionInvokerUtil.invoke(
 					_transactionConfig, callable);
@@ -102,8 +101,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						String.format(
-							"Layout with plid %s cannot be converted",
-							curSelPlid),
+							"Layout with plid %s cannot be converted", plid),
 						t);
 				}
 			}

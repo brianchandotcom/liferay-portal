@@ -15,9 +15,11 @@
 package com.liferay.layout.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutConvertHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -70,6 +72,21 @@ public class LayoutConvertHelperTest {
 		_nonConvertibleLayout = null;
 		_privateLayout = null;
 		_publicLayout = null;
+	}
+
+	@Test
+	public void testConvertPublicLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
+
+		_layoutConvertHelper.convertLayout(layout.getPlid());
+
+		Layout convertedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout.getUuid(), layout.getGroupId(), layout.isPrivateLayout());
+
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, convertedLayout.getType());
 	}
 
 	private Layout _contentLayout;

@@ -16,13 +16,10 @@
  * Action creators.
  */
 
-export {default as alignFloatingToolbar} from './alignFloatingToolbar';
 export {default as discard} from './discard';
-export {default as hideFloatingToolbar} from './hideFloatingToolbar';
 export {default as loadReducer} from './loadReducer';
 export {default as moveItem} from './moveItem';
 export {default as publish} from './publish';
-export {default as showFloatingToolbar} from './showFloatingToolbar';
 export {default as unloadReducer} from './unloadReducer';
 
 /**

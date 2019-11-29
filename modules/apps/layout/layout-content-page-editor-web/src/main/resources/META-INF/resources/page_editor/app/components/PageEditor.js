@@ -17,10 +17,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useRef} from 'react';
 import {useDrop} from 'react-dnd';
 
-import useOnClickOutside from '../../core/hooks/useOnClickOutside';
-import hideFloatingToolbar from '../actions/hideFloatingToolbar';
-import showFloatingToolbar from '../actions/showFloatingToolbar';
-import {FloatingToolbarContext} from '../components/FloatingToolbarProvider';
+import FloatingToolbar from '../components/FloatingToolbar';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
@@ -77,17 +74,7 @@ function Container({children, item}) {
 		type
 	} = item.config;
 
-	const {dispatch} = useContext(FloatingToolbarContext);
-
 	const containerRef = useRef(null);
-
-	useOnClickOutside(containerRef, () =>
-		dispatch(
-			hideFloatingToolbar({
-				targetContainerRef: containerRef
-			})
-		)
-	);
 
 	const [, drop] = useDrop({
 		accept: [LAYOUT_DATA_ITEM_TYPES.fragment, LAYOUT_DATA_ITEM_TYPES.row],
@@ -110,6 +97,16 @@ function Container({children, item}) {
 
 	return (
 		<Topper item={item} name="Container">
+			<FloatingToolbar
+				buttons={[
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.backgroundColor,
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
+				]}
+				item={item}
+				itemRef={containerRef}
+			/>
+
 			<div
 				className={classNames(`container py-${paddingVertical}`, {
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
@@ -117,25 +114,6 @@ function Container({children, item}) {
 					'container-fluid': type === 'fluid',
 					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
 				})}
-				onClick={event => {
-					event.preventDefault();
-
-					/**
-					 * Mocked buttons to render the FloatingToolbar on Container. However,
-					 * the mechanism just needs dispatch an action with previously-defined
-					 * constants to render FloatingToolbar buttons.
-					 */
-					dispatch(
-						showFloatingToolbar({
-							buttons: [
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.backgroundColor,
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.edit,
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
-							],
-							targetContainerRef: containerRef
-						})
-					);
-				}}
 				ref={node => {
 					containerRef.current = node;
 					drop(node);
@@ -160,23 +138,35 @@ function Container({children, item}) {
 function Row({children, item}) {
 	const {layoutData} = useContext(StoreContext);
 	const parent = layoutData.items[item.parentId];
+	const rowRef = useRef(null);
 
 	const [, drop] = useDrop({
 		accept: [LAYOUT_DATA_ITEM_TYPES.column]
 	});
 
 	const rowContent = (
-		<div
-			className={classNames('row', {
-				empty: !item.children.some(
-					childId => layoutData.items[childId].children.length
-				),
-				'no-gutters': !item.config.gutters
-			})}
-			ref={drop}
-		>
-			{children}
-		</div>
+		<>
+			<FloatingToolbar
+				buttons={[LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing]}
+				item={item}
+				itemRef={rowRef}
+			/>
+
+			<div
+				className={classNames('row', {
+					empty: !item.children.some(
+						childId => layoutData.items[childId].children.length
+					),
+					'no-gutters': !item.config.gutters
+				})}
+				ref={node => {
+					rowRef.current = node;
+					drop(node);
+				}}
+			>
+				{children}
+			</div>
+		</>
 	);
 
 	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
@@ -247,41 +237,21 @@ function Fragment({item}) {
 		markup = `<div>No markup from ${item.config.fragmentEntryLinkId}</div>`;
 	}
 
-	const {dispatch} = useContext(FloatingToolbarContext);
-
 	const fragmentRef = useRef(null);
-
-	useOnClickOutside(fragmentRef, () =>
-		dispatch(
-			hideFloatingToolbar({
-				targetContainerRef: fragmentRef
-			})
-		)
-	);
 
 	return (
 		<Topper item={item} name={fragmentEntryLink.name}>
+			<FloatingToolbar
+				buttons={[
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
+				]}
+				item={item}
+				itemRef={fragmentRef}
+			/>
+
 			<UnsafeHTML
 				className="fragment"
 				markup={markup}
-				onClick={event => {
-					event.preventDefault();
-
-					/**
-					 * Mocked buttons to render the FloatingToolbar on Fragment. However,
-					 * the mechanism just needs dispatch an action with previously-defined
-					 * constants to render FloatingToolbar buttons.
-					 */
-					dispatch(
-						showFloatingToolbar({
-							buttons: [
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.backgroundColor,
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
-							],
-							targetContainerRef: fragmentRef
-						})
-					);
-				}}
 				ref={fragmentRef}
 			/>
 		</Topper>

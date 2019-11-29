@@ -61,6 +61,7 @@ public class FragmentEntryWrapper
 		attributes.put("configuration", getConfiguration());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("type", getType());
+		attributes.put("readOnly", isReadOnly());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -179,6 +180,12 @@ public class FragmentEntryWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Boolean readOnly = (Boolean)attributes.get("readOnly");
+
+		if (readOnly != null) {
+			setReadOnly(readOnly);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -390,6 +397,16 @@ public class FragmentEntryWrapper
 	}
 
 	/**
+	 * Returns the read only of this fragment entry.
+	 *
+	 * @return the read only of this fragment entry
+	 */
+	@Override
+	public boolean getReadOnly() {
+		return model.getReadOnly();
+	}
+
+	/**
 	 * Returns the status of this fragment entry.
 	 *
 	 * @return the status of this fragment entry
@@ -567,6 +584,16 @@ public class FragmentEntryWrapper
 	@Override
 	public boolean isPending() {
 		return model.isPending();
+	}
+
+	/**
+	 * Returns <code>true</code> if this fragment entry is read only.
+	 *
+	 * @return <code>true</code> if this fragment entry is read only; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isReadOnly() {
+		return model.isReadOnly();
 	}
 
 	/**
@@ -760,6 +787,16 @@ public class FragmentEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this fragment entry is read only.
+	 *
+	 * @param readOnly the read only of this fragment entry
+	 */
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		model.setReadOnly(readOnly);
 	}
 
 	/**

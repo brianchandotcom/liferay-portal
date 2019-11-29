@@ -53,8 +53,8 @@ const TopperBar = ({children, item, name}) => {
 						active === item.itemId,
 					'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered':
 						hover === item.itemId,
-					'fragments-editor-border-bottom': dragHover === 1 && isOver,
-					'fragments-editor-border-top': dragHover === 0 && isOver
+					'fragments-editor-border-bottom': dragHover === 1,
+					'fragments-editor-border-top': dragHover === 0
 				}
 			)}
 			onClick={event => {

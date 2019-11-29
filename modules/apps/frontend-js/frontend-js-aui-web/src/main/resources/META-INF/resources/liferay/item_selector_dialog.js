@@ -12,6 +12,11 @@
  * details.
  */
 
+/**
+ * @deprecated As of Athanasius(7.3.x), replaced by ItemSelectorDialog.es.js
+ * @module liferay-item-selector-dialog
+ */
+
 AUI.add(
 	'liferay-item-selector-dialog',
 	A => {

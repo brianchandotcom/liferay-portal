@@ -196,7 +196,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private FragmentEntry _addFragmentEntry(
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, String configuration,
-			String typeLabel, boolean overwrite)
+			String typeLabel, boolean readOnly, boolean overwrite)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -233,15 +233,20 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			StringUtil.toLowerCase(StringUtil.trim(typeLabel)));
 
 		if (fragmentEntry == null) {
-			return _fragmentEntryService.addFragmentEntry(
+			fragmentEntry = _fragmentEntryService.addFragmentEntry(
 				fragmentCollection.getGroupId(), fragmentCollectionId,
 				fragmentEntryKey, name, css, html, js, configuration, 0, type,
 				status, ServiceContextThreadLocal.getServiceContext());
 		}
+		else {
+			fragmentEntry = _fragmentEntryService.updateFragmentEntry(
+				fragmentEntry.getFragmentEntryId(), name, css, html, js,
+				configuration, fragmentEntry.getPreviewFileEntryId(), status);
+		}
 
-		return _fragmentEntryService.updateFragmentEntry(
-			fragmentEntry.getFragmentEntryId(), name, css, html, js,
-			configuration, fragmentEntry.getPreviewFileEntryId(), status);
+		fragmentEntry.setReadOnly(readOnly);
+
+		return _fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
 	}
 
 	private String _getContent(ZipFile zipFile, String fileName)
@@ -499,6 +504,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String js = StringPool.BLANK;
 			String configuration = StringPool.BLANK;
 			String typeLabel = StringPool.BLANK;
+			boolean readOnly = false;
 
 			String fragmentJSON = _getContent(zipFile, entry.getValue());
 
@@ -518,11 +524,12 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					zipFile, entry.getValue(),
 					jsonObject.getString("configurationPath"));
 				typeLabel = jsonObject.getString("type");
+				readOnly = jsonObject.getBoolean("readOnly");
 			}
 
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
-				configuration, typeLabel, overwrite);
+				configuration, typeLabel, readOnly, overwrite);
 
 			if (Validator.isNotNull(fragmentJSON)) {
 				if (fragmentEntry.getPreviewFileEntryId() > 0) {

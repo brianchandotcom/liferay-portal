@@ -15,6 +15,8 @@
 package com.liferay.info.item.renderer;
 
 import com.liferay.info.item.template.InfoItemRendererTemplate;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -33,5 +35,24 @@ public interface InfoItemTemplatedRenderer<T> extends InfoItemRenderer<T> {
 	public void render(
 		T t, String templateKey, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse);
+
+	@Override
+	public default void render(
+		T t, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		List<InfoItemRendererTemplate> infoItemRendererTemplates =
+			getInfoItemRendererTemplate(t, LocaleUtil.getMostRelevantLocale());
+
+		if (ListUtil.isEmpty(infoItemRendererTemplates)) {
+			return;
+		}
+
+		InfoItemRendererTemplate infoItemRendererTemplate =
+			infoItemRendererTemplates.get(0);
+
+		render(t, infoItemRendererTemplate.getTemplateKey(), httpServletRequest,
+			httpServletResponse);
+	}
 
 }

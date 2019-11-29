@@ -111,7 +111,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		return new long[0];
 	}
 
-	private void _convertLayout(long plid) throws PortalException {
+	private Layout _convertLayout(long plid) throws PortalException {
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		UnicodeProperties typeSettingsProperties =
@@ -190,7 +190,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 			throw new PortalException(e);
 		}
 
-		_layoutLocalService.updateLayout(
+		return _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			new Date());
 	}

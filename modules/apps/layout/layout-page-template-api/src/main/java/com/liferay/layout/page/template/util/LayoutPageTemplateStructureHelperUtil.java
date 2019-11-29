@@ -59,17 +59,10 @@ public class LayoutPageTemplateStructureHelperUtil {
 							"fragmentEntryLinkIds",
 							Collections.singletonList("drop-zone")
 						).put(
-							"size", "12"
+							"size", StringPool.BLANK
 						))
 				).put(
-					"config",
-					JSONUtil.put(
-						"columnSpacing", true
-					).put(
-						"paddingHorizontal", "3"
-					).put(
-						"paddingVertical", "3"
-					)
+					"config", JSONFactoryUtil.createJSONObject()
 				).put(
 					"rowId", "0"
 				).put(

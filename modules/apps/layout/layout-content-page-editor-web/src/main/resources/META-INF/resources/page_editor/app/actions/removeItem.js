@@ -16,7 +16,7 @@ import {REMOVE_ITEM as type} from './types';
 
 const ACTION = {type};
 
-export default function removeItem(itemId) {
+export default function removeItem({itemId}) {
 	return {
 		...ACTION,
 		itemId

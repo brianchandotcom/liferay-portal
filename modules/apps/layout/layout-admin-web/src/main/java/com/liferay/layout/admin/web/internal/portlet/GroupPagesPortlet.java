@@ -18,6 +18,7 @@ import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
@@ -178,7 +179,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 					_dlurlHelper, _layoutSEOCanonicalURLProvider,
 					_layoutSEOLinkManager,
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+					_portal.getLiferayPortletResponse(renderResponse),
+					_storageEngine));
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
@@ -252,5 +254,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StorageEngine _storageEngine;
 
 }

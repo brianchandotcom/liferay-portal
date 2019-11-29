@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
@@ -63,7 +64,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 				_dlurlHelper, _layoutSEOCanonicalURLProvider,
 				_layoutSEOLinkManager,
 				_portal.getLiferayPortletRequest(actionRequest),
-				_portal.getLiferayPortletResponse(actionResponse));
+				_portal.getLiferayPortletResponse(actionResponse),
+				_storageEngine);
 
 		JSONArray jsonArray = layoutsAdminDisplayContext.getLayoutsJSONArray(
 			layout.getLayoutId(), layout.isPrivateLayout());
@@ -88,5 +90,8 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StorageEngine _storageEngine;
 
 }

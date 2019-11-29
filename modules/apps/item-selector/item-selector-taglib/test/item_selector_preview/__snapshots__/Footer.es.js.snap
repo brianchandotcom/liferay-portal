@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should render the Footer component 1`] = `
+<DocumentFragment>
+  <div
+    class="footer"
+  >
+    <span>
+      test image.jpeg
+    </span>
+    <div>
+      x-of-x
+    </div>
+  </div>
+</DocumentFragment>
+`;

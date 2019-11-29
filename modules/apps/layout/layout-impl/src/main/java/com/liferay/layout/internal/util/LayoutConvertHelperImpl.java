@@ -290,7 +290,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 				_classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), layout.getType(),
+				layout.getRobotsMap(), LayoutConstants.TYPE_CONTENT,
 				layout.getTypeSettings(), true, true, Collections.emptyMap(),
 				serviceContext);
 		}

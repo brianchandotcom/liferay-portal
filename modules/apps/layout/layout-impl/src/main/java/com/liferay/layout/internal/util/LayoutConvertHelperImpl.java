@@ -56,6 +56,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -296,5 +297,20 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	private class ConvertLayoutCallable implements Callable<Layout> {
+
+		@Override
+		public Layout call() throws PortalException {
+			return _convertLayout(_layoutPlid);
+		}
+
+		private ConvertLayoutCallable(Long layoutPlid) {
+			_layoutPlid = layoutPlid;
+		}
+
+		private final long _layoutPlid;
+
+	}
 
 }

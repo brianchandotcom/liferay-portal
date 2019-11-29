@@ -27,8 +27,7 @@ import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import updateLayoutData from '../thunks/updateLayoutData';
-import {TopperProvider} from './Topper';
-import TopperBar from './TopperBar';
+import Topper from './Topper';
 import UnsafeHTML from './UnsafeHTML';
 
 function Root({children, item}) {
@@ -63,11 +62,9 @@ function Root({children, item}) {
 	const background = active ? 'honeydew' : 'aliceblue';
 
 	return (
-		<TopperProvider>
-			<div ref={drop} style={{background, height: '100vh'}}>
-				{children}
-			</div>
-		</TopperProvider>
+		<div ref={drop} style={{background, height: '100vh'}}>
+			{children}
+		</div>
 	);
 }
 
@@ -112,7 +109,7 @@ function Container({children, item}) {
 	});
 
 	return (
-		<TopperBar item={item} name="Container">
+		<Topper item={item} name="Container">
 			<div
 				className={classNames(`container py-${paddingVertical}`, {
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
@@ -156,7 +153,7 @@ function Container({children, item}) {
 			>
 				{children}
 			</div>
-		</TopperBar>
+		</Topper>
 	);
 }
 
@@ -183,9 +180,13 @@ function Row({children, item}) {
 	);
 
 	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
-		<div className="container-fluid p-0">{rowContent}</div>
+		<Topper item={item} name="Row">
+			<div className="container-fluid p-0">{rowContent}</div>
+		</Topper>
 	) : (
-		rowContent
+		<Topper item={item} name="Row">
+			{rowContent}
+		</Topper>
 	);
 }
 
@@ -259,7 +260,7 @@ function Fragment({item}) {
 	);
 
 	return (
-		<TopperBar item={item} name={fragmentEntryLink.name}>
+		<Topper item={item} name={fragmentEntryLink.name}>
 			<UnsafeHTML
 				className="fragment"
 				markup={markup}
@@ -283,7 +284,7 @@ function Fragment({item}) {
 				}}
 				ref={fragmentRef}
 			/>
-		</TopperBar>
+		</Topper>
 	);
 }
 

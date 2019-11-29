@@ -23,12 +23,12 @@ import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 
@@ -113,9 +113,12 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
-		InfoItemRenderer infoItemRenderer = _getInfoItemRenderer(
+		Tuple tuple = _getInfoItemRenderer(
 			displayObject.getClass(), fragmentRendererContext,
 			httpServletRequest);
+
+		InfoItemRenderer infoItemRenderer = (InfoItemRenderer)tuple.getObject(
+			0);
 
 		if (infoItemRenderer == null) {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
@@ -128,8 +131,18 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			return;
 		}
 
-		infoItemRenderer.render(
-			displayObject, httpServletRequest, httpServletResponse);
+		if (infoItemRenderer instanceof InfoItemTemplatedRenderer) {
+			InfoItemTemplatedRenderer infoItemTemplatedRenderer =
+				(InfoItemTemplatedRenderer)infoItemRenderer;
+
+			infoItemTemplatedRenderer.render(
+				displayObject, (String)tuple.getObject(1), httpServletRequest,
+				httpServletResponse);
+		}
+		else {
+			infoItemRenderer.render(
+				displayObject, httpServletRequest, httpServletResponse);
+		}
 	}
 
 	private Object _getDisplayObject(String className, long classPK) {
@@ -170,7 +183,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			"itemSelector");
 	}
 
-	private InfoItemRenderer _getInfoItemRenderer(
+	private Tuple _getInfoItemRenderer(
 		Class<?> displayObjectClass,
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
@@ -189,36 +202,28 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext, httpServletRequest);
 
 		if (jsonObject == null) {
-			return defaultInfoItemRenderer;
+			return new Tuple(defaultInfoItemRenderer);
 		}
 
 		JSONObject templateJSONObject = jsonObject.getJSONObject("template");
 
-		String ddmTemplateKey = null;
-		String infoItemRendererKey = null;
-
-		if (templateJSONObject != null) {
-			ddmTemplateKey = templateJSONObject.getString("ddmTemplateKey");
-			infoItemRendererKey = templateJSONObject.getString(
-				"infoItemRendererKey");
+		if (templateJSONObject == null) {
+			return new Tuple(defaultInfoItemRenderer);
 		}
 
-		if (Validator.isNotNull(ddmTemplateKey)) {
-			httpServletRequest.setAttribute(
-				WebKeys.JOURNAL_TEMPLATE_ID, ddmTemplateKey);
+		String templateKey = templateJSONObject.getString("templateKey");
+
+		String infoItemRendererKey = templateJSONObject.getString(
+			"infoItemRendererKey");
+
+		InfoItemRenderer infoItemRenderer =
+			_infoItemRendererTracker.getInfoItemRenderer(infoItemRendererKey);
+
+		if (infoItemRenderer != null) {
+			return new Tuple(infoItemRenderer, templateKey);
 		}
 
-		if (Validator.isNotNull(infoItemRendererKey)) {
-			InfoItemRenderer infoItemRenderer =
-				_infoItemRendererTracker.getInfoItemRenderer(
-					infoItemRendererKey);
-
-			if (infoItemRenderer != null) {
-				return infoItemRenderer;
-			}
-		}
-
-		return defaultInfoItemRenderer;
+		return new Tuple(defaultInfoItemRenderer);
 	}
 
 	@Reference

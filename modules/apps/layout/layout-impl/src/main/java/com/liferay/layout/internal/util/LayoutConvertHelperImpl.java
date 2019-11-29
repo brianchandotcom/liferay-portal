@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.util;
 
+import com.liferay.layout.exception.LayoutConvertException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutConvertHelper;
@@ -111,10 +112,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 	}
 
 	private void _convertLayout(long selPlid) throws PortalException {
-		Layout layout = _layoutService.updateType(
-			selPlid, LayoutConstants.TYPE_CONTENT);
-
-		_updatePortletDecorator(layout);
+		Layout layout = _layoutLocalService.getLayout(selPlid);
 
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
@@ -130,6 +128,16 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
+
+		if (!layoutConverter.isConvertible(layout)) {
+			throw new LayoutConvertException(
+				"Layout with plid " + layout.getPlid() + " is not convertible");
+		}
+
+		layout = _layoutLocalService.updateType(
+			selPlid, LayoutConstants.TYPE_CONTENT);
+
+		_updatePortletDecorator(layout);
 
 		LayoutData layoutData = layoutConverter.convert(layout);
 

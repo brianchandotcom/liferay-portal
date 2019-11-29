@@ -73,6 +73,7 @@
 			<finder-column name="companyId" />
 		</finder>
 		<finder name="OAuth2ApplicationId" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="oAuth2ApplicationId" />
 		</finder>
 		<reference entity="OAuth2Application" package-path="com.liferay.oauth2.provider" />
@@ -115,12 +116,15 @@
 			<finder-column name="userId" />
 		</finder>
 		<finder name="OAuth2ApplicationId" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="oAuth2ApplicationId" />
 		</finder>
 		<finder name="AccessTokenContentHash" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="accessTokenContentHash" />
 		</finder>
 		<finder name="RefreshTokenContentHash" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="refreshTokenContentHash" />
 		</finder>
 
@@ -153,6 +157,7 @@
 		<!-- Finder methods -->
 
 		<finder name="OAuth2ApplicationScopeAliasesId" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="oAuth2ApplicationScopeAliasesId" />
 		</finder>
 		<finder name="C_O_A_B_S" return-type="OAuth2ScopeGrant">

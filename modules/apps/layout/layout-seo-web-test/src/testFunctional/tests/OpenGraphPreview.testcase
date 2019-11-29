@@ -28,6 +28,76 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the OG preview is updated when the image is changed."
+	@priority = "5"
+	test PreviewAfterReplacingImage {
+		property test.name.skip.portal.instance = "OpenGraphPreview#PreviewAfterReplacingImage";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			dontSave = "true",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_1.png");
+
+		Page.viewPreview(
+			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
+			key_imageName = "Document_1.png",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			dontSave = "true",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_2.jpeg");
+
+		Page.viewPreview(
+			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
+			key_imageName = "Document_2.jpeg",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		var key_imageName = "Document_1.png";
+
+		AssertElementNotPresent(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		Button.click(button = "Save");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Page.viewPreview(
+			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
+			key_imageName = "Document_2.jpeg",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		var key_imageName = "Document_1.png";
+
+		AssertElementNotPresent(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+	}
+
 	@description = "This ensures that the user can customize OG tags."
 	@priority = "5"
 	test Smoke {

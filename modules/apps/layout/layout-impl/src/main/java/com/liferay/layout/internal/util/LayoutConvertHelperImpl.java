@@ -22,6 +22,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.layout.util.template.LayoutData;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -197,16 +198,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 					layout.getPlid(), layoutDataJSONObject.toString());
 		}
 
-		Layout draftLayout = _layoutLocalService.addLayout(
-			layout.getUserId(), layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getParentLayoutId(),
-			_classNameLocalService.getClassNameId(Layout.class),
-			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getType(), layout.getTypeSettings(),
-			true, true, Collections.emptyMap(), serviceContext);
-
-		_layoutCopyHelper.copyLayout(layout, draftLayout);
+		_getOrCreateDraftLayout(layout);
 
 		return _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -269,6 +261,41 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		}
 
 		return layoutConverter.convert(layout);
+	}
+
+	private Layout _getOrCreateDraftLayout(Layout layout) throws Exception {
+		if ((layout.getClassNameId() != 0) || (layout.getClassPK() != 0)) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("Layout with plid ");
+			sb.append(layout.getPlid());
+			sb.append(" is a draft. You cannot get the draft of a draft ");
+
+			throw new PortalException(sb.toString());
+		}
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout == null) {
+			ServiceContext serviceContext = Optional.ofNullable(
+				ServiceContextThreadLocal.getServiceContext()
+			).orElse(
+				new ServiceContext()
+			);
+
+			draftLayout = _layoutLocalService.addLayout(
+				layout.getUserId(), layout.getGroupId(),
+				layout.isPrivateLayout(), layout.getParentLayoutId(),
+				_classNameLocalService.getClassNameId(Layout.class),
+				layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
+				layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), layout.getType(),
+				layout.getTypeSettings(), true, true, Collections.emptyMap(),
+				serviceContext);
+		}
+
+		return _layoutCopyHelper.copyLayout(layout, draftLayout);
 	}
 
 	private void _updatePortletDecorator(Layout layout) throws PortalException {

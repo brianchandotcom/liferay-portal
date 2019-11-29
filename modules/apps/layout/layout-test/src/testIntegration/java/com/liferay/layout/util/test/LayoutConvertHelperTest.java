@@ -144,6 +144,16 @@ public class LayoutConvertHelperTest {
 			LayoutConstants.TYPE_PORTLET, _publicLayout.getType());
 	}
 
+	@Test
+	public void testGetConvertibleLayouts() throws Exception {
+		_addLayouts();
+
+		_assertPlids(
+			_getConvertibleLayoutsPlids(),
+			_layoutConvertHelper.getConvertibleLayoutsPlids(
+				_group.getGroupId()));
+	}
+
 	private void _assertLayouts() throws PortalException {
 		_contentLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			_contentLayout.getUuid(), _contentLayout.getGroupId(),

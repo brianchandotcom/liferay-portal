@@ -77,7 +77,7 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -117,6 +117,8 @@ public class LayoutSEOEntryCacheModel
 		sb.append(openGraphTitleEnabled);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", DDMStorageId=");
+		sb.append(DDMStorageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -201,6 +203,8 @@ public class LayoutSEOEntryCacheModel
 			layoutSEOEntryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		layoutSEOEntryImpl.setDDMStorageId(DDMStorageId);
+
 		layoutSEOEntryImpl.resetOriginalValues();
 
 		return layoutSEOEntryImpl;
@@ -237,6 +241,8 @@ public class LayoutSEOEntryCacheModel
 
 		openGraphTitleEnabled = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+
+		DDMStorageId = objectInput.readLong();
 	}
 
 	@Override
@@ -301,6 +307,8 @@ public class LayoutSEOEntryCacheModel
 
 		objectOutput.writeBoolean(openGraphTitleEnabled);
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeLong(DDMStorageId);
 	}
 
 	public long mvccVersion;
@@ -322,5 +330,6 @@ public class LayoutSEOEntryCacheModel
 	public String openGraphTitle;
 	public boolean openGraphTitleEnabled;
 	public long lastPublishDate;
+	public long DDMStorageId;
 
 }

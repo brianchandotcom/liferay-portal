@@ -659,6 +659,20 @@ public interface LayoutSEOEntryModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the ddm storage ID of this layout seo entry.
+	 *
+	 * @return the ddm storage ID of this layout seo entry
+	 */
+	public long getDDMStorageId();
+
+	/**
+	 * Sets the ddm storage ID of this layout seo entry.
+	 *
+	 * @param DDMStorageId the ddm storage ID of this layout seo entry
+	 */
+	public void setDDMStorageId(long DDMStorageId);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

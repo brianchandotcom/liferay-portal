@@ -52,6 +52,7 @@ public class LayoutSEOEntrySoap implements Serializable {
 		soapModel.setOpenGraphTitle(model.getOpenGraphTitle());
 		soapModel.setOpenGraphTitleEnabled(model.isOpenGraphTitleEnabled());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setDDMStorageId(model.getDDMStorageId());
 
 		return soapModel;
 	}
@@ -280,6 +281,14 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getDDMStorageId() {
+		return _DDMStorageId;
+	}
+
+	public void setDDMStorageId(long DDMStorageId) {
+		_DDMStorageId = DDMStorageId;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _layoutSEOEntryId;
@@ -299,5 +308,6 @@ public class LayoutSEOEntrySoap implements Serializable {
 	private String _openGraphTitle;
 	private boolean _openGraphTitleEnabled;
 	private Date _lastPublishDate;
+	private long _DDMStorageId;
 
 }

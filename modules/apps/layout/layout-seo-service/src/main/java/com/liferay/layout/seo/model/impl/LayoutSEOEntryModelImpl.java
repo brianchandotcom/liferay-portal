@@ -93,7 +93,7 @@ public class LayoutSEOEntryModelImpl
 		{"openGraphImageFileEntryId", Types.BIGINT},
 		{"openGraphTitle", Types.VARCHAR},
 		{"openGraphTitleEnabled", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"lastPublishDate", Types.TIMESTAMP}, {"DDMStorageId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -119,10 +119,11 @@ public class LayoutSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("openGraphTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphTitleEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("DDMStorageId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null)";
+		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null,DDMStorageId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 
@@ -192,6 +193,7 @@ public class LayoutSEOEntryModelImpl
 		model.setOpenGraphTitle(soapModel.getOpenGraphTitle());
 		model.setOpenGraphTitleEnabled(soapModel.isOpenGraphTitleEnabled());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setDDMStorageId(soapModel.getDDMStorageId());
 
 		return model;
 	}
@@ -445,6 +447,11 @@ public class LayoutSEOEntryModelImpl
 			"lastPublishDate",
 			(BiConsumer<LayoutSEOEntry, Date>)
 				LayoutSEOEntry::setLastPublishDate);
+		attributeGetterFunctions.put(
+			"DDMStorageId", LayoutSEOEntry::getDDMStorageId);
+		attributeSetterBiConsumers.put(
+			"DDMStorageId",
+			(BiConsumer<LayoutSEOEntry, Long>)LayoutSEOEntry::setDDMStorageId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -1080,6 +1087,17 @@ public class LayoutSEOEntryModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON
+	@Override
+	public long getDDMStorageId() {
+		return _DDMStorageId;
+	}
+
+	@Override
+	public void setDDMStorageId(long DDMStorageId) {
+		_DDMStorageId = DDMStorageId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1259,6 +1277,7 @@ public class LayoutSEOEntryModelImpl
 		layoutSEOEntryImpl.setOpenGraphTitle(getOpenGraphTitle());
 		layoutSEOEntryImpl.setOpenGraphTitleEnabled(isOpenGraphTitleEnabled());
 		layoutSEOEntryImpl.setLastPublishDate(getLastPublishDate());
+		layoutSEOEntryImpl.setDDMStorageId(getDDMStorageId());
 
 		layoutSEOEntryImpl.resetOriginalValues();
 
@@ -1450,6 +1469,8 @@ public class LayoutSEOEntryModelImpl
 			layoutSEOEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		layoutSEOEntryCacheModel.DDMStorageId = getDDMStorageId();
+
 		return layoutSEOEntryCacheModel;
 	}
 
@@ -1558,6 +1579,7 @@ public class LayoutSEOEntryModelImpl
 	private String _openGraphTitleCurrentLanguageId;
 	private boolean _openGraphTitleEnabled;
 	private Date _lastPublishDate;
+	private long _DDMStorageId;
 	private long _columnBitmask;
 	private LayoutSEOEntry _escapedModel;
 

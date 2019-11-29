@@ -17,7 +17,8 @@ create table LayoutSEOEntry (
 	openGraphImageFileEntryId LONG,
 	openGraphTitle STRING null,
 	openGraphTitleEnabled BOOLEAN,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	DDMStorageId LONG
 );
 
 create table LayoutSEOSite (

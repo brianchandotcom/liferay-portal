@@ -24,6 +24,7 @@
 		<field localized="true" name="openGraphTitle" type="String" />
 		<field name="openGraphTitleEnabled" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="DDMStorageId" type="long" />
 	</model>
 	<model name="com.liferay.layout.seo.model.LayoutSEOSite">
 		<field name="mvccVersion" type="long" />

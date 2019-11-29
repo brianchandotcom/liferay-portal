@@ -165,6 +165,8 @@ public class LayoutSEOEntryPersistenceTest {
 
 		newLayoutSEOEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newLayoutSEOEntry.setDDMStorageId(RandomTestUtil.nextLong());
+
 		_layoutSEOEntries.add(_persistence.update(newLayoutSEOEntry));
 
 		LayoutSEOEntry existingLayoutSEOEntry = _persistence.findByPrimaryKey(
@@ -225,6 +227,9 @@ public class LayoutSEOEntryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayoutSEOEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newLayoutSEOEntry.getLastPublishDate()));
+		Assert.assertEquals(
+			existingLayoutSEOEntry.getDDMStorageId(),
+			newLayoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -295,7 +300,8 @@ public class LayoutSEOEntryPersistenceTest {
 			"canonicalURL", true, "canonicalURLEnabled", true,
 			"openGraphDescription", true, "openGraphDescriptionEnabled", true,
 			"openGraphImageFileEntryId", true, "openGraphTitle", true,
-			"openGraphTitleEnabled", true, "lastPublishDate", true);
+			"openGraphTitleEnabled", true, "lastPublishDate", true,
+			"DDMStorageId", true);
 	}
 
 	@Test
@@ -589,6 +595,8 @@ public class LayoutSEOEntryPersistenceTest {
 		layoutSEOEntry.setOpenGraphTitleEnabled(RandomTestUtil.randomBoolean());
 
 		layoutSEOEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		layoutSEOEntry.setDDMStorageId(RandomTestUtil.nextLong());
 
 		_layoutSEOEntries.add(_persistence.update(layoutSEOEntry));
 

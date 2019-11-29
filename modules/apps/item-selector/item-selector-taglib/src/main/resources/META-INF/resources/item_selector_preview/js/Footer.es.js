@@ -14,17 +14,18 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import {sub} from '../../utils/utils.es';
+
 
 const Footer = ({currentIndex, title, totalItems}) => (
 	<div className="footer">
 		<span>{title}</span>
 
 		<div>
-			{Liferay.Util.sub(
-				Liferay.Language.get('x-of-x'),
+			{sub(Liferay.Language.get('x-of-x'), [
 				currentIndex + 1,
 				totalItems
-			)}
+			])}
 		</div>
 	</div>
 );

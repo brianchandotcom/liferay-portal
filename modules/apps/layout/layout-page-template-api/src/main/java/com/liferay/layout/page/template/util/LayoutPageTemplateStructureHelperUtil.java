@@ -49,59 +49,59 @@ public class LayoutPageTemplateStructureHelperUtil {
 		if (fragmentEntryLinks.isEmpty() &&
 			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
 
-			JSONObject columnJSONObject = JSONUtil.put(
-				"columnId", "0"
-			).put(
-				"fragmentEntryLinkIds", Collections.singletonList("drop-zone")
-			).put(
-				"size", "12"
-			);
-
-			JSONObject structureJSONObject = JSONUtil.put(
-				"columns", JSONUtil.put(columnJSONObject)
-			).put(
-				"config",
+			structureJSONArray.put(
 				JSONUtil.put(
-					"columnSpacing", true
+					"columns",
+					JSONUtil.put(
+						JSONUtil.put(
+							"columnId", "0"
+						).put(
+							"fragmentEntryLinkIds",
+							Collections.singletonList("drop-zone")
+						).put(
+							"size", "12"
+						))
 				).put(
-					"paddingHorizontal", "3"
+					"config",
+					JSONUtil.put(
+						"columnSpacing", true
+					).put(
+						"paddingHorizontal", "3"
+					).put(
+						"paddingVertical", "3"
+					)
 				).put(
-					"paddingVertical", "3"
-				)
-			).put(
-				"rowId", "0"
-			).put(
-				"type", "1"
-			);
-
-			structureJSONArray.put(structureJSONObject);
+					"rowId", "0"
+				).put(
+					"type", "1"
+				));
 		}
 		else {
 			for (int i = 0; i < fragmentEntryLinks.size(); i++) {
 				FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
 
-				JSONObject columnJSONObject = JSONUtil.put(
-					"columnId", String.valueOf(i)
-				).put(
-					"fragmentEntryLinkIds",
+				structureJSONArray.put(
 					JSONUtil.put(
-						String.valueOf(
-							fragmentEntryLink.getFragmentEntryLinkId()))
-				).put(
-					"size", StringPool.BLANK
-				);
-
-				JSONObject structureJSONObject = JSONUtil.put(
-					"columns", JSONUtil.put(columnJSONObject)
-				).put(
-					"config", JSONFactoryUtil.createJSONObject()
-				).put(
-					"rowId", String.valueOf(i)
-				).put(
-					"type", String.valueOf(_getRowType(fragmentEntryLink))
-				);
-
-				structureJSONArray.put(structureJSONObject);
+						"columns",
+						JSONUtil.put(
+							JSONUtil.put(
+								"columnId", String.valueOf(i)
+							).put(
+								"fragmentEntryLinkIds",
+								JSONUtil.put(
+									String.valueOf(
+										fragmentEntryLink.
+											getFragmentEntryLinkId()))
+							).put(
+								"size", StringPool.BLANK
+							))
+					).put(
+						"config", JSONFactoryUtil.createJSONObject()
+					).put(
+						"rowId", String.valueOf(i)
+					).put(
+						"type", String.valueOf(_getRowType(fragmentEntryLink))
+					));
 			}
 		}
 

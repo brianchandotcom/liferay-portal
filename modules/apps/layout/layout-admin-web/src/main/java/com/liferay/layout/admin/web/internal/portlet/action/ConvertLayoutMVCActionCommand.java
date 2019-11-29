@@ -19,7 +19,6 @@ import com.liferay.layout.util.LayoutConvertHelper;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -41,10 +40,9 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class ConvertLayoutMVCActionCommand
-	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+	extends BaseMVCActionCommand implements MVCActionCommand {
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public boolean processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {

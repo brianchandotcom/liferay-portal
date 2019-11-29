@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 
 	@Override
-	public void convertLayout(long plid) throws PortalException {
+	public void convertLayout(long plid) throws Exception {
 		_convertLayout(plid);
 	}
 
@@ -153,7 +153,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 		return ArrayUtil.toLongArray(convertibleLayoutsPlids);
 	}
 
-	private Layout _convertLayout(long plid) throws PortalException {
+	private Layout _convertLayout(long plid) throws Exception {
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		UnicodeProperties typeSettingsProperties =
@@ -225,12 +225,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 			layout.getRobotsMap(), layout.getType(), layout.getTypeSettings(),
 			true, true, Collections.emptyMap(), serviceContext);
 
-		try {
-			_layoutCopyHelper.copyLayout(layout, draftLayout);
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
+		_layoutCopyHelper.copyLayout(layout, draftLayout);
 
 		return _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -340,7 +335,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 	private class ConvertLayoutCallable implements Callable<Layout> {
 
 		@Override
-		public Layout call() throws PortalException {
+		public Layout call() throws Exception {
 			return _convertLayout(_layoutPlid);
 		}
 

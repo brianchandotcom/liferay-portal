@@ -29,7 +29,7 @@ public interface LayoutConvertHelper {
 	 * @param  plid the primary key of the layout
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public void convertLayout(long plid) throws PortalException;
+	public void convertLayout(long plid) throws Exception;
 
 	/**
 	 * Converts all convertible layouts in the group of type {@link

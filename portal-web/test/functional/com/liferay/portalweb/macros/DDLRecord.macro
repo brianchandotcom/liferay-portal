@@ -264,8 +264,6 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${document}");
 
-			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");
-
 			AssertClick(
 				locator1 = "ItemSelector#ADD_BUTTON",
 				value1 = "Add");

@@ -296,20 +296,12 @@ definition {
 			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${webContentTitle}");
 
-		SelectFrame(value1 = "relative=top");
-
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		AssertTextEquals(
-			key_listEntry = "${webContentTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_TITLE",
+			key_card = "${webContentTitle}",
+			locator1 = "LexiconCard#CARD_TITLE",
 			value1 = "${webContentTitle}");
-
-		SelectFrame(value1 = "relative=top");
-
-		Button.clickDone();
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		PortletEntry.save();
 

@@ -32,10 +32,6 @@ public interface InfoItemTemplatedRenderer<T> extends InfoItemRenderer<T> {
 	public List<InfoItemRendererTemplate> getInfoItemRendererTemplate(
 		T t, Locale locale);
 
-	public void render(
-		T t, String templateKey, HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse);
-
 	@Override
 	public default void render(
 		T t, HttpServletRequest httpServletRequest,
@@ -51,8 +47,13 @@ public interface InfoItemTemplatedRenderer<T> extends InfoItemRenderer<T> {
 		InfoItemRendererTemplate infoItemRendererTemplate =
 			infoItemRendererTemplates.get(0);
 
-		render(t, infoItemRendererTemplate.getTemplateKey(), httpServletRequest,
+		render(
+			t, infoItemRendererTemplate.getTemplateKey(), httpServletRequest,
 			httpServletResponse);
 	}
+
+	public void render(
+		T t, String templateKey, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

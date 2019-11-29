@@ -8,7 +8,6 @@ Export-Package:\
 	com.liferay.info.display.field,\
 	com.liferay.info.display.request.attributes.contributor,\
 	com.liferay.info.display.url.provider,\
-	com.liferay.info.item.provider,\
 	com.liferay.info.item.renderer,\
 	com.liferay.info.item.selector,\
 	com.liferay.info.list.provider,\

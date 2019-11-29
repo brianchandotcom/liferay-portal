@@ -59,6 +59,7 @@ import com.liferay.sites.kernel.util.Sites;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -251,10 +252,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
 					 k++) {
 
-					String fragmentEntryLinkId =
-						fragmentEntryLinkIdsJSONArray.getString(k);
+					if (Objects.equals(
+							fragmentEntryLinkIdsJSONArray.getString(k),
+							"drop-zone")) {
 
-					if (fragmentEntryLinkId.equals("drop-zone")) {
 						newFragmentEntryLinkIdsJSONArray.put(
 							fragmentEntryLinkIdsJSONArray.getString(k));
 

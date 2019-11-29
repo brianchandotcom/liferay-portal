@@ -15,6 +15,7 @@
 package com.liferay.layout.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.exception.LayoutConvertException;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutConvertHelper;
 import com.liferay.petra.string.StringPool;
@@ -76,6 +77,19 @@ public class LayoutConvertHelperTest {
 		_nonConvertibleLayout = null;
 		_privateLayout = null;
 		_publicLayout = null;
+	}
+
+	@Test(expected = LayoutConvertException.class)
+	public void testConvertCorruptedLayout() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			StringPool.BLANK);
+
+		_layoutConvertHelper.convertLayout(layout.getPlid());
 	}
 
 	@Test

@@ -44,6 +44,7 @@ public class LayoutSEOEntrySoap implements Serializable {
 		soapModel.setLayoutId(model.getLayoutId());
 		soapModel.setCanonicalURL(model.getCanonicalURL());
 		soapModel.setCanonicalURLEnabled(model.isCanonicalURLEnabled());
+		soapModel.setDDMStorageId(model.getDDMStorageId());
 		soapModel.setOpenGraphDescription(model.getOpenGraphDescription());
 		soapModel.setOpenGraphDescriptionEnabled(
 			model.isOpenGraphDescriptionEnabled());
@@ -222,6 +223,14 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_canonicalURLEnabled = canonicalURLEnabled;
 	}
 
+	public long getDDMStorageId() {
+		return _DDMStorageId;
+	}
+
+	public void setDDMStorageId(long DDMStorageId) {
+		_DDMStorageId = DDMStorageId;
+	}
+
 	public String getOpenGraphDescription() {
 		return _openGraphDescription;
 	}
@@ -293,6 +302,7 @@ public class LayoutSEOEntrySoap implements Serializable {
 	private long _layoutId;
 	private String _canonicalURL;
 	private boolean _canonicalURLEnabled;
+	private long _DDMStorageId;
 	private String _openGraphDescription;
 	private boolean _openGraphDescriptionEnabled;
 	private long _openGraphImageFileEntryId;

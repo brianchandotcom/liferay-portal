@@ -149,6 +149,8 @@ public class LayoutSEOEntryPersistenceTest {
 		newLayoutSEOEntry.setCanonicalURLEnabled(
 			RandomTestUtil.randomBoolean());
 
+		newLayoutSEOEntry.setDDMStorageId(RandomTestUtil.nextLong());
+
 		newLayoutSEOEntry.setOpenGraphDescription(
 			RandomTestUtil.randomString());
 
@@ -207,6 +209,9 @@ public class LayoutSEOEntryPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutSEOEntry.isCanonicalURLEnabled(),
 			newLayoutSEOEntry.isCanonicalURLEnabled());
+		Assert.assertEquals(
+			existingLayoutSEOEntry.getDDMStorageId(),
+			newLayoutSEOEntry.getDDMStorageId());
 		Assert.assertEquals(
 			existingLayoutSEOEntry.getOpenGraphDescription(),
 			newLayoutSEOEntry.getOpenGraphDescription());
@@ -292,9 +297,9 @@ public class LayoutSEOEntryPersistenceTest {
 			"layoutSEOEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "privateLayout", true, "layoutId", true,
-			"canonicalURL", true, "canonicalURLEnabled", true,
-			"openGraphDescription", true, "openGraphDescriptionEnabled", true,
-			"openGraphImageFileEntryId", true, "openGraphTitle", true,
+			"canonicalURL", true, "canonicalURLEnabled", true, "DDMStorageId",
+			true, "openGraphDescription", true, "openGraphDescriptionEnabled",
+			true, "openGraphImageFileEntryId", true, "openGraphTitle", true,
 			"openGraphTitleEnabled", true, "lastPublishDate", true);
 	}
 
@@ -576,6 +581,8 @@ public class LayoutSEOEntryPersistenceTest {
 		layoutSEOEntry.setCanonicalURL(RandomTestUtil.randomString());
 
 		layoutSEOEntry.setCanonicalURLEnabled(RandomTestUtil.randomBoolean());
+
+		layoutSEOEntry.setDDMStorageId(RandomTestUtil.nextLong());
 
 		layoutSEOEntry.setOpenGraphDescription(RandomTestUtil.randomString());
 

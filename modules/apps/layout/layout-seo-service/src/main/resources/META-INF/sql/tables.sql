@@ -12,6 +12,7 @@ create table LayoutSEOEntry (
 	layoutId LONG,
 	canonicalURL STRING null,
 	canonicalURLEnabled BOOLEAN,
+	DDMStorageId LONG,
 	openGraphDescription STRING null,
 	openGraphDescriptionEnabled BOOLEAN,
 	openGraphImageFileEntryId LONG,

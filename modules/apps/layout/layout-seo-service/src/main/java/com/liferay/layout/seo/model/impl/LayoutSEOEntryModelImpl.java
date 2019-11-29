@@ -87,7 +87,7 @@ public class LayoutSEOEntryModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"privateLayout", Types.BOOLEAN},
 		{"layoutId", Types.BIGINT}, {"canonicalURL", Types.VARCHAR},
-		{"canonicalURLEnabled", Types.BOOLEAN},
+		{"canonicalURLEnabled", Types.BOOLEAN}, {"DDMStorageId", Types.BIGINT},
 		{"openGraphDescription", Types.VARCHAR},
 		{"openGraphDescriptionEnabled", Types.BOOLEAN},
 		{"openGraphImageFileEntryId", Types.BIGINT},
@@ -113,6 +113,7 @@ public class LayoutSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("canonicalURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("canonicalURLEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("DDMStorageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("openGraphDescription", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphDescriptionEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
@@ -122,7 +123,7 @@ public class LayoutSEOEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null)";
+		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,DDMStorageId LONG,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 
@@ -184,6 +185,7 @@ public class LayoutSEOEntryModelImpl
 		model.setLayoutId(soapModel.getLayoutId());
 		model.setCanonicalURL(soapModel.getCanonicalURL());
 		model.setCanonicalURLEnabled(soapModel.isCanonicalURLEnabled());
+		model.setDDMStorageId(soapModel.getDDMStorageId());
 		model.setOpenGraphDescription(soapModel.getOpenGraphDescription());
 		model.setOpenGraphDescriptionEnabled(
 			soapModel.isOpenGraphDescriptionEnabled());
@@ -407,6 +409,11 @@ public class LayoutSEOEntryModelImpl
 			"canonicalURLEnabled",
 			(BiConsumer<LayoutSEOEntry, Boolean>)
 				LayoutSEOEntry::setCanonicalURLEnabled);
+		attributeGetterFunctions.put(
+			"DDMStorageId", LayoutSEOEntry::getDDMStorageId);
+		attributeSetterBiConsumers.put(
+			"DDMStorageId",
+			(BiConsumer<LayoutSEOEntry, Long>)LayoutSEOEntry::setDDMStorageId);
 		attributeGetterFunctions.put(
 			"openGraphDescription", LayoutSEOEntry::getOpenGraphDescription);
 		attributeSetterBiConsumers.put(
@@ -792,6 +799,17 @@ public class LayoutSEOEntryModelImpl
 	@Override
 	public void setCanonicalURLEnabled(boolean canonicalURLEnabled) {
 		_canonicalURLEnabled = canonicalURLEnabled;
+	}
+
+	@JSON
+	@Override
+	public long getDDMStorageId() {
+		return _DDMStorageId;
+	}
+
+	@Override
+	public void setDDMStorageId(long DDMStorageId) {
+		_DDMStorageId = DDMStorageId;
 	}
 
 	@JSON
@@ -1251,6 +1269,7 @@ public class LayoutSEOEntryModelImpl
 		layoutSEOEntryImpl.setLayoutId(getLayoutId());
 		layoutSEOEntryImpl.setCanonicalURL(getCanonicalURL());
 		layoutSEOEntryImpl.setCanonicalURLEnabled(isCanonicalURLEnabled());
+		layoutSEOEntryImpl.setDDMStorageId(getDDMStorageId());
 		layoutSEOEntryImpl.setOpenGraphDescription(getOpenGraphDescription());
 		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
 			isOpenGraphDescriptionEnabled());
@@ -1411,6 +1430,8 @@ public class LayoutSEOEntryModelImpl
 
 		layoutSEOEntryCacheModel.canonicalURLEnabled = isCanonicalURLEnabled();
 
+		layoutSEOEntryCacheModel.DDMStorageId = getDDMStorageId();
+
 		layoutSEOEntryCacheModel.openGraphDescription =
 			getOpenGraphDescription();
 
@@ -1550,6 +1571,7 @@ public class LayoutSEOEntryModelImpl
 	private String _canonicalURL;
 	private String _canonicalURLCurrentLanguageId;
 	private boolean _canonicalURLEnabled;
+	private long _DDMStorageId;
 	private String _openGraphDescription;
 	private String _openGraphDescriptionCurrentLanguageId;
 	private boolean _openGraphDescriptionEnabled;

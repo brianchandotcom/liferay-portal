@@ -56,6 +56,7 @@ public class LayoutSEOEntryWrapper
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("canonicalURL", getCanonicalURL());
 		attributes.put("canonicalURLEnabled", isCanonicalURLEnabled());
+		attributes.put("DDMStorageId", getDDMStorageId());
 		attributes.put("openGraphDescription", getOpenGraphDescription());
 		attributes.put(
 			"openGraphDescriptionEnabled", isOpenGraphDescriptionEnabled());
@@ -147,6 +148,12 @@ public class LayoutSEOEntryWrapper
 
 		if (canonicalURLEnabled != null) {
 			setCanonicalURLEnabled(canonicalURLEnabled);
+		}
+
+		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
+
+		if (DDMStorageId != null) {
+			setDDMStorageId(DDMStorageId);
 		}
 
 		String openGraphDescription = (String)attributes.get(
@@ -299,6 +306,16 @@ public class LayoutSEOEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ddm storage ID of this layout seo entry.
+	 *
+	 * @return the ddm storage ID of this layout seo entry
+	 */
+	@Override
+	public long getDDMStorageId() {
+		return model.getDDMStorageId();
 	}
 
 	@Override
@@ -774,6 +791,16 @@ public class LayoutSEOEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the ddm storage ID of this layout seo entry.
+	 *
+	 * @param DDMStorageId the ddm storage ID of this layout seo entry
+	 */
+	@Override
+	public void setDDMStorageId(long DDMStorageId) {
+		model.setDDMStorageId(DDMStorageId);
 	}
 
 	/**

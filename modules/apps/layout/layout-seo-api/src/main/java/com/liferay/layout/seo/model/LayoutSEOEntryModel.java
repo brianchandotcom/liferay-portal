@@ -382,6 +382,20 @@ public interface LayoutSEOEntryModel
 	public void setCanonicalURLEnabled(boolean canonicalURLEnabled);
 
 	/**
+	 * Returns the ddm storage ID of this layout seo entry.
+	 *
+	 * @return the ddm storage ID of this layout seo entry
+	 */
+	public long getDDMStorageId();
+
+	/**
+	 * Sets the ddm storage ID of this layout seo entry.
+	 *
+	 * @param DDMStorageId the ddm storage ID of this layout seo entry
+	 */
+	public void setDDMStorageId(long DDMStorageId);
+
+	/**
 	 * Returns the open graph description of this layout seo entry.
 	 *
 	 * @return the open graph description of this layout seo entry

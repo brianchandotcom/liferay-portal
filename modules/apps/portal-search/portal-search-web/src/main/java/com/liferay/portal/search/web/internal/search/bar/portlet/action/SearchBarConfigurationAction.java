@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
+import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 
 import javax.servlet.http.HttpServletRequest;
 

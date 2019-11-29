@@ -17,9 +17,9 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.provider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.constants.SearchPortletKeys;
 import com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration;
-import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
 
 import java.util.Map;
 

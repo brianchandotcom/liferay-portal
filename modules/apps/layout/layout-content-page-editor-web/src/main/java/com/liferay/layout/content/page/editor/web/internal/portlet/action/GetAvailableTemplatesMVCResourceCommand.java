@@ -14,14 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.info.item.provider.InfoItemDDMTemplateProvider;
-import com.liferay.info.item.provider.InfoItemDDMTemplateProviderTracker;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
+import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
+import com.liferay.info.item.template.InfoItemRendererTemplate;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -64,77 +63,75 @@ public class GetAvailableTemplatesMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		String className = ParamUtil.getString(resourceRequest, "className");
+		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<InfoItemRenderer> infoItemRenderers =
 			_infoItemRendererTracker.getInfoItemRenderers(className);
 
+		Object object = _getDisplayObject(className, classPK);
+
 		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
-			jsonArray.put(
-				JSONUtil.put(
-					"infoItemRendererKey", infoItemRenderer.getKey()
-				).put(
-					"label", infoItemRenderer.getLabel(themeDisplay.getLocale())
-				));
-		}
+			if (infoItemRenderer instanceof InfoItemTemplatedRenderer) {
+				InfoItemTemplatedRenderer infoItemTemplatedRenderer =
+					(InfoItemTemplatedRenderer)infoItemRenderer;
 
-		InfoItemDDMTemplateProvider infoItemDDMTemplateProvider =
-			_infoItemDDMTemplateProviderTracker.getInfoItemDDMTemplateProvider(
-				className);
+				List<InfoItemRendererTemplate> infoItemRendererTemplates =
+					infoItemTemplatedRenderer.getInfoItemRendererTemplate(
+						object, themeDisplay.getLocale());
 
-		if (infoItemDDMTemplateProvider == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse, jsonArray);
+				for (InfoItemRendererTemplate infoItemRendererTemplate :
+						infoItemRendererTemplates) {
 
-			return;
-		}
-
-		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
-
-		if (infoDisplayContributor == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse, jsonArray);
-
-			return;
-		}
-
-		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
-
-		InfoDisplayObjectProvider infoDisplayObjectProvider =
-			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
-
-		if (infoDisplayObjectProvider == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse, jsonArray);
-
-			return;
-		}
-
-		List<DDMTemplate> ddmTemplates =
-			infoItemDDMTemplateProvider.getDDMTemplates(
-				infoDisplayObjectProvider.getDisplayObject());
-
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			jsonArray.put(
-				JSONUtil.put(
-					"ddmTemplateKey", ddmTemplate.getTemplateKey()
-				).put(
-					"label", ddmTemplate.getName(themeDisplay.getLocale())
-				));
+					jsonArray.put(
+						JSONUtil.put(
+							"infoItemRendererKey", infoItemRenderer.getKey()
+						).put(
+							"label", infoItemRendererTemplate.getLabel()
+						).put(
+							"templateKey",
+							infoItemRendererTemplate.getTemplateKey()
+						));
+				}
+			}
+			else {
+				jsonArray.put(
+					JSONUtil.put(
+						"infoItemRendererKey", infoItemRenderer.getKey()
+					).put(
+						"label",
+						infoItemRenderer.getLabel(themeDisplay.getLocale())
+					));
+			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
 	}
 
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private Object _getDisplayObject(String className, long classPK) {
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		try {
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+			if (infoDisplayObjectProvider == null) {
+				return null;
+			}
+
+			return infoDisplayObjectProvider.getDisplayObject();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
 
 	@Reference
-	private InfoItemDDMTemplateProviderTracker
-		_infoItemDDMTemplateProviderTracker;
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;

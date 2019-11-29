@@ -104,41 +104,37 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 									<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : StringPool.BLANK %>">
 
 										<%
-										JSONObject columnConfigJSONObject = columnJSONObject.getJSONObject("config");
+										JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
 
-										boolean isColumnDropZone = false;
+										for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
+												String fragmentEntryLinkIdString = fragmentEntryLinkIdsJSONArray.getString(k);
 
-										if (columnConfigJSONObject != null) {
-											isColumnDropZone = columnConfigJSONObject.getBoolean("isDropZone", false);
-										}
+												boolean isFragmentEntryLinkDropZone = fragmentEntryLinkIdString.equals("drop-zone");
 										%>
 
-										<c:choose>
-											<c:when test="<%= isColumnDropZone %>">
-
-												<%
-												LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), themeDisplay.getPlid(), true);
-
-												String data = layoutPageTemplateStructure.getData(segmentsExperienceIds);
-												%>
-
-												<c:if test="<%= Validator.isNotNull(data) %>">
+											<c:choose>
+												<c:when test="<%= isFragmentEntryLinkDropZone %>">
 
 													<%
-													JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+													LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), themeDisplay.getPlid(), true);
 
-													request.setAttribute("render_layout_data_structure.jsp-structureJSONArray", dataJSONObject.getJSONArray("structure"));
+													String data = layoutPageTemplateStructure.getData(segmentsExperienceIds);
 													%>
 
-													<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
-												</c:if>
-											</c:when>
-											<c:otherwise>
+													<c:if test="<%= Validator.isNotNull(data) %>">
 
-												<%
-												JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+														<%
+														JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-												for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
+														request.setAttribute("render_layout_data_structure.jsp-structureJSONArray", dataJSONObject.getJSONArray("structure"));
+														%>
+
+														<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+													</c:if>
+												</c:when>
+												<c:otherwise>
+
+													<%
 													long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
 
 													if (fragmentEntryLinkId <= 0) {
@@ -162,16 +158,16 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 													defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
 													defaultFragmentRendererContext.setPreviewType(previewType);
 													defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-												%>
+													%>
 
 													<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+												</c:otherwise>
+											</c:choose>
 
-												<%
-												}
-												%>
+										<%
+										}
+										%>
 
-											</c:otherwise>
-										</c:choose>
 									</div>
 
 								<%

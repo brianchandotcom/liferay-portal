@@ -16,8 +16,6 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
-
-		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 	}
 
 	tearDown {
@@ -31,10 +29,98 @@ definition {
 		}
 	}
 
+	@description = "This makes sure that the user can edit OG image tag."
+	@priority = "5"
+	test ChangeImageTag {
+		property test.name.skip.portal.instance = "OpenGraphImages#ChangeImageTag";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_2.jpg");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
+
+		var customImageURLSource = StringUtil.replace("${customImageURL}", "&", "&amp;");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${customImageURLSource}"''');
+	}
+
+	@description = "This makes sure that the previously added image can be cleared."
+	@priority = "5"
+	test ClearImageTag {
+		property test.name.skip.portal.instance = "OpenGraphImages#ClearImageTag";
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
+
+		AssertElementNotPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		Button.click(button = "Save");
+
+		Click(locator1 = "ControlMenu#EDIT_COG");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:image"''');
+	}
+
 	@description = "This ensures that the OG image tags will not appear when the HTTPS user disables Open Graph."
 	@priority = "5"
 	test DisableAfterAddingImage {
 		property test.name.skip.portal.instance = "OpenGraphImages#DisableAfterAddingImage";
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -77,6 +163,8 @@ definition {
 	@priority = "5"
 	test ViewImageWithMetaTags {
 		property test.name.skip.portal.instance = "OpenGraphImages#ViewImageWithMetaTags";
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

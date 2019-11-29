@@ -162,7 +162,6 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 				{allowEdit && (
 					<ClayButton
-						disabled={state.mode === 'active'}
 						displayType="secondary"
 						onClick={() => dispatch({type: 'activate'})}
 						small

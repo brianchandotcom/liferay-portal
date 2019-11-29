@@ -55,10 +55,6 @@ definition {
 			pageName = "Test Page Name",
 			uploadFileName = "Document_1.jpg");
 
-		Click(locator1 = "ControlMenu#EDIT_COG");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
-
 		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
 
 		var customImageURLSource = StringUtil.replace("${customImageURL}", "&", "&amp;");
@@ -140,20 +136,12 @@ definition {
 			pageName = "Test Page Name",
 			uploadFileName = "Document_1.jpg");
 
-		Click(locator1 = "ControlMenu#EDIT_COG");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
-
 		OpenGraph.configureOpenGraph(
 			customDescription = "This is a custom description edit",
 			customImage = "true",
 			customTitle = "This is a custom title edit",
 			pageName = "Test Page Name",
 			uploadFileName = "Document_2.jpg");
-
-		Click(locator1 = "ControlMenu#EDIT_COG");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
 

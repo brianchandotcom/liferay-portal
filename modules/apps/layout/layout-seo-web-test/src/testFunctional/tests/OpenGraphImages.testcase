@@ -47,19 +47,11 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
-		Click(locator1 = "ControlMenu#EDIT_COG");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
-
 		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
 			uploadFileName = "Document_2.jpg");
-
-		Click(locator1 = "ControlMenu#EDIT_COG");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
 
@@ -89,10 +81,6 @@ definition {
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
-
-		Click(locator1 = "ControlMenu#EDIT_COG");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
 

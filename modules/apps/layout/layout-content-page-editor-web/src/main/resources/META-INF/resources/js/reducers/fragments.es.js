@@ -32,10 +32,8 @@ import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
-	FRAGMENTS_EDITOR_ROW_TYPES,
-	PAGE_TYPES
+	FRAGMENTS_EDITOR_ROW_TYPES
 } from '../utils/constants';
-import {isDropZoneFragment, isDropZoneKey} from '../utils/isDropZone.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -50,7 +48,7 @@ import {isDropZoneFragment, isDropZoneKey} from '../utils/isDropZone.es';
  * @review
  */
 function addFragment(
-	fragmentEntryLink,
+	fragmentEntryLinkId,
 	dropTargetBorder,
 	dropTargetItemId,
 	dropTargetItemType,
@@ -67,7 +65,7 @@ function addFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLink,
+			fragmentEntryLinkId,
 			dropTargetItemId,
 			fragmentColumn.fragmentEntryLinkIds.length
 		);
@@ -85,7 +83,7 @@ function addFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLink,
+			fragmentEntryLinkId,
 			fragmentColumn.columnId,
 			position
 		);
@@ -98,14 +96,14 @@ function addFragment(
 
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLink,
+			fragmentEntryLinkId,
 			fragmentEntryLinkRowType,
 			position
 		);
 	} else {
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLink,
+			fragmentEntryLinkId,
 			fragmentEntryLinkRowType,
 			layoutData.structure.length
 		);
@@ -228,15 +226,6 @@ function addFragmentEntryLinkReducer(state, action) {
 		let nextData = null;
 		let nextState = state;
 
-		if (
-			isDropZoneKey(action.fragmentEntryKey) &&
-			state.pageType === PAGE_TYPES.master &&
-			state.layoutData.hasDropZone
-		) {
-			resolve(nextState);
-			return;
-		}
-
 		_addFragmentEntryLink(
 			nextState.addFragmentEntryLinkURL,
 			action.fragmentEntryKey,
@@ -251,7 +240,7 @@ function addFragmentEntryLinkReducer(state, action) {
 				fragmentEntryLink = response;
 
 				nextData = addFragment(
-					fragmentEntryLink,
+					fragmentEntryLink.fragmentEntryLinkId,
 					nextState.dropTargetBorder,
 					nextState.dropTargetItemId,
 					nextState.dropTargetItemType,
@@ -392,11 +381,8 @@ function moveFragmentEntryLinkReducer(state, action) {
 			action.fragmentEntryLinkRowType
 		);
 
-		const fragmentEntryLink =
-			state.fragmentEntryLinks[action.fragmentEntryLinkId];
-
 		nextData = addFragment(
-			fragmentEntryLink,
+			action.fragmentEntryLinkId,
 			action.targetBorder,
 			action.targetItemId,
 			action.targetItemType,
@@ -473,20 +459,6 @@ function removeFragmentEntryLinkReducer(state, action) {
 			fragmentEntryLinkRow.type || FRAGMENTS_EDITOR_ROW_TYPES.componentRow
 		)
 	);
-
-	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
-
-	if (isDropZoneFragment(fragmentEntryLink)) {
-		nextState = updateIn(
-			nextState,
-			['layoutData'],
-			layoutData => ({
-				...layoutData,
-				hasDropZone: false
-			}),
-			{}
-		);
-	}
 
 	if (!action.fragmentEntryLinkIsUsedInOtherExperience) {
 		nextState = updateIn(
@@ -681,7 +653,7 @@ function _addFragmentEntryLink(
  */
 function _addFragmentToColumn(
 	layoutData,
-	fragmentEntryLink,
+	fragmentEntryLinkId,
 	targetColumnId,
 	position
 ) {
@@ -695,33 +667,19 @@ function _addFragmentToColumn(
 	const columnIndex = row.columns.indexOf(column);
 	const rowIndex = structure.indexOf(row);
 
-	let newLayoutData = updateIn(
+	const newLayoutData = updateIn(
 		layoutData,
 		['structure', rowIndex, 'columns', columnIndex],
 		column => ({
-			...column,
-			config: {
-				isDropZone: isDropZoneFragment(fragmentEntryLink)
-			}
+			...column
 		})
 	);
-
-	if (!newLayoutData.hasDropZone && isDropZoneFragment(fragmentEntryLink)) {
-		newLayoutData = {
-			...newLayoutData,
-			hasDropZone: true
-		};
-	}
 
 	return updateIn(
 		newLayoutData,
 		['structure', rowIndex, 'columns', columnIndex, 'fragmentEntryLinkIds'],
 		fragmentEntryLinkIds =>
-			add(
-				fragmentEntryLinkIds,
-				fragmentEntryLink.fragmentEntryLinkId,
-				position
-			)
+			add(fragmentEntryLinkIds, fragmentEntryLinkId, position)
 	);
 }
 
@@ -737,7 +695,7 @@ function _addFragmentToColumn(
  */
 function _addSingleFragmentRow(
 	layoutData,
-	fragmentEntryLink,
+	fragmentEntryLinkId,
 	fragmentEntryLinkRowType,
 	position
 ) {
@@ -745,7 +703,7 @@ function _addSingleFragmentRow(
 		['12'],
 		layoutData,
 		position,
-		[fragmentEntryLink],
+		[fragmentEntryLinkId],
 		fragmentEntryLinkRowType
 	);
 }

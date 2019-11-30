@@ -49,7 +49,7 @@ function addPortletReducer(state, action) {
 				fragmentEntryLink = response;
 
 				nextData = addFragment(
-					fragmentEntryLink,
+					fragmentEntryLink.fragmentEntryLinkId,
 					nextState.dropTargetBorder,
 					nextState.dropTargetItemId,
 					nextState.dropTargetItemType,

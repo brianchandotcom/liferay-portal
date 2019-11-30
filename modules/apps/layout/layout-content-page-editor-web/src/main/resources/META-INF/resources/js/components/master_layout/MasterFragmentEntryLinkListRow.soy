@@ -104,7 +104,6 @@
 	{@param fragmentEntryLinks: ?}
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param? size: string}
-	{@param? config: ?}
 	{@param layoutData: ?}
 	{@param? selectedSidebarPanelId: string}
 	{@param? store: ?}
@@ -112,19 +111,21 @@
 	{let $columnClasses kind="text"}
 		{if $size}
 			{sp}col-md-{$size}
+		{else}
+			{sp}col-md-12
 		{/if}
 	{/let}
 
 	<div class="{$columnClasses}">
-		{if $config and $config.isDropZone}
-			{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
-				{param fragmentEntryLinks: $fragmentEntryLinks /}
-				{param layoutData: $layoutData /}
-				{param store: $store /}
-				{param selectedSidebarPanelId: $selectedSidebarPanelId /}
-			{/call}
-		{else}
-			{foreach $fragmentEntryLinkId in $fragmentEntryLinkIds}
+		{foreach $fragmentEntryLinkId in $fragmentEntryLinkIds}
+			{if $fragmentEntryLinkId == 'drop-zone'}
+				{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
+					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param layoutData: $layoutData /}
+					{param store: $store /}
+					{param selectedSidebarPanelId: $selectedSidebarPanelId /}
+				{/call}
+			{else}
 				{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 
 				{if $fragmentEntryLink}
@@ -136,7 +137,7 @@
 						{/call}
 					</section>
 				{/if}
-			{/foreach}
-		{/if}
+			{/if}
+		{/foreach}
 	</div>
 {/template}

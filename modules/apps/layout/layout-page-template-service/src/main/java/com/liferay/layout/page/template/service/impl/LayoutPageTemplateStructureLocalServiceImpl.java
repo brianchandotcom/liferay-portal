@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.service.impl;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -186,9 +187,21 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				groupId, classNameId, classPK);
 
+		Layout layout = _layoutLocalService.getLayout(classPK);
+
+		int type = LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+
+		if (layoutPageTemplateEntry != null) {
+			type = layoutPageTemplateEntry.getType();
+		}
+
 		JSONObject jsonObject =
 			LayoutPageTemplateStructureHelperUtil.
-				generateContentLayoutStructure(fragmentEntryLinks);
+				generateContentLayoutStructure(fragmentEntryLinks, type);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			fetchLayoutPageTemplateStructure(groupId, classNameId, classPK);

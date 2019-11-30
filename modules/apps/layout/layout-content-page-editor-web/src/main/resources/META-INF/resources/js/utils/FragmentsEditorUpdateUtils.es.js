@@ -18,7 +18,6 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from '../actions/saveChanges.es';
-import {isDropZoneFragment} from '../utils/isDropZone.es';
 import {
 	getTargetBorder,
 	getWidget,
@@ -64,7 +63,7 @@ function addRow(
 	layoutColumns,
 	layoutData,
 	position,
-	fragmentEntryLinks = [],
+	fragmentEntryLinkIds = [],
 	type = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
 ) {
 	let nextColumnId = layoutData.nextColumnId || 0;
@@ -75,12 +74,7 @@ function addRow(
 	layoutColumns.forEach(columnSize => {
 		columns.push({
 			columnId: `${nextColumnId}`,
-			config: {
-				isDropZone: fragmentEntryLinks.some(isDropZoneFragment)
-			},
-			fragmentEntryLinkIds: fragmentEntryLinks.map(
-				fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId
-			),
+			fragmentEntryLinkIds,
 			size: columnSize
 		});
 
@@ -109,13 +103,6 @@ function addRow(
 
 	nextData = setIn(nextData, ['structure'], nextStructure);
 	nextData = setIn(nextData, ['nextRowId'], nextRowId + 1);
-
-	if (!nextData.hasDropZone && fragmentEntryLinks.some(isDropZoneFragment)) {
-		nextData = {
-			...nextData,
-			hasDropZone: true
-		};
-	}
 
 	return nextData;
 }
@@ -353,7 +340,7 @@ function updateWidgets(state, fragmentEntryLinkIds = []) {
 	fragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
 		const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
 
-		if (fragmentEntryLink.portletId) {
+		if (fragmentEntryLink && fragmentEntryLink.portletId) {
 			const widget = getWidget(
 				state.widgets,
 				fragmentEntryLink.portletId

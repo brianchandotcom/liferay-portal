@@ -26,7 +26,6 @@ import './ExperimentsLabel.es';
 import {TOGGLE_SIDEBAR} from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {PAGE_TYPES} from '../../utils/constants';
 import templates from './FragmentsEditorToolbar.soy';
 
 /**
@@ -94,10 +93,7 @@ class FragmentsEditorToolbar extends Component {
 
 	_checkPublishButtonState() {
 		requestAnimationFrame(() => {
-			this._publishButtonEnabled =
-				this._online &&
-				(this.pageType !== PAGE_TYPES.master ||
-					this.layoutData.hasDropZone);
+			this._publishButtonEnabled = this._online;
 		});
 	}
 

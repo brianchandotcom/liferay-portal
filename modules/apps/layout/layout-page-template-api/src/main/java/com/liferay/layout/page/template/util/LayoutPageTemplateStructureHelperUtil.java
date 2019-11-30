@@ -75,6 +75,16 @@ public class LayoutPageTemplateStructureHelperUtil {
 			jsonObject.put("nextRowId", fragmentEntryLinks.size() - 1);
 		}
 
+		if (fragmentEntryLinks.isEmpty() &&
+			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			jsonObject.put(
+				"nextColumnId", 1
+			).put(
+				"nextRowId", 1
+			);
+		}
+
 		jsonObject.put("structure", structureJSONArray);
 
 		return jsonObject;

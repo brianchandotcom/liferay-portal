@@ -24,6 +24,8 @@ import '../floating_toolbar/spacing/FloatingToolbarSpacingPanel.es';
 
 import './ColumnOverlayGrid.es';
 
+import './DropZoneFragmentEntryLink.es';
+
 import './FragmentEntryLink.es';
 import {removeRowAction} from '../../actions/removeRow.es';
 import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
@@ -45,8 +47,10 @@ import {
 import {
 	FLOATING_TOOLBAR_BUTTONS,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
-	FRAGMENTS_EDITOR_ROW_TYPES
+	FRAGMENTS_EDITOR_ROW_TYPES,
+	PAGE_TYPES
 } from '../../utils/constants';
+import {isDropZoneFragment} from '../../utils/isDropZoneFragment.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLinkListRow.soy';
 
@@ -261,6 +265,19 @@ class FragmentEntryLinkListRow extends Component {
 	 */
 	syncLayoutData() {
 		this._updateMappedBackgroundFieldValue();
+		this._updateShowDelete();
+	}
+
+	_updateShowDelete() {
+		const row = this.layoutData.structure.find(
+			row => row.rowId === this.rowId
+		);
+
+		if (row && this.pageType === PAGE_TYPES.master) {
+			this._showDelete = !row.columns.some(column =>
+				column.fragmentEntryLinkIds.some(isDropZoneFragment)
+			);
+		}
 	}
 
 	/**
@@ -614,6 +631,18 @@ FragmentEntryLinkListRow.STATE = {
 		.value(false),
 
 	/**
+	 * If <code>true</code>, the user is resizing a column.
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEntryLinkListRow
+
+	 * @type {boolean}
+	 */
+	_showDelete: Config.internal()
+		.bool()
+		.value(true),
+
+	/**
 	 * Row.
 	 * @default undefined
 	 * @instance
@@ -646,6 +675,7 @@ const ConnectedFragmentEntryLinkListRow = getConnectedComponent(
 		'hoveredItemType',
 		'layoutData',
 		'mappingFieldsURL',
+		'pageType',
 		'selectedMappingTypes',
 		'spritemap'
 	]

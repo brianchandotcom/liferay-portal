@@ -18,6 +18,7 @@ import {
 	getRowIndex
 } from '../utils/FragmentsEditorGetUtils.es';
 import {containsFragmentEntryLinkId} from '../utils/LayoutDataList.es';
+import {isDropZoneFragment} from '../utils/isDropZoneFragment.es';
 import {REMOVE_ROW} from './actions.es';
 import {removeFragmentEntryLinksAction} from './removeFragmentEntryLinks.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
@@ -32,13 +33,17 @@ function removeRowAction(rowId) {
 	return function(dispatch, getState) {
 		const state = getState();
 
-		dispatch(_removeRowAction(rowId));
-
 		const fragmentEntryLinkIds = getRowFragmentEntryLinkIds(
 			state.layoutData.structure[
 				getRowIndex(state.layoutData.structure, rowId)
 			]
 		);
+
+		if (fragmentEntryLinkIds.some(isDropZoneFragment)) {
+			return;
+		}
+
+		dispatch(_removeRowAction(rowId));
 
 		const fragmentEntryLinkIdsToRemove = fragmentEntryLinkIds.filter(
 			fragmentEntryLinkId =>

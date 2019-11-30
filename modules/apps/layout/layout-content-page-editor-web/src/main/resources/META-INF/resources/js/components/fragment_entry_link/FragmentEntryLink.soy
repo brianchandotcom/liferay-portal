@@ -12,6 +12,7 @@
 	{@param? _handleFragmentCommentsButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _hovered: bool}
+	{@param? _isDropZone: bool}
 	{@param? _showComments: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
@@ -98,13 +99,15 @@
 						</li>
 					{/if}
 
-					<li class="fragments-editor__topper__item tbar-item">
-						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
-							<svg class="fragments-editor__topper__icon lexicon-icon">
-								<use xlink:href="{$spritemap ?: ''}#times-circle"></use>
-							</svg>
-						</button>
-					</li>
+					{if not $_isDropZone}
+						<li class="fragments-editor__topper__item tbar-item">
+							<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
+								<svg class="fragments-editor__topper__icon lexicon-icon">
+									<use xlink:href="{$spritemap ?: ''}#times-circle"></use>
+								</svg>
+							</button>
+						</li>
+					{/if}
 				</ul>
 			</nav>
 		{/if}

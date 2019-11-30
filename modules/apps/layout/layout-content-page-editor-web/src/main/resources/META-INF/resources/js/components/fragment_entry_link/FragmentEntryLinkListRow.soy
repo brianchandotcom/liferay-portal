@@ -23,6 +23,7 @@
 	{@param? _resizeColumnIndex: number}
 	{@param? _resizeHighlightedColumn: number}
 	{@param? _resizing: bool}
+	{@param? _showDelete: bool}
 	{@param? activeItemId: string}
 	{@param? activeItemType: string}
 	{@param? dropTargetItemTypes: ?}
@@ -119,16 +120,19 @@
 		  <li class="fragments-editor__drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">
 			{msg desc=""}section{/msg}
 		  </li>
-		  <li class="fragments-editor__topper__item tbar-item">
-			<button
-			  class="btn btn-small btn-unstyled"
-			  data-onclick="{$_handleRowRemoveButtonClick}"
-			>
-			  <svg class="fragments-editor__topper__icon lexicon-icon">
-				<use xlink:href="{$spritemap ?: ''}#times-circle"></use>
-			  </svg>
-			</button>
-		  </li>
+
+		  {if $_showDelete}
+			<li class="fragments-editor__topper__item tbar-item">
+				<button
+				class="btn btn-small btn-unstyled"
+				data-onclick="{$_handleRowRemoveButtonClick}"
+				>
+				<svg class="fragments-editor__topper__icon lexicon-icon">
+					<use xlink:href="{$spritemap ?: ''}#times-circle"></use>
+				</svg>
+				</button>
+			</li>
+		  {/if}
 		</ul>
 	  </nav>
 	{/if}

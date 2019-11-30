@@ -46,7 +46,7 @@
 						{param paddingDirectionId: 'Vertical' /}
 						{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
 						{param paddingOptions: $_paddingOptions /}
-						{param selectedPaddingSize: $item.config.paddingVertical /}
+						{param selectedPaddingSize: $item.config.paddingVertical ?: '3' /}
 					{/call}
 
 					{let $horizontalContainerPaddingLabel kind="text"}
@@ -58,7 +58,7 @@
 						{param paddingDirectionId: 'Horizontal' /}
 						{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
 						{param paddingOptions: $_paddingOptions /}
-						{param selectedPaddingSize: $item.config.paddingHorizontal /}
+						{param selectedPaddingSize: $item.config.paddingHorizontal ?: '3' /}
 					{/call}
 				</div>
 			{/if}

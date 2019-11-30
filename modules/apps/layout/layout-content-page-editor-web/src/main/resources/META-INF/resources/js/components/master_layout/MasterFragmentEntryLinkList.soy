@@ -39,14 +39,7 @@
 	{if $masterLayoutData.structure and (length($masterLayoutData.structure) > 0)}
 		<div class="{$entryLinksClasses}">
 			{foreach $row in $masterLayoutData.structure}
-				{if $row.config and $row.config.isDropZone}
-					{call com.liferay.layout.content.page.editor.web.FragmentEntryLinkList.render}
-						{param fragmentEntryLinks: $fragmentEntryLinks /}
-						{param layoutData: $layoutData /}
-						{param selectedSidebarPanelId: $selectedSidebarPanelId /}
-						{param store: $store /}
-					{/call}
-				{elseif $row.type == $fragmentsEditorRowTypes.sectionRow}
+				{if $row.type == $fragmentsEditorRowTypes.sectionRow}
 					{foreach $column in $row.columns}
 						{if $column.fragmentEntryLinkIds}
 							{foreach $fragmentEntryLinkId in $column.fragmentEntryLinkIds}

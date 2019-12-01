@@ -11855,11 +11855,16 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 											<arg line="&apos;localhost:9201/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
 										</exec>
 									</then>
-									<else>
-										<exec executable="curl" outputproperty="curl.output.search.indices">
-											<arg line="&apos;localhost:9200/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-										</exec>
-									</else>
+									<elseif>
+										<not>
+											<equals arg1="${suite.search.engine}" arg2="solr" />
+										</not>
+										<then>
+											<exec executable="curl" outputproperty="curl.output.search.indices">
+												<arg line="&apos;localhost:9200/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
+											</exec>
+										</then>
+									</elseif>
 								</if>
 							</then>
 							<else>
@@ -11884,13 +11889,20 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							</else>
 						</if>
 
-						<echo></echo>
-						<echo>##</echo>
-						<echo>## Elasticsearch Indices</echo>
-						<echo>##</echo>
-						<echo></echo>
-						<echo>${curl.output.search.indices}</echo>
-						<echo></echo>
+						<if>
+							<not>
+								<equals arg1="${suite.search.engine}" arg2="solr" />
+							</not>
+							<then>
+								<echo></echo>
+								<echo>##</echo>
+								<echo>## Elasticsearch Indices</echo>
+								<echo>##</echo>
+								<echo></echo>
+								<echo>${curl.output.search.indices}</echo>
+								<echo></echo>
+							</then>
+						</if>
 					</then>
 				</if>
 

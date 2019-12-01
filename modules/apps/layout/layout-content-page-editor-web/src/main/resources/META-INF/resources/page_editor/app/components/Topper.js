@@ -19,7 +19,7 @@ import React, {useContext, useRef, useState} from 'react';
 import {useDrag} from 'react-dnd';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
-import {moveItem} from '../actions/index';
+import {moveItem, removeItem} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {DispatchContext} from '../reducers/index';
 import {
@@ -133,7 +133,14 @@ export default function Topper({children, item, name}) {
 						</ClayButton>
 					</TopperListItem>
 					<TopperListItem>
-						<ClayButton displayType="unstyled" small>
+						<ClayButton
+							displayType="unstyled"
+							onClick={event => {
+								event.stopPropagation();
+								dispatch(removeItem({itemId: item.itemId}));
+							}}
+							small
+						>
 							<ClayIcon
 								className="fragments-editor__topper__icon"
 								symbol="times-circle"

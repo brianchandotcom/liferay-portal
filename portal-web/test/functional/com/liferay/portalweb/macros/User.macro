@@ -728,7 +728,7 @@ definition {
 		var key_roleTitle = "${roleTitle}";
 
 		AssertTextEquals(
-			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_ROLE_NAME",
 			value1 = "${roleTitle}");
 
 		AssertClick(
@@ -738,7 +738,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals(
-			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_ROLE_NAME",
 			value1 = "${roleTitle}");
 
 		PortletEntry.save();
@@ -760,7 +760,7 @@ definition {
 		var key_roleTitle = "${roleTitle}";
 
 		AssertTextEquals(
-			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_ROLE_NAME",
 			value1 = "${roleTitle}");
 
 		AssertClick(
@@ -770,7 +770,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals(
-			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_ROLE_NAME",
 			value1 = "${roleTitle}");
 
 		PortletEntry.save();
@@ -2645,7 +2645,7 @@ definition {
 		}
 		else {
 			AssertTextEquals(
-				locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+				locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_ROLE_NAME",
 				value1 = "${roleTitle}");
 		}
 	}

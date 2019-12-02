@@ -156,6 +156,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLES_SELECT_ROLE_NAME</td>
+	<td>//tr//*[normalize-space(text())='${key_roleTitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

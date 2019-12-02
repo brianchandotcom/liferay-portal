@@ -138,7 +138,7 @@
 <!--CONTENT_PERMISSIONS-->
 <tr>
 	<td>CONTENT_PERMISSIONS_ROLE_NAME</td>
-	<td>//tr/td[normalize-space(text())='${key_roleTitle}']</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

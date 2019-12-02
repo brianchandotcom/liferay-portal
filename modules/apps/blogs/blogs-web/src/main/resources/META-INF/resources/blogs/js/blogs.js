@@ -407,14 +407,16 @@ AUI.add(
 								'#allowTrackbacks'
 							);
 
+							var assetTagNames = instance.one('#assetTagNames');
+
 							var data = instance.ns({
 								allowPingbacks:
 									allowPingbacks && allowPingbacks.val(),
 								allowTrackbacks:
 									allowTrackbacks && allowTrackbacks.val(),
-								assetTagNames: instance
-									.one('#assetTagNames')
-									.val(),
+								assetTagNames: assetTagNames
+									? assetTagNames.val()
+									: '',
 								cmd: constants.ADD,
 								content,
 								coverImageCaption,

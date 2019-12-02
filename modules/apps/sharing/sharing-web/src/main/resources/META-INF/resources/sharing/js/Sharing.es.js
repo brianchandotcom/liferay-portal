@@ -209,7 +209,7 @@ const Sharing = ({
 									'enter-name-or-email-address'
 								)}
 								sourceItems={
-									users
+									multiSelectValue && users
 										? users.map(user => {
 												return {
 													emailAddress:

@@ -569,9 +569,20 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				return;
 			}
 
-			JarUtil.downloadAndInstallJar(
-				new URL(url), PropsValues.LIFERAY_LIB_GLOBAL_DIR, name,
-				(URLClassLoader)classLoader);
+			try {
+				JarUtil.downloadAndInstallJar(
+					new URL(url), PropsValues.LIFERAY_LIB_GLOBAL_DIR, name,
+					(URLClassLoader)classLoader);
+			}
+			catch (Exception e) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to download and install ", name, " to ",
+						PropsValues.LIFERAY_LIB_GLOBAL_DIR, " from url ", url),
+					e);
+
+				throw cnfe;
+			}
 		}
 	}
 

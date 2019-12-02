@@ -133,4 +133,33 @@ definition {
 		}
 	}
 
+	@description = "This ensures that navigation arrows do not appear in image preview when there is only one image in the library."
+	@priority = "5"
+	test PreviewSingleImage {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1",
+			navTab = "Upload Image",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		Pause(locator1 = "10000");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		ItemSelector.gotoPreviewViaSelectFile(navTab = "Blog Images");
+
+		ItemSelector.viewPreview(
+			footer = "1 of 1",
+			imageFileName = "Document_1.jpg");
+
+		AssertElementNotPresent(locator1 = "ItemSelector#VIEWER_LEFT");
+
+		AssertElementNotPresent(locator1 = "ItemSelector#VIEWER_RIGHT");
+	}
+
 }

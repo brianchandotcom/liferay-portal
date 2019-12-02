@@ -2029,6 +2029,12 @@ definition {
 
 		Form.editDescription();
 
+		var browserType = PropsUtil.get("browser.type");
+
+		if (("${browserType}" == "internetexplorer") && (IsElementPresent(locator1 = "Form#SIDEBAR_CLOSE"))) {
+			Click(locator1 = "Form#SIDEBAR_CLOSE");
+		}
+
 		Form.gotoAddField(fieldType = "Text Field");
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");

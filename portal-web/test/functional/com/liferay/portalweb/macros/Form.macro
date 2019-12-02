@@ -5,7 +5,7 @@ definition {
 	var rowNumber = "1";
 
 	macro _addField {
-		if (IsElementNotPresent(locator1 = "Form#SIDEBAR_ELEMENTS_TAB")) {
+		if (IsElementNotPresent(locator1 = "Form#SIDEBAR_CLOSE")) {
 			MouseOver.mouseOverNotVisible(locator1 = "Form#ADD_FIELD");
 
 			Click(locator1 = "Form#ADD_FIELD");

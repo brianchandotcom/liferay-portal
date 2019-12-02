@@ -17,18 +17,17 @@ import React from 'react';
 
 import Footer from '../../src/main/resources/META-INF/resources/item_selector_preview/js/Footer.es';
 
-
 describe('Footer', () => {
 	afterEach(cleanup);
 
-	it('should render the Footer component', () => {
+	it('renders the Footer component', () => {
 		const props = {
 			currentIndex: 0,
-			title: "test image.jpeg",
+			title: 'test image.jpeg',
 			totalItems: 1
-		}
+		};
 
-		const {asFragment, getByText} = render(<Footer {...props} />);
+		const {asFragment} = render(<Footer {...props} />);
 
 		expect(asFragment()).toMatchSnapshot();
 	});

@@ -24,25 +24,27 @@ const headerProps = {
 	handleClickClose: jest.fn(),
 	headerTitle,
 	showInfoIcon: true
-}
+};
 
 describe('Header', () => {
 	afterEach(cleanup);
 
-	it('should render the Header component as a navigation bar', () => {
+	it('renders the Header component as a navigation bar', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		expect(container.firstChild.classList[0]).toEqual('navbar');
-		expect(container.firstChild.classList).toContain('navigation-bar-light');
+		expect(container.firstChild.classList).toContain(
+			'navigation-bar-light'
+		);
 	});
 
-	it('should render two navigation bars inside the first one', () => {
+	it('renders two navigation bars inside the first one', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		expect(container.firstChild.querySelectorAll('nav').length).toBe(2);
 	});
 
-	it('should render the back button with "angle-left" icon and the header title on the first nav item', () => {
+	it('renders the back button with "angle-left" icon and the header title on the first nav item', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		const firstNavElement = container.querySelector('nav');
@@ -56,7 +58,7 @@ describe('Header', () => {
 		expect(titleElement.innerHTML).toEqual(headerTitle);
 	});
 
-	it('should call to handleClickClose when click on back button', () => {
+	it('calls to handleClickClose when click on back button', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		const iconBack = container.querySelector('.lexicon-icon-angle-left');
@@ -66,7 +68,7 @@ describe('Header', () => {
 		expect(headerProps.handleClickClose).toHaveBeenCalled();
 	});
 
-	it('should render the "Add" button on the second nav item with class "btn-primary"', () => {
+	it('renders the "Add" button on the second nav item with class "btn-primary"', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		const secondNavElement = container.querySelectorAll('nav')[1];
@@ -77,7 +79,7 @@ describe('Header', () => {
 		expect(buttonElement.innerHTML).toEqual('add');
 	});
 
-	it('should call to handleClickAdd when click on the Add button', () => {
+	it('calls to handleClickAdd when click on the Add button', () => {
 		const {getByText} = render(<Header {...headerProps} />);
 
 		getByText('add').click();
@@ -85,10 +87,12 @@ describe('Header', () => {
 		expect(headerProps.handleClickClose).toHaveBeenCalled();
 	});
 
-	it('should render the "info-panel-open" icon when "showInfoIcon" prop is set to true', () => {
+	it('renders the "info-panel-open" icon when "showInfoIcon" prop is set to true', () => {
 		const {container} = render(<Header {...headerProps} />);
 
-		const infoIcon = container.querySelector('.lexicon-icon-info-panel-open');
+		const infoIcon = container.querySelector(
+			'.lexicon-icon-info-panel-open'
+		);
 
 		expect(infoIcon).not.toBeNull();
 
@@ -98,17 +102,19 @@ describe('Header', () => {
 		expect(infoIconClasses).toContain('btn-outline-borderless');
 	});
 
-	it('should not render the "info-panel-open" icon when "showInfoIcon" prop is set to false', () => {
+	it('does not render the "info-panel-open" icon when "showInfoIcon" prop is set to false', () => {
 		const props2 = {...headerProps, showInfoIcon: false};
 
 		const {container} = render(<Header {...props2} />);
 
-		const infoIconClasses = container.querySelector('.lexicon-icon-info-panel-open');
+		const infoIconClasses = container.querySelector(
+			'.lexicon-icon-info-panel-open'
+		);
 
 		expect(infoIconClasses).toBeNull();
 	});
 
-	it('should not render the "icon-pencil" icon when "showEditIcon" prop is set to false', () => {
+	it('does not render the "icon-pencil" icon when "showEditIcon" prop is set to false', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		const editIcon = container.querySelector('.lexicon-icon-pencil');
@@ -116,7 +122,7 @@ describe('Header', () => {
 		expect(editIcon).toBeNull();
 	});
 
-	it('should render the "icon-pencil" icon when "showEditIcon" prop is set to true', () => {
+	it('renders the "icon-pencil" icon when "showEditIcon" prop is set to true', () => {
 		const props2 = {...headerProps, showEditIcon: true};
 
 		const {container} = render(<Header {...props2} />);
@@ -126,8 +132,12 @@ describe('Header', () => {
 		expect(editIcon).not.toBeNull();
 	});
 
-	it('should call to handleClickEdit when click on edit icon', () => {
-		const props2 = {...headerProps, handleClickEdit: jest.fn(), showEditIcon: true};
+	it('calls to handleClickEdit when click on edit icon', () => {
+		const props2 = {
+			...headerProps,
+			handleClickEdit: jest.fn(),
+			showEditIcon: true
+		};
 
 		const {container} = render(<Header {...props2} />);
 

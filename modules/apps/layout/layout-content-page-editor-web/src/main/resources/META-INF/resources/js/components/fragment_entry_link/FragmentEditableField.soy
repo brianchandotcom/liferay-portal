@@ -7,6 +7,7 @@
 	{@param content: html}
 	{@param type: string}
 	{@param? _activable: bool}
+  {@param? _active: bool}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableFocus: any}
 	{@param? _highlighted: any}
@@ -17,19 +18,16 @@
 	{@param? _mappedFieldLabel: string}
 	{@param? _selected: any}
 	{@param? _translated: bool}
-	{@param? activeItemId: string}
-	{@param? activeItemType: string}
 	{@param? defaultLanguageId: string}
 	{@param? editableId: string}
 	{@param? editableValues: ?}
 	{@param? fragmentEntryLinkId: string}
-	{@param? itemTypes: ?}
 	{@param? languageId: string}
 
 	{let $editableClasses kind="text"}
 		fragments-editor__editable
 
-		{if $activeItemId == $_itemId and $activeItemType == $itemTypes.editable}
+		{if $_active}
 			{sp}fragments-editor__editable--active
 		{/if}
 
@@ -94,7 +92,7 @@
 			data-fragments-editor-item-type="fragments-editor-editable-field"
 		{/if}
 
-		{if (not $_mapped) and ($activeItemId == $_itemId) and ($activeItemType == $itemTypes.editable)}
+		{if (not $_mapped) and $_active}
 			data-onclick="{$_handleEditableClick}"
 		{/if}
 	{/let}

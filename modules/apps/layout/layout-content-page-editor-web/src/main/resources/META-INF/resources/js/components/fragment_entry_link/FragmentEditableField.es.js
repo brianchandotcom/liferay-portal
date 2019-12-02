@@ -126,18 +126,10 @@ class FragmentEditableField extends PortletBase {
 			processor.render(this.content, value, this.editableValues)
 		);
 
-		const highlighted = editableShouldBeHighlighted(
-			state.activeItemId,
-			state.activeItemType,
-			state.fragmentEntryLinkId,
-			state.layoutData.structure
-		);
-
 		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
 
 		let nextState = state;
 
-		nextState = setIn(nextState, ['_highlighted'], highlighted);
 		nextState = setIn(nextState, ['_mapped'], mapped);
 		nextState = setIn(
 			nextState,
@@ -151,11 +143,6 @@ class FragmentEditableField extends PortletBase {
 		);
 		nextState = setIn(nextState, ['_translated'], translated);
 		nextState = setIn(nextState, ['content'], content);
-		nextState = setIn(
-			nextState,
-			['itemTypes'],
-			FRAGMENTS_EDITOR_ITEM_TYPES
-		);
 
 		return nextState;
 	}
@@ -168,8 +155,7 @@ class FragmentEditableField extends PortletBase {
 	shouldUpdate(changes) {
 		if (this._processorEnabled) {
 			return shouldUpdateOnChangeProperties(changes, [
-				'activeItemId',
-				'activeItemType',
+				'_active',
 				'languageId',
 				'segmentsExperienceId'
 			]);
@@ -182,14 +168,10 @@ class FragmentEditableField extends PortletBase {
 	 * @inheritDoc
 	 * @review
 	 */
-	syncActiveItemId() {
+	sync_active() {
 		const eventName = this.type === 'image' ? 'dblclick' : 'click';
 
-		if (
-			this.hasUpdatePermissions &&
-			this._itemId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
-		) {
+		if (this.hasUpdatePermissions && this._active) {
 			this._createFloatingToolbar();
 
 			this.element.addEventListener(eventName, this._createProcessor);
@@ -209,11 +191,7 @@ class FragmentEditableField extends PortletBase {
 		this._loadMappedFieldLabel();
 		this._updateMappedFieldValue();
 
-		if (
-			!this._processorEnabled &&
-			this._itemId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
-		) {
+		if (!this._processorEnabled && this._active) {
 			this._createFloatingToolbar();
 		}
 	}
@@ -359,10 +337,7 @@ class FragmentEditableField extends PortletBase {
 	_handleProcessorDestroyed() {
 		this._processorEnabled = false;
 
-		if (
-			this._itemId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
-		) {
+		if (this._active) {
 			this._createFloatingToolbar();
 		}
 	}
@@ -505,7 +480,13 @@ FragmentEditableField.STATE = {
 	_activable: Config.internal()
 		.bool()
 		.value(false),
+	_active: Config.internal()
+		.bool()
+		.value(false),
 	_floatingToolbar: Config.internal().value(null),
+	_highlighted: Config.internal()
+		.bool()
+		.value(false),
 	_hovered: Config.internal()
 		.bool()
 		.value(false),
@@ -570,6 +551,17 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 					itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 			);
 
+		const _active =
+			state.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable &&
+			state.activeItemId === _itemId;
+
+		const _highlighted = editableShouldBeHighlighted(
+			state.activeItemId,
+			state.activeItemType,
+			props.fragmentEntryLinkId,
+			state.layoutData.structure
+		);
+
 		const _hovered =
 			state.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable &&
 			state.hoveredItemId === _itemId;
@@ -582,8 +574,10 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		return {
 			...state,
 			_activable,
-			_itemId,
+			_active,
+			_highlighted,
 			_hovered,
+			_itemId,
 			_mappedItemHovered
 		};
 	}

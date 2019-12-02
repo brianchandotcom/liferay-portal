@@ -137,7 +137,13 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private JSONArray _getDefaultStructureJSONArray() {
 		return JSONUtil.putAll(
 			JSONUtil.put(
-				"columns", JSONUtil.putAll(JSONUtil.put("size", 12))
+				"columns",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"fragmentEntryLinkIds", JSONUtil.put("drop-zone")
+					).put(
+						"size", 12
+					))
 			).put(
 				"config", JSONUtil.put("isDropZone", true)
 			));

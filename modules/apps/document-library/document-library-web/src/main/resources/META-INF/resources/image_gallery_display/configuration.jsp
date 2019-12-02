@@ -113,11 +113,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						modal: true,
 						width: 680
 					},
-					id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
+					id:
+						'_<%= HtmlUtil.escapeJS(igRequestHelper.getPortletResource()) %>_selectFolder',
 					title:
 						'<liferay-ui:message arguments="folder" key="select-x" />',
 
-					<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL portletName="<%= igRequestHelper.getPortletResource() %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 						<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />

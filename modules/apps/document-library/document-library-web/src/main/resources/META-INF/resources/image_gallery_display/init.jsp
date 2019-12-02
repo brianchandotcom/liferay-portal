@@ -23,8 +23,6 @@ if (layout.isTypeControlPanel()) {
 
 IGRequestHelper igRequestHelper = new IGRequestHelper(request);
 
-String portletResource = igRequestHelper.getPortletResource();
-
 DLPortletInstanceSettings dlPortletInstanceSettings = igRequestHelper.getDLPortletInstanceSettings();
 
 long rootFolderId = dlPortletInstanceSettings.getRootFolderId();

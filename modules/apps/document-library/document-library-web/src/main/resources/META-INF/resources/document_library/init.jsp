@@ -43,8 +43,6 @@ String portletId = dlRequestHelper.getResourcePortletId();
 
 portletName = dlRequestHelper.getResourcePortletName();
 
-String portletResource = dlRequestHelper.getPortletResource();
-
 DLAdminDisplayContext dlAdminDisplayContext = dlAdminDisplayContextProvider.getDLAdminDisplayContext(request, response);
 
 DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = dlAdminDisplayContextProvider.getDLAdminManagementToolbarDisplayContext(request, response);

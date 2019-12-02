@@ -97,7 +97,7 @@ public class ElasticsearchEngineConfigurator
 			});
 
 		Thread thread = new Thread(
-			futureTask, "Elasticsearch initialization thread");
+			futureTask, "Elasticsearch Initialization Thread");
 
 		thread.setDaemon(true);
 

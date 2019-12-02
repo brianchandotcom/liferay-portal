@@ -246,7 +246,7 @@ public class LockLocalServiceTest {
 
 			});
 
-		Thread lockCreateThread = new Thread(futureTask, "Lock create thread");
+		Thread lockCreateThread = new Thread(futureTask, "Lock Create Thread");
 
 		lockCreateThread.start();
 

@@ -118,7 +118,7 @@ public class ViewCountEntryLocalServiceTest {
 				});
 
 			Thread thread = new Thread(
-				futureTask, "Inner view count incrementer");
+				futureTask, "Inner View Count Incrementer");
 
 			thread.start();
 

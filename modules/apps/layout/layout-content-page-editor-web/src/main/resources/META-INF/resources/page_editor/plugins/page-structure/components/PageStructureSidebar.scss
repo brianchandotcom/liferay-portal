@@ -1,0 +1,42 @@
+@import './variables';
+
+.page-editor__page-structure {
+	.lfr-treeview {
+		&-node-list {
+			&:before {
+				border-left: none;
+			}
+
+			&:focus {
+				outline: none;
+			}
+			padding-left: 10px;
+		}
+
+		&-node-list-item {
+			&__button {
+				height: 100%;
+				padding: 0 10px;
+
+				&-icon {
+					background-color: #f1f2f5;
+					color: $pageStructureGrayColor;
+					display: inline-block;
+					transition: background-color 0.15s ease-in-out;
+
+					&:hover {
+						background-color: $pageStructureLightGrayColor;
+						color: $pageStructureBlackColor;
+					}
+				}
+			}
+
+			&__children {
+				border-left: #e7e7ed 1px solid;
+				margin-left: 4px;
+				margin-top: 0px;
+				padding-left: 6px;
+			}
+		}
+	}
+}

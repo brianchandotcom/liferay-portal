@@ -15,6 +15,7 @@
 package com.liferay.talend.common.schema;
 
 import com.liferay.talend.common.json.JsonFinder;
+import com.liferay.talend.common.oas.OASException;
 import com.liferay.talend.common.oas.OASFormat;
 import com.liferay.talend.common.oas.OASType;
 import com.liferay.talend.common.oas.constants.OASConstants;
@@ -289,6 +290,14 @@ public class SchemaBuilder {
 
 		JsonObject schemaJsonObject = _extractSchemaJsonObject(
 			schemaName, oasJsonObject);
+
+		if (JsonValue.EMPTY_JSON_OBJECT == schemaJsonObject) {
+			throw new OASException(
+				String.format(
+					"Open API specification does not provide schema " +
+						"definition for %s",
+					schemaName));
+		}
 
 		_processSchemaJsonObject(
 			null, schemaJsonObject, index, previousFieldNames, schemaFields,

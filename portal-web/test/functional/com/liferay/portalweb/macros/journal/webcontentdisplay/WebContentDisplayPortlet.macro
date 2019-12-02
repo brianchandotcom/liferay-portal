@@ -244,14 +244,17 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		AssertClick(
+			key_breadcrumbName = "Workspaces",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "Workspaces");
 
-		MenuItem.click(menuItem = "${otherSiteName}");
+		LexiconCard.clickCard(card = "${otherSiteName}");
 
-		var key_webContentTitle = "${webContentTitle}";
+		var key_listEntry = "${webContentTitle}";
 
 		AssertClick(
-			locator1 = "Link#WEB_CONTENT_ARTICLE",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE",
 			value1 = "${webContentTitle}");
 
 		SelectFrame(value1 = "relative=top");

@@ -902,13 +902,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long userId, long resourcePrimKey, int increment)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(
+			KBArticle.class);
+
 		KBArticle kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 		_viewCountManager.incrementViewCount(
-			kbArticle.getCompanyId(),
-			classNameLocalService.getClassNameId(KBArticle.class),
-			kbArticle.getPrimaryKey(), increment);
+			kbArticle.getCompanyId(), classNameId, kbArticle.getPrimaryKey(),
+			increment);
 
 		if (kbArticle.isApproved() || kbArticle.isFirstVersion()) {
 			return;
@@ -918,9 +920,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		_viewCountManager.incrementViewCount(
-			kbArticle.getCompanyId(),
-			classNameLocalService.getClassNameId(KBArticle.class),
-			kbArticle.getPrimaryKey(), increment);
+			kbArticle.getCompanyId(), classNameId, kbArticle.getPrimaryKey(),
+			increment);
 	}
 
 	@Override

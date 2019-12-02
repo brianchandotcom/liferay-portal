@@ -203,7 +203,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_DELETE_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_DELETE')] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_DELETE')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_DELETE'] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_DELETE')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -218,12 +218,12 @@
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_PERMISSIONS')] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_PERMISSIONS')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_PERMISSIONS'] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_PREFERENCES_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_PREFERENCES')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_PREFERENCES']</td>
 	<td></td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_VIEW')] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_VIEW')]</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_VIEW'] | //tr[contains(.,'${key_roleTitle}')]//input[contains(@id,'ACTION_VIEW')]</td>
 	<td></td>
 </tr>
 <tr>

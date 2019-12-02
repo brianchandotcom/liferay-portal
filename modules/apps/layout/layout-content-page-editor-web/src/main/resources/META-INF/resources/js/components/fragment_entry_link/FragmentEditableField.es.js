@@ -561,126 +561,21 @@ class FragmentEditableField extends PortletBase {
  * @type {!Object}
  */
 FragmentEditableField.STATE = {
-	/**
-	 * Internal FloatingToolbar instance.
-	 * @default null
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {object|null}
-	 */
 	_floatingToolbar: Config.internal().value(null),
-
-	/**
-	 * Translated label of the mapped field
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
 	_mappedFieldLabel: Config.internal().string(),
-
-	/**
-	 * Mapped asset field value
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
 	_mappedFieldValue: Config.internal().string(),
-
-	/**
-	 * Mapped content hovered
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
 	_mappedItemHovered: Config.internal()
 		.bool()
 		.value(false),
-
-	/**
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
 	_processorEnabled: Config.internal()
 		.bool()
 		.value(false),
-
-	/**
-	 * Editable content to be rendered
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!string}
-	 */
 	content: Config.string().required(),
-
-	/**
-	 * Editable ID
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!string}
-	 */
 	editableId: Config.string().required(),
-
-	/**
-	 * Editable values
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!object}
-	 */
 	editableValues: Config.object().required(),
-
-	/**
-	 * FragmentEntryLink id
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!string}
-	 */
 	fragmentEntryLinkId: Config.string().required(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!string}
-	 */
 	processor: Config.string().required(),
-
-	/**
-	 * Set of options that are sent to the processors.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!object}
-	 */
 	processorsOptions: Config.object().required(),
-
-	/**
-	 * Editable type
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!string}
-	 */
 	type: Config.oneOf([
 		'html',
 		'image',
@@ -709,7 +604,8 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'segmentsExperienceId',
 		'selectedMappingTypes',
 		'selectedItems'
-	]
+	],
+	state => state
 );
 
 Soy.register(ConnectedFragmentEditableField, templates);

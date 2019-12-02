@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Rubén Pulido
  */
-public interface LayoutConvertHelper {
+public interface BulkLayoutConverter {
 
 	/**
 	 * Converts a layout of type {@link LayoutConstants#TYPE_PORTLET} into a

@@ -17,7 +17,7 @@ package com.liferay.layout.internal.util;
 import com.liferay.layout.exception.LayoutConvertException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.LayoutConvertHelper;
+import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
@@ -71,8 +71,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = LayoutConvertHelper.class)
-public class LayoutConvertHelperImpl implements LayoutConvertHelper {
+@Component(immediate = true, service = BulkLayoutConverter.class)
+public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 	@Override
 	public void convertLayout(long plid) throws Exception {
@@ -347,7 +347,7 @@ public class LayoutConvertHelperImpl implements LayoutConvertHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutConvertHelperImpl.class);
+		BulkLayoutConverterImpl.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.util.LayoutConvertHelper;
+import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -66,11 +66,11 @@ public class ConvertLayoutMVCActionCommand
 		}
 
 		for (long curSelPlid : selPlids) {
-			_layoutConvertHelper.convertLayout(curSelPlid);
+			_bulkLayoutConverter.convertLayout(curSelPlid);
 		}
 	}
 
 	@Reference
-	private LayoutConvertHelper _layoutConvertHelper;
+	private BulkLayoutConverter _bulkLayoutConverter;
 
 }

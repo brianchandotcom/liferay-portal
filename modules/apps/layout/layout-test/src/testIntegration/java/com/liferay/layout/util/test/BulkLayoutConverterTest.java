@@ -17,7 +17,7 @@ package com.liferay.layout.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.exception.LayoutConvertException;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.LayoutConvertHelper;
+import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -50,7 +50,7 @@ import org.junit.runner.RunWith;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class LayoutConvertHelperTest {
+public class BulkLayoutConverterTest {
 
 	@ClassRule
 	@Rule
@@ -91,7 +91,7 @@ public class LayoutConvertHelperTest {
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			StringPool.BLANK);
 
-		_layoutConvertHelper.convertLayout(layout.getPlid());
+		_bulkLayoutConverter.convertLayout(layout.getPlid());
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class LayoutConvertHelperTest {
 
 		_assertPlids(
 			_getConvertibleLayoutsPlids(),
-			_layoutConvertHelper.convertLayouts(_getLayoutsPlids()));
+			_bulkLayoutConverter.convertLayouts(_getLayoutsPlids()));
 
 		_assertLayouts();
 	}
@@ -111,7 +111,7 @@ public class LayoutConvertHelperTest {
 
 		_assertPlids(
 			_getConvertibleLayoutsPlids(),
-			_layoutConvertHelper.convertLayouts(_group.getGroupId()));
+			_bulkLayoutConverter.convertLayouts(_group.getGroupId()));
 
 		_assertLayouts();
 	}
@@ -122,7 +122,7 @@ public class LayoutConvertHelperTest {
 
 		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
 
-		_layoutConvertHelper.convertLayout(layout.getPlid());
+		_bulkLayoutConverter.convertLayout(layout.getPlid());
 
 		Layout convertedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), layout.getGroupId(), layout.isPrivateLayout());
@@ -137,7 +137,7 @@ public class LayoutConvertHelperTest {
 
 		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
 
-		_layoutConvertHelper.convertLayout(layout.getPlid());
+		_bulkLayoutConverter.convertLayout(layout.getPlid());
 
 		Layout convertedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), layout.getGroupId(), layout.isPrivateLayout());
@@ -152,7 +152,7 @@ public class LayoutConvertHelperTest {
 
 		_assertPlids(
 			_getConvertibleLayoutsPlids(),
-			_layoutConvertHelper.getConvertibleLayoutsPlids(
+			_bulkLayoutConverter.getConvertibleLayoutsPlids(
 				_group.getGroupId()));
 	}
 
@@ -250,7 +250,7 @@ public class LayoutConvertHelperTest {
 	private Group _group;
 
 	@Inject
-	private LayoutConvertHelper _layoutConvertHelper;
+	private BulkLayoutConverter _bulkLayoutConverter;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

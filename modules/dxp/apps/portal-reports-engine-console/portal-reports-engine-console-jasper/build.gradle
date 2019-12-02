@@ -7,8 +7,6 @@ dependencies {
 	compileInclude group: "com.lowagie", name: "itext", version: "2.1.7"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.12"
 	compileInclude group: "commons-digester", name: "commons-digester", version: "2.1"
-	compileInclude group: "jfree", name: "jcommon", version: "1.0.15"
-	compileInclude group: "jfree", name: "jfreechart", version: "1.0.12"
 	compileInclude group: "net.sf.jasperreports", name: "jasperreports", version: "6.7.1"
 	compileInclude group: "net.sf.jasperreports", name: "jasperreports-fonts", version: "6.0.0"
 	compileInclude group: "net.sf.jasperreports", name: "jasperreports-metadata", version: "6.9.0"
@@ -29,6 +27,8 @@ dependencies {
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 	compileInclude group: "org.codehaus.groovy", name: "groovy-all", version: "2.4.17"
 	compileInclude group: "org.eclipse.jdt", name: "core", version: "3.1.1"
+	compileInclude group: "org.jfree", name: "jcommon", version: "1.0.24"
+	compileInclude group: "org.jfree", name: "jfreechart", version: "1.0.19"
 	compileInclude group: "org.olap4j", name: "olap4j", version: "1.2.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

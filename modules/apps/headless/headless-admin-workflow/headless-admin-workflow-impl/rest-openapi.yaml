@@ -838,6 +838,10 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: completed
+                  schema:
+                      type: boolean
+                - in: query
                   name: page
                   schema:
                       type: integer

@@ -15,7 +15,6 @@
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
 import com.liferay.data.engine.rest.dto.v1_0.DataModelPermission;
-import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.constants.DataRecordCollectionConstants;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataModelPermissionResource;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -35,14 +35,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Jeyvison Nascimento
@@ -65,16 +65,19 @@ public class DataModelPermissionResourceImpl
 			dataRecordCollectionId);
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.DEFINE_PERMISSIONS, _groupLocalService,
+			ActionKeys.PERMISSIONS, _groupLocalService,
 			ddlRecordSet.getGroupId());
 
 		List<Role> roles = DataEnginePermissionUtil.getRoles(
 			contextCompany, _roleLocalService, StringUtil.split(roleNames));
 
-		List<DataModelPermission> dataModelPermissions =
-			new ArrayList<>();
+		List<DataModelPermission> dataModelPermissions = new ArrayList<>();
 
 		Set<String> actionsIdsSet = new HashSet<>();
+
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(
+				DataRecordCollectionConstants.RESOURCE_NAME);
 
 		for (Role role : roles) {
 			ResourcePermission resourcePermission =
@@ -90,10 +93,6 @@ public class DataModelPermissionResourceImpl
 
 			long actionIds = resourcePermission.getActionIds();
 
-			List<ResourceAction> resourceActions =
-				_resourceActionLocalService.getResourceActions(
-					DataRecordCollectionConstants.RESOURCE_NAME);
-
 			for (ResourceAction resourceAction : resourceActions) {
 				long bitwiseValue = resourceAction.getBitwiseValue();
 
@@ -102,8 +101,7 @@ public class DataModelPermissionResourceImpl
 				}
 			}
 
-			DataModelPermission dataModelPermission =
-				new DataModelPermission();
+			DataModelPermission dataModelPermission = new DataModelPermission();
 
 			dataModelPermission.setRoleName(role.getName());
 			dataModelPermission.setActionIds(
@@ -112,7 +110,8 @@ public class DataModelPermissionResourceImpl
 			dataModelPermissions.add(dataModelPermission);
 		}
 
-		return Page.of(dataModelPermissions);
+		return Page.of(
+			dataModelPermissions, pagination, dataModelPermissions.size());
 	}
 
 	@Override
@@ -125,7 +124,7 @@ public class DataModelPermissionResourceImpl
 			dataRecordCollectionId);
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.DEFINE_PERMISSIONS, _groupLocalService,
+			ActionKeys.PERMISSIONS, _groupLocalService,
 			ddlRecordSet.getGroupId());
 
 		ModelPermissions modelPermissions =
@@ -151,12 +150,12 @@ public class DataModelPermissionResourceImpl
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
+	private RoleLocalService _roleLocalService;
 
 }

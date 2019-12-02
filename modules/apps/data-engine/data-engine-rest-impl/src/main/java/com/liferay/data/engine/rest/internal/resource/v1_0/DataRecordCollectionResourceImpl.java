@@ -59,6 +59,19 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
+	public DataRecordCollection getDataDefinitionDataRecordCollection(
+			Long dataDefinitionId)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			dataDefinitionId);
+
+		return DataRecordCollectionUtil.toDataRecordCollection(
+			_ddlRecordSetLocalService.getRecordSet(
+				ddmStructure.getGroupId(), ddmStructure.getStructureKey()));
+	}
+
+	@Override
 	public Page<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
 				Long dataDefinitionId, String keywords, Pagination pagination)
@@ -72,19 +85,6 @@ public class DataRecordCollectionResourceImpl
 			getDataDefinitionDataRecordCollectionsPage(
 				contextAcceptLanguage, contextCompany, dataDefinitionId,
 				keywords, pagination);
-	}
-
-	@Override
-	public DataRecordCollection getDataDefinitionDefaultDataRecordCollection(
-			Long dataDefinitionId)
-		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			dataDefinitionId);
-
-		return DataRecordCollectionUtil.toDataRecordCollection(
-			_ddlRecordSetLocalService.getRecordSet(
-				ddmStructure.getGroupId(), ddmStructure.getStructureKey()));
 	}
 
 	@Override

@@ -624,6 +624,28 @@ paths:
                     description:
                         ""
             tags: ["DataListView"]
+    "/data-definitions/{dataDefinitionId}/data-record-collection":
+        get:
+            operationId: getDataDefinitionDataRecordCollection
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataRecordCollection"
+                    description:
+                        ""
+            tags: ["DataRecordCollection"]
     "/data-definitions/{dataDefinitionId}/data-record-collections":
         get:
             operationId: getDataDefinitionDataRecordCollectionsPage
@@ -754,28 +776,6 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
-    "/data-definitions/{dataDefinitionId}/default-data-record-collection":
-        get:
-            operationId: getDataDefinitionDefaultDataRecordCollection
-            parameters:
-                - in: path
-                  name: dataDefinitionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/DataRecordCollection"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/DataRecordCollection"
-                    description:
-                        ""
-            tags: ["DataRecordCollection"]
     "/data-layouts/{dataLayoutId}":
         delete:
             operationId: deleteDataLayout

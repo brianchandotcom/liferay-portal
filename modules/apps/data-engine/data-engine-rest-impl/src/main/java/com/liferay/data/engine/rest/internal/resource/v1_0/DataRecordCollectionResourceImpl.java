@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -133,14 +134,23 @@ public class DataRecordCollectionResourceImpl
 			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
 		throws Exception {
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		String dataRecordCollectionKey =
+			dataRecordCollection.getDataRecordCollectionKey();
+
+		if (Validator.isNull(dataRecordCollectionKey)) {
+			dataRecordCollectionKey = ddmStructure.getStructureKey();
+		}
+
 		CommonDataRecordCollectionResource<DataRecordCollection>
 			commonDataRecordCollectionResource =
 				_getCommonDataRecordCollectionResource();
 
 		return commonDataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
-				contextCompany, dataDefinitionId,
-				dataRecordCollection.getDataRecordCollectionKey(),
+				contextCompany, dataDefinitionId, dataRecordCollectionKey,
 				dataRecordCollection.getDescription(),
 				dataRecordCollection.getName());
 	}

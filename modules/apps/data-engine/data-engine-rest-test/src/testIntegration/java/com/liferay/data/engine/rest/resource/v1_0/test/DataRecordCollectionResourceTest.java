@@ -83,6 +83,12 @@ public class DataRecordCollectionResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLGetDataDefinitionDataRecordCollection() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLGetDataRecordCollection() {
 	}
 
@@ -137,6 +143,11 @@ public class DataRecordCollectionResourceTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
+	protected DataRecordCollection randomDataRecordCollection(String key) {
+		return _createDataRecordCollection(
+			RandomTestUtil.randomString(), key, RandomTestUtil.randomString());
+	}
+
 	@Override
 	protected DataRecordCollection randomIrrelevantDataRecordCollection()
 		throws Exception {
@@ -158,6 +169,17 @@ public class DataRecordCollectionResourceTest
 		return dataRecordCollectionResource.
 			postDataDefinitionDataRecordCollection(
 				_ddmStructure.getStructureId(), randomDataRecordCollection());
+	}
+
+	@Override
+	protected DataRecordCollection
+			testGetDataDefinitionDataRecordCollection_addDataRecordCollection()
+		throws Exception {
+
+		return dataRecordCollectionResource.
+			postDataDefinitionDataRecordCollection(
+				_ddmStructure.getStructureId(),
+				randomDataRecordCollection(_ddmStructure.getStructureKey()));
 	}
 
 	@Override
@@ -229,6 +251,29 @@ public class DataRecordCollectionResourceTest
 			{
 				dataDefinitionId = _ddmStructure.getStructureId();
 				dataRecordCollectionKey = RandomTestUtil.randomString();
+				siteId = testGroup.getGroupId();
+			}
+		};
+
+		dataRecordCollection.setDescription(
+			HashMapBuilder.<String, Object>put(
+				"en_US", description
+			).build());
+		dataRecordCollection.setName(
+			HashMapBuilder.<String, Object>put(
+				"en_US", name
+			).build());
+
+		return dataRecordCollection;
+	}
+
+	private DataRecordCollection _createDataRecordCollection(
+		String description, String key, String name) {
+
+		DataRecordCollection dataRecordCollection = new DataRecordCollection() {
+			{
+				dataDefinitionId = _ddmStructure.getStructureId();
+				dataRecordCollectionKey = key;
 				siteId = testGroup.getGroupId();
 			}
 		};

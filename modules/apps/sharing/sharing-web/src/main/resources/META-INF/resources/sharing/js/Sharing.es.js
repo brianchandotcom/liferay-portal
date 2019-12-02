@@ -178,7 +178,10 @@ const Sharing = ({
 	};
 
 	const resource = useResource({
-		link: sharingUserAutocompleteURL
+		link: sharingUserAutocompleteURL,
+		variables: {
+			[`${portletNamespace}query`]: multiSelectValue
+		}
 	});
 
 	const users = resource.resource;

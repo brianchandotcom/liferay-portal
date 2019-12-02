@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Nested Portlets,Upgrades WEM";

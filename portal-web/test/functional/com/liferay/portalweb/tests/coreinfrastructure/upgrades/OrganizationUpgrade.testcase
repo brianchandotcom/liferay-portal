@@ -2,7 +2,7 @@
 definition {
 
 	property custom.properties = "organizations.types=organization,location";
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Users and Organizations";
@@ -111,7 +111,7 @@ definition {
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-admin-org-with-user";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10";
 
 		Upgrade.addUserAndSuborganization();
@@ -120,7 +120,7 @@ definition {
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-admin-org-with-user";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
 
 		Upgrade.addUserAndSuborganization();
@@ -130,7 +130,7 @@ definition {
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-admin-org-with-user";
-		property database.types = "db2,mysql,oracle";
+		property database.types = "db2,mysql,oracle,sybase";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.addUserAndSuborganization();
@@ -140,7 +140,7 @@ definition {
 	@priority = "5"
 	test AddUserandSuborganizationAfterUpgrade621021 {
 		property data.archive.type = "data-archive-admin-org-with-user";
-		property database.types = "db2,mysql,oracle,postgresql";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.addUserAndSuborganization();

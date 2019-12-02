@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades Core Infrastructure";
@@ -22,7 +22,7 @@ definition {
 	@priority = "5"
 	test ViewPortletsPermissionsAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portlets-permissions";
-		property database.types = "db2,mysql,oracle";
+		property database.types = "db2,mysql,oracle,sybase";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.ViewPortletsPermissions();
@@ -31,7 +31,7 @@ definition {
 	@priority = "5"
 	test ViewPortletsPermissionsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portlets-permissions";
-		property database.types = "db2,mysql,oracle,postgresql";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.ViewPortletsPermissions();

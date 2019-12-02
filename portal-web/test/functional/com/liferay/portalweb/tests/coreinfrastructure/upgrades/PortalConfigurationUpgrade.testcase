@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades User and System Management";
@@ -83,7 +83,7 @@ definition {
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal-settings";
-		property database.types = "db2,mysql,oracle";
+		property database.types = "db2,mysql,oracle,sybase";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.viewInstanceSettings();
@@ -93,7 +93,7 @@ definition {
 	@priority = "5"
 	test ViewPortalConfigurationAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal-settings";
-		property database.types = "db2,mysql,oracle,postgresql";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.viewInstanceSettings();

@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades User and System Management";
@@ -136,7 +136,7 @@ definition {
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade7110 {
 		property data.archive.type = "data-archive-user";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10";
 
 		SignIn.signIn();
@@ -154,7 +154,7 @@ definition {
 	@priority = "5"
 	test ViewAndEditUserAfterUpgrade70106 {
 		property data.archive.type = "data-archive-user";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
 
 		SignIn.signIn();

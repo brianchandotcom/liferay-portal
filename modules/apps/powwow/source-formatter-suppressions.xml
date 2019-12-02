@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="MapBuilderCheck" files="modules/apps/powwow/powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
+	</checkstyle>
+</suppressions>

@@ -34,11 +34,11 @@ public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
 			getJsonObjectIndexedRecordConverter(
 				"/v1.0/price/{id}", OASConstants.OPERATION_GET,
-				readObject("openapi_bigdecimal.json"));
+				readObject("openapi_data_types.json"));
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(
-				readObject("price_content.json"));
+				readObject("bigdecimal_content.json"));
 
 		Assert.assertNotNull(
 			"Attachment is converted to indexed record", indexedRecord);

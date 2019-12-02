@@ -129,7 +129,7 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
 			getJsonObjectIndexedRecordConverter(
 				"/v1.0/timestamp/{code}", OASConstants.OPERATION_GET,
-				readObject("openapi_bigdecimal.json"));
+				readObject("openapi_data_types.json"));
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(
@@ -140,7 +140,7 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 				true,
 				getSchema(
 					"/v1.0/timestamp/{code}", OASConstants.OPERATION_PATCH,
-					readObject("openapi_bigdecimal.json")),
+					readObject("openapi_data_types.json")),
 				null, new Result());
 
 		JsonObject jsonObject = indexedRecordJsonObjectConverter.toJsonObject(

@@ -102,7 +102,7 @@ public class LiferayWriterTest extends BaseTestCase {
 		_setResourceParametersTableValues(
 			"path", "id", "1977", testLiferayOutputProperties);
 
-		JsonObject oasJsonObject = readObject("openapi_bigdecimal.json");
+		JsonObject oasJsonObject = readObject("openapi_data_types.json");
 
 		Schema patchContentSchema = getSchema(
 			"/v1.0/price/{id}", "PATCH", oasJsonObject);
@@ -119,7 +119,7 @@ public class LiferayWriterTest extends BaseTestCase {
 
 		liferayWriter.write(
 			_createIndexedRecordFromFile(
-				"price_content.json", patchContentSchema));
+				"bigdecimal_content.json", patchContentSchema));
 
 		JsonObject outputJsonObject =
 			liferayRequestContentAggregatorSink.getOutputJsonObject();

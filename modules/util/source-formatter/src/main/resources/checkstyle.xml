@@ -337,6 +337,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.ThreadLocalUtilCheck">
 			<message key="thread.local.util.use" value="Use ''ThreadLocalUtil.create'' when initializing variable ''{0}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ThreadNameCheck">
+			<message key="thread.rename" value="Rename thread to ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.TransactionalTestRuleCheck">
 			<message key="import.invalid" value="Avoid using import TransactionalTestRule in *StagedModelDataHandlerTest, see LPS-68908" />
 		</module>

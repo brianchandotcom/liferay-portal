@@ -367,23 +367,20 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetDataDefinitionDefaultDataRecordCollection()
-		throws Exception {
-
+	public void testGetDataDefinitionDataRecordCollection() throws Exception {
 		DataRecordCollection postDataRecordCollection =
-			testGetDataDefinitionDefaultDataRecordCollection_addDataRecordCollection();
+			testGetDataDefinitionDataRecordCollection_addDataRecordCollection();
 
 		DataRecordCollection getDataRecordCollection =
-			dataRecordCollectionResource.
-				getDataDefinitionDefaultDataRecordCollection(
-					postDataRecordCollection.getDataDefinitionId());
+			dataRecordCollectionResource.getDataDefinitionDataRecordCollection(
+				postDataRecordCollection.getDataDefinitionId());
 
 		assertEquals(postDataRecordCollection, getDataRecordCollection);
 		assertValid(getDataRecordCollection);
 	}
 
 	protected DataRecordCollection
-			testGetDataDefinitionDefaultDataRecordCollection_addDataRecordCollection()
+			testGetDataDefinitionDataRecordCollection_addDataRecordCollection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -391,7 +388,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDataDefinitionDefaultDataRecordCollection()
+	public void testGraphQLGetDataDefinitionDataRecordCollection()
 		throws Exception {
 
 		DataRecordCollection dataRecordCollection =
@@ -402,7 +399,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"dataDefinitionDefaultDataRecordCollection",
+				"dataDefinitionDataRecordCollection",
 				new HashMap<String, Object>() {
 					{
 						put(
@@ -421,7 +418,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			equalsJSONObject(
 				dataRecordCollection,
 				dataJSONObject.getJSONObject(
-					"dataDefinitionDefaultDataRecordCollection")));
+					"dataDefinitionDataRecordCollection")));
 	}
 
 	@Test

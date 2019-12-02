@@ -456,10 +456,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDefaultDataRecordCollection(dataDefinitionId: ___){dataDefinitionId, dataRecordCollectionKey, description, id, name, siteId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataRecordCollection(dataDefinitionId: ___){dataDefinitionId, dataRecordCollectionKey, description, id, name, siteId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public DataRecordCollection dataDefinitionDefaultDataRecordCollection(
+	public DataRecordCollection dataDefinitionDataRecordCollection(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
 
@@ -468,8 +468,7 @@ public class Query {
 			this::_populateResourceContext,
 			dataRecordCollectionResource ->
 				dataRecordCollectionResource.
-					getDataDefinitionDefaultDataRecordCollection(
-						dataDefinitionId));
+					getDataDefinitionDataRecordCollection(dataDefinitionId));
 	}
 
 	/**
@@ -677,32 +676,6 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(DataDefinition.class)
-	public class GetDataDefinitionDefaultDataRecordCollectionTypeExtension {
-
-		public GetDataDefinitionDefaultDataRecordCollectionTypeExtension(
-			DataDefinition dataDefinition) {
-
-			_dataDefinition = dataDefinition;
-		}
-
-		@GraphQLField
-		public DataRecordCollection defaultDataRecordCollection()
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_dataRecordCollectionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				dataRecordCollectionResource ->
-					dataRecordCollectionResource.
-						getDataDefinitionDefaultDataRecordCollection(
-							_dataDefinition.getId()));
-		}
-
-		private DataDefinition _dataDefinition;
-
-	}
-
-	@GraphQLTypeExtension(DataDefinition.class)
 	public class GetDataDefinitionDataDefinitionFieldLinksTypeExtension {
 
 		public GetDataDefinitionDataDefinitionFieldLinksTypeExtension(
@@ -786,6 +759,30 @@ public class Query {
 		}
 
 		private DataRecordCollection _dataRecordCollection;
+
+	}
+
+	@GraphQLTypeExtension(DataDefinition.class)
+	public class GetDataDefinitionDataRecordCollectionTypeExtension {
+
+		public GetDataDefinitionDataRecordCollectionTypeExtension(
+			DataDefinition dataDefinition) {
+
+			_dataDefinition = dataDefinition;
+		}
+
+		@GraphQLField
+		public DataRecordCollection dataRecordCollection() throws Exception {
+			return _applyComponentServiceObjects(
+				_dataRecordCollectionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				dataRecordCollectionResource ->
+					dataRecordCollectionResource.
+						getDataDefinitionDataRecordCollection(
+							_dataDefinition.getId()));
+		}
+
+		private DataDefinition _dataDefinition;
 
 	}
 

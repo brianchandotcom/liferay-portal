@@ -52,7 +52,7 @@ public interface DataRecordCollectionResource {
 			Long dataDefinitionId, DataRecordCollection dataRecordCollection)
 		throws Exception;
 
-	public DataRecordCollection getDataDefinitionDefaultDataRecordCollection(
+	public DataRecordCollection getDataDefinitionDataRecordCollection(
 			Long dataDefinitionId)
 		throws Exception;
 

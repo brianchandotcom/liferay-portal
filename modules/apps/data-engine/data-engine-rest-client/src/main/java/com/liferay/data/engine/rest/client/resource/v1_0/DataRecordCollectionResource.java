@@ -59,12 +59,12 @@ public interface DataRecordCollectionResource {
 				DataRecordCollection dataRecordCollection)
 		throws Exception;
 
-	public DataRecordCollection getDataDefinitionDefaultDataRecordCollection(
+	public DataRecordCollection getDataDefinitionDataRecordCollection(
 			Long dataDefinitionId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getDataDefinitionDefaultDataRecordCollectionHttpResponse(
+			getDataDefinitionDataRecordCollectionHttpResponse(
 				Long dataDefinitionId)
 		throws Exception;
 
@@ -336,13 +336,12 @@ public interface DataRecordCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public DataRecordCollection
-				getDataDefinitionDefaultDataRecordCollection(
-					Long dataDefinitionId)
+		public DataRecordCollection getDataDefinitionDataRecordCollection(
+				Long dataDefinitionId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDataDefinitionDefaultDataRecordCollectionHttpResponse(
+				getDataDefinitionDataRecordCollectionHttpResponse(
 					dataDefinitionId);
 
 			String content = httpResponse.getContent();
@@ -366,7 +365,7 @@ public interface DataRecordCollectionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getDataDefinitionDefaultDataRecordCollectionHttpResponse(
+				getDataDefinitionDataRecordCollectionHttpResponse(
 					Long dataDefinitionId)
 			throws Exception {
 
@@ -394,7 +393,7 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v1.0/data-definitions/{dataDefinitionId}/default-data-record-collection",
+						"/o/data-engine/v1.0/data-definitions/{dataDefinitionId}/data-record-collection",
 				dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(

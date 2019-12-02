@@ -22,6 +22,7 @@ const Container = ({processId, query}) => {
 	const [data, setData] = useState({});
 	const {getSelectedProcessSteps} = useContext(ProcessStepContext);
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
+
 	const {processSteps, timeRange} = useMemo(
 		() => ({
 			processSteps: getSelectedProcessSteps(),
@@ -30,6 +31,7 @@ const Container = ({processId, query}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[processId, query]
 	);
+
 	const {dateEnd, dateStart} = timeRange || {};
 
 	let processStepsKey;

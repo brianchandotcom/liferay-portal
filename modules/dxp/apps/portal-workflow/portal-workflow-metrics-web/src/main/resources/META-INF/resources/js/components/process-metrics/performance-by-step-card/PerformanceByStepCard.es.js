@@ -33,6 +33,7 @@ const Container = ({processId}) => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 
 	const timeRange = getSelectedTimeRange();
+
 	const {dateEnd, dateStart} = timeRange || {};
 
 	const fetchData = () => {

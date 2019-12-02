@@ -22,8 +22,12 @@ import java.io.StringReader;
 
 import java.math.BigDecimal;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +37,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
+import org.apache.avro.LogicalTypes;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.IndexedRecord;
 
@@ -111,13 +116,6 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 					encoder.encodeToString(
 						(byte[])indexedRecord.get(fieldPos)));
 			}
-			else if (AvroUtils.isSameType(
-						fieldSchema, AvroUtils._logicalTimestamp()) ||
-					 AvroUtils.isSameType(fieldSchema, AvroUtils._date())) {
-
-				currentJsonObjectBuilder.add(
-					fieldName, (Long)indexedRecord.get(fieldPos));
-			}
 			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._decimal())) {
 				currentJsonObjectBuilder.add(
 					fieldName, (BigDecimal)indexedRecord.get(fieldPos));
@@ -135,6 +133,17 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 					fieldName, (int)indexedRecord.get(fieldPos));
 			}
 			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
+				if ((fieldSchema.getLogicalType() != null) &&
+					(fieldSchema.getLogicalType() ==
+						LogicalTypes.timestampMillis())) {
+
+					currentJsonObjectBuilder.add(
+						fieldName,
+						_asISO8601String((long)indexedRecord.get(fieldPos)));
+
+					continue;
+				}
+
 				currentJsonObjectBuilder.add(
 					fieldName, (long)indexedRecord.get(fieldPos));
 			}
@@ -182,6 +191,12 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 		return objectBuilder.build();
 	}
 
+	private String _asISO8601String(long timeMills) {
+		DateFormat dateFormat = ISO8601DateFormat._format;
+
+		return dateFormat.format(new Date(timeMills));
+	}
+
 	private boolean _isJsonArrayFormattedString(String value) {
 		if (value.startsWith("[") && value.endsWith("]")) {
 			return true;
@@ -207,5 +222,12 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 	}
 
 	private final Schema _schema;
+
+	private static class ISO8601DateFormat {
+
+		private static final DateFormat _format = new SimpleDateFormat(
+			"yyyy-MM-dd'T'hh:mm:ss'Z'");
+
+	}
 
 }

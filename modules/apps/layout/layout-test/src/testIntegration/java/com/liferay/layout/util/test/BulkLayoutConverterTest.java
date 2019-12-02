@@ -243,14 +243,14 @@ public class BulkLayoutConverterTest {
 		};
 	}
 
+	@Inject
+	private BulkLayoutConverter _bulkLayoutConverter;
+
 	private Layout _contentLayout;
 	private Layout _corruptedLayout;
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private BulkLayoutConverter _bulkLayoutConverter;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

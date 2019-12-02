@@ -1036,11 +1036,12 @@ definition {
 
 		Portlet.expandTree();
 
-		Portlet.selectTreeNode(nodeName = "${folderName}");
+		AssertClick.assertPartialTextClickAt(
+			key_nodeName = "${folderName}",
+			locator1 = "Treeview#NODE_UNSELECTED",
+			value1 = "${folderName}");
 
 		SelectFrameTop();
-
-		Button.clickDone();
 
 		AssertClick(
 			locator1 = "Button#MOVE",
@@ -1068,13 +1069,12 @@ definition {
 
 		Portlet.expandTree();
 
-		Portlet.selectTreeNode(nodeName = "${folderName}");
+		AssertClick.assertPartialTextClickAt(
+			key_nodeName = "${folderName}",
+			locator1 = "Treeview#NODE_UNSELECTED",
+			value1 = "${folderName}");
 
 		SelectFrame(value1 = "relative=top");
-
-		Pause(locator1 = "5000");
-
-		Button.clickDone();
 
 		AssertClick(
 			locator1 = "Button#MOVE",
@@ -1101,13 +1101,12 @@ definition {
 
 		Portlet.expandTree();
 
-		Portlet.selectTreeNode(nodeName = "${folderName}");
+		AssertClick.assertPartialTextClickAt(
+			key_nodeName = "${folderName}",
+			locator1 = "Treeview#NODE_UNSELECTED",
+			value1 = "${folderName}");
 
 		SelectFrame(value1 = "relative=top");
-
-		Pause(locator1 = "5000");
-
-		Button.clickDone();
 
 		AssertClick(
 			locator1 = "Button#MOVE",

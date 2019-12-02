@@ -173,7 +173,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public Folder addAttachmentsFolder(long userId, long groupId)
 		throws PortalException {
 
-		return doAddFolder(userId, groupId, BlogsConstants.SERVICE_NAME);
+		return _addFolder(userId, groupId, BlogsConstants.SERVICE_NAME);
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			coverImageURL = imageSelector.getImageURL();
 		}
 		else if (imageSelector.getImageBytes() != null) {
-			coverImageFileEntryId = addCoverImageFileEntry(
+			coverImageFileEntryId = _addCoverImageFileEntry(
 				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
 		}
 
@@ -284,7 +284,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		int status = WorkflowConstants.STATUS_DRAFT;
 
-		validate(title, urlTitle, content, status);
+		_validate(title, urlTitle, content, status);
 
 		long entryId = counterLocalService.increment();
 
@@ -363,7 +363,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			coverImageURL = coverImageImageSelector.getImageURL();
 
 			if (coverImageImageSelector.getImageBytes() != null) {
-				coverImageFileEntryId = addCoverImageFileEntry(
+				coverImageFileEntryId = _addCoverImageFileEntry(
 					userId, groupId, entryId, coverImageImageSelector);
 			}
 		}
@@ -375,12 +375,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			smallImageURL = smallImageImageSelector.getImageURL();
 
 			if (smallImageImageSelector.getImageBytes() != null) {
-				smallImageFileEntryId = addSmallImageFileEntry(
+				smallImageFileEntryId = _addSmallImageFileEntry(
 					userId, groupId, entryId, smallImageImageSelector);
 			}
 		}
 
-		validate(smallImageFileEntryId);
+		_validate(smallImageFileEntryId);
 
 		entry.setCoverImageCaption(coverImageCaption);
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
@@ -406,7 +406,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		return startWorkflowInstance(userId, entry, serviceContext);
+		return _startWorkflowInstance(userId, entry, serviceContext);
 	}
 
 	@Override
@@ -526,7 +526,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		else if (imageSelector.getImageBytes() != null) {
 			smallImage = true;
 
-			smallImageFileEntryId = addSmallImageFileEntry(
+			smallImageFileEntryId = _addSmallImageFileEntry(
 				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
 		}
 
@@ -656,7 +656,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Comment
 
-		deleteDiscussion(entry);
+		_deleteDiscussion(entry);
 
 		// Expando
 
@@ -1167,7 +1167,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			status = WorkflowConstants.STATUS_DRAFT;
 		}
 
-		validate(title, urlTitle, content, status);
+		_validate(title, urlTitle, content, status);
 
 		if (Validator.isNotNull(urlTitle)) {
 			long classNameId = _classNameLocalService.getClassNameId(
@@ -1226,7 +1226,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			coverImageURL = coverImageImageSelector.getImageURL();
 
 			if (coverImageImageSelector.getImageBytes() != null) {
-				coverImageFileEntryId = addCoverImageFileEntry(
+				coverImageFileEntryId = _addCoverImageFileEntry(
 					userId, entry.getGroupId(), entryId,
 					coverImageImageSelector);
 			}
@@ -1248,7 +1248,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			smallImageURL = smallImageImageSelector.getImageURL();
 
 			if (smallImageImageSelector.getImageBytes() != null) {
-				smallImageFileEntryId = addSmallImageFileEntry(
+				smallImageFileEntryId = _addSmallImageFileEntry(
 					userId, entry.getGroupId(), entryId,
 					smallImageImageSelector);
 			}
@@ -1262,7 +1262,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			deletePreviousSmallImageId = entry.getSmallImageId();
 		}
 
-		validate(smallImageFileEntryId);
+		_validate(smallImageFileEntryId);
 
 		entry.setCoverImageCaption(coverImageCaption);
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
@@ -1297,7 +1297,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		entry = startWorkflowInstance(userId, entry, serviceContext);
+		entry = _startWorkflowInstance(userId, entry, serviceContext);
 
 		if (deletePreviousCoverImageFileEntryId != 0) {
 			_portletFileRepository.deletePortletFileEntry(
@@ -1379,7 +1379,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		validate(
+		_validate(
 			entry.getTitle(), entry.getUrlTitle(), entry.getContent(), status);
 
 		int oldStatus = entry.getStatus();
@@ -1466,7 +1466,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				// Subscriptions
 
-				notifySubscribers(
+				_notifySubscribers(
 					userId, entry, serviceContext, workflowContext);
 
 				// Ping
@@ -1476,9 +1476,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				Boolean pingOldTrackbacks = ParamUtil.getBoolean(
 					serviceContext, "pingOldTrackbacks");
 
-				pingGoogle(entry, serviceContext);
-				pingPingback(entry, serviceContext);
-				pingTrackbacks(
+				_pingGoogle(entry, serviceContext);
+				_pingPingback(entry, serviceContext);
+				_pingTrackbacks(
 					entry, trackbacks, pingOldTrackbacks, serviceContext);
 			}
 		}
@@ -1540,7 +1540,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsFileUploadsConfiguration.class, properties);
 	}
 
-	protected long addCoverImageFileEntry(
+	private long _addCoverImageFileEntry(
 			long userId, long groupId, long entryId,
 			ImageSelector imageSelector)
 		throws PortalException {
@@ -1562,9 +1562,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				throw new EntryCoverImageCropException();
 			}
 
-			Folder folder = addCoverImageFolder(userId, groupId);
+			Folder folder = _addCoverImageFolder(userId, groupId);
 
-			return addProcessedImageFileEntry(
+			return _addProcessedImageFileEntry(
 				userId, groupId, entryId, folder.getFolderId(),
 				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
 				imageBytes);
@@ -1574,13 +1574,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected Folder addCoverImageFolder(long userId, long groupId)
+	private Folder _addCoverImageFolder(long userId, long groupId)
 		throws PortalException {
 
-		return doAddFolder(userId, groupId, _COVER_IMAGE_FOLDER_NAME);
+		return _addFolder(userId, groupId, _COVER_IMAGE_FOLDER_NAME);
 	}
 
-	protected long addProcessedImageFileEntry(
+	private long _addProcessedImageFileEntry(
 			long userId, long groupId, long entryId, long folderId,
 			String title, String mimeType, byte[] bytes)
 		throws PortalException {
@@ -1598,7 +1598,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return processedImageFileEntry.getFileEntryId();
 	}
 
-	protected long addSmallImageFileEntry(
+	private long _addSmallImageFileEntry(
 			long userId, long groupId, long entryId,
 			ImageSelector imageSelector)
 		throws PortalException {
@@ -1623,9 +1623,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				throw new EntrySmallImageScaleException();
 			}
 
-			Folder folder = addSmallImageFolder(userId, groupId);
+			Folder folder = _addSmallImageFolder(userId, groupId);
 
-			return addProcessedImageFileEntry(
+			return _addProcessedImageFileEntry(
 				userId, groupId, entryId, folder.getFolderId(),
 				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
 				imageBytes);
@@ -1635,18 +1635,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected Folder addSmallImageFolder(long userId, long groupId)
+	private Folder _addSmallImageFolder(long userId, long groupId)
 		throws PortalException {
 
-		return doAddFolder(userId, groupId, _SMALL_IMAGE_FOLDER_NAME);
+		return _addFolder(userId, groupId, _SMALL_IMAGE_FOLDER_NAME);
 	}
 
-	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
+	private void _deleteDiscussion(BlogsEntry entry) throws PortalException {
 		_commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
 	}
 
-	protected Folder doAddFolder(long userId, long groupId, String folderName)
+	private Folder _addFolder(long userId, long groupId, String folderName)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -1663,7 +1663,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext);
 	}
 
-	protected String getEntryURL(
+	private String _getEntryURL(
 			BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1712,7 +1712,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return portletURL.toString();
 	}
 
-	protected String getLayoutFullURL(
+	private String _getLayoutFullURL(
 			ThemeDisplay themeDisplay, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1730,7 +1730,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return _portal.getLayoutFullURL(layout, themeDisplay);
 	}
 
-	protected void notifySubscribers(
+	private void _notifySubscribers(
 			long userId, BlogsEntry entry, ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
@@ -1881,7 +1881,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected void pingGoogle(BlogsEntry entry, ServiceContext serviceContext)
+	private void _pingGoogle(BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!PropsValues.BLOGS_PING_GOOGLE_ENABLED || !entry.isApproved()) {
@@ -1951,7 +1951,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void pingPingback(BlogsEntry entry, ServiceContext serviceContext)
+	private void _pingPingback(BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!PropsValues.BLOGS_PINGBACK_ENABLED || !entry.isAllowPingbacks() ||
@@ -1970,7 +1970,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String layoutFullURL = getLayoutFullURL(themeDisplay, serviceContext);
+		String layoutFullURL = _getLayoutFullURL(themeDisplay, serviceContext);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
@@ -1998,7 +1998,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void pingTrackbacks(
+	private void _pingTrackbacks(
 			BlogsEntry entry, String[] trackbacks, boolean pingOldTrackbacks,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -2019,7 +2019,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String layoutFullURL = getLayoutFullURL(themeDisplay, serviceContext);
+		String layoutFullURL = _getLayoutFullURL(themeDisplay, serviceContext);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
@@ -2092,7 +2092,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected BlogsEntry startWorkflowInstance(
+	private BlogsEntry _startWorkflowInstance(
 			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2110,7 +2110,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Map<String, Serializable> workflowContext =
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_URL,
-				getEntryURL(entry, serviceContext)
+				_getEntryURL(entry, serviceContext)
 			).put(
 				WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL
 			).put(
@@ -2123,7 +2123,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext, workflowContext);
 	}
 
-	protected void validate(long smallImageFileEntryId) throws PortalException {
+	private void _validate(long smallImageFileEntryId) throws PortalException {
 		if (smallImageFileEntryId != 0) {
 			FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
 				smallImageFileEntryId);
@@ -2151,7 +2151,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(
+	private void _validate(
 			String title, String urlTitle, String content, int status)
 		throws PortalException {
 

@@ -20,6 +20,8 @@
 String navigation = ParamUtil.getString(request, "navigation");
 %>
 
+<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
+
 <c:choose>
 	<c:when test='<%= navigation.equals("file_entry_types") %>'>
 		<liferay-util:include page="/document_library/view_file_entry_types.jsp" servletContext="<%= application %>" />

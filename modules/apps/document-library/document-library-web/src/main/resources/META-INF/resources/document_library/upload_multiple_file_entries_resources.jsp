@@ -96,6 +96,7 @@ else {
 
 <portlet:actionURL name="/document_library/upload_multiple_file_entries" var="uploadMultipleFileEntriesURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="portletResource" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 </portlet:actionURL>
 
 <aui:form action="<%= uploadMultipleFileEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateMultipleFiles();" %>'>

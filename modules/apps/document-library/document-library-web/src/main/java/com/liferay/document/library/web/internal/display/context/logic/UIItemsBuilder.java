@@ -1169,6 +1169,14 @@ public class UIItemsBuilder {
 				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 		}
 
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		String portletResource = portletDisplay.getId();
+
+		if (!portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			portletURL.setParameter("portletResource", portletResource);
+		}
+
 		return portletURL;
 	}
 

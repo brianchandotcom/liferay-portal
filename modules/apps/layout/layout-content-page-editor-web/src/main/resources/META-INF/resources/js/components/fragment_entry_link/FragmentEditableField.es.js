@@ -111,9 +111,7 @@ class FragmentEditableField extends PortletBase {
 			selectedLanguageId: this.languageId
 		});
 
-		const mapped = editableIsMapped(this.editableValues);
-
-		const value = mapped
+		const value = this._mapped
 			? isNullOrUndefined(this._mappedFieldValue)
 				? this.editableValues.defaultValue
 				: this._mappedFieldValue
@@ -126,11 +124,11 @@ class FragmentEditableField extends PortletBase {
 			processor.render(this.content, value, this.editableValues)
 		);
 
-		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
+		const translated =
+			!this._mapped && Boolean(segmentedValue[this.languageId]);
 
 		let nextState = state;
 
-		nextState = setIn(nextState, ['_mapped'], mapped);
 		nextState = setIn(
 			nextState,
 			['_selected'],
@@ -493,6 +491,9 @@ FragmentEditableField.STATE = {
 	_itemId: Config.internal()
 		.string()
 		.value(''),
+	_mapped: Config.internal()
+		.bool()
+		.value(false),
 	_mappedFieldLabel: Config.internal().string(),
 	_mappedFieldValue: Config.internal().string(),
 	_mappedItemHovered: Config.internal()
@@ -566,6 +567,8 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			state.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable &&
 			state.hoveredItemId === _itemId;
 
+		const _mapped = editableIsMapped(props.editableValues);
+
 		const _mappedItemHovered =
 			state.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem &&
 			state.hoveredItemId ===
@@ -578,6 +581,7 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			_highlighted,
 			_hovered,
 			_itemId,
+			_mapped,
 			_mappedItemHovered
 		};
 	}

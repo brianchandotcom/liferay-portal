@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 
@@ -38,9 +37,8 @@ public class DLCommentsAndRatingsExporterImporterCapability
 
 	@Override
 	public PortletPreferences process(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws PortletDataException {
+		PortletDataContext portletDataContext,
+		PortletPreferences portletPreferences) {
 
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();

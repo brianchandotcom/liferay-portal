@@ -138,33 +138,18 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setRepositoryLocalService(
-		RepositoryLocalService repositoryLocalService) {
-
-		_repositoryLocalService = repositoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRepositoryProvider(
-		RepositoryProvider repositoryProvider) {
-
-		_repositoryProvider = repositoryProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempFileEntriesMessageListener.class);
 
 	private volatile DLConfiguration _dlConfiguration;
+
+	@Reference
 	private RepositoryLocalService _repositoryLocalService;
+
+	@Reference
 	private RepositoryProvider _repositoryProvider;
+
+	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

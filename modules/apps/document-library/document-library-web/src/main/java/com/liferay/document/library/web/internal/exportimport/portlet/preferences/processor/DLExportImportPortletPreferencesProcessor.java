@@ -401,14 +401,10 @@ public class DLExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLExportImportPortletPreferencesProcessor.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference

@@ -154,18 +154,11 @@ public class DLFileEntryAssetRenderer
 			return super.getNewName(oldName, token);
 		}
 
-		StringBundler sb = new StringBundler(5);
-
 		int index = oldName.lastIndexOf(CharPool.PERIOD);
 
-		sb.append(oldName.substring(0, index));
-
-		sb.append(StringPool.SPACE);
-		sb.append(token);
-		sb.append(StringPool.PERIOD);
-		sb.append(extension);
-
-		return sb.toString();
+		return StringBundler.concat(
+			oldName.substring(0, index), StringPool.SPACE, token,
+			StringPool.PERIOD, extension);
 	}
 
 	@Override
@@ -241,9 +234,8 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = _getPortletURL(liferayPortletRequest);
 
@@ -257,9 +249,8 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public PortletURL getURLExport(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = _getPortletURL(liferayPortletRequest);
 

@@ -116,9 +116,8 @@ public class DLFolderAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(_folder.getGroupId());
 

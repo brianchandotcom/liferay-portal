@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -218,15 +217,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		return dlViewFileVersionDisplayContext;
 	}
 
-	@Reference(unbind = "-")
-	public void setStorageEngine(StorageEngine storageEngine) {
-		_storageEngine = storageEngine;
-	}
-
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(BundleContext bundleContext) {
 		_dlDisplayContextFactories = ServiceTrackerListFactory.open(
 			bundleContext, DLDisplayContextFactory.class);
 
@@ -282,6 +274,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 	)
 	private volatile ResourceBundleLoader _resourceBundleLoader;
 
+	@Reference
 	private StorageEngine _storageEngine;
 
 	@Reference(

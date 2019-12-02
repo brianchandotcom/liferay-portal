@@ -47,7 +47,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,7 +102,7 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DLFileEntryType.class),

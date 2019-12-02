@@ -58,9 +58,8 @@ public class DocumentsAndMediaDDMDisplayTabItem implements DDMDisplayTabItem {
 
 	@Override
 	public String getURL(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			liferayPortletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,

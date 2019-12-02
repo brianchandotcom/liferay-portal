@@ -13,8 +13,9 @@
  */
 
 import {useIsMounted} from 'frontend-js-react-web';
+import {isObject} from 'metal';
 import {PropTypes} from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
 import {PreviewSeoOnChange} from './PreviewSeoEvents.es';
 
@@ -78,21 +79,29 @@ const PreviewSeoContainer = ({
 	targets,
 	titleSuffix
 }) => {
+	const defaultLanguage = Liferay.ThemeDisplay.getLanguageId();
+	const [language, setLanguage] = useState(defaultLanguage);
+
+	const getDefaultValue = useCallback(
+		type => {
+			let defaultValue = targets[type] && targets[type].defaultValue;
+
+			if (isObject(defaultValue)) {
+				defaultValue =
+					defaultValue[language] || defaultValue[defaultLanguage];
+			}
+
+			return defaultValue;
+		},
+		[defaultLanguage, language, targets]
+	);
+
 	const [description, setDescription] = useState(
-		targets['description'] && targets['description'].defaultValue
+		getDefaultValue('description')
 	);
-	const [imgUrl, setImgUrl] = useState(
-		targets['imgUrl'] && targets['imgUrl'].defaultValue
-	);
-	const [language, setLanguage] = useState(
-		Liferay.ThemeDisplay.getLanguageId()
-	);
-	const [title, setTitle] = useState(
-		targets['title'] && targets['title'].defaultValue
-	);
-	const [url, setUrl] = useState(
-		targets['url'] && targets['url'].defaultValue
-	);
+	const [imgUrl, setImgUrl] = useState(getDefaultValue('imgUrl'));
+	const [title, setTitle] = useState(getDefaultValue('title'));
+	const [url, setUrl] = useState(getDefaultValue('url'));
 
 	const isMounted = useIsMounted();
 
@@ -100,8 +109,8 @@ const PreviewSeoContainer = ({
 		const setPreviewState = ({disabled, type, value = ''}) => {
 			if (!isMounted()) return;
 
-			const defaultValue = targets[type] && targets[type].defaultValue;
 			const customizable = targets[type] && targets[type].customizable;
+			const defaultValue = getDefaultValue(type);
 
 			if (disabled || (!customizable && !value)) {
 				value = defaultValue || '';
@@ -172,14 +181,6 @@ const PreviewSeoContainer = ({
 				if (newLanguage) {
 					setLanguage(newLanguage);
 				}
-
-				inputs.forEach(({node, type}) =>
-					setPreviewState({
-						disabled: node.disabled,
-						type,
-						value: node.value
-					})
-				);
 			}
 		);
 
@@ -191,7 +192,7 @@ const PreviewSeoContainer = ({
 			Liferay.detach(inputLocalizedLocaleChangedHandle);
 			Liferay.detach(PreviewSeoOnChangeHandle);
 		};
-	}, [isMounted, portletNamespace, targets]);
+	}, [getDefaultValue, isMounted, portletNamespace, targets]);
 
 	return (
 		<PreviewSeo
@@ -206,24 +207,20 @@ const PreviewSeoContainer = ({
 	);
 };
 
+const targetShape = PropTypes.shape({
+	defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+	id: PropTypes.string
+});
+
 PreviewSeoContainer.propTypes = {
 	targets: PropTypes.shape({
-		description: PropTypes.shape({
-			defaultValue: PropTypes.string,
-			id: PropTypes.string
-		}),
+		description: targetShape,
 		imgUrl: PropTypes.shape({
 			defaultValue: PropTypes.string,
 			id: PropTypes.string
 		}),
-		title: PropTypes.shape({
-			defaultValue: PropTypes.string,
-			id: PropTypes.string
-		}),
-		url: PropTypes.shape({
-			defaultValue: PropTypes.string,
-			id: PropTypes.string
-		})
+		title: targetShape,
+		url: targetShape
 	}).isRequired
 };
 

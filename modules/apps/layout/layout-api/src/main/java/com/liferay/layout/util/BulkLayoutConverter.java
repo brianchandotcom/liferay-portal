@@ -28,7 +28,7 @@ public interface BulkLayoutConverter {
 	 * @param  plid the primary key of the layout
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public void convertLayout(long plid) throws Exception;
+	public void convertLayout(long plid) throws PortalException;
 
 	/**
 	 * Converts all convertible layouts in the group of type {@link

@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
 public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 	@Override
-	public void convertLayout(long plid) throws Exception {
+	public void convertLayout(long plid) throws PortalException {
 		_convertLayout(plid);
 	}
 
@@ -187,7 +187,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				layout.getPlid(), layoutDataJSONObject.toString());
 	}
 
-	private Layout _convertLayout(long plid) throws Exception {
+	private Layout _convertLayout(long plid) throws PortalException {
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
@@ -267,7 +267,9 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		return layoutConverter.convert(layout);
 	}
 
-	private Layout _getOrCreateDraftLayout(Layout layout) throws Exception {
+	private Layout _getOrCreateDraftLayout(Layout layout)
+		throws PortalException {
+
 		if ((layout.getClassNameId() != 0) || (layout.getClassPK() != 0)) {
 			StringBundler sb = new StringBundler(3);
 
@@ -299,7 +301,12 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				serviceContext);
 		}
 
-		return _layoutCopyHelper.copyLayout(layout, draftLayout);
+		try {
+			return _layoutCopyHelper.copyLayout(layout, draftLayout);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	private void _updatePortletDecorator(Layout layout) throws PortalException {
@@ -378,7 +385,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 	private class ConvertLayoutCallable implements Callable<Layout> {
 
 		@Override
-		public Layout call() throws Exception {
+		public Layout call() throws PortalException {
 			return _convertLayout(_layoutPlid);
 		}
 

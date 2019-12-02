@@ -132,7 +132,6 @@ class FragmentEditableField extends PortletBase {
 			state.fragmentEntryLinkId,
 			state.layoutData.structure
 		);
-		const itemId = this._getItemId();
 
 		const translated = !mapped && Boolean(segmentedValue[this.languageId]);
 
@@ -145,14 +144,13 @@ class FragmentEditableField extends PortletBase {
 			['_selected'],
 			state.selectedItems.some(
 				selectedItem =>
-					selectedItem.itemId === itemId &&
+					selectedItem.itemId === this._itemId &&
 					selectedItem.itemType ===
 						FRAGMENTS_EDITOR_ITEM_TYPES.editable
 			)
 		);
 		nextState = setIn(nextState, ['_translated'], translated);
 		nextState = setIn(nextState, ['content'], content);
-		nextState = setIn(nextState, ['itemId'], itemId);
 		nextState = setIn(
 			nextState,
 			['itemTypes'],
@@ -189,7 +187,7 @@ class FragmentEditableField extends PortletBase {
 
 		if (
 			this.hasUpdatePermissions &&
-			this._getItemId() === this.activeItemId &&
+			this._itemId === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
 		) {
 			this._createFloatingToolbar();
@@ -213,7 +211,7 @@ class FragmentEditableField extends PortletBase {
 
 		if (
 			!this._processorEnabled &&
-			this._getItemId() === this.activeItemId &&
+			this._itemId === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
 		) {
 			this._createFloatingToolbar();
@@ -227,23 +225,6 @@ class FragmentEditableField extends PortletBase {
 	 */
 	syncGetAssetFieldValueURL() {
 		this._updateMappedFieldValue();
-	}
-
-	/**
-	 * Handle hoveredItemId changed
-	 * @inheritDoc
-	 * @review
-	 */
-	syncHoveredItemId() {
-		if (this.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
-			const [classNameId, classPK] = this.hoveredItemId.split('-');
-
-			this._mappedItemHovered =
-				this.editableValues.classNameId === classNameId &&
-				this.editableValues.classPK === classPK;
-		} else {
-			this._mappedItemHovered = false;
-		}
 	}
 
 	/**
@@ -294,7 +275,7 @@ class FragmentEditableField extends PortletBase {
 				fragmentEntryLinkId: this.fragmentEntryLinkId,
 				type: this.type
 			},
-			itemId: this._getItemId(),
+			itemId: this._itemId,
 			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
 			portalElement: document.body,
 			store: this.store
@@ -371,16 +352,6 @@ class FragmentEditableField extends PortletBase {
 	}
 
 	/**
-	 * @private
-	 * @return {string} Valid FragmentsEditor itemId for it's
-	 * 	fragmentEntryLinkId and editableId
-	 * @review
-	 */
-	_getItemId() {
-		return `${this.fragmentEntryLinkId}-${this.editableId}`;
-	}
-
-	/**
 	 * Callback executed when the exiting processor is destroyed
 	 * @private
 	 * @review
@@ -389,7 +360,7 @@ class FragmentEditableField extends PortletBase {
 		this._processorEnabled = false;
 
 		if (
-			this._getItemId() === this.activeItemId &&
+			this._itemId === this.activeItemId &&
 			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
 		) {
 			this._createFloatingToolbar();
@@ -535,6 +506,12 @@ FragmentEditableField.STATE = {
 		.bool()
 		.value(false),
 	_floatingToolbar: Config.internal().value(null),
+	_hovered: Config.internal()
+		.bool()
+		.value(false),
+	_itemId: Config.internal()
+		.string()
+		.value(''),
 	_mappedFieldLabel: Config.internal().string(),
 	_mappedFieldValue: Config.internal().string(),
 	_mappedItemHovered: Config.internal()
@@ -579,6 +556,8 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'selectedItems'
 	],
 	(state, props) => {
+		const _itemId = `${props.fragmentEntryLinkId}-${props.editableId}`;
+
 		const _activable =
 			!state.hasUpdatePermissions ||
 			getItemPath(
@@ -591,9 +570,21 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 					itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 			);
 
+		const _hovered =
+			state.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable &&
+			state.hoveredItemId === _itemId;
+
+		const _mappedItemHovered =
+			state.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem &&
+			state.hoveredItemId ===
+				`${props.editableValues.classNameId}-${props.editableValues.classPK}`;
+
 		return {
 			...state,
-			_activable
+			_activable,
+			_itemId,
+			_hovered,
+			_mappedItemHovered
 		};
 	}
 );

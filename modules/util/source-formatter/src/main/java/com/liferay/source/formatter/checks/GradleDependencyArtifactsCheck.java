@@ -155,7 +155,6 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (isSubrepository() || !fileName.endsWith("build.gradle") ||
-			absolutePath.contains("/modules/apps/static/portal-osgi-web/") ||
 			absolutePath.contains("/modules/util/")) {
 
 			return content;

@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -1714,11 +1716,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ThemeDisplay themeDisplay, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (themeDisplay != null) {
+		if (themeDisplay == null) {
+			return serviceContext.getLayoutFullURL();
+		}
+
+		if (themeDisplay.getRefererPlid() == 0) {
 			return _portal.getLayoutFullURL(themeDisplay);
 		}
 
-		return serviceContext.getLayoutFullURL();
+		Layout layout = _layoutLocalService.getLayout(
+			themeDisplay.getRefererPlid());
+
+		return _portal.getLayoutFullURL(layout, themeDisplay);
 	}
 
 	protected void notifySubscribers(
@@ -2344,6 +2353,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

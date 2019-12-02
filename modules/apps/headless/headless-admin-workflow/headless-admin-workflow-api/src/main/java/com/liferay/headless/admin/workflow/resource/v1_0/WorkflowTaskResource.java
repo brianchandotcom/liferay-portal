@@ -50,7 +50,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowTaskResource {
 
 	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-			Long workflowInstanceId, Pagination pagination)
+			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksPage(

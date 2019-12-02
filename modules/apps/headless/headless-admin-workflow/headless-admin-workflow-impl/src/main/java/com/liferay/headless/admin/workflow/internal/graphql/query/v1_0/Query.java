@@ -305,11 +305,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstanceWorkflowTasks(page: ___, pageSize: ___, workflowInstanceId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstanceWorkflowTasks(completed: ___, page: ___, pageSize: ___, workflowInstanceId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowTaskPage workflowInstanceWorkflowTasks(
 			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
+			@GraphQLName("completed") Boolean completed,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -319,7 +320,8 @@ public class Query {
 			this::_populateResourceContext,
 			workflowTaskResource -> new WorkflowTaskPage(
 				workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-					workflowInstanceId, Pagination.of(page, pageSize))));
+					workflowInstanceId, completed,
+					Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -519,6 +521,7 @@ public class Query {
 
 		@GraphQLField
 		public WorkflowTaskPage workflowTasks(
+				@GraphQLName("completed") Boolean completed,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
 			throws Exception {
@@ -528,7 +531,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				workflowTaskResource -> new WorkflowTaskPage(
 					workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-						_workflowInstance.getId(),
+						_workflowInstance.getId(), completed,
 						Pagination.of(page, pageSize))));
 		}
 

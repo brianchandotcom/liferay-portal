@@ -179,7 +179,10 @@ definition {
 			menuItem = "Manage",
 			rowEntry = "Site Template Name");
 
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Page Fragments");
 
 		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 

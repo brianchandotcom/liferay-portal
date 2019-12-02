@@ -122,7 +122,13 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 							HashMapBuilder.<String, Object>put(
 								"customizable", Boolean.TRUE
 							).put(
-								"defaultValue", layoutsAdminDisplayContext.getPageTitle()
+								"defaultValue", HashMapBuilder.<String, Object>put(
+									"ar_SA", "ar_SA FAKE title"
+								).put(
+									"ca_ES", "ca_ES FAKE title"
+								).put(
+									"en_US", "en_US FAKE title"
+								).build()
 							).put(
 								"id", "openGraphTitle"
 							).build()

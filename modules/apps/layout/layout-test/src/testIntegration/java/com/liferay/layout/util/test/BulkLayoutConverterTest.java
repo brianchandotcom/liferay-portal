@@ -147,7 +147,7 @@ public class BulkLayoutConverterTest {
 	}
 
 	@Test
-	public void testGetConvertibleLayouts() throws Exception {
+	public void testGetConvertibleLayoutPlids() throws Exception {
 		_addLayouts();
 
 		_assertPlids(

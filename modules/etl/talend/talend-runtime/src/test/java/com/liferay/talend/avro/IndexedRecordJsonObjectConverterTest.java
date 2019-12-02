@@ -124,4 +124,37 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 			descriptionJsonObject.getString("en_US"));
 	}
 
+	@Test
+	public void testToJsonObjectWithTimeProperties() throws Exception {
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/timestamp/{code}", OASConstants.OPERATION_GET,
+				readObject("openapi_data_types.json"));
+
+		IndexedRecord indexedRecord =
+			jsonObjectIndexedRecordConverter.toIndexedRecord(
+				readObject("timestamp_content.json"));
+
+		IndexedRecordJsonObjectConverter indexedRecordJsonObjectConverter =
+			new IndexedRecordJsonObjectConverter(
+				true,
+				getSchema(
+					"/v1.0/timestamp/{code}", OASConstants.OPERATION_PATCH,
+					readObject("openapi_data_types.json")),
+				null, new Result());
+
+		JsonObject jsonObject = indexedRecordJsonObjectConverter.toJsonObject(
+			indexedRecord);
+
+		Assert.assertEquals(
+			"timestamp1 value", "2019-12-02T06:17:09Z",
+			jsonObject.getString("timestamp1"));
+		Assert.assertEquals(
+			"timestamp2 value", "2019-12-02T06:17:09Z",
+			jsonObject.getString("timestamp2"));
+		Assert.assertEquals(
+			"timestamp3 value", "2019-12-02T05:17:09Z",
+			jsonObject.getString("timestamp3"));
+	}
+
 }

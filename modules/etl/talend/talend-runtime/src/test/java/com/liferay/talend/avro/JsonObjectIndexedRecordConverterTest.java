@@ -19,6 +19,7 @@ import com.liferay.talend.common.oas.constants.OASConstants;
 
 import java.math.BigDecimal;
 
+import org.apache.avro.Schema;
 import org.apache.avro.generic.IndexedRecord;
 
 import org.junit.Assert;
@@ -33,58 +34,63 @@ public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 	public void testToIndexedRecordIfBigDecimalPropertyPresent() {
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
 			getJsonObjectIndexedRecordConverter(
-				"/v1.0/price/{id}", OASConstants.OPERATION_GET,
-				readObject("openapi_bigdecimal.json"));
+				"/v1.0/bigdecimal/{id}", OASConstants.OPERATION_GET,
+				readObject("openapi_data_types.json"));
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(
-				readObject("price_content.json"));
+				readObject("bigdecimal_content.json"));
 
 		Assert.assertNotNull(
 			"Attachment is converted to indexed record", indexedRecord);
 
-		Object priceBigDecimal1 = indexedRecord.get(1);
+		Object bigDecimal1 = indexedRecord.get(
+			_posOf("bigDecimal1", indexedRecord.getSchema()));
 
 		Assert.assertEquals(
-			"Price 1 field type", BigDecimal.class,
-			priceBigDecimal1.getClass());
+			"BigDecimal 1 field type", BigDecimal.class,
+			bigDecimal1.getClass());
 
 		Assert.assertEquals(
-			"Price 1 field value", new BigDecimal("1.97797"), priceBigDecimal1);
+			"BigDecimal 1 field value", new BigDecimal("1.97797"), bigDecimal1);
 
-		Object priceBigDecimal2 = indexedRecord.get(2);
-
-		Assert.assertEquals(
-			"Price 2 field type", BigDecimal.class,
-			priceBigDecimal2.getClass());
+		Object bigDecimal2 = indexedRecord.get(
+			_posOf("bigDecimal2", indexedRecord.getSchema()));
 
 		Assert.assertEquals(
-			"Price 2 field value", new BigDecimal("1.97797E-17"),
-			priceBigDecimal2);
-
-		Object priceDouble = indexedRecord.get(3);
+			"BigDecimal 2 field type", BigDecimal.class,
+			bigDecimal2.getClass());
 
 		Assert.assertEquals(
-			"Price 3 field type", Double.class, priceDouble.getClass());
+			"BigDecimal 2 field value", new BigDecimal("1.97797E-17"),
+			bigDecimal2);
+
+		Object doubleObject = indexedRecord.get(
+			_posOf("double", indexedRecord.getSchema()));
 
 		Assert.assertEquals(
-			"Price 3 field value", Double.valueOf("19779.7"), priceDouble);
-
-		Object priceFloat = indexedRecord.get(4);
+			"Double field type", Double.class, doubleObject.getClass());
 
 		Assert.assertEquals(
-			"Price 4 field type", Float.class, priceFloat.getClass());
+			"Double field value", Double.valueOf("19779.7"), doubleObject);
+
+		Object priceFloat = indexedRecord.get(
+			_posOf("float", indexedRecord.getSchema()));
 
 		Assert.assertEquals(
-			"Price 4 field value", Float.valueOf("19.7797"), priceFloat);
-
-		Object priceNumber = indexedRecord.get(5);
+			"Float field type", Float.class, priceFloat.getClass());
 
 		Assert.assertEquals(
-			"Price 4 field type", BigDecimal.class, priceNumber.getClass());
+			"Float field value", Float.valueOf("19.7797"), priceFloat);
+
+		Object priceNumber = indexedRecord.get(
+			_posOf("number", indexedRecord.getSchema()));
 
 		Assert.assertEquals(
-			"Price 4 field value", new BigDecimal("1977.97"), priceNumber);
+			"Number field type", BigDecimal.class, priceNumber.getClass());
+
+		Assert.assertEquals(
+			"Number field value", new BigDecimal("1977.97"), priceNumber);
 	}
 
 	@Test
@@ -161,6 +167,12 @@ public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 
 		Assert.assertEquals(
 			"Product ID field value", Long.valueOf(20111101), productId);
+	}
+
+	private int _posOf(String fieldName, Schema fieldSchema) {
+		Schema.Field field = fieldSchema.getField(fieldName);
+
+		return field.pos();
 	}
 
 }

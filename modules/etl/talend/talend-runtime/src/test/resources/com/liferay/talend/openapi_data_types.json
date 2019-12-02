@@ -1,0 +1,250 @@
+{
+	"components": {
+		"schemas": {
+			"BigDecimal": {
+				"properties": {
+					"bigDecimal1": {
+						"format": "bigdecimal",
+						"type": "number"
+					},
+					"bigDecimal2": {
+						"format": "bigdecimal",
+						"type": "number"
+					},
+					"double": {
+						"format": "double",
+						"type": "number"
+					},
+					"float": {
+						"format": "float",
+						"type": "number"
+					},
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"number": {
+						"type": "number"
+					}
+				},
+				"required": [
+					"id",
+					"bigDecimal1",
+					"bigDecimal2"
+				],
+				"type": "object",
+				"xml": {
+					"name": "BigDecimal"
+				}
+			},
+			"Timestamp": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"timestamp1": {
+						"format": "date-time",
+						"type": "string"
+					},
+					"timestamp2": {
+						"format": "date-time",
+						"type": "string"
+					},
+					"timestamp3": {
+						"format": "date-time",
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"timestamp1",
+					"timestamp2"
+				],
+				"type": "object",
+				"xml": {
+					"name": "Price"
+				}
+			}
+		}
+	},
+	"info": {
+		"description": "Liferay Commerce Admin Catalog Test API",
+		"title": "Liferay Commerce Admin Catalog Test API",
+		"version": "v1.0"
+	},
+	"openapi": "3.0.1",
+	"paths": {
+		"/v1.0/bigdecimal/{id}": {
+			"delete": {
+				"operationId": "deleteBigDecimal",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Price"
+				]
+			},
+			"get": {
+				"operationId": "getBigDecimal",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BigDecimal"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/BigDecimal"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Price"
+				]
+			},
+			"patch": {
+				"operationId": "patchBigDecimal",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BigDecimal"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/BigDecimal"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"BigDecimal"
+				]
+			}
+		},
+		"/v1.0/timestamp/{code}": {
+			"get": {
+				"operationId": "getTimestamp",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Timestamp"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Timestamp"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Timestamp"
+				]
+			},
+			"patch": {
+				"operationId": "setTimestamp",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Timestamp"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Timestamp"
+							}
+						}
+					}
+				},
+				"responses": {
+					"204": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Timestamp"
+				]
+			}
+		}
+	}
+}

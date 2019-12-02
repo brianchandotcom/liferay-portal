@@ -59,9 +59,9 @@ public class LiferayBatchFileWriterTest extends BaseTestCase {
 
 	@Test
 	public void testWrite() throws Exception {
-		JsonObject oasJsonObject = readObject("openapi_bigdecimal.json");
+		JsonObject oasJsonObject = readObject("openapi_data_types.json");
 
-		Schema entitySchema = getEntitySchema("Price", oasJsonObject);
+		Schema entitySchema = getEntitySchema("BigDecimal", oasJsonObject);
 
 		LiferayBatchFileProperties batchFileProperties =
 			new LiferayBatchFileProperties(
@@ -79,7 +79,7 @@ public class LiferayBatchFileWriterTest extends BaseTestCase {
 		liferayBatchFileWriter.open("testUid");
 
 		IndexedRecord indexedRecord = createIndexedRecordFromFile(
-			"price_content.json", entitySchema);
+			"bigdecimal_content.json", entitySchema);
 
 		Schema.Field idField = entitySchema.getField("id");
 

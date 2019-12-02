@@ -90,7 +90,7 @@ public class LiferayWriterTest extends BaseTestCase {
 
 	@Test
 	public void testWriteBigDecimal() throws Exception {
-		String endpoint = "/v1.0/price/{id}";
+		String endpoint = "/v1.0/bigdecimal/{id}";
 
 		LiferayRequestContentAggregatorSink
 			liferayRequestContentAggregatorSink =
@@ -102,10 +102,10 @@ public class LiferayWriterTest extends BaseTestCase {
 		_setResourceParametersTableValues(
 			"path", "id", "1977", testLiferayOutputProperties);
 
-		JsonObject oasJsonObject = readObject("openapi_bigdecimal.json");
+		JsonObject oasJsonObject = readObject("openapi_data_types.json");
 
 		Schema patchContentSchema = getSchema(
-			"/v1.0/price/{id}", "PATCH", oasJsonObject);
+			"/v1.0/bigdecimal/{id}", "PATCH", oasJsonObject);
 
 		testLiferayOutputProperties.setSchema(patchContentSchema);
 
@@ -119,26 +119,26 @@ public class LiferayWriterTest extends BaseTestCase {
 
 		liferayWriter.write(
 			_createIndexedRecordFromFile(
-				"price_content.json", patchContentSchema));
+				"bigdecimal_content.json", patchContentSchema));
 
 		JsonObject outputJsonObject =
 			liferayRequestContentAggregatorSink.getOutputJsonObject();
 
 		Assert.assertTrue(
-			"Output has priceBigDecimal1",
-			outputJsonObject.containsKey("priceBigDecimal1"));
+			"Output has bigDecimal1",
+			outputJsonObject.containsKey("bigDecimal1"));
 
 		JsonNumber bigDecimalNumber = outputJsonObject.getJsonNumber(
-			"priceBigDecimal1");
+			"bigDecimal1");
 
 		Assert.assertEquals(
-			"Field priceBigDecimal1 value", new BigDecimal("1.97797"),
+			"Field bigDecimal1 value", new BigDecimal("1.97797"),
 			bigDecimalNumber.bigDecimalValue());
 
-		bigDecimalNumber = outputJsonObject.getJsonNumber("priceBigDecimal2");
+		bigDecimalNumber = outputJsonObject.getJsonNumber("bigDecimal2");
 
 		Assert.assertEquals(
-			"Field priceBigDecimal2 value",
+			"Field bigDecimal2 value",
 			new BigDecimal("0.0000000000000000197797"),
 			bigDecimalNumber.bigDecimalValue());
 	}

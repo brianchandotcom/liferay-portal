@@ -109,12 +109,18 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		List<DetailAST> skipDetailASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
-			TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
+		List<DetailAST> childDetailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, DetailASTUtil.ALL_TYPES);
 
-		if (!skipDetailASTList.isEmpty() || _containsComment(detailAST)) {
-			return;
+		for (DetailAST childDetailAST : childDetailASTList) {
+			if ((childDetailAST.getType() == TokenTypes.DO_WHILE) ||
+				(childDetailAST.getType() == TokenTypes.LAMBDA) ||
+				(childDetailAST.getType() == TokenTypes.LITERAL_FOR) ||
+				(childDetailAST.getType() == TokenTypes.LITERAL_WHILE) ||
+				(DetailASTUtil.getHiddenBefore(childDetailAST) != null)) {
+
+				return;
+			}
 		}
 
 		List<DetailAST> methodCallDetailASTList =
@@ -415,19 +421,6 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 				log(firstChildDetailAST, _MSG_CAST_NULL_VALUE, className);
 			}
 		}
-	}
-
-	private boolean _containsComment(DetailAST detailAST) {
-		List<DetailAST> detailASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, DetailASTUtil.ALL_TYPES);
-
-		for (DetailAST curDetailAST : detailASTList) {
-			if (DetailASTUtil.getHiddenBefore(curDetailAST) != null) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private DetailAST _getExprDetailAST(

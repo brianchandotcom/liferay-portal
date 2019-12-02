@@ -150,7 +150,7 @@ public class PollsQuestionMultiLanguageSearchTest {
 	}
 
 	private Map<String, String> _getMapResult(String prefix) {
-		return HashMapBuilder.<String, String>put(
+		return HashMapBuilder.put(
 			prefix, _KEYWORD_US + StringPool.SPACE + _KEYWORD_JP
 		).put(
 			() -> {

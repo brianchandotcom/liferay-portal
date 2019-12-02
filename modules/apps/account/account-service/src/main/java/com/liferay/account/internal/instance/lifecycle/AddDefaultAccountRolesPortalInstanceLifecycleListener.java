@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -95,7 +94,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 
 		return _accountRoleLocalService.addAccountRole(
 			userId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, roleName,
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleThreadLocal.getDefaultLocale(), roleName
 			).build(),
 			null);
@@ -122,7 +121,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 	private void _addRole(long userId, String roleName) throws PortalException {
 		_roleLocalService.addRole(
 			userId, null, 0, roleName,
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				LocaleThreadLocal.getDefaultLocale(), roleName
 			).build(),
 			null, RoleConstants.TYPE_REGULAR, null, null);

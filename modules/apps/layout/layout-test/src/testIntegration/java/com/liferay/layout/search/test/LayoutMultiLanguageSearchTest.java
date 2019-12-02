@@ -154,7 +154,7 @@ public class LayoutMultiLanguageSearchTest {
 	}
 
 	private Map<String, String> _getMapResult(String prefix, String keyWords) {
-		return HashMapBuilder.<String, String>put(
+		return HashMapBuilder.put(
 			() -> {
 				if (prefix != _TITLE) {
 					return prefix;

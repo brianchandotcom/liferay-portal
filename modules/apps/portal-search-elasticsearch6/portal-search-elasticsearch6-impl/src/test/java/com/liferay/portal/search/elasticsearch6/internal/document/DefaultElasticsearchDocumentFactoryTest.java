@@ -144,7 +144,7 @@ public class DefaultElasticsearchDocumentFactoryTest {
 					"age", 30
 				).put(
 					"name",
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"first", "John"
 					).put(
 						"last", "Smith"
@@ -159,7 +159,7 @@ public class DefaultElasticsearchDocumentFactoryTest {
 					"age", 30
 				).put(
 					"name",
-					HashMapBuilder.<String, String>put(
+					HashMapBuilder.put(
 						"first", "John"
 					).put(
 						"last", "Smith"

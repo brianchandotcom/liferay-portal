@@ -26,7 +26,6 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.function.Consumer;
 
 import org.elasticsearch.common.Strings;
@@ -141,37 +140,31 @@ public class DefaultElasticsearchDocumentFactoryTest {
 				"region", "US"
 			).field(
 				"manager",
-				new HashMap() {
-					{
-						put("age", 30);
-						put(
-							"name",
-							new HashMap() {
-								{
-									put("first", "John");
-									put("last", "Smith");
-								}
-							});
-					}
-				}
+				HashMapBuilder.<String, Object>put(
+					"age", 30
+				).put(
+					"name",
+					HashMapBuilder.<String, String>put(
+						"first", "John"
+					).put(
+						"last", "Smith"
+					).build()
+				).build()
 			),
 			documentBuilder -> documentBuilder.setString(
 				"region", "US"
 			).setValue(
 				"manager",
-				new HashMap() {
-					{
-						put("age", 30);
-						put(
-							"name",
-							new HashMap() {
-								{
-									put("first", "John");
-									put("last", "Smith");
-								}
-							});
-					}
-				}
+				HashMapBuilder.<String, Object>put(
+					"age", 30
+				).put(
+					"name",
+					HashMapBuilder.<String, String>put(
+						"first", "John"
+					).put(
+						"last", "Smith"
+					).build()
+				).build()
 			));
 	}
 

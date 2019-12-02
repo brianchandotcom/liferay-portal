@@ -32,7 +32,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -155,16 +154,20 @@ public class LayoutMultiLanguageSearchTest {
 	}
 
 	private Map<String, String> _getMapResult(String prefix, String keyWords) {
-		return new HashMap<String, String>() {
-			{
+		return HashMapBuilder.<String, String>put(
+			() -> {
 				if (prefix != _TITLE) {
-					put(prefix, keyWords);
+					return prefix;
 				}
 
-				put(prefix + "_en_US", _ENGLISH_KEYWORD);
-				put(prefix + "_ja_JP", _JAPANESE_KEYWORD);
-			}
-		};
+				return null;
+			},
+			keyWords
+		).put(
+			prefix + "_en_US", _ENGLISH_KEYWORD
+		).put(
+			prefix + "_ja_JP", _JAPANESE_KEYWORD
+		).build();
 	}
 
 	private void _testLocaleKeywords(

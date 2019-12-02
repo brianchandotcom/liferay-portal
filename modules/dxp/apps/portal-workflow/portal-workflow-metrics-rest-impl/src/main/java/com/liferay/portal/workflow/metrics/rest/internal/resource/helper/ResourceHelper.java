@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,7 +53,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -235,43 +235,69 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setMapScript(
 			_workflowMetricsInstanceCountMapScript);
 		scriptedMetricAggregation.setParameters(
-			new HashMap<String, Object>() {
-				{
+			HashMapBuilder.<String, Object>put(
+				"assigneeUserIds",
+				() -> {
 					if (!assigneeUserIds.isEmpty()) {
-						put(
-							"assigneeUserIds",
-							Stream.of(
-								assigneeUserIds
-							).flatMap(
-								List::parallelStream
-							).map(
-								String::valueOf
-							).collect(
-								Collectors.toList()
-							));
+						return Stream.of(
+							assigneeUserIds
+						).flatMap(
+							List::parallelStream
+						).map(
+							String::valueOf
+						).collect(
+							Collectors.toList()
+						);
 					}
 
-					if (dateEnd != null) {
-						put("endDate", dateEnd.getTime());
-					}
-
-					if (!slaStatuses.isEmpty()) {
-						put("slaStatuses", slaStatuses);
-					}
-
-					if (dateStart != null) {
-						put("startDate", dateStart.getTime());
-					}
-
-					if (!statuses.isEmpty()) {
-						put("statuses", statuses);
-					}
-
-					if (!taskNames.isEmpty()) {
-						put("taskNames", taskNames);
-					}
+					return null;
 				}
-			});
+			).put(
+				"endDate",
+				() -> {
+					if (dateEnd != null) {
+						return dateEnd.getTime();
+					}
+
+					return null;
+				}
+			).put(
+				"slaStatuses",
+				() -> {
+					if (!slaStatuses.isEmpty()) {
+						return slaStatuses;
+					}
+
+					return null;
+				}
+			).put(
+				"startDate",
+				() -> {
+					if (dateStart != null) {
+						return dateStart.getTime();
+					}
+
+					return null;
+				}
+			).put(
+				"statuses",
+				() -> {
+					if (!statuses.isEmpty()) {
+						return statuses;
+					}
+
+					return null;
+				}
+			).put(
+				"taskNames",
+				() -> {
+					if (!taskNames.isEmpty()) {
+						return taskNames;
+					}
+
+					return null;
+				}
+			).build());
 		scriptedMetricAggregation.setReduceScript(
 			_workflowMetricsInstanceCountReduceScript);
 

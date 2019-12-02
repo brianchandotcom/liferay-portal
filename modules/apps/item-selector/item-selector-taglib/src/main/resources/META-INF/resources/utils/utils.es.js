@@ -12,8 +12,6 @@
  * details.
  */
 
-const SPLIT_REGEX = /({\d+})/g;
-
 /**
  * Utility function for substituting variables into language keys.
  *

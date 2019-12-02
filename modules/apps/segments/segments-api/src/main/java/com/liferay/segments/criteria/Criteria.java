@@ -174,7 +174,7 @@ public final class Criteria implements Serializable {
 
 	public enum Type {
 
-		CONTEXT("context"), MODEL("model");
+		CONTEXT("context"), MODEL("model"), REFERRED("referred");
 
 		public static Type parse(String value) {
 			if (Objects.equals(CONTEXT.getValue(), value)) {
@@ -182,6 +182,9 @@ public final class Criteria implements Serializable {
 			}
 			else if (Objects.equals(MODEL.getValue(), value)) {
 				return MODEL;
+			}
+			else if (Objects.equals(REFERRED.getValue(), value)) {
+				return REFERRED;
 			}
 
 			throw new IllegalArgumentException("Invalid value " + value);

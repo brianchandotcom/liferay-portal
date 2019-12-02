@@ -147,7 +147,7 @@
 <!--ROLES_ORGANIZATION_ROLES-->
 <tr>
 	<td>ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON</td>
-	<td>//tr/td[normalize-space(text())='${key_roleTitle}']/..//button[contains(.,'Choose')]</td>
+	<td>//*[*[normalize-space(text())='${key_roleTitle}']]/..//following-sibling::td/*[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <!--ROLES_REGULAR_ROLES-->
+<tr>
+	<td>ROLES_REGULAR_SELECT_CHOOSE_BUTTON</td>
+	<td>//tr/td[normalize-space(text())='${key_roleTitle}']/..//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ROLES_REGULAR_ROLES_REMOVE_ROLE</td>
 	<td>//tr[contains(.,'${key_regularRoleName}')]//span[contains(@class,' lfr-portal-tooltip')]</td>

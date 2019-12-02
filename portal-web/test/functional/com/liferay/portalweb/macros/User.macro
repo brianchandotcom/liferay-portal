@@ -764,7 +764,7 @@ definition {
 			value1 = "${roleTitle}");
 
 		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON",
 			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");
@@ -795,7 +795,7 @@ definition {
 			value1 = "${siteRoleName}");
 
 		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_SELECT_CHOOSE_BUTTON",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON",
 			value1 = "Choose");
 
 		SelectFrame(value1 = "relative=top");

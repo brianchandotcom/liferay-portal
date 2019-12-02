@@ -9,6 +9,7 @@ Import-Package:\
 	\
 	!org.apache.commons.math3.*,\
 	!org.apache.lucene.sandbox.*,\
+	!org.apache.yetus.*,\
 	\
 	!org.jboss.netty.*,\
 	\

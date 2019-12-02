@@ -86,24 +86,22 @@ public class ControllerInterceptor implements Serializable {
 		BeanPortletMethodType beanPortletMethodType = _getMethodType(
 			invocationContextMethod);
 
-		if ((beanPortletMethodType == BeanPortletMethodType.RENDER) ||
-			(beanPortletMethodType == BeanPortletMethodType.SERVE_RESOURCE)) {
+		if (((beanPortletMethodType == BeanPortletMethodType.RENDER) ||
+			 (beanPortletMethodType == BeanPortletMethodType.SERVE_RESOURCE)) &&
+			(_renderParameters.getValue(ViewRenderer.REDIRECTED_VIEW) !=
+				null)) {
 
-			if (_renderParameters.getValue(ViewRenderer.REDIRECTED_VIEW) !=
-					null) {
+			PortletSession portletSession = _portletRequest.getPortletSession(
+				true);
 
-				PortletSession portletSession =
-					_portletRequest.getPortletSession(true);
+			actionPhaseViewName = (String)portletSession.getAttribute(
+				ViewRenderer.VIEW_NAME);
 
-				actionPhaseViewName = (String)portletSession.getAttribute(
-					ViewRenderer.VIEW_NAME);
+			portletSession.removeAttribute(ViewRenderer.VIEW_NAME);
 
-				portletSession.removeAttribute(ViewRenderer.VIEW_NAME);
-
-				if (actionPhaseViewName != null) {
-					_portletRequest.setAttribute(
-						ViewRenderer.VIEW_NAME, actionPhaseViewName);
-				}
+			if (actionPhaseViewName != null) {
+				_portletRequest.setAttribute(
+					ViewRenderer.VIEW_NAME, actionPhaseViewName);
 			}
 		}
 
@@ -253,9 +251,6 @@ public class ControllerInterceptor implements Serializable {
 
 	@Inject
 	private ActionResponse _actionResponse;
-
-	@Inject
-	private MutableRenderParameters _mutableRenderParameters;
 
 	@Inject
 	private Event<MvcEvent> _mvcEvent;

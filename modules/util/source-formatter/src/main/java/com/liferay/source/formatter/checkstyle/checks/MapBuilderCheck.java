@@ -115,7 +115,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			detailAST, true, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
 			TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
 
-		if (!skipDetailASTList.isEmpty()) {
+		if (!skipDetailASTList.isEmpty() || _containsComment(detailAST)) {
 			return;
 		}
 
@@ -417,6 +417,19 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 				log(firstChildDetailAST, _MSG_CAST_NULL_VALUE, className);
 			}
 		}
+	}
+
+	private boolean _containsComment(DetailAST detailAST) {
+		List<DetailAST> detailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, DetailASTUtil.ALL_TYPES);
+
+		for (DetailAST curDetailAST : detailASTList) {
+			if (DetailASTUtil.getHiddenBefore(curDetailAST) != null) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private DetailAST _getExprDetailAST(

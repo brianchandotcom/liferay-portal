@@ -105,8 +105,6 @@ class FragmentEditableField extends PortletBase {
 	 * @returns {object}
 	 */
 	prepareStateForRender(state) {
-		const activable = this._editableIsActivable();
-
 		const segmentedValue = computeEditableValue(this.editableValues, {
 			defaultLanguageId: this.defaultLanguageId,
 			selectedExperienceId: this.segmentsExperienceId,
@@ -140,7 +138,6 @@ class FragmentEditableField extends PortletBase {
 
 		let nextState = state;
 
-		nextState = setIn(nextState, ['_activable'], activable);
 		nextState = setIn(nextState, ['_highlighted'], highlighted);
 		nextState = setIn(nextState, ['_mapped'], mapped);
 		nextState = setIn(
@@ -339,33 +336,6 @@ class FragmentEditableField extends PortletBase {
 	}
 
 	/**
-	 * Checks whether an editable is activable or not
-	 * @private
-	 * @review
-	 */
-	_editableIsActivable() {
-		const fragmentEntryLinkIsActive =
-			this.fragmentEntryLinkId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
-
-		const siblingIsActive = getItemPath(
-			this.activeItemId,
-			this.activeItemType,
-			this.layoutData.structure
-		).some(
-			item =>
-				item.itemId === this.fragmentEntryLinkId &&
-				item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-		);
-
-		return (
-			!this.hasUpdatePermissions ||
-			fragmentEntryLinkIsActive ||
-			siblingIsActive
-		);
-	}
-
-	/**
 	 * Enables the corresponding processor
 	 * @private
 	 * @review
@@ -561,6 +531,9 @@ class FragmentEditableField extends PortletBase {
  * @type {!Object}
  */
 FragmentEditableField.STATE = {
+	_activable: Config.internal()
+		.bool()
+		.value(false),
 	_floatingToolbar: Config.internal().value(null),
 	_mappedFieldLabel: Config.internal().string(),
 	_mappedFieldValue: Config.internal().string(),
@@ -605,7 +578,24 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'selectedMappingTypes',
 		'selectedItems'
 	],
-	state => state
+	(state, props) => {
+		const _activable =
+			!state.hasUpdatePermissions ||
+			getItemPath(
+				state.activeItemId,
+				state.activeItemType,
+				state.layoutData.structure
+			).some(
+				({itemId, itemType}) =>
+					itemId === props.fragmentEntryLinkId &&
+					itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+			);
+
+		return {
+			...state,
+			_activable
+		};
+	}
 );
 
 Soy.register(ConnectedFragmentEditableField, templates);

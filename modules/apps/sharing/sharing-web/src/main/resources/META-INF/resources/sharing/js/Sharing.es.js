@@ -312,14 +312,12 @@ const Sharing = ({
 };
 
 const SharingAutocomplete = ({
-	inputValue,
 	onItemClick = () => {},
 	sourceItems
 }) => {
 	return (
 		<ClayDropDown.ItemList>
 			{sourceItems
-				.filter(item => inputValue && item.value.match(inputValue))
 				.map(item => (
 					<ClayDropDown.Item
 						key={item.id}

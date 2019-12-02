@@ -111,11 +111,11 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		List<DetailAST> loopDetailASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.DO_WHILE, TokenTypes.LITERAL_FOR,
-			TokenTypes.LITERAL_WHILE);
+		List<DetailAST> skipDetailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
+			TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
 
-		if (!loopDetailASTList.isEmpty()) {
+		if (!skipDetailASTList.isEmpty()) {
 			return;
 		}
 

@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("Import the first site's lar into the staging site for the second site") {
-			LAR.openImportAdmin(siteURLKey = "test-site-name-2-staging");
+			LAR.openImportAdmin(siteName = "test-site-name-2-staging");
 
 			LexiconEntry.gotoAdd();
 

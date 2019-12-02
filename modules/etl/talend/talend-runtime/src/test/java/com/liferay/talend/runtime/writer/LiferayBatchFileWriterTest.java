@@ -61,7 +61,7 @@ public class LiferayBatchFileWriterTest extends BaseTestCase {
 	public void testWrite() throws Exception {
 		JsonObject oasJsonObject = readObject("openapi_data_types.json");
 
-		Schema entitySchema = getEntitySchema("Price", oasJsonObject);
+		Schema entitySchema = getEntitySchema("BigDecimal", oasJsonObject);
 
 		LiferayBatchFileProperties batchFileProperties =
 			new LiferayBatchFileProperties(

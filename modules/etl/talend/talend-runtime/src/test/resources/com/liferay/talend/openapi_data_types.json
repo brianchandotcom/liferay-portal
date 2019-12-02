@@ -1,41 +1,41 @@
 {
 	"components": {
 		"schemas": {
-			"Price": {
+			"BigDecimal": {
 				"properties": {
+					"bigDecimal1": {
+						"format": "bigdecimal",
+						"type": "number"
+					},
+					"bigDecimal2": {
+						"format": "bigdecimal",
+						"type": "number"
+					},
+					"double": {
+						"format": "double",
+						"type": "number"
+					},
+					"float": {
+						"format": "float",
+						"type": "number"
+					},
 					"id": {
 						"format": "int64",
 						"readOnly": true,
 						"type": "integer"
 					},
-					"priceBigDecimal1": {
-						"format": "bigdecimal",
-						"type": "number"
-					},
-					"priceBigDecimal2": {
-						"format": "bigdecimal",
-						"type": "number"
-					},
-					"priceDouble": {
-						"format": "double",
-						"type": "number"
-					},
-					"priceFloat": {
-						"format": "float",
-						"type": "number"
-					},
-					"priceNumber": {
+					"number": {
 						"type": "number"
 					}
 				},
 				"required": [
 					"id",
-					"priceBigDecimal1",
-					"priceBigDecimal2"
+					"bigDecimal1",
+					"bigDecimal2"
 				],
 				"type": "object",
 				"xml": {
-					"name": "Price"
+					"name": "BigDecimal"
 				}
 			},
 			"Timestamp": {
@@ -77,9 +77,9 @@
 	},
 	"openapi": "3.0.1",
 	"paths": {
-		"/v1.0/price/{id}": {
+		"/v1.0/bigdecimal/{id}": {
 			"delete": {
-				"operationId": "deletePrice",
+				"operationId": "deleteBigDecimal",
 				"parameters": [
 					{
 						"in": "path",
@@ -104,7 +104,7 @@
 				]
 			},
 			"get": {
-				"operationId": "getPrice",
+				"operationId": "getBigDecimal",
 				"parameters": [
 					{
 						"in": "path",
@@ -120,12 +120,12 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Price"
+									"$ref": "#/components/schemas/BigDecimal"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/Price"
+									"$ref": "#/components/schemas/BigDecimal"
 								}
 							}
 						},
@@ -137,7 +137,7 @@
 				]
 			},
 			"patch": {
-				"operationId": "patchPrice",
+				"operationId": "patchBigDecimal",
 				"parameters": [
 					{
 						"in": "path",
@@ -152,12 +152,12 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Price"
+								"$ref": "#/components/schemas/BigDecimal"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/Price"
+								"$ref": "#/components/schemas/BigDecimal"
 							}
 						}
 					}
@@ -172,7 +172,7 @@
 					}
 				},
 				"tags": [
-					"Price"
+					"BigDecimal"
 				]
 			}
 		},

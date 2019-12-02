@@ -37,6 +37,36 @@
 				"xml": {
 					"name": "Price"
 				}
+			},
+			"Timestamp": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"timestamp1": {
+						"format": "date-time",
+						"type": "string"
+					},
+					"timestamp2": {
+						"format": "date-time",
+						"type": "string"
+					},
+					"timestamp3": {
+						"format": "date-time",
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"timestamp1",
+					"timestamp2"
+				],
+				"type": "object",
+				"xml": {
+					"name": "Price"
+				}
 			}
 		}
 	},
@@ -143,6 +173,76 @@
 				},
 				"tags": [
 					"Price"
+				]
+			}
+		},
+		"/v1.0/timestamp/{code}": {
+			"get": {
+				"operationId": "getTimestamp",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Timestamp"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Timestamp"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Timestamp"
+				]
+			},
+			"patch": {
+				"operationId": "setTimestamp",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "code",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Timestamp"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Timestamp"
+							}
+						}
+					}
+				},
+				"responses": {
+					"204": {
+						"description": "Updated"
+					}
+				},
+				"tags": [
+					"Timestamp"
 				]
 			}
 		}

@@ -316,7 +316,7 @@ definition {
 
 		if (isSet(verticalSpace)) {
 			Select(
-				key_fieldLabel = "Vertical Space",
+				key_fieldLabel = "Bottom Spacing",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${verticalSpace}");
 		}

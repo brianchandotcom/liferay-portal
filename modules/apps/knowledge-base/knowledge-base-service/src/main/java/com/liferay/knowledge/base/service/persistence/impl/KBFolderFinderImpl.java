@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -174,7 +174,7 @@ public class KBFolderFinderImpl
 		long groupId, long parentResourcePrimKey,
 		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
 
-		boolean orderByReadCount = false;
+		boolean orderByViewCount = false;
 
 		OrderByComparator<?> orderByComparator =
 			queryDefinition.getOrderByComparator();
@@ -183,7 +183,7 @@ public class KBFolderFinderImpl
 			ArrayUtil.contains(
 				orderByComparator.getOrderByFields(), "viewCount")) {
 
-			orderByReadCount = true;
+			orderByViewCount = true;
 		}
 
 		Session session = null;
@@ -197,7 +197,7 @@ public class KBFolderFinderImpl
 
 			String sql;
 
-			if (orderByReadCount) {
+			if (orderByViewCount) {
 				sql = _customSQL.get(
 					getClass(), FIND_A_BY_G_P_VC, queryDefinition);
 			}
@@ -241,8 +241,9 @@ public class KBFolderFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			if (orderByReadCount) {
-				long classNameId = _portal.getClassNameId(KBArticle.class);
+			if (orderByViewCount) {
+				long classNameId = _classNameLocalService.getClassNameId(
+					KBArticle.class);
 
 				qPos.add(classNameId);
 				qPos.add(groupId);
@@ -294,6 +295,9 @@ public class KBFolderFinderImpl
 	}
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CustomSQL _customSQL;
 
 	@Reference
@@ -304,8 +308,5 @@ public class KBFolderFinderImpl
 
 	@Reference
 	private KBFolderPersistence _kBFolderPersistence;
-
-	@Reference
-	private Portal _portal;
 
 }

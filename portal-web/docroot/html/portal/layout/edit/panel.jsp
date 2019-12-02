@@ -120,10 +120,10 @@ if (selLayout != null) {
 		portletLister.setThemeDisplay(themeDisplay);
 		portletLister.setUser(user);
 
-		JSONObject portlets = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.serialize(portletLister.getTreeView()));
+		JSONObject portletsJSON = JSONFactoryUtil.createJSONObject(JSONFactoryUtil.serialize(portletLister.getTreeView()));
 		%>
 
-		var portletList = <%= portlets %>.serializable.list.list[0];
+		var portletList = <%= portletsJSON %>.serializable.list.list[0];
 
 		var rootNode = {
 			alwaysShowHitArea: true,

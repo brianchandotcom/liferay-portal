@@ -205,7 +205,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 		Page<WorkflowTask> page =
 			workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
 				testGetWorkflowInstanceWorkflowTasksPage_getWorkflowInstanceId(),
-				Pagination.of(1, 2));
+				null, Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -221,7 +221,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 					randomIrrelevantWorkflowTask());
 
 			page = workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-				irrelevantWorkflowInstanceId, Pagination.of(1, 2));
+				irrelevantWorkflowInstanceId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -240,7 +240,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 				workflowInstanceId, randomWorkflowTask());
 
 		page = workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-			workflowInstanceId, Pagination.of(1, 2));
+			workflowInstanceId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -271,7 +271,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		Page<WorkflowTask> page1 =
 			workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-				workflowInstanceId, Pagination.of(1, 2));
+				workflowInstanceId, null, Pagination.of(1, 2));
 
 		List<WorkflowTask> workflowTasks1 =
 			(List<WorkflowTask>)page1.getItems();
@@ -281,7 +281,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		Page<WorkflowTask> page2 =
 			workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-				workflowInstanceId, Pagination.of(2, 2));
+				workflowInstanceId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -293,7 +293,7 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		Page<WorkflowTask> page3 =
 			workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-				workflowInstanceId, Pagination.of(1, 3));
+				workflowInstanceId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),

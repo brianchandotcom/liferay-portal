@@ -75,6 +75,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -85,6 +86,8 @@ public abstract class BaseWorkflowTaskResourceImpl
 	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
 				Long workflowInstanceId,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed,
 			@Context Pagination pagination)
 		throws Exception {
 

@@ -43,12 +43,13 @@ public interface WorkflowTaskResource {
 	}
 
 	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-			Long workflowInstanceId, Pagination pagination)
+			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getWorkflowInstanceWorkflowTasksPageHttpResponse(
-				Long workflowInstanceId, Pagination pagination)
+				Long workflowInstanceId, Boolean completed,
+				Pagination pagination)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksPage(
@@ -250,12 +251,13 @@ public interface WorkflowTaskResource {
 		implements WorkflowTaskResource {
 
 		public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-				Long workflowInstanceId, Pagination pagination)
+				Long workflowInstanceId, Boolean completed,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkflowInstanceWorkflowTasksPageHttpResponse(
-					workflowInstanceId, pagination);
+					workflowInstanceId, completed, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -270,7 +272,8 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse
 				getWorkflowInstanceWorkflowTasksPageHttpResponse(
-					Long workflowInstanceId, Pagination pagination)
+					Long workflowInstanceId, Boolean completed,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -293,6 +296,10 @@ public interface WorkflowTaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

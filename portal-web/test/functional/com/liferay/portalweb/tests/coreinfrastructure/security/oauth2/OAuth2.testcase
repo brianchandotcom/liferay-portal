@@ -688,9 +688,9 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/oauth2/token \
-				-d grant_type=client_credentials \
 				-d client_id=${generatedClientId} \
-				-d client_secret=${generatedClientSecret}
+				-d client_secret=${generatedClientSecret} \
+				-d grant_type=client_credentials
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

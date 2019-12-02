@@ -54,20 +54,21 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 	@Override
 	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
-			Long workflowInstanceId, Pagination pagination)
+			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
 			transform(
 				_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
 					contextCompany.getCompanyId(), contextUser.getUserId(),
-					workflowInstanceId, null, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+					workflowInstanceId, completed,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
 				this::_toWorkflowTask),
 			pagination,
 			_workflowTaskManager.getWorkflowTaskCountByWorkflowInstance(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				workflowInstanceId, null));
+				workflowInstanceId, completed));
 	}
 
 	@Override

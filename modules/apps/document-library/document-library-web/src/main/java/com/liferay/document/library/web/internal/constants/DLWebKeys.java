@@ -19,12 +19,6 @@ package com.liferay.document.library.web.internal.constants;
  */
 public class DLWebKeys {
 
-	public static final String DOCUMENT_LIBRARY_BULK_SELECTION =
-		"DOCUMENT_LIBRARY_BULK_SELECTION";
-
-	public static final String DOCUMENT_LIBRARY_COMMON_TAG_NAMES =
-		"DOCUMENT_LIBRARY_COMMON_TAG_NAMES";
-
 	public static final String
 		DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT =
 			"DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT";

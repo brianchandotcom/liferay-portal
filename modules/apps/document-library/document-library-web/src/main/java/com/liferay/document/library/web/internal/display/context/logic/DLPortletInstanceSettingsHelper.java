@@ -61,22 +61,6 @@ public class DLPortletInstanceSettingsHelper {
 		return _availableEntryColumns;
 	}
 
-	public List<KeyValuePair> getAvailableFileEntryColumns() {
-		if (_availableFileEntryColumns == null) {
-			_populateFileEntryColumns();
-		}
-
-		return _availableFileEntryColumns;
-	}
-
-	public List<KeyValuePair> getAvailableFolderColumns() {
-		if (_availableFolderColumns == null) {
-			_populateFolderColumns();
-		}
-
-		return _availableFolderColumns;
-	}
-
 	public List<KeyValuePair> getAvailableMimeTypes() {
 		if (_availableMimeTypes == null) {
 			_populateMimeTypes();
@@ -99,22 +83,6 @@ public class DLPortletInstanceSettingsHelper {
 		}
 
 		return _currentEntryColumns;
-	}
-
-	public List<KeyValuePair> getCurrentFileEntryColumns() {
-		if (_currentFileEntryColumns == null) {
-			_populateFileEntryColumns();
-		}
-
-		return _currentFileEntryColumns;
-	}
-
-	public List<KeyValuePair> getCurrentFolderColumns() {
-		if (_currentFolderColumns == null) {
-			_populateFolderColumns();
-		}
-
-		return _currentFolderColumns;
 	}
 
 	public List<KeyValuePair> getCurrentMimeTypes() {
@@ -144,33 +112,6 @@ public class DLPortletInstanceSettingsHelper {
 		}
 
 		return entryColumns;
-	}
-
-	public String[] getFileEntryColumns() {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		String[] fileEntryColumns =
-			dlPortletInstanceSettings.getFileEntryColumns();
-
-		if (!isShowActions()) {
-			fileEntryColumns = ArrayUtil.remove(fileEntryColumns, "action");
-		}
-
-		return fileEntryColumns;
-	}
-
-	public String[] getFolderColumns() {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
-
-		if (!isShowActions()) {
-			folderColumns = ArrayUtil.remove(folderColumns, "action");
-		}
-
-		return folderColumns;
 	}
 
 	public boolean isShowActions() {
@@ -228,32 +169,6 @@ public class DLPortletInstanceSettingsHelper {
 		allEntryColumns += ",modified-date,create-date";
 
 		return StringUtil.split(allEntryColumns);
-	}
-
-	private String[] _getAllFileEntryColumns() {
-		String allFileEntryColumns = "name,size";
-
-		if (PropsValues.DL_FILE_ENTRY_BUFFERED_INCREMENT_ENABLED) {
-			allFileEntryColumns += ",downloads";
-		}
-
-		allFileEntryColumns += ",locked";
-
-		if (isShowActions()) {
-			allFileEntryColumns += ",action";
-		}
-
-		return StringUtil.split(allFileEntryColumns);
-	}
-
-	private String[] _getAllFolderColumns() {
-		String allFolderColumns = "name,num-of-folders,num-of-documents";
-
-		if (isShowActions()) {
-			allFolderColumns += ",action";
-		}
-
-		return StringUtil.split(allFolderColumns);
 	}
 
 	private void _populateDisplayViews() {
@@ -331,82 +246,6 @@ public class DLPortletInstanceSettingsHelper {
 			_availableEntryColumns, new KeyValuePairComparator(false, true));
 	}
 
-	private void _populateFileEntryColumns() {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		String[] fileEntryColumns =
-			dlPortletInstanceSettings.getFileEntryColumns();
-
-		_currentFileEntryColumns = new ArrayList<>();
-
-		for (String fileEntryColumn : fileEntryColumns) {
-			_currentFileEntryColumns.add(
-				new KeyValuePair(
-					fileEntryColumn,
-					LanguageUtil.get(
-						_dlRequestHelper.getLocale(), fileEntryColumn)));
-		}
-
-		_availableFileEntryColumns = new ArrayList<>();
-
-		Arrays.sort(fileEntryColumns);
-
-		Set<String> allFileEntryColumns = SetUtil.fromArray(
-			_getAllFileEntryColumns());
-
-		for (String fileEntryColumn : allFileEntryColumns) {
-			if (Arrays.binarySearch(fileEntryColumns, fileEntryColumn) < 0) {
-				_availableFileEntryColumns.add(
-					new KeyValuePair(
-						fileEntryColumn,
-						LanguageUtil.get(
-							_dlRequestHelper.getLocale(), fileEntryColumn)));
-			}
-		}
-
-		_availableFileEntryColumns = ListUtil.sort(
-			_availableFileEntryColumns,
-			new KeyValuePairComparator(false, true));
-	}
-
-	private void _populateFolderColumns() {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		String[] folderColumns = dlPortletInstanceSettings.getFolderColumns();
-
-		_currentFolderColumns = new ArrayList<>();
-
-		for (String folderColumn : folderColumns) {
-			_currentFolderColumns.add(
-				new KeyValuePair(
-					folderColumn,
-					LanguageUtil.get(
-						_dlRequestHelper.getLocale(), folderColumn)));
-		}
-
-		_availableFolderColumns = new ArrayList<>();
-
-		Arrays.sort(folderColumns);
-
-		Set<String> allFolderColumns = SetUtil.fromArray(
-			_getAllFolderColumns());
-
-		for (String folderColumn : allFolderColumns) {
-			if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
-				_availableFolderColumns.add(
-					new KeyValuePair(
-						folderColumn,
-						LanguageUtil.get(
-							_dlRequestHelper.getLocale(), folderColumn)));
-			}
-		}
-
-		_availableFolderColumns = ListUtil.sort(
-			_availableFolderColumns, new KeyValuePairComparator(false, true));
-	}
-
 	private void _populateMimeTypes() {
 		DLPortletInstanceSettings dlPortletInstanceSettings =
 			_dlRequestHelper.getDLPortletInstanceSettings();
@@ -452,13 +291,9 @@ public class DLPortletInstanceSettingsHelper {
 
 	private List<KeyValuePair> _availableDisplayViews;
 	private List<KeyValuePair> _availableEntryColumns;
-	private List<KeyValuePair> _availableFileEntryColumns;
-	private List<KeyValuePair> _availableFolderColumns;
 	private List<KeyValuePair> _availableMimeTypes;
 	private List<KeyValuePair> _currentDisplayViews;
 	private List<KeyValuePair> _currentEntryColumns;
-	private List<KeyValuePair> _currentFileEntryColumns;
-	private List<KeyValuePair> _currentFolderColumns;
 	private List<KeyValuePair> _currentMimeTypes;
 	private final DLRequestHelper _dlRequestHelper;
 

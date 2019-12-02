@@ -4,13 +4,11 @@
 <routes>
 	<route>
 		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id/)[^/]+}/{groupId:\d+}</pattern>
-		<ignored-parameter name="assetEntryId" />
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id$)[^/]+}</pattern>
-		<ignored-parameter name="assetEntryId" />
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
@@ -21,12 +19,10 @@
 	</route>
 	<route>
 		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id/)[^/]+}/{groupId:\d+}/{p_p_state}</pattern>
-		<ignored-parameter name="assetEntryId" />
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{userIdAndInstanceId}/{type}/{urlTitle:(?!id/)[^/]+}/{p_p_state}</pattern>
-		<ignored-parameter name="assetEntryId" />
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
 	</route>
 	<route>

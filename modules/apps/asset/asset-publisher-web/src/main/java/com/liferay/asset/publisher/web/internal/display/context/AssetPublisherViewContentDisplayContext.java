@@ -175,20 +175,20 @@ public class AssetPublisherViewContentDisplayContext {
 		}
 
 		try {
-			if (Validator.isNotNull(_getURLTitle())) {
+			if (Validator.isNotNull(_getAssetEntryId())) {
+				_assetEntry = _assetRendererFactory.getAssetEntry(
+					_getAssetEntryId());
+
+				_assetRenderer = _assetRendererFactory.getAssetRenderer(
+					_assetEntry.getClassPK());
+			}
+			else if (Validator.isNotNull(_getURLTitle())) {
 				_assetRenderer = _assetRendererFactory.getAssetRenderer(
 					getGroupId(), _getURLTitle());
 
 				_assetEntry = _assetRendererFactory.getAssetEntry(
 					_assetRendererFactory.getClassName(),
 					_assetRenderer.getClassPK());
-			}
-			else {
-				_assetEntry = _assetRendererFactory.getAssetEntry(
-					_getAssetEntryId());
-
-				_assetRenderer = _assetRendererFactory.getAssetRenderer(
-					_assetEntry.getClassPK());
 			}
 		}
 		catch (Exception e) {

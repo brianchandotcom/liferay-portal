@@ -81,12 +81,12 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 	@Override
 	public long[] convertLayouts(long groupId) throws PortalException {
-		return convertLayouts(getConvertibleLayoutsPlids(groupId));
+		return convertLayouts(getConvertibleLayoutPlids(groupId));
 	}
 
 	@Override
 	public long[] convertLayouts(long[] plids) {
-		List<Long> convertedLayoutsPlids = new ArrayList<>();
+		List<Long> convertedLayoutPlids = new ArrayList<>();
 
 		for (long plid : plids) {
 			try {
@@ -95,7 +95,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				Layout layout = TransactionInvokerUtil.invoke(
 					_transactionConfig, callable);
 
-				convertedLayoutsPlids.add(layout.getPlid());
+				convertedLayoutPlids.add(layout.getPlid());
 			}
 			catch (Throwable t) {
 				if (_log.isWarnEnabled()) {
@@ -107,14 +107,14 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			}
 		}
 
-		return ArrayUtil.toLongArray(convertedLayoutsPlids);
+		return ArrayUtil.toLongArray(convertedLayoutPlids);
 	}
 
 	@Override
-	public long[] getConvertibleLayoutsPlids(long groupId)
+	public long[] getConvertibleLayoutPlids(long groupId)
 		throws PortalException {
 
-		List<Long> convertibleLayoutsPlids = new ArrayList<>();
+		List<Long> convertibleLayoutPlids = new ArrayList<>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_layoutLocalService.getActionableDynamicQuery();
@@ -144,7 +144,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 								layoutTemplateId);
 
 						if (layoutConverter.isConvertible(layout)) {
-							convertibleLayoutsPlids.add(layout.getPlid());
+							convertibleLayoutPlids.add(layout.getPlid());
 						}
 					}
 				});
@@ -152,7 +152,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 		actionableDynamicQuery.performActions();
 
-		return ArrayUtil.toLongArray(convertibleLayoutsPlids);
+		return ArrayUtil.toLongArray(convertibleLayoutPlids);
 	}
 
 	private LayoutPageTemplateStructure _addOrUpdateLayoutPageTemplateStructure(

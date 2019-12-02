@@ -66,7 +66,7 @@ public interface BulkLayoutConverter {
 	 * @param  groupId the primary key of the group
 	 * @return an array with the plids of the convertible layouts in the group
 	 */
-	public long[] getConvertibleLayoutsPlids(long groupId)
+	public long[] getConvertibleLayoutPlids(long groupId)
 		throws PortalException;
 
 }

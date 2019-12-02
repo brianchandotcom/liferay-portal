@@ -99,8 +99,8 @@ public class BulkLayoutConverterTest {
 		_addLayouts();
 
 		_assertPlids(
-			_getConvertibleLayoutsPlids(),
-			_bulkLayoutConverter.convertLayouts(_getLayoutsPlids()));
+			_getConvertibleLayoutPlids(),
+			_bulkLayoutConverter.convertLayouts(_getLayoutPlids()));
 
 		_assertLayouts();
 	}
@@ -110,7 +110,7 @@ public class BulkLayoutConverterTest {
 		_addLayouts();
 
 		_assertPlids(
-			_getConvertibleLayoutsPlids(),
+			_getConvertibleLayoutPlids(),
 			_bulkLayoutConverter.convertLayouts(_group.getGroupId()));
 
 		_assertLayouts();
@@ -151,8 +151,8 @@ public class BulkLayoutConverterTest {
 		_addLayouts();
 
 		_assertPlids(
-			_getConvertibleLayoutsPlids(),
-			_bulkLayoutConverter.getConvertibleLayoutsPlids(
+			_getConvertibleLayoutPlids(),
+			_bulkLayoutConverter.getConvertibleLayoutPlids(
 				_group.getGroupId()));
 	}
 
@@ -231,11 +231,11 @@ public class BulkLayoutConverterTest {
 			actualPlids.length);
 	}
 
-	private long[] _getConvertibleLayoutsPlids() {
+	private long[] _getConvertibleLayoutPlids() {
 		return new long[] {_privateLayout.getPlid(), _publicLayout.getPlid()};
 	}
 
-	private long[] _getLayoutsPlids() {
+	private long[] _getLayoutPlids() {
 		return new long[] {
 			_contentLayout.getPlid(), _corruptedLayout.getPlid(),
 			_nonConvertibleLayout.getPlid(), _privateLayout.getPlid(),

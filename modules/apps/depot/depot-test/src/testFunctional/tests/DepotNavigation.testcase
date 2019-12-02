@@ -91,10 +91,9 @@ definition {
 			locator1 = "NavBar#NAV_ITEM_LINK",
 			value1 = "My Sites");
 
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_navItem = "Repositories",
-			locator1 = "NavBar#NAV_ITEM_LINK",
-			value1 = "Repositories");
+			locator1 = "NavBar#NAV_ITEM_LINK");
 	}
 
 }

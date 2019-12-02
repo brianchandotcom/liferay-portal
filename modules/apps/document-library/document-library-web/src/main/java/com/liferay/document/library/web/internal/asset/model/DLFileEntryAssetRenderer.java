@@ -463,6 +463,10 @@ public class DLFileEntryAssetRenderer
 				PortletLayoutFinderRegistryUtil.getPortletLayoutFinder(
 					DLFileEntryConstants.getClassName());
 
+			if (portletLayoutFinder == null) {
+				return false;
+			}
+
 			PortletLayoutFinder.Result result = portletLayoutFinder.find(
 				themeDisplay, groupId);
 

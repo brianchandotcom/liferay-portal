@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -47,6 +48,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -68,6 +70,7 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -78,6 +81,7 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
+			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -117,8 +121,10 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/data-record-collections/{dataRecordCollectionId}/data-records")
@@ -127,7 +133,8 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
-			@Context Pagination pagination)
+			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -93,7 +94,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-record-collections")
@@ -105,7 +107,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 				@PathParam("dataDefinitionId") Long dataDefinitionId,
 				@Parameter(hidden = true) @QueryParam("keywords") String
 					keywords,
-				@Context Pagination pagination)
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

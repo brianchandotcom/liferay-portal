@@ -28,6 +28,7 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRecordSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -52,11 +54,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +73,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
 
 import org.junit.After;
@@ -191,7 +198,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		Page<DataRecord> page =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
 				testGetDataDefinitionDataRecordsPage_getDataDefinitionId(),
-				Pagination.of(1, 2));
+				RandomTestUtil.randomString(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -206,7 +213,7 @@ public abstract class BaseDataRecordResourceTestCase {
 					irrelevantDataDefinitionId, randomIrrelevantDataRecord());
 
 			page = dataRecordResource.getDataDefinitionDataRecordsPage(
-				irrelevantDataDefinitionId, Pagination.of(1, 2));
+				irrelevantDataDefinitionId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -225,7 +232,7 @@ public abstract class BaseDataRecordResourceTestCase {
 				dataDefinitionId, randomDataRecord());
 
 		page = dataRecordResource.getDataDefinitionDataRecordsPage(
-			dataDefinitionId, Pagination.of(1, 2));
+			dataDefinitionId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -260,7 +267,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page1 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, Pagination.of(1, 2));
+				dataDefinitionId, null, Pagination.of(1, 2));
 
 		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
 
@@ -268,7 +275,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page2 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, Pagination.of(2, 2));
+				dataDefinitionId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -278,7 +285,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page3 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, Pagination.of(1, 3));
+				dataDefinitionId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataRecord1, dataRecord2, dataRecord3),
@@ -332,7 +339,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		Page<DataRecord> page =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
 				testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId(),
-				Pagination.of(1, 2));
+				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -348,7 +355,8 @@ public abstract class BaseDataRecordResourceTestCase {
 					randomIrrelevantDataRecord());
 
 			page = dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				irrelevantDataRecordCollectionId, Pagination.of(1, 2));
+				irrelevantDataRecordCollectionId, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -367,7 +375,7 @@ public abstract class BaseDataRecordResourceTestCase {
 				dataRecordCollectionId, randomDataRecord());
 
 		page = dataRecordResource.getDataRecordCollectionDataRecordsPage(
-			dataRecordCollectionId, Pagination.of(1, 2));
+			dataRecordCollectionId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -402,7 +410,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page1 =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, Pagination.of(1, 2));
+				dataRecordCollectionId, null, Pagination.of(1, 2), null);
 
 		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
 
@@ -410,7 +418,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page2 =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, Pagination.of(2, 2));
+				dataRecordCollectionId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -420,11 +428,117 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page3 =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, Pagination.of(1, 3));
+				dataRecordCollectionId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataRecord1, dataRecord2, dataRecord3),
 			(List<DataRecord>)page3.getItems());
+	}
+
+	@Test
+	public void testGetDataRecordCollectionDataRecordsPageWithSortDateTime()
+		throws Exception {
+
+		testGetDataRecordCollectionDataRecordsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, dataRecord1, dataRecord2) -> {
+				BeanUtils.setProperty(
+					dataRecord1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDataRecordCollectionDataRecordsPageWithSortInteger()
+		throws Exception {
+
+		testGetDataRecordCollectionDataRecordsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, dataRecord1, dataRecord2) -> {
+				BeanUtils.setProperty(dataRecord1, entityField.getName(), 0);
+				BeanUtils.setProperty(dataRecord2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetDataRecordCollectionDataRecordsPageWithSortString()
+		throws Exception {
+
+		testGetDataRecordCollectionDataRecordsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, dataRecord1, dataRecord2) -> {
+				Class<?> clazz = dataRecord1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						dataRecord1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						dataRecord2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						dataRecord1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						dataRecord2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetDataRecordCollectionDataRecordsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, DataRecord, DataRecord, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long dataRecordCollectionId =
+			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
+
+		DataRecord dataRecord1 = randomDataRecord();
+		DataRecord dataRecord2 = randomDataRecord();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, dataRecord1, dataRecord2);
+		}
+
+		dataRecord1 = testGetDataRecordCollectionDataRecordsPage_addDataRecord(
+			dataRecordCollectionId, dataRecord1);
+
+		dataRecord2 = testGetDataRecordCollectionDataRecordsPage_addDataRecord(
+			dataRecordCollectionId, dataRecord2);
+
+		for (EntityField entityField : entityFields) {
+			Page<DataRecord> ascPage =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(dataRecord1, dataRecord2),
+				(List<DataRecord>)ascPage.getItems());
+
+			Page<DataRecord> descPage =
+				dataRecordResource.getDataRecordCollectionDataRecordsPage(
+					dataRecordCollectionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(dataRecord2, dataRecord1),
+				(List<DataRecord>)descPage.getItems());
+		}
 	}
 
 	protected DataRecord

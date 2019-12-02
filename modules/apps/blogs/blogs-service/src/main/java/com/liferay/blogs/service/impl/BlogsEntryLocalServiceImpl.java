@@ -1580,6 +1580,23 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return _addFolder(userId, groupId, _COVER_IMAGE_FOLDER_NAME);
 	}
 
+	private Folder _addFolder(long userId, long groupId, String folderName)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
+
+		return _portletFileRepository.addPortletFolder(
+			userId, repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
+			serviceContext);
+	}
+
 	private long _addProcessedImageFileEntry(
 			long userId, long groupId, long entryId, long folderId,
 			String title, String mimeType, byte[] bytes)
@@ -1641,30 +1658,50 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return _addFolder(userId, groupId, _SMALL_IMAGE_FOLDER_NAME);
 	}
 
+	private boolean _attachmentExists(
+		long groupId, long folderId, String fileName) {
+
+		try {
+			FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+				groupId, folderId, fileName);
+
+			if (fileEntry != null) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return false;
+		}
+	}
+
 	private void _deleteDiscussion(BlogsEntry entry) throws PortalException {
 		_commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
 	}
 
-	private Folder _addFolder(long userId, long groupId, String folderName)
-		throws PortalException {
+	private FileEntry _fetchPortletFileEntry(
+		long groupId, String fileName, long folderId) {
 
-		ServiceContext serviceContext = new ServiceContext();
+		try {
+			return _portletFileRepository.getPortletFileEntry(
+				groupId, folderId, fileName);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Repository repository = _portletFileRepository.addPortletRepository(
-			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
-
-		return _portletFileRepository.addPortletFolder(
-			userId, repository.getRepositoryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
-			serviceContext);
+			return null;
+		}
 	}
 
-	private String _getEntryURL(
-			BlogsEntry entry, ServiceContext serviceContext)
+	private String _getEntryURL(BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
 		String entryURL = GetterUtil.getString(
@@ -1712,6 +1749,20 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return portletURL.toString();
 	}
 
+	private String _getGroupDescriptiveName(Group group, Locale locale) {
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to get descriptive name for group " +
+					group.getGroupId(),
+				pe);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getLayoutFullURL(
 			ThemeDisplay themeDisplay, ServiceContext serviceContext)
 		throws PortalException {
@@ -1728,6 +1779,87 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			themeDisplay.getRefererPlid());
 
 		return _portal.getLayoutFullURL(layout, themeDisplay);
+	}
+
+	private String _getUniqueFileName(
+			long groupId, String fileName, long folderId)
+		throws PortalException {
+
+		fileName = FileUtil.stripParentheticalSuffix(fileName);
+
+		FileEntry fileEntry = _fetchPortletFileEntry(
+			groupId, fileName, folderId);
+
+		if (fileEntry == null) {
+			return fileName;
+		}
+
+		int suffix = 1;
+
+		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+			String curFileName = FileUtil.appendParentheticalSuffix(
+				fileName, String.valueOf(suffix));
+
+			fileEntry = _fetchPortletFileEntry(groupId, curFileName, folderId);
+
+			if (fileEntry == null) {
+				return curFileName;
+			}
+
+			suffix++;
+		}
+
+		throw new PortalException(
+			StringBundler.concat(
+				"Unable to get a unique file name for ", fileName,
+				" in folder ", folderId));
+	}
+
+	private String _getUniqueUrlTitle(BlogsEntry entry) {
+		return _getUniqueUrlTitle(entry, entry.getTitle());
+	}
+
+	private String _getUniqueUrlTitle(BlogsEntry entry, String newTitle) {
+		long entryId = entry.getEntryId();
+
+		String urlTitle = null;
+
+		if (newTitle == null) {
+			urlTitle = String.valueOf(entryId);
+		}
+		else {
+			urlTitle = StringUtil.toLowerCase(newTitle.trim());
+
+			if (Validator.isNull(urlTitle) || Validator.isNumber(urlTitle) ||
+				urlTitle.equals("rss")) {
+
+				urlTitle = String.valueOf(entryId);
+			}
+			else {
+				urlTitle =
+					FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+						urlTitle);
+			}
+
+			urlTitle = ModelHintsUtil.trimString(
+				BlogsEntry.class.getName(), "urlTitle", urlTitle);
+		}
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			BlogsEntry.class);
+
+		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
+			entry.getGroupId(), classNameId, entry.getEntryId(), urlTitle);
+	}
+
+	private String _getURLTitle(long entryId) {
+		BlogsEntry entry = blogsEntryPersistence.fetchByPrimaryKey(entryId);
+
+		if (entry != null) {
+			return entry.getUrlTitle();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private void _notifySubscribers(
@@ -2193,139 +2325,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			throw new EntryContentException(
 				"Content has more than " + contentMaxLength + " characters");
 		}
-	}
-
-	private boolean _attachmentExists(
-		long groupId, long folderId, String fileName) {
-
-		try {
-			FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
-				groupId, folderId, fileName);
-
-			if (fileEntry != null) {
-				return true;
-			}
-
-			return false;
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-	}
-
-	private FileEntry _fetchPortletFileEntry(
-		long groupId, String fileName, long folderId) {
-
-		try {
-			return _portletFileRepository.getPortletFileEntry(
-				groupId, folderId, fileName);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return null;
-		}
-	}
-
-	private String _getGroupDescriptiveName(Group group, Locale locale) {
-		try {
-			return group.getDescriptiveName(locale);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get descriptive name for group " +
-					group.getGroupId(),
-				pe);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	private String _getUniqueFileName(
-			long groupId, String fileName, long folderId)
-		throws PortalException {
-
-		fileName = FileUtil.stripParentheticalSuffix(fileName);
-
-		FileEntry fileEntry = _fetchPortletFileEntry(
-			groupId, fileName, folderId);
-
-		if (fileEntry == null) {
-			return fileName;
-		}
-
-		int suffix = 1;
-
-		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
-			String curFileName = FileUtil.appendParentheticalSuffix(
-				fileName, String.valueOf(suffix));
-
-			fileEntry = _fetchPortletFileEntry(groupId, curFileName, folderId);
-
-			if (fileEntry == null) {
-				return curFileName;
-			}
-
-			suffix++;
-		}
-
-		throw new PortalException(
-			StringBundler.concat(
-				"Unable to get a unique file name for ", fileName,
-				" in folder ", folderId));
-	}
-
-	private String _getUniqueUrlTitle(BlogsEntry entry) {
-		return _getUniqueUrlTitle(entry, entry.getTitle());
-	}
-
-	private String _getUniqueUrlTitle(BlogsEntry entry, String newTitle) {
-		long entryId = entry.getEntryId();
-
-		String urlTitle = null;
-
-		if (newTitle == null) {
-			urlTitle = String.valueOf(entryId);
-		}
-		else {
-			urlTitle = StringUtil.toLowerCase(newTitle.trim());
-
-			if (Validator.isNull(urlTitle) || Validator.isNumber(urlTitle) ||
-				urlTitle.equals("rss")) {
-
-				urlTitle = String.valueOf(entryId);
-			}
-			else {
-				urlTitle =
-					FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
-						urlTitle);
-			}
-
-			urlTitle = ModelHintsUtil.trimString(
-				BlogsEntry.class.getName(), "urlTitle", urlTitle);
-		}
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			BlogsEntry.class);
-
-		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
-			entry.getGroupId(), classNameId, entry.getEntryId(), urlTitle);
-	}
-
-	private String _getURLTitle(long entryId) {
-		BlogsEntry entry = blogsEntryPersistence.fetchByPrimaryKey(entryId);
-
-		if (entry != null) {
-			return entry.getUrlTitle();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final String _COVER_IMAGE_FOLDER_NAME = "Cover Image";

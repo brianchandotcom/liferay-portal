@@ -33,6 +33,7 @@ import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -586,6 +587,16 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				viewFullContentURL.setParameter(
 					"groupId", String.valueOf(assetRenderer.getGroupId()));
 			}
+
+			urlTitle = urlTitle.replaceAll(StringPool.SLASH, StringPool.DASH);
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(StringPool.DASH);
+			sb.append(StringPool.DASH);
+			sb.append(StringPool.PLUS);
+
+			urlTitle = urlTitle.replaceAll(sb.toString(), StringPool.DASH);
 
 			viewFullContentURL.setParameter("urlTitle", urlTitle);
 		}

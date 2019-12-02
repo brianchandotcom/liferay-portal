@@ -214,25 +214,19 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		Click(
-			locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW",
-			value1 = "${imageFileName}");
+		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
 
-		AssertElementPresent(locator1 = "ItemSelector#SELECT_IMAGE_PREVIEW");
+		Click(locator1 = "Icon#EYE_PREVIEW");
 
-		AssertTextEquals(
-			locator1 = "ItemSelector#CAPTION",
-			value1 = "${uploadFileName}");
-
-		Click(locator1 = "ItemSelector#FILE_INFO_ICON");
+		Click(locator1 = "ItemSelector#VIEWER_INFO");
 
 		AssertElementPresent(
 			key_tab = "File Info",
-			locator1 = "NavTab#NAV_TABS");
+			locator1 = "NavTab#TAB_LINK");
 
 		AssertElementPresent(
 			key_tab = "Version",
-			locator1 = "NavTab#NAV_TABS");
+			locator1 = "NavTab#TAB_LINK");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#SIDEBAR_FILE_INFO_FORMAT",
@@ -253,7 +247,7 @@ definition {
 		var key_tab = "Version";
 
 		AssertClick(
-			locator1 = "NavTab#NAV_TABS",
+			locator1 = "NavTab#TAB_LINK",
 			value1 = "Version");
 
 		AssertTextEquals(

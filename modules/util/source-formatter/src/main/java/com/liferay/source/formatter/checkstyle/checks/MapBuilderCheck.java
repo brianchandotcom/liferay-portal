@@ -43,9 +43,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		if ((detailAST.getType() == TokenTypes.INSTANCE_INIT) &&
-			isAttributeValue(_CHECK_ANONYMOUS_CLASS_KEY)) {
-
+		if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
 			_checkAnonymousClass(detailAST);
 
 			return;
@@ -618,9 +616,6 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			parentDetailAST = parentDetailAST.getParent();
 		}
 	}
-
-	private static final String _CHECK_ANONYMOUS_CLASS_KEY =
-		"checkAnonymousClass";
 
 	private static final String _MAP_TYPE_NAMES_KEY = "mapTypeNames";
 

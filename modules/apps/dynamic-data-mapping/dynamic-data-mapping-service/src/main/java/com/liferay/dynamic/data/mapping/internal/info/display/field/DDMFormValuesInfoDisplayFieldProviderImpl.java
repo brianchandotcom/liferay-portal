@@ -196,7 +196,7 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 		Value value = ddmFormFieldValue.getValue();
 
 		if (value == null) {
-		    return StringPool.BLANK;
+			return StringPool.BLANK;
 		}
 
 		String valueString = value.getString(locale);

@@ -1,4 +1,4 @@
-= Anypoint&#153; Liferay Connector Release Notes
+= Anypoint&#8482; Liferay Connector Release Notes
 
 The Anypoint Liferay Connector lets you connect Liferay with other
 platforms and services in the Mulesoft ecosystem or simply leverage

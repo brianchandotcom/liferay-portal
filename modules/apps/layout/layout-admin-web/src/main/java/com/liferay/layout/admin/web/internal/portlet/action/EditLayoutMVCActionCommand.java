@@ -110,9 +110,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
-		serviceContext.setAssetCategoryIds(null);
-		serviceContext.setAssetTagNames(null);
-
 		Layout layout = _layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 

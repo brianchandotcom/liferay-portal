@@ -52,20 +52,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 			<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
-				<liferay-asset:asset-categories-error />
-
-				<liferay-asset:asset-tags-error />
-
-				<liferay-asset:asset-categories-selector
-					className="<%= Layout.class.getName() %>"
-					classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>"
-				/>
-
-				<liferay-asset:asset-tags-selector
-					className="<%= Layout.class.getName() %>"
-					classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>"
-				/>
-
 				<aui:input id="title" label="html-title" name="title" placeholder="title" />
 
 				<h4><liferay-ui:message key="meta-tags" /></h4>

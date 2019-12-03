@@ -162,92 +162,6 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			className);
 	}
 
-	private void _checkInline(
-		DetailAST parentDetailAST, List<DetailAST> methodVariableDetailASTList,
-		String builderClassName) {
-
-		List<String> followingVariableNames = new ArrayList<>();
-
-		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
-
-		while (true) {
-			if (nextSiblingDetailAST == null) {
-				break;
-			}
-
-			followingVariableNames.addAll(
-				_getVariableNames(nextSiblingDetailAST));
-
-			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
-		}
-
-		List<String> inBetweenVariableNames = new ArrayList<>();
-
-		DetailAST previousSiblingDetailAST =
-			parentDetailAST.getPreviousSibling();
-
-		while (true) {
-			if (previousSiblingDetailAST == null) {
-				return;
-			}
-
-			if (previousSiblingDetailAST.getType() != TokenTypes.VARIABLE_DEF) {
-				followingVariableNames.addAll(
-					_getVariableNames(previousSiblingDetailAST));
-
-				inBetweenVariableNames.addAll(
-					_getVariableNames(previousSiblingDetailAST, "get.*"));
-
-				previousSiblingDetailAST =
-					previousSiblingDetailAST.getPreviousSibling();
-
-				continue;
-			}
-
-			DetailAST identDetailAST = previousSiblingDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			String name = identDetailAST.getText();
-
-			DetailAST matchingMethodVariableDetailAST = _getExprDetailAST(
-				methodVariableDetailASTList, name);
-
-			if (!followingVariableNames.contains(name) &&
-				(matchingMethodVariableDetailAST != null) &&
-				!_referencesNonfinalVariable(previousSiblingDetailAST)) {
-
-				List<String> variableNames = _getVariableNames(
-					previousSiblingDetailAST);
-
-				boolean contains = false;
-
-				for (String variableName : variableNames) {
-					if (inBetweenVariableNames.contains(variableName)) {
-						contains = true;
-
-						break;
-					}
-				}
-
-				if (!contains) {
-					log(
-						identDetailAST, _MSG_INLINE_BUILDER, name,
-						identDetailAST.getLineNo(), builderClassName,
-						parentDetailAST.getLineNo());
-				}
-			}
-
-			followingVariableNames.addAll(
-				_getVariableNames(previousSiblingDetailAST));
-
-			inBetweenVariableNames.addAll(
-				_getVariableNames(previousSiblingDetailAST, "get.*"));
-
-			previousSiblingDetailAST =
-				previousSiblingDetailAST.getPreviousSibling();
-		}
-	}
-
 	private void _checkBuilder(DetailAST methodCallDetailAST) {
 		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
@@ -361,9 +275,9 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 			if (fullIdent != null) {
 				log(
-					assignDetailAST, _MSG_INCLUDE_BUILDER,
-					fullIdent.getText(), fullIdent.getLineNo(),
-					builderClassName, assignDetailAST.getLineNo());
+					assignDetailAST, _MSG_INCLUDE_BUILDER, fullIdent.getText(),
+					fullIdent.getLineNo(), builderClassName,
+					assignDetailAST.getLineNo());
 
 				return;
 			}
@@ -377,6 +291,92 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			}
 
 			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+		}
+	}
+
+	private void _checkInline(
+		DetailAST parentDetailAST, List<DetailAST> methodVariableDetailASTList,
+		String builderClassName) {
+
+		List<String> followingVariableNames = new ArrayList<>();
+
+		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
+
+		while (true) {
+			if (nextSiblingDetailAST == null) {
+				break;
+			}
+
+			followingVariableNames.addAll(
+				_getVariableNames(nextSiblingDetailAST));
+
+			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+		}
+
+		List<String> inBetweenVariableNames = new ArrayList<>();
+
+		DetailAST previousSiblingDetailAST =
+			parentDetailAST.getPreviousSibling();
+
+		while (true) {
+			if (previousSiblingDetailAST == null) {
+				return;
+			}
+
+			if (previousSiblingDetailAST.getType() != TokenTypes.VARIABLE_DEF) {
+				followingVariableNames.addAll(
+					_getVariableNames(previousSiblingDetailAST));
+
+				inBetweenVariableNames.addAll(
+					_getVariableNames(previousSiblingDetailAST, "get.*"));
+
+				previousSiblingDetailAST =
+					previousSiblingDetailAST.getPreviousSibling();
+
+				continue;
+			}
+
+			DetailAST identDetailAST = previousSiblingDetailAST.findFirstToken(
+				TokenTypes.IDENT);
+
+			String name = identDetailAST.getText();
+
+			DetailAST matchingMethodVariableDetailAST = _getExprDetailAST(
+				methodVariableDetailASTList, name);
+
+			if (!followingVariableNames.contains(name) &&
+				(matchingMethodVariableDetailAST != null) &&
+				!_referencesNonfinalVariable(previousSiblingDetailAST)) {
+
+				List<String> variableNames = _getVariableNames(
+					previousSiblingDetailAST);
+
+				boolean contains = false;
+
+				for (String variableName : variableNames) {
+					if (inBetweenVariableNames.contains(variableName)) {
+						contains = true;
+
+						break;
+					}
+				}
+
+				if (!contains) {
+					log(
+						identDetailAST, _MSG_INLINE_BUILDER, name,
+						identDetailAST.getLineNo(), builderClassName,
+						parentDetailAST.getLineNo());
+				}
+			}
+
+			followingVariableNames.addAll(
+				_getVariableNames(previousSiblingDetailAST));
+
+			inBetweenVariableNames.addAll(
+				_getVariableNames(previousSiblingDetailAST, "get.*"));
+
+			previousSiblingDetailAST =
+				previousSiblingDetailAST.getPreviousSibling();
 		}
 	}
 
@@ -635,12 +635,9 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 		}
 	}
 
-	private static final String _TYPE_NAMES_KEY = "typeNames";
-
 	private static final String _MSG_CAST_NULL_VALUE = "null.value.cast";
 
-	private static final String _MSG_INCLUDE_BUILDER =
-		"builder.include";
+	private static final String _MSG_INCLUDE_BUILDER = "builder.include";
 
 	private static final String _MSG_INLINE_BUILDER = "builder.inline";
 
@@ -651,6 +648,8 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 	private static final String _RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private static final String _TYPE_NAMES_KEY = "typeNames";
 
 	private static final Map<String, String[]> _builderMethodNamesMap =
 		HashMapBuilder.put(

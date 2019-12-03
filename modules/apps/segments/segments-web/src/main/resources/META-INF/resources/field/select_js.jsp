@@ -19,6 +19,7 @@
 <%
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 String selectEventName = ParamUtil.getString(request, "selectEventName");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
 %>
 
 <aui:script use="liferay-search-container">
@@ -32,7 +33,14 @@ String selectEventName = ParamUtil.getString(request, "selectEventName");
 		var selectedData = [];
 
 		allSelectedElements.each(function() {
-			var row = this.ancestor('tr');
+			<c:choose>
+				<c:when test='<%= Objects.equals(displayStyle, "list") %>'>
+					var row = this.ancestor('tr');
+				</c:when>
+				<c:otherwise>
+					var row = this.ancestor('li');
+				</c:otherwise>
+			</c:choose>
 
 			var data = row.getDOM().dataset;
 

@@ -232,6 +232,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.net.IDN;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -4080,7 +4081,7 @@ public class PortalImpl implements Portal {
 		if (!virtualHostnames.isEmpty()) {
 			String domain = themeDisplay.getPortalDomain();
 
-			if (virtualHostnames.containsKey(domain)) {
+			if (_containsHostname(virtualHostnames, domain)) {
 				serverName = domain;
 			}
 		}
@@ -8067,7 +8068,14 @@ public class PortalImpl implements Portal {
 			portalDomain = portalDomain.substring(0, pos);
 		}
 
-		return virtualHostnames.containsKey(portalDomain);
+		if (virtualHostnames.containsKey(portalDomain) ||
+			(portalDomain.contains("xn--") &&
+			 virtualHostnames.containsKey(IDN.toUnicode(portalDomain)))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Map<Locale, String> _getAlternateURLs(

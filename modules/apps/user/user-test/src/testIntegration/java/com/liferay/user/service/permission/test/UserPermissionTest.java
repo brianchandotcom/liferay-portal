@@ -73,10 +73,9 @@ public class UserPermissionTest {
 	@Test
 	public void testOrganizationManageUsersPermission() throws Exception {
 		_user = UserTestUtil.addUser();
-		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
 		_user2 = UserTestUtil.addUser();
-		_organization = OrganizationTestUtil.addOrganization();
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		RoleTestUtil.addResourcePermission(
 			_role, Organization.class.getName(),
@@ -91,6 +90,8 @@ public class UserPermissionTest {
 		Assert.assertFalse(
 			_userPermission.contains(
 				permissionChecker, _user2.getUserId(), ActionKeys.UPDATE));
+
+		_organization = OrganizationTestUtil.addOrganization();
 
 		_userLocalService.addOrganizationUser(
 			_organization.getOrganizationId(), _user2.getUserId());

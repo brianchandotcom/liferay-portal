@@ -994,7 +994,7 @@ definition {
 			ratingResult = "Thumb Up",
 			voteCount = "1");
 
-		LAR.openExportAdmin(siteURLKey = "Guest");
+		LAR.openExportAdmin(siteScopeName = "Guest");
 
 		LexiconEntry.gotoAdd();
 

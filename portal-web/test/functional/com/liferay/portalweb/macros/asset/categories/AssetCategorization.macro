@@ -20,17 +20,16 @@ definition {
 	}
 
 	macro addCategory {
-		Type.sendKeys(
+		var key_categoryName = "${categoryName}";
+
+		Type(
 			key_vocabularyName = "${vocabularyName}",
 			locator1 = "AssetCategorization#CATEGORIES_FIELD",
 			value1 = "${categoryName}");
 
-		Click(
-			key_categoryName = "${categoryName}",
-			locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC");
+		Click(locator1 = "AssetCategorization#CATEGORY_AUTOCOMPLETE_SPECIFIC");
 
 		AssertTextEquals(
-			key_categoryName = "${categoryName}",
 			locator1 = "AssetCategorization#CATEGORY",
 			value1 = "${categoryName}");
 	}

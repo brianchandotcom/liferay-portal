@@ -105,6 +105,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String BUNDLE_SUPPORT_CONFIGURATION_NAME =
 		"bundleSupport";
 
+	public static final String CLEAN_DOCKER_IMAGE_TASK_NAME =
+		"cleanDockerImage";
+
 	public static final String CLEAN_TASK_NAME =
 		LifecycleBasePlugin.CLEAN_TASK_NAME;
 
@@ -243,12 +246,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 	}
 
-	private static String _makeCleanTaskName(String taskName) {
-		String firstChar = taskName.substring(0, 1);
-
-		return "clean" + firstChar.toUpperCase() + taskName.substring(1);
-	}
-
 	private Configuration _addConfigurationBundleSupport(
 		final Project project) {
 
@@ -338,10 +335,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerBuildImage.setInputDir(workspaceExtension.getDockerDir());
 
 		DockerRemoveImage removeDockerImage = GradleUtil.addTask(
-			project, _makeCleanTaskName(BUILD_DOCKER_IMAGE_TASK_NAME),
-			DockerRemoveImage.class);
+			project, CLEAN_DOCKER_IMAGE_TASK_NAME, DockerRemoveImage.class);
 
 		removeDockerImage.dependsOn(REMOVE_DOCKER_CONTAINER_TASK_NAME);
+
+		removeDockerImage.setDescription("Removes the Docker image.");
+		removeDockerImage.setForce(true);
 
 		removeDockerImage.setOnError(
 			new Closure<Void>(project) {

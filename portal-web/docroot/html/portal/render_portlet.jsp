@@ -23,7 +23,11 @@ Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 String portletId = portlet.getPortletId();
 String rootPortletId = portlet.getRootPortletId();
-String instanceId = portlet.getInstanceId();
+String instanceId = GetterUtil.getString(request.getAttribute(WebKeys.RENDER_PORTLET_INSTANCE_ID), portlet.getInstanceId());
+
+if (!portlet.isInstanceable() && Validator.isNotNull(instanceId)) {
+	portletId = PortletIdCodec.encode(portletId, instanceId);
+}
 
 String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(plid, portletId);
 

@@ -21,78 +21,36 @@ import com.liferay.petra.function.UnsafeConsumer;
  */
 public class CreationMenuBuilder {
 
-	public static CreationMenuWrapper addDropdownItem(
+	public static CreationMenu addDropdownItem(
 		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
-		CreationMenuWrapper creationMenuWrapper = new CreationMenuWrapper();
+		CreationMenu creationMenu = new CreationMenu();
 
-		return creationMenuWrapper.addDropdownItem(unsafeConsumer);
+		return creationMenu.addDropdownItem(unsafeConsumer);
 	}
 
-	public static CreationMenuWrapper addFavoriteDropdownItem(
+	public static CreationMenu addFavoriteDropdownItem(
 		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
-		CreationMenuWrapper creationMenuWrapper = new CreationMenuWrapper();
+		CreationMenu creationMenu = new CreationMenu();
 
-		return creationMenuWrapper.addFavoriteDropdownItem(unsafeConsumer);
+		return creationMenu.addFavoriteDropdownItem(unsafeConsumer);
 	}
 
-	public static CreationMenuWrapper addPrimaryDropdownItem(
+	public static CreationMenu addPrimaryDropdownItem(
 		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
-		CreationMenuWrapper creationMenuWrapper = new CreationMenuWrapper();
+		CreationMenu creationMenu = new CreationMenu();
 
-		return creationMenuWrapper.addPrimaryDropdownItem(unsafeConsumer);
+		return creationMenu.addPrimaryDropdownItem(unsafeConsumer);
 	}
 
-	public static CreationMenuWrapper addRestDropdownItem(
+	public static CreationMenu addRestDropdownItem(
 		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
 
-		CreationMenuWrapper creationMenuWrapper = new CreationMenuWrapper();
+		CreationMenu creationMenu = new CreationMenu();
 
-		return creationMenuWrapper.addRestDropdownItem(unsafeConsumer);
-	}
-
-	public static final class CreationMenuWrapper {
-
-		public CreationMenuWrapper addDropdownItem(
-			UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
-
-			_creationMenu.addDropdownItem(unsafeConsumer);
-
-			return this;
-		}
-
-		public CreationMenuWrapper addFavoriteDropdownItem(
-			UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
-
-			_creationMenu.addFavoriteDropdownItem(unsafeConsumer);
-
-			return this;
-		}
-
-		public CreationMenuWrapper addPrimaryDropdownItem(
-			UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
-
-			_creationMenu.addPrimaryDropdownItem(unsafeConsumer);
-
-			return this;
-		}
-
-		public CreationMenuWrapper addRestDropdownItem(
-			UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
-
-			_creationMenu.addRestDropdownItem(unsafeConsumer);
-
-			return this;
-		}
-
-		public CreationMenu build() {
-			return _creationMenu;
-		}
-
-		private final CreationMenu _creationMenu = new CreationMenu();
-
+		return creationMenu.addRestDropdownItem(unsafeConsumer);
 	}
 
 }

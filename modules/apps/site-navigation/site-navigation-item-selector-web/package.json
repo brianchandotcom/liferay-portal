@@ -1,10 +1,10 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.0.2",
+		"@clayui/form": "3.2.0",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
-		"metal": "2.16.8",
-		"metal-dom": "2.16.8",
-		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8"
+		"react": "16.9.0"
 	},
 	"name": "site-navigation-item-selector-web",
 	"scripts": {

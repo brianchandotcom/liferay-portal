@@ -1,6 +1,6 @@
 = Anypoint&#8482; Liferay Connector Release Notes
 
-The Anypoint Liferay Connector lets you connect Liferay with other
+The Anypoint Liferay Connector connects Liferay to 
 platforms and services in the Mulesoft ecosystem or simply leverage
 Liferay's APIs in a more user-friendly way.
 

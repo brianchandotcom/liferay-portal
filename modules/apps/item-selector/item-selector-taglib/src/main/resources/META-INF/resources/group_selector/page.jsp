@@ -17,8 +17,6 @@
 <%@ include file="/group_selector/init.jsp" %>
 
 <%
-String groupType = ParamUtil.getString(request, "groupType");
-
 GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDisplayContext(liferayPortletRequest);
 %>
 
@@ -29,7 +27,7 @@ GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDispl
 		for (String curGroupType : groupSelectorDisplayContext.getGroupTypes()) {
 		%>
 
-			<a class="btn btn-secondary <%= Objects.equals(groupType, curGroupType) ? "active" : StringPool.BLANK %>" href="<%= groupSelectorDisplayContext.getGroupItemSelectorURL(curGroupType) %>"><%= groupSelectorDisplayContext.getGroupItemSelectorLabel(curGroupType) %></a>
+			<a class="btn btn-secondary <%= groupSelectorDisplayContext.isGroupTypeActive(curGroupType) ? "active" : StringPool.BLANK %>" href="<%= groupSelectorDisplayContext.getGroupItemSelectorURL(curGroupType) %>"><%= groupSelectorDisplayContext.getGroupItemSelectorLabel(curGroupType) %></a>
 
 		<%
 		}
@@ -65,7 +63,7 @@ GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDispl
 				>
 					<liferay-frontend:horizontal-card-col>
 						<liferay-frontend:horizontal-card-icon
-							icon="<%= groupSelectorDisplayContext.getGroupItemSelectorIcon(groupType) %>"
+							icon="<%= groupSelectorDisplayContext.getGroupItemSelectorIcon() %>"
 						/>
 					</liferay-frontend:horizontal-card-col>
 				</liferay-frontend:horizontal-card>

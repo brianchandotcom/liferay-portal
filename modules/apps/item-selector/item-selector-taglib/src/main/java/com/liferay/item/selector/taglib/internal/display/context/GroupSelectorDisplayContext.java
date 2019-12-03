@@ -47,10 +47,10 @@ public class GroupSelectorDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 	}
 
-	public String getGroupItemSelectorEmptyResultsMessage(String groupType) {
+	public String getGroupItemSelectorEmptyResultsMessage() {
 		Optional<GroupItemSelectorProvider> optional =
 			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				groupType);
+				_getGroupType());
 
 		return optional.map(
 			GroupItemSelectorProvider::getEmptyResultsMessage
@@ -59,10 +59,10 @@ public class GroupSelectorDisplayContext {
 		);
 	}
 
-	public String getGroupItemSelectorIcon(String groupType) {
+	public String getGroupItemSelectorIcon() {
 		Optional<GroupItemSelectorProvider> optional =
 			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
-				groupType);
+				_getGroupType());
 
 		return optional.map(
 			GroupItemSelectorProvider::getIcon
@@ -116,8 +116,7 @@ public class GroupSelectorDisplayContext {
 			_liferayPortletRequest, getIteratorURL());
 
 		searchContainer.setEmptyResultsMessage(
-			getGroupItemSelectorEmptyResultsMessage(
-				ParamUtil.getString(_liferayPortletRequest, "groupType")));
+			getGroupItemSelectorEmptyResultsMessage());
 
 		List<Group> groups = (List<Group>)_liferayPortletRequest.getAttribute(
 			"liferay-item-selector:group-selector:groups");
@@ -165,6 +164,26 @@ public class GroupSelectorDisplayContext {
 		return portletURL;
 	}
 
+	public boolean isGroupTypeActive(String groupType) {
+		if (groupType.equals(
+			_getGroupType())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getGroupType() {
+		if (_groupType != null) {
+			return _groupType;
+		}
+
+		_groupType = ParamUtil.getString(_liferayPortletRequest, "groupType");
+
+		return _groupType;
+	}
+
 	private ItemSelector _getItemSelector() {
 		return ItemSelectorUtil.getItemSelector();
 	}
@@ -185,6 +204,7 @@ public class GroupSelectorDisplayContext {
 			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 	}
 
+	private String _groupType;
 	private final LiferayPortletRequest _liferayPortletRequest;
 
 }

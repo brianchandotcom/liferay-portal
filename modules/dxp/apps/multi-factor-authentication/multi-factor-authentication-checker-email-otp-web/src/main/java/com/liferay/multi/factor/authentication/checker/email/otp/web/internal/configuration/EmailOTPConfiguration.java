@@ -47,7 +47,7 @@ public interface EmailOTPConfiguration {
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		name = "email-template-from-name", required = false
+		name = "email-template-from-sender", required = false
 	)
 	public String emailTemplateFromName();
 

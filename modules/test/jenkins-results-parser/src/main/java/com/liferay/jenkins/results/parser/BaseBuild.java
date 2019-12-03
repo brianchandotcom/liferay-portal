@@ -629,19 +629,15 @@ public abstract class BaseBuild implements Build {
 
 		sb.append("/buildWithParameters?");
 
-		Map<String, String> parameters = getParameters();
+		Map<String, String> parameters = new HashMap<>(getParameters());
 
 		parameters.put("token", "raen3Aib");
 
 		for (Map.Entry<String, String> parameter : parameters.entrySet()) {
-			String value = parameter.getValue();
-
-			if ((value != null) && !value.isEmpty()) {
-				sb.append(parameter.getKey());
-				sb.append("=");
-				sb.append(parameter.getValue());
-				sb.append("&");
-			}
+			sb.append(parameter.getKey());
+			sb.append("=");
+			sb.append(parameter.getValue());
+			sb.append("&");
 		}
 
 		sb.deleteCharAt(sb.length() - 1);
@@ -2555,15 +2551,8 @@ public abstract class BaseBuild implements Build {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			if (jsonObject.opt("value") instanceof String) {
-				String value = jsonObject.getString("value");
-
-				if (!value.isEmpty()) {
-					String name = jsonObject.getString("name");
-
-					parameters.put(name, value);
-				}
-			}
+			parameters.put(
+				jsonObject.getString("name"), jsonObject.optString("value"));
 		}
 
 		return parameters;

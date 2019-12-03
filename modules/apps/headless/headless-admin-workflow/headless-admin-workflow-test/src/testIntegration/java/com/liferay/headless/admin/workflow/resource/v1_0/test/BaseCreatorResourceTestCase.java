@@ -176,6 +176,7 @@ public abstract class BaseCreatorResourceTestCase {
 		Creator creator = randomCreator();
 
 		creator.setAdditionalName(regex);
+		creator.setContentType(regex);
 		creator.setFamilyName(regex);
 		creator.setGivenName(regex);
 		creator.setImage(regex);
@@ -189,6 +190,7 @@ public abstract class BaseCreatorResourceTestCase {
 		creator = CreatorSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, creator.getAdditionalName());
+		Assert.assertEquals(regex, creator.getContentType());
 		Assert.assertEquals(regex, creator.getFamilyName());
 		Assert.assertEquals(regex, creator.getGivenName());
 		Assert.assertEquals(regex, creator.getImage());
@@ -396,6 +398,14 @@ public abstract class BaseCreatorResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("contentType", additionalAssertFieldName)) {
+				if (creator.getContentType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("familyName", additionalAssertFieldName)) {
 				if (creator.getFamilyName() == null) {
 					valid = false;
@@ -500,6 +510,16 @@ public abstract class BaseCreatorResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("contentType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						creator1.getContentType(), creator2.getContentType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("familyName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						creator1.getFamilyName(), creator2.getFamilyName())) {
@@ -572,6 +592,17 @@ public abstract class BaseCreatorResourceTestCase {
 				if (!Objects.deepEquals(
 						creator.getAdditionalName(),
 						jsonObject.getString("additionalName"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("contentType", fieldName)) {
+				if (!Objects.deepEquals(
+						creator.getContentType(),
+						jsonObject.getString("contentType"))) {
 
 					return false;
 				}
@@ -707,6 +738,14 @@ public abstract class BaseCreatorResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("contentType")) {
+			sb.append("'");
+			sb.append(String.valueOf(creator.getContentType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("familyName")) {
 			sb.append("'");
 			sb.append(String.valueOf(creator.getFamilyName()));
@@ -777,6 +816,7 @@ public abstract class BaseCreatorResourceTestCase {
 		return new Creator() {
 			{
 				additionalName = RandomTestUtil.randomString();
+				contentType = RandomTestUtil.randomString();
 				familyName = RandomTestUtil.randomString();
 				givenName = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();

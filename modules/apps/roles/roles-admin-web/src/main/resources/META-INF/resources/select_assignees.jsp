@@ -51,6 +51,8 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 
 <clay:management-toolbar
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= editRoleAssignmentsManagementToolbarDisplayContext.getCreationMenu() %>"
+	defaultEventHandler="<%= editRoleAssignmentsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	filterDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
 	searchActionURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
@@ -122,3 +124,8 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 		);
 	});
 </aui:script>
+
+<liferay-frontend:component
+	componentId="<%= editRoleAssignmentsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/EditRoleAssignmentsManagementToolbarDefaultEventHandler.es"
+/>

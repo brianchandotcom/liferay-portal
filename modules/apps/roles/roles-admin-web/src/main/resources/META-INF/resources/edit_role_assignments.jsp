@@ -125,6 +125,7 @@ renderResponse.setTitle(role.getTitle(locale));
 				<portlet:param name="mvcPath" value="/select_assignees.jsp" />
 				<portlet:param name="tabs2" value="<%= tabs2 %>" />
 				<portlet:param name="tabs3" value="available" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
 				<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 			</portlet:renderURL>

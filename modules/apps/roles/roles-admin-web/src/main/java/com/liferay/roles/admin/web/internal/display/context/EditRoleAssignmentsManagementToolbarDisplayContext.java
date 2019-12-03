@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -62,6 +65,7 @@ import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.roles.admin.web.internal.dao.search.SegmentsEntrySearchContainerFactory;
+import com.liferay.segments.model.SegmentsEntry;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -127,6 +131,51 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		if (!_tabs2.equals("segments")) {
+			return null;
+		}
+
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "addSegmentEntry");
+
+						PortletURL addSegmentEntryURL =
+							PortletProviderUtil.getPortletURL(
+								_renderRequest, SegmentsEntry.class.getName(),
+								PortletProvider.Action.EDIT);
+
+						addSegmentEntryURL.setParameter(
+							"redirect",
+							ParamUtil.getString(
+								_httpServletRequest, "redirect"));
+
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)_httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						addSegmentEntryURL.setParameter(
+							"groupId",
+							String.valueOf(themeDisplay.getCompanyGroupId()));
+
+						dropdownItem.putData(
+							"addSegmentEntryURL",
+							addSegmentEntryURL.toString());
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "new-segment"));
+					});
+			}
+		};
+	}
+
+	public String getDefaultEventHandler() {
+		return "EDIT_ROLE_ASSIGNMENTS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

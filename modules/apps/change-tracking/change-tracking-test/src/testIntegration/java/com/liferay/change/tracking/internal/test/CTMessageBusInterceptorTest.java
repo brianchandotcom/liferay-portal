@@ -25,13 +25,14 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -41,7 +42,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,16 +63,27 @@ public class CTMessageBusInterceptorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() {
+	@Before
+	public void setUp() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
 			CTMessageBusInterceptorTest.class);
 
-		_bundleContext = bundle.getBundleContext();
-	}
+		BundleContext bundleContext = bundle.getBundleContext();
 
-	@Before
-	public void setUp() throws Exception {
+		_testMessageListener = new TestMessageListener();
+
+		Destination destination = _destinationFactory.createDestination(
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
+				DestinationNames.SUBSCRIPTION_SENDER));
+
+		destination.register(_testMessageListener);
+
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination,
+			MapUtil.singletonDictionary(
+				"destination.name", DestinationNames.SUBSCRIPTION_SENDER));
+
 		long ctCollectionId = _counterLocalService.increment(
 			CTCollection.class.getName());
 
@@ -85,35 +96,31 @@ public class CTMessageBusInterceptorTest {
 
 		_ctCollection = _ctCollectionLocalService.updateCTCollection(
 			_ctCollection);
-
-		_asyncDestinationServiceRegistration = _registerDestination(
-			_TEST_ASYNC_DESTINATION_NAME,
-			DestinationConfiguration.DESTINATION_TYPE_SERIAL);
-
-		_syncDestinationServiceRegistration = _registerDestination(
-			_TEST_SYNC_DESTINATION_NAME,
-			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS);
 	}
 
 	@After
 	public void tearDown() {
-		_asyncDestinationServiceRegistration.unregister();
-
-		_syncDestinationServiceRegistration.unregister();
+		_serviceRegistration.unregister();
 	}
 
 	@Test
-	public void testInterceptMessageToAsyncDestination() {
-		Message message = new Message();
+	public void testInterceptMessageToAsyncDestination() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
 
-		message.setPayload(_TEST_MESSAGE_PAYLOAD);
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+		subscriptionSender.setCompanyId(companyId);
+		subscriptionSender.setMailId(
+			CTMessageBusInterceptorTest.class.getName(), "test");
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
 					_ctCollection.getCtCollectionId())) {
 
-			_messageBus.sendMessage(_TEST_ASYNC_DESTINATION_NAME, message);
+			subscriptionSender.flushNotificationsAsync();
 		}
+
+		Assert.assertNull(_testMessageListener.getReceivedMessage());
 
 		List<Message> messages = _ctMessageLocalService.getMessages(
 			_ctCollection.getCtCollectionId());
@@ -123,71 +130,33 @@ public class CTMessageBusInterceptorTest {
 		Message deserializedMessage = messages.get(0);
 
 		Assert.assertEquals(
-			_TEST_ASYNC_DESTINATION_NAME,
+			DestinationNames.SUBSCRIPTION_SENDER,
 			deserializedMessage.getDestinationName());
+
+		SubscriptionSender deserializedSubscriptionSender =
+			(SubscriptionSender)deserializedMessage.getPayload();
+
 		Assert.assertEquals(
-			message.getPayload(), deserializedMessage.getPayload());
+			companyId, deserializedSubscriptionSender.getCompanyId());
 
 		Assert.assertNull(_testMessageListener.getReceivedMessage());
-	}
-
-	@Test
-	public void testInterceptMessageToNotExistedDestination() {
-		Message message = new Message();
-
-		message.setPayload(_TEST_MESSAGE_PAYLOAD);
-
-		String nonExistDestinationName = "Non-existed Destination";
-
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					_ctCollection.getCtCollectionId())) {
-
-			_messageBus.sendMessage(nonExistDestinationName, message);
-		}
-
-		List<Message> messages = _ctMessageLocalService.getMessages(
-			_ctCollection.getCtCollectionId());
-
-		Assert.assertSame(messages.toString(), 1, messages.size());
-
-		Message deserializedMessage = messages.get(0);
-
-		Assert.assertEquals(
-			nonExistDestinationName, deserializedMessage.getDestinationName());
-		Assert.assertEquals(
-			message.getPayload(), deserializedMessage.getPayload());
-
-		Assert.assertNull(_testMessageListener.getReceivedMessage());
-	}
-
-	@Test
-	public void testInterceptMessageToSyncDestination() {
-		Message message = new Message();
-
-		message.setPayload(_TEST_MESSAGE_PAYLOAD);
-
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					_ctCollection.getCtCollectionId())) {
-
-			_messageBus.sendMessage(_TEST_SYNC_DESTINATION_NAME, message);
-		}
-
-		List<Message> messages = _ctMessageLocalService.getMessages(
-			_ctCollection.getCtCollectionId());
-
-		Assert.assertTrue(messages.toString(), messages.isEmpty());
-
-		Assert.assertSame(message, _testMessageListener.getReceivedMessage());
 	}
 
 	@Test
 	public void testPublishMessage() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
 		Message message = new Message();
 
-		message.setPayload(_TEST_MESSAGE_PAYLOAD);
-		message.setDestinationName(_TEST_SYNC_DESTINATION_NAME);
+		message.setDestinationName(DestinationNames.SUBSCRIPTION_SENDER);
+
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+		subscriptionSender.setCompanyId(companyId);
+		subscriptionSender.setMailId(
+			CTMessageBusInterceptorTest.class.getName(), "test");
+
+		message.setPayload(subscriptionSender);
 
 		_ctMessageLocalService.addCTMessage(
 			_ctCollection.getCtCollectionId(), message);
@@ -204,7 +173,11 @@ public class CTMessageBusInterceptorTest {
 
 		Message receivedMessage = _testMessageListener.getReceivedMessage();
 
-		Assert.assertEquals(message.getPayload(), receivedMessage.getPayload());
+		SubscriptionSender deserializedSubscriptionSender =
+			(SubscriptionSender)receivedMessage.getPayload();
+
+		Assert.assertEquals(
+			companyId, deserializedSubscriptionSender.getCompanyId());
 
 		List<Message> messages = _ctMessageLocalService.getMessages(
 			_ctCollection.getCtCollectionId());
@@ -214,10 +187,14 @@ public class CTMessageBusInterceptorTest {
 		Message deserializedMessage = messages.get(0);
 
 		Assert.assertEquals(
-			_TEST_SYNC_DESTINATION_NAME,
+			DestinationNames.SUBSCRIPTION_SENDER,
 			deserializedMessage.getDestinationName());
+
+		deserializedSubscriptionSender =
+			(SubscriptionSender)receivedMessage.getPayload();
+
 		Assert.assertEquals(
-			message.getPayload(), deserializedMessage.getPayload());
+			companyId, deserializedSubscriptionSender.getCompanyId());
 
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 
@@ -228,34 +205,6 @@ public class CTMessageBusInterceptorTest {
 
 		_ctCollection = null;
 	}
-
-	private ServiceRegistration<Destination> _registerDestination(
-		String destinationName, String destinationType) {
-
-		DestinationConfiguration destinationConfiguration =
-			new DestinationConfiguration(destinationType, destinationName);
-
-		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
-
-		_testMessageListener = new TestMessageListener();
-
-		destination.register(_testMessageListener);
-
-		return _bundleContext.registerService(
-			Destination.class, destination,
-			MapUtil.singletonDictionary("destination.name", destinationName));
-	}
-
-	private static final String _TEST_ASYNC_DESTINATION_NAME =
-		"_TEST_ASYNC_DESTINATION_NAME";
-
-	private static final String _TEST_MESSAGE_PAYLOAD = "TEST_MESSAGE_PAYLOAD";
-
-	private static final String _TEST_SYNC_DESTINATION_NAME =
-		"_TEST_SYNC_DESTINATION_NAME";
-
-	private static BundleContext _bundleContext;
 
 	@Inject
 	private static CounterLocalService _counterLocalService;
@@ -272,20 +221,13 @@ public class CTMessageBusInterceptorTest {
 	@Inject
 	private static DestinationFactory _destinationFactory;
 
-	@Inject
-	private static MessageBus _messageBus;
-
-	private ServiceRegistration<Destination>
-		_asyncDestinationServiceRegistration;
-
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
-	private ServiceRegistration<Destination>
-		_syncDestinationServiceRegistration;
+	private ServiceRegistration<?> _serviceRegistration;
 	private TestMessageListener _testMessageListener;
 
-	private class TestMessageListener implements MessageListener {
+	private static class TestMessageListener implements MessageListener {
 
 		public Message getReceivedMessage() {
 			return _message;

@@ -48,7 +48,7 @@ export default function TreeviewCard({node}) {
 		) : null;
 
 	return (
-		<div className="p-2" role="treeitem">
+		<div role="treeitem">
 			<ClayCard
 				className={classNames({
 					disabled: node.disabled,
@@ -64,7 +64,7 @@ export default function TreeviewCard({node}) {
 				<ClayCard.Body>
 					<ClayCard.Row>
 						<div className="autofit-col">
-							<ClaySticker inline>
+							<ClaySticker displayType="secondary" inline>
 								<ClayIcon symbol={node.icon} />
 							</ClaySticker>
 						</div>

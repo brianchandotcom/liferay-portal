@@ -1,60 +1,72 @@
+$black: #272833;
+$blue: #80acff;
+$light-gray: #e7e7ed;
+$gray: #869cad;
+$white: #fff;
+
+$focusBoxShadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $blue;
+
 .lfr-treeview {
 	&-label input:focus + label {
 		border-radius: 2px;
-		box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.25rem rgba(11, 95, 255, 0.5);
+		box-shadow: $focusBoxShadow;
 	}
 
 	&-node-list {
-		padding-left: 12px;
-		position: relative;
+		border-left: 2px solid $gray;
+		outline: 0;
 
-		&:before {
-			border-left: #e7e7ed 1px solid;
-			content: '';
-			display: block;
-			height: 100%;
-			left: 16px;
-			position: absolute;
-			top: 0;
-			width: 0;
+		.form-check-card {
+			margin-bottom: 0;
+
+			&:hover .card {
+				box-shadow: none;
+			}
+
+			&.form-check-middle-left .card-horizontal > .card-body {
+				padding-left: 1rem;
+			}
+		}
+
+		.lfr-treeview-node-list {
+			border-left-style: dashed;
+			border-left-width: 1px;
 		}
 	}
 
 	&-node-list-item {
+		margin-bottom: 16px;
+		padding-left: 16px;
 		position: relative;
+
+		@media (min-width: 768px) {
+			margin-bottom: 24px;
+			padding-left: 24px;
+		}
 
 		&:not(:first-child) {
 			margin-top: 0.25em;
 		}
 
-		.form-check-card {
-			margin-bottom: 0;
-		}
-
-		.card-body {
-			padding: 0.5em 0;
-		}
-
 		&__button {
-			background: transparent;
-			border: none;
-			display: block;
-			left: -11px;
-			padding: 10px;
+			border-width: 0;
+			left: 0;
+			margin-left: -8px;
+			margin-top: -6px;
+			padding: 0;
 			position: absolute;
 			top: 50%;
-			transform: translateY(-50%);
 
 			&-icon {
-				background-color: #e7e7ed;
-				border-radius: 2px;
-				box-shadow: 0 0 0 0 #fff, 0 0 0 0 rgba(11, 95, 255, 0.5);
-				color: #272833;
+				background-color: $gray;
+				border-radius: 3px;
+				box-shadow: 0 0 0 0 $white, 0 0 0 0 rgba(11, 95, 255, 0.5);
+				color: $white;
 				display: block;
-				height: 12px;
+				height: 14px;
 				padding: 3px;
 				transition: box-shadow ease 0.3s;
-				width: 12px;
+				width: 14px;
 			}
 
 			&:focus {
@@ -62,19 +74,77 @@
 			}
 
 			&:focus &-icon {
-				box-shadow: 0 0 0 0.125rem #fff,
+				box-shadow: 0 0 0 0.125rem $white,
 					0 0 0 0.25rem rgba(11, 95, 255, 0.5);
 			}
 		}
 
-		&__node {
-			margin-left: 1.25em;
-			margin-right: 1em;
+		&__children {
+			padding-left: 15px;
+
+			@media (min-width: 768px) {
+				padding-left: 54px;
+			}
 		}
 
-		&__children {
-			margin-top: 0.25em;
-			padding-left: 1em;
+		.card-type-directory {
+			&.disabled .card {
+				&,
+				&:hover,
+				&:focus {
+					background-color: $light-gray;
+					border: 1px solid $light-gray;
+					box-shadow: none;
+					cursor: not-allowed;
+					outline: none;
+				}
+
+				.card-title {
+					color: $black;
+				}
+			}
+
+			&.selected .card {
+				&,
+				&:hover,
+				&:focus {
+					background-color: $blue;
+					border-color: $blue;
+				}
+
+				.card-title {
+					color: $black;
+				}
+			}
+
+			.card {
+				border: 1px solid $light-gray;
+				box-shadow: none;
+				cursor: pointer;
+				margin-bottom: 0;
+
+				&:hover {
+					background-color: #f7f8f9;
+					border-color: #cdced9;
+
+					.card-title {
+						color: $black;
+					}
+				}
+
+				&:focus {
+					box-shadow: $focusBoxShadow;
+					outline: 0;
+				}
+
+				.card-title {
+					color: #6b6c7e;
+				}
+
+				.sticker {
+					font-size: 1em;
+				}
+			}
 		}
 	}
 }

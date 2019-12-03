@@ -56,7 +56,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Tina Tian
  */
 @RunWith(Arquillian.class)
-public class MessageBusCTTest {
+public class CTMessageBusInterceptorTest {
 
 	@ClassRule
 	@Rule
@@ -65,7 +65,8 @@ public class MessageBusCTTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Bundle bundle = FrameworkUtil.getBundle(MessageBusCTTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CTMessageBusInterceptorTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 	}

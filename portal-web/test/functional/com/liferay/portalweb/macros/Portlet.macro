@@ -143,13 +143,23 @@ definition {
 	}
 
 	macro clickPortletPlusIconPG {
-		MouseOver.mouseOverNotVisible(
-			key_portletName = "${portletName}",
-			locator1 = "Portlet#ICON_PLUS_SIGN");
+		var browserType = PropsUtil.get("browser.type");
+		var key_portletName = "${portletName}";
 
-		Click(
-			key_portletName = "${portletName}",
-			locator1 = "Portlet#ICON_PLUS_SIGN");
+		if ("${browserType}" == "internetexplorer") {
+			Click.javaScriptClick(locator1 = "Portlet#ICON_PLUS_SIGN");
+
+			AssertVisible(locator1 = "Portlet#ICON_PLUS_SIGN");
+		}
+		else {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "${portletName}",
+				locator1 = "Portlet#ICON_PLUS_SIGN");
+
+			Click(
+				key_portletName = "${portletName}",
+				locator1 = "Portlet#ICON_PLUS_SIGN");
+		}
 	}
 
 	macro configureApplicationDecoratorViaLookandfeelPG {

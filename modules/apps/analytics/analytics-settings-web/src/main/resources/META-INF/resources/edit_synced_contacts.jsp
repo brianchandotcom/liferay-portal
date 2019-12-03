@@ -26,6 +26,8 @@
 	</h2>
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
 		<aui:fieldset>
 			<label class="control-label">
 				<liferay-ui:message key="sync-all-contacts" />

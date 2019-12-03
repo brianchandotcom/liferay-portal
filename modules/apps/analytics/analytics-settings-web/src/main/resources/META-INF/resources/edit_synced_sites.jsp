@@ -26,6 +26,7 @@
 	</h2>
 
 	<aui:form action="<%= editSyncedSitesURL %>" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<%
 		LinkedHashMap groupParams = new LinkedHashMap<>();

@@ -738,7 +738,7 @@ function _duplicateFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLink,
+			fragmentEntryLink.fragmentEntryLinkId,
 			fragmentColumn.columnId,
 			position + 1
 		);
@@ -751,7 +751,7 @@ function _duplicateFragment(
 
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLink,
+			fragmentEntryLink.fragmentEntryLinkId,
 			fragmentEntryLinkRowType,
 			position
 		);

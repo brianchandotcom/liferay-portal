@@ -250,7 +250,7 @@ class FragmentEntryLink extends Component {
 			fragmentEntryLink.portletId &&
 			getWidget(this.widgets, fragmentEntryLink.portletId);
 
-		if (widget && widget.instanceable) {
+		if (!widget || widget.instanceable) {
 			buttons.push(FLOATING_TOOLBAR_BUTTONS.duplicateFragment);
 		}
 

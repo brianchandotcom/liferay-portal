@@ -44,7 +44,7 @@ public class AnalyticsConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "analytics";
+	private static final String _CATEGORY_ICON = "liferay-ac";
 
 	private static final String _CATEGORY_KEY = "analytics-cloud";
 

@@ -34,6 +34,7 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 
@@ -50,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
@@ -396,6 +398,16 @@ public class BatchEngineExportTaskExecutorTest
 		_batchEngineExportTaskExecutor.execute(_batchEngineExportTask);
 	}
 
+	private ZipInputStream _getZipInputStream(InputStream inputStream)
+		throws IOException {
+
+		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+
+		zipInputStream.getNextEntry();
+
+		return zipInputStream;
+	}
+
 	private List<Object[]> _readRowValuesList(
 			Function<String, Object[]> filterFunction,
 			BatchEngineExportTask batchEngineExportTask)
@@ -403,8 +415,9 @@ public class BatchEngineExportTaskExecutorTest
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId())));
+				_getZipInputStream(
+					_batchEngineExportTaskLocalService.openContentInputStream(
+						batchEngineExportTask.getBatchEngineExportTaskId()))));
 
 		unsyncBufferedReader.readLine();
 
@@ -465,8 +478,9 @@ public class BatchEngineExportTaskExecutorTest
 				_batchEngineExportTask.getBatchEngineExportTaskId());
 
 		List<BlogPosting> blogPostings = objectMapper.readValue(
-			_batchEngineExportTaskLocalService.openContentInputStream(
-				batchEngineExportTask.getBatchEngineExportTaskId()),
+			_getZipInputStream(
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId())),
 			new TypeReference<List<BlogPosting>>() {
 			});
 
@@ -498,8 +512,9 @@ public class BatchEngineExportTaskExecutorTest
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId())));
+				_getZipInputStream(
+					_batchEngineExportTaskLocalService.openContentInputStream(
+						batchEngineExportTask.getBatchEngineExportTaskId()))));
 
 		List<BlogPosting> blogPostings = new ArrayList<>();
 		String line = null;
@@ -547,8 +562,9 @@ public class BatchEngineExportTaskExecutorTest
 		}
 
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(
-			_batchEngineExportTaskLocalService.openContentInputStream(
-				batchEngineExportTask.getBatchEngineExportTaskId()));
+			_getZipInputStream(
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId())));
 
 		Sheet sheet = xssfWorkbook.getSheetAt(0);
 

@@ -43,12 +43,9 @@ import javax.portlet.annotations.InitMethod;
 import javax.portlet.annotations.RenderMethod;
 import javax.portlet.annotations.ServeResourceMethod;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Neil Griffin
  */
-@ProviderType
 public enum BeanPortletMethodType {
 
 	ACTION(

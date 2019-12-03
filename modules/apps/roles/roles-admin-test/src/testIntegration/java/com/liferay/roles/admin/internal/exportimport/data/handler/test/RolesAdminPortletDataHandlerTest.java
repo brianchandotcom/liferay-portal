@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.internal.exportimport.data.handler.test;
 
+import com.liferay.account.model.AccountRole;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -55,7 +56,8 @@ public class RolesAdminPortletDataHandlerTest
 			Assert.assertTrue(
 				manifestSummaryKey.endsWith(
 					StagedModelType.REFERRER_CLASS_NAME_ALL) ||
-				manifestSummaryKey.endsWith(Role.class.getName()));
+				manifestSummaryKey.endsWith(Role.class.getName()) ||
+				manifestSummaryKey.endsWith(AccountRole.class.getName()));
 		}
 	}
 

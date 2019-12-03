@@ -25,6 +25,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -50,13 +51,20 @@ public class LayoutsSEODisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public DDMFormValues getDDMFormValues()
-		throws StorageException {
-
+	public DDMFormValues getDDMFormValues() throws StorageException {
 		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
 
-		return _storageEngine.getDDMFormValues(
-			selLayoutSEOEntry.getDDMStorageId());
+		if (selLayoutSEOEntry != null) {
+			return _storageEngine.getDDMFormValues(
+				selLayoutSEOEntry.getDDMStorageId());
+		}
+
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addDDMFormField(new DDMFormField("key", "String"));
+		ddmForm.addDDMFormField(new DDMFormField("value", "String"));
+
+		return new DDMFormValues(ddmForm);
 	}
 
 	public long getDDMStructurePrimaryKey() throws PortalException {
@@ -73,6 +81,16 @@ public class LayoutsSEODisplayContext {
 			"custom-opengraph-meta-tags");
 
 		return _ddmStructure.getPrimaryKey();
+	}
+
+	public long getGroupId() {
+		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
+
+		if (selLayoutSEOEntry == null) {
+			return GroupConstants.DEFAULT_LIVE_GROUP_ID;
+		}
+
+		return selLayoutSEOEntry.getGroupId();
 	}
 
 	public Long getLayoutId() {

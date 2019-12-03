@@ -43,21 +43,15 @@ if (Validator.isNull(backURL)) {
 			</p>
 		</div>
 
-		<%
-		LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
-		%>
-
-		<c:if test="<%= selLayoutSEOEntry != null %>">
-			<liferay-ddm:html
-				classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-				classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"
-				ddmFormValues="<%= layoutsSEODisplayContext.getDDMFormValues() %>"
-				fieldsNamespace="<%= String.valueOf(layoutsSEODisplayContext.getDDMStructurePrimaryKey()) %>"
-				groupId="<%= selLayoutSEOEntry.getGroupId() %>"
-				localizable="<%= true %>"
-				requestedLocale="<%= locale %>"
-			/>
-		</c:if>
+		<liferay-ddm:html
+			classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+			classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"
+			ddmFormValues="<%= layoutsSEODisplayContext.getDDMFormValues() %>"
+			fieldsNamespace="<%= String.valueOf(layoutsSEODisplayContext.getDDMStructurePrimaryKey()) %>"
+			groupId="<%= layoutsSEODisplayContext.getGroupId() %>"
+			localizable="<%= true %>"
+			requestedLocale="<%= locale %>"
+		/>
 
 		<div class="sheet-footer">
 			<aui:button primary="<%= true %>" type="submit" />

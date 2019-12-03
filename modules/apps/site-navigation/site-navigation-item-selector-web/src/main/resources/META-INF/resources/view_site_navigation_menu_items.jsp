@@ -32,18 +32,17 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 		</liferay-util:html-top>
 
 		<%
-		Map<String, Object> context = new HashMap<>();
+		Map<String, Object> data = new HashMap<>();
 
-		context.put("itemSelectorSaveEvent", siteNavigationMenuItemItemSelectorViewDisplayContext.getItemSelectedEventName());
-		context.put("namespace", liferayPortletResponse.getNamespace());
-		context.put("nodes", siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenuItemsJSONArray());
-		context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+		data.put("itemSelectorSaveEvent", siteNavigationMenuItemItemSelectorViewDisplayContext.getItemSelectedEventName());
+		data.put("namespace", liferayPortletResponse.getNamespace());
+		data.put("nodes", siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenuItemsJSONArray());
+		data.put("pathThemeImages", themeDisplay.getPathThemeImages());
 		%>
 
-		<soy:component-renderer
-			context="<%= context %>"
+		<react:component
+			data="<%= data %>"
 			module="js/SelectSiteNavigationMenuItem.es"
-			templateNamespace="com.liferay.site.navigation.item.selector.web.SelectSiteNavigationMenuItem.render"
 		/>
 	</c:when>
 	<c:otherwise>

@@ -2963,15 +2963,26 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void loadParametersFromQueryString(String queryString) {
-		Set<String> jobParameterNames = getJobParameterNames();
+		Map<String, String> defaultJobParameters = _getDefaultJobParameters();
+
+		_parameters.putAll(defaultJobParameters);
 
 		for (String parameter : queryString.split("&")) {
+			if (!parameter.contains("=")) {
+				continue;
+			}
+
 			String[] nameValueArray = parameter.split("=");
 
-			if ((nameValueArray.length == 2) &&
-				jobParameterNames.contains(nameValueArray[0])) {
+			if (!defaultJobParameters.containsKey(nameValueArray[0])) {
+				continue;
+			}
 
+			if (nameValueArray.length == 2) {
 				_parameters.put(nameValueArray[0], nameValueArray[1]);
+			}
+			else if (nameValueArray.length == 1) {
+				_parameters.put(nameValueArray[0], "");
 			}
 		}
 	}
@@ -3327,6 +3338,57 @@ public abstract class BaseBuild implements Build {
 
 		}
 
+	}
+
+	private Map<String, String> _getDefaultJobParameters() {
+		Map<String, String> jobParameters = new HashMap<>();
+
+		JSONObject actionsJSONObject = null;
+
+		JSONObject jobJSONObject = null;
+
+		try {
+			jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					getJobURL(), "/api/json?tree=actions[parameterDefinitions[",
+					"defaultParameterValue[value],name]]"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		JSONArray actionsJSONArray = jobJSONObject.getJSONArray("actions");
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject jsonObject = actionsJSONArray.getJSONObject(i);
+
+			if (jsonObject.has("parameterDefinitions")) {
+				actionsJSONObject = jsonObject;
+
+				break;
+			}
+		}
+
+		if (actionsJSONObject == null) {
+			return jobParameters;
+		}
+
+		JSONArray parameterDefinitionsJSONArray =
+			actionsJSONObject.getJSONArray("parameterDefinitions");
+
+		for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
+			JSONObject parameterJSONObject =
+				parameterDefinitionsJSONArray.getJSONObject(i);
+
+			JSONObject defaultParameterValueJSONObject =
+				parameterJSONObject.getJSONObject("defaultParameterValue");
+
+			jobParameters.put(
+				parameterJSONObject.getString("name"),
+				defaultParameterValueJSONObject.getString("value"));
+		}
+
+		return jobParameters;
 	}
 
 	private boolean _isDifferent(String newValue, String oldValue) {

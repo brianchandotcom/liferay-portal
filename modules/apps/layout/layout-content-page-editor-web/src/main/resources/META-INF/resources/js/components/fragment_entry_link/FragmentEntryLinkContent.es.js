@@ -21,7 +21,6 @@ import {Config} from 'metal-state';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
-import {getComputedEditableValue} from '../../utils/computeValues.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR

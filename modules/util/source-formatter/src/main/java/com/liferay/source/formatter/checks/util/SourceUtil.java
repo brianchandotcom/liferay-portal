@@ -147,7 +147,13 @@ public class SourceUtil {
 		return ArrayUtil.toIntArray(multiLinePositions);
 	}
 
-	public static String getTitleCase(String s, String... exceptions) {
+	public static String getTitleCase(
+		String s, boolean allowDash, String... exceptions) {
+
+		if (!allowDash) {
+			s = StringUtil.replace(s, CharPool.DASH, CharPool.SPACE);
+		}
+
 		String[] words = s.split("\\s+");
 
 		if (ArrayUtil.isEmpty(words)) {

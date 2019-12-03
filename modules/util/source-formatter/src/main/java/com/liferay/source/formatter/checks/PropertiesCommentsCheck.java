@@ -43,7 +43,7 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 			String comment = matcher.group(2);
 
 			String titleCaseComment = SourceUtil.getTitleCase(
-				comment, _BRAND_NAMES);
+				comment, true, _BRAND_NAMES);
 
 			titleCaseComment = titleCaseComment.replaceAll(
 				"(?i)(\\A|\\s)sf(\\Z|\\s)", "$1Source Formatter$2");

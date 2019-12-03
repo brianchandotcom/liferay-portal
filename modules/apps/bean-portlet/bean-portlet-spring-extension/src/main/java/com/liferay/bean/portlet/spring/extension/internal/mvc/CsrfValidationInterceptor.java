@@ -17,10 +17,8 @@ package com.liferay.bean.portlet.spring.extension.internal.mvc;
 import com.liferay.bean.portlet.extension.BeanPortletMethod;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -96,23 +94,18 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 					(ThemeDisplay)clientDataRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(
-					portletDisplay.getId());
-
 				String method = StringUtil.toLowerCase(
 					clientDataRequest.getMethod());
 
 				if (method.equals("post")) {
-					if (AuthTokenUtil.isValidPortletInvocationToken(
-							themeDisplay.getRequest(), themeDisplay.getLayout(),
-							portlet)) {
+					try {
+						AuthTokenUtil.checkCSRFToken(
+							themeDisplay.getRequest(),
+							CsrfValidationInterceptor.class.getName());
 
 						proceed = true;
 					}
-					else {
+					catch (PrincipalException pe) {
 						_log.error("Invalid CSRF token");
 					}
 				}

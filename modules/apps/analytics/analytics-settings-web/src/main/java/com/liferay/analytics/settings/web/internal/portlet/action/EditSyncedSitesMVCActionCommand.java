@@ -15,14 +15,20 @@
 package com.liferay.analytics.settings.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Dictionary;
 
 import javax.portlet.ActionRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -39,8 +45,9 @@ public class EditSyncedSitesMVCActionCommand
 
 	@Override
 	protected void updateConfigurationProperties(
-		ActionRequest actionRequest,
-		Dictionary<String, Object> configurationProperties) {
+			ActionRequest actionRequest,
+			Dictionary<String, Object> configurationProperties)
+		throws PortalException {
 
 		String siteReportingGrouping = ParamUtil.getString(
 			actionRequest, "siteReportingGrouping");
@@ -50,6 +57,24 @@ public class EditSyncedSitesMVCActionCommand
 		configurationProperties.put(
 			"siteReportingGrouping", siteReportingGrouping);
 		configurationProperties.put("syncedGroupIds", syncedGroupIds);
+
+		Long companyId = (Long)actionRequest.getAttribute(WebKeys.COMPANY_ID);
+
+		_savePreferences(companyId, syncedGroupIds);
 	}
+
+	private void _savePreferences(long companyId, String[] syncedGroupIds)
+		throws PortalException {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		unicodeProperties.setProperty(
+			"liferayAnalyticsGroupIds", StringUtil.merge(syncedGroupIds, ","));
+
+		_companyService.updatePreferences(companyId, unicodeProperties);
+	}
+
+	@Reference
+	private CompanyService _companyService;
 
 }

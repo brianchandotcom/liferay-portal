@@ -14,23 +14,21 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.layout.seo.model.LayoutSEOSiteEntry;
 import com.liferay.layout.seo.service.base.LayoutSEOSiteEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.DateUtil;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the layout seo site entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.seo.service.LayoutSEOSiteEntryLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutSEOSiteEntryLocalServiceBaseImpl
+ * @author Alicia Garcia
+ * @author Adolfo Pérez
  */
 @Component(
 	property = "model.class.name=com.liferay.layout.seo.model.LayoutSEOSiteEntry",
@@ -39,9 +37,62 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutSEOSiteEntryLocalServiceImpl
 	extends LayoutSEOSiteEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.layout.seo.service.LayoutSEOSiteEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.seo.service.LayoutSEOSiteEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public LayoutSEOSiteEntry fetchLayoutSEOSiteEntryByGroupId(long groupId) {
+		return layoutSEOSiteEntryPersistence.fetchByGroupId(groupId);
+	}
+
+	@Override
+	public LayoutSEOSiteEntry updateLayoutSEOSiteEntry(
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSEOSiteEntry layoutSEOSiteEntry =
+			layoutSEOSiteEntryPersistence.fetchByGroupId(groupId);
+
+		if (layoutSEOSiteEntry == null) {
+			return _addLayoutSEOSiteEntry(
+				userId, groupId, openGraphImageFileEntryId, openGraphEnabled,
+				serviceContext);
+		}
+
+		layoutSEOSiteEntry.setModifiedDate(DateUtil.newDate());
+		layoutSEOSiteEntry.setOpenGraphEnabled(openGraphEnabled);
+		layoutSEOSiteEntry.setOpenGraphImageFileEntryId(
+			openGraphImageFileEntryId);
+
+		return layoutSEOSiteEntryPersistence.update(layoutSEOSiteEntry);
+	}
+
+	private LayoutSEOSiteEntry _addLayoutSEOSiteEntry(
+			long userId, long groupId, long openGraphImageFileEntryId,
+			boolean openGraphEnabled, ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSEOSiteEntry layoutSEOSiteEntry =
+			layoutSEOSiteEntryPersistence.create(
+				counterLocalService.increment());
+
+		layoutSEOSiteEntry.setUuid(serviceContext.getUuid());
+		layoutSEOSiteEntry.setGroupId(groupId);
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		layoutSEOSiteEntry.setCompanyId(group.getCompanyId());
+
+		layoutSEOSiteEntry.setUserId(userId);
+
+		Date now = DateUtil.newDate();
+
+		layoutSEOSiteEntry.setCreateDate(now);
+		layoutSEOSiteEntry.setModifiedDate(now);
+
+		layoutSEOSiteEntry.setOpenGraphEnabled(openGraphEnabled);
+		layoutSEOSiteEntry.setOpenGraphImageFileEntryId(
+			openGraphImageFileEntryId);
+
+		return layoutSEOSiteEntryPersistence.update(layoutSEOSiteEntry);
+	}
+
 }

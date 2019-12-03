@@ -17,16 +17,9 @@
 <%@ include file="/group_selector/init.jsp" %>
 
 <%
-List<Group> groups = (List<Group>)request.getAttribute("liferay-item-selector:group-selector:groups");
-int groupsCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:group-selector:groupsCount"));
-
 String groupType = ParamUtil.getString(request, "groupType");
 
 GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDisplayContext(liferayPortletRequest);
-
-SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, groupSelectorDisplayContext.getIteratorURL());
-
-searchContainer.setEmptyResultsMessage(groupSelectorDisplayContext.getGroupItemSelectorEmptyResultsMessage(groupType));
 %>
 
 <div class="container-fluid-1280">
@@ -47,14 +40,9 @@ searchContainer.setEmptyResultsMessage(groupSelectorDisplayContext.getGroupItemS
 
 <div class="container-fluid-1280 lfr-item-viewer">
 	<liferay-ui:search-container
-		searchContainer="<%= searchContainer %>"
-		total="<%= groupsCount %>"
+		searchContainer="<%= groupSelectorDisplayContext.getSearchContainer() %>"
 		var="listSearchContainer"
 	>
-		<liferay-ui:search-container-results
-			results="<%= groups %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
 			modelVar="curGroup"
@@ -87,7 +75,6 @@ searchContainer.setEmptyResultsMessage(groupSelectorDisplayContext.getGroupItemS
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
-			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>
 </div>

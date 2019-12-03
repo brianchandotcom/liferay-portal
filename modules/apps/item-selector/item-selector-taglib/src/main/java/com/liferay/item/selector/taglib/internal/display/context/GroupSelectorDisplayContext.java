@@ -20,10 +20,12 @@ import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
 import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
@@ -107,6 +109,28 @@ public class GroupSelectorDisplayContext {
 		portletURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
 
 		return portletURL;
+	}
+
+	public SearchContainer getSearchContainer() {
+		SearchContainer searchContainer = new GroupSearch(
+			_liferayPortletRequest, getIteratorURL());
+
+		searchContainer.setEmptyResultsMessage(
+			getGroupItemSelectorEmptyResultsMessage(
+				ParamUtil.getString(_liferayPortletRequest, "groupType")));
+
+		List<Group> groups = (List<Group>)_liferayPortletRequest.getAttribute(
+			"liferay-item-selector:group-selector:groups");
+
+		searchContainer.setResults(groups);
+
+		int groupsCount = GetterUtil.getInteger(
+			_liferayPortletRequest.getAttribute(
+				"liferay-item-selector:group-selector:groupsCount"));
+
+		searchContainer.setTotal(groupsCount);
+
+		return searchContainer;
 	}
 
 	public PortletURL getViewGroupURL(Group group) {

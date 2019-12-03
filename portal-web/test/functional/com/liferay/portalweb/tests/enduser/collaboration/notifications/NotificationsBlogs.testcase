@@ -390,19 +390,24 @@ definition {
 
 		Notifications.gotoNotifications();
 
-		Notifications.viewNewComment(
-			assetType = "comment",
-			content = "Blogs Entry Title",
-			contentBody = "Reply comment mentioning @test",
-			user = "userfn userln");
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln added a new comment to Blogs Entry Title",
+			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
+			value1 = "userfn userln added a new comment to Blogs Entry Title.");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Notifications#NOTIFICATIONS_TITLE_2",
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln added a new comment to Blogs Entry Title",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT_SPECIFIC",
+			value1 = "Reply comment mentioning @test");
+
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry",
+			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
 			value1 = "userfn userln mentioned you in a comment in a blogs entry.");
 
-		AssertTextEquals.assertPartialText(
-			key_contentBody = "Reply comment mentioning",
-			locator1 = "Notifications#NOTIFICATIONS_CONTENT_2",
+		AssertTextEquals(
+			key_notificationsTitle = "userfn userln mentioned you in a comment in a blogs entry",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT_SPECIFIC",
 			value1 = "Reply comment mentioning @test");
 	}
 

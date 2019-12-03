@@ -118,6 +118,41 @@ definition {
 			truncatedURL = "true");
 	}
 
+	@description = "This test ensures that a user can preview SEO tags with Arabic."
+	@priority = "4"
+	test ViewArabicTranslation {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		PortletEntry.changeLocale(
+			fieldName = "HTML Title",
+			locale = "ar-SA");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "عنوان الاختبار");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "وصف الاختبار");
+
+		Page.viewPreview(
+			description = "وصف الاختبار",
+			htmlTitle = "عنوان الاختبار - ${siteName}",
+			pageName = "Test Page",
+			portalURL = "${portalURL}");
+	}
+
 	@description = "This test ensures that a SERP preview is refreshed when switching translations."
 	@priority = "4"
 	test ViewPreviewWhenSwitchingTranslations {

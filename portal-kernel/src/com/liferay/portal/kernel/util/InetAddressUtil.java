@@ -56,7 +56,7 @@ public class InetAddressUtil {
 					() -> InetAddress.getByName(domain));
 
 			Thread thread = new Thread(
-				defaultNoticeableFuture, "InetAddressUtil");
+				defaultNoticeableFuture, "Inet Address Util");
 
 			thread.setDaemon(true);
 

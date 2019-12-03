@@ -33,7 +33,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class SPIDefinitionMonitorImpl implements SPIDefinitionMonitor {
 
 	public void afterPropertiesSet() {
-		_monitorThread = new Thread(new SPIMonitor(), "SPIMonitorThread");
+		_monitorThread = new Thread(new SPIMonitor(), "SPI Monitor Thread");
 
 		_monitorThread.setDaemon(true);
 

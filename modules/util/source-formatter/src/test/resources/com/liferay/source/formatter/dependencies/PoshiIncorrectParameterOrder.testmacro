@@ -40,7 +40,7 @@ definition {
 
 		ProductMenu.gotoControlPanelUsers(portlet = "Users and Organizations");
 
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
 		MultiParametersOneLine(locator1 = "ItemSelector#ADD_BUTTON", value1 = "Add");
 

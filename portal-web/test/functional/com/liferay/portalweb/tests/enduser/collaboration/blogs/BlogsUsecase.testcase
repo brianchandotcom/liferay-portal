@@ -232,7 +232,7 @@ definition {
 
 		var key_imageFileName = "Document_1.jpg";
 
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
 		SelectFrameTop(value1 = "relative=top");
 

@@ -56,7 +56,7 @@
 </tr>
 <!--SELECT_FILE-->
 <tr>
-	<td>SELECT_FILE_IMAGE_PREVIEW</td>
+	<td>SELECT_FILE_IMAGE_CARD</td>
 	<td>//div[contains(@class,'card')]//span[contains(@title,'${key_imageFileName}')]</td>
 	<td></td>
 </tr>

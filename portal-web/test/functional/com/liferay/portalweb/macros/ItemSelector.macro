@@ -70,7 +70,7 @@ definition {
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
 			value1 = "Documents and Media");
 
-		AssertElementNotPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		AssertElementNotPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
 		var key_navTab = "Blog Images";
 
@@ -90,7 +90,7 @@ definition {
 			locator1 = "Search#SEARCH_INFO",
 			value1 = "1 Results for ${imageFileName}");
 
-		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
 		SelectFrameTop(value1 = "relative=top");
 	}
@@ -143,7 +143,7 @@ definition {
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
 			value1 = "Blog Images");
 
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
 		AssertTextEquals(
 			locator1 = "ItemSelector#CAPTION",
@@ -239,7 +239,7 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
 		Click(locator1 = "Icon#EYE_PREVIEW");
 
@@ -311,7 +311,7 @@ definition {
 
 		AssertElementPresent(
 			key_imageFileName = "${imageFileName}",
-			locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 	}
 
 }

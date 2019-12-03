@@ -110,7 +110,7 @@ definition {
 		for (var imageFileName : list "Document_1.jpg,Document_2.jpg,Document_3.jpg,Document_1.png,Document_2.png,Document_3.png") {
 			AssertElementPresent(
 				key_imageFileName = "${imageFileName}",
-				locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 		}
 
 		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
@@ -120,12 +120,12 @@ definition {
 		for (var imageFileName : list "Document_1.jpg,Document_2.jpg,Document_3.jpg,Document_1.png,Document_2.png") {
 			AssertElementPresent(
 				key_imageFileName = "${imageFileName}",
-				locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 		}
 
 		AssertElementNotPresent(
 			key_imageFileName = "Document_3.png",
-			locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 
 		Pagination.viewResults(results = "Showing 1 to 5 of 6 entries.");
 	}

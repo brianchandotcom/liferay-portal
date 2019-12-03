@@ -28,6 +28,7 @@ import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfi
 import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
+import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
@@ -78,6 +79,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class EmbeddedElasticsearchConnection
 	extends BaseElasticsearchConnection {
+
+	public static final String CONNECTION_ID = "EMBEDDED";
 
 	@Override
 	public void close() {
@@ -141,6 +144,11 @@ public class EmbeddedElasticsearchConnection
 		_file.deltree(_jnaTmpDirName);
 	}
 
+	@Override
+	public String getConnectionId() {
+		return CONNECTION_ID;
+	}
+
 	public Node getNode() {
 		return _node;
 	}
@@ -161,6 +169,15 @@ public class EmbeddedElasticsearchConnection
 		java.io.File tempDir = bundleContext.getDataFile(JNA_TMP_DIR);
 
 		_jnaTmpDirName = tempDir.getAbsolutePath();
+
+		close();
+
+		if (elasticsearchConfiguration.operationMode() ==
+				com.liferay.portal.search.elasticsearch7.configuration.
+					OperationMode.EMBEDDED) {
+
+			connect();
+		}
 	}
 
 	@Reference(
@@ -306,6 +323,9 @@ public class EmbeddedElasticsearchConnection
 
 	@Override
 	protected RestHighLevelClient createRestHighLevelClient() {
+		LogUtil.setRestClientLoggerLevel(
+			elasticsearchConfiguration.restClientLoggerLevel());
+
 		startNode();
 
 		Class<? extends EmbeddedElasticsearchConnection> clazz = getClass();
@@ -483,6 +503,8 @@ public class EmbeddedElasticsearchConnection
 
 	@Reference
 	protected ClusterSettingsContext clusterSettingsContext;
+
+	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
 
 	@Reference
 	protected Props props;

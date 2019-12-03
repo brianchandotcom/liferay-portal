@@ -25,6 +25,8 @@ public interface ElasticsearchConnection {
 
 	public void connect();
 
+	public String getConnectionId();
+
 	public OperationMode getOperationMode();
 
 	public RestHighLevelClient getRestHighLevelClient();

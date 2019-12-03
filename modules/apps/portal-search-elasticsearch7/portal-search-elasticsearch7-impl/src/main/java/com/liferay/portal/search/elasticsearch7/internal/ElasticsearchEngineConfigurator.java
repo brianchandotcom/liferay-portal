@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.FutureTask;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,16 +41,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ElasticsearchEngineConfigurator
 	extends BaseSearchEngineConfigurator {
-
-	@Override
-	public void destroy() {
-		ElasticsearchConnection elasticsearchConnection =
-			_elasticsearchConnectionManager.getElasticsearchConnection();
-
-		elasticsearchConnection.close();
-
-		super.destroy();
-	}
 
 	@Activate
 	protected void activate() {
@@ -87,33 +74,6 @@ public class ElasticsearchEngineConfigurator
 		return searchEngineHelper;
 	}
 
-	@Override
-	protected void initialize() {
-		FutureTask<Void> futureTask = new FutureTask<Void>(
-			() -> {
-				_elasticsearchConnectionManager.connect();
-
-				return null;
-			});
-
-		Thread thread = new Thread(
-			futureTask, "Elasticsearch Initialization Thread");
-
-		thread.setDaemon(true);
-
-		thread.start();
-
-		try {
-			futureTask.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(
-				"Unable to initialize Elasticsearch engine", e);
-		}
-
-		super.initialize();
-	}
-
 	@Reference(
 		target = "(&(search.engine.id=SYSTEM_ENGINE)(search.engine.impl=Elasticsearch))"
 	)
@@ -144,9 +104,6 @@ public class ElasticsearchEngineConfigurator
 
 	@Reference
 	private DestinationFactory _destinationFactory;
-
-	@Reference
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 
 	@Reference(target = "(!(search.engine.impl=*))")
 	private IndexSearcher _indexSearcher;

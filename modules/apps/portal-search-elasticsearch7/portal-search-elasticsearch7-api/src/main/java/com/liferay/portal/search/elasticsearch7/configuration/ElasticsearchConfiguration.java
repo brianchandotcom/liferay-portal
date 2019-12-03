@@ -36,11 +36,10 @@ public interface ElasticsearchConfiguration {
 	public OperationMode operationMode();
 
 	@Meta.AD(
-		deflt = "http://localhost:9200",
-		description = "network-host-addresses-help",
-		name = "network-host-addresses", required = false
+		deflt = "remote", description = "remote-cluster-connection-id-help",
+		name = "remote-cluster-connection-id", required = false
 	)
-	public String[] networkHostAddresses();
+	public String remoteClusterConnectionId();
 
 	@Meta.AD(
 		deflt = "liferay-", description = "index-name-prefix-help",
@@ -79,48 +78,6 @@ public interface ElasticsearchConfiguration {
 	public String overrideTypeMappings();
 
 	@Meta.AD(
-		deflt = "false", description = "authentication-enabled-help",
-		name = "authentication-enabled", required = false
-	)
-	public boolean authenticationEnabled();
-
-	@Meta.AD(
-		deflt = "elastic", description = "username-help", name = "username",
-		required = false
-	)
-	public String username();
-
-	@Meta.AD(
-		description = "password-help", name = "password", required = false,
-		type = Meta.Type.Password
-	)
-	public String password();
-
-	@Meta.AD(
-		deflt = "false", description = "http-ssl-enabled-help",
-		name = "http-ssl-enabled", required = false
-	)
-	public boolean httpSSLEnabled();
-
-	@Meta.AD(
-		deflt = "pkcs12", description = "truststore-type-help",
-		name = "truststore-type", required = false
-	)
-	public String truststoreType();
-
-	@Meta.AD(
-		deflt = "/path/to/localhost.p12", description = "truststore-path-help",
-		name = "truststore-path", required = false
-	)
-	public String truststorePath();
-
-	@Meta.AD(
-		description = "truststore-password-help", name = "truststore-password",
-		required = false, type = Meta.Type.Password
-	)
-	public String truststorePassword();
-
-	@Meta.AD(
 		deflt = "true", description = "log-exceptions-only-help",
 		name = "log-exceptions-only", required = false
 	)
@@ -130,7 +87,7 @@ public interface ElasticsearchConfiguration {
 		deflt = "ERROR", description = "rest-client-logger-level-help",
 		name = "rest-client-logger-level", required = false
 	)
-	public String restClientLoggerLevel();
+	public RESTClientLoggerLevel restClientLoggerLevel();
 
 	@Meta.AD(
 		deflt = "LiferayElasticsearchCluster",

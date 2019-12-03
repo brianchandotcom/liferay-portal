@@ -148,7 +148,8 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 			<c:choose>
 				<c:when test="<%= (role != null) && role.isSystem() %>">
-					<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="name" value="<%= roleName %>" />
+					<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= roleName %>" />
+					<aui:input name="name" type="hidden" value="<%= roleName %>" />
 				</c:when>
 				<c:otherwise>
 					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="key-field-help" label="key" name="name" />

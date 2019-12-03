@@ -25,6 +25,8 @@ String groupType = ParamUtil.getString(request, "groupType");
 GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDisplayContext(liferayPortletRequest);
 
 SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, groupSelectorDisplayContext.getIteratorURL());
+
+searchContainer.setEmptyResultsMessage(groupSelectorDisplayContext.getGroupItemSelectorEmptyResultsMessage(groupType));
 %>
 
 <div class="container-fluid-1280">

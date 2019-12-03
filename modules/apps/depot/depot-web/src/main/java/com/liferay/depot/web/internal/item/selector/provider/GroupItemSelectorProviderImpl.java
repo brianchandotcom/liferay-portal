@@ -46,6 +46,11 @@ public class GroupItemSelectorProviderImpl
 	implements GroupItemSelectorProvider {
 
 	@Override
+	public String getEmptyResultsMessage() {
+		return "no-repositories-were-found";
+	}
+
+	@Override
 	public List<Group> getGroups(
 		long companyId, long groupId, String keywords, int start, int end) {
 

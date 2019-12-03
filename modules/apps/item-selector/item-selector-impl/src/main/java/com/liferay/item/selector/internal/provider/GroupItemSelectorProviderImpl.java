@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portlet.usersadmin.search.GroupSearch;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -43,6 +44,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GroupItemSelectorProviderImpl
 	implements GroupItemSelectorProvider {
+
+	@Override
+	public String getEmptyResultsMessage() {
+		return GroupSearch.EMPTY_RESULTS_MESSAGE;
+	}
 
 	@Override
 	public List<Group> getGroups(

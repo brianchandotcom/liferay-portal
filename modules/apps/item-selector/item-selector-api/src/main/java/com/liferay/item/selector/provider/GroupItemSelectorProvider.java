@@ -24,6 +24,8 @@ import java.util.Locale;
  */
 public interface GroupItemSelectorProvider {
 
+	public String getEmptyResultsMessage();
+
 	public List<Group> getGroups(
 		long companyId, long groupId, String keywords, int start, int end);
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.usersadmin.search.GroupSearch;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,18 @@ public class GroupSelectorDisplayContext {
 		LiferayPortletRequest liferayPortletRequest) {
 
 		_liferayPortletRequest = liferayPortletRequest;
+	}
+
+	public String getGroupItemSelectorEmptyResultsMessage(String groupType) {
+		Optional<GroupItemSelectorProvider> optional =
+			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
+				groupType);
+
+		return optional.map(
+			GroupItemSelectorProvider::getEmptyResultsMessage
+		).orElse(
+			GroupSearch.EMPTY_RESULTS_MESSAGE
+		);
 	}
 
 	public String getGroupItemSelectorIcon(String groupType) {

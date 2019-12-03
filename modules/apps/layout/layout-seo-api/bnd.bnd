@@ -5,5 +5,6 @@ Export-Package:\
 	com.liferay.layout.seo.canonical.url,\
 	com.liferay.layout.seo.exception,\
 	com.liferay.layout.seo.model,\
+	com.liferay.layout.seo.open.graph,\
 	com.liferay.layout.seo.service,\
 	com.liferay.layout.seo.service.persistence

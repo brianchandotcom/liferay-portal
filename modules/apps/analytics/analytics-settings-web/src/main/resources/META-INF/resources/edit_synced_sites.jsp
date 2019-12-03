@@ -34,12 +34,16 @@
 		groupParams.put("site", Boolean.TRUE);
 
 		List<Group> groups = GroupServiceUtil.search(themeDisplay.getCompanyId(), new long[] {PortalUtil.getClassNameId(Group.class)}, "", groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+
+		Set<String> syncedGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedGroupIds());
 		%>
 
 		<liferay-ui:search-container
 			curParam="inheritedSitesCur"
 			headerNames="name"
-			rowChecker="<%= new RowChecker(renderResponse) %>"
+			rowChecker="<%= new GroupIdChecker(renderResponse, syncedGroupIds) %>"
 			total="<%= groups.size() %>"
 		>
 			<liferay-ui:search-container-results

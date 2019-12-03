@@ -22,26 +22,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a user can redirect to the repository via personal menu."
-	@priority = "5"
-	test AccessViaPersonalMenu {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		Navigator.openURL();
-
-		DepotNavigator.gotoDepotViaPersonalMenu(depotName = "Test Depot Name");
-
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
-			value1 = "Test Depot Name");
-	}
-
 	@description = "This ensures that a user can redirect to the repository via Space icon."
 	@priority = "5"
 	test AccessViaSiteNavigation {

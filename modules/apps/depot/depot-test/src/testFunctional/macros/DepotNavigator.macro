@@ -40,24 +40,6 @@ definition {
 			value1 = "${portlet}");
 	}
 
-	macro gotoDepotViaPersonalMenu {
-		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
-
-		Click(
-			key_dropdownItem = "My Sites",
-			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		Pause(locator1 = "3000");
-
-		Navigator.gotoNavItem(navItem = "Repositories");
-
-		SiteSelector.selectSite(site = "${depotName}");
-	}
-
 	macro gotoDepotViaSpaceIcon {
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 

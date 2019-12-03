@@ -98,7 +98,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var Util = Liferay.Util;
 
-	const addMenuItemFm = document.getElementById(
+	var addMenuItemFm = document.getElementById(
 		'<portlet:namespace />addMenuItemFm'
 	);
 

@@ -194,27 +194,27 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 </script>
 
 <aui:script use="aui-alert,aui-base">
-	const languageSelectInput = A.one('#<portlet:namespace />languageId');
+	var languageSelectInput = A.one('#<portlet:namespace />languageId');
 
 	if (languageSelectInput) {
-		const nameMapString = '<%= nameMap %>';
+		var nameMapString = '<%= nameMap %>';
 
 		languageSelectInput.on('change', function(event) {
-			const select = event.currentTarget.getDOMNode();
+			var select = event.currentTarget.getDOMNode();
 
-			const selectedOption = select.options[select.selectedIndex];
+			var selectedOption = select.options[select.selectedIndex];
 
 			Liferay.fire('inputLocalized:defaultLocaleChanged', {
 				item: selectedOption
 			});
 
-			const defaultLanguage = languageSelectInput.val();
+			var defaultLanguage = languageSelectInput.val();
 
 			var defaultLanguageName = null;
 
 			if (nameMapString) {
 				try {
-					let nameMap = JSON.parse(nameMapString);
+					var nameMap = JSON.parse(nameMapString);
 					if (nameMap) {
 						defaultLanguageName = nameMap[defaultLanguage];
 					}

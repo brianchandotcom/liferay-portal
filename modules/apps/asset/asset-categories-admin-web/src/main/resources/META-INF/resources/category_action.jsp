@@ -100,7 +100,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 
 		if (moveCategoryIcon) {
 			moveCategoryIcon.addEventListener('click', function(event) {
-				const itemSelectorDialog = new ItemSelectorDialog.default({
+				var itemSelectorDialog = new ItemSelectorDialog.default({
 					eventName: '<portlet:namespace />selectCategory',
 					singleSelect: true,
 					title:
@@ -111,7 +111,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 				itemSelectorDialog.open();
 
 				itemSelectorDialog.on('selectedItemChange', function(event) {
-					const selectedItem = event.selectedItem;
+					var selectedItem = event.selectedItem;
 
 					if (selectedItem) {
 						var parentCategoryId = 0;

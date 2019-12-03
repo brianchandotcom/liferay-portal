@@ -94,7 +94,7 @@
 	);
 
 	chooseSpecificDisplayPage.addEventListener('click', function(event) {
-		const itemSelectorDialog = new ItemSelectorDialog.default({
+		var itemSelectorDialog = new ItemSelectorDialog.default({
 			eventName: '<%= selectAssetDisplayPageDisplayContext.getEventName() %>',
 			singleSelect: true,
 			title: '<liferay-ui:message key="select-page" />',
@@ -105,7 +105,7 @@
 		itemSelectorDialog.open();
 
 		itemSelectorDialog.on('selectedItemChange', function(event) {
-			const selectedItem = event.selectedItem;
+			var selectedItem = event.selectedItem;
 
 			assetDisplayPageIdInput.value = '';
 

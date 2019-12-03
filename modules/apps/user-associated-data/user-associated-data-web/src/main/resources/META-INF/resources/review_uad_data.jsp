@@ -219,11 +219,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 </portlet:renderURL>
 
 <aui:script require="metal-dom/src/dom as dom">
-	const baseURL = '<%= reviewUADDataURL %>';
+	var baseURL = '<%= reviewUADDataURL %>';
 
-	const clickListeners = [];
+	var clickListeners = [];
 
-	const registerClickHandler = function(element, clickHandlerFn) {
+	var registerClickHandler = function(element, clickHandlerFn) {
 		clickListeners.push(
 			dom.delegate(element, 'click', 'input', clickHandlerFn)
 		);
@@ -232,7 +232,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	registerClickHandler(<portlet:namespace />applicationPanelBody, function(
 		event
 	) {
-		const url = new URL(baseURL, window.location.origin);
+		var url = new URL(baseURL, window.location.origin);
 
 		url.searchParams.set(
 			'<portlet:namespace />applicationKey',
@@ -246,7 +246,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		registerClickHandler(<portlet:namespace />entitiesTypePanelBody, function(
 			event
 		) {
-			const url = new URL(baseURL, window.location.origin);
+			var url = new URL(baseURL, window.location.origin);
 
 			url.searchParams.set(
 				'<portlet:namespace />uadRegistryKey',
@@ -258,7 +258,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	</c:if>
 
 	registerClickHandler(<portlet:namespace />scopePanelBody, function(event) {
-		const url = new URL(baseURL, window.location.origin);
+		var url = new URL(baseURL, window.location.origin);
 
 		url.searchParams.set('<portlet:namespace />applicationKey', '');
 		url.searchParams.set('<portlet:namespace />scope', event.target.value);
@@ -267,7 +267,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	});
 
 	function handleDestroyPortlet() {
-		for (let i = 0; i < clickListeners.length; i++) {
+		for (var i = 0; i < clickListeners.length; i++) {
 			clickListeners[i].removeListener();
 		}
 

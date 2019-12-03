@@ -165,16 +165,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 </div>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	const layoutPageTemplateEntries = document.getElementById(
+	var layoutPageTemplateEntries = document.getElementById(
 		'<portlet:namespace />layoutPageTemplateEntries'
 	);
 
-	const addLayoutActionOptionQueryClickHandler = dom.delegate(
+	var addLayoutActionOptionQueryClickHandler = dom.delegate(
 		layoutPageTemplateEntries,
 		'click',
 		'.add-layout-action-option',
 		function(event) {
-			const actionElement = event.delegateTarget;
+			var actionElement = event.delegateTarget;
 
 			Liferay.Util.openWindow({
 				dialog: {

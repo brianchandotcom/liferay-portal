@@ -62,7 +62,7 @@ assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(renderRequ
 </aui:form>
 
 <aui:script>
-	const Util = Liferay.Util;
+	var Util = Liferay.Util;
 
 	Util.selectEntityHandler(
 		'#<portlet:namespace />selectAssetTagFm',

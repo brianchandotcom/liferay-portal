@@ -92,7 +92,7 @@ if (selLayout != null) {
 		Liferay.Loader.require(
 			'frontend-js-web/liferay/ItemSelectorDialog.es',
 			function(ItemSelectorDialog) {
-				const itemSelectorDialog = new ItemSelectorDialog.default({
+				var itemSelectorDialog = new ItemSelectorDialog.default({
 					eventName: '<%= eventName %>',
 					singleSelect: true,
 					title: '<liferay-ui:message key="select-layout" />',

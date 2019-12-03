@@ -142,7 +142,7 @@ SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContaine
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	const assetEntryId = '<%= assetPublisherDisplayContext.getAssetEntryId() %>';
+	var assetEntryId = '<%= assetPublisherDisplayContext.getAssetEntryId() %>';
 
 	if (assetEntryId) {
 		window.location.hash = assetEntryId;

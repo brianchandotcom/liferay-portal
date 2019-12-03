@@ -208,21 +208,21 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 </script>
 
 <aui:script use="aui-alert,aui-base">
-	const languageSelectInput = A.one('#<portlet:namespace />languageId');
+	var languageSelectInput = A.one('#<portlet:namespace />languageId');
 
 	if (languageSelectInput) {
-		const nameInput = Liferay.component('<portlet:namespace />name');
+		var nameInput = Liferay.component('<portlet:namespace />name');
 
 		languageSelectInput.on('change', function(event) {
-			const select = event.currentTarget.getDOMNode();
+			var select = event.currentTarget.getDOMNode();
 
-			const selectedOption = select.options[select.selectedIndex];
+			var selectedOption = select.options[select.selectedIndex];
 
 			Liferay.fire('inputLocalized:defaultLocaleChanged', {
 				item: selectedOption
 			});
 
-			const defaultLanguage = languageSelectInput.val();
+			var defaultLanguage = languageSelectInput.val();
 
 			var defaultLanguageSiteName = null;
 

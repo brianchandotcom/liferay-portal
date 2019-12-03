@@ -255,9 +255,9 @@ for (long groupId : groupIds) {
 		function(event) {
 			event.preventDefault();
 
-			const delegateTarget = event.delegateTarget;
+			var delegateTarget = event.delegateTarget;
 
-			const itemSelectorDialog = new ItemSelectorDialog.default({
+			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<%= eventName %>',
 				title: delegateTarget.dataset.title,
 				url: delegateTarget.dataset.href
@@ -266,7 +266,7 @@ for (long groupId : groupIds) {
 			itemSelectorDialog.open();
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {
-				const selectedItems = event.selectedItem;
+				var selectedItems = event.selectedItem;
 
 				if (selectedItems) {
 					selectAssets(selectedItems);

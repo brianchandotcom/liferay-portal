@@ -178,7 +178,7 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	<liferay-portlet:resourceURL id="/users_admin/get_users_count" portletName="<%= UsersAdminPortletKeys.USERS_ADMIN %>" var="getUsersCountResourceURL" />
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
-		const url = new URL(
+		var url = new URL(
 			'<%= getUsersCountResourceURL %>',
 			window.location.origin
 		);

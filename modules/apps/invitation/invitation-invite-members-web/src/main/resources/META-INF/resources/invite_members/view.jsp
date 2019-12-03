@@ -56,7 +56,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 	</c:when>
 	<c:otherwise>
 		<aui:script require="metal-dom/src/dom">
-			let dom = metalDomSrcDom.default;
+			var dom = metalDomSrcDom.default;
 
 			var portlet = document.getElementById('p_p_id<portlet:namespace />');
 

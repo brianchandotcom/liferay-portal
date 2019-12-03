@@ -50,13 +50,13 @@
 				'change',
 				'input[type=checkbox]',
 				function(event) {
-					const toggle = event.delegateTarget;
+					var toggle = event.delegateTarget;
 
-					const disableOnChecked = toggle.dataset.disableonchecked;
-					const inputs = document.querySelectorAll(toggle.dataset.inputselector);
+					var disableOnChecked = toggle.dataset.disableonchecked;
+					var inputs = document.querySelectorAll(toggle.dataset.inputselector);
 
-					for (let i = 0; i < inputs.length; i++) {
-						const input = inputs[i];
+					for (var i = 0; i < inputs.length; i++) {
+						var input = inputs[i];
 
 						input.disabled = disableOnChecked
 							? !toggle.checked

@@ -22,7 +22,7 @@
 	</div>
 
 	<aui:script require="metal-dom/src/dom">
-		let dom = metalDomSrcDom.default;
+		var dom = metalDomSrcDom.default;
 
 		var portletWrapper = document.getElementById(
 			'p_p_id_<%= portletDisplay.getId() %>_'

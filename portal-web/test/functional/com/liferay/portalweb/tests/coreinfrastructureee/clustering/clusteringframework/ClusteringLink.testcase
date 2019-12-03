@@ -1,6 +1,7 @@
 @component-name = "portal-clustering"
 definition {
 
+	property cluster.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
@@ -22,7 +23,6 @@ definition {
 
 	@priority = "5"
 	test AutodetectClusteringAddress {
-		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.autodetect.address=";
 		property test.name.skip.portal.instance = "ClusteringLink#AutodetectClusteringAddress";
 
 		AssertConsoleTextPresent(value1 = "bind_addr=127.0.0.1");
@@ -31,27 +31,17 @@ definition {
 
 	@priority = "5"
 	test CustomClusteringAddress {
-		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.autodetect.address=";
+		property cluster.node.ip = "true";
 		property test.name.skip.portal.instance = "ClusteringLink#CustomClusteringAddress";
 
 		var ipAddress = PropsUtil.get("ip.address");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dadd.cluster.link.properties=true -Dcluster.node.ip.address=${ipAddress}");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Portlet.assertServerStartup();
 
 		AssertConsoleTextPresent(value1 = "bind_addr=${ipAddress}");
 	}
 
 	@priority = "5"
 	test CustomControlChannelPropertiesFile {
-		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.channel.properties.control=tcp.xml";
+		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.name.skip.portal.instance = "ClusteringLink#CustomControlChannelPropertiesFile";
 
 		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
@@ -60,7 +50,7 @@ definition {
 
 	@priority = "5"
 	test CustomizeChannelNames {
-		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.channel.name.control=test-control-channel${line.separator}cluster.link.channel.name.transport.0=test-transport-channel";
+		property custom.properties = "cluster.link.channel.name.control=test-control-channel${line.separator}cluster.link.channel.name.transport.0=test-transport-channel";
 		property test.name.skip.portal.instance = "ClusteringLink#CustomizeChannelNames";
 
 		AssertConsoleTextPresent(value1 = "channelName: test-control-channel");
@@ -69,6 +59,7 @@ definition {
 
 	@priority = "5"
 	test CustomTransportChannelPropertiesFile {
+		property cluster.enabled = "false";
 		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.channel.properties.transport.0=tcp.xml";
 		property test.name.skip.portal.instance = "ClusteringLink#CustomTransportChannelPropertiesFile";
 

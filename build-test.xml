@@ -6839,18 +6839,8 @@ go</echo>
 		<if>
 			<equals arg1="${add.new.properties}" arg2="true" />
 			<then>
-				<if>
-					<equals arg1="${add.cluster.link.properties}" arg2="true" />
-					<then>
-						<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
-cluster.link.bind.addr["cluster-link-control"]=${cluster.node.ip.address}
-cluster.link.bind.addr["cluster-link-udp"]=${cluster.node.ip.address}</echo>
-					</then>
-					<else>
-						<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
+				<echo append="true" file="${test.app.server.classes.portal.dir}/portal-ext.properties">
 ${update.properties}</echo>
-					</else>
-				</if>
 			</then>
 			<else>
 				<replace
@@ -7340,6 +7330,17 @@ web.server.display.node=true</echo>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 cluster.link.channel.properties.control=${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/clustering_jdbc_ping.xml</echo>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="cluster.node.ip" />
+
+		<if>
+			<equals arg1="${cluster.node.ip}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+cluster.link.bind.addr["cluster-link-control"]=${ip.address}
+cluster.link.bind.addr["cluster-link-udp"]=${ip.address}</echo>
 			</then>
 		</if>
 

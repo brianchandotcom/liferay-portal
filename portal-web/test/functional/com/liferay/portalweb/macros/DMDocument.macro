@@ -676,7 +676,7 @@ definition {
 			locator1 = "Button#MOVE_TO_RECYCLE_BIN",
 			value1 = "Move to Recycle Bin");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		Alert.viewSuccessMessage();
 	}
 
 	macro deletePGViaMG {

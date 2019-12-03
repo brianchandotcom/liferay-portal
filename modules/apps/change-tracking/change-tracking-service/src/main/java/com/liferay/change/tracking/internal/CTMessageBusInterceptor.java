@@ -17,13 +17,10 @@ package com.liferay.change.tracking.internal;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,19 +35,13 @@ public class CTMessageBusInterceptor implements MessageBusInterceptor {
 	public boolean intercept(
 		MessageBus messageBus, String destinationName, Message message) {
 
-		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
-
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+		if (!destinationName.equals(DestinationNames.SUBSCRIPTION_SENDER)) {
 			return false;
 		}
 
-		Destination destination = messageBus.getDestination(destinationName);
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-		if ((destination != null) &&
-			Objects.equals(
-				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-				destination.getDestinationType())) {
-
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			return false;
 		}
 

@@ -18,11 +18,11 @@
 	{@param? _mappedFieldLabel: string}
 	{@param? _selected: any}
 	{@param? _translated: bool}
-	{@param? defaultLanguageId: string}
+  {@param? _translating: bool}
+  {@param? _value: html}
 	{@param? editableId: string}
 	{@param? editableValues: ?}
 	{@param? fragmentEntryLinkId: string}
-	{@param? languageId: string}
 
 	{let $editableClasses kind="text"}
 		fragments-editor__editable
@@ -43,7 +43,7 @@
 			{sp}fragments-editor__editable--highlighted
 		{/if}
 
-		{if $languageId != $defaultLanguageId}
+		{if $_translating}
 			{sp}fragments-editor__editable--translating
 
 			{if $_translated}
@@ -107,10 +107,10 @@
 			{/let}
 
 			<a {$linkAttributes}>
-				{$content}
+				{$_value ?: $content}
 			</a>
 		{else}
-			{$content}
+			{$_value ?: $content}
 		{/if}
 	</lfr-editable>
 {/template}

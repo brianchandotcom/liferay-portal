@@ -55,6 +55,7 @@ import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
+import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 
 /**
  * @type {number}
@@ -97,42 +98,6 @@ class FragmentEditableField extends PortletBase {
 		this._destroyProcessors();
 		this._disposeFloatingToolbar();
 		this.element.removeEventListener('click', this._createProcessor);
-	}
-
-	/**
-	 * @inheritDoc
-	 * @param {!object} state
-	 * @returns {object}
-	 */
-	prepareStateForRender(state) {
-		const segmentedValue = computeEditableValue(this.editableValues, {
-			defaultLanguageId: this.defaultLanguageId,
-			selectedExperienceId: this.segmentsExperienceId,
-			selectedLanguageId: this.languageId
-		});
-
-		const value = this._mapped
-			? isNullOrUndefined(this._mappedFieldValue)
-				? this.editableValues.defaultValue
-				: this._mappedFieldValue
-			: segmentedValue;
-
-		const processor =
-			FragmentProcessors[this.type] || FragmentProcessors.fallback;
-
-		const content = Soy.toIncDom(
-			processor.render(this.content, value, this.editableValues)
-		);
-
-		const translated =
-			!this._mapped && Boolean(segmentedValue[this.languageId]);
-
-		let nextState = state;
-
-		nextState = setIn(nextState, ['_translated'], translated);
-		nextState = setIn(nextState, ['content'], content);
-
-		return nextState;
 	}
 
 	/**
@@ -492,6 +457,13 @@ FragmentEditableField.STATE = {
 	_processorEnabled: Config.internal()
 		.bool()
 		.value(false),
+	_translated: Config.internal()
+		.bool()
+		.value(false),
+	_translating: Config.internal()
+		.bool()
+		.value(false),
+	_value: Config.internal().value(null),
 	content: Config.string().required(),
 	editableId: Config.string().required(),
 	editableValues: Config.object().required(),
@@ -528,6 +500,10 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		'selectedItems'
 	],
 	(state, props) => {
+		const prefixedSegmentsExperienceId = prefixSegmentsExperienceId(
+			state.segmentsExperienceId
+		);
+
 		const _itemId = `${props.fragmentEntryLinkId}-${props.editableId}`;
 
 		const _activable =
@@ -557,7 +533,7 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			state.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable &&
 			state.hoveredItemId === _itemId;
 
-		const _mapped = editableIsMapped(props.editableValues);
+		const _mapped = !!props._mappedFieldValue;
 
 		const _mappedItemHovered =
 			state.hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem &&
@@ -570,6 +546,35 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 				selectedItem.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
 		);
 
+		const _translated = !!(
+			!_mapped &&
+			(props.editableValues[state.languageId] ||
+				(props.editableValues[prefixedSegmentsExperienceId] &&
+					props.editableValues[prefixedSegmentsExperienceId][
+						state.languageId
+					]))
+		);
+
+		const _translating = state.defaultLanguageId !== state.languageId;
+
+		const _value = Soy.toIncDom(
+			(
+				FragmentProcessors[props.type] || FragmentProcessors.fallback
+			).render(
+				props.content,
+				_mapped
+					? isNullOrUndefined(props._mappedFieldValue)
+						? props.editableValues.defaultValue
+						: props._mappedFieldValue
+					: computeEditableValue(props.editableValues, {
+							defaultLanguageId: state.defaultLanguageId,
+							selectedExperienceId: state.segmentsExperienceId,
+							selectedLanguageId: state.languageId
+					  }),
+				props.editableValues
+			)
+		);
+
 		return {
 			...state,
 			_activable,
@@ -579,7 +584,10 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			_itemId,
 			_mapped,
 			_mappedItemHovered,
-			_selected
+			_selected,
+			_translated,
+			_translating,
+			_value
 		};
 	}
 );

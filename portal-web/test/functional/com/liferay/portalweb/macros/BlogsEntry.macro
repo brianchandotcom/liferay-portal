@@ -1135,16 +1135,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "${pageName}");
 
-		AssertClick(
-			locator1 = "BlogsEntry#TITLE_LINK",
-			value1 = "${entryTitle}");
-
-		Pause(locator1 = "3000");
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
-			value1 = "${entryTitle}");
-
 		var entryViewCount = selenium.getText("BlogsEntry#ENTRY_VIEW_COUNT");
 		var entryViewCount = StringUtil.extractLast("${entryViewCount}", "-");
 		var entryViewCount = StringUtil.extractDigits("${entryViewCount}");
@@ -1171,6 +1161,19 @@ definition {
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
+
+		if ("${entryViewCount}" == "1") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "BlogsEntry#ENTRY_VIEW_COUNT",
+				value1 = "${entryViewCount} View");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "BlogsEntry#ENTRY_VIEW_COUNT",
+				value1 = "${entryViewCount} Views");
+		}
+
+		Navigator.gotoPage(pageName = "${pageName}");
 
 		var entryViewCount = ${entryViewCount} + 1;
 

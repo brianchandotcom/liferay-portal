@@ -103,11 +103,8 @@ const PreviewSeoContainer = ({
 			const defaultValue = targets[type] && targets[type].defaultValue;
 			const customizable = targets[type] && targets[type].customizable;
 
-			if (
-				defaultValue &&
-				((customizable && disabled) || (!customizable && !value))
-			) {
-				value = defaultValue;
+			if (disabled || (!customizable && !value)) {
+				value = defaultValue || '';
 			}
 
 			if (type === 'description') {

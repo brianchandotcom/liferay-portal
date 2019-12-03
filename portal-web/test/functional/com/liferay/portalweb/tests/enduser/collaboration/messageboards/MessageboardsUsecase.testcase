@@ -958,16 +958,18 @@ definition {
 		var parentCategoryId = JSONMBMessage.getCategoryId();
 
 		for (var categoryName : list "MB Sub Category1 Name,MB Sub Category2 Name,MB Sub Category3 Name,MB Sub Category4 Name,MB Sub Category5 Name,MB Sub Category6 Name") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "${categoryName} Description",
-				categoryName = "${categoryName}",
-				parentCategoryId = "${parentCategoryId}",
-				userEmailAddress = "test@liferay.com");
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+			MessageboardsCategory.gotoCP(categoryName = "MB Category1 Name");
+
+			MessageboardsCategory.addCP(categoryName = "${categoryName}");
 		}
 
-		JSONMBMessage.addMessage(
-			categoryId = "${parentCategoryId}",
-			groupName = "Guest",
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "MB Category1 Name");
+
+		MessageboardsThread.addCP(
 			threadBody = "MB Thread Message Body in Sub Category",
 			threadSubject = "MB Thread Message Subject in Sub Category");
 

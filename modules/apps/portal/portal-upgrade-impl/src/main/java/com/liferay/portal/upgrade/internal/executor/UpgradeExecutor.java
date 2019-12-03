@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.internal.executor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.index.updater.IndexUpdaterUtil;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
@@ -34,11 +36,14 @@ import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
 
 import java.io.OutputStream;
 
+import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +57,37 @@ public class UpgradeExecutor {
 	public void execute(
 		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
 		String outputStreamContainerFactoryName) {
+
+		Bundle bundle = null;
+
+		for (UpgradeInfo upgradeInfo : upgradeInfos) {
+			UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
+
+			Bundle currentBundle = FrameworkUtil.getBundle(
+				upgradeStep.getClass());
+
+			if (currentBundle == null) {
+				continue;
+			}
+
+			if (Objects.equals(
+					currentBundle.getSymbolicName(), bundleSymbolicName)) {
+
+				bundle = currentBundle;
+
+				break;
+			}
+		}
+
+		Version requiredVersion = null;
+
+		if (bundle != null) {
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
+
+			requiredVersion = Version.parseVersion(
+				headers.get("Liferay-Require-SchemaVersion"));
+		}
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
@@ -78,16 +114,31 @@ public class UpgradeExecutor {
 					schemaVersionString));
 		}
 
-		if (size == 0) {
-			return;
+		if (size != 0) {
+			release = executeUpgradeInfos(
+				bundleSymbolicName, upgradeInfosList.get(0),
+				outputStreamContainerFactoryName);
 		}
 
-		executeUpgradeInfos(
-			bundleSymbolicName, upgradeInfosList.get(0),
-			outputStreamContainerFactoryName);
+		if (release != null) {
+			String schemaVersion = release.getSchemaVersion();
+
+			if (Validator.isNull(schemaVersion) || (requiredVersion == null)) {
+				return;
+			}
+
+			if (requiredVersion.compareTo(Version.parseVersion(schemaVersion)) >
+					0) {
+
+				throw new IllegalStateException(
+					StringBundler.concat(
+						"Unable to upgrade ", bundleSymbolicName, " to ",
+						requiredVersion, " from ", schemaVersion));
+			}
+		}
 	}
 
-	public void executeUpgradeInfos(
+	public Release executeUpgradeInfos(
 		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
 		String outputStreamContainerFactoryName) {
 
@@ -110,6 +161,8 @@ public class UpgradeExecutor {
 		if (release != null) {
 			_releasePublisher.publish(release);
 		}
+
+		return release;
 	}
 
 	@Activate

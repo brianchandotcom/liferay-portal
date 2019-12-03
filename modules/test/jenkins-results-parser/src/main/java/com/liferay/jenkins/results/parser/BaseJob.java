@@ -18,9 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -56,52 +54,6 @@ public abstract class BaseJob implements Job {
 		}
 
 		return builds;
-	}
-
-	@Override
-	public Map<String, String> getDefaultParameters(
-		JenkinsMaster jenkinsMaster) {
-
-		Map<String, String> jobParameters = new HashMap<>();
-
-		JSONObject actionsJSONObject = null;
-
-		JSONObject jobJSONObject = getJobJSONObject(
-			jenkinsMaster,
-			"actions[parameterDefinitions[defaultParameterValue[value],name]]");
-
-		JSONArray actionsJSONArray = jobJSONObject.getJSONArray("actions");
-
-		for (int i = 0; i < actionsJSONArray.length(); i++) {
-			JSONObject jsonObject = actionsJSONArray.getJSONObject(i);
-
-			if (jsonObject.has("parameterDefinitions")) {
-				actionsJSONObject = jsonObject;
-
-				break;
-			}
-		}
-
-		if (actionsJSONObject == null) {
-			return jobParameters;
-		}
-
-		JSONArray parameterDefinitionsJSONArray =
-			actionsJSONObject.getJSONArray("parameterDefinitions");
-
-		for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
-			JSONObject parameterJSONObject =
-				parameterDefinitionsJSONArray.getJSONObject(i);
-
-			JSONObject defaultParameterValueJSONObject =
-				parameterJSONObject.getJSONObject("defaultParameterValue");
-
-			jobParameters.put(
-				parameterJSONObject.getString("name"),
-				defaultParameterValueJSONObject.getString("value"));
-		}
-
-		return jobParameters;
 	}
 
 	@Override

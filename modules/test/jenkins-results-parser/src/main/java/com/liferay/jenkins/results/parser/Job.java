@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -27,9 +26,6 @@ public interface Job {
 	public Set<String> getBatchNames();
 
 	public List<Build> getBuildHistory(JenkinsMaster jenkinsMaster);
-
-	public Map<String, String> getDefaultParameters(
-		JenkinsMaster jenkinsMaster);
 
 	public Set<String> getDistTypes();
 

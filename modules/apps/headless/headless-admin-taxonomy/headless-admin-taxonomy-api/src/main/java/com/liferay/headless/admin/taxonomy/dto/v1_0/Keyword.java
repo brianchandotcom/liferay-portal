@@ -77,7 +77,7 @@ public class Keyword {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The keyword's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -105,7 +105,7 @@ public class Keyword {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The keyword's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -133,7 +133,7 @@ public class Keyword {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The keyword's most recent modification date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -159,7 +159,7 @@ public class Keyword {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The keyword's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -189,7 +189,9 @@ public class Keyword {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of times this keyword has been used with other assets."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer keywordUsageCount;
 
@@ -215,7 +217,7 @@ public class Keyword {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The keyword's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -244,7 +246,9 @@ public class Keyword {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this keyword is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 

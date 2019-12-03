@@ -212,7 +212,9 @@ public class Mutation {
 			wikiPageAttachmentResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the blog post and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
@@ -226,7 +228,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates the blog post using only the fields received in the request body. Any other fields are left untouched. Returns the updated blog post."
+	)
 	public BlogPosting patchBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
@@ -239,7 +243,9 @@ public class Mutation {
 				blogPostingId, blogPosting));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the blog post with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public BlogPosting updateBlogPosting(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
@@ -252,7 +258,9 @@ public class Mutation {
 				blogPostingId, blogPosting));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the blog post rating of the user who authenticated the request."
+	)
 	public boolean deleteBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId)
 		throws Exception {
@@ -266,7 +274,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new blog post rating by the user who authenticated the request."
+	)
 	public Rating createBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("rating") Rating rating)
@@ -279,7 +289,9 @@ public class Mutation {
 				blogPostingId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces an existing blog post rating by the user who authenticated the request."
+	)
 	public Rating updateBlogPostingMyRating(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("rating") Rating rating)
@@ -292,7 +304,7 @@ public class Mutation {
 				blogPostingId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new blog post.")
 	public BlogPosting createSiteBlogPosting(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -336,7 +348,7 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Deletes the blog post's image.")
 	public boolean deleteBlogPostingImage(
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
@@ -351,8 +363,13 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
-	@GraphQLName("postSiteBlogPostingImageSiteIdMultipartBody")
+	@GraphQLField(
+		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
+	)
+	@GraphQLName(
+		value = "postSiteBlogPostingImageSiteIdMultipartBody",
+		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
+	)
 	public BlogPostingImage createSiteBlogPostingImage(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -367,7 +384,7 @@ public class Mutation {
 					siteId, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new comment on the blog post.")
 	public Comment createBlogPostingComment(
 			@GraphQLName("blogPostingId") Long blogPostingId,
 			@GraphQLName("comment") Comment comment)
@@ -380,7 +397,9 @@ public class Mutation {
 				blogPostingId, comment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the comment and returns a 204 if the operation succeeded."
+	)
 	public boolean deleteComment(@GraphQLName("commentId") Long commentId)
 		throws Exception {
 
@@ -392,7 +411,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the comment with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public Comment updateComment(
 			@GraphQLName("commentId") Long commentId,
 			@GraphQLName("comment") Comment comment)
@@ -404,7 +425,9 @@ public class Mutation {
 			commentResource -> commentResource.putComment(commentId, comment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new child comment of the existing comment."
+	)
 	public Comment createCommentComment(
 			@GraphQLName("parentCommentId") Long parentCommentId,
 			@GraphQLName("comment") Comment comment)
@@ -417,7 +440,7 @@ public class Mutation {
 				parentCommentId, comment));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new comment on the document.")
 	public Comment createDocumentComment(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("comment") Comment comment)
@@ -430,7 +453,9 @@ public class Mutation {
 				documentId, comment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new comment on the structured content."
+	)
 	public Comment createStructuredContentComment(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("comment") Comment comment)
@@ -443,8 +468,13 @@ public class Mutation {
 				structuredContentId, comment));
 	}
 
-	@GraphQLField
-	@GraphQLName("postDocumentFolderDocumentDocumentFolderIdMultipartBody")
+	@GraphQLField(
+		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		value = "postDocumentFolderDocumentDocumentFolderIdMultipartBody",
+		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
 	public Document createDocumentFolderDocument(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -457,7 +487,9 @@ public class Mutation {
 				documentFolderId, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the document and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteDocument(@GraphQLName("documentId") Long documentId)
 		throws Exception {
 
@@ -469,8 +501,13 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
-	@GraphQLName("patchDocumentDocumentIdMultipartBody")
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		value = "patchDocumentDocumentIdMultipartBody",
+		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
 	public Document patchDocument(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -483,8 +520,13 @@ public class Mutation {
 				documentId, multipartBody));
 	}
 
-	@GraphQLField
-	@GraphQLName("putDocumentDocumentIdMultipartBody")
+	@GraphQLField(
+		description = "Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		value = "putDocumentDocumentIdMultipartBody",
+		description = "Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
 	public Document updateDocument(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
@@ -497,7 +539,9 @@ public class Mutation {
 				documentId, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the document's rating and returns a 204 if the operation succeeded."
+	)
 	public boolean deleteDocumentMyRating(
 			@GraphQLName("documentId") Long documentId)
 		throws Exception {
@@ -511,7 +555,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new rating for the document, by the user who authenticated the request."
+	)
 	public Rating createDocumentMyRating(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("rating") Rating rating)
@@ -524,7 +570,9 @@ public class Mutation {
 				documentId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public Rating updateDocumentMyRating(
 			@GraphQLName("documentId") Long documentId,
 			@GraphQLName("rating") Rating rating)
@@ -537,8 +585,13 @@ public class Mutation {
 				documentId, rating));
 	}
 
-	@GraphQLField
-	@GraphQLName("postSiteDocumentSiteIdMultipartBody")
+	@GraphQLField(
+		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
+	@GraphQLName(
+		value = "postSiteDocumentSiteIdMultipartBody",
+		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+	)
 	public Document createSiteDocument(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -552,7 +605,9 @@ public class Mutation {
 				siteId, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the document folder and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId)
 		throws Exception {
@@ -566,7 +621,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body. Any other fields are left untouched."
+	)
 	public DocumentFolder patchDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -580,7 +637,9 @@ public class Mutation {
 					documentFolderId, documentFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the document folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public DocumentFolder updateDocumentFolder(
 			@GraphQLName("documentFolderId") Long documentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -623,7 +682,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new folder in a folder identified by `parentDocumentFolderId`."
+	)
 	public DocumentFolder createDocumentFolderDocumentFolder(
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -637,7 +698,7 @@ public class Mutation {
 					parentDocumentFolderId, documentFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new document folder.")
 	public DocumentFolder createSiteDocumentFolder(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -652,7 +713,9 @@ public class Mutation {
 					siteId, documentFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the knowledge base article and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
@@ -667,7 +730,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	public KnowledgeBaseArticle patchKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -682,7 +747,9 @@ public class Mutation {
 					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the knowledge base article with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public KnowledgeBaseArticle updateKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -697,7 +764,9 @@ public class Mutation {
 					knowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the knowledge base article's rating and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
@@ -712,7 +781,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a rating for the knowledge base article."
+	)
 	public Rating createKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("rating") Rating rating)
@@ -726,7 +797,9 @@ public class Mutation {
 					knowledgeBaseArticleId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public Rating updateKnowledgeBaseArticleMyRating(
 			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
 			@GraphQLName("rating") Rating rating)
@@ -770,7 +843,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a child knowledge base article of the knowledge base article identified by `parentKnowledgeBaseArticleId`."
+	)
 	public KnowledgeBaseArticle createKnowledgeBaseArticleKnowledgeBaseArticle(
 			@GraphQLName("parentKnowledgeBaseArticleId") Long
 				parentKnowledgeBaseArticleId,
@@ -787,7 +862,9 @@ public class Mutation {
 						parentKnowledgeBaseArticleId, knowledgeBaseArticle));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new knowledge base article in the folder."
+	)
 	public KnowledgeBaseArticle createKnowledgeBaseFolderKnowledgeBaseArticle(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
@@ -803,7 +880,7 @@ public class Mutation {
 						knowledgeBaseFolderId, knowledgeBaseArticle));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new knowledge base article.")
 	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -851,9 +928,12 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+	)
 	@GraphQLName(
-		"postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
+		value = "postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody",
+		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
 	)
 	public KnowledgeBaseAttachment
 			createKnowledgeBaseArticleKnowledgeBaseAttachment(
@@ -871,7 +951,9 @@ public class Mutation {
 						knowledgeBaseArticleId, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the knowledge base file attachment and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteKnowledgeBaseAttachment(
 			@GraphQLName("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
@@ -887,7 +969,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the knowledge base folder and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
 		throws Exception {
@@ -902,7 +986,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	public KnowledgeBaseFolder patchKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -917,7 +1003,9 @@ public class Mutation {
 					knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the knowledge base folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public KnowledgeBaseFolder updateKnowledgeBaseFolder(
 			@GraphQLName("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
@@ -932,7 +1020,9 @@ public class Mutation {
 					knowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a knowledge base folder inside the parent folder."
+	)
 	public KnowledgeBaseFolder createKnowledgeBaseFolderKnowledgeBaseFolder(
 			@GraphQLName("parentKnowledgeBaseFolderId") Long
 				parentKnowledgeBaseFolderId,
@@ -949,7 +1039,7 @@ public class Mutation {
 						parentKnowledgeBaseFolderId, knowledgeBaseFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new knowledge base folder.")
 	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -965,7 +1055,9 @@ public class Mutation {
 					siteId, knowledgeBaseFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the message board attachment and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteMessageBoardAttachment(
 			@GraphQLName("messageBoardAttachmentId") Long
 				messageBoardAttachmentId)
@@ -981,9 +1073,12 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata."
+	)
 	@GraphQLName(
-		"postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
+		value = "postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody",
+		description = "Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata."
 	)
 	public MessageBoardAttachment
 			createMessageBoardMessageMessageBoardAttachment(
@@ -1001,9 +1096,12 @@ public class Mutation {
 						messageBoardMessageId, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+	)
 	@GraphQLName(
-		"postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
+		value = "postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody",
+		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
 	)
 	public MessageBoardAttachment
 			createMessageBoardThreadMessageBoardAttachment(
@@ -1020,7 +1118,9 @@ public class Mutation {
 						messageBoardThreadId, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the message board message and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
@@ -1035,7 +1135,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	public MessageBoardMessage patchMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -1050,7 +1152,9 @@ public class Mutation {
 					messageBoardMessageId, messageBoardMessage));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the message board message with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public MessageBoardMessage updateMessageBoardMessage(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -1065,7 +1169,9 @@ public class Mutation {
 					messageBoardMessageId, messageBoardMessage));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the message board message's rating and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
@@ -1080,7 +1186,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a rating for the message board message."
+	)
 	public Rating createMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("rating") Rating rating)
@@ -1094,7 +1202,9 @@ public class Mutation {
 					messageBoardMessageId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public Rating updateMessageBoardMessageMyRating(
 			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId,
 			@GraphQLName("rating") Rating rating)
@@ -1138,7 +1248,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a child message board message of the parent message."
+	)
 	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
 			@GraphQLName("parentMessageBoardMessageId") Long
 				parentMessageBoardMessageId,
@@ -1155,7 +1267,9 @@ public class Mutation {
 						parentMessageBoardMessageId, messageBoardMessage));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new message in the message board thread."
+	)
 	public MessageBoardMessage createMessageBoardThreadMessageBoardMessage(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardMessage") MessageBoardMessage
@@ -1171,7 +1285,9 @@ public class Mutation {
 						messageBoardThreadId, messageBoardMessage));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the message board section and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
@@ -1186,7 +1302,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	public MessageBoardSection patchMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -1201,7 +1319,9 @@ public class Mutation {
 					messageBoardSectionId, messageBoardSection));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the message board section with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public MessageBoardSection updateMessageBoardSection(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardSection") MessageBoardSection
@@ -1246,7 +1366,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new message board section in the parent section."
+	)
 	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
 			@GraphQLName("parentMessageBoardSectionId") Long
 				parentMessageBoardSectionId,
@@ -1263,7 +1385,7 @@ public class Mutation {
 						parentMessageBoardSectionId, messageBoardSection));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new message board section.")
 	public MessageBoardSection createSiteMessageBoardSection(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -1279,7 +1401,9 @@ public class Mutation {
 					siteId, messageBoardSection));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new message board thread inside a section."
+	)
 	public MessageBoardThread createMessageBoardSectionMessageBoardThread(
 			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
@@ -1295,7 +1419,9 @@ public class Mutation {
 						messageBoardSectionId, messageBoardThread));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the message board thread and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
@@ -1310,7 +1436,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	public MessageBoardThread patchMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
@@ -1325,7 +1453,9 @@ public class Mutation {
 					messageBoardThreadId, messageBoardThread));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the message board thread with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public MessageBoardThread updateMessageBoardThread(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("messageBoardThread") MessageBoardThread
@@ -1340,7 +1470,9 @@ public class Mutation {
 					messageBoardThreadId, messageBoardThread));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the message board thread's rating and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
@@ -1355,7 +1487,7 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates the message board thread's rating.")
 	public Rating createMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("rating") Rating rating)
@@ -1369,7 +1501,9 @@ public class Mutation {
 					messageBoardThreadId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public Rating updateMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
 			@GraphQLName("rating") Rating rating)
@@ -1413,7 +1547,7 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new message board thread.")
 	public MessageBoardThread createSiteMessageBoardThread(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -1429,7 +1563,7 @@ public class Mutation {
 					siteId, messageBoardThread));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new structured content.")
 	public StructuredContent createSiteStructuredContent(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -1445,7 +1579,9 @@ public class Mutation {
 					siteId, structuredContent));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new structured content in the folder."
+	)
 	public StructuredContent createStructuredContentFolderStructuredContent(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
@@ -1492,7 +1628,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the structured content and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
@@ -1507,7 +1645,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	public StructuredContent patchStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1522,7 +1662,9 @@ public class Mutation {
 					structuredContentId, structuredContent));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the structured content with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public StructuredContent updateStructuredContent(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("structuredContent") StructuredContent
@@ -1537,7 +1679,9 @@ public class Mutation {
 					structuredContentId, structuredContent));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the structured content's rating and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
@@ -1552,7 +1696,7 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Create a rating for the structured content.")
 	public Rating createStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("rating") Rating rating)
@@ -1566,7 +1710,9 @@ public class Mutation {
 					structuredContentId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the rating with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public Rating updateStructuredContentMyRating(
 			@GraphQLName("structuredContentId") Long structuredContentId,
 			@GraphQLName("rating") Rating rating)
@@ -1580,7 +1726,7 @@ public class Mutation {
 					structuredContentId, rating));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new structured content folder.")
 	public StructuredContentFolder createSiteStructuredContentFolder(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -1596,7 +1742,9 @@ public class Mutation {
 					siteId, structuredContentFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new structured content folder in an existing folder."
+	)
 	public StructuredContentFolder
 			createStructuredContentFolderStructuredContentFolder(
 				@GraphQLName("parentStructuredContentFolderId") Long
@@ -1615,7 +1763,9 @@ public class Mutation {
 						structuredContentFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the structured content folder and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId)
@@ -1631,7 +1781,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
 	public StructuredContentFolder patchStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
@@ -1647,7 +1799,9 @@ public class Mutation {
 					structuredContentFolderId, structuredContentFolder));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the structured content folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public StructuredContentFolder updateStructuredContentFolder(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
@@ -1697,7 +1851,7 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new wiki node")
 	public WikiNode createSiteWikiNode(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -1739,7 +1893,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteWikiNode(@GraphQLName("wikiNodeId") Long wikiNodeId)
 		throws Exception {
 
@@ -1751,7 +1907,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the wiki node with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public WikiNode updateWikiNode(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,
 			@GraphQLName("wikiNode") WikiNode wikiNode)
@@ -1764,7 +1922,7 @@ public class Mutation {
 				wikiNodeId, wikiNode));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Creates a new wiki page")
 	public WikiPage createWikiNodeWikiPage(
 			@GraphQLName("wikiNodeId") Long wikiNodeId,
 			@GraphQLName("wikiPage") WikiPage wikiPage)
@@ -1805,7 +1963,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a child wiki page of the parent wiki page."
+	)
 	public WikiPage createWikiPageWikiPage(
 			@GraphQLName("parentWikiPageId") Long parentWikiPageId,
 			@GraphQLName("wikiPage") WikiPage wikiPage)
@@ -1818,7 +1978,9 @@ public class Mutation {
 				parentWikiPageId, wikiPage));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the wiki page and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteWikiPage(@GraphQLName("wikiPageId") Long wikiPageId)
 		throws Exception {
 
@@ -1830,7 +1992,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the wiki page with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
 	public WikiPage updateWikiPage(
 			@GraphQLName("wikiPageId") Long wikiPageId,
 			@GraphQLName("wikiPage") WikiPage wikiPage)
@@ -1843,7 +2007,9 @@ public class Mutation {
 				wikiPageId, wikiPage));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the wiki page attachment and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteWikiPageAttachment(
 			@GraphQLName("wikiPageAttachmentId") Long wikiPageAttachmentId)
 		throws Exception {
@@ -1858,8 +2024,13 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
-	@GraphQLName("postWikiPageWikiPageAttachmentWikiPageIdMultipartBody")
+	@GraphQLField(
+		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
+	)
+	@GraphQLName(
+		value = "postWikiPageWikiPageAttachmentWikiPageIdMultipartBody",
+		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
+	)
 	public WikiPageAttachment createWikiPageWikiPageAttachment(
 			@GraphQLName("wikiPageId") Long wikiPageId,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)

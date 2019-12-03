@@ -114,7 +114,9 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The item class name for which data will be exported in batch."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
@@ -142,7 +144,7 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The file content type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
@@ -170,7 +172,7 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The end time of import task operation.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date endTime;
 
@@ -200,7 +202,9 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The error message in case of import task's failed execution."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
@@ -238,7 +242,7 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The status of import task's execution.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ExecuteStatus executeStatus;
 
@@ -265,7 +269,7 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The task's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -293,7 +297,7 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The start time of import task operation.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date startTime;
 
@@ -321,7 +325,7 @@ public class ExportTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The version of item class.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 

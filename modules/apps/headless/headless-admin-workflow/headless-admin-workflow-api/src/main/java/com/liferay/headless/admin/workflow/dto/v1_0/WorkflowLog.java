@@ -114,7 +114,9 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The user account of the person auditing the workflow."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator auditPerson;
 
@@ -142,7 +144,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The log's comments.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String commentLog;
 
@@ -170,7 +172,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The log's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -196,7 +198,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The log's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -225,7 +227,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The person assigned to the workflow.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator person;
 
@@ -254,7 +256,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The previous person assigned to the workflow.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator previousPerson;
 
@@ -311,7 +313,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The workflow's previous state.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String previousState;
 
@@ -366,7 +368,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The workflow's current state.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String state;
 
@@ -394,7 +396,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The task asociated with this workflow log.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long taskId;
 
@@ -430,7 +432,7 @@ public class WorkflowLog {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The workflow log's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Type type;
 

@@ -71,7 +71,7 @@ public class ContentSetElement {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content's fields.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Object content;
 
@@ -99,7 +99,7 @@ public class ContentSetElement {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content set element's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
@@ -125,7 +125,7 @@ public class ContentSetElement {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content set element's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -153,7 +153,7 @@ public class ContentSetElement {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content's title.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 

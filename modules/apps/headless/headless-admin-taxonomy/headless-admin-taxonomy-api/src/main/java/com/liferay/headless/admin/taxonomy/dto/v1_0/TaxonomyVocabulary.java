@@ -115,7 +115,9 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of asset types that can be associated with this vocabulary."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AssetType[] assetTypes;
 
@@ -145,7 +147,9 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of languages the vocabulary has a translation for."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
@@ -174,7 +178,7 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The vocabulary's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -202,7 +206,7 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The vocabulary's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -230,7 +234,9 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The vocabulary's most recent modification date."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -258,7 +264,7 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The vocabulary's text description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -284,7 +290,7 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The vocabulary's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -310,7 +316,7 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The vocabulary's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -345,7 +351,9 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of categories that directly depend on this vocabulary."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfTaxonomyCategories;
 
@@ -375,7 +383,9 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this vocabulary is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -415,7 +425,9 @@ public class TaxonomyVocabulary {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the vocabulary's default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

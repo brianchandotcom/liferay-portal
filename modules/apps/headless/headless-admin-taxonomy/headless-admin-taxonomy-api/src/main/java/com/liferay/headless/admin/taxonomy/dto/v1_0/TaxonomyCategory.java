@@ -114,7 +114,9 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of languages the category has a translation for."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
@@ -143,7 +145,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -171,7 +173,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -199,7 +201,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's most recent modification date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -227,7 +229,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's text description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -253,7 +255,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -279,7 +281,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -314,7 +316,9 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of times this category has been used in other assets."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfTaxonomyCategories;
 
@@ -346,7 +350,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's parent category, if it exists.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyCategory parentTaxonomyCategory;
 
@@ -381,7 +385,9 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The parent category's `TaxonomyVocabulary`, if such a parent category exists."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentTaxonomyVocabulary parentTaxonomyVocabulary;
 
@@ -421,7 +427,9 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the category's default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

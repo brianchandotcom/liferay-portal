@@ -113,7 +113,7 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -170,7 +170,7 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The date the folder was created.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -198,7 +198,7 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The last time the folder was modified.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -226,7 +226,7 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -252,7 +252,7 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -278,7 +278,7 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's main title/name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -313,7 +313,9 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of Knowledge Base articles in this folder."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfKnowledgeBaseArticles;
 
@@ -347,7 +349,9 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of Knowledge Base folders in this folder."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfKnowledgeBaseFolders;
 
@@ -382,7 +386,9 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The folder's parent Knowledge Base folder, if it exists."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ParentKnowledgeBaseFolder parentKnowledgeBaseFolder;
 
@@ -416,7 +422,9 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the folder's parent Knowledge Base folder, if such a parent folder exists."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long parentKnowledgeBaseFolderId;
 
@@ -444,7 +452,9 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this folder is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -484,7 +494,9 @@ public class KnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the folder's default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

@@ -113,7 +113,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -170,7 +170,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -198,7 +198,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The last time a field of the folder changed.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -226,7 +226,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -252,7 +252,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -278,7 +278,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The folder's main title/name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -309,7 +309,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of this folder's child folders.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfDocumentFolders;
 
@@ -337,7 +337,7 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of documents in this folder.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfDocuments;
 
@@ -365,7 +365,9 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this folder is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -433,7 +435,9 @@ public class DocumentFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the folder's default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

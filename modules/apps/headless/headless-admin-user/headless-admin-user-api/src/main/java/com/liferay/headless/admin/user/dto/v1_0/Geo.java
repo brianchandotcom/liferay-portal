@@ -68,7 +68,7 @@ public class Geo {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The latitude of a point in space.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double latitude;
 
@@ -96,7 +96,7 @@ public class Geo {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The longitude of a point in space.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double longitude;
 

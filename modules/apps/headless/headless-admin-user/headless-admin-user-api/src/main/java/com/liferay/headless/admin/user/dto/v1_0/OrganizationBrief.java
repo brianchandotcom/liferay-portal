@@ -66,7 +66,7 @@ public class OrganizationBrief {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The organization's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -92,7 +92,7 @@ public class OrganizationBrief {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The organization's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 

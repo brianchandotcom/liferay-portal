@@ -77,7 +77,9 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the segment is active."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean active;
 
@@ -105,7 +107,7 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The segment's criteria.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@NotEmpty
 	protected String criteria;
@@ -134,7 +136,7 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The segment's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -162,7 +164,7 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The segment's most recent modification date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -188,7 +190,7 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The segment's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -214,7 +216,7 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The segment's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@NotEmpty
 	protected String name;
@@ -243,7 +245,7 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The ID of the segment's site.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -271,7 +273,7 @@ public class Segment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The segment's source.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String source;
 

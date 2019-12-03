@@ -68,7 +68,7 @@ public class Option {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The option's label.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
@@ -96,7 +96,7 @@ public class Option {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The internal value of the field option.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String value;
 

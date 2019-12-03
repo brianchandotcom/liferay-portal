@@ -68,7 +68,7 @@ public class Value {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The field's content for simple types.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
@@ -97,7 +97,7 @@ public class Value {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A content document element.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument document;
 
@@ -124,7 +124,7 @@ public class Value {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A point determined by latitude and longitude.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 
@@ -155,7 +155,9 @@ public class Value {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A content document element that stores an image file."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
 
@@ -181,7 +183,7 @@ public class Value {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A link to a page on the server.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String link;
 
@@ -213,7 +215,7 @@ public class Value {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A link to structured content on the server.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StructuredContentLink structuredContentLink;
 

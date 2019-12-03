@@ -68,7 +68,7 @@ public class AssetType {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A flag that marks if this type is required.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
@@ -96,7 +96,7 @@ public class AssetType {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The asset's subtype.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String subtype;
 
@@ -124,7 +124,9 @@ public class AssetType {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The asset's type (e.g., `BlogPosting`, `Document`, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 

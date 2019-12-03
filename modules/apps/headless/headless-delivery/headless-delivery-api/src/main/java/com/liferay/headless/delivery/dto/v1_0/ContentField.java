@@ -70,7 +70,7 @@ public class ContentField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The field type (e.g., image, text, etc.).")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
@@ -100,7 +100,9 @@ public class ContentField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The field's control type (e.g., text, text area, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
@@ -128,7 +130,7 @@ public class ContentField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The field's label.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
@@ -156,7 +158,9 @@ public class ContentField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The field's internal name. This is valid for comparisons and unique in the structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -188,7 +192,9 @@ public class ContentField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of child content fields that depend on this resource."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] nestedContentFields;
 
@@ -218,7 +224,9 @@ public class ContentField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether this field can be rendered multiple times."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 

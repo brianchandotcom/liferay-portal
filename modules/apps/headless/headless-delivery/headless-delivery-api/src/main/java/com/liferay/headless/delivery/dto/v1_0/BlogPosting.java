@@ -114,7 +114,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's average rating.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
@@ -142,7 +142,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's subtitle.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String alternativeHeadline;
 
@@ -170,7 +170,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's body (content).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String articleBody;
@@ -200,7 +200,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's author.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -257,7 +257,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -285,7 +285,9 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The blog post's most recent modification date."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -313,7 +315,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's publication date.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
@@ -341,7 +343,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -371,7 +373,9 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The blog post's media format (e.g., HTML, BBCode, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
@@ -399,7 +403,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's relative URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
@@ -427,7 +431,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's main title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String headline;
@@ -454,7 +458,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's identifier.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -481,7 +485,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's cover image.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Image image;
 
@@ -509,7 +513,7 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of keywords describing the blog post.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
@@ -537,7 +541,9 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of comments this blog post has received."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
@@ -597,7 +603,9 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this blog post is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -627,7 +635,9 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The categories associated with this blog post."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
@@ -657,7 +667,9 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only field that adds a `TaxonomyCategory` to this resource."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
@@ -697,7 +709,9 @@ public class BlogPosting {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

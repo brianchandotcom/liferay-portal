@@ -74,7 +74,9 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the user's email addresses, with one optionally marked as primary."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected EmailAddress[] emailAddresses;
 
@@ -102,7 +104,7 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's Facebook account.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String facebook;
 
@@ -128,7 +130,7 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The ID of the `contactInformation`.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -156,7 +158,7 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's Jabber handle.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String jabber;
 
@@ -188,7 +190,9 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of user's postal addresses, with one optionally marked as primary."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected PostalAddress[] postalAddresses;
 
@@ -216,7 +220,7 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's Skype handle.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String skype;
 
@@ -242,7 +246,7 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's SMS number.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sms;
 
@@ -273,7 +277,9 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the user's phone numbers, with one optionally marked as primary."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Phone[] telephones;
 
@@ -301,7 +307,7 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's Twitter handle.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String twitter;
 
@@ -332,7 +338,9 @@ public class ContactInformation {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of the user's web URLs, with one optionally marked as primary."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected WebUrl[] webUrls;
 

@@ -74,7 +74,9 @@ public class WorkflowTaskAssignToMe {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "An optional comment to add when accepting the workflow task."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
@@ -104,7 +106,9 @@ public class WorkflowTaskAssignToMe {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The date on which the workflow task should be executed."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Date dueDate;
 

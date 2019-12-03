@@ -114,7 +114,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The thread's average rating.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
@@ -144,7 +144,9 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The thread's main body content (the message written as the thread's description)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String articleBody;
 
@@ -173,7 +175,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The thread's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -230,7 +232,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The date the thread was created.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -258,7 +260,9 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The last time any field of the thread changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -288,7 +292,9 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The media format of the thread's content (e.g., HTML, BBCode, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
@@ -316,7 +322,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The thread's main title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String headline;
@@ -343,7 +349,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The thread's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -371,7 +377,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of keywords describing the thread.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
@@ -403,7 +409,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of the thread's attachments.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardAttachments;
 
@@ -435,7 +441,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of the thread's messages.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardMessages;
 
@@ -495,7 +501,9 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether this thread was posted as a question that can receive approved answers."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean showAsQuestion;
 
@@ -523,7 +531,9 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this thread is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -579,7 +589,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The thread's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String threadType;
 
@@ -607,7 +617,7 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of views of this thread.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long viewCount;
 
@@ -647,7 +657,9 @@ public class MessageBoardThread {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the thread's default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

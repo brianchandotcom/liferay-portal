@@ -113,7 +113,7 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The section's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -170,7 +170,7 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The date the section was created.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -198,7 +198,7 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The last time the section was changed.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -226,7 +226,7 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The section's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -252,7 +252,7 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The section's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -284,7 +284,7 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The number of this section's child sections.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardSections;
 
@@ -318,7 +318,9 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of message board threads in this section."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfMessageBoardThreads;
 
@@ -346,7 +348,9 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this section is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -402,7 +406,7 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The section's main title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String title;
@@ -443,7 +447,9 @@ public class MessageBoardSection {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

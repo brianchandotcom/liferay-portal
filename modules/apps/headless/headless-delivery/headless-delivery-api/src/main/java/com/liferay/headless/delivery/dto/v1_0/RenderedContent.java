@@ -68,7 +68,7 @@ public class RenderedContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "An absolute URL to the rendered content.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentURL;
 
@@ -98,7 +98,9 @@ public class RenderedContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The name of the template used to render the content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateName;
 

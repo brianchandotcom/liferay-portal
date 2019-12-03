@@ -114,7 +114,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The blog post's average rating.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
@@ -142,7 +142,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki page's content.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String content;
 
@@ -171,7 +171,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki page's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -228,7 +228,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The date the wiki page was created.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -258,7 +258,9 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The last time any of the wiki page's fields changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -286,7 +288,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki page's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -316,7 +318,9 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The wiki page's media format (e.g., HTML, BBCode, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String encodingFormat;
@@ -345,7 +349,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki page's main title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String headline;
@@ -372,7 +376,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki page's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -400,7 +404,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of keywords describing the blog post.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
@@ -428,7 +432,7 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki page's number attachments.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfAttachments;
 
@@ -456,7 +460,9 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of child wiki page on this wiki page."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfWikiPages;
 
@@ -516,7 +522,9 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this wiki page is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -574,7 +582,9 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The categories associated with this blog post."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
@@ -604,7 +614,9 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only field that adds a `TaxonomyCategory` to this resource."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
@@ -644,7 +656,9 @@ public class WikiPage {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

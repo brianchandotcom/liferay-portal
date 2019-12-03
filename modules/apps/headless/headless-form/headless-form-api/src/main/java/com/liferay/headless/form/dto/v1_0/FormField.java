@@ -766,7 +766,7 @@ public class FormField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "https://www.schema.org/FormFieldValidation")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Validation validation;
 

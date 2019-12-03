@@ -216,7 +216,7 @@ public class FormStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "https://www.schema.org/FormPage")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormPage[] formPages;
 
@@ -246,7 +246,7 @@ public class FormStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "https://www.schema.org/FormSuccessPage")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormSuccessPage formSuccessPage;
 

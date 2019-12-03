@@ -99,7 +99,7 @@ public class CustomField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The field type (e.g., image, text, etc.).")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
@@ -127,7 +127,9 @@ public class CustomField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The field's internal name. This is valid for comparisons and unique in the structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

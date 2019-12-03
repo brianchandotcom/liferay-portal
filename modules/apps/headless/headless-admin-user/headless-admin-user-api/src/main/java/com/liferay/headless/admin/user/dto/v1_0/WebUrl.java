@@ -66,7 +66,7 @@ public class WebUrl {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The URL's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -92,7 +92,7 @@ public class WebUrl {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The absolute URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String url;
 
@@ -120,7 +120,7 @@ public class WebUrl {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The URL's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String urlType;
 

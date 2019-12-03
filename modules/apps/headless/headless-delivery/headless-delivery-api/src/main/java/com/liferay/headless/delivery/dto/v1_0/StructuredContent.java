@@ -114,7 +114,7 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The structured content's average rating.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected AggregateRating aggregateRating;
 
@@ -144,7 +144,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The list of languages the structured content has a translation for."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
@@ -175,7 +177,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The list of fields that store the structured content's information."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentField[] contentFields;
 
@@ -203,7 +207,7 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The ID of the `ContentStructure`.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long contentStructureId;
 
@@ -232,7 +236,7 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The structured content's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -289,7 +293,7 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The structured content's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -319,7 +323,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The last time any field of the structured content was changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -349,7 +355,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The structured content's most recent publication date."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
@@ -377,7 +385,7 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The structured content's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -407,7 +415,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A relative URL to the structured content's rendered content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
 
@@ -433,7 +443,7 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The structured content's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -461,7 +471,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "An identifier, independent of the database, that can be used to reference the structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String key;
 
@@ -491,7 +503,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of keywords describing the structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
@@ -521,7 +535,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of comments the structured content has received."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfComments;
 
@@ -583,7 +599,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of rendered structured content, which results from using a template to process the content and return HTML."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RenderedContent[] renderedContents;
 
@@ -613,7 +631,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this structured content is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -673,7 +693,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The categories associated with this structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 
@@ -703,7 +725,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only field to add a category to this structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
@@ -731,7 +755,7 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The structured content's main title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String title;
@@ -760,7 +784,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A valid external identifier to reference this structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
 
@@ -800,7 +826,9 @@ public class StructuredContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the structured content's default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

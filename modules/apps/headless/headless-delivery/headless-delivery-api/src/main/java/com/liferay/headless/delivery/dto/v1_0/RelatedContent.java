@@ -68,7 +68,7 @@ public class RelatedContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The type of the content.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentType;
 
@@ -94,7 +94,7 @@ public class RelatedContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The identifier of the resource.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -122,7 +122,7 @@ public class RelatedContent {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The title of the content.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 

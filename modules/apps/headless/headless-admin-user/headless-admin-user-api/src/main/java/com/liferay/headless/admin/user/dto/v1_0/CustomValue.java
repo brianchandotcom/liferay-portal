@@ -69,7 +69,7 @@ public class CustomValue {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The field's content for simple types.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object data;
 
@@ -96,7 +96,7 @@ public class CustomValue {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A point determined by latitude and longitude.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 

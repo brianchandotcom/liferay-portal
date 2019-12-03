@@ -111,7 +111,7 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki node's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -139,7 +139,7 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The date the wiki node was created.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -169,7 +169,9 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The last time any of the wiki node's fields changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -197,7 +199,7 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki node's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -223,7 +225,7 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki node's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -249,7 +251,7 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The wiki node's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -277,7 +279,9 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of child wiki page on this wiki node."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfWikiPages;
 
@@ -307,7 +311,9 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which this wiki node is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
@@ -375,7 +381,9 @@ public class WikiNode {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A write-only property that specifies the default permissions."
+	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected ViewableBy viewableBy;
 

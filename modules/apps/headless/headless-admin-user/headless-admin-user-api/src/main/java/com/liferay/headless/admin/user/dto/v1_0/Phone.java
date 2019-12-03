@@ -68,7 +68,7 @@ public class Phone {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The phone number's extension.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String extension;
 
@@ -94,7 +94,7 @@ public class Phone {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The phone number's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -122,7 +122,7 @@ public class Phone {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The phone number without its extension.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String phoneNumber;
 
@@ -150,7 +150,7 @@ public class Phone {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The phone number's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String phoneType;
 
@@ -180,7 +180,9 @@ public class Phone {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that identifies whether this is the main phone number of the user/organization."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean primary;
 

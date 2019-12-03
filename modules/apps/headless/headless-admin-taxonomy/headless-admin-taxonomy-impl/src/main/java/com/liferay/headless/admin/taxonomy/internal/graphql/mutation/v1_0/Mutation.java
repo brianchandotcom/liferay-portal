@@ -68,7 +68,9 @@ public class Mutation {
 			taxonomyVocabularyResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the keyword and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteKeyword(@GraphQLName("keywordId") Long keywordId)
 		throws Exception {
 
@@ -80,7 +82,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the keyword with the information sent in the request body. Any missing fields are deleted, unless required."
+	)
 	public Keyword updateKeyword(
 			@GraphQLName("keywordId") Long keywordId,
 			@GraphQLName("keyword") Keyword keyword)
@@ -92,7 +96,7 @@ public class Mutation {
 			keywordResource -> keywordResource.putKeyword(keywordId, keyword));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Inserts a new keyword in a Site.")
 	public Keyword createSiteKeyword(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -106,7 +110,7 @@ public class Mutation {
 				siteId, keyword));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Inserts a new child taxonomy category.")
 	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
 			@GraphQLName("parentTaxonomyCategoryId") Long
 				parentTaxonomyCategoryId,
@@ -121,7 +125,9 @@ public class Mutation {
 					parentTaxonomyCategoryId, taxonomyCategory));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the taxonomy category and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
 		throws Exception {
@@ -136,7 +142,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body. Other fields are left untouched."
+	)
 	public TaxonomyCategory patchTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -150,7 +158,9 @@ public class Mutation {
 					taxonomyCategoryId, taxonomyCategory));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
+	)
 	public TaxonomyCategory updateTaxonomyCategory(
 			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -164,7 +174,9 @@ public class Mutation {
 					taxonomyCategoryId, taxonomyCategory));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Inserts a new taxonomy category in a taxonomy vocabulary."
+	)
 	public TaxonomyCategory createTaxonomyVocabularyTaxonomyCategory(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
@@ -178,7 +190,7 @@ public class Mutation {
 					taxonomyVocabularyId, taxonomyCategory));
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")
 	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -194,7 +206,9 @@ public class Mutation {
 					siteId, taxonomyVocabulary));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds."
+	)
 	public boolean deleteTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {
@@ -209,7 +223,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Updates only the fields received in the request body. Any other fields are left untouched."
+	)
 	public TaxonomyVocabulary patchTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
@@ -224,7 +240,9 @@ public class Mutation {
 					taxonomyVocabularyId, taxonomyVocabulary));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the taxonomy vocabulary with the information sent in the request body. Any missing fields are deleted unless they are required."
+	)
 	public TaxonomyVocabulary updateTaxonomyVocabulary(
 			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary

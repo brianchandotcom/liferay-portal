@@ -70,7 +70,9 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long taxonomyCategoryId;
 
@@ -98,7 +100,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The category's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxonomyCategoryName;
 

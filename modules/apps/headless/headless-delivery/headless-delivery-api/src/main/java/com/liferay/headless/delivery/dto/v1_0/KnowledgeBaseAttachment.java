@@ -68,7 +68,7 @@ public class KnowledgeBaseAttachment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The file's relative URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
@@ -98,7 +98,9 @@ public class KnowledgeBaseAttachment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The file's media type (e.g., application/pdf, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
@@ -126,7 +128,7 @@ public class KnowledgeBaseAttachment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The file's extension.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
@@ -152,7 +154,7 @@ public class KnowledgeBaseAttachment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The file's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -180,7 +182,7 @@ public class KnowledgeBaseAttachment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The file's size in bytes.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
@@ -208,7 +210,7 @@ public class KnowledgeBaseAttachment {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The file's main title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 

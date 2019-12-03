@@ -132,7 +132,9 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the task is complete."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
@@ -160,7 +162,7 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The task's completion date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCompletion;
 
@@ -188,7 +190,7 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The task's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -216,7 +218,7 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The date the task should be completed by.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateDue;
 
@@ -272,7 +274,7 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The name of the task's workflow definition.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String definitionName;
 
@@ -328,7 +330,7 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The task's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
@@ -354,7 +356,7 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The task's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -408,7 +410,7 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The task's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -440,7 +442,9 @@ public class WorkflowTask {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The object/asset that the task's workflow is managing."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 

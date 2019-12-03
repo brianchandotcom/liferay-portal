@@ -74,7 +74,9 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The user's additional name (e.g., middle name)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
@@ -102,7 +104,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's alias or screen name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String alternateName;
 
@@ -130,7 +132,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's date of birth, in ISO 8601 format.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date birthDate;
 
@@ -160,7 +162,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's contact information.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContactInformation contactInformation;
 
@@ -217,7 +219,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A relative URL to the user's dashboard.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dashboardURL;
 
@@ -245,7 +247,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The creation date of the user's account.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -275,7 +277,9 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The last time any field of the user's account was changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -303,7 +307,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's main email address.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String emailAddress;
 
@@ -331,7 +335,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's surname (last name).")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
@@ -359,7 +363,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's first name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
@@ -387,7 +391,9 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The user's title (e.g., Dr., Mr., Mrs, Ms., etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String honorificPrefix;
 
@@ -415,7 +421,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's suffix (e.g., II, Jr., PhD, etc.).")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String honorificSuffix;
 
@@ -441,7 +447,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -469,7 +475,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A relative URL to the user's profile image.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
@@ -497,7 +503,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's job title.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String jobTitle;
 
@@ -525,7 +531,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of keywords describing the user.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
@@ -551,7 +557,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's full name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -581,7 +587,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of the user's organizations.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrganizationBrief[] organizationBriefs;
 
@@ -609,7 +615,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A relative URL to the user's profile.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 
@@ -638,7 +644,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of the user's roles.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RoleBrief[] roleBriefs;
 
@@ -667,7 +673,7 @@ public class UserAccount {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A list of the user's sites.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SiteBrief[] siteBriefs;
 

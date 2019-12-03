@@ -66,7 +66,7 @@ public class ObjectReviewed {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The resource's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -94,7 +94,7 @@ public class ObjectReviewed {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The resource's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String resourceType;
 

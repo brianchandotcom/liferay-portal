@@ -96,7 +96,7 @@ public class ContentDocument {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document's relative URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
@@ -124,7 +124,7 @@ public class ContentDocument {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
@@ -154,7 +154,9 @@ public class ContentDocument {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The document's content type (e.g., `application/pdf`, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String encodingFormat;
 
@@ -182,7 +184,7 @@ public class ContentDocument {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document's file extension.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
@@ -208,7 +210,7 @@ public class ContentDocument {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -236,7 +238,7 @@ public class ContentDocument {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document's file size in bytes.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
@@ -264,7 +266,7 @@ public class ContentDocument {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The document's title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 

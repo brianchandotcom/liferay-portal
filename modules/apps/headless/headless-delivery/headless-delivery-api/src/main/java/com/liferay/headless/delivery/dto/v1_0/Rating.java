@@ -76,7 +76,9 @@ public class Rating {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The best possible rating an asset can receive (normalized to 1.0 by default)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double bestRating;
 
@@ -105,7 +107,7 @@ public class Rating {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The rating's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -133,7 +135,7 @@ public class Rating {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The rating's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -161,7 +163,7 @@ public class Rating {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The last time a field of the rating changed.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -187,7 +189,7 @@ public class Rating {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The rating's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -215,7 +217,7 @@ public class Rating {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The rating's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double ratingValue;
 
@@ -245,7 +247,9 @@ public class Rating {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The worst possible rating an asset can receive (normalized to 0.0 by default)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double worstRating;
 

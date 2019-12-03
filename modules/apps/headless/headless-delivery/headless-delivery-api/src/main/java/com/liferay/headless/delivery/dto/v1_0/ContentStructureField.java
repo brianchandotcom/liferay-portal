@@ -72,7 +72,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The form field's type (e.g., date, geolocation, text, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
@@ -102,7 +104,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The form field's input control type (e.g., text, textarea, select field, etc.)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String inputControl;
 
@@ -130,7 +134,7 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The form field's label.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
@@ -160,7 +164,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the content is accessible in different languages."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean localizable;
 
@@ -190,7 +196,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the form field can have several values."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean multiple;
 
@@ -216,7 +224,7 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The form field's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -251,7 +259,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The child content structure fields that depend on this form field."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] nestedContentStructureFields;
 
@@ -280,7 +290,7 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The list of different possible values.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Option[] options;
 
@@ -308,7 +318,7 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The form field's default value.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String predefinedValue;
 
@@ -338,7 +348,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether this content can be rendered (and answered) several times."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
@@ -368,7 +380,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether this form field is required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean required;
 
@@ -398,7 +412,9 @@ public class ContentStructureField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the structure's end target should render the field label."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean showLabel;
 

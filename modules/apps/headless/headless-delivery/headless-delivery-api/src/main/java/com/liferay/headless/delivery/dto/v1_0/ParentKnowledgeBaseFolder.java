@@ -68,7 +68,7 @@ public class ParentKnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The parent folder's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long folderId;
 
@@ -96,7 +96,7 @@ public class ParentKnowledgeBaseFolder {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The parent folder's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String folderName;
 

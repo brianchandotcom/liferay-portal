@@ -66,7 +66,7 @@ public class RoleBrief {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -92,7 +92,7 @@ public class RoleBrief {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 

@@ -76,7 +76,9 @@ public class WorkflowInstance {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether the instance is complete."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean completed;
 
@@ -104,7 +106,7 @@ public class WorkflowInstance {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The instance's completion date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCompletion;
 
@@ -132,7 +134,7 @@ public class WorkflowInstance {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The instance's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -160,7 +162,9 @@ public class WorkflowInstance {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The name of the instance's workflow definition."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String definitionName;
 
@@ -214,7 +218,7 @@ public class WorkflowInstance {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The instance's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -246,7 +250,9 @@ public class WorkflowInstance {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The object/asset that the instance's workflow is managing."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
 

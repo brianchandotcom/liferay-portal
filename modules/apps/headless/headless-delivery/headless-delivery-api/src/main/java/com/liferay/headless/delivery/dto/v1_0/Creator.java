@@ -68,7 +68,9 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The author's additional name (e.g., middle name)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String additionalName;
 
@@ -96,7 +98,7 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The author's surname.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String familyName;
 
@@ -124,7 +126,7 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The author's first name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String givenName;
 
@@ -150,7 +152,7 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The author's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -178,7 +180,7 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A relative URL to the author's profile image.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
@@ -204,7 +206,7 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The author's full name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -232,7 +234,7 @@ public class Creator {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A relative URL to the author's user profile.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String profileURL;
 

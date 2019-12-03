@@ -66,7 +66,7 @@ public class SiteBrief {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The site's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -92,7 +92,7 @@ public class SiteBrief {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The site's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 

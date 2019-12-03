@@ -100,7 +100,7 @@ public class FormPageContext {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "https://www.schema.org/FormFieldContext")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldContext[] formFieldContexts;
 

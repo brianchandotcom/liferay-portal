@@ -94,7 +94,7 @@ public class StructuredContentLink {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The resource's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -122,7 +122,7 @@ public class StructuredContentLink {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The resource's title.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 

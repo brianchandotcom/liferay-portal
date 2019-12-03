@@ -68,7 +68,7 @@ public class SegmentUser {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's email address.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String emailAddress;
 
@@ -94,7 +94,7 @@ public class SegmentUser {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -120,7 +120,7 @@ public class SegmentUser {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The user's full name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 

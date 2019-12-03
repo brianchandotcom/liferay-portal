@@ -76,7 +76,9 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The list of languages the structure has a translation for."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
@@ -108,7 +110,7 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The list of the content structure's fields.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContentStructureField[] contentStructureFields;
 
@@ -137,7 +139,7 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content structure's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -165,7 +167,7 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content structure's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -195,7 +197,9 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The last time a field of the content structure changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -223,7 +227,7 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content structure's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
@@ -249,7 +253,7 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content structure's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -275,7 +279,7 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The content structure's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -305,7 +309,9 @@ public class ContentStructure {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The ID of the site to which the content structure is scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 

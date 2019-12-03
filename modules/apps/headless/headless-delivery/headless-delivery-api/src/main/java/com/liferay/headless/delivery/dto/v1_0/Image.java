@@ -68,7 +68,7 @@ public class Image {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The text describing the image.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String caption;
 
@@ -96,7 +96,7 @@ public class Image {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The image's relative URL.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
@@ -126,7 +126,9 @@ public class Image {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The image's ID. This can be used to retrieve more information in the `Document` API."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long imageId;
 

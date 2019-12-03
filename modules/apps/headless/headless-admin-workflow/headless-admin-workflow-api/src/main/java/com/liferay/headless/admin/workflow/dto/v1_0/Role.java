@@ -76,7 +76,9 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of languages for which the role has a translation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
@@ -105,7 +107,7 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's creator.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
@@ -133,7 +135,7 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -163,7 +165,9 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The last time any of the role's fields were changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -191,7 +195,7 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's description.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
@@ -217,7 +221,7 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -243,7 +247,7 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -271,7 +275,7 @@ public class Role {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The role's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String roleType;
 

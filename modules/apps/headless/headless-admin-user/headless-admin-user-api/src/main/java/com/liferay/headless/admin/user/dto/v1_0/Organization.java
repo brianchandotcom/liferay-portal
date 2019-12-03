@@ -76,7 +76,9 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The text of a comment associated with the organization."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String comment;
 
@@ -108,7 +110,9 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ContactInformation contactInformation;
 
@@ -165,7 +169,7 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The organization's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
@@ -195,7 +199,9 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The most recent time any of the organization's fields changed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -221,7 +227,7 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The organization's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -249,7 +255,7 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "A relative URL to the organization's image.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String image;
 
@@ -277,7 +283,9 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of keywords describing the organization."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] keywords;
 
@@ -308,7 +316,9 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The organization's postal information (country and region)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Location location;
 
@@ -334,7 +344,7 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The organization's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -365,7 +375,9 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The number of this organization's child organizations."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfOrganizations;
 
@@ -395,7 +407,7 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The organization's parent organization.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Organization parentOrganization;
 
@@ -426,7 +438,9 @@ public class Organization {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Service[] services;
 

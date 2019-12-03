@@ -72,7 +72,7 @@ public class FormContext {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "https://www.schema.org/FormFieldValue")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormFieldValue[] formFieldValues;
 
@@ -102,7 +102,7 @@ public class FormContext {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "https://www.schema.org/FormPageContext")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FormPageContext[] formPageContexts;
 

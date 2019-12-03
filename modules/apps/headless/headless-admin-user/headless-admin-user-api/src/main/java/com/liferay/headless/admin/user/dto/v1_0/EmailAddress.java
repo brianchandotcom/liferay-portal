@@ -68,7 +68,7 @@ public class EmailAddress {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The email address.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String emailAddress;
 
@@ -94,7 +94,7 @@ public class EmailAddress {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The email address's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -124,7 +124,9 @@ public class EmailAddress {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A flag that indicates whether this is the main email address of the user/organization."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean primary;
 
@@ -150,7 +152,7 @@ public class EmailAddress {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The email address's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 

@@ -249,4 +249,41 @@ definition {
 			truncatedURL = "true");
 	}
 
+	@description = "This test ensures that a user can preview open graph tags with Arabic."
+	@priority = "4"
+	test ViewArabicTranslation {
+		property test.name.skip.portal.instance = "OpenGraphPreview#ViewArabicTranslation";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.changeLocale(
+			fieldName = "openGraphTitleBoundingBox",
+			locale = "ar-SA");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "وصف الاختبار",
+			customTitle = "عنوان الاختبار",
+			dontSave = "true");
+
+		Page.viewPreview(
+			description = "وصف الاختبار",
+			htmlTitle = "عنوان الاختبار - Test Site Name - ${siteName}",
+			openGraph = "true",
+			pageName = "Test Page",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+	}
+
 }

@@ -26,7 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Neil Griffin
  */
 @ProviderType
-public class BeanPortletMethodWrapper implements BeanPortletMethod {
+public abstract class BeanPortletMethodWrapper implements BeanPortletMethod {
 
 	public BeanPortletMethodWrapper(BeanPortletMethod beanPortletMethod) {
 		_beanPortletMethod = beanPortletMethod;

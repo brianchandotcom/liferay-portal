@@ -1168,9 +1168,8 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 						_log.error(
 							StringBundler.concat(
 								"Only one @PortletPreferencesValidator ",
-									"annotation may be associated with ",
-										"portletName \"",
-								portletName, "\""));
+								"annotation may be associated with ",
+								"portletName \"", portletName, "\""));
 					}
 					else {
 						preferencesValidators.put(

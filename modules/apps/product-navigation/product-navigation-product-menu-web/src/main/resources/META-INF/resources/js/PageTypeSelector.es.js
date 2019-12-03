@@ -43,12 +43,6 @@ function PageTypeSelector(props) {
 		Liferay.Util.navigate(props.configureLayoutSetURL);
 	}, [props.configureLayoutSetURL]);
 
-	const handleOnClick = useCallback(() => {
-		const tree = Liferay.component(`${props.namespace}pagesTree`);
-
-		tree.collapseAll();
-	}, [props.namespace]);
-
 	return (
 		<div className="align-items-center d-flex page-type-selector">
 			<div className="flex-fill flex-grow-1">
@@ -67,12 +61,7 @@ function PageTypeSelector(props) {
 					</option>
 				</select>
 			</div>
-			<div className="collapse-all-link flex-fill flex-grow-1 text-right">
-				<button className="btn btn-unstyled" onClick={handleOnClick}>
-					{Liferay.Language.get('collapse-all')}
-				</button>
-			</div>
-			<div className="flex-fill flex-grow-1 text-right">
+			<div className="text-right">
 				<ClayDropDown
 					active={active}
 					onActiveChange={setActive}

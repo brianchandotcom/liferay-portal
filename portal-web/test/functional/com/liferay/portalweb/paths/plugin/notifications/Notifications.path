@@ -50,8 +50,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_TITLE_2</td>
-	<td>xpath=(//div[@class='title'])[2]</td>
+	<td>NOTIFICATIONS_TITLE_SPECIFIC</td>
+	<td>//h4//div[(@class='title') and contains(.,'${key_notificationsTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -75,8 +75,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_CONTENT_2</td>
-	<td>xpath=(//div[contains(@class,'content')]//div[@class='body' and contains(.,'${key_contentBody}')])[2]</td>
+	<td>NOTIFICATIONS_CONTENT_SPECIFIC</td>
+	<td>//a[contains(.,'${key_notificationsTitle}')]//div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>

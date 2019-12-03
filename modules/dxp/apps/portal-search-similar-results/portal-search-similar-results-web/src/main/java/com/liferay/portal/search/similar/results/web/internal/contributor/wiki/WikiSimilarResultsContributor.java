@@ -20,7 +20,6 @@ import com.liferay.portal.search.similar.results.web.internal.util.http.HttpHelp
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteBuilder;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteHelper;
-import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
 
@@ -32,23 +31,22 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(service = SimilarResultsContributor.class)
-public class WikiDisplaySimilarResultsContributor
+public class WikiSimilarResultsContributor
 	extends BaseWikiSimilarResultsContributor {
 
 	@Override
 	public void detectRoute(
 		RouteBuilder routeBuilder, RouteHelper routeHelper) {
 
-		String urlString = routeHelper.getURLString();
+		String[] parameters = _httpHelper.getFriendlyURLParameters(
+			routeHelper.getURLString());
 
-		SearchStringUtil.requireStartsWith(
-			WikiPortletKeys.WIKI_DISPLAY,
-			_httpHelper.getPortletIdParameter(urlString, "p_p_id"));
+		SearchStringUtil.requireEquals("wiki", parameters[0]);
 
 		routeBuilder.addAttribute(
-			"nodeName", _httpHelper.getPortletIdParameter(urlString, "nodeName")
+			"nodeName", parameters[1]
 		).addAttribute(
-			"title", _httpHelper.getPortletIdParameter(urlString, "title")
+			"title", parameters[2]
 		);
 	}
 

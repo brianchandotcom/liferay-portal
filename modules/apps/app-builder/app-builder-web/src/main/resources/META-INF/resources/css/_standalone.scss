@@ -91,7 +91,7 @@
 		.app-builder-standalone-name {
 			color: #ffffff;
 			font-size: 2.5rem;
-			font-weight: normal;
+			font-weight: bold;
 			margin-top: 4.5rem;
 			padding: 0;
 
@@ -109,6 +109,7 @@
 				display: flex;
 
 				.company-logo {
+					max-height: 52px;
 					max-width: 52px;
 				}
 

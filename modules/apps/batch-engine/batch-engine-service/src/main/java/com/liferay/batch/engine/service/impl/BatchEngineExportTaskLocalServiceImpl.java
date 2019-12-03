@@ -19,6 +19,8 @@ import com.liferay.batch.engine.service.base.BatchEngineExportTaskLocalServiceBa
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.Serializable;
 
@@ -38,6 +40,7 @@ public class BatchEngineExportTaskLocalServiceImpl
 	extends BatchEngineExportTaskLocalServiceBaseImpl {
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BatchEngineExportTask addBatchEngineExportTask(
 		long companyId, long userId, String callbackURL, String className,
 		String contentType, String executeStatus, List<String> fieldNamesList,

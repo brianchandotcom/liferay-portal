@@ -369,6 +369,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION_OPEN_GRAPH</td>
+	<td>//div[contains(@id,'${key_fieldName}')]//button[contains(@class,'localized')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE</td>
 	<td>//button[contains(.,'Merge')]</td>
 	<td></td>

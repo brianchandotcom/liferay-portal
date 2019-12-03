@@ -12,128 +12,71 @@
  * details.
  */
 
-import 'frontend-taglib/cards_treeview/CardsTreeview.es';
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput} from '@clayui/form';
+import {Treeview} from 'frontend-js-components-web';
+import React, {useCallback, useState} from 'react';
 
-import 'metal';
+const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
+	const [filterQuery, setFilterQuery] = useState('');
 
-import 'metal-component';
-import {PortletBase} from 'frontend-js-web';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+	const handleQueryChange = useCallback(event => {
+		const value = event.target.value;
 
-import templates from './SelectSiteNavigationMenuItem.soy';
+		setFilterQuery(value);
+	}, []);
 
-/**
- * SelectSiteNavigationMenuItem
- *
- * This component shows a list of available site navigation menu item to select
- * and allows to filter them by searching.
- */
+	const handleSelectionChange = selectedNodeId => {
+		selectedNodeId = [...selectedNodeId][0];
 
-class SelectSiteNavigationMenuItem extends PortletBase {
-	/**
-	 * Filters deep nested nodes based on a filtering value
-	 *
-	 * @type {Array.<Object>} nodes
-	 * @type {String} filterVAlue
-	 * @protected
-	 */
+		if (selectedNodeId) {
+			const selectedNode = nodes[0].children.find(
+				node => node.id === selectedNodeId
+			);
 
-	filterSiblingNodes_(nodes, filterValue) {
-		let filteredNodes = [];
-
-		nodes.forEach(node => {
-			if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-				filteredNodes.push(node);
-			}
-
-			if (node.children) {
-				filteredNodes = filteredNodes.concat(
-					this.filterSiblingNodes_(node.children, filterValue)
-				);
-			}
-		});
-
-		return filteredNodes;
-	}
-
-	/**
-	 * Searchs for nodes by name based on a filtering value
-	 *
-	 * @param {!Event} event
-	 * @protected
-	 */
-
-	searchNodes_(event) {
-		if (!this.originalNodes) {
-			this.originalNodes = this.nodes;
-		} else {
-			this.nodes = this.originalNodes;
-		}
-
-		const filterValue = event.delegateTarget.value.toLowerCase();
-
-		if (filterValue !== '') {
-			this.viewType = 'flat';
-			this.nodes = this.filterSiblingNodes_(this.nodes, filterValue);
-		} else {
-			this.viewType = 'tree';
-		}
-	}
-
-	/**
-	 * Fires item selector save event on selected node change
-	 *
-	 * @param {!Event} event
-	 * @protected
-	 */
-
-	selectedNodeChange_(event) {
-		var node = event.newVal[0];
-
-		if (node) {
-			var data = {
-				selectSiteNavigationMenuItemId: node.id,
-				selectSiteNavigationMenuItemName: node.name
+			const data = {
+				selectSiteNavigationMenuItemId: selectedNode.id,
+				selectSiteNavigationMenuItemName: selectedNode.name
 			};
 
-			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
+			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
 				data
 			});
 		}
-	}
-}
+	};
 
-SelectSiteNavigationMenuItem.STATE = {
-	/**
-	 * Event name to fire on node selection
-	 * @type {String}
-	 */
+	return (
+		<div className="container-fluid-1280">
+			<nav className="collapse-basic-search navbar navbar-default navbar-no-collapse">
+				<ClayInput.Group className="basic-search">
+					<ClayInput.GroupItem prepend>
+						<ClayInput
+							aria-label={Liferay.Language.get('search')}
+							onChange={handleQueryChange}
+							placeholder={`${Liferay.Language.get('search')}`}
+							type="text"
+						/>
+					</ClayInput.GroupItem>
 
-	itemSelectorSaveEvent: Config.string(),
+					<ClayInput.GroupItem append shrink>
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							symbol="search"
+						/>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
+			</nav>
 
-	/**
-	 * List of nodes
-	 * @type {Array.<Object>}
-	 */
-
-	nodes: Config.array().required(),
-
-	/**
-	 * Theme images root path
-	 * @type {String}
-	 */
-
-	pathThemeImages: Config.string().required(),
-
-	/**
-	 * Type of view to render. Accepted values are 'tree' and 'flat'
-	 * @type {String}
-	 */
-
-	viewType: Config.string().value('tree')
+			<Treeview
+				NodeComponent={Treeview.Card}
+				filterQuery={filterQuery}
+				nodes={nodes}
+				onSelectedNodesChange={handleSelectionChange}
+			/>
+		</div>
+	);
 };
 
-Soy.register(SelectSiteNavigationMenuItem, templates);
-
-export default SelectSiteNavigationMenuItem;
+export default function(props) {
+	return <SelectSiteNavigationMenuItem {...props} />;
+}

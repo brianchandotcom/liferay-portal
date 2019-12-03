@@ -225,10 +225,8 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			String[] guestPermissions = modelPermissions.getActionIds(
 				RoleConstants.GUEST);
 
-			if ((groupPermissions != null) || (guestPermissions != null)) {
-				updateDefinitionResources(
-					definition, groupPermissions, guestPermissions);
-			}
+			updateDefinitionResources(
+				definition, groupPermissions, guestPermissions);
 		}
 
 		// Attachments

@@ -34,6 +34,7 @@ public class CreatorUtil {
 		return new Creator() {
 			{
 				additionalName = user.getMiddleName();
+				contentType = "UserAccount";
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
 				id = user.getUserId();

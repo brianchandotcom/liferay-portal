@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="MapBuilderCheck" files="modules/apps/powwow/powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
+		<suppress checks="BuilderCheck" files="modules/apps/powwow/powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
 	</checkstyle>
 </suppressions>

@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @author Hugo Huijser
  */
-public class MapBuilderCheck extends ChainedMethodCheck {
+public class BuilderCheck extends ChainedMethodCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

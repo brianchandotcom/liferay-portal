@@ -91,7 +91,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		Type.typeNoMouseOver(
+		Type.typeAceEditorNoMouseOver(
 			locator1 = "KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT",
 			value1 = "${sourceXML}");
 

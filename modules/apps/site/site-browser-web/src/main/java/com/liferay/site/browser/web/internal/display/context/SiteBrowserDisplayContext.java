@@ -121,6 +121,8 @@ public class SiteBrowserDisplayContext {
 
 		boolean includeCompany = ParamUtil.getBoolean(
 			_httpServletRequest, "includeCompany");
+		boolean includeFormsSite = ParamUtil.getBoolean(
+			_httpServletRequest, "includeFormsSite");
 		boolean includeUserPersonalSite = ParamUtil.getBoolean(
 			_httpServletRequest, "includeUserPersonalSite");
 
@@ -129,6 +131,17 @@ public class SiteBrowserDisplayContext {
 		if (includeCompany) {
 			classNameIds = ArrayUtil.append(
 				classNameIds, PortalUtil.getClassNameId(Company.class));
+		}
+
+		if (includeFormsSite) {
+			if (groupSearch.getStart() == 0) {
+				Group formsSite = GroupLocalServiceUtil.getGroup(
+					company.getCompanyId(), GroupConstants.FORMS);
+
+				results.add(formsSite);
+			}
+
+			additionalSites++;
 		}
 
 		if (includeUserPersonalSite) {

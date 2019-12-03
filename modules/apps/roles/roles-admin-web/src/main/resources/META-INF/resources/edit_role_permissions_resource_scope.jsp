@@ -110,6 +110,7 @@ List groupNames = (List)objArray[8];
 
 						groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
 						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
+						groupSelectorURL.setParameter("includeFormsSite", Boolean.TRUE.toString());
 						groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
 						groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
 						groupSelectorURL.setParameter("target", target);

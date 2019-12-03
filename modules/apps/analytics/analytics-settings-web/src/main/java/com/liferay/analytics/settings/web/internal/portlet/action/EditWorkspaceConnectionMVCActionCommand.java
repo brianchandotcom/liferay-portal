@@ -118,16 +118,16 @@ public class EditWorkspaceConnectionMVCActionCommand
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-				throw new PortalException("Unable to connect this token");
+				throw new PortalException("Invalid token");
 			}
 
-			_savePreferences(
+			_updateCompanyPreferences(
 				themeDisplay.getCompanyId(),
 				EntityUtils.toString(closeableHttpResponse.getEntity()));
 		}
 	}
 
-	private void _savePreferences(long companyId, String json)
+	private void _updateCompanyPreferences(long companyId, String json)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);

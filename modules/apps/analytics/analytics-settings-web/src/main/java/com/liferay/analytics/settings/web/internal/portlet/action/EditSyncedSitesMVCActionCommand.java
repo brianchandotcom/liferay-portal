@@ -60,10 +60,11 @@ public class EditSyncedSitesMVCActionCommand
 
 		Long companyId = (Long)actionRequest.getAttribute(WebKeys.COMPANY_ID);
 
-		_savePreferences(companyId, syncedGroupIds);
+		_updateCompanyPreferences(companyId, syncedGroupIds);
 	}
 
-	private void _savePreferences(long companyId, String[] syncedGroupIds)
+	private void _updateCompanyPreferences(
+			long companyId, String[] syncedGroupIds)
 		throws PortalException {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);

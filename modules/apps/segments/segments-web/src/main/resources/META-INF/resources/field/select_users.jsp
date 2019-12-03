@@ -46,18 +46,50 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 			row.setData(data);
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200 table-title"
-				name="name"
-				value="<%= user2.getFullName() %>"
-			/>
+			<c:choose>
+				<c:when test='<%= Objects.equals(selectUsersDisplayContext.getDisplayStyle(), "icon") %>'>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200"
-				name="screen-name"
-				orderable="<%= true %>"
-				property="screenName"
-			/>
+					<%
+					row.setCssClass("entry-card lfr-asset-item selectable");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<clay:user-card
+							userCard="<%= new SelectUserUserCard(user2, renderRequest, searchContainer.getRowChecker()) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= Objects.equals(selectUsersDisplayContext.getDisplayStyle(), "descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<liferay-ui:user-portrait
+							userId="<%= user2.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5><%= user2.getFullName() %></h5>
+
+						<h6 class="text-default">
+							<span><%= user2.getScreenName() %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="name"
+						property="fullName"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="screen-name"
+						property="screenName"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

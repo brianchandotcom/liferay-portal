@@ -55,7 +55,8 @@ page import="com.liferay.segments.web.internal.display.context.SelectOrganizatio
 page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEntryDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectUsersDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectUsersManagementToolbarDisplayContext" %><%@
-page import="com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission" %>
+page import="com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission" %><%@
+page import="com.liferay.segments.web.internal.servlet.taglib.clay.SelectUserUserCard" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %><%@

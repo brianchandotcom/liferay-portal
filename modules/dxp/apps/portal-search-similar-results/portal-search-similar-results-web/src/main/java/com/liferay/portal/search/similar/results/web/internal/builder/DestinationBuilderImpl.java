@@ -39,7 +39,7 @@ public class DestinationBuilderImpl implements DestinationBuilder {
 	@Override
 	public DestinationBuilder replace(String oldSub, String newSub) {
 		if (Validator.isNotNull(oldSub) && Validator.isNotNull(newSub)) {
-			_urlString = StringUtil.replaceFirst(_urlString, oldSub, newSub);
+			_urlString = StringUtil.replace(_urlString, oldSub, newSub);
 		}
 
 		return this;

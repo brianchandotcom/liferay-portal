@@ -122,7 +122,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
 			"INSTANCE_BNPTUvWUBXIr_cur=0&p_r_p_resetCur=false",
 			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_assetEntryId=43152");
+			"INSTANCE_BNPTUvWUBXIr_assetEntryId=25134");
 
 		AssetEntry assetEntry1 = getAssetEntry(className1, classPK1);
 

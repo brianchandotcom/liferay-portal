@@ -219,14 +219,11 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 				definition, StringPool.EMPTY_ARRAY, StringPool.EMPTY_ARRAY);
 		}
 		else {
-			String[] groupPermissions = modelPermissions.getActionIds(
-				RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE);
-
-			String[] guestPermissions = modelPermissions.getActionIds(
-				RoleConstants.GUEST);
-
 			updateDefinitionResources(
-				definition, groupPermissions, guestPermissions);
+				definition,
+				modelPermissions.getActionIds(
+					RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE),
+				modelPermissions.getActionIds(RoleConstants.GUEST));
 		}
 
 		// Attachments

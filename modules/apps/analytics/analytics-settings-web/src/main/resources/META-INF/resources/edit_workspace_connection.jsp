@@ -18,6 +18,8 @@
 
 <%
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+
+String[] syncedGroupIds = analyticsConfiguration.syncedGroupIds();
 %>
 
 <portlet:actionURL name="/analytics/edit_workspace_connection" var="editWorkspaceConnectionURL" />
@@ -56,7 +58,7 @@ AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.
 
 		<small>
 			<strong>
-				<liferay-ui:message arguments="<%= 0 %>" key="total-sites-selected-x" />
+				<liferay-ui:message arguments="<%= ArrayUtil.getLength(syncedGroupIds) %>" key="total-sites-selected-x" />
 			</strong>
 		</small>
 

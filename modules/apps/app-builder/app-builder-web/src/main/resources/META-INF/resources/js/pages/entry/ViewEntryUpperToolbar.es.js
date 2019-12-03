@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayButtonGroup from '@clayui/button/lib/Group';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -33,23 +34,31 @@ export default withRouter(({onDelete, onEdit, onNext, onPrev, page, total}) => {
 			</UpperToolbar.Item>
 
 			<UpperToolbar.Group>
-				<ClayButtonGroup>
-					<ClayButtonWithIcon
-						disabled={page === 1}
-						displayType="secondary"
-						onClick={onPrev}
-						small
-						symbol="angle-left"
-					/>
+				<ClayTooltipProvider>
+					<ClayButtonGroup>
+						<ClayButtonWithIcon
+							data-tooltip-align="bottom"
+							data-tooltip-delay="200"
+							disabled={page === 1}
+							displayType="secondary"
+							onClick={onPrev}
+							small
+							symbol="angle-left"
+							title={Liferay.Language.get('previous-entry')}
+						/>
 
-					<ClayButtonWithIcon
-						disabled={page === total}
-						displayType="secondary"
-						onClick={onNext}
-						small
-						symbol="angle-right"
-					/>
-				</ClayButtonGroup>
+						<ClayButtonWithIcon
+							data-tooltip-align="bottom"
+							data-tooltip-delay="200"
+							disabled={page === total}
+							displayType="secondary"
+							onClick={onNext}
+							small
+							symbol="angle-right"
+							title={Liferay.Language.get('next-entry')}
+						/>
+					</ClayButtonGroup>
+				</ClayTooltipProvider>
 			</UpperToolbar.Group>
 
 			<UpperToolbar.Group>

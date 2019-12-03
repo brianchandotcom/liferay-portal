@@ -306,11 +306,15 @@ public class RolesAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "addSegmentsEntryIds"), 0L);
 
 		if (ArrayUtil.isNotEmpty(addSegmentsEntryIds)) {
-			for (long segmentsEntryId : addSegmentsEntryIds) {
-				_segmentsEntryRoleLocalService.addSegmentsEntryRole(
-					segmentsEntryId, roleId,
-					ServiceContextFactory.getInstance(
-						Role.class.getName(), actionRequest));
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+				for (long segmentsEntryId : addSegmentsEntryIds) {
+					_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+						segmentsEntryId, roleId,
+						ServiceContextFactory.getInstance(
+							Role.class.getName(), actionRequest));
+				}
 			}
 		}
 
@@ -318,9 +322,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "removeSegmentsEntryIds"), 0L);
 
 		if (ArrayUtil.isNotEmpty(removeSegmentsEntryIds)) {
-			for (long segmentsEntryId : removeSegmentsEntryIds) {
-				_segmentsEntryRoleLocalService.deleteSegmentsEntryRole(
-					segmentsEntryId, roleId);
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
+
+				for (long segmentsEntryId : removeSegmentsEntryIds) {
+					_segmentsEntryRoleLocalService.deleteSegmentsEntryRole(
+						segmentsEntryId, roleId);
+				}
 			}
 		}
 	}

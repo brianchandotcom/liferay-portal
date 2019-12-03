@@ -58,7 +58,7 @@ public abstract class ChainedMethodCheck extends BaseCheck {
 	}
 
 	protected FullIdent getMethodCallFullIdent(
-		DetailAST detailAST, String variableName, String methodName) {
+		DetailAST detailAST, String variableName, String... methodNames) {
 
 		if (detailAST.getType() != TokenTypes.EXPR) {
 			return null;
@@ -78,10 +78,12 @@ public abstract class ChainedMethodCheck extends BaseCheck {
 			FullIdent fullIdent = FullIdent.createFullIdent(
 				firstChildDetailAST);
 
-			if (Objects.equals(
-					fullIdent.getText(), variableName + "." + methodName)) {
+			for (String methodName : methodNames) {
+				if (Objects.equals(
+						fullIdent.getText(), variableName + "." + methodName)) {
 
-				return fullIdent;
+					return fullIdent;
+				}
 			}
 
 			if (firstChildDetailAST.getType() != TokenTypes.DOT) {

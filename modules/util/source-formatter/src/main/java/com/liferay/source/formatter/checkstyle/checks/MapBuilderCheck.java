@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -23,7 +24,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 /**
  * @author Hugo Huijser
@@ -123,6 +124,12 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			}
 		}
 
+		String[] builderMethodNames = _builderMethodNamesMap.get(className);
+
+		if (builderMethodNames == null) {
+			return;
+		}
+
 		List<DetailAST> methodCallDetailASTList =
 			DetailASTUtil.getAllChildTokens(
 				detailAST, true, TokenTypes.METHOD_CALL);
@@ -143,7 +150,8 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
 			if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
-				!Objects.equals(firstChildDetailAST.getText(), "put")) {
+				!ArrayUtil.contains(
+					builderMethodNames, firstChildDetailAST.getText())) {
 
 				return;
 			}
@@ -156,7 +164,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 	private void _checkInline(
 		DetailAST parentDetailAST, List<DetailAST> methodVariableDetailASTList,
-		String className) {
+		String builderClassName) {
 
 		List<String> followingVariableNames = new ArrayList<>();
 
@@ -224,7 +232,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 				if (!contains) {
 					log(
 						identDetailAST, _MSG_INLINE_MAP_BUILDER, name,
-						identDetailAST.getLineNo(), className + ".put",
+						identDetailAST.getLineNo(), builderClassName,
 						parentDetailAST.getLineNo());
 				}
 			}
@@ -253,24 +261,25 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		String className = firstChildDetailAST.getText();
+		String builderClassName = firstChildDetailAST.getText();
 
-		if (!className.endsWith("Builder")) {
+		if (!builderClassName.endsWith("Builder")) {
 			return;
 		}
 
+		String className = builderClassName.substring(
+			0, builderClassName.length() - 7);
+
 		List<String> mapTypeNames = getAttributeValues(_MAP_TYPE_NAMES_KEY);
 
-		if (!mapTypeNames.contains(
-				className.substring(0, className.length() - 7))) {
-
+		if (!mapTypeNames.contains(className)) {
 			return;
 		}
 
 		List<DetailAST> methodVariableDetailASTList =
 			_getMethodVariableDetailASTList(methodCallDetailAST);
 
-		_checkNullValues(methodVariableDetailASTList, className);
+		_checkNullValues(methodVariableDetailASTList, builderClassName);
 
 		DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
@@ -283,7 +292,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 		if (parentDetailAST.getType() == TokenTypes.LITERAL_RETURN) {
 			_checkInline(
-				parentDetailAST, methodVariableDetailASTList, className);
+				parentDetailAST, methodVariableDetailASTList, builderClassName);
 		}
 
 		if (parentDetailAST.getType() != TokenTypes.ASSIGN) {
@@ -305,7 +314,8 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			}
 		}
 
-		_checkInline(parentDetailAST, methodVariableDetailASTList, className);
+		_checkInline(
+			parentDetailAST, methodVariableDetailASTList, builderClassName);
 
 		firstChildDetailAST = assignDetailAST.getFirstChild();
 
@@ -333,6 +343,12 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 		variableNames.add(variableName);
 
+		String[] builderMethodNames = _builderMethodNamesMap.get(className);
+
+		if (builderMethodNames == null) {
+			return;
+		}
+
 		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
 
 		while (true) {
@@ -341,13 +357,13 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			}
 
 			FullIdent fullIdent = getMethodCallFullIdent(
-				nextSiblingDetailAST, variableName, "put");
+				nextSiblingDetailAST, variableName, builderMethodNames);
 
 			if (fullIdent != null) {
 				log(
 					assignDetailAST, _MSG_INCLUDE_MAP_BUILDER,
 					fullIdent.getText(), fullIdent.getLineNo(),
-					className + ".put", assignDetailAST.getLineNo());
+					builderClassName, assignDetailAST.getLineNo());
 
 				return;
 			}
@@ -381,6 +397,13 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
+		String[] builderMethodNames = _builderMethodNamesMap.get(
+			newInstanceTypeName);
+
+		if (builderMethodNames == null) {
+			return;
+		}
+
 		while (true) {
 			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
 
@@ -389,7 +412,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			}
 
 			FullIdent fullIdent = getMethodCallFullIdent(
-				nextSiblingDetailAST, variableName, "put");
+				nextSiblingDetailAST, variableName, builderMethodNames);
 
 			if (fullIdent != null) {
 				log(
@@ -407,7 +430,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 	}
 
 	private void _checkNullValues(
-		List<DetailAST> methodVariableDetailASTList, String className) {
+		List<DetailAST> methodVariableDetailASTList, String builderClassName) {
 
 		for (DetailAST methodVariableDetailAST : methodVariableDetailASTList) {
 			if (methodVariableDetailAST.getType() != TokenTypes.EXPR) {
@@ -418,7 +441,9 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 				methodVariableDetailAST.getFirstChild();
 
 			if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
-				log(firstChildDetailAST, _MSG_CAST_NULL_VALUE, className);
+				log(
+					firstChildDetailAST, _MSG_CAST_NULL_VALUE,
+					builderClassName);
 			}
 		}
 	}
@@ -626,5 +651,16 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 	private static final String _RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private static final Map<String, String[]> _builderMethodNamesMap =
+		HashMapBuilder.put(
+			"ConcurrentHashMap", new String[] {"put"}
+		).put(
+			"HashMap", new String[] {"put"}
+		).put(
+			"LinkedHashMap", new String[] {"put"}
+		).put(
+			"TreeMap", new String[] {"put"}
+		).build();
 
 }

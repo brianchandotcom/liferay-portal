@@ -568,6 +568,12 @@ components:
                         The author's additional name (e.g., middle name).
                     readOnly: true
                     type: string
+                contentType:
+                    # @review
+                    description:
+                        The type of the content.
+                    readOnly: true
+                    type: string
                 familyName:
                     description:
                         The author's surname.

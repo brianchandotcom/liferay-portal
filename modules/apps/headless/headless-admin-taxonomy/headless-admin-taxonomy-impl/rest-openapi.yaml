@@ -27,6 +27,12 @@ components:
                         An additional name for the user. This can be used for a middle name.
                     readOnly: true
                     type: string
+                contentType:
+                    # @review
+                    description:
+                        The type of the content.
+                    readOnly: true
+                    type: string
                 familyName:
                     description:
                         The user's surname (last name).

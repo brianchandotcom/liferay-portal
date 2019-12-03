@@ -6,6 +6,12 @@ components:
             properties:
                 additionalName:
                     type: string
+                contentType:
+                    # @review
+                    description:
+                        The type of the content.
+                    readOnly: true
+                    type: string
                 familyName:
                     type: string
                 givenName:

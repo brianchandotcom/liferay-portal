@@ -14,6 +14,7 @@
 
 package com.liferay.bean.portlet.cdi.extension.internal.mvc;
 
+import com.liferay.bean.portlet.extension.CSRFLiferayPortletURL;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,11 +63,14 @@ public class MvcContextImpl implements MvcContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		CSRFLiferayPortletURL csrfLiferayPortletURL = new CSRFLiferayPortletURL(
+			portletDisplay.getId());
+
+		AuthTokenUtil.addCSRFToken(
+			themeDisplay.getRequest(), csrfLiferayPortletURL);
+
 		_csrf = new CsrfImpl(
-			"p_p_auth",
-			AuthTokenUtil.getToken(
-				themeDisplay.getRequest(), themeDisplay.getPlid(),
-				portletDisplay.getId()));
+			"p_auth", csrfLiferayPortletURL.getParameter("p_auth"));
 
 		Map<String, javax.ws.rs.core.Cookie> cookieMap = new HashMap<>();
 

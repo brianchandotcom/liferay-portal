@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClaySelect} from '@clayui/form';
@@ -19,10 +20,17 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
-import {StateContext} from '../state/context.es';
+import {archiveExperiment} from '../state/actions.es';
+import {StateContext, DispatchContext} from '../state/context.es';
 import {SegmentsExperienceType} from '../types.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
-import {statusToLabelDisplayType, STATUS_DRAFT} from '../util/statuses.es';
+import {
+	statusToLabelDisplayType,
+	STATUS_DRAFT,
+	STATUS_FINISHED_WINNER,
+	STATUS_COMPLETED
+} from '../util/statuses.es';
+import {openSuccessToast, openErrorToast} from '../util/toasts.es';
 import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
 import ExperimentsHistory from './ExperimentsHistory.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
@@ -45,15 +53,20 @@ function SegmentsExperiments({
 }) {
 	const [dropdown, setDropdown] = useState(false);
 	const [activeTab, setActiveTab] = useState(TABS_STATES.ACTIVE);
-	const {experiment, experimentHistory, selectedExperienceId} = useContext(
-		StateContext
-	);
-	const {assetsPath} = useContext(SegmentsExperimentsContext);
+	const {
+		experiment,
+		experimentHistory,
+		selectedExperienceId,
+		variants
+	} = useContext(StateContext);
+	const {APIService, assetsPath} = useContext(SegmentsExperimentsContext);
+	const dispatch = useContext(DispatchContext);
 
 	const _selectedExperienceId = experiment
 		? experiment.segmentsExperienceId
 		: selectedExperienceId;
 	const noExperimentIllustration = `${assetsPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
+	const winnerVariant = variants.filter(variant => variant.winner === true);
 
 	return (
 		<>
@@ -159,6 +172,42 @@ function SegmentsExperiments({
 								{experiment.status.label}
 							</ClayLabel>
 
+							{experiment.status.value ===
+								STATUS_FINISHED_WINNER && (
+								<ClayAlert
+									className="mt-3"
+									displayType="success"
+								>
+									<div
+										className="d-inline"
+										dangerouslySetInnerHTML={{
+											__html: Liferay.Util.sub(
+												Liferay.Language.get(
+													'x-is-the-winner-variant'
+												),
+												winnerVariant[0].name
+											)
+										}}
+									/>
+
+									<div className="mt-3">
+										<ClayButton
+											className="btn-success"
+											onClick={() =>
+												_handlePublishVariant(
+													winnerVariant[0]
+														.segmentsExperienceId
+												)
+											}
+										>
+											{Liferay.Language.get(
+												'publish-winner'
+											)}
+										</ClayButton>
+									</div>
+								</ClayAlert>
+							)}
+
 							<SegmentsExperimentsDetails
 								segmentsExperiment={experiment}
 							/>
@@ -176,6 +225,7 @@ function SegmentsExperiments({
 							)}
 
 							<Variants
+								onVariantPublish={_handlePublishVariant}
 								selectedSegmentsExperienceId={
 									selectedExperienceId
 								}
@@ -247,6 +297,36 @@ function SegmentsExperiments({
 
 	function _handleEditExperiment() {
 		onEditSegmentsExperiment();
+	}
+
+	function _handlePublishVariant(experienceId) {
+		const body = {
+			segmentsExperimentId: experiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: experienceId
+		};
+
+		const confirmed = confirm(
+			Liferay.Language.get(
+				'are-you-sure-you-want-to-publish-this-variant'
+			)
+		);
+
+		if (confirmed) {
+			APIService.publishExperience(body)
+				.then(({segmentsExperiment}) => {
+					openSuccessToast();
+
+					dispatch(
+						archiveExperiment({
+							status: segmentsExperiment.status
+						})
+					);
+				})
+				.catch(_error => {
+					openErrorToast();
+				});
+		}
 	}
 }
 

@@ -18,7 +18,6 @@ import React, {useContext, useState} from 'react';
 import SegmentsExperimentsContext from '../../context.es';
 import {
 	addVariant,
-	archiveExperiment,
 	reviewVariants,
 	updateVariant,
 	updateVariants
@@ -26,7 +25,6 @@ import {
 import {DispatchContext, StateContext} from '../../state/context.es';
 import {navigateToExperience} from '../../util/navigation.es';
 import {
-	STATUS_COMPLETED,
 	STATUS_FINISHED_NO_WINNER,
 	STATUS_FINISHED_WINNER
 } from '../../util/statuses.es';
@@ -34,7 +32,7 @@ import {openErrorToast, openSuccessToast} from '../../util/toasts.es';
 import VariantForm from './internal/VariantForm.es';
 import VariantList from './internal/VariantList.es';
 
-function Variants({selectedSegmentsExperienceId}) {
+function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 	const dispatch = useContext(DispatchContext);
 	const {errors, experiment, variants} = useContext(StateContext);
 	const {APIService, page} = useContext(SegmentsExperimentsContext);
@@ -109,7 +107,7 @@ function Variants({selectedSegmentsExperienceId}) {
 				editable={experiment.editable}
 				onVariantDeletion={_handleVariantDeletion}
 				onVariantEdition={_handleVariantEdition}
-				onVariantPublish={_handlePublishVariant}
+				onVariantPublish={onVariantPublish}
 				publishable={publishable}
 				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
 				variants={variants}
@@ -208,36 +206,6 @@ function Variants({selectedSegmentsExperienceId}) {
 		});
 	}
 
-	function _handlePublishVariant(experienceId) {
-		const body = {
-			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: experienceId
-		};
-
-		const confirmed = confirm(
-			Liferay.Language.get(
-				'are-you-sure-you-want-to-publish-this-variant'
-			)
-		);
-
-		if (confirmed) {
-			APIService.publishExperience(body)
-				.then(({segmentsExperiment}) => {
-					openSuccessToast();
-
-					dispatch(
-						archiveExperiment({
-							status: segmentsExperiment.status
-						})
-					);
-				})
-				.catch(_error => {
-					openErrorToast();
-				});
-		}
-	}
-
 	function _handleVariantCreation({name}) {
 		const body = {
 			classNameId: page.classNameId,
@@ -276,6 +244,7 @@ function Variants({selectedSegmentsExperienceId}) {
 }
 
 Variants.propTypes = {
+	onVariantPublish: PropTypes.func.isRequired,
 	selectedSegmentsExperienceId: PropTypes.string.isRequired
 };
 

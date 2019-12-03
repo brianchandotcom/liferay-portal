@@ -14,7 +14,10 @@
 
 package com.liferay.product.navigation.product.menu.web.internal.display.context;
 
+import com.liferay.application.list.GroupProvider;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -45,6 +48,9 @@ public class LayoutsTreeDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
+			ApplicationListWebKeys.GROUP_PROVIDER);
 	}
 
 	public String getAddLayoutURL() {
@@ -125,6 +131,24 @@ public class LayoutsTreeDisplayContext {
 		).build();
 	}
 
+	public long getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		Group group = _groupProvider.getGroup(
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
+
+		if (group != null) {
+			_groupId = group.getGroupId();
+		}
+		else {
+			_groupId = _themeDisplay.getSiteGroupId();
+		}
+
+		return _groupId;
+	}
+
 	public Map<String, Object> getLayoutFinderData() {
 		LiferayPortletURL findLayoutsURL = PortletURLFactoryUtil.create(
 			_liferayPortletRequest,
@@ -179,6 +203,8 @@ public class LayoutsTreeDisplayContext {
 			layout.isPrivateLayout());
 	}
 
+	private Long _groupId;
+	private final GroupProvider _groupProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final ThemeDisplay _themeDisplay;
 

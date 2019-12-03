@@ -56,6 +56,7 @@ import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DeleteSpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.ExtensionContainer;
@@ -73,6 +74,7 @@ import org.osgi.framework.Constants;
 /**
  * @author Andrea Di Giorgi
  * @author David Truong
+ * @author Gregory Amerson
  */
 public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 

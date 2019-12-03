@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext, useRef, useState} from 'react';
-import {useDrag} from 'react-dnd';
+import {useDrag, useDrop} from 'react-dnd';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
 import {moveItem, removeItem} from '../actions/index';
@@ -179,20 +179,18 @@ export default function Topper({
 	});
 
 	const styles = {
-		'fragments-editor__topper-wrapper--active': active === item.itemId,
-		'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered':
-			hover === item.itemId,
+		'fragments-editor__drag-source fragments-editor__drag-source--fragment fragments-editor__drop-target fragments-editor__topper-wrapper fragment-entry-link-wrapper': true,
+		'fragments-editor__topper-wrapper--active': isSelected(item.itemId),
+		'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered': isHovered(
+			item.itemId
+		),
 		'fragments-editor-border-bottom': dragHover === 1 && isOver,
 		'fragments-editor-border-top': dragHover === 0 && isOver
 	};
 
 	if (!activeTopper) {
 		return React.cloneElement(children, {
-			className: classNames(
-				'fragments-editor__drag-source fragments-editor__drag-source--fragment fragments-editor__drop-target fragments-editor__topper-wrapper fragment-entry-link-wrapper',
-				children.className,
-				styles
-			),
+			className: classNames(children.className, styles),
 			ref: node => {
 				containerRef.current = node;
 				drop(node);
@@ -208,10 +206,7 @@ export default function Topper({
 
 	return (
 		<div
-			className={classNames(
-				'fragments-editor__drag-source fragments-editor__drag-source--fragment fragments-editor__drop-target fragments-editor__topper-wrapper fragment-entry-link-wrapper',
-				styles
-			)}
+			className={classNames(styles)}
 			onClick={event => {
 				event.stopPropagation();
 
@@ -247,17 +242,17 @@ export default function Topper({
 		>
 			<div className="fragments-editor__topper tbar">
 				<ul className="tbar-nav">
-					<Topper.Item expand isDragHandler ref={drag}>
+					<TopperListItem expand isDragHandler ref={drag}>
 						<ul className="tbar-nav">
-							<Topper.Item className="pr-0">
+							<TopperListItem className="pr-0">
 								<ClayIcon
 									className="fragments-editor__topper__drag-icon fragments-editor__topper__icon"
 									symbol="drag"
 								/>
-							</Topper.Item>
-							<Topper.Item isTitle>{name}</Topper.Item>
+							</TopperListItem>
+							<TopperListItem isTitle>{name}</TopperListItem>
 						</ul>
-					</Topper.Item>
+					</TopperListItem>
 					<TopperListItem>
 						<ClayButton displayType="unstyled" small>
 							<ClayIcon
@@ -287,6 +282,7 @@ export default function Topper({
 				className={classNames('fragment-entry-link-content', {
 					dragged: isDragging
 				})}
+				ref={drop}
 			>
 				{children}
 			</div>

@@ -1,6 +1,6 @@
-## MapBuilders
+## Builders
 
-Use `*MapBuilder` when possible.
+Use `*Builder` when possible.
 
 ### Example
 

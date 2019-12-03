@@ -116,10 +116,10 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.BuilderCheck">
 			<property name="enabled" value="false" />
 			<property name="typeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
-			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_builders.markdown" />
-			<message key="builder.inline" value="Inline variable definition ''{0}'' ({1}) inside ''{2}'' ({3}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_builders.markdown" />
-			<message key="builder.use" value="Use ''{0}'' ({1}, {2}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_builders.markdown" />
-			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_builders.markdown" />
+			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/builders.markdown" />
+			<message key="builder.inline" value="Inline variable definition ''{0}'' ({1}) inside ''{2}'' ({3}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/builders.markdown" />
+			<message key="builder.use" value="Use ''{0}'' ({1}, {2}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/builders.markdown" />
+			<message key="builder.use.instead" value="Use ''{0}'' instead of new instance of ''{1}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/builders.markdown" />
 			<message key="null.value.cast" value="Cast null value in {0}" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.CamelCaseNameCheck">

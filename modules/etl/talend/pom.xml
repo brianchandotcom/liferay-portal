@@ -22,6 +22,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<properties>
+		<liferay.talend.version>0.2.0-SNAPSHOT</liferay.talend.version>
 		<liferay.javadoc.formatter.version>1.0.33</liferay.javadoc.formatter.version>
 		<liferay.source.formatter.version>1.0.948</liferay.source.formatter.version>
 		<maven.deploy.skip>true</maven.deploy.skip>

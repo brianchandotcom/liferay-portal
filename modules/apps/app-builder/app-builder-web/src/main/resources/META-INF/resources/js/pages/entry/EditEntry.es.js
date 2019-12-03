@@ -100,7 +100,11 @@ export const EditEntry = ({
 		<>
 			<ControlMenuBase
 				backURL={redirect ? redirect : `${basePortletURL}/#/`}
-				title={Liferay.Language.get('edit-entry')}
+				title={
+					dataRecordId !== '0'
+						? Liferay.Language.get('edit-entry')
+						: Liferay.Language.get('add-entry')
+				}
 				url={location.href}
 			/>
 

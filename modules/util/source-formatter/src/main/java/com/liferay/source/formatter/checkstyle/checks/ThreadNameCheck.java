@@ -22,6 +22,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -64,7 +66,10 @@ public class ThreadNameCheck extends BaseCheck {
 
 			name = name.substring(1, name.length() - 1);
 
-			String expectedName = SourceUtil.getTitleCase(name, false);
+			Matcher matcher = _camelCasePattern.matcher(name);
+
+			String expectedName = SourceUtil.getTitleCase(
+				matcher.replaceAll("$1 $2"), false);
 
 			if (!name.equals(expectedName)) {
 				log(firstChildDetailAST, _MSG_RENAME_THREAD, expectedName);
@@ -73,5 +78,8 @@ public class ThreadNameCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_RENAME_THREAD = "thread.rename";
+
+	private static final Pattern _camelCasePattern = Pattern.compile(
+		"([a-z])([A-Z])");
 
 }

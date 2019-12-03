@@ -70,6 +70,7 @@ public class JSR330InjectedMethodElement
 		}
 		else {
 			Class<?>[] parameterTypes = method.getParameterTypes();
+
 			dependencies = new Object[parameterTypes.length];
 			DependencyDescriptor[] dependencyDescriptors =
 				new DependencyDescriptor[parameterTypes.length];

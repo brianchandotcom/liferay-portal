@@ -196,7 +196,7 @@ public class MvcExtension {
 							StringBundler.concat(
 								"Removed unsupported @",
 								unsupportedAnnotationClass.getSimpleName(),
-								" annotation from " + annotatedField));
+								" annotation from ", annotatedField));
 					}
 				}
 			}

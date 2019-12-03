@@ -18,8 +18,6 @@ import com.liferay.bean.portlet.extension.BeanFilterMethod;
 
 import java.lang.reflect.Method;
 
-import java.util.Set;
-
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -39,9 +37,8 @@ public class CDIBeanFilterMethod implements BeanFilterMethod {
 
 	@Override
 	public Object invoke(Object... args) throws ReflectiveOperationException {
-		Set<Bean<?>> beans = _beanManager.getBeans(_beanType);
-
-		Bean<?> resolvedBean = _beanManager.resolve(beans);
+		Bean<?> resolvedBean = _beanManager.resolve(
+			_beanManager.getBeans(_beanType));
 
 		CreationalContext<?> creationalContext =
 			_beanManager.createCreationalContext(resolvedBean);

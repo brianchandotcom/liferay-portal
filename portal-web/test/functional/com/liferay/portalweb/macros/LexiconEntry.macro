@@ -146,7 +146,14 @@ definition {
 	}
 
 	macro gotoHeaderMenuItem {
-		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Click.clickNoMouseOver(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS_IE");
+		}
+		else {
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+		}
 
 		MenuItem.click(menuItem = "${menuItem}");
 	}

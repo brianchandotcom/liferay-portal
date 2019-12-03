@@ -1625,9 +1625,9 @@ public class ModulesStructureTest {
 	private static final Set<String> _gitRepoGradlePropertiesKeys =
 		SetUtil.fromList(
 			Arrays.asList(
-				"jira.project.keys", "org.gradle.daemon", "org.gradle.parallel",
-				"pom.scm.connection", "pom.scm.developerConnection",
-				"pom.scm.url"));
+				"jira.project.keys", "org.gradle.daemon", "org.gradle.jvmargs",
+				"org.gradle.parallel", "pom.scm.connection",
+				"pom.scm.developerConnection", "pom.scm.url"));
 	private static final List<String> _gradleConfigurations = Arrays.asList(
 		"compileOnly", "provided", "compile", "runtime", "testCompile",
 		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");

@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -304,49 +302,30 @@ public abstract class TopLevelBuildRunner
 			throw new RuntimeException(ioe);
 		}
 
-		String mostAvailableMasterURL =
+		String invocationURL =
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				JenkinsResultsParserUtil.combine(
 					"http://", cohortName, ".liferay.com"),
 				1);
 
-		Matcher matcher = _mostAvailableMasterURLPattern.matcher(
-			mostAvailableMasterURL);
-
-		if (!matcher.find()) {
-			throw new RuntimeException(
-				"Invalid Jenkins master URL " + mostAvailableMasterURL);
-		}
-
-		JenkinsMaster jenkinsMaster = new JenkinsMaster(matcher.group(1));
-
-		Job job = JobFactory.newJob(jobName);
-
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(job.getJobURL(jenkinsMaster));
+		sb.append(invocationURL);
+		sb.append("/job/");
+		sb.append(jobName);
 		sb.append("/buildWithParameters?token=");
 		sb.append(buildProperties.getProperty("jenkins.authentication.token"));
 
-		Map<String, String> jobParameters = job.getDefaultParameters(
-			jenkinsMaster);
-
-		for (Map.Entry<String, String> entry : jobParameters.entrySet()) {
-			String jobParameterName = entry.getKey();
+		for (Map.Entry<String, String> invocationParameter :
+				invocationParameters.entrySet()) {
 
 			sb.append("&");
-			sb.append(JenkinsResultsParserUtil.fixURL(jobParameterName));
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(invocationParameter.getKey()));
 			sb.append("=");
-
-			if (invocationParameters.containsKey(jobParameterName)) {
-				sb.append(
-					JenkinsResultsParserUtil.fixURL(
-						invocationParameters.get(jobParameterName)));
-
-				continue;
-			}
-
-			sb.append(JenkinsResultsParserUtil.fixURL(entry.getValue()));
+			sb.append(
+				JenkinsResultsParserUtil.fixURL(
+					invocationParameter.getValue()));
 		}
 
 		_topLevelBuild.addDownstreamBuilds(sb.toString());
@@ -428,9 +407,6 @@ public abstract class TopLevelBuildRunner
 	private static final int _SECONDS_WAIT_FOR_INVOKED_JOB_DURATION = 30;
 
 	private static final int _THREADS_FILE_PROPAGATOR_THREAD_SIZE = 1;
-
-	private static final Pattern _mostAvailableMasterURLPattern =
-		Pattern.compile("http://([^?]*[^/?])[/]*");
 
 	private final List<BuildData> _downstreamBuildDataList = new ArrayList<>();
 	private long _lastGeneratedReportTime = -1;

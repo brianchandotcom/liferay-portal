@@ -27,9 +27,13 @@ import updateLayoutData from '../thunks/updateLayoutData';
 import Topper from './Topper';
 import UnsafeHTML from './UnsafeHTML';
 
-const Root = ({children}) => <div style={{height: '100vh'}}>{children}</div>;
+const Root = React.forwardRef(({children}, ref) => (
+	<div ref={ref} style={{height: '100vh'}}>
+		{children}
+	</div>
+));
 
-function Container({children, item}) {
+const Container = React.forwardRef(({children, item}, ref) => {
 	const {
 		backgroundColorCssClass,
 		backgroundImage,
@@ -50,6 +54,7 @@ function Container({children, item}) {
 					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
 				}
 			)}
+			ref={ref}
 			style={
 				backgroundImage
 					? {
@@ -64,13 +69,13 @@ function Container({children, item}) {
 			<div className="page-editor__container-outline">{children}</div>
 		</div>
 	);
-}
+});
 
-function Row({children, item, layoutData}) {
+const Row = React.forwardRef(({children, item, layoutData}, ref) => {
 	const parent = layoutData.items[item.parentId];
 
 	const rowContent = (
-		<div className="page-editor__row-outline">
+		<div className="page-editor__row-outline" ref={ref}>
 			<div
 				className={classNames('page-editor__row row', {
 					empty: !item.children.some(
@@ -86,8 +91,10 @@ function Row({children, item, layoutData}) {
 
 	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
 		<div className="container-fluid p-0">{rowContent}</div>
-	) : rowContent;
-}
+	) : (
+		rowContent
+	);
+});
 
 const Column = React.forwardRef(({children, className, item}, ref) => {
 	const {size} = item.config;
@@ -102,7 +109,7 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 	);
 });
 
-function Fragment({item}) {
+const Fragment = React.forwardRef(({item}, ref) => {
 	const {fragmentEntryLinks} = useContext(StoreContext);
 
 	const fragmentEntryLink =
@@ -121,8 +128,8 @@ function Fragment({item}) {
 		markup = `<div>No markup from ${item.config.fragmentEntryLinkId}</div>`;
 	}
 
-	return <UnsafeHTML className="page-editor__fragment" markup={markup} />;
-}
+	return <UnsafeHTML className="page-editor__fragment" markup={markup} ref={ref} />;
+});
 
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
@@ -154,56 +161,66 @@ const LAYOUT_DATA_TOPPER_ACTIVE = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: false
 };
 
-const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = [
+const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: [],
 	[LAYOUT_DATA_ITEM_TYPES.container]: [
 		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.backgroundColor,
 		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
 		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
 	],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration],
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
+	],
 	[LAYOUT_DATA_ITEM_TYPES.root]: [],
 	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing]
-];
+};
 
 const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
+	const floatingToolbarButtons =
+		LAYOUT_DATA_FLOATING_TOOLBAR_TYPES[item.type];
 	const isActiveTopper = LAYOUT_DATA_TOPPER_ACTIVE[item.type];
-	const floatingToolbarButtons = LAYOUT_DATA_FLOATING_TOOLBAR_TYPES[item.type];
+	const componentRef = useRef(null);
 
 	const fragmentEntryLink = fragmentEntryLinks[
 		item.config.fragmentEntryLinkId
 	] || {name: item.type};
 
 	return (
-		<Topper
-			acceptDrop={LAYOUT_DATA_ACCEPT_DROP_TYPES[item.type]}
-			active={isActiveTopper}
-			item={item}
-			layoutData={layoutData}
-			name={fragmentEntryLink.name}
-		>
-			{floatingToolbarButtons.length && (
+		<>
+			{floatingToolbarButtons.length > 0 && (
 				<FloatingToolbar
 					buttons={floatingToolbarButtons}
 					item={item}
-					itemRef={fragmentRef}
+					itemRef={componentRef}
 				/>
 			)}
 
-			<Component item={item} layoutData={layoutData}>
-				{item.children.map(childId => {
-					return (
-						<LayoutDataItem
-							fragmentEntryLinks={fragmentEntryLinks}
-							item={layoutData.items[childId]}
-							key={childId}
-							layoutData={layoutData}
-						/>
-					);
-				})}
-			</Component>
-		</Topper>
+			<Topper
+				acceptDrop={LAYOUT_DATA_ACCEPT_DROP_TYPES[item.type]}
+				active={isActiveTopper}
+				item={item}
+				layoutData={layoutData}
+				name={fragmentEntryLink.name}
+			>
+				<Component
+					item={item}
+					layoutData={layoutData}
+					ref={componentRef}
+				>
+					{item.children.map(childId => {
+						return (
+							<LayoutDataItem
+								fragmentEntryLinks={fragmentEntryLinks}
+								item={layoutData.items[childId]}
+								key={childId}
+								layoutData={layoutData}
+							/>
+						);
+					})}
+				</Component>
+			</Topper>
+		</>
 	);
 };
 
@@ -273,9 +290,7 @@ export default function PageEditor() {
 	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 
 	if (mainItem.children.length === 0) {
-		return (
-			<LayoutEmptyState item={mainItem} />
-		);
+		return <LayoutEmptyState item={mainItem} />;
 	}
 
 	return (

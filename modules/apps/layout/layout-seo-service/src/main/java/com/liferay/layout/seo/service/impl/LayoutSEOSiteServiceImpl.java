@@ -46,4 +46,5 @@ public class LayoutSEOSiteServiceImpl extends LayoutSEOSiteServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.layout.seo.service.LayoutSEOSiteServiceUtil</code> to access the layout seo site remote service.
 	 */
+
 }

@@ -196,6 +196,13 @@ public class LayoutSEOSiteLocalServiceWrapper
 		return _layoutSEOSiteLocalService.fetchLayoutSEOSite(layoutSEOSiteId);
 	}
 
+	@Override
+	public com.liferay.layout.seo.model.LayoutSEOSite
+		fetchLayoutSEOSiteByGroupId(long groupId) {
+
+		return _layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(groupId);
+	}
+
 	/**
 	 * Returns the layout seo site matching the UUID and group.
 	 *
@@ -361,6 +368,18 @@ public class LayoutSEOSiteLocalServiceWrapper
 		com.liferay.layout.seo.model.LayoutSEOSite layoutSEOSite) {
 
 		return _layoutSEOSiteLocalService.updateLayoutSEOSite(layoutSEOSite);
+	}
+
+	@Override
+	public com.liferay.layout.seo.model.LayoutSEOSite updateLayoutSEOSite(
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutSEOSiteLocalService.updateLayoutSEOSite(
+			userId, groupId, openGraphEnabled, openGraphImageFileEntryId,
+			serviceContext);
 	}
 
 	@Override

@@ -191,6 +191,12 @@ public class LayoutSEOSiteLocalServiceUtil {
 		return getService().fetchLayoutSEOSite(layoutSEOSiteId);
 	}
 
+	public static com.liferay.layout.seo.model.LayoutSEOSite
+		fetchLayoutSEOSiteByGroupId(long groupId) {
+
+		return getService().fetchLayoutSEOSiteByGroupId(groupId);
+	}
+
 	/**
 	 * Returns the layout seo site matching the UUID and group.
 	 *
@@ -342,6 +348,18 @@ public class LayoutSEOSiteLocalServiceUtil {
 			com.liferay.layout.seo.model.LayoutSEOSite layoutSEOSite) {
 
 		return getService().updateLayoutSEOSite(layoutSEOSite);
+	}
+
+	public static com.liferay.layout.seo.model.LayoutSEOSite
+			updateLayoutSEOSite(
+				long userId, long groupId, boolean openGraphEnabled,
+				long openGraphImageFileEntryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateLayoutSEOSite(
+			userId, groupId, openGraphEnabled, openGraphImageFileEntryId,
+			serviceContext);
 	}
 
 	public static LayoutSEOSiteLocalService getService() {

@@ -19,7 +19,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 /**
  * @author Hugo Huijser
  */
-public class CreationMenuBuilder {
+public class CreationMenuUtil {
 
 	public static CreationMenu addDropdownItem(
 		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {

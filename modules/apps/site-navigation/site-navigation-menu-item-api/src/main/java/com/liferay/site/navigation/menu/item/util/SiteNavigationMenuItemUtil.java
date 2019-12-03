@@ -163,7 +163,8 @@ public class SiteNavigationMenuItemUtil {
 						siteNavigationMenuItem.getGroupId())));
 
 			map.put(
-				defaultLanguageId, typeSettingsProperties.getProperty(name));
+				defaultLanguageId,
+				GetterUtil.getString(typeSettingsProperties.getProperty(name)));
 		}
 
 		return LocalizationUtil.getXml(

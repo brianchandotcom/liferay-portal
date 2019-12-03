@@ -77,12 +77,14 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 					getItem(
 						`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
 						{...query, page: entryIndex, pageSize: 1}
-					).then(({items, page, totalCount}) => {
-						setResults({
-							dataRecord: items.pop(),
-							page,
-							total: totalCount
-						});
+					).then(({items = [], page, totalCount}) => {
+						if (items.length > 0) {
+							setResults({
+								dataRecord: items.pop(),
+								page,
+								total: totalCount
+							});
+						}
 					}),
 					getItem(
 						`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`

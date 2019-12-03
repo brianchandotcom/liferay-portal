@@ -1034,12 +1034,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Portlet.expandTree();
-
-		AssertClick.assertPartialTextClickAt(
-			key_nodeName = "${folderName}",
-			locator1 = "Treeview#NODE_UNSELECTED",
-			value1 = "${folderName}");
+		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 
 		SelectFrameTop();
 
@@ -1067,12 +1062,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Portlet.expandTree();
-
-		AssertClick.assertPartialTextClickAt(
-			key_nodeName = "${folderName}",
-			locator1 = "Treeview#NODE_UNSELECTED",
-			value1 = "${folderName}");
+		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -1099,12 +1089,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Portlet.expandTree();
-
-		AssertClick.assertPartialTextClickAt(
-			key_nodeName = "${folderName}",
-			locator1 = "Treeview#NODE_UNSELECTED",
-			value1 = "${folderName}");
+		WebContentFolder.selectFolderTreeNode(nodeName = "${folderName}");
 
 		SelectFrame(value1 = "relative=top");
 

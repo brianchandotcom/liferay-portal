@@ -179,6 +179,17 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
+	macro selectFolderTreeNode {
+		Portlet.expandTree();
+
+		if (IsElementPresent(locator1 = "Treeview#NODE_UNSELECTED", key_nodeName = "${nodeName}")) {
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = "${nodeName}",
+				locator1 = "Treeview#NODE_UNSELECTED",
+				value1 = "${nodeName}");
+		}
+	}
+
 	macro viewFolderWorkflow {
 		WebContentFolder.gotoEditCP(
 			folderName = "${folderName}",

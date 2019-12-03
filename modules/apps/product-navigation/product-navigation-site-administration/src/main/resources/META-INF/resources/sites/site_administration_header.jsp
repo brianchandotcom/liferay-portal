@@ -29,56 +29,58 @@ portletURL.setParameter("selPpid", portletDisplay.getId());
 portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 %>
 
-<div class="icon-pages-tree">
-	<liferay-ui:icon
-		icon="pages-tree"
-		id="pagesTreeSidenavToggleId"
-		label="<%= false %>"
-		linkCssClass="icon-monospaced"
-		markupView="lexicon"
-		message="find-a-page"
-		url="javascript:;"
-	/>
-</div>
+<c:if test="<%= group.getType() != GroupConstants.TYPE_DEPOT %>">
+	<div class="icon-pages-tree">
+		<liferay-ui:icon
+			icon="pages-tree"
+			id="pagesTreeSidenavToggleId"
+			label="<%= false %>"
+			linkCssClass="icon-monospaced"
+			markupView="lexicon"
+			message="find-a-page"
+			url="javascript:;"
+		/>
+	</div>
 
-<aui:script sandbox="<%= true %>">
-	var pagesTreeToggle = document.getElementById(
-		'<portlet:namespace />pagesTreeSidenavToggleId'
-	);
+	<aui:script sandbox="<%= true %>">
+		var pagesTreeToggle = document.getElementById(
+			'<portlet:namespace />pagesTreeSidenavToggleId'
+		);
 
-	pagesTreeToggle.addEventListener('click', function(event) {
-		Liferay.Util.Session.set(
-			'com.liferay.product.navigation.product.menu.web_pagesTreeState',
-			'open'
-		).then(function() {
-			Liferay.Util.fetch('<%= portletURL.toString() %>')
-				.then(function(response) {
-					if (!response.ok) {
-						throw new Error(
-							'<liferay-ui:message key="an-unexpected-error-occurred" />'
-						);
-					}
+		pagesTreeToggle.addEventListener('click', function(event) {
+			Liferay.Util.Session.set(
+				'com.liferay.product.navigation.product.menu.web_pagesTreeState',
+				'open'
+			).then(function() {
+				Liferay.Util.fetch('<%= portletURL.toString() %>')
+					.then(function(response) {
+						if (!response.ok) {
+							throw new Error(
+								'<liferay-ui:message key="an-unexpected-error-occurred" />'
+							);
+						}
 
-					return response.text();
-				})
-				.then(function(response) {
-					var sidebar = document.querySelector('.sidebar-body');
-					sidebar.innerHTML = '';
+						return response.text();
+					})
+					.then(function(response) {
+						const sidebar = document.querySelector('.sidebar-body');
+						sidebar.innerHTML = '';
 
-					var range = document.createRange();
-					range.selectNode(sidebar);
+						const range = document.createRange();
+						range.selectNode(sidebar);
 
-					var fragment = range.createContextualFragment(response);
+						const fragment = range.createContextualFragment(response);
 
-					var pagesTree = document.createElement('div');
-					pagesTree.setAttribute('class', 'pages-tree');
-					pagesTree.appendChild(fragment);
+						const pagesTree = document.createElement('div');
+						pagesTree.setAttribute('class', 'pages-tree');
+						pagesTree.appendChild(fragment);
 
-					sidebar.appendChild(pagesTree);
-				});
+						sidebar.appendChild(pagesTree);
+					});
+			});
 		});
-	});
-</aui:script>
+	</aui:script>
+</c:if>
 
 <c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 	<div class="icon-sites">

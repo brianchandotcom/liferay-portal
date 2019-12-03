@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -182,6 +183,9 @@ public interface LayoutSEOSiteEntryLocalService
 	public LayoutSEOSiteEntry fetchLayoutSEOSiteEntry(
 		long layoutSEOSiteEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSEOSiteEntry fetchLayoutSEOSiteEntryByGroupId(long groupId);
+
 	/**
 	 * Returns the layout seo site entry matching the UUID and group.
 	 *
@@ -296,5 +300,10 @@ public interface LayoutSEOSiteEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSEOSiteEntry updateLayoutSEOSiteEntry(
 		LayoutSEOSiteEntry layoutSEOSiteEntry);
+
+	public LayoutSEOSiteEntry updateLayoutSEOSiteEntry(
+			long userId, long groupId, boolean openGraphEnabled,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
+		throws PortalException;
 
 }

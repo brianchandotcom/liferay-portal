@@ -47,4 +47,5 @@ public class LayoutSEOSiteEntryServiceImpl
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.layout.seo.service.LayoutSEOSiteEntryServiceUtil</code> to access the layout seo site entry remote service.
 	 */
+
 }

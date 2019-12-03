@@ -158,7 +158,7 @@ renderResponse.setTitle(title);
 								selectFolderButton.addEventListener('click', function(event) {
 									event.preventDefault();
 
-									const itemSelectorDialog = new ItemSelectorDialog.default({
+									var itemSelectorDialog = new ItemSelectorDialog.default({
 										eventName: '<portlet:namespace />selectFolder',
 										singleSelect: true,
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
@@ -175,7 +175,7 @@ renderResponse.setTitle(title);
 									itemSelectorDialog.open();
 
 									itemSelectorDialog.on('selectedItemChange', function(event) {
-										const selectedItem = event.selectedItem;
+										var selectedItem = event.selectedItem;
 
 										if (selectedItem) {
 											var folderData = {

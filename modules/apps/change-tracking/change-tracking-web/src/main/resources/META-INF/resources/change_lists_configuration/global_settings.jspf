@@ -38,10 +38,9 @@
 	function <portlet:namespace />doSubmitRedirectToOverview() {
 		event.preventDefault();
 
-		const form = document.<portlet:namespace />fm;
+		var form = document.<portlet:namespace />fm;
 
-		const redirectToOverviewInput =
-			form.<portlet:namespace />redirectToOverview;
+		var redirectToOverviewInput = form.<portlet:namespace />redirectToOverview;
 
 		redirectToOverviewInput.value = true;
 
@@ -49,9 +48,9 @@
 	}
 
 	function <portlet:namespace />updateSubmitRedirectToOverview() {
-		const form = document.<portlet:namespace />fm;
+		var form = document.<portlet:namespace />fm;
 
-		const enableChangeListsInput = form.<portlet:namespace />enableChangeLists;
+		var enableChangeListsInput = form.<portlet:namespace />enableChangeLists;
 
 		Liferay.Util.toggleDisabled(
 			'#<portlet:namespace />submitRedirectToOverview',

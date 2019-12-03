@@ -157,16 +157,15 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 	var showSiteNavigationMenuSettingsButtonClickHandler = null;
 	var sidebar = null;
 	var sidebarBodyChangeHandler = null;
+	var sidebarHeaderButtonClickEventListener = null;
 	var siteNavigationMenuEditor = null;
 	var siteNavigationMenuItemRemoveButtonClickHandler = null;
 	var siteNavigationMenuItemRemoveButtonKeyupHandler = null;
 
-	let sidebarHeaderButtonClickEventListener = null;
-
 	var closeSidebar = function() {
-		let form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.querySelector('#<portlet:namespace />fm');
 
-		let error = form ? form.querySelector('[role="alert"]') : null;
+		var error = form ? form.querySelector('[role="alert"]') : null;
 
 		var saveChanges = false;
 
@@ -179,7 +178,7 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 		}
 
 		if (saveChanges) {
-			const sidebarForm = document.querySelector(
+			var sidebarForm = document.querySelector(
 				'#<portlet:namespace />sidebarBody form'
 			);
 
@@ -210,7 +209,7 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 	};
 
 	var handleSelectedMenuItemChanged = function(event) {
-		const siteNavigationMenuItem = event.newVal;
+		var siteNavigationMenuItem = event.newVal;
 
 		if (!closeSidebar() || !siteNavigationMenuItem) {
 			return;
@@ -307,11 +306,11 @@ sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMH
 				return response.text();
 			})
 			.then(function(responseContent) {
-				const sidebarBody = document.getElementById(
+				var sidebarBody = document.getElementById(
 					'<portlet:namespace />sidebarBody'
 				);
 
-				const sidebarHeaderButton = document.getElementById(
+				var sidebarHeaderButton = document.getElementById(
 					'<portlet:namespace />sidebarHeaderButton'
 				);
 

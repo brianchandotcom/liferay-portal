@@ -194,17 +194,17 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 <c:if test="<%= role == null %>">
 	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounceModule">
-		const form = document.getElementById('<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			const nameInput = form.querySelector('#<portlet:namespace />name');
-			const titleInput = form.querySelector('#<portlet:namespace />title');
+			var nameInput = form.querySelector('#<portlet:namespace />name');
+			var titleInput = form.querySelector('#<portlet:namespace />title');
 
 			if (nameInput && titleInput) {
-				const debounce = debounceModule.default;
+				var debounce = debounceModule.default;
 
-				const handleOnTitleInput = function(event) {
-					let value = event.target.value;
+				var handleOnTitleInput = function(event) {
+					var value = event.target.value;
 
 					if (nameInput.hasAttribute('maxLength')) {
 						value = value.substring(0, nameInput.getAttribute('maxLength'));

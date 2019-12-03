@@ -156,7 +156,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 			document.<portlet:namespace />layoutPageTemplateCollectionsFm;
 
 		if (layoutPageTemplateCollectionsFm) {
-			const itemSelectorDialog = new ItemSelectorDialog.default({
+			var itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="delete" />',
 				eventName: '<portlet:namespace />selectCollections',
 				title: '<liferay-ui:message key="delete-collection" />',
@@ -165,7 +165,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 			});
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {
-				const selectedItems = event.selectedItem;
+				var selectedItems = event.selectedItem;
 
 				if (selectedItems) {
 					if (

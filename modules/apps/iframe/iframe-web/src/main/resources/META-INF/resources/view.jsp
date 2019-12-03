@@ -191,7 +191,7 @@
 
 <c:if test='<%= iFramePortletInstanceConfiguration.auth() && StringUtil.equals(iFramePortletInstanceConfiguration.authType(), "basic") %>'>
 	<aui:script>
-		const headers = new Headers();
+		var headers = new Headers();
 
 		headers.append(
 			'Authorization',

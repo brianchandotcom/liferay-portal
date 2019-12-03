@@ -331,7 +331,7 @@ else {
 				uri
 			);
 
-			const itemSelectorDialog = new ItemSelectorDialog.default({
+			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName:
 					'<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
 				singleSelect: true,
@@ -341,7 +341,7 @@ else {
 			});
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {
-				const selectedItem = event.selectedItem;
+				var selectedItem = event.selectedItem;
 
 				if (selectedItem) {
 					rootMenuItemIdInput.value =

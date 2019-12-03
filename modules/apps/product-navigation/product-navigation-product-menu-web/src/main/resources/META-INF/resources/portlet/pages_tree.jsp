@@ -82,7 +82,7 @@ pageTypeSelectorData.put("namespace", PortalUtil.getPortletNamespace(ProductNavi
 
 <aui:script>
 	function destroyTreeComponent() {
-		Liferay.destroyComponent(`${props.namespace}pagesTree`);
+		Liferay.destroyComponent(props.namespace + 'pagesTree');
 		Liferay.detach('destroyPortlet', destroyTreeComponent);
 	}
 

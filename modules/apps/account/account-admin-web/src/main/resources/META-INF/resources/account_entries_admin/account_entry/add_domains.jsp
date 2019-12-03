@@ -52,12 +52,14 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 		// Email domain regex from aui-form-validator.js
 
-		const pattern = new RegExp(
+		var pattern = new RegExp(
 			'^((([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|\\d|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.)+(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])|(([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])([a-z]|\\d|-|\\.|_|~|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])*([a-z]|[\\u00A0-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFEF])))\\.?$',
 			'i'
 		);
 
-		for (const domain of domains) {
+		for (var i = 0; i < domains.length; i++) {
+			var domain = domains[i];
+
 			if (!pattern.test(domain.trim())) {
 				var domainAlert = document.getElementById(
 					'<portlet:namespace />domainAlert'

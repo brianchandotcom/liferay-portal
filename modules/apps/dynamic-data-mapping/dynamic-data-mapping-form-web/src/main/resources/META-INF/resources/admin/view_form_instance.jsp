@@ -106,7 +106,8 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 <aui:script require='<%= mainRequire + "/admin/js/components/ShareFormPopover/ShareFormPopover.es as ShareFormPopover" %>'>
 	var spritemap = themeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
-	Liferay.after('<portlet:namespace />copyFormURL', function({url}) {
+	Liferay.after('<portlet:namespace />copyFormURL', function(data) {
+		var url = data.url;
 		var trigger = Liferay.Menu._INSTANCE._activeTrigger;
 
 		var popover = new ShareFormPopover.default({
@@ -116,8 +117,8 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 					popover.dispose();
 				}
 			},
-			spritemap,
-			url,
+			spritemap: spritemap,
+			url: url,
 			visible: true
 		});
 	});

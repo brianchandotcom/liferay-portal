@@ -142,9 +142,9 @@
 	function populatePrecisionType(precisionTypeElement, numberSize) {
 		var numberSizeOptions = '';
 
-		for (var bit of numberSize) {
+		numberSize.forEach(function(bit) {
 			numberSizeOptions += '<option value="' + bit + '">' + bit + '</option>';
-		}
+		});
 
 		precisionTypeElement.innerHTML = numberSizeOptions;
 	}

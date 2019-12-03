@@ -137,7 +137,7 @@ if (organizationId > 0) {
 				</aui:script>
 
 				<aui:script require="metal-dom/src/dom">
-					let dom = metalDomSrcDom.default;
+					var dom = metalDomSrcDom.default;
 
 					var <portlet:namespace />selectionMethod = document.getElementById(
 						'<portlet:namespace />selectionMethod'

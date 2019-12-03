@@ -705,7 +705,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					}
 				);
 
-				if (!!response.commentId) {
+				if (response.commentId) {
 					var messageTextNode = document.querySelector(
 						'input[name^="<%= namespace %>body"]'
 					);

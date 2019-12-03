@@ -320,7 +320,7 @@
 	}
 
 	function updateElement(formElementIds, action) {
-		for (var formElementId of formElementIds) {
+		formElementIds.forEach(function(formElementId) {
 			var formElement = document.getElementById(
 				'<portlet:namespace />' + formElementId
 			);
@@ -338,6 +338,6 @@
 					formElement.classList.remove('hide');
 				}
 			}
-		}
+		});
 	}
 </script>

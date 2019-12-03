@@ -158,9 +158,9 @@
 		function(event) {
 			event.preventDefault();
 
-			const delegateTarget = event.delegateTarget;
+			var delegateTarget = event.delegateTarget;
 
-			const itemSelectorDialog = new ItemSelectorDialog.default({
+			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<portlet:namespace />selectAsset',
 				title: encodeURI(delegateTarget.dataset.title),
 				url: delegateTarget.dataset.href
@@ -169,10 +169,10 @@
 			itemSelectorDialog.open();
 
 			itemSelectorDialog.on('selectedItemChange', function(event) {
-				const selectedItems = event.selectedItem;
+				var selectedItems = event.selectedItem;
 
 				if (selectedItems) {
-					const assetEntryIds = [];
+					var assetEntryIds = [];
 
 					Array.prototype.forEach.call(selectedItems, function(
 						assetEntry

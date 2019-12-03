@@ -147,7 +147,7 @@ public class SourceUtil {
 		return ArrayUtil.toIntArray(multiLinePositions);
 	}
 
-	public static String getTitleCase(String s, String[] exceptions) {
+	public static String getTitleCase(String s, String... exceptions) {
 		String[] words = s.split("\\s+");
 
 		if (ArrayUtil.isEmpty(words)) {

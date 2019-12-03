@@ -455,7 +455,11 @@ class Analytics {
 	}
 
 	_isTrackingDisabled() {
-		if (ENV.ac_client_disable_tracking || navigator.doNotTrack) {
+		if (
+			ENV.ac_client_disable_tracking ||
+			navigator.doNotTrack == '1' ||
+			navigator.doNotTrack == 'yes'
+		) {
 			return true;
 		}
 

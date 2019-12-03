@@ -12,14 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.taglib.servlet.taglib.soy;
+package com.liferay.layout.taglib.servlet.taglib.react;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
-import com.liferay.frontend.taglib.util.TagAccessor;
-import com.liferay.frontend.taglib.util.TagResourceHandler;
-import com.liferay.layout.taglib.internal.frontend.js.loader.modules.extender.npm.NPMResolverProvider;
+import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -27,15 +23,18 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,96 +47,154 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
+ * @author Marko Cikos
  */
-public class SelectLayoutTag extends ComponentRendererTag {
+public class SelectLayoutTag extends IncludeTag {
 
-	@Override
-	public int doStartTag() {
-		Map<String, Object> context = getContext();
-
-		if (context.get("followURLOnTitleClick") == null) {
-			putValue("followURLOnTitleClick", false);
-		}
-
-		if (context.get("itemSelectorSaveEvent") == null) {
-			putValue(
-				"itemSelectorSaveEvent",
-				context.get("namespace") + "selectLayout");
-		}
-
-		try {
-			putValue("nodes", _getLayoutsJSONArray());
-		}
-		catch (Exception e) {
-			return SKIP_BODY;
-		}
-
-		if (context.get("multiSelection") == null) {
-			putValue("multiSelection", false);
-		}
-
-		if (context.get("viewType") == null) {
-			putValue("viewType", "tree");
-		}
-
-		setTemplateNamespace("com.liferay.layout.taglib.SelectLayout.render");
-
-		_tagResourceHandler.outputBundleStyleSheet(
-			"select_layout/css/main.css");
-
-		return super.doStartTag();
+	public String getComponentId() {
+		return _componentId;
 	}
 
-	@Override
-	public String getModule() {
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+	public boolean getFollowURLOnTitleClick() {
+		return _followURLOnTitleClick;
+	}
 
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
+	public String getItemSelectorSaveEvent() {
+		return _itemSelectorSaveEvent;
+	}
 
-		return npmResolver.resolveModuleName(
-			"layout-taglib/select_layout/js/SelectLayout.es");
+	public String getNamespace() {
+		return _namespace;
+	}
+
+	public String getPathThemeImages() {
+		return _pathThemeImages;
+	}
+
+	public String getViewType() {
+		return _viewType;
+	}
+
+	public boolean isCheckDisplayPage() {
+		return _checkDisplayPage;
+	}
+
+	public boolean isEnableCurrentPage() {
+		return _enableCurrentPage;
+	}
+
+	public boolean isMultiSelection() {
+		return _multiSelection;
+	}
+
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
+	public boolean isShowHiddenLayouts() {
+		return _showHiddenLayouts;
 	}
 
 	public void setCheckDisplayPage(boolean checkDisplayPage) {
-		putValue("checkDisplayPage", checkDisplayPage);
+		_checkDisplayPage = checkDisplayPage;
+	}
+
+	public void setComponentId(String componentId) {
+		_componentId = componentId;
 	}
 
 	public void setEnableCurrentPage(boolean enableCurrentPage) {
-		putValue("enableCurrentPage", enableCurrentPage);
+		_enableCurrentPage = enableCurrentPage;
 	}
 
 	public void setFollowURLOnTitleClick(boolean followURLOnTitleClick) {
-		putValue("followURLOnTitleClick", followURLOnTitleClick);
+		_followURLOnTitleClick = followURLOnTitleClick;
 	}
 
 	public void setItemSelectorSaveEvent(String itemSelectorSaveEvent) {
-		putValue("itemSelectorSaveEvent", itemSelectorSaveEvent);
+		_itemSelectorSaveEvent = itemSelectorSaveEvent;
 	}
 
 	public void setMultiSelection(boolean multiSelection) {
-		putValue("multiSelection", multiSelection);
+		_multiSelection = multiSelection;
 	}
 
 	public void setNamespace(String namespace) {
-		putValue("namespace", namespace);
+		_namespace = namespace;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setPathThemeImages(String pathThemeImages) {
-		putValue("pathThemeImages", pathThemeImages);
+		_pathThemeImages = pathThemeImages;
 	}
 
 	public void setPrivateLayout(boolean privateLayout) {
-		putValue("privateLayout", privateLayout);
+		_privateLayout = privateLayout;
 	}
 
 	public void setShowHiddenLayouts(boolean showHiddenLayouts) {
-		putValue("showHiddenLayouts", showHiddenLayouts);
+		_showHiddenLayouts = showHiddenLayouts;
 	}
 
 	public void setViewType(String viewType) {
-		putValue("viewType", viewType);
+		_viewType = viewType;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_checkDisplayPage = false;
+		_componentId = null;
+		_enableCurrentPage = false;
+		_followURLOnTitleClick = false;
+		_itemSelectorSaveEvent = null;
+		_multiSelection = false;
+		_namespace = null;
+		_pathThemeImages = null;
+		_privateLayout = false;
+		_showHiddenLayouts = false;
+		_viewType = null;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		try {
+			httpServletRequest.setAttribute(
+				"liferay-layout:select-layout:data", _getData());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	private Map<String, Object> _getData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"followURLOnTitleClick", _followURLOnTitleClick
+		).put(
+			"itemSelectorSaveEvent", _itemSelectorSaveEvent
+		).put(
+			"multiSelection", _multiSelection
+		).put(
+			"namespace", _namespace
+		).put(
+			"nodes", _getLayoutsJSONArray()
+		).put(
+			"pathThemeImages", _pathThemeImages
+		).put(
+			"viewType", _viewType
+		).build();
 	}
 
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
@@ -182,7 +239,7 @@ public class SelectLayoutTag extends ComponentRendererTag {
 		String layoutUuid = ParamUtil.getString(request, "layoutUuid");
 
 		JSONArray jsonArray = _getLayoutsJSONArray(
-			themeDisplay.getScopeGroupId(), _getPrivateLayout(), 0, layoutUuid);
+			themeDisplay.getScopeGroupId(), _privateLayout, 0, layoutUuid);
 
 		JSONObject jsonObject = JSONUtil.put(
 			"children", jsonArray
@@ -215,7 +272,7 @@ public class SelectLayoutTag extends ComponentRendererTag {
 			groupId, privateLayout, parentLayoutId);
 
 		for (Layout layout : layouts) {
-			if ((layout.isHidden() && !_isShowHiddenLayouts()) ||
+			if ((layout.isHidden() && !_showHiddenLayouts) ||
 				(Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_CONTENT) &&
 				 Objects.equals(
@@ -235,9 +292,8 @@ public class SelectLayoutTag extends ComponentRendererTag {
 				jsonObject.put("children", childrenJSONArray);
 			}
 
-			if ((_isCheckDisplayPage() && !layout.isContentDisplayPage()) ||
-				(!_isEnableCurrentPage() &&
-				 (layout.getPlid() == _getSelPlid()))) {
+			if ((_checkDisplayPage && !layout.isContentDisplayPage()) ||
+				(_enableCurrentPage && (layout.getPlid() == _getSelPlid()))) {
 
 				jsonObject.put("disabled", true);
 			}
@@ -270,54 +326,26 @@ public class SelectLayoutTag extends ComponentRendererTag {
 		return jsonArray;
 	}
 
-	private PageContext _getPageContext() {
-		return pageContext;
-	}
-
-	private boolean _getPrivateLayout() {
-		Map<String, Object> context = getContext();
-
-		return GetterUtil.getBoolean(context.get("privateLayout"));
-	}
-
 	private long _getSelPlid() {
 		return ParamUtil.getLong(
 			request, "selPlid", LayoutConstants.DEFAULT_PLID);
 	}
 
-	private boolean _isCheckDisplayPage() {
-		Map<String, Object> context = getContext();
+	private static final String _PAGE = "/select_layout/page.jsp";
 
-		return GetterUtil.getBoolean(context.get("checkDisplayPage"));
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		SelectLayoutTag.class);
 
-	private boolean _isEnableCurrentPage() {
-		Map<String, Object> context = getContext();
-
-		return GetterUtil.getBoolean(context.get("enableCurrentPage"));
-	}
-
-	private boolean _isShowHiddenLayouts() {
-		Map<String, Object> context = getContext();
-
-		return GetterUtil.getBoolean(context.get("showHiddenLayouts"));
-	}
-
-	private final TagResourceHandler _tagResourceHandler =
-		new TagResourceHandler(
-			SelectLayoutTag.class,
-			new TagAccessor() {
-
-				@Override
-				public PageContext getPageContext() {
-					return SelectLayoutTag.this._getPageContext();
-				}
-
-				@Override
-				public HttpServletRequest getRequest() {
-					return SelectLayoutTag.this.getRequest();
-				}
-
-			});
+	private boolean _checkDisplayPage;
+	private String _componentId;
+	private boolean _enableCurrentPage;
+	private boolean _followURLOnTitleClick;
+	private String _itemSelectorSaveEvent;
+	private boolean _multiSelection;
+	private String _namespace;
+	private String _pathThemeImages;
+	private boolean _privateLayout;
+	private boolean _showHiddenLayouts;
+	private String _viewType;
 
 }

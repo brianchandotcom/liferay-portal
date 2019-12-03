@@ -23,12 +23,11 @@
 	<parent>
 		<groupId>com.liferay</groupId>
 		<artifactId>com.liferay.talend</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+		<version>0.3.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.runtime</artifactId>
-	<version>${liferay.talend.version}</version>
 	<name>Liferay Talend Runtime</name>
 	<packaging>jar</packaging>
 	<repositories>
@@ -52,28 +51,12 @@
 			<url>https://talend-update.talend.com/nexus/service/local/repositories/libraries/content/</url>
 		</repository>
 	</repositories>
-	<properties>
-		<daikon.version>0.27.0</daikon.version>
-		<java.version>1.8</java.version>
-		<liferay.source.formatter.version>1.0.864</liferay.source.formatter.version>
-		<liferay.javadoc.formatter.version>1.0.28</liferay.javadoc.formatter.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<log4j.rootLogger>DEBUG, stdout</log4j.rootLogger>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.talend.definition</artifactId>
-			<version>${liferay.talend.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-api</artifactId>
-		</dependency>
-
-		<!-- Start Jersey dependencies -->
-
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
@@ -169,9 +152,10 @@
 			<artifactId>javassist</artifactId>
 			<version>3.18.1-GA</version>
 		</dependency>
-
-		<!-- End Jersey dependencies -->
-
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-api</artifactId>
@@ -186,16 +170,6 @@
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.javadoc.formatter</artifactId>
-				<version>${liferay.javadoc.formatter.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.source.formatter</artifactId>
-				<version>${liferay.source.formatter.version}</version>
-			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.4</version>
@@ -261,6 +235,49 @@
 								</resource>
 							</resources>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>generate-depends-file</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>list</goal>
+						</goals>
+						<configuration>
+							<includeScope>compile</includeScope>
+							<outputFile>
+								target/classes/META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt
+							</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven-antrun-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>append-self-artifact-to-deps</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<tasks>
+								<echo
+									append="true"
+									encoding="UTF-8"
+									file="target/classes/META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt"
+									message="${project.groupId}:${project.artifactId}:jar:${project.version}:runtime"
+								/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

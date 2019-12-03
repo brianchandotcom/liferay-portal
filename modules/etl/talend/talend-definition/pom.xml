@@ -2,65 +2,16 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.glassfish.jersey</groupId>
-				<artifactId>jersey-bom</artifactId>
-				<version>2.22.2</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.talend.components</groupId>
-				<artifactId>components-bom</artifactId>
-				<version>0.25.3</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-    <parent>
-        <groupId>com.liferay</groupId>
-        <artifactId>com.liferay.talend</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+	<parent>
+		<groupId>com.liferay</groupId>
+		<artifactId>com.liferay.talend</artifactId>
+		<version>0.3.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.definition</artifactId>
-	<version>${liferay.talend.version}</version>
 	<name>Liferay Talend Definition</name>
 	<packaging>bundle</packaging>
-	<repositories>
-		<repository>
-			<id>liferay</id>
-			<name>Liferay Repository</name>
-			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
-		</repository>
-		<repository>
-			<id>talend_nexus</id>
-			<name>snapshots</name>
-			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceSnapshot/</url>
-		</repository>
-		<repository>
-			<id>releases</id>
-			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
-		</repository>
-		<repository>
-			<id>talend_runtime_nexus</id>
-			<name>Talend Runtime Nexus</name>
-			<url>https://talend-update.talend.com/nexus/service/local/repositories/libraries/content/</url>
-		</repository>
-	</repositories>
-	<properties>
-		<daikon.version>0.27.0</daikon.version>
-		<java.version>1.8</java.version>
-		<liferay.source.formatter.version>1.0.864</liferay.source.formatter.version>
-		<liferay.javadoc.formatter.version>1.0.28</liferay.javadoc.formatter.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<log4j.rootLogger>DEBUG, stdout</log4j.rootLogger>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
@@ -73,31 +24,8 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.talend.common</artifactId>
-			<version>${liferay.talend.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-api</artifactId>
-			<classifier>tests</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.components</groupId>
-			<artifactId>components-common</artifactId>
-			<classifier>bundle</classifier>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Start Jersey dependencies -->
-
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
@@ -188,13 +116,31 @@
 			<artifactId>javassist</artifactId>
 			<version>3.18.1-GA</version>
 		</dependency>
-
-		<!-- End Jersey dependencies -->
-
 		<dependency>
-			<groupId>org.ops4j.pax.url</groupId>
-			<artifactId>pax-url-aether</artifactId>
-			<version>2.4.7</version>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.3.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<version>1.5.1.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-api</artifactId>
+			<classifier>tests</classifier>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.components</groupId>
@@ -216,7 +162,24 @@
 		</dependency>
 		<dependency>
 			<groupId>org.talend.components</groupId>
+			<artifactId>components-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-common</artifactId>
+			<classifier>bundle</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.components</groupId>
 			<artifactId>components-osgitest</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.daikon</groupId>
+			<artifactId>daikon</artifactId>
+			<classifier>tests</classifier>
+			<version>0.27.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -252,37 +215,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.javadoc.formatter</artifactId>
-				<version>${liferay.javadoc.formatter.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.source.formatter</artifactId>
-				<version>${liferay.source.formatter.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.20-PAXEXAM-PATCH</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<argLine>-Xms512m -Xmx1024m</argLine>
-					<systemPropertyVariables>
-						<pax.exam.karaf.version>4.0.2</pax.exam.karaf.version>
-					</systemPropertyVariables>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.0.1</version>
 				<extensions>true</extensions>
 				<executions>
 					<execution>
@@ -294,6 +229,7 @@
 						<configuration>
 							<instructions>
 								<Bundle-SymbolicName>com.liferay.talend</Bundle-SymbolicName>
+								<DynamicImport-Package>org.talend.daikon.*</DynamicImport-Package>
 								<Import-Package>!com.sun.jdi.*, !jersey.repackaged.com.google.common.*, !sun.misc.*, *</Import-Package>
 								<Service-Component>*</Service-Component>
 								<Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!components*|auto-service|pax-url-aether</Embed-Dependency>
@@ -305,13 +241,51 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven-resources-plugin.version}</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>generate-depends-file</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>list</goal>
+						</goals>
+						<configuration>
+							<includeScope>compile</includeScope>
+							<outputFile>
+								target/classes/META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt
+							</outputFile>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-p2-extras-plugin</artifactId>
-				<version>${tycho-p2-extras-plugin.version}</version>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven-antrun-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>append-self-artifact-to-deps</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<tasks>
+								<echo
+									append="true"
+									encoding="UTF-8"
+									file="target/classes/META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt"
+									message="${project.groupId}:${project.artifactId}:jar:${project.version}:runtime"
+								/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven-resources-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

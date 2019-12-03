@@ -36,14 +36,19 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.io.IOException;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -119,6 +124,10 @@ public class BatchEngineExportTaskExecutorImpl
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
+		ZipOutputStream zipOutputStream = _getZipOutputStream(
+			batchEngineExportTask.getContentType(),
+			unsyncByteArrayOutputStream);
+
 		try (BatchEngineTaskItemResourceDelegate
 				batchEngineTaskItemResourceDelegate =
 					_batchEngineTaskItemResourceDelegateFactory.create(
@@ -135,7 +144,7 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineExportTask.getFieldNamesList(),
 					_batchEngineTaskMethodRegistry.getItemClass(
 						batchEngineExportTask.getClassName()),
-					unsyncByteArrayOutputStream)) {
+					zipOutputStream)) {
 
 			Page<?> page = null;
 			int pageIndex = 1;
@@ -171,6 +180,22 @@ public class BatchEngineExportTaskExecutorImpl
 
 		_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
 			batchEngineExportTask);
+	}
+
+	private ZipOutputStream _getZipOutputStream(
+			String contentType,
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream)
+		throws IOException {
+
+		ZipOutputStream zipOutputStream = new ZipOutputStream(
+			unsyncByteArrayOutputStream);
+
+		ZipEntry zipEntry = new ZipEntry(
+			"export." + StringUtil.toLowerCase(contentType));
+
+		zipOutputStream.putNextEntry(zipEntry);
+
+		return zipOutputStream;
 	}
 
 	private void _updateBatchEngineExportTask(

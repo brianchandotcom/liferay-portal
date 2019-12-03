@@ -240,6 +240,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_VERTICAL_ELLIPSIS_IE</td>
+	<td>//*[@data-qa-id='header']//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HISTORY_VERTICAL_ELLIPSIS</td>
 	<td>//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>

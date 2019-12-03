@@ -1,5 +1,15 @@
 definition {
 
+	macro changeLocale {
+		Click.clickNoMouseOver(
+			key_fieldName = "${fieldName}",
+			locator1 = "Button#LOCALIZATION_OPEN_GRAPH");
+
+		Click(
+			key_locale = StringUtil.replace("${locale}", "-", "_"),
+			locator1 = "Translation#LOCALIZATION_NAME");
+	}
+
 	macro configureOpenGraph {
 		if (isSet(customTitle)) {
 			var checkboxName = "Use Custom Title";

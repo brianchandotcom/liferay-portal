@@ -92,7 +92,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
-			themeDisplay.getScopeGroupId(), keywords,
+			themeDisplay.getSiteGroupId(), keywords,
 			new String[] {
 				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
@@ -120,7 +120,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 		jsonObject.put("layouts", jsonArray);
 
 		int totalCount = _layoutLocalService.getLayoutsCount(
-			themeDisplay.getScopeGroupId(), keywords,
+			themeDisplay.getSiteGroupId(), keywords,
 			new String[] {
 				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,

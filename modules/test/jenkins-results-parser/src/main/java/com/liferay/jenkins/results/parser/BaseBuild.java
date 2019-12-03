@@ -3099,6 +3099,13 @@ public abstract class BaseBuild implements Build {
 			loadParametersFromQueryString(invocationURL);
 
 			setStatus("starting");
+
+			try {
+				JenkinsResultsParserUtil.toString(getInvocationURL(), false);
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
 		}
 	}
 

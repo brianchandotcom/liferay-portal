@@ -329,13 +329,6 @@ public abstract class TopLevelBuildRunner
 		}
 
 		_topLevelBuild.addDownstreamBuilds(sb.toString());
-
-		try {
-			JenkinsResultsParserUtil.toString(sb.toString());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 	}
 
 	private void _invokeDownstreamBuild(BuildData buildData) {

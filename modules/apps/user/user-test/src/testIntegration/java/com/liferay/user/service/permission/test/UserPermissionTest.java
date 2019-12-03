@@ -59,13 +59,13 @@ public class UserPermissionTest {
 			_role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(_user1.getCompanyId()), ActionKeys.VIEW);
 
-		_user1LocalService.addRoleUser(_role.getRoleId(), _user1);
+		_userLocalService1.addRoleUser(_role.getRoleId(), _user1);
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			_user1);
 
 		Assert.assertTrue(
-			_user1Permission.contains(
+			_userPermission1.contains(
 				permissionChecker, ResourceConstants.PRIMKEY_DNE,
 				ActionKeys.VIEW));
 	}
@@ -82,22 +82,22 @@ public class UserPermissionTest {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(_user1.getCompanyId()), ActionKeys.MANAGE_USERS);
 
-		_user1LocalService.addRoleUser(_role.getRoleId(), _user1);
+		_userLocalService1.addRoleUser(_role.getRoleId(), _user1);
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			_user1);
 
 		Assert.assertFalse(
-			_user1Permission.contains(
+			_userPermission1.contains(
 				permissionChecker, _user2.getUserId(), ActionKeys.UPDATE));
 
 		_organization = OrganizationTestUtil.addOrganization();
 
-		_user1LocalService.addOrganizationUser(
+		_userLocalService1.addOrganizationUser(
 			_organization.getOrganizationId(), _user2.getUserId());
 
 		Assert.assertTrue(
-			_user1Permission.contains(
+			_userPermission1.contains(
 				permissionChecker, _user2.getUserId(), ActionKeys.UPDATE));
 	}
 
@@ -117,9 +117,9 @@ public class UserPermissionTest {
 	private User _user2;
 
 	@Inject
-	private UserLocalService _user1LocalService;
+	private UserLocalService _userLocalService1;
 
 	@Inject
-	private UserPermission _user1Permission;
+	private UserPermission _userPermission1;
 
 }

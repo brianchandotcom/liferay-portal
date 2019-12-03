@@ -78,7 +78,11 @@ public class OpenGraphSettingsDisplayContext {
 	}
 
 	public String getOpenGraphImageURL() {
-		LayoutSEOSite layoutSEOSite = _getLayoutSEOSite();
+		Group group = _getGroup();
+
+		LayoutSEOSite layoutSEOSite =
+			LayoutSEOSiteLocalServiceUtil.fetchLayoutSEOSiteByGroupId(
+				group.getGroupId());
 
 		if ((layoutSEOSite == null) ||
 			(layoutSEOSite.getOpenGraphImageFileEntryId() == 0)) {
@@ -112,13 +116,6 @@ public class OpenGraphSettingsDisplayContext {
 		}
 
 		return (Group)_httpServletRequest.getAttribute("site.group");
-	}
-
-	private LayoutSEOSite _getLayoutSEOSite() {
-		Group group = _getGroup();
-
-		return LayoutSEOSiteLocalServiceUtil.fetchLayoutSEOSiteByGroupId(
-			group.getGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

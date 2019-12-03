@@ -532,10 +532,6 @@ definition {
 			key_googleDocContent = "Liferay",
 			locator1 = "GoogleDoc#INSERT_LINK_DOCUMENT_CONTENT");
 
-		Click(
-			key_linkAddress = "http://localhost:8080/web/guest",
-			locator1 = "GoogleDoc#INSERT_LINK_FLOATING_LINK");
-
 		SelectWindow(locator1 = "title=Home - ${siteName}");
 
 		UserBar.signOut();

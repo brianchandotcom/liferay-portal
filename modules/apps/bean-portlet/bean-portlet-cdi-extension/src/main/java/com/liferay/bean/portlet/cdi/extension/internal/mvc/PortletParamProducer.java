@@ -381,7 +381,7 @@ public class PortletParamProducer {
 					_log.debug(
 						StringBundler.concat(
 							"Injection into a field annotated with ",
-							"@FormParam(\"", formParam.value() + "\") is ",
+							"@FormParam(\"", formParam.value(), "\") is ",
 							"invalid during the RENDER_PHASE."));
 				}
 				else {

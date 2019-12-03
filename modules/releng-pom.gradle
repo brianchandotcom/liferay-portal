@@ -71,7 +71,12 @@ generatePomCompileOnly {
 				mainArgs += ["--host-bundle-symbolic-name", "com.liferay.login.web", "--host-bundle-version", "1.0.0"]
 			}
 			else if (it.equals("modules-ext")) {
-				mainArgs += ["--original-module-name", "com.liferay.login.web", "--original-module-version", "2.0.4"]
+				if (project.property("gradle.releng.pom.project.templates.version").startsWith("7.0")) {
+					return
+				}
+				else {
+					mainArgs += ["--original-module-name", "com.liferay.login.web", "--original-module-version", "2.0.4"]
+				}
 			}
 			else if (it.equals("service")) {
 				mainArgs += ["--class-name", "FooAction", "--service", "com.liferay.portal.kernel.events.LifecycleAction"]
@@ -81,6 +86,9 @@ generatePomCompileOnly {
 			}
 			else if (it.equals("service-wrapper")) {
 				mainArgs += ["--service", "com.liferay.portal.kernel.service.UserLocalServiceWrapper"]
+			}
+			else if (it.equals("social-bookmark") && project.property("gradle.releng.pom.project.templates.version").startsWith("7.0")) {
+				return
 			}
 			else if (it.equals("spring-mvc-portlet")) {
 				return

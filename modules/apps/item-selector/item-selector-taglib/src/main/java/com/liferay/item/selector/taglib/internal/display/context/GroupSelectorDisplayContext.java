@@ -108,7 +108,7 @@ public class GroupSelectorDisplayContext {
 		return searchContainer;
 	}
 
-	public PortletURL getViewGroupURL(Group group) {
+	public String getViewGroupURL(Group group) {
 		ItemSelector itemSelector = _getItemSelector();
 
 		String itemSelectedEventName = ParamUtil.getString(
@@ -137,7 +137,7 @@ public class GroupSelectorDisplayContext {
 			"selectedTab",
 			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));
 
-		return portletURL;
+		return portletURL.toString();
 	}
 
 	public boolean isGroupTypeActive(String groupType) {

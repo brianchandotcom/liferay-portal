@@ -24,6 +24,7 @@ import groovy.util.Node;
 
 import java.io.File;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,6 +33,9 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.plugins.ide.api.FileContentMerger;
 import org.gradle.plugins.ide.api.XmlFileContentMerger;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -69,11 +73,11 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	private EclipseDefaultsPlugin() {
 	}
 
-	private void _configureEclipseClasspathFile(Project project) {
+	private void _configureEclipseClasspathFile(final Project project) {
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
 
-		EclipseClasspath eclipseClasspath = eclipseModel.getClasspath();
+		final EclipseClasspath eclipseClasspath = eclipseModel.getClasspath();
 
 		FileContentMerger fileContentMerger = eclipseClasspath.getFile();
 
@@ -108,6 +112,32 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		};
 
 		fileContentMerger.whenMerged(closure);
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
+
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					_configureEclipseClasspathFileForJavaPlugin(
+						project, eclipseClasspath);
+				}
+
+			});
+	}
+
+	private void _configureEclipseClasspathFileForJavaPlugin(
+		Project project, EclipseClasspath eclipseClasspath) {
+
+		Collection<Configuration> configurations =
+			eclipseClasspath.getPlusConfigurations();
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
+		configurations.add(configuration);
 	}
 
 	private void _configureEclipseProject(Project project, File portalRootDir) {

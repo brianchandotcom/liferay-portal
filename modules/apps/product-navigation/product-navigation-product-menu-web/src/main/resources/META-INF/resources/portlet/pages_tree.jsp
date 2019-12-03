@@ -84,7 +84,7 @@ Group group = themeDisplay.getSiteGroup();
 	</liferay-util:buffer>
 
 	<liferay-layout:layouts-tree
-		groupId="<%= themeDisplay.getSiteGroupId() %>"
+		groupId="<%= layoutsTreeDisplayContext.getGroupId() %>"
 		linkTemplate="<%= linkTemplate %>"
 		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
 		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'

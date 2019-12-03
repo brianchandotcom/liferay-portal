@@ -62,7 +62,9 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 					return response.text();
 				})
 				.then(function(response) {
-					const sidebar = document.querySelector('.sidebar-body');
+					const sidebar = document.querySelector(
+						'.lfr-product-menu-sidebar .sidebar-body'
+					);
 					sidebar.innerHTML = '';
 
 					const range = document.createRange();

@@ -97,3 +97,59 @@ public Map<String, Object> getMap() {
     ).build();
 }
 ```
+
+### Example
+
+Incorrect:
+
+```java
+public Map<String, String> getUserMap() {
+    User user = _getUser();
+
+    return new HashMap<String, String>() {
+        {
+            String firstName = user.getFirstName();
+
+            if (firstName != null) {
+                put("firstName", firstName);
+            }
+
+            String lastName = user.getLastName();
+
+            if (lastName != null) {
+                put("lastName", lastName);
+            }
+        }
+    };
+}
+```
+
+Correct:
+
+```java
+public Map<String, String> getUserMap() {
+    return HashMapBuilder.put(
+        "firstName",
+        () -> {
+             String firstName = user.getFirstName();
+
+             if (firstName != null) {
+                 return firstName;
+             }
+
+             return null;
+        }
+    ).put(
+        "lastGroup",
+        () -> {
+             String lastName = user.getLastName();
+
+             if (lastName != null) {
+                 return lastName;
+             }
+
+             return null;
+        }
+    ).build();
+}
+```

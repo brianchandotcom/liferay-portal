@@ -120,10 +120,8 @@
 						data-info-item-renderer-key="{$option.infoItemRendererKey}"
 					{/if}
 
-					{if $selectedTemplate and
-						(($selectedTemplate.templateKey and $selectedTemplate.templateKey == $option.templateKey) or
-						 ($selectedTemplate.infoItemRendererKey and $selectedTemplate.infoItemRendererKey == $option.infoItemRendererKey))
-					}
+					{if $selectedTemplate and $selectedTemplate.infoItemRendererKey == $option.infoItemRendererKey and
+					 (not $selectedTemplate.templateKey or ($selectedTemplate.templateKey and $selectedTemplate.templateKey == $option.templateKey))}
 						selected
 					{/if}
 				{/let}

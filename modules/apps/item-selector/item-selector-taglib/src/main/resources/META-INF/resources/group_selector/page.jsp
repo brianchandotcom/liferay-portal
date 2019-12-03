@@ -43,23 +43,16 @@ GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDispl
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
+			cssClass="entry-card lfr-asset-item"
 			modelVar="curGroup"
 		>
-
-			<%
-			PortletURL viewGroupURL = groupSelectorDisplayContext.getViewGroupURL(curGroup);
-
-			row.setCssClass("entry-card lfr-asset-item");
-			%>
-
 			<liferay-ui:search-container-column-text
 				colspan="<%= 3 %>"
 			>
 				<liferay-frontend:horizontal-card
 					cardCssClass="card-interactive card-interactive-primary"
-					resultRow="<%= row %>"
 					text="<%= curGroup.getDescriptiveName(locale) %>"
-					url="<%= viewGroupURL.toString() %>"
+					url="<%= groupSelectorDisplayContext.getViewGroupURL(curGroup) %>"
 				>
 					<liferay-frontend:horizontal-card-col>
 						<liferay-frontend:horizontal-card-icon

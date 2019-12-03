@@ -66,6 +66,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.jvm.tasks.Jar;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
@@ -186,9 +187,23 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 				@Override
 				public void execute(Project project) {
-					_configureTaskDeployFast(project, workspaceExtension);
-					_configureTaskSetUpTestableTomcat(
-						project, workspaceExtension);
+					TaskContainer taskContainer = project.getTasks();
+
+					Task deployFastTask = taskContainer.findByName(
+						LiferayOSGiPlugin.DEPLOY_FAST_TASK_NAME);
+
+					if (deployFastTask != null) {
+						_configureTaskDeployFast(
+							(Copy)deployFastTask, workspaceExtension);
+					}
+
+					Task setUpTestableTomcatTask = taskContainer.findByName(
+						TestIntegrationPlugin.SET_UP_TESTABLE_TOMCAT_TASK_NAME);
+
+					if (setUpTestableTomcatTask != null) {
+						_configureTaskSetUpTestableTomcat(
+							setUpTestableTomcatTask, workspaceExtension);
+					}
 				}
 
 			});
@@ -392,12 +407,9 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskDeployFast(
-		Project project, WorkspaceExtension workspaceExtension) {
+		Copy deployFastTask, WorkspaceExtension workspaceExtension) {
 
-		Copy deployFastTask = (Copy)GradleUtil.getTask(
-			project, LiferayOSGiPlugin.DEPLOY_FAST_TASK_NAME);
-		GradleUtil.getTask(
-			project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME);
+		Project project = deployFastTask.getProject();
 
 		String bundleSymbolicName = BndBuilderUtil.getInstruction(
 			project, Constants.BUNDLE_SYMBOLICNAME);
@@ -463,10 +475,9 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskSetUpTestableTomcat(
-		Project project, WorkspaceExtension workspaceExtension) {
+		Task task, WorkspaceExtension workspaceExtension) {
 
-		Task setupTestableTomcatTask = GradleUtil.getTask(
-			project, TestIntegrationPlugin.SET_UP_TESTABLE_TOMCAT_TASK_NAME);
+		Project project = task.getProject();
 
 		File homeDir = workspaceExtension.getHomeDir();
 
@@ -475,7 +486,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				project.getRootProject(),
 				RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
 
-			setupTestableTomcatTask.dependsOn(initBundleTask);
+			task.dependsOn(initBundleTask);
 		}
 	}
 

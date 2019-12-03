@@ -54,13 +54,11 @@ public class JSR330BeanPortletPostProcessor
 		_autowiredAnnotationTypes.add(Autowired.class);
 
 		try {
-			ClassLoader classLoader =
-				JSR330BeanPortletPostProcessor.class.getClassLoader();
-
 			@SuppressWarnings("unchecked")
 			Class<? extends Annotation> injectAnnotation =
 				(Class<? extends Annotation>)ClassUtils.forName(
-					"javax.inject.Inject", classLoader);
+					"javax.inject.Inject",
+					JSR330BeanPortletPostProcessor.class.getClassLoader());
 
 			_autowiredAnnotationTypes.add(injectAnnotation);
 		}

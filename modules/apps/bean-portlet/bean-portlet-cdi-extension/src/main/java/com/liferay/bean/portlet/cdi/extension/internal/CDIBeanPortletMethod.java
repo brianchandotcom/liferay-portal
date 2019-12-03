@@ -19,8 +19,6 @@ import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 
 import java.lang.reflect.Method;
 
-import java.util.Set;
-
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -47,9 +45,7 @@ public class CDIBeanPortletMethod extends BaseBeanPortletMethod {
 
 	@Override
 	public Object invoke(Object... args) throws ReflectiveOperationException {
-		Set<Bean<?>> beans = _beanManager.getBeans(_beanType);
-
-		Bean<?> bean = _beanManager.resolve(beans);
+		Bean<?> bean = _beanManager.resolve(_beanManager.getBeans(_beanType));
 
 		CreationalContext creationalContext =
 			_beanManager.createCreationalContext(bean);

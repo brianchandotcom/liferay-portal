@@ -77,14 +77,10 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 						exportTaskId),
 					outputStream);
 
-			String contentType = StringUtil.toLowerCase(
-				batchEngineExportTask.getContentType());
-
 			return Response.ok(
 				streamingOutput
 			).header(
-				"content-disposition",
-				"attachment; filename=export." + contentType
+				"content-disposition", "attachment; filename=export.zip"
 			).build();
 		}
 

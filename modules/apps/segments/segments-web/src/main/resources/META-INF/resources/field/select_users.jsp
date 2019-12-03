@@ -21,18 +21,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= selectUsersDisplayContext.getClearResultsURL() %>"
-	componentId="selectSegmentsEntryUsersManagementToolbar"
-	disabled="<%= selectUsersDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= selectUsersDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= selectUsersDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= selectUsersDisplayContext.getSearchActionURL() %>"
-	searchContainerId="selectSegmentsEntryUsers"
-	searchFormName="searchFm"
-	showSearch="<%= selectUsersDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= selectUsersDisplayContext.getOrderByType() %>"
-	sortingURL="<%= selectUsersDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= selectUsersDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SelectUsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectUsersDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

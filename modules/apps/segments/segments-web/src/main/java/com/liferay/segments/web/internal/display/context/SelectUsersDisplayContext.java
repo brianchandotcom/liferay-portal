@@ -220,7 +220,7 @@ public class SelectUsersDisplayContext {
 		return userSearchContainer.getTotal();
 	}
 
-	public SearchContainer getUserSearchContainer() throws PortalException {
+	public SearchContainer getUserSearchContainer() {
 		if (_userSearchContainer != null) {
 			return _userSearchContainer;
 		}

@@ -44,15 +44,15 @@ if (Validator.isNull(backURL)) {
 		</div>
 
 		<%
-		LayoutSEOEntry selLayoutSEOEntry = layoutsAdminDisplayContext.getSelLayoutSEOEntry();
+		LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
 		%>
 
 		<c:if test="<%= selLayoutSEOEntry != null %>">
 			<liferay-ddm:html
 				classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-				classPK="<%= layoutsAdminDisplayContext.getDDMStructurePrimaryKey() %>"
-				ddmFormValues="<%= layoutsAdminDisplayContext.getDDMFormValues() %>"
-				fieldsNamespace="<%= String.valueOf(layoutsAdminDisplayContext.getDDMStructurePrimaryKey()) %>"
+				classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"
+				ddmFormValues="<%= layoutsSEODisplayContext.getDDMFormValues() %>"
+				fieldsNamespace="<%= String.valueOf(layoutsSEODisplayContext.getDDMStructurePrimaryKey()) %>"
 				groupId="<%= selLayoutSEOEntry.getGroupId() %>"
 				localizable="<%= true %>"
 				requestedLocale="<%= locale %>"

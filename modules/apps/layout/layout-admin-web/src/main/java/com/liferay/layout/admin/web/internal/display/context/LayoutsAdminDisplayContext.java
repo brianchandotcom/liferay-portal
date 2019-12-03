@@ -19,11 +19,6 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -78,7 +73,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -137,15 +131,13 @@ public class LayoutsAdminDisplayContext {
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		StorageEngine storageEngine) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_dlurlHelper = dlurlHelper;
 		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_storageEngine = storageEngine;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
@@ -411,29 +403,6 @@ public class LayoutsAdminDisplayContext {
 			"explicitCreation", String.valueOf(Boolean.TRUE));
 
 		return copyLayoutURL.toString();
-	}
-
-	public DDMFormValues getDDMFormValues() throws StorageException {
-		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
-
-		return _storageEngine.getDDMFormValues(
-			selLayoutSEOEntry.getDDMStorageId());
-	}
-
-	public long getDDMStructurePrimaryKey() throws PortalException {
-		if (_ddmStructure != null) {
-			return _ddmStructure.getPrimaryKey();
-		}
-
-		Company company = _themeDisplay.getCompany();
-
-		_ddmStructure = DDMStructureServiceUtil.fetchStructure(
-			company.getGroupId(),
-			ClassNameLocalServiceUtil.getClassNameId(
-				LayoutSEOEntry.class.getName()),
-			"custom-opengraph-meta-tags");
-
-		return _ddmStructure.getPrimaryKey();
 	}
 
 	public String getDefaultCanonicalURL() throws PortalException {
@@ -915,7 +884,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getOpenGraphImageURL() {
-		LayoutSEOEntry layoutSEOEntry = getSelLayoutSEOEntry();
+		LayoutSEOEntry layoutSEOEntry = _getSelLayoutSEOEntry();
 
 		if ((layoutSEOEntry == null) ||
 			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
@@ -1240,18 +1209,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return _selLayout;
-	}
-
-	public LayoutSEOEntry getSelLayoutSEOEntry() {
-		Layout layout = getSelLayout();
-
-		if (layout == null) {
-			return null;
-		}
-
-		return LayoutSEOEntryLocalServiceUtil.fetchLayoutSEOEntry(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId());
 	}
 
 	public LayoutSet getSelLayoutSet() throws PortalException {
@@ -2001,6 +1958,18 @@ public class LayoutsAdminDisplayContext {
 		return _orderByType;
 	}
 
+	private LayoutSEOEntry _getSelLayoutSEOEntry() {
+		Layout layout = getSelLayout();
+
+		if (layout == null) {
+			return null;
+		}
+
+		return LayoutSEOEntryLocalServiceUtil.fetchLayoutSEOEntry(
+			layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getLayoutId());
+	}
+
 	private boolean _isActive(long plid) throws PortalException {
 		if (plid == getSelPlid()) {
 			return true;
@@ -2039,7 +2008,6 @@ public class LayoutsAdminDisplayContext {
 
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
-	private DDMStructure _ddmStructure;
 	private String _displayStyle;
 	private final DLURLHelper _dlurlHelper;
 	private Boolean _firstColumn;
@@ -2066,7 +2034,6 @@ public class LayoutsAdminDisplayContext {
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;
-	private final StorageEngine _storageEngine;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
 

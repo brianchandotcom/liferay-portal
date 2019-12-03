@@ -114,10 +114,11 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			Layout targetLayout = _layoutService.addLayout(
 				groupId, privateLayout, sourceLayout.getParentLayoutId(), 0, 0,
-				nameMap, new HashMap<>(), new HashMap<>(),
-				sourceLayout.getKeywordsMap(), sourceLayout.getRobotsMap(),
-				sourceLayout.getType(), sourceTypeSettingsProperties.toString(),
-				false, false, new HashMap<>(), serviceContext);
+				nameMap, sourceLayout.getTitleMap(),
+				sourceLayout.getDescriptionMap(), sourceLayout.getKeywordsMap(),
+				sourceLayout.getRobotsMap(), sourceLayout.getType(),
+				sourceTypeSettingsProperties.toString(), false, false,
+				new HashMap<>(), serviceContext);
 
 			Layout draftLayout = _layoutLocalService.fetchLayout(
 				_portal.getClassNameId(Layout.class), targetLayout.getPlid());

@@ -131,14 +131,16 @@ public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-				Long parentKnowledgeBaseArticleId, String search,
-				String filterString, Pagination pagination, String sortString)
+				Long parentKnowledgeBaseArticleId, Boolean flatten,
+				String search, String filterString, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
-				Long parentKnowledgeBaseArticleId, String search,
-				String filterString, Pagination pagination, String sortString)
+				Long parentKnowledgeBaseArticleId, Boolean flatten,
+				String search, String filterString, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public KnowledgeBaseArticle postKnowledgeBaseArticleKnowledgeBaseArticle(
@@ -904,14 +906,14 @@ public interface KnowledgeBaseArticleResource {
 
 		public Page<KnowledgeBaseArticle>
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-					Long parentKnowledgeBaseArticleId, String search,
-					String filterString, Pagination pagination,
+					Long parentKnowledgeBaseArticleId, Boolean flatten,
+					String search, String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
-					parentKnowledgeBaseArticleId, search, filterString,
+					parentKnowledgeBaseArticleId, flatten, search, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -927,8 +929,8 @@ public interface KnowledgeBaseArticleResource {
 
 		public HttpInvoker.HttpResponse
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
-					Long parentKnowledgeBaseArticleId, String search,
-					String filterString, Pagination pagination,
+					Long parentKnowledgeBaseArticleId, Boolean flatten,
+					String search, String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
 
@@ -952,6 +954,10 @@ public interface KnowledgeBaseArticleResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (flatten != null) {
+				httpInvoker.parameter("flatten", String.valueOf(flatten));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

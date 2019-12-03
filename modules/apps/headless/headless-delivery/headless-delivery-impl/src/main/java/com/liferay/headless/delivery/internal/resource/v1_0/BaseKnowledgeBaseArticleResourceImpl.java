@@ -410,6 +410,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			@Parameter(
 				in = ParameterIn.PATH, name = "parentKnowledgeBaseArticleId"
 			),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -427,6 +428,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				@NotNull @Parameter(hidden = true)
 				@PathParam("parentKnowledgeBaseArticleId") Long
 					parentKnowledgeBaseArticleId,
+				@Parameter(hidden = true) @QueryParam("flatten") Boolean
+					flatten,
 				@Parameter(hidden = true) @QueryParam("search") String search,
 				@Context Filter filter, @Context Pagination pagination,
 				@Context Sort[] sorts)

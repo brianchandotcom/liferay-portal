@@ -814,7 +814,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {knowledgeBaseArticleKnowledgeBaseArticles(filter: ___, page: ___, pageSize: ___, parentKnowledgeBaseArticleId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {knowledgeBaseArticleKnowledgeBaseArticles(filter: ___, flatten: ___, page: ___, pageSize: ___, parentKnowledgeBaseArticleId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated, filtered, searched, and sorted."
@@ -822,6 +822,7 @@ public class Query {
 	public KnowledgeBaseArticlePage knowledgeBaseArticleKnowledgeBaseArticles(
 			@GraphQLName("parentKnowledgeBaseArticleId") Long
 				parentKnowledgeBaseArticleId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -835,7 +836,7 @@ public class Query {
 			knowledgeBaseArticleResource -> new KnowledgeBaseArticlePage(
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-						parentKnowledgeBaseArticleId, search,
+						parentKnowledgeBaseArticleId, flatten, search,
 						_filterBiFunction.apply(
 							knowledgeBaseArticleResource, filterString),
 						Pagination.of(page, pageSize),
@@ -1150,14 +1151,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadMessageBoardMessages(filter: ___, flatten: ___, messageBoardThreadId: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadMessageBoardMessages(filter: ___, messageBoardThreadId: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the message board thread's messages. Results can be paginated, filtered, searched, and sorted."
 	)
 	public MessageBoardMessagePage messageBoardThreadMessageBoardMessages(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
-			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -1171,7 +1171,7 @@ public class Query {
 			messageBoardMessageResource -> new MessageBoardMessagePage(
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
-						messageBoardThreadId, flatten, search,
+						messageBoardThreadId, search,
 						_filterBiFunction.apply(
 							messageBoardMessageResource, filterString),
 						Pagination.of(page, pageSize),
@@ -1850,6 +1850,7 @@ public class Query {
 			description = "Retrieves the parent knowledge base article's child knowledge base articles. Results can be paginated, filtered, searched, and sorted."
 		)
 		public KnowledgeBaseArticlePage knowledgeBaseArticles(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1863,7 +1864,7 @@ public class Query {
 				knowledgeBaseArticleResource -> new KnowledgeBaseArticlePage(
 					knowledgeBaseArticleResource.
 						getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
-							_knowledgeBaseArticle.getId(), search,
+							_knowledgeBaseArticle.getId(), flatten, search,
 							_filterBiFunction.apply(
 								knowledgeBaseArticleResource, filterString),
 							Pagination.of(page, pageSize),
@@ -2812,7 +2813,6 @@ public class Query {
 			description = "Retrieves the message board thread's messages. Results can be paginated, filtered, searched, and sorted."
 		)
 		public MessageBoardMessagePage messageBoardMessages(
-				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -2826,7 +2826,7 @@ public class Query {
 				messageBoardMessageResource -> new MessageBoardMessagePage(
 					messageBoardMessageResource.
 						getMessageBoardThreadMessageBoardMessagesPage(
-							_messageBoardThread.getId(), flatten, search,
+							_messageBoardThread.getId(), search,
 							_filterBiFunction.apply(
 								messageBoardMessageResource, filterString),
 							Pagination.of(page, pageSize),

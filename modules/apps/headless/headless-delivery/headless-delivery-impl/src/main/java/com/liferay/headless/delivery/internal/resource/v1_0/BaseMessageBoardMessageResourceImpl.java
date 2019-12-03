@@ -479,7 +479,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId"),
-			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -496,8 +495,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			getMessageBoardThreadMessageBoardMessagesPage(
 				@NotNull @Parameter(hidden = true)
 				@PathParam("messageBoardThreadId") Long messageBoardThreadId,
-				@Parameter(hidden = true) @QueryParam("flatten") Boolean
-					flatten,
 				@Parameter(hidden = true) @QueryParam("search") String search,
 				@Context Filter filter, @Context Pagination pagination,
 				@Context Sort[] sorts)

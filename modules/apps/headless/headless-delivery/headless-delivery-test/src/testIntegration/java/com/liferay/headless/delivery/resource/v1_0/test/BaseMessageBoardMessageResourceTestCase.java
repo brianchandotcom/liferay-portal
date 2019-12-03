@@ -856,8 +856,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			messageBoardMessageResource.
 				getMessageBoardThreadMessageBoardMessagesPage(
 					testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
-					null, RandomTestUtil.randomString(), null,
-					Pagination.of(1, 2), null);
+					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+					null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -875,7 +875,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			page =
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
-						irrelevantMessageBoardThreadId, null, null, null,
+						irrelevantMessageBoardThreadId, null, null,
 						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -897,7 +897,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		page =
 			messageBoardMessageResource.
 				getMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, null, null, Pagination.of(1, 2),
+					messageBoardThreadId, null, null, Pagination.of(1, 2),
 					null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -938,7 +938,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Page<MessageBoardMessage> page =
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
-						messageBoardThreadId, null, null,
+						messageBoardThreadId, null,
 						getFilterString(
 							entityField, "between", messageBoardMessage1),
 						Pagination.of(1, 2), null);
@@ -976,7 +976,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Page<MessageBoardMessage> page =
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
-						messageBoardThreadId, null, null,
+						messageBoardThreadId, null,
 						getFilterString(
 							entityField, "eq", messageBoardMessage1),
 						Pagination.of(1, 2), null);
@@ -1009,7 +1009,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Page<MessageBoardMessage> page1 =
 			messageBoardMessageResource.
 				getMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, null, null, Pagination.of(1, 2),
+					messageBoardThreadId, null, null, Pagination.of(1, 2),
 					null);
 
 		List<MessageBoardMessage> messageBoardMessages1 =
@@ -1021,7 +1021,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Page<MessageBoardMessage> page2 =
 			messageBoardMessageResource.
 				getMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, null, null, Pagination.of(2, 2),
+					messageBoardThreadId, null, null, Pagination.of(2, 2),
 					null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -1035,7 +1035,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Page<MessageBoardMessage> page3 =
 			messageBoardMessageResource.
 				getMessageBoardThreadMessageBoardMessagesPage(
-					messageBoardThreadId, null, null, null, Pagination.of(1, 3),
+					messageBoardThreadId, null, null, Pagination.of(1, 3),
 					null);
 
 		assertEqualsIgnoringOrder(
@@ -1140,8 +1140,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Page<MessageBoardMessage> ascPage =
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
-						messageBoardThreadId, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":asc");
+						messageBoardThreadId, null, null, Pagination.of(1, 2),
+						entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(messageBoardMessage1, messageBoardMessage2),
@@ -1150,8 +1150,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Page<MessageBoardMessage> descPage =
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
-						messageBoardThreadId, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":desc");
+						messageBoardThreadId, null, null, Pagination.of(1, 2),
+						entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(messageBoardMessage2, messageBoardMessage1),

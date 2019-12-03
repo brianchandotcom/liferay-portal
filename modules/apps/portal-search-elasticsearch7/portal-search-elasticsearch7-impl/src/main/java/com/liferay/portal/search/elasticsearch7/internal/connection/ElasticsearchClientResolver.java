@@ -23,4 +23,6 @@ public interface ElasticsearchClientResolver {
 
 	public RestHighLevelClient getRestHighLevelClient();
 
+	public RestHighLevelClient getRestHighLevelClient(String connectionId);
+
 }

@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConnectionConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 
 import java.io.InputStream;
@@ -26,8 +24,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.security.KeyStore;
-
-import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 
@@ -43,20 +39,9 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-	immediate = true, property = "operation.mode=REMOTE",
-	service = ElasticsearchConnection.class
-)
 public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Override
@@ -64,10 +49,12 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		return OperationMode.REMOTE;
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
+	public void setElasticsearchConnectionConfigurationWrapper(
+		ElasticsearchConnectionConfigurationWrapper
+			elasticsearchConnectionConfigurationWrapper) {
+
+		_elasticsearchConnectionConfigurationWrapper =
+			elasticsearchConnectionConfigurationWrapper;
 	}
 
 	protected void configureSecurity(RestClientBuilder restClientBuilder) {
@@ -76,7 +63,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 				httpClientBuilder.setDefaultCredentialsProvider(
 					createCredentialsProvider());
 
-				if (elasticsearchConfiguration.httpSSLEnabled()) {
+				if (_elasticsearchConnectionConfigurationWrapper.
+						isHhttpSSLEnabled()) {
+
 					httpClientBuilder.setSSLContext(createSSLContext());
 				}
 
@@ -91,8 +80,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		credentialsProvider.setCredentials(
 			AuthScope.ANY,
 			new UsernamePasswordCredentials(
-				elasticsearchConfiguration.username(),
-				elasticsearchConfiguration.password()));
+				_elasticsearchConnectionConfigurationWrapper.getUsername(),
+				_elasticsearchConnectionConfigurationWrapper.getPassword()));
 
 		return credentialsProvider;
 	}
@@ -100,7 +89,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	@Override
 	protected RestHighLevelClient createRestHighLevelClient() {
 		String[] networkHostAddresses =
-			elasticsearchConfiguration.networkHostAddresses();
+			_elasticsearchConnectionConfigurationWrapper.
+				getNetworkHostAddresses();
 
 		HttpHost[] httpHosts = new HttpHost[networkHostAddresses.length];
 
@@ -110,7 +100,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		RestClientBuilder restClientBuilder = RestClient.builder(httpHosts);
 
-		if (elasticsearchConfiguration.authenticationEnabled()) {
+		if (_elasticsearchConnectionConfigurationWrapper.
+				isAuthenticationEnabled()) {
+
 			configureSecurity(restClientBuilder);
 		}
 
@@ -122,15 +114,18 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	protected SSLContext createSSLContext() {
 		try {
-			KeyStore keyStore = KeyStore.getInstance(
-				elasticsearchConfiguration.truststoreType());
-			String truststorePath = elasticsearchConfiguration.truststorePath();
-			String truststorePassword =
-				elasticsearchConfiguration.truststorePassword();
-
-			Path path = Paths.get(truststorePath);
+			Path path = Paths.get(
+				_elasticsearchConnectionConfigurationWrapper.
+					getTruststorePath());
 
 			InputStream is = Files.newInputStream(path);
+
+			KeyStore keyStore = KeyStore.getInstance(
+				_elasticsearchConnectionConfigurationWrapper.
+					getTruststoreType());
+			String truststorePassword =
+				_elasticsearchConnectionConfigurationWrapper.
+					getTruststorePassword();
 
 			keyStore.load(is, truststorePassword.toCharArray());
 
@@ -147,30 +142,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		}
 	}
 
-	@Deactivate
-	protected void deactivate(Map<String, Object> properties) {
-		close();
-	}
-
-	@Modified
-	protected synchronized void modified(Map<String, Object> properties) {
-		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
-
-		if (isConnected()) {
-			close();
-		}
-
-		if (!isConnected() &&
-			(elasticsearchConfiguration.operationMode() ==
-				com.liferay.portal.search.elasticsearch7.configuration.
-					OperationMode.REMOTE)) {
-
-			connect();
-		}
-	}
-
-	@Reference
-	protected Props props;
+	private ElasticsearchConnectionConfigurationWrapper
+		_elasticsearchConnectionConfigurationWrapper;
 
 }

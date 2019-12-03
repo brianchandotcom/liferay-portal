@@ -27,8 +27,8 @@ import updateLayoutData from '../thunks/updateLayoutData';
 import Topper from './Topper';
 import UnsafeHTML from './UnsafeHTML';
 
-const Root = React.forwardRef(({children}, ref) => (
-	<div ref={ref} style={{height: '100vh'}}>
+const Root = React.forwardRef(({children, className}, ref) => (
+	<div className={className} ref={ref} style={{height: '100vh'}}>
 		{children}
 	</div>
 ));
@@ -143,14 +143,24 @@ const LAYOUT_DATA_ACCEPT_DROP_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.fragment],
 	[LAYOUT_DATA_ITEM_TYPES.container]: [
 		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.fragment
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.row
 	],
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
 		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.container
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.row
 	],
-	[LAYOUT_DATA_ITEM_TYPES.root]: [],
-	[LAYOUT_DATA_ITEM_TYPES.row]: []
+	[LAYOUT_DATA_ITEM_TYPES.root]: [
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.row
+	],
+	[LAYOUT_DATA_ITEM_TYPES.row]: [
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.row
+	]
 };
 
 const LAYOUT_DATA_TOPPER_ACTIVE = {
@@ -158,7 +168,7 @@ const LAYOUT_DATA_TOPPER_ACTIVE = {
 	[LAYOUT_DATA_ITEM_TYPES.container]: true,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: true,
 	[LAYOUT_DATA_ITEM_TYPES.root]: false,
-	[LAYOUT_DATA_ITEM_TYPES.row]: false
+	[LAYOUT_DATA_ITEM_TYPES.row]: true
 };
 
 const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {

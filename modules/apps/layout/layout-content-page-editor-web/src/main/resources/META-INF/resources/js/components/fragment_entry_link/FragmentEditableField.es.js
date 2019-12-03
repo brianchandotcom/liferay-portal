@@ -129,16 +129,6 @@ class FragmentEditableField extends PortletBase {
 
 		let nextState = state;
 
-		nextState = setIn(
-			nextState,
-			['_selected'],
-			state.selectedItems.some(
-				selectedItem =>
-					selectedItem.itemId === this._itemId &&
-					selectedItem.itemType ===
-						FRAGMENTS_EDITOR_ITEM_TYPES.editable
-			)
-		);
 		nextState = setIn(nextState, ['_translated'], translated);
 		nextState = setIn(nextState, ['content'], content);
 
@@ -574,6 +564,12 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			state.hoveredItemId ===
 				`${props.editableValues.classNameId}-${props.editableValues.classPK}`;
 
+		const _selected = state.selectedItems.some(
+			selectedItem =>
+				selectedItem.itemId === _itemId &&
+				selectedItem.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable
+		);
+
 		return {
 			...state,
 			_activable,
@@ -582,7 +578,8 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			_hovered,
 			_itemId,
 			_mapped,
-			_mappedItemHovered
+			_mappedItemHovered,
+			_selected
 		};
 	}
 );

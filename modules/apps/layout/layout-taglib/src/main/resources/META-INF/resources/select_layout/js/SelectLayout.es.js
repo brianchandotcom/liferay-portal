@@ -12,20 +12,22 @@
  * details.
  */
 
-import 'frontend-taglib/cards_treeview/CardsTreeview.es';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput} from '@clayui/form';
+import ClayManagementToolbar from '@clayui/management-toolbar';
+import {Treeview} from 'frontend-js-components-web';
+import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 
-import templates from './SelectLayout.soy';
+function visit(nodes, callback) {
+	nodes.forEach(node => {
+		callback(node);
 
-/**
- * KeyBoardEvent enter key
- * @review
- * @type {!string}
- */
-
-const ENTER_KEY = 'Enter';
+		if (node.children) {
+			visit(node.children, callback);
+		}
+	});
+}
 
 /**
  * SelectLayout
@@ -36,203 +38,117 @@ const ENTER_KEY = 'Enter';
  * @review
  */
 
-class SelectLayout extends Component {
-	/**
-	 * Filters deep nested nodes based on a filtering value
-	 *
-	 * @type {Array<Object>} nodes
-	 * @type {string} filterValue
-	 * @private
-	 * @review
-	 */
+const SelectLayout = ({
+	followURLOnTitleClick,
+	itemSelectorSaveEvent,
+	multiSelection,
+	namespace,
+	nodes
+}) => {
+	const [filterQuery, setFilterQuery] = useState();
 
-	_filterSiblingNodes(nodes, filterValue) {
-		let filteredNodes = [];
+	const handleSelectionChange = selectedNodeIds => {
+		let data = [];
 
-		nodes.forEach(node => {
-			if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-				filteredNodes.push(node);
-			}
-
-			if (node.children) {
-				filteredNodes = filteredNodes.concat(
-					this._filterSiblingNodes(node.children, filterValue)
-				);
+		visit(nodes, node => {
+			if (selectedNodeIds.has(node.id)) {
+				data.push({
+					groupId: node.groupId,
+					id: node.id,
+					layoutId: node.layoutId,
+					name: node.value,
+					privateLayout: node.privateLayout,
+					value: node.url
+				});
 			}
 		});
 
-		return filteredNodes;
-	}
-
-	/**
-	 * When the search form is submitted, nothing should happend,
-	 * as filtering is performed on keypress.
-	 * @param {KeyboardEvent} event
-	 * @private
-	 * @review
-	 */
-
-	_handleSearchFormKeyDown(event) {
-		if (event.key === ENTER_KEY) {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-		}
-	}
-
-	/**
-	 * Searchs for nodes by name based on a filtering value
-	 *
-	 * @param {!Event} event
-	 * @private
-	 * @review
-	 */
-
-	_searchNodes(event) {
-		if (!this.originalNodes) {
-			this.originalNodes = this.nodes;
-		} else {
-			this.nodes = this.originalNodes;
-		}
-
-		const filterValue = event.delegateTarget.value.toLowerCase();
-
-		if (filterValue !== '') {
-			this.viewType = SelectLayout.VIEW_TYPES.flat;
-			this.nodes = this._filterSiblingNodes(this.nodes, filterValue);
-		} else {
-			this.viewType = SelectLayout.VIEW_TYPES.tree;
-		}
-	}
-
-	/**
-	 * Fires item selector save event on selected node change
-	 *
-	 * @param {!Event} event
-	 * @private
-	 * @review
-	 */
-
-	_selectedNodeChange(event) {
-		var data = event.newVal.map(node => {
-			return {
-				groupId: node.groupId,
-				id: node.id,
-				layoutId: node.layoutId,
-				name: node.value,
-				privateLayout: node.privateLayout,
-				value: node.url
-			};
-		});
-
-		if (!this.multiSelection) {
+		if (!multiSelection) {
 			data = data[0];
 		}
 
-		if (this.followURLOnTitleClick) {
+		if (followURLOnTitleClick) {
 			Liferay.Util.getOpener().document.location.href = data.url;
 		} else {
-			this.emit(this.itemSelectorSaveEvent, {
+			Liferay.fire(itemSelectorSaveEvent, {
 				data
 			});
 
-			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
+			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
 				data
 			});
 		}
-	}
+	};
+
+	return (
+		<div className="select-layout">
+			<ClayManagementToolbar>
+				<ClayManagementToolbar.Search
+					onSubmit={event => {
+						event.preventDefault();
+					}}
+				>
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<ClayInput
+								className="form-control input-group-inset input-group-inset-after"
+								name={`${namespace}filterKeywords`}
+								onInput={event => {
+									setFilterQuery(
+										event.target.value.toLowerCase()
+									);
+								}}
+								placeholder={Liferay.Language.get('search-for')}
+								type="text"
+							/>
+							<ClayInput.GroupInsetItem after tag="span">
+								<ClayButtonWithIcon
+									className="navbar-breakpoint-d-none"
+									displayType="unstyled"
+									symbol="times"
+								/>
+								<ClayButtonWithIcon
+									className="navbar-breakpoint-d-block"
+									displayType="unstyled"
+									symbol="search"
+								/>
+							</ClayInput.GroupInsetItem>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayManagementToolbar.Search>
+			</ClayManagementToolbar>
+
+			<div
+				className="container-fluid-1280 layouts-selector"
+				id={`${namespace}selectLayoutFm`}
+			>
+				<fieldset className="panel-body">
+					<div
+						className="layout-tree"
+						id={`${namespace}layoutContainer`}
+					>
+						<Treeview
+							NodeComponent={Treeview.Card}
+							filterQuery={filterQuery}
+							multiSelection={multiSelection}
+							nodes={nodes}
+							onSelectedNodesChange={handleSelectionChange}
+						/>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	);
+};
+
+SelectLayout.propTypes = {
+	followURLOnTitleClick: PropTypes.bool,
+	itemSelectorSaveEvent: PropTypes.string,
+	multiSelection: PropTypes.bool,
+	namespace: PropTypes.string,
+	nodes: PropTypes.array.isRequired
+};
+
+export default function(props) {
+	return <SelectLayout {...props} />;
 }
-
-/**
- * SelectLayout view types
- * @review
- * @static
- * @type {Object}
- */
-
-SelectLayout.VIEW_TYPES = {
-	flat: 'flat',
-	tree: 'tree'
-};
-
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-
-SelectLayout.STATE = {
-	/**
-	 * Enables URL following on the title click
-	 * @default false
-	 * @instance
-	 * @memberOf SelectLayout
-	 * @review
-	 * @type {boolean}
-	 */
-
-	followURLOnTitleClick: Config.bool().value(false),
-
-	/**
-	 * Event name to fire on node selection
-	 * @default ''
-	 * @instance
-	 * @memberOf SelectLayout
-	 * @review
-	 * @type {string}
-	 */
-
-	itemSelectorSaveEvent: Config.string().value(''),
-
-	/**
-	 * Enables multiple selection of tree elements
-	 * @default false
-	 * @instance
-	 * @memberOf SelectLayout
-	 * @review
-	 * @type {boolean}
-	 */
-
-	multiSelection: Config.bool().value(false),
-
-	/**
-	 * List of nodes
-	 * @default undefined
-	 * @instance
-	 * @memberOf SelectLayout
-	 * @review
-	 * @type {!Array<Object>}
-	 */
-
-	nodes: Config.array().required(),
-
-	/**
-	 * Theme images root path
-	 * @default undefined
-	 * @instance
-	 * @memberOf SelectLayout
-	 * @review
-	 * @type {!string}
-	 */
-
-	pathThemeImages: Config.string().required(),
-
-	/**
-	 * Type of view to render. Accepted values are defined inside
-	 * SelectLayout.VIEW_TYPES static property.
-	 * @default SelectLayout.VIEW_TYPES.tree
-	 * @instance
-	 * @memberOf SelectLayout
-	 * @review
-	 * @type {string}
-	 */
-
-	viewType: Config.oneOf(Object.values(SelectLayout.VIEW_TYPES)).value(
-		SelectLayout.VIEW_TYPES.tree
-	)
-};
-
-Soy.register(SelectLayout, templates);
-
-export {SelectLayout};
-export default SelectLayout;

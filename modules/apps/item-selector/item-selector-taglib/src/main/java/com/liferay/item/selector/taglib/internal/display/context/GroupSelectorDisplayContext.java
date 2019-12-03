@@ -47,7 +47,7 @@ public class GroupSelectorDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 	}
 
-	public String getGroupItemSelectorEmptyResultsMessage() {
+	private String _getEmptyResultsMessage() {
 		Optional<GroupItemSelectorProvider> optional =
 			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
 				_getGroupType());
@@ -100,7 +100,7 @@ public class GroupSelectorDisplayContext {
 		return GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderTypes();
 	}
 
-	public PortletURL getIteratorURL() {
+	private PortletURL _getIteratorURL() {
 		PortletURL portletURL = _getItemSelectorURL();
 
 		portletURL.setParameter(
@@ -113,10 +113,10 @@ public class GroupSelectorDisplayContext {
 
 	public SearchContainer getSearchContainer() {
 		SearchContainer searchContainer = new GroupSearch(
-			_liferayPortletRequest, getIteratorURL());
+			_liferayPortletRequest, _getIteratorURL());
 
 		searchContainer.setEmptyResultsMessage(
-			getGroupItemSelectorEmptyResultsMessage());
+			_getEmptyResultsMessage());
 
 		List<Group> groups = (List<Group>)_liferayPortletRequest.getAttribute(
 			"liferay-item-selector:group-selector:groups");

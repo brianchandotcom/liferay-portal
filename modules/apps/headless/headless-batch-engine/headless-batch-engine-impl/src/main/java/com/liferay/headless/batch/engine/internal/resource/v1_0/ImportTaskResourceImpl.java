@@ -25,6 +25,7 @@ import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -49,6 +52,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -135,13 +139,48 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			InputStream inputStream)
 		throws IOException {
 
-		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+		java.io.File tempFile = _file.createTempFile(inputStream);
 
-		ZipEntry zipEntry = zipInputStream.getNextEntry();
+		String fileName = null;
+
+		try (ZipInputStream zipInputStream = new ZipInputStream(
+				new FileInputStream(tempFile))) {
+
+			ZipEntry zipEntry = zipInputStream.getNextEntry();
+
+			fileName = zipEntry.getName();
+		}
 
 		return new AbstractMap.SimpleImmutableEntry<>(
-			StreamUtil.toByteArray(zipInputStream),
-			_file.getExtension(zipEntry.getName()));
+			StreamUtil.toByteArray(new AutoDeleteFileInputStream(tempFile)),
+			_file.getExtension(fileName));
+	}
+
+	private Map.Entry<byte[], String>
+			_getContentAndExtensionFromUncompressedFile(
+				String fileName, InputStream inputStream)
+		throws IOException {
+
+		java.io.File tempFile = _file.createTempFile();
+
+		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
+				new FileOutputStream(tempFile))) {
+
+			ZipEntry zipEntry = new ZipEntry(fileName);
+
+			zipOutputStream.putNextEntry(zipEntry);
+
+			byte[] bytes = new byte[1024];
+			int length;
+
+			while ((length = inputStream.read(bytes)) >= 0) {
+				zipOutputStream.write(bytes, 0, length);
+			}
+		}
+
+		return new AbstractMap.SimpleImmutableEntry<>(
+			StreamUtil.toByteArray(new AutoDeleteFileInputStream(tempFile)),
+			_file.getExtension(fileName));
 	}
 
 	private ImportTask _importFile(
@@ -161,28 +200,23 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			_portalExecutorManager.getPortalExecutor(
 				ImportTaskResourceImpl.class.getName());
 
-		byte[] content = null;
-		String extension = null;
+		Map.Entry<byte[], String> entry = null;
 
 		if (StringUtil.endsWith(binaryFile.getFileName(), "zip")) {
-			Map.Entry<byte[], String> entry =
-				_getContentAndExtensionFromCompressedFile(
-					binaryFile.getInputStream());
-
-			content = entry.getKey();
-			extension = entry.getValue();
+			entry = _getContentAndExtensionFromCompressedFile(
+				binaryFile.getInputStream());
 		}
 		else {
-			content = StreamUtil.toByteArray(binaryFile.getInputStream());
-			extension = _file.getExtension(binaryFile.getFileName());
+			entry = _getContentAndExtensionFromUncompressedFile(
+				binaryFile.getFileName(), binaryFile.getInputStream());
 		}
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_itemClassBatchSizeMap.getOrDefault(className, _batchSize),
-				callbackURL, className, content,
-				StringUtil.upperCase(extension),
+				callbackURL, className, entry.getKey(),
+				StringUtil.upperCase(entry.getValue()),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toMap(fieldNameMappingString), batchEngineTaskOperation.name(),
 				ParametersUtil.toParameters(contextUriInfo, _ignoredParameters),

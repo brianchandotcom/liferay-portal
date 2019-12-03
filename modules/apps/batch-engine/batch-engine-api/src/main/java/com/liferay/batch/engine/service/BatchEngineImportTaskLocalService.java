@@ -76,6 +76,7 @@ public interface BatchEngineImportTaskLocalService
 	public BatchEngineImportTask addBatchEngineImportTask(
 		BatchEngineImportTask batchEngineImportTask);
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BatchEngineImportTask addBatchEngineImportTask(
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,

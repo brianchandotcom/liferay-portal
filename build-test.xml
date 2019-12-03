@@ -10593,55 +10593,107 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<elseif>
 				<equals arg1="${database.type}" arg2="sybase" />
 				<then>
-					<echo file="import-sybase.sql">load database lportal from "${liferay.home}/${database.type}.dmp"
+					<get-database-property property.name="database.host" />
+					<get-database-property property.name="database.schema" />
+					<get-database-property property.name="database.username" />
+					<get-database-property property.name="database.password" />
+
+					<if>
+						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+						<then>
+							<property location="sybase.sh" name="sybase.sh.file.path" />
+
+							<echo file="${sybase.sh.file.path}">
+								<![CDATA[
+									#!/bin/bash
+
+									export SYBASE_ASE=${env.SYBASE_ASE}
+
+									${env.SYBASE}/${env.SYBASE_ASE}/bin/backupserver -Slportal_BS &>/dev/null &
+
+									while ! echo exit | nc ${database.host} 5001; do sleep 60; done
+
+									cat /tmp/sybase.sql
+
+									cat lportal__srv.log
+
+									${sybase.executable} -P ${database.password} -S ${database.schema} -U ${database.username} -i /tmp/sybase.sql --retserverror
+								]]>
+							</echo>
+
+							<property location="sybase.sql" name="sybase.sql.file.path" />
+
+							<echo file="sybase.sql">load database lportal from "/tmp/sybase.dmp"
 go
 online database lportal
 go</echo>
 
-					<exec executable="${env.SYBASE}/${env.SYBASE_ASE}/bin/backupserver" spawn="true">
-						<arg value="-Slportal_BS" />
-					</exec>
+							<property location="${liferay.home}/sybase.dmp" name="sybase.dump.file.path" />
 
-					<waitfor maxwait="60" maxwaitunit="second">
-						<socket port="5001" server="localhost" />
-					</waitfor>
+							<execute>
+								<![CDATA[
+									docker cp ${sybase.dump.file.path} ${database.host}:/tmp/sybase.dmp
 
-					<print-file file.name="import-sybase.sql" />
+									docker cp ${sybase.sh.file.path} ${database.host}:/tmp/sybase.sh
 
-					<print-file file.name="lportal__srv.log" />
+									docker cp ${sybase.sql.file.path} ${database.host}:/tmp/sybase.sql
 
-					<local name="output.content" />
-
-					<exec executable="${sybase.executable}" logError="true" outputproperty="output.content">
-						<arg value="-i" />
-						<arg value="import-sybase.sql" />
-						<arg value="-P" />
-						<arg value="${database.sybase.password}" />
-						<arg value="--retserverror" />
-						<arg value="-S" />
-						<arg value="${database.sybase.schema}" />
-						<arg value="-U" />
-						<arg value="${database.sybase.username}" />
-					</exec>
-
-					<echo>${output.content}</echo>
-
-					<delete file="import-sybase.sql" />
-					<delete file="lportal__srv.log" />
-
-					<echo file="get-charset.sql">sp_helpsort
+									docker exec ${database.host} /bin/bash /tmp/sybase.sh
+								]]>
+							</execute>
+						</then>
+						<else>
+							<echo file="import-sybase.sql">load database lportal from "${liferay.home}/${database.type}.dmp"
+go
+online database lportal
 go</echo>
 
-					<print-file file.name="get-charset.sql" />
+							<exec executable="${env.SYBASE}/${env.SYBASE_ASE}/bin/backupserver" spawn="true">
+								<arg value="-Slportal_BS" />
+							</exec>
 
-					<exec executable="${sybase.executable}">
-						<arg value="-P${database.sybase.password}" />
-						<arg value="-S${database.sybase.schema}" />
-						<arg value="-U${database.sybase.username}" />
-						<arg line="-i get-charset.sql" />
-					</exec>
+							<waitfor maxwait="60" maxwaitunit="second">
+								<socket port="5001" server="localhost" />
+							</waitfor>
 
-					<delete file="get-charset.sql" />
+							<print-file file.name="import-sybase.sql" />
+
+							<print-file file.name="lportal__srv.log" />
+
+							<local name="output.content" />
+
+							<exec executable="${sybase.executable}" logError="true" outputproperty="output.content">
+								<arg value="-i" />
+								<arg value="import-sybase.sql" />
+								<arg value="-P" />
+								<arg value="${database.password}" />
+								<arg value="--retserverror" />
+								<arg value="-S" />
+								<arg value="${database.schema}" />
+								<arg value="-U" />
+								<arg value="${database.username}" />
+							</exec>
+
+							<echo>${output.content}</echo>
+
+							<delete file="import-sybase.sql" />
+							<delete file="lportal__srv.log" />
+
+							<echo file="get-charset.sql">sp_helpsort
+go</echo>
+
+							<print-file file.name="get-charset.sql" />
+
+							<exec executable="${sybase.executable}">
+								<arg value="-P${database.password}" />
+								<arg value="-S${database.schema}" />
+								<arg value="-U${database.username}" />
+								<arg line="-i get-charset.sql" />
+							</exec>
+
+							<delete file="get-charset.sql" />
+						</else>
+					</if>
 				</then>
 			</elseif>
 		</if>

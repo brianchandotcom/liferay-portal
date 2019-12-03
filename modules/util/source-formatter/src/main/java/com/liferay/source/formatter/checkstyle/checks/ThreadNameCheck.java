@@ -64,7 +64,7 @@ public class ThreadNameCheck extends BaseCheck {
 
 			name = name.substring(1, name.length() - 1);
 
-			String expectedName = SourceUtil.getTitleCase(name, new String[0]);
+			String expectedName = SourceUtil.getTitleCase(name);
 
 			if (!name.equals(expectedName)) {
 				log(firstChildDetailAST, _MSG_RENAME_THREAD, expectedName);

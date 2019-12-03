@@ -17,7 +17,10 @@ package com.liferay.gradle.plugins.workspace.internal.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Gregory Amerson
@@ -85,6 +88,12 @@ public class StringUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static String toString(List<String> strings) {
+		Stream<String> stream = strings.stream();
+
+		return stream.collect(Collectors.joining(", "));
 	}
 
 }

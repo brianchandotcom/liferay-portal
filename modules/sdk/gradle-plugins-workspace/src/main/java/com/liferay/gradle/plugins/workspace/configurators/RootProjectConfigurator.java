@@ -817,11 +817,22 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				});
 
-			for (String commonConfigName : commonConfigNames) {
-				for (File configDir :
-						configsDir.listFiles(
-							(dir, name) -> !commonConfigNames.contains(name))) {
+			File[] configDirs = configsDir.listFiles(
+				(dir, name) -> {
+					File file = new File(dir, name);
 
+					return file.isDirectory() &&
+						   !commonConfigNames.contains(name);
+				});
+
+			if ((configDirs == null) || (configDirs.length == 0)) {
+				throw new GradleException(
+					"'configs' dir must contain one directory not named: " +
+						StringUtil.toString(commonConfigNames));
+			}
+
+			for (String commonConfigName : commonConfigNames) {
+				for (File configDir : configDirs) {
 					copy.from(
 						new Callable<File>() {
 

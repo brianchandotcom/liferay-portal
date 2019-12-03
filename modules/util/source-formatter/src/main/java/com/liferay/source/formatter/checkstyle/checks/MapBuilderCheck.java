@@ -51,7 +51,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 		}
 
 		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
-			_checkMapBuilder(detailAST);
+			_checkBuilder(detailAST);
 
 			return;
 		}
@@ -104,9 +104,9 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 		String className = identDetailAST.getText();
 
-		List<String> mapTypeNames = getAttributeValues(_MAP_TYPE_NAMES_KEY);
+		List<String> typeNames = getAttributeValues(_TYPE_NAMES_KEY);
 
-		if (!mapTypeNames.contains(className)) {
+		if (!typeNames.contains(className)) {
 			return;
 		}
 
@@ -158,7 +158,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 		}
 
 		log(
-			detailAST, _MSG_USE_MAP_BUILDER_INSTEAD, className + "Builder",
+			detailAST, _MSG_USE_BUILDER_INSTEAD, className + "Builder",
 			className);
 	}
 
@@ -231,7 +231,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 				if (!contains) {
 					log(
-						identDetailAST, _MSG_INLINE_MAP_BUILDER, name,
+						identDetailAST, _MSG_INLINE_BUILDER, name,
 						identDetailAST.getLineNo(), builderClassName,
 						parentDetailAST.getLineNo());
 				}
@@ -248,7 +248,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 		}
 	}
 
-	private void _checkMapBuilder(DetailAST methodCallDetailAST) {
+	private void _checkBuilder(DetailAST methodCallDetailAST) {
 		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
 		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
@@ -270,9 +270,9 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 		String className = builderClassName.substring(
 			0, builderClassName.length() - 7);
 
-		List<String> mapTypeNames = getAttributeValues(_MAP_TYPE_NAMES_KEY);
+		List<String> typeNames = getAttributeValues(_TYPE_NAMES_KEY);
 
-		if (!mapTypeNames.contains(className)) {
+		if (!typeNames.contains(className)) {
 			return;
 		}
 
@@ -361,7 +361,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 			if (fullIdent != null) {
 				log(
-					assignDetailAST, _MSG_INCLUDE_MAP_BUILDER,
+					assignDetailAST, _MSG_INCLUDE_BUILDER,
 					fullIdent.getText(), fullIdent.getLineNo(),
 					builderClassName, assignDetailAST.getLineNo());
 
@@ -391,9 +391,9 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		List<String> mapTypeNames = getAttributeValues(_MAP_TYPE_NAMES_KEY);
+		List<String> typeNames = getAttributeValues(_TYPE_NAMES_KEY);
 
-		if (!mapTypeNames.contains(newInstanceTypeName)) {
+		if (!typeNames.contains(newInstanceTypeName)) {
 			return;
 		}
 
@@ -416,7 +416,7 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 
 			if (fullIdent != null) {
 				log(
-					detailAST, _MSG_USE_MAP_BUILDER,
+					detailAST, _MSG_USE_BUILDER,
 					newInstanceTypeName + "Builder", detailAST.getLineNo(),
 					fullIdent.getLineNo());
 
@@ -635,19 +635,19 @@ public class MapBuilderCheck extends ChainedMethodCheck {
 		}
 	}
 
-	private static final String _MAP_TYPE_NAMES_KEY = "mapTypeNames";
+	private static final String _TYPE_NAMES_KEY = "typeNames";
 
 	private static final String _MSG_CAST_NULL_VALUE = "null.value.cast";
 
-	private static final String _MSG_INCLUDE_MAP_BUILDER =
-		"map.builder.include";
+	private static final String _MSG_INCLUDE_BUILDER =
+		"builder.include";
 
-	private static final String _MSG_INLINE_MAP_BUILDER = "map.builder.inline";
+	private static final String _MSG_INLINE_BUILDER = "builder.inline";
 
-	private static final String _MSG_USE_MAP_BUILDER = "map.builder.use";
+	private static final String _MSG_USE_BUILDER = "builder.use";
 
-	private static final String _MSG_USE_MAP_BUILDER_INSTEAD =
-		"map.builder.use.instead";
+	private static final String _MSG_USE_BUILDER_INSTEAD =
+		"builder.use.instead";
 
 	private static final String _RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";

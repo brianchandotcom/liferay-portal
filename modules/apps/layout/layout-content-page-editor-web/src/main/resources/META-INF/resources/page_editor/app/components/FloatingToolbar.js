@@ -58,7 +58,6 @@ export default function FloatingToolbar({buttons, item, itemRef}) {
 				<ClayPopover
 					alignPosition={false}
 					className="position-static"
-					ref={popoverRef}
 					show
 				>
 					{buttons.map(button => (

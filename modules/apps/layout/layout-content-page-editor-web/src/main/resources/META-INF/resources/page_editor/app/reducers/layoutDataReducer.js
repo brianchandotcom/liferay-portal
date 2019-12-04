@@ -209,8 +209,8 @@ export default function layoutDataReducer(state, action) {
 						},
 						itemId: action.itemId,
 						itemType: LAYOUT_DATA_ITEM_TYPES.fragment,
-						parentId: action.parentId,
-						position: action.position
+						position: action.position,
+						siblingId: action.siblingId
 					})
 				}
 			};

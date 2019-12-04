@@ -45,7 +45,6 @@ export default function addFragment({
 				addFragmentEntryLink({
 					fragmentEntryLink,
 					itemId: `thing-${Date.now()}`,
-					itemType: LAYOUT_DATA_ITEM_TYPES.fragment,
 					position,
 					siblingId
 				})

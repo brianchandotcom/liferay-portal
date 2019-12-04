@@ -191,6 +191,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>FILTER_LIST_ASCEND_AND_DESCEND_BUTTON</td>
+	<td>//*[contains(@class,'lexicon-icon-order-arrow')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

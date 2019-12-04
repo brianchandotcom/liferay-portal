@@ -142,6 +142,13 @@
 	<td></td>
 </tr>
 
+<!-- SEARCH_COMMANDS -->
+<tr>
+	<td>SEARCH_BAR_INPUT</td>
+	<td>//input[contains(@class, 'input-group')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

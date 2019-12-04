@@ -165,4 +165,8 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 	}
 
+	macro clearSearch {
+		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
+	}
+
 }

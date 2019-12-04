@@ -161,6 +161,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>VALIDATE_SEARCH_RESULTS_BAR</td>
+	<td>//div[contains(.,'Results')]//li[@class='tbar-item tbar-item-expand']</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

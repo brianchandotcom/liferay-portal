@@ -32,7 +32,12 @@ describe('Header', () => {
 	it('renders the Header component as a navigation bar', () => {
 		const {container} = render(<Header {...headerProps} />);
 
-		expect(container.firstChild.classList[0]).toEqual('navbar');
+		expect(container.firstChild.classList).toContain('navbar');
+	});
+
+	it('renders the Header component as a light navigation bar', () => {
+		const {container} = render(<Header {...headerProps} />);
+
 		expect(container.firstChild.classList).toContain(
 			'navigation-bar-light'
 		);
@@ -44,7 +49,7 @@ describe('Header', () => {
 		expect(container.firstChild.querySelectorAll('nav').length).toBe(2);
 	});
 
-	it('renders the back button with "angle-left" icon and the header title on the first nav item', () => {
+	it('renders the back button with "angle-left" icon on the first nav item', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		const firstNavElement = container.querySelector('nav');
@@ -52,6 +57,12 @@ describe('Header', () => {
 		const iconElement = firstNavElement.querySelector('.lexicon-icon');
 
 		expect([...iconElement.classList]).toContain('lexicon-icon-angle-left');
+	});
+
+	it('renders the header title on the first nav item', () => {
+		const {container} = render(<Header {...headerProps} />);
+
+		const firstNavElement = container.querySelector('nav');
 
 		const titleElement = firstNavElement.getElementsByTagName('strong')[0];
 
@@ -76,7 +87,6 @@ describe('Header', () => {
 		const buttonElement = secondNavElement.querySelector('.btn-primary');
 
 		expect(buttonElement).not.toBeNull();
-		expect(buttonElement.innerHTML).toEqual('add');
 	});
 
 	it('calls to handleClickAdd when click on the Add button', () => {
@@ -95,23 +105,18 @@ describe('Header', () => {
 		);
 
 		expect(infoIcon).not.toBeNull();
-
-		const infoIconClasses = [...infoIcon.parentElement.classList];
-
-		expect(infoIconClasses).toContain('btn-outline-secondary');
-		expect(infoIconClasses).toContain('btn-outline-borderless');
 	});
 
 	it('does not render the "info-panel-open" icon when "showInfoIcon" prop is set to false', () => {
-		const props2 = {...headerProps, showInfoIcon: false};
+		const props = {...headerProps, showInfoIcon: false};
 
-		const {container} = render(<Header {...props2} />);
+		const {container} = render(<Header {...props} />);
 
-		const infoIconClasses = container.querySelector(
+		const infoIcon = container.querySelector(
 			'.lexicon-icon-info-panel-open'
 		);
 
-		expect(infoIconClasses).toBeNull();
+		expect(infoIcon).toBeNull();
 	});
 
 	it('does not render the "icon-pencil" icon when "showEditIcon" prop is set to false', () => {
@@ -123,9 +128,9 @@ describe('Header', () => {
 	});
 
 	it('renders the "icon-pencil" icon when "showEditIcon" prop is set to true', () => {
-		const props2 = {...headerProps, showEditIcon: true};
+		const props = {...headerProps, showEditIcon: true};
 
-		const {container} = render(<Header {...props2} />);
+		const {container} = render(<Header {...props} />);
 
 		const editIcon = container.querySelector('.lexicon-icon-pencil');
 
@@ -133,16 +138,16 @@ describe('Header', () => {
 	});
 
 	it('calls to handleClickEdit when click on edit icon', () => {
-		const props2 = {
+		const props = {
 			...headerProps,
 			handleClickEdit: jest.fn(),
 			showEditIcon: true
 		};
 
-		const {container} = render(<Header {...props2} />);
+		const {container} = render(<Header {...props} />);
 
 		container.querySelector('.lexicon-icon-pencil').parentElement.click();
 
-		expect(props2.handleClickEdit).toHaveBeenCalled();
+		expect(props.handleClickEdit).toHaveBeenCalled();
 	});
 });

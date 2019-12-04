@@ -1110,6 +1110,7 @@ public class Query {
 
 		public EmailAddressPage(Page emailAddressPage) {
 			items = emailAddressPage.getItems();
+			lastPage = emailAddressPage.getLastPage();
 			page = emailAddressPage.getPage();
 			pageSize = emailAddressPage.getPageSize();
 			totalCount = emailAddressPage.getTotalCount();
@@ -1117,6 +1118,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<EmailAddress> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1134,6 +1138,7 @@ public class Query {
 
 		public OrganizationPage(Page organizationPage) {
 			items = organizationPage.getItems();
+			lastPage = organizationPage.getLastPage();
 			page = organizationPage.getPage();
 			pageSize = organizationPage.getPageSize();
 			totalCount = organizationPage.getTotalCount();
@@ -1141,6 +1146,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Organization> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1158,6 +1166,7 @@ public class Query {
 
 		public PhonePage(Page phonePage) {
 			items = phonePage.getItems();
+			lastPage = phonePage.getLastPage();
 			page = phonePage.getPage();
 			pageSize = phonePage.getPageSize();
 			totalCount = phonePage.getTotalCount();
@@ -1165,6 +1174,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Phone> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1182,6 +1194,7 @@ public class Query {
 
 		public PostalAddressPage(Page postalAddressPage) {
 			items = postalAddressPage.getItems();
+			lastPage = postalAddressPage.getLastPage();
 			page = postalAddressPage.getPage();
 			pageSize = postalAddressPage.getPageSize();
 			totalCount = postalAddressPage.getTotalCount();
@@ -1189,6 +1202,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<PostalAddress> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1206,6 +1222,7 @@ public class Query {
 
 		public RolePage(Page rolePage) {
 			items = rolePage.getItems();
+			lastPage = rolePage.getLastPage();
 			page = rolePage.getPage();
 			pageSize = rolePage.getPageSize();
 			totalCount = rolePage.getTotalCount();
@@ -1213,6 +1230,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Role> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1230,6 +1250,7 @@ public class Query {
 
 		public SegmentPage(Page segmentPage) {
 			items = segmentPage.getItems();
+			lastPage = segmentPage.getLastPage();
 			page = segmentPage.getPage();
 			pageSize = segmentPage.getPageSize();
 			totalCount = segmentPage.getTotalCount();
@@ -1237,6 +1258,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Segment> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1254,6 +1278,7 @@ public class Query {
 
 		public SegmentUserPage(Page segmentUserPage) {
 			items = segmentUserPage.getItems();
+			lastPage = segmentUserPage.getLastPage();
 			page = segmentUserPage.getPage();
 			pageSize = segmentUserPage.getPageSize();
 			totalCount = segmentUserPage.getTotalCount();
@@ -1261,6 +1286,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<SegmentUser> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1278,6 +1306,7 @@ public class Query {
 
 		public SitePage(Page sitePage) {
 			items = sitePage.getItems();
+			lastPage = sitePage.getLastPage();
 			page = sitePage.getPage();
 			pageSize = sitePage.getPageSize();
 			totalCount = sitePage.getTotalCount();
@@ -1285,6 +1314,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Site> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1302,6 +1334,7 @@ public class Query {
 
 		public SubscriptionPage(Page subscriptionPage) {
 			items = subscriptionPage.getItems();
+			lastPage = subscriptionPage.getLastPage();
 			page = subscriptionPage.getPage();
 			pageSize = subscriptionPage.getPageSize();
 			totalCount = subscriptionPage.getTotalCount();
@@ -1309,6 +1342,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Subscription> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1326,6 +1362,7 @@ public class Query {
 
 		public UserAccountPage(Page userAccountPage) {
 			items = userAccountPage.getItems();
+			lastPage = userAccountPage.getLastPage();
 			page = userAccountPage.getPage();
 			pageSize = userAccountPage.getPageSize();
 			totalCount = userAccountPage.getTotalCount();
@@ -1333,6 +1370,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<UserAccount> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -1350,6 +1390,7 @@ public class Query {
 
 		public WebUrlPage(Page webUrlPage) {
 			items = webUrlPage.getItems();
+			lastPage = webUrlPage.getLastPage();
 			page = webUrlPage.getPage();
 			pageSize = webUrlPage.getPageSize();
 			totalCount = webUrlPage.getTotalCount();
@@ -1357,6 +1398,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<WebUrl> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;

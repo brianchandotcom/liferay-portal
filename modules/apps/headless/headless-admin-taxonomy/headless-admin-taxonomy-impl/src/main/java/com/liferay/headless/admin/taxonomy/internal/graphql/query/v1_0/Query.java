@@ -330,6 +330,7 @@ public class Query {
 
 		public KeywordPage(Page keywordPage) {
 			items = keywordPage.getItems();
+			lastPage = keywordPage.getLastPage();
 			page = keywordPage.getPage();
 			pageSize = keywordPage.getPageSize();
 			totalCount = keywordPage.getTotalCount();
@@ -337,6 +338,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Keyword> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -354,6 +358,7 @@ public class Query {
 
 		public TaxonomyCategoryPage(Page taxonomyCategoryPage) {
 			items = taxonomyCategoryPage.getItems();
+			lastPage = taxonomyCategoryPage.getLastPage();
 			page = taxonomyCategoryPage.getPage();
 			pageSize = taxonomyCategoryPage.getPageSize();
 			totalCount = taxonomyCategoryPage.getTotalCount();
@@ -361,6 +366,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<TaxonomyCategory> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -378,6 +386,7 @@ public class Query {
 
 		public TaxonomyVocabularyPage(Page taxonomyVocabularyPage) {
 			items = taxonomyVocabularyPage.getItems();
+			lastPage = taxonomyVocabularyPage.getLastPage();
 			page = taxonomyVocabularyPage.getPage();
 			pageSize = taxonomyVocabularyPage.getPageSize();
 			totalCount = taxonomyVocabularyPage.getTotalCount();
@@ -385,6 +394,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<TaxonomyVocabulary> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;

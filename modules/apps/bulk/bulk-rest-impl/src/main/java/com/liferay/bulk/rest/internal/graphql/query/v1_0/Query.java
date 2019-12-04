@@ -71,6 +71,7 @@ public class Query {
 
 		public StatusPage(Page statusPage) {
 			items = statusPage.getItems();
+			lastPage = statusPage.getLastPage();
 			page = statusPage.getPage();
 			pageSize = statusPage.getPageSize();
 			totalCount = statusPage.getTotalCount();
@@ -78,6 +79,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Status> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;

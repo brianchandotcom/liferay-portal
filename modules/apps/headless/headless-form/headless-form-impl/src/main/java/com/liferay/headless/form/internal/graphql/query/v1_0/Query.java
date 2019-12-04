@@ -273,6 +273,7 @@ public class Query {
 
 		public FormPage(Page formPage) {
 			items = formPage.getItems();
+			lastPage = formPage.getLastPage();
 			page = formPage.getPage();
 			pageSize = formPage.getPageSize();
 			totalCount = formPage.getTotalCount();
@@ -280,6 +281,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Form> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -297,6 +301,7 @@ public class Query {
 
 		public FormDocumentPage(Page formDocumentPage) {
 			items = formDocumentPage.getItems();
+			lastPage = formDocumentPage.getLastPage();
 			page = formDocumentPage.getPage();
 			pageSize = formDocumentPage.getPageSize();
 			totalCount = formDocumentPage.getTotalCount();
@@ -304,6 +309,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<FormDocument> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -321,6 +329,7 @@ public class Query {
 
 		public FormRecordPage(Page formRecordPage) {
 			items = formRecordPage.getItems();
+			lastPage = formRecordPage.getLastPage();
 			page = formRecordPage.getPage();
 			pageSize = formRecordPage.getPageSize();
 			totalCount = formRecordPage.getTotalCount();
@@ -328,6 +337,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<FormRecord> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -345,6 +357,7 @@ public class Query {
 
 		public FormStructurePage(Page formStructurePage) {
 			items = formStructurePage.getItems();
+			lastPage = formStructurePage.getLastPage();
 			page = formStructurePage.getPage();
 			pageSize = formStructurePage.getPageSize();
 			totalCount = formStructurePage.getTotalCount();
@@ -352,6 +365,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<FormStructure> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;

@@ -449,6 +449,7 @@ public class Query {
 
 		public AssigneeUserPage(Page assigneeUserPage) {
 			items = assigneeUserPage.getItems();
+			lastPage = assigneeUserPage.getLastPage();
 			page = assigneeUserPage.getPage();
 			pageSize = assigneeUserPage.getPageSize();
 			totalCount = assigneeUserPage.getTotalCount();
@@ -456,6 +457,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<AssigneeUser> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -473,6 +477,7 @@ public class Query {
 
 		public CalendarPage(Page calendarPage) {
 			items = calendarPage.getItems();
+			lastPage = calendarPage.getLastPage();
 			page = calendarPage.getPage();
 			pageSize = calendarPage.getPageSize();
 			totalCount = calendarPage.getTotalCount();
@@ -480,6 +485,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Calendar> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -497,6 +505,7 @@ public class Query {
 
 		public InstancePage(Page instancePage) {
 			items = instancePage.getItems();
+			lastPage = instancePage.getLastPage();
 			page = instancePage.getPage();
 			pageSize = instancePage.getPageSize();
 			totalCount = instancePage.getTotalCount();
@@ -504,6 +513,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Instance> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -521,6 +533,7 @@ public class Query {
 
 		public MetricPage(Page metricPage) {
 			items = metricPage.getItems();
+			lastPage = metricPage.getLastPage();
 			page = metricPage.getPage();
 			pageSize = metricPage.getPageSize();
 			totalCount = metricPage.getTotalCount();
@@ -528,6 +541,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Metric> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -545,6 +561,7 @@ public class Query {
 
 		public NodePage(Page nodePage) {
 			items = nodePage.getItems();
+			lastPage = nodePage.getLastPage();
 			page = nodePage.getPage();
 			pageSize = nodePage.getPageSize();
 			totalCount = nodePage.getTotalCount();
@@ -552,6 +569,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Node> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -569,6 +589,7 @@ public class Query {
 
 		public ProcessPage(Page processPage) {
 			items = processPage.getItems();
+			lastPage = processPage.getLastPage();
 			page = processPage.getPage();
 			pageSize = processPage.getPageSize();
 			totalCount = processPage.getTotalCount();
@@ -576,6 +597,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Process> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -593,6 +617,7 @@ public class Query {
 
 		public RolePage(Page rolePage) {
 			items = rolePage.getItems();
+			lastPage = rolePage.getLastPage();
 			page = rolePage.getPage();
 			pageSize = rolePage.getPageSize();
 			totalCount = rolePage.getTotalCount();
@@ -600,6 +625,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Role> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -617,6 +645,7 @@ public class Query {
 
 		public SLAPage(Page slaPage) {
 			items = slaPage.getItems();
+			lastPage = slaPage.getLastPage();
 			page = slaPage.getPage();
 			pageSize = slaPage.getPageSize();
 			totalCount = slaPage.getTotalCount();
@@ -624,6 +653,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<SLA> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -641,6 +673,7 @@ public class Query {
 
 		public TaskPage(Page taskPage) {
 			items = taskPage.getItems();
+			lastPage = taskPage.getLastPage();
 			page = taskPage.getPage();
 			pageSize = taskPage.getPageSize();
 			totalCount = taskPage.getTotalCount();
@@ -648,6 +681,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Task> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;
@@ -665,6 +701,7 @@ public class Query {
 
 		public TimeRangePage(Page timeRangePage) {
 			items = timeRangePage.getItems();
+			lastPage = timeRangePage.getLastPage();
 			page = timeRangePage.getPage();
 			pageSize = timeRangePage.getPageSize();
 			totalCount = timeRangePage.getTotalCount();
@@ -672,6 +709,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<TimeRange> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;

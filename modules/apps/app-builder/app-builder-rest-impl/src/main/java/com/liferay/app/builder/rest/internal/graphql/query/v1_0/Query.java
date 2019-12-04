@@ -116,6 +116,7 @@ public class Query {
 
 		public AppPage(Page appPage) {
 			items = appPage.getItems();
+			lastPage = appPage.getLastPage();
 			page = appPage.getPage();
 			pageSize = appPage.getPageSize();
 			totalCount = appPage.getTotalCount();
@@ -123,6 +124,9 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<App> items;
+
+		@GraphQLField
+		protected long lastPage;
 
 		@GraphQLField
 		protected long page;

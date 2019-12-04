@@ -76,7 +76,7 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 
 	<c:if test="<%= currentRoleTypeContributor.isAllowDelete(role) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteRole" var="deleteRoleURL">
-			<portlet:param name="mvcPath" value="/edit_role.jsp" />
+			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:actionURL>

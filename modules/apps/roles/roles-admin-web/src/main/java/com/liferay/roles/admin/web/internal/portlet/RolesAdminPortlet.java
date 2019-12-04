@@ -25,6 +25,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
@@ -176,7 +177,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		_roleService.deleteRole(roleId);
+		try {
+			_roleService.deleteRole(roleId);
+		}
+		catch (ModelListenerException mle) {
+			throw (Exception)mle.getCause();
+		}
 	}
 
 	public void deleteRoles(
@@ -186,8 +192,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 		long[] deleteRoleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteRoleIds"), 0L);
 
-		for (long roleId : deleteRoleIds) {
-			_roleService.deleteRole(roleId);
+		try {
+			for (long roleId : deleteRoleIds) {
+				_roleService.deleteRole(roleId);
+			}
+		}
+		catch (ModelListenerException mle) {
+			throw (Exception)mle.getCause();
 		}
 	}
 
@@ -520,9 +531,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(renderRequest, "roleId");
 
+		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+
 		if (SessionErrors.contains(
 				renderRequest, RequiredRoleException.class.getName()) &&
-			(roleId < 1)) {
+			((roleId < 1) ||
+			 (Validator.isNotNull(mvcPath) && mvcPath.equals("/view.jsp")))) {
+
+			hideDefaultErrorMessage(renderRequest);
 
 			include("/view.jsp", renderRequest, renderResponse);
 		}

@@ -45,7 +45,7 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
 				group.getGroupId());
 
-		if ((layoutSEOSite != null) && layoutSEOSite.isOpenGraphEnabled()) {
+		if ((layoutSEOSite == null) || layoutSEOSite.isOpenGraphEnabled()) {
 			return true;
 		}
 

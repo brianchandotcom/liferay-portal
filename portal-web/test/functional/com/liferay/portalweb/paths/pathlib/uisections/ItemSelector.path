@@ -82,8 +82,8 @@
 </tr>
 <!--VIEWER-->
 <tr>
-	<td>CAPTION</td>
-	<td>//li[@data-qa-id='row']/div[contains(@class,'image-card') and contains(.,'${key_uploadFileName}')]</td>
+	<td>FOOTER</td>
+	<td>//div[contains(@class,"item-selector-preview")]//div[@class="footer"]//span</td>
 	<td></td>
 </tr>
 <tr>

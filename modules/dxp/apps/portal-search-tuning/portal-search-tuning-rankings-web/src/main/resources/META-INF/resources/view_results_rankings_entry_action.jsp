@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext" %>
 
 <liferay-frontend:defineObjects />
@@ -56,6 +57,17 @@ RankingEntryDisplayContext rankingEntryDisplayContext = (RankingEntryDisplayCont
 	<liferay-ui:icon
 		message="edit"
 		url="<%= editURL %>"
+	/>
+
+	<portlet:actionURL name="/results_ranking/edit" var="deactivateURL">
+		<portlet:param name="<%= Constants.CMD %>" value="<%= rankingEntryDisplayContext.getInactive() ? ResultRankingsConstants.ACTIVATE : ResultRankingsConstants.DEACTIVATE %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="resultsRankingUid" value="<%= rankingEntryDisplayContext.getUid() %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message="<%= rankingEntryDisplayContext.getInactive() ? ResultRankingsConstants.ACTIVATE : ResultRankingsConstants.DEACTIVATE %>"
+		url="<%= deactivateURL %>"
 	/>
 
 	<portlet:actionURL name="/results_ranking/edit" var="deleteURL">

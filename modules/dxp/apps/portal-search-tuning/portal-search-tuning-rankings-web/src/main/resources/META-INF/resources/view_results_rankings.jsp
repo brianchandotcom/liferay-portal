@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingPortletDisplayContext" %>
@@ -49,12 +50,22 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	showSearch="<%= false %>"
 />
 
+<portlet:actionURL name="/results_ranking/edit" var="activateResultsRankingEntryURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.ACTIVATE %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<portlet:actionURL name="/results_ranking/edit" var="deactivateResultsRankingEntryURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.DEACTIVATE %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
 <portlet:actionURL name="/results_ranking/edit" var="deleteResultsRankingEntryURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteResultsRankingEntryURL %>" cssClass="container-fluid-1280" method="post" name="resultsRankingEntriesFm">
+<aui:form cssClass="container-fluid-1280" method="post" name="resultsRankingEntriesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-ui:search-container
@@ -136,24 +147,56 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
+	var submitForm = function(url) {
+		var searchContainer = document.getElementById(
+			'<portlet:namespace />resultsRankingEntries'
+		);
+
+		if (searchContainer) {
+			Liferay.Util.postForm(
+				document.<portlet:namespace />resultsRankingEntriesFm,
+				{
+					data: {
+						actionFormInstanceIds: Liferay.Util.listCheckedExcept(
+							searchContainer,
+							'<portlet:namespace />allRowIds'
+						)
+					},
+
+					url: url
+				}
+			);
+		}
+	};
+
+	var activateResultsRankingsEntries = function() {
+		submitForm('<%= activateResultsRankingEntryURL %>');
+	};
+
+	var deactivateResultsRankingsEntries = function() {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-deactivate-this" />'
+			)
+		) {
+			submitForm('<%= deactivateResultsRankingEntryURL %>');
+		}
+	};
+
 	var deleteResultsRankingsEntries = function() {
 		if (
 			confirm(
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
 			)
 		) {
-			var form = document.querySelector(
-				'#<portlet:namespace />resultsRankingEntriesFm'
-			);
-
-			if (form) {
-				submitForm(form);
-			}
+			submitForm('<%= deleteResultsRankingEntryURL %>');
 		}
 	};
 
 	var ACTIONS = {
+		activateResultsRankingsEntries: activateResultsRankingsEntries,
+		deactivateResultsRankingsEntries: deactivateResultsRankingsEntries,
 		deleteResultsRankingsEntries: deleteResultsRankingsEntries
 	};
 

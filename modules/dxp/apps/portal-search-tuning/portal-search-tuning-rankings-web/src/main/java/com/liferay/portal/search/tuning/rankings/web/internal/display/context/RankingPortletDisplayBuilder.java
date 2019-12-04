@@ -113,6 +113,25 @@ public class RankingPortletDisplayBuilder {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData(
+							"action", "deactivateResultsRankingsEntries");
+						dropdownItem.setIcon("hidden");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "deactivate"));
+						dropdownItem.setQuickAction(true);
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"action", "activateResultsRankingsEntries");
+						dropdownItem.setIcon("undo");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "activate"));
+						dropdownItem.setQuickAction(true);
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.putData(
 							"action", "deleteResultsRankingsEntries");
 						dropdownItem.setIcon("times-circle");
 						dropdownItem.setLabel(

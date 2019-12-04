@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.tuning.rankings.web.internal.configuration.DefaultResultRankingsConfiguration;
 import com.liferay.portal.search.tuning.rankings.web.internal.configuration.ResultRankingsConfiguration;
+import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DuplicateQueryStringsDetector;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
@@ -85,6 +86,20 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		else if (editRankingMVCActionRequest.isCmd(Constants.DELETE)) {
 			delete(actionRequest, actionResponse, editRankingMVCActionRequest);
 		}
+		else if (editRankingMVCActionRequest.isCmd(
+					ResultRankingsConstants.DEACTIVATE)) {
+
+			deactivate(
+				actionRequest, actionResponse, editRankingMVCActionRequest,
+				true);
+		}
+		else if (editRankingMVCActionRequest.isCmd(
+					ResultRankingsConstants.ACTIVATE)) {
+
+			deactivate(
+				actionRequest, actionResponse, editRankingMVCActionRequest,
+				false);
+		}
 	}
 
 	protected void add(
@@ -106,6 +121,19 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}
+	}
+
+	protected void deactivate(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			EditRankingMVCActionRequest editRankingMVCActionRequest,
+			boolean inactive)
+		throws Exception {
+
+		doDeactivate(actionRequest, editRankingMVCActionRequest, inactive);
+
+		sendRedirect(
+			actionRequest, actionResponse,
+			editRankingMVCActionRequest.getRedirect());
 	}
 
 	protected void delete(
@@ -157,6 +185,45 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		Optional<Ranking> optional = rankingIndexReader.fetchOptional(id);
 
 		return optional.get();
+	}
+
+	protected void doDeactivate(
+		ActionRequest actionRequest,
+		EditRankingMVCActionRequest editRankingMVCActionRequest,
+		boolean inactive) {
+
+		String resultsRankingUid =
+			editRankingMVCActionRequest.getResultsRankingUid();
+
+		String[] deactivateResultsRankingUids = null;
+
+		if (Validator.isNotNull(resultsRankingUid)) {
+			deactivateResultsRankingUids = new String[] {resultsRankingUid};
+		}
+		else {
+			deactivateResultsRankingUids = ParamUtil.getStringValues(
+				actionRequest, "rowIds");
+		}
+
+		for (String deactivateResultsRankingUid :
+				deactivateResultsRankingUids) {
+
+			Optional<Ranking> optional = rankingIndexReader.fetchOptional(
+				deactivateResultsRankingUid);
+
+			if (!optional.isPresent()) {
+				return;
+			}
+
+			Ranking ranking = optional.get();
+
+			Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(
+				ranking);
+
+			rankingBuilder.inactive(inactive);
+
+			rankingIndexWriter.update(rankingBuilder.build());
+		}
 	}
 
 	protected void doDelete(

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Tina Tian
  */
 @Component(
 	property = "model.class.name=com.liferay.change.tracking.model.CTMessage",

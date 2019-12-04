@@ -124,10 +124,6 @@ public class BatchEngineExportTaskExecutorImpl
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		ZipOutputStream zipOutputStream = _getZipOutputStream(
-			batchEngineExportTask.getContentType(),
-			unsyncByteArrayOutputStream);
-
 		try (BatchEngineTaskItemResourceDelegate
 				batchEngineTaskItemResourceDelegate =
 					_batchEngineTaskItemResourceDelegateFactory.create(
@@ -137,6 +133,9 @@ public class BatchEngineExportTaskExecutorImpl
 						batchEngineExportTask.getParameters(),
 						batchEngineExportTask.getUserId(),
 						batchEngineExportTask.getVersion());
+			ZipOutputStream zipOutputStream = _getZipOutputStream(
+				batchEngineExportTask.getContentType(),
+				unsyncByteArrayOutputStream);
 			BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
 				_batchEngineExportTaskItemWriterFactory.create(
 					BatchEngineTaskContentType.valueOf(

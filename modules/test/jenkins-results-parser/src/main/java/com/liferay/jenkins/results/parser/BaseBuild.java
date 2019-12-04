@@ -631,7 +631,16 @@ public abstract class BaseBuild implements Build {
 
 		Map<String, String> parameters = new HashMap<>(getParameters());
 
-		parameters.put("token", "raen3Aib");
+		try {
+			parameters.put(
+				"token",
+				JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.authentication.token"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to get jenkins authentication token", ioe);
+		}
 
 		for (Map.Entry<String, String> parameter : parameters.entrySet()) {
 			sb.append(parameter.getKey());

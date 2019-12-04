@@ -17,14 +17,12 @@ import {ADD_FRAGMENT_ENTRY_LINK} from './types';
 export default function addFragmentEntryLink({
 	fragmentEntryLink,
 	itemId,
-	itemType,
 	position,
 	siblingId
 }) {
 	return {
 		fragmentEntryLink,
 		itemId,
-		itemType,
 		position,
 		siblingId,
 		type: ADD_FRAGMENT_ENTRY_LINK

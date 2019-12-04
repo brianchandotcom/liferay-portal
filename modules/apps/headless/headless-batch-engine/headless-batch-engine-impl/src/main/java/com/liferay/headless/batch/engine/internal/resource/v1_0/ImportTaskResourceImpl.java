@@ -25,8 +25,9 @@ import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
-import com.liferay.petra.io.AutoDeleteFileInputStream;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,8 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -139,12 +138,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			InputStream inputStream)
 		throws IOException {
 
-		java.io.File tempFile = _file.createTempFile(inputStream);
+		byte[] content = StreamUtil.toByteArray(inputStream);
 
 		String fileName = null;
 
 		try (ZipInputStream zipInputStream = new ZipInputStream(
-				new FileInputStream(tempFile))) {
+				new UnsyncByteArrayInputStream(content))) {
 
 			ZipEntry zipEntry = zipInputStream.getNextEntry();
 
@@ -152,8 +151,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		}
 
 		return new AbstractMap.SimpleImmutableEntry<>(
-			StreamUtil.toByteArray(new AutoDeleteFileInputStream(tempFile)),
-			_file.getExtension(fileName));
+			content, _file.getExtension(fileName));
 	}
 
 	private Map.Entry<byte[], String>
@@ -161,25 +159,21 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				String fileName, InputStream inputStream)
 		throws IOException {
 
-		java.io.File tempFile = _file.createTempFile();
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
 
 		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
-				new FileOutputStream(tempFile))) {
+				unsyncByteArrayOutputStream)) {
 
 			ZipEntry zipEntry = new ZipEntry(fileName);
 
 			zipOutputStream.putNextEntry(zipEntry);
 
-			byte[] bytes = new byte[1024];
-			int length;
-
-			while ((length = inputStream.read(bytes)) >= 0) {
-				zipOutputStream.write(bytes, 0, length);
-			}
+			StreamUtil.transfer(inputStream, zipOutputStream, false);
 		}
 
 		return new AbstractMap.SimpleImmutableEntry<>(
-			StreamUtil.toByteArray(new AutoDeleteFileInputStream(tempFile)),
+			unsyncByteArrayOutputStream.toByteArray(),
 			_file.getExtension(fileName));
 	}
 

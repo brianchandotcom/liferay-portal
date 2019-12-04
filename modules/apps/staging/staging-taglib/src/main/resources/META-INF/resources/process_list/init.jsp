@@ -40,7 +40,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 
 String processListListViewCss = "process-list";
 
-if ("list".equals(displayStyle)) {
+if (Objects.equals(displayStyle, "list")) {
 	processListListViewCss += " process-list-list-view";
 };
 

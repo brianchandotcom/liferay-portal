@@ -170,6 +170,65 @@ definition {
 		Depot.viewNoConnectedSiteCP();
 	}
 
+	@description = "This ensures that users can search for depot document from connected site."
+	@priority = "5"
+	test SearchForDocumentFromConnectedSite {
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Bar");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Search Results");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(
+			connectSite = "true",
+			siteList = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Search.searchCP(searchTerm = "DM Document Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title",
+			searchAssetType = "Document");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title");
+
+		SearchPortlets.viewResultDetails(searchAssetTitle = "DM Document Title");
+	}
+
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
 	test Smoke {

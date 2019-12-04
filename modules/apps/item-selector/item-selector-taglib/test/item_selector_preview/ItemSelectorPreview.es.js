@@ -23,11 +23,11 @@ const basicMetadata = {
 			data: [
 				{
 					key: Liferay.Language.get('format'),
-					value: "jpg"
+					value: 'jpg'
 				},
 				{
 					key: Liferay.Language.get('name'),
-					value: "test image.jpg"
+					value: 'test image.jpg'
 				}
 			],
 			title: 'file-info'
@@ -44,18 +44,19 @@ const items = [
 		returntype: 'returntype',
 		title: itemTitle,
 		url: itemUrl,
-		value: itemUrl,
+		value: itemUrl
 	}
 ];
 
 const previewProps = {
 	container: document.createElement('div'),
 	handleSelectedItem: jest.fn(),
-	headerTitle: headerTitle,
+	headerTitle,
 	items
-}
+};
 
-const renderPreviewComponent = (props) => render(<ItemSelectorPreview {...props} />);
+const renderPreviewComponent = props =>
+	render(<ItemSelectorPreview {...props} />);
 
 describe('ItemSelectorPreview', () => {
 	beforeAll(() => {

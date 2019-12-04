@@ -2,8 +2,8 @@
 
 <root>
 	<structure>
-		<name>custom-opengraph-meta-tags</name>
-		<description>custom-opengraph-meta-tags</description>
+		<name>custom-open-graph-meta-tags</name>
+		<description>custom-open-graph-meta-tags</description>
 		<definition>
 			<![CDATA[
 				{

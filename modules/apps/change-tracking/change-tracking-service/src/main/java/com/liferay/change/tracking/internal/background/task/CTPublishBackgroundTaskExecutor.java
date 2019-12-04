@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -125,13 +123,6 @@ public class CTPublishBackgroundTaskExecutor
 
 		_ctServiceRegistry.onAfterPublish(ctCollectionId);
 
-		List<Message> messages = _ctMessageLocalService.getMessages(
-			ctCollectionId);
-
-		for (Message message : messages) {
-			_messageBus.sendMessage(message.getDestinationName(), message);
-		}
-
 		Date modifiedDate = new Date();
 
 		ctCollection.setModifiedDate(modifiedDate);
@@ -178,8 +169,5 @@ public class CTPublishBackgroundTaskExecutor
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;
-
-	@Reference
-	private MessageBus _messageBus;
 
 }

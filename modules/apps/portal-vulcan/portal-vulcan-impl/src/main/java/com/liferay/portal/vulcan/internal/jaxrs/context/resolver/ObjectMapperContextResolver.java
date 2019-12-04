@@ -40,7 +40,7 @@ public class ObjectMapperContextResolver
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
 			setDateFormat(new ISO8601DateFormat());
-			setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+			setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
 		}
 	};
 

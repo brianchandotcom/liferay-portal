@@ -72,6 +72,7 @@ class FragmentEntryLink extends Component {
 		onPropertiesChanged(
 			this,
 			[
+				'_configurationValues',
 				'hasUpdatePermissions',
 				'fragmentEntryLinkId',
 				'activeItemId',

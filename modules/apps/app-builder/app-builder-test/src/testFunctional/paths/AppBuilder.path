@@ -155,6 +155,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>CLEAR_SEARCH</td>
+	<td>//button[contains(text(),'Clear')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

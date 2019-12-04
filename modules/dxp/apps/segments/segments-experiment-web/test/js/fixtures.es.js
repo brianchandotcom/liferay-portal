@@ -80,15 +80,17 @@ export const segmentsVariants = [
 		segmentsExperienceId: '0',
 		segmentsExperimentId: '0',
 		segmentsExperimentRelId: '123',
-		split: 0.0
+		split: 50.0,
+		winner: false
 	},
 	{
 		control: false,
 		name: 'Variant 1',
-		segmentsExperienceId: '40',
+		segmentsExperienceId: '1',
 		segmentsExperimentId: '0',
 		segmentsExperimentRelId: '124',
-		split: 0.0
+		split: 50.0,
+		winner: true
 	}
 ];
 

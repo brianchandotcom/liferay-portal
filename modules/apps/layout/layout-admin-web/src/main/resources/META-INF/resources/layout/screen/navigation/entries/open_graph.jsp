@@ -76,7 +76,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 						<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-open-graph-description" name="openGraphDescriptionEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
-						<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="descripton" />
+						<aui:input disabled="<%= !selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" />
 
 						<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 					</div>

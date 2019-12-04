@@ -1274,12 +1274,23 @@ public class JenkinsResultsParserUtil {
 	public static String getMostAvailableMasterURL(
 		String baseInvocationURL, int invokedBatchSize) {
 
+		return getMostAvailableMasterURL(
+			baseInvocationURL, invokedBatchSize,
+			JenkinsMaster.SLAVE_RAM_DEFAULT);
+	}
+
+	public static String getMostAvailableMasterURL(
+		String baseInvocationURL, int invokedBatchSize, int minimumRAM) {
+
 		String loadBalancerServiceURL =
 			_URL_LOAD_BALANCER_SERVICE_TEMPLATE.replace(
 				"${baseInvocationURL}", baseInvocationURL);
 
 		loadBalancerServiceURL = loadBalancerServiceURL.replace(
 			"${invokedBatchSize}", String.valueOf(invokedBatchSize));
+
+		loadBalancerServiceURL = loadBalancerServiceURL.replace(
+			"${minimumRAM}", String.valueOf(minimumRAM));
 
 		try {
 			JSONObject jsonObject = toJSONObject(loadBalancerServiceURL);
@@ -1297,10 +1308,17 @@ public class JenkinsResultsParserUtil {
 					"Unable to get build properties", ioe2);
 			}
 
-			List<JenkinsMaster> availableJenkinsMasters =
-				LoadBalancerUtil.getAvailableJenkinsMasters(
-					LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
-					buildProperties);
+			List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>();
+
+			for (JenkinsMaster jenkinsMaster :
+					LoadBalancerUtil.getAvailableJenkinsMasters(
+						LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
+						buildProperties)) {
+
+				if (jenkinsMaster.getSlaveRAM() >= minimumRAM) {
+					availableJenkinsMasters.add(jenkinsMaster);
+				}
+			}
 
 			Random random = new Random(System.currentTimeMillis());
 
@@ -3115,7 +3133,7 @@ public class JenkinsResultsParserUtil {
 	private static final String _URL_LOAD_BALANCER_SERVICE_TEMPLATE = combine(
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/",
 		"load_balancer?baseInvocationURL=${baseInvocationURL}",
-		"&invokedJobBatchSize=${invokedBatchSize}");
+		"&invokedJobBatchSize=${invokedBatchSize}&minimumRAM=${minimumRAM}");
 
 	private static Hashtable<Object, Object> _buildProperties;
 	private static String[] _buildPropertiesURLs;

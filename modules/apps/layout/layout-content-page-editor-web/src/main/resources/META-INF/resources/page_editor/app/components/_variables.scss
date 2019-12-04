@@ -8,9 +8,10 @@ $defaultTransitionDuration: 0.5s;
 // Colors
 //
 
+$colorInfoL1: #89a7e0;
+$colorPrimary: #0b5fff;
+
 $dragSourceBackgroundColor: #e1ebff;
-$dragSourceColor: #0b5fff;
-$dropTargetColor: #0b5fff;
 $fragmentEntryLinkErrorBorderColor: #da1414;
 $sidebarBorderColor: #e7e7ed;
 $sidebarButtonBackgroundColor: #393a4a;
@@ -40,8 +41,9 @@ $fragmentsEditorSpacing: 8px;
 // z-indexes, ordered numerically.
 //
 
-$floatingToolbarZIndex: 976;
-$floatingToolbarPanelZIndex: 989;
 $zIndexToolbar: 971;
 $zIndexSidebar: 972;
+$floatingToolbarZIndex: 976;
 $dragSourceZIndex: 977;
+$floatingToolbarPanelZIndex: 989;
+$portletTopperZIndex: 2000;

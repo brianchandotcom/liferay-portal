@@ -1,3 +1,7 @@
+@import 'atlas-variables';
+
+@import 'variables';
+
 .page-editor {
 	&__container,
 	&__container-outline,
@@ -6,19 +10,60 @@
 		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
 	}
 
+	&__fragment {
+		cursor: pointer;
+
+		.portlet {
+			> .portlet-topper {
+				background-color: rgba(255, 255, 255, 0.95);
+				border: 1px solid $colorInfoL1;
+				border-radius: 3px;
+				height: 100%;
+				min-height: 54px;
+				opacity: 0;
+				padding: 10px 20px 10px 10px;
+				pointer-events: none;
+				transform: translateY(0);
+				width: 100%;
+				z-index: $portletTopperZIndex;
+			}
+
+			@include media-breakpoint-up(sm) {
+				&:hover,
+				&.focus {
+					> .portlet-topper {
+						opacity: 1;
+						pointer-events: all;
+						transform: translateY(0);
+
+						.portlet-topper-toolbar {
+							position: absolute;
+							right: 5px;
+
+							.lexicon-icon {
+								fill: $colorPrimary;
+								stroke: currentColor;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	&__container.empty &__container-outline,
 	&__row.empty {
 		min-height: 10em;
 	}
 
 	&__root {
-		box-shadow: inset 0 0 0 0 #0b5fff;
+		box-shadow: inset 0 0 0 0 $colorPrimary;
 		min-height: 50vh;
 		transition: box-shadow ease 0.3s;
 		will-change: box-shadow;
 
 		&--active {
-			box-shadow: inset 0 0 0 4px #0b5fff;
+			box-shadow: inset 0 0 0 4px $colorPrimary;
 		}
 	}
 }

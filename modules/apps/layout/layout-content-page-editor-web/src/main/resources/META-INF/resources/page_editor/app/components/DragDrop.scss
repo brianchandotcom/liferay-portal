@@ -9,7 +9,7 @@
 
 	animation: lfrDragIndicator#{$position} ease 0.15s;
 	animation-fill-mode: forwards;
-	border-#{$position}: solid $dropTargetColor 0;
+	border-#{$position}: solid $colorPrimary 0;
 }
 
 @keyframes fragmentsEditorDragSource {
@@ -50,7 +50,7 @@
 			background-color: fade_out($dragSourceBackgroundColor, 1);
 			border-radius: 4px;
 			box-shadow: none;
-			color: $dragSourceColor;
+			color: $colorPrimary;
 			content: attr(data-drag-source-label);
 			cursor: grabbing;
 			display: block;

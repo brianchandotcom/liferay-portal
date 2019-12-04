@@ -143,7 +143,9 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 							_layoutConverterRegistry.getLayoutConverter(
 								layoutTemplateId);
 
-						if (layoutConverter.isConvertible(layout)) {
+						if ((layoutConverter != null) &&
+							layoutConverter.isConvertible(layout)) {
+
 							convertibleLayoutPlids.add(layout.getPlid());
 						}
 					}

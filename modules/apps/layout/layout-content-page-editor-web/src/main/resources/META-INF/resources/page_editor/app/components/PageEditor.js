@@ -27,9 +27,24 @@ import updateLayoutData from '../thunks/updateLayoutData';
 import Topper from './Topper';
 import UnsafeHTML from './UnsafeHTML';
 
-const Root = React.forwardRef(({children, className}, ref) => (
-	<div className={className} ref={ref} style={{height: '100vh'}}>
-		{children}
+const Root = React.forwardRef(({children, className, isOver, canDrop}, ref) => (
+	<div
+		className={classNames('page-editor__root', {
+			'page-editor__root--active': isOver && canDrop
+		})}
+		ref={ref}
+		style={{height: '100vh'}}
+	>
+		{React.Children.count(children) ? (
+			children
+		) : (
+			<div className="taglib-empty-result-message">
+				<div className="taglib-empty-result-message-header"></div>
+				<div className="text-center text-muted">
+					{Liferay.Language.get('place-fragments-here')}
+				</div>
+			</div>
+		)}
 	</div>
 ));
 
@@ -197,76 +212,44 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 	] || {name: item.type};
 
 	return (
-		<>
-			{floatingToolbarButtons.length > 0 && (
-				<FloatingToolbar
-					buttons={floatingToolbarButtons}
-					item={item}
-					itemRef={componentRef}
-				/>
-			)}
-
-			<Topper
-				acceptDrop={LAYOUT_DATA_ACCEPT_DROP_TYPES[item.type]}
-				active={isActiveTopper}
-				item={item}
-				layoutData={layoutData}
-				name={fragmentEntryLink.name}
-			>
-				<Component
-					item={item}
-					layoutData={layoutData}
-					ref={componentRef}
-				>
-					{item.children.map(childId => {
-						return (
-							<LayoutDataItem
-								fragmentEntryLinks={fragmentEntryLinks}
-								item={layoutData.items[childId]}
-								key={childId}
-								layoutData={layoutData}
-							/>
-						);
-					})}
-				</Component>
-			</Topper>
-		</>
-	);
-};
-
-const LayoutEmptyState = ({item}) => {
-	const [{isOver}, drop] = useDrop({
-		accept: [
-			LAYOUT_DATA_ITEM_TYPES.container,
-			LAYOUT_DATA_ITEM_TYPES.fragment
-		],
-		collect(_monitor) {
-			return {
-				isOver: _monitor.isOver({shallow: true})
-			};
-		},
-		drop(_item, _monitor) {
-			return {
-				itemId: _item.itemId,
-				itemType: _monitor.getItemType(),
-				position: 0,
-				siblingId: item.itemId
-			};
-		}
-	});
-
-	return (
-		<div
-			className={classNames('fragment-editor-empty-state mt-4', {
-				isOver
-			})}
-			ref={drop}
+		<Topper
+			acceptDrop={LAYOUT_DATA_ACCEPT_DROP_TYPES[item.type]}
+			active={isActiveTopper}
+			item={item}
+			layoutData={layoutData}
+			name={fragmentEntryLink.name}
 		>
-			<div className="fragment-editor-empty-state__image taglib-empty-result-message-header"></div>
-			<div className="text-center text-muted">
-				{Liferay.Language.get('place-fragments-here')}
-			</div>
-		</div>
+			{({isOver, canDrop}) => (
+				<>
+					{floatingToolbarButtons.length > 0 && (
+						<FloatingToolbar
+							buttons={floatingToolbarButtons}
+							item={item}
+							itemRef={componentRef}
+						/>
+					)}
+
+					<Component
+						canDrop={canDrop}
+						isOver={isOver}
+						item={item}
+						layoutData={layoutData}
+						ref={componentRef}
+					>
+						{item.children.map(childId => {
+							return (
+								<LayoutDataItem
+									fragmentEntryLinks={fragmentEntryLinks}
+									item={layoutData.items[childId]}
+									key={childId}
+									layoutData={layoutData}
+								/>
+							);
+						})}
+					</Component>
+				</>
+			)}
+		</Topper>
 	);
 };
 
@@ -298,10 +281,6 @@ export default function PageEditor() {
 			}
 		}
 	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
-
-	if (mainItem.children.length === 0) {
-		return <LayoutEmptyState item={mainItem} />;
-	}
 
 	return (
 		<LayoutDataItem

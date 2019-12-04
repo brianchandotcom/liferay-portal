@@ -59,14 +59,10 @@ describe('Header', () => {
 		expect([...iconElement.classList]).toContain('lexicon-icon-angle-left');
 	});
 
-	it('renders the header title on the first nav item', () => {
-		const {container} = render(<Header {...headerProps} />);
+	it('renders the header title', () => {
+		const {getByText} = render(<Header {...headerProps} />);
 
-		const firstNavElement = container.querySelector('nav');
-
-		const titleElement = firstNavElement.getElementsByTagName('strong')[0];
-
-		expect(titleElement.innerHTML).toEqual(headerTitle);
+		expect(getByText(headerTitle));
 	});
 
 	it('calls to handleClickClose when click on back button', () => {
@@ -138,9 +134,11 @@ describe('Header', () => {
 	});
 
 	it('calls to handleClickEdit when click on edit icon', () => {
+		const onClickEditMock = jest.fn(() => {});
+
 		const props = {
 			...headerProps,
-			handleClickEdit: jest.fn(),
+			handleClickEdit: onClickEditMock,
 			showEditIcon: true
 		};
 
@@ -148,6 +146,6 @@ describe('Header', () => {
 
 		container.querySelector('.lexicon-icon-pencil').parentElement.click();
 
-		expect(props.handleClickEdit).toHaveBeenCalled();
+		expect(onClickEditMock).toHaveBeenCalledTimes(1);
 	});
 });

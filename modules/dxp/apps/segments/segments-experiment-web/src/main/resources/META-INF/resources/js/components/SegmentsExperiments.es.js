@@ -185,7 +185,9 @@ function SegmentsExperiments({
 												Liferay.Language.get(
 													'x-is-the-winner-variant'
 												),
-												winnerVariant[0].name
+												'<strong>',
+												winnerVariant[0].name,
+												'</strong>'
 											)
 										}}
 									/>

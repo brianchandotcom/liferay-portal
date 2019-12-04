@@ -1459,10 +1459,15 @@ public class JavaParserUtil {
 
 		DetailAST lastChildDetailAST = methodReferenceDetailAST.getLastChild();
 
+		JavaExpression referenceJavaExpression = _parseJavaExpression(
+			methodReferenceDetailAST.getFirstChild(), true);
+
+		if (referenceJavaExpression instanceof JavaTypeCast) {
+			referenceJavaExpression.setHasSurroundingParentheses(true);
+		}
+
 		return new JavaMethodReference(
-			lastChildDetailAST.getText(),
-			_parseJavaExpression(
-				methodReferenceDetailAST.getFirstChild(), true),
+			lastChildDetailAST.getText(), referenceJavaExpression,
 			_parseGenericJavaTypes(
 				methodReferenceDetailAST.findFirstToken(
 					TokenTypes.TYPE_ARGUMENTS),

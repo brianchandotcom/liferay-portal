@@ -481,23 +481,16 @@ function reducer(state, action) {
 
 				return {
 					...state,
+					filteredNodes:
+						filteredNodes &&
+						filteredNodes.map(node =>
+							toggleNode(node, selectedNodeIds)
+						),
 					focusedNodeId: id,
 					nodes: state.nodes.map(node =>
 						visit(
 							node,
-							node => {
-								if (
-									node.selected !==
-									selectedNodeIds.has(node.id)
-								) {
-									return {
-										...node,
-										selected: !node.selected
-									};
-								} else {
-									return node;
-								}
-							},
+							node => toggleNode(node, selectedNodeIds),
 							nodeMap
 						)
 					),
@@ -516,6 +509,24 @@ function reducer(state, action) {
 	}
 
 	return state;
+}
+
+/**
+ * Toggles the `selected` property of `node` based on its membership
+ * within `selectedNodeIds`.
+ *
+ * Returns the original node if it was already in the desired state;
+ * otherwise returns a copy.
+ */
+function toggleNode(node, selectedNodeIds) {
+	if (node.selected !== selectedNodeIds.has(node.id)) {
+		return {
+			...node,
+			selected: !node.selected
+		};
+	} else {
+		return node;
+	}
 }
 
 /**

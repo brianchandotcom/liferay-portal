@@ -39,56 +39,57 @@ const ALIGNMENTS_MAP = {
 	'top-right': Align.TopRight
 };
 
-export default forwardRef(
-	function ConfigurationPanel({configurationPanel, popoverRef, ...otherProps}, ref) {
-		const configurationPanelRef = useRef(null);
+export default forwardRef(function ConfigurationPanel(
+	{configurationPanel, popoverRef, ...otherProps},
+	ref
+) {
+	const configurationPanelRef = useRef(null);
 
-		const [configurationPanelAlign, setConfigurationPanelAlign] = useState(
-			null
-		);
+	const [configurationPanelAlign, setConfigurationPanelAlign] = useState(
+		null
+	);
 
-		const ConfigurationPanelComponent =
-			configurationPanel &&
-			FLOATING_TOOLBAR_CONFIGURATIONS[configurationPanel];
+	const ConfigurationPanelComponent =
+		configurationPanel &&
+		FLOATING_TOOLBAR_CONFIGURATIONS[configurationPanel];
 
-		useLayoutEffect(() => {
-			if (configurationPanelRef.current && popoverRef.current) {
-				const newAlignment =
-					ALIGNMENTS[
-						Align.align(
-							configurationPanelRef.current,
-							popoverRef.current,
-							ALIGNMENTS_MAP['bottom-right'],
-							false
-						)
-					];
+	useLayoutEffect(() => {
+		if (configurationPanelRef.current && popoverRef.current) {
+			const newAlignment =
+				ALIGNMENTS[
+					Align.align(
+						configurationPanelRef.current,
+						popoverRef.current,
+						ALIGNMENTS_MAP['bottom-right'],
+						false
+					)
+				];
 
-				if (newAlignment !== configurationPanelAlign) {
-					setConfigurationPanelAlign(newAlignment);
-				}
+			if (newAlignment !== configurationPanelAlign) {
+				setConfigurationPanelAlign(newAlignment);
 			}
-		}, [
-			configurationPanel,
-			popoverRef,
-			configurationPanelRef,
-			configurationPanelAlign
-		]);
+		}
+	}, [
+		configurationPanel,
+		popoverRef,
+		configurationPanelRef,
+		configurationPanelAlign
+	]);
 
-		return (
-			<div
-				className="fragments-editor__floating-toolbar-panel"
-				ref={node => {
-					configurationPanelRef.current = node;
-					if (ref) {
-						ref.current = node;
-					}
-				}}
-				{...otherProps}
-			>
-				<div className="p-3 popover popover-scrollable">
-					{ConfigurationPanelComponent && <ConfigurationPanelComponent />}
-				</div>
+	return (
+		<div
+			className="fragments-editor__floating-toolbar-panel"
+			ref={node => {
+				configurationPanelRef.current = node;
+				if (ref) {
+					ref.current = node;
+				}
+			}}
+			{...otherProps}
+		>
+			<div className="p-3 popover popover-scrollable">
+				{ConfigurationPanelComponent && <ConfigurationPanelComponent />}
 			</div>
-		);
-	}
-);
+		</div>
+	);
+});

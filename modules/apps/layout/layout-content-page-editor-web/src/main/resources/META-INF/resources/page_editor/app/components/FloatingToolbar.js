@@ -63,9 +63,8 @@ export default function FloatingToolbar({buttons, item, itemRef}) {
 		floatingToolbar
 	]);
 
-	useEffect(() => setFloatingToolbarRef(popoverRef), [
-		show
-	]);
+	/* eslint-disable-next-line react-hooks/exhaustive-deps */
+	useEffect(() => setFloatingToolbarRef(popoverRef), [show]);
 
 	return (
 		show &&

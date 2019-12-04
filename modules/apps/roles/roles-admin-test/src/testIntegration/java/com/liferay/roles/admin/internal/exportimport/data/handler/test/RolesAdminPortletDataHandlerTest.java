@@ -20,14 +20,22 @@ import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -41,6 +49,22 @@ public class RolesAdminPortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Override
+	@Test
+	public void testPrepareManifestSummary() throws Exception {
+		GroupTestUtil.deleteGroup(stagingGroup);
+
+		_company = CompanyTestUtil.addCompany();
+
+		_user = UserTestUtil.addCompanyAdminUser(_company);
+
+		stagingGroup = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		super.testPrepareManifestSummary();
+	}
 
 	@Override
 	protected void addStagedModels() throws Exception {
@@ -85,5 +109,11 @@ public class RolesAdminPortletDataHandlerTest
 	protected boolean isDataSiteLevel() {
 		return false;
 	}
+
+	@DeleteAfterTestRun
+	private Company _company;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

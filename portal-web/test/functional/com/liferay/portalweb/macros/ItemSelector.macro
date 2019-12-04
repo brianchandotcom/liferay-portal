@@ -143,13 +143,11 @@ definition {
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
 			value1 = "Blog Images");
 
-		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_VIEW_BUTTON");
 
 		AssertTextEquals(
-			locator1 = "ItemSelector#CAPTION",
+			locator1 = "ItemSelector#FOOTER",
 			value1 = "${imageFileName}");
-
-		SelectFrameTop(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "ItemSelector#ADD_BUTTON",

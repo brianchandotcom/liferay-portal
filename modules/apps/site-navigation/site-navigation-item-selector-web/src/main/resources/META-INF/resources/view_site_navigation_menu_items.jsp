@@ -40,10 +40,12 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 		data.put("pathThemeImages", themeDisplay.getPathThemeImages());
 		%>
 
-		<react:component
-			data="<%= data %>"
-			module="js/SelectSiteNavigationMenuItem.es"
-		/>
+		<div>
+			<react:component
+				data="<%= data %>"
+				module="js/SelectSiteNavigationMenuItem.es"
+			/>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<liferay-frontend:empty-result-message

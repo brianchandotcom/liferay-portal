@@ -173,7 +173,7 @@ public class LayoutSEOEntryLocalServiceImpl
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			group.getCompanyId());
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			companyGroup.getGroupId(),
 			_classNameLocalService.getClassNameId(
 				LayoutSEOEntry.class.getName()),

@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ACTIVE_DATE</td>
+	<td>//div[contains(@class,'day active')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

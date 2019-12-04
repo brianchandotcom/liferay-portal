@@ -159,20 +159,14 @@ definition {
 
 		Navigator.openURL();
 
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
 		for (var i : list "1,2,3,4") {
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Document_1.doc",
 				workflowAssetType = "Document",
 				workflowTask = "Board Member Review ${i}");
 
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",
 				workflowAssetTitle = "Document",
@@ -181,21 +175,11 @@ definition {
 		}
 
 		for (var i : list "1,2,3,4") {
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Document_2.doc",
 				workflowAssetType = "Document",
 				workflowTask = "Board Member Review ${i}");
 
-			Navigator.openURL();
-
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",
 				workflowAssetTitle = "Document",
@@ -204,20 +188,10 @@ definition {
 		}
 
 		for (var i : list "1,2,3,4") {
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Document_3.doc",
 				workflowAssetType = "Document",
 				workflowTask = "Board Member Review ${i}");
-
-			Navigator.openURL();
-
-			Navigator.openURL();
-
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",

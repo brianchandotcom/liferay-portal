@@ -210,6 +210,8 @@ definition {
 
 		Button.clickSubmitForPublication();
 
+		Click(locator1 = "FormFields#SELECT_ACTIVE_DATE");
+
 		Alert.viewSuccessMessage();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");

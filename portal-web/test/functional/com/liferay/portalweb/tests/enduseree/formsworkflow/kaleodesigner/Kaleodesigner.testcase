@@ -147,7 +147,7 @@ definition {
 
 	@priority = "5"
 	test AddJoinXORWorkflowDefinitionViaViewTab {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab";
 		property testray.component.names = "Training";
 
@@ -349,7 +349,7 @@ definition {
 	@description = "This is a use case for LPS-53992."
 	@priority = "5"
 	test AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddTaskNodeEditNameAndDesciptionAndNotificationsAndDeleteViaViewTab";
 		property testray.component.names = "Training";
 
@@ -533,7 +533,7 @@ definition {
 
 	@priority = "5"
 	test DeleteConnectors {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#DeleteConnectors";
 		property testray.component.names = "Training";
 
@@ -633,7 +633,7 @@ definition {
 
 	@priority = "5"
 	test EditAssignmentsForTaskNodeKDCP {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#EditAssignmentsForTaskNodeKDCP";
 		property testray.component.names = "Training";
 

@@ -20,6 +20,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -150,7 +152,17 @@ public interface ${schemaName}Resource {
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if javaMethodParameter?is_last>
-								${javaMethodParameter.parameterName}.toString()
+								<#if javaMethodParameter.parameterType?starts_with("[L")>
+									Stream.of(
+										${javaMethodParameter.parameterName}
+									).map(
+										value -> String.valueOf(value)
+									).collect(
+										Collectors.toList()
+									).toString()
+								<#else>
+									${javaMethodParameter.parameterName}.toString()
+								</#if>
 							</#if>
 						</#list>
 

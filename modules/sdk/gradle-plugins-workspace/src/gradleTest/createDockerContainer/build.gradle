@@ -1,6 +1,4 @@
-import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
-
-task runGradleTest(type: DockerRemoveContainer)
+task runGradleTest
 
 runGradleTest {
 	dependsOn createDockerContainer
@@ -10,32 +8,38 @@ runGradleTest {
 
 		String[] inputDirFileNames = inputDir.list()
 
-		assert inputDirFileNames.length == 2
+		assert inputDirFileNames.length == 6
 
+		assert inputDirFileNames.contains("100_liferay_image_setup.sh")
+		assert inputDirFileNames.contains("Dockerfile")
+		assert inputDirFileNames.contains("configs")
 		assert inputDirFileNames.contains("deploy")
-		assert !inputDirFileNames.contains("Dockerfile")
-		assert inputDirFileNames.contains("files")
+		assert inputDirFileNames.contains("scripts")
+		assert inputDirFileNames.contains("work")
 
-		File filesDir = new File(inputDir, "files")
+		File configsDir = new File(inputDir, "configs")
 
-		String[] filesDirFileNames = filesDir.list()
+		String[] configsDirFileNames = configsDir.list()
 
-		assert filesDirFileNames.length == 1
+		assert configsDirFileNames.length == 1
 
-		assert !filesDirFileNames.contains(".touch")
-		assert filesDirFileNames.contains("portal-ext.properties")
+		assert configsDirFileNames.contains("local")
+
+		File localDir = new File(configsDir, "local")
+
+		String[] localDirFileNames = localDir.list()
+
+		assert localDirFileNames.length == 2
+
+		assert localDirFileNames.contains("local_file")
+		assert localDirFileNames.contains("portal-ext.properties")
 
 		File deployDir = new File(inputDir, "deploy")
 
 		String[] deployDirFileNames = deployDir.list()
 
-		assert deployDirFileNames.length == 1
-
-		assert !deployDirFileNames.contains(".touch")
 		assert deployDirFileNames.contains("com.liferay.foo.web-1.0.0.jar")
 	}
 
-	targetContainerId {
-		createDockerContainer.containerId
-	}
+	finalizedBy removeDockerContainer
 }

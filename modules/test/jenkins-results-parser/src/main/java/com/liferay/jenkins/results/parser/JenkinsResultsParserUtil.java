@@ -746,6 +746,21 @@ public class JenkinsResultsParserUtil {
 		return properties;
 	}
 
+	public static String getBuildProperty(
+			boolean checkCache, String propertyName)
+		throws IOException {
+
+		Properties buildProperties = getBuildProperties(checkCache);
+
+		return buildProperties.getProperty(propertyName);
+	}
+
+	public static String getBuildProperty(String propertyName)
+		throws IOException {
+
+		return getBuildProperty(false, propertyName);
+	}
+
 	public static List<String> getBuildPropertyAsList(
 			boolean checkCache, String key)
 		throws IOException {

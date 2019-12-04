@@ -188,6 +188,8 @@ public class ContentPageEditorDisplayContext {
 				"addFragmentEntryLinkURL",
 				editorSoyContext.get("addFragmentEntryLinkURL")
 			).put(
+				"addPortletURL", editorSoyContext.get("addPortletURL")
+			).put(
 				"availableLanguages", editorSoyContext.get("availableLanguages")
 			).put(
 				"classNameId", editorSoyContext.get("classNameId")

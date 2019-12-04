@@ -14,15 +14,39 @@
 
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 import {useDrag} from 'react-dnd';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../../../app/config/index';
+import {DispatchContext} from '../../../app/reducers/index';
+import {StoreContext} from '../../../app/store/index';
+import addWidget from '../../../app/thunks/addWidget';
 
-export default function Widget(props) {
+export default function Widget({instanceable, portletId, title, used}) {
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+	const store = useContext(StoreContext);
+
 	const [, drag] = useDrag({
 		end(_item, _monitor) {
-			// TODO: call server to get itemId and notify app
+			const result = _monitor.getDropResult();
+
+			if (!result) {
+				return;
+			}
+
+			const {position, siblingId} = result;
+
+			dispatch(
+				addWidget({
+					config,
+					portletId,
+					position,
+					siblingId,
+					store
+				})
+			);
 		},
 		item: {type: LAYOUT_DATA_ITEM_TYPES.fragment}
 	});
@@ -30,21 +54,22 @@ export default function Widget(props) {
 	return (
 		<button
 			className="btn btn-sm btn-unstyled d-block mb-1 px-2 py-1"
-			disabled={props.used && !props.instanceable}
+			disabled={used && !instanceable}
 			ref={drag}
 			type="button"
 		>
 			<ClayIcon
 				className="mr-2"
-				symbol={props.instanceable ? 'grid' : 'live'}
+				symbol={instanceable ? 'grid' : 'live'}
 			/>
-			<span>{props.title}</span>
+			<span>{title}</span>
 		</button>
 	);
 }
 
 Widget.propTypes = {
 	instanceable: PropTypes.bool.isRequired,
+	portletId: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	used: PropTypes.bool.isRequired
 };

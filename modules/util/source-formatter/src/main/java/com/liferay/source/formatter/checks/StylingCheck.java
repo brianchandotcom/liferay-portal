@@ -55,6 +55,7 @@ public abstract class StylingCheck extends BaseFileCheck {
 		content = _formatToStringMethodCall(content, "Short");
 
 		content = _fixBooleanStatement(content);
+		content = _fixLambdaStatement(content);
 
 		content = _fixRedundantArrayInitialization(content);
 		content = _fixRedundantArrayInitialization(content, "Arrays", "asList");
@@ -98,6 +99,12 @@ public abstract class StylingCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private String _fixLambdaStatement(String content) {
+		Matcher matcher = _lambdaPattern.matcher(content);
+
+		return matcher.replaceAll("$1::$2");
 	}
 
 	private String _fixRedundantArrayInitialization(String content) {
@@ -298,6 +305,8 @@ public abstract class StylingCheck extends BaseFileCheck {
 
 	private static final Pattern _booleanPattern = Pattern.compile(
 		"\\((\\!)?(\\w+)\\s+(==|!=)\\s+(false|true)\\)");
+	private static final Pattern _lambdaPattern = Pattern.compile(
+		"\\(\\)\\s+->\\s+(\\w+)\\.(\\w+)\\(\\)");
 	private static final Pattern _objectsEqualsPattern = Pattern.compile(
 		"\\WObjects\\.equals\\(");
 	private static final Pattern _redundantArrayInitializationPattern =

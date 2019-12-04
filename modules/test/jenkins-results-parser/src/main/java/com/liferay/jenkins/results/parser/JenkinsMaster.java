@@ -29,6 +29,8 @@ import org.json.JSONObject;
  */
 public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
+	public static final Integer SLAVE_RAM_DEFAULT = 16;
+
 	public JenkinsMaster(String masterName) {
 		if (masterName.contains(".")) {
 			_masterName = masterName.substring(0, masterName.indexOf("."));
@@ -44,6 +46,19 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 			_masterURL = properties.getProperty(
 				JenkinsResultsParserUtil.combine(
 					"jenkins.local.url[", _masterName, "]"));
+
+			Integer slaveRAM = SLAVE_RAM_DEFAULT;
+
+			String slaveRAMString = JenkinsResultsParserUtil.getProperty(
+				properties,
+				JenkinsResultsParserUtil.combine(
+					"master.property(", _masterName, "/slave.ram)"));
+
+			if ((slaveRAMString != null) && slaveRAMString.matches("\\d+")) {
+				slaveRAM = Integer.valueOf(slaveRAMString);
+			}
+
+			_slaveRAM = slaveRAM;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
@@ -107,6 +122,10 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 	public String getName() {
 		return _masterName;
+	}
+
+	public Integer getSlaveRAM() {
+		return _slaveRAM;
 	}
 
 	public String getURL() {
@@ -240,6 +259,7 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 	private final String _masterName;
 	private final String _masterURL;
 	private int _reportedAvailableSlavesCount;
+	private final Integer _slaveRAM;
 	private String _summary;
 
 }

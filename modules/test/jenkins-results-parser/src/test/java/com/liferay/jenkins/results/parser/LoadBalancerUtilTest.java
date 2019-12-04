@@ -153,7 +153,8 @@ public class LoadBalancerUtilTest
 		JenkinsResultsParserUtil.setBuildProperties(properties);
 
 		List<JenkinsMaster> jenkinsMasters =
-			JenkinsResultsParserUtil.getJenkinsMasters(properties, sampleKey);
+			JenkinsResultsParserUtil.getJenkinsMasters(
+				properties, JenkinsMaster.SLAVE_RAM_DEFAULT, sampleKey);
 
 		File sampleDir = testSample.getSampleDir();
 

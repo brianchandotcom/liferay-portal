@@ -1113,7 +1113,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static List<JenkinsMaster> getJenkinsMasters(
-		Properties buildProperties, String prefix) {
+		Properties buildProperties, int minimumRAM, String prefix) {
 
 		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
 
@@ -1122,7 +1122,11 @@ public class JenkinsResultsParserUtil {
 				 "master.slaves(" + prefix + "-" + i + ")");
 			 i++) {
 
-			jenkinsMasters.add(new JenkinsMaster(prefix + "-" + i));
+			JenkinsMaster jenkinsMaster = new JenkinsMaster(prefix + "-" + i);
+
+			if (jenkinsMaster.getSlaveRAM() >= minimumRAM) {
+				jenkinsMasters.add(jenkinsMaster);
+			}
 		}
 
 		return jenkinsMasters;
@@ -1308,17 +1312,10 @@ public class JenkinsResultsParserUtil {
 					"Unable to get build properties", ioe2);
 			}
 
-			List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>();
-
-			for (JenkinsMaster jenkinsMaster :
-					LoadBalancerUtil.getAvailableJenkinsMasters(
-						LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
-						buildProperties)) {
-
-				if (jenkinsMaster.getSlaveRAM() >= minimumRAM) {
-					availableJenkinsMasters.add(jenkinsMaster);
-				}
-			}
+			List<JenkinsMaster> availableJenkinsMasters =
+				LoadBalancerUtil.getAvailableJenkinsMasters(
+					LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
+					minimumRAM, buildProperties);
 
 			Random random = new Random(System.currentTimeMillis());
 

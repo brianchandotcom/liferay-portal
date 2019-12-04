@@ -34,19 +34,21 @@ import java.util.regex.Pattern;
 public class LoadBalancerUtil {
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, Properties properties) {
+		String masterPrefix, int minimumRAM, Properties properties) {
 
-		return getAvailableJenkinsMasters(masterPrefix, properties, true);
+		return getAvailableJenkinsMasters(
+			masterPrefix, minimumRAM, properties, true);
 	}
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, Properties properties, boolean verbose) {
+		String masterPrefix, int minimumRAM, Properties properties,
+		boolean verbose) {
 
 		List<JenkinsMaster> allJenkinsMasters = null;
 
 		if (!_jenkinsMasters.containsKey(masterPrefix)) {
 			allJenkinsMasters = JenkinsResultsParserUtil.getJenkinsMasters(
-				properties, masterPrefix);
+				properties, minimumRAM, masterPrefix);
 
 			_jenkinsMasters.put(masterPrefix, allJenkinsMasters);
 		}
@@ -114,16 +116,8 @@ public class LoadBalancerUtil {
 					minimumRAM = Integer.valueOf(minimumRAMString);
 				}
 
-				List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
-
-				for (JenkinsMaster jenkinsMaster :
-						getAvailableJenkinsMasters(
-							masterPrefix, properties, verbose)) {
-
-					if (jenkinsMaster.getSlaveRAM() >= minimumRAM) {
-						jenkinsMasters.add(jenkinsMaster);
-					}
-				}
+				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
+					masterPrefix, minimumRAM, properties, verbose);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
 					masterPrefix);

@@ -61,17 +61,21 @@ describe('Carousel', () => {
 		expect(container.firstChild.classList).toContain('sidenav-container');
 	});
 
-	it('renders the Carousel component with the info panel closed', () => {
-		const {container} = renderCarouselComponent(carouselProps);
-
-		expect(container.firstChild.classList).toContain('closed');
-	});
-
 	it('renders sidenav content inside the sidenav container', () => {
 		const {container} = renderCarouselComponent(carouselProps);
 
 		expect(container.firstChild.querySelector('.sidenav-content')).not.toBeNull();
 	});
+
+	it('renders an image with alt attribute', () => {
+		const {getByRole} = renderCarouselComponent(carouselProps);
+
+		expect(getByRole('img').alt).toEqual(itemTitle);
+	});
+});
+
+describe('Arrow elements', () => {
+	afterEach(cleanup);
 
 	it('renders left and right arrows as buttons', () => {
 		const {getAllByRole} = renderCarouselComponent(carouselProps);
@@ -89,12 +93,6 @@ describe('Carousel', () => {
 		expect(container.querySelector('.icon-arrow')).toBeNull();
 	});
 
-	it('renders an image with alt attribute', () => {
-		const {getByRole} = renderCarouselComponent(carouselProps);
-
-		expect(getByRole('img').alt).toEqual(itemTitle);
-	});
-
 	it('calls to handleClickPrevious when left arrow is clicked', () => {
 		const {getAllByRole} = renderCarouselComponent(carouselProps);
 
@@ -102,10 +100,23 @@ describe('Carousel', () => {
 
 		expect(carouselProps.handleClickPrevious).toHaveBeenCalled();
 	});
+});
+
+
+describe('Infopanel', () => {
+	afterEach(cleanup);
+
+	it('renders the Carousel component with the info panel closed', () => {
+		const {container} = renderCarouselComponent(carouselProps);
+
+		expect(container.firstChild.classList).toContain('closed');
+	});
 
 	it('renders item data on the info panel', () => {
 		const {getByText} = renderCarouselComponent(carouselProps);
 
 		expect(getByText(itemTitle));
+		console.log(itemTitle);
 	});
+
 });

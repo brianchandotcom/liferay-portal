@@ -161,7 +161,6 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-
 		for (var i : list "1,2,3,4") {
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Document_1.doc",

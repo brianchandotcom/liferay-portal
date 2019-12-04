@@ -23,6 +23,8 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -203,7 +205,14 @@ public interface DataModelPermissionResource {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				dataModelPermissions.toString(), "application/json");
+				Stream.of(
+					dataModelPermissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

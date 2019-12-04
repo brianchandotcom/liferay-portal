@@ -50,7 +50,7 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 
 		String projectPath = project.getPath();
 
-		if (projectPath.startsWith(":dxp:")) {
+		if (projectPath.startsWith(":dxp:") && !_isRunningInCIEnvironment()) {
 			LiferayProfileDXPPlugin.INSTANCE.apply(project);
 		}
 

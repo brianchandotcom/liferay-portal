@@ -24,8 +24,7 @@ import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
+import com.liferay.oauth2.provider.util.builder.OAuth2Scope;
 import com.liferay.oauth2.provider.shortcut.internal.constants.OAuth2ProviderShortcutConstants;
 import com.liferay.oauth2.provider.shortcut.internal.spi.scope.finder.OAuth2ProviderShortcutScopeFinder;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
@@ -106,10 +105,10 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_scopeAliasesList = new ArrayList<>(_SAP_ENTRY_OBJECT_ARRAYS.length);
+		_scopesList = new ArrayList<>(_SAP_ENTRY_OBJECT_ARRAYS.length);
 
 		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
-			_scopeAliasesList.add(
+			_scopesList.add(
 				StringUtil.replaceFirst(
 					sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK));
 		}
@@ -177,19 +176,15 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 				"https://analytics.liferay.com", 0, _APPLICATION_NAME, null,
 				Collections.singletonList(
 					"https://analytics.liferay.com/oauth/receive"),
-				_scopeAliasesList, new ServiceContext());
+				this::_buildScopes, new ServiceContext());
 
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/logo.png");
 
-		_oAuth2ApplicationLocalService.updateIcon(
+		return _oAuth2ApplicationLocalService.updateIcon(
 			oAuth2Application.getOAuth2ApplicationId(), inputStream);
-
-		_createOAuth2ScopeGrants(oAuth2Application);
-
-		return oAuth2Application;
 	}
 
 	private void _addResourcePermissions(OAuth2Application oAuth2Application)
@@ -255,21 +250,28 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _createOAuth2ScopeGrants(OAuth2Application oAuth2Application)
-		throws PortalException {
+	private void _buildAnalyticsCloudScopes(OAuth2Scope.Builder builder) {
+		builder.forApplication(
+			OAuth2ProviderShortcutConstants.APPLICATION_NAME,
+			"com.liferay.oauth2.provider.shortcut",
+			applicationScopeAssigner -> _scopesList.forEach(
+				applicationScopeAssigner::assignScope));
+	}
 
-		for (String scope : _SEGMENTS_ASAH_DEFAULT_OAUTH2_SCOPE_GRANTS) {
-			_oAuth2ScopeGrantLocalService.createOAuth2ScopeGrant(
-				oAuth2Application.getCompanyId(),
-				oAuth2Application.getOAuth2ApplicationScopeAliasesId(),
-				"Liferay.Segments.Asah.REST",
-				"com.liferay.segments.asah.rest.impl", scope,
-				Collections.singletonList(
-					"Liferay.Segments.Asah.REST.everything"));
-		}
+	private void _buildScopes(OAuth2Scope.Builder builder) {
+		_buildAnalyticsCloudScopes(builder);
 
-		_oAuth2ApplicationLocalService.updateOAuth2Application(
-			oAuth2Application);
+		_buildSegmentsAsahScopes(builder);
+	}
+
+	private void _buildSegmentsAsahScopes(OAuth2Scope.Builder builder) {
+		builder.forApplication(
+			"Liferay.Segments.Asah.REST", "com.liferay.segments.asah.rest.impl",
+			applicationScopeAssigner -> applicationScopeAssigner.assignScope(
+				_SEGMENTS_ASAH_DEFAULT_OAUTH2_SCOPE_GRANTS
+			).mapToScopeAlias(
+				"Liferay.Segments.Asah.REST.everything"
+			));
 	}
 
 	private static final String _APPLICATION_NAME = "Analytics Cloud";
@@ -330,13 +332,6 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 	@Reference
-	private OAuth2ApplicationScopeAliasesLocalService
-		_oAuth2ApplicationScopeAliasesLocalService;
-
-	@Reference
-	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
-
-	@Reference
 	private Portal _portal;
 
 	@Reference
@@ -348,7 +343,7 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;
 
-	private List<String> _scopeAliasesList;
+	private List<String> _scopesList;
 	private ServiceRegistration<?> _serviceRegistration;
 
 	@Reference

@@ -15,7 +15,6 @@
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useRef} from 'react';
-import {useDrop} from 'react-dnd';
 
 import FloatingToolbar from '../components/FloatingToolbar';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../config/constants/layoutDataFloatingToolbarButtons';
@@ -27,7 +26,7 @@ import updateLayoutData from '../thunks/updateLayoutData';
 import Topper from './Topper';
 import UnsafeHTML from './UnsafeHTML';
 
-const Root = React.forwardRef(({children, className, isOver, canDrop}, ref) => (
+const Root = React.forwardRef(({canDrop, children, isOver}, ref) => (
 	<div
 		className={classNames('page-editor__root', {
 			'page-editor__root--active': isOver && canDrop
@@ -143,7 +142,13 @@ const Fragment = React.forwardRef(({item}, ref) => {
 		markup = `<div>No markup from ${item.config.fragmentEntryLinkId}</div>`;
 	}
 
-	return <UnsafeHTML className="page-editor__fragment" markup={markup} ref={ref} />;
+	return (
+		<UnsafeHTML
+			className="page-editor__fragment"
+			markup={markup}
+			ref={ref}
+		/>
+	);
 });
 
 const LAYOUT_DATA_ITEMS = {
@@ -219,7 +224,7 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 			layoutData={layoutData}
 			name={fragmentEntryLink.name}
 		>
-			{({isOver, canDrop}) => (
+			{({canDrop, isOver}) => (
 				<>
 					{floatingToolbarButtons.length > 0 && (
 						<FloatingToolbar

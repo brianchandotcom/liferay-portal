@@ -88,7 +88,7 @@ export default function Topper({
 		}
 	});
 
-	const [{isOver, canDrop}, drop] = useDrop({
+	const [{canDrop, isOver}, drop] = useDrop({
 		accept: acceptDrop,
 		collect(_monitor) {
 			return {
@@ -189,11 +189,13 @@ export default function Topper({
 		'fragments-editor-border-top': edge === 0 && isOver
 	};
 
-	const childrenElement = children({isOver, canDrop});
+	const childrenElement = children({canDrop, isOver});
 
 	if (!activeTopper) {
 		const isFragment = childrenElement.type === React.Fragment;
-		const realChildren = isFragment ? childrenElement.props.children : childrenElement;
+		const realChildren = isFragment
+			? childrenElement.props.children
+			: childrenElement;
 
 		return React.Children.map(realChildren, child => {
 			if (!child) {
@@ -205,7 +207,7 @@ export default function Topper({
 				ref: node => {
 					containerRef.current = node;
 					drop(node);
-	
+
 					// Call the original ref, if any.
 					const {ref} = child;
 					if (typeof ref === 'function') {

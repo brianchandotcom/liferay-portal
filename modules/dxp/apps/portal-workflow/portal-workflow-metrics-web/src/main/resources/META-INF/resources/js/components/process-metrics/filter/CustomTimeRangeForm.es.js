@@ -32,10 +32,17 @@ const CustomTimeRangeForm = ({filterKey}) => {
 		setDateStart,
 		validate
 	} = useCustomTimeRange(filterKey);
-	const {setShowCustomForm} = useContext(TimeRangeContext);
-	const wrapperRef = useRef();
 
-	const dateFormat = 'MM/DD/YYYY';
+	const {setShowCustomForm} = useContext(TimeRangeContext);
+
+	const onApply = () => {
+		const errors = validate();
+
+		if (!errors) {
+			applyCustomFilter();
+			setShowCustomForm(false);
+		}
+	};
 
 	const onBlur = ({target: {name, value}}) => {
 		validate(name, value);
@@ -49,16 +56,7 @@ const CustomTimeRangeForm = ({filterKey}) => {
 		setter(value);
 	};
 
-	const onApply = () => {
-		const errors = validate();
-
-		if (!errors) {
-			applyCustomFilter();
-			setShowCustomForm(false);
-		}
-	};
-
-	const dateMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
+	const wrapperRef = useRef();
 
 	useEffect(() => {
 		const onClickOutside = handleClickOutside(() => {
@@ -69,6 +67,9 @@ const CustomTimeRangeForm = ({filterKey}) => {
 
 		return () => removeClickOutsideListener(onClickOutside);
 	}, [setShowCustomForm]);
+
+	const dateFormat = 'MM/DD/YYYY';
+	const dateMask = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
 
 	return (
 		<div className="custom-range-wrapper" ref={wrapperRef}>

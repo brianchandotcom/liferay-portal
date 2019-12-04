@@ -16,6 +16,12 @@ import {useFilterFetch} from '../../shared/components/filter/hooks/useFilterFetc
 import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 
+const allStepsItem = {
+	dividerAfter: true,
+	key: 'allSteps',
+	name: Liferay.Language.get('all-steps')
+};
+
 const ProcessStepFilter = ({
 	className,
 	dispatch,
@@ -62,12 +68,6 @@ const ProcessStepFilter = ({
 			{...options}
 		/>
 	);
-};
-
-const allStepsItem = {
-	dividerAfter: true,
-	key: 'allSteps',
-	name: Liferay.Language.get('all-steps')
 };
 
 export default ProcessStepFilter;

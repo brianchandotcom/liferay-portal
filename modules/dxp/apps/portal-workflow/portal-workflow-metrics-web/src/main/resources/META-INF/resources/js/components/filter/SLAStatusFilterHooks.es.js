@@ -16,6 +16,12 @@ import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.
 import {useFilterStatic} from '../../shared/components/filter/hooks/useFilterStatic.es';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 
+const slaStatusConstants = {
+	onTime: 'OnTime',
+	overdue: 'Overdue',
+	untracked: 'Untracked'
+};
+
 const slaStatuses = [
 	{
 		key: slaStatusConstants.onTime,
@@ -65,12 +71,6 @@ const SLAStatusFilter = ({
 			{...options}
 		/>
 	);
-};
-
-const slaStatusConstants = {
-	onTime: 'OnTime',
-	overdue: 'Overdue',
-	untracked: 'Untracked'
 };
 
 export default SLAStatusFilter;

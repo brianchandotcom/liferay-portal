@@ -32,16 +32,16 @@ import {Header} from './PerformanceByAssigneePageHeader.es';
 const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 	const {processId} = routeParams;
+
 	useProcessTitle(processId, Liferay.Language.get('performance-by-assignee'));
 
 	const filterKeys = ['processStep', 'roles'];
+
 	const {
 		dispatch,
 		filterValues: {roleIds, taskKeys},
 		selectedFilters
 	} = useFilter(filterKeys);
-
-	const {search = null} = parse(query);
 
 	const timeRange = getSelectedTimeRange(
 		timeRangeKeys,
@@ -62,6 +62,8 @@ const Container = ({filtersParam, query, routeParams, timeRangeKeys}) => {
 		timeRangeParams.dateEnd = dateEnd.toISOString();
 		timeRangeParams.dateStart = dateStart.toISOString();
 	}
+
+	const {search = null} = parse(query);
 
 	const {data, fetchData} = useFetch(
 		`/processes/${processId}/assignee-users`,

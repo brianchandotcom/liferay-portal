@@ -22,22 +22,24 @@ import {ProcessStepContext} from '../filter/store/ProcessStepStore.es';
 import {Table} from './WorkloadByAssigneeCardTable.es';
 
 const Body = ({currentTab, processId, query}) => {
+	const {assigneeTaskKeys} = useMemo(() => getFiltersParam(query), [query]);
 	const {client, defaultDelta} = useContext(AppContext);
+	const [data, setData] = useState({});
 	const {getSelectedProcessSteps} = useContext(ProcessStepContext);
 	const {setError} = useContext(ErrorContext);
 	const {setLoading} = useContext(LoadingContext);
-	const [data, setData] = useState({});
 
-	const {assigneeTaskKeys} = useMemo(() => getFiltersParam(query), [query]);
 	const processSteps = useMemo(
 		() => getSelectedProcessSteps(assigneeTaskKeys),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[assigneeTaskKeys]
 	);
+
 	const processStepKey = useMemo(
 		() => (processSteps ? processSteps[0].key : null),
 		[processSteps]
 	);
+
 	const filters =
 		processStepKey && processStepKey !== 'allSteps'
 			? {taskKeys: [processStepKey]}

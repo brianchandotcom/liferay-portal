@@ -27,7 +27,6 @@ import {
 
 const useCustomTimeRange = (dateEndKey, dateStartKey, filterKey) => {
 	const [errors, setErrors] = useState(undefined);
-	const routerProps = useRouter();
 	const {filters} = useRouterParams();
 
 	const [dateEnd, setDateEnd] = useState(
@@ -36,6 +35,8 @@ const useCustomTimeRange = (dateEndKey, dateStartKey, filterKey) => {
 	const [dateStart, setDateStart] = useState(
 		formatDateEnLocale(filters[dateStartKey])
 	);
+
+	const routerProps = useRouter();
 
 	const applyCustomFilter = () => {
 		if (!errors) {
@@ -56,14 +57,14 @@ const useCustomTimeRange = (dateEndKey, dateStartKey, filterKey) => {
 		const dateEndMoment = parseDateMomentEnLocale(dateEnd);
 		const dateStartMoment = parseDateMomentEnLocale(dateStart);
 
-		let errors = checkValidDate(dateEndMoment, dateStartMoment);
+		let errors = validateDate(dateEndMoment, dateStartMoment);
 
 		if (!errors) {
-			errors = checkRangeConsistency(dateEndMoment, dateStartMoment);
+			errors = validateRangeConsistency(dateEndMoment, dateStartMoment);
 		}
 
 		if (!errors) {
-			errors = checkEarlierDate(dateEndMoment, dateStartMoment);
+			errors = validateEarlierDate(dateEndMoment, dateStartMoment);
 		}
 
 		setErrors(errors);
@@ -82,7 +83,30 @@ const useCustomTimeRange = (dateEndKey, dateStartKey, filterKey) => {
 	};
 };
 
-const checkEarlierDate = (dateEndMoment, dateStartMoment) => {
+const validateDate = (dateEndMoment, dateStartMoment) => {
+	const dateNow = new Date();
+	let errors;
+
+	if (!dateEndMoment.isValid() || dateEndMoment.isAfter(dateNow)) {
+		errors = updateErrors(
+			errors,
+			'dateEnd',
+			Liferay.Language.get('please-enter-a-valid-date')
+		);
+	}
+
+	if (!dateStartMoment.isValid() || dateStartMoment.isAfter(dateNow)) {
+		errors = updateErrors(
+			errors,
+			'dateStart',
+			Liferay.Language.get('please-enter-a-valid-date')
+		);
+	}
+
+	return errors;
+};
+
+const validateEarlierDate = (dateEndMoment, dateStartMoment) => {
 	const earlierDate = moment()
 		.date(1)
 		.month(1)
@@ -108,7 +132,7 @@ const checkEarlierDate = (dateEndMoment, dateStartMoment) => {
 	return errors;
 };
 
-const checkRangeConsistency = (dateEndMoment, dateStartMoment) => {
+const validateRangeConsistency = (dateEndMoment, dateStartMoment) => {
 	let errors;
 
 	if (dateEndMoment.isBefore(dateStartMoment)) {
@@ -128,29 +152,6 @@ const checkRangeConsistency = (dateEndMoment, dateStartMoment) => {
 			Liferay.Language.get(
 				'the-start-date-cannot-be-later-than-the-end-date'
 			)
-		);
-	}
-
-	return errors;
-};
-
-const checkValidDate = (dateEndMoment, dateStartMoment) => {
-	const dateNow = new Date();
-	let errors;
-
-	if (!dateEndMoment.isValid() || dateEndMoment.isAfter(dateNow)) {
-		errors = updateErrors(
-			errors,
-			'dateEnd',
-			Liferay.Language.get('please-enter-a-valid-date')
-		);
-	}
-
-	if (!dateStartMoment.isValid() || dateStartMoment.isAfter(dateNow)) {
-		errors = updateErrors(
-			errors,
-			'dateStart',
-			Liferay.Language.get('please-enter-a-valid-date')
 		);
 	}
 

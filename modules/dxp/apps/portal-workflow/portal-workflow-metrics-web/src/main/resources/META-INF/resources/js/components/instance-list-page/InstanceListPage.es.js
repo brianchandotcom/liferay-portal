@@ -29,14 +29,13 @@ import {
 } from './store/InstanceListPageStore.es';
 
 export function InstanceListPage({page, pageSize, processId, query}) {
-	const filters = getFiltersParam(query);
 	const {
 		assigneeUserIds = [],
 		slaStatuses = [],
 		statuses = [],
 		taskKeys = [],
 		timeRange = []
-	} = filters;
+	} = getFiltersParam(query);
 
 	useProcessTitle(processId, Liferay.Language.get('all-items'));
 

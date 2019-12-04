@@ -24,9 +24,11 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 	useProcessTitle(processId, Liferay.Language.get('workload-by-assignee'));
 
 	const {search = ''} = parse(query);
+
 	const keywords = search.length ? search : null;
 
 	const filterKeys = ['processStep', 'roles'];
+
 	const {
 		dispatch,
 		filterValues: {roleIds, taskKeys},

@@ -17,18 +17,28 @@ import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import {useRouterParams} from '../../shared/hooks/useRouterParams.es';
 import {
-	parseQueryDate,
-	formatDescriptionDate
+	formatDescriptionDate,
+	parseQueryDate
 } from '../process-metrics/util/timeRangeUtil.es';
 import {CustomTimeRangeForm} from './CustomTimeRangeForm.es';
 
-const isCustomFilter = filter => filter.key === 'custom';
+const getCustomTimeRange = (dateEnd, dateStart) => {
+	const customTimeRange = {
+		dateEnd: parseQueryDate(dateEnd, true),
+		dateStart: parseQueryDate(dateStart),
+		dividerAfter: true,
+		key: 'custom',
+		name: Liferay.Language.get('custom-range')
+	};
 
-const onChangeFilter = selectedFilter => {
-	const preventDefault = isCustomFilter(selectedFilter);
+	customTimeRange.resultName = `${formatDescriptionDate(
+		dateStart
+	)} - ${formatDescriptionDate(dateEnd)}`;
 
-	return preventDefault;
+	return customTimeRange;
 };
+
+const isCustomFilter = filter => filter.key === 'custom';
 
 const TimeRangeFilter = ({
 	className,
@@ -51,7 +61,6 @@ const TimeRangeFilter = ({
 		[dateEndKey, dateStartKey, filters]
 	);
 
-	// MIGRATE STATE RULES TO AVOID DUPLICATED REQUESTS WHEN staticItems CHANGES
 	const {items, selectedItems} = useFilterFetch(
 		dispatch,
 		filterKey,
@@ -70,6 +79,8 @@ const TimeRangeFilter = ({
 		Liferay.Language.get('completion-period'),
 		options.withSelectionTitle
 	);
+
+	const onChangeFilter = selectedFilter => isCustomFilter(selectedFilter);
 
 	return (
 		<Filter
@@ -90,22 +101,6 @@ const TimeRangeFilter = ({
 			)}
 		</Filter>
 	);
-};
-
-const getCustomTimeRange = (dateEnd, dateStart) => {
-	const customTimeRange = {
-		dateEnd: parseQueryDate(dateEnd, true),
-		dateStart: parseQueryDate(dateStart),
-		dividerAfter: true,
-		key: 'custom',
-		name: Liferay.Language.get('custom-range')
-	};
-
-	customTimeRange.resultName = `${formatDescriptionDate(
-		dateStart
-	)} - ${formatDescriptionDate(dateEnd)}`;
-
-	return customTimeRange;
 };
 
 const useCustomFormState = () => {

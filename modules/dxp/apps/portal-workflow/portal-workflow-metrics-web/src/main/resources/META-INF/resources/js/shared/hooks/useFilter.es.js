@@ -38,6 +38,7 @@ const buildInitialState = (filterKeys, filters, prefixKeys) => {
 	filterKeys.forEach(filterKey => {
 		prefixKeys.forEach(prefixKey => {
 			const key = `${prefixKey}${filterKey}`;
+
 			if (filters[key]) {
 				initialState[key] = filters[key].map(buildFilterItem);
 			}
@@ -63,6 +64,7 @@ const useFilter = (filterKeys, prefixKeys = ['']) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
+
 	const [filterState, dispatch] = useReducer(reducer, initialState);
 
 	const filterValues = {};

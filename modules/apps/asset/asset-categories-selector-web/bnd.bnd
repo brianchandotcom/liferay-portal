@@ -1,11 +1,4 @@
 Bundle-Name: Liferay Asset Categories Selector Web
 Bundle-SymbolicName: com.liferay.asset.categories.selector.web
 Bundle-Version: 3.0.0
-Provide-Capability:\
-	soy;\
-		type="asset-categories-selector-web";\
-		version:Version="${Bundle-Version}"
-Require-Capability:\
-	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /asset-categories-selector-web

@@ -12,9 +12,6 @@
  * details.
  */
 
-import 'metal';
-
-import 'metal-component';
 import ClayIcon from '@clayui/icon';
 import {Treeview} from 'frontend-js-components-web';
 import React, {useState, useCallback, useRef} from 'react';

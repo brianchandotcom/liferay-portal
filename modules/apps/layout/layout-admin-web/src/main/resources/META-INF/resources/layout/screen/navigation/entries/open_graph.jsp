@@ -107,7 +107,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 					).put(
 						"targets",
 						HashMapBuilder.<String, Object>put(
-							"description", HashMapBuilder.<String, Object>put(
+							"description",
+							HashMapBuilder.<String, Object>put(
 								"customizable", Boolean.TRUE
 							).put(
 								"defaultValue", selLayout.getDescription(locale)
@@ -117,7 +118,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 						).put(
 							"imgUrl", Collections.singletonMap("id", "openGraphImageURL")
 						).put(
-							"title", HashMapBuilder.<String, Object>put(
+							"title",
+							HashMapBuilder.<String, Object>put(
 								"customizable", Boolean.TRUE
 							).put(
 								"defaultValue", layoutsAdminDisplayContext.getPageTitle()

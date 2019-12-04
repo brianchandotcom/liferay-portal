@@ -119,19 +119,22 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						Map<String, Object> data = HashMapBuilder.<String, Object>put(
 							"targets",
 							HashMapBuilder.<String, Object>put(
-								"description", HashMapBuilder.put(
+								"description",
+								HashMapBuilder.put(
 									"defaultValue", selLayout.getDescription(locale)
 								).put(
 									"id", "descriptionSEO"
 								).build()
 							).put(
-								"title", HashMapBuilder.put(
+								"title",
+								HashMapBuilder.put(
 									"defaultValue", layoutsAdminDisplayContext.getPageTitle()
 								).put(
 									"id", "title"
 								).build()
 							).put(
-								"url", HashMapBuilder.put(
+								"url",
+								HashMapBuilder.put(
 									"defaultValue", layoutsAdminDisplayContext.getDefaultCanonicalURL()
 								).put(
 									"id", "canonicalURL"

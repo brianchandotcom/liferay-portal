@@ -18,6 +18,7 @@ import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.change.tracking.service.CTMessageLocalService;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import java.util.List;
 
@@ -32,12 +33,18 @@ public class CTMessageEventListener implements CTEventListener {
 
 	@Override
 	public void onAfterPublish(long ctCollectionId) {
-		List<Message> messages = _ctMessageLocalService.getMessages(
-			ctCollectionId);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				List<Message> messages = _ctMessageLocalService.getMessages(
+					ctCollectionId);
 
-		for (Message message : messages) {
-			_messageBus.sendMessage(message.getDestinationName(), message);
-		}
+				for (Message message : messages) {
+					_messageBus.sendMessage(
+						message.getDestinationName(), message);
+				}
+
+				return null;
+			});
 	}
 
 	@Reference

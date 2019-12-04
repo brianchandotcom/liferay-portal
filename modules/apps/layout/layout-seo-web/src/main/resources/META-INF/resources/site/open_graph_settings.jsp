@@ -36,18 +36,15 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	<liferay-ui:message key="open-graph-image-description" />
 </p>
 
-<div>
+<div class="form-group">
 	<label class="control-label"><liferay-ui:message key="image" /></label>
 
-	<div class="input-group">
-		<div class="input-group-item">
-			<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="w-100" />
-		</div>
+	<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="mb-3" />
 
-		<div class="input-group-item input-group-item-shrink">
-			<aui:button name="openGraphImageButton" value="select" />
-		</div>
-	</div>
+	<aui:button-row cssClass="mt-0">
+		<aui:button name="openGraphImageButton" value="select" />
+		<aui:button name="openGraphClearImageButton" value="clear" />
+	</aui:button-row>
 </div>
 
 <div id="<portlet:namespace />openGraphSettings">
@@ -63,6 +60,12 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 <aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var openGraphImageButton = document.getElementById(
 		'<portlet:namespace />openGraphImageButton'
+	);
+	var openGraphImageFileEntryId = document.getElementById(
+		'<portlet:namespace />openGraphImageFileEntryId'
+	);
+	var openGraphImageURL = document.getElementById(
+		'<portlet:namespace />openGraphImageURL'
 	);
 
 	if (openGraphImageButton) {
@@ -80,17 +83,9 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 			if (selectedItem) {
 				var itemValue = JSON.parse(selectedItem.value);
 
-				var openGraphImageFileEntryId = document.getElementById(
-					'<portlet:namespace />openGraphImageFileEntryId'
-				);
-
 				if (openGraphImageFileEntryId) {
 					openGraphImageFileEntryId.value = itemValue.fileEntryId;
 				}
-
-				var openGraphImageURL = document.getElementById(
-					'<portlet:namespace />openGraphImageURL'
-				);
 
 				if (openGraphImageURL) {
 					openGraphImageURL.value = itemValue.url;
@@ -103,15 +98,35 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 			itemSelectorDialog.open();
 		});
 	}
+
+	var openGraphClearImageButton = document.getElementById(
+		'<portlet:namespace />openGraphClearImageButton'
+	);
+
+	openGraphClearImageButton.addEventListener('click', function() {
+		openGraphImageFileEntryId.value = '';
+		openGraphImageURL.value = '';
+	});
+
 	var openGraphEnabledCheck = document.getElementById(
 		'<portlet:namespace />openGraphEnabled'
 	);
 
 	if (openGraphEnabledCheck && openGraphImageButton) {
 		openGraphEnabledCheck.addEventListener('click', function(event) {
+			var disabled = !event.target.checked;
+
+			Liferay.Util.toggleDisabled(
+				openGraphImageURL,
+				disabled
+			);
 			Liferay.Util.toggleDisabled(
 				openGraphImageButton,
-				!event.target.checked
+				disabled
+			);
+			Liferay.Util.toggleDisabled(
+				openGraphClearImageButton,
+				disabled
 			);
 		});
 	}

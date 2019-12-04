@@ -64,11 +64,7 @@ if (portletTitleBasedNavigation) {
 		<liferay-frontend:sidebar-panel>
 
 			<%
-			List<KBArticle> kbArticles = new ArrayList<KBArticle>();
-
-			kbArticles.add(kbArticle);
-
-			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, kbArticles);
+			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, ListUtil.fromArray(kbArticle));
 			%>
 
 			<liferay-util:include page="/admin/info_panel.jsp" servletContext="<%= application %>" />

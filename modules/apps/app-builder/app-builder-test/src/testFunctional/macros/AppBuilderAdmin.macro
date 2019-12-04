@@ -34,6 +34,18 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_CANCEL");
 	}
 
+	macro chooseSearchFilterByOption {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click(
+			key_FilterOption = "${filterOption}",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+	}
+
+	macro clearSearch {
+		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
+	}
+
 	macro continueNewCustomObject {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
@@ -58,6 +70,10 @@ definition {
 		Type(
 			locator1 = "AppBuilder#INPUT_OBJECT_NAME",
 			value1 = "${customObjectName}");
+	}
+
+	macro filterListAscendAndDescend {
+		Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
 	}
 
 	macro gotoAddCustomObject {
@@ -94,6 +110,14 @@ definition {
 
 	macro save {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
+	}
+
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 	}
 
 	macro setName {
@@ -140,33 +164,11 @@ definition {
 			value1 = "${description}");
 	}
 
-	macro validateItemNameOnTable {
+	macro validateFormViewTitle {
 		AssertTextEquals(
-			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "${itemName}");
-	}
-
-	macro validateRequiredValidNameMessage {
-
-		AssertTextEquals(
-			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
-			value1 = "This field is required.");
-	}
-
-	macro viewCheckboxChecked {
-		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
-	}
-
-	macro searchByItem {
-		Type(
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "${itemName}");
-
-		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
-	}
-
-	macro clearSearch {
-		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
+			key_RowNumber = "${rowNumber}",
+			locator1 = "AppBuilder#VALIDATE_FORM_VIEW_NAME_AT_ROW",
+			value1 = "${title}");
 	}
 
 	macro validateIfSearchItemIsFound {
@@ -185,23 +187,21 @@ definition {
 			value1 = "No results were found.");
 	}
 
-	macro validateFormViewTitle {
+	macro validateItemNameOnTable {
 		AssertTextEquals(
-			key_RowNumber = "${rowNumber}",
-			locator1 = "AppBuilder#VALIDATE_FORM_VIEW_NAME_AT_ROW",
-			value1 = "${title}");
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${itemName}");
 	}
 
-	macro chooseSearchFilterByOption {
-		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+	macro validateRequiredValidNameMessage {
 
-		Click(
-			key_FilterOption = "${filterOption}",
-			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
+			value1 = "This field is required.");
 	}
 
-	macro filterListAscendAndDescend {
-		Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
+	macro viewCheckboxChecked {
+		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
 	}
 
 }

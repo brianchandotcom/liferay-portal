@@ -71,6 +71,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 </aui:form>
 
 <liferay-util:include page="/field/select_js.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="displayStyle" value="<%= selectOrganizationsDisplayContext.getDisplayStyle() %>" />
 	<liferay-util:param name="searchContainerId" value="selectSegmentsEntryOrganizations" />
 	<liferay-util:param name="selectEventName" value="<%= selectOrganizationsDisplayContext.getEventName() %>" />
 </liferay-util:include>

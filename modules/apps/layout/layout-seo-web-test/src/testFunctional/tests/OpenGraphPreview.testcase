@@ -98,6 +98,76 @@ definition {
 		AssertElementNotPresent(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 	}
 
+	@description = "This ensures that the OG preview is inherited from the SEO."
+	@priority = "5"
+	test PreviewInheritedSEO {
+		property test.name.skip.portal.instance = "OpenGraphPreview#PreviewInheritedSEO";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		AssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_SERP");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Page HTML Title");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Page Description");
+
+		Button.clickSave();
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "This is a custom description",
+			customTitle = "This is a custom title");
+
+		var checkboxName = "Use Custom Title";
+
+		Click(locator1 = "Checkbox#ANY_CHECKBOX");
+
+		var checkboxName = "Use Custom Description";
+
+		Click(locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickSave();
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Page HTML Title - Test Site Name - ${siteName}","og:description" content="Page Description"''');
+	}
+
 	@description = "This ensures that the user can customize OG tags."
 	@priority = "5"
 	test Smoke {
@@ -247,6 +317,51 @@ definition {
 			siteNameURL = "test-site-name",
 			truncatedHTMLTitle = "true",
 			truncatedURL = "true");
+	}
+
+	@description = "This ensures that the OG preview is returned to default when deselecting the customize checkboxes."
+	@priority = "5"
+	test ValidateReturnToDefault {
+		property test.name.skip.portal.instance = "OpenGraphPreview#ValidateReturnToDefault";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "This is a custom description",
+			customTitle = "This is a custom title");
+
+		var checkboxName = "Use Custom Title";
+
+		Click(locator1 = "Checkbox#ANY_CHECKBOX");
+
+		var checkboxName = "Use Custom Description";
+
+		Click(locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.clickSave();
+
+		Page.viewPreview(
+			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
+			openGraph = "true",
+			pageName = "Test Page Name",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		AssertTextEquals(
+			locator1 = "SitePagesEditPage#PREVIEW_DESCRIPTION",
+			value1 = "");
 	}
 
 	@description = "This test ensures that a user can preview Open Graph tags with Arabic."

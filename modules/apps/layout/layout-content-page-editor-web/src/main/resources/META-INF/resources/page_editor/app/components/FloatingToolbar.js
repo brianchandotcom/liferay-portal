@@ -25,7 +25,7 @@ import React, {
 import {createPortal} from 'react-dom';
 
 import ConfigurationPanel from './ConfigurationPanel';
-import {useIsActive} from './Controls';
+import {useFloatingToolbar, useIsActive} from './Controls';
 
 const ALIGNMENTS_MAP = {
 	bottom: Align.Bottom,
@@ -42,6 +42,7 @@ export default function FloatingToolbar({buttons, item, itemRef}) {
 	const isActive = useIsActive();
 	const popoverRef = useRef(null);
 	const show = isActive(item.itemId);
+	const floatingToolbar = useFloatingToolbar();
 
 	const [activeConfigurationPanel, setActiveConfigurationPanel] = useState(
 		null
@@ -58,14 +59,22 @@ export default function FloatingToolbar({buttons, item, itemRef}) {
 		}
 	}, [show, itemRef, popoverRef]);
 
+	const setFloatingToolbarRef = useCallback(ref => floatingToolbar(ref), [
+		floatingToolbar
+	]);
+
+	useEffect(() => setFloatingToolbarRef(popoverRef), [
+		show
+	]);
+
 	return (
 		show &&
-		buttons.length && (
+		buttons.length &&
+		createPortal(
 			<div className="position-absolute pr-2 pt-2" ref={popoverRef}>
 				<ClayPopover
 					alignPosition={false}
 					className="position-static"
-					ref={popoverRef}
 					show
 				>
 					{buttons.map(button => (

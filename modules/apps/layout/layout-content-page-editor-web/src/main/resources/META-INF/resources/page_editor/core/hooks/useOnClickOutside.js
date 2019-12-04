@@ -16,16 +16,21 @@ import React from 'react';
 
 const {useEffect} = React;
 
-export default function useOnClickOutside(ref, handler) {
+export default function useOnClickOutside(references = [], handler) {
 	useEffect(
 		() => {
 			const listener = event => {
-				// Do nothing if clicking ref's element or descendent elements
-				if (!ref.current || ref.current.contains(event.target)) {
-					return;
-				}
+				/**
+				 * Filter references that were clicked ref's element
+				 * or descendent elements
+				 * */
+				const filtered = references.filter(
+					ref => ref.current && ref.current.contains(event.target)
+				);
 
-				handler(event);
+				if (!filtered.length) {
+					handler(event);
+				}
 			};
 
 			document.addEventListener('mousedown', listener);
@@ -42,6 +47,6 @@ export default function useOnClickOutside(ref, handler) {
 		// ... callback/cleanup to run every render. It's not a big deal ...
 		// ... but to optimize you can wrap handler in useCallback before ...
 		// ... passing it into this hook.
-		[ref, handler]
+		[references, handler]
 	);
 }

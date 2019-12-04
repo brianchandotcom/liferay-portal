@@ -22,12 +22,13 @@ const INITIAL_STATE = {
 
 const HOVER_ITEM = 'HOVER_ITEM';
 const SELECT_ITEM = 'SELECT_ITEM';
+const FLOATING_TOOLBAR_REFERENCE = 'FLOATING_TOOLBAR_REFERENCE';
 
 const ControlsContext = React.createContext([INITIAL_STATE, () => {}]);
 const ControlsConsumer = ControlsContext.Consumer;
 
 const reducer = (state, action) => {
-	const {itemId, multiSelect, type} = action;
+	const {floatingToolbarRef, itemId, multiSelect, type} = action;
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
@@ -47,6 +48,8 @@ const reducer = (state, action) => {
 		} else if (nextState.selectedItemsIds.length) {
 			nextState = {...nextState, selectedItemsIds: []};
 		}
+	} else if (type === FLOATING_TOOLBAR_REFERENCE) {
+		nextState = {...state, floatingToolbarRef};
 	}
 
 	return nextState;
@@ -98,9 +101,25 @@ const useSelectItem = () => {
 		});
 };
 
+const useFloatingToolbar = () => {
+	const [, dispatch] = useContext(ControlsContext);
+	return floatingToolbarRef =>
+		dispatch({
+			floatingToolbarRef,
+			type: FLOATING_TOOLBAR_REFERENCE
+		});
+};
+
+const useCurrentFloatingToolbar = () => {
+	const [state] = useContext(ControlsContext);
+	return state.floatingToolbarRef;
+};
+
 export {
 	ControlsConsumer,
 	ControlsProvider,
+	useCurrentFloatingToolbar,
+	useFloatingToolbar,
 	useHoverItem,
 	useIsActive,
 	useIsHovered,

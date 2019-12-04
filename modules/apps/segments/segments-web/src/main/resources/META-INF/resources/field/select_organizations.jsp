@@ -21,18 +21,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= selectOrganizationsDisplayContext.getClearResultsURL() %>"
-	componentId="selectSegmentsEntryOrganizationsManagementToolbar"
-	disabled="<%= selectOrganizationsDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= selectOrganizationsDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= selectOrganizationsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="selectSegmentsEntryOrganizations"
-	searchFormName="searchFm"
-	showSearch="<%= selectOrganizationsDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= selectOrganizationsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= selectOrganizationsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= selectOrganizationsDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= new SelectOrganizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectOrganizationsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

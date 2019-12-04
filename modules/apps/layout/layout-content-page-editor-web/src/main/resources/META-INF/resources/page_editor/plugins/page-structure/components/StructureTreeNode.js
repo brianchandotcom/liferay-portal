@@ -16,6 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+import {useHoverItem, useIsHovered} from '../../../app/components/Controls';
+
 const NameButton = ({name}) => {
 	return (
 		<ClayButton
@@ -39,8 +41,24 @@ const RemoveButton = () => {
 };
 
 export default function StructureTreeNode({node}) {
+	const hoverItem = useHoverItem();
+	const isHovered = useIsHovered();
+
 	return (
-		<div className="page-editor__page-structure__tree-node">
+		<div
+			className="page-editor__page-structure__tree-node"
+			onMouseLeave={event => {
+				event.stopPropagation();
+
+				if (isHovered(node.id)) {
+					hoverItem(null);
+				}
+			}}
+			onMouseOver={event => {
+				event.stopPropagation();
+				hoverItem(node.id);
+			}}
+		>
 			<NameButton name={node.name} />
 			{node.removable && <RemoveButton />}
 		</div>

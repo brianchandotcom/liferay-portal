@@ -192,4 +192,12 @@ definition {
 			value1 = "${title}");
 	}
 
+	macro chooseSearchFilterByOption {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click(
+			key_FilterOption = "${filterOption}",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+	}
+
 }

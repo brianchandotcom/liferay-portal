@@ -169,4 +169,10 @@ definition {
 		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
 	}
 
+	macro validateIfSearchItemIsFound {
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
+			value1 = "1 Results for ${itemName}");
+	}
+
 }

@@ -16,6 +16,11 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		width: 80%;
+
+		&--active {
+			color: $pageStructureBlackColor;
+			font-weight: 600;
+		}
 	}
 
 	&__remove-button {

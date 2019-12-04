@@ -14,14 +14,30 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import classNames from 'classnames';
+import React, {useRef} from 'react';
 
-import {useHoverItem, useIsHovered} from '../../../app/components/Controls';
+import {
+	useHoverItem,
+	useIsHovered,
+	useIsSelected,
+	useSelectItem
+} from '../../../app/components/Controls';
+import useOnClickOutside from '../../../core/hooks/useOnClickOutside';
 
-const NameButton = ({name}) => {
+const NameButton = ({id, name}) => {
+	const isSelected = useIsSelected();
+
 	return (
 		<ClayButton
-			className="page-editor__page-structure__tree-node__name-button"
+			className={classNames(
+				'page-editor__page-structure__tree-node__name-button',
+				{
+					'page-editor__page-structure__tree-node__name-button--active': isSelected(
+						id
+					)
+				}
+			)}
 			displayType="unstyled"
 		>
 			{name}
@@ -41,12 +57,25 @@ const RemoveButton = () => {
 };
 
 export default function StructureTreeNode({node}) {
+	const containerRef = useRef(null);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
+	const selectItem = useSelectItem();
+
+	useOnClickOutside(containerRef, event => {
+		if (!event.shiftKey) {
+			selectItem(null);
+		}
+	});
 
 	return (
 		<div
 			className="page-editor__page-structure__tree-node"
+			onClick={event => {
+				event.stopPropagation();
+
+				selectItem(node.id);
+			}}
 			onMouseLeave={event => {
 				event.stopPropagation();
 
@@ -59,7 +88,7 @@ export default function StructureTreeNode({node}) {
 				hoverItem(node.id);
 			}}
 		>
-			<NameButton name={node.name} />
+			<NameButton id={node.id} name={node.name} />
 			{node.removable && <RemoveButton />}
 		</div>
 	);

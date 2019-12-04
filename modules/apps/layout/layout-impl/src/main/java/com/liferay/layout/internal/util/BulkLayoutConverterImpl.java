@@ -25,6 +25,8 @@ import com.liferay.layout.util.template.LayoutData;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -122,6 +124,10 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		if (groupId > 0) {
 			actionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
+					Property property = PropertyFactoryUtil.forName("system");
+
+					dynamicQuery.add(property.eq(false));
+
 					dynamicQuery.add(
 						RestrictionsFactoryUtil.eq("groupId", groupId));
 					dynamicQuery.add(

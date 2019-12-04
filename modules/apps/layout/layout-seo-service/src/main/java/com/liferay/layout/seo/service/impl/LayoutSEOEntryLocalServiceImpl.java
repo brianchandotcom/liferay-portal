@@ -177,7 +177,7 @@ public class LayoutSEOEntryLocalServiceImpl
 			companyGroup.getGroupId(),
 			_classNameLocalService.getClassNameId(
 				LayoutSEOEntry.class.getName()),
-			"custom-opengraph-meta-tags");
+			"custom-open-graph-meta-tags");
 
 		DDMForm ddmForm = new DDMForm();
 

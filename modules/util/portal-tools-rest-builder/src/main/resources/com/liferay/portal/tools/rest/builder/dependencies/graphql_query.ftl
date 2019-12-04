@@ -133,6 +133,7 @@ public class Query {
 
 			public ${schemaName}Page(Page ${freeMarkerTool.getSchemaVarName(schemaName)}Page) {
 				items = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getItems();
+				lastPage = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getLastPage();
 				page = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getPage();
 				pageSize = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getPageSize();
 				totalCount = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getTotalCount();
@@ -140,6 +141,9 @@ public class Query {
 
 			@GraphQLField
 			protected java.util.Collection<${schemaName}> items;
+
+			@GraphQLField
+			protected long lastPage;
 
 			@GraphQLField
 			protected long page;

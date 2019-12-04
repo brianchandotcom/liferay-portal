@@ -48,7 +48,7 @@ export default function TreeviewCard({node}) {
 		) : null;
 
 	return (
-		<div className="p-2">
+		<div className="p-2" role="treeitem">
 			<ClayCard
 				className={classNames({
 					disabled: node.disabled,
@@ -59,7 +59,6 @@ export default function TreeviewCard({node}) {
 				onClick={() => {
 					dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'});
 				}}
-				role="treeitem"
 				selectable={true}
 			>
 				<ClayCard.Body>

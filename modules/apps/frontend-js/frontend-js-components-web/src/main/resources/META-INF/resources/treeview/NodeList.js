@@ -25,6 +25,7 @@ export default function NodeList({
 	nodes,
 	onBlur,
 	onFocus,
+	role = 'group',
 	tabIndex = -1
 }) {
 	const {dispatch} = useContext(TreeviewContext);
@@ -58,6 +59,7 @@ export default function NodeList({
 			}}
 			onKeyDown={handleKeyDown}
 			ref={focusable}
+			role={role}
 			tabIndex={tabIndex}
 		>
 			{nodes.map(node => (

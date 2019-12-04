@@ -96,7 +96,7 @@ public class ScopeFinderTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			ScopeFinder scopeFinder = () -> Collections.emptyList();
+			ScopeFinder scopeFinder = Collections::emptyList;
 
 			Dictionary<String, Object> properties1 = new HashMapDictionary<>();
 

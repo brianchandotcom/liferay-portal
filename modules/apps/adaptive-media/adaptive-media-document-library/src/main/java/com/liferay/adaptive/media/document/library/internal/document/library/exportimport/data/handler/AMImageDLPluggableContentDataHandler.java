@@ -232,7 +232,7 @@ public class AMImageDLPluggableContentDataHandler
 
 		return firstAdaptiveMediaOptional.map(
 			adaptiveMedia -> _amImageSerializer.deserialize(
-				serializedAdaptiveMedia, () -> adaptiveMedia.getInputStream())
+				serializedAdaptiveMedia, adaptiveMedia::getInputStream)
 		).orElse(
 			null
 		);

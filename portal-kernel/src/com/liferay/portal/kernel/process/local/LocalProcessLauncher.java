@@ -411,7 +411,7 @@ public class LocalProcessLauncher {
 					ProcessCallable<?> processCallable =
 						(ProcessCallable<?>)_objectInputStream.readObject();
 
-					executorService.submit(() -> processCallable.call());
+					executorService.submit(processCallable::call);
 				}
 				catch (Exception e) {
 					UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

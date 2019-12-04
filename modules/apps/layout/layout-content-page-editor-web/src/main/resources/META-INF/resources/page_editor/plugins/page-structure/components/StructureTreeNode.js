@@ -15,14 +15,16 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 
+import {removeItem} from '../../../app/actions/index';
 import {
 	useHoverItem,
 	useIsHovered,
 	useIsSelected,
 	useSelectItem
 } from '../../../app/components/Controls';
+import {DispatchContext} from '../../../app/reducers/index';
 import useOnClickOutside from '../../../core/hooks/useOnClickOutside';
 
 const NameButton = ({id, name}) => {
@@ -45,11 +47,17 @@ const NameButton = ({id, name}) => {
 	);
 };
 
-const RemoveButton = () => {
+const RemoveButton = ({id}) => {
+	const dispatch = useContext(DispatchContext);
+
 	return (
 		<ClayButton
 			className="page-editor__page-structure__tree-node__remove-button"
 			displayType="unstyled"
+			onClick={event => {
+				event.stopPropagation();
+				dispatch(removeItem({itemId: id}));
+			}}
 		>
 			<ClayIcon symbol="times-circle" />
 		</ClayButton>
@@ -89,7 +97,7 @@ export default function StructureTreeNode({node}) {
 			}}
 		>
 			<NameButton id={node.id} name={node.name} />
-			{node.removable && <RemoveButton />}
+			{node.removable && <RemoveButton id={node.id} />}
 		</div>
 	);
 }

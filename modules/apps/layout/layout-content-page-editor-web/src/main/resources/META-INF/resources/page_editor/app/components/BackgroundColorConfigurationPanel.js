@@ -12,44 +12,53 @@
  * details.
  */
 
-import ClayColorPicker from '@clayui/color-picker';
-import React, {useState} from 'react';
+import ClayButton from '@clayui/button';
+import React from 'react';
+
+const COLORS = [
+	'primary',
+	'success',
+	'danger',
+	'warning',
+	'info',
+	'dark',
+	'gray-dark',
+	'secondary',
+	'light',
+	'lighter',
+	'white'
+];
 
 /**
  * Renders BackgroundColor Configuration Panel Configuration Panel.
  * *WARNING:* This component is unfinished since this is just used
  * to test FloatingToolbar ConfigurationPanel mechanism.
  */
-export const BackgroundColorConfigurationPanel = () => {
-	const [customColors, setCustoms] = useState([
-		'0b5fff',
-		'287d3d',
-		'da1414',
-		'b95000',
-		'2e5aac',
-		'272833',
-		'393a4a',
-		'6b6c7e',
-		'f1f2f5',
-		'f7f8f9',
-		'ffffff'
-	]);
-
-	const [color, setColor] = useState(customColors[0]);
-
-	return (
-		<div className="form-group">
-			<label htmlFor="floatingToolbarBackgroundColorPanelPalette">
-				{Liferay.Language.get('background-color')}
-			</label>
-			<ClayColorPicker
-				label={Liferay.Language.get('background-color')}
-				name="colorPicker"
-				onColorsChange={setCustoms}
-				onValueChange={setColor}
-				showHex
-				value={color}
-			/>
+export const BackgroundColorConfigurationPanel = () => (
+	<div className="form-group">
+		<label htmlFor="floatingToolbarBackgroundColorPanelPalette">
+			{Liferay.Language.get('background-color')}
+		</label>
+		<div
+			className="palette-container"
+			id="floatingToolbarBackgroundColorPanelPalette"
+		>
+			<ul className="list-unstyled palette-items-container">
+				{COLORS.map(color => (
+					<li className="palette-item">
+						<ClayButton
+							block
+							className={`bg-${color} palette-item-inner p-1 rounded-circle`}
+							displayType="unstyled"
+							key={color}
+							small
+						/>
+					</li>
+				))}
+			</ul>
 		</div>
-	);
-};
+		<ClayButton displayType="secondary" small>
+			{Liferay.Language.get('clear')}
+		</ClayButton>
+	</div>
+);

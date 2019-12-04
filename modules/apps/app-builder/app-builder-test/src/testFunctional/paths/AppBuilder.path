@@ -149,6 +149,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//*[contains(@class,'lexicon-icon-search')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -26,17 +26,17 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 		setFilterQuery(value);
 	}, []);
 
-	const handleSelectionChange = selectedNodeId => {
-		selectedNodeId = [...selectedNodeId][0];
+	const handleSelectionChange = selectedNodeIds => {
+		const selectedNodeId = [...selectedNodeIds][0];
 
 		if (selectedNodeId) {
-			const selectedNode = nodes[0].children.find(
+			const {id, name} = nodes[0].children.find(
 				node => node.id === selectedNodeId
 			);
 
 			const data = {
-				selectSiteNavigationMenuItemId: selectedNode.id,
-				selectSiteNavigationMenuItemName: selectedNode.name
+				selectSiteNavigationMenuItemId: id,
+				selectSiteNavigationMenuItemName: name
 			};
 
 			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {

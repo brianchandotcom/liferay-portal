@@ -1,10 +1,10 @@
 @import './variables';
 
 .fragments-editor__topper {
-	background-color: $topperBackgroundColor;
+	background-color: $colorPrimary;
 	border-radius: $topperBorderRadius $topperBorderRadius 0 0;
 	bottom: calc(100% + #{$topperBorderWidth});
-	box-shadow: 0 0 0 $topperBorderWidth $topperBorderColor;
+	box-shadow: 0 0 0 $topperBorderWidth $colorPrimary;
 	color: $topperColor;
 	cursor: pointer;
 	font-size: 12px;
@@ -56,8 +56,7 @@
 	}
 
 	&-wrapper:after {
-		box-shadow: inset 0 0 0 $topperBorderWidth
-			fade_out($topperBorderColor, 1);
+		box-shadow: inset 0 0 0 $topperBorderWidth fade_out($colorPrimary, 1);
 		content: '';
 		display: block;
 		height: 100%;
@@ -84,14 +83,14 @@
 		z-index: $topperHoverZIndex;
 
 		&:after {
-			box-shadow: inset 0 0 0 $topperHoveredBorderWidth $topperBorderColor;
+			box-shadow: inset 0 0 0 $topperHoveredBorderWidth $colorPrimary;
 			transition: box-shadow ease ($topperShowDuration + $topperShowDelay);
 		}
 	}
 
 	&-wrapper--highlighted {
 		&:after {
-			box-shadow: inset 0 0 0 $topperBorderWidth $topperBorderColor;
+			box-shadow: inset 0 0 0 $topperBorderWidth $colorPrimary;
 		}
 	}
 

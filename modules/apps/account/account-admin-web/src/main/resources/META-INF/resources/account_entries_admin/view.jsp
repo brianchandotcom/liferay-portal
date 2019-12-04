@@ -40,9 +40,9 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 			>
 
 				<%
-				Map<String, Object> rowData = new HashMap<>();
-
-				rowData.put("actions", StringUtil.merge(viewAccountEntriesManagementToolbarDisplayContext.getAvailableActions(accountEntryDisplay)));
+				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+					"actions", StringUtil.merge(viewAccountEntriesManagementToolbarDisplayContext.getAvailableActions(accountEntryDisplay))
+				).build();
 
 				row.setData(rowData);
 				%>

@@ -56,9 +56,9 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 					<c:if test="<%= curLayout != null %>">
 
 						<%
-						Map<String, String> data = new HashMap<>();
-
-						data.put("href", assetEntryUsagesDisplayContext.getPreviewURL(assetEntryUsage));
+						Map<String, String> data = HashMapBuilder.put(
+							"href", assetEntryUsagesDisplayContext.getPreviewURL(assetEntryUsage)
+						).build();
 						%>
 
 						<clay:button

@@ -17,12 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> context = new HashMap<>();
-
-context.put("itemSelectorSaveEvent", HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName()));
-context.put("multiSelection", !assetCategoriesSelectorDisplayContext.isSingleSelect());
-context.put("namespace", liferayPortletResponse.getNamespace());
-context.put("nodes", assetCategoriesSelectorDisplayContext.getCategoriesJSONArray());
+Map<String, Object> context = HashMapBuilder.<String, Object>put(
+	"itemSelectorSaveEvent", HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName())
+).put(
+	"multiSelection", !assetCategoriesSelectorDisplayContext.isSingleSelect()
+).put(
+	"namespace", liferayPortletResponse.getNamespace()
+).put(
+	"nodes", assetCategoriesSelectorDisplayContext.getCategoriesJSONArray()
+).build();
 %>
 
 <react:component

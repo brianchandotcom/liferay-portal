@@ -103,10 +103,11 @@ if (folder != null) {
 				<liferay-ui:search-container-column-text>
 
 					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("entityid", curFolder.getFolderId());
-					data.put("entityname", curFolder.getName());
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"entityid", curFolder.getFolderId()
+					).put(
+						"entityname", curFolder.getName()
+					).build();
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
@@ -125,10 +126,11 @@ if (folder != null) {
 				</c:if>
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("entityid", folderId);
-				data.put("entityname", folderName);
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"entityid", folderId
+				).put(
+					"entityname", folderName
+				).build();
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />

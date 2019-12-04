@@ -56,9 +56,9 @@ AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarD
 			<%
 			int subcategoriesCount = AssetCategoryLocalServiceUtil.getChildCategoriesCount(curCategory.getCategoryId());
 
-			Map<String, Object> rowData = new HashMap<>();
-
-			rowData.put("actions", assetCategoriesManagementToolbarDisplayContext.getAvailableActions(curCategory));
+			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+				"actions", assetCategoriesManagementToolbarDisplayContext.getAvailableActions(curCategory)
+			).build();
 
 			row.setData(rowData);
 			%>

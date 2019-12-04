@@ -38,10 +38,11 @@ assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(renderRequ
 		>
 
 			<%
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("entityid", tag.getTagId());
-			data.put("entityname", tag.getName());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"entityid", tag.getTagId()
+			).put(
+				"entityname", tag.getName()
+			).build();
 			%>
 
 			<liferay-ui:search-container-column-text

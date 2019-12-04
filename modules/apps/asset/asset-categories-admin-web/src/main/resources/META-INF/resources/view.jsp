@@ -58,9 +58,9 @@ AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementTool
 		>
 
 			<%
-			Map<String, Object> rowData = new HashMap<>();
-
-			rowData.put("actions", assetVocabulariesManagementToolbarDisplayContext.getAvailableActions(vocabulary));
+			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+				"actions", assetVocabulariesManagementToolbarDisplayContext.getAvailableActions(vocabulary)
+			).build();
 
 			row.setData(rowData);
 			%>

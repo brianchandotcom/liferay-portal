@@ -38,10 +38,11 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 		>
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("assetListEntryId", assetListEntry.getAssetListEntryId());
-			data.put("assetListEntryTitle", assetListEntry.getTitle());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"assetListEntryId", assetListEntry.getAssetListEntryId()
+			).put(
+				"assetListEntryTitle", assetListEntry.getTitle()
+			).build();
 			%>
 
 			<liferay-ui:search-container-column-icon

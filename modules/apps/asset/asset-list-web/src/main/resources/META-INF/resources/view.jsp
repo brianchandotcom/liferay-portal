@@ -54,9 +54,9 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						editURL = editAssetListEntryURL.toString();
 					}
 
-					Map<String, Object> rowData = new HashMap<>();
-
-					rowData.put("actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry));
+					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+						"actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry)
+					).build();
 
 					row.setData(rowData);
 					%>

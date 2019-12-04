@@ -28,9 +28,9 @@ else {
 
 assetTags = ListUtil.sort(assetTags);
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("scopeGroupId", Long.valueOf(scopeGroupId));
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"scopeGroupId", Long.valueOf(scopeGroupId)
+).build();
 %>
 
 <liferay-ddm:template-renderer

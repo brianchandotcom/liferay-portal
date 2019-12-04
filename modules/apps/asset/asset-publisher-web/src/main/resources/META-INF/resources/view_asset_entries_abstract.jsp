@@ -58,10 +58,11 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 		String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 
-		Map<String, Object> fragmentsEditorData = new HashMap<>();
-
-		fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
-		fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
+		Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
+			"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
+		).put(
+			"fragments-editor-item-type", "fragments-editor-mapped-item"
+		).build();
 %>
 
 		<div class="asset-abstract mb-5 <%= assetPublisherWebUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
@@ -349,11 +350,11 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 						for (String extension : assetPublisherDisplayContext.getExtensions(assetRenderer)) {
-							Map<String, Object> data = new HashMap<>();
-
 							exportAssetURL.setParameter("targetExtension", extension);
 
-							data.put("resource-href", exportAssetURL.toString());
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"resource-href", exportAssetURL.toString()
+							).build();
 						%>
 
 							<div class="autofit-col export-action">

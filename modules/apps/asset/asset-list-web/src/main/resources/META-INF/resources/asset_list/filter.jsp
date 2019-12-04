@@ -42,14 +42,19 @@
 		<div>
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL());
-			data.put("groupIds", ListUtil.toList(editAssetListDisplayContext.getReferencedModelsGroupIds()));
-			data.put("namespace", liferayPortletResponse.getNamespace());
-			data.put("rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray());
-			data.put("tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL());
-			data.put("vocabularyIds", editAssetListDisplayContext.getVocabularyIds());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
+			).put(
+				"groupIds", ListUtil.toList(editAssetListDisplayContext.getReferencedModelsGroupIds())
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray()
+			).put(
+				"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
+			).put(
+				"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
+			).build();
 			%>
 
 			<react:component

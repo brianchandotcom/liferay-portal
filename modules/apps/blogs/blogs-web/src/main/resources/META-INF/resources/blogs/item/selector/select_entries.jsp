@@ -40,8 +40,6 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 			<%
 			row.setCssClass("entries");
 
-			Map<String, Object> data = new HashMap<>();
-
 			JSONObject entryJSONObject = JSONUtil.put(
 				"className", BlogsEntry.class.getName()
 			).put(
@@ -52,7 +50,9 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 				"title", BlogsEntryUtil.getDisplayTitle(resourceBundle, entry)
 			);
 
-			data.put("value", entryJSONObject.toString());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"value", entryJSONObject.toString()
+			).build();
 
 			row.setData(data);
 			%>

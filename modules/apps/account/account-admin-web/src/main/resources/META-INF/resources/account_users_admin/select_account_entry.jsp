@@ -52,9 +52,9 @@ SelectAccountEntryManagementToolbarDisplayContext selectAccountEntryManagementTo
 			<liferay-ui:search-container-column-text>
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				data.put("accountentryid", accountEntryDisplay.getAccountEntryId());
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"accountentryid", accountEntryDisplay.getAccountEntryId()
+				).build();
 				%>
 
 				<aui:button cssClass="choose-account selector-button" data="<%= data %>" value="choose" />

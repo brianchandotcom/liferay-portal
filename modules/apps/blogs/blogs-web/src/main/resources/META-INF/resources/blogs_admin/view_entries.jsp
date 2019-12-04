@@ -75,9 +75,9 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 				</liferay-portlet:renderURL>
 
 				<%
-				Map<String, Object> rowData = new HashMap<>();
-
-				rowData.put("actions", StringUtil.merge(blogEntriesDisplayContext.getAvailableActions(entry)));
+				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+					"actions", StringUtil.merge(blogEntriesDisplayContext.getAvailableActions(entry))
+				).build();
 
 				row.setData(rowData);
 				%>

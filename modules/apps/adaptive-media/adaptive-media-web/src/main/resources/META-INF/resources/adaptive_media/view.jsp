@@ -161,16 +161,23 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							</portlet:resourceURL>
 
 							<%
-							Map<String, Object> data = new HashMap<>();
-
-							data.put("adaptedImages", Math.min(adaptedImages, totalImages));
-							data.put("adaptiveMediaProgressComponentId", renderResponse.getNamespace() + "AdaptRemaining" + uuid);
-							data.put("autoStartProgress", ((optimizeImagesAllConfigurationsBackgroundTasksCount > 0) && amImageConfigurationEntry.isEnabled()) || currentBackgroundTaskConfigurationEntryUuids.contains(uuid));
-							data.put("disabled", !amImageConfigurationEntry.isEnabled());
-							data.put("namespace", liferayPortletResponse.getNamespace());
-							data.put("percentageUrl", adaptedImagesPercentageURL.toString());
-							data.put("totalImages", totalImages);
-							data.put("uuid", uuid);
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"adaptedImages", Math.min(adaptedImages, totalImages)
+							).put(
+								"adaptiveMediaProgressComponentId", renderResponse.getNamespace() + "AdaptRemaining" + uuid
+							).put(
+								"autoStartProgress", ((optimizeImagesAllConfigurationsBackgroundTasksCount > 0) && amImageConfigurationEntry.isEnabled()) || currentBackgroundTaskConfigurationEntryUuids.contains(uuid)
+							).put(
+								"disabled", !amImageConfigurationEntry.isEnabled()
+							).put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).put(
+								"percentageUrl", adaptedImagesPercentageURL.toString()
+							).put(
+								"totalImages", totalImages
+							).put(
+								"uuid", uuid
+							).build();
 							%>
 
 							<react:component

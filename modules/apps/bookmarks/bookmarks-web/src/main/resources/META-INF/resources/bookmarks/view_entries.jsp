@@ -77,11 +77,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			<c:when test="<%= curFolder != null %>">
 
 				<%
-				Map<String, Object> rowData = new HashMap<String, Object>();
-
-				rowData.put("folder", true);
-				rowData.put("folder-id", curFolder.getFolderId());
-				rowData.put("title", curFolder.getName());
+				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+					"folder", true
+				).put(
+					"folder-id", curFolder.getFolderId()
+				).put(
+					"title", curFolder.getName()
+				).build();
 
 				row.setData(rowData);
 
@@ -118,9 +120,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			<c:otherwise>
 
 				<%
-				Map<String, Object> rowData = new HashMap<String, Object>();
-
-				rowData.put("title", entry.getName());
+				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
+					"title", entry.getName()
+				).build();
 
 				row.setData(rowData);
 

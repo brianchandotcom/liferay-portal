@@ -37,15 +37,21 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 		<div class="app-builder-form-view-app" id="<%= editFormViewRootElementId %>">
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("basePortletURL", basePortletURL.toString());
-			data.put("customObjectSidebarElementId", customObjectSidebarElementId);
-			data.put("dataDefinitionId", dataDefinitionId);
-			data.put("dataLayoutBuilderElementId", dataLayoutBuilderElementId);
-			data.put("dataLayoutBuilderId", componentId);
-			data.put("dataLayoutId", dataLayoutId);
-			data.put("newCustomObject", newCustomObject);
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"basePortletURL", basePortletURL.toString()
+			).put(
+				"customObjectSidebarElementId", customObjectSidebarElementId
+			).put(
+				"dataDefinitionId", dataDefinitionId
+			).put(
+				"dataLayoutBuilderElementId", dataLayoutBuilderElementId
+			).put(
+				"dataLayoutBuilderId", componentId
+			).put(
+				"dataLayoutId", dataLayoutId
+			).put(
+				"newCustomObject", newCustomObject
+			).build();
 			%>
 
 			<react:component

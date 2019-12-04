@@ -29,10 +29,11 @@
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<%
-		LinkedHashMap groupParams = new LinkedHashMap<>();
-
-		groupParams.put("active", Boolean.TRUE);
-		groupParams.put("site", Boolean.TRUE);
+		LinkedHashMap<String, Object> groupParams = LinkedHashMapBuilder.<String, Object>put(
+			"active", Boolean.TRUE
+		).put(
+			"site", Boolean.TRUE
+		).build();
 
 		List<Group> groups = GroupServiceUtil.search(themeDisplay.getCompanyId(), new long[] {PortalUtil.getClassNameId(Group.class)}, "", groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 

@@ -101,10 +101,11 @@ if (stageableGroup.isLayout()) {
 						request.setAttribute("view.jsp-assetEntry", assetEntry);
 						request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
-						Map<String, Object> fragmentsEditorData = new HashMap<>();
-
-						fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
-						fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
+						Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
+							"fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK()
+						).put(
+							"fragments-editor-item-type", "fragments-editor-mapped-item"
+						).build();
 					%>
 
 						<tr class="<%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "table-active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>

@@ -142,9 +142,9 @@ for (long groupId : groupIds) {
 			assetBrowserURL.setPortletMode(PortletMode.VIEW);
 			assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-			Map<String, Object> data = new HashMap<String, Object>();
-
-			data.put("groupid", String.valueOf(curGroupId));
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"groupid", String.valueOf(curGroupId)
+			).build();
 
 			if (!curRendererFactory.isSupportsClassTypes()) {
 				data.put("href", assetBrowserURL.toString());

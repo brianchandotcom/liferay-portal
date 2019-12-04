@@ -185,4 +185,11 @@ definition {
 			value1 = "No results were found.");
 	}
 
+	macro validateFormViewTitle {
+		AssertTextEquals(
+			key_RowNumber = "${rowNumber}",
+			locator1 = "AppBuilder#VALIDATE_FORM_VIEW_NAME_AT_ROW",
+			value1 = "${title}");
+	}
+
 }

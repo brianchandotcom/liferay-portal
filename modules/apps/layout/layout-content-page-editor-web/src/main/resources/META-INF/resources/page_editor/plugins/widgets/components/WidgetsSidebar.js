@@ -61,12 +61,7 @@ export default function WidgetsSidebar() {
 							open={searchValue.length > 0}
 						>
 							{category.portlets.map(widget => (
-								<Widget
-									instanceable={widget.instanceable}
-									key={widget.portletId}
-									title={widget.title}
-									used={widget.used}
-								/>
+								<Widget key={widget.portletId} {...widget} />
 							))}
 						</Collapse>
 					</div>

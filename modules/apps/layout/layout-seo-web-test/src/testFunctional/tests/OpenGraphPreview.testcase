@@ -249,7 +249,7 @@ definition {
 			truncatedURL = "true");
 	}
 
-	@description = "This test ensures that a user can preview open graph tags with Arabic."
+	@description = "This test ensures that a user can preview Open Graph tags with Arabic."
 	@priority = "4"
 	test ViewArabicTranslation {
 		property test.name.skip.portal.instance = "OpenGraphPreview#ViewArabicTranslation";

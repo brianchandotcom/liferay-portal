@@ -1,27 +1,24 @@
 @import './variables';
 
 .page-editor__page-structure__tree-node {
-	color: $pageStructureGrayColor;
-	cursor: pointer;
 	font-size: 14px;
 	height: 28px;
 	line-height: 28px;
 
-	transition: color 0.15s ease-in-out;
-
-	&:hover {
-		color: $pageStructureBlackColor;
-	}
-
-	button {
+	&__name-button,
+	&__remove-button {
 		color: $pageStructureGrayColor;
-		float: right;
 	}
 
-	span {
+	&__name-button {
 		display: inline-block;
 		max-width: 80%;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		width: 80%;
+	}
+
+	&__remove-button {
+		float: right;
 	}
 }

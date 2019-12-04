@@ -16,9 +16,23 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+const NameButton = ({name}) => {
+	return (
+		<ClayButton
+			className="page-editor__page-structure__tree-node__name-button"
+			displayType="unstyled"
+		>
+			{name}
+		</ClayButton>
+	);
+};
+
 const RemoveButton = () => {
 	return (
-		<ClayButton displayType="unstyled">
+		<ClayButton
+			className="page-editor__page-structure__tree-node__remove-button"
+			displayType="unstyled"
+		>
 			<ClayIcon symbol="times-circle" />
 		</ClayButton>
 	);
@@ -27,7 +41,7 @@ const RemoveButton = () => {
 export default function StructureTreeNode({node}) {
 	return (
 		<div className="page-editor__page-structure__tree-node">
-			<span>{node.name}</span>
+			<NameButton name={node.name} />
 			{node.removable && <RemoveButton />}
 		</div>
 	);

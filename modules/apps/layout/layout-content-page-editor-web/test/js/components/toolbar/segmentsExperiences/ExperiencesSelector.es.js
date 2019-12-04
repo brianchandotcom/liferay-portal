@@ -337,7 +337,7 @@ describe('ExperienceSelector', () => {
 
 		userEvent.click(lockIcon);
 
-		getByText('experience-locked-message');
 		getByText('experience-locked');
+		getByText('edit-is-not-allowed-for-this-experience');
 	});
 });

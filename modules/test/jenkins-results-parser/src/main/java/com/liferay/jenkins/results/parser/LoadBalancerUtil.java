@@ -104,8 +104,26 @@ public class LoadBalancerUtil {
 					return baseInvocationURL;
 				}
 
-				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
-					masterPrefix, properties, verbose);
+				Integer minimumRAM = JenkinsMaster.SLAVE_RAM_DEFAULT;
+
+				String minimumRAMString = properties.getProperty("minimum.ram");
+
+				if ((minimumRAMString != null) &&
+					minimumRAMString.matches("\\d+")) {
+
+					minimumRAM = Integer.valueOf(minimumRAMString);
+				}
+
+				List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
+
+				for (JenkinsMaster jenkinsMaster :
+						getAvailableJenkinsMasters(
+							masterPrefix, properties, verbose)) {
+
+					if (jenkinsMaster.getSlaveRAM() >= minimumRAM) {
+						jenkinsMasters.add(jenkinsMaster);
+					}
+				}
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
 					masterPrefix);

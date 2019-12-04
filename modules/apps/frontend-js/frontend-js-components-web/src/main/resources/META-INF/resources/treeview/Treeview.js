@@ -665,6 +665,7 @@ Treeview.propTypes = {
 	nodes: PropTypes.arrayOf(
 		PropTypes.shape({
 			children: PropTypes.array,
+			expanded: PropTypes.bool,
 			id: PropTypes.string.isRequired
 		})
 	).isRequired,

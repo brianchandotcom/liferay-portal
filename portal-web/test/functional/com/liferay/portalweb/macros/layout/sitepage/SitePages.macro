@@ -379,9 +379,16 @@ definition {
 			}
 		}
 
-		Click(
-			key_pageName = "${pageName}",
-			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+		if ("${browserType}" == "internetexplorer") {
+			Click(
+				key_pageName = "${pageName}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON_IE");
+		}
+		else {
+			Click(
+				key_pageName = "${pageName}",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+		}
 
 		MenuItem.click(menuItem = "${menuItem}");
 	}

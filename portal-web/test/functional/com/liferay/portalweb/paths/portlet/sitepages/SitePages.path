@@ -35,6 +35,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON_IE</td>
+	<td>//li[contains(.,'${key_pageName}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_PAGE_TYPE</td>
 	<td>//li[contains(@class,'list-group-item')]//h6[contains(.,'${key_pageType}')]</td>
 	<td></td>

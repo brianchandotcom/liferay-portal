@@ -200,7 +200,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 		return ListUtil.toLongArray(
 			assetEntryAssetCategoryRels,
-			AssetEntryAssetCategoryRel::getAssetCategoryId);
+			AssetEntryAssetCategoryRel::getAssetEntryId);
 	}
 
 	private void _reindex(long assetEntryId) {

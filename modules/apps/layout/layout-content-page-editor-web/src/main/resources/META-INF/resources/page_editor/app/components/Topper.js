@@ -57,9 +57,9 @@ export default function Topper({
 	layoutData,
 	name
 }) {
+	const [edge, setEdge] = useState(null);
 	const containerRef = useRef(null);
 	const dispatch = useContext(DispatchContext);
-	const [dragHover, setDragHover] = useState(null);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
@@ -88,10 +88,11 @@ export default function Topper({
 		}
 	});
 
-	const [{isOver}, drop] = useDrop({
+	const [{isOver, canDrop}, drop] = useDrop({
 		accept: acceptDrop,
 		collect(_monitor) {
 			return {
+				canDrop: _monitor.canDrop(),
 				isOver: _monitor.isOver({shallow: true})
 			};
 		},
@@ -100,7 +101,7 @@ export default function Topper({
 				return {
 					itemId: _item.itemId,
 					itemType: _monitor.getItemType(),
-					position: dragHover,
+					position: edge,
 					siblingId: item.itemId
 				};
 			}
@@ -112,7 +113,7 @@ export default function Topper({
 
 			// Don't replace items with themselves
 			if (dragId === hoverId) {
-				setDragHover(null);
+				setEdge(null);
 
 				return;
 			}
@@ -144,7 +145,7 @@ export default function Topper({
 					parentChildren[dragIndex + 1] !== hoverId &&
 					hoverClientY < hoverMiddleY
 				) {
-					setDragHover(0);
+					setEdge(0);
 					return;
 				}
 
@@ -153,22 +154,22 @@ export default function Topper({
 					parentChildren[dragIndex - 1] !== hoverId &&
 					hoverClientY > hoverMiddleY
 				) {
-					setDragHover(1);
+					setEdge(1);
 					return;
 				}
 			} else {
 				if (hoverClientY < hoverMiddleY) {
-					setDragHover(0);
+					setEdge(0);
 					return;
 				}
 
 				if (hoverClientY > hoverMiddleY) {
-					setDragHover(1);
+					setEdge(1);
 					return;
 				}
 			}
 
-			setDragHover(null);
+			setEdge(null);
 		}
 	});
 
@@ -184,23 +185,34 @@ export default function Topper({
 		'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered': isHovered(
 			item.itemId
 		),
-		'fragments-editor-border-bottom': dragHover === 1 && isOver,
-		'fragments-editor-border-top': dragHover === 0 && isOver
+		'fragments-editor-border-bottom': edge === 1 && isOver,
+		'fragments-editor-border-top': edge === 0 && isOver
 	};
 
-	if (!activeTopper) {
-		return React.cloneElement(children, {
-			className: classNames(children.className, styles),
-			ref: node => {
-				containerRef.current = node;
-				drop(node);
+	const childrenElement = children({isOver, canDrop});
 
-				// Call the original ref, if any.
-				const {ref} = children;
-				if (typeof ref === 'function') {
-					ref(node);
-				}
+	if (!activeTopper) {
+		const isFragment = childrenElement.type === React.Fragment;
+		const realChildren = isFragment ? childrenElement.props.children : childrenElement;
+
+		return React.Children.map(realChildren, child => {
+			if (!child) {
+				return child;
 			}
+
+			return React.cloneElement(child, {
+				className: classNames(child.className, styles),
+				ref: node => {
+					containerRef.current = node;
+					drop(node);
+	
+					// Call the original ref, if any.
+					const {ref} = child;
+					if (typeof ref === 'function') {
+						ref(node);
+					}
+				}
+			});
 		});
 	}
 
@@ -284,7 +296,7 @@ export default function Topper({
 				})}
 				ref={drop}
 			>
-				{children}
+				{childrenElement}
 			</div>
 		</div>
 	);

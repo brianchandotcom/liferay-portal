@@ -1,144 +1,122 @@
 = Liferay Connector
 
 == Overview
-The Anypoint Liferay Connector lets you connect Liferay with other
-platforms and services in the Mulesoft ecosystem or simply leverage
-Liferay's APIs in a more user-friendly way.
+The Anypoint Liferay Connector connects Liferay to other platforms and services
+in the Mulesoft ecosystem.
 
-In this user guide we will explain the main concepts behind the design of
-Liferay connector and you will also learn how to set up and configure a basic
-flow using a Liferay connector.
+Here, you'll learn how the Liferay connector is designed and to set up and
+configure a basic flow using a Liferay connector.
 
 == Prerequisites
-This document assumes that you are familiar with Mule and Anypoint Studio.
-To increase your familiarity with Studio, consider completing an Anypoint Studio
-Tutorial. This page requires basic knowledge of Mule Concepts, Elements in a
-Mule Flow, and Global Elements.
+You should be familiar already with Mule and Anypoint Studio. To learn about
+Studio, consider completing an Anypoint Studio Tutorial. You should know about
+Mule Concepts, Elements in a Mule Flow, and Global Elements.
 
-For connector prerequisites check link:release-notes.adoc[release notes].
+For connector prerequisites, check link:release-notes.adoc[release notes].
 
 == Liferay Connector Design
-Liferay Connector is designed to be dynamically configured with OpenAPI 3.0
-documents that are used to describe all Liferay APIs. You can find Liferay
-OpenAPI documents at the following link:
-https://app.swaggerhub.com/organizations/liferayinc
+Liferay Connector is dynamically configured using OpenAPI 3.0 documents that
+describe all Liferay APIs at https://app.swaggerhub.com/organizations/liferayinc[Swagger Hub]
 
-Each OpenAPI document is also deployed dynamically in your Liferay portal
+Each OpenAPI document is also deployed dynamically in your Liferay Portal
 instance under following schema:
 ....
 http://[host]:[port]/o/[headless-api-app-name]/[version]/openapi.json
 ....
-This OpenAPI document is dynamically generated based on your RESTful web
-service implementation code, therefore it is the most current and accurate
-description of your APIs. More about Liferay APIs can be found at
-https://portal.liferay.dev/docs/7-1/tutorials/-/knowledge_base/t/get-started-discover-the-api
 
-Once you specify OpenAPI document endpoint, Liferay connector will be
-dynamically configured with paths, path/query parameters and entity metadata
-defined in the OpenAPI document.
+This OpenAPI document is dynamically generated based on your deployed RESTful
+web services, so it is the most current and accurate description of your APIs.
+More about Liferay APIs can be found
+https://portal.liferay.dev/docs/7-1/tutorials/-/knowledge_base/t/get-started-discover-the-api[here].
 
-Liferay connector is designed to work with any OpenAPI 3.0 document that was
-designed following Liferay standards. With this approach, all Liferay APIs are
-supported with single Liferay connector.
+Once you specify an OpenAPI document endpoint, Liferay connector is dynamically
+configured with paths, path/query parameters and entity metadata defined in the
+OpenAPI document.
+
+Liferay connector works with any OpenAPI 3.0 document that follows Liferay
+standards. A single Liferay connector supports all Liferay APIs.
 
 == Connector Configuration
-To configure Liferay connector you need to:
+To configure the Liferay connector, you must
 
 . Select authentication method and enter required authentication parameters
 . Specify OpenAPI document endpoint
 
-You can choose between *Basic* and *OAuth2* authentication methods.
-(Read more about authentication methods at
-https://portal.liferay.dev/docs/7-1/tutorials/-/knowledge_base/t/making-authenticated-requests)
+Choose between *Basic* and *OAuth2* authentication methods.
+Read more about authentication methods
+https://portal.liferay.dev/docs/7-2/frameworks/-/knowledge_base/f/making-authenticated-requests[here].
 
 Basic Authentication::
-* Enter *Username* and *Password* pair.
+Enter a *User name* and *Password*.
 
 OAuth2::
-* Enter *Client Key* and *Client Secret* pair.
-+
-Liferay supports OAuth 2.0 Client Credentials grant type. To connect Liferay
-connector to Liferay instance using OAuth 2.0 protocol you need to supply
-*Client ID* (Client Key) and *Client Secret* (Client Secret).
-If you haven't done it already, you also need to set up OAuth2 authorization in
-your Liferay instance by following the next steps:
+* Enter a *Client Key* and *Client Secret*.
 
-** Open *Control Panel* > *OAuth 2 Administration*
-** Click plus sign (*+*) in  the right upper corner to create new OAuth 2
-application entry
-** In *client profile* select *Headless Server* (do this first as it would setup
-correct UI)
-** Set *Application Name*
-** Make sure *Client Credentials* checkbox is checked
-** Click *save*
-+
-At this point, you have available Client ID (*Consumer Key*) and Client Secret
-(*Consumer Secret*) that will be used in your Liferay connector configuration.
-Before you can start using endpoints with OAuth2 authorization you also need to
-enable Scopes:
+You must set up OAuth2 authorization in your Liferay instance first by following
+the instructions
+https://portal.liferay.dev/docs/7-2/deploy/-/knowledge_base/d/oauth-2-0#creating-an-application[here].
+Liferay supports the OAuth 2.0 Client Credentials grant type. Select *Headless
+Server* for the Client Profile.
 
-** Click on *Scopes* tab (if it's not already on your screen, go to Control
-Panel > OAuth2 Administration and edit your newly created OAuth2 application)
-** Unwind desired scope and check authorization options you need (
-_everything_, _everything.write_ or _everything.read_)
-** Click *save*
+Liferay generates a Client ID (*Consumer Key*) and Client Secret (*Consumer
+Secret*) to use in your Liferay connector configuration. Before you can start
+using endpoints with OAuth2 authorization you must also enable
+https://portal.liferay.dev/docs/7-2/deploy/-/knowledge_base/d/oauth2-scopes[scopes].
+Select the desired scope and check authorization options you need, such as
+_everything_, _everything.write_ or _everything.read_.
 
 Specify OpenAPI Document::
-Once you have entered authorization parameters all that's left to do is to
-specify which Liferay API you want to use. As we mentioned in the previous
-section you achieve that by specifying the OpenAPI document endpoint which
-describes desired API. For example if you'd like to use Commerce
-Admin Catalog API you would enter
-http://[host]:[port]/o/headless-commerce-admin-catalog/v1.0/openapi.json into
-*OpenAPI Spec URL* field.
-[%hardbreaks]
-* Configuration example with Basic authentication
+Once authorized, you can specify the Liferay API you want to use. Specify the
+OpenAPI document endpoint that describes the API you want. For example, the
+Commerce Admin Catalog API is here:
+
+http://[host]:[port]/o/headless-commerce-admin-catalog/v1.0/openapi.json
+
+Enter it into the
+*OpenAPI Spec URL* field. [%hardbreaks]
+
+* Configuration example using Basic authentication
+
 ```xml
  <liferay:config name="Liferay_Config_Catalog">
  <liferay:basic-connection _username=${username} _password=${password} _openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json"/>
  </liferay:config>
 ```
 
-* Configuration example with OAuth 2.0
+* Configuration example using OAuth 2.0
 ```xml
  <liferay:config name="Liferay_Config_Catalog">
     <liferay:oauth2-connection _consumerKey="${consumerKey}" _consumerSecret=${consumerSecret} _openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json"/>
  </liferay:config>
 ```
 
-If *Test Connection* is successful you can start building flows using Liferay
-connector!
+If *Test Connection* is successful you can start building flows using the
+Liferay connector!
 
 == Operations
-After you have created new Mule project, imported and configured Liferay
-connector, it's time to build your Mule flows using Liferay connector
-operations. Operations enable you to *Create*, *Delete*, *Get* and *Update*
-resources defined by your OpenAPI document. Each operation implements and
-exposes different parts of the specified OpenAPI document which will be
-explained in detail below.
+Now that you've created your Mule project and imported and configured the
+Liferay connector, you can build your Mule flows using Liferay connector
+operations. Operations *Create*, *Delete*, *Get* and *Update* resources defined
+by your OpenAPI document. Each operation implements and exposes different parts
+of the specified OpenAPI document.
 
-Create Operation::
-Create operation exposes all endpoints that are manipulated by POST HTTP method.
-+
-On the next picture, you can see SwaggerHub UI with the definition of
-"/products" endpoint which is used to create a new product using POST HTTP
-method. On the right side you can see available path parameters, request body
-structure and all possible responses.
-+
-image::../images/swaggerhub_products_post.png[]
-+
-The following picture shows that same endpoint being used with Liferay
-connector's Create operation in a flow that imports products from Salesforce
-into Liferay Commerce. Once you select desired endpoint from the Endpoint
-dropdown list, the connector will dynamically generate related Metadata which
-can be seen in the bottom right corner.
-+
-image::../images/anypoint_studio_products_create.png[]
-+
-Next, we will define input parameters. Keep in mind input parameters are
-designed in a way to support all Liferay RESTful web services and don't have to
-be used with every endpoint:
-+
+=== Create Operation
+
+Create exposes all endpoints that are manipulated by HTTP POST.
+
+The SwaggerHub UI shows all available path parameters, request body
+structures, and all possible responses.
+
+image::../images/swaggerhub_products_post.png[The "/products" endpoint creates a new product using HTTP POST.]
+
+Once you select desired endpoint from the Endpoint selector the connector
+dynamically generates related Metadata.
+
+image::../images/anypoint_studio_products_create.png[The same endpoint is used in a flow that imports products from Salesforce into Liferay Commerce. ]
+
+Next, you define input parameters. Input parameters support all Liferay RESTful
+web services and need not be used with every endpoint:
+
 [%header,cols=4*]
 |===
 |Parameter name
@@ -167,10 +145,10 @@ be used with every endpoint:
 |No
 |===
 
-Delete Operation::
-Delete operation exposes all endpoints that are manipulated by DELETE HTTP
-method. Input parameters:
-+
+=== Delete Operation
+The Delete operation exposes all endpoints that are manipulated by HTTP DELETE.
+Input parameters:
+
 [%header,cols=4*]
 |===
 |Parameter name
@@ -194,10 +172,10 @@ method. Input parameters:
 |No
 |===
 
-Get Operation::
-Get operation exposes all endpoints that are manipulated by GET HTTP
-method. Input parameters:
-+
+=== Get Operation
+The Get operation exposes all endpoints that are manipulated by HTTP GET.
+Input parameters:
+
 [%header,cols=4*]
 |===
 |Parameter name
@@ -221,10 +199,10 @@ method. Input parameters:
 |No
 |===
 
-Update Operation::
-Update operation exposes all endpoints that are manipulated by PATCH HTTP
-method. Input parameters:
-+
+=== Update Operation
+The Update operation exposes all endpoints that are manipulated by HTTP PATCH.
+Input parameters:
+
 [%header,cols=4*]
 |===
 |Parameter name
@@ -253,10 +231,9 @@ method. Input parameters:
 |No
 |===
 
-It is recommended to use
+You should use
 https://app.swaggerhub.com/organizations/liferayinc as documentation for Liferay
-connector operations to see all available path/query parameters, request body
-examples, expected success and error responses, etc..
+connector operations.
 You can also use the OpenAPI document from the endpoint you defined in
 connector configuration, in which case you lose the helpful UI offered by
 SwaggerHub editor.

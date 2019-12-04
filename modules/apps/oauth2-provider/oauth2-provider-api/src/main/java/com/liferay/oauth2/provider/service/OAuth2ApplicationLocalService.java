@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -64,6 +65,17 @@ public interface OAuth2ApplicationLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationLocalServiceUtil} to access the o auth2 application local service. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2ApplicationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList,
+			Consumer<OAuth2Scope.Builder> builderConsumer,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public OAuth2Application addOAuth2Application(
 			long companyId, long userId, String userName,
 			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,

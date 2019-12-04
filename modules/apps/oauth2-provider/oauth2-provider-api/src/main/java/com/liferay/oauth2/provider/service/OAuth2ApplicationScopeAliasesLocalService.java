@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -60,6 +61,12 @@ public interface OAuth2ApplicationScopeAliasesLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2ApplicationScopeAliasesLocalServiceUtil} to access the o auth2 application scope aliases local service. Add custom service methods to <code>com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
+			long companyId, long userId, String userName,
+			long oAuth2ApplicationId,
+			Consumer<OAuth2Scope.Builder> builderConsumer)
+		throws PortalException;
+
 	public OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
 			long companyId, long userId, String userName,
 			long oAuth2ApplicationId, List<String> scopeAliasesList)

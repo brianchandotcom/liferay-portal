@@ -36,6 +36,7 @@ import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2Scope;
 import com.liferay.oauth2.provider.service.base.OAuth2ApplicationLocalServiceBaseImpl;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.portal.aop.AopService;
@@ -78,6 +79,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -93,6 +95,89 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class OAuth2ApplicationLocalServiceImpl
 	extends OAuth2ApplicationLocalServiceBaseImpl {
+
+	@Override
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList,
+			Consumer<OAuth2Scope.Builder> builderConsumer,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (allowedGrantTypesList == null) {
+			allowedGrantTypesList = new ArrayList<>();
+		}
+
+		if (Validator.isBlank(clientId)) {
+			clientId = OAuth2SecureRandomGenerator.generateClientId();
+		}
+		else {
+			clientId = StringUtil.trim(clientId);
+		}
+
+		homePageURL = StringUtil.trim(homePageURL);
+		name = StringUtil.trim(name);
+		privacyPolicyURL = StringUtil.trim(privacyPolicyURL);
+
+		if (redirectURIsList == null) {
+			redirectURIsList = new ArrayList<>();
+		}
+
+		validate(
+			companyId, allowedGrantTypesList, clientId, clientProfile,
+			clientSecret, homePageURL, name, privacyPolicyURL,
+			redirectURIsList);
+
+		long oAuth2ApplicationId = counterLocalService.increment(
+			OAuth2Application.class.getName());
+
+		User user = _userLocalService.getUser(clientCredentialUserId);
+
+		OAuth2Application oAuth2Application =
+			oAuth2ApplicationPersistence.create(oAuth2ApplicationId);
+
+		oAuth2Application.setCompanyId(companyId);
+		oAuth2Application.setUserId(userId);
+		oAuth2Application.setUserName(userName);
+		oAuth2Application.setCreateDate(new Date());
+		oAuth2Application.setModifiedDate(new Date());
+		oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
+		oAuth2Application.setClientCredentialUserId(user.getUserId());
+		oAuth2Application.setClientCredentialUserName(user.getScreenName());
+		oAuth2Application.setClientId(clientId);
+		oAuth2Application.setClientProfile(clientProfile);
+		oAuth2Application.setClientSecret(clientSecret);
+		oAuth2Application.setDescription(description);
+		oAuth2Application.setFeaturesList(featuresList);
+		oAuth2Application.setHomePageURL(homePageURL);
+		oAuth2Application.setIconFileEntryId(iconFileEntryId);
+		oAuth2Application.setName(name);
+		oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
+		oAuth2Application.setRedirectURIsList(redirectURIsList);
+
+		if (builderConsumer != null) {
+			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
+				_oAuth2ApplicationScopeAliasesLocalService.
+					addOAuth2ApplicationScopeAliases(
+						companyId, userId, userName, oAuth2ApplicationId,
+						builderConsumer);
+
+			oAuth2Application.setOAuth2ApplicationScopeAliasesId(
+				oAuth2ApplicationScopeAliases.
+					getOAuth2ApplicationScopeAliasesId());
+		}
+
+		resourceLocalService.addResources(
+			oAuth2Application.getCompanyId(), 0, oAuth2Application.getUserId(),
+			OAuth2Application.class.getName(),
+			oAuth2Application.getOAuth2ApplicationId(), false, false, false);
+
+		return oAuth2ApplicationPersistence.update(oAuth2Application);
+	}
 
 	@Override
 	public OAuth2Application addOAuth2Application(

@@ -50,6 +50,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
+		var browserType = PropsUtil.get("browser.type");
+		var key_portletName = "${portletName}";
+
+		if (("${browserType}" == "internetexplorer") && (IsElementNotPresent(locator1 = "Home#PORTLET"))) {
+			Refresh();
+		}
+
 		BlogsConfiguration.viewNoPermissionPG();
 	}
 

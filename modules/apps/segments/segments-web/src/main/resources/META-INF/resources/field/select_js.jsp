@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 String selectEventName = ParamUtil.getString(request, "selectEventName");
-String displayStyle = ParamUtil.getString(request, "displayStyle");
 %>
 
 <aui:script use="liferay-search-container">

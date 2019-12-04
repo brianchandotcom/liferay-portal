@@ -63,15 +63,15 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 						return response.text();
 					})
 					.then(function(response) {
-						const sidebar = document.querySelector('.sidebar-body');
+						var sidebar = document.querySelector('.sidebar-body');
 						sidebar.innerHTML = '';
 
-						const range = document.createRange();
+						var range = document.createRange();
 						range.selectNode(sidebar);
 
-						const fragment = range.createContextualFragment(response);
+						var fragment = range.createContextualFragment(response);
 
-						const pagesTree = document.createElement('div');
+						var pagesTree = document.createElement('div');
 						pagesTree.setAttribute('class', 'pages-tree');
 						pagesTree.appendChild(fragment);
 

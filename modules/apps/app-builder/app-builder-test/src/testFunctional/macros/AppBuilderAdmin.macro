@@ -157,4 +157,12 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
 	}
 
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+	}
+
 }

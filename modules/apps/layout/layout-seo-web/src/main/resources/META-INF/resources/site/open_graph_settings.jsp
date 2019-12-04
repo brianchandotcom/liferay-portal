@@ -61,6 +61,15 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	var openGraphImageButton = document.getElementById(
 		'<portlet:namespace />openGraphImageButton'
 	);
+
+	var itemSelectorDialog = new ItemSelectorDialog.default({
+		buttonAddLabel: '<liferay-ui:message key="done" />',
+		eventName: '<portlet:namespace />openGraphImageSelectedItem',
+		singleSelect: true,
+		title: '<liferay-ui:message key="open-graph-image" />',
+		url: '<%= openGraphSettingsDisplayContext.getItemSelectorURL() %>'
+	});
+
 	var openGraphImageFileEntryId = document.getElementById(
 		'<portlet:namespace />openGraphImageFileEntryId'
 	);
@@ -68,36 +77,21 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 		'<portlet:namespace />openGraphImageURL'
 	);
 
-	if (openGraphImageButton) {
-		var itemSelectorDialog = new ItemSelectorDialog.default({
-			buttonAddLabel: '<liferay-ui:message key="done" />',
-			eventName: '<portlet:namespace />openGraphImageSelectedItem',
-			singleSelect: true,
-			title: '<liferay-ui:message key="open-graph-image" />',
-			url: '<%= openGraphSettingsDisplayContext.getItemSelectorURL() %>'
-		});
+	itemSelectorDialog.on('selectedItemChange', function(event) {
+		var selectedItem = event.selectedItem;
 
-		itemSelectorDialog.on('selectedItemChange', function(event) {
-			var selectedItem = event.selectedItem;
+		if (selectedItem) {
+			var itemValue = JSON.parse(selectedItem.value);
 
-			if (selectedItem) {
-				var itemValue = JSON.parse(selectedItem.value);
+			openGraphImageFileEntryId.value = itemValue.fileEntryId;
+			openGraphImageURL.value = itemValue.url;
+		}
+	});
 
-				if (openGraphImageFileEntryId) {
-					openGraphImageFileEntryId.value = itemValue.fileEntryId;
-				}
-
-				if (openGraphImageURL) {
-					openGraphImageURL.value = itemValue.url;
-				}
-			}
-		});
-
-		openGraphImageButton.addEventListener('click', function(event) {
-			event.preventDefault();
-			itemSelectorDialog.open();
-		});
-	}
+	openGraphImageButton.addEventListener('click', function(event) {
+		event.preventDefault();
+		itemSelectorDialog.open();
+	});
 
 	var openGraphClearImageButton = document.getElementById(
 		'<portlet:namespace />openGraphClearImageButton'
@@ -112,22 +106,11 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 		'<portlet:namespace />openGraphEnabled'
 	);
 
-	if (openGraphEnabledCheck && openGraphImageButton) {
-		openGraphEnabledCheck.addEventListener('click', function(event) {
-			var disabled = !event.target.checked;
+	openGraphEnabledCheck.addEventListener('click', function(event) {
+		var disabled = !event.target.checked;
 
-			Liferay.Util.toggleDisabled(
-				openGraphImageURL,
-				disabled
-			);
-			Liferay.Util.toggleDisabled(
-				openGraphImageButton,
-				disabled
-			);
-			Liferay.Util.toggleDisabled(
-				openGraphClearImageButton,
-				disabled
-			);
-		});
-	}
+		Liferay.Util.toggleDisabled(openGraphImageURL, disabled);
+		Liferay.Util.toggleDisabled(openGraphImageButton, disabled);
+		Liferay.Util.toggleDisabled(openGraphClearImageButton, disabled);
+	});
 </aui:script>

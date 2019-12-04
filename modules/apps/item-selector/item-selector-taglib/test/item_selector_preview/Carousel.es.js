@@ -26,11 +26,11 @@ const basicMetadata = {
 			data: [
 				{
 					key: Liferay.Language.get('format'),
-					value: "jpg"
+					value: 'jpg'
 				},
 				{
 					key: Liferay.Language.get('name'),
-					value: "test image.jpg"
+					value: 'test image.jpg'
 				}
 			],
 			title: 'file-info'
@@ -44,13 +44,13 @@ const carouselProps = {
 		returntype: 'returntype',
 		title: itemTitle,
 		url: itemUrl,
-		value: itemUrl,
+		value: itemUrl
 	},
 	handleClickNext: jest.fn(),
 	handleClickPrevious: jest.fn()
 };
 
-const renderCarouselComponent = (props) => render(<Carousel {...props} />);
+const renderCarouselComponent = props => render(<Carousel {...props} />);
 
 describe('Carousel', () => {
 	afterEach(cleanup);
@@ -64,7 +64,9 @@ describe('Carousel', () => {
 	it('renders sidenav content inside the sidenav container', () => {
 		const {container} = renderCarouselComponent(carouselProps);
 
-		expect(container.firstChild.querySelector('.sidenav-content')).not.toBeNull();
+		expect(
+			container.firstChild.querySelector('.sidenav-content')
+		).not.toBeNull();
 	});
 
 	it('renders an image with alt attribute', () => {
@@ -88,7 +90,10 @@ describe('Arrow elements', () => {
 	});
 
 	it('does not render arrows if prop "showArrows" is false', () => {
-		const {container} = renderCarouselComponent({...carouselProps, showArrows: false});
+		const {container} = renderCarouselComponent({
+			...carouselProps,
+			showArrows: false
+		});
 
 		expect(container.querySelector('.icon-arrow')).toBeNull();
 	});
@@ -101,7 +106,6 @@ describe('Arrow elements', () => {
 		expect(carouselProps.handleClickPrevious).toHaveBeenCalled();
 	});
 });
-
 
 describe('Infopanel', () => {
 	afterEach(cleanup);
@@ -116,7 +120,5 @@ describe('Infopanel', () => {
 		const {getByText} = renderCarouselComponent(carouselProps);
 
 		expect(getByText(itemTitle));
-		console.log(itemTitle);
 	});
-
 });

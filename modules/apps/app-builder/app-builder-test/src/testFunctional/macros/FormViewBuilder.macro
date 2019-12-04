@@ -171,13 +171,13 @@ definition {
 		Click(
 			key_fieldName = "${fieldName}",
 			key_radioOption = "${radioOption}",
-			locator1 = "FormFields#RADIO_OPTION_LABEL");
+			locator1 = "FormViewBuilder#RADIO_OPTION_LABEL");
 	}
 
 	macro editDate {
 		Type(
 			key_fieldName = "${fieldName}",
-			locator1 = "FormFields#DATE_FIELD",
+			locator1 = "FormViewBuilder#DATE_FIELD",
 			value1 = "${fieldValue}");
 	}
 

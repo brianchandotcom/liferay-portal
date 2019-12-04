@@ -510,7 +510,7 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//section//h2[contains(.,'${key_portletName}')] | //div[contains(@class,'portlet-borderless')]/span[contains(.,'${key_portletName}')]</td>
+	<td>//section[contains(@class,'portlet')]//h2[contains(.,'${key_portletName}')] | //div[contains(@class,'portlet-borderless')]/span[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

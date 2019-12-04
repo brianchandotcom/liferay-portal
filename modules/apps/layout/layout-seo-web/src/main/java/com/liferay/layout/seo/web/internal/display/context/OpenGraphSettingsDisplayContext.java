@@ -44,16 +44,15 @@ import javax.servlet.http.HttpServletRequest;
 public class OpenGraphSettingsDisplayContext {
 
 	public OpenGraphSettingsDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, DLURLHelper dlurlHelper,
-		ItemSelector itemSelector,
+		DLURLHelper dlurlHelper, HttpServletRequest httpServletRequest,
+		ItemSelector itemSelector, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
 		OpenGraphConfiguration openGraphConfiguration) {
 
-		_httpServletRequest = httpServletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_dlurlHelper = dlurlHelper;
+		_httpServletRequest = httpServletRequest;
 		_itemSelector = itemSelector;
+		_liferayPortletResponse = liferayPortletResponse;
 		_openGraphConfiguration = openGraphConfiguration;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(

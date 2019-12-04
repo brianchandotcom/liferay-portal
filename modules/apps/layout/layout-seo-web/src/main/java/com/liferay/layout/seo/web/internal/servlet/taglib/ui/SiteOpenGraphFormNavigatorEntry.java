@@ -87,10 +87,10 @@ public class SiteOpenGraphFormNavigatorEntry
 		httpServletRequest.setAttribute(
 			OpenGraphSettingsDisplayContext.class.getName(),
 			new OpenGraphSettingsDisplayContext(
-				httpServletRequest,
+				_dlurlHelper, httpServletRequest, _itemSelector,
 				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse),
-				_dlurlHelper, _itemSelector, _openGraphConfiguration));
+				_openGraphConfiguration));
 
 		super.include(httpServletRequest, httpServletResponse);
 	}

@@ -74,7 +74,7 @@ public class LayoutsSEODisplayContext {
 
 		Company company = _themeDisplay.getCompany();
 
-		_ddmStructure = DDMStructureServiceUtil.fetchStructure(
+		_ddmStructure = DDMStructureServiceUtil.getStructure(
 			company.getGroupId(),
 			ClassNameLocalServiceUtil.getClassNameId(
 				LayoutSEOEntry.class.getName()),

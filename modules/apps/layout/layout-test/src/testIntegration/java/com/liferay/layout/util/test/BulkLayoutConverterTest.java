@@ -156,6 +156,20 @@ public class BulkLayoutConverterTest {
 				_group.getGroupId()));
 	}
 
+	@Test
+	public void testGetConvertibleLayoutPlidsAfterConvertLayoutsInGroup()
+		throws Exception {
+
+		_addLayouts();
+
+		_bulkLayoutConverter.convertLayouts(_group.getGroupId());
+
+		_assertPlids(
+			new long[0],
+			_bulkLayoutConverter.getConvertibleLayoutPlids(
+				_group.getGroupId()));
+	}
+
 	private void _addLayouts() throws Exception {
 		_contentLayout = LayoutTestUtil.addLayout(_group);
 

@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that an entry with a depot image can be added."
+	@description = "This ensures that a depot image can be used through Blogs on a connected site."
 	@priority = "5"
 	test AddImageViaBlogs {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -91,7 +91,7 @@ definition {
 			uploadFileName = "Document_2");
 	}
 
-	@description = "This ensures that a content page with a depot image can be added."
+	@description = "This ensures that a depot image can be used through page creation on a connected site."
 	@priority = "5"
 	test AddImageViaContentPage {
 		JSONGroup.addGroup(groupName = "Site Name");

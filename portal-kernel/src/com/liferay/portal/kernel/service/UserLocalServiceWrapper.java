@@ -2302,15 +2302,12 @@ public class UserLocalServiceWrapper
 	 user's first name, middle name, last name, screen name, or email
 	 address
 	 * @param status the workflow status
-	 * @param params the indexer parameters (optionally <code>null</code>). For
-	 more information see {@link
-	 com.liferay.portlet.usersadmin.util.UserIndexer}.
+	 * @param params the indexer parameters (optionally <code>null</code>).
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param sort the field and direction to sort by (optionally
 	 <code>null</code>)
 	 * @return the matching users
-	 * @see com.liferay.portlet.usersadmin.util.UserIndexer
 	 */
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
@@ -2408,9 +2405,7 @@ public class UserLocalServiceWrapper
 	 * @param screenName the screen name keywords
 	 * @param emailAddress the email address keywords
 	 * @param status the workflow status
-	 * @param params the indexer parameters (optionally <code>null</code>). For
-	 more information see {@link
-	 com.liferay.portlet.usersadmin.util.UserIndexer}.
+	 * @param params the indexer parameters (optionally <code>null</code>).
 	 * @param andSearch whether every field must match its keywords, or just
 	 one field. For example, &quot;users with the first name 'bob' and
 	 last name 'smith'&quot; vs &quot;users with the first name 'bob'
@@ -2420,7 +2415,6 @@ public class UserLocalServiceWrapper
 	 * @param sort the field and direction to sort by (optionally
 	 <code>null</code>)
 	 * @return the matching users
-	 * @see com.liferay.portlet.usersadmin.util.UserIndexer
 	 */
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(

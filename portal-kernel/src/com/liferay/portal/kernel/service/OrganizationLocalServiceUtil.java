@@ -1083,16 +1083,13 @@ public class OrganizationLocalServiceUtil {
 	 * @param keywords the keywords (space separated), which may occur in the
 	 organization's name, street, city, zipcode, type, region or
 	 country (optionally <code>null</code>)
-	 * @param params the finder parameters (optionally <code>null</code>). For
-	 more information see {@link
-	 com.liferay.portlet.usersadmin.util.OrganizationIndexer}
+	 * @param params the finder parameters (optionally <code>null</code>).
 	 * @param start the lower bound of the range of organizations to return
 	 * @param end the upper bound of the range of organizations to return (not
 	 inclusive)
 	 * @param sort the field and direction by which to sort (optionally
 	 <code>null</code>)
 	 * @return the matching organizations ordered by name
-	 * @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
 	 */
 	public static com.liferay.portal.kernel.search.Hits search(
 		long companyId, long parentOrganizationId, String keywords,
@@ -1341,9 +1338,7 @@ public class OrganizationLocalServiceUtil {
 	 * @param zip the zipcode keywords (optionally <code>null</code>)
 	 * @param region the region keywords (optionally <code>null</code>)
 	 * @param country the country keywords (optionally <code>null</code>)
-	 * @param params the finder parameters (optionally <code>null</code>). For
-	 more information see {@link
-	 com.liferay.portlet.usersadmin.util.OrganizationIndexer}.
+	 * @param params the finder parameters (optionally <code>null</code>).
 	 * @param andSearch whether every field must match its keywords or just one
 	 field
 	 * @param start the lower bound of the range of organizations to return
@@ -1352,7 +1347,6 @@ public class OrganizationLocalServiceUtil {
 	 * @param sort the field and direction by which to sort (optionally
 	 <code>null</code>)
 	 * @return the matching organizations ordered by <code>sort</code>
-	 * @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
 	 */
 	public static com.liferay.portal.kernel.search.Hits search(
 		long companyId, long parentOrganizationId, String name, String type,

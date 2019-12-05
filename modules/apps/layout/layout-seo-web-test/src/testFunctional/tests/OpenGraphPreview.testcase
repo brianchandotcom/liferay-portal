@@ -143,13 +143,13 @@ definition {
 			customDescription = "This is a custom description",
 			customTitle = "This is a custom title");
 
-		var checkboxName = "Use Custom Title";
+		Click(
+			checkboxName = "Use Custom Title",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Click(locator1 = "Checkbox#ANY_CHECKBOX");
-
-		var checkboxName = "Use Custom Description";
-
-		Click(locator1 = "Checkbox#ANY_CHECKBOX");
+		Click(
+			checkboxName = "Use Custom Description",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		Button.clickSave();
 
@@ -342,13 +342,13 @@ definition {
 			customDescription = "This is a custom description",
 			customTitle = "This is a custom title");
 
-		var checkboxName = "Use Custom Title";
+		Click(
+			checkboxName = "Use Custom Title",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		Click(locator1 = "Checkbox#ANY_CHECKBOX");
-
-		var checkboxName = "Use Custom Description";
-
-		Click(locator1 = "Checkbox#ANY_CHECKBOX");
+		Click(
+			checkboxName = "Use Custom Description",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		Button.clickSave();
 

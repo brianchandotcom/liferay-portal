@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.apps;
+package com.liferay.journal.web.internal.depot.application;
 
 import com.liferay.depot.application.DepotApplication;
+import com.liferay.journal.constants.JournalPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,11 +23,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DepotApplication.class)
-public class TrashDepotApplication implements DepotApplication {
+public class JournalDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return "com_liferay_trash_web_portlet_TrashPortlet";
+		return JournalPortletKeys.JOURNAL;
 	}
 
 }

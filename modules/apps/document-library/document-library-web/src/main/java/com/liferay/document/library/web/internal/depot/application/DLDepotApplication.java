@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.apps;
+package com.liferay.document.library.web.internal.depot.application;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.document.library.constants.DLPortletKeys;

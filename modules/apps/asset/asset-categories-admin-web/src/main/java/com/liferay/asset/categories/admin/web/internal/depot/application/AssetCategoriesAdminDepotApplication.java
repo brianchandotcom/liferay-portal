@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.apps;
+package com.liferay.asset.categories.admin.web.internal.depot.application;
 
 import com.liferay.depot.application.DepotApplication;
 
@@ -22,11 +22,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DepotApplication.class)
-public class AssetTagsAdminDepotApplication implements DepotApplication {
+public class AssetCategoriesAdminDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
+		return "com_liferay_asset_categories_admin_web_portlet_" +
+			"AssetCategoriesAdminPortlet";
 	}
 
 }

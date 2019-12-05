@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//input[@id='${key_roleTitle}_ACTION_ADD_TO_PAGE']</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_TO_PAGE'] | //input[@id='${key_roleTitle}_PRESELECTED_ADD_TO_PAGE']</td>
 	<td></td>
 </tr>
 <tr>

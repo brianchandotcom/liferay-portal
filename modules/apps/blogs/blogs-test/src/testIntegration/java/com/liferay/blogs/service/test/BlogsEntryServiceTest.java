@@ -19,7 +19,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -228,122 +227,6 @@ public class BlogsEntryServiceTest {
 				_groupUser, permissionChecker)) {
 
 			BlogsEntryServiceUtil.deleteEntry(entry.getEntryId());
-		}
-	}
-
-	@Test
-	public void testDeprecatedAddEntryWithAddEntryPermission()
-		throws Exception {
-
-		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_company.getCompanyId(), "com.liferay.blogs",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			siteMemberRole.getRoleId(), ActionKeys.ADD_ENTRY);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			BlogsEntryServiceUtil.addEntry(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 1, 1, 1990, 1, 1, true, false,
-				new String[0], false, StringPool.BLANK, StringPool.BLANK, null,
-				serviceContext);
-		}
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeprecatedAddEntryWithoutAddEntryPermission()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			BlogsEntryServiceUtil.addEntry(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 1, 1, 1990, 1, 1, true, false,
-				new String[0], false, StringPool.BLANK, StringPool.BLANK, null,
-				serviceContext);
-		}
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeprecatedUpdateEntryWithoutUpdatePermission()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
-
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			serviceContext = ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-			BlogsEntryServiceUtil.updateEntry(
-				entry.getEntryId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 1,
-				1, 1990, 1, 1, true, false, new String[0], false,
-				StringPool.BLANK, StringPool.BLANK, null, serviceContext);
-		}
-	}
-
-	@Test
-	public void testDeprecatedUpdateEntryWithUpdatePermission()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
-
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
-
-		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_group.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
-			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
-			siteMemberRole.getRoleId(), ActionKeys.UPDATE);
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			serviceContext = ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
-			BlogsEntryServiceUtil.updateEntry(
-				entry.getEntryId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(), 1,
-				1, 1990, 1, 1, true, false, new String[0], false,
-				StringPool.BLANK, StringPool.BLANK, null, serviceContext);
 		}
 	}
 

@@ -180,10 +180,52 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		if (isSet(analyzer)) {
+			Type(
+				key_fieldLabel = "Analyzer",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${analyzer}");
+		}
+
 		if (isSet(displayTemplate)) {
 			Select(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "${displayTemplate}");
+		}
+
+		if (isSet(fields)) {
+			Type(
+				key_fieldLabel = "Fields",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fields}");
+		}
+
+		if (isSet(maximumDocumentFrequency)) {
+			Type(
+				key_fieldLabel = "Maximum Document Frequency",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${maximumDocumentFrequency}");
+		}
+
+		if (isSet(maximumItemDisplay)) {
+			Type(
+				key_maximumItems = "Maximum Item Display",
+				locator1 = "Search#SIMILAR_RESULTS_MAXIMUM_ITEM_DISPLAY",
+				value1 = "${maximumItemDisplay}");
+		}
+
+		if (isSet(maximumQueryTerms)) {
+			Type(
+				key_fieldLabel = "Maximum Query Terms",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${maximumQueryTerms}");
+		}
+
+		if (isSet(maximumWordLength)) {
+			Type(
+				key_fieldLabel = "Maximum Word Length",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${maximumWordLength}");
 		}
 
 		if (isSet(minimumDocumentFrequency)) {
@@ -193,11 +235,32 @@ definition {
 				value1 = "${minimumDocumentFrequency}");
 		}
 
+		if (isSet(minimumShouldMatch)) {
+			Type(
+				key_fieldLabel = "Minimum Should Match",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${minimumShouldMatch}");
+		}
+
 		if (isSet(minimumTermFrequency)) {
 			Type(
 				key_fieldLabel = "Minimum Term Frequency",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${minimumTermFrequency}");
+		}
+
+		if (isSet(minimumWordLength)) {
+			Type(
+				key_fieldLabel = "Minimum Word Length",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${minimumWordLength}");
+		}
+
+		if (isSet(stopWords)) {
+			Type(
+				key_fieldLabel = "Stop Words",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${stopWords}");
 		}
 
 		PortletEntry.save();

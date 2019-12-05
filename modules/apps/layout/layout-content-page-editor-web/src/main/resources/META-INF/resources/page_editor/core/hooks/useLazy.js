@@ -14,30 +14,41 @@
 
 import React from 'react';
 
-const {lazy, useCallback} = React;
+const {lazy, useCallback, useRef} = React;
 
 /**
- * Returns a component that takes a promise of a plugin instance and
- * wraps it in a `React.lazy` wrapper. The supplied callback will be
- * called with the plugin instance once it resolves, and should return
- * something to be rendered.
+ * Returns a component that takes a `pluginId` and a `getInstance`
+ * function (for obtaining a promise of a plugin instance) and wraps it
+ * in a `React.lazy` wrapper.
+ *
+ * The supplied callback will be called with the plugin instance once the
+ * promise resolves, and should return something to be rendered.
  */
 export default function useLazy(callback) {
+	const components = useRef(new Map());
+
 	return useCallback(
-		({plugin}) => {
-			const Component = lazy(() => {
-				return plugin.then(instance => {
-					return {
-						default: () => {
-							if (instance) {
-								return callback({instance});
-							} else {
-								return null;
+		({getInstance, pluginId}) => {
+			if (!components.current.has(pluginId)) {
+				const plugin = getInstance(pluginId);
+
+				const Component = lazy(() => {
+					return plugin.then(instance => {
+						return {
+							default: () => {
+								if (instance) {
+									return callback({instance});
+								} else {
+									return null;
+								}
 							}
-						}
-					};
+						};
+					});
 				});
-			});
+
+				components.current.set(pluginId, Component);
+			}
+			const Component = components.current.get(pluginId);
 
 			return <Component />;
 		},

@@ -200,7 +200,8 @@ export default function Sidebar() {
 						<ErrorBoundary handleError={() => setHasError(true)}>
 							<Suspense fallback={<ClayLoadingIndicator />}>
 								<SidebarPanel
-									plugin={getInstance(activePluginId)}
+									getInstance={getInstance}
+									pluginId={activePluginId}
 								/>
 							</Suspense>
 						</ErrorBoundary>

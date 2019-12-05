@@ -109,9 +109,8 @@ function ToolbarBody() {
 										}
 									>
 										<ToolbarSection
-											plugin={getInstance(
-												pluginEntryPoint
-											)}
+											getInstance={getInstance}
+											pluginId={pluginEntryPoint}
 										/>
 									</Suspense>
 								</ErrorBoundary>

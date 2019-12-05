@@ -29,21 +29,9 @@ String[] templateLanguageTypes = journalEditDDMTemplateDisplayContext.getTemplat
 <aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
 <c:choose>
-	<c:when test="<%= (templateLanguageTypes.length == 1) && ((ddmTemplate == null) || Objects.equals(templateLanguageTypes[0], ddmTemplate.getLanguage())) %>">
-
-		<%
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(LanguageUtil.get(request, templateLanguageTypes[0] + "[stands-for]"));
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(StringPool.PERIOD);
-		sb.append(journalEditDDMTemplateDisplayContext.getLanguage());
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-		%>
-
+	<c:when test="<%= journalEditDDMTemplateDisplayContext.isShowSpecificLanguageType() %>">
 		<p class="article-structure">
-			<b><liferay-ui:message key="language" /></b>: <%= sb.toString() %>
+			<b><liferay-ui:message key="language" /></b>: <%= journalEditDDMTemplateDisplayContext.getTemplateLanguageTypeLabel(templateLanguageTypes[0]) %>
 		</p>
 
 		<aui:input name="language" type="hidden" value="<%= journalEditDDMTemplateDisplayContext.getLanguage() %>" />
@@ -52,24 +40,10 @@ String[] templateLanguageTypes = journalEditDDMTemplateDisplayContext.getTemplat
 		<aui:select changesContext="<%= true %>" label="language" name="language">
 
 			<%
-			String[] extendedTemplateLanguageTypes = templateLanguageTypes;
-
-			if ((ddmTemplate != null) && !ArrayUtil.contains(templateLanguageTypes, ddmTemplate.getLanguage())) {
-				extendedTemplateLanguageTypes = ArrayUtil.append(templateLanguageTypes, ddmTemplate.getLanguage());
-			}
-
-			for (String curLangType : extendedTemplateLanguageTypes) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(StringPool.PERIOD);
-				sb.append(curLangType);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+			for (String curLangType : journalEditDDMTemplateDisplayContext.getExtendedTemplateLanguageTypes()) {
 			%>
 
-				<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), curLangType) %>" value="<%= curLangType %>" />
+				<aui:option label="<%= journalEditDDMTemplateDisplayContext.getTemplateLanguageTypeLabel(curLangType) %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), curLangType) %>" value="<%= curLangType %>" />
 
 			<%
 			}

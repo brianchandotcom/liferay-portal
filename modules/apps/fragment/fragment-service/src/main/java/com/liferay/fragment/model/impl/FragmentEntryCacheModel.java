@@ -113,10 +113,10 @@ public class FragmentEntryCacheModel
 		sb.append(configuration);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", readOnly=");
 		sb.append(readOnly);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -216,8 +216,8 @@ public class FragmentEntryCacheModel
 		}
 
 		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
-		fragmentEntryImpl.setType(type);
 		fragmentEntryImpl.setReadOnly(readOnly);
+		fragmentEntryImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentEntryImpl.setLastPublishDate(null);
@@ -274,9 +274,9 @@ public class FragmentEntryCacheModel
 
 		previewFileEntryId = objectInput.readLong();
 
-		type = objectInput.readInt();
-
 		readOnly = objectInput.readBoolean();
+
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -361,9 +361,9 @@ public class FragmentEntryCacheModel
 
 		objectOutput.writeLong(previewFileEntryId);
 
-		objectOutput.writeInt(type);
-
 		objectOutput.writeBoolean(readOnly);
+
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -397,8 +397,8 @@ public class FragmentEntryCacheModel
 	public String js;
 	public String configuration;
 	public long previewFileEntryId;
-	public int type;
 	public boolean readOnly;
+	public int type;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

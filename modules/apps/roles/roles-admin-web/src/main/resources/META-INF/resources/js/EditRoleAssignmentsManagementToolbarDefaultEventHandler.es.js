@@ -16,6 +16,8 @@ import {DefaultEventHandler} from 'frontend-js-web';
 
 class EditRoleAssignmentsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addSegmentEntry(itemData) {
+		window.sessionStorage.setItem(itemData.sessionKey, 'open');
+
 		Liferay.Util.getTop().location.href = itemData.addSegmentEntryURL;
 	}
 }

@@ -64,6 +64,7 @@ import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.roles.admin.web.internal.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.web.internal.dao.search.SegmentsEntrySearchContainerFactory;
 import com.liferay.segments.model.SegmentsEntry;
 
@@ -165,6 +166,10 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 						dropdownItem.putData(
 							"addSegmentEntryURL",
 							addSegmentEntryURL.toString());
+
+						dropdownItem.putData(
+							"sessionKey",
+							RolesAdminWebKeys.MODAL_SEGMENT_STATE);
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(

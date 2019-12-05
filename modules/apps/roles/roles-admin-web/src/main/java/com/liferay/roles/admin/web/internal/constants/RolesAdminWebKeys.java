@@ -21,6 +21,8 @@ public class RolesAdminWebKeys {
 
 	public static final String CURRENT_ROLE_TYPE = "CURRENT_ROLE_TYPE";
 
+	public static final String MODAL_SEGMENT_STATE = "modalSegmentState";
+
 	public static final String ROLE_TYPES = "ROLE_TYPES";
 
 }

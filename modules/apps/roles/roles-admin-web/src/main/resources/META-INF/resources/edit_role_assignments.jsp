@@ -196,4 +196,16 @@ renderResponse.setTitle(role.getTitle(locale));
 	) {
 		managementToolbar.on('creationButtonClicked', addAssignees);
 	});
+
+	var state = window.sessionStorage.getItem(
+		'<%= RolesAdminWebKeys.MODAL_SEGMENT_STATE %>'
+	);
+
+	if (state == 'open') {
+		window.sessionStorage.removeItem(
+			'<%= RolesAdminWebKeys.MODAL_SEGMENT_STATE %>'
+		);
+
+		addAssignees();
+	}
 </aui:script>

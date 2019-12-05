@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -214,6 +215,10 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 			DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
 				new DeleteByQueryDocumentRequest(
 					booleanQuery, baseWorkflowMetricsIndexer.getIndexName());
+
+			if (PortalRunMode.isTestMode()) {
+				deleteByQueryDocumentRequest.setRefresh(true);
+			}
 
 			_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 		}

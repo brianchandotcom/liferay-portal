@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
@@ -66,6 +67,10 @@ public class SLATaskResultWorkflowMetricsIndexer
 
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			if (PortalRunMode.isTestMode()) {
+				bulkDocumentRequest.setRefresh(true);
+			}
 
 			searchEngineAdapter.execute(bulkDocumentRequest);
 		}

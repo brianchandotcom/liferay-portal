@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -62,7 +63,10 @@ public abstract class BaseWorkflowMetricsIndexer {
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			getIndexName(), document);
 
-		indexDocumentRequest.setRefresh(true);
+		if (PortalRunMode.isTestMode()) {
+			indexDocumentRequest.setRefresh(true);
+		}
+
 		indexDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(indexDocumentRequest);
@@ -173,6 +177,10 @@ public abstract class BaseWorkflowMetricsIndexer {
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {
 
+			if (PortalRunMode.isTestMode()) {
+				bulkDocumentRequest.setRefresh(true);
+			}
+
 			searchEngineAdapter.execute(bulkDocumentRequest);
 		}
 	}
@@ -205,6 +213,10 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(), document.getUID(), document);
+
+		if (PortalRunMode.isTestMode()) {
+			updateDocumentRequest.setRefresh(true);
+		}
 
 		updateDocumentRequest.setType(getIndexType());
 

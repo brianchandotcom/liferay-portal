@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -372,6 +373,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			if (PortalRunMode.isTestMode()) {
+				bulkDocumentRequest.setRefresh(true);
+			}
 
 			searchEngineAdapter.execute(bulkDocumentRequest);
 		}

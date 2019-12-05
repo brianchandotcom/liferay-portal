@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -93,6 +94,10 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 					setType(getIndexType());
 				}
 			});
+
+		if (PortalRunMode.isTestMode()) {
+			bulkDocumentRequest.setRefresh(true);
+		}
 
 		searchEngineAdapter.execute(bulkDocumentRequest);
 	}

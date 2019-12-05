@@ -415,7 +415,7 @@ public class LDAPAuth implements Authenticator {
 				if (_log.isDebugEnabled()) {
 					StringBundler sb = new StringBundler(10);
 
-					sb.append("Uanble to authenticate with ");
+					sb.append("Unable to authenticate with ");
 					sb.append(fullUserDN);
 					sb.append(" on LDAP server ");
 					sb.append(ldapServerId);

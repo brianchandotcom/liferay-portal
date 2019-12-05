@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import ItemSelectorPreview from '../../src/main/resources/META-INF/resources/item_selector_preview/js/ItemSelectorPreview.es';
@@ -34,7 +34,8 @@ const basicMetadata = {
 		}
 	]
 };
-const itemTitle = 'test image.jpg';
+const item1Title = 'item1.jpg';
+const item2Title = 'item2.jpg';
 const itemUrl = 'image1.jpg';
 const headerTitle = 'Images';
 
@@ -42,7 +43,14 @@ const items = [
 	{
 		metadata: JSON.stringify(basicMetadata),
 		returntype: 'returntype',
-		title: itemTitle,
+		title: item1Title,
+		url: itemUrl,
+		value: itemUrl
+	},
+	{
+		metadata: JSON.stringify(basicMetadata),
+		returntype: 'returntype',
+		title: item2Title,
 		url: itemUrl,
 		value: itemUrl
 	}
@@ -67,6 +75,12 @@ describe('ItemSelectorPreview', () => {
 
 	afterEach(cleanup);
 
+	it('initialize the sidebar only once', () => {
+		renderPreviewComponent(previewProps);
+
+		expect(Liferay.SideNavigation.initialize).toHaveBeenCalledTimes(1);
+	});
+
 	it('renders the ItemSelectorPreview component with the fullscreen class', () => {
 		const {container} = renderPreviewComponent(previewProps);
 
@@ -83,5 +97,52 @@ describe('ItemSelectorPreview', () => {
 		const {getAllByRole} = renderPreviewComponent(previewProps);
 
 		expect(getAllByRole('img').length).toBe(1);
+	});
+
+	it('renders a specific item', () => {
+		const {getByText} = renderPreviewComponent({...previewProps, currentIndex: 1});
+
+		expect(getByText(item2Title));
+	});
+
+	it('shows the next item when requested', () => {
+		const {container, getByText} = renderPreviewComponent({...previewProps});
+
+		expect(getByText(item1Title));
+
+		const rigthArrowButton = container.querySelectorAll('.icon-arrow')[1];
+
+		fireEvent.click(rigthArrowButton);
+
+		expect(getByText(item2Title));
+	});
+
+	it('returns to the first item when requested the next item for the last one', () => {
+		const {container, getByText} = renderPreviewComponent({...previewProps, currentIndex: 1});
+
+		const rigthArrowButton = container.querySelectorAll('.icon-arrow')[1];
+
+		fireEvent.click(rigthArrowButton);
+		expect(getByText(item1Title));
+	});
+
+	it('shows the previous item when pressed the left key event', () => {
+		const {container, getByText} = renderPreviewComponent({...previewProps});
+
+		const rigthArrowButton = container.querySelectorAll('.icon-arrow')[0];
+
+		fireEvent.keyDown(document.documentElement, { key: 'ArrowLeft', keyCode: 37, which: 37 })
+
+		expect(getByText(item2Title));
+	});
+
+	it('handleSelectedItem is called when Add button is clicked', () => {
+		const {getByText} = renderPreviewComponent({...previewProps});
+
+		const addButton = getByText('add');
+
+		fireEvent.click(addButton);
+
+		expect(previewProps.handleSelectedItem).toHaveBeenCalledTimes(1);
 	});
 });

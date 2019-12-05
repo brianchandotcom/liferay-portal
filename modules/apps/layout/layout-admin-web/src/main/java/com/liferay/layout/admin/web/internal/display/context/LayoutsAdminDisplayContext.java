@@ -37,7 +37,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
-import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
@@ -313,23 +312,6 @@ public class LayoutsAdminDisplayContext {
 				selLayout.getName(_themeDisplay.getLocale())));
 
 		return breadcrumbEntriesJSONArray;
-	}
-
-	public String getCanonicalLayoutURL() throws PortalException {
-		String completeURL = getViewLayoutURL(_selLayout);
-
-		String canonicalURL = PortalUtil.getCanonicalURL(
-			completeURL, _themeDisplay, _selLayout, false, false);
-
-		Map<Locale, String> alternateURLs = PortalUtil.getAlternateURLs(
-			canonicalURL, _themeDisplay, _selLayout);
-
-		LayoutSEOLink canonicalLayoutSEOLink =
-			_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-				_selLayout, _themeDisplay.getLocale(), canonicalURL,
-				alternateURLs);
-
-		return canonicalLayoutSEOLink.getHref();
 	}
 
 	public Map<Locale, String> getCanonicalLayoutURLMap()

@@ -44,9 +44,10 @@ public class LayoutStructure {
 			Item parentLayoutStructureItem = _layoutStructureItems.get(
 				parentId);
 
-			List<String> children = parentLayoutStructureItem.getChildren();
+			List<String> childrenItemIds =
+				parentLayoutStructureItem.getChildrenItemIds();
 
-			children.add(position, layoutStructureItem.getItemId());
+			childrenItemIds.add(position, layoutStructureItem.getItemId());
 		}
 
 		return this;
@@ -61,7 +62,7 @@ public class LayoutStructure {
 			itemsJSONObject.put(
 				entry.getKey(),
 				JSONUtil.put(
-					"children", layoutStructureItem.getChildren()
+					"children", layoutStructureItem.getChildrenItemIds()
 				).put(
 					"config", layoutStructureItem.getConfig()
 				).put(
@@ -91,18 +92,18 @@ public class LayoutStructure {
 		}
 
 		public Item(
-			List<String> children, JSONObject config, String itemId,
+			List<String> childrenItemIds, JSONObject config, String itemId,
 			String parentId, String type) {
 
-			_children = children;
+			_childrenItemIds = childrenItemIds;
 			_config = config;
 			_itemId = itemId;
 			_parentId = parentId;
 			_type = type;
 		}
 
-		public List<String> getChildren() {
-			return _children;
+		public List<String> getChildrenItemIds() {
+			return _childrenItemIds;
 		}
 
 		public JSONObject getConfig() {
@@ -121,7 +122,7 @@ public class LayoutStructure {
 			return _type;
 		}
 
-		private final List<String> _children;
+		private final List<String> _childrenItemIds;
 		private final JSONObject _config;
 		private final String _itemId;
 		private final String _parentId;

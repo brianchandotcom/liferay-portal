@@ -82,11 +82,11 @@ public class LayoutStructureUtil {
 		JSONObject layoutStructureJSONObject = JSONFactoryUtil.createJSONObject(
 			layoutStructure);
 
-		JSONObject rootItems = layoutStructureJSONObject.getJSONObject(
-			"rootItems");
+		JSONObject rootItemsJSONObject =
+			layoutStructureJSONObject.getJSONObject("rootItems");
 
 		LayoutStructure.Root layoutStructureRoot = new LayoutStructure.Root(
-			rootItems.getString("main"));
+			rootItemsJSONObject.getString("main"));
 
 		JSONObject itemsJSONObject = layoutStructureJSONObject.getJSONObject(
 			"items");
@@ -111,13 +111,13 @@ public class LayoutStructureUtil {
 		String parentId = jsonObject.getString("parentId");
 		String type = jsonObject.getString("type");
 
-		ArrayList<String> children = new ArrayList<>();
+		ArrayList<String> childrenItemIds = new ArrayList<>();
 
 		JSONUtil.addToStringCollection(
-			children, jsonObject.getJSONArray("children"));
+			childrenItemIds, jsonObject.getJSONArray("children"));
 
 		return new LayoutStructure.Item(
-			children, configJSONObject, itemId, parentId, type);
+			childrenItemIds, configJSONObject, itemId, parentId, type);
 	}
 
 }

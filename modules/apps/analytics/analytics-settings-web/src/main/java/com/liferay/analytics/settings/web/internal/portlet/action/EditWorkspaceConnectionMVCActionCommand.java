@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -70,8 +71,19 @@ public class EditWorkspaceConnectionMVCActionCommand
 
 		String token = ParamUtil.getString(actionRequest, "token");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			new String(Base64.decode(token)));
+		JSONObject jsonObject = null;
+
+		try {
+			if (Validator.isBlank(token)) {
+				throw new IllegalArgumentException();
+			}
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				new String(Base64.decode(token)));
+		}
+		catch (Exception e) {
+			throw new PortalException("Invalid token");
+		}
 
 		_connect(
 			themeDisplay, jsonObject.getString("token"),
@@ -123,7 +135,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 	}
 
 	private void _updateCompanyPreferences(long companyId, String json)
-		throws Exception {
+		throws PortalException {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 

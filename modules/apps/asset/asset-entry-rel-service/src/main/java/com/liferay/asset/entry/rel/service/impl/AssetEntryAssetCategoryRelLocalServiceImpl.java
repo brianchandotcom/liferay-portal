@@ -100,9 +100,6 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 				_reindex(assetEntryAssetCategoryRel.getAssetEntryId());
 			});
-
-		assetEntryAssetCategoryRelPersistence.removeByAssetCategoryId(
-			assetCategoryId);
 	}
 
 	@Override

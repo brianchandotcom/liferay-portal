@@ -20,8 +20,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.depot.web.internal.application.support.DepotApplicationSupportController;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -68,31 +67,8 @@ public class DepotPanelAppController {
 			return true;
 		}
 
-		if (_panelCategoryHelper.containsPortlet(
-				panelApp.getPortletId(),
-				PanelCategoryKeys.SITE_ADMINISTRATION_CATEGORIZATION)) {
-
-			return true;
-		}
-
-		if (_panelCategoryHelper.containsPortlet(
-				panelApp.getPortletId(),
-				PanelCategoryKeys.SITE_ADMINISTRATION_RECYCLE_BIN)) {
-
-			return true;
-		}
-
-		if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
-				panelApp.getPortletId())) {
-
-			return true;
-		}
-
-		if (JournalPortletKeys.JOURNAL.equals(panelApp.getPortletId())) {
-			return true;
-		}
-
-		return false;
+		return _depotApplicationSupportController.isEnabeld(
+			panelApp.getPortletId());
 	}
 
 	@Activate
@@ -126,6 +102,10 @@ public class DepotPanelAppController {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotPanelAppController.class);
+
+	@Reference
+	private DepotApplicationSupportController
+		_depotApplicationSupportController;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

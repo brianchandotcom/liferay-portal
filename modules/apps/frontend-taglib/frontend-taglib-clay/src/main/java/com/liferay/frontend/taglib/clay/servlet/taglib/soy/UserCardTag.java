@@ -42,14 +42,6 @@ public class UserCardTag extends BaseClayCardTag {
 		putValue("imageSrc", imageSrc);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setInitials(String initials) {
-		putValue("initials", initials);
-	}
-
 	public void setName(String name) {
 		putValue("name", name);
 	}

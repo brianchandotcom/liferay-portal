@@ -267,7 +267,6 @@
 	<div class="col-md-6" id="image-card-block">
 		<clay:user-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
-			initials="HS"
 			name="User Name"
 			subtitle="Latest Action"
 			userColorCssClass="danger"

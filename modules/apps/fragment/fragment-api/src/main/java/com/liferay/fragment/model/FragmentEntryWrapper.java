@@ -60,8 +60,8 @@ public class FragmentEntryWrapper
 		attributes.put("js", getJs());
 		attributes.put("configuration", getConfiguration());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
-		attributes.put("type", getType());
 		attributes.put("readOnly", isReadOnly());
+		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -176,16 +176,16 @@ public class FragmentEntryWrapper
 			setPreviewFileEntryId(previewFileEntryId);
 		}
 
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
 		Boolean readOnly = (Boolean)attributes.get("readOnly");
 
 		if (readOnly != null) {
 			setReadOnly(readOnly);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

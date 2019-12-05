@@ -1347,14 +1347,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>
-				@deprecated - Replaced by defaultEventHandler.
-			</description>
-			<name>actionHandler</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description></description>
 			<name>checkboxStatus</name>
 			<required>false</required>

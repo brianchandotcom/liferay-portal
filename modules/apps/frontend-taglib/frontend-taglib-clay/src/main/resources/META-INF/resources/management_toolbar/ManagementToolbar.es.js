@@ -70,12 +70,6 @@ class ManagementToolbar extends ClayComponent {
 			}
 		});
 
-		if (this.actionHandler) {
-			Liferay.componentReady(this.actionHandler).then(actionHandler => {
-				this.defaultEventHandler = actionHandler;
-			});
-		}
-
 		if (this.infoPanelId) {
 			const sidenavToggle = this.refs.managementToolbar.refs.infoButton;
 
@@ -277,23 +271,6 @@ class ManagementToolbar extends ClayComponent {
  * @type {!Object}
  */
 ManagementToolbar.STATE = {
-	/**
-	 * Component wired to handle the available user actions in the Management
-	 * Toolbar component.
-	 *
-	 * <p>
-	 * This property represents a component ID that the toolbar can resolve
-	 * through a <code>Liferay.componentReady(actionHandler)</code> call.
-	 * </p>
-	 *
-	 * @default undefined
-	 * @deprecated use {@link defaultEventHandler} instead
-	 * @instance
-	 * @memberof ManagementToolbar
-	 * @type {?(string|object|undefined)}
-	 */
-	actionHandler: Config.string(),
-
 	/**
 	 * List of items to display in the actions menu on active state.
 	 *

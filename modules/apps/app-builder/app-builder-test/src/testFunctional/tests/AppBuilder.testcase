@@ -497,6 +497,33 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "123");
 	}
 
+	@description = "Validate returns by search engine using a search term"
+	@priority = "5"
+	test FormViewSearchByTerm {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Date",
+			formViewName = "Date Field - Form View Title");
+
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
+
+		AppBuilderAdmin.searchByItem(
+			itemName = "Text");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(
+			itemName = "Text");
+	}
+
 	@description = "No results found screen is shown when the search doesn't retrieve any results"
 	@priority = "5"
 		test FormViewSearchNoResultsFound {

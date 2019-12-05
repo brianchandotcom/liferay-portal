@@ -2411,10 +2411,14 @@ definition {
 			groupName = "Guest",
 			title = "Apple");
 
+		Pause(locator1 = "1000");
+
 		JSONWebcontent.addWebContent(
 			content = "Content",
 			groupName = "Guest",
 			title = "Banana");
+
+		Pause(locator1 = "1000");
 
 		JSONWebcontent.addWebContent(
 			content = "Content",

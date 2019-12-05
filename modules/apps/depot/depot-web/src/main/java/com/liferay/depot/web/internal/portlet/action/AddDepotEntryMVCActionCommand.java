@@ -19,6 +19,8 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
+import com.liferay.portal.kernel.exception.DuplicateGroupException;
+import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -107,6 +109,16 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (e instanceof DepotEntryNameException) {
 			return LanguageUtil.get(
 				themeDisplay.getRequest(), "please-enter-a-name");
+		}
+
+		if (e instanceof DuplicateGroupException) {
+			return LanguageUtil.get(
+				themeDisplay.getRequest(), "please-enter-a-unique-name");
+		}
+
+		if (e instanceof GroupKeyException) {
+			return LanguageUtil.get(
+				themeDisplay.getRequest(), "please-enter-a-valid-name");
 		}
 
 		return LanguageUtil.get(

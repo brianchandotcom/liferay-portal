@@ -44,8 +44,16 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	</c:choose>
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= DuplicateGroupException.class %>">
+	<liferay-ui:message key="new-name-matches-an-existing-workspace.-please-change-name" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= DepotEntryNameException.class %>">
 	<liferay-ui:message key="repository-name-is-required-for-the-default-language" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= GroupKeyException.class %>">
+	<liferay-ui:message key="please-enter-a-valid-name" />
 </liferay-ui:error>
 
 <aui:input checked="<%= inheritLocales %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />

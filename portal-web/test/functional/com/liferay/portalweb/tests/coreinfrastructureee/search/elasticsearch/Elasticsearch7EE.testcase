@@ -229,6 +229,64 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	test ConfigureSimilarResultsMaximumItemDisplay {
+		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
+			JSONWebcontent.addWebContent(
+				content = "${titleName}",
+				groupName = "Guest",
+				title = "${titleName}");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Alpha Bravo Charlie Delta Echo Foxtrot");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie Delta Echo Foxtrot");
+
+		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
+			AssertElementPresent(
+				key_linkResultTitle = "${titleName}",
+				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+		}
+
+		SearchPortlets.configureSimilarResults(maximumItemDisplay = "0");
+
+		AssertTextEquals.assertPartialText(
+			key_widgetName = "Similar Results",
+			locator1 = "Message#INFO_SPECIFIC_WIDGET",
+			value1 = "no similar results available");
+
+		SearchPortlets.configureSimilarResults(maximumItemDisplay = "5");
+
+		AssertElementPresent(
+			key_resultPosition = "5",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+
+		AssertElementNotPresent(
+			key_resultPosition = "6",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+	}
+
 	test HotDeployLearningToRankApp {
 		property hot.deploy.osgi.app.includes = "portal-search-learning-to-rank";
 		property test.assert.warning.exceptions = "true";

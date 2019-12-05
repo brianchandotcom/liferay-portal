@@ -17,7 +17,7 @@ package com.liferay.fragment.internal.renderer;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;

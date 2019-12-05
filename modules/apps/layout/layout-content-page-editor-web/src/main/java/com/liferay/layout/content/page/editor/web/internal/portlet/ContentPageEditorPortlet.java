@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet;
 
-import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys;

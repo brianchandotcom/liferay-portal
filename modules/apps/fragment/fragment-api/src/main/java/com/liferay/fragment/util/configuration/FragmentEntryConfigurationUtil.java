@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.fragment.util;
+package com.liferay.fragment.util.configuration;
 
-import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 

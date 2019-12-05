@@ -28,7 +28,7 @@ definition {
 
 		GogoShell.executeCommand(commandName = "scr:list");
 
-		AssertElementPresent(locator1 = "GogoShell#OUTPUT_FIELD");
+		GogoShell.viewOutput(outputContent = "State:ACTIVE");
 
 		GogoShell.executeCommand(commandName = "system:check");
 

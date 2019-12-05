@@ -113,12 +113,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 			detailAST, true, DetailASTUtil.ALL_TYPES);
 
 		for (DetailAST childDetailAST : childDetailASTList) {
-			if ((childDetailAST.getType() == TokenTypes.DO_WHILE) ||
-				(childDetailAST.getType() == TokenTypes.LAMBDA) ||
-				(childDetailAST.getType() == TokenTypes.LITERAL_FOR) ||
-				(childDetailAST.getType() == TokenTypes.LITERAL_WHILE) ||
-				(DetailASTUtil.getHiddenBefore(childDetailAST) != null)) {
-
+			if (DetailASTUtil.getHiddenBefore(childDetailAST) != null) {
 				return;
 			}
 		}
@@ -149,12 +144,23 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 			DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
-			if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
-				!ArrayUtil.contains(
-					builderInformation.getMethodNames(),
-					firstChildDetailAST.getText())) {
+			if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+				if (!ArrayUtil.contains(
+						builderInformation.getMethodNames(),
+						firstChildDetailAST.getText())) {
 
-				return;
+					return;
+				}
+
+				parentDetailAST = DetailASTUtil.getParentWithTokenType(
+					methodCallDetailAST, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
+					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
+
+				if ((parentDetailAST != null) &&
+					(detailAST.getLineNo() <= parentDetailAST.getLineNo())) {
+
+					return;
+				}
 			}
 		}
 

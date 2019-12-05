@@ -2,26 +2,26 @@
 @import '../../../app/components/variables';
 
 .page-editor__fragments__layout-element-card-preview {
-	box-shadow: 0 0 0 1px $sectionBuilderLightColor;
+	box-shadow: 0 0 0 1px $fragmentsLightColor;
 	display: flex;
 	flex-direction: row;
 	margin-bottom: $pageEditorSpacing * 2;
 	width: calc(50% - #{$pageEditorSpacing});
 
 	.card-title {
-		color: $sectionBuilderGrayColor;
+		color: $fragmentsGrayColor;
 		font-size: 12px;
 	}
 
 	.col {
-		border: solid 1px $sectionBuilderGrayColor;
+		border: solid 1px $fragmentsGrayColor;
 		flex: 1;
 		margin: 2px;
 		padding: 0;
 	}
 
 	.row {
-		border: solid 2px $sectionBuilderGrayColor;
+		border: solid 2px $fragmentsGrayColor;
 		border-radius: 2px;
 		height: 40px;
 		margin: 0;

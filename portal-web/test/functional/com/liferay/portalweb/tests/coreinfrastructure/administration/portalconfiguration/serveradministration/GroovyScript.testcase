@@ -19,6 +19,29 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-54216"
+	@priority = "3"
+	test ExecuteScriptWithEmbeddedHTML {
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			out.println(
+			"""
+				<div class="embedded-html-test">
+					Test Embedded HTML
+				</div>
+			""");
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		AssertTextEquals(
+			locator1 = "//div[@class='embedded-html-test']",
+			value1 = "Test Embedded HTML");
+	}
+
 	@description = "This is a test for LRQA-53784"
 	@priority = "5"
 	test ExecuteScriptWithLiferayClasses {

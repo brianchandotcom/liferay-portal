@@ -19,6 +19,7 @@ import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.language.Language;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -76,6 +79,24 @@ public class DepotEntryLocalServiceTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, group.getParentGroupId());
 		Assert.assertEquals(GroupConstants.TYPE_DEPOT, group.getType());
 		Assert.assertFalse(group.isSite());
+	}
+
+	@Test(expected = DuplicateGroupException.class)
+	public void testAddDepotEntryDuplicateName() throws Exception {
+		String depotName = RandomTestUtil.randomString();
+
+		_addDepotEntry(depotName, RandomTestUtil.randomString());
+
+		_addDepotEntry(depotName, RandomTestUtil.randomString());
+	}
+
+	@Test(expected = DuplicateGroupException.class)
+	public void testAddDepotEntryDuplicateNameSite() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		_addDepotEntry(
+			group.getName(LocaleUtil.getDefault()),
+			RandomTestUtil.randomString());
 	}
 
 	@Test

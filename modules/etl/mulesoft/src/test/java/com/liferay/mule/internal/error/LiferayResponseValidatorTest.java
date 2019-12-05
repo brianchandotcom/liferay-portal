@@ -14,6 +14,8 @@
 
 package com.liferay.mule.internal.error;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,19 +36,11 @@ public class LiferayResponseValidatorTest {
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_NoResponse() throws Exception {
-		try {
-			_liferayResponseValidator.validate(null);
-
-			Assert.fail();
-		}
-		catch (ModuleException me) {
-			Assert.assertEquals(LiferayError.SERVER_ERROR, me.getType());
-
-			throw me;
-		}
+		_assertThatResponseValidationProducesLiferayError(
+			null, LiferayError.SERVER_ERROR);
 	}
 
-	@Test(expected = Test.None.class)
+	@Test
 	public void testValidateMessage_Status200() throws Exception {
 		HttpConstants.HttpStatus httpStatus = HttpConstants.HttpStatus.OK;
 
@@ -57,133 +51,70 @@ public class LiferayResponseValidatorTest {
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_Status400() throws Exception {
-		HttpConstants.HttpStatus httpStatus =
-			HttpConstants.HttpStatus.BAD_REQUEST;
-
-		try {
-			_liferayResponseValidator.validate(
-				_getHttpResponse(
-					httpStatus.getReasonPhrase(), httpStatus.getStatusCode()));
-
-			Assert.fail();
-		}
-		catch (ModuleException me) {
-			Assert.assertEquals(LiferayError.BAD_REQUEST, me.getType());
-
-			throw me;
-		}
+		_assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus.BAD_REQUEST, LiferayError.BAD_REQUEST);
 	}
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_Status404() throws Exception {
-		HttpConstants.HttpStatus httpStatus =
-			HttpConstants.HttpStatus.NOT_FOUND;
-
-		try {
-			_liferayResponseValidator.validate(
-				_getHttpResponse(
-					httpStatus.getReasonPhrase(), httpStatus.getStatusCode()));
-
-			Assert.fail();
-		}
-		catch (ModuleException me) {
-			Assert.assertEquals(LiferayError.NOT_FOUND, me.getType());
-
-			throw me;
-		}
+		_assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus.NOT_FOUND, LiferayError.NOT_FOUND);
 	}
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_Status405() throws Exception {
-		HttpConstants.HttpStatus httpStatus =
-			HttpConstants.HttpStatus.METHOD_NOT_ALLOWED;
-
-		try {
-			_liferayResponseValidator.validate(
-				_getHttpResponse(
-					httpStatus.getReasonPhrase(), httpStatus.getStatusCode()));
-
-			Assert.fail();
-		}
-		catch (ModuleException me) {
-			Assert.assertEquals(LiferayError.NOT_ALLOWED, me.getType());
-
-			throw me;
-		}
+		_assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus.METHOD_NOT_ALLOWED,
+			LiferayError.NOT_ALLOWED);
 	}
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_Status406() throws Exception {
-		HttpConstants.HttpStatus httpStatus =
-			HttpConstants.HttpStatus.NOT_ACCEPTABLE;
-
-		try {
-			_liferayResponseValidator.validate(
-				_getHttpResponse(
-					httpStatus.getReasonPhrase(), httpStatus.getStatusCode()));
-
-			Assert.fail();
-		}
-		catch (ModuleException me) {
-			Assert.assertEquals(LiferayError.NOT_ACCEPTABLE, me.getType());
-
-			throw me;
-		}
+		_assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus.NOT_ACCEPTABLE,
+			LiferayError.NOT_ACCEPTABLE);
 	}
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_Status415() throws Exception {
-		HttpConstants.HttpStatus httpStatus =
-			HttpConstants.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
-
-		try {
-			_liferayResponseValidator.validate(
-				_getHttpResponse(
-					httpStatus.getReasonPhrase(), httpStatus.getStatusCode()));
-
-			Assert.fail();
-		}
-		catch (ModuleException me) {
-			Assert.assertEquals(
-				LiferayError.UNSUPPORTED_MEDIA_TYPE, me.getType());
-
-			throw me;
-		}
+		_assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+			LiferayError.UNSUPPORTED_MEDIA_TYPE);
 	}
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_Status500() throws Exception {
-		HttpConstants.HttpStatus httpStatus =
-			HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR;
-
-		try {
-			_liferayResponseValidator.validate(
-				_getHttpResponse(
-					httpStatus.getReasonPhrase(), httpStatus.getStatusCode()));
-
-			Assert.fail();
-		}
-		catch (ModuleException me) {
-			Assert.assertEquals(LiferayError.SERVER_ERROR, me.getType());
-
-			throw me;
-		}
+		_assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR,
+			LiferayError.SERVER_ERROR);
 	}
 
 	@Test(expected = ModuleException.class)
 	public void testValidateMessage_Status501() throws Exception {
-		HttpConstants.HttpStatus httpStatus =
-			HttpConstants.HttpStatus.NOT_IMPLEMENTED;
+		_assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus.NOT_IMPLEMENTED,
+			LiferayError.NOT_IMPLEMENTED);
+	}
+
+	private void _assertThatResponseValidationProducesLiferayError(
+			HttpConstants.HttpStatus httpStatus, LiferayError liferayError)
+		throws IOException {
 
 		try {
-			_liferayResponseValidator.validate(
-				_getHttpResponse(
-					httpStatus.getReasonPhrase(), httpStatus.getStatusCode()));
+			if (httpStatus != null) {
+				_liferayResponseValidator.validate(
+					_getHttpResponse(
+						httpStatus.getReasonPhrase(),
+						httpStatus.getStatusCode()));
+			}
+			else {
+				_liferayResponseValidator.validate(null);
+			}
 
 			Assert.fail();
 		}
 		catch (ModuleException me) {
-			Assert.assertEquals(LiferayError.NOT_IMPLEMENTED, me.getType());
+			Assert.assertEquals(liferayError, me.getType());
 
 			throw me;
 		}

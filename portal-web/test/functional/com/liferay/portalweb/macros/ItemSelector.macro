@@ -187,6 +187,31 @@ definition {
 		LexiconCard.clickCard(card = "${imageFileName}");
 	}
 
+	macro selectRepositoryImage {
+		var key_navTab = "Documents and Media";
+		var key_imageFileName = "${imageFileName}";
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		AssertClick(
+			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+			value1 = "Documents and Media");
+
+		AssertClick(
+			key_breadcrumbName = "Workspaces",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "Workspaces");
+
+		AssertClick(
+			key_groupTab = "Repository",
+			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+			value1 = "Repository");
+
+		LexiconCard.clickCard(card = "${depotName}");
+
+		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_PREVIEW");
+	}
+
 	macro uploadFile {
 		var key_navTab = "${navTab}";
 		var key_uploadFileName = "${uploadFileName}";

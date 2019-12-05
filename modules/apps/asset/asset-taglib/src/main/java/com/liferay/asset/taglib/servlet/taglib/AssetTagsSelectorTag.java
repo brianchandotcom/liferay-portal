@@ -35,7 +35,6 @@ import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -259,25 +258,42 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	}
 
 	private Map<String, Object> _getData() {
-		return new HashMap<String, Object>() {
-			{
+		return HashMapBuilder.<String, Object>put(
+			"addCallback",
+			() -> {
 				if (Validator.isNotNull(_addCallback)) {
-					put("addCallback", _getNamespace() + _addCallback);
+					return _getNamespace() + _addCallback;
 				}
 
-				put("eventName", getEventName());
-				put("groupIds", getGroupIds());
-				put("id", _getNamespace() + getId() + "assetTagsSelector");
-				put("inputName", _getInputName());
-
+				return null;
+			}
+		).put(
+			"eventName", getEventName()
+		).put(
+			"groupIds", getGroupIds()
+		).put(
+			"id", _getNamespace() + getId() + "assetTagsSelector"
+		).put(
+			"inputName", _getInputName()
+		).put(
+			"portletURL",
+			() -> {
 				PortletURL portletURL = getPortletURL();
 
-				put("portletURL", portletURL.toString());
-
+				return portletURL.toString();
+			}
+		).put(
+			"removeCallback",
+			() -> {
 				if (Validator.isNotNull(_removeCallback)) {
-					put("removeCallback", _getNamespace() + _removeCallback);
+					return _getNamespace() + _removeCallback;
 				}
 
+				return null;
+			}
+		).put(
+			"selectedItems",
+			() -> {
 				List<Map<String, String>> selectedItems = new ArrayList<>();
 
 				for (String tagName : getTagNames()) {
@@ -290,11 +306,11 @@ public class AssetTagsSelectorTag extends IncludeTag {
 					selectedItems.add(selectedItem);
 				}
 
-				put("selectedItems", selectedItems);
-
-				put("showSelectButton", _showSelectButton);
+				return selectedItems;
 			}
-		};
+		).put(
+			"showSelectButton", _showSelectButton
+		).build();
 	}
 
 	private String _getInputName() {

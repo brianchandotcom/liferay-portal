@@ -14,11 +14,11 @@
 
 package com.liferay.fragment.internal.util;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -42,6 +42,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -172,7 +173,7 @@ public class FragmentEntryConfigurationUtilImpl
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "itemSelector")) {
 
-			return _getAssetEntryJSONObject(value);
+			return _getInfoDisplayObjectEntryJSONObject(value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "select") ||
@@ -342,132 +343,6 @@ public class FragmentEntryConfigurationUtilImpl
 		return jsonObject.toString();
 	}
 
-	private static Object _getAssetEntry(String value) {
-		if (Validator.isNull(value)) {
-			return null;
-		}
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
-
-			String className = GetterUtil.getString(
-				jsonObject.getString("className"));
-			long classPK = GetterUtil.getLong(jsonObject.getString("classPK"));
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				className, classPK);
-
-			if (assetEntry != null) {
-				AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-				return assetRenderer.getAssetObject();
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get asset entry: " + value, e);
-			}
-		}
-
-		return null;
-	}
-
-	private static JSONObject _getAssetEntryJSONObject(String value) {
-		if (Validator.isNull(value)) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		try {
-			JSONObject configurationValueJSONObject =
-				JSONFactoryUtil.createJSONObject(value);
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(_getAssetEntry(value)));
-
-			jsonObject.put(
-				"className",
-				GetterUtil.getString(
-					configurationValueJSONObject.getString("className"))
-			).put(
-				"classNameId",
-				GetterUtil.getString(
-					configurationValueJSONObject.getString("classNameId"))
-			).put(
-				"classPK",
-				GetterUtil.getLong(
-					configurationValueJSONObject.getString("classPK"))
-			).put(
-				"template",
-				GetterUtil.getLong(
-					configurationValueJSONObject.getString("template"))
-			);
-
-			return jsonObject;
-		}
-		catch (JSONException jsone) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to serialize asset entry to JSON: " + value, jsone);
-			}
-		}
-
-		return null;
-	}
-
-	private static Object _getContextObject(String type, String value) {
-		if (StringUtil.equalsIgnoreCase(type, "itemSelector")) {
-			return _getAssetEntry(value);
-		}
-
-		return null;
-	}
-
-	private static JSONArray _getFieldSetsJSONArray(String configuration) {
-		try {
-			JSONObject configurationJSONObject =
-				JSONFactoryUtil.createJSONObject(configuration);
-
-			return configurationJSONObject.getJSONArray("fieldSets");
-		}
-		catch (JSONException jsone) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to parse configuration JSON: " + configuration,
-					jsone);
-			}
-		}
-
-		return null;
-	}
-
-	private static Object _getFieldValue(String dataType, String value) {
-		if (StringUtil.equalsIgnoreCase(dataType, "bool")) {
-			return GetterUtil.getBoolean(value);
-		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "double")) {
-			return GetterUtil.getDouble(value);
-		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "int")) {
-			return GetterUtil.getInteger(value);
-		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "object")) {
-			try {
-				return JSONFactoryUtil.createJSONObject(value);
-			}
-			catch (JSONException jsone) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to parse configuration JSON: " + value, jsone);
-				}
-			}
-		}
-		else if (StringUtil.equalsIgnoreCase(dataType, "string")) {
-			return value;
-		}
-
-		return null;
-	}
-
 	private static void _translateConfigurationField(
 		JSONObject fieldJSONObject, ResourceBundle resourceBundle) {
 
@@ -509,6 +384,140 @@ public class FragmentEntryConfigurationUtilImpl
 			});
 	}
 
+	private Object _getContextObject(String type, String value) {
+		if (StringUtil.equalsIgnoreCase(type, "itemSelector")) {
+			return _getInfoDisplayObjectEntry(value);
+		}
+
+		return null;
+	}
+
+	private JSONArray _getFieldSetsJSONArray(String configuration) {
+		try {
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(configuration);
+
+			return configurationJSONObject.getJSONArray("fieldSets");
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to parse configuration JSON: " + configuration,
+					jsone);
+			}
+		}
+
+		return null;
+	}
+
+	private Object _getFieldValue(String dataType, String value) {
+		if (StringUtil.equalsIgnoreCase(dataType, "bool")) {
+			return GetterUtil.getBoolean(value);
+		}
+		else if (StringUtil.equalsIgnoreCase(dataType, "double")) {
+			return GetterUtil.getDouble(value);
+		}
+		else if (StringUtil.equalsIgnoreCase(dataType, "int")) {
+			return GetterUtil.getInteger(value);
+		}
+		else if (StringUtil.equalsIgnoreCase(dataType, "object")) {
+			try {
+				return JSONFactoryUtil.createJSONObject(value);
+			}
+			catch (JSONException jsone) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse configuration JSON: " + value, jsone);
+				}
+			}
+		}
+		else if (StringUtil.equalsIgnoreCase(dataType, "string")) {
+			return value;
+		}
+
+		return null;
+	}
+
+	private Object _getInfoDisplayObjectEntry(String value) {
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			String className = GetterUtil.getString(
+				jsonObject.getString("className"));
+
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					className);
+
+			if (infoDisplayContributor == null) {
+				return null;
+			}
+
+			long classPK = GetterUtil.getLong(jsonObject.getString("classPK"));
+
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+			if (infoDisplayObjectProvider != null) {
+				return infoDisplayObjectProvider.getDisplayObject();
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get entry: " + value, e);
+			}
+		}
+
+		return null;
+	}
+
+	private JSONObject _getInfoDisplayObjectEntryJSONObject(String value) {
+		if (Validator.isNull(value)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		try {
+			JSONObject configurationValueJSONObject =
+				JSONFactoryUtil.createJSONObject(value);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(
+					_getInfoDisplayObjectEntry(value)));
+
+			jsonObject.put(
+				"className",
+				GetterUtil.getString(
+					configurationValueJSONObject.getString("className"))
+			).put(
+				"classNameId",
+				GetterUtil.getString(
+					configurationValueJSONObject.getString("classNameId"))
+			).put(
+				"classPK",
+				GetterUtil.getLong(
+					configurationValueJSONObject.getString("classPK"))
+			).put(
+				"template",
+				GetterUtil.getLong(
+					configurationValueJSONObject.getString("template"))
+			);
+
+			return jsonObject;
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to serialize asset entry to JSON: " + value, jsone);
+			}
+		}
+
+		return null;
+	}
+
 	private static final String _CONTEXT_OBJECT_SUFFIX = "Object";
 
 	private static final String _KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
@@ -517,5 +526,8 @@ public class FragmentEntryConfigurationUtilImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryConfigurationUtilImpl.class);
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 }

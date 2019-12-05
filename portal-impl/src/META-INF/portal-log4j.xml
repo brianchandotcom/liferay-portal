@@ -768,10 +768,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.util.CookieKeys">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.util.EntityResolver">
 		<priority value="ERROR" />
 	</category>

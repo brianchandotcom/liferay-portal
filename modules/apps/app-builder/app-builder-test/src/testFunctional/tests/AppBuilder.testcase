@@ -292,6 +292,45 @@ definition {
 		AppBuilderAdmin.cancelNewCustomObject();
 	}
 
+	@description = "Change order of list from default most recent on top to oldest."
+	@priority = "5"
+	test ChangeFormViewsListOrderByDate {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Date",
+			formViewName = "Date Field - Form View Title");
+
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "1",
+			title = "Date Field - Form View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "2",
+			title = "Text Field - Form View Title");
+
+		AppBuilderAdmin.filterListAscendAndDescend();
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "1",
+			title = "Text Field - Form View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "2",
+			title = "Date Field - Form View Title");
+	}
+
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {

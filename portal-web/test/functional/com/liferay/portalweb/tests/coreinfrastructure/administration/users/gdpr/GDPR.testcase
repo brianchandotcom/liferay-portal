@@ -308,6 +308,8 @@ definition {
 
 	@priority = "4"
 	test DeleteEntryFromPersonalSiteScope {
+		property test.name.skip.portal.instance = "GDPR#DeleteEntryFromPersonalSiteScope";
+		
 		User.logoutPG();
 
 		User.loginUserPG(

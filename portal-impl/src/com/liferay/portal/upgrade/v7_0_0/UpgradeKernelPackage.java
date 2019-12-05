@@ -118,22 +118,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #upgradeLongTextTable(String, String, String, String,
-	 *             String[])}
-	 */
-	@Deprecated
-	protected void upgradeLongTextTable(
-			String columnName, String selectSQL, String updateSQL,
-			String[] name)
-		throws SQLException {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by upgradeLongTextTable(" +
-				"String, String, String, String, String[])");
-	}
-
 	protected void upgradeLongTextTable(
 			String tableName, String columnName, String primaryKeyColumnName,
 			String[][] names, WildcardMode wildcardMode)
@@ -191,22 +175,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 					updateSQL, name);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #upgradeLongTextTable(String, String, String, String[][],
-	 *             WildcardMode)}
-	 */
-	@Deprecated
-	protected void upgradeLongTextTable(
-			String tableName, String columnName, String[][] names,
-			WildcardMode wildcardMode)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by upgradeLongTextTable(" +
-				"String, String, String, String[][], WildcardMode)");
 	}
 
 	protected void upgradeTable(

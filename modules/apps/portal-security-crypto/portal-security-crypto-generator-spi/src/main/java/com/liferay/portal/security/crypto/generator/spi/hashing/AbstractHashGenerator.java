@@ -14,9 +14,6 @@
 
 package com.liferay.portal.security.crypto.generator.spi.hashing;
 
-import com.liferay.portal.kernel.io.BigEndianCodec;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.util.Base64;
 /**
  * @author Arthur Chan
  */
@@ -40,14 +37,6 @@ public abstract class AbstractHashGenerator implements HashGenerator {
 		this.salt = salt;
 
 		return this;
-	}
-
-	public String generateSalt() throws Exception {
-		byte[] saltBytes = new byte[Long.BYTES];
-
-		BigEndianCodec.putLong(saltBytes, 0, SecureRandomUtil.nextLong());
-
-		return Base64.encode(saltBytes);
 	}
 
 	protected byte[] pepper = new byte[0];

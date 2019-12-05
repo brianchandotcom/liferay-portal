@@ -30,6 +30,11 @@
 </tr>
 <!--NAVIGATION-->
 <tr>
+	<td>NAVIGATION_GROUP_TAB</td>
+	<td>//div[contains(@class,'btn-group')]//a[contains(.,'${key_groupTab}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAVIGATION_SPECIFIC_TAB</td>
 	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'${key_navTab}')]</td>
 	<td></td>

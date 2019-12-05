@@ -1,0 +1,40 @@
+@component-name = "portal-gogo-shell"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Gogo Shell";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AccessGogoShellCommandViaPortlet {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		GogoShell.executeCommand(commandName = "scr:list");
+
+		AssertElementPresent(locator1 = "GogoShell#OUTPUT_FIELD");
+
+		GogoShell.executeCommand(commandName = "system:check");
+
+		for (var outputContent : list "Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found") {
+			GogoShell.viewOutput(outputContent = "${outputContent}");
+		}
+	}
+
+}

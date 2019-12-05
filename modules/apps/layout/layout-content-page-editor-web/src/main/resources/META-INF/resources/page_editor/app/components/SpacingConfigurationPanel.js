@@ -18,9 +18,9 @@ import React, {useContext} from 'react';
 import {DispatchContext} from '../../app/reducers/index';
 import updateItemConfig from '../actions/updateItemConfig';
 
-const numberOfColumnsOptions = ['0', '1', '2', '3', '4', '5', '6'];
+const NUMBER_OF_COLUMNS_OPTIONS = ['0', '1', '2', '3', '4', '5', '6'];
 
-const paddingOptions = ['0', '1', '2', '4', '6', '8', '10'];
+const PADDING_OPTIONS = ['0', '1', '2', '4', '6', '8', '10'];
 
 const SELECTORS = {
 	numberOfColumns: 'numberofColumns',
@@ -59,7 +59,7 @@ export const SpacingConfigurationPanel = ({itemId}) => {
 							value
 						)
 					}
-					options={numberOfColumnsOptions.map(value => ({
+					options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
 						label: value,
 						value
 					}))}
@@ -102,7 +102,7 @@ export const SpacingConfigurationPanel = ({itemId}) => {
 								value
 							)
 						}
-						options={paddingOptions.map(value => ({
+						options={PADDING_OPTIONS.map(value => ({
 							label: value,
 							value
 						}))}
@@ -123,7 +123,7 @@ export const SpacingConfigurationPanel = ({itemId}) => {
 								value
 							)
 						}
-						options={paddingOptions.map(value => ({
+						options={PADDING_OPTIONS.map(value => ({
 							label: value,
 							value
 						}))}

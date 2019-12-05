@@ -110,6 +110,16 @@ public class EditSegmentsEntryDisplayContext {
 		return _data;
 	}
 
+	public long getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
+
+		return _groupId;
+	}
+
 	public String getRedirect() {
 		if (_redirect != null) {
 			return _redirect;
@@ -124,10 +134,6 @@ public class EditSegmentsEntryDisplayContext {
 		}
 
 		return _redirect;
-	}
-
-	public long getScopeGroupId() {
-		return ParamUtil.getLong(_httpServletRequest, "scopeGroupId");
 	}
 
 	public long getSegmentsEntryId() {
@@ -494,6 +500,7 @@ public class EditSegmentsEntryDisplayContext {
 
 	private String _backURL;
 	private Map<String, Object> _data;
+	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final Locale _locale;
 	private String _redirect;

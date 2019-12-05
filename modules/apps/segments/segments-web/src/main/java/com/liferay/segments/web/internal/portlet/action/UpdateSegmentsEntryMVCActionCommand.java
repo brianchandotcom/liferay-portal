@@ -102,11 +102,10 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			validateCriteria(criteria, dynamic);
 
 			if (segmentsEntryId <= 0) {
-				long scopeGroupId = ParamUtil.getLong(
-					actionRequest, "scopeGroupId");
+				long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-				if (scopeGroupId > 0) {
-					serviceContext.setScopeGroupId(scopeGroupId);
+				if (groupId > 0) {
+					serviceContext.setScopeGroupId(groupId);
 				}
 
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(

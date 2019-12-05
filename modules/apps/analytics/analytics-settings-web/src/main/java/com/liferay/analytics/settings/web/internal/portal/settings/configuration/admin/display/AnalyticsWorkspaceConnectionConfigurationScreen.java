@@ -30,7 +30,7 @@ public class AnalyticsWorkspaceConnectionConfigurationScreen
 
 	@Override
 	public String getKey() {
-		return "workspace-connection";
+		return "analytics-cloud-connection";
 	}
 
 	@Override

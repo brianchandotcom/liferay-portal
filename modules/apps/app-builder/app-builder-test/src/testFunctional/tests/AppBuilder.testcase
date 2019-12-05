@@ -331,6 +331,46 @@ definition {
 			title = "Date Field - Form View Title");
 	}
 
+	@description = "Order the list of Form Views by Name/Title (Asc or Desc)"
+	@priority = "5"
+	test ChangeFormViewsListOrderByName {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Date",
+			formViewName = "Date Field - Form View Title");
+
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "1",
+			title = "Date Field - Form View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "2",
+			title = "Text Field - Form View Title");
+
+		AppBuilderAdmin.chooseSearchFilterByOption(
+			filterOption = "Name");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "1",
+			title = "Text Field - Form View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "2",
+			title = "Date Field - Form View Title");
+	}
+
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {

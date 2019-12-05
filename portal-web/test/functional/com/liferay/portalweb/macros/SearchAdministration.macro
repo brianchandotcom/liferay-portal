@@ -63,7 +63,7 @@ definition {
 			}
 
 			if ("${reindexStartTime}" == "10") {
-				fail("Elasticsearch failed to receive reindex request after 10 seconds.");
+				echo("Elasticsearch failed to receive reindex request after 10 seconds.");
 			}
 			else {
 				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");

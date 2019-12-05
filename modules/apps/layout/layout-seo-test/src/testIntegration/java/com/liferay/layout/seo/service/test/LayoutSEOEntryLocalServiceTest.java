@@ -70,7 +70,6 @@ public class LayoutSEOEntryLocalServiceTest {
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				_group.getGroupId(), false, _layout.getLayoutId());
 
-		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
@@ -83,6 +82,7 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
+		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -99,7 +99,6 @@ public class LayoutSEOEntryLocalServiceTest {
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				_group.getGroupId(), false, _layout.getLayoutId());
 
-		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
@@ -113,6 +112,7 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
+		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -135,12 +135,13 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateLayoutSEOEntry() throws PortalException {
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			_layout.getLayoutId(), false,
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		LayoutSEOEntry originalLayoutSEOEntry =
+			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				_layout.getLayoutId(), false,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
@@ -152,7 +153,6 @@ public class LayoutSEOEntryLocalServiceTest {
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				_group.getGroupId(), false, _layout.getLayoutId());
 
-		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
@@ -165,6 +165,9 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
+		Assert.assertEquals(
+			originalLayoutSEOEntry.getDDMStorageId(),
+			layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -188,7 +191,6 @@ public class LayoutSEOEntryLocalServiceTest {
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				_group.getGroupId(), false, _layout.getLayoutId());
 
-		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
@@ -202,6 +204,7 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
+		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@DeleteAfterTestRun

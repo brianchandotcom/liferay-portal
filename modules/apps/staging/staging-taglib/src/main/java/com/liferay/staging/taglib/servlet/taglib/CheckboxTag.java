@@ -19,22 +19,12 @@ import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.staging.taglib.servlet.taglib.base.BaseCssTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Péter Borkuti
  */
 public class CheckboxTag extends BaseCssTag {
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public int doEndTag() throws JspException {
-		return super.doEndTag();
-	}
 
 	public long getDeletions() {
 		return _deletions;

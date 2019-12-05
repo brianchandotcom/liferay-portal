@@ -25,7 +25,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
@@ -209,8 +209,8 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 					_portal.getHttpServletResponse(actionResponse))
 			).put(
 				"defaultConfigurationValues",
-				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-					configuration)
+				_fragmentEntryConfigurationUtil.
+					getConfigurationDefaultValuesJSONObject(configuration)
 			).put(
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(
@@ -251,6 +251,9 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;

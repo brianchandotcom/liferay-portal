@@ -19,7 +19,7 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -118,7 +118,7 @@ public class FreeMarkerFragmentEntryProcessor
 				TemplateConstants.LANG_TYPE_FTL);
 
 		JSONObject configurationValuesJSONObject =
-			FragmentEntryConfigUtil.getConfigurationJSONObject(
+			_fragmentEntryConfigurationUtil.getConfigurationJSONObject(
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getSegmentsExperienceIds());
@@ -130,7 +130,7 @@ public class FreeMarkerFragmentEntryProcessor
 		).build();
 
 		contextObjects.putAll(
-			FragmentEntryConfigUtil.getContextObjects(
+			_fragmentEntryConfigurationUtil.getContextObjects(
 				configurationValuesJSONObject,
 				fragmentEntryLink.getConfiguration()));
 
@@ -191,7 +191,7 @@ public class FreeMarkerFragmentEntryProcessor
 						TemplateConstants.LANG_TYPE_FTL);
 
 				JSONObject configurationDefaultValuesJSONObject =
-					FragmentEntryConfigUtil.
+					_fragmentEntryConfigurationUtil.
 						getConfigurationDefaultValuesJSONObject(configuration);
 
 				Map<String, Object> contextObjects =
@@ -202,7 +202,7 @@ public class FreeMarkerFragmentEntryProcessor
 					).build();
 
 				contextObjects.putAll(
-					FragmentEntryConfigUtil.getContextObjects(
+					_fragmentEntryConfigurationUtil.getContextObjects(
 						configurationDefaultValuesJSONObject, configuration));
 
 				templateManager.addContextObjects(template, contextObjects);
@@ -243,5 +243,8 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
 
 }

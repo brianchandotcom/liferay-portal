@@ -22,7 +22,7 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
-import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -235,7 +235,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		if (Validator.isNotNull(fragmentEntryLink.getConfiguration())) {
 			JSONObject configurationJSONObject =
-				FragmentEntryConfigUtil.getConfigurationJSONObject(
+				_fragmentEntryConfigurationUtil.getConfigurationJSONObject(
 					fragmentEntryLink.getConfiguration(),
 					fragmentEntryLink.getEditableValues(),
 					fragmentRendererContext.getSegmentsExperienceIds());
@@ -265,6 +265,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		return unsyncStringWriter.toString();
 	}
+
+	@Reference
+	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

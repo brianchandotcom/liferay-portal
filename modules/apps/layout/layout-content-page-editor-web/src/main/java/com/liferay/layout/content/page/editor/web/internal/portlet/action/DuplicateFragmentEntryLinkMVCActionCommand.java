@@ -27,7 +27,7 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -184,8 +184,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 						fragmentRendererContext))
 			).put(
 				"defaultConfigurationValues",
-				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-					duplicateFragmentEntryLink.getConfiguration())
+				_fragmentEntryConfigurationUtil.
+					getConfigurationDefaultValuesJSONObject(
+						duplicateFragmentEntryLink.getConfiguration())
 			).put(
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(
@@ -291,6 +292,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -52,7 +52,7 @@ describe('layoutDataReducer', () => {
 				addItem({
 					itemId: 'new-container',
 					itemType: LAYOUT_DATA_ITEM_TYPES.container,
-					parentId: 'root-item-0'
+					siblingId: 'root-item-0'
 				})
 			);
 
@@ -79,7 +79,7 @@ describe('layoutDataReducer', () => {
 					},
 					itemId: 'new-row',
 					itemType: LAYOUT_DATA_ITEM_TYPES.row,
-					parentId: 'root-item-0'
+					siblingId: 'root-item-0'
 				})
 			);
 
@@ -104,7 +104,8 @@ describe('layoutDataReducer', () => {
 				addItem({
 					itemId: 'row-at-position-3',
 					itemType: LAYOUT_DATA_ITEM_TYPES.row,
-					parentId: 'root-item-0'
+					position: 1,
+					siblingId: 'example-fragment-0'
 				})
 			);
 
@@ -113,8 +114,8 @@ describe('layoutDataReducer', () => {
 				addItem({
 					itemId: 'row-at-position-0',
 					itemType: LAYOUT_DATA_ITEM_TYPES.container,
-					parentId: 'root-item-0',
-					position: 0
+					position: 0,
+					siblingId: 'example-fragment-0'
 				})
 			);
 
@@ -123,8 +124,8 @@ describe('layoutDataReducer', () => {
 				addItem({
 					itemId: 'row-at-position-2',
 					itemType: LAYOUT_DATA_ITEM_TYPES.row,
-					parentId: 'root-item-0',
-					position: 2
+					position: 0,
+					siblingId: 'row-at-position-3'
 				})
 			);
 
@@ -150,7 +151,7 @@ describe('layoutDataReducer', () => {
 		it('removes an item from layoutData.items', () => {
 			const nextState = layoutDataReducer(
 				state,
-				removeItem('example-fragment-0')
+				removeItem({itemId: 'example-fragment-0'})
 			);
 
 			expect(nextState.layoutData.items).toEqual({
@@ -167,7 +168,7 @@ describe('layoutDataReducer', () => {
 		it('does nothing if item does not exist', () => {
 			const nextState = layoutDataReducer(
 				state,
-				removeItem('no-existing-item')
+				removeItem({itemId: 'no-existing-item'})
 			);
 
 			expect(nextState.layoutData.items).toEqual(state.layoutData.items);

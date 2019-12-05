@@ -59,7 +59,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTo
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -835,10 +834,13 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 	protected Sort[] getSortsFromComparator(
 		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
 
-		Stream<String> stream = Arrays.stream(
-			orderByComparator.getOrderByFields());
+		if (orderByComparator == null) {
+			return null;
+		}
 
-		return stream.map(
+		return Stream.of(
+			orderByComparator.getOrderByFields()
+		).map(
 			orderByFieldName -> {
 				String fieldName = _fieldNameOrderByCols.getOrDefault(
 					orderByFieldName, orderByFieldName);

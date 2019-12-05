@@ -708,6 +708,10 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 	protected Sort[] getSortsFromComparator(
 		OrderByComparator<KaleoLog> orderByComparator) {
 
+		if (orderByComparator == null) {
+			return null;
+		}
+
 		return Stream.of(
 			orderByComparator.getOrderByFields()
 		).map(

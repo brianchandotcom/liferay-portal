@@ -22,6 +22,7 @@
 
 	<div class="clearfix"></div>
 
+	${request.setAttribute("aspectRatio", "" )}
 	${request.setAttribute("author", "" )}
 	${request.setAttribute("viewURL", "" )}
 </#if>

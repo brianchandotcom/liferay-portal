@@ -1,5 +1,5 @@
 <#assign
-	aspectRatio = requestMap.attributes.aspectRatio
+	aspectRatio = requestMap.attributes.aspectRatio!""
 	author = requestMap.attributes.author!""
 	viewURL = requestMap.attributes.viewURL!""
 />

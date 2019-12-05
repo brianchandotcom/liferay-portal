@@ -23,6 +23,7 @@ import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import updateLayoutData from '../thunks/updateLayoutData';
+import {useIsActive} from './Controls';
 import Topper from './Topper';
 import UnsafeHTML from './UnsafeHTML';
 
@@ -209,12 +210,24 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
 	const floatingToolbarButtons =
 		LAYOUT_DATA_FLOATING_TOOLBAR_TYPES[item.type];
+	const isActive = useIsActive()(item.itemId);
 	const isActiveTopper = LAYOUT_DATA_TOPPER_ACTIVE[item.type];
+	const isMounted = useIsMounted();
 	const componentRef = useRef(null);
 
 	const fragmentEntryLink = fragmentEntryLinks[
 		item.config.fragmentEntryLinkId
 	] || {name: item.type};
+
+	useEffect(() => {
+		if (isActive && componentRef.current && isMounted()) {
+			componentRef.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'nearest',
+				inline: 'nearest'
+			});
+		}
+	}, [componentRef, isActive, isMounted]);
 
 	return (
 		<Topper

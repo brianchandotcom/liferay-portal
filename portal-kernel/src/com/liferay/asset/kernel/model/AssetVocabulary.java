@@ -68,13 +68,6 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public long[] getSelectedClassTypePKs();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getSettingsProperties();
-
 	public String getUnambiguousTitle(
 			java.util.List<AssetVocabulary> vocabularies, long groupId,
 			java.util.Locale locale)
@@ -92,20 +85,6 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public boolean isMultiValued();
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 #isRequired(long, long)}
-	 */
-	@Deprecated
-	public boolean isRequired(long classNameId);
-
 	public boolean isRequired(long classNameId, long classTypePK);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
 
 }

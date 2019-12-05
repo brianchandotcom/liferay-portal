@@ -33,7 +33,6 @@ const Root = React.forwardRef(({canDrop, children, isOver}, ref) => (
 			'page-editor__root--active': isOver && canDrop
 		})}
 		ref={ref}
-		style={{height: '100vh'}}
 	>
 		{React.Children.count(children) ? (
 			children

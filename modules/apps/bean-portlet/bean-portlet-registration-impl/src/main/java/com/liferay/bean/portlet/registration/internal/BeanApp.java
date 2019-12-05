@@ -37,4 +37,21 @@ public interface BeanApp {
 
 	public String getSpecVersion();
 
+	public void setContainerRuntimeOptions(
+		Map<String, List<String>> containerRuntimeOptions);
+
+	public void setCustomPortletModes(Set<String> customPortletModes);
+
+	public void setDefaultNamespace(String defaultNamespace);
+
+	public void setEvents(List<Event> events);
+
+	public void setPortletListeners(
+		List<Map.Entry<Integer, String>> portletListeners);
+
+	public void setPublicRenderParameters(
+		Map<String, PublicRenderParameter> publicRenderParameters);
+
+	public void setSpecVersion(String specVersion);
+
 }

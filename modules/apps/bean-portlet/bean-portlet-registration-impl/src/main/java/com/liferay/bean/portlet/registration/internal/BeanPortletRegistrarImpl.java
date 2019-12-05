@@ -578,9 +578,13 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 
 		portletListeners.addAll(beanApp.getPortletListeners());
 
-		beanApp = new BeanAppImpl(
-			specVersion, defaultNamespace, events, publicRenderParameters,
-			containerRuntimeOptions, customPortletModes, portletListeners);
+		beanApp.setSpecVersion(specVersion);
+		beanApp.setDefaultNamespace(defaultNamespace);
+		beanApp.setEvents(events);
+		beanApp.setPublicRenderParameters(publicRenderParameters);
+		beanApp.setContainerRuntimeOptions(containerRuntimeOptions);
+		beanApp.setCustomPortletModes(customPortletModes);
+		beanApp.setPortletListeners(portletListeners);
 
 		String preferencesValidator = preferencesValidatorFunction.apply(
 			configuredPortletName);

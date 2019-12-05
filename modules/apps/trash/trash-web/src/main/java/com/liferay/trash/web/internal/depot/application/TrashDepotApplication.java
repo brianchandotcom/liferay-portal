@@ -15,6 +15,7 @@
 package com.liferay.trash.web.internal.depot.application;
 
 import com.liferay.depot.application.DepotApplication;
+import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,7 +27,7 @@ public class TrashDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return "com_liferay_trash_web_portlet_TrashPortlet";
+		return TrashPortletKeys.TRASH;
 	}
 
 }

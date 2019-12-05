@@ -14,6 +14,7 @@
 
 package com.liferay.asset.tags.admin.web.internal.depot.application;
 
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.depot.application.DepotApplication;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,7 +27,7 @@ public class AssetTagsAdminDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
+		return AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN;
 	}
 
 }

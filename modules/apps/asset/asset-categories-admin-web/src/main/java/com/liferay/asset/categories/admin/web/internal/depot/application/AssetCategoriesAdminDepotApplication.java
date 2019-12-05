@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.internal.depot.application;
 
+import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.depot.application.DepotApplication;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,8 +27,7 @@ public class AssetCategoriesAdminDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return "com_liferay_asset_categories_admin_web_portlet_" +
-			"AssetCategoriesAdminPortlet";
+		return AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN;
 	}
 
 }

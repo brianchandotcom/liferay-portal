@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.fragment.internal.util;
+package com.liferay.fragment.internal.util.configuration;
 
-import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;

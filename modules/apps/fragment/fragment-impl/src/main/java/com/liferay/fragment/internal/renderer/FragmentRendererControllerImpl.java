@@ -23,7 +23,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
-import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

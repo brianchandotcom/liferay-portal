@@ -12,13 +12,21 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.support;
+package com.liferay.depot.web.internal.application.apps;
+
+import com.liferay.depot.web.internal.application.DepotApplication;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
-public interface DepotApplicationSupportDescriptor {
+@Component(immediate = true, service = DepotApplication.class)
+public class AssetTagsAdminDepotApplication implements DepotApplication {
 
-	public String getPortletId();
+	@Override
+	public String getPortletId() {
+		return "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
+	}
 
 }

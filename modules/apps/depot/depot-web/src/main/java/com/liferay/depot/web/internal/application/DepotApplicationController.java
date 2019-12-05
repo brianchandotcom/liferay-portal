@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.support;
+package com.liferay.depot.web.internal.application;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = DepotApplicationSupportController.class)
-public class DepotApplicationSupportController {
+@Component(immediate = true, service = DepotApplicationController.class)
+public class DepotApplicationController {
 
 	public boolean isEnabeld(String portletId) {
 		if (_serviceTrackerMap.getService(portletId) != null) {
@@ -39,13 +39,12 @@ public class DepotApplicationSupportController {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DepotApplicationSupportDescriptor.class, null,
+			bundleContext, DepotApplication.class, null,
 			(serviceReference, emitter) -> {
-				DepotApplicationSupportDescriptor
-					depotApplicationSupportDescriptor =
-						bundleContext.getService(serviceReference);
+				DepotApplication depotApplication = bundleContext.getService(
+					serviceReference);
 
-				emitter.emit(depotApplicationSupportDescriptor.getPortletId());
+				emitter.emit(depotApplication.getPortletId());
 
 				bundleContext.ungetService(serviceReference);
 			});
@@ -56,7 +55,6 @@ public class DepotApplicationSupportController {
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, DepotApplicationSupportDescriptor>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, DepotApplication> _serviceTrackerMap;
 
 }

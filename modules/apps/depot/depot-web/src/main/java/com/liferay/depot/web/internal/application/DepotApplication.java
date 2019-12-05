@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.support.descriptor;
-
-import com.liferay.depot.web.internal.application.support.DepotApplicationSupportDescriptor;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.depot.web.internal.application;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = DepotApplicationSupportDescriptor.class)
-public class TrashDepotApplicationSupportDescriptor
-	implements DepotApplicationSupportDescriptor {
+public interface DepotApplication {
 
-	@Override
-	public String getPortletId() {
-		return "com_liferay_trash_web_portlet_TrashPortlet";
-	}
+	public String getPortletId();
 
 }

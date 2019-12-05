@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.support.descriptor;
+package com.liferay.depot.web.internal.application.apps;
 
-import com.liferay.depot.web.internal.application.support.DepotApplicationSupportDescriptor;
+import com.liferay.depot.web.internal.application.DepotApplication;
+import com.liferay.document.library.constants.DLPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = DepotApplicationSupportDescriptor.class)
-public class AssetTagsAdminDepotApplicationSupportDescriptor
-	implements DepotApplicationSupportDescriptor {
+@Component(immediate = true, service = DepotApplication.class)
+public class DLDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet";
+		return DLPortletKeys.DOCUMENT_LIBRARY_ADMIN;
 	}
 
 }

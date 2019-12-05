@@ -20,7 +20,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.depot.web.internal.application.support.DepotApplicationSupportController;
+import com.liferay.depot.web.internal.application.DepotApplicationController;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -67,8 +67,7 @@ public class DepotPanelAppController {
 			return true;
 		}
 
-		return _depotApplicationSupportController.isEnabeld(
-			panelApp.getPortletId());
+		return _depotApplicationController.isEnabeld(panelApp.getPortletId());
 	}
 
 	@Activate
@@ -104,8 +103,7 @@ public class DepotPanelAppController {
 		DepotPanelAppController.class);
 
 	@Reference
-	private DepotApplicationSupportController
-		_depotApplicationSupportController;
+	private DepotApplicationController _depotApplicationController;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

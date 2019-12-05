@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.support.descriptor;
+package com.liferay.depot.web.internal.application.apps;
 
-import com.liferay.depot.web.internal.application.support.DepotApplicationSupportDescriptor;
+import com.liferay.depot.web.internal.application.DepotApplication;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, service = DepotApplicationSupportDescriptor.class)
-public class AssetCategoriesAdminDepotApplicationSupportDescriptor
-	implements DepotApplicationSupportDescriptor {
+@Component(immediate = true, service = DepotApplication.class)
+public class AssetCategoriesAdminDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {

@@ -29,6 +29,7 @@ if (Validator.isNull(backURL)) {
 <portlet:actionURL name="/layout/edit_open_graph" var="editOpenGraphURL" />
 
 <aui:form action="<%= editOpenGraphURL %>" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 	<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />

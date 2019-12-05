@@ -16,8 +16,9 @@ package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -37,18 +38,14 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class BlogPostingArticleBodyExceptionMapper
-	implements ExceptionMapper<EntryContentException> {
+	extends BaseExceptionMapper<EntryContentException> {
 
 	@Override
-	public Response toResponse(EntryContentException entryContentException) {
-		return Response.status(
-			400
-		).entity(
+	protected Problem getProblem(EntryContentException entryContentException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST,
 			StringUtil.replace(
-				entryContentException.getMessage(), "Content", "Article body")
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+				entryContentException.getMessage(), "Content", "Article body"));
 	}
 
 }

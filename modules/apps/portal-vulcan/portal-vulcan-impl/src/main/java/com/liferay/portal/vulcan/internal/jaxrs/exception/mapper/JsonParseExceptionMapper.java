@@ -16,9 +16,10 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-import javax.ws.rs.core.MediaType;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 /**
  * Converts any {@code JsonParseException} to a {@code 400} error.
@@ -27,17 +28,12 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @review
  */
 public class JsonParseExceptionMapper
-	implements ExceptionMapper<JsonParseException> {
+	extends BaseExceptionMapper<JsonParseException> {
 
 	@Override
-	public Response toResponse(JsonParseException jsonParseException) {
-		return Response.status(
-			Response.Status.BAD_REQUEST
-		).entity(
-			"Input is invalid JSON"
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+	protected Problem getProblem(JsonParseException jsonParseException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST, "Input is invalid JSON");
 	}
 
 }

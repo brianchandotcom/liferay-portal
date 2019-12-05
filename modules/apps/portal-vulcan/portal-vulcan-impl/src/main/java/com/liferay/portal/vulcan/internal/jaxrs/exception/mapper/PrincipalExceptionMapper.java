@@ -16,12 +16,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 /**
  * Converts any {@code PrincipalException} to a {@code 404} error in case it is
@@ -31,10 +32,10 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @review
  */
 public class PrincipalExceptionMapper
-	implements ExceptionMapper<PrincipalException> {
+	extends BaseExceptionMapper<PrincipalException> {
 
 	@Override
-	public Response toResponse(PrincipalException principalException) {
+	protected Problem getProblem(PrincipalException principalException) {
 		Response.Status status = Response.Status.FORBIDDEN;
 
 		String method = _httpServletRequest.getMethod();
@@ -43,9 +44,7 @@ public class PrincipalExceptionMapper
 			status = Response.Status.NOT_FOUND;
 		}
 
-		return Response.status(
-			status
-		).build();
+		return new Problem(status, null);
 	}
 
 	@Context

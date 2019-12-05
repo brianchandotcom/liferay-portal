@@ -15,8 +15,9 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.journal.exception.FolderNameException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,18 +37,14 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class StructuredContentFolderNameExceptionMapper
-	implements ExceptionMapper<FolderNameException> {
+	extends BaseExceptionMapper<FolderNameException> {
 
 	@Override
-	public Response toResponse(FolderNameException folderNameException) {
-		return Response.status(
-			400
-		).entity(
+	protected Problem getProblem(FolderNameException folderNameException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST,
 			"Invalid structured content folder name " +
-				folderNameException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+				folderNameException.getMessage());
 	}
 
 }

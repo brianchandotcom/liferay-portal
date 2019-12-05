@@ -16,8 +16,9 @@ package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -37,19 +38,17 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class BlogPostingFriendlyURLExceptionMapper
-	implements ExceptionMapper<EntryUrlTitleException> {
+	extends BaseExceptionMapper<EntryUrlTitleException> {
 
 	@Override
-	public Response toResponse(EntryUrlTitleException entryUrlTitleException) {
-		return Response.status(
-			400
-		).entity(
+	protected Problem getProblem(
+		EntryUrlTitleException entryUrlTitleException) {
+
+		return new Problem(
+			Response.Status.BAD_REQUEST,
 			StringUtil.replace(
 				entryUrlTitleException.getMessage(), "URL title",
-				"Friendly URL")
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+				"Friendly URL"));
 	}
 
 }

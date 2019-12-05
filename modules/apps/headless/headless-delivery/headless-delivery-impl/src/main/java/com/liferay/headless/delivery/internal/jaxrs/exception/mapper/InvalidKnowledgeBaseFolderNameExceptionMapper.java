@@ -15,8 +15,9 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,19 +37,15 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class InvalidKnowledgeBaseFolderNameExceptionMapper
-	implements ExceptionMapper<InvalidKBFolderNameException> {
+	extends BaseExceptionMapper<InvalidKBFolderNameException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		InvalidKBFolderNameException invalidKBFolderNameException) {
 
-		return Response.status(
-			409
-		).entity(
-			invalidKBFolderNameException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+		return new Problem(
+			Response.Status.CONFLICT,
+			invalidKBFolderNameException.getMessage());
 	}
 
 }

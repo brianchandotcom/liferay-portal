@@ -15,8 +15,9 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.journal.exception.ArticleTitleException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,17 +37,12 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class StructuredContentTitleExceptionMapper
-	implements ExceptionMapper<ArticleTitleException> {
+	extends BaseExceptionMapper<ArticleTitleException> {
 
 	@Override
-	public Response toResponse(ArticleTitleException articleTitleException) {
-		return Response.status(
-			400
-		).entity(
-			articleTitleException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+	protected Problem getProblem(ArticleTitleException articleTitleException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST, articleTitleException.getMessage());
 	}
 
 }

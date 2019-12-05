@@ -16,13 +16,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 /**
  * Converts any {@code NoSuchModelException} to a {@code 404} error.
@@ -34,7 +34,7 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @review
  */
 public class NoSuchModelExceptionMapper
-	implements ExceptionMapper<NoSuchModelException> {
+	extends BaseExceptionMapper<NoSuchModelException> {
 
 	@Override
 	public Response toResponse(NoSuchModelException noSuchModelException) {
@@ -46,13 +46,21 @@ public class NoSuchModelExceptionMapper
 			).build();
 		}
 
+		Problem problem = getProblem(noSuchModelException);
+
 		return Response.status(
-			Response.Status.NOT_FOUND
+			problem.getStatus()
 		).entity(
-			noSuchModelException.getMessage()
+			problem
 		).type(
-			MediaType.TEXT_PLAIN
+			getMediaType()
 		).build();
+	}
+
+	@Override
+	protected Problem getProblem(NoSuchModelException noSuchModelException) {
+		return new Problem(
+			Response.Status.NOT_FOUND, noSuchModelException.getMessage());
 	}
 
 	@Context

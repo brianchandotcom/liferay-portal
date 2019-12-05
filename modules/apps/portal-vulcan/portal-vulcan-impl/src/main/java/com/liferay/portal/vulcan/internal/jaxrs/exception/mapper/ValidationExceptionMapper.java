@@ -14,11 +14,12 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+
 import javax.validation.ValidationException;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 /**
  * Converts any {@code ValidationException} to a {@code 400} error.
@@ -27,17 +28,12 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @review
  */
 public class ValidationExceptionMapper
-	implements ExceptionMapper<ValidationException> {
+	extends BaseExceptionMapper<ValidationException> {
 
 	@Override
-	public Response toResponse(ValidationException validationException) {
-		return Response.status(
-			Response.Status.BAD_REQUEST
-		).entity(
-			validationException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+	protected Problem getProblem(ValidationException validationException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST, validationException.getMessage());
 	}
 
 }

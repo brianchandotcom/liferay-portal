@@ -16,8 +16,9 @@ package com.liferay.headless.admin.taxonomy.internal.jaxrs.exception.mapper;
 
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -37,21 +38,17 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class TaxonomyVocabularyNameExceptionMapper
-	implements ExceptionMapper<VocabularyNameException> {
+	extends BaseExceptionMapper<VocabularyNameException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		VocabularyNameException vocabularyNameException) {
 
-		return Response.status(
-			400
-		).entity(
+		return new Problem(
+			Response.Status.BAD_REQUEST,
 			StringUtil.replace(
 				vocabularyNameException.getMessage(), "Category vocabulary",
-				"Taxonomy vocabulary")
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+				"Taxonomy vocabulary"));
 	}
 
 }

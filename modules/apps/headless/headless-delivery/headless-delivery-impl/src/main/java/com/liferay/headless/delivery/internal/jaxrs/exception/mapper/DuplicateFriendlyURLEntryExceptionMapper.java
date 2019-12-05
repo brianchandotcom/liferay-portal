@@ -15,8 +15,9 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -37,19 +38,13 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class DuplicateFriendlyURLEntryExceptionMapper
-	implements ExceptionMapper<DuplicateFriendlyURLEntryException> {
+	extends BaseExceptionMapper<DuplicateFriendlyURLEntryException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		DuplicateFriendlyURLEntryException duplicateFriendlyURLEntryException) {
 
-		return Response.status(
-			409
-		).entity(
-			"Duplicate friendly URL"
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+		return new Problem(Response.Status.CONFLICT, "Duplicate friendly URL");
 	}
 
 }

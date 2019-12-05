@@ -53,6 +53,8 @@ definition {
 	macro addUsers {
 		LexiconEntry.gotoAdd();
 
+		MenuItem.click(menuItem = "Add User");
+
 		Type(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
 			value1 = "${userScreenName}");

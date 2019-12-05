@@ -4741,11 +4741,28 @@ public class ServiceBuilder {
 			return null;
 		}
 
+		String tableName = entity.getTable();
+
+		List<String> databaseRegularEntityColumnNames = new ArrayList<>();
+
+		for (EntityColumn databaseRegularEntityColumn :
+				databaseRegularEntityColumns) {
+
+			databaseRegularEntityColumnNames.add(
+				databaseRegularEntityColumn.getDBName());
+		}
+
+		boolean hasCompanyIdPrimaryKey = false;
+
+		if (databaseRegularEntityColumnNames.contains("companyId") &&
+			!tableName.equals("Company")) {
+
+			hasCompanyIdPrimaryKey = true;
+		}
+
 		StringBundler sb = new StringBundler();
 
 		sb.append(_SQL_CREATE_TABLE);
-
-		String tableName = entity.getTable();
 
 		if ((_databaseNameMaxLength > 0) &&
 			(tableName.length() > _databaseNameMaxLength)) {
@@ -4865,7 +4882,8 @@ public class ServiceBuilder {
 				sb.append(" not null");
 
 				if (!entity.hasCompoundPK() &&
-					!entity.isChangeTrackingEnabled()) {
+					!entity.isChangeTrackingEnabled() &&
+					!hasCompanyIdPrimaryKey) {
 
 					sb.append(" primary key");
 				}
@@ -4891,7 +4909,8 @@ public class ServiceBuilder {
 			}
 
 			if (((i + 1) != databaseRegularEntityColumns.size()) ||
-				entity.hasCompoundPK() || entity.isChangeTrackingEnabled()) {
+				entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
+				hasCompanyIdPrimaryKey) {
 
 				sb.append(",");
 			}
@@ -4899,7 +4918,9 @@ public class ServiceBuilder {
 			sb.append("\n");
 		}
 
-		if (entity.hasCompoundPK() || entity.isChangeTrackingEnabled()) {
+		if (entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
+			hasCompanyIdPrimaryKey) {
+
 			sb.append("\tprimary key (");
 
 			List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
@@ -4916,6 +4937,10 @@ public class ServiceBuilder {
 
 			if (entity.isChangeTrackingEnabled()) {
 				sb.append(", ctCollectionId");
+			}
+
+			if (hasCompanyIdPrimaryKey) {
+				sb.append(", companyId");
 			}
 
 			sb.append(")\n");

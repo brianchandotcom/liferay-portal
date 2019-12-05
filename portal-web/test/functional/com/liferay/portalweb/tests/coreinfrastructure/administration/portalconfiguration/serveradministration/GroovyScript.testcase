@@ -19,6 +19,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-53784"
+	@priority = "5"
+	test ExecuteScriptWithLiferayClasses {
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+			import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+
+			fragmentCollectionId = CounterLocalServiceUtil.increment();
+
+			fragmentCollection = FragmentCollectionLocalServiceUtil.createFragmentCollection(fragmentCollectionId);
+
+			fragmentCollection.setName("Test Fragment Collection Name");
+
+			out.println(fragmentCollection.getName());
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Test Fragment Collection Name");
+	}
+
 	@description = "This is a test for LRQA-53783"
 	@priority = "5"
 	test ExecuteSimpleScript {

@@ -318,7 +318,7 @@ public class LayoutsAdminDisplayContext {
 		throws PortalException {
 
 		return _layoutSEOCanonicalURLProvider.getCanonicalURLMap(
-			_selLayout, getViewLayoutURL(_selLayout), _themeDisplay);
+			_selLayout, _themeDisplay);
 	}
 
 	public String getConfigureLayoutURL(Layout layout) {
@@ -395,16 +395,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getDefaultCanonicalURL() throws PortalException {
-		String completeURL = getViewLayoutURL(_selLayout);
-
-		String canonicalURL = PortalUtil.getCanonicalURL(
-			completeURL, _themeDisplay, _selLayout, false, false);
-
-		Map<Locale, String> alternateURLs = PortalUtil.getAlternateURLs(
-			canonicalURL, _themeDisplay, _selLayout);
-
 		return _layoutSEOCanonicalURLProvider.getDefaultCanonicalURL(
-			_selLayout, _themeDisplay.getLocale(), canonicalURL, alternateURLs);
+			_selLayout, _themeDisplay);
 	}
 
 	public String getDeleteLayoutURL(Layout layout) throws PortalException {

@@ -20,9 +20,12 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -53,17 +56,18 @@ public class LayoutSEOCanonicalURLProviderImpl
 			return layoutCanonicalURL;
 		}
 
-		return getDefaultCanonicalURL(
+		return _getDefaultCanonicalURL(
 			layout, locale, canonicalURL, alternateURLs);
 	}
 
 	@Override
 	public Map<Locale, String> getCanonicalURLMap(
-			Layout layout, String completeURL, ThemeDisplay themeDisplay)
+			Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		String canonicalURL = _portal.getCanonicalURL(
-			completeURL, themeDisplay, layout, false, false);
+			_getViewLayoutURL(layout, themeDisplay), themeDisplay, layout,
+			false, false);
 
 		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
 			canonicalURL, themeDisplay, layout);
@@ -88,6 +92,19 @@ public class LayoutSEOCanonicalURLProviderImpl
 
 	@Override
 	public String getDefaultCanonicalURL(
+			Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String canonicalURL = _portal.getCanonicalURL(
+			_getViewLayoutURL(layout, themeDisplay), themeDisplay, layout,
+			false, false);
+
+		return _getDefaultCanonicalURL(
+			layout, themeDisplay.getLocale(), canonicalURL,
+			_portal.getAlternateURLs(canonicalURL, themeDisplay, layout));
+	}
+
+	private String _getDefaultCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
@@ -121,8 +138,31 @@ public class LayoutSEOCanonicalURLProviderImpl
 		return layoutSEOEntry.getCanonicalURL(locale);
 	}
 
+	private String _getViewLayoutURL(Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String layoutFullURL = _portal.getLayoutFullURL(layout, themeDisplay);
+
+		try {
+			layoutFullURL = _http.setParameter(
+				layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to generate view layout URL for " + layoutFullURL, e);
+		}
+
+		return layoutFullURL;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSEOCanonicalURLProviderImpl.class);
+
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

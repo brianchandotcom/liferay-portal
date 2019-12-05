@@ -32,12 +32,11 @@ public interface LayoutSEOCanonicalURLProvider {
 		throws PortalException;
 
 	public Map<Locale, String> getCanonicalURLMap(
-			Layout layout, String completeURL, ThemeDisplay themeDisplay)
+			Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public String getDefaultCanonicalURL(
-			Layout layout, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
+			Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 }

@@ -12,7 +12,11 @@
  * details.
  */
 
-import {generateName, generateNestedFieldName} from '../../util/repeatable.es';
+import {
+	generateInstanceId,
+	generateName,
+	generateNestedFieldName
+} from '../../util/repeatable.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
 export default (pages, name) => {
@@ -36,6 +40,7 @@ export default (pages, name) => {
 			const indexToAddField = currentIndex + 1;
 			const newField = {
 				...field,
+				instanceId: generateInstanceId(),
 				name: generateName(name, indexToAddField)
 			};
 

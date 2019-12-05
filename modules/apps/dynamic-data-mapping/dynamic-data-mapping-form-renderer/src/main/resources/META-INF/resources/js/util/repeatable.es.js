@@ -16,6 +16,11 @@ const FIELD_NAME_REGEX = /(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)\$\$(\w+)/;
 
 const NESTED_FIELD_NAME_REGEX = /(_\w+_)ddm\$\$(.+)\$(\w+)\$(\d+)#(.+)\$(\w+)\$(\d+)\$\$(\w+)/;
 
+export const generateInstanceId = () =>
+	Math.random()
+		.toString(36)
+		.substr(2, 8);
+
 export const generateName = (name, repeatedIndex) => {
 	const parsedName = parseName(name);
 	const {fieldName, instanceId, locale, portletNamespace} = parsedName;

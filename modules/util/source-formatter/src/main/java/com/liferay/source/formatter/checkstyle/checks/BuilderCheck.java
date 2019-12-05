@@ -307,6 +307,10 @@ public class BuilderCheck extends ChainedMethodCheck {
 		DetailAST parentDetailAST, List<DetailAST> methodVariableDetailASTList,
 		String builderClassName, String markdownFileName) {
 
+		if (!isAttributeValue(_CHECK_INLINE)) {
+			return;
+		}
+
 		List<String> followingVariableNames = new ArrayList<>();
 
 		DetailAST nextSiblingDetailAST = parentDetailAST.getNextSibling();
@@ -671,6 +675,8 @@ public class BuilderCheck extends ChainedMethodCheck {
 			parentDetailAST = parentDetailAST.getParent();
 		}
 	}
+
+	private static final String _CHECK_INLINE = "checkInline";
 
 	private static final String _MSG_CAST_NULL_VALUE = "null.value.cast";
 

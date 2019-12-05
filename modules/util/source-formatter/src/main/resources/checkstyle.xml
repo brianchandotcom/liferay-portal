@@ -114,6 +114,7 @@
 			<message key="attribute.incorrect.order" value="Attribute ''{0}'' should come after attribute ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.BuilderCheck">
+			<property name="checkInline" value="true" />
 			<property name="enabled" value="false" />
 			<property name="typeNames" value="ConcurrentHashMap,HashMap,LinkedHashMap,TreeMap" />
 			<message key="builder.include" value="Include method call ''{0}'' ({1}) in ''{2}'' ({3}). See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/{4}.markdown" />

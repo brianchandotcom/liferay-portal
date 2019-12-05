@@ -67,7 +67,7 @@ public class DepotPanelAppController {
 			return true;
 		}
 
-		return _depotApplicationController.isEnabeld(panelApp.getPortletId());
+		return _depotApplicationController.isEnabled(panelApp.getPortletId());
 	}
 
 	@Activate

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = DepotApplicationController.class)
 public class DepotApplicationController {
 
-	public boolean isEnabeld(String portletId) {
+	public boolean isEnabled(String portletId) {
 		if (_serviceTrackerMap.getService(portletId) != null) {
 			return true;
 		}

@@ -130,7 +130,7 @@ public class UpgradeCTModel extends UpgradeProcess {
 							normalizedTableName, "'"));
 					ResultSet rs = ps.executeQuery()) {
 
-					while (rs.next()) {
+					if (rs.next()) {
 						primaryKeyConstraintName = rs.getString("name");
 					}
 				}

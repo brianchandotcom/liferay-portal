@@ -26,6 +26,11 @@ import java.util.Map;
  */
 public interface LayoutSEOCanonicalURLProvider {
 
+	public String getCanonicalURL(
+			Layout layout, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws PortalException;
+
 	public Map<Locale, String> getCanonicalURLMap(
 			Layout layout, String completeURL, ThemeDisplay themeDisplay)
 		throws PortalException;

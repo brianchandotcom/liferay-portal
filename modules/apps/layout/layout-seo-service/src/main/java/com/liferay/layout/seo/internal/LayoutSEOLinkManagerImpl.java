@@ -17,9 +17,7 @@ package com.liferay.layout.seo.internal;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
-import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -54,7 +52,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 		return new LayoutSEOLinkImpl(
 			_html.escapeAttribute(
-				_getCanonicalURL(layout, locale, canonicalURL, alternateURLs)),
+				_layoutSEOCanonicalURLProvider.getCanonicalURL(
+					layout, locale, canonicalURL, alternateURLs)),
 			null, LayoutSEOLink.Relationship.CANONICAL);
 	}
 
@@ -133,36 +132,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		return _openGraphConfiguration.isOpenGraphEnabled(layout.getGroup());
 	}
 
-	private String _getCanonicalURL(
-			Layout layout, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
-		throws PortalException {
-
-		String layoutCanonicalURL = _getLayoutCanonicalURL(locale, layout);
-
-		if (Validator.isNotNull(layoutCanonicalURL)) {
-			return layoutCanonicalURL;
-		}
-
-		return _layoutSEOCanonicalURLProvider.getDefaultCanonicalURL(
-			layout, locale, canonicalURL, alternateURLs);
-	}
-
-	private String _getLayoutCanonicalURL(Locale locale, Layout layout) {
-		LayoutSEOEntry layoutSEOEntry =
-			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId());
-
-		if ((layoutSEOEntry == null) ||
-			!layoutSEOEntry.isCanonicalURLEnabled()) {
-
-			return StringPool.BLANK;
-		}
-
-		return layoutSEOEntry.getCanonicalURL(locale);
-	}
-
 	private String _getPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
@@ -233,9 +202,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Reference
 	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
-
-	@Reference
-	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private OpenGraphConfiguration _openGraphConfiguration;

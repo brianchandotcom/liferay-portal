@@ -18,11 +18,13 @@ import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -38,6 +40,22 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = LayoutSEOCanonicalURLProvider.class)
 public class LayoutSEOCanonicalURLProviderImpl
 	implements LayoutSEOCanonicalURLProvider {
+
+	@Override
+	public String getCanonicalURL(
+			Layout layout, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws PortalException {
+
+		String layoutCanonicalURL = _getLayoutCanonicalURL(locale, layout);
+
+		if (Validator.isNotNull(layoutCanonicalURL)) {
+			return layoutCanonicalURL;
+		}
+
+		return getDefaultCanonicalURL(
+			layout, locale, canonicalURL, alternateURLs);
+	}
 
 	@Override
 	public Map<Locale, String> getCanonicalURLMap(
@@ -86,6 +104,21 @@ public class LayoutSEOCanonicalURLProviderImpl
 		}
 
 		return alternateURLs.getOrDefault(locale, canonicalURL);
+	}
+
+	private String _getLayoutCanonicalURL(Locale locale, Layout layout) {
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if ((layoutSEOEntry == null) ||
+			!layoutSEOEntry.isCanonicalURLEnabled()) {
+
+			return StringPool.BLANK;
+		}
+
+		return layoutSEOEntry.getCanonicalURL(locale);
 	}
 
 	@Reference

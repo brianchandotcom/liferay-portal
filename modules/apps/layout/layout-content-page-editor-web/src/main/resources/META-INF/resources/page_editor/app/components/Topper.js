@@ -30,17 +30,14 @@ import {
 } from './Controls';
 
 const TopperListItem = React.forwardRef(
-	({children, className, expand, isDragHandler, isTitle, ...props}, ref) => (
+	({children, className, expand, ...props}, ref) => (
 		<li
 			{...props}
 			className={classNames(
-				'fragments-editor__topper__item tbar-item',
-				className,
-				{
-					'fragments-editor__drag-handler': isDragHandler,
-					'fragments-editor__topper__title': isTitle,
-					'tbar-item-expand': expand
-				}
+				'page-editor-topper__item',
+				'tbar-item',
+				{'tbar-item-expand': expand},
+				className
 			)}
 			ref={ref}
 		>
@@ -180,13 +177,12 @@ export default function Topper({
 	});
 
 	const styles = {
-		'fragments-editor__drag-source fragments-editor__drag-source--fragment fragments-editor__drop-target fragments-editor__topper-wrapper fragment-entry-link-wrapper': true,
-		'fragments-editor__topper-wrapper--active': isSelected(item.itemId),
-		'fragments-editor__topper-wrapper--hovered fragment-entry-link-wrapper--hovered': isHovered(
-			item.itemId
-		),
-		'fragments-editor-border-bottom': edge === 1 && isOver,
-		'fragments-editor-border-top': edge === 0 && isOver
+		active: isSelected(item.itemId),
+		'drag-over-bottom': edge === 1 && isOver,
+		'drag-over-top': edge === 0 && isOver,
+		dragged: isDragging,
+		hovered: isHovered(item.itemId),
+		'page-editor-topper': true
 	};
 
 	const childrenElement = children({canDrop, isOver});
@@ -254,23 +250,27 @@ export default function Topper({
 			}}
 			ref={containerRef}
 		>
-			<div className="fragments-editor__topper tbar">
+			<div className="page-editor-topper__bar tbar">
 				<ul className="tbar-nav">
-					<TopperListItem expand isDragHandler ref={drag}>
-						<ul className="tbar-nav">
-							<TopperListItem className="pr-0">
-								<ClayIcon
-									className="fragments-editor__topper__drag-icon fragments-editor__topper__icon"
-									symbol="drag"
-								/>
-							</TopperListItem>
-							<TopperListItem isTitle>{name}</TopperListItem>
-						</ul>
+					<TopperListItem
+						className="page-editor-topper__drag-handler"
+						ref={drag}
+					>
+						<ClayIcon
+							className="page-editor-topper__drag-icon page-editor-topper__icon"
+							symbol="drag"
+						/>
+					</TopperListItem>
+					<TopperListItem
+						className="page-editor-topper__title"
+						expand
+					>
+						{name}
 					</TopperListItem>
 					<TopperListItem>
 						<ClayButton displayType="unstyled" small>
 							<ClayIcon
-								className="fragments-editor__topper__icon"
+								className="page-editor-topper__icon"
 								symbol="comments"
 							/>
 						</ClayButton>
@@ -285,19 +285,15 @@ export default function Topper({
 							small
 						>
 							<ClayIcon
-								className="fragments-editor__topper__icon"
+								className="page-editor-topper__icon"
 								symbol="times-circle"
 							/>
 						</ClayButton>
 					</TopperListItem>
 				</ul>
 			</div>
-			<div
-				className={classNames('fragment-entry-link-content', {
-					dragged: isDragging
-				})}
-				ref={drop}
-			>
+
+			<div className="page-editor-topper__content" ref={drop}>
 				{childrenElement}
 			</div>
 		</div>

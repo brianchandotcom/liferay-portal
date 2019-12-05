@@ -14,7 +14,7 @@
 
 package com.liferay.depot.web.internal.application.apps;
 
-import com.liferay.depot.web.internal.application.DepotApplication;
+import com.liferay.depot.application.DepotApplication;
 import com.liferay.journal.constants.JournalPortletKeys;
 
 import org.osgi.service.component.annotations.Component;

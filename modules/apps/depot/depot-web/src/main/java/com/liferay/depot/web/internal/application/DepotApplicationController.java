@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.application;
 
+import com.liferay.depot.application.DepotApplication;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 

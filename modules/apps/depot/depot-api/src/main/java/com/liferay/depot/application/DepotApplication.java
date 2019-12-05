@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application;
+package com.liferay.depot.application;
 
 /**
  * @author Alejandro Tardín

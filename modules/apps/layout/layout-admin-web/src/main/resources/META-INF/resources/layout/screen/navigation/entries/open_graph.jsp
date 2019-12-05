@@ -128,7 +128,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 							).build()
 						).put(
 							"url",
-							Collections.singletonMap("defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURL())
+							Collections.singletonMap("defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURLMap())
 						).build()
 					).put(
 						"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()

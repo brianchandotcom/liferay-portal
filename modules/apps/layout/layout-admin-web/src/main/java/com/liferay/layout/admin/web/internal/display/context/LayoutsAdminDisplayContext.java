@@ -332,6 +332,13 @@ public class LayoutsAdminDisplayContext {
 		return canonicalLayoutSEOLink.getHref();
 	}
 
+	public Map<Locale, String> getCanonicalLayoutURLMap()
+		throws PortalException {
+
+		return _layoutSEOCanonicalURLProvider.getCanonicalURLMap(
+			_selLayout, getViewLayoutURL(_selLayout), _themeDisplay);
+	}
+
 	public String getConfigureLayoutURL(Layout layout) {
 		PortletURL configureLayoutURL =
 			_liferayPortletResponse.createRenderURL();

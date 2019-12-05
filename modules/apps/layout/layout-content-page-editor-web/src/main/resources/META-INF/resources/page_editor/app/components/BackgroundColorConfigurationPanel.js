@@ -45,12 +45,11 @@ export const BackgroundColorConfigurationPanel = () => (
 		>
 			<ul className="list-unstyled palette-items-container">
 				{COLORS.map(color => (
-					<li className="palette-item">
+					<li className="palette-item" key={color}>
 						<ClayButton
 							block
 							className={`bg-${color} palette-item-inner p-1 rounded-circle`}
 							displayType="unstyled"
-							key={color}
 							small
 						/>
 					</li>

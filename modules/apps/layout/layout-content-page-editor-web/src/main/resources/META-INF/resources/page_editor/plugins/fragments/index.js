@@ -17,9 +17,9 @@ import React from 'react';
 import {Component} from '../../core/AppContext';
 import FragmentsSidebar from './components/FragmentsSidebar';
 /**
- * Entry-point for "Section Builder" (sidebar pane) functionality.
+ * Entry-point for "Fragments" (sidebar pane) functionality.
  */
-export default class SectionBuilder {
+export default class Fragments {
 	constructor({app, panel}) {
 		this.Component = Component(app);
 		this.title = panel.label;

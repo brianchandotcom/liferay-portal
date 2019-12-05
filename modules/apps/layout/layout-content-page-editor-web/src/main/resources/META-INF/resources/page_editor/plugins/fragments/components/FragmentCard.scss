@@ -2,7 +2,7 @@
 @import '../../../app/components/variables';
 
 .page-editor__fragments__fragment-card {
-	box-shadow: 0 0 0 1px $sectionBuilderLightColor;
+	box-shadow: 0 0 0 1px $fragmentsLightColor;
 	margin-bottom: $pageEditorSpacing * 2;
 	width: calc(50% - #{$pageEditorSpacing});
 
@@ -11,7 +11,7 @@
 	}
 
 	&-no-preview {
-		background-color: $sectionBuilderLightColor;
+		background-color: $fragmentsLightColor;
 		color: #a7a9bc;
 		font-size: 24px;
 		line-height: 80px;
@@ -23,7 +23,7 @@
 		text-align: center;
 
 		.card-title {
-			color: $sectionBuilderGrayColor;
+			color: $fragmentsGrayColor;
 			font-size: 12px;
 		}
 

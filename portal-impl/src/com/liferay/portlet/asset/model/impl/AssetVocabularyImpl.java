@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -80,22 +79,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		}
 
 		return _vocabularySettingsHelper.toString();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public UnicodeProperties getSettingsProperties() {
-		AssetVocabularySettingsHelper vocabularySettingsHelper =
-			getVocabularySettingsHelper();
-
-		UnicodeProperties settingsProperties = new UnicodeProperties(true);
-
-		settingsProperties.fastLoad(vocabularySettingsHelper.toString());
-
-		return settingsProperties;
 	}
 
 	@Override
@@ -206,17 +189,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		return vocabularySettingsHelper.isMultiValued();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #isRequired(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isRequired(long classNameId) {
-		return isRequired(
-			classNameId, AssetCategoryConstants.ALL_CLASS_TYPE_PK);
-	}
-
 	@Override
 	public boolean isRequired(long classNameId, long classTypePK) {
 		AssetVocabularySettingsHelper vocabularySettingsHelper =
@@ -231,17 +203,6 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 		_vocabularySettingsHelper = null;
 
 		super.setSettings(settings);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setSettingsProperties(UnicodeProperties settingsProperties) {
-		super.setSettings(settingsProperties.toString());
-
-		_vocabularySettingsHelper = getVocabularySettingsHelper();
 	}
 
 	protected AssetVocabularySettingsHelper getVocabularySettingsHelper() {

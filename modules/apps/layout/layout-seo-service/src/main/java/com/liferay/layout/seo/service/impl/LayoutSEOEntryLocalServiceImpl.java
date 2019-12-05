@@ -14,6 +14,9 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -105,6 +108,25 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
 
+		DDMStructure ddmStructure = _getDDMStructure(
+			_groupLocalService.getGroup(groupId));
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_ddmFormValuesDeserializer.deserialize(
+					DDMFormValuesDeserializerDeserializeRequest.Builder.
+						newBuilder(
+							(String)serviceContext.getAttribute(
+								ddmStructure.getStructureId() +
+									"ddmFormValues"),
+							ddmStructure.getDDMForm()
+						).build());
+
+		_storageEngine.update(
+			layoutSEOEntry.getDDMStorageId(),
+			ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues(),
+			serviceContext);
+
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
 
@@ -170,14 +192,7 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			group.getCompanyId());
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			companyGroup.getGroupId(),
-			_classNameLocalService.getClassNameId(
-				LayoutSEOEntry.class.getName()),
-			"custom-open-graph-meta-tags");
+		DDMStructure ddmStructure = _getDDMStructure(group);
 
 		DDMForm ddmForm = new DDMForm();
 
@@ -193,8 +208,22 @@ public class LayoutSEOEntryLocalServiceImpl
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
 
+	private DDMStructure _getDDMStructure(Group group) throws PortalException {
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		return _ddmStructureLocalService.getStructure(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(
+				LayoutSEOEntry.class.getName()),
+			"custom-open-graph-meta-tags");
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

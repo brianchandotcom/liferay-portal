@@ -16,7 +16,8 @@ import {
 	waitForDomChange,
 	waitForElement,
 	wait,
-	waitForElementToBeRemoved
+	waitForElementToBeRemoved,
+	within
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -124,6 +125,26 @@ describe('SegmentsExperimentsSidebar', () => {
 		expect(queryByTestId('segments-experiments-drop-down')).toBe(null);
 
 		segmentsExperiment.editable = true;
+	});
+
+	it('Sidebar indicates mandatory sections in sidebar with asterisks icons', () => {
+		const experiment = {
+			...segmentsExperiment,
+			goal: {
+				label: 'Click',
+				value: 'click'
+			}
+		};
+
+		const {getByText} = renderApp({
+			initialSegmentsExperiment: experiment
+		});
+
+		const clickGoalSection = getByText('click-goal');
+		within(clickGoalSection).getByRole('presentation');
+
+		const variantsSection = getByText('variants');
+		within(variantsSection).getByRole('presentation');
 	});
 });
 

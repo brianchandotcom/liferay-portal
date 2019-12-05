@@ -39,12 +39,9 @@ const ALIGNMENTS_MAP = {
 	'top-right': Align.TopRight
 };
 
-export default forwardRef(function ConfigurationPanel(
-	{configurationPanel, popoverRef, ...otherProps},
-	ref
-) {
-	const configurationPanelRef = useRef(null);
-
+export default forwardRef(
+	({configurationPanel, itemId, popoverRef, ...otherProps}, ref) => {
+		const configurationPanelRef = useRef(null);
 	const [configurationPanelAlign, setConfigurationPanelAlign] = useState(
 		null
 	);
@@ -88,7 +85,7 @@ export default forwardRef(function ConfigurationPanel(
 			{...otherProps}
 		>
 			<div className="p-3 popover popover-scrollable">
-				{ConfigurationPanelComponent && <ConfigurationPanelComponent />}
+				{ConfigurationPanelComponent && <ConfigurationPanelComponent itemId={itemId} />}
 			</div>
 		</div>
 	);

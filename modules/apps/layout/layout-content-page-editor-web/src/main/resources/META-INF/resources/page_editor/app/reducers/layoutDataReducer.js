@@ -161,6 +161,27 @@ function removeItem(items, action) {
 	return newItems;
 }
 
+function updateItemConfig(items, action) {
+	const {config, itemId} = action;
+
+	let newItems = items;
+
+	if (itemId in items) {
+		newItems = {
+			...items,
+			[itemId]: {
+				...items[itemId],
+				config: {
+					...items[itemId].config,
+					...config
+				}
+			}
+		};
+	}
+
+	return newItems;
+}
+
 export default function layoutDataReducer(state, action) {
 	let nextState = state;
 
@@ -193,6 +214,16 @@ export default function layoutDataReducer(state, action) {
 				layoutData: {
 					...state.layoutData,
 					items: removeItem(state.layoutData.items, action)
+				}
+			};
+			break;
+
+		case TYPES.UPDATE_ITEM_CONFIG:
+			nextState = {
+				...state,
+				layoutData: {
+					...state.layoutData,
+					items: updateItemConfig(state.layoutData.items, action)
 				}
 			};
 			break;

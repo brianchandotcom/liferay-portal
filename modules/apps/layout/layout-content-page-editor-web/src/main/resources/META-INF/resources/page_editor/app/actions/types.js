@@ -20,3 +20,4 @@ export const MOVE_ITEM = 'MOVE_ITEM';
 export const PUBLISH = 'PUBLISH';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const UNLOAD_REDUCER = 'UNLOAD_REDUCER';
+export const UPDATE_ITEM_CONFIG = 'UPDATE_ITEM_CONFIG';

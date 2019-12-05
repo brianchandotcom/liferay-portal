@@ -12,20 +12,23 @@
  * details.
  */
 
-/**
- * Action creators.
- */
+import {UPDATE_ITEM_CONFIG as type} from './types';
 
-export {default as discard} from './discard';
-export {default as loadReducer} from './loadReducer';
-export {default as moveItem} from './moveItem';
-export {default as publish} from './publish';
-export {default as removeItem} from './removeItem';
-export {default as unloadReducer} from './unloadReducer';
-export {default as updateItemConfig} from './updateItemConfig';
+const ACTION = {type};
 
 /**
- * Action types.
+ * @param {object} options
+ * @param {object} [options.config={}]
+ * @param {string} options.itemId
+ * @param {string} options.itemType
+ * @param {string} options.parentId
+ * @return {object}
  */
-
-export * as TYPES from './types';
+export default function updateItem({config = {}, itemId, itemType}) {
+	return {
+		...ACTION,
+		config,
+		itemId,
+		itemType
+	};
+}

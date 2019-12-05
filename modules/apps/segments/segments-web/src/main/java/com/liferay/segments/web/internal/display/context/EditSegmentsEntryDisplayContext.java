@@ -126,6 +126,10 @@ public class EditSegmentsEntryDisplayContext {
 		return _redirect;
 	}
 
+	public long getScopeGroupId() {
+		return ParamUtil.getLong(_httpServletRequest, "scopeGroupId");
+	}
+
 	public long getSegmentsEntryId() {
 		if (_segmentsEntryId != null) {
 			return _segmentsEntryId;

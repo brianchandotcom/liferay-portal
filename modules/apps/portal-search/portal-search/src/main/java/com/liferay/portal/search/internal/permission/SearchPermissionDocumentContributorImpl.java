@@ -184,7 +184,7 @@ public class SearchPermissionDocumentContributorImpl
 	private String _getPermissionName(Document document, String defaultValue) {
 		String resourcePermissionName = document.get("resourcePermissionName");
 
-		if (Validator.isNull(document.get("resourcePermissionName"))) {
+		if (Validator.isNull(resourcePermissionName)) {
 			return defaultValue;
 		}
 

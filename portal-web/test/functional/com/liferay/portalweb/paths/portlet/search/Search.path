@@ -99,6 +99,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIMILAR_RESULTS_MAXIMUM_ITEM_DISPLAY</td>
+	<td>//div[label[contains(.,'${key_maximumItems}')]]//input[@type='number']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIMILAR_RESULTS_SPECIFIC_POSITION</td>
+	<td>//div[contains(@id,'SimilarResultsPortlet')]//div[@class='display-compact']//li[${key_resultPosition}]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_PORTLET_DROPDOWN</td>
 	<td>//div/select[contains(@id, "SortPortlet")]</td>
 	<td></td>

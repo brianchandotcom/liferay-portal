@@ -17,6 +17,7 @@ package com.liferay.asset.categories.admin.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -108,46 +109,35 @@ public class AssetCategoriesManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						PortletURL addCategoryURL =
-							liferayPortletResponse.createRenderURL();
+		return CreationMenuUtil.addPrimaryDropdownItem(
+			dropdownItem -> {
+				PortletURL addCategoryURL =
+					liferayPortletResponse.createRenderURL();
 
-						addCategoryURL.setParameter(
-							"mvcPath", "/edit_category.jsp");
+				addCategoryURL.setParameter("mvcPath", "/edit_category.jsp");
 
-						if (_assetCategoriesDisplayContext.getCategoryId() >
-								0) {
+				if (_assetCategoriesDisplayContext.getCategoryId() > 0) {
+					addCategoryURL.setParameter(
+						"parentCategoryId",
+						String.valueOf(
+							_assetCategoriesDisplayContext.getCategoryId()));
+				}
 
-							addCategoryURL.setParameter(
-								"parentCategoryId",
-								String.valueOf(
-									_assetCategoriesDisplayContext.
-										getCategoryId()));
-						}
+				addCategoryURL.setParameter(
+					"vocabularyId",
+					String.valueOf(
+						_assetCategoriesDisplayContext.getVocabularyId()));
 
-						addCategoryURL.setParameter(
-							"vocabularyId",
-							String.valueOf(
-								_assetCategoriesDisplayContext.
-									getVocabularyId()));
+				dropdownItem.setHref(addCategoryURL);
 
-						dropdownItem.setHref(addCategoryURL);
+				String label = "add-category";
 
-						String label = "add-category";
+				if (_assetCategoriesDisplayContext.getCategoryId() > 0) {
+					label = "add-subcategory";
+				}
 
-						if (_assetCategoriesDisplayContext.getCategoryId() >
-								0) {
-
-							label = "add-subcategory";
-						}
-
-						dropdownItem.setLabel(LanguageUtil.get(request, label));
-					});
-			}
-		};
+				dropdownItem.setLabel(LanguageUtil.get(request, label));
+			});
 	}
 
 	@Override

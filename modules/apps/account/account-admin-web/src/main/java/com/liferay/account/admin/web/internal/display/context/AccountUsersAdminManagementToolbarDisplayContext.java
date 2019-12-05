@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -180,48 +181,40 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 	}
 
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "addAccountUser");
+		return CreationMenuUtil.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "addAccountUser");
 
-						PortletURL accountEntrySelectorURL =
-							liferayPortletResponse.createRenderURL();
+				PortletURL accountEntrySelectorURL =
+					liferayPortletResponse.createRenderURL();
 
-						accountEntrySelectorURL.setParameter(
-							"mvcPath",
-							"/account_users_admin/select_account_entry.jsp");
-						accountEntrySelectorURL.setWindowState(
-							LiferayWindowState.POP_UP);
+				accountEntrySelectorURL.setParameter(
+					"mvcPath", "/account_users_admin/select_account_entry.jsp");
+				accountEntrySelectorURL.setWindowState(
+					LiferayWindowState.POP_UP);
 
-						dropdownItem.putData(
-							"accountEntrySelectorURL",
-							accountEntrySelectorURL.toString());
+				dropdownItem.putData(
+					"accountEntrySelectorURL",
+					accountEntrySelectorURL.toString());
 
-						PortletURL addAccountUserURL =
-							liferayPortletResponse.createRenderURL();
+				PortletURL addAccountUserURL =
+					liferayPortletResponse.createRenderURL();
 
-						addAccountUserURL.setParameter(
-							"mvcRenderCommandName",
-							"/account_admin/add_account_user");
-						addAccountUserURL.setParameter(
-							"backURL",
-							String.valueOf(
-								liferayPortletResponse.createRenderURL()));
+				addAccountUserURL.setParameter(
+					"mvcRenderCommandName", "/account_admin/add_account_user");
+				addAccountUserURL.setParameter(
+					"backURL",
+					String.valueOf(liferayPortletResponse.createRenderURL()));
 
-						dropdownItem.putData(
-							"addAccountUserURL", addAccountUserURL.toString());
+				dropdownItem.putData(
+					"addAccountUserURL", addAccountUserURL.toString());
 
-						dropdownItem.putData(
-							"dialogTitle",
-							LanguageUtil.get(request, "select-an-account"));
+				dropdownItem.putData(
+					"dialogTitle",
+					LanguageUtil.get(request, "select-an-account"));
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "add-user"));
-					});
-			}
-		};
+				dropdownItem.setLabel(LanguageUtil.get(request, "add-user"));
+			});
 	}
 
 	@Override

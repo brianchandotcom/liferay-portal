@@ -16,6 +16,7 @@ package com.liferay.announcements.web.internal.display.context;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -109,46 +110,40 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addDropdownItem(
-					dropdownItem -> {
-						PortletURL addEntryURL =
-							_liferayPortletResponse.createRenderURL();
+		return CreationMenuUtil.addDropdownItem(
+			dropdownItem -> {
+				PortletURL addEntryURL =
+					_liferayPortletResponse.createRenderURL();
 
-						addEntryURL.setParameter(
-							"mvcRenderCommandName",
-							"/announcements/edit_entry");
-						addEntryURL.setParameter(
-							"redirect",
-							PortalUtil.getCurrentURL(_httpServletRequest));
+				addEntryURL.setParameter(
+					"mvcRenderCommandName", "/announcements/edit_entry");
+				addEntryURL.setParameter(
+					"redirect", PortalUtil.getCurrentURL(_httpServletRequest));
 
-						String navigation = _getNavigation();
+				String navigation = _getNavigation();
 
-						addEntryURL.setParameter(
-							"alert",
-							String.valueOf(
-								String.valueOf(navigation.equals("alerts"))));
+				addEntryURL.setParameter(
+					"alert",
+					String.valueOf(
+						String.valueOf(navigation.equals("alerts"))));
 
-						addEntryURL.setParameter(
-							"distributionScope", _getDistributionScope());
+				addEntryURL.setParameter(
+					"distributionScope", _getDistributionScope());
 
-						dropdownItem.setHref(addEntryURL);
+				dropdownItem.setHref(addEntryURL);
 
-						String label = null;
+				String label = null;
 
-						if (navigation.equals("alerts")) {
-							label = "add-alert";
-						}
-						else {
-							label = "add-announcement";
-						}
+				if (navigation.equals("alerts")) {
+					label = "add-alert";
+				}
+				else {
+					label = "add-announcement";
+				}
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, label));
-					});
-			}
-		};
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, label));
+			});
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

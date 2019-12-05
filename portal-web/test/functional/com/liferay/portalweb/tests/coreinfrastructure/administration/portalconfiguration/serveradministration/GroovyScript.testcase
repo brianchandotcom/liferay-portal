@@ -46,6 +46,28 @@ definition {
 			value1 = "Test Fragment Collection Name");
 	}
 
+	@description = "This is a test for LRQA-53785"
+	@priority = "4"
+	test ExecuteScriptWithPredefinedVariables {
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			import com.liferay.portal.kernel.util.PortalUtil;
+
+			company = PortalUtil.getCompany(actionRequest);
+
+			out.println("Current company: ${company.getName()}");
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Current company: Liferay DXP");
+	}
+
 	@description = "This is a test for LRQA-53783"
 	@priority = "5"
 	test ExecuteSimpleScript {

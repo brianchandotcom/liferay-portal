@@ -74,12 +74,53 @@ public class BeanAppImpl implements BeanApp {
 		return _specVersion;
 	}
 
-	private final Map<String, List<String>> _containerRuntimeOptions;
-	private final Set<String> _customPortletModes;
-	private final String _defaultNamespace;
-	private final List<Event> _events;
-	private final List<Map.Entry<Integer, String>> _portletListeners;
-	private final Map<String, PublicRenderParameter> _publicRenderParameters;
-	private final String _specVersion;
+	@Override
+	public void setContainerRuntimeOptions(
+		Map<String, List<String>> containerRuntimeOptions) {
+
+		_containerRuntimeOptions = containerRuntimeOptions;
+	}
+
+	@Override
+	public void setCustomPortletModes(Set<String> customPortletModes) {
+		_customPortletModes = customPortletModes;
+	}
+
+	@Override
+	public void setDefaultNamespace(String defaultNamespace) {
+		_defaultNamespace = defaultNamespace;
+	}
+
+	@Override
+	public void setEvents(List<Event> events) {
+		_events = events;
+	}
+
+	@Override
+	public void setPortletListeners(
+		List<Map.Entry<Integer, String>> portletListeners) {
+
+		_portletListeners = portletListeners;
+	}
+
+	@Override
+	public void setPublicRenderParameters(
+		Map<String, PublicRenderParameter> publicRenderParameters) {
+
+		_publicRenderParameters = publicRenderParameters;
+	}
+
+	@Override
+	public void setSpecVersion(String specVersion) {
+		_specVersion = specVersion;
+	}
+
+	private Map<String, List<String>> _containerRuntimeOptions;
+	private Set<String> _customPortletModes;
+	private String _defaultNamespace;
+	private List<Event> _events;
+	private List<Map.Entry<Integer, String>> _portletListeners;
+	private Map<String, PublicRenderParameter> _publicRenderParameters;
+	private String _specVersion;
 
 }

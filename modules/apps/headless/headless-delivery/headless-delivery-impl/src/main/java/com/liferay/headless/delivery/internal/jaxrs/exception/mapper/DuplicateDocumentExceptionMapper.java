@@ -16,8 +16,9 @@ package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -37,21 +38,17 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class DuplicateDocumentExceptionMapper
-	implements ExceptionMapper<DuplicateFileEntryException> {
+	extends BaseExceptionMapper<DuplicateFileEntryException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		DuplicateFileEntryException duplicateFileEntryException) {
 
-		return Response.status(
-			409
-		).entity(
+		return new Problem(
+			Response.Status.CONFLICT,
 			StringUtil.replace(
 				duplicateFileEntryException.getMessage(), "file entry",
-				"document")
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+				"document"));
 	}
 
 }

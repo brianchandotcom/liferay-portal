@@ -15,8 +15,9 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,17 +37,12 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class DocumentFileSizeExceptionMapper
-	implements ExceptionMapper<FileSizeException> {
+	extends BaseExceptionMapper<FileSizeException> {
 
 	@Override
-	public Response toResponse(FileSizeException fileSizeException) {
-		return Response.status(
-			400
-		).entity(
-			fileSizeException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+	protected Problem getProblem(FileSizeException fileSizeException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST, fileSizeException.getMessage());
 	}
 
 }

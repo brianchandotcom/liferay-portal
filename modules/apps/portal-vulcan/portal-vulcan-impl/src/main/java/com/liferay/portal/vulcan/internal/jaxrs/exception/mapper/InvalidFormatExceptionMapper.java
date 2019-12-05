@@ -18,14 +18,14 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 /**
  * Converts any {@code InvalidFormatException} to a {@code 400} error.
@@ -34,10 +34,12 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @review
  */
 public class InvalidFormatExceptionMapper
-	implements ExceptionMapper<InvalidFormatException> {
+	extends BaseExceptionMapper<InvalidFormatException> {
 
 	@Override
-	public Response toResponse(InvalidFormatException invalidFormatException) {
+	protected Problem getProblem(
+		InvalidFormatException invalidFormatException) {
+
 		List<JsonMappingException.Reference> references =
 			invalidFormatException.getPath();
 
@@ -56,13 +58,7 @@ public class InvalidFormatExceptionMapper
 			invalidFormatException.getValue(), "\" to class \"",
 			clazz.getSimpleName(), "\"");
 
-		return Response.status(
-			Response.Status.BAD_REQUEST
-		).entity(
-			message
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+		return new Problem(Response.Status.BAD_REQUEST, message);
 	}
 
 }

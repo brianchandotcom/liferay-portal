@@ -15,8 +15,9 @@
 package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
 
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,19 +37,14 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class DocumentSourceFileNameExceptionMapper
-	implements ExceptionMapper<SourceFileNameException> {
+	extends BaseExceptionMapper<SourceFileNameException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		SourceFileNameException sourceFileNameException) {
 
-		return Response.status(
-			400
-		).entity(
-			sourceFileNameException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+		return new Problem(
+			Response.Status.BAD_REQUEST, sourceFileNameException.getMessage());
 	}
 
 }

@@ -15,8 +15,9 @@
 package com.liferay.headless.admin.taxonomy.internal.jaxrs.exception.mapper;
 
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -36,18 +37,14 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class KeywordNameExceptionMapper
-	implements ExceptionMapper<AssetTagException> {
+	extends BaseExceptionMapper<AssetTagException> {
 
 	@Override
-	public Response toResponse(AssetTagException assetTagException) {
-		return Response.status(
-			400
-		).entity(
+	protected Problem getProblem(AssetTagException assetTagException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST,
 			"Keyword name is too long or contains invalid characters: " +
-				assetTagException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+				assetTagException.getMessage());
 	}
 
 }

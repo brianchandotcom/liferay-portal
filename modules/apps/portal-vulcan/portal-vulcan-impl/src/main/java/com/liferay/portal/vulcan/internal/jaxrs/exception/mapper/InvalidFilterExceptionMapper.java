@@ -15,10 +15,10 @@
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.odata.filter.InvalidFilterException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 /**
  * Converts any {@code InvalidFilterException} to a {@code 400} error.
@@ -27,17 +27,14 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @review
  */
 public class InvalidFilterExceptionMapper
-	implements ExceptionMapper<InvalidFilterException> {
+	extends BaseExceptionMapper<InvalidFilterException> {
 
 	@Override
-	public Response toResponse(InvalidFilterException invalidFilterException) {
-		return Response.status(
-			Response.Status.BAD_REQUEST
-		).entity(
-			invalidFilterException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+	protected Problem getProblem(
+		InvalidFilterException invalidFilterException) {
+
+		return new Problem(
+			Response.Status.BAD_REQUEST, invalidFilterException.getMessage());
 	}
 
 }

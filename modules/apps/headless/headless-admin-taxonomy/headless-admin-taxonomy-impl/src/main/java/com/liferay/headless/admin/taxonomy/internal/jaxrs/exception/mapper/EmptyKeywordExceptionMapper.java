@@ -16,8 +16,9 @@ package com.liferay.headless.admin.taxonomy.internal.jaxrs.exception.mapper;
 
 import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -37,18 +38,14 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class EmptyKeywordExceptionMapper
-	implements ExceptionMapper<AssetTagNameException> {
+	extends BaseExceptionMapper<AssetTagNameException> {
 
 	@Override
-	public Response toResponse(AssetTagNameException assetTagNameException) {
-		return Response.status(
-			400
-		).entity(
+	protected Problem getProblem(AssetTagNameException assetTagNameException) {
+		return new Problem(
+			Response.Status.BAD_REQUEST,
 			StringUtil.replace(
-				assetTagNameException.getMessage(), "Tag", "Keyword")
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+				assetTagNameException.getMessage(), "Tag", "Keyword"));
 	}
 
 }

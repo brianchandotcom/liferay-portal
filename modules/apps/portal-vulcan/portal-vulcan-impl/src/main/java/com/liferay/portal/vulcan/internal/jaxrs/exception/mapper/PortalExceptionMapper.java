@@ -15,10 +15,10 @@
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 /**
  * Converts any {@code PortalException} to a {@code 500} error.
@@ -26,17 +26,14 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @author Alejandro Hernández
  * @review
  */
-public class PortalExceptionMapper implements ExceptionMapper<PortalException> {
+public class PortalExceptionMapper
+	extends BaseExceptionMapper<PortalException> {
 
 	@Override
-	public Response toResponse(PortalException portalException) {
-		return Response.status(
-			Response.Status.INTERNAL_SERVER_ERROR
-		).entity(
-			portalException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+	protected Problem getProblem(PortalException portalException) {
+		return new Problem(
+			Response.Status.INTERNAL_SERVER_ERROR,
+			portalException.getMessage());
 	}
 
 }

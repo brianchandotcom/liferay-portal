@@ -16,6 +16,7 @@ package com.liferay.layout.seo.canonical.url;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Locale;
 import java.util.Map;
@@ -24,6 +25,10 @@ import java.util.Map;
  * @author Alejandro Tardín
  */
 public interface LayoutSEOCanonicalURLProvider {
+
+	public Map<Locale, String> getCanonicalURLMap(
+			Layout layout, String completeURL, ThemeDisplay themeDisplay)
+		throws PortalException;
 
 	public String getDefaultCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,

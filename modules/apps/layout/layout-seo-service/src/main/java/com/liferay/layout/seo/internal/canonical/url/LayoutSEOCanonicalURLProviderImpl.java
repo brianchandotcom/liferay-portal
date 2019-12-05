@@ -16,10 +16,15 @@ package com.liferay.layout.seo.internal.canonical.url;
 
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +38,35 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = LayoutSEOCanonicalURLProvider.class)
 public class LayoutSEOCanonicalURLProviderImpl
 	implements LayoutSEOCanonicalURLProvider {
+
+	@Override
+	public Map<Locale, String> getCanonicalURLMap(
+			Layout layout, String completeURL, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String canonicalURL = _portal.getCanonicalURL(
+			completeURL, themeDisplay, layout, false, false);
+
+		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
+			canonicalURL, themeDisplay, layout);
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if ((layoutSEOEntry == null) ||
+			!layoutSEOEntry.isCanonicalURLEnabled()) {
+
+			return alternateURLs;
+		}
+
+		Map<Locale, String> canonicalURLMap = new HashMap<>(alternateURLs);
+
+		canonicalURLMap.putAll(layoutSEOEntry.getCanonicalURLMap());
+
+		return canonicalURLMap;
+	}
 
 	@Override
 	public String getDefaultCanonicalURL(
@@ -56,5 +90,11 @@ public class LayoutSEOCanonicalURLProviderImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

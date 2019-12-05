@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet;
 
+import com.liferay.fragment.util.FragmentEntryConfigurationUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys;
@@ -91,6 +92,9 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 		httpServletRequest.setAttribute(
 			ContentPageEditorTypeConfiguration.class.getName(),
 			_contentPageEditorTypeConfiguration);
+		httpServletRequest.setAttribute(
+			FragmentEntryConfigurationUtil.class.getName(),
+			_fragmentEntryConfigurationUtil);
 
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
 			(ContentPageEditorDisplayContext)httpServletRequest.getAttribute(
@@ -144,6 +148,9 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 
 	private volatile ContentPageEditorTypeConfiguration
 		_contentPageEditorTypeConfiguration;
+
+	@Reference
+	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
 
 	@Reference
 	private Http _http;

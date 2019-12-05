@@ -196,7 +196,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private FragmentEntry _addFragmentEntry(
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, String configuration,
-			String typeLabel, boolean readOnly, boolean overwrite)
+			boolean readOnly, String typeLabel, boolean overwrite)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -503,8 +503,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String html = StringPool.BLANK;
 			String js = StringPool.BLANK;
 			String configuration = StringPool.BLANK;
-			String typeLabel = StringPool.BLANK;
 			boolean readOnly = false;
+			String typeLabel = StringPool.BLANK;
 
 			String fragmentJSON = _getContent(zipFile, entry.getValue());
 
@@ -523,13 +523,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				configuration = _getFragmentEntryContent(
 					zipFile, entry.getValue(),
 					jsonObject.getString("configurationPath"));
-				typeLabel = jsonObject.getString("type");
 				readOnly = jsonObject.getBoolean("readOnly");
+				typeLabel = jsonObject.getString("type");
 			}
 
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
-				configuration, typeLabel, readOnly, overwrite);
+				configuration, readOnly, typeLabel, overwrite);
 
 			if (Validator.isNotNull(fragmentJSON)) {
 				if (fragmentEntry.getPreviewFileEntryId() > 0) {

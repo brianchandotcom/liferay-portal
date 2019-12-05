@@ -82,8 +82,8 @@
 		<column name="js" type="String" />
 		<column name="configuration" type="String" />
 		<column name="previewFileEntryId" type="long" />
-		<column name="type" type="int" />
 		<column name="readOnly" type="boolean" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

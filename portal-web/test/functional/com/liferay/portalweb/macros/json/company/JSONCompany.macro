@@ -3,8 +3,10 @@ definition {
 	macro getCompanyId {
 		var portalInstanceName = JSONCompany.getPortalInstanceName();
 
+		var portalURL = JSONCompany.getPortalURL();
+
 		var curl = '''
-			http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
 				-u test@liferay.com:test
 		''';
 

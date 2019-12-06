@@ -28,21 +28,22 @@ import java.util.Map;
 public class LayoutStructure {
 
 	public LayoutStructure(
-		Map<String, Item> layoutStructureItems, Root layoutStructureRoot) {
+		Map<String, Item> layoutStructureItems,
+		RootItem layoutStructureRootItem) {
 
 		_layoutStructureItems = layoutStructureItems;
-		_layoutStructureRoot = layoutStructureRoot;
+		_layoutStructureRootItem = layoutStructureRootItem;
 	}
 
 	public LayoutStructure addItem(
-		Item layoutStructureItem, String parentId, int position) {
+		Item layoutStructureItem, String parentItemId, int position) {
 
 		_layoutStructureItems.put(
 			layoutStructureItem.getItemId(), layoutStructureItem);
 
-		if (parentId != null) {
+		if (parentItemId != null) {
 			Item parentLayoutStructureItem = _layoutStructureItems.get(
-				parentId);
+				parentItemId);
 
 			List<String> childrenItemIds =
 				parentLayoutStructureItem.getChildrenItemIds();
@@ -64,20 +65,21 @@ public class LayoutStructure {
 				JSONUtil.put(
 					"children", layoutStructureItem.getChildrenItemIds()
 				).put(
-					"config", layoutStructureItem.getConfigJSONObject()
+					"config", layoutStructureItem.getItemConfigJSONObject()
 				).put(
 					"itemId", layoutStructureItem.getItemId()
 				).put(
-					"parentId", layoutStructureItem.getParentId()
+					"parentId", layoutStructureItem.getParentItemId()
 				).put(
-					"type", layoutStructureItem.getType()
+					"type", layoutStructureItem.getItemType()
 				));
 		}
 
 		return JSONUtil.put(
 			"items", itemsJSONObject
 		).put(
-			"rootItems", JSONUtil.put("main", _layoutStructureRoot.getMain())
+			"rootItems",
+			JSONUtil.put("main", _layoutStructureRootItem.getMainItemId())
 		).put(
 			"version", 1
 		);
@@ -86,67 +88,68 @@ public class LayoutStructure {
 	public static class Item {
 
 		public static Item create(
-			JSONObject configJSONObject, String itemId, String parentId,
-			String type) {
+			JSONObject itemConfigJSONObject, String itemId, String parentItemId,
+			String itemType) {
 
 			return new Item(
-				new ArrayList<>(), configJSONObject, itemId, parentId, type);
+				new ArrayList<>(), itemConfigJSONObject, itemId, parentItemId,
+				itemType);
 		}
 
 		public Item(
-			List<String> childrenItemIds, JSONObject configJSONObject,
-			String itemId, String parentId, String type) {
+			List<String> childrenItemIds, JSONObject itemConfigJSONObject,
+			String itemId, String parentItemId, String itemType) {
 
 			_childrenItemIds = childrenItemIds;
-			_configJSONObject = configJSONObject;
+			_itemConfigJSONObject = itemConfigJSONObject;
 			_itemId = itemId;
-			_parentId = parentId;
-			_type = type;
+			_parentItemId = parentItemId;
+			_itemType = itemType;
 		}
 
 		public List<String> getChildrenItemIds() {
 			return _childrenItemIds;
 		}
 
-		public JSONObject getConfigJSONObject() {
-			return _configJSONObject;
+		public JSONObject getItemConfigJSONObject() {
+			return _itemConfigJSONObject;
 		}
 
 		public String getItemId() {
 			return _itemId;
 		}
 
-		public String getParentId() {
-			return _parentId;
+		public String getItemType() {
+			return _itemType;
 		}
 
-		public String getType() {
-			return _type;
+		public String getParentItemId() {
+			return _parentItemId;
 		}
 
 		private final List<String> _childrenItemIds;
-		private final JSONObject _configJSONObject;
+		private final JSONObject _itemConfigJSONObject;
 		private final String _itemId;
-		private final String _parentId;
-		private final String _type;
+		private final String _itemType;
+		private final String _parentItemId;
 
 	}
 
-	public static class Root {
+	public static class RootItem {
 
-		public Root(String main) {
-			_main = main;
+		public RootItem(String mainItemId) {
+			_mainItemId = mainItemId;
 		}
 
-		public String getMain() {
-			return _main;
+		public String getMainItemId() {
+			return _mainItemId;
 		}
 
-		private final String _main;
+		private final String _mainItemId;
 
 	}
 
 	private final Map<String, Item> _layoutStructureItems;
-	private final Root _layoutStructureRoot;
+	private final RootItem _layoutStructureRootItem;
 
 }

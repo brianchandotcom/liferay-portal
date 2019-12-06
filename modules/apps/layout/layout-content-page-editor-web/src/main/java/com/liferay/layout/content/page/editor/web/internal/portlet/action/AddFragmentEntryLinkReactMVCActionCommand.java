@@ -134,9 +134,9 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
-		String config = ParamUtil.getString(actionRequest, "config");
-		String parentId = ParamUtil.getString(actionRequest, "parentId");
-		String type = ParamUtil.getString(actionRequest, "type");
+		String itemConfig = ParamUtil.getString(actionRequest, "config");
+		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
+		String itemType = ParamUtil.getString(actionRequest, "type");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
@@ -144,12 +144,12 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			layoutStructure -> {
 				LayoutStructure.Item layoutStructureItem =
 					LayoutStructure.Item.create(
-						JSONFactoryUtil.createJSONObject(config),
+						JSONFactoryUtil.createJSONObject(itemConfig),
 						String.valueOf(fragmentEntryLink.getFragmentEntryId()),
-						parentId, type);
+						parentItemId, itemType);
 
 				layoutStructure.addItem(
-					layoutStructureItem, parentId, position);
+					layoutStructureItem, parentItemId, position);
 			});
 	}
 
@@ -253,8 +253,8 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 	private JSONObject _processAddFragmentEntryLinkAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		Callable<JSONObject> callable =
-			new AddFragmentEntryLinkCallable(actionRequest, actionResponse);
+		Callable<JSONObject> callable = new AddFragmentEntryLinkCallable(
+			actionRequest, actionResponse);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

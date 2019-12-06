@@ -85,8 +85,8 @@ public class LayoutStructureUtil {
 		JSONObject rootItemsJSONObject =
 			layoutStructureJSONObject.getJSONObject("rootItems");
 
-		LayoutStructure.Root layoutStructureRoot = new LayoutStructure.Root(
-			rootItemsJSONObject.getString("main"));
+		LayoutStructure.RootItem layoutStructureRootItem =
+			new LayoutStructure.RootItem(rootItemsJSONObject.getString("main"));
 
 		JSONObject itemsJSONObject = layoutStructureJSONObject.getJSONObject(
 			"items");
@@ -100,7 +100,7 @@ public class LayoutStructureUtil {
 				_toLayoutStructureItem(itemsJSONObject.getJSONObject(key)));
 		}
 
-		return new LayoutStructure(itemMap, layoutStructureRoot);
+		return new LayoutStructure(itemMap, layoutStructureRootItem);
 	}
 
 	private static LayoutStructure.Item _toLayoutStructureItem(

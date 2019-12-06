@@ -506,9 +506,17 @@ definition {
 		if (isSet(webContentImage)) {
 			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
-			ItemSelector.uploadFile(
-				navTab = "Web Content Images",
-				uploadFileName = "${webContentImage}");
+			if (isSet(depotName)) {
+				ItemSelector.selectRepositoryImage(
+					depotName = "${depotName}",
+					imageFileName = "${webContentImage}");
+			}
+
+			else {
+				ItemSelector.uploadFile(
+					navTab = "Web Content Images",
+					uploadFileName = "${webContentImage}");
+			}
 		}
 
 		if (isSet(webContentImageUnderDocumentsAndMedia)) {

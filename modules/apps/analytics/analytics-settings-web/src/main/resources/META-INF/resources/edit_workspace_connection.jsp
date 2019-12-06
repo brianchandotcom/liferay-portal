@@ -50,7 +50,7 @@ if (analyticsConfiguration != null) {
 			</div>
 
 			<c:choose>
-				<c:when test="<%=connected%>">
+				<c:when test="<%= connected %>">
 					<aui:input name="disconnect" type="hidden" value="true" />
 
 					<aui:button-row>

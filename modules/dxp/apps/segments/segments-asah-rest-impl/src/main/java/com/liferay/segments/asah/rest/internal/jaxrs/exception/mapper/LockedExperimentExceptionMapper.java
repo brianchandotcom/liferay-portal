@@ -14,12 +14,15 @@
 
 package com.liferay.segments.asah.rest.internal.jaxrs.exception.mapper;
 
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
+import com.sun.xml.internal.rngom.parse.host.Base;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -38,19 +41,12 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class LockedExperimentExceptionMapper
-	implements ExceptionMapper<LockedSegmentsExperimentException> {
+	extends BaseExceptionMapper<LockedSegmentsExperimentException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		LockedSegmentsExperimentException lockedSegmentsExperimentException) {
-
-		return Response.status(
-			400
-		).entity(
-			lockedSegmentsExperimentException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+		return new Problem(Response.Status.BAD_REQUEST, lockedSegmentsExperimentException.getMessage());
 	}
 
 }

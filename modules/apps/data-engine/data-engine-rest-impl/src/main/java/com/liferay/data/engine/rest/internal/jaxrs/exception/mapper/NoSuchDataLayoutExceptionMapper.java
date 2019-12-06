@@ -14,8 +14,9 @@
 
 package com.liferay.data.engine.rest.internal.jaxrs.exception.mapper;
 
-import com.liferay.data.engine.rest.dto.v1_0.DataLayout;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -34,17 +35,15 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class NoSuchDataLayoutExceptionMapper
-	implements ExceptionMapper<NoSuchStructureLayoutException> {
+	extends BaseExceptionMapper<NoSuchStructureLayoutException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		NoSuchStructureLayoutException noSuchStructureLayoutException) {
 
-		return Response.status(
-			Response.Status.NOT_FOUND
-		).entity(
-			new DataLayout()
-		).build();
+		return new Problem(
+			Response.Status.NOT_FOUND,
+			noSuchStructureLayoutException.getMessage());
 	}
 
 }

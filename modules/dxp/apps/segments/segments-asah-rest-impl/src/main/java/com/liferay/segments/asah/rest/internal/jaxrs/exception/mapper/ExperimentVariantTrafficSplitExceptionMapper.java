@@ -14,6 +14,8 @@
 
 package com.liferay.segments.asah.rest.internal.jaxrs.exception.mapper;
 
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.segments.exception.SegmentsExperimentRelSplitException;
 
 import javax.ws.rs.core.MediaType;
@@ -38,20 +40,12 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class ExperimentVariantTrafficSplitExceptionMapper
-	implements ExceptionMapper<SegmentsExperimentRelSplitException> {
+	extends BaseExceptionMapper<SegmentsExperimentRelSplitException> {
 
 	@Override
-	public Response toResponse(
-		SegmentsExperimentRelSplitException
-			segmentsExperimentRelSplitException) {
-
-		return Response.status(
-			400
-		).entity(
-			segmentsExperimentRelSplitException.getMessage()
-		).type(
-			MediaType.TEXT_PLAIN
-		).build();
+	protected Problem getProblem(
+		SegmentsExperimentRelSplitException segmentsExperimentRelSplitException) {
+		return new Problem(Response.Status.BAD_REQUEST, segmentsExperimentRelSplitException.getMessage());
 	}
 
 }

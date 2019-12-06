@@ -1,6 +1,6 @@
 create table Mail_Account (
-	accountId LONG not null primary key,
-	companyId LONG,
+	accountId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -24,24 +24,26 @@ create table Mail_Account (
 	draftFolderId LONG,
 	sentFolderId LONG,
 	trashFolderId LONG,
-	defaultSender BOOLEAN
+	defaultSender BOOLEAN,
+	primary key (accountId, companyId)
 );
 
 create table Mail_Attachment (
-	attachmentId LONG not null primary key,
-	companyId LONG,
+	attachmentId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	accountId LONG,
 	folderId LONG,
 	messageId LONG,
 	contentPath VARCHAR(75) null,
 	fileName VARCHAR(75) null,
-	size_ LONG
+	size_ LONG,
+	primary key (attachmentId, companyId)
 );
 
 create table Mail_Folder (
-	folderId LONG not null primary key,
-	companyId LONG,
+	folderId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -49,12 +51,13 @@ create table Mail_Folder (
 	accountId LONG,
 	fullName VARCHAR(75) null,
 	displayName VARCHAR(75) null,
-	remoteMessageCount INTEGER
+	remoteMessageCount INTEGER,
+	primary key (folderId, companyId)
 );
 
 create table Mail_Message (
-	messageId LONG not null primary key,
-	companyId LONG,
+	messageId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -72,5 +75,6 @@ create table Mail_Message (
 	flags VARCHAR(75) null,
 	size_ LONG,
 	remoteMessageId LONG,
-	contentType VARCHAR(75) null
+	contentType VARCHAR(75) null,
+	primary key (messageId, companyId)
 );

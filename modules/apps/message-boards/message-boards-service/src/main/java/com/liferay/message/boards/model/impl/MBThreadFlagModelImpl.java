@@ -93,7 +93,7 @@ public class MBThreadFlagModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG,lastPublishDate DATE null)";
+		"create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG,lastPublishDate DATE null,primary key (threadFlagId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBThreadFlag";
 

@@ -104,7 +104,7 @@ public class KaleoInstanceTokenModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoInstanceToken (mvccVersion LONG default 0 not null,kaleoInstanceTokenId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,parentKaleoInstanceTokenId LONG,currentKaleoNodeId LONG,currentKaleoNodeName VARCHAR(200) null,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null)";
+		"create table KaleoInstanceToken (mvccVersion LONG default 0 not null,kaleoInstanceTokenId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,parentKaleoInstanceTokenId LONG,currentKaleoNodeId LONG,currentKaleoNodeName VARCHAR(200) null,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null,primary key (kaleoInstanceTokenId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoInstanceToken";
 

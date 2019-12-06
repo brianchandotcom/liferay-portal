@@ -1,6 +1,6 @@
 create table Audit_AuditEvent (
-	auditEventId LONG not null primary key,
-	companyId LONG,
+	auditEventId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -13,5 +13,6 @@ create table Audit_AuditEvent (
 	serverName VARCHAR(255) null,
 	serverPort INTEGER,
 	sessionID VARCHAR(255) null,
-	additionalInfo TEXT null
+	additionalInfo TEXT null,
+	primary key (auditEventId, companyId)
 );

@@ -16,5 +16,5 @@ create index IX_5615F9DD on SamlSpMessage (samlIdpEntityId[$COLUMN_LENGTH:1024$]
 
 create index IX_85F532ED on SamlSpSession (jSessionId[$COLUMN_LENGTH:200$]);
 create index IX_1040A689 on SamlSpSession (nameIdValue[$COLUMN_LENGTH:1024$]);
-create unique index IX_C66E4319 on SamlSpSession (samlSpSessionKey[$COLUMN_LENGTH:75$]);
+create unique index IX_A4ED076F on SamlSpSession (samlSpSessionKey[$COLUMN_LENGTH:75$], companyId);
 create index IX_2001B382 on SamlSpSession (sessionIndex[$COLUMN_LENGTH:75$]);

@@ -98,7 +98,7 @@ public class KaleoNodeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoNode (mvccVersion LONG default 0 not null,kaleoNodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN)";
+		"create table KaleoNode (mvccVersion LONG default 0 not null,kaleoNodeId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,name VARCHAR(200) null,metadata STRING null,description STRING null,type_ VARCHAR(20) null,initial_ BOOLEAN,terminal BOOLEAN,primary key (kaleoNodeId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoNode";
 

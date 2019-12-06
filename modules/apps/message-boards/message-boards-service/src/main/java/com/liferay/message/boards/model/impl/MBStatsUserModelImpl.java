@@ -84,7 +84,7 @@ public class MBStatsUserModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
+		"create table MBStatsUser (statsUserId LONG not null,groupId LONG,companyId LONG not null,userId LONG,messageCount INTEGER,lastPostDate DATE null,primary key (statsUserId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBStatsUser";
 

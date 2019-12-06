@@ -82,7 +82,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntryAssetCategoryRel (mvccVersion LONG default 0 not null,assetEntryAssetCategoryRelId LONG not null primary key,companyId LONG,assetEntryId LONG,assetCategoryId LONG,priority INTEGER)";
+		"create table AssetEntryAssetCategoryRel (mvccVersion LONG default 0 not null,assetEntryAssetCategoryRelId LONG not null,companyId LONG not null,assetEntryId LONG,assetCategoryId LONG,priority INTEGER,primary key (assetEntryAssetCategoryRelId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetEntryAssetCategoryRel";

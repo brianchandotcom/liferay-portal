@@ -87,7 +87,7 @@ public class OAuthConsumerModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OpenSocial_OAuthConsumer (oAuthConsumerId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,gadgetKey VARCHAR(75) null,serviceName VARCHAR(75) null,consumerKey VARCHAR(75) null,consumerSecret TEXT null,keyType VARCHAR(75) null)";
+		"create table OpenSocial_OAuthConsumer (oAuthConsumerId LONG not null,companyId LONG not null,createDate DATE null,modifiedDate DATE null,gadgetKey VARCHAR(75) null,serviceName VARCHAR(75) null,consumerKey VARCHAR(75) null,consumerSecret TEXT null,keyType VARCHAR(75) null,primary key (oAuthConsumerId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OpenSocial_OAuthConsumer";

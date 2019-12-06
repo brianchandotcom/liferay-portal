@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.depot">
+	<namespace>Depot</namespace>
+	<entity local-service="true" name="DepotEntry" remote-service="true" trash-enabled="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="depotEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+	</entity>
+	<entity local-service="true" name="DepotEntryGroupRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="depotEntryGroupRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="depotEntryId" type="long" />
+		<column name="toGroupId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="DepotEntryId" return-type="Collection">
+			<finder-column name="depotEntryId" />
+		</finder>
+		<finder name="ToGroupId" return-type="Collection">
+			<finder-column name="toGroupId" />
+		</finder>
+		<finder name="D_TGI" return-type="DepotEntryGroupRel" unique="true">
+			<finder-column name="depotEntryId" />
+			<finder-column name="toGroupId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>DepotEntryName</exception>
+	</exceptions>
+</service-builder>

@@ -87,7 +87,7 @@ public class LVEntryLocalizationVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LVEntryLocalizationVersion (lvEntryLocalizationVersionId LONG not null primary key,version INTEGER,lvEntryLocalizationId LONG,companyId LONG,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null)";
+		"create table LVEntryLocalizationVersion (lvEntryLocalizationVersionId LONG not null,version INTEGER,lvEntryLocalizationId LONG,companyId LONG not null,lvEntryId LONG,languageId VARCHAR(75) null,title VARCHAR(75) null,content VARCHAR(75) null,primary key (lvEntryLocalizationVersionId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LVEntryLocalizationVersion";

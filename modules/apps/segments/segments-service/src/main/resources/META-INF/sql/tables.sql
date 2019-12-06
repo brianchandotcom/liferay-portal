@@ -1,9 +1,9 @@
 create table SegmentsEntry (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	segmentsEntryId LONG not null primary key,
+	segmentsEntryId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -15,41 +15,44 @@ create table SegmentsEntry (
 	criteria TEXT null,
 	source VARCHAR(75) null,
 	type_ VARCHAR(75) null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (segmentsEntryId, companyId)
 );
 
 create table SegmentsEntryRel (
 	mvccVersion LONG default 0 not null,
-	segmentsEntryRelId LONG not null primary key,
+	segmentsEntryRelId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	segmentsEntryId LONG,
 	classNameId LONG,
-	classPK LONG
+	classPK LONG,
+	primary key (segmentsEntryRelId, companyId)
 );
 
 create table SegmentsEntryRole (
 	mvccVersion LONG default 0 not null,
-	segmentsEntryRoleId LONG not null primary key,
-	companyId LONG,
+	segmentsEntryRoleId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	segmentsEntryId LONG,
-	roleId LONG
+	roleId LONG,
+	primary key (segmentsEntryRoleId, companyId)
 );
 
 create table SegmentsExperience (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	segmentsExperienceId LONG not null primary key,
+	segmentsExperienceId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -61,15 +64,16 @@ create table SegmentsExperience (
 	name STRING null,
 	priority INTEGER,
 	active_ BOOLEAN,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (segmentsExperienceId, companyId)
 );
 
 create table SegmentsExperiment (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	segmentsExperimentId LONG not null primary key,
+	segmentsExperimentId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -82,19 +86,21 @@ create table SegmentsExperiment (
 	name VARCHAR(75) null,
 	description STRING null,
 	typeSettings TEXT null,
-	status INTEGER
+	status INTEGER,
+	primary key (segmentsExperimentId, companyId)
 );
 
 create table SegmentsExperimentRel (
 	mvccVersion LONG default 0 not null,
-	segmentsExperimentRelId LONG not null primary key,
+	segmentsExperimentRelId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	segmentsExperimentId LONG,
 	segmentsExperienceId LONG,
-	split DOUBLE
+	split DOUBLE,
+	primary key (segmentsExperimentRelId, companyId)
 );

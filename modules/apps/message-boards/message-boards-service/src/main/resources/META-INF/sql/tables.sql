@@ -1,21 +1,22 @@
 create table MBBan (
 	uuid_ VARCHAR(75) null,
-	banId LONG not null primary key,
+	banId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	banUserId LONG,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (banId, companyId)
 );
 
 create table MBCategory (
 	uuid_ VARCHAR(75) null,
-	categoryId LONG not null primary key,
+	categoryId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -31,14 +32,15 @@ create table MBCategory (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (categoryId, companyId)
 );
 
 create table MBDiscussion (
 	uuid_ VARCHAR(75) null,
-	discussionId LONG not null primary key,
+	discussionId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -46,14 +48,15 @@ create table MBDiscussion (
 	classNameId LONG,
 	classPK LONG,
 	threadId LONG,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (discussionId, companyId)
 );
 
 create table MBMailingList (
 	uuid_ VARCHAR(75) null,
-	mailingListId LONG not null primary key,
+	mailingListId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -75,14 +78,15 @@ create table MBMailingList (
 	outUserName VARCHAR(75) null,
 	outPassword VARCHAR(75) null,
 	allowAnonymous BOOLEAN,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	primary key (mailingListId, companyId)
 );
 
 create table MBMessage (
 	uuid_ VARCHAR(75) null,
-	messageId LONG not null primary key,
+	messageId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -105,23 +109,25 @@ create table MBMessage (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (messageId, companyId)
 );
 
 create table MBStatsUser (
-	statsUserId LONG not null primary key,
+	statsUserId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	messageCount INTEGER,
-	lastPostDate DATE null
+	lastPostDate DATE null,
+	primary key (statsUserId, companyId)
 );
 
 create table MBThread (
 	uuid_ VARCHAR(75) null,
-	threadId LONG not null primary key,
+	threadId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -139,18 +145,20 @@ create table MBThread (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (threadId, companyId)
 );
 
 create table MBThreadFlag (
 	uuid_ VARCHAR(75) null,
-	threadFlagId LONG not null primary key,
+	threadFlagId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	threadId LONG,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (threadFlagId, companyId)
 );

@@ -130,7 +130,7 @@ public class KBArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (kbArticleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 

@@ -93,7 +93,7 @@ public class CTCollectionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(200) null,status INTEGER,statusByUserId LONG,statusDate DATE null)";
+		"create table CTCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG not null,companyId LONG not null,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(200) null,status INTEGER,statusByUserId LONG,statusDate DATE null,primary key (ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CTCollection";
 

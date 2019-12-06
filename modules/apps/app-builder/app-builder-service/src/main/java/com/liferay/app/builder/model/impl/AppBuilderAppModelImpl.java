@@ -107,7 +107,7 @@ public class AppBuilderAppModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,status INTEGER)";
+		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,status INTEGER,primary key (appBuilderAppId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AppBuilderApp";
 

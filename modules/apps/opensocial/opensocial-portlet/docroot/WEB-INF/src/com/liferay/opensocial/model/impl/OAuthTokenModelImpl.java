@@ -97,7 +97,7 @@ public class OAuthTokenModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OpenSocial_OAuthToken (oAuthTokenId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,gadgetKey VARCHAR(75) null,serviceName VARCHAR(75) null,moduleId LONG,accessToken VARCHAR(75) null,tokenName VARCHAR(75) null,tokenSecret VARCHAR(75) null,sessionHandle VARCHAR(75) null,expiration LONG)";
+		"create table OpenSocial_OAuthToken (oAuthTokenId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,gadgetKey VARCHAR(75) null,serviceName VARCHAR(75) null,moduleId LONG,accessToken VARCHAR(75) null,tokenName VARCHAR(75) null,tokenSecret VARCHAR(75) null,sessionHandle VARCHAR(75) null,expiration LONG,primary key (oAuthTokenId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OpenSocial_OAuthToken";

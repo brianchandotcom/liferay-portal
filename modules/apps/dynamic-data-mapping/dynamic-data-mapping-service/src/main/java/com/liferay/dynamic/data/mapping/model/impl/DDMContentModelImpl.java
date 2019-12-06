@@ -104,7 +104,7 @@ public class DDMContentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMContent (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,contentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,data_ TEXT null)";
+		"create table DDMContent (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,contentId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,data_ TEXT null,primary key (contentId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMContent";
 

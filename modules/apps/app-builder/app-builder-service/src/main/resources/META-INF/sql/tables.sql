@@ -1,8 +1,8 @@
 create table AppBuilderApp (
 	uuid_ VARCHAR(75) null,
-	appBuilderAppId LONG not null primary key,
+	appBuilderAppId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -11,13 +11,15 @@ create table AppBuilderApp (
 	ddmStructureLayoutId LONG,
 	deDataListViewId LONG,
 	name STRING null,
-	status INTEGER
+	status INTEGER,
+	primary key (appBuilderAppId, companyId)
 );
 
 create table AppBuilderAppDeployment (
-	appBuilderAppDeploymentId LONG not null primary key,
-	companyId LONG,
+	appBuilderAppDeploymentId LONG not null,
+	companyId LONG not null,
 	appBuilderAppId LONG,
 	settings_ TEXT null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	primary key (appBuilderAppDeploymentId, companyId)
 );

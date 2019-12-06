@@ -96,7 +96,7 @@ public class WeDeployAuthAppModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WeDeployAuth_WeDeployAuthApp (weDeployAuthAppId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,redirectURI VARCHAR(75) null,clientId VARCHAR(75) null,clientSecret VARCHAR(75) null)";
+		"create table WeDeployAuth_WeDeployAuthApp (weDeployAuthAppId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,redirectURI VARCHAR(75) null,clientId VARCHAR(75) null,clientSecret VARCHAR(75) null,primary key (weDeployAuthAppId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WeDeployAuth_WeDeployAuthApp";

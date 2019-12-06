@@ -63,8 +63,31 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand-smallest table-cell-minw-150"
 			name="members"
-			value="<%= SegmentsEntryDisplayContext.getMembersCount(segmentsEntry.getSegmentsEntryId()) %>"
+			value="<%= String.valueOf(SegmentsEntryDisplayContext.getMembersCount(segmentsEntry.getSegmentsEntryId())) %>"
 		/>
+
+		<c:if test='<%= Objects.equals(ParamUtil.getString(request, "tabs3"), "current") %>'>
+			<liferay-ui:search-container-column-text>
+				<liferay-ui:icon-menu
+					direction="left-side"
+					icon="<%= StringPool.BLANK %>"
+					markupView="lexicon"
+					message="<%= StringPool.BLANK %>"
+					showWhenSingleIcon="<%= true %>"
+				>
+					<portlet:renderURL var="viewMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="mvcPath" value="/view_segments_entry_users.jsp" />
+						<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						message="members"
+						url="<%= viewMembersURL %>"
+						useDialog="<%= true %>"
+					/>
+				</liferay-ui:icon-menu>
+			</liferay-ui:search-container-column-text>
+		</c:if>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator

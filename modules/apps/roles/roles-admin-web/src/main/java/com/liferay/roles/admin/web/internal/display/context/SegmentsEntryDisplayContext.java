@@ -15,11 +15,17 @@
 package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,14 +45,28 @@ public class SegmentsEntryDisplayContext {
 		return group.getDescriptiveName(locale);
 	}
 
-	public static String getMembersCount(long segmentsEntryId)
+	public static List<User> getMembers(
+			long segmentsEntryId, int start, int end)
 		throws Exception {
 
-		int count =
-			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
-				segmentsEntryId);
+		long[] segmentsEntryClassPKs =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+				segmentsEntryId, start, end);
 
-		return String.valueOf(count);
+		LongStream segmentsEntryClassPKsStream = Arrays.stream(
+			segmentsEntryClassPKs);
+
+		return segmentsEntryClassPKsStream.boxed(
+		).map(
+			userId -> _userLocalService.fetchUser(userId)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	public static int getMembersCount(long segmentsEntryId) throws Exception {
+		return _segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
+			segmentsEntryId);
 	}
 
 	@Reference(unbind = "-")
@@ -61,7 +81,13 @@ public class SegmentsEntryDisplayContext {
 		_segmentsEntryProviderRegistry = segmentsEntryProviderRegistry;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static GroupLocalService _groupLocalService;
 	private static SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
+	private static UserLocalService _userLocalService;
 
 }

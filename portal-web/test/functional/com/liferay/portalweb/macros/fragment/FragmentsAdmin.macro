@@ -31,11 +31,9 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${resourceFile}");
 
-		IFrame.selectTopFrame();
+		IFrame.selectConfigurationFrame();
 
-		AssertClick(
-			locator1 = "Button#OK",
-			value1 = "OK");
+		Button.clickAdd();
 	}
 
 	macro deleteEntry {

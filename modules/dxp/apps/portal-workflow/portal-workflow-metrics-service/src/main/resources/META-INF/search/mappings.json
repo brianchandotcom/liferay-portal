@@ -1067,6 +1067,10 @@
 				"store": true,
 				"type": "long"
 			},
+			"instanceCompleted": {
+				"store": true,
+				"type": "boolean"
+			},
 			"instanceId": {
 				"store": true,
 				"type": "keyword"

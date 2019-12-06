@@ -36,7 +36,9 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
@@ -89,6 +91,16 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		document.addKeyword(
 			"companyId", workflowMetricsSLAProcessResult.getCompanyId());
 		document.addKeyword("deleted", false);
+
+		KaleoInstance kaleoInstance =
+			_kaleoInstanceLocalService.fetchKaleoInstance(
+				workflowMetricsSLAProcessResult.getInstanceId());
+
+		if (kaleoInstance != null) {
+			document.addKeyword(
+				"instanceCompleted", kaleoInstance.isCompleted());
+		}
+
 		document.addKeyword(
 			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
 		document.addKeyword(
@@ -385,5 +397,8 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	private final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern(
 			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
+
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 }

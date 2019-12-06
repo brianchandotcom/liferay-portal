@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 
@@ -34,8 +33,6 @@ public class KaleoLogModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, KaleoLog kaleoLog) {
-		document.addDateSortable(
-			Field.MODIFIED_DATE, kaleoLog.getModifiedDate());
 		document.addKeyword("comment", kaleoLog.getComment());
 		document.addKeyword(
 			"currentAssigneeClassName", kaleoLog.getCurrentAssigneeClassName());
@@ -55,7 +52,7 @@ public class KaleoLogModelDocumentContributor
 		document.addKeyword("kaleoInstanceId", kaleoLog.getKaleoInstanceId());
 		document.addKeyword(
 			"kaleoInstanceTokenId", kaleoLog.getKaleoInstanceTokenId());
-		document.addKeyword("kaleoLogId", kaleoLog.getKaleoLogId());
+		document.addNumberSortable("kaleoLogId", kaleoLog.getKaleoLogId());
 		document.addKeyword("kaleoNodeName", kaleoLog.getKaleoNodeName());
 		document.addKeyword(
 			"kaleoTaskInstanceTokenId", kaleoLog.getKaleoTaskInstanceTokenId());

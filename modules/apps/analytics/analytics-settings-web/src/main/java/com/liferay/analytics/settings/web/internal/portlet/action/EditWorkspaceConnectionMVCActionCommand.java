@@ -69,6 +69,12 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (ParamUtil.getBoolean(actionRequest, "disconnect", false)) {
+			_disconnect(themeDisplay.getCompanyId(), configurationProperties);
+
+			return;
+		}
+
 		String token = ParamUtil.getString(actionRequest, "token");
 
 		JSONObject jsonObject = null;
@@ -132,6 +138,23 @@ public class EditWorkspaceConnectionMVCActionCommand
 				themeDisplay.getCompanyId(),
 				EntityUtils.toString(closeableHttpResponse.getEntity()));
 		}
+	}
+
+	private void _disconnect(
+			long companyId, Dictionary<String, Object> configurationProperties)
+		throws PortalException {
+
+		// TODO call AC to inactivate data source
+
+		configurationProperties.remove("token");
+
+		_companyService.removePreferences(
+			companyId,
+			new String[] {
+				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
+				"liferayAnalyticsFaroBackendSecuritySignature",
+				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsURL"
+			});
 	}
 
 	private void _updateCompanyPreferences(long companyId, String json)

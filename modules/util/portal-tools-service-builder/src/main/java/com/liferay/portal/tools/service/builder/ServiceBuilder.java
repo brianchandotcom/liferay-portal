@@ -4868,6 +4868,9 @@ public class ServiceBuilder {
 
 				sb.append(" null");
 			}
+			else if (dbName.equals("companyId")) {
+				sb.append(" not null");
+			}
 
 			if (Validator.isNotNull(idType) && idType.equals("identity")) {
 				sb.append(" IDENTITY");

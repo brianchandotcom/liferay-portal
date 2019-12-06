@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -47,10 +50,13 @@ import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionL
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
+import java.text.DateFormat;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -118,6 +124,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		Map<Long, LocalDateTime> missingCreateLocalDateTimes =
 			_getMissingCreateLocalDateTimes(
 				workflowMetricsSLADefinition.getCompanyId(),
+				workflowMetricsSLADefinitionVersion.getCreateDate(),
 				workflowMetricsSLADefinition.getProcessId(),
 				workflowMetricsSLADefinitionId);
 
@@ -146,7 +153,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private BooleanQuery _createBooleanQuery(
-		long companyId, long processId, long workflowMetricsSLADefinitionId) {
+		long companyId, Date createDate, long processId,
+		long workflowMetricsSLADefinitionId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -155,7 +163,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		instancesBooleanQuery.addFilterQueryClauses(
 			_queries.term("_index", "workflow-metrics-instances"));
 		instancesBooleanQuery.addMustQueryClauses(
-			_createInstancesBooleanQuery(true, companyId, processId));
+			_createInstancesBooleanQuery(
+				true, companyId, createDate, processId));
 
 		BooleanQuery slaProcessResultsBooleanQuery = _queries.booleanQuery();
 
@@ -174,11 +183,18 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		boolean completed, long companyId, long processId) {
+		boolean completed, long companyId, Date createDate, long processId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
+
+		if (completed && (createDate != null)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.rangeTerm(
+					"completionDate", false, false, _formatDate(createDate),
+					null));
+		}
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", companyId),
@@ -204,6 +220,22 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("slaDefinitionId", slaDefinitionId));
 	}
 
+	private String _formatDate(Date date) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			_INDEX_DATE_FORMAT_PATTERN);
+
+		try {
+			return dateFormat.format(date);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			return null;
+		}
+	}
+
 	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
 		long companyId, long processId) {
 
@@ -211,7 +243,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
 		searchSearchRequest.setQuery(
-			_createInstancesBooleanQuery(false, companyId, processId));
+			_createInstancesBooleanQuery(false, companyId, null, processId));
 		searchSearchRequest.setSize(10000);
 
 		return Stream.of(
@@ -234,7 +266,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private Map<Long, LocalDateTime> _getMissingCreateLocalDateTimes(
-		long companyId, long processId, long workflowMetricsSLADefinitionId) {
+		long companyId, Date createDate, long processId,
+		long workflowMetricsSLADefinitionId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -252,7 +285,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
-				companyId, processId, workflowMetricsSLADefinitionId));
+				companyId, createDate, processId,
+				workflowMetricsSLADefinitionId));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -413,6 +447,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowMetricsSLAProcessBackgroundTaskExecutor.class);
 
 	@Reference
 	private Aggregations _aggregations;

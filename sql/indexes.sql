@@ -83,7 +83,7 @@ create unique index IX_B27A301F on ClassName_ (value[$COLUMN_LENGTH:200$]);
 create index IX_38EFE3FD on Company (logoId);
 create index IX_12566EC2 on Company (mx[$COLUMN_LENGTH:200$]);
 create index IX_8699D9BD on Company (system_);
-create unique index IX_895FF26C on Company (webId[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_EC00543C on Company (webId[$COLUMN_LENGTH:75$]);
 
 create unique index IX_85C63FD7 on CompanyInfo (companyId);
 
@@ -276,7 +276,7 @@ create index IX_AB044D1C on OrgGroupRole (roleId);
 create index IX_6AF0D434 on OrgLabor (organizationId);
 
 create index IX_6B83F1C7 on Organization_ (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_E301BDF5 on Organization_ (companyId, name[$COLUMN_LENGTH:100$]);
+create unique index IX_E301BDF5 on Organization_ (companyId, name[$COLUMN_LENGTH:100$]);
 create index IX_D834B361 on Organization_ (companyId, parentOrganizationId, name[$COLUMN_LENGTH:100$]);
 create index IX_A9D85BA6 on Organization_ (uuid_[$COLUMN_LENGTH:75$], companyId);
 
@@ -430,7 +430,7 @@ create index IX_8BACD0AA on Ticket (companyId, classNameId, classPK, type_);
 create index IX_B2468446 on Ticket (key_[$COLUMN_LENGTH:75$]);
 
 create index IX_CB9015AF on UserGroup (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_23EAD0D on UserGroup (companyId, name[$COLUMN_LENGTH:255$]);
+create unique index IX_23EAD0D on UserGroup (companyId, name[$COLUMN_LENGTH:255$]);
 create index IX_69771487 on UserGroup (companyId, parentUserGroupId);
 create index IX_72394F8E on UserGroup (uuid_[$COLUMN_LENGTH:75$], companyId);
 

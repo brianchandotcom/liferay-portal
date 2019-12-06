@@ -1247,6 +1247,8 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
 		AssertClick(
 			locator1 = "ItemSelector#ADD_BUTTON",
 			value1 = "Add");

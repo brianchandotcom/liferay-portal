@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>EDIT_PENCIL</td>
-	<td>//a[span/*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
 	<td></td>
 </tr>
 <tr>

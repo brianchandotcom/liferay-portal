@@ -82,7 +82,7 @@ if (analyticsConfiguration != null) {
 		</small>
 
 		<aui:button-row>
-			<aui:button disabled="<%= true %>" primary="<%= true %>" value="select-sites" />
+			<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-sites" />
 		</aui:button-row>
 	</aui:fieldset>
 
@@ -102,7 +102,7 @@ if (analyticsConfiguration != null) {
 		</small>
 
 		<aui:button-row>
-			<aui:button disabled="<%= true %>" primary="<%= true %>" value="select-contacts" />
+			<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-contacts" />
 		</aui:button-row>
 	</aui:fieldset>
 </div>

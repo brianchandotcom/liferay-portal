@@ -293,69 +293,6 @@ public class CTCollectionUtil {
 	}
 
 	/**
-	 * Returns the ct collection where companyId = &#63; and name = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public static CTCollection findByC_N(long companyId, String name)
-		throws com.liferay.change.tracking.exception.NoSuchCollectionException {
-
-		return getPersistence().findByC_N(companyId, name);
-	}
-
-	/**
-	 * Returns the ct collection where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public static CTCollection fetchByC_N(long companyId, String name) {
-		return getPersistence().fetchByC_N(companyId, name);
-	}
-
-	/**
-	 * Returns the ct collection where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public static CTCollection fetchByC_N(
-		long companyId, String name, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_N(companyId, name, useFinderCache);
-	}
-
-	/**
-	 * Removes the ct collection where companyId = &#63; and name = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the ct collection that was removed
-	 */
-	public static CTCollection removeByC_N(long companyId, String name)
-		throws com.liferay.change.tracking.exception.NoSuchCollectionException {
-
-		return getPersistence().removeByC_N(companyId, name);
-	}
-
-	/**
-	 * Returns the number of ct collections where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the number of matching ct collections
-	 */
-	public static int countByC_N(long companyId, String name) {
-		return getPersistence().countByC_N(companyId, name);
-	}
-
-	/**
 	 * Returns all the ct collections where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID

@@ -184,56 +184,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Returns the ct collection where companyId = &#63; and name = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching ct collection
-	 * @throws NoSuchCollectionException if a matching ct collection could not be found
-	 */
-	public CTCollection findByC_N(long companyId, String name)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the ct collection where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByC_N(long companyId, String name);
-
-	/**
-	 * Returns the ct collection where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
-	 */
-	public CTCollection fetchByC_N(
-		long companyId, String name, boolean useFinderCache);
-
-	/**
-	 * Removes the ct collection where companyId = &#63; and name = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the ct collection that was removed
-	 */
-	public CTCollection removeByC_N(long companyId, String name)
-		throws NoSuchCollectionException;
-
-	/**
-	 * Returns the number of ct collections where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the number of matching ct collections
-	 */
-	public int countByC_N(long companyId, String name);
-
-	/**
 	 * Returns all the ct collections where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID

@@ -215,12 +215,6 @@ public class CTCollectionLocalServiceUtil {
 		return getService().fetchCTCollection(ctCollectionId);
 	}
 
-	public static com.liferay.change.tracking.model.CTCollection
-		fetchCTCollection(long companyId, String name) {
-
-		return getService().fetchCTCollection(companyId, name);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

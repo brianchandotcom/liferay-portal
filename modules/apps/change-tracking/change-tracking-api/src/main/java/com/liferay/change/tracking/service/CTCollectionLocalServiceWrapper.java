@@ -221,13 +221,6 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.change.tracking.model.CTCollection fetchCTCollection(
-		long companyId, String name) {
-
-		return _ctCollectionLocalService.fetchCTCollection(companyId, name);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

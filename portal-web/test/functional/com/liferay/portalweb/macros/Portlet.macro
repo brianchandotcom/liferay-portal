@@ -355,9 +355,17 @@ definition {
 	}
 
 	macro viewApplicationDecorator {
-		AssertElementPresent(
-			key_decorator = StringUtil.lowerCase("${decorator}"),
-			locator1 = "Portlet#PORTLET_BORDER_DECORATOR");
+		if (isSet(portletName)) {
+			key_decorator = StringUtil.lowerCase("${decorator}");
+			var key_portletTitleName = "${portletName}";
+
+			AssertElementPresent(locator1 = "Portlet#SPECIFIC_PORTLET_BORDER_DECORATOR");
+		}
+		else {
+			AssertElementPresent(
+				key_decorator = StringUtil.lowerCase("${decorator}"),
+				locator1 = "Portlet#PORTLET_BORDER_DECORATOR");
+		}
 	}
 
 	@summary = "Assert that the ${portletName} portlet body has the text '${portletBody}'"

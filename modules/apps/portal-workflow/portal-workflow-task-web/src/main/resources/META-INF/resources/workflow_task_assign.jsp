@@ -41,10 +41,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 					<aui:select disabled="<%= !hasOtherAssignees %>" label="assign-to" name="assigneeUserId">
 
 						<%
-						for (long pooledActorId : workflowTaskDisplayContext.getActorsIds(workflowTask)) {
+						for (User pooledActor : workflowTaskDisplayContext.getActors(workflowTask)) {
 						%>
 
-							<aui:option label="<%= workflowTaskDisplayContext.getActorName(pooledActorId) %>" selected="<%= workflowTask.getAssigneeUserId() == pooledActorId %>" value="<%= String.valueOf(pooledActorId) %>" />
+							<aui:option label="<%= pooledActor.getFullName() %>" selected="<%= workflowTask.getAssigneeUserId() == pooledActor.getUserId() %>" value="<%= String.valueOf(pooledActor.getUserId()) %>" />
 
 						<%
 						}

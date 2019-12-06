@@ -90,8 +90,6 @@ definition {
 
 		Button.click(button = "Save");
 
-		Click(locator1 = "ControlMenu#EDIT_COG");
-
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");

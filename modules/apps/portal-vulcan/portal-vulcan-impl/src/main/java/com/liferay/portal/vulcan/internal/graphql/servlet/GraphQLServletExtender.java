@@ -629,12 +629,19 @@ public class GraphQLServletExtender {
 			}
 
 			if (parameterName.equals("siteKey") && (argument != null)) {
-				SiteParamConverterProvider siteParamConverterProvider =
-					new SiteParamConverterProvider(_groupLocalService);
+				try {
+					SiteParamConverterProvider siteParamConverterProvider =
+						new SiteParamConverterProvider(_groupLocalService);
 
-				args[i - 1] = Long.valueOf(
-					siteParamConverterProvider.getGroupId(
-						CompanyThreadLocal.getCompanyId(), (String)argument));
+					args[i - 1] = Long.valueOf(
+						siteParamConverterProvider.getGroupId(
+							CompanyThreadLocal.getCompanyId(),
+							(String)argument));
+				}
+				catch (Exception e) {
+					throw new Exception(
+						argument + " can not be converted to a valid Site", e);
+				}
 			}
 
 			if (_isMultipartBody(parameter)) {

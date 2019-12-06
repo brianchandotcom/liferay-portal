@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 buildCSS {
 	imports = [
 		new File(npmInstall.nodeModulesDir, "clay-css/src/scss")
@@ -27,4 +29,15 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+}
+
+mergeLang {
+	setting("../../segments/segments-lang/src/main/resources/content") {
+		transformKey "no-users-have-been-assigned-to-this-segment", "no-users-have-been-assigned-to-this-segment"
+	}
+
+	sourceDirs = [
+		"../../segments/segments-lang/src/main/resources/content",
+		"src/main/resources/content"
+	]
 }

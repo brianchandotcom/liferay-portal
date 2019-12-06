@@ -83,6 +83,16 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		document.addKeyword(
 			"companyId", workflowMetricsSLAProcessResult.getCompanyId());
 		document.addKeyword("deleted", false);
+
+		KaleoInstance kaleoInstance =
+			_kaleoInstanceLocalService.fetchKaleoInstance(
+				workflowMetricsSLAProcessResult.getInstanceId());
+
+		if (kaleoInstance != null) {
+			document.addKeyword(
+				"instanceCompleted", kaleoInstance.isCompleted());
+		}
+
 		document.addKeyword(
 			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
 		document.addKeyword(

@@ -64,12 +64,6 @@ const ListEntries = withRouter(({history, location}) => {
 	const {dataDefinition, dataListView, isLoading} = state;
 	const {fieldNames: columns} = dataListView;
 
-	const defaultDataRecordValues = {};
-
-	columns.forEach(column => {
-		defaultDataRecordValues[column] = ' - ';
-	});
-
 	const getEditURL = (dataRecordId = 0) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 			dataRecordId,
@@ -164,19 +158,23 @@ const ListEntries = withRouter(({history, location}) => {
 
 					const displayedDataRecordValues = {};
 
-					columns.forEach(fieldName => {
-						displayedDataRecordValues[
-							fieldName
-						] = dataDefinition && (
-							<Link to={viewURL}>
-								<FieldValuePreview
-									dataDefinition={dataDefinition}
-									dataRecordValues={dataRecordValues}
-									displayType="list"
-									fieldName={fieldName}
-								/>
-							</Link>
+					columns.forEach((fieldName, columnIndex) => {
+						let fieldValuePreview = (
+							<FieldValuePreview
+								dataDefinition={dataDefinition}
+								dataRecordValues={dataRecordValues}
+								displayType="list"
+								fieldName={fieldName}
+							/>
 						);
+
+						if (columnIndex === 0) {
+							fieldValuePreview = (
+								<Link to={viewURL}>{fieldValuePreview}</Link>
+							);
+						}
+
+						displayedDataRecordValues[fieldName] = fieldValuePreview;
 					});
 
 					return {

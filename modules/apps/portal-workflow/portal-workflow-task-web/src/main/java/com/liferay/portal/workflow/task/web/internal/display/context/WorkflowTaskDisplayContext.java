@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -80,6 +79,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -116,25 +117,22 @@ public class WorkflowTaskDisplayContext {
 			_httpServletRequest);
 	}
 
-	public String getActorName(long actorId) {
-		return HtmlUtil.escape(
-			PortalUtil.getUserName(actorId, StringPool.BLANK));
-	}
-
-	public long[] getActorsIds(WorkflowTask workflowTask)
+	public List<User> getActors(WorkflowTask workflowTask)
 		throws PortalException {
 
-		List<Long> pooledActorIdsList = new ArrayList<>();
-
-		long[] pooledActorsIds = _getPooledActorsIds(workflowTask);
-
-		for (long pooledActorId : pooledActorsIds) {
-			if (pooledActorId != _workflowTaskRequestHelper.getUserId()) {
-				pooledActorIdsList.add(pooledActorId);
-			}
-		}
-
-		return ArrayUtil.toLongArray(pooledActorIdsList);
+		return Stream.of(
+			WorkflowTaskManagerUtil.getPooledActors(
+				_workflowTaskRequestHelper.getCompanyId(),
+				workflowTask.getWorkflowTaskId())
+		).flatMap(
+			List::stream
+		).filter(
+			pooledActor ->
+				pooledActor.getUserId() !=
+					_workflowTaskRequestHelper.getUserId()
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {
@@ -591,9 +589,9 @@ public class WorkflowTaskDisplayContext {
 		logTypes.add(WorkflowLog.TASK_UPDATE);
 		logTypes.add(WorkflowLog.TRANSITION);
 
-		return WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
+		return WorkflowLogManagerUtil.getWorkflowLogsByWorkflowTask(
 			_workflowTaskRequestHelper.getCompanyId(),
-			_getWorkflowInstanceId(workflowTask), logTypes, QueryUtil.ALL_POS,
+			workflowTask.getWorkflowTaskId(), logTypes, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
 			WorkflowComparatorFactoryUtil.getLogCreateDateComparator(false));
 	}
@@ -648,17 +646,17 @@ public class WorkflowTaskDisplayContext {
 		int total = WorkflowTaskManagerUtil.searchCount(
 			_workflowTaskRequestHelper.getCompanyId(),
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			_getAssetType(searchTerms.getKeywords()), _getCompleted(),
-			searchByUserRoles);
+			searchTerms.getKeywords(), _getAssetType(searchTerms.getKeywords()),
+			null, null, null, _getCompleted(), searchByUserRoles, false);
 
 		_workflowTaskSearch.setTotal(total);
 
 		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
 			_workflowTaskRequestHelper.getCompanyId(),
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			_getAssetType(searchTerms.getKeywords()), _getCompleted(),
-			searchByUserRoles, _workflowTaskSearch.getStart(),
-			_workflowTaskSearch.getEnd(),
+			searchTerms.getKeywords(), _getAssetType(searchTerms.getKeywords()),
+			null, null, null, _getCompleted(), searchByUserRoles, false,
+			_workflowTaskSearch.getStart(), _workflowTaskSearch.getEnd(),
 			_workflowTaskSearch.getOrderByComparator());
 
 		_workflowTaskSearch.setResults(results);
@@ -904,14 +902,6 @@ public class WorkflowTaskDisplayContext {
 		};
 	}
 
-	private long[] _getPooledActorsIds(WorkflowTask workflowTask)
-		throws PortalException {
-
-		return WorkflowTaskManagerUtil.getPooledActorsIds(
-			_workflowTaskRequestHelper.getCompanyId(),
-			workflowTask.getWorkflowTaskId());
-	}
-
 	private PortletURL _getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -1042,9 +1032,9 @@ public class WorkflowTaskDisplayContext {
 		throws PortalException {
 
 		List<WorkflowLog> workflowLogs =
-			WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
+			WorkflowLogManagerUtil.getWorkflowLogsByWorkflowTask(
 				_workflowTaskRequestHelper.getCompanyId(),
-				_getWorkflowInstanceId(workflowTask), null, 0, 1,
+				workflowTask.getWorkflowTaskId(), null, 0, 1,
 				WorkflowComparatorFactoryUtil.getLogCreateDateComparator());
 
 		if (!workflowLogs.isEmpty()) {

@@ -3717,12 +3717,6 @@ public class ServiceBuilder {
 				continue;
 			}
 
-			List<String> entityColumnNames = new ArrayList<>();
-
-			for (EntityColumn entityColumn : entity.getEntityColumns()) {
-				entityColumnNames.add(entityColumn.getDBName());
-			}
-
 			List<IndexMetadata> indexMetadatas = indexMetadatasMap.get(
 				entity.getTable());
 
@@ -3740,44 +3734,42 @@ public class ServiceBuilder {
 					continue;
 				}
 
-				List<String> entityFinderColumnNames = new ArrayList<>();
+				List<String> dbNames = new ArrayList<>();
 
 				for (EntityColumn entityColumn : entityFinderColumns) {
-					entityFinderColumnNames.add(entityColumn.getDBName());
+					dbNames.add(entityColumn.getDBName());
 				}
 
-				if (entityFinderColumnNames.isEmpty()) {
+				if (dbNames.isEmpty()) {
 					continue;
 				}
 
 				List<String> internalColumnNames = new ArrayList<>();
 
 				if (entity.isChangeTrackingEnabled() &&
-					!entityFinderColumnNames.contains("ctCollectionId")) {
+					!dbNames.contains("ctCollectionId")) {
 
 					internalColumnNames.add("ctCollectionId");
 				}
 
-				if (entityFinder.isUnique() &&
-					entityColumnNames.contains("companyId") &&
-					!entityFinderColumnNames.contains("companyId")) {
+				if (entityFinder.isUnique() && entity.hasCompanyId() &&
+					!dbNames.contains("companyId")) {
 
 					internalColumnNames.add("companyId");
 				}
 
 				if ((indexMetadatas != null) && (internalColumnNames != null)) {
 					_removeRedundantUniqueIndex(
-						indexMetadatas, entityFinderColumnNames,
+						indexMetadatas, dbNames,
 						internalColumnNames.toArray(new String[0]));
 				}
 
-				entityFinderColumnNames = ListUtil.concat(
-					entityFinderColumnNames, internalColumnNames);
+				dbNames = ListUtil.concat(dbNames, internalColumnNames);
 
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
 						entityFinder.isUnique(), entity.getTable(),
-						entityFinderColumnNames.toArray(new String[0]));
+						dbNames.toArray(new String[0]));
 
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
@@ -4741,28 +4733,11 @@ public class ServiceBuilder {
 			return null;
 		}
 
-		String tableName = entity.getTable();
-
-		List<String> databaseRegularEntityColumnNames = new ArrayList<>();
-
-		for (EntityColumn databaseRegularEntityColumn :
-				databaseRegularEntityColumns) {
-
-			databaseRegularEntityColumnNames.add(
-				databaseRegularEntityColumn.getDBName());
-		}
-
-		boolean hasCompanyIdPrimaryKey = false;
-
-		if (databaseRegularEntityColumnNames.contains("companyId") &&
-			!tableName.equals("Company")) {
-
-			hasCompanyIdPrimaryKey = true;
-		}
-
 		StringBundler sb = new StringBundler();
 
 		sb.append(_SQL_CREATE_TABLE);
+
+		String tableName = entity.getTable();
 
 		if ((_databaseNameMaxLength > 0) &&
 			(tableName.length() > _databaseNameMaxLength)) {
@@ -4883,7 +4858,7 @@ public class ServiceBuilder {
 
 				if (!entity.hasCompoundPK() &&
 					!entity.isChangeTrackingEnabled() &&
-					!hasCompanyIdPrimaryKey) {
+					(!entity.hasCompanyId() || entity.hasCompanyIdPK())) {
 
 					sb.append(" primary key");
 				}
@@ -4910,7 +4885,7 @@ public class ServiceBuilder {
 
 			if (((i + 1) != databaseRegularEntityColumns.size()) ||
 				entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
-				hasCompanyIdPrimaryKey) {
+				(entity.hasCompanyId() && !entity.hasCompanyIdPK())) {
 
 				sb.append(",");
 			}
@@ -4919,7 +4894,7 @@ public class ServiceBuilder {
 		}
 
 		if (entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
-			hasCompanyIdPrimaryKey) {
+			(entity.hasCompanyId() && !entity.hasCompanyIdPK())) {
 
 			sb.append("\tprimary key (");
 
@@ -4939,7 +4914,7 @@ public class ServiceBuilder {
 				sb.append(", ctCollectionId");
 			}
 
-			if (hasCompanyIdPrimaryKey) {
+			if (entity.hasCompanyId() && !entity.hasCompanyIdPK()) {
 				sb.append(", companyId");
 			}
 
@@ -6581,7 +6556,7 @@ public class ServiceBuilder {
 		newLocalizedColumnElement.addAttribute("primary", "true");
 		newLocalizedColumnElement.addAttribute("type", "long");
 
-		if (entity.hasEntityColumn("companyId")) {
+		if (entity.hasCompanyId()) {
 			newLocalizedColumnElement = newLocalizedEntityElement.addElement(
 				"column");
 

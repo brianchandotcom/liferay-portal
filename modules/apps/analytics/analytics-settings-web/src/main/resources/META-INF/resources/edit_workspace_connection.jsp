@@ -19,7 +19,15 @@
 <%
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 
-String[] syncedGroupIds = analyticsConfiguration.syncedGroupIds();
+String[] syncedGroupIds = new String[0];
+String token = "";
+boolean connected = false;
+
+if (analyticsConfiguration != null) {
+	syncedGroupIds = analyticsConfiguration.syncedGroupIds();
+	token = analyticsConfiguration.token();
+	connected = !Validator.isBlank(token);
+}
 %>
 
 <portlet:actionURL name="/analytics/edit_workspace_connection" var="editWorkspaceConnectionURL" />
@@ -31,19 +39,30 @@ String[] syncedGroupIds = analyticsConfiguration.syncedGroupIds();
 		</span>
 	</h2>
 
-	<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm">
+	<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm" onSubmit="confirmation(event)">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<aui:fieldset>
-			<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" value='<%= (analyticsConfiguration != null) ? analyticsConfiguration.token() : "" %>' />
+			<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" value="<%= token %>" />
 
 			<div class="form-text">
 				<liferay-ui:message key="analytics-cloud-token-help" />
 			</div>
 
-			<aui:button-row>
-				<aui:button type="submit" value="connect" />
-			</aui:button-row>
+			<c:choose>
+				<c:when test="<%=connected%>">
+					<aui:input name="disconnect" type="hidden" value="true" />
+
+					<aui:button-row>
+						<aui:button primary="false" type="submit" value="disconnect" />
+					</aui:button-row>
+				</c:when>
+				<c:otherwise>
+					<aui:button-row>
+						<aui:button type="submit" value="connect" />
+					</aui:button-row>
+				</c:otherwise>
+			</c:choose>
 		</aui:fieldset>
 	</aui:form>
 
@@ -87,3 +106,13 @@ String[] syncedGroupIds = analyticsConfiguration.syncedGroupIds();
 		</aui:button-row>
 	</aui:fieldset>
 </div>
+
+<script>
+	function confirmation(event) {
+		<c:if test="<%=connected%>">
+			if (!confirm("Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?")) {
+				event.preventDefault();
+			}
+		</c:if>
+	}
+</script>

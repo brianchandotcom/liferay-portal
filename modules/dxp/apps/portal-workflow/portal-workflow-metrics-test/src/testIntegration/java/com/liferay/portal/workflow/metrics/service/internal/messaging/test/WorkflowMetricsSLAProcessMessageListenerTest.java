@@ -62,6 +62,20 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 
 		BlogsEntry blogsEntry = addBlogsEntry();
 
+		KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
+
+		completeKaleoTaskInstanceToken(kaleoInstance);
+
+		completeKaleoInstance(kaleoInstance);
+
+		retryAssertCount(
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", true, "instanceId",
+			kaleoInstance.getKaleoInstanceId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId());
+
 		_workflowMetricsSLADefinition =
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
@@ -71,7 +85,9 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 					new String[] {getTerminalNodeKey(kaleoDefinition)},
 					ServiceContextTestUtil.getServiceContext());
 
-		KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
+		blogsEntry = addBlogsEntry();
+
+		kaleoInstance = getKaleoInstance(blogsEntry);
 
 		retryAssertCount(
 			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
@@ -82,6 +98,13 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			kaleoDefinition.getKaleoDefinitionId());
 
 		_workflowMetricsSLAProcessMessageListener.receive(new Message());
+
+		retryAssertCount(
+			"workflow-metrics-sla-process-results",
+			"WorkflowMetricsSLAProcessResultType", "companyId",
+			kaleoDefinition.getCompanyId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",
+			_workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 
 		retryAssertCount(
 			"workflow-metrics-sla-process-results",

@@ -50,7 +50,7 @@
 					<h5 class="text-default">
 
 						<%
-						dateSearchEntry.setDate(workflowTask.getCreateDate());
+						dateSearchEntry.setDate(workflowTaskDisplayContext.getLastActivityDate(workflowTask));
 						%>
 
 						<liferay-ui:message key="last-activity-date" />, <%= dateSearchEntry.getName(request) %>

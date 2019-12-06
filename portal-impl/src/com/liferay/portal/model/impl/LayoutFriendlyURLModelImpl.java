@@ -101,7 +101,7 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutFriendlyURL (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,lastPublishDate DATE null,primary key (layoutFriendlyURLId, ctCollectionId))";
+		"create table LayoutFriendlyURL (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutFriendlyURLId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,plid LONG,privateLayout BOOLEAN,friendlyURL VARCHAR(255) null,languageId VARCHAR(75) null,lastPublishDate DATE null,primary key (layoutFriendlyURLId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutFriendlyURL";
 

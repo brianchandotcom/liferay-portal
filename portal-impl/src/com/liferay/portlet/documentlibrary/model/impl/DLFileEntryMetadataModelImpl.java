@@ -85,7 +85,7 @@ public class DLFileEntryMetadataModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntryMetadata (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null primary key,companyId LONG,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG)";
+		"create table DLFileEntryMetadata (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null,companyId LONG not null,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG,primary key (fileEntryMetadataId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DLFileEntryMetadata";

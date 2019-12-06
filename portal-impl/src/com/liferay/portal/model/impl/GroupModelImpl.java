@@ -121,7 +121,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Group_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
+		"create table Group_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null,companyId LONG not null,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN,primary key (groupId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
@@ -248,7 +248,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ORGS_SQL_CREATE =
-		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId))";
+		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ORGS =
 		GetterUtil.getBoolean(
@@ -264,7 +264,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE =
-		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
+		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES =
 		GetterUtil.getBoolean(
@@ -281,7 +281,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE =
-		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
+		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS =
 		GetterUtil.getBoolean(
@@ -297,7 +297,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE =
-		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (groupId, userId))";
+		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,primary key (groupId, userId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS =
 		GetterUtil.getBoolean(

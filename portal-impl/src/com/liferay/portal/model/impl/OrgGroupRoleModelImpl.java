@@ -78,7 +78,7 @@ public class OrgGroupRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OrgGroupRole (mvccVersion LONG default 0 not null,organizationId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (organizationId, groupId, roleId))";
+		"create table OrgGroupRole (mvccVersion LONG default 0 not null,organizationId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG not null,primary key (organizationId, groupId, roleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table OrgGroupRole";
 

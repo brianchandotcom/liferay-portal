@@ -86,7 +86,7 @@ public class PasswordTrackerModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PasswordTracker (mvccVersion LONG default 0 not null,passwordTrackerId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,password_ VARCHAR(75) null)";
+		"create table PasswordTracker (mvccVersion LONG default 0 not null,passwordTrackerId LONG not null,companyId LONG not null,userId LONG,createDate DATE null,password_ VARCHAR(75) null,primary key (passwordTrackerId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table PasswordTracker";
 

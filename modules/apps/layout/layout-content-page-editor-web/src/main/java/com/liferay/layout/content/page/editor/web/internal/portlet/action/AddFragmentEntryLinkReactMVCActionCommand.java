@@ -142,14 +142,12 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			actionRequest,
 			layoutStructure -> {
-				LayoutStructure.Item layoutStructureItem =
-					LayoutStructure.Item.create(
-						JSONFactoryUtil.createJSONObject(itemConfig),
-						String.valueOf(fragmentEntryLink.getFragmentEntryId()),
-						parentItemId, itemType);
+				LayoutStructure.Item item = LayoutStructure.Item.create(
+					JSONFactoryUtil.createJSONObject(itemConfig),
+					String.valueOf(fragmentEntryLink.getFragmentEntryId()),
+					parentItemId, itemType);
 
-				layoutStructure.addItem(
-					layoutStructureItem, parentItemId, position);
+				layoutStructure.addItem(item, parentItemId, position);
 			});
 	}
 

@@ -27,28 +27,22 @@ import java.util.Map;
  */
 public class LayoutStructure {
 
-	public LayoutStructure(
-		Map<String, Item> layoutStructureItems,
-		RootItem layoutStructureRootItem) {
-
-		_layoutStructureItems = layoutStructureItems;
-		_layoutStructureRootItem = layoutStructureRootItem;
+	public LayoutStructure(Map<String, Item> items, RootItem rootItem) {
+		_items = items;
+		_rootItem = rootItem;
 	}
 
 	public LayoutStructure addItem(
-		Item layoutStructureItem, String parentItemId, int position) {
+		Item item, String parentItemId, int position) {
 
-		_layoutStructureItems.put(
-			layoutStructureItem.getItemId(), layoutStructureItem);
+		_items.put(item.getItemId(), item);
 
 		if (parentItemId != null) {
-			Item parentLayoutStructureItem = _layoutStructureItems.get(
-				parentItemId);
+			Item parentItem = _items.get(parentItemId);
 
-			List<String> childrenItemIds =
-				parentLayoutStructureItem.getChildrenItemIds();
+			List<String> childrenItemIds = parentItem.getChildrenItemIds();
 
-			childrenItemIds.add(position, layoutStructureItem.getItemId());
+			childrenItemIds.add(position, item.getItemId());
 		}
 
 		return this;
@@ -57,29 +51,28 @@ public class LayoutStructure {
 	public JSONObject toJSONObject() {
 		JSONObject itemsJSONObject = JSONFactoryUtil.createJSONObject();
 
-		for (Map.Entry<String, Item> entry : _layoutStructureItems.entrySet()) {
-			Item layoutStructureItem = entry.getValue();
+		for (Map.Entry<String, Item> entry : _items.entrySet()) {
+			Item item = entry.getValue();
 
 			itemsJSONObject.put(
 				entry.getKey(),
 				JSONUtil.put(
-					"children", layoutStructureItem.getChildrenItemIds()
+					"children", item.getChildrenItemIds()
 				).put(
-					"config", layoutStructureItem.getItemConfigJSONObject()
+					"config", item.getItemConfigJSONObject()
 				).put(
-					"itemId", layoutStructureItem.getItemId()
+					"itemId", item.getItemId()
 				).put(
-					"parentId", layoutStructureItem.getParentItemId()
+					"parentId", item.getParentItemId()
 				).put(
-					"type", layoutStructureItem.getItemType()
+					"type", item.getItemType()
 				));
 		}
 
 		return JSONUtil.put(
 			"items", itemsJSONObject
 		).put(
-			"rootItems",
-			JSONUtil.put("main", _layoutStructureRootItem.getMainItemId())
+			"rootItems", JSONUtil.put("main", _rootItem.getMainItemId())
 		).put(
 			"version", 1
 		);
@@ -149,7 +142,7 @@ public class LayoutStructure {
 
 	}
 
-	private final Map<String, Item> _layoutStructureItems;
-	private final RootItem _layoutStructureRootItem;
+	private final Map<String, Item> _items;
+	private final RootItem _rootItem;
 
 }

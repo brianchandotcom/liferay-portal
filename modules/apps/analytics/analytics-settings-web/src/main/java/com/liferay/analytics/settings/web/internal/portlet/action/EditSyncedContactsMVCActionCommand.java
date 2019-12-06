@@ -45,6 +45,10 @@ public class EditSyncedContactsMVCActionCommand
 
 		String syncAllContactsString = ParamUtil.getString(
 			actionRequest, "syncAllContacts");
+		String[] syncedUserGroupIds = ParamUtil.getStringValues(
+			actionRequest, "userGroupIds");
+		String[] syncedOrganizationIds = ParamUtil.getStringValues(
+			actionRequest, "organizationIds");
 
 		boolean syncAllContacts = false;
 
@@ -54,6 +58,13 @@ public class EditSyncedContactsMVCActionCommand
 
 		configurationProperties.put(
 			"syncAllContacts", String.valueOf(syncAllContacts));
+
+		if (!syncAllContacts) {
+			configurationProperties.put(
+				"syncedOrganizationIds", syncedOrganizationIds);
+			configurationProperties.put(
+				"syncedUserGroupIds", syncedUserGroupIds);
+		}
 	}
 
 }

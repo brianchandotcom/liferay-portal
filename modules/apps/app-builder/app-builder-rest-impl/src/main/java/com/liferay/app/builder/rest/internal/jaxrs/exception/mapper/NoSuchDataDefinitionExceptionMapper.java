@@ -16,6 +16,8 @@ package com.liferay.app.builder.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -34,19 +36,17 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class NoSuchDataDefinitionExceptionMapper
-	implements ExceptionMapper<NoSuchStructureException> {
+	extends BaseExceptionMapper<NoSuchStructureException> {
 
 	@Override
-	public Response toResponse(
+	protected Problem getProblem(
 		NoSuchStructureException noSuchStructureException) {
 
-		return Response.status(
-			Response.Status.NOT_FOUND
-		).entity(
+		return new Problem(
+			Response.Status.NOT_FOUND,
 			StringUtil.replace(
 				noSuchStructureException.getMessage(), "DDMStructure",
-				"Data definition")
-		).build();
+				"Data definition"));
 	}
 
 }

@@ -86,9 +86,11 @@ definition {
 			language = "Groovy",
 			script = "${script}");
 
+		var siteName = TestCase.getSiteName();
+
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Current company: Liferay DXP");
+			value1 = "Current company: ${siteName}");
 	}
 
 	@description = "This is a test for LRQA-53783"

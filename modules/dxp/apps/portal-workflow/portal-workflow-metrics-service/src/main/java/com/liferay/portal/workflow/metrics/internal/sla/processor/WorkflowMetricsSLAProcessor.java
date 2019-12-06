@@ -458,12 +458,15 @@ public class WorkflowMetricsSLAProcessor {
 			StringUtil.split(
 				workflowMetricsSLADefinitionVersion.getStartNodeKeys()));
 
-		if (!Objects.equals(
-				workflowMetricsSLAStatus, WorkflowMetricsSLAStatus.NEW)) {
+		if (Objects.equals(
+				workflowMetricsSLAStatus, WorkflowMetricsSLAStatus.RUNNING)) {
 
 			workflowMetricsSLAStopwatch.run(lastCheckLocalDateTime);
 		}
-		else if (startTimeMarkers.containsKey(startNodeId)) {
+		else if (Objects.equals(
+					workflowMetricsSLAStatus, WorkflowMetricsSLAStatus.NEW) &&
+				 startTimeMarkers.containsKey(startNodeId)) {
+
 			workflowMetricsSLAStopwatch.run(createDateLocalDateTime);
 		}
 

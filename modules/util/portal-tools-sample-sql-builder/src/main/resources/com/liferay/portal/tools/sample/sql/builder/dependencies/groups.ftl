@@ -4,17 +4,17 @@
 
 <#assign layoutModel = dataFactory.newLayoutModel(guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
 
-<@insertLayout _layoutModel = layoutModel />
+<@insertLayout _layoutModel=layoutModel />
 
-<@insertGroup _groupModel = dataFactory.commerceCatalogGroupModel />
+<@insertGroup _groupModel=dataFactory.commerceCatalogGroupModel />
 
-<@insertGroup _groupModel = dataFactory.commerceChannelGroupModel />
+<@insertGroup _groupModel=dataFactory.commerceChannelGroupModel />
 
-<@insertGroup _groupModel = dataFactory.newGlobalGroupModel() />
+<@insertGroup _groupModel=dataFactory.newGlobalGroupModel() />
 
-<@insertGroup _groupModel = guestGroupModel />
+<@insertGroup _groupModel=guestGroupModel />
 
-<@insertGroup _groupModel = dataFactory.newUserPersonalSiteGroupModel() />
+<@insertGroup _groupModel=dataFactory.newUserPersonalSiteGroupModel() />
 
 <#list dataFactory.newGroupModels() as groupModel>
 	<#assign groupId = groupModel.groupId />
@@ -45,10 +45,10 @@
 	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId) />
 
 	<#list publicLayoutModels as publicLayoutModel>
-		<@insertLayout _layoutModel = publicLayoutModel />
+		<@insertLayout _layoutModel=publicLayoutModel />
 	</#list>
 
-	<@insertGroup _groupModel = groupModel />
+	<@insertGroup _groupModel=groupModel />
 
 	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>

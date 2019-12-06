@@ -12,13 +12,13 @@
 		layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
 	/>
 
-	<@insertLayout _layoutModel = layoutModel />
+	<@insertLayout _layoutModel=layoutModel />
 
-	<@insertGroup _groupModel = userGroupModel />
+	<@insertGroup _groupModel=userGroupModel />
 
 	<@insertUser
-		_groupIds = groupIds
-		_roleIds = roleIds
-		_userModel = userModel
+		_groupIds=groupIds
+		_roleIds=roleIds
+		_userModel=userModel
 	/>
 </#list>

@@ -3752,7 +3752,8 @@ public class ServiceBuilder {
 				}
 
 				if (entityFinder.isUnique() && entity.hasCompanyId() &&
-					!dbNames.contains("companyId")) {
+					!dbNames.contains("companyId") &&
+					!Objects.equals("Company", entity.getName())) {
 
 					internalColumnNames.add("companyId");
 				}

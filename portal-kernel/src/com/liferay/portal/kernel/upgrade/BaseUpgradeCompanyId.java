@@ -104,7 +104,8 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 
 					runSQL(
 						connection,
-						"alter table " + _tableName + " add companyId LONG");
+						"alter table " + _tableName +
+							" add companyId LONG not null");
 				}
 				else {
 					if (_log.isInfoEnabled()) {

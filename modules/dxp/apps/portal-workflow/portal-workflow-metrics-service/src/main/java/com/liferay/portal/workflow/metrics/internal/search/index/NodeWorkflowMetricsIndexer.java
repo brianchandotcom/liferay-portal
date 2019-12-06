@@ -205,6 +205,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			digest(companyId, 0, processId, 0, taskId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
+		document.addKeyword("instanceCompleted", false);
 		document.addKeyword("instanceId", 0);
 		document.addKeyword("processId", processId);
 		document.addKeyword("slaDefinitionId", 0);

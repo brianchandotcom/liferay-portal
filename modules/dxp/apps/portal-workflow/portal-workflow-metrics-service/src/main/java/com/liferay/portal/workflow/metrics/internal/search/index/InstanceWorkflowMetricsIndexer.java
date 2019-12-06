@@ -150,6 +150,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			_slaProcessResultWorkflowMetricsIndexer.updateDocuments(
 				documentImpl -> new DocumentImpl() {
 					{
+						addKeyword("instanceCompleted", true);
 						addKeyword(
 							"status", WorkflowMetricsSLAStatus.EXPIRED.name());
 						addKeyword(

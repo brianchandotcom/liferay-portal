@@ -173,6 +173,7 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			digest(companyId, 0, kaleoDefinitionId, 0));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
+		document.addKeyword("instanceCompleted", false);
 		document.addKeyword("instanceId", 0);
 		document.addKeyword("processId", kaleoDefinitionId);
 		document.addKeyword("slaDefinitionId", 0);

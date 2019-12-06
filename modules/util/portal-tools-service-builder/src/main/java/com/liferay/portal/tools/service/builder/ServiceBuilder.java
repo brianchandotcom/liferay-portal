@@ -4719,7 +4719,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		sb.append(")\n");
+		sb.append(", companyId)\n");
 		sb.append(");");
 
 		return sb.toString();

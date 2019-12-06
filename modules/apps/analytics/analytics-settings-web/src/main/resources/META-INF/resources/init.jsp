@@ -24,9 +24,15 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.analytics.settings.configuration.AnalyticsConfiguration" %><%@
 page import="com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys" %><%@
 page import="com.liferay.analytics.settings.web.internal.search.GroupChecker" %><%@
+page import="com.liferay.analytics.settings.web.internal.search.OrganizationChecker" %><%@
+page import="com.liferay.analytics.settings.web.internal.search.UserGroupChecker" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.model.Organization" %><%@
+page import="com.liferay.portal.kernel.model.UserGroup" %><%@
 page import="com.liferay.portal.kernel.service.GroupServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.OrganizationServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.UserGroupServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

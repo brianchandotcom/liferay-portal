@@ -16,6 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+List<UserGroup> userGroups = UserGroupServiceUtil.getUserGroups(themeDisplay.getCompanyId());
+
+List<Organization> organizations = OrganizationServiceUtil.getOrganizations(themeDisplay.getCompanyId(), -1);
+
+AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+
+boolean syncAllContacts = analyticsConfiguration.syncAllContacts();
+
+Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedUserGroupIds());
+
+Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syncedOrganizationIds());
+%>
+
 <portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
 
 <div class="sheet sheet-lg">
@@ -38,7 +52,7 @@
 			</div>
 
 			<label class="mb-4 mt-3 toggle-switch">
-				<input class="toggle-switch-check" name="<portlet:namespace />syncAllContacts" type="checkbox" />
+				<input class="toggle-switch-check" name="<portlet:namespace />syncAllContacts" type="checkbox" <%= syncAllContacts ? "checked" : "" %> />
 
 				<span aria-hidden="true" class="toggle-switch-bar">
 					<span class="toggle-switch-handle" />
@@ -75,7 +89,7 @@
 						</h4>
 
 						<p class="list-group-subtext">
-							<liferay-ui:message arguments="<%= 0 %>" key="x-organizations-selected" />
+							<liferay-ui:message arguments='<%= syncAllContacts ? "All" : syncedUserGroupIds.size() %>' key="x-user-groups-selected" />
 						</p>
 					</div>
 				</li>
@@ -95,12 +109,70 @@
 						</h4>
 
 						<p class="list-group-subtext">
-							<liferay-ui:message arguments="<%= 0 %>" key="x-user-groups-selected" />
+							<liferay-ui:message arguments='<%= syncAllContacts ? "All" : syncedOrganizationIds.size() %>' key="x-organizations-selected" />
 						</p>
 					</div>
 				</li>
 			</ul>
 		</aui:fieldset>
+
+		<liferay-ui:search-container
+			curParam="inheritedUserGroupsCur"
+			headerNames="name"
+			rowChecker="<%= new UserGroupChecker(renderResponse, syncedUserGroupIds) %>"
+			total="<%= userGroups.size() %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= userGroups %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.model.UserGroup"
+				escapedModel="<%= true %>"
+				keyProperty="userGroupId"
+				modelVar="userGroup"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="user-group-name"
+					value="<%= HtmlUtil.escape(userGroup.getName()) %>"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+			/>
+		</liferay-ui:search-container>
+
+		<liferay-ui:search-container
+			curParam="inheritedOrganizationsCur"
+			headerNames="name"
+			rowChecker="<%= new OrganizationChecker(renderResponse, syncedOrganizationIds) %>"
+			total="<%= organizations.size() %>"
+		>
+			<liferay-ui:search-container-results
+				results="<%= organizations %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.model.Organization"
+				escapedModel="<%= true %>"
+				keyProperty="organizationId"
+				modelVar="organization"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="organization-name"
+					value="<%= HtmlUtil.escape(organization.getName()) %>"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
+			/>
+		</liferay-ui:search-container>
 
 		<aui:button-row>
 			<aui:button type="submit" value="save" />

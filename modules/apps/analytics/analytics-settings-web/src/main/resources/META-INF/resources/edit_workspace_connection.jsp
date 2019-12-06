@@ -110,7 +110,7 @@ if (analyticsConfiguration != null) {
 <script>
 	function confirmation(event) {
 		<c:if test="<%=connected%>">
-			if (!confirm("Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?")) {
+			if (!confirm("<liferay-ui:message key="are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance" />")) {
 				event.preventDefault();
 			}
 		</c:if>

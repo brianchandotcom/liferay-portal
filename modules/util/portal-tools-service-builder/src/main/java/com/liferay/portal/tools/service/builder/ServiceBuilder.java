@@ -7221,7 +7221,8 @@ public class ServiceBuilder {
 				indexColumnNames, entityFinderColumnNames.size(),
 				indexColumnNames.length);
 
-			if (ArrayUtil.containsAll(
+			if ((internalIndexColumnNames.length == 0) ||
+				ArrayUtil.containsAll(
 					internalColumns, internalIndexColumnNames)) {
 
 				iterator.remove();

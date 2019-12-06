@@ -21,6 +21,8 @@ definition {
 
 	@priority = "3"
 	test ExecuteScriptWithEmbeddedHTML {
+		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithEmbeddedHTML";
+
 		ServerAdministration.openServerAdmin();
 
 		var script = '''
@@ -43,6 +45,8 @@ definition {
 
 	@priority = "5"
 	test ExecuteScriptWithLiferayClasses {
+		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithLiferayClasses";
+
 		ServerAdministration.openServerAdmin();
 
 		var script = '''
@@ -69,6 +73,8 @@ definition {
 
 	@priority = "4"
 	test ExecuteScriptWithPredefinedVariables {
+		property test.name.skip.portal.instance = "GroovyScript#ExecuteScriptWithPredefinedVariables";
+
 		ServerAdministration.openServerAdmin();
 
 		var script = '''
@@ -92,6 +98,8 @@ definition {
 
 	@priority = "5"
 	test ExecuteSimpleScript {
+		property test.name.skip.portal.instance = "GroovyScript#ExecuteSimpleScript";
+
 		ServerAdministration.openServerAdmin();
 
 		var script = '''

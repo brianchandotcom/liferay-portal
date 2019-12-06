@@ -383,10 +383,6 @@ definition {
 
 			LexiconCard.clickCard(card = "${entryTitle}");
 
-			SelectFrame(value1 = "relative=top");
-
-			Click(locator1 = "Button#DONE");
-
 			AssertElementPresent(
 				key_contentName = "${entryTitle}",
 				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
@@ -402,10 +398,6 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 			LexiconCard.clickCard(card = "${webContentTitle}");
-
-			SelectFrame(value1 = "relative=top");
-
-			Click(locator1 = "Button#DONE");
 
 			AssertElementPresent(
 				key_contentName = "${webContentTitle}",

@@ -237,11 +237,6 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public CTCollection fetchCTCollection(long companyId, String name) {
-		return ctCollectionPersistence.fetchByC_N(companyId, name);
-	}
-
-	@Override
 	public List<CTCollection> getCTCollections(
 		long companyId, int status, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {

@@ -59,36 +59,19 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "ctCollectionId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			themeDisplay.getCompanyId(), name);
-
-		if ((ctCollection != null) &&
-			(ctCollection.getCtCollectionId() != ctCollectionId)) {
-
-			SessionErrors.add(actionRequest, "ctCollectionDuplicate");
-
-			_portal.copyRequestParameters(actionRequest, actionResponse);
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/change_lists/edit_ct_collection.jsp");
-
-			return;
-		}
+		String description = ParamUtil.getString(actionRequest, "description");
 
 		try {
-			String description = ParamUtil.getString(
-				actionRequest, "description");
-
 			if (ctCollectionId > 0) {
 				_ctCollectionLocalService.updateCTCollection(
 					themeDisplay.getUserId(), ctCollectionId, name,
 					description);
 			}
 			else {
-				ctCollection = _ctCollectionLocalService.addCTCollection(
-					themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-					description);
+				CTCollection ctCollection =
+					_ctCollectionLocalService.addCTCollection(
+						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+						name, description);
 
 				CTPreferences ctPreferences =
 					_ctPreferencesLocalService.getCTPreferences(

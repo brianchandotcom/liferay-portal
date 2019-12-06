@@ -3740,21 +3740,20 @@ public class ServiceBuilder {
 				List<EntityColumn> entityFinderColumns =
 					entityFinder.getEntityColumns();
 
-				if (entityFinderColumns.equals(entity.getPKEntityColumns())) {
+				if (entityFinderColumns.isEmpty() ||
+					entityFinderColumns.equals(entity.getPKEntityColumns())) {
+
 					continue;
 				}
 
-				List<String> dbNames = new ArrayList<>();
+				List<String> dbNames = new ArrayList<>(
+					entityFinderColumns.size() + 2);
 
 				for (EntityColumn entityColumn : entityFinderColumns) {
 					dbNames.add(entityColumn.getDBName());
 				}
 
-				if (dbNames.isEmpty()) {
-					continue;
-				}
-
-				List<String> internalColumnNames = new ArrayList<>();
+				List<String> internalColumnNames = new ArrayList<>(2);
 
 				if (entity.isChangeTrackingEnabled() &&
 					!dbNames.contains("ctCollectionId")) {
@@ -3768,13 +3767,14 @@ public class ServiceBuilder {
 					internalColumnNames.add("companyId");
 				}
 
-				if ((indexMetadatas != null) && (internalColumnNames != null)) {
+				if ((indexMetadatas != null) &&
+					!internalColumnNames.isEmpty()) {
+
 					_removeRedundantUniqueIndex(
-						indexMetadatas, dbNames,
-						internalColumnNames.toArray(new String[0]));
+						indexMetadatas, dbNames, internalColumnNames);
 				}
 
-				dbNames = ListUtil.concat(dbNames, internalColumnNames);
+				dbNames.addAll(internalColumnNames);
 
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
@@ -7201,10 +7201,11 @@ public class ServiceBuilder {
 
 	private void _removeRedundantUniqueIndex(
 		List<IndexMetadata> indexMetadatas,
-		List<String> entityFinderColumnNames, String[] internalColumns) {
+		List<String> entityFinderColumnNames, List<String> internalColumns) {
 
 		Iterator<IndexMetadata> iterator = indexMetadatas.iterator();
 
+		iterate:
 		while (iterator.hasNext()) {
 			IndexMetadata indexMetadata = iterator.next();
 
@@ -7214,31 +7215,33 @@ public class ServiceBuilder {
 
 			String[] indexColumnNames = indexMetadata.getColumnNames();
 
-			if (indexColumnNames.length < entityFinderColumnNames.size()) {
-				continue;
-			}
-
-			String[] originalIndexColumnNames = ArrayUtil.subset(
-				indexColumnNames, 0, entityFinderColumnNames.size());
-
-			if (!entityFinderColumnNames.equals(
-					Arrays.asList(originalIndexColumnNames))) {
+			if ((indexColumnNames.length < entityFinderColumnNames.size()) ||
+				(indexColumnNames.length >
+					(entityFinderColumnNames.size() +
+						internalColumns.size()))) {
 
 				continue;
 			}
 
-			String[] internalIndexColumnNames = ArrayUtil.subset(
-				indexColumnNames, entityFinderColumnNames.size(),
-				indexColumnNames.length);
+			for (int i = 0; i < entityFinderColumnNames.size(); i++) {
+				String indexColumnName = indexColumnNames[i];
 
-			if ((internalIndexColumnNames.length == 0) ||
-				ArrayUtil.containsAll(
-					internalColumns, internalIndexColumnNames)) {
-
-				iterator.remove();
-
-				break;
+				if (!indexColumnName.equals(entityFinderColumnNames.get(i))) {
+					continue iterate;
+				}
 			}
+
+			for (int i = entityFinderColumnNames.size();
+				 i < indexColumnNames.length; i++) {
+
+				if (!internalColumns.contains(indexColumnNames[i])) {
+					continue iterate;
+				}
+			}
+
+			iterator.remove();
+
+			break;
 		}
 	}
 

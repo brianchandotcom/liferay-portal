@@ -106,6 +106,20 @@ definition {
 			LexiconCard.clickCard(card = "${siteName}");
 		}
 
+		if (isSet(depotName)) {
+			AssertClick(
+				key_breadcrumbName = "Workspaces",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Workspaces");
+
+			AssertClick(
+				key_groupTab = "Repository",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Repository");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+
 		LexiconCard.clickCard(card = "${dmDocumentTitle}");
 
 		SelectFrameTop(value1 = "relative=top");

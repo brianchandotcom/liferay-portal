@@ -31,6 +31,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoLogOrderByComparator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,9 +59,9 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 		KaleoInstanceToken kaleoInstanceToken = addKaleoInstanceToken(
 			kaleoInstance);
 
-		KaleoLog kaleoLog = addNodeExitKaleoLog(kaleoInstanceToken);
+		KaleoLog exitKaleoLog = addNodeExitKaleoLog(kaleoInstanceToken);
 
-		addWorkflowInstanceEndKaleoLog(kaleoInstance);
+		KaleoLog endKaleoLog = addWorkflowInstanceEndKaleoLog(kaleoInstance);
 
 		List<KaleoLog> kaleoLogs =
 			kaleoLogLocalService.getKaleoInstanceKaleoLogs(
@@ -71,6 +72,9 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 					_kaleoWorkflowModelConverter));
 
 		Assert.assertEquals(kaleoLogs.toString(), 2, kaleoLogs.size());
+
+		Assert.assertEquals(
+			Arrays.asList(endKaleoLog, exitKaleoLog), kaleoLogs);
 
 		kaleoLogs = kaleoLogLocalService.getKaleoInstanceKaleoLogs(
 			TestPropsValues.getCompanyId(), kaleoInstance.getKaleoInstanceId(),
@@ -86,7 +90,7 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 
 		Assert.assertEquals(kaleoLogs.toString(), 1, kaleoLogs.size());
 
-		Assert.assertEquals(kaleoLog, kaleoLogs.get(0));
+		Assert.assertEquals(exitKaleoLog, kaleoLogs.get(0));
 	}
 
 	@Test
@@ -128,12 +132,15 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			addKaleoTaskInstanceToken(kaleoInstance, kaleoInstanceToken);
 
-		KaleoLog kaleoLog = kaleoLogLocalService.addTaskAssignmentKaleoLog(
-			Collections.emptyList(), kaleoTaskInstanceToken, StringPool.BLANK,
-			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+		KaleoLog assignmentKaleoLog =
+			kaleoLogLocalService.addTaskAssignmentKaleoLog(
+				Collections.emptyList(), kaleoTaskInstanceToken,
+				StringPool.BLANK,
+				WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+				serviceContext);
 
-		addTaskCompletionKaleoLog(kaleoInstance, kaleoTaskInstanceToken);
+		KaleoLog completionKaleoLog = addTaskCompletionKaleoLog(
+			kaleoInstance, kaleoTaskInstanceToken);
 
 		List<KaleoLog> kaleoLogs =
 			kaleoLogLocalService.getKaleoTaskInstanceTokenKaleoLogs(
@@ -145,6 +152,9 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 					_kaleoWorkflowModelConverter));
 
 		Assert.assertEquals(kaleoLogs.toString(), 2, kaleoLogs.size());
+
+		Assert.assertEquals(
+			Arrays.asList(completionKaleoLog, assignmentKaleoLog), kaleoLogs);
 
 		kaleoLogs = kaleoLogLocalService.getKaleoInstanceKaleoLogs(
 			TestPropsValues.getCompanyId(), kaleoInstance.getKaleoInstanceId(),
@@ -160,7 +170,7 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 
 		Assert.assertEquals(kaleoLogs.toString(), 1, kaleoLogs.size());
 
-		Assert.assertEquals(kaleoLog, kaleoLogs.get(0));
+		Assert.assertEquals(assignmentKaleoLog, kaleoLogs.get(0));
 	}
 
 	@Test

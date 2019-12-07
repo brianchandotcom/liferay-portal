@@ -38,9 +38,10 @@ import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -50,13 +51,21 @@ import org.junit.rules.TestName;
  */
 public class CompanyIndexFactoryTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_elasticsearchFixture = new ElasticsearchFixture(
 			CompanyIndexFactoryTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_companyIndexFactoryFixture = new CompanyIndexFactoryFixture(
 			_elasticsearchFixture, testName.getMethodName());
 
@@ -67,11 +76,6 @@ public class CompanyIndexFactoryTest {
 			_elasticsearchFixture.getRestHighLevelClient(),
 			new IndexName(_companyIndexFactoryFixture.getIndexName()),
 			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -426,9 +430,10 @@ public class CompanyIndexFactoryTest {
 			mappings, "kuromoji_liferay_custom", analyzer);
 	}
 
+	private static ElasticsearchFixture _elasticsearchFixture;
+
 	private CompanyIndexFactory _companyIndexFactory;
 	private CompanyIndexFactoryFixture _companyIndexFactoryFixture;
-	private ElasticsearchFixture _elasticsearchFixture;
 	private SingleFieldFixture _singleFieldFixture;
 
 }

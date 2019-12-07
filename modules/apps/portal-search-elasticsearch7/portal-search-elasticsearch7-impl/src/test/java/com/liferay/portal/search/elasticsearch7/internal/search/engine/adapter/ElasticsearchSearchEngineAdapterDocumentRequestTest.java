@@ -60,8 +60,10 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -69,12 +71,21 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(getClass());
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_elasticsearchFixture = new ElasticsearchFixture(
+			ElasticsearchSearchEngineAdapterDocumentRequestTest.class);
 
 		_elasticsearchFixture.setUp();
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
 		_restHighLevelClient = _elasticsearchFixture.getRestHighLevelClient();
@@ -91,8 +102,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		_deleteIndex();
 
 		_documentFixture.tearDown();
-
-		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -655,8 +664,9 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	private static final String _MAPPING_SOURCE =
 		"{\"properties\":{\"matchDocument\":{\"type\":\"boolean\"}}}";
 
+	private static ElasticsearchFixture _elasticsearchFixture;
+
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private ElasticsearchFixture _elasticsearchFixture;
 	private IndicesClient _indicesClient;
 	private RestHighLevelClient _restHighLevelClient;
 	private SearchEngineAdapter _searchEngineAdapter;

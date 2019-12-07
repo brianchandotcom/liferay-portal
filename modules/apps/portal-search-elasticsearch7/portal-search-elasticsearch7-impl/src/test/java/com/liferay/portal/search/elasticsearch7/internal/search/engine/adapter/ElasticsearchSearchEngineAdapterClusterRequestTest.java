@@ -41,8 +41,10 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -50,13 +52,23 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_elasticsearchFixture = new ElasticsearchFixture(
+			ElasticsearchSearchEngineAdapterClusterRequestTest.class.
+				getSimpleName());
+
+		_elasticsearchFixture.setUp();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		setUpJSONFactoryUtil();
-
-		_elasticsearchFixture = new ElasticsearchFixture(getClass());
-
-		_elasticsearchFixture.setUp();
 
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
@@ -71,8 +83,6 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 	@After
 	public void tearDown() throws Exception {
 		_deleteIndex();
-
-		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -238,7 +248,8 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private ElasticsearchFixture _elasticsearchFixture;
+	private static ElasticsearchFixture _elasticsearchFixture;
+
 	private IndicesClient _indicesClient;
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private SearchEngineAdapter _searchEngineAdapter;

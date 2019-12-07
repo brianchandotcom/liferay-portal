@@ -31,8 +31,9 @@ import java.util.logging.Level;
 
 import org.elasticsearch.cluster.health.ClusterHealthStatus;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -42,33 +43,34 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineAdapterLoggingTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_elasticsearchFixture = new ElasticsearchFixture(
+			ElasticsearchSearchEngineAdapterLoggingTest.class.getSimpleName());
+
+		_elasticsearchFixture.setUp();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			getClass());
-
 		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =
 			new ElasticsearchEngineAdapterFixture() {
 				{
-					setElasticsearchClientResolver(elasticsearchFixture);
+					setElasticsearchClientResolver(_elasticsearchFixture);
 				}
 			};
 
 		elasticsearchEngineAdapterFixture.setUp();
 
-		elasticsearchFixture.setUp();
-
-		waitForElasticsearchToStart(elasticsearchFixture);
-
-		_elasticsearchFixture = elasticsearchFixture;
+		waitForElasticsearchToStart(_elasticsearchFixture);
 
 		_searchEngineAdapter =
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -143,7 +145,8 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			});
 	}
 
-	private ElasticsearchFixture _elasticsearchFixture;
+	private static ElasticsearchFixture _elasticsearchFixture;
+
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

@@ -54,8 +54,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -63,13 +65,22 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_elasticsearchFixture = new ElasticsearchFixture(
+			ElasticsearchSearchEngineAdapterSearchRequestTest.class);
+
+		_elasticsearchFixture.setUp();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_documentFixture.setUp();
-
-		_elasticsearchFixture = new ElasticsearchFixture(getClass());
-
-		_elasticsearchFixture.setUp();
 
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
@@ -104,8 +115,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_deleteIndex();
 
 		_documentFixture.tearDown();
-
-		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -446,8 +455,9 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 	private static final String _MAPPING_NAME = "test_mapping";
 
+	private static ElasticsearchFixture _elasticsearchFixture;
+
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private ElasticsearchFixture _elasticsearchFixture;
 	private IndicesClient _indicesClient;
 	private RestHighLevelClient _restHighLevelClient;
 	private SearchEngineAdapter _searchEngineAdapter;

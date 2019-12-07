@@ -41,9 +41,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.SnapshotClient;
 import org.elasticsearch.snapshots.SnapshotInfo;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -51,13 +52,21 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_elasticsearchFixture = new ElasticsearchFixture(
 			ElasticsearchSearchEngineTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_elasticsearchConnectionManager = createElasticsearchConnectionManager(
 			_elasticsearchFixture.getEmbeddedElasticsearchConnection());
 
@@ -74,11 +83,6 @@ public class ElasticsearchSearchEngineTest {
 
 		_searchEngineAdapter =
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -259,8 +263,9 @@ public class ElasticsearchSearchEngineTest {
 		elasticsearchConnectionManager.connect();
 	}
 
+	private static ElasticsearchFixture _elasticsearchFixture;
+
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private ElasticsearchFixture _elasticsearchFixture;
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

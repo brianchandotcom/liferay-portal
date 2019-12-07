@@ -57,8 +57,10 @@ import org.elasticsearch.repositories.fs.FsRepository;
 import org.elasticsearch.snapshots.SnapshotInfo;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -66,12 +68,21 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(getClass());
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_elasticsearchFixture = new ElasticsearchFixture(
+			ElasticsearchSearchEngineAdapterSnapshotRequestTest.class);
 
 		_elasticsearchFixture.setUp();
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
 		RestHighLevelClient restHighLevelClient =
@@ -89,8 +100,6 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 	public void tearDown() throws Exception {
 		_deleteIndex();
 		_deleteRepository(_TEST_REPOSITORY_NAME);
-
-		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -450,7 +459,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 	private static final String _TEST_REPOSITORY_NAME =
 		"testRepositoryOperations";
 
-	private ElasticsearchFixture _elasticsearchFixture;
+	private static ElasticsearchFixture _elasticsearchFixture;
+
 	private IndicesClient _indicesClient;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SnapshotClient _snapshotClient;

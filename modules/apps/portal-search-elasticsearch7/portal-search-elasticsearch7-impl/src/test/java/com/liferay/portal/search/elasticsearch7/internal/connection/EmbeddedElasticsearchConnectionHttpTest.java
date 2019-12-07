@@ -38,9 +38,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import org.hamcrest.CoreMatchers;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.MockitoAnnotations;
@@ -50,11 +51,9 @@ import org.mockito.MockitoAnnotations;
  */
 public class EmbeddedElasticsearchConnectionHttpTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		setUpJSONFactoryUtil();
-
-		MockitoAnnotations.initMocks(this);
 
 		_clusterName = RandomTestUtil.randomString();
 
@@ -71,9 +70,14 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 		_elasticsearchFixture.setUp();
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 		_elasticsearchFixture.tearDown();
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
@@ -86,6 +90,12 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 			status,
 			CoreMatchers.containsString(
 				"\"cluster_name\" : \"" + _clusterName));
+	}
+
+	protected static void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(_jsonFactory);
 	}
 
 	protected int getHttpPort() throws Exception {
@@ -124,20 +134,14 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 		return 0;
 	}
 
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(_jsonFactory);
-	}
-
 	protected String toString(URL url) throws Exception {
 		try (InputStream inputStream = url.openStream()) {
 			return StringUtil.read(inputStream);
 		}
 	}
 
-	private String _clusterName;
-	private ElasticsearchFixture _elasticsearchFixture;
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private static String _clusterName;
+	private static ElasticsearchFixture _elasticsearchFixture;
+	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

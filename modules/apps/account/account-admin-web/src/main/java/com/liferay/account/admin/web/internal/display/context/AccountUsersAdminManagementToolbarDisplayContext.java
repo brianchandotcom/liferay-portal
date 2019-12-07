@@ -271,6 +271,27 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 									request, accountEntry.getName())));
 					}
 				}
+
+				if (!Objects.equals(getNavigation(), "active")) {
+					add(
+						labelItem -> {
+							PortletURL removeLabelURL = getPortletURL();
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
+							labelItem.setCloseable(true);
+
+							String label = String.format(
+								"%s: %s", LanguageUtil.get(request, "status"),
+								LanguageUtil.get(request, getNavigation()));
+
+							labelItem.setLabel(label);
+						});
+				}
 			}
 		};
 	}

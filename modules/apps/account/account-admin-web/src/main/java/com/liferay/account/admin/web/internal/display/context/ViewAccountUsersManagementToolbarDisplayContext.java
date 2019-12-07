@@ -22,6 +22,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -158,6 +161,33 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	@Override
 	public String getDefaultEventHandler() {
 		return "ACCOUNT_USERS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	public List<LabelItem> getFilterLabelItems() {
+		return new LabelItemList() {
+			{
+				if (!Objects.equals(getNavigation(), "active")) {
+					add(
+						labelItem -> {
+							PortletURL removeLabelURL = getPortletURL();
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
+							labelItem.setCloseable(true);
+
+							String label = String.format(
+								"%s: %s", LanguageUtil.get(request, "status"),
+								LanguageUtil.get(request, getNavigation()));
+
+							labelItem.setLabel(label);
+						});
+				}
+			}
+		};
 	}
 
 	@Override

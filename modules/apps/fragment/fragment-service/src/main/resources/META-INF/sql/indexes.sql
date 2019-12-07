@@ -4,7 +4,6 @@ create index IX_9A228268 on FragmentCollection (uuid_[$COLUMN_LENGTH:75$], compa
 create unique index IX_DFB882EA on FragmentCollection (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_DDB6278B on FragmentEntry (fragmentCollectionId, status);
-create unique index IX_62913C70 on FragmentEntry (groupId, fragmentCollectionId, fragmentEntryKey[$COLUMN_LENGTH:75$]);
 create index IX_9EC6FEE4 on FragmentEntry (groupId, fragmentCollectionId, name[$COLUMN_LENGTH:75$], status);
 create index IX_BD18F965 on FragmentEntry (groupId, fragmentCollectionId, status);
 create index IX_BD1F4C5C on FragmentEntry (groupId, fragmentCollectionId, type_, status);

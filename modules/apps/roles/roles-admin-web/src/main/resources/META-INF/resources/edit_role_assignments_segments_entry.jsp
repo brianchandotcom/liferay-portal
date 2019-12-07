@@ -81,9 +81,9 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						message="members"
+						message="view-members"
+						onClick='<%= renderResponse.getNamespace() + "openViewMembersDialog(event);" %>'
 						url="<%= viewMembersURL %>"
-						useDialog="<%= true %>"
 					/>
 				</liferay-ui:icon-menu>
 			</liferay-ui:search-container-column-text>
@@ -94,3 +94,19 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>
+
+<aui:script>
+	function <portlet:namespace/>openViewMembersDialog(event) {
+		Liferay.Util.openInDialog(event, {
+			dialog: {
+				constrain: true,
+				destroyOnHide: true,
+				height: 768,
+				modal: true,
+				width: 600
+			},
+			uri: event.currentTarget.href,
+			title: '<liferay-ui:message key="members" />'
+		});
+	}
+</aui:script>

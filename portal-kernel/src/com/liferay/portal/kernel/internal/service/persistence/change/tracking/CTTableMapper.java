@@ -129,7 +129,7 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 			if (!_containsTableMapping(
 					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
 
-				addedLeftPrimaryKeys.add(rightPrimaryKey);
+				addedLeftPrimaryKeys.add(leftPrimaryKey);
 
 				_addTableMapping(
 					companyId, leftPrimaryKey, rightPrimaryKey, ctCollectionId);
@@ -148,7 +148,7 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 		}
 
 		return _deleteTableMappings(
-			leftModelClass, rightModelClass, getRightPrimaryKeysSqlQuery,
+			leftModelClass, rightModelClass, _getCTRightPrimaryKeysSqlQuery,
 			leftPrimaryKey, ctCollectionId, true);
 	}
 
@@ -314,16 +314,12 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 				", ctCollectionId) VALUES (?, ?, ?, 0)"),
 			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 
-		if (cacheless) {
-			containsTableMappingSQL =
-				MappingSqlQueryFactoryUtil.getMappingSqlQuery(
-					dataSource,
-					StringBundler.concat(
-						"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
-						" = ? AND ", rightColumnName,
-						" = ? AND ctCollectionId = 0"),
-					RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
-		}
+		containsTableMappingSQL = MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+			dataSource,
+			StringBundler.concat(
+				"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
+				" = ? AND ", rightColumnName, " = ? AND ctCollectionId = 0"),
+			RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT);
 
 		deleteLeftPrimaryKeyTableMappingsSqlUpdate =
 			SqlUpdateFactoryUtil.getSqlUpdate(
@@ -373,19 +369,22 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		DB db = DBManagerUtil.getDB();
 
-		if (cacheless) {
-			_containsCTTableMappingSQL =
-				MappingSqlQueryFactoryUtil.getMappingSqlQuery(
-					dataSource,
-					StringBundler.concat(
-						"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
-						" = ? AND ", rightColumnName,
-						" = ? AND (ctCollectionId = 0 OR ctCollectionId = ?) ",
-						"and (changeType is NULL or changeType = ",
-						db.getTemplateTrue(), ")"),
-					RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT,
-					ParamSetter.BIGINT);
-		}
+		_containsCTTableMappingSQL =
+			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
+				dataSource,
+				StringBundler.concat(
+					"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
+					" = ? AND ", rightColumnName,
+					" = ? AND (ctCollectionId = 0 OR ctCollectionId = ?) AND ",
+					"(changeType is NULL or changeType = ",
+					db.getTemplateTrue(), ") AND NOT EXISTS (SELECT * FROM ",
+					tableName, " WHERE ", leftColumnName, " = ? AND ",
+					rightColumnName,
+					" = ? AND ctCollectionId = ? AND changeType = ",
+					db.getTemplateFalse(), ")"),
+				RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+				ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+				ParamSetter.BIGINT);
 
 		_getCTLeftPrimaryKeysSqlQuery =
 			MappingSqlQueryFactoryUtil.getMappingSqlQuery(
@@ -418,10 +417,10 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 			dataSource,
 			StringBundler.concat(
 				"UPDATE ", tableName, " SET changeType = ? WHERE ",
-				leftColumnName, " = ? and ", rightColumnName,
-				" = ? and ctCollectionId = ?"),
-			_booleanParamSetter, ParamSetter.BIGINT, ParamSetter.BIGINT,
-			ParamSetter.BIGINT);
+				leftColumnName, " = ? AND ", rightColumnName,
+				" = ? AND ctCollectionId = ?"),
+			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+			_booleanParamSetter);
 	}
 
 	private static <T extends BaseModel<T>> List<T> _getBaseModels(
@@ -541,7 +540,8 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		try {
 			counts = _containsCTTableMappingSQL.execute(
-				leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+				leftPrimaryKey, rightPrimaryKey, ctCollectionId, leftPrimaryKey,
+				rightPrimaryKey, ctCollectionId);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

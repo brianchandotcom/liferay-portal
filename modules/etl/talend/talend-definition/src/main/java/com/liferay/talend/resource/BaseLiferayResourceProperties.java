@@ -115,7 +115,11 @@ public abstract class BaseLiferayResourceProperties
 	}
 
 	public URI getEndpointURI() {
-		String applicationBaseHref = connection.getApplicationBaseHref();
+		LiferayConnectionProperties liferayConnectionProperties =
+			connection.getEffectiveLiferayConnectionProperties();
+
+		String applicationBaseHref =
+			liferayConnectionProperties.getApplicationBaseHref();
 
 		String endpointRelativePath = endpoint.getValue();
 

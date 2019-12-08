@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -53,6 +54,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import graphql.GraphQLError;
+import graphql.GraphqlErrorBuilder;
 import graphql.Scalars;
 import graphql.TypeResolutionEnvironment;
 
@@ -115,7 +117,6 @@ import graphql.schema.TypeResolver;
 
 import graphql.servlet.ApolloScalars;
 import graphql.servlet.DefaultGraphQLErrorHandler;
-import graphql.servlet.GenericGraphQLError;
 import graphql.servlet.GraphQLConfiguration;
 import graphql.servlet.GraphQLContext;
 import graphql.servlet.GraphQLHttpServlet;
@@ -1605,16 +1606,44 @@ public class GraphQLServletExtender {
 
 			return stream.map(
 				graphQLError -> {
-					if (!isClientError(graphQLError)) {
-						return new GenericGraphQLError(
-							graphQLError.getMessage());
+					String message = graphQLError.getMessage();
+
+					if (message.contains("SecurityException")) {
+						return _getExtendedGraphQLError(
+							graphQLError, Response.Status.UNAUTHORIZED);
+					}
+					else if (!isClientError(graphQLError)) {
+						return _getExtendedGraphQLError(
+							graphQLError,
+							Response.Status.INTERNAL_SERVER_ERROR);
 					}
 
-					return graphQLError;
+					return _getExtendedGraphQLError(
+						graphQLError, Response.Status.BAD_REQUEST);
 				}
 			).collect(
 				Collectors.toList()
 			);
+		}
+
+		private GraphQLError _getExtendedGraphQLError(
+			GraphQLError graphQLError, Response.Status status) {
+
+			GraphqlErrorBuilder graphqlErrorBuilder =
+				GraphqlErrorBuilder.newError();
+
+			return graphqlErrorBuilder.message(
+				graphQLError.getMessage()
+			).extensions(
+				HashMapBuilder.put(
+					"code", (Object)status.getReasonPhrase()
+				).put(
+					"exception",
+					HashMapBuilder.put(
+						"errno", status.getStatusCode()
+					).build()
+				).build()
+			).build();
 		}
 
 	}

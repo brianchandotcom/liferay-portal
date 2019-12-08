@@ -140,4 +140,161 @@ definition {
 			portletName = "Documents and Media");
 	}
 
+	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
+	@priority = "5"
+	test EditConvertedContentPageWithDecorator {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Look and Feel Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.selectApplicationDecorator(decorator = "Borderless");
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Documents and Media",
+			portletOption = "Look and Feel Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.selectApplicationDecorator(decorator = "Decorate");
+
+		PortletEntry.save();
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page",
+			pageName = "Test Page Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.viewApplicationDecorator(
+			decorator = "Borderless",
+			portletName = "Asset Publisher");
+
+		Portlet.viewApplicationDecorator(
+			decorator = "Decorate",
+			portletName = "Documents and Media");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "Userfn1",
+			userLastName = "Userln1",
+			userScreenName = "usersn1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "userea1@liferay.com",
+			userScreenName = "usersn1");
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "Userfn1",
+			userLastName = "Userln1",
+			userScreenName = "usersn1");
+
+		User.openUsersAdmin();
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Click(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertElementNotPresent(locator1 = "Icon#OK");
+
+		Click(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Portlet#SPECIFIC_TITLE",
+			value1 = "Documents and Media");
+
+		AssertElementNotPresent(locator1 = "Icon#OK");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.configureCustomTitlePG(portletTitleName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.viewSpecificPG(portletName = "Asset Publisher Custom");
+
+		Portlet.configureCustomTitlePG(portletTitleName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.viewSpecificPG(portletName = "Documents and Media Custom");
+	}
+
 }

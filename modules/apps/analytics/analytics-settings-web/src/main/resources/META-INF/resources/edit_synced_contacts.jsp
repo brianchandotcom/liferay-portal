@@ -89,7 +89,7 @@ Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syn
 						</h4>
 
 						<p class="list-group-subtext">
-							<liferay-ui:message arguments='<%= syncAllContacts ? "All" : syncedUserGroupIds.size() %>' key="x-user-groups-selected" />
+							<liferay-ui:message arguments='<%= syncAllContacts ? "all" : syncedUserGroupIds.size() %>' key="x-user-groups-selected" />
 						</p>
 					</div>
 				</li>
@@ -109,7 +109,7 @@ Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syn
 						</h4>
 
 						<p class="list-group-subtext">
-							<liferay-ui:message arguments='<%= syncAllContacts ? "All" : syncedOrganizationIds.size() %>' key="x-organizations-selected" />
+							<liferay-ui:message arguments='<%= syncAllContacts ? "all" : syncedOrganizationIds.size() %>' key="x-organizations-selected" />
 						</p>
 					</div>
 				</li>

@@ -48,7 +48,7 @@ public class LoadBalancerUtil {
 
 		if (!_jenkinsMasters.containsKey(masterPrefix)) {
 			allJenkinsMasters = JenkinsResultsParserUtil.getJenkinsMasters(
-				properties, minimumRAM, masterPrefix);
+				properties, JenkinsMaster.SLAVE_RAM_DEFAULT, masterPrefix);
 
 			_jenkinsMasters.put(masterPrefix, allJenkinsMasters);
 		}
@@ -58,15 +58,15 @@ public class LoadBalancerUtil {
 
 		List<String> blacklist = _getBlacklist(properties, verbose);
 
-		if (blacklist.isEmpty()) {
-			return new ArrayList<>(allJenkinsMasters);
-		}
-
 		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
 			if (blacklist.contains(jenkinsMaster.getName())) {
+				continue;
+			}
+
+			if (jenkinsMaster.getSlaveRAM() < minimumRAM) {
 				continue;
 			}
 

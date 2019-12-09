@@ -263,14 +263,19 @@ AUI.add(
 							buffer.push(
 								xmlRole.open,
 								XMLUtil.create('roleType', item),
-								XMLUtil.create('name', roleName),
-								XMLUtil.create(
-									'autoCreate',
-									dataAssignments.autoCreate[index] ||
-										String(false)
-								),
-								xmlRole.close
+								XMLUtil.create('name', roleName)
 							);
+
+							if (dataAssignments.autoCreate[index] != null) {
+								buffer.push(
+									XMLUtil.create(
+										'autoCreate',
+										dataAssignments.autoCreate[index]
+									)
+								);
+							}
+
+							buffer.push(xmlRole.close);
 						}
 					});
 

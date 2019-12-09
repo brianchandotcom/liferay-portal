@@ -14,6 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,22 +24,15 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.TermsQuery;
-import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
@@ -49,10 +45,9 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatu
 import java.sql.Timestamp;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -144,49 +139,51 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			return;
 		}
 
-		long lastInstanceId = 0;
-		long searchHitsTotal = 0;
-		int searchRequestSize = 50;
-		SearchSearchResponse searchSearchResponse = null;
-
 		Stream<WorkflowMetricsSLADefinition> stream =
 			workflowMetricsSLADefinitions.stream();
 
-		Set<Long> processIds = stream.map(
+		Set<String> kaleoDefinitionNames = stream.map(
 			WorkflowMetricsSLADefinition::getProcessId
+		).map(
+			kaleoDefinitionLocalService::fetchKaleoDefinition
+		).filter(
+			Objects::nonNull
+		).map(
+			KaleoDefinition::getName
 		).collect(
 			Collectors.toSet()
 		);
 
-		while (true) {
-			searchSearchResponse = searchEngineAdapter.execute(
-				_createInstanceSearchSearchRequest(
-					companyId, lastInstanceId, processIds, searchRequestSize));
+		ActionableDynamicQuery actionableDynamicQuery =
+			kaleoInstanceLocalService.getActionableDynamicQuery();
 
-			_reindexSLAProcessResults(companyId, searchSearchResponse);
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
 
-			SearchHits searchHits = searchSearchResponse.getSearchHits();
+				dynamicQuery.add(companyIdProperty.eq(companyId));
 
-			searchHitsTotal = searchHits.getTotalHits();
+				Property completedProperty = PropertyFactoryUtil.forName(
+					"completed");
 
-			if (searchHitsTotal == 0) {
-				break;
-			}
+				dynamicQuery.add(completedProperty.eq(true));
 
-			List<SearchHit> searchHitsList = searchHits.getSearchHits();
+				Property kaleoDefinitionNameProperty =
+					PropertyFactoryUtil.forName("kaleoDefinitionName");
 
-			SearchHit searchHit = searchHitsList.get(searchHitsList.size() - 1);
+				dynamicQuery.add(
+					kaleoDefinitionNameProperty.in(kaleoDefinitionNames));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(KaleoInstance kaleoInstance) -> _reindexSLAProcessResults(
+				kaleoInstance));
 
-			com.liferay.portal.search.document.Document document =
-				searchHit.getDocument();
-
-			lastInstanceId = document.getLong("instanceId");
-
-			if (searchHitsTotal != searchRequestSize) {
-				break;
-			}
-		}
+		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	protected KaleoInstanceLocalService kaleoInstanceLocalService;
 
 	@Reference
 	protected KaleoNodeLocalService kaleoNodeLocalService;
@@ -217,59 +214,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	@Reference
 	protected WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor;
 
-	private BooleanQuery _createInstancesBooleanQuery(
-		long companyId, long lastInstanceId, Set<Long> processIds) {
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		return booleanQuery.addMustQueryClauses(
-			queries.term("companyId", companyId),
-			queries.term("completed", true), queries.term("deleted", false),
-			queries.rangeTerm("instanceId", false, true, lastInstanceId, null),
-			_createProcessIdTermsQuery(processIds));
-	}
-
-	private SearchSearchRequest _createInstanceSearchSearchRequest(
-		long companyId, long lastInstanceId, Set<Long> processIds,
-		int searchRequestSize) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-		searchSearchRequest.setQuery(
-			_createInstancesBooleanQuery(
-				companyId, lastInstanceId, processIds));
-		searchSearchRequest.setSize(searchRequestSize);
-		searchSearchRequest.setSorts(
-			Collections.singleton(sorts.field("instanceId", SortOrder.ASC)));
-
-		return searchSearchRequest;
-	}
-
-	private TermsQuery _createProcessIdTermsQuery(Set<Long> processIds) {
-		TermsQuery termsQuery = queries.terms("processId");
-
-		Stream<Long> stream = processIds.stream();
-
-		termsQuery.addValues(
-			stream.map(
-				String::valueOf
-			).toArray(
-				Object[]::new
-			));
-
-		return termsQuery;
-	}
-
-	private long _getStartNodeId(long processId, String version) {
+	private long _getStartNodeId(KaleoInstance kaleoInstance) {
 		try {
-			KaleoDefinition kaleoDefinition =
-				kaleoDefinitionLocalService.getKaleoDefinition(processId);
-
 			KaleoDefinitionVersion kaleoDefinitionVersion =
 				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-					version);
+					kaleoInstance.getKaleoDefinitionVersionId());
 
 			List<KaleoNode> kaleoNodes =
 				kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
@@ -295,79 +244,56 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		return 0L;
 	}
 
-	private void _reindexSLAProcessResults(
-		long companyId, SearchSearchResponse searchSearchResponse) {
-
+	private void _reindexSLAProcessResults(KaleoInstance kaleoInstance) {
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		Stream.of(
-			searchSearchResponse.getSearchHits()
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
+		List<WorkflowMetricsSLADefinitionVersion>
+			workflowMetricsSLADefinitionVersions =
+				workflowMetricsSLADefinitionVersionLocalService.
+					getWorkflowMetricsSLADefinitionVersions(
+						kaleoInstance.getCompanyId(),
+						kaleoInstance.getCompletionDate(),
+						WorkflowConstants.STATUS_APPROVED);
+
+		Stream<WorkflowMetricsSLADefinitionVersion> stream =
+			workflowMetricsSLADefinitionVersions.stream();
+
+		stream.filter(
+			WorkflowMetricsSLADefinitionVersion::isActive
 		).forEach(
-			document -> {
-				LocalDateTime completionDate = LocalDateTime.parse(
-					document.getString("completionDate"), _dateTimeFormatter);
+			workflowMetricsSLADefinitionVersion -> {
+				Optional<WorkflowMetricsSLAProcessResult> optional =
+					workflowMetricsSLAProcessor.process(
+						workflowMetricsSLADefinitionVersion.getCompanyId(),
+						new Timestamp(
+							kaleoInstance.getCreateDate(
+							).getTime()
+						).toLocalDateTime(),
+						kaleoInstance.getKaleoInstanceId(), LocalDateTime.now(),
+						_getStartNodeId(kaleoInstance),
+						workflowMetricsSLADefinitionVersion);
 
-				List<WorkflowMetricsSLADefinitionVersion>
-					workflowMetricsSLADefinitionVersions =
-						workflowMetricsSLADefinitionVersionLocalService.
-							getWorkflowMetricsSLADefinitionVersions(
-								companyId,
-								Timestamp.valueOf(
-									completionDate.withNano(
-										LocalDateTime.MAX.getNano())),
-								WorkflowConstants.STATUS_APPROVED);
+				optional.ifPresent(
+					workflowMetricsSLAProcessResult -> {
+						workflowMetricsSLAProcessResult.
+							setWorkflowMetricsSLAStatus(
+								WorkflowMetricsSLAStatus.COMPLETED);
 
-				Stream<WorkflowMetricsSLADefinitionVersion> stream =
-					workflowMetricsSLADefinitionVersions.stream();
+						bulkDocumentRequest.addBulkableDocumentRequest(
+							new IndexDocumentRequest(
+								getIndexName(),
+								createDocument(
+									workflowMetricsSLAProcessResult)) {
 
-				stream.filter(
-					WorkflowMetricsSLADefinitionVersion::isActive
-				).forEach(
-					workflowMetricsSLADefinitionVersion -> {
-						Optional<WorkflowMetricsSLAProcessResult> optional =
-							workflowMetricsSLAProcessor.process(
-								workflowMetricsSLADefinitionVersion.
-									getCompanyId(),
-								LocalDateTime.parse(
-									document.getString("createDate"),
-									_dateTimeFormatter),
-								document.getLong("instanceId"),
-								LocalDateTime.now(),
-								_getStartNodeId(
-									document.getLong("processId"),
-									document.getString("version")),
-								workflowMetricsSLADefinitionVersion);
-
-						optional.ifPresent(
-							workflowMetricsSLAProcessResult -> {
-								workflowMetricsSLAProcessResult.
-									setWorkflowMetricsSLAStatus(
-										WorkflowMetricsSLAStatus.COMPLETED);
-
-								bulkDocumentRequest.addBulkableDocumentRequest(
-									new IndexDocumentRequest(
-										getIndexName(),
-										createDocument(
-											workflowMetricsSLAProcessResult)) {
-
-										{
-											setType(getIndexType());
-										}
-									});
-
-								slaTaskResultWorkflowMetricsIndexer.
-									addDocuments(
-										workflowMetricsSLAProcessResult.
-											getWorkflowMetricsSLATaskResults());
+								{
+									setType(getIndexType());
+								}
 							});
-					}
-				);
+
+						slaTaskResultWorkflowMetricsIndexer.addDocuments(
+							workflowMetricsSLAProcessResult.
+								getWorkflowMetricsSLATaskResults());
+					});
 			}
 		);
 
@@ -384,9 +310,5 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SLAProcessResultWorkflowMetricsIndexer.class);
-
-	private final DateTimeFormatter _dateTimeFormatter =
-		DateTimeFormatter.ofPattern(
-			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
 
 }

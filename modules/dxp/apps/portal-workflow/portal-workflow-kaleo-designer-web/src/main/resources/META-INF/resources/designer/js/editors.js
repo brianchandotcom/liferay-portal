@@ -338,7 +338,11 @@ AUI.add(
 							) {
 								item2.set(
 									'checked',
-									A.DataType.Boolean.parse(value)
+									A.DataType.Boolean.parse(
+										value || typeof value == 'boolean'
+											? value
+											: true
+									)
 								);
 							} else if (
 								item2.test('select[multiple]') &&

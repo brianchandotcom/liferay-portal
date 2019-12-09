@@ -238,8 +238,9 @@ public class FreeMarkerTool {
 			"String sortsString");
 
 		parameters = StringUtil.replace(
-			parameters, "Long siteId",
-			"Long siteId, @GraphQLName(\"siteKey\") String siteKey");
+			parameters, "@GraphQLName(\"siteId\") java.lang.Long siteId",
+			"java.lang.Long siteId, @GraphQLName(\"siteKey\") @NotEmpty " +
+				"String siteKey");
 
 		return parameters;
 	}

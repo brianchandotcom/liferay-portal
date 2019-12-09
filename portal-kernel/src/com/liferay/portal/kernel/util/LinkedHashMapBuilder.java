@@ -92,7 +92,7 @@ public class LinkedHashMapBuilder<K, V> extends BaseMapBuilder {
 		}
 
 		public LinkedHashMapWrapper<K, V> put(K key, V value) {
-			_linkedHashMap.put(key, value);
+			doPut(key, value);
 
 			return this;
 		}

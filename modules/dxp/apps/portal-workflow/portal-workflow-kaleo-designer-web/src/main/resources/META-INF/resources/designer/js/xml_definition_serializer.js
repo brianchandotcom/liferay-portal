@@ -211,7 +211,7 @@ AUI.add(
 			wrapperNodeName,
 			wrapperNodeAttrs
 		) {
-			if (dataAssignments) {
+			if (!AObject.isEmpty(dataAssignments)) {
 				var assignmentType = AArray(dataAssignments.assignmentType)[0];
 
 				var xmlAssignments = XMLUtil.createObj(

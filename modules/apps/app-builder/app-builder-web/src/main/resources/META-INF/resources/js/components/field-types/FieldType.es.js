@@ -41,6 +41,7 @@ export default props => {
 		description,
 		disabled,
 		dragAlignment = 'left',
+		draggable = true,
 		dragType = DRAG_FIELD_TYPE,
 		icon,
 		label,
@@ -51,7 +52,7 @@ export default props => {
 	} = props;
 
 	const [{dragging}, drag, preview] = useDrag({
-		canDrag: _ => !disabled,
+		canDrag: _ => !disabled && draggable,
 		collect: monitor => ({
 			dragging: monitor.isDragging()
 		}),

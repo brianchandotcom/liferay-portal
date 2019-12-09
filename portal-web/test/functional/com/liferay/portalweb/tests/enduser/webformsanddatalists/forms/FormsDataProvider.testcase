@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		// FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
 	}
 
 	tearDown {
@@ -27,126 +27,126 @@ definition {
 		property test.name.skip.portal.instance = "FormsDataProvider#ConfigureAutocompleteWithTextField";
 		var portalURL = PropsUtil.get("portal.url");
 
-		// Navigator.openURL();
+		Navigator.openURL();
 
-		// ProductMenu.gotoPortlet(
-		// 	category = "Content &amp; Data",
-		// 	panel = "Site Administration",
-		// 	portlet = "Forms");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
 
-		// Navigator.gotoNavItem(navItem = "Data Providers");
+		Navigator.gotoNavItem(navItem = "Data Providers");
 
-		// FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoAddDataProvider();
 
-		// FormsAdmin.editDataProvider(
-		// 	name = "Country Names",
-		// 	outputParameterLabel = "Countries Full Name",
-		// 	outputParameterLabel2 = "Countries A2",
-		// 	outputParameterName = "Countries Full Name",
-		// 	outputParameterName2 = "Countries A2",
-		// 	outputParameterPath = "nameCurrentValue",
-		// 	outputParameterPath2 = "a2",
-		// 	outputParameterType = "List",
-		// 	outputParameterType2 = "List",
-		// 	password = "test",
-		// 	url = "${portalURL}/api/jsonws/country/get-countries",
-		// 	username = "test@liferay.com");
+		FormsAdmin.editDataProvider(
+			name = "Country Names",
+			outputParameterLabel = "Countries Full Name",
+			outputParameterLabel2 = "Countries A2",
+			outputParameterName = "Countries Full Name",
+			outputParameterName2 = "Countries A2",
+			outputParameterPath = "nameCurrentValue",
+			outputParameterPath2 = "a2",
+			outputParameterType = "List",
+			outputParameterType2 = "List",
+			password = "test",
+			url = "${portalURL}/api/jsonws/country/get-countries",
+			username = "test@liferay.com");
 
-		// FormsAdmin.saveDataProvider();
+		FormsAdmin.saveDataProvider();
 
-		// Navigator.openURL();
+		Navigator.openURL();
 
-		// ProductMenu.gotoPortlet(
-		// 	category = "Content &amp; Data",
-		// 	panel = "Site Administration",
-		// 	portlet = "Forms");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
 
-		// FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoAddForm();
 
-		// Form.editName();
+		Form.editName();
 
-		// Form.editDescription();
+		Form.editDescription();
 
-		// Form.gotoAddField(fieldType = "Text Field");
+		Form.gotoAddField(fieldType = "Text Field");
 
-		// Form.editFieldLabelMetal(fieldValue = "Text Field With Autocomplete");
+		Form.editFieldLabelMetal(fieldValue = "Text Field With Autocomplete");
 
-		// Form.gotoAutocompleteTab();
+		Form.gotoAutocompleteTab();
 
-		// Form.enableAutocompleteConfiguration();
+		Form.enableAutocompleteConfiguration();
 
-		// Form.editTextFieldDataProvider(
-		// 	dataProvider = "Country Names",
-		// 	dataProviderOutput = "Countries A2");
+		Form.editTextFieldDataProvider(
+			dataProvider = "Country Names",
+			dataProviderOutput = "Countries A2");
 
-		// Form.closeSidebar();
+		Form.closeSidebar();
 
-		// Form.save();
+		Form.save();
 
-		// Navigator.openURL();
+		Navigator.openURL();
 
-		// ProductMenu.gotoPortlet(
-		// 	category = "Content &amp; Data",
-		// 	panel = "Site Administration",
-		// 	portlet = "Forms");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
 
-		// LexiconEntry.gotoEntryMenuItem(
-		// 	menuItem = "Edit",
-		// 	rowEntry = "Created Form Name");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Created Form Name");
 
-		// FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
 
-		// Form.gotoAutocompleteTab();
+		Form.gotoAutocompleteTab();
 
-		// Form.editTextFieldDataProvider(
-		// 	dataProvider = "Country Names",
-		// 	dataProviderOutput = "Countries Full Name");
+		Form.editTextFieldDataProvider(
+			dataProvider = "Country Names",
+			dataProviderOutput = "Countries Full Name");
 
-		// Form.closeSidebar();
+		Form.closeSidebar();
 
-		// Form.save();
+		Form.save();
 
-		// ProductMenu.gotoPortlet(
-		// 	category = "Site Builder",
-		// 	panel = "Site Administration",
-		// 	portlet = "Pages");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
 
-		// SitePages.addPublicPage(pageName = "Form Page");
+		SitePages.addPublicPage(pageName = "Form Page");
 
-		// Navigator.gotoPage(pageName = "Form Page");
+		Navigator.gotoPage(pageName = "Form Page");
 
-		// Portlet.addPG(
-		// 	pageName = "Form Page",
-		// 	portletName = "Form");
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
 
-		// FormPortletNavigator.gotoSelectForm();
+		FormPortletNavigator.gotoSelectForm();
 
-		// FormPortletConfiguration.selectForm();
+		FormPortletConfiguration.selectForm();
 
-		// PortletEntry.save();
+		PortletEntry.save();
 
-		// Navigator.gotoPage(pageName = "Form Page");
+		Navigator.gotoPage(pageName = "Form Page");
 
-		// FormFields.editTextWithDataProvider(
-		// 	fieldName = "TextFieldWithAutocomplete",
-		// 	fieldValue = "United");
+		FormFields.editTextWithDataProvider(
+			fieldName = "TextFieldWithAutocomplete",
+			fieldValue = "United");
 
-		// FormFields.selectAutoCompleteOption(autocompleteOption = "United States");
+		FormFields.selectAutoCompleteOption(autocompleteOption = "United States");
 
-		// FormPortlet.submit();
+		FormPortlet.submit();
 
-		// Navigator.openURL();
+		Navigator.openURL();
 
-		// ProductMenu.gotoPortlet(
-		// 	category = "Content &amp; Data",
-		// 	panel = "Site Administration",
-		// 	portlet = "Forms");
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
 
-		// FormsAdminNavigator.gotoViewEntries();
+		FormsAdminNavigator.gotoViewEntries();
 
-		// FormsAdmin.viewFormTableEntry(
-		// 	fieldLabel = "Text Field With Autocomplete",
-		// 	fieldValue = "United States");
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field With Autocomplete",
+			fieldValue = "United States");
 
 		Navigator.openURL();
 

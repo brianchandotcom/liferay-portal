@@ -95,7 +95,7 @@ const SidebarFooter = ({children}) => {
 
 const SidebarHeader = ({children, className}) => {
 	return (
-		<div className={classNames(className, 'pb-0 sidebar-header')}>
+		<div className={classNames(className, 'sidebar-header')}>
 			{children}
 		</div>
 	);
@@ -129,18 +129,22 @@ const SidebarTab = ({tabs}) => {
 		<nav className="component-tbar tbar">
 			<div className="container-fluid">
 				<ul className="nav nav-underline" role="tablist">
-					{tabs.map((tab, index) => (
+					{tabs.map(({active, label, onClick}, index) => (
 						<li className="nav-item" key={index}>
 							<a
-								className="active nav-link"
+								className={classNames('nav-link', {active})}
 								data-senna-off
 								href=""
 								onClick={event => {
 									event.preventDefault();
+
+									if (onClick) {
+										onClick(index);
+									}
 								}}
 								role="tab"
 							>
-								{tab}
+								{label}
 							</a>
 						</li>
 					))}

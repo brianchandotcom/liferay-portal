@@ -78,7 +78,9 @@ const DefaultSidebarBody = ({keywords}) => {
 
 	return (
 		<>
-			<Sidebar.Tab tabs={[Liferay.Language.get('fields')]} />
+			<Sidebar.Tab
+				tabs={[{active: true, label: Liferay.Language.get('fields')}]}
+			/>
 
 			<Sidebar.TabContent>
 				<FieldTypeList

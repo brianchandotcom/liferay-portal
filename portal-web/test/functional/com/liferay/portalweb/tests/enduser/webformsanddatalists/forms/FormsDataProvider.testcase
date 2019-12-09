@@ -75,7 +75,7 @@ definition {
 
 		Form.enableAutocompleteConfiguration();
 
-		Form.editFieldDataProvider(
+		Form.editTextFieldDataProvider(
 			dataProvider = "Country Names",
 			dataProviderOutput = "Countries A2");
 
@@ -98,7 +98,7 @@ definition {
 
 		Form.gotoAutocompleteTab();
 
-		Form.editFieldDataProvider(
+		Form.editTextFieldDataProvider(
 			dataProvider = "Country Names",
 			dataProviderOutput = "Countries Full Name");
 

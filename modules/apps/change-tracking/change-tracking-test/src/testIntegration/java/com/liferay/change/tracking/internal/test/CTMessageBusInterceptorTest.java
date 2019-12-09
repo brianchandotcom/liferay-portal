@@ -97,7 +97,7 @@ public class CTMessageBusInterceptorTest {
 	}
 
 	@Test
-	public void testInterceptMessageToAsyncDestination() throws Exception {
+	public void testInterceptSubscriptionSenderMessage() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -134,7 +134,7 @@ public class CTMessageBusInterceptorTest {
 	}
 
 	@Test
-	public void testPublishMessage() throws Exception {
+	public void testPublishSubscriptionSenderMessage() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 
 		Message message = new Message();

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless APIs
+Bundle-SymbolicName: com.liferay.headless.apis
+Bundle-Version: 1.0.0

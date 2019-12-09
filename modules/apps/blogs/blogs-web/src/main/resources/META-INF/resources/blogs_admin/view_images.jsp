@@ -91,7 +91,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 
 				<%
 				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-					"rowData", StringUtil.merge(blogImagesManagementToolbarDisplayContext.getAvailableActions(fileEntry))
+					"actions", StringUtil.merge(blogImagesManagementToolbarDisplayContext.getAvailableActions(fileEntry))
 				).build();
 
 				row.setData(rowData);

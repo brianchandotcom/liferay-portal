@@ -71,7 +71,8 @@ public class FontAwesomeTopHeadDynamicInclude extends BaseDynamicInclude {
 			absolutePortalURLBuilder.forModule(
 				_bundleContext.getBundle(), "css/main.css"
 			).build());
-		sb.append("\" rel=\"stylesheet\"></script>");
+		sb.append("\" rel=\"stylesheet\" type=\"text/css\" ");
+		sb.append("/>");
 
 		printWriter.println(sb.toString());
 	}

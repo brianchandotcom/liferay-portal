@@ -71,10 +71,10 @@ public class CTEntryDiffDisplay {
 
 	public void renderLeftView() throws Exception {
 		if (!_changeType.equals("added")) {
-			long ctCollectionId = 0;
+			long ctCollectionId = _ctCollection.getCtCollectionId();
 
 			if (_changeType.equals("deleted")) {
-				ctCollectionId = _ctCollection.getCtCollectionId();
+				ctCollectionId = 0;
 			}
 
 			_ctDisplayRendererRegistry.renderCTEntry(

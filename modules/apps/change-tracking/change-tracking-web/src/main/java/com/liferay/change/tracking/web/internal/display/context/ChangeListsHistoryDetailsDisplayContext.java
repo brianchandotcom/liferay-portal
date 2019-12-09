@@ -98,7 +98,8 @@ public class ChangeListsHistoryDetailsDisplayContext {
 
 		OrderByComparator<CTEntry> orderByComparator =
 			OrderByComparatorFactoryUtil.create(
-				"CTEntry", _getOrderByCol(), getOrderByType().equals("asc"));
+				"CTEntry", _getOrderByCol(),
+				Objects.equals(getOrderByType(), "asc"));
 
 		searchContainer.setResults(
 			CTEntryLocalServiceUtil.getCTCollectionCTEntries(
@@ -132,7 +133,7 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		}
 
 		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "desc");
+			_httpServletRequest, "orderByType", "modifiedDate");
 
 		return _orderByType;
 	}
@@ -223,12 +224,10 @@ public class ChangeListsHistoryDetailsDisplayContext {
 	}
 
 	private String _getOrderByCol() {
-		if (_orderByCol != null) {
-			return _orderByCol;
+		if (_orderByCol == null) {
+			_orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "modifiedDate");
 		}
-
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "title");
 
 		return _orderByCol;
 	}
@@ -239,11 +238,12 @@ public class ChangeListsHistoryDetailsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "title"));
+							Objects.equals(_getOrderByCol(), "modifiedDate"));
 						dropdownItem.setHref(
-							_getKeywordsURL(), "orderByCol", "title");
+							_getKeywordsURL(), "orderByCol", "modifiedDate");
 						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "name"));
+							LanguageUtil.get(
+								_httpServletRequest, "modified-date"));
 					});
 			}
 		};

@@ -166,7 +166,7 @@ public class GetCTProcessesMVCResourceCommand
 			"mvcRenderCommandName", "/change_lists_history/view_details");
 		detailsURL.setParameter(
 			"backURL", _portal.getCurrentURL(resourceRequest));
-		detailsURL.setParameter("orderByCol", "title");
+		detailsURL.setParameter("orderByCol", "modifiedDate");
 		detailsURL.setParameter("orderByType", "desc");
 
 		for (CTProcess ctProcess : ctProcesses) {

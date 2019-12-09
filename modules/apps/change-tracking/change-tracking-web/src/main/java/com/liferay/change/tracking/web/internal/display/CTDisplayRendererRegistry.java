@@ -70,8 +70,12 @@ public class CTDisplayRendererRegistry {
 					ctEntry.getCtCollectionId())) {
 
 			T ctModel = ctService.updateWithUnsafeFunction(
-				ctPersistence -> ctPersistence.findByPrimaryKey(
+				ctPersistence -> ctPersistence.fetchByPrimaryKey(
 					ctEntry.getModelClassPK()));
+
+			if (ctModel == null) {
+				return null;
+			}
 
 			return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
 		}
@@ -114,8 +118,12 @@ public class CTDisplayRendererRegistry {
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			T ctModel = ctService.updateWithUnsafeFunction(
-				ctPersistence -> ctPersistence.findByPrimaryKey(
+				ctPersistence -> ctPersistence.fetchByPrimaryKey(
 					ctEntry.getModelClassPK()));
+
+			if (ctModel == null) {
+				return;
+			}
 
 			CTDisplayRenderer<T> ctDisplayRenderer =
 				_ctDisplayServiceTrackerMap.getService(

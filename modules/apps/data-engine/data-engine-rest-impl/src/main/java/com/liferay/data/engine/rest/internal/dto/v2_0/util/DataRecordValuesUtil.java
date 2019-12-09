@@ -16,11 +16,20 @@ package com.liferay.data.engine.rest.internal.dto.v2_0.util;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -52,6 +61,26 @@ public class DataRecordValuesUtil {
 		}
 
 		return dataRecordValues;
+	}
+
+	public static DDMFormValues toDDMFormValues(
+		Map<String, Object> dataRecordValues, DDMForm ddmForm, Locale locale) {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(locale);
+		ddmFormValues.setDefaultLocale(locale);
+
+		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
+			true);
+
+		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {
+			ddmFormValues.addDDMFormFieldValue(
+				_createDDMFormFieldValue(
+					dataRecordValues, entry.getValue(), locale));
+		}
+
+		return ddmFormValues;
 	}
 
 	public static String toJSON(
@@ -89,6 +118,55 @@ public class DataRecordValuesUtil {
 		}
 
 		return jsonObject.toString();
+	}
+
+	private static DDMFormFieldValue _createDDMFormFieldValue(
+		Map<String, Object> dataRecordValues, DDMFormField ddmFormField,
+		Locale locale) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		String name = ddmFormField.getName();
+
+		ddmFormFieldValue.setName(name);
+
+		if (dataRecordValues == null) {
+			return ddmFormFieldValue;
+		}
+
+		Object value = dataRecordValues.get(name);
+
+		if (value != null) {
+			if (value instanceof Object[]) {
+				JSONArray jsonArray = JSONUtil.putAll((Object[])value);
+
+				value = jsonArray.toString();
+			}
+
+			if (ddmFormField.isLocalizable()) {
+				LocalizedValue localizedValue = new LocalizedValue();
+
+				localizedValue.addString(locale, String.valueOf(value));
+
+				ddmFormFieldValue.setValue(localizedValue);
+			}
+			else {
+				ddmFormFieldValue.setValue(
+					new UnlocalizedValue(String.valueOf(value)));
+			}
+		}
+
+		if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
+			for (DDMFormField nestedDDMFormField :
+					ddmFormField.getNestedDDMFormFields()) {
+
+				ddmFormFieldValue.addNestedDDMFormFieldValue(
+					_createDDMFormFieldValue(
+						dataRecordValues, nestedDDMFormField, locale));
+			}
+		}
+
+		return ddmFormFieldValue;
 	}
 
 	private static Object _toDataRecordValue(

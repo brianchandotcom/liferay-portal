@@ -138,8 +138,6 @@ public class CTMessageBusInterceptorTest {
 
 		Assert.assertEquals(
 			companyId, deserializedSubscriptionSender.getCompanyId());
-
-		Assert.assertNull(_testMessageListener.getReceivedMessage());
 	}
 
 	@Test

@@ -33,6 +33,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -98,8 +100,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Inserts a new keyword in a Site.")
 	public Keyword createSiteKeyword(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
@@ -192,8 +193,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")
 	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
 		throws Exception {

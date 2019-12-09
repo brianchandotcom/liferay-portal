@@ -38,6 +38,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -176,8 +178,7 @@ public class Mutation {
 	@GraphQLField
 	public java.util.Collection<TaxonomyVocabulary>
 			createSiteTaxonomyVocabulariesCommonPage(
-				@GraphQLName("siteId") Long siteId,
-				@GraphQLName("siteKey") String siteKey,
+				Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("documentBulkSelection") DocumentBulkSelection
 					documentBulkSelection)
 		throws Exception {

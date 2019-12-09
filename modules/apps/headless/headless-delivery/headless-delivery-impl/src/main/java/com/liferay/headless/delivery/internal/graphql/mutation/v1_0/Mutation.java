@@ -63,6 +63,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -306,8 +308,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new blog post.")
 	public BlogPosting createSiteBlogPosting(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
 
@@ -320,8 +321,7 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean updateSiteBlogPostingSubscribe(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey)
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -335,8 +335,7 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean updateSiteBlogPostingUnsubscribe(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey)
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -371,8 +370,7 @@ public class Mutation {
 		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
 	)
 	public BlogPostingImage createSiteBlogPostingImage(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
@@ -593,8 +591,7 @@ public class Mutation {
 		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
 	public Document createSiteDocument(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
@@ -700,8 +697,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new document folder.")
 	public DocumentFolder createSiteDocumentFolder(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
@@ -882,8 +878,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new knowledge base article.")
 	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
 		throws Exception {
@@ -898,8 +893,7 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean updateSiteKnowledgeBaseArticleSubscribe(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey)
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -914,8 +908,7 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean updateSiteKnowledgeBaseArticleUnsubscribe(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey)
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -1041,8 +1034,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new knowledge base folder.")
 	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
 		throws Exception {
@@ -1387,8 +1379,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new message board section.")
 	public MessageBoardSection createSiteMessageBoardSection(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
 		throws Exception {
@@ -1549,8 +1540,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new message board thread.")
 	public MessageBoardThread createSiteMessageBoardThread(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
 		throws Exception {
@@ -1565,8 +1555,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new structured content.")
 	public StructuredContent createSiteStructuredContent(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
 		throws Exception {
@@ -1728,8 +1717,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new structured content folder.")
 	public StructuredContentFolder createSiteStructuredContentFolder(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
 				structuredContentFolder)
 		throws Exception {
@@ -1853,8 +1841,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new wiki node")
 	public WikiNode createSiteWikiNode(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("wikiNode") WikiNode wikiNode)
 		throws Exception {
 

@@ -74,6 +74,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -284,8 +286,7 @@ public class Query {
 		description = "Retrieves the site's blog postings. Results can be paginated, filtered, searched, and sorted."
 	)
 	public BlogPostingPage blogPostings(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -333,8 +334,7 @@ public class Query {
 		description = "Retrieves the site's blog post images. Results can be paginated, filtered, searched, and sorted."
 	)
 	public BlogPostingImagePage blogPostingImages(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -513,8 +513,7 @@ public class Query {
 		description = "Retrieves the content set elements by key. Results can be paginated."
 	)
 	public ContentSetElementPage contentSetByKeyContentSetElements(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("key") String key,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -538,8 +537,7 @@ public class Query {
 		description = "Retrieves the content set elements by UUID. Results can be paginated."
 	)
 	public ContentSetElementPage contentSetByUuidContentSetElements(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("uuid") String uuid,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -581,8 +579,7 @@ public class Query {
 		description = "Retrieves the site's content structures. Results can be paginated, filtered, searched, and sorted."
 	)
 	public ContentStructurePage contentStructures(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -672,8 +669,7 @@ public class Query {
 		description = "Retrieves the documents in the site's root folder. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
 	public DocumentPage documents(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -750,8 +746,7 @@ public class Query {
 		description = "Retrieves the site's document folders. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
 	public DocumentFolderPage documentFolders(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -885,8 +880,7 @@ public class Query {
 		description = "Retrieves the site's knowledge base articles. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
 	public KnowledgeBaseArticlePage knowledgeBaseArticles(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1002,8 +996,7 @@ public class Query {
 		description = "Retrieves the site's knowledge base folders. Results can be paginated."
 	)
 	public KnowledgeBaseFolderPage knowledgeBaseFolders(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -1186,8 +1179,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the site's message board messages.")
 	public MessageBoardMessagePage messageBoardMessages(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1268,8 +1260,7 @@ public class Query {
 		description = "Retrieves the site's message board sections. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
 	public MessageBoardSectionPage messageBoardSections(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1391,8 +1382,7 @@ public class Query {
 		description = "Retrieves the site's message board threads. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
 	public MessageBoardThreadPage messageBoardThreads(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1454,8 +1444,7 @@ public class Query {
 		description = "Retrieves the site's structured content. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
 	public StructuredContentPage structuredContents(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1486,8 +1475,7 @@ public class Query {
 		description = "Retrieves a structured content by its key (`articleKey`)."
 	)
 	public StructuredContent structuredContentByKey(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("key") String key)
 		throws Exception {
 
@@ -1506,8 +1494,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves a structured content by its UUID.")
 	public StructuredContent structuredContentByUuid(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("uuid") String uuid)
 		throws Exception {
 
@@ -1619,8 +1606,7 @@ public class Query {
 		description = "Retrieves the site's structured content folders. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
 	public StructuredContentFolderPage structuredContentFolders(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1704,8 +1690,7 @@ public class Query {
 		description = "Retrieves the wiki node's of a site. Results can be paginated, filtered, searched, and sorted."
 	)
 	public WikiNodePage wikiNodes(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,

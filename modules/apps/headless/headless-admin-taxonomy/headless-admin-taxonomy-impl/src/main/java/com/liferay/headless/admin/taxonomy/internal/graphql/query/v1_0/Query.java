@@ -40,6 +40,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -99,8 +101,7 @@ public class Query {
 		description = "Retrieves a Site's keywords. Results can be paginated, filtered, searched, and sorted."
 	)
 	public KeywordPage keywords(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -209,8 +210,7 @@ public class Query {
 		description = "Retrieves a Site's taxonomy vocabularies. Results can be paginated, filtered, searched, and sorted."
 	)
 	public TaxonomyVocabularyPage taxonomyVocabularies(
-			@GraphQLName("siteId") Long siteId,
-			@GraphQLName("siteKey") String siteKey,
+			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,

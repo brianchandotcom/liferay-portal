@@ -85,6 +85,16 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 				QueryUtil.ALL_POS, null);
 
 		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
+			long[] oAuth2AuthorizationPrimaryKeys =
+				_oAuth2ScopeGrantLocalService.getOAuth2AuthorizationPrimaryKeys(
+					oAuth2ScopeGrant.getOAuth2ScopeGrantId());
+
+			if (oAuth2AuthorizationPrimaryKeys.length < 1) {
+				return null;
+			}
+		}
+
+		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
 			_oAuth2ScopeGrantLocalService.deleteOAuth2ScopeGrant(
 				oAuth2ScopeGrant.getOAuth2ScopeGrantId());
 		}

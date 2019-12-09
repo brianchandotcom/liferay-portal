@@ -227,6 +227,22 @@ definition {
 			value1 = "${successPageDescription}");
 	}
 
+	macro editTextFieldDataProvider {
+		FormFields.selectRadioOption(
+			fieldName = "dataSourceType",
+			radioOption = "From Data Provider");
+
+		Pause(locator1 = "2000");
+
+		FormFields.selectSelectOption(
+			fieldName = "Choose a Data Provider",
+			selectOption = "${dataProvider}");
+
+		FormFields.selectSelectOption(
+			fieldName = "Output Parameter",
+			selectOption = "${dataProviderOutput}");
+	}
+
 	macro enableAutocompleteConfiguration {
 		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
 	}

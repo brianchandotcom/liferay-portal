@@ -14,6 +14,9 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
+import static graphql.schema.FieldCoordinates.coordinates;
+import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.string.StringPool;
@@ -70,6 +73,7 @@ import graphql.annotations.processor.retrievers.GraphQLTypeRetriever;
 import graphql.annotations.processor.retrievers.fieldBuilders.ArgumentBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DeprecateBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.DirectivesBuilder;
+import graphql.annotations.processor.retrievers.fieldBuilders.field.FieldNameBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameBuilder;
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
@@ -1702,6 +1706,35 @@ public class GraphQLServletExtender {
 	}
 
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
+
+		@Override
+		public GraphQLFieldDefinition getField(
+				String parentName, Field field,
+				ProcessingElementsContainer container)
+			throws GraphQLAnnotationsException {
+
+			GraphQLFieldDefinition.Builder builder =
+				GraphQLFieldDefinition.newFieldDefinition();
+
+			builder.deprecate(
+				new DeprecateBuilder(
+					field
+				).build());
+
+			GraphQLField graphQLField = field.getAnnotation(GraphQLField.class);
+
+			builder.description(graphQLField.description());
+
+			builder.name(
+				new FieldNameBuilder(
+					field
+				).build());
+			builder.type(
+				(GraphQLOutputType)_defaultTypeFunction.buildType(
+					field.getType(), field.getAnnotatedType(), container));
+
+			return builder.build();
+		}
 
 		@Override
 		public GraphQLFieldDefinition getField(

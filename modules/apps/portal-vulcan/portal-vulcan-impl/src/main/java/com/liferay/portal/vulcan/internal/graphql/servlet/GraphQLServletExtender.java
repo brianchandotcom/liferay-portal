@@ -111,6 +111,7 @@ import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLScalarType;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLType;
+import graphql.schema.PropertyDataFetcher;
 import graphql.schema.TypeResolver;
 
 import graphql.servlet.ApolloScalars;
@@ -838,6 +839,8 @@ public class GraphQLServletExtender {
 			if (_servlet != null) {
 				return _servlet;
 			}
+
+			PropertyDataFetcher.clearReflectionCache();
 
 			ProcessingElementsContainer processingElementsContainer =
 				new ProcessingElementsContainer(_defaultTypeFunction);

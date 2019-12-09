@@ -46,18 +46,19 @@ public class HashMapBuilderTest {
 	}
 
 	@Test
-	public void testNullValues() {
+	public void testLambdaNullValue() {
 		Map<String, Object> map = HashMapBuilder.<String, Object>put(
-			"Hello", null
-		).build();
-
-		Assert.assertEquals(map.toString(), 1, map.size());
-
-		map = HashMapBuilder.<String, Object>put(
 			"Hello", () -> null
 		).build();
 
 		Assert.assertEquals(map.toString(), 0, map.size());
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testNullValue() {
+		HashMapBuilder.<String, Object>put(
+			"Hello", null
+		).build();
 	}
 
 	@Test

@@ -147,6 +147,31 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		return ProjectDirType.UNKNOWN;
 	}
 
+	private boolean _includeDXPProjects(
+		String buildProfile, Set<String> buildProfileFileNames,
+		Path projectPathRootDirPath) {
+
+		if ((buildProfile == null) && (buildProfileFileNames == null)) {
+			File portalRootDir = GradleUtil.getRootDir(
+				projectPathRootDirPath.toFile(), "portal-impl");
+
+			if (portalRootDir == null) {
+				return false;
+			}
+
+			File buildProfileDXPPropertiesFile = new File(
+				portalRootDir, "build.profile-dxp.properties");
+
+			if (!buildProfileDXPPropertiesFile.exists()) {
+				return false;
+			}
+
+			return true;
+		}
+
+		return Objects.equals(buildProfile, "dxp");
+	}
+
 	private void _includeProject(
 		Settings settings, Path projectDirPath, Path projectPathRootDirPath,
 		String projectPathPrefix) {
@@ -186,6 +211,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		final Set<ProjectDirType> excludedProjectDirTypes = _getFlags(
 			"build.exclude.", ProjectDirType.class);
 
+		final boolean includeDXPProjects = _includeDXPProjects(
+			buildProfile, buildProfileFileNames, projectPathRootDirPath);
+
 		Files.walkFileTree(
 			projectPathRootDirPath, EnumSet.of(FileVisitOption.FOLLOW_LINKS),
 			10,
@@ -203,9 +231,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if ((buildProfileFileNames != null) &&
-						!Objects.equals(buildProfile, "dxp")) {
-
+					if (!includeDXPProjects) {
 						Path dxpPath = projectPathRootDirPath.resolve("dxp");
 
 						if (dirPath.equals(dxpPath)) {

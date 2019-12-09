@@ -87,7 +87,7 @@ public class TreeMapBuilder<K, V> extends BaseMapBuilder {
 		}
 
 		public TreeMapWrapper<K, V> put(K key, V value) {
-			_treeMap.put(key, value);
+			doPut(key, value);
 
 			return this;
 		}

@@ -87,7 +87,7 @@ public class HashMapBuilder<K, V> extends BaseMapBuilder {
 		}
 
 		public HashMapWrapper<K, V> put(K key, V value) {
-			_hashMap.put(key, value);
+			doPut(key, value);
 
 			return this;
 		}

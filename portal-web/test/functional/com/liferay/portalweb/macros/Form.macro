@@ -114,6 +114,10 @@ definition {
 		FormFields.disableSwitcher(fieldName = "Autocomplete");
 	}
 
+	macro disableAutocompleteSwitcherTextField {
+		Click(locator1 = "FormFields#SWITCHER_TEXTFIELD");
+	}
+
 	macro duplicate {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Duplicate",

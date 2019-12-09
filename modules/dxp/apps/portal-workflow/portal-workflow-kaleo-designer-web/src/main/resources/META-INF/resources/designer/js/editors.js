@@ -13,6 +13,7 @@ AUI.add(
 	'liferay-kaleo-designer-editors',
 	A => {
 		var AArray = A.Array;
+		var AObject = A.Object;
 		var getClassName = A.getClassName;
 		var Lang = A.Lang;
 		var Template = A.Template;
@@ -1559,6 +1560,12 @@ AUI.add(
 					var recipients = instance.get('recipients');
 
 					var value = recipients[index];
+
+					if (value && AObject.isEmpty(value)) {
+						value.assignmentType = 'taskAssignees';
+						value.receptionType = ['to'];
+						value.taskAssignees = [''];
+					}
 
 					instance.showEditorForm(
 						NotificationRecipientsEditorForm,

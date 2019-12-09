@@ -163,7 +163,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 				httpClientBuilder.build()) {
 
 			HttpPost httpPost = new HttpPost(
-				liferayAnalyticsFaroBackendURL + "/data-sources/" +
+				liferayAnalyticsFaroBackendURL + "/api/1.0/data-sources/" +
 					liferayAnalyticsDataSourceId + "/disconnect");
 
 			httpPost.setHeader(

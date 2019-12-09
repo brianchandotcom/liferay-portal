@@ -83,9 +83,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		document.addKeyword(
 			"companyId", workflowMetricsSLAProcessResult.getCompanyId());
 		document.addKeyword("deleted", false);
+		document.addKeyword(
+			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
 
 		KaleoInstance kaleoInstance =
-			_kaleoInstanceLocalService.fetchKaleoInstance(
+			kaleoInstanceLocalService.fetchKaleoInstance(
 				workflowMetricsSLAProcessResult.getInstanceId());
 
 		if (kaleoInstance != null) {
@@ -93,8 +95,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				"instanceCompleted", kaleoInstance.isCompleted());
 		}
 
-		document.addKeyword(
-			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
 		document.addKeyword(
 			"instanceId", workflowMetricsSLAProcessResult.getInstanceId());
 		document.addDateSortable(
@@ -163,6 +163,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		).collect(
 			Collectors.toSet()
 		);
+
+		if (kaleoDefinitionNames.isEmpty()) {
+			return;
+		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			kaleoInstanceLocalService.getActionableDynamicQuery();

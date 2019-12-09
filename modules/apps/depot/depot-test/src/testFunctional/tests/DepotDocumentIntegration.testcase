@@ -57,9 +57,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
@@ -111,9 +109,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
@@ -154,9 +150,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

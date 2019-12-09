@@ -57,9 +57,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name,Private Site Name,Restricted Site Name");
+		Depot.connectSite(siteList = "Site Name,Private Site Name,Restricted Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -87,9 +85,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -153,9 +149,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -210,9 +204,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -313,9 +305,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -386,9 +376,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -448,9 +436,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -484,9 +470,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -525,9 +509,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		Depot.connectSite(siteList = "Site Name");
 
 		ProductMenu.gotoSite(site = "Site Name");
 
@@ -572,9 +554,7 @@ definition {
 
 		DepotNavigator.gotoSites(depotName = "Test Depot Name");
 
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Child Site Name");
+		Depot.connectSite(siteList = "Child Site Name");
 
 		ProductMenu.gotoSite(site = "Child Site Name");
 

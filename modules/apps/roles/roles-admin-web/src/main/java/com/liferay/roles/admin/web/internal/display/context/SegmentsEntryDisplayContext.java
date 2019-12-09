@@ -18,14 +18,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,19 +48,11 @@ public class SegmentsEntryDisplayContext {
 			long segmentsEntryId, int start, int end)
 		throws Exception {
 
-		long[] segmentsEntryClassPKs =
-			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
-				segmentsEntryId, start, end);
-
-		LongStream segmentsEntryClassPKsStream = Arrays.stream(
-			segmentsEntryClassPKs);
-
-		return segmentsEntryClassPKsStream.boxed(
-		).map(
-			userId -> _userLocalService.fetchUser(userId)
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transformToList(
+			ArrayUtil.toLongArray(
+				_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+					segmentsEntryId, start, end)),
+			_userLocalService::fetchUser);
 	}
 
 	public static int getMembersCount(long segmentsEntryId) throws Exception {

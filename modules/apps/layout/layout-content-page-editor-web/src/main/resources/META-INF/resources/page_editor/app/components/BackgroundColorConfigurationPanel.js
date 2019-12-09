@@ -13,7 +13,10 @@
  */
 
 import ClayButton from '@clayui/button';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import {DispatchContext} from '../../app/reducers/index';
+import updateItemConfig from '../actions/updateItemConfig';
 
 const COLORS = [
 	'primary',
@@ -29,35 +32,54 @@ const COLORS = [
 	'white'
 ];
 
-/**
- * Renders BackgroundColor Configuration Panel Configuration Panel.
- * *WARNING:* This component is unfinished since this is just used
- * to test FloatingToolbar ConfigurationPanel mechanism.
- */
-export const BackgroundColorConfigurationPanel = () => (
-	<div className="form-group">
-		<label htmlFor="floatingToolbarBackgroundColorPanelPalette">
-			{Liferay.Language.get('background-color')}
-		</label>
-		<div
-			className="palette-container"
-			id="floatingToolbarBackgroundColorPanelPalette"
-		>
-			<ul className="list-unstyled palette-items-container">
-				{COLORS.map(color => (
-					<li className="palette-item" key={color}>
-						<ClayButton
-							block
-							className={`bg-${color} palette-item-inner p-1 rounded-circle`}
-							displayType="unstyled"
-							small
-						/>
-					</li>
-				))}
-			</ul>
+const SELECTORS = {
+	backgroundColorCssClass: 'backgroundColorCssClass'
+};
+
+export const BackgroundColorConfigurationPanel = ({itemId}) => {
+	const dispatch = useContext(DispatchContext);
+
+	const handleSelectValueChanged = (identifier, value) =>
+		dispatch(
+			updateItemConfig({
+				config: {
+					[identifier]: value
+				},
+				itemId
+			})
+		);
+
+	return (
+		<div className="form-group">
+			<label htmlFor="floatingToolbarBackgroundColorPanelPalette">
+				{Liferay.Language.get('background-color')}
+			</label>
+			<div
+				className="palette-container"
+				id="floatingToolbarBackgroundColorPanelPalette"
+			>
+				<ul className="list-unstyled palette-items-container">
+					{COLORS.map(color => (
+						<li className="palette-item" key={color}>
+							<ClayButton
+								block
+								className={`bg-${color} palette-item-inner p-1 rounded-circle`}
+								displayType="unstyled"
+								onClick={() =>
+									handleSelectValueChanged(
+										SELECTORS.backgroundColorCssClass,
+										color
+									)
+								}
+								small
+							/>
+						</li>
+					))}
+				</ul>
+			</div>
+			<ClayButton displayType="secondary" small>
+				{Liferay.Language.get('clear')}
+			</ClayButton>
 		</div>
-		<ClayButton displayType="secondary" small>
-			{Liferay.Language.get('clear')}
-		</ClayButton>
-	</div>
-);
+	);
+};

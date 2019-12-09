@@ -20,6 +20,8 @@ import com.liferay.data.engine.rule.function.DataRuleFunction;
 import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.HashMap;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -76,9 +78,11 @@ public class EmailAddressDataRuleFunctionTest {
 	@Test
 	public void testNullEmailAddress() {
 		_dataRecord.setDataRecordValues(
-			HashMapBuilder.<String, Object>put(
-				"fieldName", (Object)null
-			).build());
+			new HashMap() {
+				{
+					put("fieldName", null);
+				}
+			});
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(

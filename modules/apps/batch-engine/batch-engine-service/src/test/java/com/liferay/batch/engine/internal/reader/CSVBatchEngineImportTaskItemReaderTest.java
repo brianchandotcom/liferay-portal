@@ -23,6 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -119,15 +120,14 @@ public class CSVBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.put(
-					"createDate1", "createDate"
-				).put(
-					"description1", "description"
-				).put(
-					"id1", "id"
-				).put(
-					"name1", (String)null
-				).build(),
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", null);
+					}
+				},
 				csvBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
@@ -287,11 +287,12 @@ public class CSVBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				csvBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.put(
-					"en", (String)null
-				).put(
-					"hr", "naziv 1"
-				).build());
+				new HashMap<String, String>() {
+					{
+						put("en", null);
+						put("hr", "naziv 1");
+					}
+				});
 
 			validate(
 				createDateString, "sample description 2", 2L,

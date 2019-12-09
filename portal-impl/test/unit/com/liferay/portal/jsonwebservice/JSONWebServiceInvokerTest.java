@@ -161,9 +161,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		// Style 1
 
-		Map<String, Object> params = LinkedHashMapBuilder.<String, Object>put(
-			"+fooData", (Object)null
-		).build();
+		Map<String, Object> params = new LinkedHashMap<>();
+
+		params.put("+fooData", null);
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			"/foo/use1", params

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.io.ByteArrayInputStream;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -113,15 +114,14 @@ public class JSONLBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.put(
-					"createDate1", "createDate"
-				).put(
-					"description1", "description"
-				).put(
-					"id1", "id"
-				).put(
-					"name1", (String)null
-				).build(),
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", null);
+					}
+				},
 				jsonlBatchEngineImportTaskItemReader.read(), null);
 		}
 	}

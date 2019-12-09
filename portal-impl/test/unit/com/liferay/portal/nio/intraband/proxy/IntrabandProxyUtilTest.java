@@ -79,6 +79,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -2494,58 +2495,40 @@ public class IntrabandProxyUtilTest {
 	private static final ClassLoader _classLoader =
 		IntrabandProxyUtilTest.class.getClassLoader();
 	private static final Map<Class<?>, Object> _defaultValueMap =
-		HashMapBuilder.<Class<?>, Object>put(
-			boolean.class, Boolean.FALSE
-		).put(
-			byte.class, (byte)0
-		).put(
-			char.class, (char)0
-		).put(
-			Date.class, (Object)null
-		).put(
-			double.class, (double)0
-		).put(
-			float.class, (float)0
-		).put(
-			int.class, 0
-		).put(
-			long.class, (long)0
-		).put(
-			Object.class, (Object)null
-		).put(
-			short.class, (short)0
-		).put(
-			String.class, (Object)null
-		).put(
-			void.class, (Object)null
-		).build();
+		new HashMap<Class<?>, Object>() {
+			{
+				put(boolean.class, Boolean.FALSE);
+				put(byte.class, (byte)0);
+				put(char.class, (char)0);
+				put(Date.class, null);
+				put(double.class, (double)0);
+				put(float.class, (float)0);
+				put(int.class, 0);
+				put(long.class, (long)0);
+				put(Object.class, null);
+				put(short.class, (short)0);
+				put(String.class, null);
+				put(void.class, null);
+			}
+		};
 	private static final Method _getVisibleMethodsMethod;
 	private static final Map<Class<?>, Object> _sampleValueMap =
-		HashMapBuilder.<Class<?>, Object>put(
-			boolean.class, Boolean.TRUE
-		).put(
-			byte.class, (byte)11
-		).put(
-			char.class, 'X'
-		).put(
-			Date.class, new Date()
-		).put(
-			double.class, 12.345
-		).put(
-			float.class, 5.325F
-		).put(
-			int.class, 127
-		).put(
-			long.class, (long)82465
-		).put(
-			Object.class, new Locale("en")
-		).put(
-			short.class, (short)-35
-		).put(
-			String.class, "Hello"
-		).put(
-			void.class, (Object)null
-		).build();
+		new HashMap<Class<?>, Object>() {
+			{
+				put(boolean.class, Boolean.TRUE);
+				put(byte.class, (byte)11);
+				put(char.class, 'X');
+				put(Date.class, new Date());
+				put(double.class, 12.345);
+				put(float.class, 5.325F);
+				put(int.class, 127);
+				put(long.class, (long)82465);
+				put(Object.class, new Locale("en"));
+				put(short.class, (short)-35);
+				put(String.class, "Hello");
+				put(void.class, null);
+			}
+		};
 	private static final Type[] _types = {
 		Type.BOOLEAN_TYPE, Type.BYTE_TYPE, Type.CHAR_TYPE, Type.DOUBLE_TYPE,
 		Type.FLOAT_TYPE, Type.INT_TYPE, Type.LONG_TYPE, Type.SHORT_TYPE,

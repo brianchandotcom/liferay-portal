@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -123,15 +124,14 @@ public class XLSBatchEngineImportTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description", 1L,
-				HashMapBuilder.put(
-					"createDate1", "createDate"
-				).put(
-					"description1", "description"
-				).put(
-					"id1", "id"
-				).put(
-					"name1", (String)null
-				).build(),
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", null);
+					}
+				},
 				xlsBatchEngineImportTaskItemReader.read(), null);
 		}
 	}
@@ -289,11 +289,12 @@ public class XLSBatchEngineImportTaskItemReaderTest
 			validate(
 				createDateString, null, 1L, Collections.emptyMap(),
 				xlsBatchEngineImportTaskItemReader.read(),
-				HashMapBuilder.put(
-					"en", (String)null
-				).put(
-					"hr", "naziv"
-				).build());
+				new HashMap<String, String>() {
+					{
+						put("en", null);
+						put("hr", "naziv");
+					}
+				});
 
 			validate(
 				createDateString, "sample description 2", 2L,

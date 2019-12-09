@@ -41,38 +41,6 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', () => {
 	});
 
 	describe('regression', () => {
-		it('test should serialize "receptionType" attribute.', done => {
-			var jsonDefinition = {
-				nodes: [
-					{
-						name: 'task1',
-						notifications: {
-							name: ['notification1'],
-							recipients: [
-								{
-									receptionType: 'bcc'
-								}
-							]
-						},
-						xmlType: 'task'
-					}
-				]
-			};
-
-			var definition = serializeDefinition(
-				XML_NAMESPACE,
-				METADATA,
-				jsonDefinition
-			);
-
-			assert(
-				definition.indexOf('receptionType="bcc"') > 0,
-				'receptionType attribute not serialized.'
-			);
-
-			done();
-		});
-
 		it('test should not serialize "receptionType" attribute if it has no value.', done => {
 			var jsonDefinition = {
 				nodes: [
@@ -132,6 +100,63 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', () => {
 			assert(
 				definition.indexOf('receptionType="') < 0,
 				'Empty receptionType attribute is serialized.'
+			);
+
+			done();
+		});
+
+		it('test should not serialize <assignment> attribute if it has no value.', done => {
+			var jsonDefinition = {
+				nodes: [
+					{
+						assignments: {},
+						name: 'task1',
+						xmlType: 'task'
+					}
+				]
+			};
+
+			var definition = serializeDefinition(
+				XML_NAMESPACE,
+				METADATA,
+				jsonDefinition
+			);
+
+			assert(
+				definition.indexOf('<assignments') < 0,
+				'<assignments/> element not serialized from empty object.'
+			);
+
+			done();
+		});
+
+		it('test should serialize "receptionType" attribute.', done => {
+			var jsonDefinition = {
+				nodes: [
+					{
+						name: 'task1',
+						notifications: {
+							name: ['notification1'],
+							recipients: [
+								{
+									receptionType: 'bcc'
+								}
+							]
+						},
+						xmlType: 'task'
+					}
+				]
+			};
+
+			var definition = serializeDefinition(
+				XML_NAMESPACE,
+				METADATA,
+				jsonDefinition
+			);
+
+			assert(
+				definition.indexOf('receptionType="bcc"') > 0,
+				'receptionType attribute not serialized.'
 			);
 
 			done();
@@ -204,11 +229,13 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', () => {
 			done();
 		});
 
-		it('test should serialize <assignment> even when assignment object is empty.', done => {
+		it('test should serialize <assignment> element if given.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{
-						assignments: {},
+						assignments: {
+							assignmentType: 'taskAssignees'
+						},
 						name: 'task1',
 						xmlType: 'task'
 					}

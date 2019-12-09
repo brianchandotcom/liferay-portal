@@ -57,9 +57,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * Provides the base implementation for the lazy blob entity local service.
  *
@@ -525,8 +522,11 @@ public abstract class LazyBlobEntityLocalServiceBaseImpl
 		}
 	}
 
-	@Activate
-	protected void activate() {
+	public void afterPropertiesSet() {
+		persistedModelLocalServiceRegistry.register(
+			"com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity",
+			lazyBlobEntityLocalService);
+
 		DB db = DBManagerUtil.getDB();
 
 		if ((db.getDBType() != DBType.DB2) &&
@@ -536,12 +536,6 @@ public abstract class LazyBlobEntityLocalServiceBaseImpl
 
 			_useTempFile = true;
 		}
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity",
-			lazyBlobEntityLocalService);
 	}
 
 	public void destroy() {
@@ -603,7 +597,7 @@ public abstract class LazyBlobEntityLocalServiceBaseImpl
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@Reference
+	@BeanReference(type = File.class)
 	protected File _file;
 
 	private static final InputStream _EMPTY_INPUT_STREAM =

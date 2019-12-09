@@ -117,24 +117,6 @@ public class WorkflowTaskDisplayContext {
 			_httpServletRequest);
 	}
 
-	public List<User> getActors(WorkflowTask workflowTask)
-		throws PortalException {
-
-		return Stream.of(
-			WorkflowTaskManagerUtil.getPooledActors(
-				_workflowTaskRequestHelper.getCompanyId(),
-				workflowTask.getWorkflowTaskId())
-		).flatMap(
-			List::stream
-		).filter(
-			pooledActor ->
-				pooledActor.getUserId() !=
-					_workflowTaskRequestHelper.getUserId()
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	public AssetEntry getAssetEntry() throws PortalException {
 		long assetEntryId = ParamUtil.getLong(
 			_liferayPortletRequest, "assetEntryId");
@@ -349,6 +331,24 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return _orderByType;
+	}
+
+	public List<User> getPooledUsers(WorkflowTask workflowTask)
+		throws PortalException {
+
+		return Stream.of(
+			WorkflowTaskManagerUtil.getPooledActors(
+				_workflowTaskRequestHelper.getCompanyId(),
+				workflowTask.getWorkflowTaskId())
+		).flatMap(
+			List::stream
+		).filter(
+			pooledActor ->
+				pooledActor.getUserId() !=
+					_workflowTaskRequestHelper.getUserId()
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public String getPortletResource() {

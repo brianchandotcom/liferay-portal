@@ -1409,7 +1409,8 @@ import org.osgi.service.component.annotations.Reference;
 
 	<#assign
 		lazyBlob = entity.hasLazyBlobEntityColumn() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence()
-		localizedEntity = dependencyInjectorDS && stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence()
+		localizedEntity = stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence()
+		springLocalEntity = !dependencyInjectorDS && stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()
 	/>
 
 	<#if lazyBlob>
@@ -1463,26 +1464,42 @@ import org.osgi.service.component.annotations.Reference;
 		</#list>
 	</#if>
 
-	<#if lazyBlob || localizedEntity>
+	<#assign activateMethodNeeded = lazyBlob || localizedEntity || springLocalEntity />
+
+	<#if !dependencyInjectorDS>
+		public void afterPropertiesSet() {
+	<#elseif activateMethodNeeded>
 		@Activate
 		protected void activate() {
-			<#if localizedEntity>
-				<#assign localizedEntity = entity.localizedEntity />
+	</#if>
 
-				registerListener(new ${localizedEntity.name}VersionServiceListener());
-			</#if>
+	<#if springLocalEntity>
+		<#if validator.isNotNull(pluginName)>
+			PersistedModelLocalServiceRegistryUtil.register("${apiPackagePath}.model.${entity.name}", ${entity.varName}LocalService);
+		<#else>
+			persistedModelLocalServiceRegistry.register("${apiPackagePath}.model.${entity.name}", ${entity.varName}LocalService);
+		</#if>
+	</#if>
 
-			<#if lazyBlob>
-				DB db = DBManagerUtil.getDB();
+	<#if localizedEntity>
+		<#assign localizedEntity = entity.localizedEntity />
 
-				if ((db.getDBType() != DBType.DB2) &&
-				(db.getDBType() != DBType.MYSQL) &&
-				(db.getDBType() != DBType.MARIADB) &&
-				(db.getDBType() != DBType.SYBASE)) {
+		registerListener(new ${localizedEntity.name}VersionServiceListener());
+	</#if>
 
-					_useTempFile = true;
-				}
-			</#if>
+	<#if lazyBlob>
+		DB db = DBManagerUtil.getDB();
+
+		if ((db.getDBType() != DBType.DB2) &&
+		(db.getDBType() != DBType.MYSQL) &&
+		(db.getDBType() != DBType.MARIADB) &&
+		(db.getDBType() != DBType.SYBASE)) {
+
+			_useTempFile = true;
+		}
+	</#if>
+
+	<#if !dependencyInjectorDS || activateMethodNeeded>
 		}
 	</#if>
 
@@ -1507,22 +1524,6 @@ import org.osgi.service.component.annotations.Reference;
 			${entity.varName}${sessionTypeName}Service = (${entity.name}${sessionTypeName}Service)aopProxy;
 		}
 	<#else>
-		public void afterPropertiesSet() {
-			<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
-				<#if validator.isNotNull(pluginName)>
-					PersistedModelLocalServiceRegistryUtil.register("${apiPackagePath}.model.${entity.name}", ${entity.varName}LocalService);
-				<#else>
-					persistedModelLocalServiceRegistry.register("${apiPackagePath}.model.${entity.name}", ${entity.varName}LocalService);
-				</#if>
-			</#if>
-
-			<#if stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity?? && entity.hasPersistence()>
-				<#assign localizedEntity = entity.localizedEntity />
-
-				registerListener(new ${localizedEntity.name}VersionServiceListener());
-			</#if>
-		}
-
 		public void destroy() {
 			<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
 				<#if validator.isNotNull(pluginName)>
@@ -1976,7 +1977,11 @@ import org.osgi.service.component.annotations.Reference;
 	</#list>
 
 	<#if lazyBlob>
-		@Reference
+		<#if dependencyInjectorDS>
+			@Reference
+		<#else>
+			@BeanReference(type = File.class)
+		</#if>
 		protected File _file;
 
 		private static final InputStream _EMPTY_INPUT_STREAM = new UnsyncByteArrayInputStream(new byte[0]);

@@ -20,7 +20,9 @@ import React, {useContext, useLayoutEffect, useState} from 'react';
 import Button from '../../components/button/Button.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import EditTableViewContext from './EditTableViewContext.es';
+import EditTableViewContext, {
+	UPDATE_FOCUSED_COLUMN
+} from './EditTableViewContext.es';
 import {getColumnIndex, getColumnNode, getFieldTypeLabel} from './utils.es';
 
 const getStyle = (container, index) => {
@@ -79,8 +81,8 @@ const Overlay = ({
 };
 
 export default ({container, fields, onRemoveFieldName}) => {
+	const [{focusedColumn}, dispatch] = useContext(EditTableViewContext);
 	const [hoveredFieldName, setHoveredFieldName] = useState(null);
-	const [selectedFieldName, setSelectedFieldName] = useState(null);
 
 	useEventListener(
 		'click',
@@ -92,7 +94,10 @@ export default ({container, fields, onRemoveFieldName}) => {
 					(field, index) => index === columnIndex
 				);
 
-				setSelectedFieldName(name);
+				dispatch({
+					payload: {fieldName: name},
+					type: UPDATE_FOCUSED_COLUMN
+				});
 			}
 		},
 		true,
@@ -102,8 +107,18 @@ export default ({container, fields, onRemoveFieldName}) => {
 	useEventListener(
 		'click',
 		({target}) => {
-			if (isClickOutside(target, container)) {
-				setSelectedFieldName(null);
+			if (
+				isClickOutside(
+					target,
+					container,
+					'.app-builder-sidebar',
+					'.dropdown-menu'
+				)
+			) {
+				dispatch({
+					payload: {fieldName: null},
+					type: UPDATE_FOCUSED_COLUMN
+				});
 			}
 		},
 		true,
@@ -145,14 +160,17 @@ export default ({container, fields, onRemoveFieldName}) => {
 	);
 
 	useKeyDown(() => {
-		if (selectedFieldName) {
-			setSelectedFieldName(null);
+		if (focusedColumn) {
+			dispatch({
+				payload: {fieldName: null},
+				type: UPDATE_FOCUSED_COLUMN
+			});
 		}
 	}, 27);
 
 	return fields.map(
 		({fieldType, name}, index) =>
-			(name === hoveredFieldName || name === selectedFieldName) && (
+			(name === hoveredFieldName || name === focusedColumn) && (
 				<Overlay
 					container={container}
 					fieldType={fieldType}
@@ -160,7 +178,7 @@ export default ({container, fields, onRemoveFieldName}) => {
 					key={name}
 					name={name}
 					onRemoveFieldName={onRemoveFieldName}
-					selected={name === selectedFieldName}
+					selected={name === focusedColumn}
 					total={fields.length}
 				/>
 			)

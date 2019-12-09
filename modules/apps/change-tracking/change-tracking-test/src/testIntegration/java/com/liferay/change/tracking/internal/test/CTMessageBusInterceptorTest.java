@@ -23,21 +23,20 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -46,11 +45,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Tina Tian
@@ -65,24 +59,16 @@ public class CTMessageBusInterceptorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CTMessageBusInterceptorTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
 		_testMessageListener = new TestMessageListener();
 
-		Destination destination = _destinationFactory.createDestination(
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-				DestinationNames.SUBSCRIPTION_SENDER));
+		Destination destination = _messageBus.getDestination(
+			DestinationNames.SUBSCRIPTION_SENDER);
+
+		_originalMessageListeners = destination.getMessageListeners();
+
+		destination.unregisterMessageListeners();
 
 		destination.register(_testMessageListener);
-
-		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination,
-			MapUtil.singletonDictionary(
-				"destination.name", DestinationNames.SUBSCRIPTION_SENDER));
 
 		long ctCollectionId = _counterLocalService.increment(
 			CTCollection.class.getName());
@@ -100,7 +86,14 @@ public class CTMessageBusInterceptorTest {
 
 	@After
 	public void tearDown() {
-		_serviceRegistration.unregister();
+		Destination destination = _messageBus.getDestination(
+			DestinationNames.SUBSCRIPTION_SENDER);
+
+		destination.unregisterMessageListeners();
+
+		for (MessageListener messageListener : _originalMessageListeners) {
+			destination.register(messageListener);
+		}
 	}
 
 	@Test
@@ -217,12 +210,12 @@ public class CTMessageBusInterceptorTest {
 	private static CTProcessLocalService _ctProcessLocalService;
 
 	@Inject
-	private static DestinationFactory _destinationFactory;
+	private static MessageBus _messageBus;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
-	private ServiceRegistration<?> _serviceRegistration;
+	private Set<MessageListener> _originalMessageListeners;
 	private TestMessageListener _testMessageListener;
 
 	private static class TestMessageListener implements MessageListener {

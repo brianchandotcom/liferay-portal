@@ -159,7 +159,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
 
-		Form.gotoAdvancedTab();
+		Form.gotoAutocompleteTab();
 
 		AssertVisible(
 			key_fieldName = "dataSourceType",

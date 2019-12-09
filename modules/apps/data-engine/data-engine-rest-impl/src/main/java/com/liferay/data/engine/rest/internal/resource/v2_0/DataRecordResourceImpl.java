@@ -41,15 +41,19 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -101,11 +105,13 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Override
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
-			Long dataDefinitionId, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return getDataRecordCollectionDataRecordsPage(
-			_getDefaultDataRecordCollectionId(dataDefinitionId), pagination);
+			_getDefaultDataRecordCollectionId(dataDefinitionId), keywords,
+			pagination, sorts);
 	}
 
 	@Override
@@ -148,7 +154,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Override
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			Long dataRecordCollectionId, Pagination pagination)
+			Long dataRecordCollectionId, String keywords, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -162,15 +169,23 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, DataActionKeys.VIEW_DATA_RECORD);
 
-		return Page.of(
-			transform(
-				_ddlRecordLocalService.getRecords(
-					dataRecordCollectionId, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
-				this::_toDataRecord),
-			pagination,
-			_ddlRecordLocalService.getRecordsCount(
-				dataRecordCollectionId, PrincipalThreadLocal.getUserId()));
+		return SearchUtil.search(
+			booleanQuery -> {
+			},
+			null, DDLRecord.class, keywords, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"recordSetId", dataRecordCollectionId);
+				searchContext.setAttribute(
+					"recordSetScope", ddlRecordSet.getScope());
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			document -> _toDataRecord(
+				_ddlRecordLocalService.getRecord(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+			sorts);
 	}
 
 	@Override

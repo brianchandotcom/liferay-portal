@@ -47,6 +47,10 @@
 		height: calc(100vh - 168px);
 		overflow: visible;
 	}
+
+	.sidebar-header {
+		padding-bottom: 0;
+	}
 }
 
 .app-builder-sidebar-content {

@@ -1,4 +1,77 @@
 .app-builder-table-view {
+	.app-builder-sidebar {
+		margin-top: $upperToolbarHeight;
+
+		.sidebar-header {
+			padding-bottom: 1rem;
+
+			&.table-view-filters-sidebar-header {
+				border-bottom: 1px solid #e7e7ed;
+			}
+
+			.btn-monospaced {
+				width: 3rem;
+			}
+
+			.field-type {
+				border-width: 0;
+				cursor: inherit;
+				padding: 0;
+
+				&:hover {
+					border-color: transparent;
+					box-shadow: none;
+					transform: none;
+				}
+
+				.app-builder-field-sticker {
+					height: 2.5rem;
+					width: 2.5rem;
+				}
+
+				.list-group-title {
+					font-size: 1rem;
+				}
+
+				.list-group-subtitle {
+					font-size: 0.75rem;
+				}
+			}
+		}
+
+		.sidebar-body {
+			padding-top: 0;
+
+			.table-view-filters-header {
+				margin-bottom: 0;
+			}
+
+			.table-view-filters-list:not(.single-field) .table-view-filter {
+				border-bottom: 1px solid #e7e7ed;
+				padding: 1.5rem 0;
+			}
+		}
+
+		.multiple-select-filter-trigger {
+			align-items: center;
+			background-color: #f1f2f5;
+			border-color: #e7e7ed;
+			color: #272833;
+			display: flex;
+			font-weight: normal;
+			text-align: left;
+			width: 100%;
+
+			.multiple-select-filter-values {
+				flex-grow: 1;
+			}
+
+			&.empty {
+				color: #6b6c7e;
+			}
+		}
+	}
+
 	.app-builder-sidebar-content {
 		padding-top: 1.5rem;
 	}

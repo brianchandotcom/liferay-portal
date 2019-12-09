@@ -16,6 +16,11 @@
 		margin: auto;
 		padding: 0 2rem;
 	}
+
+	.tooltip-icon {
+		color: #b0b2c4;
+		margin-left: 0.25rem;
+	}
 }
 
 body.open .app-builder-upper-toolbar {
@@ -47,13 +52,74 @@ body.open .app-builder-upper-toolbar {
 	min-width: 260px;
 }
 
-.ie11 .table-list {
-	border-collapse: separate;
-	border-spacing: 0px;
+.edge,
+.ie11 {
+	.table-list {
+		border-collapse: separate;
+		border-spacing: 0px;
+	}
 }
 
 :-ms-input-placeholder {
 	color: #6b6c7e !important;
+}
+
+.multiple-select-filter-dropdown {
+	min-width: 293px;
+
+	.dropdown-search {
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+
+		.form-control {
+			height: 2rem;
+		}
+	}
+
+	.dropdown-select-all {
+		display: flex;
+		padding-bottom: 0;
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+		padding-top: 0;
+
+		&.clearable {
+			&:hover {
+				background-color: transparent;
+			}
+
+			.btn-unstyled {
+				&:hover {
+					background-color: #f7f8f9;
+				}
+			}
+		}
+
+		.btn-unstyled {
+			padding: 0.375rem 0.75rem;
+
+			&:active:focus,
+			&:focus {
+				box-shadow: none;
+				outline: none;
+			}
+		}
+
+		.all {
+			flex-grow: 1;
+			font-size: 14px;
+			margin-right: 0.5rem;
+		}
+
+		.clear {
+			font-size: 14px;
+			font-weight: 600;
+		}
+	}
+
+	.lexicon-icon-check {
+		color: #0b5fff;
+	}
 }
 
 .remove-object-field-message {

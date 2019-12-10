@@ -12,8 +12,31 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
-export const FragmentConfigurationPanel = () => (
-	<div className="floating-toolbar-configuration-panel"></div>
-);
+import {StoreContext} from '../store/index';
+
+const FieldSet = ({fields, label}) => {
+	return <>{label && <p class="mb-3 sheet-subtitle">{label}</p>}</>;
+};
+
+export const FragmentConfigurationPanel = ({item}) => {
+	const {fragmentEntryLinks} = useContext(StoreContext);
+
+	const configuration =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId].configuration;
+
+	return (
+		<div className="floating-toolbar-configuration-panel">
+			{configuration.fieldSets.map((fieldSet, index) => {
+				return (
+					<FieldSet
+						fields={fieldSet.fields}
+						key={index}
+						label={fieldSet.label}
+					/>
+				);
+			})}
+		</div>
+	);
+};

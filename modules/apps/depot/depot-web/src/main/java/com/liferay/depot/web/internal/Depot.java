@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.configuration;
+package com.liferay.depot.web.internal;
 
+import com.liferay.depot.web.internal.configuration.DepotConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;

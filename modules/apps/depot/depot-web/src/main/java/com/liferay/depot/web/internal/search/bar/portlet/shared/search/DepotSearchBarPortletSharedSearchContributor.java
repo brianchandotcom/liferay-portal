@@ -19,6 +19,7 @@ import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.web.internal.Depot;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
@@ -52,6 +53,10 @@ public class DepotSearchBarPortletSharedSearchContributor
 
 		_defaultSearchBarPortletSharedSearchContributor.contribute(
 			portletSharedSearchSettings);
+
+		if (!_depot.isEnabled()) {
+			return;
+		}
 
 		SearchContext searchContext =
 			portletSharedSearchSettings.getSearchContext();
@@ -93,6 +98,9 @@ public class DepotSearchBarPortletSharedSearchContributor
 	)
 	private PortletSharedSearchContributor
 		_defaultSearchBarPortletSharedSearchContributor;
+
+	@Reference
+	private Depot _depot;
 
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;

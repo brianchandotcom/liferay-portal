@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.item.selector;
 
+import com.liferay.depot.web.internal.Depot;
 import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -79,7 +80,7 @@ public class DepotItemSelectorView
 
 	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
-		return true;
+		return _depot.isEnabled();
 	}
 
 	@Override
@@ -104,6 +105,9 @@ public class DepotItemSelectorView
 			ListUtil.fromArray(
 				new URLItemSelectorReturnType(),
 				new UUIDItemSelectorReturnType()));
+
+	@Reference
+	private Depot _depot;
 
 	@Reference
 	private DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;

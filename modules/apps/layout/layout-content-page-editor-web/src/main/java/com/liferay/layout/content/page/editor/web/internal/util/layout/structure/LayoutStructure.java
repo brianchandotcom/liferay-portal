@@ -58,7 +58,8 @@ public class LayoutStructure {
 			itemsJSONObject.put(
 				entry.getKey(),
 				JSONUtil.put(
-					"children", item.getChildrenItemIds()
+					"children",
+					JSONFactoryUtil.createJSONArray(item.getChildrenItemIds())
 				).put(
 					"config", item.getItemConfigJSONObject()
 				).put(

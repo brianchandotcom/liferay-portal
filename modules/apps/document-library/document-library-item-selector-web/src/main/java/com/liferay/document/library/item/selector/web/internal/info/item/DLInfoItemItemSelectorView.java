@@ -24,7 +24,6 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +67,7 @@ public class DLInfoItemItemSelectorView
 
 	@Override
 	public String[] getMimeTypes() {
-		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+		return new String[0];
 	}
 
 	@Override

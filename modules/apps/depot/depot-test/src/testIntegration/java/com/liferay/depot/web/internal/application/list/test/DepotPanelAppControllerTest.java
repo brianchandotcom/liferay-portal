@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.application.list.test;
+package com.liferay.depot.web.internal.application.list.test;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;

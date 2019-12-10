@@ -17,6 +17,7 @@ import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
+import {globalEval} from 'metal-dom';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import SiteNavigationMenuEditor from './SiteNavigationMenuEditor.es';
 import ClayIcon from '@clayui/icon';
@@ -34,26 +35,13 @@ function ContextualSidebar({
 	const [visible, setVisible] = useState(false);
 	const isMounted = useIsMounted();
 
+	const namespace = Liferay.Util.getPortletNamespace(portletId);
+
 	useEffect(() => {
 		const handle = siteNavigationMenuEditor.on(
 			'selectedMenuItemChanged',
 			event => {
 				const {siteNavigationMenuItemId, title} = event.newVal.dataset;
-
-				/*
-			if (!closeSidebar() || !siteNavigationMenuItem) {
-				return;
-			}
-
-			openSidebar(
-				siteNavigationMenuItem.dataset.title,
-				'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" /></portlet:renderURL>',
-				{
-					redirect: '<%= currentURL %>',
-					siteNavigationMenuItemId
-				}
-			);
-			*/
 
 				setLoading(true);
 				setTitle(title);
@@ -61,7 +49,7 @@ function ContextualSidebar({
 
 				fetch(editSiteNavigationMenuItemURL, {
 					body: objectToFormData(
-						Liferay.Util.ns(Liferay.Util.getPortletNamespace(portletId), {
+						Liferay.Util.ns(namespace, {
 							redirect,
 							siteNavigationMenuItemId
 						})
@@ -70,35 +58,6 @@ function ContextualSidebar({
 				})
 					.then(response => response.text())
 					.then(responseContent => {
-						/*
-						const sidebarBody = document.getElementById(
-							'<portlet:namespace />sidebarBody'
-						);
-
-						const sidebarHeaderButton = document.getElementById(
-							'<portlet:namespace />sidebarHeaderButton'
-						);
-
-						if (sidebarBody) {
-							sidebarBody.innerHTML = responseContent;
-
-							globalEval.default.runScriptsInElement(sidebarBody);
-
-							sidebarBodyChangeHandler = dom.on(
-								sidebarBody,
-								'change',
-								handleSidebarBodyChange
-							);
-						}
-
-						if (sidebarHeaderButton) {
-							sidebarHeaderButtonClickEventListener = dom.on(
-								sidebarHeaderButton,
-								'click',
-								handleSidebarCloseButtonClick
-							);
-						}
-						*/
 						setBody(responseContent);
 						setLoading(false);
 					});
@@ -109,11 +68,8 @@ function ContextualSidebar({
 	}, []);
 
 	return visible ? (
-		<div
-			className="{$contextualSidebarClasses} {$elementClasses ?: ''}"
-			id="{$id ?: ''}"
-		>
-			<div className="sidebar-header {$headerClasses ?: ''}">
+		<div id={`${namespace}sidebar`}>
+			<div className="sidebar-header">
 				<div className="autofit-row sidebar-section">
 					<div className="autofit-col autofit-col-expand">
 						<h4 className="component-title">
@@ -123,18 +79,40 @@ function ContextualSidebar({
 						</h4>
 					</div>
 					<div className="autofit-col">
-						<ClayButton monospaced>
+						<ClayButton monospaced onClick={() => setVisible(false)}>
 							<ClayIcon symbol="times" />
 						</ClayButton>
 					</div>
 				</div>
 			</div>
 
-			<div className="sidebar-body {$bodyClasses ?: ''}">
-				{loading ? <ClayLoadingIndicator /> : {body}}
+			<div className="sidebar-body">
+				{loading ? <ClayLoadingIndicator /> : <SidebarBody body={body}/>}}
 			</div>
 		</div>
 	) : null;
+}
+
+class SidebarBody extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this._ref = React.createRef();
+	}
+
+	componentDidMount() {
+		if (this._ref.current) {
+			globalEval.runScriptsInElement(this._ref.current);
+		}
+	}
+
+	shouldComponentUpdate() {
+		return false;
+	}
+
+	render() {
+		return <div dangerouslySetInnerHTML={{__html: this.props.body}} ref={this._ref} />;
+	}
 }
 
 export default function(props) {

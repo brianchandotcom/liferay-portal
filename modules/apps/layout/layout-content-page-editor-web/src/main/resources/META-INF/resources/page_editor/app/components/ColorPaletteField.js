@@ -12,12 +12,10 @@
  * details.
  */
 
-import {CheckboxField} from '../../components/CheckboxField';
-import {ColorPaletteField} from '../../components/ColorPaletteField';
-import {SelectField} from '../../components/SelectField';
+import React from 'react';
 
-export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
-	checkbox: CheckboxField,
-	colorPalette: ColorPaletteField,
-	select: SelectField
-};
+import ColorPalette from '../../common/components/ColorPalette';
+
+export const ColorPaletteField = ({field}) => (
+	<ColorPalette label={field.label} onColorSelect={() => {}}></ColorPalette>
+);

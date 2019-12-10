@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.test;
+package com.liferay.change.tracking.internal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal;
+package com.liferay.change.tracking.internal.messaging;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.configuration.CTMessageBusConfiguration;

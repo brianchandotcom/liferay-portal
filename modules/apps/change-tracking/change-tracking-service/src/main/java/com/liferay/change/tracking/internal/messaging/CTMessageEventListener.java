@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.message;
+package com.liferay.change.tracking.internal.messaging;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.listener.CTEventListener;

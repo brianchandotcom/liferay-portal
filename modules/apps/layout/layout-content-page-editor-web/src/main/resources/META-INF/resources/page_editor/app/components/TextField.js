@@ -12,14 +12,18 @@
  * details.
  */
 
-import {CheckboxField} from '../../components/CheckboxField';
-import {ColorPaletteField} from '../../components/ColorPaletteField';
-import {SelectField} from '../../components/SelectField';
-import {TextField} from '../../components/TextField';
+import {ClayInput} from '@clayui/form';
+import React from 'react';
 
-export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
-	checkbox: CheckboxField,
-	colorPalette: ColorPaletteField,
-	select: SelectField,
-	text: TextField
-};
+export const TextField = ({field}) => (
+	<>
+		<label htmlFor={field.name}>{field.label}</label>
+
+		<ClayInput
+			id={field.name}
+			placeholder={field.typeOptions ? field.typeOptions.placeholder : ''}
+			type="text"
+			value={field.defaultValue}
+		/>
+	</>
+);

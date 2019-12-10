@@ -1,6 +1,8 @@
 definition {
 
 	macro goToFindAPage {
+		ProductMenuHelper.openProductMenu();
+
 		if (IsElementNotPresent(locator1 = "PagesFinder#INPUT_FIELD")) {
 			Click(locator1 = "PagesFinder#OUTLINE_ICON");
 		}

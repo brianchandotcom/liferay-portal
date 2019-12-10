@@ -53,6 +53,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.analytics.settings.web.jar!httpclient.jar</file-name>
+				<version>4.5.3</version>
+				<project-name>HttpComponents Apache HttpClient</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.analytics.settings.web.jar!httpcore.jar</file-name>
+				<version>4.4.6</version>
+				<project-name>HttpComponents Apache HttpCore</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.asset.auto.tagger.opennlp.impl.jar!opennlp-tools.jar</file-name>
 				<version>1.9.1</version>
 				<project-name>Apache OpenNLP Tools</project-name>
@@ -1687,7 +1711,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.cache.ehcache.impl.jar!net.sf.ehcache.jar</file-name>
-				<version>2.10.6.LIFERAY-PATCHED-1</version>
+				<version>2.10.6.LIFERAY-PATCHED-2</version>
 				<project-name>ehcache</project-name>
 				<project-url>http://www.terracotta.org</project-url>
 				<licenses>
@@ -1710,7 +1734,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.cluster.multiple.jar!jgroups.jar</file-name>
-				<version>4.1.6.Final</version>
+				<version>4.1.7.Final</version>
 				<project-name>JGroups</project-name>
 				<project-url>http://www.jgroups.org</project-url>
 				<licenses>

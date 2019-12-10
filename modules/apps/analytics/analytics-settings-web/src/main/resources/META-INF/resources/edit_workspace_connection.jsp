@@ -43,7 +43,7 @@ if (analyticsConfiguration != null) {
 		</span>
 	</h2>
 
-	<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm" onSubmit="confirmation(event)">
+	<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "confirmation(event);" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<c:if test="<%= connected %>">
@@ -119,7 +119,7 @@ if (analyticsConfiguration != null) {
 </div>
 
 <script>
-	function confirmation(event) {
+	function <portlet:namespace />confirmation(event) {
 		<c:if test="<%=connected%>">
 			if (!confirm("<liferay-ui:message key="are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance" />")) {
 				event.preventDefault();

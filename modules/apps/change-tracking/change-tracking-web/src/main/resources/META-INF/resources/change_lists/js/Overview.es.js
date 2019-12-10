@@ -54,12 +54,12 @@ Overview.STATE = {
 	 */
 	activeCTCollection: Config.shapeOf({
 		additionCount: Config.number().value(0),
+		conflictsURL: Config.string(),
 		deleteURL: Config.string(),
 		deletionCount: Config.number().value(0),
 		description: Config.string(),
 		modifiedCount: Config.number().value(0),
-		name: Config.string(),
-		publishURL: Config.string()
+		name: Config.string()
 	}).required(),
 
 	/**

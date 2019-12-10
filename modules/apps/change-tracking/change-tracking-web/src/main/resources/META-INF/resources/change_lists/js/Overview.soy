@@ -10,12 +10,12 @@
 	{@param urlSelectChangeList: string}
 	{@param? activeCTCollection: [
 		additionCount: number,
+		conflictsURL: string,
 		deleteURL: string,
 		deletionCount: number,
 		description: string,
 		modifiedCount: number,
-		name: string,
-		publishURL: string
+		name: string
 	]}
 	{@param? changeEntries: list<[
 		changeType: string,
@@ -41,7 +41,7 @@
 	]}
 
 	{let $headerButtonLabel kind="text"}
-		{msg desc=""}publish{/msg}
+		{msg desc=""}prepare-to-publish{/msg}
 	{/let}
 
 	{let $headerLinkLabel kind="text"}
@@ -100,7 +100,7 @@
 						{param headerTitle: $activeCTCollection.name /}
 						{param spritemap: $spritemap /}
 						{param urlActiveCollectionDelete: $activeCTCollection.deleteURL /}
-						{param urlActiveCollectionPublish: $activeCTCollection.publishURL /}
+						{param urlActiveCollectionPublish: $activeCTCollection.conflictsURL /}
 					{/call}
 				</div>
 

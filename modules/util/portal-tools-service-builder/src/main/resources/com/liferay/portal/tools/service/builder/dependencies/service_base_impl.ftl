@@ -1408,11 +1408,11 @@ import org.osgi.service.component.annotations.Reference;
 	</#if>
 
 	<#assign
-		lazyBlob = entity.hasLazyBlobEntityColumn() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence()
-		localizedEntity = stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence()
+		lazyBlobExists = entity.hasLazyBlobEntityColumn() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence()
+		localizedEntityExists = stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence()
 	/>
 
-	<#if lazyBlob>
+	<#if lazyBlobExists>
 		<#list entity.blobEntityColumns as entityColumn>
 			<#if entityColumn.lazy>
 				@Override
@@ -1465,18 +1465,6 @@ import org.osgi.service.component.annotations.Reference;
 
 	<#if !dependencyInjectorDS>
 		public void afterPropertiesSet() {
-			<#if lazyBlob>
-				DB db = DBManagerUtil.getDB();
-
-				if ((db.getDBType() != DBType.DB2) &&
-				(db.getDBType() != DBType.MYSQL) &&
-				(db.getDBType() != DBType.MARIADB) &&
-				(db.getDBType() != DBType.SYBASE)) {
-
-				_useTempFile = true;
-				}
-			</#if>
-
 			<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
 				<#if validator.isNotNull(pluginName)>
 					PersistedModelLocalServiceRegistryUtil.register("${apiPackagePath}.model.${entity.name}", ${entity.varName}LocalService);
@@ -1485,20 +1473,13 @@ import org.osgi.service.component.annotations.Reference;
 				</#if>
 			</#if>
 
-			<#if localizedEntity>
+			<#if localizedEntityExists>
 				<#assign localizedEntity = entity.localizedEntity />
 
 				registerListener(new ${localizedEntity.name}VersionServiceListener());
 			</#if>
-		}
-	</#if>
 
-	<#assign activateMethodNeeded = dependencyInjectorDS && (lazyBlob || localizedEntity)/>
-
-	<#if activateMethodNeeded>
-		@Activate
-		protected void activate() {
-			<#if lazyBlob>
+			<#if lazyBlobExists>
 				DB db = DBManagerUtil.getDB();
 
 				if ((db.getDBType() != DBType.DB2) &&
@@ -1509,11 +1490,28 @@ import org.osgi.service.component.annotations.Reference;
 				_useTempFile = true;
 				}
 			</#if>
+		}
+	</#if>
 
-			<#if localizedEntity>
+	<#if dependencyInjectorDS && (lazyBlobExists || localizedEntityExists)>
+		@Activate
+		protected void activate() {
+			<#if localizedEntityExists>
 				<#assign localizedEntity = entity.localizedEntity />
 
 				registerListener(new ${localizedEntity.name}VersionServiceListener());
+			</#if>
+
+			<#if lazyBlobExists>
+				DB db = DBManagerUtil.getDB();
+
+				if ((db.getDBType() != DBType.DB2) &&
+				(db.getDBType() != DBType.MYSQL) &&
+				(db.getDBType() != DBType.MARIADB) &&
+				(db.getDBType() != DBType.SYBASE)) {
+
+				_useTempFile = true;
+				}
 			</#if>
 		}
 	</#if>
@@ -1991,7 +1989,7 @@ import org.osgi.service.component.annotations.Reference;
 		</#if>
 	</#list>
 
-	<#if lazyBlob>
+	<#if lazyBlobExists>
 		<#if dependencyInjectorDS>
 			@Reference
 		<#else>

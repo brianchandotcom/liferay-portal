@@ -304,14 +304,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project);
 
 		DockerRemoveContainer dockerRemoveContainer =
-			_addTaskRemoveDockerContainer(dockerStopContainer, project);
+			_addTaskRemoveDockerContainer(project, dockerStopContainer);
 
 		DockerCreateContainer dockerCreateContainer =
 			_addTaskCreateDockerContainer(
 				project, workspaceExtension, dockerBuildImage,
 				dockerRemoveContainer);
 
-		_addTaskStartDockerContainer(dockerCreateContainer, project);
+		_addTaskStartDockerContainer(project, dockerCreateContainer);
 
 		_addTaskLogsDockerContainer(project);
 		_addTaskPullDockerImage(project, workspaceExtension);
@@ -1078,7 +1078,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private DockerRemoveContainer _addTaskRemoveDockerContainer(
-		DockerStopContainer stopDockerContainer, Project project) {
+		Project project, DockerStopContainer stopDockerContainer) {
 
 		DockerRemoveContainer dockerRemoveContainer = GradleUtil.addTask(
 			project, REMOVE_DOCKER_CONTAINER_TASK_NAME,
@@ -1120,7 +1120,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private DockerStartContainer _addTaskStartDockerContainer(
-		DockerCreateContainer dockerCreateContainer, Project project) {
+		Project project, DockerCreateContainer dockerCreateContainer) {
 
 		DockerStartContainer dockerStartContainer = GradleUtil.addTask(
 			project, START_DOCKER_CONTAINER_TASK_NAME,

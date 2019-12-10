@@ -5,21 +5,18 @@
  */
 {template .render}
 	{@param fragmentEntryLinkId: string}
+  {@param? _active: bool}
+  {@param? _dropBorder: string}
 	{@param? _fragmentEntryLinkRowType: string}
-	{@param? _fragmentsEditorItemTypes: ?}
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentCommentsButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _hovered: bool}
 	{@param? _isDropZone: bool}
+	{@param? _itemType: string}
 	{@param? _showComments: bool}
-	{@param? activeItemId: string}
-	{@param? activeItemType: string}
 	{@param? content: ?}
-	{@param? dropTargetBorder: ?}
-	{@param? dropTargetItemId: ?}
-	{@param? dropTargetItemType: ?}
 	{@param? editableValues: ?}
 	{@param? error: bool}
 	{@param? hasUpdatePermissions: bool}
@@ -38,8 +35,8 @@
 			{sp}fragments-editor__drop-target--sidebar-widget
 		{/if}
 
-		{if $dropTargetItemId == $fragmentEntryLinkId and $_fragmentsEditorItemTypes and $dropTargetItemType == $_fragmentsEditorItemTypes.fragment}
-			{sp}{$dropTargetBorder}
+		{if $_dropBorder}
+			{sp}{$_dropBorder}
 		{/if}
 
 		{if $hasUpdatePermissions}
@@ -48,7 +45,7 @@
 			{sp}fragments-editor__drop-target
 			{sp}fragments-editor__topper-wrapper
 
-			{if $activeItemId == $fragmentEntryLinkId and $_fragmentsEditorItemTypes and $activeItemType == $_fragmentsEditorItemTypes.fragment}
+			{if $_active}
 				{sp}fragments-editor__topper-wrapper--active
 				{sp}fragment-entry-link-wrapper--active
 			{/if}
@@ -70,7 +67,7 @@
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
 		data-fragment-entry-link-row-type="{$_fragmentEntryLinkRowType}"
 		data-fragments-editor-item-id="{$fragmentEntryLinkId}"
-		data-fragments-editor-item-type="{if $_fragmentsEditorItemTypes}{$_fragmentsEditorItemTypes.fragment}{/if}"
+		data-fragments-editor-item-type="{$_itemType ?: ''}"
 		data-onkeyup="{$_handleFragmentKeyUp}"
 		ref="fragmentEntryLinkWrapper"
 		tabindex="0"

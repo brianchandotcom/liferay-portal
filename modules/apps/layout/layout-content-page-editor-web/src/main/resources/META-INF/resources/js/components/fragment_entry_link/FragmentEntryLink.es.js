@@ -72,19 +72,14 @@ class FragmentEntryLink extends Component {
 		onPropertiesChanged(
 			this,
 			[
+				'_active',
 				'_configurationValues',
 				'hasUpdatePermissions',
 				'fragmentEntryLinkId',
-				'fragmentEntryLinks',
-				'activeItemId',
-				'activeItemType'
+				'fragmentEntryLinks'
 			],
 			() => {
-				if (
-					this.hasUpdatePermissions &&
-					this.fragmentEntryLinkId === this.activeItemId &&
-					this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-				) {
+				if (this.hasUpdatePermissions && this._active) {
 					this._createFloatingToolbar();
 				} else {
 					this._disposeFloatingToolbar();
@@ -114,7 +109,6 @@ class FragmentEntryLink extends Component {
 		return {
 			...state,
 			_fragmentEntryLinkRowType: state.rowType,
-			_fragmentsEditorItemTypes: FRAGMENTS_EDITOR_ITEM_TYPES,
 			_fragmentsEditorRowTypes: FRAGMENTS_EDITOR_ROW_TYPES
 		};
 	}
@@ -361,11 +355,7 @@ class FragmentEntryLink extends Component {
 			Array.isArray(this._configuration.fieldSets) &&
 			this._configuration.fieldSets.length > 0;
 
-		const fragmentIsActive =
-			this.fragmentEntryLinkId === this.activeItemId &&
-			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
-
-		return fieldSetsExist && fragmentIsActive;
+		return fieldSetsExist && this._active;
 	}
 }
 
@@ -376,13 +366,22 @@ class FragmentEntryLink extends Component {
  * @type {!Object}
  */
 FragmentEntryLink.STATE = {
+	_active: Config.internal()
+		.bool()
+		.value(false),
 	_configuration: Config.object().internal(),
 	_configurationValues: Config.object().internal(),
 	_defaultConfigurationValues: Config.object().internal(),
+	_dropBorder: Config.internal()
+		.string()
+		.value(''),
 	_floatingToolbar: Config.internal().value(null),
 	_hovered: Config.internal()
 		.bool()
 		.value(false),
+	_itemType: Config.internal()
+		.string()
+		.value(''),
 	_showComments: Config.internal()
 		.bool()
 		.value(false),
@@ -412,16 +411,21 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 		);
 
 		return {
+			_active:
+				state.activeItemId === props.fragmentEntryLinkId &&
+				state.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
+			_dropBorder:
+				state.dropTargetItemId === props.fragmentEntryLinkId &&
+				state.dropTargetItemType ===
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+					? state.dropTargetBorder
+					: '',
 			_hovered,
+			_itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
 			_showComments,
-			activeItemId: state.activeItemId,
-			activeItemType: state.activeItemType,
 			defaultEditorConfigurations: state.defaultEditorConfigurations,
 			defaultLanguageId: state.defaultLanguageId,
 			defaultSegmentsExperienceId: state.defaultSegmentsExperienceId,
-			dropTargetBorder: state.dropTargetBorder,
-			dropTargetItemId: state.dropTargetItemId,
-			dropTargetItemType: state.dropTargetItemType,
 			duplicateFragmentEntryLinkURL: state.duplicateFragmentEntryLinkURL,
 			fragmentEntryLinks: state.fragmentEntryLinks,
 			hasUpdatePermissions: state.hasUpdatePermissions,

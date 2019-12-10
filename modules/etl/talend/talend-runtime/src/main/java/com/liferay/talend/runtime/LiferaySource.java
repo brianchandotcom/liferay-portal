@@ -50,6 +50,11 @@ public class LiferaySource extends LiferaySourceOrSink implements Source {
 		return new LiferayReader(this, (TLiferayInputProperties)componentData);
 	}
 
+	@Override
+	protected String getLiferayConnectionProipertiesPath() {
+		return "resource." + super.getLiferayConnectionProipertiesPath();
+	}
+
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferaySource.class);
 

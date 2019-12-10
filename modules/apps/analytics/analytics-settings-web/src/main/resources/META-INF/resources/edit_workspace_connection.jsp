@@ -19,14 +19,18 @@
 <%
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 
+boolean connected = false;
+
 String[] syncedGroupIds = new String[0];
 String token = "";
-boolean connected = false;
 
 if (analyticsConfiguration != null) {
 	syncedGroupIds = analyticsConfiguration.syncedGroupIds();
 	token = analyticsConfiguration.token();
-	connected = !Validator.isBlank(token);
+
+	if (!Validator.isBlank(token)) {
+		connected = true;
+	}
 }
 %>
 
@@ -52,6 +56,10 @@ if (analyticsConfiguration != null) {
 	<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm" onSubmit="confirmation(event)">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
+		<c:if test="<%= connected %>">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="disconnect" />
+		</c:if>
+
 		<aui:fieldset>
 			<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" value="<%= token %>" />
 
@@ -59,20 +67,9 @@ if (analyticsConfiguration != null) {
 				<liferay-ui:message key="analytics-cloud-token-help" />
 			</div>
 
-			<c:choose>
-				<c:when test="<%= connected %>">
-					<aui:input name="disconnect" type="hidden" value="true" />
-
-					<aui:button-row>
-						<aui:button primary="false" type="submit" value="disconnect" />
-					</aui:button-row>
-				</c:when>
-				<c:otherwise>
-					<aui:button-row>
-						<aui:button type="submit" value="connect" />
-					</aui:button-row>
-				</c:otherwise>
-			</c:choose>
+			<aui:button-row>
+				<aui:button primary="<%= connected ? false : true %>" type="submit" value='<%= connected ? "disconnect" : "connect" %>' />
+			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>
 

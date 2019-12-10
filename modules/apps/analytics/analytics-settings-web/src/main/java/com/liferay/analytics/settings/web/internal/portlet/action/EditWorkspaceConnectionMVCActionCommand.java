@@ -22,16 +22,17 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Iterator;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -70,7 +71,9 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (ParamUtil.getBoolean(actionRequest, "disconnect", false)) {
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		if (Objects.equals(cmd, "disconnect")) {
 			_disconnect(themeDisplay.getCompanyId(), configurationProperties);
 
 			return;
@@ -81,15 +84,11 @@ public class EditWorkspaceConnectionMVCActionCommand
 		JSONObject jsonObject = null;
 
 		try {
-			if (Validator.isBlank(token)) {
-				throw new IllegalArgumentException();
-			}
-
 			jsonObject = JSONFactoryUtil.createJSONObject(
 				new String(Base64.decode(token)));
 		}
 		catch (Exception e) {
-			throw new PortalException("Invalid token");
+			throw new PortalException("Invalid token", e);
 		}
 
 		_connect(

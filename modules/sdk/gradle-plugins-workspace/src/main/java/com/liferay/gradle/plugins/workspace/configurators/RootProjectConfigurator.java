@@ -221,21 +221,21 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
-	private static String _getDockerContainerId(Project project) {
+	private String _getDockerContainerId(Project project) {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		return workspaceExtension.getDockerContainerId();
 	}
 
-	private static String _getDockerImageId(Project project) {
+	private String _getDockerImageId(Project project) {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		return workspaceExtension.getDockerImageId();
 	}
 
-	private static String _loadTemplate(String name) {
+	private String _loadTemplate(String name) {
 		try (InputStream inputStream =
 				RootProjectConfigurator.class.getResourceAsStream(name)) {
 

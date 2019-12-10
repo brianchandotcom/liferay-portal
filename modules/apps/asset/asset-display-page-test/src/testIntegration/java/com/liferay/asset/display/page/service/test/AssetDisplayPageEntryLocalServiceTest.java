@@ -318,19 +318,11 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()
 		throws PortalException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, true, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
-
-		layoutPageTemplateEntry.setModifiedDate(null);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
-
-		return layoutPageTemplateEntry;
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, true, 0, 0,
+			0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 	}
 
 	@Inject

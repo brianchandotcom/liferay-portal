@@ -250,8 +250,8 @@ class DataLayoutBuilder extends Component {
 						defaultLanguageId={defaultLanguageId}
 						editingLanguageId={editingLanguageId}
 						fieldTypes={fieldTypes}
-						portletNamespace={portletNamespace}
 						paginationMode={'wizard'}
+						portletNamespace={portletNamespace}
 						ref="builder"
 						spritemap={spritemap}
 					/>

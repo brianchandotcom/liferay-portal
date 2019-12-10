@@ -13,7 +13,6 @@
  */
 
 module.exports = {
-	extends: ['liferay/react'],
 	globals: {
 		__CONFIG__: true,
 		__dirname: true,

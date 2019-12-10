@@ -13,5 +13,5 @@
  */
 
 module.exports = {
-	extends: ['liferay/react']
+	extends: ['liferay/metal']
 };

@@ -10,7 +10,6 @@
  */
 
 module.exports = {
-	extends: ['liferay/react'],
 	globals: {
 		mount: true,
 		shallow: true

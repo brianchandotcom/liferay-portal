@@ -421,9 +421,9 @@ class Form extends Component {
 					/>
 
 					<Sidebar
-						fieldSetDefinitionURL={fieldSetDefinitionURL}
 						defaultLanguageId={defaultLanguageId}
 						editingLanguageId={editingLanguageId}
+						fieldSetDefinitionURL={fieldSetDefinitionURL}
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
 						portletNamespace={namespace}

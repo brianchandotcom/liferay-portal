@@ -178,6 +178,25 @@ public class RankingJSONBuilder {
 		String content = _document.getString(
 			Field.getLocalizedName(_locale, Field.CONTENT));
 
+		if (!Validator.isBlank(content)) {
+			return StringUtil.shorten(content, 200);
+		}
+
+		content = _document.getString(Field.CONTENT);
+
+		if (!Validator.isBlank(content)) {
+			return StringUtil.shorten(content, 200);
+		}
+
+		content = _document.getString(
+			Field.getLocalizedName(_locale, Field.DESCRIPTION));
+
+		if (!Validator.isBlank(content)) {
+			return StringUtil.shorten(content, 200);
+		}
+
+		content = _document.getString(Field.DESCRIPTION);
+
 		return StringUtil.shorten(content, 200);
 	}
 
@@ -255,7 +274,12 @@ public class RankingJSONBuilder {
 	}
 
 	private String _getTitle() {
-		String title = _document.getString(Field.TITLE + "_en_US");
+		if (_isUser()) {
+			return _document.getString("fullName");
+		}
+
+		String title = _document.getString(
+			Field.getLocalizedName(_locale, Field.TITLE));
 
 		if (!Validator.isBlank(title)) {
 			return title;
@@ -267,11 +291,14 @@ public class RankingJSONBuilder {
 			return title;
 		}
 
-		if (_isUser()) {
-			return _document.getString("fullName");
+		title = _document.getString(
+			Field.getLocalizedName(_locale, Field.NAME));
+
+		if (!Validator.isBlank(title)) {
+			return title;
 		}
 
-		return _document.getString("name");
+		return _document.getString(Field.NAME);
 	}
 
 	private String _getType() {

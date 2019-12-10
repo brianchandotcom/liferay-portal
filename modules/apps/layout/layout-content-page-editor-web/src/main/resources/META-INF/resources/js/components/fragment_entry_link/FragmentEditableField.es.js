@@ -33,7 +33,8 @@ import {updateEditableValueContentAction} from '../../actions/updateEditableValu
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {
 	shouldUpdateOnChangeProperties,
-	shouldUpdatePureComponent
+	shouldUpdatePureComponent,
+	onPropertiesChanged
 } from '../../utils/FragmentsEditorComponentUtils.es';
 import {
 	editableIsMappedToInfoItem,
@@ -86,6 +87,37 @@ class FragmentEditableField extends PortletBase {
 				EDITABLE_FIELD_CHANGE_DELAY
 			);
 		}
+
+		onPropertiesChanged(this, ['_active'], () => {
+			const eventName = this.type === 'image' ? 'dblclick' : 'click';
+
+			if (this.hasUpdatePermissions && this._active) {
+				this._createFloatingToolbar();
+
+				this.element.addEventListener(eventName, this._createProcessor);
+			} else {
+				this._disposeFloatingToolbar();
+				this._destroyProcessors();
+
+				this.element.removeEventListener(
+					eventName,
+					this._createProcessor
+				);
+			}
+		});
+
+		onPropertiesChanged(this, ['editableValues'], () => {
+			this._loadMappedFieldLabel();
+			this._updateMappedFieldValue();
+
+			if (!this._processorEnabled && this._active) {
+				this._createFloatingToolbar();
+			}
+		});
+
+		onPropertiesChanged(this, ['syncGetAssetFieldValueURL'], () => {
+			this._updateMappedFieldValue();
+		});
 	}
 
 	/**
@@ -96,6 +128,17 @@ class FragmentEditableField extends PortletBase {
 		this._destroyProcessors();
 		this._disposeFloatingToolbar();
 		this.element.removeEventListener('click', this._createProcessor);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		return {
+			...state,
+			_value: Soy.toIncDom(state._value)
+		};
 	}
 
 	/**
@@ -113,47 +156,6 @@ class FragmentEditableField extends PortletBase {
 		}
 
 		return shouldUpdatePureComponent(changes);
-	}
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-	sync_active() {
-		const eventName = this.type === 'image' ? 'dblclick' : 'click';
-
-		if (this.hasUpdatePermissions && this._active) {
-			this._createFloatingToolbar();
-
-			this.element.addEventListener(eventName, this._createProcessor);
-		} else {
-			this._disposeFloatingToolbar();
-			this._destroyProcessors();
-
-			this.element.removeEventListener(eventName, this._createProcessor);
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-	syncEditableValues() {
-		this._loadMappedFieldLabel();
-		this._updateMappedFieldValue();
-
-		if (!this._processorEnabled && this._active) {
-			this._createFloatingToolbar();
-		}
-	}
-
-	/**
-	 * Handle getAssetFieldValueURL changed
-	 * @inheritDoc
-	 * @review
-	 */
-	syncGetAssetFieldValueURL() {
-		this._updateMappedFieldValue();
 	}
 
 	/**
@@ -461,7 +463,9 @@ FragmentEditableField.STATE = {
 	_translating: Config.internal()
 		.bool()
 		.value(false),
-	_value: Config.internal().value(null),
+	_value: Config.internal()
+		.string()
+		.value(''),
 	content: Config.string().required(),
 	editableId: Config.string().required(),
 	editableValues: Config.object().required(),
@@ -538,22 +542,20 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 
 		const _translating = state.defaultLanguageId !== state.languageId;
 
-		const _value = Soy.toIncDom(
-			(
-				FragmentProcessors[props.type] || FragmentProcessors.fallback
-			).render(
-				props.content,
-				_mapped
-					? isNullOrUndefined(props._mappedFieldValue)
-						? props.editableValues.defaultValue
-						: props._mappedFieldValue
-					: computeEditableValue(props.editableValues, {
-							defaultLanguageId: state.defaultLanguageId,
-							selectedExperienceId: state.segmentsExperienceId,
-							selectedLanguageId: state.languageId
-					  }),
-				props.editableValues
-			)
+		const _value = (
+			FragmentProcessors[props.type] || FragmentProcessors.fallback
+		).render(
+			props.content,
+			_mapped
+				? isNullOrUndefined(props._mappedFieldValue)
+					? props.editableValues.defaultValue
+					: props._mappedFieldValue
+				: computeEditableValue(props.editableValues, {
+						defaultLanguageId: state.defaultLanguageId,
+						selectedExperienceId: state.segmentsExperienceId,
+						selectedLanguageId: state.languageId
+				  }),
+			props.editableValues
 		);
 
 		return {

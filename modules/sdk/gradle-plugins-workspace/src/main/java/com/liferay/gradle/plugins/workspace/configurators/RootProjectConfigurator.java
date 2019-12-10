@@ -513,7 +513,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerCreateContainer.withEnvVar("JPDA_ADDRESS", "0.0.0.0:8000");
 		dockerCreateContainer.withEnvVar("LIFERAY_JPDA_ENABLED", "true");
 		dockerCreateContainer.withEnvVar(
-			_makeEnvOverride("module.framework.properties.osgi.console"),
+			_getEnvVarOverride("module.framework.properties.osgi.console"),
 			"0.0.0.0:11311");
 		dockerCreateContainer.withEnvVar(
 			"LIFERAY_WORKSPACE_ENVIRONMENT",
@@ -1355,7 +1355,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return Collections.singletonList(src);
 	}
 
-	private String _makeEnvOverride(String string) {
+	private String _getEnvVarOverride(String string) {
 		String[] segments = string.split("\\.");
 
 		StringBuilder sb = new StringBuilder();

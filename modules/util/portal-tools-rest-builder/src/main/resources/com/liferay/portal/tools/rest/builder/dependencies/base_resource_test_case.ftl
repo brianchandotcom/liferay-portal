@@ -1186,7 +1186,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 										</#if>
 									</#list>
 									<#if javaMethodSignature.methodName?contains("Site")>
-										put("siteId", testGroup.getGroupId());
+										put("siteKey", "\"" + testGroup.getGroupId() + "\"");
 									</#if>
 								}
 							},
@@ -1363,7 +1363,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						"createSite${schemaName}",
 						new HashMap<String, Object>() {
 							{
-								put("siteId", testGroup.getGroupId());
+								put("siteKey", "\"" + testGroup.getGroupId() + "\"");
 								put("${schemaVarName}", sb.toString());
 							}
 						},

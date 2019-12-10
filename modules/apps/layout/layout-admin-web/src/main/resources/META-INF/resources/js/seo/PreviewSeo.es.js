@@ -98,18 +98,6 @@ const PreviewSeoContainer = ({
 		[defaultLanguage, targets, language]
 	);
 
-	const setFieldsState = useCallback(
-		({type, ...props}) => {
-			if (!isMounted()) return;
-
-			setFields(state => ({
-				...state,
-				[type]: {...props}
-			}));
-		},
-		[isMounted]
-	);
-
 	const inputTargets = useMemo(
 		() =>
 			Object.entries(targets).reduce((acc, [type, {id}]) => {
@@ -144,6 +132,15 @@ const PreviewSeoContainer = ({
 	}, [isMounted]);
 
 	useEffect(() => {
+		const setFieldState = ({type, ...props}) => {
+			if (!isMounted()) return;
+
+			setFields(state => ({
+				...state,
+				[type]: {...props}
+			}));
+		};
+
 		const handleInputChange = ({event, type}) => {
 			const target = event.target;
 
@@ -152,7 +149,7 @@ const PreviewSeoContainer = ({
 			}
 
 			const {disabled, value} = target;
-			setFieldsState({disabled, type, value});
+			setFieldState({disabled, type, value});
 		};
 
 		const inputs = inputTargets.reduce((acc, {node, type}) => {
@@ -165,9 +162,6 @@ const PreviewSeoContainer = ({
 
 			node.addEventListener('input', listener);
 
-			const {disabled, value} = node;
-			setFieldsState({disabled, type, value});
-
 			acc.push({listener, node});
 
 			return acc;
@@ -175,7 +169,7 @@ const PreviewSeoContainer = ({
 
 		const PreviewSeoOnChangeHandle = PreviewSeoOnChange(
 			portletNamespace,
-			setFieldsState
+			setFieldState
 		);
 
 		return () => {
@@ -185,14 +179,20 @@ const PreviewSeoContainer = ({
 
 			Liferay.detach(PreviewSeoOnChangeHandle);
 		};
-	}, [portletNamespace, targets, isMounted, setFieldsState, inputTargets]);
+	}, [inputTargets, isMounted, portletNamespace, targets]);
 
 	useEffect(() => {
-		inputTargets.forEach(({node, type}) => {
+		if (!isMounted()) return;
+
+		const newFieldsState = inputTargets.reduce((acc, {node, type}) => {
 			const {disabled, value} = node;
-			setFieldsState({disabled, type, value});
-		});
-	}, [language, targets, portletNamespace, setFieldsState, inputTargets]);
+			acc[type] = {disabled, value};
+
+			return acc;
+		}, {});
+
+		setFields(newFieldsState);
+	}, [inputTargets, isMounted, language]);
 
 	const getValue = type => {
 		const disabled = fields[type] && fields[type].disabled;

@@ -12,13 +12,14 @@
  * details.
  */
 
+/* eslint-disable prefer-arrow-callback */
 AUI().ready(
 	/*
 	This function gets loaded when all the HTML, not including the portlets, is
 	loaded.
 	*/
 
-	() => {}
+	function() {}
 );
 
 Liferay.Portlet.ready(
@@ -29,7 +30,7 @@ Liferay.Portlet.ready(
 	node: the Alloy Node object of the current portlet
 	*/
 
-	(_portletId, _node) => {}
+	function(_portletId, _node) {}
 );
 
 Liferay.on(
@@ -40,5 +41,5 @@ Liferay.on(
 	the page.
 	*/
 
-	() => {}
+	function() {}
 );

@@ -12,7 +12,8 @@
  * details.
  */
 
-AUI().ready('liferay-sign-in-modal', A => {
+/* eslint-disable prefer-arrow-callback */
+AUI().ready('liferay-sign-in-modal', function(A) {
 	var signIn = A.one('.sign-in > a');
 
 	if (signIn && signIn.getData('redirect') !== 'true') {

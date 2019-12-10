@@ -37,7 +37,6 @@ import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -163,8 +162,9 @@ public class JSONDataStorage implements DataStorage {
 
 					dataRecordValues.put(
 						ddmFormFieldValue.getName(),
-						JSONUtil.toStringList(JSONFactoryUtil.createJSONArray(
-							value.getString(value.getDefaultLocale()))));
+						JSONUtil.toStringList(
+							JSONFactoryUtil.createJSONArray(
+								value.getString(value.getDefaultLocale()))));
 				}
 				else {
 					dataRecordValues.put(

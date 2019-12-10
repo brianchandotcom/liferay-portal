@@ -20,6 +20,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
+import com.liferay.data.engine.rest.internal.odata.entity.v1_0.DataRecordEntityModel;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
 import com.liferay.data.engine.rest.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
@@ -35,6 +36,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -46,17 +51,25 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.validation.ValidationException;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,7 +82,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v2_0/data-record.properties",
 	scope = ServiceScope.PROTOTYPE, service = DataRecordResource.class
 )
-public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
+public class DataRecordResourceImpl
+	extends BaseDataRecordResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteDataRecord(Long dataRecordId) throws Exception {
@@ -160,6 +174,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			PermissionThreadLocal.getPermissionChecker(),
 			dataRecordCollectionId, DataActionKeys.VIEW_DATA_RECORD);
 
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
+			dataRecordCollectionId);
+
 		return SearchUtil.search(
 			booleanQuery -> {
 			},
@@ -177,6 +194,46 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 				_ddlRecordLocalService.getRecord(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws PortalException {
+
+		Long dataDefinitionId = GetterUtil.getLong(
+			(String)multivaluedMap.getFirst("dataDefinitionId"));
+
+		if (Validator.isNull(dataDefinitionId)) {
+			long dataRecordCollectionId = GetterUtil.getLong(
+				(String)multivaluedMap.getFirst("dataRecordCollectionId"));
+
+			if (dataRecordCollectionId > 0) {
+				DDLRecordSet ddlRecordSet =
+					_ddlRecordSetLocalService.getDDLRecordSet(
+						dataRecordCollectionId);
+
+				DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+				dataDefinitionId = ddmStructure.getStructureId();
+			}
+		}
+
+		List<EntityField> entityFields = new ArrayList<>();
+
+		if (dataDefinitionId > 0) {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
+
+			for (String fieldName : ddmStructure.getFieldNames()) {
+				entityFields.add(
+					new StringEntityField(
+						fieldName,
+						locale -> _getSortableIndexFieldName(
+							ddmStructure.getStructureId(), fieldName, locale)));
+			}
+		}
+
+		return new DataRecordEntityModel(entityFields);
 	}
 
 	@Override
@@ -281,6 +338,9 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		_modelResourcePermission = modelResourcePermission;
 	}
 
+	@Reference
+	protected DDMIndexer ddmIndexer;
+
 	private DataStorage _getDataStorage(String dataStorageType) {
 		if (Validator.isNull(dataStorageType)) {
 			throw new ValidationException("Data storage type is null");
@@ -307,6 +367,20 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			ddmStructure.getGroupId(), ddmStructure.getStructureKey());
 
 		return ddlRecordSet.getRecordSetId();
+	}
+
+	private String _getSortableIndexFieldName(
+		long ddmStructureId, String fieldName, Locale locale) {
+
+		StringBundler sb = new StringBundler(
+			ddmIndexer.encodeName(ddmStructureId, fieldName, locale));
+
+		sb.append(StringPool.UNDERLINE);
+		sb.append("String");
+		sb.append(StringPool.UNDERLINE);
+		sb.append(Field.SORTABLE_FIELD_SUFFIX);
+
+		return sb.toString();
 	}
 
 	private DataRecord _toDataRecord(DDLRecord ddlRecord) throws Exception {

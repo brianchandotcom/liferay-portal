@@ -95,10 +95,8 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 		Date originalModifiedDate = _layoutPageTemplateEntry.getModifiedDate();
 
-		long classPK = RandomTestUtil.randomLong();
-
 		AssetDisplayPageEntryTestUtil.addAssetDisplayPageEntry(
-			_group.getGroupId(), _classNameId, classPK,
+			_group.getGroupId(), _classNameId, RandomTestUtil.randomLong(),
 			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_DEFAULT);
 
@@ -286,11 +284,9 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 		_layoutPageTemplateEntry = _getLayoutPageTemplateEntry();
 
-		long classPK = RandomTestUtil.randomLong();
-
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryTestUtil.addAssetDisplayPageEntry(
-				_group.getGroupId(), _classNameId, classPK,
+				_group.getGroupId(), _classNameId, RandomTestUtil.randomLong(),
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				AssetDisplayPageConstants.TYPE_DEFAULT);
 

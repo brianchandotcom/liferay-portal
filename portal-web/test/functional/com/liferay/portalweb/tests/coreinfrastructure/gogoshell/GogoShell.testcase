@@ -24,6 +24,8 @@ definition {
 
 	@priority = "4"
 	test AccessGogoShellCommandViaPortlet {
+		property test.name.skip.portal.instance = "GogoShell#AccessGogoShellCommandViaPortlet";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -42,7 +44,7 @@ definition {
 
 	@priority = "4"
 	test SiteAdminCannotAccessGogoShellPortlet {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		property test.name.skip.portal.instance = "GogoShell#SiteAdminCannotAccessGogoShellPortlet";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -64,6 +66,8 @@ definition {
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		Site.assignUserSitesCP(
 			siteName = "${siteName}",

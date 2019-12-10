@@ -334,15 +334,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerBuildImage.setGroup(DOCKER_GROUP);
 		dockerBuildImage.setInputDir(workspaceExtension.getDockerDir());
 
-		DockerRemoveImage removeDockerImage = GradleUtil.addTask(
+		DockerRemoveImage dockerRemoveImage = GradleUtil.addTask(
 			project, CLEAN_DOCKER_IMAGE_TASK_NAME, DockerRemoveImage.class);
 
-		removeDockerImage.dependsOn(REMOVE_DOCKER_CONTAINER_TASK_NAME);
+		dockerRemoveImage.dependsOn(REMOVE_DOCKER_CONTAINER_TASK_NAME);
 
-		removeDockerImage.setDescription("Removes the Docker image.");
-		removeDockerImage.setForce(true);
+		dockerRemoveImage.setDescription("Removes the Docker image.");
+		dockerRemoveImage.setForce(true);
 
-		removeDockerImage.setOnError(
+		dockerRemoveImage.setOnError(
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
@@ -368,7 +368,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					String dockerImageId = _getDockerImageId(project);
 
 					dockerBuildImage.setTag(dockerImageId);
-					removeDockerImage.setImageId(dockerImageId);
+					dockerRemoveImage.setImageId(dockerImageId);
 				}
 
 			});
@@ -376,7 +376,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Task cleanTask = GradleUtil.getTask(
 			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
 
-		cleanTask.dependsOn(removeDockerImage);
+		cleanTask.dependsOn(dockerRemoveImage);
 
 		return dockerBuildImage;
 	}

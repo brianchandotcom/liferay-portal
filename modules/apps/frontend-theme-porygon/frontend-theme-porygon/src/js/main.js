@@ -14,7 +14,7 @@
 
 (function() {
 	AUI().ready('liferay-sign-in-modal', A => {
-		var signIn = A.one('.sign-in > a');
+		var signIn = A.one('a.sign-in');
 
 		if (signIn && signIn.getData('redirect') !== 'true') {
 			signIn.plug(Liferay.SignInModal);

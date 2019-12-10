@@ -15,7 +15,7 @@
 AUI().ready('liferay-sign-in-modal', A => {
 	var BODY = A.getBody();
 
-	var signIn = A.one('#sign-in');
+	var signIn = A.one('a.sign-in');
 
 	if (signIn && signIn.getData('redirect') !== 'true') {
 		signIn.plug(Liferay.SignInModal);

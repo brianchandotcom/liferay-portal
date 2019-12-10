@@ -12,7 +12,9 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../config/constants/fragmentConfigurationFieldTypes';
@@ -52,6 +54,14 @@ export const FragmentConfigurationPanel = ({item}) => {
 					/>
 				);
 			})}
+			<RestoreButton></RestoreButton>
 		</div>
 	);
 };
+
+const RestoreButton = () => (
+	<ClayButton borderless className="w-100" displayType="secondary" small>
+		<ClayIcon symbol="restore" />
+		<span className="ml-2">{Liferay.Language.get('restore-values')}</span>
+	</ClayButton>
+);

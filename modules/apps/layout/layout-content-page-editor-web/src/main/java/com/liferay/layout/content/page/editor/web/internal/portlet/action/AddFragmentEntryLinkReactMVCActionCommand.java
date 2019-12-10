@@ -144,7 +144,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			layoutStructure -> {
 				LayoutStructure.Item item = LayoutStructure.Item.create(
 					JSONFactoryUtil.createJSONObject(itemConfig),
-					String.valueOf(fragmentEntryLink.getFragmentEntryId()),
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 					parentItemId, itemType);
 
 				layoutStructure.addItem(item, parentItemId, position);

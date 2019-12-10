@@ -121,7 +121,11 @@ if (analyticsConfiguration != null) {
 <script>
 	function <portlet:namespace />confirmation(event) {
 		<c:if test="<%=connected%>">
-			if (!confirm("<liferay-ui:message key="are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance" />")) {
+			if (
+				!confirm(
+					'<liferay-ui:message key="are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance" />'
+				)
+			) {
 				event.preventDefault();
 			}
 		</c:if>

@@ -152,6 +152,23 @@ public class BuilderCheck extends ChainedMethodCheck {
 					return;
 				}
 
+				DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+					TokenTypes.ELIST);
+
+				DetailAST childDetailAST = elistDetailAST.getFirstChild();
+
+				while (true) {
+					if (childDetailAST == null) {
+						break;
+					}
+
+					if (_isNullValueExpression(childDetailAST)) {
+						return;
+					}
+
+					childDetailAST = childDetailAST.getNextSibling();
+				}
+
 				parentDetailAST = DetailASTUtil.getParentWithTokenType(
 					methodCallDetailAST, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
 					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
@@ -429,13 +446,31 @@ public class BuilderCheck extends ChainedMethodCheck {
 				builderInformation.getMethodNames());
 
 			if (fullIdent != null) {
-				log(
-					detailAST, _MSG_USE_BUILDER,
-					builderInformation.getBuilderClassName(),
-					detailAST.getLineNo(), fullIdent.getLineNo(),
-					builderInformation.getMarkdownFileName());
+				DetailAST methodCallDetailAST =
+					nextSiblingDetailAST.findFirstToken(TokenTypes.METHOD_CALL);
 
-				return;
+				DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+					TokenTypes.ELIST);
+
+				DetailAST childDetailAST = elistDetailAST.getFirstChild();
+
+				while (true) {
+					if (childDetailAST == null) {
+						log(
+							detailAST, _MSG_USE_BUILDER,
+							builderInformation.getBuilderClassName(),
+							detailAST.getLineNo(), fullIdent.getLineNo(),
+							builderInformation.getMarkdownFileName());
+
+						return;
+					}
+
+					if (_isNullValueExpression(childDetailAST)) {
+						return;
+					}
+
+					childDetailAST = childDetailAST.getNextSibling();
+				}
 			}
 
 			if (containsVariableName(nextSiblingDetailAST, variableName)) {
@@ -448,27 +483,10 @@ public class BuilderCheck extends ChainedMethodCheck {
 		List<DetailAST> methodVariableDetailASTList, String builderClassName) {
 
 		for (DetailAST methodVariableDetailAST : methodVariableDetailASTList) {
-			if (methodVariableDetailAST.getType() != TokenTypes.EXPR) {
-				continue;
-			}
-
-			DetailAST firstChildDetailAST =
-				methodVariableDetailAST.getFirstChild();
-
-			if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+			if (_isNullValueExpression(methodVariableDetailAST)) {
 				log(
-					firstChildDetailAST, _MSG_INCORRECT_NULL_VALUE,
+					methodVariableDetailAST, _MSG_INCORRECT_NULL_VALUE,
 					builderClassName);
-			}
-			else if (firstChildDetailAST.getType() == TokenTypes.TYPECAST) {
-				DetailAST lastChildDetailAST =
-					firstChildDetailAST.getLastChild();
-
-				if (lastChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
-					log(
-						lastChildDetailAST, _MSG_INCORRECT_NULL_VALUE,
-						builderClassName);
-				}
 			}
 		}
 	}
@@ -646,6 +664,28 @@ public class BuilderCheck extends ChainedMethodCheck {
 		}
 
 		return variableNames;
+	}
+
+	private boolean _isNullValueExpression(DetailAST detailAST) {
+		if (detailAST.getType() != TokenTypes.EXPR) {
+			return false;
+		}
+
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+			return true;
+		}
+
+		if (firstChildDetailAST.getType() == TokenTypes.TYPECAST) {
+			DetailAST lastChildDetailAST = firstChildDetailAST.getLastChild();
+
+			if (lastChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _referencesNonfinalVariable(DetailAST detailAST) {

@@ -179,6 +179,35 @@ definition {
 	}
 
 	@priority = "4"
+	test RestrictEnabledLocales {
+		property custom.properties = "locales.enabled=zh_CN,en_US,fr_FR,de_DE,es_ES${line.separator}locales=zh_CN-en_US,fr_FR,de_DE,es_ES,pt_BR,hu_HU";
+		property test.name.skip.portal.instance = "Locale#RestrictEnabledLocales";
+
+		User.firstLoginPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		task ("Assert that some of the configured languages are available in available languages") {
+			for (var language : list "Hungarian (Hungary),Portuguese (Brazil)") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
+					value1 = "${language}");
+			}
+		}
+
+		task ("Assert that some of the configured languages are available in current languages") {
+			for (var language : list "Chinese (China),English (United States),French (France),German (Germany),Spanish (Spain)") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
+					value1 = "${language}");
+			}
+		}
+	}
+
+	@priority = "4"
 	test ViewSiteLocaleWithoutUserPreferredLocale {
 		User.firstLoginPG();
 

@@ -18,9 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -53,7 +51,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,7 +113,7 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 	public void testContributeWithConnectedGroupIdAndDepotDisabled()
 		throws Exception {
 
-		_withDepotDisabled(
+		DepotTestUtil.withDepotDisabled(
 			() -> {
 				DepotEntry depotEntry = _addDepotEntry();
 
@@ -402,23 +399,6 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 			}
 
 		};
-	}
-
-	private void _withDepotDisabled(UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-		dictionary.put("enabled", false);
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.depot.web.internal.configuration." +
-						"FFDepotConfiguration",
-					dictionary)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	@DeleteAfterTestRun

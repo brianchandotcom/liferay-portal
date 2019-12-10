@@ -15,17 +15,13 @@
 package com.liferay.depot.web.internal.item.selector.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.util.Dictionary;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -53,25 +49,8 @@ public class DepotItemSelectorViewTest {
 
 	@Test
 	public void testIsVisibleWithDepotDisabled() throws Exception {
-		_withDepotDisabled(
+		DepotTestUtil.withDepotDisabled(
 			() -> Assert.assertFalse(_depotItemSelectorView.isVisible(null)));
-	}
-
-	private void _withDepotDisabled(UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-		dictionary.put("enabled", false);
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.depot.web.internal.configuration." +
-						"FFDepotConfiguration",
-					dictionary)) {
-
-			unsafeRunnable.run();
-		}
 	}
 
 	@Inject(filter = "component.name=*.DepotItemSelectorView")

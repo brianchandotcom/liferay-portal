@@ -109,7 +109,10 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	shouldUpdate(changes) {
-		return shouldUpdatePureComponent(changes);
+		return shouldUpdatePureComponent(changes, [
+			'events',
+			'_floatingToolbar'
+		]);
 	}
 
 	/**

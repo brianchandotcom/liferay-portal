@@ -128,6 +128,31 @@ definition {
 	}
 
 	@priority = "4"
+	test RestrictAvailableLocales {
+		property custom.properties = "locales=ca_ES,zh_CN,nl_NL,en_AU,en_GB,en_US,fi_FI,fr_FR,de_DE,it_IT,iw_IL,hu_HU,ja_JP,pt_BR,es_ES";
+		property test.name.skip.portal.instance = "Locale#RestrictAvailableLocales";
+
+		User.firstLoginPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		task ("Assert there is at least one language available in current languages") {
+			AssertElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT");
+		}
+
+		task ("Assert that some of the configured languages are available in available languages") {
+			for (var language : list "English (Australia),English (United Kingdom),Italian (Italy)") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "LanguageConfiguration#LANGUAGES_AVAILABLE",
+					value1 = "${language}");
+			}
+		}
+	}
+
+	@priority = "4"
 	test RestrictDefaultLocale {
 		property custom.properties = "company.default.locale=es_ES";
 

@@ -51,6 +51,7 @@ const Container = React.forwardRef(({children, item}, ref) => {
 	const {
 		backgroundColorCssClass,
 		backgroundImage,
+		columnSpacing,
 		paddingHorizontal,
 		paddingVertical,
 		type
@@ -65,7 +66,8 @@ const Container = React.forwardRef(({children, item}, ref) => {
 					container: type === 'fixed',
 					'container-fluid': type === 'fluid',
 					empty: !item.children.length,
-					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
+					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3,
+					'no-gutters': columnSpacing
 				}
 			)}
 			ref={ref}

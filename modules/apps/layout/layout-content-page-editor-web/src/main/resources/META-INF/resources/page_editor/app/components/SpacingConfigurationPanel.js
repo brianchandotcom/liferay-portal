@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import React, {useContext} from 'react';
+import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
+import React, {useContext, useState} from 'react';
 
 import {DispatchContext} from '../../app/reducers/index';
 import updateItemConfig from '../actions/updateItemConfig';
@@ -23,14 +23,33 @@ const NUMBER_OF_COLUMNS_OPTIONS = ['0', '1', '2', '3', '4', '5', '6'];
 const PADDING_OPTIONS = ['0', '1', '2', '4', '6', '8', '10'];
 
 const SELECTORS = {
+	columnSpacing: 'columnSpacing',
 	numberOfColumns: 'numberofColumns',
 	paddingHorizontal: 'paddingHorizontal',
 	paddingVertical: 'paddingVertical',
 	type: 'type'
 };
 
+const ClayCheckboxWithState = ({onChange, ...otherProps}) => {
+	const [value, setValue] = useState(false);
+
+	return (
+		<ClayCheckbox
+			checked={value}
+			onChange={event => {
+				onChange(event);
+				setValue(val => !val);
+			}}
+			{...otherProps}
+		/>
+	);
+};
+
 export const SpacingConfigurationPanel = ({itemId}) => {
 	const dispatch = useContext(DispatchContext);
+	const [showSpaceBetweenCheckbox, setShowSpaceBetweenCheckbox] = useState(
+		false
+	);
 
 	const handleSelectValueChanged = (identifier, value) => {
 		dispatch(
@@ -53,12 +72,15 @@ export const SpacingConfigurationPanel = ({itemId}) => {
 					aria-label={Liferay.Language.get('number-of-columns')}
 					defaultValue="1"
 					id="floatingToolbarSpacingPanelNumberOfColumnsOption"
-					onChange={({target: {value}}) =>
+					onChange={({target: {value}}) => {
+						if (value > 1 && !showSpaceBetweenCheckbox) {
+							setShowSpaceBetweenCheckbox(true);
+						}
 						handleSelectValueChanged(
 							SELECTORS.numberOfColumns,
 							value
-						)
-					}
+						);
+					}}
 					options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
 						label: value,
 						value
@@ -130,6 +152,24 @@ export const SpacingConfigurationPanel = ({itemId}) => {
 					/>
 				</div>
 			</ClayForm.Group>
+
+			{showSpaceBetweenCheckbox && (
+				<ClayForm.Group>
+					<ClayCheckboxWithState
+						aria-label={Liferay.Language.get(
+							'space-between-columns'
+						)}
+						defaultValue={true}
+						label={Liferay.Language.get('space-between-columns')}
+						onChange={({target: {value}}) =>
+							handleSelectValueChanged(
+								SELECTORS.columnSpacing,
+								value
+							)
+						}
+					/>
+				</ClayForm.Group>
+			)}
 		</div>
 	);
 };

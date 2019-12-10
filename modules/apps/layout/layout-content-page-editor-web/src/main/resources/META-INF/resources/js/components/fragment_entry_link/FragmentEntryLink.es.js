@@ -74,12 +74,12 @@ class FragmentEntryLink extends Component {
 			[
 				'_active',
 				'_configurationValues',
-				'hasUpdatePermissions',
+				'_hasUpdatePermissions',
 				'fragmentEntryLinkId',
 				'fragmentEntryLinks'
 			],
 			() => {
-				if (this.hasUpdatePermissions && this._active) {
+				if (this._hasUpdatePermissions && this._active) {
 					this._createFloatingToolbar();
 				} else {
 					this._disposeFloatingToolbar();
@@ -376,6 +376,9 @@ FragmentEntryLink.STATE = {
 		.string()
 		.value(''),
 	_floatingToolbar: Config.internal().value(null),
+	_hasUpdatePermissions: Config.internal()
+		.bool()
+		.value(true),
 	_hovered: Config.internal()
 		.bool()
 		.value(false),
@@ -385,6 +388,9 @@ FragmentEntryLink.STATE = {
 	_showComments: Config.internal()
 		.bool()
 		.value(false),
+	_spritemap: Config.internal()
+		.string()
+		.value(''),
 	fragmentEntryLinkId: Config.string().required(),
 	name: Config.string().value(''),
 	rowType: Config.string(),
@@ -420,23 +426,14 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 					? state.dropTargetBorder
 					: '',
+			_hasUpdatePermissions: state.hasUpdatePermissions,
 			_hovered,
 			_itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
 			_showComments,
-			defaultEditorConfigurations: state.defaultEditorConfigurations,
-			defaultLanguageId: state.defaultLanguageId,
-			defaultSegmentsExperienceId: state.defaultSegmentsExperienceId,
-			duplicateFragmentEntryLinkURL: state.duplicateFragmentEntryLinkURL,
+			_spritemap: state.spritemap,
 			fragmentEntryLinks: state.fragmentEntryLinks,
-			hasUpdatePermissions: state.hasUpdatePermissions,
-			imageSelectorURL: state.imageSelectorURL,
-			languageId: state.languageId,
 			layoutData: state.layoutData,
-			portletNamespace: state.portletNamespace,
 			segmentsExperienceId: state.segmentsExperienceId,
-			selectedMappingTypes: state.selectedMappingTypes,
-			selectedSidebarPanelId: state.selectedSidebarPanelId,
-			spritemap: state.spritemap,
 			widgets: state.widgets
 		};
 	}

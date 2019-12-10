@@ -12,18 +12,18 @@
 	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentCommentsButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? _hasUpdatePermissions: bool}
 	{@param? _hovered: bool}
 	{@param? _isDropZone: bool}
 	{@param? _itemType: string}
 	{@param? _showComments: bool}
+	{@param? _spritemap: string}
 	{@param? content: ?}
 	{@param? editableValues: ?}
 	{@param? error: bool}
-	{@param? hasUpdatePermissions: bool}
 	{@param? name: string}
 	{@param? rowType: ?}
 	{@param? showControlBar: bool}
-	{@param? spritemap: string}
 	{@param? store: ?}
 
 	{let $wrapperClasses kind="text"}
@@ -39,7 +39,7 @@
 			{sp}{$_dropBorder}
 		{/if}
 
-		{if $hasUpdatePermissions}
+		{if $_hasUpdatePermissions}
 			{sp}fragments-editor__drag-source
 			{sp}fragments-editor__drag-source--fragment
 			{sp}fragments-editor__drop-target
@@ -72,13 +72,13 @@
 		ref="fragmentEntryLinkWrapper"
 		tabindex="0"
 	>
-		{if $hasUpdatePermissions and $showControlBar}
+		{if $_hasUpdatePermissions and $showControlBar}
 			<nav class="fragments-editor__topper tbar">
 				<ul class="tbar-nav">
 					<li class="fragments-editor__drag-handler fragments-editor__topper__item pr-0 tbar-item">
 						<div>
 							<svg class="fragments-editor__topper__icon fragments-editor__topper__drag-icon lexicon-icon">
-									<use xlink:href="{$spritemap ?: ''}#drag"></use>
+									<use xlink:href="{$_spritemap ?: ''}#drag"></use>
 							</svg>
 						</div>
 					</li>
@@ -90,7 +90,7 @@
 						<li class="fragments-editor__topper__item tbar-item">
 							<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentCommentsButtonClick}">
 								<svg class="fragments-editor__topper__icon lexicon-icon">
-									<use xlink:href="{$spritemap ?: ''}#comments"></use>
+									<use xlink:href="{$_spritemap ?: ''}#comments"></use>
 								</svg>
 							</button>
 						</li>
@@ -100,7 +100,7 @@
 						<li class="fragments-editor__topper__item tbar-item">
 							<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
 								<svg class="fragments-editor__topper__icon lexicon-icon">
-									<use xlink:href="{$spritemap ?: ''}#times-circle"></use>
+									<use xlink:href="{$_spritemap ?: ''}#times-circle"></use>
 								</svg>
 							</button>
 						</li>

@@ -65,6 +65,8 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import javax.validation.constraints.NotNull;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,6 +82,20 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements EntityModelResource {
+
+	@Override
+	public void deleteOrganization(@NotNull Long organizationId)
+		throws Exception {
+
+		_organizationService.deleteOrganization(organizationId);
+	}
+
+	@Override
+	public void deleteOrganization(Long[] organizationIds) throws Exception {
+		for (Long organizationId : organizationIds) {
+			deleteOrganization(organizationId);
+		}
+	}
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {

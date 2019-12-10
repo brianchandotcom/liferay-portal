@@ -393,86 +393,14 @@ class FragmentEntryLink extends Component {
  * @type {!Object}
  */
 FragmentEntryLink.STATE = {
-	/**
-	 * Fragment Entry Configuration
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {object}
-	 */
 	_configuration: Config.object().internal(),
-
-	/**
-	 * Fragment Entry Link Configuration values
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {object}
-	 */
 	_configurationValues: Config.object().internal(),
-
-	/**
-	 * Fragment Entry Link Default configuration values
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {object}
-	 */
 	_defaultConfigurationValues: Config.object().internal(),
-
-	/**
-	 * Floating toolbar instance for internal use.
-	 * @default null
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {object|null}
-	 */
 	_floatingToolbar: Config.internal().value(null),
-
-	/**
-	 * FragmentEntryLink id
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!string}
-	 */
 	fragmentEntryLinkId: Config.string().required(),
-
-	/**
-	 * Fragment name
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {string}
-	 */
 	name: Config.string().value(''),
-
-	/**
-	 * Row type
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {string}
-	 */
 	rowType: Config.string(),
-
-	/**
-	 * Shows FragmentEntryLink control toolbar
-	 * @default true
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!bool}
-	 */
 	showControlBar: Config.bool().value(true),
-
-	/**
-	 * CSS class to modify style
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!string}
-	 */
 	styleModifier: Config.string()
 };
 

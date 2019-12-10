@@ -11851,18 +11851,14 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 										<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
 									</and>
 									<then>
-										<exec executable="curl" outputproperty="curl.output.search.indices">
-											<arg line="&apos;localhost:9201/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-										</exec>
+										<ant antfile="build-test-elasticsearch7.xml" target="print-elasticsearch-indices" />
 									</then>
 									<elseif>
 										<not>
 											<equals arg1="${suite.search.engine}" arg2="solr" />
 										</not>
 										<then>
-											<exec executable="curl" outputproperty="curl.output.search.indices">
-												<arg line="&apos;localhost:9200/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-											</exec>
+											<ant antfile="build-test-elasticsearch6.xml" target="print-elasticsearch-indices" />
 										</then>
 									</elseif>
 								</if>
@@ -11876,32 +11872,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 										<equals arg1="${portal.suite.search.engine}" arg2="elasticsearch7" />
 									</and>
 									<then>
-										<exec executable="curl" outputproperty="curl.output.search.indices">
-											<arg line="&apos;localhost:9201/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-										</exec>
+										<ant antfile="build-test-elasticsearch7.xml" target="print-elasticsearch-indices" />
 									</then>
 									<else>
-										<exec executable="curl" outputproperty="curl.output.search.indices">
-											<arg line="&apos;localhost:9200/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-										</exec>
+										<ant antfile="build-test-elasticsearch6.xml" target="print-elasticsearch-indices" />
 									</else>
 								</if>
 							</else>
-						</if>
-
-						<if>
-							<not>
-								<equals arg1="${suite.search.engine}" arg2="solr" />
-							</not>
-							<then>
-								<echo></echo>
-								<echo>##</echo>
-								<echo>## Elasticsearch Indices</echo>
-								<echo>##</echo>
-								<echo></echo>
-								<echo>${curl.output.search.indices}</echo>
-								<echo></echo>
-							</then>
 						</if>
 					</then>
 				</if>
@@ -11911,19 +11888,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<if>
 					<equals arg1="${solr.enabled}" arg2="true" />
 					<then>
-						<exec executable="curl" outputproperty="curl.output.solr.indices">
-							<arg line="http://localhost:8983/solr/liferay/select?q=*:*&amp;wt=json" />
-							<arg value="-d" />
-							<arg value="&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-						</exec>
-
-						<echo></echo>
-						<echo>##</echo>
-						<echo>## Solr Indices</echo>
-						<echo>##</echo>
-						<echo></echo>
-						<echo>${curl.output.solr.indices}</echo>
-						<echo></echo>
+						<ant antfile="build-test-solr.xml" target="print-solr-indices" />
 					</then>
 					<elseif>
 						<isset property="env.CI_TEST_SUITE" />
@@ -11933,19 +11898,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							<if>
 								<equals arg1="${suite.search.engine}" arg2="solr" />
 								<then>
-									<exec executable="curl" outputproperty="curl.output.solr.indices">
-										<arg line="http://localhost:8983/solr/liferay/select?q=*:*&amp;wt=json" />
-										<arg value="-d" />
-										<arg value="&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-									</exec>
-
-									<echo></echo>
-									<echo>##</echo>
-									<echo>## Solr Indices</echo>
-									<echo>##</echo>
-									<echo></echo>
-									<echo>${curl.output.solr.indices}</echo>
-									<echo></echo>
+									<ant antfile="build-test-solr.xml" target="print-solr-indices" />
 								</then>
 							</if>
 						</then>

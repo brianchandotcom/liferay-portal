@@ -208,6 +208,33 @@ definition {
 	}
 
 	@priority = "4"
+	test ViewDefaultEnabledLocales {
+		User.firstLoginPG();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Navigator.gotoNavTab(navTab = "Languages");
+
+		task ("Assert the default language options radio box is checked") {
+			AssertChecked(locator1 = "SiteSettingsDisplaySettings#DEFAULT_LANGUAGES_RADIO");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		task ("Assert the default enabled locales in Web Content match what is normally available") {
+			Click(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			for (var language : list "ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE") {
+				AssertElementPresent(
+					key_locale = "${language}",
+					locator1 = "Translation#LOCALIZATION_NAME");
+			}
+		}
+	}
+
+	@priority = "4"
 	test ViewSiteLocaleWithoutUserPreferredLocale {
 		User.firstLoginPG();
 

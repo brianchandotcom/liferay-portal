@@ -1483,11 +1483,11 @@ import org.osgi.service.component.annotations.Reference;
 				DB db = DBManagerUtil.getDB();
 
 				if ((db.getDBType() != DBType.DB2) &&
-				(db.getDBType() != DBType.MYSQL) &&
-				(db.getDBType() != DBType.MARIADB) &&
-				(db.getDBType() != DBType.SYBASE)) {
+					(db.getDBType() != DBType.MYSQL) &&
+					(db.getDBType() != DBType.MARIADB) &&
+					(db.getDBType() != DBType.SYBASE)) {
 
-				_useTempFile = true;
+					_useTempFile = true;
 				}
 			</#if>
 		}
@@ -1506,11 +1506,11 @@ import org.osgi.service.component.annotations.Reference;
 				DB db = DBManagerUtil.getDB();
 
 				if ((db.getDBType() != DBType.DB2) &&
-				(db.getDBType() != DBType.MYSQL) &&
-				(db.getDBType() != DBType.MARIADB) &&
-				(db.getDBType() != DBType.SYBASE)) {
+					(db.getDBType() != DBType.MYSQL) &&
+					(db.getDBType() != DBType.MARIADB) &&
+					(db.getDBType() != DBType.SYBASE)) {
 
-				_useTempFile = true;
+					_useTempFile = true;
 				}
 			</#if>
 		}

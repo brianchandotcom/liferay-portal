@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,6 +69,10 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 
 	protected abstract TableUpdater[] getTableUpdaters();
 
+	protected void setUpgradePrimaryKey(boolean upgradePrimaryKey) {
+		_upgradePrimaryKey = upgradePrimaryKey;
+	}
+
 	protected class TableUpdater implements Callable<Void> {
 
 		public TableUpdater(
@@ -104,8 +109,9 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 
 					runSQL(
 						connection,
-						"alter table " + _tableName +
-							" add companyId LONG not null");
+						StringBundler.concat(
+							"alter table ", _tableName, " add ",
+							_COMPANYID_COLUMN_DEFINITION));
 				}
 				else {
 					if (_log.isInfoEnabled()) {
@@ -116,6 +122,23 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 				}
 
 				update(connection);
+
+				if (_upgradePrimaryKey) {
+					if (!hasColumnType(
+							_tableName, "companyId", "LONG not null")) {
+
+						runSQL(
+							StringBundler.concat(
+								"alter_column_type ", _tableName,
+								StringPool.SPACE,
+								_COMPANYID_COLUMN_DEFINITION));
+					}
+
+					UpgradePrimaryKey upgradePrimaryKey = new UpgradePrimaryKey(
+						_COMPANYID_COLUMN_DEFINITION, false, _tableName);
+
+					upgradePrimaryKey.doUpgrade();
+				}
 			}
 
 			return null;
@@ -206,6 +229,9 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 			return sb.toString();
 		}
 
+		private static final String _COMPANYID_COLUMN_DEFINITION =
+			"companyId LONG not null";
+
 		private final String _columnName;
 		private boolean _createCompanyIdColumn;
 		private final String[][] _foreignNamesArray;
@@ -215,5 +241,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUpgradeCompanyId.class);
+
+	private boolean _upgradePrimaryKey;
 
 }

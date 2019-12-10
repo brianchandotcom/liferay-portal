@@ -43,6 +43,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -59,6 +61,21 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseOrganizationResourceImpl
 	implements OrganizationResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@DELETE
+	@Operation(description = "Deletes multiple organizations")
+	@Path("/organizations")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
+	public void deleteOrganization(Long[] longs) throws Exception {
+	}
 
 	/**
 	 * Invoke this method with the command line:
@@ -91,6 +108,26 @@ public abstract class BaseOrganizationResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(description = "Deletes the organization")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
+	)
+	@Path("/organizations/{organizationId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
+	public void deleteOrganization(
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
+				organizationId)
+		throws Exception {
 	}
 
 	/**

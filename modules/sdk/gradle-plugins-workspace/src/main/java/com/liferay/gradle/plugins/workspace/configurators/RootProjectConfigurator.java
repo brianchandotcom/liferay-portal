@@ -221,31 +221,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
-	private String _getDockerContainerId(Project project) {
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
-
-		return workspaceExtension.getDockerContainerId();
-	}
-
-	private String _getDockerImageId(Project project) {
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
-
-		return workspaceExtension.getDockerImageId();
-	}
-
-	private String _loadTemplate(String name) {
-		try (InputStream inputStream =
-				RootProjectConfigurator.class.getResourceAsStream(name)) {
-
-			return StringUtil.read(inputStream);
-		}
-		catch (Exception e) {
-			throw new GradleException("Unable to read template " + name, e);
-		}
-	}
-
 	private Configuration _addConfigurationBundleSupport(
 		final Project project) {
 
@@ -1340,6 +1315,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 	}
 
+	private String _getDockerContainerId(Project project) {
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
+		return workspaceExtension.getDockerContainerId();
+	}
+
+	private String _getDockerImageId(Project project) {
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
+		return workspaceExtension.getDockerImageId();
+	}
+
 	private File _getDownloadFile(Download download) {
 		URL url = (URL)download.getSrc();
 
@@ -1348,20 +1337,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return new File(
 			download.getDest(),
 			fileName.substring(fileName.lastIndexOf('/') + 1));
-	}
-
-	private List<?> _getSrcList(Download download) {
-		Object src = download.getSrc();
-
-		if (src == null) {
-			return Collections.emptyList();
-		}
-
-		if (src instanceof List<?>) {
-			return (List<?>)src;
-		}
-
-		return Collections.singletonList(src);
 	}
 
 	private String _getEnvVarOverride(String string) {
@@ -1380,6 +1355,31 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 
 		return sb.toString();
+	}
+
+	private List<?> _getSrcList(Download download) {
+		Object src = download.getSrc();
+
+		if (src == null) {
+			return Collections.emptyList();
+		}
+
+		if (src instanceof List<?>) {
+			return (List<?>)src;
+		}
+
+		return Collections.singletonList(src);
+	}
+
+	private String _loadTemplate(String name) {
+		try (InputStream inputStream =
+				RootProjectConfigurator.class.getResourceAsStream(name)) {
+
+			return StringUtil.read(inputStream);
+		}
+		catch (Exception e) {
+			throw new GradleException("Unable to read template " + name, e);
+		}
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

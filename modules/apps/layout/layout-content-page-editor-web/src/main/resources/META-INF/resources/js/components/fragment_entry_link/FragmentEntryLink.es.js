@@ -111,24 +111,12 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		const hoveredPath = getItemPath(
-			state.hoveredItemId,
-			state.hoveredItemType,
-			state.layoutData.structure
-		);
-
 		return {
 			...state,
 
 			_fragmentEntryLinkRowType: state.rowType,
 			_fragmentsEditorItemTypes: FRAGMENTS_EDITOR_ITEM_TYPES,
 			_fragmentsEditorRowTypes: FRAGMENTS_EDITOR_ROW_TYPES,
-
-			_hovered: itemIsInPath(
-				hoveredPath,
-				state.fragmentEntryLinkId,
-				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			),
 
 			_showComments: state.sidebarPanels.some(
 				sidebarPanel => sidebarPanel.sidebarPanelId === 'comments'
@@ -397,6 +385,9 @@ FragmentEntryLink.STATE = {
 	_configurationValues: Config.object().internal(),
 	_defaultConfigurationValues: Config.object().internal(),
 	_floatingToolbar: Config.internal().value(null),
+	_hovered: Config.internal()
+		.bool()
+		.value(false),
 	fragmentEntryLinkId: Config.string().required(),
 	name: Config.string().value(''),
 	rowType: Config.string(),
@@ -404,31 +395,46 @@ FragmentEntryLink.STATE = {
 	styleModifier: Config.string()
 };
 
-const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
-	'activeItemId',
-	'activeItemType',
-	'defaultEditorConfigurations',
-	'defaultLanguageId',
-	'defaultSegmentsExperienceId',
-	'dropTargetItemId',
-	'dropTargetItemType',
-	'dropTargetBorder',
-	'duplicateFragmentEntryLinkURL',
-	'fragmentEntryLinks',
-	'hasUpdatePermissions',
-	'hoveredItemId',
-	'hoveredItemType',
-	'imageSelectorURL',
-	'languageId',
-	'layoutData',
-	'portletNamespace',
-	'segmentsExperienceId',
-	'selectedMappingTypes',
-	'selectedSidebarPanelId',
-	'sidebarPanels',
-	'spritemap',
-	'widgets'
-]);
+const ConnectedFragmentEntryLink = getConnectedComponent(
+	FragmentEntryLink,
+	[],
+	(state, props) => {
+		const _hovered = itemIsInPath(
+			getItemPath(
+				state.hoveredItemId,
+				state.hoveredItemType,
+				state.layoutData.structure
+			),
+			props.fragmentEntryLinkId,
+			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		);
+
+		return {
+			_hovered,
+			activeItemId: state.activeItemId,
+			activeItemType: state.activeItemType,
+			defaultEditorConfigurations: state.defaultEditorConfigurations,
+			defaultLanguageId: state.defaultLanguageId,
+			defaultSegmentsExperienceId: state.defaultSegmentsExperienceId,
+			dropTargetBorder: state.dropTargetBorder,
+			dropTargetItemId: state.dropTargetItemId,
+			dropTargetItemType: state.dropTargetItemType,
+			duplicateFragmentEntryLinkURL: state.duplicateFragmentEntryLinkURL,
+			fragmentEntryLinks: state.fragmentEntryLinks,
+			hasUpdatePermissions: state.hasUpdatePermissions,
+			imageSelectorURL: state.imageSelectorURL,
+			languageId: state.languageId,
+			layoutData: state.layoutData,
+			portletNamespace: state.portletNamespace,
+			segmentsExperienceId: state.segmentsExperienceId,
+			selectedMappingTypes: state.selectedMappingTypes,
+			selectedSidebarPanelId: state.selectedSidebarPanelId,
+			sidebarPanels: state.sidebarPanels,
+			spritemap: state.spritemap,
+			widgets: state.widgets
+		};
+	}
+);
 
 Soy.register(ConnectedFragmentEntryLink, templates);
 

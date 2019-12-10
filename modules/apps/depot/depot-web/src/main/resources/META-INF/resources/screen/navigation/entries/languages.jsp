@@ -45,7 +45,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>">
-	<liferay-ui:message key="new-name-matches-an-existing-workspace.-please-change-name" />
+	<liferay-ui:message key="there-is-already-a-workspace-with-this-name.-please-enter-a-unique-name" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DepotEntryNameException.class %>">

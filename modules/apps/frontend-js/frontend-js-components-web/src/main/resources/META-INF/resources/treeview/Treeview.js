@@ -12,9 +12,8 @@
  * details.
  */
 
-import {useTimeout} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useReducer, useRef, useState} from 'react';
+import React, {useEffect, useReducer} from 'react';
 
 import NodeList from './NodeList';
 import TreeviewCard from './TreeviewCard';
@@ -115,7 +114,6 @@ function init({
 	});
 
 	return {
-		active: false,
 		filterQuery,
 		filteredNodes: filterNodes(nodes, filterQuery),
 		focusedNodeId: null,
@@ -175,23 +173,6 @@ function reducer(state, action) {
 	const nodes = filteredNodes || state.nodes;
 
 	switch (action.type) {
-		case 'ACTIVATE': {
-			const focusedNodeId =
-				state.focusedNodeId || (nodes[0] && nodes[0].id);
-
-			return {
-				...state,
-				active: true,
-				focusedNodeId
-			};
-		}
-
-		case 'DEACTIVATE':
-			return {
-				...state,
-				active: false
-			};
-
 		case 'COLLAPSE':
 			// eg double click
 			if (!filteredNodes) {
@@ -573,12 +554,6 @@ function Treeview({
 	nodes: initialNodes,
 	onSelectedNodesChange
 }) {
-	const delay = useTimeout();
-
-	const focusTimer = useRef();
-
-	const [, setHasFocus] = useState(false);
-
 	const [state, dispatch] = useReducer(
 		reducer,
 		{
@@ -602,52 +577,20 @@ function Treeview({
 		}
 	}, [onSelectedNodesChange, selectedNodeIds]);
 
-	const cancelTimer = () => {
-		if (focusTimer.current) {
-			focusTimer.current();
-			focusTimer.current = null;
-		}
-	};
-
-	const handleFocus = () => {
-		cancelTimer();
-
-		setHasFocus(hadFocus => {
-			if (!hadFocus) {
-				dispatch({type: 'ACTIVATE'});
-			}
-
-			return true;
-		});
-	};
-
-	const handleBlur = () => {
-		cancelTimer();
-
-		// Due to React's event bubbling, we may get a "focus" event
-		// immediately after this "blur" (eg. when moving around inside
-		// the treeview); so, we defer this state update until the next
-		// tick, giving us a chance to cancel it if needed.
-		focusTimer.current = delay(() => {
-			setHasFocus(hadFocus => {
-				if (hadFocus) {
-					dispatch({type: 'DEACTIVATE'});
-				}
-
-				return false;
-			});
-		}, 0);
-	};
-
 	return (
 		<TreeviewContext.Provider value={{dispatch, state}}>
+			<div
+				onFocus={() => {
+					if (nodes) {
+						dispatch({nodeId: nodes[0].id, type: 'FOCUS'});
+					}
+				}}
+				tabIndex={0}
+			></div>
 			<NodeList
 				NodeComponent={NodeComponent}
 				nodes={filteredNodes || nodes}
-				onBlur={handleBlur}
-				onFocus={handleFocus}
 				role="tree"
-				tabIndex={0}
 			/>
 		</TreeviewContext.Provider>
 	);

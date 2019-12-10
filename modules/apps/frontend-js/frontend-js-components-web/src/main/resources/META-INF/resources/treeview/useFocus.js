@@ -19,15 +19,15 @@ import TreeviewContext from './TreeviewContext';
 export default function useFocus(nodeId) {
 	const {state} = useContext(TreeviewContext);
 
-	const {active, focusedNodeId} = state;
+	const {focusedNodeId} = state;
 
 	const focusable = useRef();
 
 	useEffect(() => {
-		if (active && nodeId === focusedNodeId && focusable.current) {
+		if (nodeId === focusedNodeId && focusable.current) {
 			focusable.current.focus();
 		}
-	}, [active, focusedNodeId, nodeId]);
+	}, [focusedNodeId, nodeId]);
 
 	return focusable;
 }

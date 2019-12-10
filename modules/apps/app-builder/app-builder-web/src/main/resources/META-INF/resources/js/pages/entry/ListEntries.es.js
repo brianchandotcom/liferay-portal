@@ -174,7 +174,9 @@ const ListEntries = withRouter(({history, location}) => {
 							);
 						}
 
-						displayedDataRecordValues[fieldName] = fieldValuePreview;
+						displayedDataRecordValues[
+							fieldName
+						] = fieldValuePreview;
 					});
 
 					return {

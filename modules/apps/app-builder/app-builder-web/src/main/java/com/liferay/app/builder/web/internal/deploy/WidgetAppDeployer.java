@@ -84,7 +84,8 @@ public class WidgetAppDeployer implements AppDeployer {
 		boolean showFormView, boolean showTableView) {
 
 		AppPortlet appPortlet = new AppPortlet(
-			appBuilderApp, appName, portletName, showFormView, showTableView);
+			appBuilderApp, "widget", appName, portletName, showFormView,
+			showTableView);
 
 		return _bundleContext.registerService(
 			Portlet.class, appPortlet,

@@ -23,6 +23,7 @@
 
 	Map<String, Object> data = new HashMap<>();
 
+	data.put("appDeploymentType", request.getAttribute(AppBuilderWebKeys.APP_DEPLOYMENT_TYPE));
 	data.put("appId", appBuilderApp.getAppBuilderAppId());
 	data.put("basePortletURL", String.valueOf(renderResponse.createRenderURL()));
 	data.put("dataDefinitionId", appBuilderApp.getDdmStructureId());

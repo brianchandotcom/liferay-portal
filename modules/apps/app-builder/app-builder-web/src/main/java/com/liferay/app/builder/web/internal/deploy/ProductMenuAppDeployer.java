@@ -156,7 +156,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		AppBuilderApp appBuilderApp, String appName, String portletName) {
 
 		AppPortlet appPortlet = new AppPortlet(
-			appBuilderApp, appName, portletName);
+			appBuilderApp, "productMenu", appName, portletName);
 
 		return _bundleContext.registerService(
 			Portlet.class, appPortlet,

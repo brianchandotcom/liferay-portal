@@ -34,16 +34,19 @@ import javax.portlet.RenderResponse;
 public class AppPortlet extends MVCPortlet {
 
 	public AppPortlet(
-		AppBuilderApp appBuilderApp, String appName, String portletName) {
+		AppBuilderApp appBuilderApp, String appDeploymentType, String appName,
+		String portletName) {
 
-		this(appBuilderApp, appName, portletName, true, true);
+		this(
+			appBuilderApp, appDeploymentType, appName, portletName, true, true);
 	}
 
 	public AppPortlet(
-		AppBuilderApp appBuilderApp, String appName, String portletName,
-		boolean showFormView, boolean showTableView) {
+		AppBuilderApp appBuilderApp, String appDeploymentType, String appName,
+		String portletName, boolean showFormView, boolean showTableView) {
 
 		_appBuilderApp = appBuilderApp;
+		_appDeploymentType = appDeploymentType;
 		_appName = appName;
 		_portletName = portletName;
 		_showFormView = showFormView;
@@ -91,6 +94,8 @@ public class AppPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(AppBuilderWebKeys.APP, _appBuilderApp);
 		renderRequest.setAttribute(
+			AppBuilderWebKeys.APP_DEPLOYMENT_TYPE, _appDeploymentType);
+		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_TABLE_VIEW, _showTableView);
@@ -99,6 +104,7 @@ public class AppPortlet extends MVCPortlet {
 	}
 
 	private final AppBuilderApp _appBuilderApp;
+	private final String _appDeploymentType;
 	private final String _appName;
 	private final String _portletName;
 	private final boolean _showFormView;

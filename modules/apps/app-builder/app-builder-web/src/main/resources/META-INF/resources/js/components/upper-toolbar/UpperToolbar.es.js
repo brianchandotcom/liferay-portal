@@ -14,13 +14,18 @@
 
 import {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {AppContext} from '../../AppContext.es';
 import Button from '../button/Button.es';
 
 const UpperToolbar = ({children}) => {
+	const {appDeploymentType} = useContext(AppContext);
+
 	return (
-		<nav className="app-builder-upper-toolbar component-tbar subnav-tbar-light tbar">
+		<nav
+			className={`app-builder-upper-toolbar-${appDeploymentType} component-tbar subnav-tbar-light tbar`}
+		>
 			<div className="container-fluid container-fluid-max-xl">
 				<ul className="tbar-nav">{children}</ul>
 			</div>

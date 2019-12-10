@@ -15,12 +15,12 @@
 package com.liferay.portal.search.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.index.IndexInformation;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -88,13 +88,15 @@ public class FieldMappingsDisplayBuilder {
 		List<FieldMappingIndexDisplayContext> fieldMappingIndexDisplayContexts,
 		String fieldMappings, String selectedIndexName) {
 
-		return HashMapBuilder.<String, Object>put(
-			"fieldMappingIndexDisplayContexts", fieldMappingIndexDisplayContexts
-		).put(
-			"fieldMappings", fieldMappings
-		).put(
-			"selectedIndexName", selectedIndexName
-		).build();
+		Map<String, Object> data = new HashMap<>();
+
+		data.put(
+			"fieldMappingIndexDisplayContexts",
+			fieldMappingIndexDisplayContexts);
+		data.put("fieldMappings", fieldMappings);
+		data.put("selectedIndexName", selectedIndexName);
+
+		return data;
 	}
 
 	protected FieldMappingIndexDisplayContext

@@ -40,6 +40,7 @@ import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -101,6 +102,12 @@ public class DDMFormTemplateContextFactoryImpl
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
+		String containerId = ddmFormRenderingContext.getContainerId();
+
+		if (Validator.isNull(containerId)) {
+			containerId = StringUtil.randomId();
+		}
+
 		setDDMFormFieldsEvaluableProperty(ddmForm);
 
 		Locale locale = ddmFormRenderingContext.getLocale();
@@ -109,46 +116,30 @@ public class DDMFormTemplateContextFactoryImpl
 			locale = LocaleThreadLocal.getSiteDefaultLocale();
 		}
 
-		Map<String, Object> templateContext =
-			HashMapBuilder.<String, Object>put(
-				"containerId",
-				() -> {
-					String containerId =
-						ddmFormRenderingContext.getContainerId();
+		Map<String, Object> templateContext = new HashMap<>();
 
-					if (Validator.isNull(containerId)) {
-						containerId = StringUtil.randomId();
-					}
-
-					return containerId;
-				}
-			).put(
-				"currentPage",
-				ParamUtil.getString(
-					ddmFormRenderingContext.getHttpServletRequest(),
-					"currentPage", "1")
-			).put(
-				"editingLanguageId", LanguageUtil.getLanguageId(locale)
-			).put(
-				"evaluatorURL", getDDMFormContextProviderServletURL()
-			).put(
-				"groupId", ddmFormRenderingContext.getGroupId()
-			).put(
-				"pages",
-				getPages(ddmForm, ddmFormLayout, ddmFormRenderingContext)
-			).put(
-				"paginationMode", ddmFormLayout.getPaginationMode()
-			).put(
-				"portletNamespace",
-				ddmFormRenderingContext.getPortletNamespace()
-			).put(
-				"readOnly", ddmFormRenderingContext.isReadOnly()
-			).put(
-				"rules", toObjectList(ddmForm.getDDMFormRules())
-			).put(
-				"showRequiredFieldsWarning",
-				ddmFormRenderingContext.isShowRequiredFieldsWarning()
-			).build();
+		templateContext.put("containerId", containerId);
+		templateContext.put(
+			"currentPage",
+			ParamUtil.getString(
+				ddmFormRenderingContext.getHttpServletRequest(), "currentPage",
+				"1"));
+		templateContext.put(
+			"editingLanguageId", LanguageUtil.getLanguageId(locale));
+		templateContext.put(
+			"evaluatorURL", getDDMFormContextProviderServletURL());
+		templateContext.put("groupId", ddmFormRenderingContext.getGroupId());
+		templateContext.put(
+			"pages", getPages(ddmForm, ddmFormLayout, ddmFormRenderingContext));
+		templateContext.put(
+			"paginationMode", ddmFormLayout.getPaginationMode());
+		templateContext.put(
+			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
+		templateContext.put("readOnly", ddmFormRenderingContext.isReadOnly());
+		templateContext.put("rules", toObjectList(ddmForm.getDDMFormRules()));
+		templateContext.put(
+			"showRequiredFieldsWarning",
+			ddmFormRenderingContext.isShowRequiredFieldsWarning());
 
 		boolean showSubmitButton = ddmFormRenderingContext.isShowSubmitButton();
 

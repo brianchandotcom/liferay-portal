@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -106,10 +105,11 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getHttpServletRequest());
 		}
 
-		Map<String, String> stringsMap = HashMapBuilder.put(
+		Map<String, String> stringsMap = new HashMap<>();
+
+		stringsMap.put(
 			"select",
-			LanguageUtil.get(getResourceBundle(displayLocale), "select")
-		).build();
+			LanguageUtil.get(getResourceBundle(displayLocale), "select"));
 
 		parameters.put("strings", stringsMap);
 

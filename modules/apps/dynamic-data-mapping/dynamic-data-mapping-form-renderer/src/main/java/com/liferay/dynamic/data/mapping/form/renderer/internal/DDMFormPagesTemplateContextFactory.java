@@ -186,34 +186,44 @@ public class DDMFormPagesTemplateContextFactory {
 	protected Map<String, Object> createPageTemplateContext(
 		DDMFormLayoutPage ddmFormLayoutPage, int pageIndex) {
 
+		Map<String, Object> pageTemplateContext = new HashMap<>();
+
 		LocalizedValue description = ddmFormLayoutPage.getDescription();
+
+		pageTemplateContext.put(
+			"description",
+			getValue(_ddmFormRenderingContext, description.getString(_locale)));
 
 		_pageEnabled = isPageEnabled(pageIndex);
 
+		pageTemplateContext.put("enabled", _pageEnabled);
+
+		pageTemplateContext.put(
+			"localizedDescription",
+			getLocalizedValueMap(description, _ddmFormRenderingContext));
+
 		LocalizedValue title = ddmFormLayoutPage.getTitle();
 
-		return HashMapBuilder.<String, Object>put(
-			"description",
-			getValue(_ddmFormRenderingContext, description.getString(_locale))
-		).put(
-			"enabled", _pageEnabled
-		).put(
-			"localizedDescription",
-			getLocalizedValueMap(description, _ddmFormRenderingContext)
-		).put(
+		pageTemplateContext.put(
 			"localizedTitle",
-			getLocalizedValueMap(title, _ddmFormRenderingContext)
-		).put(
+			getLocalizedValueMap(title, _ddmFormRenderingContext));
+
+		pageTemplateContext.put(
 			"rows",
-			createRowsTemplateContext(ddmFormLayoutPage.getDDMFormLayoutRows())
-		).put(
-			"showRequiredFieldsWarning",
-			isShowRequiredFieldsWarning(
-				ddmFormLayoutPage.getDDMFormLayoutRows())
-		).put(
+			createRowsTemplateContext(
+				ddmFormLayoutPage.getDDMFormLayoutRows()));
+
+		boolean showRequiredFieldsWarning = isShowRequiredFieldsWarning(
+			ddmFormLayoutPage.getDDMFormLayoutRows());
+
+		pageTemplateContext.put(
+			"showRequiredFieldsWarning", showRequiredFieldsWarning);
+
+		pageTemplateContext.put(
 			"title",
-			getValue(_ddmFormRenderingContext, title.getString(_locale))
-		).build();
+			getValue(_ddmFormRenderingContext, title.getString(_locale)));
+
+		return pageTemplateContext;
 	}
 
 	protected List<Object> createRowsTemplateContext(

@@ -16,7 +16,6 @@ package com.liferay.ratings.kernel.display.context;
 
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -91,9 +90,9 @@ public class GroupPortletRatingsDefinitionDisplayContext {
 				ratingsType = RatingsType.parse(groupRatingsTypeString);
 			}
 
-			Map<String, RatingsType> ratingsTypeMap = HashMapBuilder.put(
-				className, ratingsType
-			).build();
+			Map<String, RatingsType> ratingsTypeMap = new HashMap<>();
+
+			ratingsTypeMap.put(className, ratingsType);
 
 			_groupRatingsTypeMaps.put(portletId, ratingsTypeMap);
 		}

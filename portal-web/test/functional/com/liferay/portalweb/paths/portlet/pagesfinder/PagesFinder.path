@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>OUTLINE_ICON</td>
-	<td>//a[contains(@aria-label,'Find a Page')]</td>
+	<td>//a[contains(.,'Find a Page')]</td>
 	<td></td>
 </tr>
 <tr>

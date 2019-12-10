@@ -113,14 +113,9 @@ class FragmentEntryLink extends Component {
 	prepareStateForRender(state) {
 		return {
 			...state,
-
 			_fragmentEntryLinkRowType: state.rowType,
 			_fragmentsEditorItemTypes: FRAGMENTS_EDITOR_ITEM_TYPES,
-			_fragmentsEditorRowTypes: FRAGMENTS_EDITOR_ROW_TYPES,
-
-			_showComments: state.sidebarPanels.some(
-				sidebarPanel => sidebarPanel.sidebarPanelId === 'comments'
-			)
+			_fragmentsEditorRowTypes: FRAGMENTS_EDITOR_ROW_TYPES
 		};
 	}
 
@@ -388,6 +383,9 @@ FragmentEntryLink.STATE = {
 	_hovered: Config.internal()
 		.bool()
 		.value(false),
+	_showComments: Config.internal()
+		.bool()
+		.value(false),
 	fragmentEntryLinkId: Config.string().required(),
 	name: Config.string().value(''),
 	rowType: Config.string(),
@@ -409,8 +407,13 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 			FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 		);
 
+		const _showComments = state.sidebarPanels.some(
+			sidebarPanel => sidebarPanel.sidebarPanelId === 'comments'
+		);
+
 		return {
 			_hovered,
+			_showComments,
 			activeItemId: state.activeItemId,
 			activeItemType: state.activeItemType,
 			defaultEditorConfigurations: state.defaultEditorConfigurations,
@@ -429,7 +432,6 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 			segmentsExperienceId: state.segmentsExperienceId,
 			selectedMappingTypes: state.selectedMappingTypes,
 			selectedSidebarPanelId: state.selectedSidebarPanelId,
-			sidebarPanels: state.sidebarPanels,
 			spritemap: state.spritemap,
 			widgets: state.widgets
 		};

@@ -88,6 +88,7 @@ public class DDMSearchHelper {
 		searchContext.setAttribute(Field.CLASS_PK, classPK);
 		searchContext.setAttribute(Field.DESCRIPTION, description);
 		searchContext.setAttribute(Field.NAME, name);
+		searchContext.setAttribute(Field.STATUS, status);
 
 		try {
 			searchContext.setAttribute(
@@ -101,7 +102,6 @@ public class DDMSearchHelper {
 			}
 		}
 
-		searchContext.setAttribute(Field.STATUS, status);
 		searchContext.setAttribute("storageType", storageType);
 		searchContext.setAttribute("type", type);
 		searchContext.setCompanyId(companyId);

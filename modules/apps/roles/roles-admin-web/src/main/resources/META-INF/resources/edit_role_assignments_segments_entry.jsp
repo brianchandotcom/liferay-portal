@@ -63,7 +63,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand-smallest table-cell-minw-150"
 			name="members"
-			value="<%= String.valueOf(SegmentsEntryDisplayContext.getMembersCount(segmentsEntry.getSegmentsEntryId())) %>"
+			value="<%= String.valueOf(SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
 		/>
 
 		<c:if test='<%= Objects.equals(ParamUtil.getString(request, "tabs3"), "current") %>'>

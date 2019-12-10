@@ -44,7 +44,7 @@ public class SegmentsEntryDisplayContext {
 		return group.getDescriptiveName(locale);
 	}
 
-	public static List<User> getMembers(
+	public static List<User> getSegmentsEntryUsers(
 			long segmentsEntryId, int start, int end)
 		throws Exception {
 
@@ -55,7 +55,9 @@ public class SegmentsEntryDisplayContext {
 			_userLocalService::fetchUser);
 	}
 
-	public static int getMembersCount(long segmentsEntryId) throws Exception {
+	public static int getSegmentsEntryUsersCount(long segmentsEntryId)
+		throws Exception {
+
 		return _segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 			segmentsEntryId);
 	}

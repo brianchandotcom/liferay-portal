@@ -71,13 +71,7 @@ class FragmentEntryLink extends Component {
 	created() {
 		onPropertiesChanged(
 			this,
-			[
-				'_active',
-				'_configurationValues',
-				'_hasUpdatePermissions',
-				'fragmentEntryLinkId',
-				'fragmentEntryLinks'
-			],
+			['_active', '_fragmentEntryLink', '_hasUpdatePermissions'],
 			() => {
 				if (this._hasUpdatePermissions && this._active) {
 					this._createFloatingToolbar();
@@ -85,10 +79,6 @@ class FragmentEntryLink extends Component {
 					this._disposeFloatingToolbar();
 				}
 			}
-		);
-
-		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
-			this
 		);
 	}
 
@@ -123,55 +113,67 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * @inheritDoc
-	 * @review
-	 */
-	syncFragmentEntryLinks() {
-		if (this.fragmentEntryLinks[this.fragmentEntryLinkId]) {
-			const configurationValues = this.fragmentEntryLinks[
-				this.fragmentEntryLinkId
-			].editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
-
-			this._configuration = this.fragmentEntryLinks[
-				this.fragmentEntryLinkId
-			].configuration;
-
-			this._defaultConfigurationValues = this.fragmentEntryLinks[
-				this.fragmentEntryLinkId
-			].defaultConfigurationValues;
-
-			if (configurationValues) {
-				const segmentedConfigurationValues = computeConfigurationEditableValue(
-					configurationValues,
-					{selectedExperienceId: this.segmentsExperienceId}
-				);
-
-				this._configurationValues = {
-					...this._defaultConfigurationValues,
-					...segmentedConfigurationValues
-				};
-			}
-		}
-	}
-
-	/**
 	 * Creates a new instance of the floating toolbar.
 	 * @private
 	 */
 	_createFloatingToolbar() {
+		const buttons = [];
+		const {
+			configuration,
+			defaultConfigurationValues,
+			editableValues,
+			fragmentEntryLinkId,
+			portletId
+		} = this._fragmentEntryLink;
+		const widget = portletId && getWidget(this.widgets, portletId);
+
+		let configurationValues =
+			editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
+
+		if (!widget || widget.instanceable) {
+			buttons.push(FLOATING_TOOLBAR_BUTTONS.duplicateFragment);
+		}
+
+		if (
+			configuration &&
+			Array.isArray(configuration.fieldSets) &&
+			configuration.fieldSets.length
+		) {
+			buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration);
+
+			if (configurationValues) {
+				configurationValues = {
+					...defaultConfigurationValues,
+					...computeConfigurationEditableValue(
+						editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR],
+						{selectedExperienceId: this.segmentsExperienceId}
+					)
+				};
+			}
+		}
+
 		const config = {
 			anchorElement: this.element,
-			buttons: this._getFloatingToolbarButtons(),
+			buttons,
 			events: {
-				buttonClicked: this._handleFloatingToolbarButtonClicked
+				buttonClicked: (event, data) => {
+					if (
+						data.panelId ===
+						FLOATING_TOOLBAR_BUTTONS.duplicateFragment.panelId
+					) {
+						event.preventDefault();
+
+						this._disposeFloatingToolbar();
+					}
+				}
 			},
 			item: {
-				configuration: this._configuration,
-				configurationValues: this._configurationValues,
-				defaultConfigurationValues: this._defaultConfigurationValues,
-				fragmentEntryLinkId: this.fragmentEntryLinkId
+				configuration,
+				configurationValues,
+				defaultConfigurationValues,
+				fragmentEntryLinkId
 			},
-			itemId: this.fragmentEntryLinkId,
+			itemId: fragmentEntryLinkId,
 			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
 			portalElement: document.body,
 			store: this.store
@@ -210,49 +212,6 @@ class FragmentEntryLink extends Component {
 			this._floatingToolbar.dispose();
 
 			this._floatingToolbar = null;
-		}
-	}
-
-	/**
-	 * @private
-	 * @return {object[]} Floating toolbar buttons
-	 * @review
-	 */
-	_getFloatingToolbarButtons() {
-		const buttons = [];
-
-		const fragmentEntryLink = this.fragmentEntryLinks[
-			this.fragmentEntryLinkId
-		];
-
-		const widget =
-			fragmentEntryLink.portletId &&
-			getWidget(this.widgets, fragmentEntryLink.portletId);
-
-		if (!widget || widget.instanceable) {
-			buttons.push(FLOATING_TOOLBAR_BUTTONS.duplicateFragment);
-		}
-
-		if (this._shouldShowConfigPanel()) {
-			buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration);
-		}
-
-		return buttons;
-	}
-
-	/**
-	 * Callback executed when an floating toolbar button is clicked
-	 * @param {Event} event
-	 * @param {Object} data
-	 * @private
-	 */
-	_handleFloatingToolbarButtonClicked(event, data) {
-		const {panelId} = data;
-
-		if (panelId === FLOATING_TOOLBAR_BUTTONS.duplicateFragment.panelId) {
-			event.preventDefault();
-
-			this._duplicateFragmentEntryLink();
 		}
 	}
 
@@ -343,20 +302,6 @@ class FragmentEntryLink extends Component {
 			removeFragmentEntryLinkAction(this.fragmentEntryLinkId)
 		);
 	}
-
-	/**
-	 * Returns wether the config panel should be shown or not
-	 * @private
-	 * @review
-	 */
-	_shouldShowConfigPanel() {
-		const fieldSetsExist =
-			this._configuration &&
-			Array.isArray(this._configuration.fieldSets) &&
-			this._configuration.fieldSets.length > 0;
-
-		return fieldSetsExist && this._active;
-	}
 }
 
 /**
@@ -369,13 +314,14 @@ FragmentEntryLink.STATE = {
 	_active: Config.internal()
 		.bool()
 		.value(false),
-	_configuration: Config.object().internal(),
-	_configurationValues: Config.object().internal(),
 	_defaultConfigurationValues: Config.object().internal(),
 	_dropBorder: Config.internal()
 		.string()
 		.value(''),
 	_floatingToolbar: Config.internal().value(null),
+	_fragmentEntryLink: Config.internal()
+		.object()
+		.value(null),
 	_hasUpdatePermissions: Config.internal()
 		.bool()
 		.value(true),
@@ -426,12 +372,13 @@ const ConnectedFragmentEntryLink = getConnectedComponent(
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 					? state.dropTargetBorder
 					: '',
+			_fragmentEntryLink:
+				state.fragmentEntryLinks[props.fragmentEntryLinkId],
 			_hasUpdatePermissions: state.hasUpdatePermissions,
 			_hovered,
 			_itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
 			_showComments,
 			_spritemap: state.spritemap,
-			fragmentEntryLinks: state.fragmentEntryLinks,
 			layoutData: state.layoutData,
 			segmentsExperienceId: state.segmentsExperienceId,
 			widgets: state.widgets

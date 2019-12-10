@@ -172,7 +172,8 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 			ZipEntry zipEntry = iterator.nextElement();
 
 			if (Objects.equals(
-					_getFileName(zipEntry.getName()), "deploy.json")) {
+					_getFileName(zipEntry.getName()),
+					"fragments-deploy.json")) {
 
 				return zipEntry;
 			}

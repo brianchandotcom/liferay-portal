@@ -14,7 +14,7 @@
 
 import {ItemSelectorDialog} from 'frontend-js-web';
 
-import {PreviewSeoFireChange} from './PreviewSeoEvents.es';
+import {previewSeoFireChange} from './PreviewSeoEvents.es';
 
 export default function({namespace, uploadOpenGraphImageURL}) {
 	const openGraphImageButton = document.getElementById(
@@ -45,7 +45,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 			openGraphImageFileEntryId.value = itemValue.fileEntryId;
 			openGraphImageURL.value = itemValue.url;
 
-			PreviewSeoFireChange(namespace, {
+			previewSeoFireChange(namespace, {
 				type: 'imgUrl',
 				value: itemValue.url
 			});
@@ -64,7 +64,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		openGraphImageFileEntryId.value = '';
 		openGraphImageURL.value = '';
 
-		PreviewSeoFireChange(namespace, {
+		previewSeoFireChange(namespace, {
 			type: 'imgUrl',
 			value: ''
 		});
@@ -87,7 +87,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 		Liferay.Util.toggleDisabled(openGraphTitleFieldDefaultLocale, disabled);
 
-		PreviewSeoFireChange(namespace, {
+		previewSeoFireChange(namespace, {
 			disabled,
 			type: 'title',
 			value: openGraphTitleField.value
@@ -114,7 +114,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 			disabled
 		);
 
-		PreviewSeoFireChange(namespace, {
+		previewSeoFireChange(namespace, {
 			disabled,
 			type: 'description',
 			value: openGraphDescriptionField.value

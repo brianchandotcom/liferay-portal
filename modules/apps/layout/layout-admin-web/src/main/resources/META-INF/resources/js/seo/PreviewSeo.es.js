@@ -17,7 +17,7 @@ import {isObject} from 'metal';
 import {PropTypes} from 'prop-types';
 import React, {useEffect, useState, useCallback, useMemo} from 'react';
 
-import {PreviewSeoOnChange} from './PreviewSeoEvents.es';
+import {previewSeoOnChange} from './PreviewSeoEvents.es';
 
 const MAX_LENGTH_DESCIPTION = 160;
 
@@ -167,7 +167,7 @@ const PreviewSeoContainer = ({
 			return acc;
 		}, []);
 
-		const PreviewSeoOnChangeHandle = PreviewSeoOnChange(
+		const previewSeoOnChangeHandle = previewSeoOnChange(
 			portletNamespace,
 			setFieldState
 		);
@@ -177,7 +177,7 @@ const PreviewSeoContainer = ({
 				node.removeEventListener('input', listener)
 			);
 
-			Liferay.detach(PreviewSeoOnChangeHandle);
+			Liferay.detach(previewSeoOnChangeHandle);
 		};
 	}, [inputTargets, isMounted, portletNamespace, targets]);
 

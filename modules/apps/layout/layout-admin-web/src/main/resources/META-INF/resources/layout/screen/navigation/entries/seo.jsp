@@ -235,7 +235,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			canonicalURLField.value = '';
 		}
 
-		PreviewSeoEvents.PreviewSeoFireChange('<portlet:namespace />', {
+		PreviewSeoEvents.previewSeoFireChange('<portlet:namespace />', {
 			type: 'url',
 			value: canonicalURLField.value
 		});

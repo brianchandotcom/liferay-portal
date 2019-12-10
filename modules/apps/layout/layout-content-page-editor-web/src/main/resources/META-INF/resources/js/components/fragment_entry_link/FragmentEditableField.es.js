@@ -479,24 +479,7 @@ FragmentEditableField.STATE = {
 
 const ConnectedFragmentEditableField = getConnectedComponent(
 	FragmentEditableField,
-	[
-		'activeItemId',
-		'activeItemType',
-		'defaultLanguageId',
-		'defaultSegmentsExperienceId',
-		'getAssetFieldValueURL',
-		'getAssetMappingFieldsURL',
-		'hasUpdatePermissions',
-		'hoveredItemId',
-		'hoveredItemType',
-		'languageId',
-		'layoutData',
-		'mappingFieldsURL',
-		'portletNamespace',
-		'segmentsExperienceId',
-		'selectedMappingTypes',
-		'selectedItems'
-	],
+	[],
 	(state, props) => {
 		const prefixedSegmentsExperienceId = prefixSegmentsExperienceId(
 			state.segmentsExperienceId

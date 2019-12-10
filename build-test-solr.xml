@@ -288,6 +288,22 @@ schema=schema.xml</echo>
 		</if>
 	</target>
 
+	<target name="print-solr-indices">
+		<exec executable="curl" outputproperty="curl.output.solr.indices">
+			<arg line="http://localhost:8983/solr/liferay/select?q=*:*&amp;wt=json" />
+			<arg value="-d" />
+			<arg value="&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
+		</exec>
+
+		<echo></echo>
+		<echo>##</echo>
+		<echo>## Solr Indices</echo>
+		<echo>##</echo>
+		<echo></echo>
+		<echo>${curl.output.solr.indices}</echo>
+		<echo></echo>
+	</target>
+
 	<target name="start-solr">
 		<lstopwatch action="start" name="start.solr" />
 

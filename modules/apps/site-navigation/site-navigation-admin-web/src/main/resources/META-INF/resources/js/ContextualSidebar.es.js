@@ -23,8 +23,10 @@ import ClayIcon from '@clayui/icon';
 import ClayButton from '@clayui/button';
 
 function ContextualSidebar({
-	siteNavigationMenuEditor,
-	editSiteNavigationMenuItemURL
+	editSiteNavigationMenuItemURL,
+	portletId,
+	redirect,
+	siteNavigationMenuEditor
 }) {
 	const [body, setBody] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -59,7 +61,8 @@ function ContextualSidebar({
 
 				fetch(editSiteNavigationMenuItemURL, {
 					body: objectToFormData(
-						Liferay.Util.ns('<portlet:namespace />', {
+						Liferay.Util.ns(Liferay.Util.getPortletNamespace(portletId), {
+							redirect,
 							siteNavigationMenuItemId
 						})
 					),
@@ -67,8 +70,6 @@ function ContextualSidebar({
 				})
 					.then(response => response.text())
 					.then(responseContent => {
-						console.log(responseContent);
-						debugger;
 						/*
 						const sidebarBody = document.getElementById(
 							'<portlet:namespace />sidebarBody'
@@ -140,7 +141,7 @@ export default function(props) {
 	const siteNavigationMenuEditor = new SiteNavigationMenuEditor({
 		editSiteNavigationMenuItemParentURL:
 			props.editSiteNavigationMenuItemParentURL,
-		namespace: `_${props.portletId}_`
+		namespace: Liferay.Util.getPortletNamespace(props.portletId)
 	});
 
 	return (

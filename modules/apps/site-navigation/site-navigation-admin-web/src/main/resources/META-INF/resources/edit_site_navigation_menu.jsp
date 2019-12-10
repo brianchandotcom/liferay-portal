@@ -115,6 +115,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		data.put("editSiteNavigationMenuItemURL", editSiteNavigationMenuItemURL.toString());
 		data.put("editSiteNavigationMenuItemParentURL", editSiteNavigationMenuItemParentURL.toString());
 		data.put("id", renderResponse.getNamespace() + "sidebar" );
+		data.put("redirect", currentURL);
 		%>
 
 		<react:component

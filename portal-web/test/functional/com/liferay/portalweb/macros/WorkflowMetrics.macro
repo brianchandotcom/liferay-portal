@@ -50,6 +50,21 @@ definition {
 			value1 = "inst / day");
 	}
 
+	macro executeWorkflowScript {
+		var key_scriptName = "${scriptName}";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		var scriptContent = TestCase.getFileContent(fileName = "${key_scriptName}");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${scriptContent}");
+	}
+
 	macro fillSLAForm {
 		var key_slaDefinitionDays = "${slaDefinitionDays}";
 		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
@@ -248,6 +263,24 @@ definition {
 			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
 
 		}
+	}
+
+	macro viewPerformanceByAssignee {
+		var key_assignee = "${assignee}";
+		var key_avgCompletionTime = "${avgCompletionTime}";
+		var key_taskCount = "${taskCount}";
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_NAME",
+			value1 = "${assignee}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_TASK_COUNT",
+			value1 = "${taskCount}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_AVG_COMPLETION_TIME",
+			value1 = "${avgCompletionTime}");
 	}
 
 	macro viewUserWorkload {

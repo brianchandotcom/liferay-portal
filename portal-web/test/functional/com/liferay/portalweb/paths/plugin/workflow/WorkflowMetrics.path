@@ -139,6 +139,32 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_AVG_COMPLETION_TIME</td>
+	<td>xpath=(//span[contains(text(),'${key_assignee}')]/ancestor::td[contains(@data-testid,'assigneeProfileInfo')]/following-sibling::td//span)[2]
+</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_EMPTY_STATE</td>
+	<td>//span[contains(text(),'Performance by Assignee')]/ancestor::div[contains(@data-testid, 'panelHeader')]/following-sibling::div//p[contains(.,'There is no data at the moment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK</td>
+	<td>//a//span[contains(text(), 'View All Assignees (${key_assigneesNumber})')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_NAME</td>
+	<td>//td[contains(@data-testid,'assigneeProfileInfo')]//span[contains(text(),'${key_assignee}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_TASK_COUNT</td>
+	<td>xpath=(//span[contains(text(),'${key_assignee}')]/ancestor::td[contains(@data-testid,'assigneeProfileInfo')]/following-sibling::td//span)[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_TAB</td>
 	<td>//a[contains(@href, 'performance')]</td>
 	<td></td>

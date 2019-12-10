@@ -132,8 +132,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureLiferayOSGi(project);
 
-			_configureRootTaskInitBundle(jar);
 			_configureRootTaskDistBundle(jar);
+			_configureRootTaskInitBundle(jar);
 
 			project.afterEvaluate(
 				new Action<Project>() {
@@ -158,8 +158,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				final Task buildTask = GradleUtil.getTask(
 					project, LifecycleBasePlugin.BUILD_TASK_NAME);
 
-				_configureRootTaskInitBundle(buildTask);
 				_configureRootTaskDistBundle(buildTask);
+				_configureRootTaskInitBundle(buildTask);
 
 				jarSourcePath = new Callable<ConfigurableFileCollection>() {
 

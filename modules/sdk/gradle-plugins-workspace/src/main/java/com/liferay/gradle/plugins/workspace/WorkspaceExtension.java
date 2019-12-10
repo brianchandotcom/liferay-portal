@@ -76,8 +76,17 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
-		_dockerImageLiferay = _getProperty(
-			settings, "docker.image.liferay", _DOCKER_IMAGE_LIFERAY);
+		_dockerContainerId = new Closure<Void>(_gradle) {
+
+			@SuppressWarnings("unused")
+			public String doCall() {
+				Project rootProject = _gradle.getRootProject();
+
+				return rootProject.getName() + "-liferay";
+			}
+
+		};
+		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageId = new Closure<Void>(_gradle) {
 
 			@SuppressWarnings("unused")
@@ -102,17 +111,8 @@ public class WorkspaceExtension {
 			}
 
 		};
-		_dockerContainerId = new Closure<Void>(_gradle) {
-
-			@SuppressWarnings("unused")
-			public String doCall() {
-				Project rootProject = _gradle.getRootProject();
-
-				return rootProject.getName() + "-liferay";
-			}
-
-		};
-		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
+		_dockerImageLiferay = _getProperty(
+			settings, "docker.image.liferay", _DOCKER_IMAGE_LIFERAY);
 		_environment = _getProperty(
 			settings, "environment",
 			BundleSupportConstants.DEFAULT_ENVIRONMENT);

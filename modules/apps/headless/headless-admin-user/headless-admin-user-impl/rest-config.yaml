@@ -5,5 +5,5 @@ application:
     className: "HeadlessAdminUserApplication"
     name: "Liferay.Headless.Admin.User"
 author: "Javier Gamarra"
-clientDir: "../headless-admin-user-client/src/main/java"
-testDir: "../headless-admin-user-test/src/testIntegration/java"
+#clientDir: "../headless-admin-user-client/src/main/java"
+#testDir: "../headless-admin-user-test/src/testIntegration/java"

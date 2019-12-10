@@ -45,7 +45,7 @@ const ClayCheckboxWithState = ({onChange, ...otherProps}) => {
 	);
 };
 
-export const SpacingConfigurationPanel = ({itemId}) => {
+export const SpacingConfigurationPanel = ({item}) => {
 	const dispatch = useContext(DispatchContext);
 	const [showSpaceBetweenCheckbox, setShowSpaceBetweenCheckbox] = useState(
 		false
@@ -57,7 +57,7 @@ export const SpacingConfigurationPanel = ({itemId}) => {
 				config: {
 					[identifier]: value
 				},
-				itemId
+				itemId: item.itemId
 			})
 		);
 	};

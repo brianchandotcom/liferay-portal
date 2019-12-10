@@ -36,7 +36,7 @@ const SELECTORS = {
 	backgroundColorCssClass: 'backgroundColorCssClass'
 };
 
-export const BackgroundColorConfigurationPanel = ({itemId}) => {
+export const BackgroundColorConfigurationPanel = ({item}) => {
 	const dispatch = useContext(DispatchContext);
 
 	const handleSelectValueChanged = (identifier, value) =>
@@ -45,7 +45,7 @@ export const BackgroundColorConfigurationPanel = ({itemId}) => {
 				config: {
 					[identifier]: value
 				},
-				itemId
+				itemId: item.itemId
 			})
 		);
 

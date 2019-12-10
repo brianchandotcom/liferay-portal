@@ -95,7 +95,7 @@ export default function FloatingToolbar({buttons, item, itemRef}) {
 				{activeConfigurationPanel && (
 					<ConfigurationPanel
 						configurationPanel={activeConfigurationPanel}
-						itemId={item.itemId}
+						item={item}
 						popoverRef={popoverRef}
 					/>
 				)}

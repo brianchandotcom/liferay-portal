@@ -834,8 +834,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			if ((configDirs == null) || (configDirs.length == 0)) {
 				throw new GradleException(
-					"'configs' dir must contain one directory not named: " +
-						StringUtil.toString(commonConfigDirNames));
+					"The 'configs' directory must contain one directory not " +
+						"named: " + StringUtil.toString(commonConfigDirNames));
 			}
 
 			for (String commonConfigDirName : commonConfigDirNames) {

@@ -26,7 +26,7 @@ import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 const Sharing = ({
 	classNameId,
@@ -177,6 +177,8 @@ const Sharing = ({
 		}
 	};
 
+	const multiSelectFilter = useCallback(() => true, []);
+
 	const resource = useResource({
 		link: multiSelectValue ? sharingUserAutocompleteURL : undefined,
 		variables: {
@@ -199,6 +201,7 @@ const Sharing = ({
 							</label>
 
 							<ClayMultiSelect
+								filter={multiSelectFilter}
 								inputName={`${portletNamespace}userEmailAddress`}
 								inputValue={multiSelectValue}
 								items={selectedItems}

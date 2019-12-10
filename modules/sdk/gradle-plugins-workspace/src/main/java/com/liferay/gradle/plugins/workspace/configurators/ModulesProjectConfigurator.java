@@ -477,7 +477,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	private void _configureTaskSetUpTestableTomcat(
 		Task setUpTestableTomcatTask, WorkspaceExtension workspaceExtension) {
 
-		Project project = task.getProject();
+		Project project = setUpTestableTomcatTask.getProject();
 
 		File homeDir = workspaceExtension.getHomeDir();
 

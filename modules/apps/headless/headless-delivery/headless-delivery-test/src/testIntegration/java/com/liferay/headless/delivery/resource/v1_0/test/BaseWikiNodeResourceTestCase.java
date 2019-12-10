@@ -477,7 +477,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 					{
 						put("page", 1);
 						put("pageSize", 2);
-						put("siteId", testGroup.getGroupId());
+						put("siteKey", "\"" + testGroup.getGroupId() + "\"");
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -847,7 +847,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 				"createSiteWikiNode",
 				new HashMap<String, Object>() {
 					{
-						put("siteId", testGroup.getGroupId());
+						put("siteKey", "\"" + testGroup.getGroupId() + "\"");
 						put("wikiNode", sb.toString());
 					}
 				},

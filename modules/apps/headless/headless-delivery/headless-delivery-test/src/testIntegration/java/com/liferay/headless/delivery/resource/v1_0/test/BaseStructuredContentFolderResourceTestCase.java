@@ -554,7 +554,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					{
 						put("page", 1);
 						put("pageSize", 2);
-						put("siteId", testGroup.getGroupId());
+						put("siteKey", "\"" + testGroup.getGroupId() + "\"");
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -1433,7 +1433,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				"createSiteStructuredContentFolder",
 				new HashMap<String, Object>() {
 					{
-						put("siteId", testGroup.getGroupId());
+						put("siteKey", "\"" + testGroup.getGroupId() + "\"");
 						put("structuredContentFolder", sb.toString());
 					}
 				},

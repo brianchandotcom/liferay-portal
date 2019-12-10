@@ -291,11 +291,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Project project, WorkspaceExtension workspaceExtension,
 		Configuration providedModulesConfiguration) {
 
-		Copy copyDockerDeploy = _addTaskDockerDeploy(
+		Copy dockerDeploy = _addTaskDockerDeploy(
 			project, workspaceExtension, providedModulesConfiguration);
 
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
-			project, workspaceExtension, copyDockerDeploy);
+			project, workspaceExtension, dockerDeploy);
 
 		DockerBuildImage dockerBuildImage = _addTaskBuildDockerImage(
 			dockerfile, workspaceExtension);

@@ -36,16 +36,6 @@ if (analyticsConfiguration != null) {
 
 <portlet:actionURL name="/analytics/edit_workspace_connection" var="editWorkspaceConnectionURL" />
 
-<liferay-portlet:renderURL varImpl="selectContactsURL">
-	<portlet:param name="configurationScreenKey" value="synced-contacts" />
-	<portlet:param name="mvcRenderCommandName" value="/view_configuration_screen" />
-</liferay-portlet:renderURL>
-
-<liferay-portlet:renderURL varImpl="selectSitesURL">
-	<portlet:param name="configurationScreenKey" value="synced-sites" />
-	<portlet:param name="mvcRenderCommandName" value="/view_configuration_screen" />
-</liferay-portlet:renderURL>
-
 <div class="sheet sheet-lg">
 	<h2 class="autofit-row">
 		<span class="autofit-col autofit-col-expand">
@@ -89,6 +79,11 @@ if (analyticsConfiguration != null) {
 		</small>
 
 		<aui:button-row>
+			<liferay-portlet:renderURL varImpl="selectSitesURL">
+				<portlet:param name="mvcRenderCommandName" value="/view_configuration_screen" />
+				<portlet:param name="configurationScreenKey" value="synced-sites" />
+			</liferay-portlet:renderURL>
+
 			<a href="<%= selectSitesURL.toString() %>">
 				<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-sites" />
 			</a>
@@ -111,6 +106,11 @@ if (analyticsConfiguration != null) {
 		</small>
 
 		<aui:button-row>
+			<liferay-portlet:renderURL varImpl="selectContactsURL">
+				<portlet:param name="mvcRenderCommandName" value="/view_configuration_screen" />
+				<portlet:param name="configurationScreenKey" value="synced-contacts" />
+			</liferay-portlet:renderURL>
+
 			<a href="<%= selectContactsURL.toString() %>">
 				<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-contacts" />
 			</a>

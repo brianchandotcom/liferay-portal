@@ -24,7 +24,13 @@ const UpperToolbar = ({children}) => {
 
 	return (
 		<nav
-			className={`app-builder-upper-toolbar-${appDeploymentType} component-tbar subnav-tbar-light tbar`}
+			className={classNames(
+				'app-builder-upper-toolbar',
+				'component-tbar',
+				'subnav-tbar-light',
+				'tbar',
+				appDeploymentType
+			)}
 		>
 			<div className="container-fluid container-fluid-max-xl">
 				<ul className="tbar-nav">{children}</ul>

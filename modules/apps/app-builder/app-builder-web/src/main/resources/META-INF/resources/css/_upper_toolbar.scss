@@ -1,14 +1,6 @@
 @import 'mixins';
 
-.app-builder-upper-toolbar-standalone,
-.app-builder-upper-toolbar-widget {
-	margin-bottom: 2rem;
-	position: relative;
-	top: 0;
-	width: auto;
-}
-
-.app-builder-upper-toolbar-productMenu {
+.app-builder-upper-toolbar {
 	height: $upperToolbarHeight;
 	position: fixed;
 	top: $controlMenuHeight;
@@ -18,5 +10,13 @@
 
 	@include respond-to(phone, tablet) {
 		top: $mobile_controlMenuHeight;
+	}
+
+	&.standalone,
+	&.widget {
+		margin-bottom: 2rem;
+		position: relative;
+		top: 0;
+		width: auto;
 	}
 }

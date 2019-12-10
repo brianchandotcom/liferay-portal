@@ -135,7 +135,8 @@ const ListEntries = withRouter(({history, location}) => {
 					)
 				}
 				columns={columns.map(column => ({
-					key: column,
+					key: 'dataRecordValues/' + column,
+					sortable: true,
 					value: getFieldLabel(dataDefinition, column)
 				}))}
 				emptyState={{
@@ -188,7 +189,7 @@ const ListEntries = withRouter(({history, location}) => {
 						}
 
 						displayedDataRecordValues[
-							fieldName
+							'dataRecordValues/' + fieldName
 						] = fieldValuePreview;
 					});
 

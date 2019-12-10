@@ -120,7 +120,7 @@ const syncStoreState = function(component, store, mapStateToProps) {
 			newState[key] = state[key];
 		});
 
-		component.setState(state);
+		component.setState(newState);
 	}
 };
 

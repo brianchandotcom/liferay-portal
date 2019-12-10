@@ -88,10 +88,10 @@ class FragmentEditableField extends PortletBase {
 			);
 		}
 
-		onPropertiesChanged(this, ['_active'], () => {
+		onPropertiesChanged(this, ['_active', '_activable'], () => {
 			const eventName = this.type === 'image' ? 'dblclick' : 'click';
 
-			if (this.hasUpdatePermissions && this._active) {
+			if (this._active && this._activable) {
 				this._createFloatingToolbar();
 
 				this.element.addEventListener(eventName, this._createProcessor);
@@ -178,7 +178,7 @@ class FragmentEditableField extends PortletBase {
 
 		let buttons = processor.getFloatingToolbarButtons(this.editableValues);
 
-		if (this.selectedItems.length > 1) {
+		if (this._multipleItemsSelected) {
 			buttons = buttons.map(button => {
 				if (button.id === FLOATING_TOOLBAR_BUTTONS.map.id) {
 					return button;
@@ -454,6 +454,9 @@ FragmentEditableField.STATE = {
 	_mappedItemHovered: Config.internal()
 		.bool()
 		.value(false),
+	_multipleItemsSelected: Config.internal()
+		.bool()
+		.value(false),
 	_processorEnabled: Config.internal()
 		.bool()
 		.value(false),
@@ -525,6 +528,8 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			state.hoveredItemId ===
 				`${props.editableValues.classNameId}-${props.editableValues.classPK}`;
 
+		const _multipleItemsSelected = state.selectedItems.length > 1;
+
 		const _selected = state.selectedItems.some(
 			selectedItem =>
 				selectedItem.itemId === _itemId &&
@@ -567,6 +572,7 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			_itemId,
 			_mapped,
 			_mappedItemHovered,
+			_multipleItemsSelected,
 			_selected,
 			_translated,
 			_translating,

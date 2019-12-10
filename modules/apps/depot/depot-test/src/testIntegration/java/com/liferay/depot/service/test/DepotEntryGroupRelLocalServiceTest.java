@@ -111,8 +111,6 @@ public class DepotEntryGroupRelLocalServiceTest {
 		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			depotEntryGroupRel.getDepotEntryGroupRelId());
 
-		_depotEntries.remove(depotEntry);
-
 		try {
 			_depotEntryGroupRelLocalService.getDepotEntryGroupRel(
 				depotEntryGroupRel.getDepotEntryGroupRelId());

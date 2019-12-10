@@ -30,7 +30,10 @@ import {
 	UPDATE_DROP_TARGET
 } from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import {
+	onPropertiesChanged,
+	shouldUpdatePureComponent
+} from '../../utils/FragmentsEditorComponentUtils.es';
 import {initializeDragDrop} from '../../utils/FragmentsEditorDragDrop.es';
 import {
 	moveItem,
@@ -186,8 +189,10 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-	attached() {
-		this._initializeDragAndDrop();
+	created() {
+		onPropertiesChanged(this, ['layoutData'], () => {
+			this._initializeDragAndDrop();
+		});
 	}
 
 	/**
@@ -236,15 +241,6 @@ class FragmentEntryLinkList extends Component {
 	 */
 	shouldUpdate(changes) {
 		return shouldUpdatePureComponent(changes);
-	}
-
-	/**
-	 * Handle layoutData changed
-	 * @inheritDoc
-	 * @review
-	 */
-	syncLayoutData() {
-		this._initializeDragAndDrop();
 	}
 
 	/**

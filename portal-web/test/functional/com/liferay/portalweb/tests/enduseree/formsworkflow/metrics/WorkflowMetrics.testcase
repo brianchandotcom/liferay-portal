@@ -37,6 +37,8 @@ definition {
 
 		Blogs.tearDownCP();
 
+		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
@@ -300,6 +302,82 @@ definition {
 		WorkflowMetrics.assertChartTotalValue(
 			velocityUnitTotal = "inst / week",
 			velocityValueTotal = "0");
+	}
+
+	@description = "LRQA-53634 - LPS-99441: [Performance] View performance for all assignees"
+	@priority = "5"
+	test ViewPerformanceByAssigneePage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var count : list "1,2,3,4") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${count} Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		ScrollWebElementIntoView(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_EMPTY_STATE");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		ScrollWebElementIntoView(
+			key_assigneesNumber = "3",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "1user user1",
+			avgCompletionTime = "1min",
+			taskCount = "2");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "2user user2",
+			avgCompletionTime = "1min",
+			taskCount = "1");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "3user user3",
+			avgCompletionTime = "1min",
+			taskCount = "1");
+
+		Click(
+			key_assigneesNumber = "3",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "1user user1",
+			avgCompletionTime = "1min",
+			taskCount = "2");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "2user user2",
+			avgCompletionTime = "1min",
+			taskCount = "1");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "3user user3",
+			avgCompletionTime = "1min",
+			taskCount = "1");
 	}
 
 	@description = "Workload by assignee"

@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.util.layout.structur
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class LayoutStructure {
 
 		_items.put(item.getItemId(), item);
 
-		if (parentItemId != null) {
+		if (Validator.isNotNull(parentItemId)) {
 			Item parentItem = _items.get(parentItemId);
 
 			List<String> childrenItemIds = parentItem.getChildrenItemIds();

@@ -457,8 +457,18 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 			if (firstChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
 				log(
-					firstChildDetailAST, _MSG_CAST_NULL_VALUE,
+					firstChildDetailAST, _MSG_INCORRECT_NULL_VALUE,
 					builderClassName);
+			}
+			else if (firstChildDetailAST.getType() == TokenTypes.TYPECAST) {
+				DetailAST lastChildDetailAST =
+					firstChildDetailAST.getLastChild();
+
+				if (lastChildDetailAST.getType() == TokenTypes.LITERAL_NULL) {
+					log(
+						lastChildDetailAST, _MSG_INCORRECT_NULL_VALUE,
+						builderClassName);
+				}
 			}
 		}
 	}
@@ -678,9 +688,10 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 	private static final String _CHECK_INLINE = "checkInline";
 
-	private static final String _MSG_CAST_NULL_VALUE = "null.value.cast";
-
 	private static final String _MSG_INCLUDE_BUILDER = "builder.include";
+
+	private static final String _MSG_INCORRECT_NULL_VALUE =
+		"null.value.incorrect";
 
 	private static final String _MSG_INLINE_BUILDER = "builder.inline";
 

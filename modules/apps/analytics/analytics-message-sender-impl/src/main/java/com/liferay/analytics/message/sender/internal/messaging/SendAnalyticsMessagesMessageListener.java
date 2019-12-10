@@ -17,6 +17,7 @@ package com.liferay.analytics.message.sender.internal.messaging;
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.message.storage.model.AnalyticsMessage;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -30,12 +31,6 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import java.util.List;
@@ -101,22 +96,13 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 			for (AnalyticsMessage analyticsMessage : analyticsMessages) {
-				StringBuilder sb = new StringBuilder();
+				String json = new String(
+					StreamUtil.toByteArray(
+						_analyticsMessageLocalService.openBodyInputStream(
+							analyticsMessage.getAnalyticsMessageId())),
+					StandardCharsets.UTF_8);
 
-				InputStreamReader inputStreamReader = new InputStreamReader(
-					_analyticsMessageLocalService.openBodyInputStream(
-						analyticsMessage.getAnalyticsMessageId()),
-					Charset.forName(StandardCharsets.UTF_8.name()));
-
-				try (Reader reader = new BufferedReader(inputStreamReader)) {
-					int character = 0;
-
-					while ((character = reader.read()) != -1) {
-						sb.append((char)character);
-					}
-				}
-
-				jsonArray.put(JSONFactoryUtil.createJSONObject(sb.toString()));
+				jsonArray.put(JSONFactoryUtil.createJSONObject(json));
 			}
 
 			_analyticsMessageSenderClient.send(jsonArray.toString(), companyId);

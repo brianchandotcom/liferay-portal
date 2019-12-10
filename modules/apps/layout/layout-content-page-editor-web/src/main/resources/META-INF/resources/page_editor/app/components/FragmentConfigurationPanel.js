@@ -12,13 +12,28 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
 import React, {useContext} from 'react';
 
+import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../config/constants/fragmentConfigurationFieldTypes';
 import {StoreContext} from '../store/index';
 
-const FieldSet = ({fields, label}) => {
-	return <>{label && <p class="mb-3 sheet-subtitle">{label}</p>}</>;
-};
+const FieldSet = ({fields, label}) => (
+	<>
+		{label && <p className="mb-3 sheet-subtitle">{label}</p>}
+
+		{fields.map((field, index) => {
+			const FieldComponent =
+				field.type && FRAGMENT_CONFIGURATION_FIELD_TYPES[field.type];
+
+			return (
+				<ClayForm.Group key={index}>
+					<FieldComponent field={field}></FieldComponent>
+				</ClayForm.Group>
+			);
+		})}
+	</>
+);
 
 export const FragmentConfigurationPanel = ({item}) => {
 	const {fragmentEntryLinks} = useContext(StoreContext);

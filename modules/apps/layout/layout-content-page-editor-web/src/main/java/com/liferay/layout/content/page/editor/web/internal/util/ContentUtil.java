@@ -131,7 +131,7 @@ public class ContentUtil {
 			}
 		}
 		catch (Exception e) {
-			_log.error("An error ocurred while getting mapped contents", e);
+			_log.error("An error occurred while getting mapped contents", e);
 		}
 
 		return mappedContentsJSONArray;

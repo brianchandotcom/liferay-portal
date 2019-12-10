@@ -13,9 +13,11 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createPortal} from 'react-dom';
 import {Link as InternalLink, withRouter} from 'react-router-dom';
+
+import {AppContext} from '../../AppContext.es';
 
 const CONTROL_MENU_CONTENT = '.control-menu-nav-item-content';
 
@@ -133,17 +135,22 @@ export const PortalControlMenu = ({backURL, title, tooltip, url}) => {
 };
 
 export const ControlMenuBase = props => {
-	const contentNode = document.querySelector(CONTROL_MENU_CONTENT);
-
 	useEffect(() => {
 		setDocumentTitle(props.title);
 	}, [props.title]);
 
-	if (contentNode) {
+	const {appDeploymentType} = useContext(AppContext);
+
+	if (
+		appDeploymentType &&
+		(appDeploymentType === 'standalone' || appDeploymentType === 'widget')
+	) {
+		return <InlineControlMenu {...props} />;
+	} else {
+		const contentNode = document.querySelector(CONTROL_MENU_CONTENT);
+
 		return <PortalControlMenu contentNode={contentNode} {...props} />;
 	}
-
-	return <InlineControlMenu {...props} />;
 };
 
 export default withRouter(({match: {url}, ...props}) => {

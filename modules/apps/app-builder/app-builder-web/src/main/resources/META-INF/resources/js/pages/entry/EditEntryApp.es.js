@@ -17,10 +17,10 @@ import React from 'react';
 import {AppContextProvider} from '../../AppContext.es';
 import EditEntry from './EditEntry.es';
 
-export default ({basePortletURL, ...restProps}) => {
+export default props => {
 	return (
-		<AppContextProvider basePortletURL={basePortletURL}>
-			<EditEntry {...restProps} />
+		<AppContextProvider {...props}>
+			<EditEntry {...props} />
 		</AppContextProvider>
 	);
 };

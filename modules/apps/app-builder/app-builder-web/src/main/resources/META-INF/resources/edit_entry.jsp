@@ -38,6 +38,8 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 
 								<%
 								Map<String, Object> data = HashMapBuilder.<String, Object>put(
+									"appDeploymentType", request.getAttribute(AppBuilderWebKeys.APP_DEPLOYMENT_TYPE)
+								).put(
 									"appId", appBuilderApp.getAppBuilderAppId()
 								).put(
 									"basePortletURL", String.valueOf(renderResponse.createRenderURL())

@@ -12,33 +12,6 @@
 		}
 
 		.app-builder-root {
-			.app-builder-control-menu {
-				background-color: #434354;
-				border: 1px solid #6b6c7e;
-				border-radius: 4px 4px 0 0;
-				margin-top: calc(-1.5rem - 1px);
-				padding: 0;
-
-				.control-menu-back-button {
-					align-items: center;
-					color: #ffffff;
-					display: inline-flex;
-					height: 40px;
-					margin: calc(1rem - 1px);
-					width: 40px;
-
-					&:hover {
-						background-color: #4d4d5f;
-						border-radius: 4px;
-					}
-				}
-
-				.control-menu-title {
-					color: #ffffff;
-					font-size: 24px;
-				}
-			}
-
 			.app-builder-form-buttons {
 				padding: 0 0.75rem;
 			}

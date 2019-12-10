@@ -16,10 +16,21 @@ package com.liferay.talend.common.oas;
 
 import com.liferay.talend.common.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Ivica Cardic
  */
 public class OASParameter {
+
+	public static final List<OASParameter> liferayOASParameters =
+		new ArrayList<OASParameter>() {
+			{
+				add(new OASParameter("nestedFields", "query"));
+				add(new OASParameter("includeFieldsParameters", "query"));
+			}
+		};
 
 	public OASParameter(String name, String type) {
 		_name = name;

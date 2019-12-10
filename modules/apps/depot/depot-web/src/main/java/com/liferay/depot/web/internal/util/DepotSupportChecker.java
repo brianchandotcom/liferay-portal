@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal;
+package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.web.internal.configuration.DepotConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.depot.web.internal.configuration.DepotConfiguration",
-	service = Depot.class
+	service = DepotSupportChecker.class
 )
-public class Depot {
+public class DepotSupportChecker {
 
 	public boolean isEnabled() {
 		return _depotConfiguration.enabled();

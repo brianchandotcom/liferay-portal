@@ -309,7 +309,7 @@ public class JournalEditDDMTemplateDisplayContext {
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(StringPool.PERIOD);
-		sb.append(getLanguage());
+		sb.append(templateLanguageType);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();

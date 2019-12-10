@@ -475,7 +475,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskSetUpTestableTomcat(
-		Task task, WorkspaceExtension workspaceExtension) {
+		Task setUpTestableTomcatTask, WorkspaceExtension workspaceExtension) {
 
 		Project project = task.getProject();
 
@@ -486,7 +486,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				project.getRootProject(),
 				RootProjectConfigurator.INIT_BUNDLE_TASK_NAME);
 
-			task.dependsOn(initBundleTask);
+			setUpTestableTomcatTask.dependsOn(initBundleTask);
 		}
 	}
 

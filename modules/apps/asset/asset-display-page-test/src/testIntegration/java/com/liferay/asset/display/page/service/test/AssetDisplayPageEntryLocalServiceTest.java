@@ -89,11 +89,13 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 	@Test
 	public void testAddAssetDisplayPageEntryUpdatesLayoutPageTemplate()
-		throws PortalException {
+		throws Exception {
 
 		_layoutPageTemplateEntry = _getLayoutPageTemplateEntry();
 
 		Date originalModifiedDate = _layoutPageTemplateEntry.getModifiedDate();
+
+		Thread.sleep(500);
 
 		AssetDisplayPageEntryTestUtil.addAssetDisplayPageEntry(
 			_group.getGroupId(), _classNameId, RandomTestUtil.randomLong(),
@@ -280,7 +282,7 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateAssetDisplayPageEntryUpdatesLayoutPageTemplate()
-		throws PortalException {
+		throws Exception {
 
 		_layoutPageTemplateEntry = _getLayoutPageTemplateEntry();
 
@@ -295,6 +297,8 @@ public class AssetDisplayPageEntryLocalServiceTest {
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Date originalModifiedDate = layoutPageTemplateEntry.getModifiedDate();
+
+		Thread.sleep(500);
 
 		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntry.getAssetDisplayPageEntryId(),

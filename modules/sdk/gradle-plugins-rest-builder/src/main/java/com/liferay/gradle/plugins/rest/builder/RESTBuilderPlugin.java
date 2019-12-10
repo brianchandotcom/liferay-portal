@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.logging.Logger;
@@ -202,7 +203,11 @@ public class RESTBuilderPlugin implements Plugin<Project> {
 			return;
 		}
 
-		buildRESTTask.finalizedBy(apiProject.getPath() + ":baseline");
+		Task task = GradleUtil.getTask(apiProject, "baseline");
+
+		task.setProperty("ignoreFailures", Boolean.TRUE);
+
+		buildRESTTask.finalizedBy(task);
 	}
 
 	private void _configureTasksBuildREST(

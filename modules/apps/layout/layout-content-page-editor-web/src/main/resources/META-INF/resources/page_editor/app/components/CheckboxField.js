@@ -12,10 +12,13 @@
  * details.
  */
 
-import {CheckboxField} from '../../components/CheckboxField';
-import {SelectField} from '../../components/SelectField';
+import {ClayCheckbox} from '@clayui/form';
+import React from 'react';
 
-export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
-	checkbox: CheckboxField,
-	select: SelectField
-};
+export const CheckboxField = ({field}) => (
+	<ClayCheckbox
+		aria-label={field.label}
+		checked={field.defaultValue}
+		label={field.label}
+	/>
+);

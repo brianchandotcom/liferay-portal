@@ -1,28 +1,53 @@
 @import 'mixins';
 
 .app-builder-control-menu {
-	background-color: #434354;
-	border: 1px solid #6b6c7e;
-	border-radius: 4px 4px 0 0;
-	margin-top: calc(-1.5rem - 1px);
 	padding: 0;
+
+	&.standalone {
+		background-color: #434354;
+		border: 1px solid #6b6c7e;
+		border-radius: 4px 4px 0 0;
+		margin-top: calc(-1.5rem - 1px);
+	}
+
+	&.widget {
+		background-color: #ffffff;
+		border-color: #e7e7ed;
+		border-style: solid;
+		border-width: 0 0 0.0625rem 0;
+	}
 
 	.control-menu-back-button {
 		align-items: center;
-		color: #ffffff;
 		display: inline-flex;
 		height: 40px;
-		margin: calc(1rem - 1px);
 		width: 40px;
 
-		&:hover {
-			background-color: #4d4d5f;
-			border-radius: 4px;
+		&.standalone {
+			color: #ffffff;
+			margin: calc(1rem - 1px);
+
+			&:hover {
+				background-color: #4d4d5f;
+				border-radius: 4px;
+			}
+		}
+
+		&.widget {
+			color: #6b6c7e;
+			margin: 8px;
 		}
 	}
 
 	.control-menu-title {
-		color: #ffffff;
-		font-size: 24px;
+		&.standalone {
+			color: #ffffff;
+			font-size: 24px;
+		}
+
+		&.widget {
+			font-size: 16px;
+			font-weight: 600;
+		}
 	}
 }

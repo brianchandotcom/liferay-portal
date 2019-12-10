@@ -13,6 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useContext, useEffect} from 'react';
 import {createPortal} from 'react-dom';
 import {Link as InternalLink, withRouter} from 'react-router-dom';
@@ -51,16 +52,26 @@ const setDocumentTitle = title => {
 };
 
 export const InlineControlMenu = ({backURL, title, tooltip, url}) => {
+	const {appDeploymentType} = useContext(AppContext);
+
 	backURL = resolveBackURL(backURL, url);
 
 	const Link =
 		backURL && backURL.startsWith('http') ? ExternalLink : InternalLink;
 
 	return (
-		<div className="app-builder-control-menu">
+		<div
+			className={classNames(
+				'app-builder-control-menu',
+				appDeploymentType
+			)}
+		>
 			{backURL && (
 				<Link
-					className="control-menu-back-button"
+					className={classNames(
+						'control-menu-back-button',
+						appDeploymentType
+					)}
 					tabIndex={1}
 					to={backURL}
 				>
@@ -69,7 +80,16 @@ export const InlineControlMenu = ({backURL, title, tooltip, url}) => {
 					</span>
 				</Link>
 			)}
-			{title && <span className="control-menu-title">{title}</span>}
+			{title && (
+				<span
+					className={classNames(
+						'control-menu-title',
+						appDeploymentType
+					)}
+				>
+					{title}
+				</span>
+			)}
 			{tooltip && (
 				<span
 					className="lfr-portal-tooltip taglib-icon-help"

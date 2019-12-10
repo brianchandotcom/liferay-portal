@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.depot.web.internal.configuration.DepotConfiguration"
+	id = "com.liferay.depot.web.internal.configuration.FFDepotConfiguration"
 )
-public interface DepotConfiguration {
+public interface FFDepotConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enabled();

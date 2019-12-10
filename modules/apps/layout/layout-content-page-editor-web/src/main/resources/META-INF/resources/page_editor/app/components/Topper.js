@@ -268,7 +268,7 @@ export default function Topper({
 						className="page-editor-topper__title"
 						expand
 					>
-						{name}
+						{name || Liferay.Language.get('Element')}
 					</TopperListItem>
 					<TopperListItem>
 						<ClayButton displayType="unstyled" small>

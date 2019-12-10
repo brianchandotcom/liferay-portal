@@ -81,6 +81,8 @@ const PreviewSeoContainer = ({
 }) => {
 	const defaultLanguage = Liferay.ThemeDisplay.getLanguageId();
 	const [language, setLanguage] = useState(defaultLanguage);
+	const [fields, setFields] = useState({});
+	const isMounted = useIsMounted();
 
 	const getDefaultValue = useCallback(
 		type => {
@@ -96,9 +98,17 @@ const PreviewSeoContainer = ({
 		[defaultLanguage, targets, language]
 	);
 
-	const [fields, setFields] = useState({});
+	const setFieldsState = useCallback(
+		({type, ...props}) => {
+			if (!isMounted()) return;
 
-	const isMounted = useIsMounted();
+			setFields(state => ({
+				...state,
+				[type]: {...props}
+			}));
+		},
+		[isMounted]
+	);
 
 	useEffect(() => {
 		const inputLocalizedLocaleChangedHandle = Liferay.on(
@@ -119,15 +129,6 @@ const PreviewSeoContainer = ({
 	}, [isMounted]);
 
 	useEffect(() => {
-		const setFieldsState = ({type, ...props}) => {
-			if (!isMounted()) return;
-
-			setFields(state => ({
-				...state,
-				[type]: {...props}
-			}));
-		};
-
 		const handleInputChange = ({event, type}) => {
 			const target = event.target;
 
@@ -175,7 +176,20 @@ const PreviewSeoContainer = ({
 
 			Liferay.detach(PreviewSeoOnChangeHandle);
 		};
-	}, [portletNamespace, targets, isMounted]);
+	}, [portletNamespace, targets, isMounted, setFieldsState]);
+
+	useEffect(() => {
+		Object.entries(targets).forEach(([type, {id}]) => {
+			if (id) {
+				const node = document.getElementById(
+					`${portletNamespace}${id}`
+				);
+
+				const {disabled, value} = node;
+				setFieldsState({disabled, type, value});
+			}
+		});
+	}, [language, targets, portletNamespace, setFieldsState]);
 
 	const getValue = type => {
 		const disabled = fields[type] && fields[type].disabled;
@@ -184,7 +198,7 @@ const PreviewSeoContainer = ({
 		let value = fields[type] && fields[type].value;
 
 		if (disabled || (!customizable && !value)) {
-			value = defaultValue || '';
+			value = defaultValue;
 		}
 
 		return value || '';

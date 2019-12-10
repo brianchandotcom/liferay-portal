@@ -946,6 +946,35 @@ paths:
                         ""
             tags: ["Subscription"]
     "/organizations":
+        delete:
+            description:
+                Deletes multiple organizations
+            operationId: deleteOrganization
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            description:
+                                A list of organizationIds
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            description:
+                                A list of organizationIds
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description:
+                        ""
+            tags: ["Organization"]
         get:
             description:
                 Retrieves the organizations. Results can be paginated, filtered, searched, and sorted.
@@ -992,6 +1021,24 @@ paths:
                         ""
             tags: ["Organization"]
     "/organizations/{organizationId}":
+        delete:
+            description:
+                Deletes the organization
+            operationId: deleteOrganization
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description:
+                        ""
+            tags: ["Organization"]
         get:
             description:
                 Retrieves the organization.

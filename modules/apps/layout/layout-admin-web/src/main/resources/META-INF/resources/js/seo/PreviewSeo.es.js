@@ -15,7 +15,7 @@
 import {useIsMounted} from 'frontend-js-react-web';
 import {isObject} from 'metal';
 import {PropTypes} from 'prop-types';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
 
 import {PreviewSeoOnChange} from './PreviewSeoEvents.es';
 
@@ -110,6 +110,21 @@ const PreviewSeoContainer = ({
 		[isMounted]
 	);
 
+	const inputTargets = useMemo(
+		() =>
+			Object.entries(targets).reduce((acc, [type, {id}]) => {
+				if (id) {
+					const node = document.getElementById(
+						`${portletNamespace}${id}`
+					);
+					acc.push({node, type});
+				}
+
+				return acc;
+			}, []),
+		[portletNamespace, targets]
+	);
+
 	useEffect(() => {
 		const inputLocalizedLocaleChangedHandle = Liferay.on(
 			'inputLocalized:localeChanged',
@@ -140,26 +155,20 @@ const PreviewSeoContainer = ({
 			setFieldsState({disabled, type, value});
 		};
 
-		const inputs = Object.entries(targets).reduce((acc, [type, {id}]) => {
-			if (id) {
-				const listener = event => {
-					handleInputChange({
-						event,
-						type
-					});
-				};
+		const inputs = inputTargets.reduce((acc, {node, type}) => {
+			const listener = event => {
+				handleInputChange({
+					event,
+					type
+				});
+			};
 
-				const node = document.getElementById(
-					`${portletNamespace}${id}`
-				);
+			node.addEventListener('input', listener);
 
-				node.addEventListener('input', listener);
+			const {disabled, value} = node;
+			setFieldsState({disabled, type, value});
 
-				const {disabled, value} = node;
-				setFieldsState({disabled, type, value});
-
-				acc.push({listener, node, type});
-			}
+			acc.push({listener, node});
 
 			return acc;
 		}, []);
@@ -176,20 +185,14 @@ const PreviewSeoContainer = ({
 
 			Liferay.detach(PreviewSeoOnChangeHandle);
 		};
-	}, [portletNamespace, targets, isMounted, setFieldsState]);
+	}, [portletNamespace, targets, isMounted, setFieldsState, inputTargets]);
 
 	useEffect(() => {
-		Object.entries(targets).forEach(([type, {id}]) => {
-			if (id) {
-				const node = document.getElementById(
-					`${portletNamespace}${id}`
-				);
-
-				const {disabled, value} = node;
-				setFieldsState({disabled, type, value});
-			}
+		inputTargets.forEach(({node, type}) => {
+			const {disabled, value} = node;
+			setFieldsState({disabled, type, value});
 		});
-	}, [language, targets, portletNamespace, setFieldsState]);
+	}, [language, targets, portletNamespace, setFieldsState, inputTargets]);
 
 	const getValue = type => {
 		const disabled = fields[type] && fields[type].disabled;

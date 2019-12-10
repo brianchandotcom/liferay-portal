@@ -820,8 +820,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				(dir, name) -> {
 					File file = new File(dir, name);
 
-					return file.isDirectory() &&
-						   !commonConfigNames.contains(name);
+					if (!file.isDirectory()) {
+						return false;
+					}
+
+					if (commonConfigNames.contains(name)) {
+						return false;
+					}
+
+					return true;
 				});
 
 			if ((configDirs == null) || (configDirs.length == 0)) {

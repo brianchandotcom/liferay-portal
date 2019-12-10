@@ -795,7 +795,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		File configsDir = workspaceExtension.getConfigsDir();
 
 		if (configsDir.exists()) {
-			List<String> commonConfigNames = Arrays.asList("common", "docker");
+			List<String> commonConfigDirNames = Arrays.asList(
+				"common", "docker");
 
 			copy.from(
 				new Callable<File>() {
@@ -810,7 +811,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
-						copySpec.exclude(commonConfigNames);
+						copySpec.exclude(commonConfigDirNames);
 						copySpec.into(_LIFERAY_CONFIGS_DIR_NAME);
 					}
 
@@ -824,7 +825,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						return false;
 					}
 
-					if (commonConfigNames.contains(name)) {
+					if (commonConfigDirNames.contains(name)) {
 						return false;
 					}
 
@@ -834,17 +835,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			if ((configDirs == null) || (configDirs.length == 0)) {
 				throw new GradleException(
 					"'configs' dir must contain one directory not named: " +
-						StringUtil.toString(commonConfigNames));
+						StringUtil.toString(commonConfigDirNames));
 			}
 
-			for (String commonConfigName : commonConfigNames) {
+			for (String commonConfigDirName : commonConfigDirNames) {
 				for (File configDir : configDirs) {
 					copy.from(
 						new Callable<File>() {
 
 							@Override
 							public File call() throws Exception {
-								return new File(configsDir, commonConfigName);
+								return new File(
+									configsDir, commonConfigDirName);
 							}
 
 						},

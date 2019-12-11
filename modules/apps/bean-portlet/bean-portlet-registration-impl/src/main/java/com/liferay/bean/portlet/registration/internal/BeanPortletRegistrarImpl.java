@@ -155,27 +155,16 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		List<DiscoveredBeanMethod> discoveredBeanMethods = new ArrayList<>();
 
 		for (Class<?> discoveredClass : discoveredClasses) {
-			try {
-				for (Method method : discoveredClass.getMethods()) {
-					for (BeanPortletMethodType beanPortletMethodType :
-							BeanPortletMethodType.values()) {
+			for (Method method : discoveredClass.getMethods()) {
+				for (BeanPortletMethodType beanPortletMethodType :
+						BeanPortletMethodType.values()) {
 
-						if (beanPortletMethodType.isMatch(method)) {
-							discoveredBeanMethods.add(
-								new DiscoveredBeanMethod(
-									discoveredClass, method,
-									beanPortletMethodType));
-						}
+					if (beanPortletMethodType.isMatch(method)) {
+						discoveredBeanMethods.add(
+							new DiscoveredBeanMethod(
+								discoveredClass, method,
+								beanPortletMethodType));
 					}
-				}
-			}
-			catch (Throwable t) {
-				String discoveredClassName = discoveredClass.getName();
-
-				if (!discoveredClassName.startsWith("org.springframework")) {
-					_log.error(
-						"Unable to discover methods in class: " +
-							discoveredClassName);
 				}
 			}
 		}

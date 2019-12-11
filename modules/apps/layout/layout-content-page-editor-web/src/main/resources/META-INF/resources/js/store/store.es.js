@@ -14,6 +14,7 @@
 
 import State, {Config} from 'metal-state';
 
+import {debounce} from 'frontend-js-web';
 import {DEFAULT_INITIAL_STATE} from './state.es';
 
 /**
@@ -44,11 +45,14 @@ let _store;
  * @review
  */
 const connect = function(component, store, mapStateToProps) {
-	component._storeChangeListener = store.on('change', () =>
-		syncStoreState(component, store, mapStateToProps)
-	);
+	const debouncedSync = debounce(() => {
+		if (!component.disposed_) {
+			syncStoreState(component, store, mapStateToProps);
+		}
+	}, 100);
 
-	syncStoreState(component, store, mapStateToProps);
+	component._storeChangeListener = store.on('change', debouncedSync);
+	component.on('stateChanged', debouncedSync);
 };
 
 /**

@@ -28,11 +28,17 @@ import {connect, disconnect, Store} from './store.es';
  *  component props
  * @return {Component}
  */
-const getConnectedComponent = (
-	Component,
-	properties,
-	mapStateToProps = state => state
-) => {
+const getConnectedComponent = (Component, properties, mapStateToProps) => {
+	const defaultMapStateToProps = (state, props) => {
+		const mappedProps = {...props};
+
+		properties.forEach(property => {
+			mappedProps[property] = state[property];
+		});
+
+		return mappedProps;
+	};
+
 	/**
 	 * ConnectedComponent
 	 */
@@ -43,7 +49,19 @@ const getConnectedComponent = (
 		 * @param  {...any} ...args
 		 */
 		constructor(props, ...args) {
-			super(props, ...args);
+			let syncedProps = props;
+
+			if (syncedProps.store instanceof Store) {
+				syncedProps = {
+					...syncedProps,
+					...(mapStateToProps || defaultMapStateToProps)(
+						syncedProps.store.getState(),
+						syncedProps
+					)
+				};
+			}
+
+			super(syncedProps, ...args);
 
 			this.on('storeChanged', change => {
 				const newStore = change.newVal;
@@ -56,7 +74,7 @@ const getConnectedComponent = (
 						connect(
 							this,
 							newStore,
-							mapStateToProps
+							mapStateToProps || defaultMapStateToProps
 						);
 					}
 				}
@@ -66,11 +84,11 @@ const getConnectedComponent = (
 				disconnect(this);
 			});
 
-			if (props.store instanceof Store) {
+			if (syncedProps.store instanceof Store) {
 				connect(
 					this,
-					props.store,
-					mapStateToProps
+					syncedProps.store,
+					mapStateToProps || defaultMapStateToProps
 				);
 			}
 		}

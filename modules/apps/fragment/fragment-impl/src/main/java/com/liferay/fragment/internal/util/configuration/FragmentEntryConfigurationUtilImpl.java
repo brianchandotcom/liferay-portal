@@ -511,7 +511,9 @@ public class FragmentEntryConfigurationUtilImpl
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to serialize asset entry to JSON: " + value, jsone);
+					"Unable to serialize info display object entry to JSON: " +
+						value,
+					jsone);
 			}
 		}
 

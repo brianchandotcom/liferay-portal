@@ -128,6 +128,11 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		return _html.escape(_getPageTitleSuffix(layout, companyName));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             OpenGraphConfiguration#isOpenGraphEnabled(Group)}
+	 */
+	@Deprecated
 	@Override
 	public boolean isOpenGraphEnabled(Layout layout) throws PortalException {
 		return _openGraphConfiguration.isOpenGraphEnabled(layout.getGroup());

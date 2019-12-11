@@ -65,6 +65,11 @@ public interface LayoutSEOLinkManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             OpenGraphConfiguration#isOpenGraphEnabled(Group)}
+	 */
+	@Deprecated
 	public default boolean isOpenGraphEnabled(Layout layout)
 		throws PortalException {
 

@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.web.internal.util.FileEntryMetadataOpenGraphTagsProvider;
 import com.liferay.petra.string.StringPool;
@@ -103,7 +104,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					printWriter.println(_addLinkTag(layoutSEOLink));
 				}
 
-				if (_layoutSEOLinkManager.isOpenGraphEnabled(layout)) {
+				if (_openGraphConfiguration.isOpenGraphEnabled(
+						layout.getGroup())) {
+
 					Group group = layout.getGroup();
 					LayoutSEOLink layoutSEOLink =
 						_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
@@ -332,6 +335,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;
+
+	@Reference
+	private OpenGraphConfiguration _openGraphConfiguration;
 
 	@Reference
 	private Portal _portal;

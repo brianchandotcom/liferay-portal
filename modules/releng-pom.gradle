@@ -303,7 +303,6 @@ testPomCompileOnly {
 	doLast {
 		_testPom(pomCompileOnlyArtifactId, version)
 	}
-
 }
 
 testPomRelease {

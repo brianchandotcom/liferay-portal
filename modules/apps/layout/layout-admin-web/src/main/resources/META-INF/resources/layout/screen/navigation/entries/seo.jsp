@@ -50,13 +50,12 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				value="seo"
 			/>
 
+			<h4><liferay-ui:message key="general-settings" /></h4>
+
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 			<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
 				<aui:input id="title" label="html-title" name="title" placeholder="title" />
-
-				<h4><liferay-ui:message key="meta-tags" /></h4>
-
 				<aui:input id="descriptionSEO" name="description" placeholder="description" />
 
 				<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">

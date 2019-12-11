@@ -317,7 +317,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		else if (className.equals(Organization.class.getName())) {
 			groupKey = getOrgGroupName(groupKey);
 		}
-		else if (!GroupConstants.USER_PERSONAL_SITE.equals(groupKey)) {
+		else if ((type != GroupConstants.TYPE_DEPOT) &&
+				 !GroupConstants.USER_PERSONAL_SITE.equals(groupKey)) {
+
 			groupKey = String.valueOf(classPK);
 		}
 
@@ -379,7 +381,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
+		if ((classNameId <= 0) || (type == GroupConstants.TYPE_DEPOT) ||
+			className.equals(Group.class.getName())) {
+
 			validateGroupKey(groupId, user.getCompanyId(), groupKey, site);
 		}
 
@@ -3646,7 +3650,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId(), groupId, classNameId, classPK,
 			StringPool.BLANK, friendlyURL);
 
-		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
+		if ((classNameId <= 0) || (type == GroupConstants.TYPE_DEPOT) ||
+			className.equals(Group.class.getName())) {
+
 			validateGroupKey(
 				group.getGroupId(), group.getCompanyId(), groupKey,
 				group.isSite());

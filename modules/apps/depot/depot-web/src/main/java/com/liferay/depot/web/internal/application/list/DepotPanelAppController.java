@@ -21,6 +21,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.depot.web.internal.application.DepotApplicationController;
+import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -61,13 +62,17 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class DepotPanelAppController {
 
 	public boolean isShow(PanelApp panelApp) {
-		if (_panelCategoryHelper.containsPortlet(
-				panelApp.getPortletId(), PanelCategoryKeys.CONTROL_PANEL)) {
+		String portletId = panelApp.getPortletId();
+
+		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||
+			portletId.equals(DepotPortletKeys.DEPOT_SETTINGS) ||
+			_panelCategoryHelper.containsPortlet(
+				portletId, PanelCategoryKeys.CONTROL_PANEL)) {
 
 			return true;
 		}
 
-		return _depotApplicationController.isEnabled(panelApp.getPortletId());
+		return _depotApplicationController.isEnabled(portletId);
 	}
 
 	@Activate

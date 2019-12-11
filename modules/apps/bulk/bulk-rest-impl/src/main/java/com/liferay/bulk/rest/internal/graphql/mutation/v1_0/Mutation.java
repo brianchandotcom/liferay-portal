@@ -178,7 +178,7 @@ public class Mutation {
 	@GraphQLField
 	public java.util.Collection<TaxonomyVocabulary>
 			createSiteTaxonomyVocabulariesCommonPage(
-				Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("documentBulkSelection") DocumentBulkSelection
 					documentBulkSelection)
 		throws Exception {
@@ -190,7 +190,7 @@ public class Mutation {
 				Page paginationPage =
 					taxonomyVocabularyResource.
 						postSiteTaxonomyVocabulariesCommonPage(
-							siteId, documentBulkSelection);
+							Long.valueOf(siteKey), documentBulkSelection);
 
 				return paginationPage.getItems();
 			});

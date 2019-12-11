@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.portlet.action;
+package com.liferay.depot.web.internal.portlet;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -20,9 +20,15 @@ import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.portlet.DynamicRenderRequest;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
+
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -31,26 +37,38 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(
+	immediate = true,
 	property = {
-		"javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN,
+		"com.liferay.portlet.css-class-wrapper=portlet-depot-admin",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.instanceable=false",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Depot",
+		"javax.portlet.init-param.always-send-redirect=true",
+		"javax.portlet.init-param.template-path=/META-INF/resources/",
+		"javax.portlet.init-param.view-template=/edit_depot_entry.jsp",
 		"javax.portlet.name=" + DepotPortletKeys.DEPOT_SETTINGS,
-		"mvc.command.name=/depot_entry/edit"
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator"
 	},
-	service = MVCRenderCommand.class
+	service = Portlet.class
 )
-public class EditDepotEntryMVCRenderCommand implements MVCRenderCommand {
+public class DepotSettingsPortlet extends MVCPortlet {
 
 	@Override
-	public String render(
+	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+		throws IOException, PortletException {
 
 		try {
-			DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
-				ParamUtil.getLong(renderRequest, "depotEntryId"));
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+				themeDisplay.getScopeGroupId());
 
 			renderRequest.setAttribute(
 				DepotAdminWebKeys.DEPOT_ENTRY, depotEntry);
@@ -58,7 +76,16 @@ public class EditDepotEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DepotAdminWebKeys.ITEM_SELECTOR, _itemSelector);
 
-			return "/edit_depot_entry.jsp";
+			super.doView(
+				new DynamicRenderRequest(
+					renderRequest,
+					HashMapBuilder.put(
+						"depotEntryId",
+						new String[] {
+							String.valueOf(depotEntry.getDepotEntryId())
+						}
+					).build()),
+				renderResponse);
 		}
 		catch (PortalException pe) {
 			throw new PortletException(pe);

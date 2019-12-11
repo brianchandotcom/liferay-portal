@@ -200,6 +200,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"classPK", editorSoyContext.get("classPK")
 			).put(
+				"defaultEditorConfigurations", _getDefaultConfigurations()
+			).put(
 				"defaultLanguageId", editorSoyContext.get("defaultLanguageId")
 			).put(
 				"fragments", editorSoyContext.get("elements")

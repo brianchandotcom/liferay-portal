@@ -16,7 +16,7 @@ import serviceFetch from './serviceFetch';
 
 /**
  * @typedef FragmentComment
- * @author {object} author
+ * @property {object} author
  * @property {string} body
  * @property {number} commentId
  * @property {string} dateDescription
@@ -40,6 +40,25 @@ export default {
 		return serviceFetch(config, addFragmentEntryLinkCommentURL, {
 			body,
 			fragmentEntryLinkId
+		});
+	},
+
+	/**
+	 * Edits a fragment comment
+	 * @param {object} options
+	 * @param {string} options.body Body of the comment
+	 * @param {string} options.commentId Id of the comment
+	 * @param {object} options.config AppConfig
+	 * @param {boolean} options.resolved Whether the comment should be marked as resolved or not
+	 * @return {Promise<FragmentComment>} Created FragmentComment
+	 */
+	editFragmentEntryLinkComment({body, commentId, config, resolved}) {
+		const {editFragmentEntryLinkCommentURL} = config;
+
+		return serviceFetch(config, editFragmentEntryLinkCommentURL, {
+			body,
+			commentId,
+			resolved
 		});
 	}
 };

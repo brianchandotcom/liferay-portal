@@ -29,7 +29,9 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
+import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -37,6 +39,8 @@ import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.execution.ProjectConfigurer;
+import org.gradle.internal.service.ServiceRegistry;
 
 /**
  * @author Andrea Di Giorgi
@@ -303,11 +307,24 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Task task = GradleUtil.getTask(apiProject, "baseline");
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
 
-		task.setProperty("ignoreFailures", Boolean.TRUE);
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
 
-		buildServiceTask.finalizedBy(task);
+		ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		projectConfigurer.configure((ProjectInternal)apiProject);
+
+		TaskContainer taskContainer = apiProject.getTasks();
+
+		Task task = taskContainer.findByName("baseline");
+
+		if (task != null) {
+			task.setProperty("ignoreFailures", Boolean.TRUE);
+
+			buildServiceTask.finalizedBy(task);
+		}
 	}
 
 	protected void configureTaskBuildServiceForWarPlugin(

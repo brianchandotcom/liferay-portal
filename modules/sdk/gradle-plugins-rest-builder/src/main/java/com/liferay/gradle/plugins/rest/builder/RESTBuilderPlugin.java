@@ -33,11 +33,15 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.internal.GradleInternal;
+import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.execution.ProjectConfigurer;
+import org.gradle.internal.service.ServiceRegistry;
 
 /**
  * @author Peter Shin
@@ -203,11 +207,24 @@ public class RESTBuilderPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Task task = GradleUtil.getTask(apiProject, "baseline");
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
 
-		task.setProperty("ignoreFailures", Boolean.TRUE);
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
 
-		buildRESTTask.finalizedBy(task);
+		ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		projectConfigurer.configure((ProjectInternal)apiProject);
+
+		TaskContainer taskContainer = apiProject.getTasks();
+
+		Task task = taskContainer.findByName("baseline");
+
+		if (task != null) {
+			task.setProperty("ignoreFailures", Boolean.TRUE);
+
+			buildRESTTask.finalizedBy(task);
+		}
 	}
 
 	private void _configureTasksBuildREST(

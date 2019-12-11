@@ -22,8 +22,10 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.web.internal.util.FileEntryMetadataOpenGraphTagsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -141,32 +143,35 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			printWriter.println(
 				_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
 
-			LayoutSEOEntry layoutSEOEntry =
-				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId());
+			long openGraphImageFileEntryId = _getOpenGraphImageFileEntryId(
+				layout);
 
-			if ((layoutSEOEntry == null) ||
-				(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
-
+			if (openGraphImageFileEntryId == 0) {
 				return;
 			}
 
-			String imageTag = _getImageTag(layout, themeDisplay);
-
-			printWriter.println(_getOpenGraphTag("og:image", imageTag));
-
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-				layoutSEOEntry.getOpenGraphImageFileEntryId());
+				openGraphImageFileEntryId);
+
+			printWriter.println(
+				_getOpenGraphTag(
+					"og:image",
+					_dlurlHelper.getImagePreviewURL(fileEntry, themeDisplay)));
 
 			printWriter.println(
 				_getOpenGraphTag("og:image:type", fileEntry.getMimeType()));
 
-			printWriter.println(_getOpenGraphTag("og:image:url", imageTag));
+			printWriter.println(
+				_getOpenGraphTag(
+					"og:image:url",
+					_dlurlHelper.getImagePreviewURL(fileEntry, themeDisplay)));
 
 			if (themeDisplay.isSecure()) {
 				printWriter.println(
-					_getOpenGraphTag("og:image:url_secure", imageTag));
+					_getOpenGraphTag(
+						"og:image:url_secure",
+						_dlurlHelper.getImagePreviewURL(
+							fileEntry, themeDisplay)));
 			}
 
 			for (KeyValuePair keyValuePair :
@@ -239,9 +244,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return layout.getDescription(themeDisplay.getLanguageId());
 	}
 
-	private String _getImageTag(Layout layout, ThemeDisplay themeDisplay)
-		throws Exception {
-
+	private long _getOpenGraphImageFileEntryId(Layout layout) {
 		LayoutSEOEntry layoutSEOEntry =
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -250,13 +253,20 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		if ((layoutSEOEntry != null) &&
 			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-				layoutSEOEntry.getOpenGraphImageFileEntryId());
-
-			return _dlurlHelper.getImagePreviewURL(fileEntry, themeDisplay);
+			return layoutSEOEntry.getOpenGraphImageFileEntryId();
 		}
 
-		return StringPool.BLANK;
+		LayoutSEOSite layoutSEOSite =
+			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
+				layout.getGroupId());
+
+		if ((layoutSEOSite != null) &&
+			(layoutSEOSite.getOpenGraphImageFileEntryId() > 0)) {
+
+			return layoutSEOSite.getOpenGraphImageFileEntryId();
+		}
+
+		return 0;
 	}
 
 	private String _getOpenGraphTag(String property, String content) {
@@ -335,6 +345,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;
+
+	@Reference
+	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 
 	@Reference
 	private OpenGraphConfiguration _openGraphConfiguration;

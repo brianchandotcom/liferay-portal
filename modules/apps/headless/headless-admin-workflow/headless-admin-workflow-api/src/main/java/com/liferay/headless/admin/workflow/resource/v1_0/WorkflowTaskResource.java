@@ -53,6 +53,16 @@ public interface WorkflowTaskResource {
 			Long workflowInstanceId, Boolean completed, Pagination pagination)
 		throws Exception;
 
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksAssignedToMePage(
+			Long workflowInstanceId, Boolean completed, Pagination pagination)
+		throws Exception;
+
+	public Page<WorkflowTask>
+			getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+				Long workflowInstanceId, Long assigneeId, Boolean completed,
+				Pagination pagination)
+		throws Exception;
+
 	public Page<WorkflowTask> getWorkflowTasksPage(
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
 			String[] assetTypes, Boolean completed, Date dateDueEnd,

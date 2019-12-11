@@ -327,6 +327,53 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstanceWorkflowTasksAssignedToMe(completed: ___, page: ___, pageSize: ___, workflowInstanceId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowTaskPage workflowInstanceWorkflowTasksAssignedToMe(
+			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
+			@GraphQLName("completed") Boolean completed,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> new WorkflowTaskPage(
+				workflowTaskResource.
+					getWorkflowInstanceWorkflowTasksAssignedToMePage(
+						workflowInstanceId, completed,
+						Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstanceWorkflowTasksAssignedToUser(assigneeId: ___, completed: ___, page: ___, pageSize: ___, workflowInstanceId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowTaskPage workflowInstanceWorkflowTasksAssignedToUser(
+			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
+			@GraphQLName("assigneeId") Long assigneeId,
+			@GraphQLName("completed") Boolean completed,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> new WorkflowTaskPage(
+				workflowTaskResource.
+					getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+						workflowInstanceId, assigneeId, completed,
+						Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasks(andOperator: ___, assetPrimaryKeys: ___, assetTitle: ___, assetTypes: ___, completed: ___, dateDueEnd: ___, dateDueStart: ___, page: ___, pageSize: ___, searchByUserRoles: ___, sorts: ___, taskName: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -568,6 +615,36 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(WorkflowInstance.class)
+	public class GetWorkflowInstanceWorkflowTasksAssignedToMePageTypeExtension {
+
+		public GetWorkflowInstanceWorkflowTasksAssignedToMePageTypeExtension(
+			WorkflowInstance workflowInstance) {
+
+			_workflowInstance = workflowInstance;
+		}
+
+		@GraphQLField
+		public WorkflowTaskPage workflowTasksAssignedToMe(
+				@GraphQLName("completed") Boolean completed,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_workflowTaskResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowTaskResource -> new WorkflowTaskPage(
+					workflowTaskResource.
+						getWorkflowInstanceWorkflowTasksAssignedToMePage(
+							_workflowInstance.getId(), completed,
+							Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowInstance _workflowInstance;
+
+	}
+
 	@GraphQLTypeExtension(WorkflowTask.class)
 	public class GetWorkflowTaskAssignableUsersPageTypeExtension {
 
@@ -619,6 +696,38 @@ public class Query {
 		}
 
 		private WorkflowTask _workflowTask;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowInstance.class)
+	public class
+		GetWorkflowInstanceWorkflowTasksAssignedToUserPageTypeExtension {
+
+		public GetWorkflowInstanceWorkflowTasksAssignedToUserPageTypeExtension(
+			WorkflowInstance workflowInstance) {
+
+			_workflowInstance = workflowInstance;
+		}
+
+		@GraphQLField
+		public WorkflowTaskPage workflowTasksAssignedToUser(
+				@GraphQLName("assigneeId") Long assigneeId,
+				@GraphQLName("completed") Boolean completed,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_workflowTaskResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowTaskResource -> new WorkflowTaskPage(
+					workflowTaskResource.
+						getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+							_workflowInstance.getId(), assigneeId, completed,
+							Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowInstance _workflowInstance;
 
 	}
 

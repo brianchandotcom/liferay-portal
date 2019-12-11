@@ -97,6 +97,72 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-me'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-me"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksAssignedToMePage(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
+				Long workflowInstanceId,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-user'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId"),
+			@Parameter(in = ParameterIn.QUERY, name = "assigneeId"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path(
+		"/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-user"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask>
+			getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("workflowInstanceId") Long workflowInstanceId,
+				@Parameter(hidden = true) @QueryParam("assigneeId") Long
+					assigneeId,
+				@Parameter(hidden = true) @QueryParam("completed") Boolean
+					completed,
+				@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks'  -u 'test@liferay.com:test'
 	 */
 	@Override

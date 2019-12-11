@@ -325,6 +325,276 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	}
 
 	@Test
+	public void testGetWorkflowInstanceWorkflowTasksAssignedToMePage()
+		throws Exception {
+
+		Page<WorkflowTask> page =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToMePage(
+					testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getWorkflowInstanceId(),
+					null, Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getWorkflowInstanceId();
+		Long irrelevantWorkflowInstanceId =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getIrrelevantWorkflowInstanceId();
+
+		if ((irrelevantWorkflowInstanceId != null)) {
+			WorkflowTask irrelevantWorkflowTask =
+				testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
+					irrelevantWorkflowInstanceId,
+					randomIrrelevantWorkflowTask());
+
+			page =
+				workflowTaskResource.
+					getWorkflowInstanceWorkflowTasksAssignedToMePage(
+						irrelevantWorkflowInstanceId, null,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantWorkflowTask),
+				(List<WorkflowTask>)page.getItems());
+			assertValid(page);
+		}
+
+		WorkflowTask workflowTask1 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		WorkflowTask workflowTask2 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		page =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToMePage(
+					workflowInstanceId, null, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(workflowTask1, workflowTask2),
+			(List<WorkflowTask>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetWorkflowInstanceWorkflowTasksAssignedToMePageWithPagination()
+		throws Exception {
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getWorkflowInstanceId();
+
+		WorkflowTask workflowTask1 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		WorkflowTask workflowTask2 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		WorkflowTask workflowTask3 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		Page<WorkflowTask> page1 =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToMePage(
+					workflowInstanceId, null, Pagination.of(1, 2));
+
+		List<WorkflowTask> workflowTasks1 =
+			(List<WorkflowTask>)page1.getItems();
+
+		Assert.assertEquals(
+			workflowTasks1.toString(), 2, workflowTasks1.size());
+
+		Page<WorkflowTask> page2 =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToMePage(
+					workflowInstanceId, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<WorkflowTask> workflowTasks2 =
+			(List<WorkflowTask>)page2.getItems();
+
+		Assert.assertEquals(
+			workflowTasks2.toString(), 1, workflowTasks2.size());
+
+		Page<WorkflowTask> page3 =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToMePage(
+					workflowInstanceId, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
+			(List<WorkflowTask>)page3.getItems());
+	}
+
+	protected WorkflowTask
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_addWorkflowTask(
+				Long workflowInstanceId, WorkflowTask workflowTask)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getWorkflowInstanceId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceWorkflowTasksAssignedToMePage_getIrrelevantWorkflowInstanceId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetWorkflowInstanceWorkflowTasksAssignedToUserPage()
+		throws Exception {
+
+		Page<WorkflowTask> page =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+					testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getWorkflowInstanceId(),
+					null, null, Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getWorkflowInstanceId();
+		Long irrelevantWorkflowInstanceId =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getIrrelevantWorkflowInstanceId();
+
+		if ((irrelevantWorkflowInstanceId != null)) {
+			WorkflowTask irrelevantWorkflowTask =
+				testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
+					irrelevantWorkflowInstanceId,
+					randomIrrelevantWorkflowTask());
+
+			page =
+				workflowTaskResource.
+					getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+						irrelevantWorkflowInstanceId, null, null,
+						Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantWorkflowTask),
+				(List<WorkflowTask>)page.getItems());
+			assertValid(page);
+		}
+
+		WorkflowTask workflowTask1 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		WorkflowTask workflowTask2 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		page =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+					workflowInstanceId, null, null, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(workflowTask1, workflowTask2),
+			(List<WorkflowTask>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetWorkflowInstanceWorkflowTasksAssignedToUserPageWithPagination()
+		throws Exception {
+
+		Long workflowInstanceId =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getWorkflowInstanceId();
+
+		WorkflowTask workflowTask1 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		WorkflowTask workflowTask2 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		WorkflowTask workflowTask3 =
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
+				workflowInstanceId, randomWorkflowTask());
+
+		Page<WorkflowTask> page1 =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+					workflowInstanceId, null, null, Pagination.of(1, 2));
+
+		List<WorkflowTask> workflowTasks1 =
+			(List<WorkflowTask>)page1.getItems();
+
+		Assert.assertEquals(
+			workflowTasks1.toString(), 2, workflowTasks1.size());
+
+		Page<WorkflowTask> page2 =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+					workflowInstanceId, null, null, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<WorkflowTask> workflowTasks2 =
+			(List<WorkflowTask>)page2.getItems();
+
+		Assert.assertEquals(
+			workflowTasks2.toString(), 1, workflowTasks2.size());
+
+		Page<WorkflowTask> page3 =
+			workflowTaskResource.
+				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+					workflowInstanceId, null, null, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(workflowTask1, workflowTask2, workflowTask3),
+			(List<WorkflowTask>)page3.getItems());
+	}
+
+	protected WorkflowTask
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_addWorkflowTask(
+				Long workflowInstanceId, WorkflowTask workflowTask)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getWorkflowInstanceId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetWorkflowInstanceWorkflowTasksAssignedToUserPage_getIrrelevantWorkflowInstanceId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetWorkflowTasksPage() throws Exception {
 		Page<WorkflowTask> page = workflowTaskResource.getWorkflowTasksPage(
 			null, null, RandomTestUtil.randomString(), null, null,

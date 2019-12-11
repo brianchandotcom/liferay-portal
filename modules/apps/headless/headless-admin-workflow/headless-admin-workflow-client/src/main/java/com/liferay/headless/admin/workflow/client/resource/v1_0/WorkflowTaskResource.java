@@ -52,6 +52,28 @@ public interface WorkflowTaskResource {
 				Pagination pagination)
 		throws Exception;
 
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksAssignedToMePage(
+			Long workflowInstanceId, Boolean completed, Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getWorkflowInstanceWorkflowTasksAssignedToMePageHttpResponse(
+				Long workflowInstanceId, Boolean completed,
+				Pagination pagination)
+		throws Exception;
+
+	public Page<WorkflowTask>
+			getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+				Long workflowInstanceId, Long assigneeId, Boolean completed,
+				Pagination pagination)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getWorkflowInstanceWorkflowTasksAssignedToUserPageHttpResponse(
+				Long workflowInstanceId, Long assigneeId, Boolean completed,
+				Pagination pagination)
+		throws Exception;
+
 	public Page<WorkflowTask> getWorkflowTasksPage(
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
 			String[] assetTypes, Boolean completed, java.util.Date dateDueEnd,
@@ -312,6 +334,152 @@ public interface WorkflowTaskResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks",
+				workflowInstanceId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<WorkflowTask>
+				getWorkflowInstanceWorkflowTasksAssignedToMePage(
+					Long workflowInstanceId, Boolean completed,
+					Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWorkflowInstanceWorkflowTasksAssignedToMePageHttpResponse(
+					workflowInstanceId, completed, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, WorkflowTaskSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getWorkflowInstanceWorkflowTasksAssignedToMePageHttpResponse(
+					Long workflowInstanceId, Boolean completed,
+					Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-me",
+				workflowInstanceId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<WorkflowTask>
+				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
+					Long workflowInstanceId, Long assigneeId, Boolean completed,
+					Pagination pagination)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getWorkflowInstanceWorkflowTasksAssignedToUserPageHttpResponse(
+					workflowInstanceId, assigneeId, completed, pagination);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, WorkflowTaskSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getWorkflowInstanceWorkflowTasksAssignedToUserPageHttpResponse(
+					Long workflowInstanceId, Long assigneeId, Boolean completed,
+					Pagination pagination)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (assigneeId != null) {
+				httpInvoker.parameter("assigneeId", String.valueOf(assigneeId));
+			}
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-user",
 				workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(

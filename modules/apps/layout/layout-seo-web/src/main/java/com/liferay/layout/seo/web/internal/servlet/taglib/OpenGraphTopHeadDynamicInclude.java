@@ -123,7 +123,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			printWriter.println(
 				_getOpenGraphTag(
 					"og:description",
-					_getDescriptionTag(layout, themeDisplay)));
+					_getDescriptionTagValue(layout, themeDisplay)));
 			printWriter.println(
 				_getOpenGraphTag("og:locale", themeDisplay.getLanguageId()));
 
@@ -139,7 +139,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				_getOpenGraphTag("og:site_name", group.getDescriptiveName()));
 
 			printWriter.println(
-				_getOpenGraphTag("og:title", _getTitleTag(httpServletRequest)));
+				_getOpenGraphTag(
+					"og:title", _getTitleTagValue(httpServletRequest)));
 			printWriter.println(
 				_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
 
@@ -226,7 +227,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return sb.toString();
 	}
 
-	private String _getDescriptionTag(
+	private String _getDescriptionTagValue(
 		Layout layout, ThemeDisplay themeDisplay) {
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -274,18 +275,11 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<meta property=\"");
-		sb.append(property);
-		sb.append("\" content=\"");
-		sb.append(content);
-		sb.append("\">");
-
-		return sb.toString();
+		return StringBundler.concat(
+			"<meta property=\"", property, "\" content=\"", content, "\">");
 	}
 
-	private String _getTitleTag(HttpServletRequest httpServletRequest)
+	private String _getTitleTagValue(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =

@@ -204,6 +204,11 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"defaultLanguageId", editorSoyContext.get("defaultLanguageId")
 			).put(
+				"editFragmentEntryLinkCommentURL",
+				getFragmentEntryActionURL(
+					"/content_layout/edit_fragment_entry_link_comment",
+					Constants.UPDATE)
+			).put(
 				"fragments", editorSoyContext.get("elements")
 			).put(
 				"hasUpdatePermissions",

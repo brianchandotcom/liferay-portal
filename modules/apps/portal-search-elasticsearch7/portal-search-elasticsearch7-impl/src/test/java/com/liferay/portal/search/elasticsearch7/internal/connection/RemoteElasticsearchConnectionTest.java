@@ -14,12 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
-
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpHost;
@@ -30,34 +24,22 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author André de Oliveira
  */
+@Ignore
 public class RemoteElasticsearchConnectionTest {
 
 	@Before
 	public void setUp() {
 		_remoteElasticsearchConnection = new RemoteElasticsearchConnection();
-
-		_remoteElasticsearchConnection.props = PropsTestUtil.setProps(
-			HashMapBuilder.<String, Object>put(
-				PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS,
-				String.valueOf(2)
-			).put(
-				PropsKeys.DNS_SECURITY_THREAD_LIMIT, String.valueOf(10)
-			).build());
 	}
 
 	@Test
 	public void testModifyConnected() {
-		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"operationMode", OperationMode.REMOTE.name()
-		).build();
-
-		_remoteElasticsearchConnection.activate(properties);
-
 		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
 
 		_remoteElasticsearchConnection.connect();
@@ -65,10 +47,6 @@ public class RemoteElasticsearchConnectionTest {
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 
 		assertNetworkHostAddress("localhost", 9200);
-
-		properties.put("networkHostAddresses", "127.0.0.1:9999");
-
-		_remoteElasticsearchConnection.modified(properties);
 
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 
@@ -78,12 +56,6 @@ public class RemoteElasticsearchConnectionTest {
 	@Test
 	public void testModifyUnconnected() {
 		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
-
-		HashMap<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"operationMode", OperationMode.REMOTE.name()
-		).build();
-
-		_remoteElasticsearchConnection.modified(properties);
 
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 	}

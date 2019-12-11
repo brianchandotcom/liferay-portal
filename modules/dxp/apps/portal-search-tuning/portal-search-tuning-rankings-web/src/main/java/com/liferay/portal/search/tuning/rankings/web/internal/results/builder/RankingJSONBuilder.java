@@ -175,29 +175,23 @@ public class RankingJSONBuilder {
 	}
 
 	private String _getDescription() {
-		String content = _document.getString(
+		String description = _document.getString(
 			Field.getLocalizedName(_locale, Field.CONTENT));
 
-		if (!Validator.isBlank(content)) {
-			return StringUtil.shorten(content, 200);
+		if (Validator.isBlank(description)) {
+			description = _document.getString(Field.CONTENT);
 		}
 
-		content = _document.getString(Field.CONTENT);
-
-		if (!Validator.isBlank(content)) {
-			return StringUtil.shorten(content, 200);
+		if (Validator.isBlank(description)) {
+			description = _document.getString(
+				Field.getLocalizedName(_locale, Field.DESCRIPTION));
 		}
 
-		content = _document.getString(
-			Field.getLocalizedName(_locale, Field.DESCRIPTION));
-
-		if (!Validator.isBlank(content)) {
-			return StringUtil.shorten(content, 200);
+		if (Validator.isBlank(description)) {
+			description = _document.getString(Field.DESCRIPTION);
 		}
 
-		content = _document.getString(Field.DESCRIPTION);
-
-		return StringUtil.shorten(content, 200);
+		return StringUtil.shorten(description, 200);
 	}
 
 	private String _getIcon() {
@@ -281,24 +275,20 @@ public class RankingJSONBuilder {
 		String title = _document.getString(
 			Field.getLocalizedName(_locale, Field.TITLE));
 
-		if (!Validator.isBlank(title)) {
-			return title;
+		if (Validator.isBlank(title)) {
+			title = _document.getString(Field.TITLE);
 		}
 
-		title = _document.getString(Field.TITLE);
-
-		if (!Validator.isBlank(title)) {
-			return title;
+		if (Validator.isBlank(title)) {
+			title = _document.getString(
+				Field.getLocalizedName(_locale, Field.NAME));
 		}
 
-		title = _document.getString(
-			Field.getLocalizedName(_locale, Field.NAME));
-
-		if (!Validator.isBlank(title)) {
-			return title;
+		if (Validator.isBlank(title)) {
+			title = _document.getString(Field.NAME);
 		}
 
-		return _document.getString(Field.NAME);
+		return title;
 	}
 
 	private String _getType() {

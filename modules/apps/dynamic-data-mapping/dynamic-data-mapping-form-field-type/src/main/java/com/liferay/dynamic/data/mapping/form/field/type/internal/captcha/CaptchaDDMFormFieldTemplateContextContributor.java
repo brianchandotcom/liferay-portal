@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
 import com.liferay.portal.template.soy.util.SoyRawData;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,24 +56,18 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		return HashMapBuilder.<String, Object>put(
-			"html",
-			() -> {
-				String html = StringPool.BLANK;
+		String html = StringPool.BLANK;
 
-				try {
-					html = renderCaptchaTag(
-						ddmFormField, ddmFormFieldRenderingContext);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
+		try {
+			html = renderCaptchaTag(ddmFormField, ddmFormFieldRenderingContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 
-				SoyRawData soyRawData = _soyDataFactory.createSoyRawData(html);
+		SoyRawData soyRawData = _soyDataFactory.createSoyRawData(html);
 
-				return soyRawData.getValue();
-			}
-		).build();
+		return Collections.singletonMap("html", soyRawData.getValue());
 	}
 
 	protected String renderCaptchaTag(

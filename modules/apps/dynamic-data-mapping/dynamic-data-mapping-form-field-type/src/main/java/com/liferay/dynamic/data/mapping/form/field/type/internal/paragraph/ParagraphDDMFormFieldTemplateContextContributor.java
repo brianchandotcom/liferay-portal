@@ -19,10 +19,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
 import com.liferay.portal.template.soy.util.SoyRawData;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,15 +46,10 @@ public class ParagraphDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		return HashMapBuilder.<String, Object>put(
-			"text",
-			() -> {
-				SoyRawData soyRawData = _soyDataFactory.createSoyRawData(
-					getText(ddmFormField, ddmFormFieldRenderingContext));
+		SoyRawData soyRawData = _soyDataFactory.createSoyRawData(
+			getText(ddmFormField, ddmFormFieldRenderingContext));
 
-				return soyRawData.getValue();
-			}
-		).build();
+		return Collections.singletonMap("text", soyRawData.getValue());
 	}
 
 	protected String getText(

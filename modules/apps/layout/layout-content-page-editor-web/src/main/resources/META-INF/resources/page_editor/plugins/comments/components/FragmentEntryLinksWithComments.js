@@ -14,20 +14,21 @@
 
 import React, {useContext} from 'react';
 
+import {useSelectItem, useHoverItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {StoreContext} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import AppContext from '../../../core/AppContext';
 import NoCommentsMessage from './NoCommentsMessage';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
 
 export default function FragmentEntryLinksWithComments() {
-	const {dispatch} = useContext(AppContext);
-
 	const {fragmentEntryLinks, layoutData, showResolvedComments} = useContext(
 		StoreContext
 	);
+
+	const selectItem = useSelectItem();
+	const hoverItem = useHoverItem();
 
 	const fragmentEntryLinksWithComments = Object.values(layoutData.items)
 		.filter(item => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
@@ -41,30 +42,19 @@ export default function FragmentEntryLinksWithComments() {
 		);
 
 	const setActiveFragmentEntryLink = fragmentEntryLinkId => () => {
-		dispatch({
-			itemId: Object.values(layoutData.items).find(
+		selectItem(
+			Object.values(layoutData.items).find(
 				item => item.config.fragmentEntryLinkId === fragmentEntryLinkId
-			),
-			type: 'updateActiveItem'
-		});
-
-		const fragmentEntryLinkElement = null;
-
-		if (fragmentEntryLinkElement) {
-			fragmentEntryLinkElement.scrollIntoView({
-				behavior: 'smooth',
-				block: 'center'
-			});
-		}
+			).itemId
+		);
 	};
 
 	const setHoveredFragmentEntryLink = fragmentEntryLinkId => () => {
-		dispatch({
-			itemId: Object.values(layoutData.items).find(
+		hoverItem(
+			Object.values(layoutData.items).find(
 				item => item.config.fragmentEntryLinkId === fragmentEntryLinkId
-			),
-			type: 'updateHoveredItem'
-		});
+			).itemId
+		);
 	};
 
 	const getFragmentEntryLinkItem = ({
@@ -84,6 +74,7 @@ export default function FragmentEntryLinksWithComments() {
 				key={fragmentEntryLinkId}
 				onClick={setActiveFragmentEntryLink(fragmentEntryLinkId)}
 				onFocus={setHoveredFragmentEntryLink(fragmentEntryLinkId)}
+				onMouseOut={() => hoverItem(null)}
 				onMouseOver={setHoveredFragmentEntryLink(fragmentEntryLinkId)}
 			>
 				<strong className="d-block text-dark">{name}</strong>

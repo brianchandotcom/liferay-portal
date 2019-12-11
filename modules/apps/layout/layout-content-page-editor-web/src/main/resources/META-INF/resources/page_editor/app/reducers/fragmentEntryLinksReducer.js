@@ -48,7 +48,32 @@ export default function fragmentEntryLinksReducer(state, action) {
 				};
 			}
 			break;
+		case TYPES.EDIT_FRAGMENT_ENTRY_LINK_COMMENT:
+			{
+				const fragmentEntryLink =
+					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
 
+				const {comments = []} = fragmentEntryLink;
+
+				const nextComments = comments.map(comment =>
+					comment.commentId ===
+					action.fragmentEntryLinkComment.commentId
+						? action.fragmentEntryLinkComment
+						: comment
+				);
+
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...fragmentEntryLink,
+							comments: nextComments
+						}
+					}
+				};
+			}
+			break;
 		default:
 			break;
 	}

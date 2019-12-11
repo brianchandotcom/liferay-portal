@@ -12,29 +12,12 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
 import React, {useContext} from 'react';
 
 import {DispatchContext} from '../../app/reducers/index';
+import ColorPalette from '../../common/components/ColorPalette';
 import updateItemConfig from '../actions/updateItemConfig';
-
-const COLORS = [
-	'primary',
-	'success',
-	'danger',
-	'warning',
-	'info',
-	'dark',
-	'gray-dark',
-	'secondary',
-	'light',
-	'lighter',
-	'white'
-];
-
-const SELECTORS = {
-	backgroundColorCssClass: 'backgroundColorCssClass'
-};
 
 export const BackgroundColorConfigurationPanel = ({item}) => {
 	const dispatch = useContext(DispatchContext);
@@ -50,36 +33,12 @@ export const BackgroundColorConfigurationPanel = ({item}) => {
 		);
 
 	return (
-		<div className="form-group">
-			<label htmlFor="floatingToolbarBackgroundColorPanelPalette">
-				{Liferay.Language.get('background-color')}
-			</label>
-			<div
-				className="palette-container"
-				id="floatingToolbarBackgroundColorPanelPalette"
-			>
-				<ul className="list-unstyled palette-items-container">
-					{COLORS.map(color => (
-						<li className="palette-item" key={color}>
-							<ClayButton
-								block
-								className={`bg-${color} palette-item-inner p-1 rounded-circle`}
-								displayType="unstyled"
-								onClick={() =>
-									handleSelectValueChanged(
-										SELECTORS.backgroundColorCssClass,
-										color
-									)
-								}
-								small
-							/>
-						</li>
-					))}
-				</ul>
-			</div>
-			<ClayButton displayType="secondary" small>
-				{Liferay.Language.get('clear')}
-			</ClayButton>
-		</div>
+		<ClayForm.Group>
+			<ColorPalette
+				clearButton
+				label={Liferay.Language.get('background-color')}
+				onColorSelect={handleSelectValueChanged}
+			></ColorPalette>
+		</ClayForm.Group>
 	);
 };

@@ -54,6 +54,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSharding;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeUser;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflow;
 import com.liferay.portal.verify.VerifyUUID;
@@ -112,6 +113,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradeResourcePermission());
 		upgrade(new UpgradeSocial());
 		upgrade(new UpgradeSubscription());
+		upgrade(new UpgradeUser());
 		upgrade(new UpgradeWebsite());
 		upgrade(new UpgradeWorkflow());
 

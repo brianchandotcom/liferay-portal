@@ -17,6 +17,21 @@
 	<td></td>
 </tr>
 
+<!--SIDEBAR-->
+
+<tr>
+	<td>CLOSE_COLUMN_SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar-header')]//*[contains(@class,'lexicon-icon-angle-left')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>COLUMN_LABEL_AT_SIDEBAR</td>
+	<td>//div[contains(@class,'app-builder-sidebar')]//span[contains(text(),'${columnLabel}')]</td>
+	<td></td>
+</tr>
+
+
 </tbody>
 </table>
 </body>

@@ -19,8 +19,10 @@ import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,12 +34,23 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
 	@Override
-	public boolean isOpenGraphEnabled(Group group) throws PortalException {
+	public boolean isOpenGraphEnabled(Company company) throws PortalException {
 		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
-				LayoutSEOCompanyConfiguration.class, group.getCompanyId());
+				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
 
 		if (!layoutSEOCompanyConfiguration.enableOpenGraph()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isOpenGraphEnabled(Group group) throws PortalException {
+		if (!isOpenGraphEnabled(
+				_companyLocalService.getCompany(group.getCompanyId()))) {
+
 			return false;
 		}
 
@@ -51,6 +64,9 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 
 		return false;
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

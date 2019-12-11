@@ -34,10 +34,21 @@ public class AntUtil {
 	public static void callMacrodef(
 		Project project, String name, Map<String, String> attributes) {
 
+		callMacrodef(project, name, attributes, null);
+	}
+
+	public static void callMacrodef(
+		Project project, String name, Map<String, String> attributes,
+		String text) {
+
 		Task task = project.createTask(name);
 
 		RuntimeConfigurable runtimeConfigurable =
 			task.getRuntimeConfigurableWrapper();
+
+		if (text != null) {
+			runtimeConfigurable.addText(text);
+		}
 
 		for (Map.Entry<String, String> attribute : attributes.entrySet()) {
 			runtimeConfigurable.setAttribute(

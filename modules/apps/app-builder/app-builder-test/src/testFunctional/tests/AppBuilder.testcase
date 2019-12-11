@@ -29,8 +29,6 @@ definition {
 		}
 		else {
 
-			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
-
 			ProductMenu.gotoPortlet(
 				category = "App Builder",
 				panel = "Control Panel",
@@ -39,6 +37,8 @@ definition {
 			AppBuilderAdmin.teardownAppBuilder();
 
 			Page.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
 
 		}
 	}
@@ -260,6 +260,8 @@ definition {
 		AppBuilderAdmin.openItem(itemName = "My Table View");
 
 		TableViewBuilder.validateColumnLabel(columnLabel = "Text Field");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Text Field");
 
 		TableViewBuilder.save();
 	}
@@ -766,12 +768,12 @@ definition {
 
 		AppBuilderAdmin.add();
 
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Hobbies");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Date of birth");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Occupation");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Number of children");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Nickname");
 		TableViewBuilder.addColumnByDoubleClick(fieldType = "Full name");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Nickname");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Number of children");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Occupation");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Date of birth");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Hobbies");
 
 		TableViewBuilder.setName(tableViewName = "${myTableViewName}");
 
@@ -806,7 +808,7 @@ definition {
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
-			fieldValue = "Alex Ferguson");
+			fieldValue = "Alex");
 
 		FormViewBuilder.editText(
 			fieldName = "Nickname",
@@ -834,22 +836,22 @@ definition {
 			pageName = "App Builder Test Page",
 			siteName = "App Builder Site Name");
 		
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Alex Ferguson");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Alex");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 2");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2, Multiple 3");
 
-		AppBuilderAdmin.editItem(itemName = "Alex Ferguson");
+		AppBuilderAdmin.editItem(itemName = "Alex");
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
-			fieldValue = "Pepe Guardiola");
+			fieldValue = "Pepe");
 
 		FormViewBuilder.editText(
 			fieldName = "Nickname",
-			fieldValue = "Mister Guardi");
+			fieldValue = "Guardi");
 
 		FormViewBuilder.editText(
 			fieldName = "NumberOfChildren",
@@ -869,8 +871,8 @@ definition {
 
 		AppBuilderAdmin.save();
 
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe Guardiola");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister Guardi");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Guardi");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2014");

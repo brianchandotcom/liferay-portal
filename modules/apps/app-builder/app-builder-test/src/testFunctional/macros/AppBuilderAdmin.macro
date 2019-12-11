@@ -52,7 +52,7 @@ definition {
 
 	macro deleteEntry {
 		Click(
-			key_customObjectName = "${customObjectName}",
+			key_itemName = "${itemName}",
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -63,7 +63,7 @@ definition {
 
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "${customObjectName}");
+			value1 = "${key_itemName}");
 	}
 
 	macro editCustomObjectNameAtPopover {
@@ -104,7 +104,7 @@ definition {
 
 	macro openItem {
 		Click(
-			key_ItemName = "${itemName}",
+			key_itemName = "${itemName}",
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 	}
 
@@ -206,7 +206,7 @@ definition {
 
 	macro openActionMenu {
 		Click(
-			key_customObjectName = "${itemName}",
+			key_itemName = "${itemName}",
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 	}
 

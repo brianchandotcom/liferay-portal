@@ -308,7 +308,7 @@ public abstract class BaseSegmentResourceTestCase {
 					{
 						put("page", 1);
 						put("pageSize", 2);
-						put("siteKey", "\"" + testGroup.getGroupId() + "\"");
+						put("siteId", testGroup.getGroupId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));

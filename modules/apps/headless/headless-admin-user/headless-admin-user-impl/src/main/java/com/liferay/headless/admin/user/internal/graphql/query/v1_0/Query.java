@@ -56,8 +56,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.validation.constraints.NotEmpty;
-
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -428,7 +426,8 @@ public class Query {
 	 */
 	@GraphQLField(description = "Gets a site's segments.")
 	public SegmentPage segments(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -450,7 +449,8 @@ public class Query {
 		description = "Gets a user's segments. The set of available headers are: Accept-Language (string), Host (string), User-Agent (string), X-Browser (string), X-Cookies (collection string), X-Device-Brand (string), X-Device-Model (string), X-Device-Screen-Resolution-Height (double), X-Device-Screen-Resolution-Width (double), X-Last-Sign-In-Date-Time (date time) and X-Signed-In (boolean). Local date will be always present in the request."
 	)
 	public SegmentPage userAccountSegments(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("userAccountId") Long userAccountId)
 		throws Exception {
 
@@ -525,7 +525,8 @@ public class Query {
 	 */
 	@GraphQLField
 	public Site site(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -624,7 +625,8 @@ public class Query {
 		description = "Retrieves the site members' user accounts. Results can be paginated, filtered, searched, and sorted."
 	)
 	public UserAccountPage siteUserAccounts(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,

@@ -18,7 +18,10 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.web.internal.display.context.OpenGraphSettingsDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
@@ -97,11 +100,20 @@ public class SiteOpenGraphFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Group group) {
-		if ((group == null) || group.isCompany()) {
+		try {
+			if ((group == null) || group.isCompany() ||
+				!_openGraphConfiguration.isOpenGraphEnabled(group)) {
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
 			return false;
 		}
-
-		return true;
 	}
 
 	@Override
@@ -117,6 +129,9 @@ public class SiteOpenGraphFormNavigatorEntry
 	protected String getJspPath() {
 		return "/site/open_graph_settings.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteOpenGraphFormNavigatorEntry.class);
 
 	@Reference
 	private DLURLHelper _dlurlHelper;

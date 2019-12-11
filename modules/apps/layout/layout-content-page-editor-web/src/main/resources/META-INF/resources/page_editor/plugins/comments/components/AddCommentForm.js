@@ -16,18 +16,18 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState, useContext} from 'react';
 
-import AppContext from '../../../core/AppContext';
+import {ConfigContext} from '../../../app/config/index';
+import {DispatchContext} from '../../../app/reducers/index';
+import addFragmentComment from '../../../app/thunks/addFragmentComment';
 import CommentForm from './CommentForm';
-
-function addFragmentEntryLinkComment() {
-	throw new Error('Not implemented');
-}
 
 export default function AddCommentForm({fragmentEntryLinkId}) {
 	const [addingComment, setAddingComment] = useState(false);
 	const [showButtons, setShowButtons] = useState(false);
 	const [textareaContent, setTextareaContent] = useState('');
-	const dispatch = useContext(AppContext);
+	const dispatch = useContext(DispatchContext);
+
+	const config = useContext(ConfigContext);
 
 	const _handleCancelButtonClick = () => {
 		setShowButtons(false);
@@ -41,14 +41,14 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 	const _handleCommentButtonClick = () => {
 		setAddingComment(true);
 
-		addFragmentEntryLinkComment(fragmentEntryLinkId, textareaContent)
-			.then(comment => {
-				dispatch({
-					comment,
-					fragmentEntryLinkId,
-					type: 'addComment'
-				});
-
+		dispatch(
+			addFragmentComment({
+				body: textareaContent,
+				config,
+				fragmentEntryLinkId
+			})
+		)
+			.then(() => {
 				setAddingComment(false);
 				setShowButtons(false);
 				setTextareaContent('');

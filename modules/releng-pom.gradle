@@ -373,17 +373,7 @@ private Model _getModel(String artifactId) {
 }
 
 private Boolean _isDigitalExperiencePlatform() {
-	File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
-
-	Matcher matcher = (releaseInfoFile.text =~ /private static final String _NAME = "(.+)";/)
-
-	String releaseInfoName = matcher[0][1]
-
-	if (releaseInfoName.contains(" DXP ") || releaseInfoName.contains(" Digital Experience ")) {
-		return true
-	}
-
-	return false
+	return project.properties["liferay.releng.product.display.name"] == "Liferay DXP"
 }
 
 private void _testPom(String artifactId, String version) {

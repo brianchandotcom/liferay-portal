@@ -14,6 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -84,6 +88,14 @@ public class TemplateNotificationMessageGenerator
 				false);
 
 			populateContextVariables(template, executionContext);
+
+			if (_log.isDebugEnabled()) {
+				template.forEach(
+					(key, value) -> _log.debug(
+						StringBundler.concat(
+							key, CharPool.SPACE, CharPool.OPEN_PARENTHESIS,
+							value.getClass(), CharPool.CLOSE_PARENTHESIS)));
+			}
 
 			StringWriter stringWriter = new StringWriter();
 
@@ -169,6 +181,9 @@ public class TemplateNotificationMessageGenerator
 			template.put("kaleoTimerInstanceToken", kaleoTimerInstanceToken);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TemplateNotificationMessageGenerator.class);
 
 	@Reference
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;

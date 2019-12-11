@@ -99,15 +99,9 @@ public class DepotEntryLocalServiceTest {
 			RandomTestUtil.randomString());
 	}
 
-	@Test
+	@Test(expected = DepotEntryNameException.class)
 	public void testAddDepotEntryWithNullName() throws Exception {
-		try {
-			_addDepotEntry(null, null);
-
-			Assert.fail();
-		}
-		catch (DepotEntryNameException dene) {
-		}
+		_addDepotEntry(null, null);
 	}
 
 	@Test(expected = NoSuchGroupException.class)
@@ -213,8 +207,7 @@ public class DepotEntryLocalServiceTest {
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();
 
-		Assert.assertEquals(
-			true,
+		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				typeSettingsProperties.getProperty("inheritLocales")));
 		Assert.assertEquals(

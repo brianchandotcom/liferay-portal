@@ -311,26 +311,22 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		for (ServiceRegistration<?> serviceRegistration :
 				serviceRegistrations) {
 
+			ServiceReference<?> serviceReference =
+				serviceRegistration.getReference();
+
+			String[] serviceClasses = (String[])serviceReference.getProperty(
+				Constants.OBJECTCLASS);
+
+			if (ArrayUtil.contains(serviceClasses, "javax.portlet.Portlet")) {
+				totalBeanPortlets++;
+			}
+			else if (ArrayUtil.contains(
+						serviceClasses, "javax.portlet.filter.PortletFilter")) {
+
+				totalBeanFilters++;
+			}
+
 			try {
-				ServiceReference<?> serviceReference =
-					serviceRegistration.getReference();
-
-				String[] serviceClasses =
-					(String[])serviceReference.getProperty(
-						Constants.OBJECTCLASS);
-
-				if (ArrayUtil.contains(
-						serviceClasses, "javax.portlet.Portlet")) {
-
-					totalBeanPortlets++;
-				}
-				else if (ArrayUtil.contains(
-							serviceClasses,
-							"javax.portlet.filter.PortletFilter")) {
-
-					totalBeanFilters++;
-				}
-
 				serviceRegistration.unregister();
 			}
 			catch (IllegalStateException ise) {

@@ -19,6 +19,11 @@ definition {
 		DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
 
 		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
+
+		TableViewBuilder.closeColumnSidebar();
+
 	}
 
 	macro save {
@@ -33,6 +38,16 @@ definition {
 		AssertTextEquals(
 			locator1 = "TableViewBuilder#COLUMN_LABEL",
 			value1 = "${columnLabel}");
+	}
+
+	macro validateColumnLabelAtSidebar {
+		AssertTextEquals(
+			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
+			value1 = "${columnLabel}");
+	}
+
+	macro closeColumnSidebar {
+		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
 
 }

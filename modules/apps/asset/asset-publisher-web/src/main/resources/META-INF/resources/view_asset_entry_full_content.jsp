@@ -50,7 +50,7 @@ assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 
 String title = assetRenderer.getTitle(locale);
 
-PortletURL viewFullContentURL = assetPublisherHelper.getBaseAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
+PortletURL viewFullContentURL = assetPublisherHelper.getBaseAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry);
 
 if (print) {
 	viewFullContentURL.setParameter("viewMode", Constants.PRINT);

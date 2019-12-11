@@ -285,7 +285,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 					</c:if>
 
 					<%
-					PortletURL viewFullContentURL = assetPublisherHelper.getBaseAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
+					PortletURL viewFullContentURL = assetPublisherHelper.getBaseAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry);
 					%>
 
 					<div class="autofit-col">

@@ -48,37 +48,35 @@ export default function TreeviewCard({node}) {
 		) : null;
 
 	return (
-		<div role="treeitem">
-			<ClayCard
-				className={classNames({
-					disabled: node.disabled,
-					focused: node.id === focusedNodeId,
-					selected: node.selected
-				})}
-				horizontal
-				onClick={() => {
-					dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'});
-				}}
-				selectable={true}
-			>
-				<ClayCard.Body>
-					<ClayCard.Row>
-						<div className="autofit-col">
-							<ClaySticker displayType="secondary" inline>
-								<ClayIcon symbol={node.icon} />
-							</ClaySticker>
-						</div>
-					</ClayCard.Row>
-
-					<div className="autofit-col autofit-col-expand autofit-col-gutters">
-						<ClayCard.Description displayType="title">
-							{node.name}
-						</ClayCard.Description>
+		<ClayCard
+			className={classNames({
+				disabled: node.disabled,
+				focused: node.id === focusedNodeId,
+				selected: node.selected
+			})}
+			horizontal
+			onClick={() => {
+				dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'});
+			}}
+			selectable={true}
+		>
+			<ClayCard.Body>
+				<ClayCard.Row>
+					<div className="autofit-col">
+						<ClaySticker displayType="secondary" inline>
+							<ClayIcon symbol={node.icon} />
+						</ClaySticker>
 					</div>
-					{path}
-				</ClayCard.Body>
-			</ClayCard>
-		</div>
+				</ClayCard.Row>
+
+				<div className="autofit-col autofit-col-expand autofit-col-gutters">
+					<ClayCard.Description displayType="title">
+						{node.name}
+					</ClayCard.Description>
+				</div>
+				{path}
+			</ClayCard.Body>
+		</ClayCard>
 	);
 }
 

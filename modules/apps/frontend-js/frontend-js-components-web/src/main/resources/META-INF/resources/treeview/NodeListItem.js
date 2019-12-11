@@ -53,6 +53,7 @@ export default function NodeListItem({NodeComponent, node}) {
 				onDoubleClick={toggleExpanded}
 				onKeyDown={handleKeyDown}
 				ref={focusable}
+				role="treeitem"
 				tabIndex="-1"
 			>
 				{children.length ? (

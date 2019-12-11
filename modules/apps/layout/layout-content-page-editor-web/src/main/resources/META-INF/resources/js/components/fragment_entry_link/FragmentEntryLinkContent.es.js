@@ -12,15 +12,13 @@
  * details.
  */
 
-import {isFunction, isObject} from 'metal';
 import Component from 'metal-component';
 import {closest, globalEval} from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
-import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
-import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {onPropertiesChanged} from '../../utils/FragmentsEditorComponentUtils.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
@@ -35,6 +33,30 @@ import templates from './FragmentEntryLinkContent.soy';
  */
 class FragmentEntryLinkContent extends Component {
 	/**
+	 * @inheritdoc
+	 */
+	created() {
+		onPropertiesChanged(this, ['_languageId'], () => {
+			if (this.refs.content) {
+				if (Liferay.Language && Liferay.Language.direction) {
+					this.refs.content.dir =
+						Liferay.Language.direction[this._languageId] || 'ltr';
+				}
+
+				this.refs.content.lang = this._languageId;
+			}
+		});
+
+		onPropertiesChanged(
+			this,
+			['_defaultEditorConfigurations', 'content'],
+			() => {
+				this._renderContent(this.content, {evaluateJs: true});
+			}
+		);
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	disposed() {
@@ -42,50 +64,12 @@ class FragmentEntryLinkContent extends Component {
 	}
 
 	/**
-	 * @inheritDoc
-	 */
-	prepareStateForRender(state) {
-		return {
-			...state,
-			content: this.content ? Soy.toIncDom(this.content) : null
-		};
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	rendered() {
-		requestAnimationFrame(() => {
-			if (this.content) {
-				this._renderContent(this.content, {evaluateJs: true});
-			}
-		});
-	}
-
-	/**
 	 * @inheritdoc
 	 * @return {boolean}
 	 * @review
 	 */
-	shouldUpdate(changes) {
-		return shouldUpdateOnChangeProperties(changes, [
-			'content',
-			'selectedMappingTypes'
-		]);
-	}
-
-	/**
-	 * Renders the content if it is changed.
-	 * @inheritDoc
-	 * @param {string} newContent The new content to render.
-	 * @param {string} prevContent
-	 */
-	syncContent(newContent, prevContent) {
-		if (newContent && newContent !== prevContent) {
-			requestAnimationFrame(() => {
-				this._renderContent(newContent, {evaluateJs: true});
-			});
-		}
+	shouldUpdate() {
+		return false;
 	}
 
 	/**
@@ -113,26 +97,6 @@ class FragmentEntryLinkContent extends Component {
 					editable.editableValues = editableValues;
 				});
 			}
-		}
-	}
-
-	/*
-	 * @inheritDoc
-	 * @param {string} newLanguageId
-	 * @param {string} oldLanguageId
-	 */
-	syncLanguageId(newLanguageId, oldLanguageId) {
-		if (
-			newLanguageId &&
-			this.refs.content &&
-			newLanguageId !== oldLanguageId
-		) {
-			if (Liferay.Language && Liferay.Language.direction) {
-				this.refs.content.dir =
-					Liferay.Language.direction[newLanguageId] || 'ltr';
-			}
-
-			this.refs.content.lang = newLanguageId;
 		}
 	}
 
@@ -197,9 +161,9 @@ class FragmentEntryLinkContent extends Component {
 					  };
 
 			const defaultEditorConfiguration =
-				this.defaultEditorConfigurations[
+				this._defaultEditorConfigurations[
 					editable.getAttribute('type')
-				] || this.defaultEditorConfigurations.text;
+				] || this._defaultEditorConfigurations.text;
 
 			return new FragmentEditableField({
 				content: editable.innerHTML,
@@ -211,7 +175,7 @@ class FragmentEntryLinkContent extends Component {
 
 				processorsOptions: {
 					defaultEditorConfiguration,
-					imageSelectorURL: this.imageSelectorURL
+					imageSelectorURL: this._imageSelectorURL
 				},
 
 				segmentsExperienceId: this.segmentsExperienceId,
@@ -252,21 +216,31 @@ class FragmentEntryLinkContent extends Component {
 
 	/**
 	 * Parses and renders the fragment entry link content with AUI.
-	 * @param {string} content
+	 * @param {string|object} content
 	 * @param {object} [options={}]
 	 * @param {boolean} [options.evaluateJs]
 	 * @private
 	 * @review
 	 */
 	_renderContent(content, options = {}) {
-		if (content && this.refs.content) {
-			this.refs.content.innerHTML = content;
+		let parsedContent = content;
+
+		if (
+			parsedContent &&
+			parsedContent.value &&
+			parsedContent.value.content
+		) {
+			parsedContent = parsedContent.value.content;
+		}
+
+		if (parsedContent && this.refs.content) {
+			this.refs.content.innerHTML = parsedContent;
 
 			if (options.evaluateJs) {
 				globalEval.runScriptsInElement(this.refs.content);
 			}
 
-			if (this.editableValues) {
+			if (this._defaultEditorConfigurations && this.editableValues) {
 				this._createEditables();
 			}
 		}
@@ -279,50 +253,36 @@ class FragmentEntryLinkContent extends Component {
  * @type {!Object}
  */
 FragmentEntryLinkContent.STATE = {
-	/**
-	 * Fragment content to be rendered.
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {string}
-	 */
-	content: Config.any()
-		.setter(content => {
-			return !isFunction(content) && isObject(content)
-				? content.value.content
-				: content;
-		})
+	_defaultEditorConfigurations: Config.internal()
+		.object()
+		.value(null),
+	_imageSelectorURL: Config.internal()
+		.string()
 		.value(''),
-
-	/**
-	 * Editable values that should be used instead of the default ones inside
-	 * editable fields.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @type {!Object}
-	 */
+	_languageId: Config.internal()
+		.string()
+		.value(''),
+	_segmentsExperienceId: Config.internal()
+		.string()
+		.value(''),
+	_selectedMappingTypes: Config.internal().value(null),
+	content: Config.any().value(''),
 	editableValues: Config.object().required(),
-
-	/**
-	 * Fragment entry link ID.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLinkContent
-	 * @type {!string}
-	 */
 	fragmentEntryLinkId: Config.string().required()
 };
 
 const ConnectedFragmentEntryLinkContent = getConnectedComponent(
 	FragmentEntryLinkContent,
-	[
-		'defaultEditorConfigurations',
-		'imageSelectorURL',
-		'languageId',
-		'selectedMappingTypes',
-		'segmentsExperienceId'
-	]
+	[],
+	state => {
+		return {
+			_defaultEditorConfigurations: state.defaultEditorConfigurations,
+			_imageSelectorURL: state.imageSelectorURL,
+			_languageId: state.languageId,
+			_segmentsExperienceId: state.segmentsExperienceId,
+			_selectedMappingTypes: state.selectedMappingTypes
+		};
+	}
 );
 
 Soy.register(ConnectedFragmentEntryLinkContent, templates);

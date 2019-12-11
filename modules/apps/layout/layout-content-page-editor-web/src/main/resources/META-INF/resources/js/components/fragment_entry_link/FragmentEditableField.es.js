@@ -115,7 +115,7 @@ class FragmentEditableField extends PortletBase {
 			}
 		});
 
-		onPropertiesChanged(this, ['syncGetAssetFieldValueURL'], () => {
+		onPropertiesChanged(this, ['_getAssetFieldValueURL'], () => {
 			this._updateMappedFieldValue();
 		});
 	}
@@ -365,10 +365,10 @@ class FragmentEditableField extends PortletBase {
 			this.editableValues.classNameId &&
 			this.editableValues.classPK &&
 			this.editableValues.fieldId &&
-			this.getAssetMappingFieldsURL
+			this._getAssetMappingFieldsURL
 		) {
 			mappedFieldId = this.editableValues.fieldId;
-			promise = this.fetch(this.getAssetMappingFieldsURL, {
+			promise = this.fetch(this._getAssetMappingFieldsURL, {
 				classNameId: this.editableValues.classNameId,
 				classPK: this.editableValues.classPK
 			});
@@ -396,10 +396,10 @@ class FragmentEditableField extends PortletBase {
 	 */
 	_updateMappedFieldValue() {
 		if (
-			this.getAssetFieldValueURL &&
+			this._getAssetFieldValueURL &&
 			editableIsMappedToInfoItem(this.editableValues)
 		) {
-			this.fetch(this.getAssetFieldValueURL, {
+			this.fetch(this._getAssetFieldValueURL, {
 				classNameId: this.editableValues.classNameId,
 				classPK: this.editableValues.classPK,
 				fieldId: this.editableValues.fieldId
@@ -437,6 +437,12 @@ FragmentEditableField.STATE = {
 		.bool()
 		.value(false),
 	_floatingToolbar: Config.internal().value(null),
+	_getAssetFieldValueURL: Config.internal()
+		.string()
+		.value(''),
+	_getAssetMappingFieldsURL: Config.internal()
+		.string()
+		.value(''),
 	_highlighted: Config.internal()
 		.bool()
 		.value(false),
@@ -510,6 +516,9 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			state.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable &&
 			state.activeItemId === _itemId;
 
+		const _getAssetFieldValueURL = state.getAssetFieldValueURL;
+		const _getAssetMappingFieldsURL = state.getAssetMappingFieldsURL;
+
 		const _highlighted = editableShouldBeHighlighted(
 			state.activeItemId,
 			state.activeItemType,
@@ -567,6 +576,8 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			...state,
 			_activable,
 			_active,
+			_getAssetFieldValueURL,
+			_getAssetMappingFieldsURL,
 			_highlighted,
 			_hovered,
 			_itemId,

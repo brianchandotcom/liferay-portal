@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -91,6 +92,26 @@ public abstract class BaseOrganizationResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@DELETE
+	@Operation(description = "Deletes an organization")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
+	)
+	@Path("/organizations/{organizationId}")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
+	public void deleteOrganization(
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
+				organizationId)
+		throws Exception {
 	}
 
 	/**

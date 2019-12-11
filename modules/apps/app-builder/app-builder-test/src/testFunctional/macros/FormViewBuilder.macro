@@ -140,13 +140,26 @@ definition {
 		Click(
 			locator1 = "FormViewBuilder#SELECT_FIELD",
 			value1 = "${selectOption}");
+
+		Click(
+			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
+			value1 = "${selectOption}");
 	}
 
 	macro selectSelectWithMultipleOptions {
 		var key_fieldName = "${fieldName}";
 
 		for (var selectOption : list "${selectOptionsList}") {
-			FormFields.enableCheckbox(fieldName = "${selectOption}");
+			FormViewBuilder.enableCheckbox(fieldName = "${selectOption}");
+		}
+
+	}
+
+	macro deselectSelectWithMultipleOptions {
+		var key_fieldName = "${fieldName}";
+
+		for (var selectOption : list "${selectOptionsList}") {
+			FormViewBuilder.disableCheckbox(fieldName = "${selectOption}");
 		}
 
 	}
@@ -165,6 +178,22 @@ definition {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormViewBuilder#CHECKBOX");
+	}
+
+	macro viewCheckboxNotChecked {
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#CHECKBOX");
+	}
+
+	macro disableCheckbox {
+		if (IsChecked(locator1 = "FormViewBuilder#CHECKBOX", key_fieldName = "${fieldName}")) {
+			Click(
+				key_fieldName = "${fieldName}",
+				locator1 = "FormViewBuilder#CHECKBOX_LABEL");
+		}
+
+		FormViewBuilder.viewCheckboxNotChecked(fieldName = "${fieldName}");
 	}
 
 	macro selectRadioOption {

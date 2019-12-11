@@ -6500,18 +6500,20 @@ to version 2.3.475.
 - [LPS-103252]: Update the [Liferay Source Formatter] dependency to version
 1.0.947.
 
+### Fixed
+- [LPS-100515]: Include `compileOnly` dependencies in the classpath for Eclipse.
+
 ## 4.4.95 - 2019-12-09
 
 ### Changed
-- [LPS-103252]: Update the [Liferay Gradle Plugins Source Formatter] dependency
-to version 2.3.476.
-- [LPS-103252]: Update the [Liferay Source Formatter] dependency to version
-1.0.948.
 - [LPS-105237]: Set the [Liferay Gradle Plugins REST Builder] dependency to
 version 1.0.41.
-
-### Fixed
-- [LPS-100515]: Include `compileOnly` dependencies in the classpath for Eclipse.
+- [LPS-105237]: Set the [Liferay Portal Tools REST Builder] dependency to version
+1.0.42.
+- [LPS-105290]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.476.
+- [LPS-105290]: Update the [Liferay Source Formatter] dependency to version
+1.0.948.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -7019,4 +7021,5 @@ version 1.0.41.
 [LPS-103252]: https://issues.liferay.com/browse/LPS-103252
 [LPS-104435]: https://issues.liferay.com/browse/LPS-104435
 [LPS-105237]: https://issues.liferay.com/browse/LPS-105237
+[LPS-105290]: https://issues.liferay.com/browse/LPS-105290
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

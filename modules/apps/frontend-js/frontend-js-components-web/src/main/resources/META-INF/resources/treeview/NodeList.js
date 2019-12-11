@@ -17,17 +17,22 @@ import React, {useContext} from 'react';
 
 import NodeListItem from './NodeListItem';
 import TreeviewContext from './TreeviewContext';
+import useFocus from './useFocus';
 import useKeyboardNavigation from './useKeyboardNavigation';
 
 export default function NodeList({
 	NodeComponent,
 	nodes,
+	onBlur,
+	onFocus,
 	role = 'group',
 	tabIndex = -1
 }) {
 	const {dispatch} = useContext(TreeviewContext);
 
 	const rootNodeId = nodes[0] && nodes[0].id;
+
+	const focusable = useFocus(rootNodeId);
 
 	const handleKeyDown = useKeyboardNavigation(rootNodeId);
 
@@ -39,10 +44,21 @@ export default function NodeList({
 	return (
 		<div
 			className="lfr-treeview-node-list"
+			onBlur={() => {
+				if (onBlur) {
+					onBlur();
+				}
+			}}
 			onDoubleClick={() => {
 				dispatch({nodeId: rootNodeId, type: 'TOGGLE_EXPANDED'});
 			}}
+			onFocus={event => {
+				if (onFocus) {
+					onFocus(event);
+				}
+			}}
 			onKeyDown={handleKeyDown}
+			ref={focusable}
 			role={role}
 			tabIndex={tabIndex}
 		>
@@ -66,5 +82,7 @@ NodeList.propTypes = {
 			name: PropTypes.string.isRequired
 		})
 	).isRequired,
+	onBlur: PropTypes.func,
+	onFocus: PropTypes.func,
 	tabIndex: PropTypes.number
 };

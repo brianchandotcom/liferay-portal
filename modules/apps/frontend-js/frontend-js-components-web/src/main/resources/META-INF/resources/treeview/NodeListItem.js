@@ -64,7 +64,6 @@ export default function NodeListItem({NodeComponent, node}) {
 						}`}
 						className="lfr-treeview-node-list-item__button"
 						onClick={toggleExpanded}
-						tabIndex="-1"
 						type="button"
 					>
 						<ClayIcon

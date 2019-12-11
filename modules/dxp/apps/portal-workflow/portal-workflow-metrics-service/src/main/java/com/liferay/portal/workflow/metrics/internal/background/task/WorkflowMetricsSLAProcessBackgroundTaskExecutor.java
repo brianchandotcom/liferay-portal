@@ -164,7 +164,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("_index", "workflow-metrics-instances"));
 		instancesBooleanQuery.addMustQueryClauses(
 			_createInstancesBooleanQuery(
-				true, companyId, createDate, processId));
+				companyId, true, createDate, processId));
 
 		BooleanQuery slaProcessResultsBooleanQuery = _queries.booleanQuery();
 
@@ -183,7 +183,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		boolean completed, long companyId, Date createDate, long processId) {
+		long companyId, boolean completed, Date createDate, long processId) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -243,7 +243,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
 		searchSearchRequest.setQuery(
-			_createInstancesBooleanQuery(false, companyId, null, processId));
+			_createInstancesBooleanQuery(companyId, false, null, processId));
 		searchSearchRequest.setSize(10000);
 
 		return Stream.of(

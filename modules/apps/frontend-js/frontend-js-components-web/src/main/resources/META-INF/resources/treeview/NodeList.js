@@ -49,9 +49,6 @@ export default function NodeList({
 					onBlur();
 				}
 			}}
-			onDoubleClick={() => {
-				dispatch({nodeId: rootNodeId, type: 'TOGGLE_EXPANDED'});
-			}}
 			onFocus={event => {
 				if (onFocus) {
 					onFocus(event);

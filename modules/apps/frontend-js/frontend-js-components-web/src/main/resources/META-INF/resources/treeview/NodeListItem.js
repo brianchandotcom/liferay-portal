@@ -39,8 +39,16 @@ export default function NodeListItem({NodeComponent, node}) {
 
 	const symbol = node.expanded ? 'hr' : 'plus';
 
-	const toggleExpanded = () => {
-		dispatch({nodeId: node.id, type: 'TOGGLE_EXPANDED'});
+	const toggleExpanded = event => {
+		if (node.children.length) {
+			event.stopPropagation();
+
+			dispatch({nodeId: node.id, type: 'TOGGLE_EXPANDED'});
+		}
+	};
+
+	const toggleSelected = () => {
+		dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'});
 	};
 
 	return (
@@ -50,6 +58,7 @@ export default function NodeListItem({NodeComponent, node}) {
 				onBlur={() => {
 					return;
 				}}
+				onClick={toggleSelected}
 				onDoubleClick={toggleExpanded}
 				onKeyDown={handleKeyDown}
 				ref={focusable}

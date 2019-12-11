@@ -26,12 +26,10 @@ import TreeviewContext from './TreeviewContext';
  *
  * See: https://github.com/liferay/liferay-amd-loader/issues/225
  */
-function classNames({disabled, focused, selected}) {
-	return [
-		disabled && 'disabled',
-		focused && 'focused',
-		selected && 'selected'
-	]
+function classNames(classes) {
+	return Object.entries(classes).map(([key, value]) => {
+		return value ? key : false;
+	})
 		.filter(Boolean)
 		.join(' ');
 }
@@ -48,35 +46,36 @@ export default function TreeviewCard({node}) {
 		) : null;
 
 	return (
-		<ClayCard
+		<div
 			className={classNames({
 				disabled: node.disabled,
 				focused: node.id === focusedNodeId,
-				selected: node.selected
+				selected: node.selected,
+				'card-type-directory': true,
+				'form-check': true,
+				'form-check-card': true,
+				'form-check-middle-left': true
 			})}
-			horizontal
-			onClick={() => {
-				dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'});
-			}}
-			selectable={true}
 		>
-			<ClayCard.Body>
-				<ClayCard.Row>
-					<div className="autofit-col">
-						<ClaySticker displayType="secondary" inline>
-							<ClayIcon symbol={node.icon} />
-						</ClaySticker>
-					</div>
-				</ClayCard.Row>
+			<div className="card card-horizontal">
+				<div className="card-body">
+					<ClayCard.Row>
+						<div className="autofit-col">
+							<ClaySticker displayType="secondary" inline>
+								<ClayIcon symbol={node.icon} />
+							</ClaySticker>
+						</div>
+					</ClayCard.Row>
 
-				<div className="autofit-col autofit-col-expand autofit-col-gutters">
-					<ClayCard.Description displayType="title">
-						{node.name}
-					</ClayCard.Description>
+					<div className="autofit-col autofit-col-expand autofit-col-gutters">
+						<ClayCard.Description displayType="title">
+							{node.name}
+						</ClayCard.Description>
+					</div>
+					{path}
 				</div>
-				{path}
-			</ClayCard.Body>
-		</ClayCard>
+			</div>
+		</div>
 	);
 }
 

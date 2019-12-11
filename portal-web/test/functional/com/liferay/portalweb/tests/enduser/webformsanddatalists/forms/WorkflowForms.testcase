@@ -208,9 +208,9 @@ definition {
 			fieldName = "Date",
 			fieldValue = "02/01/2016");
 
-		Button.clickSubmitForPublication();
-
 		Click(locator1 = "FormFields#SELECT_ACTIVE_DATE");
+
+		Button.clickSubmitForPublication();
 
 		Alert.viewSuccessMessage();
 

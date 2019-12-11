@@ -904,10 +904,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portlet.usersadmin.util.OrganizationIndexer">
-		<priority value="WARN" />
-	</category>
-
 	<category name="com.liferay.portlet.usersadmin.util.OrganizationSearchTerms">
 		<priority value="WARN" />
 	</category>

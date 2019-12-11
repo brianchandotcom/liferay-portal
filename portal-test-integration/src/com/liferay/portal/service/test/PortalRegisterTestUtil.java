@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.UserWorkflowHandler;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
-import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 
 /**
  * @author     Roberto Díaz
@@ -33,7 +32,6 @@ public class PortalRegisterTestUtil {
 		}
 
 		IndexerRegistryUtil.register(new ContactIndexer());
-		IndexerRegistryUtil.register(new OrganizationIndexer());
 
 		_indexersRegistered = true;
 	}

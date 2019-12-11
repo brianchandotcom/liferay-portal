@@ -14,6 +14,7 @@
 
 import React, {useContext} from 'react';
 
+import {useActiveItemId} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {StoreContext} from '../../../app/store/index';
 import FragmentComments from './FragmentComments';
@@ -38,9 +39,9 @@ function getActiveFragmentEntryLink(itemId, fragmentEntryLinks, layoutData) {
 }
 
 export default function CommentsSidebar() {
-	const {activeItemId, fragmentEntryLinks, layoutData} = useContext(
-		StoreContext
-	);
+	const {fragmentEntryLinks, layoutData} = useContext(StoreContext);
+
+	const activeItemId = useActiveItemId();
 
 	const activeFragmentEntryLink = getActiveFragmentEntryLink(
 		activeItemId,

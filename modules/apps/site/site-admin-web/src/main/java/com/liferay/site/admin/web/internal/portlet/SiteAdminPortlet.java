@@ -816,7 +816,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		}
 
 		boolean openGraphEnabled = ParamUtil.getBoolean(
-			actionRequest, "openGraphEnabled");
+			actionRequest, "openGraphEnabled", true);
 		long openGraphImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "openGraphImageFileEntryId");
 

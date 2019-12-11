@@ -70,113 +70,113 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
 		try {
-			if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
-				String completeURL = _portal.getCurrentCompleteURL(
-					httpServletRequest);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-				String canonicalURL = _portal.getCanonicalURL(
-					completeURL, themeDisplay, layout, false, false);
+			Layout layout = themeDisplay.getLayout();
 
-				Map<Locale, String> alternateURLs = Collections.emptyMap();
+			if (themeDisplay.isSignedIn() || layout.isPrivateLayout()) {
+				return;
+			}
 
-				Set<Locale> availableLocales = _language.getAvailableLocales(
-					themeDisplay.getSiteGroupId());
+			String completeURL = _portal.getCurrentCompleteURL(
+				httpServletRequest);
 
-				if (availableLocales.size() > 1) {
-					alternateURLs = _portal.getAlternateURLs(
-						canonicalURL, themeDisplay, layout);
-				}
+			String canonicalURL = _portal.getCanonicalURL(
+				completeURL, themeDisplay, layout, false, false);
 
-				PrintWriter printWriter = httpServletResponse.getWriter();
+			Map<Locale, String> alternateURLs = Collections.emptyMap();
 
-				for (LayoutSEOLink layoutSEOLink :
-						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-							layout, _portal.getLocale(httpServletRequest),
-							canonicalURL, alternateURLs)) {
+			Set<Locale> availableLocales = _language.getAvailableLocales(
+				themeDisplay.getSiteGroupId());
 
-					printWriter.println(_addLinkTag(layoutSEOLink));
-				}
+			if (availableLocales.size() > 1) {
+				alternateURLs = _portal.getAlternateURLs(
+					canonicalURL, themeDisplay, layout);
+			}
 
-				if (_openGraphConfiguration.isOpenGraphEnabled(
-						layout.getGroup())) {
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-					Group group = layout.getGroup();
-					LayoutSEOLink layoutSEOLink =
-						_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-							layout, themeDisplay.getLocale(), canonicalURL,
-							alternateURLs);
+			for (LayoutSEOLink layoutSEOLink :
+					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+						layout, _portal.getLocale(httpServletRequest),
+						canonicalURL, alternateURLs)) {
 
-					printWriter.println(
-						_getOpenGraphTag(
-							"og:description",
-							_getDescriptionTag(layout, themeDisplay)));
-					printWriter.println(
-						_getOpenGraphTag(
-							"og:locale", themeDisplay.getLanguageId()));
+				printWriter.println(_addLinkTag(layoutSEOLink));
+			}
 
-					availableLocales.forEach(
-						locale -> printWriter.println(
-							_getOpenGraphTag(
-								"og:locale:alternate",
-								LocaleUtil.toLanguageId(locale))));
+			if (!_openGraphConfiguration.isOpenGraphEnabled(
+					layout.getGroup())) {
 
-					printWriter.println(
-						_getOpenGraphTag(
-							"og:site_name", group.getDescriptiveName()));
-					printWriter.println(
-						_getOpenGraphTag(
-							"og:title", _getTitleTag(httpServletRequest)));
-					printWriter.println(
-						_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
+				return;
+			}
 
-					LayoutSEOEntry layoutSEOEntry =
-						_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-							layout.getGroupId(), layout.isPrivateLayout(),
-							layout.getLayoutId());
+			LayoutSEOLink layoutSEOLink =
+				_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+					layout, themeDisplay.getLocale(), canonicalURL,
+					alternateURLs);
 
-					if ((layoutSEOEntry != null) &&
-						(layoutSEOEntry.getOpenGraphImageFileEntryId() != 0)) {
+			printWriter.println(
+				_getOpenGraphTag(
+					"og:description",
+					_getDescriptionTag(layout, themeDisplay)));
+			printWriter.println(
+				_getOpenGraphTag("og:locale", themeDisplay.getLanguageId()));
 
-						String imageTag = _getImageTag(layout, themeDisplay);
+			availableLocales.forEach(
+				locale -> printWriter.println(
+					_getOpenGraphTag(
+						"og:locale:alternate",
+						LocaleUtil.toLanguageId(locale))));
 
-						printWriter.println(
-							_getOpenGraphTag("og:image", imageTag));
+			Group group = layout.getGroup();
 
-						FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-							layoutSEOEntry.getOpenGraphImageFileEntryId());
+			printWriter.println(
+				_getOpenGraphTag("og:site_name", group.getDescriptiveName()));
 
-						printWriter.println(
-							_getOpenGraphTag(
-								"og:image:type", fileEntry.getMimeType()));
+			printWriter.println(
+				_getOpenGraphTag("og:title", _getTitleTag(httpServletRequest)));
+			printWriter.println(
+				_getOpenGraphTag("og:url", layoutSEOLink.getHref()));
 
-						printWriter.println(
-							_getOpenGraphTag("og:image:url", imageTag));
+			LayoutSEOEntry layoutSEOEntry =
+				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId());
 
-						if (themeDisplay.isSecure()) {
-							printWriter.println(
-								_getOpenGraphTag(
-									"og:image:url_secure", imageTag));
-						}
+			if ((layoutSEOEntry == null) ||
+				(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
 
-						for (KeyValuePair keyValuePair :
-								_fileEntryMetadataOpenGraphTagsProvider.
-									getFileEntryMetadataOpenGraphTagKeyValuePairs(
-										fileEntry)) {
+				return;
+			}
 
-							printWriter.println(
-								_getOpenGraphTag(
-									keyValuePair.getKey(),
-									keyValuePair.getValue()));
-						}
-					}
-				}
+			String imageTag = _getImageTag(layout, themeDisplay);
+
+			printWriter.println(_getOpenGraphTag("og:image", imageTag));
+
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				layoutSEOEntry.getOpenGraphImageFileEntryId());
+
+			printWriter.println(
+				_getOpenGraphTag("og:image:type", fileEntry.getMimeType()));
+
+			printWriter.println(_getOpenGraphTag("og:image:url", imageTag));
+
+			if (themeDisplay.isSecure()) {
+				printWriter.println(
+					_getOpenGraphTag("og:image:url_secure", imageTag));
+			}
+
+			for (KeyValuePair keyValuePair :
+					_fileEntryMetadataOpenGraphTagsProvider.
+						getFileEntryMetadataOpenGraphTagKeyValuePairs(
+							fileEntry)) {
+
+				printWriter.println(
+					_getOpenGraphTag(
+						keyValuePair.getKey(), keyValuePair.getValue()));
 			}
 		}
 		catch (RuntimeException re) {

@@ -319,18 +319,16 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 					(String[])serviceReference.getProperty(
 						Constants.OBJECTCLASS);
 
-				if (ArrayUtil.isNotEmpty(serviceClasses)) {
-					if (Objects.equals(
-							serviceClasses[0], "javax.portlet.Portlet")) {
+				if (ArrayUtil.contains(
+						serviceClasses, "javax.portlet.Portlet")) {
 
-						totalBeanPortlets++;
-					}
-					else if (Objects.equals(
-								serviceClasses[0],
-								"javax.portlet.filter.PortletFilter")) {
+					totalBeanPortlets++;
+				}
+				else if (ArrayUtil.contains(
+							serviceClasses,
+							"javax.portlet.filter.PortletFilter")) {
 
-						totalBeanFilters++;
-					}
+					totalBeanFilters++;
 				}
 
 				serviceRegistration.unregister();

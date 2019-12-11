@@ -204,4 +204,15 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
 	}
 
+	macro openActionMenu {
+		Click(
+			key_customObjectName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+	}
+
+	macro editItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
 }

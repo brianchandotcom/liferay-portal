@@ -2877,6 +2877,8 @@ definition {
 
 		KaleoFormsAdmin.viewSelectedFieldSet(kfFieldSetName = "Field5");
 
+		Pagination.changePagination(itemsPerPage = "20");
+
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "Field4",
 			kfProcessName = "Kaleo Forms Process");

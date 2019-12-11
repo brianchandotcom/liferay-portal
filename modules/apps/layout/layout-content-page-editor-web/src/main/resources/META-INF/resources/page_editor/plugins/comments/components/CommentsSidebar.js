@@ -49,9 +49,15 @@ export default function CommentsSidebar() {
 		layoutData
 	);
 
-	return activeFragmentEntryLink ? (
-		<FragmentComments fragmentEntryLink={activeFragmentEntryLink} />
-	) : (
-		<FragmentEntryLinksWithComments />
+	return (
+		<div
+			onMouseDown={event => event.nativeEvent.stopImmediatePropagation()}
+		>
+			{activeFragmentEntryLink ? (
+				<FragmentComments fragmentEntryLink={activeFragmentEntryLink} />
+			) : (
+				<FragmentEntryLinksWithComments />
+			)}
+		</div>
 	);
 }

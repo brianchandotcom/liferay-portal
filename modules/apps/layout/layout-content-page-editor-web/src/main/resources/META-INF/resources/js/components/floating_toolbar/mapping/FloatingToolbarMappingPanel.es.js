@@ -455,6 +455,7 @@ const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 		'languageId',
 		'mappedInfoItems',
 		'mappingFieldsURL',
+		'portletNamespace',
 		'segmentsExperienceId',
 		'selectedItems',
 		'selectedMappingTypes'

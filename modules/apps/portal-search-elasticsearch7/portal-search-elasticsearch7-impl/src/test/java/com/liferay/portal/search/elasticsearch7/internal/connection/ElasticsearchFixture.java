@@ -149,6 +149,11 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 		return _embeddedElasticsearchConnection.getRestHighLevelClient();
 	}
 
+	@Override
+	public RestHighLevelClient getRestHighLevelClient(String connectionId) {
+		return _embeddedElasticsearchConnection.getRestHighLevelClient();
+	}
+
 	public void setClusterSettingsContext(
 		ClusterSettingsContext clusterSettingsContext) {
 
@@ -296,8 +301,6 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 
 		embeddedElasticsearchConnection.activate(
 			bundleContext, _elasticsearchConfigurationProperties);
-
-		embeddedElasticsearchConnection.connect();
 
 		return embeddedElasticsearchConnection;
 	}

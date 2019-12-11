@@ -30,8 +30,14 @@ const onPropertiesChanged = (component, properties, callback) => {
 	}, 100);
 
 	properties.forEach(property => {
-		component.on(`${property}Changed`, debouncedCallback);
+		component.on(`${property}Changed`, ({newVal, prevVal}) => {
+			if (newVal !== prevVal) {
+				debouncedCallback();
+			}
+		});
 	});
+
+	debouncedCallback();
 };
 
 /**

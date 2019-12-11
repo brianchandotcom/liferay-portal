@@ -865,6 +865,87 @@ paths:
                     description:
                         ""
             tags: ["WorkflowTask"]
+    "/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-me":
+        get:
+            operationId: getWorkflowInstanceWorkflowTasksAssignedToMePage
+            parameters:
+                - in: path
+                  name: workflowInstanceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: completed
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
+                    description:
+                        ""
+            tags: ["WorkflowTask"]
+    "/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-user":
+        get:
+            operationId: getWorkflowInstanceWorkflowTasksAssignedToUserPage
+            parameters:
+                - in: path
+                  name: workflowInstanceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: assigneeId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: completed
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WorkflowTask"
+                                type: array
+                    description:
+                        ""
+            tags: ["WorkflowTask"]
     "/workflow-logs/{workflowLogId}":
         get:
             operationId: getWorkflowLog

@@ -16,6 +16,9 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.headless.admin.user.dto.v1_0.ContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
@@ -81,8 +84,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements EntityModelResource {
 
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = Organization.class
+	)
 	@Override
-	public void deleteOrganization(Long organizationId) throws Exception {
+	public void deleteOrganization(
+			@BatchEngineTaskFieldId("id") Long organizationId)
+		throws Exception {
+
 		_organizationService.deleteOrganization(organizationId);
 	}
 

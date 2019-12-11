@@ -11,6 +11,8 @@ definition {
 
 		User.firstLoginPG();
 
+		JSONGroup.addGroup(groupName = "App Builder Site Name");
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -26,14 +28,17 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+
+			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
+
 			ProductMenu.gotoPortlet(
 				category = "App Builder",
 				panel = "Control Panel",
 				portlet = "Custom Objects");
 
-			//AppBuilderAdmin.teardownAppBuilder();
+			AppBuilderAdmin.teardownAppBuilder();
 
-			//Page.tearDownCP();
+			Page.tearDownCP();
 
 		}
 	}
@@ -703,7 +708,7 @@ definition {
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
 		property portal.acceptance = "true";
-/*
+
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
 		var myAppName = "My Registration app";
@@ -779,37 +784,24 @@ definition {
 			deployOption = "Widget",
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
-*/
-
-		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "ADT Test Page");
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "ADT Test Page",
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
 			layoutTemplate = "1 Column");
-/*
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "App Builder Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "App Builder Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
 		Portlet.addPG(
-			pageName = "App Builder Page",
+			pageName = "App Builder Test Page",
 			portletName = "My Registration app");
-*/
-/*		
+
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
@@ -824,7 +816,6 @@ definition {
 			fieldName = "NumberOfChildren",
 			fieldValue = "2");
 
-
 		FormViewBuilder.selectSelectOption(
 			fieldName = "Occupation",
 			selectOption = "Select 2");
@@ -838,7 +829,53 @@ definition {
 			fieldValue = "05/02/2016");
 
 		AppBuilderAdmin.save();
-*/
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
+		
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Alex Ferguson");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2, Multiple 3");
+
+		AppBuilderAdmin.editItem(itemName = "Alex Ferguson");
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Pepe Guardiola");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Mister Guardi");
+
+		FormViewBuilder.editText(
+			fieldName = "NumberOfChildren",
+			fieldValue = "1");
+
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Occupation",
+			selectOption = "Select 1");
+
+		FormViewBuilder.deselectSelectWithMultipleOptions(
+			fieldName = "Hobbies",
+			selectOptionsList = "Multiple 2");
+
+		FormViewBuilder.editDate(
+			fieldName = "DateOfBirth",
+			fieldValue = "05/02/2014");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe Guardiola");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister Guardi");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2014");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 3");
+		
 	}
 
 

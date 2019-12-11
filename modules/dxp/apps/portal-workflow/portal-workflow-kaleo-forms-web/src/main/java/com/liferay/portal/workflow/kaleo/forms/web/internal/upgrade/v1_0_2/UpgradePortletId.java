@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.forms.web.internal.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,8 +31,7 @@ import java.util.Set;
 /**
  * @author Inácio Nery
  */
-public class UpgradePortletId
-	extends com.liferay.portal.upgrade.util.UpgradePortletId {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
 	protected void deletePortletReferences(String portletId) throws Exception {
 		runSQL("delete from Portlet where portletId = '" + portletId + "'");

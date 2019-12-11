@@ -14,15 +14,14 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_0;
 
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 
 /**
  * @author Leonardo Barros
  */
-public class UpgradePortletId
-	extends com.liferay.portal.upgrade.util.UpgradePortletId {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
-	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			{

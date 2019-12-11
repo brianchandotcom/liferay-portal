@@ -39,17 +39,17 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 	public UpgradePrimaryKey(
 		String newPKColumnDefinition, boolean addColumn, String... tableNames) {
 
-		_addColumn = addColumn;
 		_newPKColumnDefinition = newPKColumnDefinition;
-
-		_newPKColumnName = StringUtil.extractFirst(
-			newPKColumnDefinition, CharPool.SPACE);
+		_addColumn = addColumn;
 
 		if (tableNames.length == 0) {
 			throw new IllegalArgumentException("Table names is empty");
 		}
 
 		_tableNames = tableNames;
+
+		_newPKColumnName = StringUtil.extractFirst(
+			newPKColumnDefinition, CharPool.SPACE);
 	}
 
 	@Override
@@ -144,11 +144,11 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 
 			if (dbType == DBType.SQLSERVER) {
 				try (PreparedStatement ps = connection.prepareStatement(
-					StringBundler.concat(
-						"select name from sys.key_constraints where type ",
-						"= 'PK' and OBJECT_NAME(parent_object_id) = '",
-						normalizedTableName, "'"));
-					 ResultSet rs = ps.executeQuery()) {
+						StringBundler.concat(
+							"select name from sys.key_constraints where type ",
+							"= 'PK' and OBJECT_NAME(parent_object_id) = '",
+							normalizedTableName, "'"));
+					ResultSet rs = ps.executeQuery()) {
 
 					if (rs.next()) {
 						primaryKeyConstraintName = rs.getString("name");
@@ -157,8 +157,8 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 			}
 			else {
 				try (PreparedStatement ps = connection.prepareStatement(
-					"sp_helpconstraint " + normalizedTableName);
-					 ResultSet rs = ps.executeQuery()) {
+						"sp_helpconstraint " + normalizedTableName);
+					ResultSet rs = ps.executeQuery()) {
 
 					while (rs.next()) {
 						String definition = rs.getString("definition");
@@ -175,7 +175,7 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 			if (primaryKeyConstraintName == null) {
 				throw new UpgradeException(
 					"No primary key constraint found for " +
-					normalizedTableName);
+						normalizedTableName);
 			}
 
 			runSQL(

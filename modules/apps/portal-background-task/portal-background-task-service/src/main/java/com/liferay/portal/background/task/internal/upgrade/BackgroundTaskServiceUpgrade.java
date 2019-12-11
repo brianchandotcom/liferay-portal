@@ -19,6 +19,7 @@ import com.liferay.portal.background.task.internal.upgrade.v1_0_0.UpgradeKernelP
 import com.liferay.portal.background.task.internal.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.background.task.internal.upgrade.v2_0_0.util.BackgroundTaskTable;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,6 +41,9 @@ public class BackgroundTaskServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {BackgroundTaskTable.class}));
+
+		registry.register(
+			"2.0.0", "2.1.0", new UpgradePrimaryKeyCompanyId("BackgroundTask"));
 	}
 
 }

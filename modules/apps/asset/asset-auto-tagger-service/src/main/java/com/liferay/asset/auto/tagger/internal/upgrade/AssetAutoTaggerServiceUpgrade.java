@@ -15,6 +15,7 @@
 package com.liferay.asset.auto.tagger.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,6 +38,10 @@ public class AssetAutoTaggerServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new UpgradePrimaryKeyCompanyId("AssetAutoTaggerEntry"));
 	}
 
 }

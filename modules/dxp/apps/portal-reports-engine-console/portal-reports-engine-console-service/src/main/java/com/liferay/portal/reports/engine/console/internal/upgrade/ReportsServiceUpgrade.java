@@ -16,6 +16,7 @@ package com.liferay.portal.reports.engine.console.internal.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.UpgradeKernelPackage;
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.UpgradeLastPublishDate;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -70,6 +71,11 @@ public class ReportsServiceUpgrade implements UpgradeStepRegistrator {
 				v1_0_1.UpgradeReportDefinition(),
 			new com.liferay.portal.reports.engine.console.internal.upgrade.
 				v1_0_1.UpgradeReportEntry());
+
+		registry.register(
+			"1.0.1", "1.1.0",
+			new UpgradePrimaryKeyCompanyId(
+				"Reports_Definition", "Reports_Entry", "Reports_Source"));
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

@@ -31,6 +31,10 @@ public class LayoutSEOServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("1.0.0", "2.0.0", new UpgradeSEOEntry());
 
 		registry.register("2.0.0", "2.1.0", new UpgradeSchema());
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new UpgradePrimaryKeyCompanyId("LayoutSEOEntry", "LayoutSEOSite"));
 	}
 
 }

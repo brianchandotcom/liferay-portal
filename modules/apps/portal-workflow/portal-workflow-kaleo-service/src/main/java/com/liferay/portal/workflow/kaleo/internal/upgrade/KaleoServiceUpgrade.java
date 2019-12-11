@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_0_0.UpgradeKaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_1_0.UpgradeWorkflowContext;
@@ -120,6 +121,17 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "2.0.1", new UpgradeMessageBoardsClassName());
+
+		registry.register(
+			"2.0.1", "2.1.0",
+			new UpgradePrimaryKeyCompanyId(
+				"KaleoAction", "KaleoCondition", "KaleoDefinition",
+				"KaleoDefinitionVersion", "KaleoInstance", "KaleoInstanceToken",
+				"KaleoLog", "KaleoNode", "KaleoNotificationRecipient",
+				"KaleoNotification", "KaleoTaskAssignmentInstance",
+				"KaleoTaskAssignment", "KaleoTaskFormInstance", "KaleoTaskForm",
+				"KaleoTaskInstanceToken", "KaleoTask",
+				"KaleoTimerInstanceToken", "KaleoTimer", "KaleoTransition"));
 	}
 
 }

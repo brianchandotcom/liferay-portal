@@ -16,6 +16,7 @@ package com.liferay.site.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.internal.upgrade.v2_0_0.util.SiteFriendlyURLTable;
 
@@ -44,6 +45,10 @@ public class SiteServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new UpgradePrimaryKeyCompanyId("SiteFriendlyURL"));
 	}
 
 }

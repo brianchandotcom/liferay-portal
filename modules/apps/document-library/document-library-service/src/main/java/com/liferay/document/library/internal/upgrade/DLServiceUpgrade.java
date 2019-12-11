@@ -23,6 +23,7 @@ import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
@@ -56,6 +57,10 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 			"2.0.0", "3.0.0",
 			new UpgradeViewCount(
 				"DlFileEntry", DLFileEntry.class, "fileEntryId", "readCount"));
+
+		registry.register(
+			"3.0.0", "3.1.0",
+			new UpgradePrimaryKeyCompanyId("DLFileVersionPreview"));
 	}
 
 	@Reference

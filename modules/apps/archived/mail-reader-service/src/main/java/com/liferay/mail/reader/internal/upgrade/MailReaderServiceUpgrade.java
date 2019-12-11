@@ -12,50 +12,24 @@
  * details.
  */
 
-package com.liferay.site.navigation.internal.upgrade;
+package com.liferay.mail.reader.internal.upgrade;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuItemTable;
-import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuTable;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author José Ángel Jiménez
+ * @author Alberto Chaparro
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class SiteNavigationServiceUpgrade implements UpgradeStepRegistrator {
+public class MailReaderServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"1.0.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
-				new Class<?>[] {
-					SiteNavigationMenuItemTable.class,
-					SiteNavigationMenuTable.class
-				}));
-
-		registry.register(
-			"2.0.0", "2.1.0",
-			new UpgradeMVCCVersion() {
-
-				@Override
-				protected String[] getModuleTableNames() {
-					return new String[] {
-						"SiteNavigationMenu", "SiteNavigationMenuItem"
-					};
-				}
-
-			});
-
-		registry.register(
-			"2.1.0", "2.2.0",
+			"1.0.0", "1.1.0",
 			new UpgradePrimaryKeyCompanyId(
-				"SiteNavigationMenu", "SiteNavigationMenuItem"));
+				"Mail_Account, Mail_Attachment, Mail_Folder, Mail_Message"));
 	}
 
 }

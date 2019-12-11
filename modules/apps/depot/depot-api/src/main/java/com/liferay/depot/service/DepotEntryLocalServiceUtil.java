@@ -315,6 +315,13 @@ public class DepotEntryLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	public static com.liferay.depot.model.DepotEntry getGroupDepotEntry(
+			long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getGroupDepotEntry(groupId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

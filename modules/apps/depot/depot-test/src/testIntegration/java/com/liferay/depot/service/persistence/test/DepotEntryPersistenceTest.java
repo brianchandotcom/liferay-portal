@@ -193,6 +193,13 @@ public class DepotEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DepotEntry newDepotEntry = addDepotEntry();
 
@@ -445,6 +452,11 @@ public class DepotEntryPersistenceTest {
 				existingDepotEntry.getUuid(),
 				ReflectionTestUtil.invoke(
 					existingDepotEntry, "getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(
+			Long.valueOf(existingDepotEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingDepotEntry, "getOriginalGroupId", new Class<?>[0]));
+
 		Assert.assertEquals(
 			Long.valueOf(existingDepotEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(

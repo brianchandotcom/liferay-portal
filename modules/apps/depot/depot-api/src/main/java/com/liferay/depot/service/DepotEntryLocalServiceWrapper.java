@@ -333,6 +333,13 @@ public class DepotEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.depot.model.DepotEntry getGroupDepotEntry(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryLocalService.getGroupDepotEntry(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

@@ -856,6 +856,53 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
+	test ViewSimilarResultsOnContentPages {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results WC Title 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results WC Title 2");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Similar Results Page");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		PageEditor.addWidget(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/similar-results-page");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results WC Title 1");
+
+		AssertTextEquals.assertPartialText(
+			key_assetTitle = "Similar Results WC Title 1",
+			locator1 = "APAsset#ASSET_TITLE",
+			value1 = "Similar Results WC Title 1");
+
+		AssertClick.assertPartialTextClickAt(
+			key_linkResultTitle = "Similar Results WC Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE",
+			value1 = "Similar Results WC Title 2");
+
+		AssertTextEquals.assertPartialText(
+			key_assetTitle = "Similar Results WC Title 2",
+			locator1 = "APAsset#ASSET_TITLE",
+			value1 = "Similar Results WC Title 2");
+	}
+
 	@priority = "5"
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";

@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -289,7 +290,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 				fileEntry = DLAppServiceUtil.updateFileEntry(
 					fileEntryId, newName, mimeType, newName, description,
-					changeLog, false, file, serviceContext);
+					changeLog, DLVersionNumberIncrease.fromMajorVersion(false),
+					file, serviceContext);
 
 				if (folderId != newParentFolderId) {
 					fileEntry = DLAppServiceUtil.moveFileEntry(
@@ -386,7 +388,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntryId, title, contentType, title, description,
-					changeLog, false, file, serviceContext);
+					changeLog, DLVersionNumberIncrease.fromMajorVersion(false),
+					file, serviceContext);
 			}
 			catch (NoSuchFileEntryException nsfee) {
 				if (_log.isDebugEnabled()) {

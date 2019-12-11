@@ -15,6 +15,7 @@
 package com.liferay.opensocial.shindig.service;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.opensocial.shindig.util.SerializerUtil;
@@ -472,7 +473,9 @@ public class LiferayMediaItemService implements MediaItemService {
 			DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), fileName, contentType,
 				mediaItem.getTitle(), mediaItem.getDescription(),
-				StringPool.BLANK, false, byteArray, serviceContext);
+				StringPool.BLANK,
+				DLVersionNumberIncrease.fromMajorVersion(false), byteArray,
+				serviceContext);
 		}
 	}
 

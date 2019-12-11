@@ -14,6 +14,7 @@
 
 package com.liferay.opensocial.editor.portlet;
 
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
@@ -458,7 +459,8 @@ public class EditorPortlet extends AdminPortlet {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileEntry.getTitle(), resourceRequest.getContentType(),
 			fileEntry.getTitle(), fileEntry.getDescription(), StringPool.BLANK,
-			false, bytes, serviceContext);
+			DLVersionNumberIncrease.fromMajorVersion(false), bytes,
+			serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -483,8 +485,9 @@ public class EditorPortlet extends AdminPortlet {
 
 		DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileEntryTitle, resourceRequest.getContentType(),
-			fileEntryTitle, fileEntry.getDescription(), StringPool.BLANK, false,
-			bytes, serviceContext);
+			fileEntryTitle, fileEntry.getDescription(), StringPool.BLANK,
+			DLVersionNumberIncrease.fromMajorVersion(false), bytes,
+			serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

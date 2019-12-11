@@ -308,7 +308,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new blog post.")
 	public BlogPosting createSiteBlogPosting(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
 
@@ -316,33 +316,35 @@ public class Mutation {
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.postSiteBlogPosting(
-				siteId, blogPosting));
+				Long.valueOf(siteKey), blogPosting));
 	}
 
 	@GraphQLField
 	public boolean updateSiteBlogPostingSubscribe(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingResource ->
-				blogPostingResource.putSiteBlogPostingSubscribe(siteId));
+				blogPostingResource.putSiteBlogPostingSubscribe(
+					Long.valueOf(siteKey)));
 
 		return true;
 	}
 
 	@GraphQLField
 	public boolean updateSiteBlogPostingUnsubscribe(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
 			_blogPostingResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			blogPostingResource ->
-				blogPostingResource.putSiteBlogPostingUnsubscribe(siteId));
+				blogPostingResource.putSiteBlogPostingUnsubscribe(
+					Long.valueOf(siteKey)));
 
 		return true;
 	}
@@ -370,7 +372,7 @@ public class Mutation {
 		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
 	)
 	public BlogPostingImage createSiteBlogPostingImage(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
@@ -379,7 +381,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			blogPostingImageResource ->
 				blogPostingImageResource.postSiteBlogPostingImage(
-					siteId, multipartBody));
+					Long.valueOf(siteKey), multipartBody));
 	}
 
 	@GraphQLField(description = "Creates a new comment on the blog post.")
@@ -591,7 +593,7 @@ public class Mutation {
 		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
 	public Document createSiteDocument(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
@@ -599,7 +601,7 @@ public class Mutation {
 			_documentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			documentResource -> documentResource.postSiteDocument(
-				siteId, multipartBody));
+				Long.valueOf(siteKey), multipartBody));
 	}
 
 	@GraphQLField(
@@ -697,7 +699,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new document folder.")
 	public DocumentFolder createSiteDocumentFolder(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
@@ -706,7 +708,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			documentFolderResource ->
 				documentFolderResource.postSiteDocumentFolder(
-					siteId, documentFolder));
+					Long.valueOf(siteKey), documentFolder));
 	}
 
 	@GraphQLField(
@@ -878,7 +880,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new knowledge base article.")
 	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
 		throws Exception {
@@ -888,12 +890,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-					siteId, knowledgeBaseArticle));
+					Long.valueOf(siteKey), knowledgeBaseArticle));
 	}
 
 	@GraphQLField
 	public boolean updateSiteKnowledgeBaseArticleSubscribe(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -901,14 +903,15 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.
-					putSiteKnowledgeBaseArticleSubscribe(siteId));
+					putSiteKnowledgeBaseArticleSubscribe(
+						Long.valueOf(siteKey)));
 
 		return true;
 	}
 
 	@GraphQLField
 	public boolean updateSiteKnowledgeBaseArticleUnsubscribe(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey)
+			@GraphQLName("siteKey") @NotEmpty String siteKey)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -916,7 +919,8 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.
-					putSiteKnowledgeBaseArticleUnsubscribe(siteId));
+					putSiteKnowledgeBaseArticleUnsubscribe(
+						Long.valueOf(siteKey)));
 
 		return true;
 	}
@@ -1034,7 +1038,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new knowledge base folder.")
 	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
 		throws Exception {
@@ -1044,7 +1048,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			knowledgeBaseFolderResource ->
 				knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
-					siteId, knowledgeBaseFolder));
+					Long.valueOf(siteKey), knowledgeBaseFolder));
 	}
 
 	@GraphQLField(
@@ -1379,7 +1383,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new message board section.")
 	public MessageBoardSection createSiteMessageBoardSection(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
 		throws Exception {
@@ -1389,7 +1393,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardSectionResource ->
 				messageBoardSectionResource.postSiteMessageBoardSection(
-					siteId, messageBoardSection));
+					Long.valueOf(siteKey), messageBoardSection));
 	}
 
 	@GraphQLField(
@@ -1540,7 +1544,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new message board thread.")
 	public MessageBoardThread createSiteMessageBoardThread(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
 		throws Exception {
@@ -1550,12 +1554,12 @@ public class Mutation {
 			this::_populateResourceContext,
 			messageBoardThreadResource ->
 				messageBoardThreadResource.postSiteMessageBoardThread(
-					siteId, messageBoardThread));
+					Long.valueOf(siteKey), messageBoardThread));
 	}
 
 	@GraphQLField(description = "Creates a new structured content.")
 	public StructuredContent createSiteStructuredContent(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
 		throws Exception {
@@ -1565,7 +1569,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			structuredContentResource ->
 				structuredContentResource.postSiteStructuredContent(
-					siteId, structuredContent));
+					Long.valueOf(siteKey), structuredContent));
 	}
 
 	@GraphQLField(
@@ -1717,7 +1721,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new structured content folder.")
 	public StructuredContentFolder createSiteStructuredContentFolder(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
 				structuredContentFolder)
 		throws Exception {
@@ -1727,7 +1731,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			structuredContentFolderResource ->
 				structuredContentFolderResource.postSiteStructuredContentFolder(
-					siteId, structuredContentFolder));
+					Long.valueOf(siteKey), structuredContentFolder));
 	}
 
 	@GraphQLField(
@@ -1841,7 +1845,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Creates a new wiki node")
 	public WikiNode createSiteWikiNode(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("wikiNode") WikiNode wikiNode)
 		throws Exception {
 
@@ -1849,7 +1853,7 @@ public class Mutation {
 			_wikiNodeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wikiNodeResource -> wikiNodeResource.postSiteWikiNode(
-				siteId, wikiNode));
+				Long.valueOf(siteKey), wikiNode));
 	}
 
 	@GraphQLField

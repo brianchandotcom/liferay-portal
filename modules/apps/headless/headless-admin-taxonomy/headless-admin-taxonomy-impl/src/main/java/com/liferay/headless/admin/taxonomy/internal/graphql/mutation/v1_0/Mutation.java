@@ -100,7 +100,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Inserts a new keyword in a Site.")
 	public Keyword createSiteKeyword(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
@@ -108,7 +108,7 @@ public class Mutation {
 			_keywordResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			keywordResource -> keywordResource.postSiteKeyword(
-				siteId, keyword));
+				Long.valueOf(siteKey), keyword));
 	}
 
 	@GraphQLField(description = "Inserts a new child taxonomy category.")
@@ -193,7 +193,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")
 	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
-			Long siteId, @GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
 		throws Exception {
@@ -203,7 +203,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			taxonomyVocabularyResource ->
 				taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-					siteId, taxonomyVocabulary));
+					Long.valueOf(siteKey), taxonomyVocabulary));
 	}
 
 	@GraphQLField(

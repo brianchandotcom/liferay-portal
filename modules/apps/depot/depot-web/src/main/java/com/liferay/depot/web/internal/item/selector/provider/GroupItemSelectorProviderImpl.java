@@ -54,9 +54,17 @@ public class GroupItemSelectorProviderImpl
 		long companyId, long groupId, String keywords, int start, int end) {
 
 		try {
+			long toGroupId = groupId;
+
+			Group group = _groupService.getGroup(groupId);
+
+			if (group.isStagingGroup()) {
+				toGroupId = group.getLiveGroupId();
+			}
+
 			List<DepotEntryGroupRel> depotEntryGroupRels =
 				_depotEntryGroupRelService.getDepotEntryGroupRels(
-					groupId, start, end);
+					toGroupId, start, end);
 
 			Stream<DepotEntryGroupRel> stream = depotEntryGroupRels.stream();
 
@@ -80,8 +88,16 @@ public class GroupItemSelectorProviderImpl
 	@Override
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
 		try {
+			long toGroupId = groupId;
+
+			Group group = _groupService.getGroup(groupId);
+
+			if (group.isStagingGroup()) {
+				toGroupId = group.getLiveGroupId();
+			}
+
 			return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(
-				groupId);
+				toGroupId);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

@@ -40,7 +40,10 @@ export default function FragmentComments({fragmentEntryLink}) {
 
 	return (
 		<>
-			<SidebarPanelHeader className="comments-sidebar-title">
+			<SidebarPanelHeader
+				className="comments-sidebar-title"
+				padded={false}
+			>
 				<ClayButton
 					borderless
 					className="text-dark"
@@ -53,7 +56,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 				<span>{name}</span>
 			</SidebarPanelHeader>
 
-			<SidebarPanelContent>
+			<SidebarPanelContent padded={false}>
 				<ResolvedCommentsToggle />
 
 				<div>

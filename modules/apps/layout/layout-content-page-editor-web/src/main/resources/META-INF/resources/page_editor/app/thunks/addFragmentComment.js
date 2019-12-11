@@ -12,15 +12,26 @@
  * details.
  */
 
-export const ADD_FRAGMENT_ENTRY_LINK = 'ADD_FRAGMENT_ENTRY_LINK';
-export const ADD_FRAGMENT_ENTRY_LINK_COMMENT =
-	'ADD_FRAGMENT_ENTRY_LINK_COMMENT';
-export const ADD_ITEM = 'ADD_ITEM';
-export const DISCARD = 'DISCARD';
-export const LOAD_REDUCER = 'LOAD_REDUCER';
-export const MOVE_ITEM = 'MOVE_ITEM';
-export const PUBLISH = 'PUBLISH';
-export const REMOVE_ITEM = 'REMOVE_ITEM';
-export const UNLOAD_REDUCER = 'UNLOAD_REDUCER';
-export const UPDATE_LANGUAGE_ID = 'UPDATE_LANGUAGE_ID';
-export const UPDATE_ITEM_CONFIG = 'UPDATE_ITEM_CONFIG';
+import addFragmentEntryLinkComment from '../actions/addFragmentEntryLinkComment';
+import FragmentCommentService from '../services/FragmentCommentService';
+
+export default function addFragmentComment({
+	body,
+	config,
+	fragmentEntryLinkId
+}) {
+	return dispatch => {
+		return FragmentCommentService.addFragmentEntryLinkComment({
+			body,
+			config,
+			fragmentEntryLinkId
+		}).then(fragmentEntryLinkComment => {
+			dispatch(
+				addFragmentEntryLinkComment({
+					fragmentEntryLinkComment,
+					fragmentEntryLinkId
+				})
+			);
+		});
+	};
+}

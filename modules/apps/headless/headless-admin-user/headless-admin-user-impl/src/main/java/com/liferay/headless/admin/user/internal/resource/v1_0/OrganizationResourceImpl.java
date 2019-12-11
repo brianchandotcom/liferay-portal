@@ -82,6 +82,11 @@ public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteOrganization(Long organizationId) throws Exception {
+		_organizationService.deleteOrganization(organizationId);
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}

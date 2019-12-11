@@ -2937,6 +2937,11 @@ command line argument:
 - [LPS-103252]: Update the [Liferay Source Formatter] dependency to version
 1.0.947.
 
+## 2.3.476 - 2019-12-09
+
+### Changed
+- [LPS-103252]: Update the [Liferay Source Formatter] dependency to version 1.0.948.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675

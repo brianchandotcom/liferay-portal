@@ -6500,6 +6500,16 @@ to version 2.3.475.
 - [LPS-103252]: Update the [Liferay Source Formatter] dependency to version
 1.0.947.
 
+## 4.4.95 - 2019-12-09
+
+### Changed
+- [LPS-103252]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.476.
+- [LPS-103252]: Update the [Liferay Source Formatter] dependency to version
+1.0.948.
+- [LPS-105237]: Set the [Liferay Gradle Plugins REST Builder] dependency to
+version 1.0.41.
+
 ### Fixed
 - [LPS-100515]: Include `compileOnly` dependencies in the classpath for Eclipse.
 
@@ -7008,4 +7018,5 @@ to version 2.3.475.
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
 [LPS-103252]: https://issues.liferay.com/browse/LPS-103252
 [LPS-104435]: https://issues.liferay.com/browse/LPS-104435
+[LPS-105237]: https://issues.liferay.com/browse/LPS-105237
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

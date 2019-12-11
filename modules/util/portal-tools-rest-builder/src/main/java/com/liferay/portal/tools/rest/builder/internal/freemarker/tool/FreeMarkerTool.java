@@ -134,6 +134,8 @@ public class FreeMarkerTool {
 		arguments = StringUtil.replace(
 			arguments, "pageSize,page", "Pagination.of(page, pageSize)");
 		arguments = StringUtil.replace(
+			arguments, "siteId", "Long.valueOf(siteKey)");
+		arguments = StringUtil.replace(
 			arguments, "sorts",
 			"_sortsBiFunction.apply(" + schemaVarName +
 				"Resource, sortsString)");
@@ -239,8 +241,7 @@ public class FreeMarkerTool {
 
 		parameters = StringUtil.replace(
 			parameters, "@GraphQLName(\"siteId\") java.lang.Long siteId",
-			"java.lang.Long siteId, @GraphQLName(\"siteKey\") @NotEmpty " +
-				"String siteKey");
+			"@GraphQLName(\"siteKey\") @NotEmpty String siteKey");
 
 		return parameters;
 	}
@@ -688,7 +689,12 @@ public class FreeMarkerTool {
 			Iterator<String> iterator = javaMethodParameterNames.iterator();
 
 			while (iterator.hasNext()) {
-				sb.append(iterator.next());
+				String next = iterator.next();
+
+				next = StringUtil.replace(next, "siteId", "siteKey");
+
+				sb.append(next);
+
 				sb.append(": ___");
 
 				if (iterator.hasNext()) {

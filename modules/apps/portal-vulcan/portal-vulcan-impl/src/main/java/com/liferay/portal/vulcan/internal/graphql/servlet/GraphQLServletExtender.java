@@ -639,7 +639,7 @@ public class GraphQLServletExtender {
 					SiteParamConverterProvider siteParamConverterProvider =
 						new SiteParamConverterProvider(_groupLocalService);
 
-					args[i - 1] = Long.valueOf(
+					argument = String.valueOf(
 						siteParamConverterProvider.getGroupId(
 							CompanyThreadLocal.getCompanyId(),
 							(String)argument));

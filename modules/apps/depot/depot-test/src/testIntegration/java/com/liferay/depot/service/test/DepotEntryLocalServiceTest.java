@@ -82,7 +82,7 @@ public class DepotEntryLocalServiceTest {
 	}
 
 	@Test(expected = DuplicateGroupException.class)
-	public void testAddDepotEntryDuplicateName() throws Exception {
+	public void testAddDepotEntryDuplicateDepotName() throws Exception {
 		String depotName = RandomTestUtil.randomString();
 
 		_addDepotEntry(depotName, RandomTestUtil.randomString());
@@ -91,7 +91,7 @@ public class DepotEntryLocalServiceTest {
 	}
 
 	@Test(expected = DuplicateGroupException.class)
-	public void testAddDepotEntryDuplicateNameSite() throws Exception {
+	public void testAddDepotEntryDuplicateGroupName() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		_addDepotEntry(

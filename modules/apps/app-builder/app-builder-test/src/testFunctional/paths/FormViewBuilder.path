@@ -151,10 +151,16 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>SELECT_FIELD_OPTIONS_LIST</td>
+	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//li[contains(.,'${key_selectOption}')]</td>
+	<td></td>
+</tr>
+
 <!--CHECKBOX-->
 <tr>
 	<td>CHECKBOX</td>
-	<td>//input[@type='checkbox' and contains (@name,'${key_fieldName}')]</td>
+	<td>//input[contains(@type,'checkbox')]//following-sibling::span[contains(.,'${key_fieldName}')]/..//preceding-sibling::input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 

@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {useSelectItem} from '../../../app/components/Controls';
 import {StoreContext} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
@@ -26,7 +27,9 @@ import FragmentComment from './FragmentComment';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
 
 export default function FragmentComments({fragmentEntryLink}) {
-	const {comments, fragmentEntryLinkId, name} = fragmentEntryLink;
+	const {comments = [], fragmentEntryLinkId, name} = fragmentEntryLink;
+
+	const selectItem = useSelectItem();
 
 	const {dispatch} = useContext(AppContext);
 	const {showResolvedComments} = useContext(StoreContext);
@@ -41,7 +44,7 @@ export default function FragmentComments({fragmentEntryLink}) {
 				<ClayButton
 					borderless
 					className="text-dark"
-					onClick={() => dispatch({type: 'clearActiveItem'})}
+					onClick={() => selectItem(null)}
 					small
 				>
 					<ClayIcon symbol="angle-left" />

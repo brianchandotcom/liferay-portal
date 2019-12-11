@@ -20,6 +20,12 @@
 OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSettingsDisplayContext)request.getAttribute(OpenGraphSettingsDisplayContext.class.getName());
 %>
 
+<liferay-util:html-top
+	outputKey="layout_seo_web_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="form-group" id="<portlet:namespace />idOptions">
 	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" />
 </div>
@@ -53,6 +59,22 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 
 <div class="form-group">
 	<label><liferay-ui:message key="preview" /></label>
+
+	<div class="preview-seo preview-seo-og" dir="ltr">
+		<div class="aspect-ratio aspect-ratio-191-to-100 bg-light preview-seo-image">
+			<div class="preview-seo-placeholder" id="<portlet:namespace />openGraphPreviewPlaceholder">
+				<liferay-ui:icon
+					icon="picture"
+					iconCssClass="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid preview-seo-placeholder-icon"
+					markupView="lexicon"
+				/>
+
+				<div class="preview-seo-placeholder-text">Your image will be previewed here once you select one</div>
+			</div>
+
+			<img alt="" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-flush <%= Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) ? "hide" : "" %>" id="<portlet:namespace />openGraphPreviewImage" src="<%= openGraphSettingsDisplayContext.getOpenGraphImageURL() %>" />
+		</div>
+	</div>
 </div>
 
 <portlet:actionURL name="/site/upload_open_graph_image" var="uploadOpenGraphImageURL" />
@@ -76,6 +98,9 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	var openGraphImageURL = document.getElementById(
 		'<portlet:namespace />openGraphImageURL'
 	);
+	var openGraphPreviewImage = document.getElementById(
+		'<portlet:namespace />openGraphPreviewImage'
+	);
 
 	itemSelectorDialog.on('selectedItemChange', function(event) {
 		var selectedItem = event.selectedItem;
@@ -85,6 +110,9 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 
 			openGraphImageFileEntryId.value = itemValue.fileEntryId;
 			openGraphImageURL.value = itemValue.url;
+			openGraphPreviewImage.src = itemValue.url;
+
+			openGraphPreviewImage.classList.remove('hide');
 		}
 	});
 
@@ -100,6 +128,9 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	openGraphClearImageButton.addEventListener('click', function() {
 		openGraphImageFileEntryId.value = '';
 		openGraphImageURL.value = '';
+		openGraphPreviewImage.src = '';
+
+		openGraphPreviewImage.classList.add('hide');
 	});
 
 	var openGraphEnabledCheck = document.getElementById(

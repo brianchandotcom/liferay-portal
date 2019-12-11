@@ -1,0 +1,20 @@
+.page-editor__disabled-area {
+	cursor: not-allowed;
+	position: relative;
+
+	&::after {
+		background-color: rgba(255, 255, 255, 0);
+		content: '';
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		transition: background-color ease 0.3s;
+		width: 100%;
+	}
+
+	&:hover:after {
+		background-color: rgba(255, 255, 255, 0.4);
+	}
+}

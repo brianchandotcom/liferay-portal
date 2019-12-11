@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import DisabledArea from './DisabledArea';
 import PageEditor from './PageEditor';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
@@ -21,6 +22,7 @@ import Toolbar from './Toolbar';
 export default function App() {
 	return (
 		<>
+			<DisabledArea />
 			<Toolbar />
 			<PageEditor />
 			<Sidebar />

@@ -50,21 +50,6 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	showSearch="<%= false %>"
 />
 
-<portlet:actionURL name="/results_ranking/edit" var="activateResultsRankingEntryURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.ACTIVATE %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:actionURL name="/results_ranking/edit" var="deactivateResultsRankingEntryURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.DEACTIVATE %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:actionURL name="/results_ranking/edit" var="deleteResultsRankingEntryURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
 <aui:form cssClass="container-fluid-1280" method="post" name="resultsRankingEntriesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
@@ -163,7 +148,6 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 							'<portlet:namespace />allRowIds'
 						)
 					},
-
 					url: url
 				}
 			);
@@ -171,17 +155,21 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	};
 
 	var activateResultsRankingsEntries = function() {
+		<portlet:actionURL name="/results_ranking/edit" var="activateResultsRankingEntryURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.ACTIVATE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
+
 		submitForm('<%= activateResultsRankingEntryURL %>');
 	};
 
 	var deactivateResultsRankingsEntries = function() {
-		if (
-			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-deactivate-this" />'
-			)
-		) {
-			submitForm('<%= deactivateResultsRankingEntryURL %>');
-		}
+		<portlet:actionURL name="/results_ranking/edit" var="deactivateResultsRankingEntryURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= ResultRankingsConstants.DEACTIVATE %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
+
+		submitForm('<%= deactivateResultsRankingEntryURL %>');
 	};
 
 	var deleteResultsRankingsEntries = function() {
@@ -190,6 +178,11 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
 			)
 		) {
+			<portlet:actionURL name="/results_ranking/edit" var="deleteResultsRankingEntryURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
 			submitForm('<%= deleteResultsRankingEntryURL %>');
 		}
 	};

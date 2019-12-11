@@ -23,36 +23,44 @@ import {sub} from './utils.es';
 
 const ItemSelectorUrl = ({eventName}) => {
 	const inputName = 'urlInputReact';
-	const [imgUrl, setImgUrl] = useState('');
-	const [imgLoaded, setImgLoaded] = useState(false);
+	const [url, setUrl] = useState('');
+	const [loaded, setLoaded] = useState(false);
+	const [previewError, setPreviewError] = useState(false);
 	const isMounted = useIsMounted();
 
-	const handleImageUrlChange = ({target}) => {
-		setImgUrl(target.value);
-		setImgLoaded(false);
+	const handleImgPreviewError = () => {
+		if (isMounted()) {
+			setLoaded(true);
+			setPreviewError(true);
+		}
 	};
 
-	const handleImageLoad = () => {
+	const handleLoad = () => {
 		if (isMounted()) {
-			setImgLoaded(true);
+			setLoaded(true);
 		}
 	};
 
 	const handleSubmit = event => {
 		event.preventDefault();
 
-		if (!imgLoaded) {
+		if (!loaded) {
 			return;
 		}
 
 		const eventData = {
 			data: {
 				returnType: 'URL',
-				value: imgUrl
+				value: url
 			}
 		};
 
 		Liferay.Util.getOpener().Liferay.fire(eventName, eventData);
+	};
+
+	const handleUrlChange = ({target}) => {
+		setUrl(target.value);
+		setLoaded(false);
 	};
 
 	return (
@@ -60,14 +68,14 @@ const ItemSelectorUrl = ({eventName}) => {
 			<form onSubmit={handleSubmit}>
 				<ClayForm.Group>
 					<label htmlFor={inputName}>
-						{Liferay.Language.get('image-url')}
+						{Liferay.Language.get('url')}
 					</label>
 					<ClayInput
 						id={inputName}
-						onChange={handleImageUrlChange}
+						onChange={handleUrlChange}
 						placeholder="http://"
 						type="text"
-						value={imgUrl}
+						value={url}
 					/>
 					<p className="form-text">
 						{sub(Liferay.Language.get('for-example-x'), [
@@ -75,26 +83,34 @@ const ItemSelectorUrl = ({eventName}) => {
 						])}
 					</p>
 				</ClayForm.Group>
-				<ClayButton disabled={!imgLoaded} type="submit">
+				<ClayButton disabled={!loaded} type="submit">
 					{Liferay.Language.get('add')}
 				</ClayButton>
 			</form>
 			<div className="aspect-ratio aspect-ratio-16-to-9 bg-light mt-4">
-				{imgUrl && (
+				{!previewError && url && (
 					<img
 						className={classNames(
 							'aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-vertical-fluid',
 							{
-								invisible: !imgLoaded
+								invisible: !loaded
 							}
 						)}
-						onLoad={handleImageLoad}
-						src={imgUrl}
+						onError={handleImgPreviewError}
+						onLoad={handleLoad}
+						src={url}
 					/>
 				)}
-				{imgUrl && !imgLoaded && (
+				{!previewError && url && !loaded && (
 					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
 						<ClayLoadingIndicator />
+					</div>
+				)}
+				{previewError && url && loaded && (
+					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
+						<span>
+							{Liferay.Language.get('no-preview-available')}
+						</span>
 					</div>
 				)}
 			</div>

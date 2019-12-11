@@ -28,6 +28,26 @@ export default function fragmentEntryLinksReducer(state, action) {
 				}
 			};
 			break;
+		case TYPES.ADD_FRAGMENT_ENTRY_LINK_COMMENT:
+			{
+				const fragmentEntryLink =
+					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
+
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...fragmentEntryLink,
+							comments: [
+								...(fragmentEntryLink.comments || []),
+								action.fragmentEntryLinkComment
+							]
+						}
+					}
+				};
+			}
+			break;
 
 		default:
 			break;

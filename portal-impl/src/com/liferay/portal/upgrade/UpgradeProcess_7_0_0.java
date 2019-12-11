@@ -56,6 +56,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflow;
+import com.liferay.portal.verify.VerifyGroup;
 import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.portal.verify.model.AssetTagVerifiableModel;
 import com.liferay.portal.verify.model.RatingsEntryVerifiableModel;
@@ -119,7 +120,17 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 		populateUUIDModels();
 
+		fixStagedGroupIds();
+
 		clearIndexesCache();
+	}
+
+	protected void fixStagedGroupIds() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			VerifyGroup verifyGroup = new VerifyGroup();
+
+			verifyGroup.verify();
+		}
 	}
 
 	protected void populateUUIDModels() throws Exception {

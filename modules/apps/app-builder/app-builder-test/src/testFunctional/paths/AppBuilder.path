@@ -31,7 +31,7 @@
 
 <tr>
 	<td>ITEM_ON_THE_TABLE_CLICK</td>
-	<td>//table[contains(@class,'table')]//*[contains(text(),'${key_ItemName}')]</td>
+	<td>//table[contains(@class,'table')]//*[contains(text(),'${key_itemName}')]</td>
 	<td></td>
 </tr>
 
@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>VERTICAL_ELLIPSIS_BUTTON</td>
-	<td>//tr[contains(@data-testid,'item')][descendant::a[contains(.,'${key_customObjectName}')]]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//tr[contains(@data-testid,'item')][descendant::a[contains(.,'${key_itemName}')]]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 

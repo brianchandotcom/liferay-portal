@@ -216,6 +216,11 @@ public class ContentPageEditorDisplayContext {
 				"editSegmentsEntryURL",
 				editorSoyContext.get("editSegmentsEntryURL")
 			).put(
+				"editFragmentEntryLinkCommentURL",
+				getFragmentEntryActionURL(
+					"/content_layout/edit_fragment_entry_link_comment",
+					Constants.UPDATE)
+			).put(
 				"fragments", editorSoyContext.get("elements")
 			).put(
 				"hasEditSegmentsEntryPermission",

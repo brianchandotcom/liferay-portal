@@ -6042,6 +6042,7 @@ according to Liferay defaults.
 [LPS-89415]: https://issues.liferay.com/browse/LPS-89415
 [LPS-89457]: https://issues.liferay.com/browse/LPS-89457
 [LPS-94158]: https://issues.liferay.com/browse/LPS-94158
+[LPS-103252]: https://issues.liferay.com/browse/LPS-103252
 [LPS-104435]: https://issues.liferay.com/browse/LPS-104435
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

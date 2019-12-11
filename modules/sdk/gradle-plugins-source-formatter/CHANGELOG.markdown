@@ -3115,4 +3115,5 @@ command line argument:
 [LPS-88171]: https://issues.liferay.com/browse/LPS-88171
 [LPS-88186]: https://issues.liferay.com/browse/LPS-88186
 [LPS-88223]: https://issues.liferay.com/browse/LPS-88223
+[LPS-103252]: https://issues.liferay.com/browse/LPS-103252
 [LPS-104435]: https://issues.liferay.com/browse/LPS-104435

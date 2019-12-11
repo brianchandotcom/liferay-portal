@@ -12,9 +12,9 @@
  * details.
  */
 
+import {debounce} from 'frontend-js-web';
 import State, {Config} from 'metal-state';
 
-import {debounce} from 'frontend-js-web';
 import {DEFAULT_INITIAL_STATE} from './state.es';
 
 /**

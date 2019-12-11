@@ -47,33 +47,6 @@ public class AMDLAppServiceWrapper extends DLAppServiceWrapper {
 	public FileEntry updateFileEntryAndCheckIn(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
-			boolean majorVersion, File file, ServiceContext serviceContext)
-		throws PortalException {
-
-		return AMCleanUpOnUpdateAndCheckInThreadLocal.enable(
-			() -> super.updateFileEntryAndCheckIn(
-				fileEntryId, sourceFileName, mimeType, title, description,
-				changeLog, majorVersion, file, serviceContext));
-	}
-
-	@Override
-	public FileEntry updateFileEntryAndCheckIn(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			boolean majorVersion, InputStream is, long size,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return AMCleanUpOnUpdateAndCheckInThreadLocal.enable(
-			() -> super.updateFileEntryAndCheckIn(
-				fileEntryId, sourceFileName, mimeType, title, description,
-				changeLog, majorVersion, is, size, serviceContext));
-	}
-
-	@Override
-	public FileEntry updateFileEntryAndCheckIn(
-			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
 			ServiceContext serviceContext)
 		throws PortalException {

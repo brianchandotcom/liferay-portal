@@ -45,23 +45,10 @@ class FragmentEntryLinkContent extends Component {
 	 * @inheritDoc
 	 */
 	prepareStateForRender(state) {
-		let nextState = state;
-
-		if (state.languageId && Liferay.Language.direction) {
-			nextState = setIn(
-				nextState,
-				['_languageDirection'],
-				Liferay.Language.direction[state.languageId] || 'ltr'
-			);
-		}
-
-		nextState = setIn(
-			nextState,
-			['content'],
-			this.content ? Soy.toIncDom(this.content) : null
-		);
-
-		return nextState;
+		return {
+			...state,
+			content: this.content ? Soy.toIncDom(this.content) : null
+		};
 	}
 
 	/**
@@ -83,8 +70,6 @@ class FragmentEntryLinkContent extends Component {
 	shouldUpdate(changes) {
 		return shouldUpdateOnChangeProperties(changes, [
 			'content',
-			'languageId',
-			'segmentsExperienceId',
 			'selectedMappingTypes'
 		]);
 	}
@@ -128,6 +113,26 @@ class FragmentEntryLinkContent extends Component {
 					editable.editableValues = editableValues;
 				});
 			}
+		}
+	}
+
+	/*
+	 * @inheritDoc
+	 * @param {string} newLanguageId
+	 * @param {string} oldLanguageId
+	 */
+	syncLanguageId(newLanguageId, oldLanguageId) {
+		if (
+			newLanguageId &&
+			this.refs.content &&
+			newLanguageId !== oldLanguageId
+		) {
+			if (Liferay.Language && Liferay.Language.direction) {
+				this.refs.content.dir =
+					Liferay.Language.direction[newLanguageId] || 'ltr';
+			}
+
+			this.refs.content.lang = newLanguageId;
 		}
 	}
 
@@ -313,14 +318,10 @@ const ConnectedFragmentEntryLinkContent = getConnectedComponent(
 	FragmentEntryLinkContent,
 	[
 		'defaultEditorConfigurations',
-		'defaultLanguageId',
-		'defaultSegmentsExperienceId',
 		'imageSelectorURL',
 		'languageId',
-		'portletNamespace',
 		'selectedMappingTypes',
-		'segmentsExperienceId',
-		'spritemap'
+		'segmentsExperienceId'
 	]
 );
 

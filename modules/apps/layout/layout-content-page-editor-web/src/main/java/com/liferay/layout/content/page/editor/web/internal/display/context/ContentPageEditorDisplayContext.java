@@ -185,6 +185,10 @@ public class ContentPageEditorDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
+				"addFragmentEntryLinkCommentURL",
+				getFragmentEntryActionURL(
+					"/content_layout/add_fragment_entry_link_comment")
+			).put(
 				"addFragmentEntryLinkURL",
 				editorSoyContext.get("addFragmentEntryLinkURL")
 			).put(

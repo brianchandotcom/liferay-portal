@@ -1,0 +1,31 @@
+@import 'atlas-variables';
+
+.preview-seo {
+	$component: &;
+
+	background-color: $white;
+	border: 1px solid $secondary-l3;
+	border-radius: 0.25rem;
+	font-size: 0.875rem;
+	padding: 1rem;
+
+	&-og {
+		color: $secondary;
+		max-width: 535px;
+
+		#{$component}-placeholder-icon {
+			font-size: 2rem;
+		}
+		#{$component}-placeholder-text {
+			bottom: 1rem;
+			font-weight: 600;
+			position: absolute;
+			text-align: center;
+			width: 100%;
+		}
+	}
+}
+
+.aspect-ratio-191-to-100 {
+	@include clay-aspect-ratio(1.91, 1);
+}

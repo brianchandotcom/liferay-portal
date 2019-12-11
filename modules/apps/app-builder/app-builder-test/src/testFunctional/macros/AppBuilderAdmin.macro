@@ -72,6 +72,11 @@ definition {
 			value1 = "${customObjectName}");
 	}
 
+	macro editItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
 	macro filterListAscendAndDescend {
 		Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
 	}
@@ -100,6 +105,12 @@ definition {
 		Click(
 			key_portlet = "${portlet}",
 			locator1 = "AppBuilder#CUSTOM_PORTLET");
+	}
+
+	macro openActionMenu {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 	}
 
 	macro openItem {
@@ -202,17 +213,6 @@ definition {
 
 	macro viewCheckboxChecked {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
-	}
-
-	macro openActionMenu {
-		Click(
-			key_itemName = "${itemName}",
-			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
-	}
-
-	macro editItem {
-		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
-		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
 }

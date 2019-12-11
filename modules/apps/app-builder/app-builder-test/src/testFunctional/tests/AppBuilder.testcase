@@ -1,5 +1,6 @@
 @component-name = "app-builder"
 definition {
+
 	property custom.properties = "default.layout.template.id=1_column";
 
 	property portal.release = "true";
@@ -378,6 +379,181 @@ definition {
 			title = "Date Field - Form View Title");
 	}
 
+	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
+	@priority = "5"
+	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
+		property portal.acceptance = "true";
+
+		var myFormViewName = "My Registration form";
+		var myTableViewName = "My display table";
+		var myAppName = "My Registration app";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Number of children");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Occupation");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Date of birth");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Multiple${number}",
+				optionValue = "Multiple ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.setName(formViewName = "${myFormViewName}");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myFormViewName}");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Full name");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Nickname");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Number of children");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Occupation");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Date of birth");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Hobbies");
+
+		TableViewBuilder.setName(tableViewName = "${myTableViewName}");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName}");
+
+		App.add(
+			appTitle = "${myAppName}",
+			deployOption = "Widget",
+			formViewName = "${myFormViewName}",
+			tableViewName = "${myTableViewName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
+
+		Portlet.addPG(
+			pageName = "App Builder Test Page",
+			portletName = "My Registration app");
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Alex");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Mister");
+
+		FormViewBuilder.editText(
+			fieldName = "NumberOfChildren",
+			fieldValue = "2");
+
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Occupation",
+			selectOption = "Select 2");
+
+		FormViewBuilder.selectSelectWithMultipleOptions(
+			fieldName = "Hobbies",
+			selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
+
+		FormViewBuilder.editDate(
+			fieldName = "DateOfBirth",
+			fieldValue = "05/02/2016");
+
+		AppBuilderAdmin.save();
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Alex");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2, Multiple 3");
+
+		AppBuilderAdmin.editItem(itemName = "Alex");
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Pepe");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Guardi");
+
+		FormViewBuilder.editText(
+			fieldName = "NumberOfChildren",
+			fieldValue = "1");
+
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Occupation",
+			selectOption = "Select 1");
+
+		FormViewBuilder.deselectSelectWithMultipleOptions(
+			fieldName = "Hobbies",
+			selectOptionsList = "Multiple 2");
+
+		FormViewBuilder.editDate(
+			fieldName = "DateOfBirth",
+			fieldValue = "05/02/2014");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Guardi");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2014");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 3");
+
+		AppBuilderAdmin.deleteEntry(itemName = "Pepe");
+	}
+
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {
@@ -705,183 +881,5 @@ definition {
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
 	}
-
-	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
-	@priority = "5"
-	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
-		property portal.acceptance = "true";
-
-		var myFormViewName = "My Registration form";
-		var myTableViewName = "My display table";
-		var myAppName = "My Registration app";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
-		FormViewBuilder.setFieldRequired();
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Number of children");
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Occupation");
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Select${number}",
-				optionValue = "Select ${number}",
-				rowNumber = "${number}");
-		}
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Date of birth");
-		FormViewBuilder.setFieldRequired();
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies");
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Multiple${number}",
-				optionValue = "Multiple ${number}",
-				rowNumber = "${number}");
-		}
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.setName(formViewName = "${myFormViewName}");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myFormViewName}");
-
-		AppBuilderAdmin.switchTab(tabName = "Table Views");
-
-		AppBuilderAdmin.add();
-
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Full name");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Nickname");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Number of children");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Occupation");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Date of birth");
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Hobbies");
-
-		TableViewBuilder.setName(tableViewName = "${myTableViewName}");
-
-		TableViewBuilder.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName}");
-
-		App.add(
-			appTitle = "${myAppName}",
-			deployOption = "Widget",
-			formViewName = "${myFormViewName}",
-			tableViewName = "${myTableViewName}");
-
-		JSONLayout.addPublicLayout(
-			groupName = "App Builder Site Name",
-			layoutName = "App Builder Test Page");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "App Builder Site Name",
-			layoutName = "App Builder Test Page",
-			layoutTemplate = "1 Column");
-		
-		Navigator.gotoSitePage(
-			pageName = "App Builder Test Page",
-			siteName = "App Builder Site Name");
-
-		Portlet.addPG(
-			pageName = "App Builder Test Page",
-			portletName = "My Registration app");
-
-		AppBuilderAdmin.add();
-
-		FormViewBuilder.editText(
-			fieldName = "FullName",
-			fieldValue = "Alex");
-
-		FormViewBuilder.editText(
-			fieldName = "Nickname",
-			fieldValue = "Mister");
-
-		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
-			fieldValue = "2");
-
-		FormViewBuilder.selectSelectOption(
-			fieldName = "Occupation",
-			selectOption = "Select 2");
-
-		FormViewBuilder.selectSelectWithMultipleOptions(
-			fieldName = "Hobbies",
-			selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
-
-		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
-			fieldValue = "05/02/2016");
-
-		AppBuilderAdmin.save();
-
-		Navigator.gotoSitePage(
-			pageName = "App Builder Test Page",
-			siteName = "App Builder Site Name");
-		
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Alex");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 2");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2, Multiple 3");
-
-		AppBuilderAdmin.editItem(itemName = "Alex");
-
-		FormViewBuilder.editText(
-			fieldName = "FullName",
-			fieldValue = "Pepe");
-
-		FormViewBuilder.editText(
-			fieldName = "Nickname",
-			fieldValue = "Guardi");
-
-		FormViewBuilder.editText(
-			fieldName = "NumberOfChildren",
-			fieldValue = "1");
-
-		FormViewBuilder.selectSelectOption(
-			fieldName = "Occupation",
-			selectOption = "Select 1");
-
-		FormViewBuilder.deselectSelectWithMultipleOptions(
-			fieldName = "Hobbies",
-			selectOptionsList = "Multiple 2");
-
-		FormViewBuilder.editDate(
-			fieldName = "DateOfBirth",
-			fieldValue = "05/02/2014");
-
-		AppBuilderAdmin.save();
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Guardi");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2014");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 3");
-
-		AppBuilderAdmin.deleteEntry(itemName = "Pepe");
-
-		
-	}
-
 
 }

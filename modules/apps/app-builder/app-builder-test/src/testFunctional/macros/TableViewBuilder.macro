@@ -23,7 +23,10 @@ definition {
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
 
 		TableViewBuilder.closeColumnSidebar();
+	}
 
+	macro closeColumnSidebar {
+		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
 
 	macro save {
@@ -44,10 +47,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
 			value1 = "${columnLabel}");
-	}
-
-	macro closeColumnSidebar {
-		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
 
 }

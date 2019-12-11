@@ -263,6 +263,36 @@ public class DepotEntryLocalServiceTest {
 			"Unnamed Repository", group.getName(LocaleUtil.getDefault()));
 	}
 
+	@Test
+	public void testUpdateDepotEntryPreservesGroupKey() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry("name", "description");
+
+		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		String oldGroupKey = group.getGroupKey();
+
+		UnicodeProperties formTypeSettingsProperties = new UnicodeProperties();
+
+		formTypeSettingsProperties.put(
+			PropsKeys.LOCALES,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+		_depotEntryLocalService.updateDepotEntry(
+			depotEntry.getDepotEntryId(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "name"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "description"
+			).build(),
+			formTypeSettingsProperties,
+			ServiceContextTestUtil.getServiceContext());
+
+		group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+		Assert.assertEquals(oldGroupKey, group.getGroupKey());
+	}
+
 	@Test(expected = LocaleException.class)
 	public void testUpdateDepotEntryRequiresValidTypeSettingProperties()
 		throws Exception {

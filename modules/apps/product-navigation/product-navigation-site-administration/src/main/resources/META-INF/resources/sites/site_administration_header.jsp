@@ -110,26 +110,32 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, itemSelectorCriterion);
 	%>
 
-	<aui:script sandbox="<%= true %>">
-		$('#<portlet:namespace />manageSitesLink').on('click', function(event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<%= eventName %>',
-					id: '<portlet:namespace />selectSite',
-					title: '<liferay-ui:message key="select-space" />',
-					uri: '<%= itemSelectorURL.toString() %>'
-				},
-				function(event) {
-					location.href = event.url;
-				}
-			);
-		});
-	</aui:script>
+	<script>
+		(function() {
+			var manageSitesLink = document.getElementById('<portlet:namespace />manageSitesLink');
+
+			if (manageSitesLink) {
+				manageSitesLink.addEventListener('click', function(event) {
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								destroyOnHide: true,
+								modal: true
+							},
+							eventName: '<%= eventName %>',
+							id: '<portlet:namespace />selectSite',
+							title: '<liferay-ui:message key="select-space" />',
+							uri: '<%= itemSelectorURL.toString() %>'
+						},
+						function(event) {
+							location.href = event.url;
+						}
+					);
+				});
+			}
+		})();
+	</script>
 </c:if>
 
 <c:choose>

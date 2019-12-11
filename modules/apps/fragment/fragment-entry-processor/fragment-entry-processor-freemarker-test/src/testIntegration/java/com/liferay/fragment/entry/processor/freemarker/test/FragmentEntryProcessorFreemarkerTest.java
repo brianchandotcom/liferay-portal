@@ -156,7 +156,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 	}
 
 	@Test
-	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelector()
+	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorJournalArticle()
 		throws Exception {
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
@@ -188,7 +188,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 		).build();
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_itemselector.html",
+			"fragment_entry_with_configuration_itemselector_journal_article." +
+				"html",
 			"configuration_itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -228,14 +229,14 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration_" +
-					"itemselector.html",
+					"itemselector_journal_article.html",
 				expectedValues));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
 
 	@Test
-	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorNondefaultSegmentId()
+	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorJournalArticleNondefaultSegmentId()
 		throws Exception {
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
@@ -291,7 +292,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 		).build();
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_configuration_itemselector.html",
+			"fragment_entry_with_configuration_itemselector_journal_article." +
+				"html",
 			"configuration_itemselector.json", configurationDefaultValues);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -302,7 +304,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString(
 				"fragment_entry_link_editable_values_with_configuration_" +
-					"itemselector_nondefault_segment_id.json",
+					"itemselector_journal_article_nondefault_segment_id.json",
 				editableValuesValues));
 
 		DefaultFragmentEntryProcessorContext
@@ -335,7 +337,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration_" +
-					"itemselector.html",
+					"itemselector_journal_article.html",
 				expectedValues));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);

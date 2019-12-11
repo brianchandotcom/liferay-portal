@@ -12,16 +12,14 @@
  * details.
  */
 
-import {CheckboxField} from '../../components/CheckboxField';
-import {ColorPaletteField} from '../../components/ColorPaletteField';
-import {ItemSelectorField} from '../../components/ItemSelectorField';
-import {SelectField} from '../../components/SelectField';
-import {TextField} from '../../components/TextField';
+import React from 'react';
 
-export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
-	checkbox: CheckboxField,
-	colorPalette: ColorPaletteField,
-	itemSelector: ItemSelectorField,
-	select: SelectField,
-	text: TextField
-};
+import ItemSelector from '../../common/components/ItemSelector';
+
+export const ItemSelectorField = ({field}) => (
+	<ItemSelector
+		label={field.label}
+		onSelectItem={() => {}}
+		value={field.value}
+	></ItemSelector>
+);

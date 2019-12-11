@@ -60,15 +60,14 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		return Page.of(
 			transform(
 				_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
-					contextCompany.getCompanyId(), contextUser.getUserId(),
-					workflowInstanceId, completed,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
+					contextCompany.getCompanyId(), null, workflowInstanceId,
+					completed, _getStartPosition(pagination),
+					_getEndPosition(pagination), null),
 				this::_toWorkflowTask),
 			pagination,
 			_workflowTaskManager.getWorkflowTaskCountByWorkflowInstance(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				workflowInstanceId, completed));
+				contextCompany.getCompanyId(), null, workflowInstanceId,
+				completed));
 	}
 
 	@Override
@@ -279,6 +278,14 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				workflowTaskAssignToMe.getDueDate()));
 	}
 
+	private int _getEndPosition(Pagination pagination) {
+		if (pagination == null) {
+			return QueryUtil.ALL_POS;
+		}
+
+		return pagination.getEndPosition();
+	}
+
 	private Role[] _getRoles(List<WorkflowTaskAssignee> workflowTaskAssignees)
 		throws PortalException {
 
@@ -303,6 +310,14 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 		}
 
 		return roles.toArray(new Role[0]);
+	}
+
+	private int _getStartPosition(Pagination pagination) {
+		if (pagination == null) {
+			return QueryUtil.ALL_POS;
+		}
+
+		return pagination.getStartPosition();
 	}
 
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
@@ -332,12 +347,15 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 
 		return new WorkflowTask() {
 			{
-				assigneePerson = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUser(
-						workflowTask.getAssigneeUserId()));
-				assigneeRoles = _getRoles(
-					workflowTask.getWorkflowTaskAssignees());
+				if (workflowTask.getAssigneeUserId() > 0) {
+					assigneePerson = CreatorUtil.toCreator(
+						_portal,
+						_userLocalService.getUser(
+							workflowTask.getAssigneeUserId()));
+					assigneeRoles = _getRoles(
+						workflowTask.getWorkflowTaskAssignees());
+				}
+
 				completed = workflowTask.isCompleted();
 				dateCompletion = workflowTask.getCompletionDate();
 				dateCreated = workflowTask.getCreateDate();

@@ -877,6 +877,9 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2014");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 3");
+
+		AppBuilderAdmin.deleteEntry(itemName = "Pepe");
+
 		
 	}
 

@@ -31,7 +31,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	test AssertSimilarResultsDisplayTemplate {
 		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsDisplayTemplate";
 
@@ -92,7 +91,6 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_CARD_TITLE");
 	}
 
-	@ignore = "true"
 	test AssertSimilarResultsMatchesAssetType {
 		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsMatchesAssetType";
 

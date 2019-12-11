@@ -18,6 +18,7 @@ import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASParameter;
 import com.liferay.talend.common.oas.OASSource;
+import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.schema.SchemaListener;
 import com.liferay.talend.source.LiferayOASSource;
@@ -238,11 +239,10 @@ public abstract class BaseLiferayResourceProperties
 		}
 
 		for (int i = 0; i < parameterNames.size(); i++) {
-			String typeString = parameterTypes.get(i);
+			OASParameter.Location location = OASParameter.Location.valueOf(
+				parameterTypes.get(i));
 
-			if (OASParameter.Type.PATH == OASParameter.Type.valueOf(
-					typeString.toUpperCase())) {
-
+			if (location.isPath()) {
 				continue;
 			}
 
@@ -288,21 +288,15 @@ public abstract class BaseLiferayResourceProperties
 				continue;
 			}
 
-			if (oasParameter.isRequired() ||
-				(OASParameter.Type.PATH == oasParameter.getType())) {
-
+			if (oasParameter.isRequired() || oasParameter.isLocationPath()) {
 				name = name + "*";
 			}
 
 			parameterNames.add(name);
 
-			OASParameter.Type type = oasParameter.getType();
+			OASParameter.Location location = oasParameter.getLocation();
 
-			String typeString = type.toString();
-
-			typeString = typeString.toLowerCase();
-
-			parameterTypes.add(typeString);
+			parameterTypes.add(StringUtil.toLowerCase(location.toString()));
 
 			parameterValues.add("");
 		}

@@ -17,6 +17,7 @@ package com.liferay.talend.properties.parameters;
 import static org.talend.daikon.properties.property.PropertyFactory.newProperty;
 
 import com.liferay.talend.common.oas.OASParameter;
+import com.liferay.talend.common.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,19 +58,15 @@ public class RequestParameterProperties extends ComponentPropertiesImpl {
 				continue;
 			}
 
-			if (oasParameter.isRequired() ||
-				(OASParameter.Type.PATH == oasParameter.getType())) {
-
+			if (oasParameter.isRequired() || oasParameter.isLocationPath()) {
 				name = name + "*";
 			}
 
 			parameterNames.add(name);
 
-			OASParameter.Type type = oasParameter.getType();
+			OASParameter.Location location = oasParameter.getLocation();
 
-			String location = type.toString();
-
-			parameterLocations.add(location.toLowerCase());
+			parameterLocations.add(StringUtil.toLowerCase(location.toString()));
 
 			parameterValues.add("");
 		}

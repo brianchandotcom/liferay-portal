@@ -86,6 +86,41 @@ public class GroupItemSelectorProviderImplTest {
 	}
 
 	@Test
+	public void testGetGroupsCountStaging() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		GroupTestUtil.enableLocalStaging(_group);
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		Assert.assertEquals(
+			1,
+			_groupItemSelectorProvider.getGroupsCount(
+				stagingGroup.getCompanyId(), stagingGroup.getGroupId(), null));
+	}
+
+	@Test
+	public void testGetGroupsStaging() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		GroupTestUtil.enableLocalStaging(_group);
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		List<Group> groups = _groupItemSelectorProvider.getGroups(
+			stagingGroup.getCompanyId(), stagingGroup.getGroupId(), null, 0,
+			20);
+
+		Assert.assertEquals(groups.toString(), 1, groups.size());
+	}
+
+	@Test
 	public void testGetIcon() {
 		Assert.assertEquals("repository", _groupItemSelectorProvider.getIcon());
 	}

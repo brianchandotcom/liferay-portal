@@ -8,6 +8,21 @@
 <tr><td rowspan="1" colspan="3">DDMSelectTemplate</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>COPY_FORM_TEMPLATES_CHECKBOX</td>
+	<td>//input[contains(@id,'copyFormTemplates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COPY_DISPLAY_TEMPLATES_CHECKBOX</td>
+	<td>//input[contains(@id,'copyDisplayTemplates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--TEMPLATE_CARDS-->
 <tr>
 	<td>TEMPLATE_CARDS_NAME</td>
@@ -17,16 +32,6 @@
 <tr>
 	<td>TEMPLATE_CARDS_SMALL_IMAGE</td>
 	<td>//div[contains(@class,'aspect-ratio')]/div/label//img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COPY_FORM_TEMPLATES_CHECKBOX</td>
-	<td>//input[contains(@id,'copyFormTemplates')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COPY_DISPLAY_TEMPLATES_CHECKBOX</td>
-	<td>//input[contains(@id,'copyDisplayTemplates')]</td>
 	<td></td>
 </tr>
 <tr>

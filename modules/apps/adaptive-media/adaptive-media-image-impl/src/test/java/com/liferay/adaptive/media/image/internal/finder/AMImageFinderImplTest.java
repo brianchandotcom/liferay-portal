@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
@@ -495,6 +497,12 @@ public class AMImageFinderImplTest {
 				Mockito.anyLong(), Mockito.any(Predicate.class))
 		).thenThrow(
 			AMRuntimeException.InvalidConfiguration.class
+		);
+
+		Mockito.when(
+			_fileVersion.getMimeType()
+		).thenReturn(
+			StringUtil.randomString()
 		);
 
 		Mockito.when(
@@ -1413,6 +1421,46 @@ public class AMImageFinderImplTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMediaWithNullFunction() throws Exception {
 		_amImageFinderImpl.getAdaptiveMediaStream(null);
+	}
+
+	@Test
+	public void testGetSVGMediaInputStream() throws Exception {
+		InputStream inputStream = Mockito.mock(InputStream.class);
+
+		Mockito.when(
+			_fileVersion.getContentStream(Mockito.anyBoolean())
+		).thenReturn(
+			inputStream
+		);
+
+		Mockito.when(
+			_fileVersion.getMimeType()
+		).thenReturn(
+			ContentTypes.IMAGE_SVG_XML
+		);
+
+		Mockito.when(
+			_amImageMimeTypeProvider.isMimeTypeSupported(
+				ContentTypes.IMAGE_SVG_XML)
+		).thenReturn(
+			true
+		);
+
+		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
+			_amImageFinderImpl.getAdaptiveMediaStream(
+				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
+					_fileVersion
+				).done());
+
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			adaptiveMediaStream.collect(Collectors.toList());
+
+		Assert.assertEquals(
+			adaptiveMedias.toString(), 1, adaptiveMedias.size());
+
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+
+		Assert.assertSame(inputStream, adaptiveMedia.getInputStream());
 	}
 
 	@Test

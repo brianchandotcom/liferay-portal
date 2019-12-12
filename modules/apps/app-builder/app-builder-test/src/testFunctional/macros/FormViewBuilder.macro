@@ -157,7 +157,7 @@ definition {
 	macro setFieldHelpText {
 		var key_fieldType = "tip";
 		Type(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
+			locator1 = "FormViewBuilder#FIELD_LABEL_AT_SIDEBAR",
 			value1 = "${fieldLabel}");
 
 		AssertTextEquals(
@@ -168,7 +168,7 @@ definition {
 	macro setFieldLabel {
 		var key_fieldType = "label";
 		Type(
-			locator1 = "FormViewBuilder#FIELD_LABEL",
+			locator1 = "FormViewBuilder#FIELD_LABEL_AT_SIDEBAR",
 			value1 = "${fieldLabel}");
 
 		AssertTextEquals(

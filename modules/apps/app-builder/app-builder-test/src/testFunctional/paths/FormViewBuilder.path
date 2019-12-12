@@ -42,6 +42,12 @@
 
 <tr>
 	<td>FIELD_LABEL</td>
+	<td>//label[contains(text(),'${fieldLabel}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>FIELD_LABEL_AT_SIDEBAR</td>
 	<td>//input[contains (@name,'${key_fieldType}')]</td>
 	<td></td>
 </tr>

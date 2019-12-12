@@ -19,6 +19,8 @@ definition {
 		}
 		else {
 			JSONUser.tearDownNonAdminUsers();
+
+			PortalInstances.tearDownCP();
 		}
 	}
 
@@ -40,6 +42,40 @@ definition {
 		for (var outputContent : list "Declarative Service Soft Circular Dependency Checker check result: No issues were found,Declarative Service Unsatisfied Component Checker check result: No issues were found,Spring Extender Unavailable Component Checker check result: No issues were found") {
 			GogoShell.viewOutput(outputContent = "${outputContent}");
 		}
+	}
+
+	@priority = "4"
+	test GogoShellPortletOnlyOnMainInstance {
+		property test.name.skip.portal.instance = "GogoShell#GogoShellPortletOnlyOnMainInstance";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		Portlet.viewNoPortletsPresentCP(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
 	}
 
 	@priority = "4"

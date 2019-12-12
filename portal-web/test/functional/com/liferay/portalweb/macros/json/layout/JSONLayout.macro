@@ -173,6 +173,30 @@ definition {
 			typeSettings = "${typeSettings}");
 	}
 
+	@summary = "Delete a public site page under an existing site via groupKey"
+	macro deletePublicLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var serviceContext = JSONLayoutSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		JSONLayoutAPI._deleteLayout(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			serviceContext = "${serviceContext}");
+	}
+
 	macro updateLayoutTemplateOfPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
 

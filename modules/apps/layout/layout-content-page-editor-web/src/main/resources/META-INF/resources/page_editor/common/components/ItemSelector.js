@@ -23,7 +23,7 @@ import {ConfigContext} from '../../app/config/index';
 export default function ItemSelector({label, onSelectItem, value}) {
 	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
 
-	const openInfoItemSelector = (callback, destroyedCallback = null) => {
+	const openInfoItemSelector = () => {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			eventName: `${portletNamespace}selectInfoItem`,
 			singleSelect: true,
@@ -37,18 +37,12 @@ export default function ItemSelector({label, onSelectItem, value}) {
 			if (selectedItem && selectedItem.value) {
 				const infoItem = JSON.parse(selectedItem.value);
 
-				callback({
+				onSelectItem({
 					className: infoItem.className,
 					classNameId: infoItem.classNameId,
 					classPK: infoItem.classPK,
 					title: infoItem.title
 				});
-			}
-		});
-
-		itemSelectorDialog.on('visibleChange', event => {
-			if (event.newVal === false && destroyedCallback) {
-				destroyedCallback();
 			}
 		});
 
@@ -61,9 +55,10 @@ export default function ItemSelector({label, onSelectItem, value}) {
 
 			<div className="d-flex">
 				<ClayInput
-					className="form-control-sm mr-2"
+					className="mr-2"
 					id="itemSelectorInput"
 					readOnly
+					sizing="sm"
 					type="text"
 					value={value}
 				/>
@@ -71,11 +66,7 @@ export default function ItemSelector({label, onSelectItem, value}) {
 				<ClayButton.Group>
 					<ClayButton
 						displayType="secondary"
-						onClick={() => {
-							openInfoItemSelector(selectedInfoItem => {
-								onSelectItem(selectedInfoItem);
-							});
-						}}
+						onClick={openInfoItemSelector}
 						small
 					>
 						<ClayIcon symbol="plus" />

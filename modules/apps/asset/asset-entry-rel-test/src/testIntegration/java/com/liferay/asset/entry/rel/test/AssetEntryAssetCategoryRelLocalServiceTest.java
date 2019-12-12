@@ -46,8 +46,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testAddAssetEntryAssetCategoryRel() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 
@@ -56,8 +56,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testAddAssetEntryAssetCategoryRelWithPriority() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 		int priority = RandomTestUtil.randomInt();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, priority);
@@ -68,8 +68,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testDeleteAssetEntryAssetCategoryRel() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId1 = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
 
@@ -94,8 +94,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testDeleteAssetEntryAssetCategoryRelByAssetCategoryId() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId1 = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
 
@@ -122,8 +122,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testDeleteAssetEntryAssetCategoryRelByAssetEntryId() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId1 = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
 
@@ -148,8 +148,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testFetchAssetEntryAssetCategoryRel() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
 			assetEntryId, assetCategoryId);
@@ -173,8 +173,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testGetAssetCategoryPrimaryKeys() {
-		long assetCategoryId1 = RandomTestUtil.randomLong();
 		long assetEntryId = RandomTestUtil.randomLong();
+		long assetCategoryId1 = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId1);
 
@@ -196,8 +196,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testGetAssetEntryAssetCategoryRelsByAssetCategoryId() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 
@@ -211,8 +211,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testGetAssetEntryAssetCategoryRelsByAssetEntryId() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 
@@ -225,8 +225,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testGetAssetEntryAssetCategoryRelsCount() {
-		long assetCategoryId1 = RandomTestUtil.randomLong();
 		long assetEntryId = RandomTestUtil.randomLong();
+		long assetCategoryId1 = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId1);
 
@@ -243,8 +243,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testGetAssetEntryPrimaryKeys() {
-		long assetCategoryId = RandomTestUtil.randomLong();
 		long assetEntryId1 = RandomTestUtil.randomLong();
+		long assetCategoryId = RandomTestUtil.randomLong();
 
 		_addAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
 

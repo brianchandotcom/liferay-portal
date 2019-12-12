@@ -817,7 +817,7 @@ definition {
 
 		AppBuilderAdmin.add();
 
-		FormFields.editText(
+		FormViewBuilder.editText(
 			fieldName = "TextField",
 			fieldValue = "content of form 1");
 
@@ -827,11 +827,11 @@ definition {
 
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",
-			portlet = "Test App 1");
+			portlet = "Test App 2");
 
 		AppBuilderAdmin.add();
 
-		FormFields.editText(
+		FormViewBuilder.editText(
 			fieldName = "Numeric",
 			fieldValue = "123");
 

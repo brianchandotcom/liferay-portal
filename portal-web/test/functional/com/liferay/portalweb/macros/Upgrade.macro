@@ -1372,14 +1372,6 @@ definition {
 			searchAssetType = "Web Content Article");
 
 		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Site Name");
-
-		ClassicSearch.search(searchTerm = "Cotent");
-
-		AssertElementPresent(locator1 = "Search#SEARCH_SUGGESTED_SPELLING");
 	}
 
 	macro viewDocument {
@@ -1900,14 +1892,6 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to 2 of 3 entries.");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_TYPE_FACET_TERM_COUNT");
-
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Site Name");
-
-		SearchPortlets.searchEmbedded(searchTerm = "Cotent");
-
-		AssertElementPresent(locator1 = "Search#SEARCH_SUGGESTED_SPELLING");
 	}
 
 	macro viewStagingNestedPortlets {

@@ -16,6 +16,7 @@ package com.liferay.sharing.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

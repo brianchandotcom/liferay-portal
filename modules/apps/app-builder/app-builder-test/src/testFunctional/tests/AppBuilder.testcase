@@ -381,10 +381,15 @@ definition {
 			title = "Date Field - Form View Title");
 	}
 
-	@description = "Order the list of Form Views by Name/Title (Asc or Desc)"
+	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"
 	@priority = "5"
-	test ChangeFormViewsListOrderByName {
+	test ChangeTableViewsListOrderByName {
 		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"

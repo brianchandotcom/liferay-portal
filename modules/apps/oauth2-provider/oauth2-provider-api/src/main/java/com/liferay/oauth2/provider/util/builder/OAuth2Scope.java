@@ -14,43 +14,9 @@
 
 package com.liferay.oauth2.provider.util.builder;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.function.Consumer;
-
 /**
  * @author Stian Sigvartsen
  * @author Carlos Sierra
  */
 public interface OAuth2Scope {
-
-	public interface Builder {
-
-		public void forApplication(
-			String applicationName, String bundleSymbolicName,
-			Consumer<ApplicationScopeAssigner>
-				applicationScopeAssignerConsumer);
-
-		public interface ApplicationScope {
-
-			public void mapToScopeAlias(Collection<String> scopeAliases);
-
-			public default void mapToScopeAlias(String... scopeAlias) {
-				mapToScopeAlias(Arrays.asList(scopeAlias));
-			}
-
-		}
-
-		public interface ApplicationScopeAssigner {
-
-			public ApplicationScope assignScope(Collection<String> scopes);
-
-			public default ApplicationScope assignScope(String... scope) {
-				return assignScope(Arrays.asList(scope));
-			}
-
-		}
-
-	}
-
 }

@@ -50,8 +50,8 @@ public class OAuth2ApplicationLocalServiceWrapper
 				long iconFileEntryId, String name, String privacyPolicyURL,
 				java.util.List<String> redirectURIsList,
 				java.util.function.Consumer
-					<com.liferay.oauth2.provider.util.builder.OAuth2Scope.
-						Builder> builderConsumer,
+					<com.liferay.oauth2.provider.util.builder.
+						OAuth2ScopeBuilder> builderConsumer,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

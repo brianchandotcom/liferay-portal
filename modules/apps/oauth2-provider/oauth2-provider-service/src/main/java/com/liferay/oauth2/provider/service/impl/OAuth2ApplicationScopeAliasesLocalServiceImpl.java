@@ -21,7 +21,7 @@ import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
 import com.liferay.oauth2.provider.service.base.OAuth2ApplicationScopeAliasesLocalServiceBaseImpl;
-import com.liferay.oauth2.provider.util.builder.OAuth2Scope;
+import com.liferay.oauth2.provider.util.builder.OAuth2ScopeBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -60,7 +60,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 	public OAuth2ApplicationScopeAliases addOAuth2ApplicationScopeAliases(
 			long companyId, long userId, String userName,
 			long oAuth2ApplicationId,
-			Consumer<OAuth2Scope.Builder> builderConsumer)
+			Consumer<OAuth2ScopeBuilder> builderConsumer)
 		throws PortalException {
 
 		Map<Map.Entry<ScopeNamespace, String>, List<String>>
@@ -249,9 +249,9 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 	}
 
 	protected static class OAuth2ScopeBuilderImpl
-		implements OAuth2Scope.Builder,
-				   OAuth2Scope.Builder.ApplicationScopeAssigner,
-				   OAuth2Scope.Builder.ApplicationScope {
+		implements OAuth2ScopeBuilder,
+				   OAuth2ScopeBuilder.ApplicationScopeAssigner,
+				   OAuth2ScopeBuilder.ApplicationScope {
 
 		public OAuth2ScopeBuilderImpl(
 			Map<Map.Entry<ScopeNamespace, String>, List<String>>

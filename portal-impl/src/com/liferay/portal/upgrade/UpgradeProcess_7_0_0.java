@@ -126,11 +126,9 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 	}
 
 	protected void fixStagedGroupIds() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyGroup verifyGroup = new VerifyGroup();
+		VerifyGroup verifyGroup = new VerifyGroup();
 
-			verifyGroup.verify();
-		}
+		verifyGroup.verify();
 	}
 
 	protected void populateUUIDModels() throws Exception {

@@ -18,7 +18,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.not;
 
 import com.liferay.oauth2.provider.service.impl.OAuth2ApplicationScopeAliasesLocalServiceImpl.ScopeNamespace;
-import com.liferay.oauth2.provider.util.builder.OAuth2Scope;
+import com.liferay.oauth2.provider.util.builder.OAuth2ScopeBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -264,12 +264,12 @@ public class OAuth2ScopeBuilderImplTest extends PowerMockito {
 	}
 
 	private Map<Map.Entry<String, String>, Set<String>> _exerciseBuilder(
-		Consumer<OAuth2Scope.Builder> builderConsumer) {
+		Consumer<OAuth2ScopeBuilder> builderConsumer) {
 
 		Map<Map.Entry<ScopeNamespace, String>, List<String>>
 			simpleEntryScopeAliases = new HashMap<>();
 
-		OAuth2Scope.Builder builder =
+		OAuth2ScopeBuilder builder =
 			new OAuth2ApplicationScopeAliasesLocalServiceImpl.
 				OAuth2ScopeBuilderImpl(simpleEntryScopeAliases);
 

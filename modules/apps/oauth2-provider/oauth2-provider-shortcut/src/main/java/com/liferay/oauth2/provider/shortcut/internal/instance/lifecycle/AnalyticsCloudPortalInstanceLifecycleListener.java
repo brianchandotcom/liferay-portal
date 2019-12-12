@@ -24,10 +24,10 @@ import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.oauth2.provider.util.builder.OAuth2Scope;
 import com.liferay.oauth2.provider.shortcut.internal.constants.OAuth2ProviderShortcutConstants;
 import com.liferay.oauth2.provider.shortcut.internal.spi.scope.finder.OAuth2ProviderShortcutScopeFinder;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.oauth2.provider.util.builder.OAuth2ScopeBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -250,7 +250,7 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 		}
 	}
 
-	private void _buildAnalyticsCloudScopes(OAuth2Scope.Builder builder) {
+	private void _buildAnalyticsCloudScopes(OAuth2ScopeBuilder builder) {
 		builder.forApplication(
 			OAuth2ProviderShortcutConstants.APPLICATION_NAME,
 			"com.liferay.oauth2.provider.shortcut",
@@ -258,13 +258,13 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 				applicationScopeAssigner::assignScope));
 	}
 
-	private void _buildScopes(OAuth2Scope.Builder builder) {
+	private void _buildScopes(OAuth2ScopeBuilder builder) {
 		_buildAnalyticsCloudScopes(builder);
 
 		_buildSegmentsAsahScopes(builder);
 	}
 
-	private void _buildSegmentsAsahScopes(OAuth2Scope.Builder builder) {
+	private void _buildSegmentsAsahScopes(OAuth2ScopeBuilder builder) {
 		builder.forApplication(
 			"Liferay.Segments.Asah.REST", "com.liferay.segments.asah.rest.impl",
 			applicationScopeAssigner -> applicationScopeAssigner.assignScope(

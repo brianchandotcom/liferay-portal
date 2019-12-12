@@ -69,61 +69,53 @@ public class EditWorkspaceConnectionMVCActionCommand
 			Dictionary<String, Object> configurationProperties)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Objects.equals(cmd, "disconnect")) {
-			_disconnect(themeDisplay.getCompanyId(), configurationProperties);
-
-			return;
+			_disconnect(actionRequest, configurationProperties);
 		}
-
-		String token = ParamUtil.getString(actionRequest, "token");
-
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(
-				new String(Base64.decode(token)));
-		} catch (Exception e) {
-			throw new PortalException("Invalid token", e);
+		else {
+			_connect(actionRequest, configurationProperties);
 		}
-
-		_connect(
-			configurationProperties, themeDisplay,
-			jsonObject.getString("token"), jsonObject.getString("url"));
-
-		Iterator<String> keys = jsonObject.keys();
-
-		while (keys.hasNext()) {
-			String key = keys.next();
-
-			configurationProperties.put(key, jsonObject.getString(key));
-		}
-
-		configurationProperties.put("token", token);
 	}
 
 	private void _connect(
-			Dictionary<String, Object> configurationProperties,
-			ThemeDisplay themeDisplay, String token, String url)
+			ActionRequest actionRequest,
+			Dictionary<String, Object> configurationProperties)
 		throws Exception {
+
+		JSONObject tokenJSONObject = _createTokenJSONObject(actionRequest);
+
+		String dataSourceConnectionJSON = _connectDataSource(
+			actionRequest, tokenJSONObject);
+
+		_updateCompanyPreferences(actionRequest, dataSourceConnectionJSON);
+
+		_updateConfigurationProperties(
+			actionRequest, configurationProperties, tokenJSONObject);
+	}
+
+	private String _connectDataSource(
+			ActionRequest actionRequest, JSONObject tokenJSONObject)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		try (CloseableHttpClient closeableHttpClient =
 				httpClientBuilder.build()) {
 
-			HttpPost httpPost = new HttpPost(url);
+			HttpPost httpPost = new HttpPost(tokenJSONObject.getString("url"));
 
 			httpPost.setEntity(
 				new UrlEncodedFormEntity(
 					Arrays.asList(
 						new BasicNameValuePair(
 							"portalURL", _portal.getPortalURL(themeDisplay)),
-						new BasicNameValuePair("token", token))));
+						new BasicNameValuePair(
+							"token", tokenJSONObject.getString("token")))));
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpPost);
@@ -134,40 +126,61 @@ public class EditWorkspaceConnectionMVCActionCommand
 				throw new PortalException("Invalid token");
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				EntityUtils.toString(closeableHttpResponse.getEntity()));
+			return EntityUtils.toString(closeableHttpResponse.getEntity());
+		}
+	}
 
-			_updateCompanyPreferences(themeDisplay.getCompanyId(), jsonObject);
-			_updateConfigurationProperties(
-				themeDisplay.getCompanyId(), configurationProperties,
-				jsonObject);
+	private JSONObject _createTokenJSONObject(ActionRequest actionRequest)
+		throws Exception {
+
+		String token = ParamUtil.getString(actionRequest, "token");
+
+		try {
+			return JSONFactoryUtil.createJSONObject(
+				new String(Base64.decode(token)));
+		}
+		catch (Exception e) {
+			throw new PortalException("Invalid token", e);
 		}
 	}
 
 	private void _disconnect(
-		long companyId, Dictionary<String, Object> configurationProperties)
+			ActionRequest actionRequest,
+			Dictionary<String, Object> configurationProperties)
 		throws Exception {
 
-		// Disconnect data source on AC
+		_disconnectDataSource(actionRequest);
+		_removeCompanyPreferences(actionRequest);
+		_removeConfigurationProperties(actionRequest, configurationProperties);
+	}
+
+	private void _disconnectDataSource(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String liferayAnalyticsDataSourceId = PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsDataSourceId");
+			themeDisplay.getCompanyId(), "liferayAnalyticsDataSourceId");
 
 		String liferayAnalyticsFaroBackendSecuritySignature =
 			PrefsPropsUtil.getString(
-				companyId, "liferayAnalyticsFaroBackendSecuritySignature");
+				themeDisplay.getCompanyId(),
+				"liferayAnalyticsFaroBackendSecuritySignature");
 
 		String liferayAnalyticsFaroBackendURL = PrefsPropsUtil.getString(
-			companyId, "liferayAnalyticsFaroBackendURL");
+			themeDisplay.getCompanyId(), "liferayAnalyticsFaroBackendURL");
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		try (CloseableHttpClient closeableHttpClient =
-				 httpClientBuilder.build()) {
+				httpClientBuilder.build()) {
 
 			HttpPost httpPost = new HttpPost(
-				liferayAnalyticsFaroBackendURL + "/api/1.0/data-sources/" +
-				liferayAnalyticsDataSourceId + "/disconnect");
+				String.format(
+					"%s/api/1.0/data-sources/%s/disconnect",
+					liferayAnalyticsFaroBackendURL,
+					liferayAnalyticsDataSourceId));
 
 			httpPost.setHeader(
 				"OSB-Asah-Faro-Backend-Security-Signature",
@@ -182,29 +195,49 @@ public class EditWorkspaceConnectionMVCActionCommand
 				throw new PortalException("Failed to disconnected data source");
 			}
 		}
+	}
 
-		// Clear configurations and preferences
+	private void _removeCompanyPreferences(ActionRequest actionRequest)
+		throws Exception {
 
-		configurationProperties.remove("token");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_companyService.removePreferences(
-			companyId,
+			themeDisplay.getCompanyId(),
 			new String[] {
 				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
 				"liferayAnalyticsFaroBackendSecuritySignature",
-				"liferayAnalyticsFaroBackendURL",
-				"liferayAnalyticsGroupIds", "liferayAnalyticsURL"
+				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",
+				"liferayAnalyticsURL"
 			});
+	}
+
+	private void _removeConfigurationProperties(
+			ActionRequest actionRequest,
+			Dictionary<String, Object> configurationProperties)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		configurationProperties.remove("token");
 
 		configurationProvider.deleteCompanyConfiguration(
-			AnalyticsConfiguration.class, companyId);
+			AnalyticsConfiguration.class, themeDisplay.getCompanyId());
 	}
 
 	private void _updateCompanyPreferences(
-			long companyId, JSONObject jsonObject)
+			ActionRequest actionRequest, String dataSourceConnectionJSON)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			dataSourceConnectionJSON);
 
 		Iterator<String> keys = jsonObject.keys();
 
@@ -214,22 +247,30 @@ public class EditWorkspaceConnectionMVCActionCommand
 			unicodeProperties.setProperty(key, jsonObject.getString(key));
 		}
 
-		_companyService.updatePreferences(companyId, unicodeProperties);
+		_companyService.updatePreferences(
+			themeDisplay.getCompanyId(), unicodeProperties);
 	}
 
 	private void _updateConfigurationProperties(
-		long companyId, Dictionary<String, Object> configurationProperties,
-		JSONObject jsonObject) {
+		ActionRequest actionRequest,
+		Dictionary<String, Object> configurationProperties,
+		JSONObject tokenJSONObject) {
 
-		configurationProperties.put("companyId", companyId);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		Iterator<String> keys = jsonObject.keys();
+		configurationProperties.put("companyId", themeDisplay.getCompanyId());
+
+		Iterator<String> keys = tokenJSONObject.keys();
 
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			configurationProperties.put(key, jsonObject.getString(key));
+			configurationProperties.put(key, tokenJSONObject.getString(key));
 		}
+
+		configurationProperties.put(
+			"token", tokenJSONObject.getString("token"));
 	}
 
 	@Reference

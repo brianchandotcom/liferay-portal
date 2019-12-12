@@ -65,7 +65,16 @@ if (size != null) {
 			<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace + "personal_menu_dropdown_toggle" %>" ref="triggerButton" type="button">
 				<span class="<%= userStickerCssClasses %>">
 					<span class="<%= userStickerCssClasses + " sticker-circle user-icon-color-" + color %>">
-						<aui:icon image="user" markupView="lexicon" />
+						<c:choose>
+							<c:when test="<%= user2.getPortraitId() > 0 %>">
+								<span class="sticker-overlay">
+									<img class="sticker-img" src="<%= user2.getPortraitURL(themeDisplay) %>" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<aui:icon image="user" markupView="lexicon" />
+							</c:otherwise>
+						</c:choose>
 					</span>
 
 					<c:if test="<%= themeDisplay.isImpersonated() %>">

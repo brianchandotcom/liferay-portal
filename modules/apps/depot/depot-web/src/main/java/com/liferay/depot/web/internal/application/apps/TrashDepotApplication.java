@@ -15,7 +15,7 @@
 package com.liferay.depot.web.internal.application.apps;
 
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.trash.web.internal.constants.TrashPortletKeys;
+import com.liferay.trash.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

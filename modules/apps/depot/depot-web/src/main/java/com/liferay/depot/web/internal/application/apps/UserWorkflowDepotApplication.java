@@ -15,7 +15,7 @@
 package com.liferay.depot.web.internal.application.apps;
 
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

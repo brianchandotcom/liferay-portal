@@ -15,17 +15,18 @@
 package com.liferay.fragment.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -46,8 +47,9 @@ public class FragmentEntryConfigurationUtilTest {
 	@Test
 	public void testGetConfigurationDefaultValuesJSONObject() throws Exception {
 		JSONObject configurationDefaultValuesJSONObject =
-			FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-				_read("configuration.json"));
+			_fragmentEntryConfigurationUtil.
+				getConfigurationDefaultValuesJSONObject(
+					_read("configuration.json"));
 
 		JSONObject expectedConfigurationDefaultValuesJSONObject =
 			JSONFactoryUtil.createJSONObject(
@@ -96,8 +98,11 @@ public class FragmentEntryConfigurationUtilTest {
 
 		Assert.assertEquals(
 			expectedConfigurationTranslatedJSONObject.toJSONString(),
-			FragmentEntryConfigUtil.translateConfiguration(
+			_fragmentEntryConfigurationUtil.translateConfiguration(
 				configurationJSONOjbect, _getResourceBundle(language)));
 	}
+
+	@Inject
+	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
 
 }

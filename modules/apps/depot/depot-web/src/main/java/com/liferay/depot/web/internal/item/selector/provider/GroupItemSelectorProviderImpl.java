@@ -18,6 +18,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.web.internal.util.DepotSupportChecker;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -101,6 +102,11 @@ public class GroupItemSelectorProviderImpl
 		return _language.get(locale, "repository");
 	}
 
+	@Override
+	public boolean isActive() {
+		return _depotSupportChecker.isEnabled();
+	}
+
 	private Optional<Group> _toGroupOptional(
 		DepotEntryGroupRel depotEntryGroupRel) {
 
@@ -125,6 +131,9 @@ public class GroupItemSelectorProviderImpl
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private DepotSupportChecker _depotSupportChecker;
 
 	@Reference
 	private GroupService _groupService;

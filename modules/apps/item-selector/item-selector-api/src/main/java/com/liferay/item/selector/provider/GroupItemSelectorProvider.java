@@ -35,4 +35,8 @@ public interface GroupItemSelectorProvider {
 
 	public String getLabel(Locale locale);
 
+	public default boolean isActive() {
+		return true;
+	}
+
 }

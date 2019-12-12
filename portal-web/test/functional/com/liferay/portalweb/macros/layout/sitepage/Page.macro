@@ -27,8 +27,6 @@ definition {
 	}
 
 	macro addCategory {
-		Navigator.gotoNavTab(navTab = "SEO");
-
 		AssetCategorization.addCategory(
 			categoryName = "${categoryName}",
 			vocabularyName = "${vocabularyName}");

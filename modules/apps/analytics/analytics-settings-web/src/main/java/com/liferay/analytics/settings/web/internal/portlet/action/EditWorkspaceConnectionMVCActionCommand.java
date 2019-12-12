@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -139,7 +140,44 @@ public class EditWorkspaceConnectionMVCActionCommand
 
 	private void _disconnect(
 		long companyId, Dictionary<String, Object> configurationProperties)
-		throws PortalException {
+		throws Exception {
+
+		// Disconnect data source on AC
+
+		String liferayAnalyticsDataSourceId = PrefsPropsUtil.getString(
+			companyId, "liferayAnalyticsDataSourceId");
+
+		String liferayAnalyticsFaroBackendSecuritySignature =
+			PrefsPropsUtil.getString(
+				companyId, "liferayAnalyticsFaroBackendSecuritySignature");
+
+		String liferayAnalyticsFaroBackendURL = PrefsPropsUtil.getString(
+			companyId, "liferayAnalyticsFaroBackendURL");
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		try (CloseableHttpClient closeableHttpClient =
+				 httpClientBuilder.build()) {
+
+			HttpPost httpPost = new HttpPost(
+				liferayAnalyticsFaroBackendURL + "/api/1.0/data-sources/" +
+				liferayAnalyticsDataSourceId + "/disconnect");
+
+			httpPost.setHeader(
+				"OSB-Asah-Faro-Backend-Security-Signature",
+				liferayAnalyticsFaroBackendSecuritySignature);
+
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost);
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+				throw new PortalException("Failed to disconnected data source");
+			}
+		}
+
+		// Clear configurations and preferences
 
 		configurationProperties.remove("token");
 

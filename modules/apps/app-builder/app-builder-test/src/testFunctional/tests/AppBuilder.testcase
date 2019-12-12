@@ -979,15 +979,27 @@ definition {
 		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
+			customObjectName = "My custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.addFormView(
+		TableViewBuilder.createTableViewWithFieldView(
 			fieldType = "Text Field",
-			formViewName = "Text Field - Form View Title");
+			formViewName = "Text Field - Form View Title",
+			tableViewName = "Text Field - Table View Title");
 
-		AppBuilderAdmin.switchTab(tabName = "Table Views");
+		FormViewBuilder.switchToFormViewTab();
+
+		TableViewBuilder.createTableViewWithFieldView(
+			fieldType = "Date",
+			formViewName = "Date Field - Form View Title",
+			tableViewName = "Date Field - Table View Title");
+
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "My custom object");
+
+		AppBuilderAdmin.searchByItem(itemName = "Text");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Text");
 
 	}
 

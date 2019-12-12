@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.fragment.util;
+package com.liferay.fragment.util.test;
 
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,13 +25,12 @@ import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Rubén Pulido

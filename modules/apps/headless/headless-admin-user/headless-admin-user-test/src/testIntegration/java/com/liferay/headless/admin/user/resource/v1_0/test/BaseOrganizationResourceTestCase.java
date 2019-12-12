@@ -224,10 +224,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			Arrays.asList(organization1, organization2),
 			(List<Organization>)page.getItems());
 		assertValid(page);
-
-		organizationResource.deleteOrganization(organization1.getId());
-
-		organizationResource.deleteOrganization(organization2.getId());
 	}
 
 	@Test
@@ -647,10 +643,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			Arrays.asList(organization1, organization2),
 			(List<Organization>)page.getItems());
 		assertValid(page);
-
-		organizationResource.deleteOrganization(organization1.getId());
-
-		organizationResource.deleteOrganization(organization2.getId());
 	}
 
 	@Test

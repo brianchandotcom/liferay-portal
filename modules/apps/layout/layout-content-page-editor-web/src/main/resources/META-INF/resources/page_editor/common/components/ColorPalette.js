@@ -14,34 +14,24 @@
 
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useContext} from 'react';
 
-const COLORS = [
-	'primary',
-	'success',
-	'danger',
-	'warning',
-	'info',
-	'dark',
-	'gray-dark',
-	'secondary',
-	'light',
-	'lighter',
-	'white'
-];
+import {ConfigContext} from '../../app/config/index';
 
 const SELECTORS = {
 	backgroundColorCssClass: 'backgroundColorCssClass'
 };
 
 export default function ColorPalette({clearButton, label, onColorSelect}) {
+	const {themeColorsCssClasses} = useContext(ConfigContext);
+
 	return (
 		<>
 			<label htmlFor="colorPalette">{label}</label>
 
 			<div className="palette-container" id="colorPalette">
 				<ul className="list-unstyled palette-items-container">
-					{COLORS.map(color => (
+					{themeColorsCssClasses.map(color => (
 						<li className="palette-item" key={color}>
 							<ClayButton
 								block

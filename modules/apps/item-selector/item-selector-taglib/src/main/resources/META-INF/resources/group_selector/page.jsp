@@ -18,23 +18,27 @@
 
 <%
 GroupSelectorDisplayContext groupSelectorDisplayContext = new GroupSelectorDisplayContext(liferayPortletRequest);
+
+Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 %>
 
-<div class="container-fluid-1280">
-	<div class="btn-group" role="group">
+<c:if test="<%= groupTypes.size() > 1 %>">
+	<div class="container-fluid-1280">
+		<div class="btn-group" role="group">
 
-		<%
-		for (String curGroupType : groupSelectorDisplayContext.getGroupTypes()) {
-		%>
+			<%
+			for (String curGroupType : groupTypes) {
+			%>
 
-			<a class="btn btn-secondary <%= groupSelectorDisplayContext.isGroupTypeActive(curGroupType) ? "active" : StringPool.BLANK %>" href="<%= groupSelectorDisplayContext.getGroupItemSelectorURL(curGroupType) %>"><%= groupSelectorDisplayContext.getGroupItemSelectorLabel(curGroupType) %></a>
+				<a class="btn btn-secondary <%= groupSelectorDisplayContext.isGroupTypeActive(curGroupType) ? "active" : StringPool.BLANK %>" href="<%= groupSelectorDisplayContext.getGroupItemSelectorURL(curGroupType) %>"><%= groupSelectorDisplayContext.getGroupItemSelectorLabel(curGroupType) %></a>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
+		</div>
 	</div>
-</div>
+</c:if>
 
 <div class="container-fluid-1280 lfr-item-viewer">
 	<liferay-ui:search-container

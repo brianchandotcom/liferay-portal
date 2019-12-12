@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
 import java.util.List;
@@ -48,8 +50,14 @@ public class GroupIdQueryPreFilterContributor
 		if (ArrayUtil.isEmpty(groupIds) ||
 			((groupIds.length == 1) && (groupIds[0] == 0))) {
 
-			booleanFilter.addTerm(
-				Field.STAGING_GROUP, "true", BooleanClauseOccur.MUST_NOT);
+			boolean showStaged = GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.ATTRIBUTE_KEY_SHOW_STAGED));
+
+			if (!showStaged) {
+				booleanFilter.addTerm(
+					Field.STAGING_GROUP, "true", BooleanClauseOccur.MUST_NOT);
+			}
 
 			_addInactiveGroupsBooleanFilter(booleanFilter, searchContext);
 

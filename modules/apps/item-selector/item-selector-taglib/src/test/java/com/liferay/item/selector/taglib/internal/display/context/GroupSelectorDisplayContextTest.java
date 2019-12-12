@@ -106,6 +106,11 @@ public class GroupSelectorDisplayContextTest {
 		}
 
 		@Override
+		public String getGroupType() {
+			return "test";
+		}
+
+		@Override
 		public String getIcon() {
 			return "icon";
 		}

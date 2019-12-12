@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(
-	property = "group.type=depot", service = GroupItemSelectorProvider.class
-)
+@Component(service = GroupItemSelectorProvider.class)
 public class GroupItemSelectorProviderImpl
 	implements GroupItemSelectorProvider {
 
@@ -90,6 +88,11 @@ public class GroupItemSelectorProviderImpl
 
 			return 0;
 		}
+	}
+
+	@Override
+	public String getGroupType() {
+		return "depot";
 	}
 
 	@Override

@@ -359,6 +359,10 @@
 
 .calendar-portlet-recurrence-content {
 	.calendar-portlet-recurrence-limit {
+		input[type='text'] {
+			max-width: 40%;
+		}
+
 		label,
 		input {
 			display: inline-block;
@@ -368,15 +372,26 @@
 		&.control-group {
 			margin-bottom: 10px;
 		}
+
+		&.field-wrapper {
+			margin-bottom: 5px;
+			margin-top: 10px;
+		}
 	}
 
-	&.calendar-recurrence-weekday-checkbox label {
-		display: inline-block;
+	&.calendar-recurrence-weekday-checkbox {
+		padding-top: 10px;
+
+		label {
+			display: inline-block;
+		}
 	}
 }
 
 .calendar-portlet-recurrence-summary {
+	display: block;
 	font-weight: bold;
+	margin-top: 8px;
 	text-transform: capitalize;
 
 	span {
@@ -387,9 +402,10 @@
 .calendar-portlet-recurrence-title {
 	font-weight: bold;
 	margin-right: 10px;
-	padding: 4px 10px;
+	padding: 10px 10px 0;
 	text-align: right;
 	vertical-align: top;
+	width: 33%;
 }
 
 .calendar-portlet-time-zone-field .field .field-content {

@@ -838,6 +838,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				MustNotExceedMaximumSize(nameMaxLength);
 		}
 
+		if (Objects.equals(name, "Blank") &&
+			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			throw new LayoutPageTemplateEntryNameException.MustNotBeDuplicate(
+				groupId, name);
+		}
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryPersistence.fetchByG_N_T(
 				groupId, name, type);

@@ -36,6 +36,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaBasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.JavaExec;
@@ -347,11 +348,15 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			project, WRITE_FIND_BUGS_PROJECT_TASK_NAME,
 			WriteFindBugsProjectTask.class);
 
+		Task classesTask = GradleUtil.getTask(
+			project, JavaPlugin.CLASSES_TASK_NAME);
+
+		writeFindBugsProjectTask.dependsOn(classesTask);
+
 		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
-		writeFindBugsProjectTask.dependsOn(
-			_UNZIP_JAR_TASK_NAME, compileJSPTask);
+		writeFindBugsProjectTask.dependsOn(compileJSPTask);
 
 		final SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
@@ -424,12 +429,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 	private static final String _FIND_SECURITY_BUGS_INCLUDE_FILE_NAME =
 		"fsb-include.xml";
-
-	/**
-	 * Copied from
-	 * <code>com.liferay.gradle.plugins.internal.JspCDefaultsPlugin</code>.
-	 */
-	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 
 	private static final String _VERSION = "1.9.0.LIFERAY-PATCHED-1";
 

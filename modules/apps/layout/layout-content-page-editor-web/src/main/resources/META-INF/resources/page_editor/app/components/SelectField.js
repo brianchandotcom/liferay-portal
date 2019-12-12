@@ -21,6 +21,7 @@ export const SelectField = ({field}) => (
 
 		<ClaySelectWithOption
 			aria-label={field.label}
+			className="form-control-sm"
 			defaultValue={field.defaultValue}
 			id={`${field.name}`}
 			options={field.typeOptions.validValues}

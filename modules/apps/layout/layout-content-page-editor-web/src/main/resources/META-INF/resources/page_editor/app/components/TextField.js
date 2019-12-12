@@ -23,6 +23,7 @@ export const TextField = ({field}) => (
 			defaultValue={field.defaultValue}
 			id={field.name}
 			placeholder={field.typeOptions ? field.typeOptions.placeholder : ''}
+			sizing="sm"
 			type="text"
 		/>
 	</>

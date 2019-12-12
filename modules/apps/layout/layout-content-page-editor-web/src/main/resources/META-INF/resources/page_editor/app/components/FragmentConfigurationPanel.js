@@ -30,7 +30,7 @@ const FieldSet = ({fields, label}) => (
 
 			return (
 				<ClayForm.Group key={index}>
-					<FieldComponent field={field}></FieldComponent>
+					<FieldComponent field={field} />
 				</ClayForm.Group>
 			);
 		})}
@@ -54,7 +54,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 					/>
 				);
 			})}
-			<RestoreButton></RestoreButton>
+			<RestoreButton />
 		</div>
 	);
 };

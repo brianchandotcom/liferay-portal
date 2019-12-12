@@ -56,11 +56,11 @@ public class GroupSelectorDisplayContextTest {
 	@Test
 	public void testGetGroupItemSelectorIcon() {
 		GroupSelectorDisplayContext groupSelectorDisplayContext =
-			new GroupSelectorDisplayContext(new MockLiferayResourceRequest());
+			new GroupSelectorDisplayContext(
+				"test", new MockLiferayResourceRequest());
 
 		Assert.assertEquals(
-			"icon",
-			groupSelectorDisplayContext.getGroupItemSelectorIcon("test"));
+			"icon", groupSelectorDisplayContext.getGroupItemSelectorIcon());
 	}
 
 	@Test
@@ -85,6 +85,11 @@ public class GroupSelectorDisplayContextTest {
 
 	private static class MockGroupItemSelectorProvider
 		implements GroupItemSelectorProvider {
+
+		@Override
+		public String getEmptyResultsMessage() {
+			return null;
+		}
 
 		@Override
 		public List<Group> getGroups(

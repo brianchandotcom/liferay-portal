@@ -148,6 +148,13 @@ public class GroupSelectorDisplayContext {
 		return false;
 	}
 
+	protected GroupSelectorDisplayContext(
+		String groupType, LiferayPortletRequest liferayPortletRequest) {
+
+		_groupType = groupType;
+		_liferayPortletRequest = liferayPortletRequest;
+	}
+
 	private String _getEmptyResultsMessage() {
 		Optional<GroupItemSelectorProvider> optional =
 			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(

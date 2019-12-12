@@ -97,6 +97,11 @@ public class GroupItemSelectorTrackerUtilTest {
 		implements GroupItemSelectorProvider {
 
 		@Override
+		public String getEmptyResultsMessage() {
+			return null;
+		}
+
+		@Override
 		public List<Group> getGroups(
 			long companyId, long groupId, String keywords, int start, int end) {
 

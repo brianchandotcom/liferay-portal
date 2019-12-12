@@ -203,9 +203,13 @@ public class ContentPageEditorDisplayContext {
 				"hasUpdatePermissions",
 				editorSoyContext.get("hasUpdatePermissions")
 			).put(
+				"infoItemSelectorURL", _getInfoItemSelectorURL()
+			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
 			).put(
 				"sidebarPanels", editorSoyContext.get("sidebarPanels")
+			).put(
+				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
 				"updateLayoutPageTemplateDataURL",
 				editorSoyContext.get("updateLayoutPageTemplateDataURL")

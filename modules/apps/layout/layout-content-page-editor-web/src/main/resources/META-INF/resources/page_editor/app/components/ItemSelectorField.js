@@ -14,24 +14,12 @@
 
 import React from 'react';
 
-import {Component} from '../../core/AppContext';
-import FragmentsSidebar from './components/FragmentsSidebar';
-/**
- * Entry-point for "Fragments" (sidebar pane) functionality.
- */
-export default class Fragments {
-	constructor({app, panel}) {
-		this.Component = Component(app);
-		this.title = panel.label;
-	}
+import ItemSelector from '../../common/components/ItemSelector';
 
-	renderSidebar() {
-		const {Component} = this;
-
-		return (
-			<Component>
-				<FragmentsSidebar title={this.title} />
-			</Component>
-		);
-	}
-}
+export const ItemSelectorField = ({field}) => (
+	<ItemSelector
+		label={field.label}
+		onSelectItem={() => {}}
+		value={field.value}
+	></ItemSelector>
+);

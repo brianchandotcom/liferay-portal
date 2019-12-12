@@ -12,26 +12,16 @@
  * details.
  */
 
-import React from 'react';
+import {CheckboxField} from '../../components/CheckboxField';
+import {ColorPaletteField} from '../../components/ColorPaletteField';
+import {ItemSelectorField} from '../../components/ItemSelectorField';
+import {SelectField} from '../../components/SelectField';
+import {TextField} from '../../components/TextField';
 
-import {Component} from '../../core/AppContext';
-import FragmentsSidebar from './components/FragmentsSidebar';
-/**
- * Entry-point for "Fragments" (sidebar pane) functionality.
- */
-export default class Fragments {
-	constructor({app, panel}) {
-		this.Component = Component(app);
-		this.title = panel.label;
-	}
-
-	renderSidebar() {
-		const {Component} = this;
-
-		return (
-			<Component>
-				<FragmentsSidebar title={this.title} />
-			</Component>
-		);
-	}
-}
+export const FRAGMENT_CONFIGURATION_FIELD_TYPES = {
+	checkbox: CheckboxField,
+	colorPalette: ColorPaletteField,
+	itemSelector: ItemSelectorField,
+	select: SelectField,
+	text: TextField
+};

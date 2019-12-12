@@ -12,26 +12,13 @@
  * details.
  */
 
+import {ClayCheckbox} from '@clayui/form';
 import React from 'react';
 
-import {Component} from '../../core/AppContext';
-import FragmentsSidebar from './components/FragmentsSidebar';
-/**
- * Entry-point for "Fragments" (sidebar pane) functionality.
- */
-export default class Fragments {
-	constructor({app, panel}) {
-		this.Component = Component(app);
-		this.title = panel.label;
-	}
-
-	renderSidebar() {
-		const {Component} = this;
-
-		return (
-			<Component>
-				<FragmentsSidebar title={this.title} />
-			</Component>
-		);
-	}
-}
+export const CheckboxField = ({field}) => (
+	<ClayCheckbox
+		aria-label={field.label}
+		defaultChecked={field.defaultValue}
+		label={field.label}
+	/>
+);

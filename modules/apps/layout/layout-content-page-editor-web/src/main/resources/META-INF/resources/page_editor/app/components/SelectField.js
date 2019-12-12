@@ -12,26 +12,19 @@
  * details.
  */
 
+import {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
-import {Component} from '../../core/AppContext';
-import FragmentsSidebar from './components/FragmentsSidebar';
-/**
- * Entry-point for "Fragments" (sidebar pane) functionality.
- */
-export default class Fragments {
-	constructor({app, panel}) {
-		this.Component = Component(app);
-		this.title = panel.label;
-	}
+export const SelectField = ({field}) => (
+	<>
+		<label htmlFor={field.name}>{field.label}</label>
 
-	renderSidebar() {
-		const {Component} = this;
-
-		return (
-			<Component>
-				<FragmentsSidebar title={this.title} />
-			</Component>
-		);
-	}
-}
+		<ClaySelectWithOption
+			aria-label={field.label}
+			className="form-control-sm"
+			defaultValue={field.defaultValue}
+			id={`${field.name}`}
+			options={field.typeOptions.validValues}
+		/>
+	</>
+);

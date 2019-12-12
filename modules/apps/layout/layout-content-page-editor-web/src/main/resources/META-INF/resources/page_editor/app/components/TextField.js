@@ -12,26 +12,19 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import React from 'react';
 
-import {Component} from '../../core/AppContext';
-import FragmentsSidebar from './components/FragmentsSidebar';
-/**
- * Entry-point for "Fragments" (sidebar pane) functionality.
- */
-export default class Fragments {
-	constructor({app, panel}) {
-		this.Component = Component(app);
-		this.title = panel.label;
-	}
+export const TextField = ({field}) => (
+	<>
+		<label htmlFor={field.name}>{field.label}</label>
 
-	renderSidebar() {
-		const {Component} = this;
-
-		return (
-			<Component>
-				<FragmentsSidebar title={this.title} />
-			</Component>
-		);
-	}
-}
+		<ClayInput
+			defaultValue={field.defaultValue}
+			id={field.name}
+			placeholder={field.typeOptions ? field.typeOptions.placeholder : ''}
+			sizing="sm"
+			type="text"
+		/>
+	</>
+);

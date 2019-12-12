@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,6 +56,10 @@ public class LayoutPageTemplatesAdminDisplayContext {
 
 	public List<NavigationItem> getNavigationItems() {
 		Group group = _themeDisplay.getScopeGroup();
+
+		if (group.isCompany()) {
+			return Collections.emptyList();
+		}
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
@@ -114,6 +119,14 @@ public class LayoutPageTemplatesAdminDisplayContext {
 
 	public String getTabs1() {
 		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (group.isCompany()) {
+			_tabs1 = "page-templates";
+
 			return _tabs1;
 		}
 

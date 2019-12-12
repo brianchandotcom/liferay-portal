@@ -39,9 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(
-	property = "group.type=site", service = GroupItemSelectorProvider.class
-)
+@Component(service = GroupItemSelectorProvider.class)
 public class GroupItemSelectorProviderImpl
 	implements GroupItemSelectorProvider {
 
@@ -80,6 +78,11 @@ public class GroupItemSelectorProviderImpl
 
 		return _groupService.searchCount(
 			companyId, _classNameIds, keywords, groupParams);
+	}
+
+	@Override
+	public String getGroupType() {
+		return "site";
 	}
 
 	@Override

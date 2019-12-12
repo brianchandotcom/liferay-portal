@@ -18,6 +18,7 @@ import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -59,17 +60,15 @@ public class GroupItemSelectorTrackerUtil {
 			return Collections.emptySet();
 		}
 
-		Set<String> keys = _serviceTrackerMap.keySet();
+		Collection<GroupItemSelectorProvider> values =
+			_serviceTrackerMap.values();
 
-		Stream<String> stream = keys.stream();
+		Stream<GroupItemSelectorProvider> stream = values.stream();
 
 		return stream.filter(
-			key -> {
-				GroupItemSelectorProvider groupItemSelectorProvider =
-					_serviceTrackerMap.getService(key);
-
-				return groupItemSelectorProvider.isEnabled();
-			}
+			GroupItemSelectorProvider::isEnabled
+		).map(
+			GroupItemSelectorProvider::getGroupType
 		).collect(
 			Collectors.toSet()
 		);
@@ -78,7 +77,18 @@ public class GroupItemSelectorTrackerUtil {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, GroupItemSelectorProvider.class, "group.type");
+			bundleContext, GroupItemSelectorProvider.class, null,
+			(serviceReference, emitter) -> {
+				GroupItemSelectorProvider groupItemSelectorProvider =
+					bundleContext.getService(serviceReference);
+
+				try {
+					emitter.emit(groupItemSelectorProvider.getGroupType());
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 	}
 
 	@Deactivate

@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -103,6 +104,11 @@ public class GroupSelectorDisplayContextTest {
 			long companyId, long groupId, String keywords) {
 
 			return 3;
+		}
+
+		@Override
+		public String getGroupType() {
+			return "test";
 		}
 
 		@Override

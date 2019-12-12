@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -145,6 +146,11 @@ public class GroupItemSelectorTrackerUtilTest {
 			long companyId, long groupId, String keywords) {
 
 			return 3;
+		}
+
+		@Override
+		public String getGroupType() {
+			return "test";
 		}
 
 		@Override

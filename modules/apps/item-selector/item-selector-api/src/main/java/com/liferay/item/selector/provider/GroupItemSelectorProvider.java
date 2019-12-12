@@ -31,6 +31,8 @@ public interface GroupItemSelectorProvider {
 
 	public int getGroupsCount(long companyId, long groupId, String keywords);
 
+	public String getGroupType();
+
 	public String getIcon();
 
 	public String getLabel(Locale locale);

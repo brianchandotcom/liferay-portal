@@ -43,6 +43,44 @@ definition {
 	}
 
 	@priority = "4"
+	test OmniAdminCanAccessGogoShellCommandViaPortlet {
+		property test.name.skip.portal.instance = "GogoShell#OmniAdminCanAccessGogoShellCommandViaPortlet";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			requirePasswordReset = "true",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		GogoShell.executeCommand(commandName = "lb | grep Liferay");
+
+		GogoShell.viewOutput(outputContent = "Liferay Portal");
+	}
+
+	@priority = "4"
 	test SiteAdminCannotAccessGogoShellPortlet {
 		property test.name.skip.portal.instance = "GogoShell#SiteAdminCannotAccessGogoShellPortlet";
 

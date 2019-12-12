@@ -24,8 +24,10 @@ import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -90,7 +92,7 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 				Future<Metadata> future =
 					processChannel.getProcessNoticeableFuture();
 
-				return future.get();
+				return _postProcessMetadata(mimeType, future.get());
 			}
 			catch (Exception e) {
 				throw new SystemException(e);
@@ -98,8 +100,10 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		}
 
 		try {
-			return ExtractMetadataProcessCallable.extractMetadata(
-				file, metadata, _parser);
+			return _postProcessMetadata(
+				mimeType,
+				ExtractMetadataProcessCallable.extractMetadata(
+					file, metadata, _parser));
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
@@ -123,6 +127,24 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		finally {
 			file.delete();
 		}
+	}
+
+	private Metadata _postProcessMetadata(String mimeType, Metadata metadata) {
+		if (!mimeType.equals(ContentTypes.IMAGE_SVG_XML)) {
+			return metadata;
+		}
+
+		String contentType = metadata.get("Content-Type");
+
+		if (contentType.startsWith(ContentTypes.TEXT_PLAIN)) {
+			metadata.set(
+				"Content-Type",
+				StringUtil.replace(
+					mimeType, ContentTypes.TEXT_PLAIN,
+					ContentTypes.IMAGE_SVG_XML));
+		}
+
+		return metadata;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

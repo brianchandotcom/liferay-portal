@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useCallback, useEffect, useRef} from 'react';
+import {useCallback, useLayoutEffect, useRef} from 'react';
 
 /**
  * Hook for determining whether a component is still mounted.
@@ -36,7 +36,7 @@ export default function useIsMounted() {
 	const mountedRef = useRef(false);
 	const isMounted = useCallback(() => mountedRef.current, []);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		mountedRef.current = true;
 
 		return () => {

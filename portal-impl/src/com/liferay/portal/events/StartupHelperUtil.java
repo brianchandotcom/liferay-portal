@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -42,6 +44,28 @@ import java.util.List;
  * @author Raymond Augé
  */
 public class StartupHelperUtil {
+
+	public static void initPermissions() {
+		List<String> modelNames = ResourceActionsUtil.getModelNames();
+
+		for (String modelName : modelNames) {
+			List<String> actionIds =
+				ResourceActionsUtil.getModelResourceActions(modelName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, actionIds, true);
+		}
+
+		List<String> portletNames = ResourceActionsUtil.getPortletNames();
+
+		for (String portletName : portletNames) {
+			List<String> actionIds =
+				ResourceActionsUtil.getPortletResourceActions(portletName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				portletName, actionIds, true);
+		}
+	}
 
 	public static boolean isDBNew() {
 		return _dbNew;

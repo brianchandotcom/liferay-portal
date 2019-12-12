@@ -479,6 +479,9 @@ FragmentEditableField.STATE = {
 	editableId: Config.string().required(),
 	editableValues: Config.object().required(),
 	fragmentEntryLinkId: Config.string().required(),
+	portletNamespace: Config.internal()
+		.string()
+		.value(''),
 	processor: Config.string().required(),
 	processorsOptions: Config.object().required(),
 	type: Config.oneOf([
@@ -586,7 +589,8 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 			_selected,
 			_translated,
 			_translating,
-			_value
+			_value,
+			portletNamespace: state.portletNamespace
 		};
 	}
 );

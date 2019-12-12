@@ -22,8 +22,8 @@ import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
-import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
+import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.plugins.workspace.FrontendPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
@@ -127,7 +127,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			if (FileUtil.exists(project, "service.xml")) {
 				GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
-				GradleUtil.applyPlugin(project, UpgradeTableBuilderPlugin.class);
+				GradleUtil.applyPlugin(
+					project, UpgradeTableBuilderPlugin.class);
 				GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 			}
 

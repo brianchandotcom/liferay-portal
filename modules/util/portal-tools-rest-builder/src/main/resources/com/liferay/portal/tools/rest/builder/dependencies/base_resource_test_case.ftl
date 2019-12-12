@@ -422,7 +422,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEqualsIgnoringOrder(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), (List<${schemaName}>)page.getItems());
 					assertValid(page);
 
-					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
+					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
 						<#assign deleteJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) />
 
 						<#if properties?keys?seq_contains("id")>

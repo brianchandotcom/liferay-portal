@@ -39,7 +39,7 @@ describe('UnsafeHTML', () => {
 
 	it('allows using a custom HTML tag as container', () => {
 		const {getByRole} = render(
-			<UnsafeHTML TagName="h1" markup="The Title" />
+			<UnsafeHTML markup="The Title" TagName="h1" />
 		);
 
 		expect(getByRole('heading')).toBeInTheDocument();

@@ -119,6 +119,11 @@ definition {
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 	}
 
+	macro openStandAloneApp {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "Open Standalone App");
+	}
+
 	macro save {
 		Click(locator1 = "AppBuilder#SAVE_BUTTON");
 	}

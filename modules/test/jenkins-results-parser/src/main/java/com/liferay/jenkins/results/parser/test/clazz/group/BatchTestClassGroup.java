@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.google.common.collect.Lists;
 
+import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -72,6 +73,17 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public String getBatchName() {
 		return batchName;
+	}
+
+	public Integer getMinimumSlaveRAM() {
+		String minimumSlaveRAM = getFirstPropertyValue(
+			"test.batch.minimum.slave.ram");
+
+		if (minimumSlaveRAM == null) {
+			return JenkinsMaster.SLAVE_RAM_DEFAULT;
+		}
+
+		return Integer.valueOf(minimumSlaveRAM);
 	}
 
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {

@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
 /**
  * @author Rubén Pulido
  */
-public class FragmentEntryConfigUtilTest {
+public class FragmentEntryConfigurationUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {

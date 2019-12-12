@@ -82,7 +82,7 @@ const InstanceListPage = ({page, pageSize, processId, query}) => {
 	);
 };
 
-const Body = ({page, pageSize, processId, query, singleModal}) => {
+const Body = ({page, pageSize, processId, singleModal}) => {
 	const {fetchInstances, items, searching, totalCount} = useContext(
 		InstanceListContext
 	);
@@ -103,7 +103,7 @@ const Body = ({page, pageSize, processId, query, singleModal}) => {
 
 		return [];
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page, pageSize, processId, query, singleModal.visible]);
+	}, [fetchInstances, singleModal.visible]);
 
 	return (
 		<>

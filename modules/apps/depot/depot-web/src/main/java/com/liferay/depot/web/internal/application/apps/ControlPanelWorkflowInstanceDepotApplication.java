@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.depot.application;
+package com.liferay.depot.web.internal.application.apps;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
@@ -23,11 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DepotApplication.class)
-public class UserWorkflowDepotApplication implements DepotApplication {
+public class ControlPanelWorkflowInstanceDepotApplication
+	implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return WorkflowPortletKeys.USER_WORKFLOW;
+		return WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE;
 	}
 
 }

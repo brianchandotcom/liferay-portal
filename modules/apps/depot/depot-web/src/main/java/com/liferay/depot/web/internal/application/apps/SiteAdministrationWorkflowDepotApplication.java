@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.depot.application;
+package com.liferay.depot.web.internal.application.apps;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;

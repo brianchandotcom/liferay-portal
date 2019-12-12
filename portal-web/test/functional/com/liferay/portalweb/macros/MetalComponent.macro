@@ -7,9 +7,9 @@ definition {
 	}
 
 	macro waitForLayout {
-		AssertVisible(locator1 = "//div[@class='portlet-body']/form/div");
+		AssertVisible(locator1 = "//div[@class='portlet-body']//form//div");
 
-		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.portlet-body > form > div").id''');
+		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.portlet-body form div").id''');
 	}
 
 	macro waitForManagementBar {

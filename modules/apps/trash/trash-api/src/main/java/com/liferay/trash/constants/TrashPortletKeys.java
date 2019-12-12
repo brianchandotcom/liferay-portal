@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.trash.web.internal.constants;
+package com.liferay.trash.constants;
 
 /**
  * Provides the portlet ID for the implementation of the {@link

@@ -15,7 +15,7 @@
 package com.liferay.asset.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

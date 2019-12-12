@@ -17,7 +17,7 @@ package com.liferay.trash.web.internal.upgrade;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.trash.web.internal.constants.TrashPortletKeys;
+import com.liferay.trash.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

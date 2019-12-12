@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;

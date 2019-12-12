@@ -14,7 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.internal.portlet.configuration.icon;
 
-import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.portal.kernel.exception.PortalException;

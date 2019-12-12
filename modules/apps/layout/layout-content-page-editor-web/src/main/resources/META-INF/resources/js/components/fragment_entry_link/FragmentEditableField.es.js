@@ -573,7 +573,6 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 		);
 
 		return {
-			...state,
 			_activable,
 			_active,
 			_getAssetFieldValueURL,

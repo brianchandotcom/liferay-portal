@@ -143,6 +143,12 @@ public class AddItemReactMVCActionCommandTest {
 	public void testAddItemToLayoutDataAtPosition() throws Exception {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructure(
+				_group.getGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				_layout.getPlid(), _read("layout_data_with_children.json"));
+
 		String newItemId = RandomTestUtil.randomString();
 
 		actionRequest.addParameter(

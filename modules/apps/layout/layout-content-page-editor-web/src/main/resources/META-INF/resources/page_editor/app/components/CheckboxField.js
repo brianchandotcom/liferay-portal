@@ -18,7 +18,7 @@ import React from 'react';
 export const CheckboxField = ({field}) => (
 	<ClayCheckbox
 		aria-label={field.label}
-		checked={field.defaultValue}
+		defaultChecked={field.defaultValue}
 		label={field.label}
 	/>
 );

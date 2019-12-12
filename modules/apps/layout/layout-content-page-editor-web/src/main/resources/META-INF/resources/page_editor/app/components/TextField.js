@@ -20,10 +20,10 @@ export const TextField = ({field}) => (
 		<label htmlFor={field.name}>{field.label}</label>
 
 		<ClayInput
+			defaultValue={field.defaultValue}
 			id={field.name}
 			placeholder={field.typeOptions ? field.typeOptions.placeholder : ''}
 			type="text"
-			value={field.defaultValue}
 		/>
 	</>
 );

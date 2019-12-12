@@ -22,33 +22,32 @@ import java.util.function.Consumer;
  * @author Stian Sigvartsen
  * @author Carlos Sierra
  */
-public interface OAuth2Scope {
+public interface OAuth2ScopeBuilder {
 
-	public interface Builder {
+	public void forApplication(
+		String applicationName, String bundleSymbolicName,
+		Consumer<OAuth2ScopeBuilder.ApplicationScopeAssigner>
+			applicationScopeAssignerConsumer);
 
-		public void forApplication(
-			String applicationName, String bundleSymbolicName,
-			Consumer<ApplicationScopeAssigner>
-				applicationScopeAssignerConsumer);
+	public interface ApplicationScope {
 
-		public interface ApplicationScope {
+		public void mapToScopeAlias(Collection<String> scopeAliases);
 
-			public void mapToScopeAlias(Collection<String> scopeAliases);
-
-			public default void mapToScopeAlias(String... scopeAlias) {
-				mapToScopeAlias(Arrays.asList(scopeAlias));
-			}
-
+		public default void mapToScopeAlias(String... scopeAlias) {
+			mapToScopeAlias(Arrays.asList(scopeAlias));
 		}
 
-		public interface ApplicationScopeAssigner {
+	}
 
-			public ApplicationScope assignScope(Collection<String> scopes);
+	public interface ApplicationScopeAssigner {
 
-			public default ApplicationScope assignScope(String... scope) {
-				return assignScope(Arrays.asList(scope));
-			}
+		public OAuth2ScopeBuilder.ApplicationScope assignScope(
+			Collection<String> scopes);
 
+		public default OAuth2ScopeBuilder.ApplicationScope assignScope(
+			String... scope) {
+
+			return assignScope(Arrays.asList(scope));
 		}
 
 	}

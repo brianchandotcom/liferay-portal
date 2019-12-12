@@ -207,6 +207,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"sidebarPanels", editorSoyContext.get("sidebarPanels")
 			).put(
+				"themeColorsCssClasses", _getThemeColorsCssClasses()
+			).put(
 				"updateLayoutPageTemplateDataURL",
 				editorSoyContext.get("updateLayoutPageTemplateDataURL")
 			).put(

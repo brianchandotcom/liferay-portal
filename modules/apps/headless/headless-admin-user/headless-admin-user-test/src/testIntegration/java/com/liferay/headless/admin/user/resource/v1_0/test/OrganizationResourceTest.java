@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,9 +45,38 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetOrganizationOrganizationsPageWithSortString() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetOrganizationsPageWithSortString() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteOrganization() {
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
+	}
+
+	@Override
+	protected Organization testDeleteOrganization_addOrganization()
+		throws Exception {
+
+		Organization organization = randomOrganization();
+
+		return _toOrganization(
+			OrganizationLocalServiceUtil.addOrganization(
+				_user.getUserId(), 0, organization.getName(), true));
 	}
 
 	@Override

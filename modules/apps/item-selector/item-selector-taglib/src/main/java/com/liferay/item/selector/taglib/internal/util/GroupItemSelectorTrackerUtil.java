@@ -21,6 +21,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -40,7 +42,16 @@ public class GroupItemSelectorTrackerUtil {
 			return Optional.empty();
 		}
 
-		return Optional.ofNullable(_serviceTrackerMap.getService(groupType));
+		GroupItemSelectorProvider groupItemSelectorProvider =
+			_serviceTrackerMap.getService(groupType);
+
+		if ((groupItemSelectorProvider != null) &&
+			groupItemSelectorProvider.isActive()) {
+
+			return Optional.of(groupItemSelectorProvider);
+		}
+
+		return Optional.empty();
 	}
 
 	public static Set<String> getGroupItemSelectorProviderTypes() {
@@ -48,7 +59,20 @@ public class GroupItemSelectorTrackerUtil {
 			return Collections.emptySet();
 		}
 
-		return _serviceTrackerMap.keySet();
+		Set<String> keys = _serviceTrackerMap.keySet();
+
+		Stream<String> stream = keys.stream();
+
+		return stream.filter(
+			key -> {
+				GroupItemSelectorProvider groupItemSelectorProvider =
+					_serviceTrackerMap.getService(key);
+
+				return groupItemSelectorProvider.isActive();
+			}
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	@Activate

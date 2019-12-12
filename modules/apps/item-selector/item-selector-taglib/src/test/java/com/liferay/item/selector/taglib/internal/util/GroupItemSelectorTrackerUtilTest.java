@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -71,6 +72,29 @@ public class GroupItemSelectorTrackerUtilTest {
 	}
 
 	@Test
+	public void testGetGroupItemSelectorProviderOptionalWithRegisteredInactiveGroupItemSelectorProvider() {
+		ReflectionTestUtil.setFieldValue(
+			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap",
+			new MockServiceTrackerMap(
+				Collections.singletonMap(
+					"test", new MockGroupItemSelectorProvider(false))));
+
+		Optional<GroupItemSelectorProvider> groupItemSelectorProviderOptional =
+			GroupItemSelectorTrackerUtil.getGroupItemSelectorProviderOptional(
+				"test");
+
+		Assert.assertFalse(groupItemSelectorProviderOptional.isPresent());
+
+		Assert.assertTrue(
+			SetUtil.isEmpty(
+				GroupItemSelectorTrackerUtil.
+					getGroupItemSelectorProviderTypes()));
+
+		ReflectionTestUtil.setFieldValue(
+			GroupItemSelectorTrackerUtil.class, "_serviceTrackerMap", null);
+	}
+
+	@Test
 	public void testGetGroupItemSelectorProviderTypesWithoutRegisteredGroupItemSelectorProvider() {
 		Assert.assertEquals(
 			Collections.emptySet(),
@@ -95,6 +119,14 @@ public class GroupItemSelectorTrackerUtilTest {
 
 	private static class MockGroupItemSelectorProvider
 		implements GroupItemSelectorProvider {
+
+		public MockGroupItemSelectorProvider() {
+			this(true);
+		}
+
+		public MockGroupItemSelectorProvider(boolean active) {
+			_active = active;
+		}
 
 		@Override
 		public String getEmptyResultsMessage() {
@@ -124,6 +156,13 @@ public class GroupItemSelectorTrackerUtilTest {
 		public String getLabel(Locale locale) {
 			return RandomTestUtil.randomString();
 		}
+
+		@Override
+		public boolean isActive() {
+			return _active;
+		}
+
+		private boolean _active;
 
 	}
 

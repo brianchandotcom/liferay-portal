@@ -16,24 +16,17 @@ package com.liferay.fragment.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.language.LanguageImpl;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,23 +42,6 @@ public class FragmentEntryConfigurationUtilTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(new LanguageImpl());
-
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
-	}
 
 	@Test
 	public void testGetConfigurationDefaultValuesJSONObject() throws Exception {

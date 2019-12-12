@@ -23,7 +23,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verify(new VerifyPermission());
 		verify(new VerifyGroup());
 
 		verify(new VerifyAuditedModel());

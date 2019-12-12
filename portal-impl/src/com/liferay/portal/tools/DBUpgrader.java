@@ -115,6 +115,8 @@ public class DBUpgrader {
 
 			_checkClassNamesAndResourceActions();
 
+			StartupHelperUtil.initPermissions();
+
 			verify();
 
 			DependencyManagerSyncUtil.sync();

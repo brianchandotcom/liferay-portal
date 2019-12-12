@@ -43,6 +43,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistrar;
@@ -107,6 +108,8 @@ public class DBUpgrader {
 			StartupHelperUtil.printPatchLevel();
 
 			upgrade();
+
+			new VerifyProperties().verify();
 
 			_checkClassNamesAndResourceActions();
 

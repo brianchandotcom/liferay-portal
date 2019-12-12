@@ -17,22 +17,25 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.web.internal.constants.LayoutScreenNavigationEntryConstants;
-import com.liferay.layout.seo.kernel.LayoutSEOLinkManagerUtil;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,14 +78,29 @@ public class LayoutOpenGraphScreenNavigationEntry
 	@Override
 	public boolean isVisible(User user, Layout layout) {
 		try {
-			if (!StringUtil.equals(
-					layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) &&
-				LayoutSEOLinkManagerUtil.isOpenGraphEnabled(layout)) {
-
-				return true;
+			if (!_layoutSEOLinkManager.isOpenGraphEnabled(layout)) {
+				return false;
 			}
 
-			return false;
+			Group group = _groupLocalService.fetchGroup(layout.getGroupId());
+
+			if ((group != null) && group.isLayoutPrototype()) {
+				return false;
+			}
+
+			Layout draftLayout = _layoutLocalService.fetchLayout(
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+			if ((Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_CONTENT) ||
+				 Objects.equals(
+					 layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) &&
+				(draftLayout == null)) {
+
+				return false;
+			}
+
+			return true;
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -114,7 +132,16 @@ public class LayoutOpenGraphScreenNavigationEntry
 		LayoutOpenGraphScreenNavigationEntry.class);
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

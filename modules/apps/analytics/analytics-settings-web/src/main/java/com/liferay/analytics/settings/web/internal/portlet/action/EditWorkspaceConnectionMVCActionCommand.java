@@ -270,7 +270,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 		}
 
 		configurationProperties.put(
-			"token", tokenJSONObject.getString("token"));
+			"token", ParamUtil.getString(actionRequest, "token"));
 	}
 
 	@Reference

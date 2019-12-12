@@ -1468,6 +1468,33 @@ definition {
 			securityQuestions = "This is just a test");
 	}
 
+	@description = "This is a use case for LPS-104643."
+	@priority = "3"
+	test UpdateExistUserEmailAddressByScript {
+		property test.name.skip.portal.instance = "UsersandorganizationsUsecase#UpdateExistUserEmailAddressByScript";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ServerAdministration.openServerAdmin();
+
+		var script = TestCase.getFileContent(fileName = "updateUser.groovy");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		var companyId = JSONCompany.getCompanyId();
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "exception.UserEmailAddressException$MustNotBeDuplicate: User ${userId} cannot be created or updated because a user with company ${companyId} and email address userea@liferay.com is already in use");
+	}
+
 	@priority = "4"
 	test ValidateRegExPasswordPolicyCP {
 		ProductMenu.gotoPortlet(

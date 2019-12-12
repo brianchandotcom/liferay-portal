@@ -25,6 +25,8 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -62,7 +64,7 @@ public class DLImageItemSelectorView
 
 	@Override
 	public String[] getMimeTypes() {
-		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+		return _mimeTypes;
 	}
 
 	@Override
@@ -76,6 +78,10 @@ public class DLImageItemSelectorView
 		_dlImageItemSelectorViewConfiguration =
 			ConfigurableUtil.createConfigurable(
 				DLImageItemSelectorViewConfiguration.class, properties);
+
+		_mimeTypes = ArrayUtil.append(
+			PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+			ContentTypes.IMAGE_SVG_XML);
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -88,5 +94,6 @@ public class DLImageItemSelectorView
 
 	private volatile DLImageItemSelectorViewConfiguration
 		_dlImageItemSelectorViewConfiguration;
+	private String[] _mimeTypes;
 
 }

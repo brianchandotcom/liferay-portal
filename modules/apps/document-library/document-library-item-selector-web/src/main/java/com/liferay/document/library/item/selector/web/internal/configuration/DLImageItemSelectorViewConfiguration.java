@@ -34,8 +34,8 @@ public interface DLImageItemSelectorViewConfiguration {
 	 * extensions
 	 */
 	@Meta.AD(
-		deflt = ".bmp|.gif|.jpeg|.jpg|.png|.tiff", name = "valid-extensions",
-		required = false
+		deflt = ".bmp|.gif|.jpeg|.jpg|.png|.svg|.tiff",
+		name = "valid-extensions", required = false
 	)
 	public String[] validExtensions();
 

@@ -988,6 +988,13 @@ definition {
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
+		FormViewBuilder.switchToFormViewTab();
+
+		TableViewBuilder.createTableViewWithFieldView(
+			fieldType = "Date",
+			formViewName = "Date Field - Form View Title",
+			tableViewName = "Date Field - Table View Title");
+
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

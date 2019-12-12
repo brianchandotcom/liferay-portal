@@ -69,23 +69,16 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		if (ParamUtil.getBoolean(actionRequest, "disconnect", false)) {
+			_disconnect(themeDisplay.getCompanyId(), configurationProperties);
+
+			return;
+		}
+
 		String token = ParamUtil.getString(actionRequest, "token");
 
 		if ((token == null) || token.isEmpty()) {
-			_companyService.removePreferences(
-				themeDisplay.getCompanyId(),
-				new String[] {
-					"liferayAnalyticsDataSourceId",
-					"liferayAnalyticsEndpointURL",
-					"liferayAnalyticsFaroBackendSecuritySignature",
-					"liferayAnalyticsFaroBackendURL",
-					"liferayAnalyticsGroupIds", "liferayAnalyticsURL"
-				});
-
-			configurationProvider.deleteCompanyConfiguration(
-				AnalyticsConfiguration.class, themeDisplay.getCompanyId());
-
-			return;
+			throw new PortalException("Invalid token");
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -142,6 +135,25 @@ public class EditWorkspaceConnectionMVCActionCommand
 				themeDisplay.getCompanyId(), configurationProperties,
 				jsonObject);
 		}
+	}
+
+	private void _disconnect(
+		long companyId, Dictionary<String, Object> configurationProperties)
+		throws PortalException {
+
+		configurationProperties.remove("token");
+
+		_companyService.removePreferences(
+			companyId,
+			new String[] {
+				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
+				"liferayAnalyticsFaroBackendSecuritySignature",
+				"liferayAnalyticsFaroBackendURL",
+				"liferayAnalyticsGroupIds", "liferayAnalyticsURL"
+			});
+
+		configurationProvider.deleteCompanyConfiguration(
+			AnalyticsConfiguration.class, companyId);
 	}
 
 	private void _updateCompanyPreferences(

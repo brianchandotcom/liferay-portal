@@ -20,7 +20,14 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState, useRef} from 'react';
 
-function PersonalMenu({color, isImpersonated, itemsURL, label, size}) {
+function PersonalMenu({
+	color,
+	isImpersonated,
+	itemsURL,
+	label,
+	size,
+	userPortraitURL
+}) {
 	const [items, setItems] = useState([]);
 	const preloadPromise = useRef();
 
@@ -55,7 +62,14 @@ function PersonalMenu({color, isImpersonated, itemsURL, label, size}) {
 								shape="circle"
 								size={size}
 							>
-								<ClayIcon symbol="user" />
+								{userPortraitURL ? (
+									<img
+										className="sticker-img"
+										src={userPortraitURL}
+									/>
+								) : (
+									<ClayIcon symbol="user" />
+								)}
 							</ClaySticker>
 
 							{isImpersonated && (

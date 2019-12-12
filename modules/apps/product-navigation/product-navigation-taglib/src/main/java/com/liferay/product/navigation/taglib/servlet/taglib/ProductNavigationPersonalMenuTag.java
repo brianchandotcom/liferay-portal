@@ -96,6 +96,8 @@ public class ProductNavigationPersonalMenuTag extends IncludeTag {
 			"liferay-product-navigation:personal-menu:label", _label);
 		httpServletRequest.setAttribute(
 			"liferay-product-navigation:personal-menu:size", _size);
+		httpServletRequest.setAttribute(
+			"liferay-product-navigation:personal-menu:user", _user);
 	}
 
 	private static final String _PAGE = "/personal_menu/page.jsp";

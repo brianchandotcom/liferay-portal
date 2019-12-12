@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -74,6 +75,32 @@ public class OpenGraphSettingsDisplayContext {
 			imageItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	public String getOpenGraphImageTitle() {
+		Group group = _getGroup();
+
+		LayoutSEOSite layoutSEOSite =
+			LayoutSEOSiteLocalServiceUtil.fetchLayoutSEOSiteByGroupId(
+				group.getGroupId());
+
+		if ((layoutSEOSite == null) ||
+			(layoutSEOSite.getOpenGraphImageFileEntryId() == 0)) {
+
+			return null;
+		}
+
+		try {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				layoutSEOSite.getOpenGraphImageFileEntryId());
+
+			return fileEntry.getTitle();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return null;
+		}
 	}
 
 	public String getOpenGraphImageURL() {

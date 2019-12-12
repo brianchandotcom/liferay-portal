@@ -45,7 +45,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 <div class="form-group">
 	<label class="control-label"><liferay-ui:message key="image" /></label>
 
-	<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="mb-3" />
+	<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
 
 	<aui:button-row cssClass="mt-0">
 		<aui:button disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" name="openGraphImageButton" value="select" />
@@ -95,8 +95,8 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	var openGraphImageFileEntryId = document.getElementById(
 		'<portlet:namespace />openGraphImageFileEntryId'
 	);
-	var openGraphImageURL = document.getElementById(
-		'<portlet:namespace />openGraphImageURL'
+	var openGraphImageTitle = document.getElementById(
+		'<portlet:namespace />openGraphImageTitle'
 	);
 	var openGraphPreviewImage = document.getElementById(
 		'<portlet:namespace />openGraphPreviewImage'
@@ -109,7 +109,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 			var itemValue = JSON.parse(selectedItem.value);
 
 			openGraphImageFileEntryId.value = itemValue.fileEntryId;
-			openGraphImageURL.value = itemValue.url;
+			openGraphImageTitle.value = itemValue.title;
 			openGraphPreviewImage.src = itemValue.url;
 
 			openGraphPreviewImage.classList.remove('hide');
@@ -127,7 +127,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 
 	openGraphClearImageButton.addEventListener('click', function() {
 		openGraphImageFileEntryId.value = '';
-		openGraphImageURL.value = '';
+		openGraphImageTitle.value = '';
 		openGraphPreviewImage.src = '';
 
 		openGraphPreviewImage.classList.add('hide');
@@ -140,7 +140,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	openGraphEnabledCheck.addEventListener('click', function(event) {
 		var disabled = !event.target.checked;
 
-		Liferay.Util.toggleDisabled(openGraphImageURL, disabled);
+		Liferay.Util.toggleDisabled(openGraphImageTitle, disabled);
 		Liferay.Util.toggleDisabled(openGraphImageButton, disabled);
 		Liferay.Util.toggleDisabled(openGraphClearImageButton, disabled);
 	});

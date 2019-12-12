@@ -3098,8 +3098,13 @@ public abstract class BaseBuild implements Build {
 
 			setStatus("starting");
 
+			if (JenkinsResultsParserUtil.isCINode()) {
+				invocationURL = JenkinsResultsParserUtil.getLocalURL(
+					invocationURL);
+			}
+
 			try {
-				JenkinsResultsParserUtil.toString(getInvocationURL(), false);
+				JenkinsResultsParserUtil.toString(invocationURL, false);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(ioe);
@@ -3352,10 +3357,16 @@ public abstract class BaseBuild implements Build {
 
 		JSONObject jobJSONObject = null;
 
+		String jobURL = getJobURL();
+
+		if (JenkinsResultsParserUtil.isCINode()) {
+			jobURL = JenkinsResultsParserUtil.getLocalURL(jobURL);
+		}
+
 		try {
 			jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
-					getJobURL(), "/api/json?tree=actions[parameterDefinitions[",
+					jobURL, "/api/json?tree=actions[parameterDefinitions[",
 					"defaultParameterValue[value],name]]"));
 		}
 		catch (IOException ioe) {

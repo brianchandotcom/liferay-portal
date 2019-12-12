@@ -995,6 +995,8 @@ definition {
 			formViewName = "Date Field - Form View Title",
 			tableViewName = "Date Field - Table View Title");
 
+		AppBuilderAdmin.searchByItem(itemName = "Text");
+
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

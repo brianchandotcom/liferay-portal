@@ -992,6 +992,7 @@ paths:
             tags: ["Organization"]
     "/organizations/{organizationId}":
         delete:
+            # @review
             description:
                 Deletes an organization
             operationId: deleteOrganization

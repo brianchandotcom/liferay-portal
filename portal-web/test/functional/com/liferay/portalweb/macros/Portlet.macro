@@ -439,6 +439,17 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
+	macro viewNoPortletsPresentCP {
+		ProductMenuHelper.expandPanel(panel = "${panel}");
+
+		ProductMenuHelper.expandCategory(category = "${category}");
+
+		AssertElementNotPresent(
+			key_portlet = "${portlet}",
+			locator1 = "ProductMenu#PORTLET",
+			value1 = "${portlet}");
+	}
+
 	macro viewNoPortletsPresentPG {
 		AssertElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT");
 	}

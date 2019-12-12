@@ -80,6 +80,10 @@ public class SearchBarPortletSharedSearchContributor
 		filterByThisSite(
 			searchRequestBuilder, searchBarPortletPreferences,
 			portletSharedSearchSettings);
+
+		setShowStaged(
+			searchRequestBuilder, searchBarPortletPreferences,
+			portletSharedSearchSettings);
 	}
 
 	protected void filterByThisSite(
@@ -285,6 +289,33 @@ public class SearchBarPortletSharedSearchContributor
 			searchContext -> searchContext.setAttribute(
 				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX,
 				Boolean.TRUE));
+	}
+
+	protected void setShowStaged(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		SearchScope searchScope = getSearchScope(
+			searchBarPortletPreferences, portletSharedSearchSettings);
+
+		ThemeDisplay themeDisplay =
+			portletSharedSearchSettings.getThemeDisplay();
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		if ((searchScope == SearchScope.THIS_SITE) ||
+			!siteGroup.isStagingGroup()) {
+
+			return;
+		}
+
+		if (searchBarPortletPreferences.isShowStaged()) {
+			searchRequestBuilder.withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					SearchContextAttributes.ATTRIBUTE_KEY_SHOW_STAGED,
+					Boolean.TRUE));
+		}
 	}
 
 	protected boolean shouldContributeToCurrentPageSearch(

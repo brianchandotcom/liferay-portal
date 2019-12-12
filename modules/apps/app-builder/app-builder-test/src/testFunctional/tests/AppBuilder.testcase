@@ -1009,7 +1009,8 @@ definition {
 	@description = "Validate Table View search returns by search engine using a search term"
 	@priority = "5"
 	test TableViewSearchByTerm {
-
+		property portal.acceptance = "false";
+		
 	}
 
 	@description = "Validate empty list state of Form View listing screen"

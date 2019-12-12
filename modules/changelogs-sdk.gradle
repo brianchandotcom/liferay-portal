@@ -1,0 +1,11 @@
+buildscript {
+	apply from: file("build-buildscript.gradle"), to: buildscript
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+task buildChangelogs

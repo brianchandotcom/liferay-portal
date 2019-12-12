@@ -38,6 +38,7 @@ const ItemSelectorUrl = ({eventName}) => {
 	const handleLoad = () => {
 		if (isMounted()) {
 			setLoaded(true);
+			setPreviewError(false);
 		}
 	};
 
@@ -61,6 +62,7 @@ const ItemSelectorUrl = ({eventName}) => {
 	const handleUrlChange = ({target}) => {
 		setUrl(target.value);
 		setLoaded(false);
+		setPreviewError(false);
 	};
 
 	return (

@@ -94,10 +94,15 @@ generatePomCompileOnly {
 				return
 			}
 			else if (project.property("gradle.releng.pom.project.templates.version").startsWith("7.2") &&
-				(it.equals("spring-mvc-portlet") || it.equals("spring-mvc-portlet") || it.equals("content-targeting-report") ||
-					it.equals("content-targeting-rule") || it.equals("content-targeting-tracking-action") || it.equals("form-field") ||
-					it.equals("npm-angular-portlet") || it.equals("npm-react-portlet") || it.equals("npm-vuejs-portlet") ||
-					it.equals("social-bookmark"))) {
+				(it.equals("content-targeting-report") ||
+					it.equals("content-targeting-rule") ||
+					it.equals("content-targeting-tracking-action") ||
+					it.equals("form-field") ||
+					it.equals("npm-angular-portlet") ||
+					it.equals("npm-react-portlet") ||
+					it.equals("npm-vuejs-portlet") ||
+					it.equals("social-bookmark") ||
+					it.equals("spring-mvc-portlet"))) {
 
 				return
 			}

@@ -52,8 +52,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 			callables.add(tableUpdater);
 		}
 
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			callables.size());
+		ExecutorService executorService = Executors.newWorkStealingPool();
 
 		try {
 			List<Future<Void>> futures = executorService.invokeAll(callables);

@@ -158,7 +158,7 @@ public class GroupItemSelectorTrackerUtilTest {
 		}
 
 		@Override
-		public boolean isActive() {
+		public boolean isEnabled() {
 			return _active;
 		}
 

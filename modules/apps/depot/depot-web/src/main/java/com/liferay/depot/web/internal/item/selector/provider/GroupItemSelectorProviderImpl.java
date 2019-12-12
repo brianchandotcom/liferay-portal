@@ -103,7 +103,7 @@ public class GroupItemSelectorProviderImpl
 	}
 
 	@Override
-	public boolean isActive() {
+	public boolean isEnabled() {
 		return _depotSupportChecker.isEnabled();
 	}
 

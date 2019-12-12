@@ -46,7 +46,7 @@ public class GroupItemSelectorTrackerUtil {
 			_serviceTrackerMap.getService(groupType);
 
 		if ((groupItemSelectorProvider != null) &&
-			groupItemSelectorProvider.isActive()) {
+			groupItemSelectorProvider.isEnabled()) {
 
 			return Optional.of(groupItemSelectorProvider);
 		}
@@ -68,7 +68,7 @@ public class GroupItemSelectorTrackerUtil {
 				GroupItemSelectorProvider groupItemSelectorProvider =
 					_serviceTrackerMap.getService(key);
 
-				return groupItemSelectorProvider.isActive();
+				return groupItemSelectorProvider.isEnabled();
 			}
 		).collect(
 			Collectors.toSet()

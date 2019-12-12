@@ -395,6 +395,8 @@ definition {
 			fieldType = "Text Field",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
+
+		FormViewBuilder.switchToFormViewTab();
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"

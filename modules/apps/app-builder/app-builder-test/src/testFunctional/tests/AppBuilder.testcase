@@ -997,6 +997,7 @@ definition {
 
 		AppBuilderAdmin.searchByItem(itemName = "Text");
 
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Text");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

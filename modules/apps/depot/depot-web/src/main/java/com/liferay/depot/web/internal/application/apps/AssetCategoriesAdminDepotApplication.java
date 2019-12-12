@@ -14,7 +14,7 @@
 
 package com.liferay.depot.web.internal.application.apps;
 
-import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.depot.application.DepotApplication;
 
 import org.osgi.service.component.annotations.Component;

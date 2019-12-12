@@ -15,8 +15,8 @@
 package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowNavigationDisplayContext;
 
 import java.util.Arrays;

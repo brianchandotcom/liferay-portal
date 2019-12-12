@@ -14,9 +14,9 @@
 
 package com.liferay.asset.categories.admin.web.internal.display.context;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.configuration.AssetCategoriesAdminWebConfiguration;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminDisplayStyleKeys;
-import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.categories.admin.web.internal.util.AssetCategoryTreePathComparator;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.trash.TrashHelper;
-import com.liferay.trash.web.internal.constants.TrashPortletKeys;
+import com.liferay.trash.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

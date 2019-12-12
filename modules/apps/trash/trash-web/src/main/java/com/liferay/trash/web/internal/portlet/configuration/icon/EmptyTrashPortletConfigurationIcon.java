@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.trash.web.internal.constants.TrashPortletKeys;
+import com.liferay.trash.constants.TrashPortletKeys;
 
 import javax.portlet.PortletRequest;
 

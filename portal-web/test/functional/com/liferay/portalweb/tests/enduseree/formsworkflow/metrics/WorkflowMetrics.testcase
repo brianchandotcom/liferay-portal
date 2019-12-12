@@ -22,19 +22,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			ProductMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Control Panel",
-				portlet = "Metrics");
-
-			WorkflowMetrics.tearDown();
-
-		}
-
 		Blogs.tearDownCP();
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
@@ -47,6 +34,19 @@ definition {
 		Workflow.configureWorkflow(
 			workflowDefinition = "No Workflow",
 			workflowResourceValue = "Blogs Entry");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Control Panel",
+				portlet = "Metrics");
+
+			WorkflowMetrics.tearDown();
+
+		}
 	}
 
 	@description = "Verify the user can set a SLA to Single Approver workflow (LPS-99765)"
@@ -380,10 +380,13 @@ definition {
 			taskCount = "1");
 	}
 
-	@description = "Workload by assignee"
+	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssignee {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -394,32 +397,56 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry Title");
+		for (var count : list "1,2,3,4") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${count} Content",
+				entryTitle = "Blogs Entry Title ${count}");
+		}
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
-
-		ProductMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Control Panel",
-			portlet = "Metrics");
+		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "Review");
+
 		WorkflowMetrics.viewWorkloadByAssignee(
-			assignee = "Test Test",
+			assigneeName = "1user user1",
+			tabName = "Total",
+			taskCount = "2");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "2user user2",
 			tabName = "Total",
 			taskCount = "1");
 
-		WorkflowMetrics.viewUserWorkload(assignee = "Test Test");
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "3user user3",
+			tabName = "Total",
+			taskCount = "1");
 
-		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,Test Test");
+		WorkflowMetrics.viewUserWorkloadByStep(
+			assigneeName = "1user user1",
+			isNotPresent = "2user user2,3user user3",
+			isPresent = "Blogs Entry Title 1,Blogs Entry Title 4",
+			taskName = "Review");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,1user user1,Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "Update");
+
+		WorkflowMetrics.assertWorkloadByAssigneeCardEmptyMessage(
+			emptyMessage = "There are no assigned items overdue at the moment.",
+			tabName = "Overdue");
+
+		WorkflowMetrics.assertWorkloadByAssigneeCardEmptyMessage(
+			emptyMessage = "There are no assigned items on time at the moment.",
+			tabName = "On Time");
+
+		WorkflowMetrics.assertWorkloadByAssigneeCardEmptyMessage(
+			emptyMessage = "There are no items assigned to users at the moment.",
+			tabName = "Total");
 	}
 
 }

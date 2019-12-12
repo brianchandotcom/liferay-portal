@@ -175,8 +175,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_NAME</td>
-	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'assignee-name')]//span[contains(text(),'${key_assignee}')]</td>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE</td>
+	<td>//div[contains(@class, 'panel-body')]//div[contains(@class, 'empty-message')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER</td>
+	<td>//button[contains(@class, 'btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'${key_workflowStep}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME</td>
+	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'assignee-name')]//span[contains(text(),'${key_assigneeName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -185,8 +200,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE</td>
-	<td>//td[contains(@data-testid,'assigneesCell') and contains(text(),'${key_assignee}')]</td>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME</td>
+	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]/following-sibling::td[contains(@data-testid,'taskNamesCell') and contains(text(),'${key_taskName}')]/following-sibling::td[contains(@data-testid,'assigneesCell') and contains(text(),'${key_assigneeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_INSTANCE</td>
+	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_TASK</td>
+	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]/following-sibling::td[contains(@data-testid,'taskNamesCell') and contains(text(),'${key_taskName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -50,6 +50,19 @@ definition {
 			value1 = "inst / day");
 	}
 
+	macro assertWorkloadByAssigneeCardEmptyMessage {
+		var key_tabName = "${tabName}";
+		var key_emptyMessage = "${emptyMessage}";
+
+		Click(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TAB",
+			value1 = "${tabName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE",
+			value1 = "${emptyMessage}");
+	}
+
 	macro executeWorkflowScript {
 		var key_scriptName = "${scriptName}";
 
@@ -174,6 +187,14 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${velocityUnit}");
 	}
 
+	macro selectWorkloadByAssigneeCardFilterValue {
+		var key_workflowStep = "${workflowStep}";
+
+		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
+	}
+
 	macro tearDown {
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -261,7 +282,6 @@ definition {
 	macro verifyFiltersFromDashboard {
 		for (var key_workflowFilterValue : list "${isFilterOptionPresent}") {
 			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
-
 		}
 	}
 
@@ -283,30 +303,43 @@ definition {
 			value1 = "${avgCompletionTime}");
 	}
 
-	macro viewUserWorkload {
-		var key_assignee = "${assignee}";
+	macro viewUserWorkloadByStep {
+		var key_assigneeName = "${assigneeName}";
+		var key_taskName = "${taskName}";
 
 		Click(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME",
-			value1 = "${assignee}");
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME",
+			value1 = "${assigneeName}");
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE",
-			value1 = "${assignee}");
+		for (var isInstancePresent : list "${isPresent}") {
+			var key_instanceInfo = "${isInstancePresent}";
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME");
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_INSTANCE");
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME");
+		}
+
+		for (var isAssigneeNotPresent : list "${isNotPresent}") {
+			var key_assigneeName = "${isAssigneeNotPresent}";
+
+			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME");
+		}
 	}
 
 	macro viewWorkloadByAssignee {
 		var key_tabName = "${tabName}";
 		var key_taskCount = "${taskCount}";
-		var key_assignee = "${assignee}";
+		var key_assigneeName = "${assigneeName}";
 
 		Click(
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TAB",
 			value1 = "${tabName}");
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME",
-			value1 = "${assignee}");
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME",
+			value1 = "${assigneeName}");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT",

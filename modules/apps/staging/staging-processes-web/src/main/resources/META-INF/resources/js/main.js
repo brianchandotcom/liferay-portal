@@ -15,8 +15,6 @@
 AUI.add(
 	'liferay-staging-processes-export-import',
 	A => {
-		var $ = AUI.$;
-
 		var Lang = A.Lang;
 
 		var ADate = A.Date;
@@ -100,46 +98,44 @@ AUI.add(
 						);
 					}
 
-					$('[id^=' + instance.ns('PORTLET_DATA') + ']').each(
-						function() {
-							var checkBox = $(this);
-
-							checkBox.on(STR_CLICK, () => {
-								if (checkBox.is(':checked')) {
-									var id = checkBox.prop('id');
-
-									var controlCheckboxes = $(
-										'[data-root-control-id=' + id + ']'
-									);
-
-									if (controlCheckboxes.length == 0) {
-										return;
-									}
-
-									controlCheckboxes.each(function() {
-										var controlCheckbox = $(this);
-
-										if (!controlCheckbox.is(':checked')) {
-											controlCheckbox.trigger(STR_CLICK);
-										}
-									});
-
-									var portletId = id.replace(
-										instance.ns('PORTLET_DATA') + '_',
-										''
-									);
-
-									instance._setContentLabels(portletId);
-
-									var contentNode = instance.byId(
-										'content_' + portletId
-									);
-
-									instance._storeNodeInputStates(contentNode);
-								}
-							});
-						}
+					const checkboxes = document.querySelectorAll(
+						`[id^=${instance.ns('PORTLET_DATA')}]`
 					);
+
+					if (checkboxes.length > 0) {
+						document.body.addEventListener('click', event => {
+							const {id} = event.target;
+
+							if (id.includes(instance.ns('PORTLET_DATA'))) {
+								const controlCheckboxes = document.querySelectorAll(
+									`[data-root-control-id=${id}]`
+								);
+
+								if (controlCheckboxes.length > 0) {
+									controlCheckboxes.forEach(
+										controlCheckbox => {
+											if (!controlCheckbox.checked) {
+												controlCheckbox.click();
+											}
+										}
+									);
+								}
+
+								const portletId = id.replace(
+									`${instance.ns('PORTLET_DATA')}_`,
+									''
+								);
+
+								instance._setContentLabels(portletId);
+
+								const contentNode = instance.byId(
+									'content_' + portletId
+								);
+
+								instance._storeNodeInputStates(contentNode);
+							}
+						});
+					}
 
 					var changeToPublicLayoutsButton = instance.byId(
 						'changeToPublicLayoutsButton'

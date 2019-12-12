@@ -16,6 +16,8 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -30,10 +32,14 @@ import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author     Brian Wing Shun Chan
@@ -55,6 +61,14 @@ public class VerifyGroup extends VerifyProcess {
 				if (!group.hasStagingGroup()) {
 					continue;
 				}
+
+				UnicodeProperties typeSettingsProperties =
+					group.getTypeSettingsProperties();
+
+				verifyStagingTypeSettingsProperties(typeSettingsProperties);
+
+				GroupLocalServiceUtil.updateGroup(
+					group.getGroupId(), typeSettingsProperties.toString());
 
 				Group stagingGroup = group.getStagingGroup();
 
@@ -162,6 +176,28 @@ public class VerifyGroup extends VerifyProcess {
 		UserLocalServiceUtil.clearGroupUsers(stagingGroup.getGroupId());
 	}
 
+	protected void verifyStagingTypeSettingsProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		Set<String> keys = typeSettingsProperties.keySet();
+
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (ArrayUtil.contains(
+					_LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS, key)) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Removing type settings property " + key);
+				}
+
+				iterator.remove();
+			}
+		}
+	}
+
 	protected void verifyStagingUserGroupGroupRolesAssignments(
 		Group stagingGroup) {
 
@@ -228,5 +264,13 @@ public class VerifyGroup extends VerifyProcess {
 		UserGroupRoleLocalServiceUtil.deleteUserGroupRolesByGroupId(
 			stagingGroup.getGroupId());
 	}
+
+	private static final String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS = {
+		"staged-portlet_39", "staged-portlet_54", "staged-portlet_56",
+		"staged-portlet_59", "staged-portlet_107", "staged-portlet_108",
+		"staged-portlet_110", "staged-portlet_166", "staged-portlet_169"
+	};
+
+	private static final Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
 
 }

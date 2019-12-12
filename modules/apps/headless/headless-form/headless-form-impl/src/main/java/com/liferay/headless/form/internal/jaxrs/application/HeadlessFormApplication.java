@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.base=/headless-form",
+		"liferay.jackson=false", "osgi.jaxrs.application.base=/headless-form",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
 		"osgi.jaxrs.name=Liferay.Headless.Form"
 	},

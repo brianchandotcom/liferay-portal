@@ -1006,6 +1006,12 @@ definition {
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
 	}
 
+	@description = "Validate Table View search returns by search engine using a search term"
+	@priority = "5"
+	test TableViewSearchByTerm {
+
+	}
+
 	@description = "Validate empty list state of Form View listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfFormViewListingScreen {

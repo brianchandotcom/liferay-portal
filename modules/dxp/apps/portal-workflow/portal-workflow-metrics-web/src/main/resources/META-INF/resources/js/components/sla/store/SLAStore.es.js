@@ -16,9 +16,14 @@ import {
 	formatHours,
 	getDurationValues
 } from '../../../shared/util/duration.es';
-import {START_NODE_KEYS} from '../Constants.es';
+import {START_NODE_KEYS, STOP_NODE_KEYS} from '../Constants.es';
 
-const useSLA = (fetchClient, slaId, processId) => {
+const useSLA = (
+	fetchClient,
+	slaId,
+	processId,
+	{errors = {}, setErrors = () => {}} = {}
+) => {
 	const [sla, setSLA] = useState({
 		calendarKey: null,
 		days: null,
@@ -96,6 +101,22 @@ const useSLA = (fetchClient, slaId, processId) => {
 					return node;
 				});
 
+				if (status === 2) {
+					const noLongerAvailableMsg = Liferay.Language.get(
+						'selected-option-is-no-longer-available'
+					);
+
+					if (!startNodeKeys.nodeKeys.length) {
+						errors[START_NODE_KEYS] = noLongerAvailableMsg;
+					}
+
+					if (!stopNodeKeys.nodeKeys.length) {
+						errors[STOP_NODE_KEYS] = noLongerAvailableMsg;
+					}
+
+					setErrors({...errors});
+				}
+
 				setSLA({
 					calendarKey,
 					days,
@@ -109,6 +130,7 @@ const useSLA = (fetchClient, slaId, processId) => {
 				});
 			});
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[fetchClient]
 	);
 

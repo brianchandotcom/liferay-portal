@@ -19,7 +19,7 @@ const FieldError = ({error}) => (
 			<span className="form-feedback-indicator">
 				<Icon iconName="exclamation-full" />
 			</span>
-			{error}
+			<span style={{marginLeft: '0.3125rem'}}>{error}</span>
 		</div>
 	</div>
 );

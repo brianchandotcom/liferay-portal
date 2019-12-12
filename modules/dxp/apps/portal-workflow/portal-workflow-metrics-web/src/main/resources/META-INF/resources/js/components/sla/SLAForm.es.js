@@ -56,12 +56,15 @@ const {useContext, useState} = React;
  */
 function SLAForm({id, processId, query}) {
 	const {client} = useContext(AppContext);
+	const errorsState = useErrors();
 
 	return (
 		<div className="sla-form">
-			<Errors.Provider value={useErrors()}>
+			<Errors.Provider value={errorsState}>
 				<SLANodes.Provider value={useSLANodes(processId, client)}>
-					<SLA.Provider value={useSLA(client, id, processId)}>
+					<SLA.Provider
+						value={useSLA(client, id, processId, errorsState)}
+					>
 						<SLAForm.Body
 							id={id}
 							processId={processId}
@@ -597,7 +600,7 @@ const Footer = ({id, onReloadNodes, processId, query}) => {
 		errors[START_NODE_KEYS] = validateNodeKeys(startNodeKeys.nodeKeys);
 		errors[STOP_NODE_KEYS] = validateNodeKeys(stopNodeKeys.nodeKeys);
 
-		if ((!hours || hours === '00:00') && (days && Number(days) > 0)) {
+		if ((!hours || hours === '00:00') && days && Number(days) > 0) {
 			errors[HOURS] = '';
 		}
 

@@ -381,6 +381,12 @@ definition {
 			title = "Date Field - Form View Title");
 	}
 
+	@description = "Order the list of Form Views by Name/Title (Asc or Desc)"
+	@priority = "5"
+	test ChangeFormViewsListOrderByName {
+		property portal.acceptance = "false";
+	}
+
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {

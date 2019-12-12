@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.admin.web.internal.depot.application;
+package com.liferay.depot.web.internal.application.apps;
 
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.depot.application.DepotApplication;

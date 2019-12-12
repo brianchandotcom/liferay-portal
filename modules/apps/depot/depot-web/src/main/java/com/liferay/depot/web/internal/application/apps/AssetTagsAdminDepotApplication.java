@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.trash.web.internal.depot.application;
+package com.liferay.depot.web.internal.application.apps;
 
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,11 +23,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DepotApplication.class)
-public class TrashDepotApplication implements DepotApplication {
+public class AssetTagsAdminDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return TrashPortletKeys.TRASH;
+		return AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN;
 	}
 
 }

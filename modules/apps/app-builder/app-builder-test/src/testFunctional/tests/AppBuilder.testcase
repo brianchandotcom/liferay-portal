@@ -385,6 +385,11 @@ definition {
 	@priority = "5"
 	test ChangeTableViewsListOrderByDate {
 		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
 	}
 
 	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"

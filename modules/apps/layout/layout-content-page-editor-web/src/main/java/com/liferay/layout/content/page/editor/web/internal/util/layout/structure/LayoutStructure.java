@@ -42,15 +42,17 @@ public class LayoutStructure {
 		_layoutStructureItems.put(
 			layoutStructureItem.getItemId(), layoutStructureItem);
 
-		if (Validator.isNotNull(parentItemId)) {
-			LayoutStructureItem parentLayoutStructureItem =
-				_layoutStructureItems.get(parentItemId);
-
-			List<String> childrenItemIds =
-				parentLayoutStructureItem.getChildrenItemIds();
-
-			childrenItemIds.add(position, layoutStructureItem.getItemId());
+		if (Validator.isNull(parentItemId)) {
+			return;
 		}
+
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
+		childrenItemIds.add(position, layoutStructureItem.getItemId());
 	}
 
 	public JSONObject toJSONObject() {

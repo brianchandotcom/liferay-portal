@@ -19,7 +19,7 @@ import ItemSelector from '../../common/components/ItemSelector';
 export const ItemSelectorField = ({field}) => (
 	<ItemSelector
 		label={field.label}
-		onSelectItem={() => {}}
+		onItemSelect={() => {}}
 		value={field.value}
 	></ItemSelector>
 );

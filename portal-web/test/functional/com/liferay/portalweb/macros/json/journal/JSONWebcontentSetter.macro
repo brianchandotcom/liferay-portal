@@ -1,5 +1,20 @@
 definition {
 
+	macro setArticleId {
+		Variables.assertDefined(parameterList = "${groupName},${title}");
+
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+
+		var urlTitle = StringUtil.replace("${title}", " ", "-");
+		var urlTitle = StringUtil.lowerCase("${urlTitle}");
+
+		var articleId = JSONWebcontentAPI._getArticleIdByURLTitle(
+			groupName = "${groupName}",
+			urlTitle = "${urlTitle}");
+
+		return "${articleId}";
+	}
+
 	macro setContentXML {
 		JSONUtil2._exclusiveOrCheck(
 			A = "${content}",

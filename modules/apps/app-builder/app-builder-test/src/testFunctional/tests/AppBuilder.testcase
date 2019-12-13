@@ -402,6 +402,10 @@ definition {
 			fieldType = "Upload",
 			formViewName = "Upload Field - Form View Title",
 			tableViewName = "Upload Field - Table View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "1",
+			title = "Upload Field - Table View Title");
 	}
 
 	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"

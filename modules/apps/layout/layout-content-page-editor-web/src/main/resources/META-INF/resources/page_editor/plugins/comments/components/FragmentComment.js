@@ -23,6 +23,7 @@ import React, {useEffect, useState, useContext} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
 import {DispatchContext} from '../../../app/reducers/index';
+import FragmentCommentService from '../../../app/services/FragmentCommentService';
 import {StoreContext} from '../../../app/store/index';
 import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
 import InlineConfirm from '../../../common/components/InlineConfirm';
@@ -30,10 +31,6 @@ import UserIcon from '../../../common/components/UserIcon';
 import EditCommentForm from './EditCommentForm';
 import ReplyCommentForm from './ReplyCommentForm';
 import ResolveButton from './ResolveButton';
-
-function editFragmentEntryLinkComment() {
-	throw new Error('Not implemented');
-}
 
 export default function FragmentComment({
 	comment,
@@ -80,7 +77,13 @@ export default function FragmentComment({
 	const handleResolveButtonClick = () => {
 		setChangingResolved(true);
 
-		editFragmentEntryLinkComment(commentId, body, !resolved)
+		FragmentCommentService.editFragmentEntryLinkComment({
+			body,
+			commentId,
+			config,
+			fragmentEntryLinkId,
+			resolved: !resolved
+		})
 			.then(comment => {
 				setChangingResolved(false);
 

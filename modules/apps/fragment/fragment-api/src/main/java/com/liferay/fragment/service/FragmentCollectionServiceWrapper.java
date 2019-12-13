@@ -94,6 +94,14 @@ public class FragmentCollectionServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentCollection>
+		getFragmentCollections(long groupId, boolean includeSystem) {
+
+		return _fragmentCollectionService.getFragmentCollections(
+			groupId, includeSystem);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentCollection>
 		getFragmentCollections(long groupId, int start, int end) {
 
 		return _fragmentCollectionService.getFragmentCollections(

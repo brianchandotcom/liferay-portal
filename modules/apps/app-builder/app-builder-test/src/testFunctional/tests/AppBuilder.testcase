@@ -402,6 +402,10 @@ definition {
 			fieldType = "Numeric",
 			formViewName = "Numeric Field - Form View Title",
 			tableViewName = "Numeric Field - Table View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "1",
+			title = "Numeric Field - Table View Title");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"

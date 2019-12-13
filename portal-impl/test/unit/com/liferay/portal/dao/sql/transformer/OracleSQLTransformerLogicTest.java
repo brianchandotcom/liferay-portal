@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.db.TestDB;
 import com.liferay.portal.kernel.dao.db.DBType;
 
 import org.junit.Assert;

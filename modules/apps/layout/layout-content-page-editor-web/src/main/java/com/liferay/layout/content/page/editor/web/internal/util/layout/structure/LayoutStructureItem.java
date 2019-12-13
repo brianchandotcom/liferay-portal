@@ -55,6 +55,10 @@ public class LayoutStructureItem {
 		childrenItemIds.add(position, itemId);
 	}
 
+	public void deleteChildrenItem(String itemId) {
+		_childrenItemIds.remove(itemId);
+	}
+
 	public List<String> getChildrenItemIds() {
 		return _childrenItemIds;
 	}

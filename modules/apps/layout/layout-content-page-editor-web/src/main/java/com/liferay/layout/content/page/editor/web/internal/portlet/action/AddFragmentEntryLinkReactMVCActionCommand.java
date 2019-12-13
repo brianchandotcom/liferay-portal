@@ -29,7 +29,6 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -186,16 +185,10 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
-			layoutStructure -> {
-				LayoutStructureItem layoutStructureItem =
-					new LayoutStructureItem(
-						JSONFactoryUtil.createJSONObject(itemConfig),
-						String.valueOf(fragmentEntryLinkId), parentItemId,
-						itemType);
-
-				layoutStructure.addLayoutStructureItem(
-					layoutStructureItem, parentItemId, position);
-			});
+			layoutStructure -> layoutStructure.addLayoutStructureItem(
+				JSONFactoryUtil.createJSONObject(itemConfig),
+				String.valueOf(fragmentEntryLinkId), parentItemId, itemType,
+				position));
 	}
 
 	private FragmentEntry _getFragmentEntry(

@@ -332,6 +332,7 @@ components:
                 addressType:
                     description:
                         The address's type.
+                    enum: [billing, other, p-o-box, shipping]
                     type: string
                 id:
                     description:

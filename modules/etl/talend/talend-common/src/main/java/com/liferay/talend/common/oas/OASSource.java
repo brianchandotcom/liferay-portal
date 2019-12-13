@@ -26,6 +26,8 @@ public interface OASSource {
 
 	public JsonObject getOASJsonObject();
 
+	public JsonObject getOASJsonObject(String oasUrl);
+
 	public ValidationResult initialize(ComponentProperties componentProperties);
 
 }

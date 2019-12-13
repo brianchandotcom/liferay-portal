@@ -14,11 +14,10 @@
 
 package com.liferay.talend.runtime;
 
-import com.liferay.talend.common.exception.MalformedURLException;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.util.StringUtil;
-import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.properties.resource.LiferayResourceProperties;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.runtime.client.ResponseHandler;
 import com.liferay.talend.runtime.client.exception.ResponseContentClientException;
@@ -58,7 +57,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 	public JsonObject doDeleteRequest(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
-		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
+		RESTClient restClient = getRestClient(resourceURL);
 
 		return _getResponseContentJsonObject(restClient.executeDeleteRequest());
 	}
@@ -66,7 +65,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 	public JsonObject doGetRequest(
 		RuntimeContainer runtimeContainer, String resourceURL) {
 
-		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
+		RESTClient restClient = getRestClient(resourceURL);
 
 		return _getResponseContentJsonObject(restClient.executeGetRequest());
 	}
@@ -79,7 +78,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		RuntimeContainer runtimeContainer, String resourceURL,
 		JsonObject jsonObject) {
 
-		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
+		RESTClient restClient = getRestClient(resourceURL);
 
 		return _getResponseContentJsonObject(
 			restClient.executePatchRequest(jsonObject));
@@ -89,7 +88,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		RuntimeContainer runtimeContainer, String resourceURL,
 		JsonObject jsonObject) {
 
-		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
+		RESTClient restClient = getRestClient(resourceURL);
 
 		return _responseHandler.asJsonObject(
 			restClient.executePostRequest(jsonObject));
@@ -102,18 +101,23 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		return null;
 	}
 
+	/**
+	 * @return JsonObject
+	 * @deprecated As of Athanasius (7.3.x), see {@link
+	 *             #getOASJsonObject(String)}
+	 */
+	@Deprecated
 	@Override
 	public JsonObject getOASJsonObject() {
 		return doGetRequest((String)null);
 	}
 
-	public RESTClient getRestClient(RuntimeContainer runtimeContainer) {
-		return getRestClient(runtimeContainer, null);
+	@Override
+	public JsonObject getOASJsonObject(String oasUrl) {
+		return doGetRequest(oasUrl);
 	}
 
-	public RESTClient getRestClient(
-		RuntimeContainer runtimeContainer, String resourceURL) {
-
+	public RESTClient getRestClient(String resourceURL) {
 		if ((resourceURL == null) || resourceURL.isEmpty()) {
 			if (restClient != null) {
 				return restClient;
@@ -184,7 +188,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 				getEffectiveLiferayConnectionProperties();
 
 		try {
-			getRestClient(runtimeContainer);
+			getRestClient(_getTarget(componentProperties));
 
 			return ValidationResult.OK;
 		}
@@ -196,16 +200,6 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 
 	@Override
 	public ValidationResult validate(RuntimeContainer runtimeContainer) {
-		String target = _liferayConnectionProperties.getApiSpecURL();
-
-		try {
-			URIUtil.validateOpenAPISpecURL(target);
-		}
-		catch (MalformedURLException murle) {
-			return new ValidationResult(
-				ValidationResult.Result.ERROR, murle.getMessage());
-		}
-
 		if (_liferayConnectionProperties.isBasicAuthorization()) {
 			if (StringUtil.isEmpty(_liferayConnectionProperties.getUserId()) ||
 				StringUtil.isEmpty(
@@ -310,6 +304,17 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		}
 
 		return _responseHandler.asJsonObject(response);
+	}
+
+	private String _getTarget(ComponentProperties componentProperties) {
+		if (!(componentProperties instanceof LiferayResourceProperties)) {
+			return null;
+		}
+
+		LiferayResourceProperties liferayResourceProperties =
+			(LiferayResourceProperties)componentProperties;
+
+		return liferayResourceProperties.getOpenAPIUrl();
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

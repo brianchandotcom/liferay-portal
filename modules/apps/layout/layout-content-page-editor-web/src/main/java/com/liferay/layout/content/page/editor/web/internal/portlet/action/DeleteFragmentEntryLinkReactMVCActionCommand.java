@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
 
@@ -50,13 +52,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/delete_fragment_entry_link"
+		"mvc.command.name=/content_layout/delete_fragment_entry_link_react"
 	},
 	service = {AopService.class, MVCActionCommand.class}
 )
@@ -72,7 +74,7 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 		return super.processAction(actionRequest, actionResponse);
 	}
 
-	protected FragmentEntryLink deleteFragmentEntryLink(
+	protected JSONObject deleteFragmentEntryLinkJSONObject(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -81,6 +83,10 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
+		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.deleteFragmentEntryLink(
@@ -127,7 +133,11 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 			_portal.getClassNameId(FragmentEntryLink.class),
 			themeDisplay.getPlid());
 
-		return fragmentEntryLink;
+		return LayoutStructureUtil.updateLayoutPageTemplateData(
+			themeDisplay.getScopeGroupId(), segmentsExperienceId,
+			themeDisplay.getPlid(),
+			layoutStructure -> layoutStructure.deleteLayoutStructureItem(
+				String.valueOf(fragmentEntryLinkId), parentItemId));
 	}
 
 	@Override
@@ -141,7 +151,7 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			deleteFragmentEntryLink(actionRequest);
+			jsonObject = deleteFragmentEntryLinkJSONObject(actionRequest);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

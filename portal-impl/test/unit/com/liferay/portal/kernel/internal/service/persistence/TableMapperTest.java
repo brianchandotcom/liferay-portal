@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactory;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
@@ -31,9 +33,11 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.internal.service.persistence.change.tracking.CTTableMapper;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -94,6 +98,10 @@ public class TableMapperTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		ToolDependencies.wireBasic();
+
+		DBManagerUtil.setDB(DBType.HYPERSONIC, null);
+
 		ToolDependencies.wireCaches();
 	}
 
@@ -1707,6 +1715,47 @@ public class TableMapperTest {
 		}
 	}
 
+	@Test
+	public void testTableMapperFactoryCTModel() {
+		MockBasePersistence<CTLeft> ctLeftBasePersistence =
+			new MockBasePersistence<>(CTLeft.class);
+
+		ctLeftBasePersistence.setDataSource(_dataSource);
+
+		MockBasePersistence<CTRight> ctRightBasePersistence =
+			new MockBasePersistence<>(CTRight.class);
+
+		ctRightBasePersistence.setDataSource(_dataSource);
+
+		TableMapper<CTLeft, Right> tableMapper1 =
+			TableMapperFactory.getTableMapper(
+				_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
+				_RIGHT_COLUMN_NAME, ctLeftBasePersistence,
+				_rightBasePersistence);
+
+		Assert.assertFalse(tableMapper1 instanceof CTTableMapper);
+
+		TableMapperFactory.removeTableMapper(_TABLE_NAME);
+
+		TableMapper<Left, CTRight> tableMapper2 =
+			TableMapperFactory.getTableMapper(
+				_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
+				_RIGHT_COLUMN_NAME, _leftBasePersistence,
+				ctRightBasePersistence);
+
+		Assert.assertFalse(tableMapper2 instanceof CTTableMapper);
+
+		TableMapperFactory.removeTableMapper(_TABLE_NAME);
+
+		TableMapper<CTLeft, CTRight> ctTableMapper =
+			TableMapperFactory.getTableMapper(
+				_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
+				_RIGHT_COLUMN_NAME, ctLeftBasePersistence,
+				ctRightBasePersistence);
+
+		Assert.assertTrue(ctTableMapper instanceof CTTableMapper);
+	}
+
 	protected void testDestroy(TableMapper<?, ?> tableMapper) {
 		PortalCacheManager<?, ?> portalCacheManager =
 			PortalCacheManagerProvider.getPortalCacheManager(
@@ -1921,6 +1970,19 @@ public class TableMapperTest {
 
 	private static class RightRecorderModelListener
 		extends RecorderModelListener<Right> {
+	}
+
+	private interface CTLeft extends CTLeftModel {
+	}
+
+	private interface CTLeftModel extends BaseModel<CTLeft>, CTModel<CTLeft> {
+	}
+
+	private interface CTRight extends CTRightModel {
+	}
+
+	private interface CTRightModel
+		extends BaseModel<CTRight>, CTModel<CTRight> {
 	}
 
 	private class GetPrimaryKeyObjInvocationHandler
@@ -2355,6 +2417,10 @@ public class TableMapperTest {
 					dataSource, paramSetters);
 			}
 
+			if (sql.contains("ctCollectionId")) {
+				return null;
+			}
+
 			throw new UnsupportedOperationException(sql);
 		}
 
@@ -2417,6 +2483,10 @@ public class TableMapperTest {
 						_RIGHT_COLUMN_NAME, " = ? AND ", _LEFT_COLUMN_NAME,
 						" = ?"))) {
 
+				return null;
+			}
+
+			if (sql.contains("ctCollectionId")) {
 				return null;
 			}
 

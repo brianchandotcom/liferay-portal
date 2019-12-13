@@ -381,7 +381,7 @@ public class Organization {
 	@GraphQLField(
 		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OrganizationContactInformation organizationContactInformation;
 
 	@Schema(description = "The organization's parent organization.")

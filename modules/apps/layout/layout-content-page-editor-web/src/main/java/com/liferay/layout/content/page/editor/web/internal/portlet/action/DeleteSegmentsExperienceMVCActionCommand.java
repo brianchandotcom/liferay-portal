@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,9 +31,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,10 +41,10 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,10 +59,19 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/delete_segments_experience"
 	},
-	service = MVCActionCommand.class
+	service = {AopService.class, MVCActionCommand.class}
 )
 public class DeleteSegmentsExperienceMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	protected void deleteSegmentsExperience(ActionRequest actionRequest)
 		throws PortalException {
@@ -137,16 +145,13 @@ public class DeleteSegmentsExperienceMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Callable<Void> callable = new DeleteSegmentsExperienceCallable(
-			actionRequest);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			deleteSegmentsExperience(actionRequest);
 		}
-		catch (Throwable t) {
-			_log.error(t, t);
+		catch (Exception e) {
+			_log.error(e, e);
 
 			jsonObject.put(
 				"error",
@@ -163,10 +168,6 @@ public class DeleteSegmentsExperienceMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteSegmentsExperienceMVCActionCommand.class);
 
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
@@ -178,22 +179,5 @@ public class DeleteSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;
-
-	private class DeleteSegmentsExperienceCallable implements Callable<Void> {
-
-		@Override
-		public Void call() throws Exception {
-			deleteSegmentsExperience(_actionRequest);
-
-			return null;
-		}
-
-		private DeleteSegmentsExperienceCallable(ActionRequest actionRequest) {
-			_actionRequest = actionRequest;
-		}
-
-		private final ActionRequest _actionRequest;
-
-	}
 
 }

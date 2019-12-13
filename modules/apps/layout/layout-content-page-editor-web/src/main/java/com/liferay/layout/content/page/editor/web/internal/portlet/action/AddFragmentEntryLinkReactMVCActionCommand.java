@@ -32,6 +32,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -46,9 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,10 +55,10 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,18 +72,50 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/add_fragment_entry_link_react"
 	},
-	service = MVCActionCommand.class
+	service = {AopService.class, MVCActionCommand.class}
 )
 public class AddFragmentEntryLinkReactMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _processAddFragmentEntryLinkActionJSONObject(
-			actionRequest, actionResponse);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			jsonObject = _processAddFragmentEntryLink(
+				actionRequest, actionResponse);
+
+			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			String errorMessage = "an-unexpected-error-occurred";
+
+			if (e instanceof NoSuchEntryException) {
+				errorMessage =
+					"the-fragment-can-no-longer-be-added-because-it-has-been-" +
+						"deleted";
+			}
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					errorMessage));
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
 
@@ -245,47 +276,8 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		);
 	}
 
-	private JSONObject _processAddFragmentEntryLinkActionJSONObject(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		Callable<JSONObject> callable = new AddFragmentEntryLinkCallable(
-			actionRequest, actionResponse);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			jsonObject = TransactionInvokerUtil.invoke(
-				_transactionConfig, callable);
-
-			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
-
-			String errorMessage = "an-unexpected-error-occurred";
-
-			if (t.getCause() instanceof NoSuchEntryException) {
-				errorMessage =
-					"the-fragment-can-no-longer-be-added-because-it-has-been-" +
-						"deleted";
-			}
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					_portal.getHttpServletRequest(actionRequest),
-					errorMessage));
-		}
-
-		return jsonObject;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddFragmentEntryLinkReactMVCActionCommand.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private FragmentCollectionContributorTracker
@@ -311,25 +303,5 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	private class AddFragmentEntryLinkCallable implements Callable<JSONObject> {
-
-		@Override
-		public JSONObject call() throws Exception {
-			return _processAddFragmentEntryLink(
-				_actionRequest, _actionResponse);
-		}
-
-		private AddFragmentEntryLinkCallable(
-			ActionRequest actionRequest, ActionResponse actionResponse) {
-
-			_actionRequest = actionRequest;
-			_actionResponse = actionResponse;
-		}
-
-		private final ActionRequest _actionRequest;
-		private final ActionResponse _actionResponse;
-
-	}
 
 }

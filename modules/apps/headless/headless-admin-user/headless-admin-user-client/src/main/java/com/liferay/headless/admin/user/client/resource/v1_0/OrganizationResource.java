@@ -49,6 +49,13 @@ public interface OrganizationResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
+	public Organization postOrganization(Organization organization)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postOrganizationHttpResponse(
+			Organization organization)
+		throws Exception;
+
 	public void deleteOrganization(Long organizationId) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteOrganizationHttpResponse(
@@ -196,6 +203,70 @@ public interface OrganizationResource {
 			if (sortString != null) {
 				httpInvoker.parameter("sort", sortString);
 			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/organizations");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Organization postOrganization(Organization organization)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postOrganizationHttpResponse(organization);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return OrganizationSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse postOrganizationHttpResponse(
+				Organization organization)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(organization.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

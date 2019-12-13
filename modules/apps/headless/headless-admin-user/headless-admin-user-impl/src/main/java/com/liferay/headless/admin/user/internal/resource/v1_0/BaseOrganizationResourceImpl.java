@@ -41,8 +41,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -90,6 +92,24 @@ public abstract class BaseOrganizationResourceImpl
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations' -d $'{"comment": ___, "customFields": ___, "id": ___, "location": ___, "name": ___, "organizationContactInformation": ___, "parentOrganization": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(description = "Creates a new organization")
+	@POST
+	@Path("/organizations")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Organization")})
+	public Organization postOrganization(Organization organization)
+		throws Exception {
+
+		return new Organization();
 	}
 
 	/**

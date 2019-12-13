@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -52,6 +53,18 @@ public class Mutation {
 
 		_subscriptionResourceComponentServiceObjects =
 			subscriptionResourceComponentServiceObjects;
+	}
+
+	@GraphQLField(description = "Creates a new organization")
+	public Organization createOrganization(
+			@GraphQLName("organization") Organization organization)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource -> organizationResource.postOrganization(
+				organization));
 	}
 
 	@GraphQLField(description = "Deletes an organization.")

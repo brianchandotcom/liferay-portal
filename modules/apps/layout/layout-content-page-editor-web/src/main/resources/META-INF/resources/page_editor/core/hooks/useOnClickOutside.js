@@ -19,9 +19,6 @@ const {useEffect} = React;
 export default function useOnClickOutside(elements, handler) {
 	useEffect(() => {
 		const listener = event => {
-			/**
-			 * Detect clicks on elements or their descendent elements.
-			 */
 			if (
 				!elements.some(
 					element => element && element.contains(event.target)

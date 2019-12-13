@@ -47,13 +47,17 @@ public class AssetPublisherSimilarResultsContributor
 	public void detectRoute(
 		RouteBuilder routeBuilder, RouteHelper routeHelper) {
 
-		String[] parameters = _httpHelper.getFriendlyURLParameters(
-			routeHelper.getURLString());
+		String urlString = routeHelper.getURLString();
+
+		String[] parameters = _httpHelper.getFriendlyURLParameters(urlString);
 
 		SearchStringUtil.requireEquals("asset_publisher", parameters[0]);
 
+		String assetEntryId = _httpHelper.getPortletIdParameter(
+			urlString, "assetEntryId");
+
 		putAttribute(parameters[2], "type", routeBuilder);
-		putAttribute(Long.valueOf(parameters[4]), "entryId", routeBuilder);
+		putAttribute(Long.valueOf(assetEntryId), "entryId", routeBuilder);
 	}
 
 	@Override

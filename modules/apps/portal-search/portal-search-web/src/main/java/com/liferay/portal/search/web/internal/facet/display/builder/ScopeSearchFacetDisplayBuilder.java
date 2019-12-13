@@ -14,13 +14,16 @@
 
 package com.liferay.portal.search.web.internal.facet.display.builder;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetTermDisplayContext;
 
@@ -179,7 +182,21 @@ public class ScopeSearchFacetDisplayBuilder {
 		}
 
 		try {
-			return group.getDescriptiveName(_locale);
+			String name = group.getDescriptiveName(_locale);
+
+			if (group.isStagingGroup() || group.isStagedRemotely()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(name);
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(LanguageUtil.get(_locale, "staged"));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				name = sb.toString();
+			}
+
+			return name;
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

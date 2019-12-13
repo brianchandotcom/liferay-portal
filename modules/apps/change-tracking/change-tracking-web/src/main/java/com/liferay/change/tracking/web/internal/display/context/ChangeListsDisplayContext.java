@@ -178,14 +178,17 @@ public class ChangeListsDisplayContext {
 		if (_confirmationEnabled) {
 			return StringBundler.concat(
 				"javascript:confirm('",
-				LanguageUtil.format(
-					_httpServletRequest,
-					"do-you-want-to-switch-to-x-change-list", name, false),
-				"') && Liferay.Util.navigate('", checkoutURL, "')");
+				HtmlUtil.escapeJS(
+					LanguageUtil.format(
+						_httpServletRequest,
+						"do-you-want-to-switch-to-x-change-list", name, false)),
+				"') && Liferay.Util.navigate('",
+				HtmlUtil.escapeJS(checkoutURL.toString()), "')");
 		}
 
 		return StringBundler.concat(
-			"javascript:Liferay.Util.navigate('", checkoutURL, "');");
+			"javascript:Liferay.Util.navigate('",
+			HtmlUtil.escapeJS(checkoutURL.toString()), "');");
 	}
 
 	public String getConfirmationMessage(String ctCollectionName) {
@@ -259,7 +262,8 @@ public class ChangeListsDisplayContext {
 					_httpServletRequest,
 					"are-you-sure-you-want-to-delete-x-change-list", name,
 					false)),
-			"') && Liferay.Util.navigate('", deleteURL, "')");
+			"') && Liferay.Util.navigate('",
+			HtmlUtil.escapeJS(deleteURL.toString()), "')");
 	}
 
 	public String getDisplayStyle() {
@@ -351,7 +355,8 @@ public class ChangeListsDisplayContext {
 					_httpServletRequest,
 					"are-you-sure-you-want-to-publish-x-change-list", name,
 					false)),
-			"') && Liferay.Util.navigate('", publishURL, "')");
+			"') && Liferay.Util.navigate('",
+			HtmlUtil.escapeJS(publishURL.toString()), "')");
 	}
 
 	public SearchContainer<CTCollection> getSearchContainer() {

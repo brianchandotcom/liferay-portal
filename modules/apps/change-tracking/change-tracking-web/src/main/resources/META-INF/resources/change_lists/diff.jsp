@@ -33,7 +33,7 @@ portletDisplay.setURLBack(backURL);
 			<div class="overview-card-sheet">
 				<div class="overview-card-container overview-card-header">
 					<div class="row">
-						<h4><%= ctEntryDiffDisplay.getLeftTitle() %></h4>
+						<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getLeftTitle()) %></h4>
 					</div>
 				</div>
 
@@ -52,7 +52,7 @@ portletDisplay.setURLBack(backURL);
 			<div class="overview-card-sheet">
 				<div class="overview-card-container overview-card-header">
 					<div class="row">
-						<h4><%= ctEntryDiffDisplay.getRightTitle() %></h4>
+						<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getRightTitle()) %></h4>
 					</div>
 				</div>
 

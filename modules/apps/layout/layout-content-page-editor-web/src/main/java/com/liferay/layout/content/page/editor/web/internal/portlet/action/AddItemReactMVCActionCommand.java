@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.UUID;
 
@@ -50,6 +53,14 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 	protected JSONObject addItemToLayoutData(ActionRequest actionRequest)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String itemConfig = ParamUtil.getString(actionRequest, "config");
 		String itemId = ParamUtil.getString(
 			actionRequest, "itemId", String.valueOf(UUID.randomUUID()));
@@ -58,7 +69,8 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 		String itemType = ParamUtil.getString(actionRequest, "type");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			actionRequest,
+			themeDisplay.getScopeGroupId(), segmentsExperienceId, classNameId,
+			classPK, themeDisplay.getPlid(),
 			layoutStructure -> {
 				LayoutStructureItem layoutStructureItem =
 					LayoutStructureItem.create(

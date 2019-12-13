@@ -124,7 +124,7 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntry.setUuid(serviceContext.getUuid());
 		fragmentEntry.setGroupId(groupId);
-		fragmentEntry.setCompanyId(user.getCompanyId());
+		fragmentEntry.setCompanyId(serviceContext.getCompanyId());
 		fragmentEntry.setUserId(user.getUserId());
 		fragmentEntry.setUserName(user.getFullName());
 		fragmentEntry.setCreateDate(serviceContext.getCreateDate(new Date()));

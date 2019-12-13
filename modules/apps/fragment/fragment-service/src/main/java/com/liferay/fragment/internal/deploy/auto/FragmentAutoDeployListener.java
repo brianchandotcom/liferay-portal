@@ -16,6 +16,7 @@ package com.liferay.fragment.internal.deploy.auto;
 
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -41,12 +43,15 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -106,9 +111,7 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 		try {
 			JSONObject deployJSONObject = _getDeployJSONObject(file);
 
-			if ((deployJSONObject != null) &&
-				deployJSONObject.has("companyWebId")) {
-
+			if (deployJSONObject != null) {
 				return true;
 			}
 		}
@@ -124,27 +127,39 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 	private void _deploy(File file) throws Exception {
 		JSONObject deployJSONObject = _getDeployJSONObject(file);
 
-		if ((deployJSONObject == null) ||
-			!deployJSONObject.has("companyWebId")) {
-
+		if (deployJSONObject == null) {
 			throw new AutoDeployException();
 		}
 
+		Company company = null;
+		Group group = null;
+
 		String webId = deployJSONObject.getString("companyWebId");
 
-		Company company = _companyLocalService.getCompanyByWebId(webId);
+		if (Validator.isNotNull(webId) &&
+			!Objects.equals(webId, StringPool.STAR)) {
 
-		Group group = null;
+			company = _companyLocalService.getCompanyByWebId(webId);
+		}
 
 		if (deployJSONObject.has("groupKey")) {
 			group = _groupLocalService.getGroup(
 				company.getCompanyId(), deployJSONObject.getString("groupKey"));
 		}
-		else {
+		else if (company != null) {
 			group = _groupLocalService.getCompanyGroup(company.getCompanyId());
 		}
+		else {
+			List<Company> companies = _companyLocalService.getCompanies(0, 1);
 
-		User user = _getUser(group);
+			if (ListUtil.isEmpty(companies)) {
+				throw new AutoDeployException();
+			}
+
+			company = companies.get(0);
+		}
+
+		User user = _getUser(company, group);
 
 		if (user == null) {
 			throw new AutoDeployException();
@@ -159,12 +174,24 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		if (company != null) {
+			serviceContext.setCompanyId(company.getCompanyId());
+		}
+		else {
+			serviceContext.setCompanyId(CompanyConstants.SYSTEM);
+		}
+
 		serviceContext.setUserId(user.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		_fragmentsImporter.importFile(
-			user.getUserId(), group.getGroupId(), 0, file, true);
+		long groupId = 0;
+
+		if (group != null) {
+			groupId = group.getGroupId();
+		}
+
+		_fragmentsImporter.importFile(user.getUserId(), groupId, 0, file, true);
 	}
 
 	private JSONObject _getDeployJSONObject(File file)
@@ -209,14 +236,23 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 		return path;
 	}
 
-	private User _getUser(Group group) throws PortalException {
-		long userId = group.getCreatorUserId();
+	private User _getUser(Company company, Group group) throws PortalException {
+		long companyId = CompanyConstants.SYSTEM;
+		long userId = 0;
+
+		if (group != null) {
+			companyId = group.getCompanyId();
+			userId = group.getCreatorUserId();
+		}
+		else if (company != null) {
+			companyId = company.getCompanyId();
+		}
 
 		User user = _userLocalService.fetchUserById(userId);
 
 		if ((user == null) || user.isDefaultUser()) {
 			Role role = _roleLocalService.getRole(
-				group.getCompanyId(), RoleConstants.ADMINISTRATOR);
+				companyId, RoleConstants.ADMINISTRATOR);
 
 			long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
 

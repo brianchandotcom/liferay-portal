@@ -35,7 +35,7 @@ public class LayoutStructure {
 		_mainItemId = mainItemId;
 	}
 
-	public LayoutStructure addLayoutStructureItem(
+	public void addLayoutStructureItem(
 		LayoutStructureItem layoutStructureItem, String parentItemId,
 		int position) {
 
@@ -51,8 +51,6 @@ public class LayoutStructure {
 
 			childrenItemIds.add(position, layoutStructureItem.getItemId());
 		}
-
-		return this;
 	}
 
 	public JSONObject toJSONObject() {

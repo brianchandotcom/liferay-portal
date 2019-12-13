@@ -37,10 +37,10 @@ if (Validator.isNull(backURL)) {
 
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
-			<h2 class="sheet-title"><liferay-ui:message key="custom-open-graph-meta-tags" /></h2>
+			<h2 class="sheet-title"><liferay-ui:message key="custom-meta-tags" /></h2>
 
 			<p class="text-muted">
-				<liferay-ui:message key="custom-open-graph-meta-tags-description" />
+				<liferay-ui:message key="custom-meta-tags-description" />
 			</p>
 		</div>
 

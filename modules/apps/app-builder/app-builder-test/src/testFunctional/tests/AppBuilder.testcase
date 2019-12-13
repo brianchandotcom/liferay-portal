@@ -406,6 +406,12 @@ definition {
 		AppBuilderAdmin.validateFormViewTitle(
 			rowNumber = "1",
 			title = "Numeric Field - Table View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "2",
+			title = "Text Field - Table View Title");
+
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"

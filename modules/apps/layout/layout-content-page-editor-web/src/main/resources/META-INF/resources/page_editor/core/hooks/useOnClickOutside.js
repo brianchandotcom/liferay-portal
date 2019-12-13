@@ -22,11 +22,11 @@ export default function useOnClickOutside(elements, handler) {
 			/**
 			 * Detect clicks on elements or their descendent elements.
 			 */
-			const filtered = elements.filter(
-				element => element && element.contains(event.target)
-			);
-
-			if (!filtered.length) {
+			if (
+				!elements.some(
+					element => element && element.contains(event.target)
+				)
+			) {
 				handler(event);
 			}
 		};

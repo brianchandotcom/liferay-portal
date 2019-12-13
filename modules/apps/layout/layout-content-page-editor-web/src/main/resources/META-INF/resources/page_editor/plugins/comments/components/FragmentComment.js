@@ -35,9 +35,7 @@ import ResolveButton from './ResolveButton';
 export default function FragmentComment({
 	comment,
 	fragmentEntryLinkId,
-	onDelete,
 	onEdit,
-	onEditReply,
 	parentCommentId
 }) {
 	const {
@@ -223,7 +221,6 @@ export default function FragmentComment({
 					comment={comment}
 					fragmentEntryLinkId={fragmentEntryLinkId}
 					onCloseForm={() => setEditing(false)}
-					onEdit={onEdit}
 				/>
 			) : (
 				<div
@@ -246,9 +243,6 @@ export default function FragmentComment({
 									}}
 									fragmentEntryLinkId={fragmentEntryLinkId}
 									key={childComment.commentId}
-									onDelete={onDelete}
-									onEdit={onEditReply(commentId)}
-									onEditReply={onEditReply}
 									parentCommentId={commentId}
 								/>
 							))}
@@ -309,12 +303,11 @@ FragmentComment.propTypes = {
 		}),
 		body: PropTypes.string,
 		commentId: PropTypes.string.isRequired,
-		dateDescription: PropTypes.string
+		dateDescription: PropTypes.string,
+		parentCommentId: PropTypes.string
 	}),
 
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	onDelete: PropTypes.func,
 	onEdit: PropTypes.func,
-	onEditReply: PropTypes.func,
 	parentCommentId: PropTypes.string
 };

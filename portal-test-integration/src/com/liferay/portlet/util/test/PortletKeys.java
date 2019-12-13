@@ -16,7 +16,9 @@ package com.liferay.portlet.util.test;
 
 /**
  * @author Miguel Pastor
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class PortletKeys {
 
 	public static final String TEST = "com_liferay_test_portlet_TestPortlet";

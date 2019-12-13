@@ -178,6 +178,26 @@ public class FragmentCollectionServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentCollectionSoap[]
+			getFragmentCollections(long groupId, boolean includeSystem)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.fragment.model.FragmentCollection>
+				returnValue =
+					FragmentCollectionServiceUtil.getFragmentCollections(
+						groupId, includeSystem);
+
+			return com.liferay.fragment.model.FragmentCollectionSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.fragment.model.FragmentCollectionSoap[]
 			getFragmentCollections(long groupId, int start, int end)
 		throws RemoteException {
 

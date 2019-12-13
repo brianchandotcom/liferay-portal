@@ -91,6 +91,12 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection>
+		getFragmentCollections(long groupId, boolean includeSystem) {
+
+		return getService().getFragmentCollections(groupId, includeSystem);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentCollection>
 		getFragmentCollections(long groupId, int start, int end) {
 
 		return getService().getFragmentCollections(groupId, start, end);

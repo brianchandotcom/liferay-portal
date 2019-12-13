@@ -26,13 +26,16 @@ import java.util.List;
  */
 public class LayoutStructureItem {
 
-	public static LayoutStructureItem create(
+	public LayoutStructureItem(
 		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
 		String itemType) {
 
-		return new LayoutStructureItem(
-			new ArrayList<>(), itemConfigJSONObject, itemId, parentItemId,
-			itemType);
+		_itemConfigJSONObject = itemConfigJSONObject;
+		_itemId = itemId;
+		_parentItemId = parentItemId;
+		_itemType = itemType;
+
+		_childrenItemIds = new ArrayList<>();
 	}
 
 	public LayoutStructureItem(

@@ -16,7 +16,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.headless.admin.user.dto.v1_0.ContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
@@ -24,6 +23,7 @@ import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
@@ -236,29 +236,6 @@ public class UserAccountResourceImpl
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
 				birthDate = user.getBirthday();
-				contactInformation = new ContactInformation() {
-					{
-						emailAddresses = transformToArray(
-							user.getEmailAddresses(), EmailAddressUtil::toEmail,
-							EmailAddress.class);
-						facebook = contact.getFacebookSn();
-						jabber = contact.getJabberSn();
-						postalAddresses = transformToArray(
-							user.getAddresses(),
-							address -> PostalAddressUtil.toPostalAddress(
-								address,
-								contextAcceptLanguage.getPreferredLocale()),
-							PostalAddress.class);
-						skype = contact.getSkypeSn();
-						sms = contact.getSmsSn();
-						telephones = transformToArray(
-							user.getPhones(), PhoneUtil::toPhone, Phone.class);
-						twitter = contact.getTwitterSn();
-						webUrls = transformToArray(
-							user.getWebsites(), WebUrlUtil::toWebUrl,
-							WebUrl.class);
-					}
-				};
 				customFields = CustomFieldsUtil.toCustomFields(
 					User.class.getName(), user.getUserId(), user.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());
@@ -288,6 +265,31 @@ public class UserAccountResourceImpl
 						contextCompany.getCompanyId(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
 					group -> _toSiteBrief(group), SiteBrief.class);
+				userAccountContactInformation =
+					new UserAccountContactInformation() {
+						{
+							emailAddresses = transformToArray(
+								user.getEmailAddresses(),
+								EmailAddressUtil::toEmail, EmailAddress.class);
+							facebook = contact.getFacebookSn();
+							jabber = contact.getJabberSn();
+							postalAddresses = transformToArray(
+								user.getAddresses(),
+								address -> PostalAddressUtil.toPostalAddress(
+									address,
+									contextAcceptLanguage.getPreferredLocale()),
+								PostalAddress.class);
+							skype = contact.getSkypeSn();
+							sms = contact.getSmsSn();
+							telephones = transformToArray(
+								user.getPhones(), PhoneUtil::toPhone,
+								Phone.class);
+							twitter = contact.getTwitterSn();
+							webUrls = transformToArray(
+								user.getWebsites(), WebUrlUtil::toWebUrl,
+								WebUrl.class);
+						}
+					};
 
 				setDashboardURL(
 					() -> {

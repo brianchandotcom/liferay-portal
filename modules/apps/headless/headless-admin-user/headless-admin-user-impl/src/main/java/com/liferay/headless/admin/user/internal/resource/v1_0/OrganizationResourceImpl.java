@@ -16,11 +16,11 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.headless.admin.user.dto.v1_0.ContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
@@ -198,31 +198,6 @@ public class OrganizationResourceImpl
 		return new Organization() {
 			{
 				comment = organization.getComments();
-				contactInformation = new ContactInformation() {
-					{
-						emailAddresses = transformToArray(
-							_emailAddressService.getEmailAddresses(
-								organization.getModelClassName(),
-								organization.getOrganizationId()),
-							EmailAddressUtil::toEmail, EmailAddress.class);
-						postalAddresses = transformToArray(
-							organization.getAddresses(),
-							address -> PostalAddressUtil.toPostalAddress(
-								address,
-								contextAcceptLanguage.getPreferredLocale()),
-							PostalAddress.class);
-						telephones = transformToArray(
-							_phoneService.getPhones(
-								organization.getModelClassName(),
-								organization.getOrganizationId()),
-							PhoneUtil::toPhone, Phone.class);
-						webUrls = transformToArray(
-							_websiteService.getWebsites(
-								organization.getModelClassName(),
-								organization.getOrganizationId()),
-							WebUrlUtil::toWebUrl, WebUrl.class);
-					}
-				};
 				customFields = CustomFieldsUtil.toCustomFields(
 					com.liferay.portal.kernel.model.Organization.class.
 						getName(),
@@ -269,6 +244,32 @@ public class OrganizationResourceImpl
 					_organizationService.getOrganizationsCount(
 						organization.getCompanyId(),
 						organization.getOrganizationId());
+				organizationContactInformation =
+					new OrganizationContactInformation() {
+						{
+							emailAddresses = transformToArray(
+								_emailAddressService.getEmailAddresses(
+									organization.getModelClassName(),
+									organization.getOrganizationId()),
+								EmailAddressUtil::toEmail, EmailAddress.class);
+							postalAddresses = transformToArray(
+								organization.getAddresses(),
+								address -> PostalAddressUtil.toPostalAddress(
+									address,
+									contextAcceptLanguage.getPreferredLocale()),
+								PostalAddress.class);
+							telephones = transformToArray(
+								_phoneService.getPhones(
+									organization.getModelClassName(),
+									organization.getOrganizationId()),
+								PhoneUtil::toPhone, Phone.class);
+							webUrls = transformToArray(
+								_websiteService.getWebsites(
+									organization.getModelClassName(),
+									organization.getOrganizationId()),
+								WebUrlUtil::toWebUrl, WebUrl.class);
+						}
+					};
 				parentOrganization = _toOrganization(
 					organization.getParentOrganization());
 				services = transformToArray(

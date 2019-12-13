@@ -121,7 +121,10 @@ public class GroupItemSelectorProviderImplTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "group.type=depot", type = GroupItemSelectorProvider.class)
+	@Inject(
+		filter = "component.name=com.liferay.depot.web.internal.item.selector.provider.GroupItemSelectorProviderImpl",
+		type = GroupItemSelectorProvider.class
+	)
 	private GroupItemSelectorProvider _groupItemSelectorProvider;
 
 }

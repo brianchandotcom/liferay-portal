@@ -26,6 +26,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -50,9 +51,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -60,10 +59,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
-import java.util.concurrent.Callable;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,9 +78,19 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/add_portlet_react"
 	},
-	service = MVCActionCommand.class
+	service = {AopService.class, MVCActionCommand.class}
 )
-public class AddPortletReactMVCActionCommand extends BaseMVCActionCommand {
+public class AddPortletReactMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	protected JSONObject addFragmentEntryLinkToLayoutData(
 			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
@@ -122,8 +130,32 @@ public class AddPortletReactMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _processAddPortletAction(
-			actionRequest, actionResponse);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			jsonObject = processAddPortlet(actionRequest, actionResponse);
+
+			if (SessionErrors.contains(
+					actionRequest, "fragmentEntryContentInvalid")) {
+
+				jsonObject.put("error", true);
+			}
+
+			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			String errorMessage = "an-unexpected-error-occurred";
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					errorMessage));
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
 
@@ -253,49 +285,8 @@ public class AddPortletReactMVCActionCommand extends BaseMVCActionCommand {
 		return instanceId;
 	}
 
-	private JSONObject _processAddPortletAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		Callable<JSONObject> callable = new AddPortletLinkCallable(
-			actionRequest, actionResponse);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			jsonObject = TransactionInvokerUtil.invoke(
-				_transactionConfig, callable);
-
-			if (SessionErrors.contains(
-					actionRequest, "fragmentEntryContentInvalid")) {
-
-				jsonObject.put("error", true);
-			}
-
-			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
-		}
-		catch (Throwable t) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(t, t);
-			}
-
-			String errorMessage = "an-unexpected-error-occurred";
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					_portal.getHttpServletRequest(actionRequest),
-					errorMessage));
-		}
-
-		return jsonObject;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddPortletReactMVCActionCommand.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
@@ -320,24 +311,5 @@ public class AddPortletReactMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	private class AddPortletLinkCallable implements Callable<JSONObject> {
-
-		@Override
-		public JSONObject call() throws Exception {
-			return processAddPortlet(_actionRequest, _actionResponse);
-		}
-
-		private AddPortletLinkCallable(
-			ActionRequest actionRequest, ActionResponse actionResponse) {
-
-			_actionRequest = actionRequest;
-			_actionResponse = actionResponse;
-		}
-
-		private final ActionRequest _actionRequest;
-		private final ActionResponse _actionResponse;
-
-	}
 
 }

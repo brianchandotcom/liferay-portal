@@ -416,6 +416,10 @@ definition {
 		AppBuilderAdmin.validateFormViewTitle(
 			rowNumber = "1",
 			title = "Text Field - Form View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "2",
+			title = "Numeric Field - Form View Title");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"

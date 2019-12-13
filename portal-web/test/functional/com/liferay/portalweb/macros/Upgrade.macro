@@ -991,6 +991,80 @@ definition {
 		FormsAdmin.viewNoFormEntries();
 	}
 
+	macro viewAndDeleteGoogleDriveDocuments {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Edited Google Document");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Edited Google Sheet");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Edited Google Slide");
+	}
+
+	macro viewAndEditGoogleDriveDocuments {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		var key_dmDocumentTitle = "Untitled (1)";
+
+		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit in Google Sheets");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Sheet");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Edited Google Sheet",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Edited Google Sheet");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		GoogleDoc.gotoEdit(
+			dmDocumentTitle = "Untitled (2)",
+			dmDocumentTypeName = "Google Slides");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Slide");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Edited Google Slide",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Edited Google Slide");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		GoogleDoc.gotoEdit(
+			dmDocumentTitle = "Untitled",
+			dmDocumentTypeName = "Google Docs");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Document");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Edited Google Document",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Edited Google Document");
+	}
+
 	macro viewAndEditUser {
 		ProductMenu.gotoPortlet(
 			category = "Users",

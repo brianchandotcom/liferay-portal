@@ -38,10 +38,18 @@ public class ProductNavigationPersonalMenuTag extends IncludeTag {
 		return _user;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public boolean isExpanded() {
 		return _expanded;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setExpanded(boolean expanded) {
 		_expanded = expanded;
 	}
@@ -90,8 +98,6 @@ public class ProductNavigationPersonalMenuTag extends IncludeTag {
 
 		httpServletRequest.setAttribute(
 			"liferay-product-navigation:personal-menu:color", color);
-		httpServletRequest.setAttribute(
-			"liferay-product-navigation:personal-menu:expanded", _expanded);
 		httpServletRequest.setAttribute(
 			"liferay-product-navigation:personal-menu:label", _label);
 		httpServletRequest.setAttribute(

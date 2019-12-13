@@ -20,7 +20,6 @@
 String namespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 long color = (long)request.getAttribute("liferay-product-navigation:personal-menu:color");
-boolean expanded = (boolean)request.getAttribute("liferay-product-navigation:personal-menu:expanded");
 String label = (String)request.getAttribute("liferay-product-navigation:personal-menu:label");
 String size = (String)request.getAttribute("liferay-product-navigation:personal-menu:size");
 User user2 = (User)request.getAttribute("liferay-product-navigation:personal-menu:user");

@@ -20,7 +20,6 @@
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<span class="user-avatar-link">
 			<liferay-product-navigation:personal-menu
-				expanded="<%= true %>"
 				size="lg"
 				user="<%= user %>"
 			/>

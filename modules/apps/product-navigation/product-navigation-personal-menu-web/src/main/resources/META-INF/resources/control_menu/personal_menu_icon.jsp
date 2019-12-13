@@ -42,7 +42,6 @@
 <li class="control-menu-nav-item">
 	<span class="user-avatar-link">
 		<liferay-product-navigation:personal-menu
-			expanded="<%= true %>"
 			user="<%= user %>"
 		/>
 

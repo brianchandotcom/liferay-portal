@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Dictionary;
@@ -132,13 +131,9 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 		updateConfigurationProperties(actionRequest, configurationProperties);
 
-		String token = ParamUtil.getString(actionRequest, "token");
-
-		if ((token != null) && !token.isEmpty()) {
-			configurationProvider.saveCompanyConfiguration(
-				AnalyticsConfiguration.class, themeDisplay.getCompanyId(),
-				configurationProperties);
-		}
+		configurationProvider.saveCompanyConfiguration(
+			AnalyticsConfiguration.class, themeDisplay.getCompanyId(),
+			configurationProperties);
 	}
 
 	protected abstract void updateConfigurationProperties(

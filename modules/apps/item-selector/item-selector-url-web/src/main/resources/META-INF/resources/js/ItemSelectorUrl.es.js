@@ -82,6 +82,8 @@ const ItemSelectorUrl = ({eventName}) => {
 		}
 	};
 
+	const isLoading = !previewError && url && !loaded;
+
 	return (
 		<>
 			<form onSubmit={handleSubmit}>
@@ -120,12 +122,12 @@ const ItemSelectorUrl = ({eventName}) => {
 						src={url}
 					/>
 				)}
-				{!previewError && url && !loaded && (
+				{isLoading && (
 					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
 						<ClayLoadingIndicator />
 					</div>
 				)}
-				{previewError && url && loaded && (
+				{previewError && (
 					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
 						<strong className="text-secondary">
 							{Liferay.Language.get('no-preview-available')}

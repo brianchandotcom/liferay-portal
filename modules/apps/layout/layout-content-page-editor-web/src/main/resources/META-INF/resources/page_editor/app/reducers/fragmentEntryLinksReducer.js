@@ -33,16 +33,41 @@ export default function fragmentEntryLinksReducer(state, action) {
 				const fragmentEntryLink =
 					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
 
+				const {comments = []} = fragmentEntryLink;
+
+				let nextComments;
+
+				if (action.parentCommentId) {
+					nextComments = comments.map(comment =>
+						comment.commentId === action.parentCommentId
+							? {
+									...comment,
+									children: [
+										...(comment.children || []),
+										action.fragmentEntryLinkComment
+									]
+							  }
+							: comment
+					);
+				} else {
+					nextComments = [
+						...comments,
+						action.fragmentEntryLinkComment
+					];
+				}
+
 				nextState = {
 					...nextState,
 					fragmentEntryLinks: {
 						...nextState.fragmentEntryLinks,
 						[action.fragmentEntryLinkId]: {
 							...fragmentEntryLink,
-							comments: [
-								...(fragmentEntryLink.comments || []),
-								action.fragmentEntryLinkComment
-							]
+							comments: nextComments
+						}
+					}
+				};
+			}
+			break;
 						}
 					}
 				};
@@ -55,12 +80,32 @@ export default function fragmentEntryLinksReducer(state, action) {
 
 				const {comments = []} = fragmentEntryLink;
 
-				const nextComments = comments.map(comment =>
-					comment.commentId ===
-					action.fragmentEntryLinkComment.commentId
-						? action.fragmentEntryLinkComment
-						: comment
-				);
+				let nextComments;
+
+				if (action.parentCommentId) {
+					nextComments = comments.map(comment =>
+						comment.commentId === action.parentCommentId
+							? {
+									...comment,
+									children: comment.children.map(
+										childComment =>
+											childComment.commentId ===
+											action.fragmentEntryLinkComment
+												.commentId
+												? action.fragmentEntryLinkComment
+												: childComment
+									)
+							  }
+							: comment
+					);
+				} else {
+					nextComments = comments.map(comment =>
+						comment.commentId ===
+						action.fragmentEntryLinkComment.commentId
+							? {...comment, ...action.fragmentEntryLinkComment}
+							: comment
+					);
+				}
 
 				nextState = {
 					...nextState,

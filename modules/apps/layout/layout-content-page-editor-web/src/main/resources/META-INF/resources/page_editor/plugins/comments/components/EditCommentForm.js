@@ -39,7 +39,8 @@ export default function EditCommentForm({
 				body: textareaContent,
 				commentId: comment.commentId,
 				config,
-				fragmentEntryLinkId
+				fragmentEntryLinkId,
+				parentCommentId: comment.parentCommentId
 			})
 		)
 			.then(() => {

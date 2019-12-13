@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 
-export default function ItemSelector({label, onSelectItem, value}) {
+export default function ItemSelector({label, onItemSelect, value}) {
 	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
 
 	const openInfoItemSelector = () => {
@@ -37,7 +37,7 @@ export default function ItemSelector({label, onSelectItem, value}) {
 			if (selectedItem && selectedItem.value) {
 				const infoItem = JSON.parse(selectedItem.value);
 
-				onSelectItem({
+				onItemSelect({
 					className: infoItem.className,
 					classNameId: infoItem.classNameId,
 					classPK: infoItem.classPK,

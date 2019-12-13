@@ -29,3 +29,7 @@
 .aspect-ratio-191-to-100 {
 	@include clay-aspect-ratio(1.91, 1);
 }
+
+.openGraphSettings.disabled {
+	opacity: 0.4;
+}

@@ -45,7 +45,7 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	}
 
 	dependencies {
-		bnd group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
+		bnd group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.3.0"
 	}
 
 	repositories {

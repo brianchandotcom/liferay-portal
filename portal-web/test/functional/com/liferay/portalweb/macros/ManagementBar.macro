@@ -34,7 +34,9 @@ definition {
 		var browserType = PropsUtil.get("browser.type");
 
 		if ("${browserType}" == "internetexplorer") {
-			Click(locator1 = "Icon#INFO_IE");
+			Click.clickAt(locator1 = "Icon#INFO_IE");
+
+			Pause(locator1 = "3000");
 		}
 		else {
 			Click.clickNoMouseOver(locator1 = "Icon#INFO");

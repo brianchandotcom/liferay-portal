@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import java.util.concurrent.Callable;
@@ -87,13 +88,22 @@ public class AddPortletReactMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String itemConfig = ParamUtil.getString(actionRequest, "config");
 		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
 		String itemType = ParamUtil.getString(actionRequest, "type");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			actionRequest,
+			themeDisplay.getScopeGroupId(), segmentsExperienceId, classNameId,
+			classPK, themeDisplay.getPlid(),
 			layoutStructure -> {
 				LayoutStructureItem layoutStructureItem =
 					LayoutStructureItem.create(

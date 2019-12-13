@@ -103,6 +103,8 @@ public class NotificationTemplateContextFactory {
 
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
+				"calendarName", calendar.getName(user.getLocale(), true)
+			).put(
 				"endTime",
 				StringBundler.concat(
 					userDateTimeFormat.format(calendarBooking.getEndTime()),
@@ -124,6 +126,18 @@ public class NotificationTemplateContextFactory {
 					ResourceBundleUtil.getBundle(
 						user.getLocale(), "com.liferay.calendar.web"),
 					"javax.portlet.title.".concat(CalendarPortletKeys.CALENDAR))
+			).put(
+				"siteName",
+				() -> {
+					Group calendarGroup = _groupLocalService.getGroup(
+						calendar.getGroupId());
+
+					if (calendarGroup.isSite()) {
+						return calendarGroup.getName(user.getLocale());
+					}
+
+					return StringPool.BLANK;
+				}
 			).put(
 				"startTime",
 				StringBundler.concat(

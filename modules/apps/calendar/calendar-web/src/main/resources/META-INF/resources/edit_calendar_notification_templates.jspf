@@ -93,6 +93,18 @@ String notificationTemplateSubject = BeanPropertiesUtil.getString(calendarNotifi
 
 		<dl>
 			<dt>
+				[$COMPANY_ID$]
+			</dt>
+			<dd>
+				<liferay-ui:message key="the-company-id-associated-with-the-calendar-booking" />
+			</dd>
+			<dt>
+				[$CALENDAR_NAME$]
+			</dt>
+			<dd>
+				<liferay-ui:message key="the-calendar-name" />
+			</dd>
+			<dt>
 				[$EVENT_LOCATION$]
 			</dt>
 			<dd>
@@ -138,6 +150,20 @@ String notificationTemplateSubject = BeanPropertiesUtil.getString(calendarNotifi
 			<dd>
 				<%= company.getVirtualHostname() %>
 			</dd>
+
+			<%
+			Group calendarGroup = GroupLocalServiceUtil.getGroup(calendar.getGroupId());
+			%>
+
+			<c:if test="<%= calendarGroup.isSite() %>">
+				<dt>
+					[$SITE_NAME$]
+				</dt>
+				<dd>
+					<liferay-ui:message key="the-site-name-associated-with-the-calendar-booking" />
+				</dd>
+			</c:if>
+
 			<dt>
 				[$TO_ADDRESS$]
 			</dt>

@@ -15,6 +15,8 @@
 package com.liferay.fragment.entry.processor.freemarker.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -35,6 +37,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,6 +50,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -151,6 +157,78 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String expectedProcessedHTML = _getProcessedHTML(
 			_getFileAsString(
 				"expected_processed_fragment_entry_with_configuration.html"));
+
+		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
+	}
+
+	@Test
+	public void testProcessFragmentEntryLinkHTMLWithConfigurationItemSelectorFileEntry()
+		throws Exception {
+
+		String fileName = RandomTestUtil.randomString() + ".jpg";
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				FragmentEntryProcessorFreemarkerTest.class,
+				"dependencies/image.jpg"),
+			new ServiceContext());
+
+		Map<String, String> configurationDefaultValues = HashMapBuilder.put(
+			"className", FileEntry.class.getName()
+		).put(
+			"classNameId",
+			String.valueOf(
+				_classNameLocalService.getClassNameId(
+					fileEntry.getModelClassName()))
+		).put(
+			"classPK", String.valueOf(fileEntry.getPrimaryKey())
+		).build();
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			"fragment_entry_with_configuration_itemselector_file_entry.html",
+			"configuration_itemselector.json", configurationDefaultValues);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_with_configuration_" +
+					"itemselector.json"));
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, null);
+
+		String actualProcessedHTML = _getProcessedHTML(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, defaultFragmentEntryProcessorContext));
+
+		Map<String, String> expectedValues = HashMapBuilder.put(
+			"className", FileEntry.class.getName()
+		).put(
+			"classNameId",
+			String.valueOf(
+				_classNameLocalService.getClassNameId(
+					fileEntry.getModelClassName()))
+		).put(
+			"classPK", String.valueOf(fileEntry.getPrimaryKey())
+		).put(
+			"fileName", fileName
+		).build();
+
+		String expectedProcessedHTML = _getProcessedHTML(
+			_getFileAsString(
+				"expected_processed_fragment_entry_with_configuration_" +
+					"itemselector_file_entry.html",
+				expectedValues));
 
 		Assert.assertEquals(expectedProcessedHTML, actualProcessedHTML);
 	}
@@ -536,10 +614,16 @@ public class FragmentEntryProcessorFreemarkerTest {
 		return themeDisplay;
 	}
 
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private FragmentCollectionService _fragmentCollectionService;

@@ -343,10 +343,15 @@ FragmentEntryLink.STATE = {
 		.string()
 		.value(''),
 	fragmentEntryLinkId: Config.string().required(),
+	layoutData: Config.internal().object(),
 	name: Config.string().value(''),
 	rowType: Config.string(),
+	segmentsExperienceId: Config.internal()
+		.string()
+		.value(),
 	showControlBar: Config.bool().value(true),
-	styleModifier: Config.string()
+	styleModifier: Config.string(),
+	widgets: Config.internal().array()
 };
 
 const ConnectedFragmentEntryLink = getConnectedComponent(

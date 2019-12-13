@@ -138,17 +138,9 @@ public class TLiferayInputDefinitionTest {
 		TLiferayInputProperties tLiferayInputProperties =
 			new TLiferayInputProperties("liferayInputProperties");
 
-		boolean componentSupported =
+		Assert.assertTrue(
 			_tLiferayInputDefinition.supportsProperties(
-				tLiferayInputProperties.connection);
-
-		Assert.assertTrue(componentSupported);
-
-		boolean propertiesSupportedByDefault =
-			_tLiferayInputDefinition.supportsProperties(
-				tLiferayInputProperties);
-
-		Assert.assertTrue(propertiesSupportedByDefault);
+				tLiferayInputProperties));
 	}
 
 	@Rule

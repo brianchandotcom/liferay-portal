@@ -78,8 +78,21 @@ import org.osgi.service.component.annotations.Reference;
 public class AddFragmentEntryLinkReactMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected FragmentEntryLink addFragmentEntryLink(
-			ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = _processAddFragmentEntryLinkAction(
+			actionRequest, actionResponse);
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLink(ActionRequest actionRequest)
 		throws PortalException {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -124,7 +137,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			fragmentEntryKey, serviceContext);
 	}
 
-	protected JSONObject addFragmentEntryLinkToLayoutData(
+	private JSONObject _addFragmentEntryLinkToLayoutData(
 			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
@@ -145,31 +158,41 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			});
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	private FragmentEntry _getContributedFragmentEntry(
+		String fragmentEntryKey, Locale locale) {
 
-		JSONObject jsonObject = _processAddFragmentEntryLinkAction(
-			actionRequest, actionResponse);
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return fragmentEntries.get(fragmentEntryKey);
 	}
 
-	protected JSONObject processAddFragmentEntryLink(
+	private FragmentEntry _getFragmentEntry(
+		long groupId, String fragmentEntryKey, ServiceContext serviceContext) {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				groupId, fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		return _getContributedFragmentEntry(
+			fragmentEntryKey, serviceContext.getLocale());
+	}
+
+	private JSONObject _processAddFragmentEntryLink(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			actionRequest);
 
-		JSONObject layoutDataJSONObject = addFragmentEntryLinkToLayoutData(
+		JSONObject layoutDataJSONObject = _addFragmentEntryLinkToLayoutData(
 			actionRequest, fragmentEntryLink);
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
@@ -216,30 +239,6 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		).put(
 			"layoutData", layoutDataJSONObject
 		);
-	}
-
-	private FragmentEntry _getContributedFragmentEntry(
-		String fragmentEntryKey, Locale locale) {
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
-
-		return fragmentEntries.get(fragmentEntryKey);
-	}
-
-	private FragmentEntry _getFragmentEntry(
-		long groupId, String fragmentEntryKey, ServiceContext serviceContext) {
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				groupId, fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		return _getContributedFragmentEntry(
-			fragmentEntryKey, serviceContext.getLocale());
 	}
 
 	private JSONObject _processAddFragmentEntryLinkAction(
@@ -313,7 +312,8 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 
 		@Override
 		public JSONObject call() throws Exception {
-			return processAddFragmentEntryLink(_actionRequest, _actionResponse);
+			return _processAddFragmentEntryLink(
+				_actionRequest, _actionResponse);
 		}
 
 		private AddFragmentEntryLinkCallable(

@@ -111,7 +111,7 @@ public class FragmentPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS,
 			_fragmentCollectionService.getFragmentCollections(
-				themeDisplay.getScopeGroupId()));
+				themeDisplay.getScopeGroupId(), true));
 		renderRequest.setAttribute(
 			FragmentPortletConfiguration.class.getName(),
 			fragmentPortletConfiguration);

@@ -18,10 +18,6 @@ import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 
-const SELECTORS = {
-	backgroundColorCssClass: 'backgroundColorCssClass'
-};
-
 export default function ColorPalette({clearButton, label, onColorSelect}) {
 	const {themeColorsCssClasses} = useContext(ConfigContext);
 
@@ -42,12 +38,7 @@ export default function ColorPalette({clearButton, label, onColorSelect}) {
 									'rounded-circle'
 								)}
 								displayType="unstyled"
-								onClick={() =>
-									onColorSelect(
-										SELECTORS.backgroundColorCssClass,
-										color
-									)
-								}
+								onClick={() => onColorSelect(color)}
 								small
 							/>
 						</li>

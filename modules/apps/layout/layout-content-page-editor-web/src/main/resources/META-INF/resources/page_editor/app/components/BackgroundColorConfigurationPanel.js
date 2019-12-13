@@ -19,14 +19,16 @@ import {DispatchContext} from '../../app/reducers/index';
 import ColorPalette from '../../common/components/ColorPalette';
 import updateItemConfig from '../actions/updateItemConfig';
 
+const BACKGROUND_COLOR_CSS_CLASS_SELECTOR = 'backgroundColorCssClass';
+
 export const BackgroundColorConfigurationPanel = ({item}) => {
 	const dispatch = useContext(DispatchContext);
 
-	const handleSelectValueChanged = (identifier, value) =>
+	const handleSelectValueChanged = value =>
 		dispatch(
 			updateItemConfig({
 				config: {
-					[identifier]: value
+					[BACKGROUND_COLOR_CSS_CLASS_SELECTOR]: value
 				},
 				itemId: item.itemId
 			})

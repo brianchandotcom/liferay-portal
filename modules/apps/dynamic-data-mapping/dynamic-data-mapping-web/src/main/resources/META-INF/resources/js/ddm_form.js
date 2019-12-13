@@ -1636,12 +1636,14 @@ AUI.add(
 				_handleSelectButtonClick() {
 					var instance = this;
 
+					var portletNamespace = instance.get('portletNamespace');
+
 					Liferay.Loader.require(
 						'frontend-js-web/liferay/ItemSelectorDialog.es',
 						ItemSelectorDialog => {
 							var itemSelectorDialog = new ItemSelectorDialog.default(
 								{
-									eventName: 'selectContent',
+									eventName: portletNamespace + 'selectWebContent',
 									singleSelect: true,
 									title: Liferay.Language.get('journal-article'),
 									url: instance.getWebContentSelectorURL()

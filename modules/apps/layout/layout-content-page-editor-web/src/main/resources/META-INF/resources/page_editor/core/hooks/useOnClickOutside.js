@@ -23,7 +23,7 @@ export default function useOnClickOutside(references = [], handler) {
 				/**
 				 * Filter references that were clicked ref's element
 				 * or descendent elements
-				 * */
+				 */
 				const filtered = references.filter(
 					ref => ref.current && ref.current.contains(event.target)
 				);

@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useContext, useRef} from 'react';
+import React, {useContext} from 'react';
 
 import {removeItem} from '../../../app/actions/index';
 import {
@@ -25,7 +25,6 @@ import {
 	useSelectItem
 } from '../../../app/components/Controls';
 import {DispatchContext} from '../../../app/reducers/index';
-import useOnClickOutside from '../../../core/hooks/useOnClickOutside';
 
 const NameButton = ({id, name}) => {
 	const isSelected = useIsSelected();
@@ -65,16 +64,9 @@ const RemoveButton = ({id}) => {
 };
 
 export default function StructureTreeNode({node}) {
-	const containerRef = useRef(null);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const selectItem = useSelectItem();
-
-	useOnClickOutside(containerRef, event => {
-		if (!event.shiftKey) {
-			selectItem(null);
-		}
-	});
 
 	return (
 		<div

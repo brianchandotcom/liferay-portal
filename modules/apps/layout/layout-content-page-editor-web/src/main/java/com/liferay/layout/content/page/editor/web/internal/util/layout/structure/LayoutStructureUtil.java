@@ -36,8 +36,7 @@ import java.util.Map;
 public class LayoutStructureUtil {
 
 	public static JSONObject updateLayoutPageTemplateData(
-			long groupId, long segmentsExperienceId, long classNameId,
-			long classPK, long plid,
+			long groupId, long segmentsExperienceId, long plid,
 			UnsafeConsumer<LayoutStructure, PortalException> unsafeConsumer)
 		throws PortalException {
 
@@ -56,8 +55,8 @@ public class LayoutStructureUtil {
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructure(
-				groupId, classNameId, classPK, segmentsExperienceId,
-				dataJSONObject.toString());
+				groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+				plid, segmentsExperienceId, dataJSONObject.toString());
 
 		return dataJSONObject;
 	}

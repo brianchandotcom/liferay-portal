@@ -20,9 +20,7 @@
 OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSettingsDisplayContext)request.getAttribute(OpenGraphSettingsDisplayContext.class.getName());
 %>
 
-<liferay-util:html-top
-	outputKey="layout_seo_web_css"
->
+<liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 

@@ -81,6 +81,5 @@ EditCommentForm.propTypes = {
 		body: PropTypes.string.isRequired,
 		commentId: PropTypes.string.isRequired
 	}),
-	onCloseForm: PropTypes.func.isRequired,
-	onEdit: PropTypes.func
+	onCloseForm: PropTypes.func.isRequired
 };

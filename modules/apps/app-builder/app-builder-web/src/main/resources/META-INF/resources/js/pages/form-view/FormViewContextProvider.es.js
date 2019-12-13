@@ -47,7 +47,7 @@ export default ({
 
 	useEffect(() => {
 		if (dataLayoutId) {
-			getItem(`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`).then(
+			getItem(`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`).then(
 				dataLayout =>
 					dispatch({
 						payload: {dataLayout},
@@ -59,7 +59,7 @@ export default ({
 
 	useEffect(() => {
 		getItem(
-			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
 		).then(dataDefinition =>
 			dispatch({
 				payload: {dataDefinition},

@@ -35,7 +35,7 @@ export default withRouter(
 
 		useEffect(() => {
 			getItem(
-				`/o/data-engine/v1.0/data-definitions/data-definition-fields/field-types`
+				`/o/data-engine/v2.0/data-definitions/data-definition-fields/field-types`
 			).then(fieldTypes => {
 				dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
 			});
@@ -43,7 +43,7 @@ export default withRouter(
 
 		useEffect(() => {
 			getItem(
-				`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
+				`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
 			).then(dataDefinition => {
 				dispatch({
 					payload: {dataDefinition},
@@ -55,7 +55,7 @@ export default withRouter(
 		useEffect(() => {
 			if (dataListViewId) {
 				getItem(
-					`/o/data-engine/v1.0/data-list-views/${dataListViewId}`
+					`/o/data-engine/v2.0/data-list-views/${dataListViewId}`
 				).then(dataListView => {
 					dispatch({
 						payload: {dataListView},

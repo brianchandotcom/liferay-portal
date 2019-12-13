@@ -69,7 +69,7 @@ export const EditEntry = ({
 
 			if (dataRecordId !== '0') {
 				updateItem(
-					`/o/data-engine/v1.0/data-records/${dataRecordId}`,
+					`/o/data-engine/v2.0/data-records/${dataRecordId}`,
 					dataRecord
 				).then(() => {
 					openSuccessToast(false);
@@ -77,7 +77,7 @@ export const EditEntry = ({
 				});
 			} else {
 				addItem(
-					`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
+					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
 					dataRecord
 				).then(() => {
 					openSuccessToast(true);

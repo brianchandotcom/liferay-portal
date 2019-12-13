@@ -33,7 +33,7 @@ import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.util.comparator.AppBuilderAppCreateDateComparator;
 import com.liferay.app.builder.util.comparator.AppBuilderAppModifiedDateComparator;
 import com.liferay.app.builder.util.comparator.AppBuilderAppNameComparator;
-import com.liferay.data.engine.rest.client.resource.v1_0.DataListViewResource;
+import com.liferay.data.engine.rest.client.resource.v2_0.DataListViewResource;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;

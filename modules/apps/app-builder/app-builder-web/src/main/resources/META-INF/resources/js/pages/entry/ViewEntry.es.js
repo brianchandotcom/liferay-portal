@@ -75,7 +75,7 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 			({dataDefinitionId, dataLayoutId}) => {
 				Promise.all([
 					getItem(
-						`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
+						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
 						{...query, page: entryIndex, pageSize: 1}
 					).then(({items = [], page, totalCount}) => {
 						if (items.length > 0) {
@@ -87,10 +87,10 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 						}
 					}),
 					getItem(
-						`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
+						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
 					).then(dataDefinition => setDataDefinition(dataDefinition)),
 					getItem(
-						`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`
+						`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`
 					).then(dataLayout => setDataLayout(dataLayout))
 				]).then(() => setLoading(false));
 			}
@@ -101,7 +101,7 @@ export default withRouter(({history, match: {params: {entryIndex}}}) => {
 	const {dataLayoutPages} = dataLayout;
 
 	const onDelete = () => {
-		confirmDelete('/o/data-engine/v1.0/data-records/')({
+		confirmDelete('/o/data-engine/v2.0/data-records/')({
 			id: dataRecord.id
 		}).then(confirmed => {
 			if (confirmed) {

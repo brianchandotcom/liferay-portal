@@ -39,7 +39,7 @@ export default callback => {
 		});
 
 		return getItem(
-			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-definition-field-links?fieldName=${fieldName}`
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-definition-field-links?fieldName=${fieldName}`
 		).then(({dataLayouts, dataListViews}) => {
 			dispatchModal({
 				payload: {

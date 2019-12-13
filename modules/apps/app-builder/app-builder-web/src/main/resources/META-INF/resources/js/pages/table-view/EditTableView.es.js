@@ -72,12 +72,12 @@ const EditTableView = withRouter(({history}) => {
 
 		if (dataListView.id) {
 			updateItem(
-				`/o/data-engine/v1.0/data-list-views/${dataListView.id}`,
+				`/o/data-engine/v2.0/data-list-views/${dataListView.id}`,
 				dataListView
 			).then(() => history.goBack());
 		} else {
 			addItem(
-				`/o/data-engine/v1.0/data-definitions/${dataDefinition.id}/data-list-views`,
+				`/o/data-engine/v2.0/data-definitions/${dataDefinition.id}/data-list-views`,
 				dataListView
 			).then(() => history.goBack());
 		}

@@ -106,7 +106,7 @@ export default ({
 												'there-are-no-form-views-yet'
 											)
 										)}
-										endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`}
+										endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`}
 										itemType="DATA_LAYOUT"
 										title={Liferay.Language.get(
 											'select-a-form-view'
@@ -124,7 +124,7 @@ export default ({
 												'there-are-no-table-views-yet'
 											)
 										)}
-										endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-list-views`}
+										endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`}
 										itemType="DATA_LIST_VIEW"
 										title={Liferay.Language.get(
 											'select-a-table-view'

@@ -72,7 +72,7 @@ export default ({
 					name: Liferay.Language.get('edit')
 				},
 				{
-					action: confirmDelete('/o/data-engine/v1.0/data-layouts/'),
+					action: confirmDelete('/o/data-engine/v2.0/data-layouts/'),
 					name: Liferay.Language.get('delete')
 				}
 			]}
@@ -99,7 +99,7 @@ export default ({
 				),
 				title: Liferay.Language.get('there-are-no-form-views-yet')
 			}}
-			endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`}
+			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`}
 		>
 			{item => ({
 				dataDefinitionId,

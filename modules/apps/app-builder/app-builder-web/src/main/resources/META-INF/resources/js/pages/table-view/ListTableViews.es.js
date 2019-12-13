@@ -56,7 +56,7 @@ export default ({
 				},
 				{
 					action: confirmDelete(
-						'/o/data-engine/v1.0/data-list-views/'
+						'/o/data-engine/v2.0/data-list-views/'
 					),
 					name: Liferay.Language.get('delete')
 				}
@@ -81,7 +81,7 @@ export default ({
 				),
 				title: Liferay.Language.get('there-are-no-table-views-yet')
 			}}
-			endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-list-views`}
+			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`}
 		>
 			{item => ({
 				...item,

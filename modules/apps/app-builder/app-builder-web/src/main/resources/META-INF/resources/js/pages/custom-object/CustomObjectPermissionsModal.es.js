@@ -83,7 +83,7 @@ export default ({dataDefinitionId, onClose}) => {
 			Promise.all([
 				getItem('/o/headless-admin-user/v1.0/roles'),
 				getItem(
-					`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-record-collection`
+					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-record-collection`
 				)
 			])
 				.then(([{items: roles = []}, {id: dataRecordCollectionId}]) => {
@@ -101,7 +101,7 @@ export default ({dataDefinitionId, onClose}) => {
 					const roleNames = roles.map(({name}) => name);
 
 					return getItem(
-						`/o/data-engine/v1.0/data-record-collections/${dataRecordCollectionId}/data-model-permissions`,
+						`/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/data-model-permissions`,
 						{roleNames}
 					);
 				})
@@ -129,7 +129,7 @@ export default ({dataDefinitionId, onClose}) => {
 
 	const onSave = () => {
 		updateItem(
-			`/o/data-engine/v1.0/data-record-collections/${dataRecordCollectionId}/data-model-permissions`,
+			`/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/data-model-permissions`,
 			permissions
 		).then(() => onClose());
 	};

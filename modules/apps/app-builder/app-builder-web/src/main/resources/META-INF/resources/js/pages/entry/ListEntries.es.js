@@ -43,8 +43,8 @@ const ListEntries = withRouter(({history, location}) => {
 
 	useEffect(() => {
 		Promise.all([
-			getItem(`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`),
-			getItem(`/o/data-engine/v1.0/data-list-views/${dataListViewId}`)
+			getItem(`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`),
+			getItem(`/o/data-engine/v2.0/data-list-views/${dataListViewId}`)
 		]).then(([dataDefinition, dataListView]) => {
 			setState(prevState => ({
 				...prevState,
@@ -88,7 +88,7 @@ const ListEntries = withRouter(({history, location}) => {
 			},
 			{
 				action: item =>
-					confirmDelete('/o/data-engine/v1.0/data-records/')(
+					confirmDelete('/o/data-engine/v2.0/data-records/')(
 						item
 					).then(confirmed => {
 						if (confirmed) {
@@ -138,7 +138,7 @@ const ListEntries = withRouter(({history, location}) => {
 						),
 					title: Liferay.Language.get('there-are-no-entries-yet')
 				}}
-				endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`}
+				endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`}
 			>
 				{(item, index) => {
 					const {dataRecordValues = {}, id} = item;

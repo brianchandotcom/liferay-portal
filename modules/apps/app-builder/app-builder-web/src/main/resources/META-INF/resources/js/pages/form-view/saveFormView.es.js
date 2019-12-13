@@ -46,14 +46,14 @@ export default ({
 
 	const updateDefinition = () =>
 		updateItem(
-			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`,
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`,
 			dataDefinition
 		);
 
 	if (dataLayoutId) {
 		return updateDefinition().then(() =>
 			updateItem(
-				`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`,
+				`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`,
 				normalizedDataLayout
 			)
 		);
@@ -61,7 +61,7 @@ export default ({
 
 	return updateDefinition().then(() =>
 		addItem(
-			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`,
+			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`,
 			normalizedDataLayout
 		)
 	);

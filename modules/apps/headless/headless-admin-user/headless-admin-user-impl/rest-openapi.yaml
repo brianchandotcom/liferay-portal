@@ -123,41 +123,6 @@ components:
                         The text of a comment associated with the organization.
                     readOnly: true
                     type: string
-                contactInformation:
-                    description:
-                        The organization's contact information, which includes email addresses, postal addresses, phone
-                        numbers, and web URLs. This is modeled internally as a `Contact`.
-                    properties:
-                        emailAddresses:
-                            description:
-                                The organization's email addresses, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/EmailAddress"
-                            readOnly: true
-                            type: array
-                        postalAddresses:
-                            description:
-                                The organization's postal addresses, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/PostalAddress"
-                            readOnly: true
-                            type: array
-                        telephones:
-                            description:
-                                The organization's phones numbers, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/Phone"
-                            readOnly: true
-                            type: array
-                        webUrls:
-                            description:
-                                The organization's web URLs, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/WebUrl"
-                            readOnly: true
-                            type: array
-                    readOnly: true
-                    type: object
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"
@@ -227,6 +192,41 @@ components:
                         The number of this organization's child organizations.
                     readOnly: true
                     type: integer
+                organizationContactInformation:
+                    description:
+                        The organization's contact information, which includes email addresses, postal addresses, phone
+                        numbers, and web URLs. This is modeled internally as a `Contact`.
+                    properties:
+                        emailAddresses:
+                            description:
+                                The organization's email addresses, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/EmailAddress"
+                            readOnly: true
+                            type: array
+                        postalAddresses:
+                            description:
+                                The organization's postal addresses, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/PostalAddress"
+                            readOnly: true
+                            type: array
+                        telephones:
+                            description:
+                                The organization's phones numbers, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/Phone"
+                            readOnly: true
+                            type: array
+                        webUrls:
+                            description:
+                                The organization's web URLs, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/WebUrl"
+                            readOnly: true
+                            type: array
+                    readOnly: true
+                    type: object
                 parentOrganization:
                     allOf:
                         - $ref: "#/components/schemas/Organization"
@@ -610,70 +610,6 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
-                contactInformation:
-                    description:
-                        The user's contact information.
-                    properties:
-                        emailAddresses:
-                            description:
-                                A list of the user's email addresses, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/EmailAddress"
-                            readOnly: true
-                            type: array
-                        facebook:
-                            description:
-                                The user's Facebook account.
-                            readOnly: true
-                            type: string
-                        id:
-                            description:
-                                The ID of the `contactInformation`.
-                            format: int64
-                            readOnly: true
-                            type: integer
-                        jabber:
-                            description:
-                                The user's Jabber handle.
-                            readOnly: true
-                            type: string
-                        postalAddresses:
-                            description:
-                                A list of user's postal addresses, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/PostalAddress"
-                            readOnly: true
-                            type: array
-                        skype:
-                            description:
-                                The user's Skype handle.
-                            readOnly: true
-                            type: string
-                        sms:
-                            description:
-                                The user's SMS number.
-                            readOnly: true
-                            type: string
-                        telephones:
-                            description:
-                                A list of the user's phone numbers, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/Phone"
-                            readOnly: true
-                            type: array
-                        twitter:
-                            description:
-                                The user's Twitter handle.
-                            readOnly: true
-                            type: string
-                        webUrls:
-                            description:
-                                A list of the user's web URLs, with one optionally marked as primary.
-                            items:
-                                $ref: "#/components/schemas/WebUrl"
-                            readOnly: true
-                            type: array
-                    type: object
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"
@@ -775,6 +711,70 @@ components:
                         $ref: "#/components/schemas/SiteBrief"
                     readOnly: true
                     type: array
+                userAccountContactInformation:
+                    description:
+                        The user's contact information.
+                    properties:
+                        emailAddresses:
+                            description:
+                                A list of the user's email addresses, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/EmailAddress"
+                            readOnly: true
+                            type: array
+                        facebook:
+                            description:
+                                The user's Facebook account.
+                            readOnly: true
+                            type: string
+                        id:
+                            description:
+                                The ID of the `contactInformation`.
+                            format: int64
+                            readOnly: true
+                            type: integer
+                        jabber:
+                            description:
+                                The user's Jabber handle.
+                            readOnly: true
+                            type: string
+                        postalAddresses:
+                            description:
+                                A list of user's postal addresses, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/PostalAddress"
+                            readOnly: true
+                            type: array
+                        skype:
+                            description:
+                                The user's Skype handle.
+                            readOnly: true
+                            type: string
+                        sms:
+                            description:
+                                The user's SMS number.
+                            readOnly: true
+                            type: string
+                        telephones:
+                            description:
+                                A list of the user's phone numbers, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/Phone"
+                            readOnly: true
+                            type: array
+                        twitter:
+                            description:
+                                The user's Twitter handle.
+                            readOnly: true
+                            type: string
+                        webUrls:
+                            description:
+                                A list of the user's web URLs, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/WebUrl"
+                            readOnly: true
+                            type: array
+                    type: object
             type: object
         WebUrl:
             description:

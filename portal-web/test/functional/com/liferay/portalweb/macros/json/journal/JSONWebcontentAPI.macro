@@ -40,6 +40,23 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Helper function to delete a WC Article via JSON"
+	macro _deleteWebContent {
+		Variables.assertDefined(parameterList = "${articleId},${groupId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/delete-article \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d articleId=${articleId} \
+				-d articleURL='' \
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _getArticleIdByURLTitle {
 		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
 

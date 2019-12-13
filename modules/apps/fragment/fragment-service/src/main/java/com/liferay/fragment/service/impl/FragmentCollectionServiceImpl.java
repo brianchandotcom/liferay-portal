@@ -23,8 +23,10 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
@@ -120,7 +122,20 @@ public class FragmentCollectionServiceImpl
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(long groupId) {
-		return fragmentCollectionPersistence.findByGroupId(groupId);
+		return getFragmentCollections(groupId, false);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long groupId, boolean includeSystem) {
+
+		long[] groupIds = {groupId};
+
+		if (includeSystem) {
+			groupIds = ArrayUtil.append(groupIds, CompanyConstants.SYSTEM);
+		}
+
+		return fragmentCollectionPersistence.findByGroupId(groupIds);
 	}
 
 	@Override

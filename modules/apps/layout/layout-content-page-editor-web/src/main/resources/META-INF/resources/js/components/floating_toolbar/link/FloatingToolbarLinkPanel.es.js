@@ -566,6 +566,7 @@ const ConnectedFloatingToolbarLinkPanel = getConnectedComponent(
 		'getAssetMappingFieldsURL',
 		'mappedInfoItems',
 		'mappingFieldsURL',
+		'portletNamespace',
 		'selectedMappingTypes',
 		'spritemap'
 	]

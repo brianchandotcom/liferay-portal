@@ -34,12 +34,20 @@ export default {
 	 * @param {string} options.fragmentEntryLinkId Id of the Fragment
 	 * @return {Promise<FragmentComment>} Created FragmentComment
 	 */
-	addFragmentEntryLinkComment({body, config, fragmentEntryLinkId}) {
+	addFragmentEntryLinkComment({
+		body,
+		config,
+		fragmentEntryLinkId,
+		parentCommentId = 0
+	}) {
 		const {addFragmentEntryLinkCommentURL} = config;
 
 		return serviceFetch(config, addFragmentEntryLinkCommentURL, {
 			body,
-			fragmentEntryLinkId
+			fragmentEntryLinkId,
+			parentCommentId
+		});
+	},
 		});
 	},
 

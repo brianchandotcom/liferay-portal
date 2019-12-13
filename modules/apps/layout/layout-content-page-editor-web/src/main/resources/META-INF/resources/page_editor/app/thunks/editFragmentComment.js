@@ -20,6 +20,7 @@ export default function editFragmentComment({
 	commentId,
 	config,
 	fragmentEntryLinkId,
+	parentCommentId,
 	resolved = false
 }) {
 	return dispatch => {
@@ -32,7 +33,8 @@ export default function editFragmentComment({
 			dispatch(
 				editFragmentEntryLinkComment({
 					fragmentEntryLinkComment,
-					fragmentEntryLinkId
+					fragmentEntryLinkId,
+					parentCommentId
 				})
 			);
 		});

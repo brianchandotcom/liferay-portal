@@ -50,6 +50,7 @@ export const SpacingConfigurationPanel = ({item}) => {
 	const [showSpaceBetweenCheckbox, setShowSpaceBetweenCheckbox] = useState(
 		false
 	);
+	const {itemId} = item;
 
 	const handleSelectValueChanged = (identifier, value) => {
 		dispatch(

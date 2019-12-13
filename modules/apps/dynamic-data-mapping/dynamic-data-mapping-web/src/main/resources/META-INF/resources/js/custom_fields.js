@@ -584,13 +584,15 @@ AUI.add(
 
 					var webContentSelectorParameters = {
 						'0_json': JSON.stringify(criterionJSON),
-						criteria: 'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion',
-						itemSelectedEventName: portletNamespace + 'selectContent',
+						criteria:
+							'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion',
+						itemSelectedEventName:
+							portletNamespace + 'selectContent',
 						p_auth: Liferay.authToken,
 						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 						p_p_mode: 'view',
 						p_p_state: 'pop_up'
-					}
+					};
 
 					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
 						themeDisplay.getURLControlPanel(),
@@ -627,9 +629,12 @@ AUI.add(
 						ItemSelectorDialog => {
 							var itemSelectorDialog = new ItemSelectorDialog.default(
 								{
-									eventName: portletNamespace + 'selectContent',
+									eventName:
+										portletNamespace + 'selectContent',
 									singleSelect: true,
-									title: Liferay.Language.get('journal-article'),
+									title: Liferay.Language.get(
+										'journal-article'
+									),
 									url: instance._getWebContentSelectorURL()
 								}
 							);

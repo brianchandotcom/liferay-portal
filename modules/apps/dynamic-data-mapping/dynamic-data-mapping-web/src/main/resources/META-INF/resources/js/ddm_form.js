@@ -1620,9 +1620,11 @@ AUI.add(
 						'webContentSelectorURL'
 					);
 
-					return webContentSelectorURL ? webContentSelectorURL : instance._getWebContentURL(
-						'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion'
-					);
+					return webContentSelectorURL
+						? webContentSelectorURL
+						: instance._getWebContentURL(
+								'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion'
+						  );
 				},
 
 				_getWebContentURL(criteria) {
@@ -1688,9 +1690,12 @@ AUI.add(
 						ItemSelectorDialog => {
 							var itemSelectorDialog = new ItemSelectorDialog.default(
 								{
-									eventName: portletNamespace + 'selectWebContent',
+									eventName:
+										portletNamespace + 'selectWebContent',
 									singleSelect: true,
-									title: Liferay.Language.get('journal-article'),
+									title: Liferay.Language.get(
+										'journal-article'
+									),
 									url: instance._getWebContentSelectorURL()
 								}
 							);

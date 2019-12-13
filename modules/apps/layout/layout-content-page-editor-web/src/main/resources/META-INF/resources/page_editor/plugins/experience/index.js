@@ -113,7 +113,7 @@ export default class Experience {
 		this.dispatch = app.dispatch;
 
 		this.toolbarId = app.config.toolbarId;
-		this.toolbarPluginId = {toolbarPlugin};
+		this.toolbarPluginId = toolbarPlugin.toolbarPluginId;
 	}
 
 	activate() {

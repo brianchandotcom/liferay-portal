@@ -74,8 +74,21 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
-	protected FragmentEntryLink addFragmentEntryLink(
-			ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = _processAddFragmentEntryLink(
+			actionRequest, actionResponse);
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLink(ActionRequest actionRequest)
 		throws PortalException {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -118,20 +131,6 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 			fragmentEntryKey, serviceContext);
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		JSONObject jsonObject = _processAddFragmentEntryLink(
-			actionRequest, actionResponse);
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	private FragmentEntry _getContributedFragmentEntry(
@@ -270,7 +269,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public FragmentEntryLink call() throws Exception {
-			return addFragmentEntryLink(_actionRequest);
+			return _addFragmentEntryLink(_actionRequest);
 		}
 
 		private AddFragmentEntryLinkCallable(ActionRequest actionRequest) {

@@ -12,9 +12,7 @@
  * details.
  */
 
-import React from 'react';
-
-const {useEffect} = React;
+import React, {useEffect} from 'react';
 
 export default function useOnClickOutside(elements, handler) {
 	useEffect(() => {

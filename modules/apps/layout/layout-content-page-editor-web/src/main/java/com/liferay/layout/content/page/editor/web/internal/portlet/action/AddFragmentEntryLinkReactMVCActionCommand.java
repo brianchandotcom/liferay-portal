@@ -83,7 +83,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _processAddFragmentEntryLinkAction(
+		JSONObject jsonObject = _processAddFragmentEntryLinkActionJSONObject(
 			actionRequest, actionResponse);
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -137,7 +137,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			fragmentEntryKey, serviceContext);
 	}
 
-	private JSONObject _addFragmentEntryLinkToLayoutData(
+	private JSONObject _addFragmentEntryLinkToLayoutDataJSONObject(
 			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
@@ -192,8 +192,9 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			actionRequest);
 
-		JSONObject layoutDataJSONObject = _addFragmentEntryLinkToLayoutData(
-			actionRequest, fragmentEntryLink);
+		JSONObject layoutDataJSONObject =
+			_addFragmentEntryLinkToLayoutDataJSONObject(
+				actionRequest, fragmentEntryLink);
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
@@ -241,7 +242,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		);
 	}
 
-	private JSONObject _processAddFragmentEntryLinkAction(
+	private JSONObject _processAddFragmentEntryLinkActionJSONObject(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		Callable<JSONObject> callable = new AddFragmentEntryLinkCallable(

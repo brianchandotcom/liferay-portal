@@ -390,6 +390,11 @@ definition {
 			customObjectName = "Custom Object Title",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
+
+		TableViewBuilder.createTableViewWithFieldView(
+			fieldType = "Single Selection",
+			formViewName = "Single Selection Field - Form View Title",
+			tableViewName = "Single Selection Field - Table View Title");
 	}
 
 	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"

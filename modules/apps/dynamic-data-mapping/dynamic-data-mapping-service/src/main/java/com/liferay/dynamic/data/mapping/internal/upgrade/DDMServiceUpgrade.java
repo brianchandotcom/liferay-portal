@@ -33,6 +33,9 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0.UpgradeCheckboxF
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_1.UpgradeDDMFormFieldSettings;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3.UpgradeDDMFormInstanceDefinition;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3.UpgradeDDMFormInstanceEntries;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_4.UpgradeDDMFormParagraphFields;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_5.UpgradeDDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_6.UpgradeDDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMContentTable;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMDataProviderInstanceTable;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMFormInstanceRecordTable;
@@ -45,7 +48,6 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMStructur
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMTemplateTable;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMTemplateVersionTable;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_0.UpgradeDDMStructureLayout;
-import com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_1.UpgradeDDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
@@ -212,7 +214,16 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeDDMFormInstanceSettings(_jsonFactory));
 
 		registry.register(
-			"2.0.3", "3.0.0",
+			"2.0.3", "2.0.4", new UpgradeDDMFormParagraphFields(_jsonFactory));
+
+		registry.register(
+			"2.0.4", "2.0.5", new UpgradeDDMFormFieldValidation(_jsonFactory));
+
+		registry.register(
+			"2.0.5", "2.0.6", new UpgradeDDMDataProviderInstance(_jsonFactory));
+
+		registry.register(
+			"2.0.6", "3.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					DDMContentTable.class, DDMDataProviderInstanceTable.class,
@@ -225,22 +236,14 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 					DDMTemplateVersionTable.class
 				}));
 
-		registry.register(
-			"3.0.0", "3.0.1",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_1.
-				UpgradeDDMFormParagraphFields(_jsonFactory));
-
-		registry.register("3.0.1", "3.1.0", new UpgradeDDMStructureLayout());
+		registry.register("3.0.0", "3.1.0", new UpgradeDDMStructureLayout());
 
 		registry.register(
 			"3.1.0", "3.1.1",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_1.
 				UpgradeDDMStructureLayout());
 
-		registry.register(
-			"3.1.1", "3.1.2",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_2.
-				UpgradeDDMFormFieldValidation(_jsonFactory));
+		registry.register("3.1.1", "3.1.2", new DummyUpgradeStep());
 
 		registry.register(
 			"3.1.2", "3.2.0",
@@ -261,8 +264,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 			});
 
-		registry.register(
-			"3.2.0", "3.2.1", new UpgradeDDMDataProviderInstance(_jsonFactory));
+		registry.register("3.2.0", "3.2.1", new DummyUpgradeStep());
 
 		registry.register(
 			"3.2.1", "3.3.0",

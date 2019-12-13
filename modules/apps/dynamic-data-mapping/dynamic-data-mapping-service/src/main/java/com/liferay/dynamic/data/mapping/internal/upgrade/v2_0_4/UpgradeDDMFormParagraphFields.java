@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_1;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_4;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.portal.kernel.json.JSONFactory;

@@ -23,18 +23,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.ActionRequest;
 
 /**
  * @author Víctor Galán
@@ -42,25 +36,16 @@ import javax.portlet.ActionRequest;
 public class LayoutStructureUtil {
 
 	public static JSONObject updateLayoutPageTemplateData(
-			ActionRequest actionRequest,
+			long groupId, long segmentsExperienceId, long classNameId,
+			long classPK, long plid,
 			UnsafeConsumer<LayoutStructure, PortalException> unsafeConsumer)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					PortalUtil.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(), true);
+					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					plid, true);
 
 		LayoutStructure layoutStructure = _parse(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
@@ -71,8 +56,8 @@ public class LayoutStructureUtil {
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructure(
-				themeDisplay.getScopeGroupId(), classNameId, classPK,
-				segmentsExperienceId, dataJSONObject.toString());
+				groupId, classNameId, classPK, segmentsExperienceId,
+				dataJSONObject.toString());
 
 		return dataJSONObject;
 	}

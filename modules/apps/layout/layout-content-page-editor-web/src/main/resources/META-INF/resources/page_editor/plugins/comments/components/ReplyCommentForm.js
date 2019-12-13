@@ -17,12 +17,10 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState, useContext} from 'react';
 
-import AppContext from '../../../core/AppContext';
+import {ConfigContext} from '../../../app/config/index';
+import {DispatchContext} from '../../../app/reducers/index';
+import addFragmentComment from '../../../app/thunks/addFragmentComment';
 import CommentForm from './CommentForm';
-
-function addFragmentEntryLinkCommentReply() {
-	throw new Error('Not implemented');
-}
 
 export default function ReplyCommentForm({
 	disabled,
@@ -32,24 +30,21 @@ export default function ReplyCommentForm({
 	const [addingComment, setAddingComment] = useState(false);
 	const [showForm, setShowForm] = useState(false);
 	const [textareaContent, setTextareaContent] = useState('');
-	const {dispatch} = useContext(AppContext);
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
 
 	const handleReplyButtonClick = () => {
 		setAddingComment(true);
 
-		addFragmentEntryLinkCommentReply(
-			fragmentEntryLinkId,
-			parentCommentId,
-			textareaContent
+		dispatch(
+			addFragmentComment({
+				body: textareaContent,
+				config,
+				fragmentEntryLinkId,
+				parentCommentId
+			})
 		)
-			.then(comment => {
-				dispatch({
-					comment,
-					fragmentEntryLinkId,
-					parentCommentId,
-					type: 'addReply'
-				});
-
+			.then(() => {
 				setAddingComment(false);
 				setShowForm(false);
 				setTextareaContent('');

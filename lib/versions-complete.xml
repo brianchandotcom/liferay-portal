@@ -1888,7 +1888,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.axis.extender.jar!org.apache.axis.jar</file-name>
-				<version>1.4.LIFERAY-PATCHED-4</version>
+				<version>1.4.LIFERAY-PATCHED-5</version>
 				<project-name>org.apache.axis</project-name>
 				<licenses>
 					<license>

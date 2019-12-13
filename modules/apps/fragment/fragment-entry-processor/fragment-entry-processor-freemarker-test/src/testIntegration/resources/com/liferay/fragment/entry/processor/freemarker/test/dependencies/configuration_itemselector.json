@@ -4,7 +4,7 @@
 			"fields": [
 				{
 					"defaultValue": {
-						"className": "com.liferay.journal.model.JournalArticle",
+						"className": "${className}",
 						"classNameId": "${classNameId}",
 						"classPK": "${classPK}"
 					},

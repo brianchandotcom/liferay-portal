@@ -182,6 +182,8 @@ public class FragmentEntryProcessorFreemarkerTest {
 			serviceContext);
 
 		Map<String, String> configurationDefaultValues = HashMapBuilder.put(
+			"className", journalArticle.getModelClassName()
+		).put(
 			"classNameId", String.valueOf(journalArticle.getClassNameId())
 		).put(
 			"classPK", String.valueOf(journalArticle.getResourcePrimKey())

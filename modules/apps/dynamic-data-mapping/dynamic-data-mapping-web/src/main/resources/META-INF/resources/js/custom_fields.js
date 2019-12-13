@@ -573,19 +573,26 @@ AUI.add(
 				},
 
 				_getWebContentSelectorURL() {
-					var webContentSelectorParameters = {
-						eventName: 'selectContent',
-						groupId: themeDisplay.getScopeGroupId(),
-						p_auth: Liferay.authToken,
-						p_p_id:
-							'com_liferay_asset_browser_web_portlet_AssetBrowserPortlet',
-						p_p_state: 'pop_up',
-						selectedGroupId: themeDisplay.getScopeGroupId(),
-						showNonindexable: true,
-						showScheduled: true,
-						typeSelection:
-							'com.liferay.journal.model.JournalArticle'
+					var criterionJSON = {
+						desiredItemSelectorReturnTypes:
+							'com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType'
 					};
+
+					var instance = this;
+
+					var portletNamespace = instance.get('portletNamespace');
+
+					var webContentSelectorParameters = {
+						'0_json': JSON.stringify(criterionJSON),
+						criteria: 'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion',
+						itemSelectedEventName: portletNamespace + 'selectContent',
+						p_auth: Liferay.authToken,
+						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
+						p_p_mode: 'view',
+						p_p_state: 'pop_up'
+					}
+
+					webContentSelectorParameters[portletNamespace + 'singleSelect'] = 'true';
 
 					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
 						themeDisplay.getURLControlPanel(),
@@ -615,29 +622,40 @@ AUI.add(
 				_onClickChoose() {
 					var instance = this;
 
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
-							},
-							eventName: 'selectContent',
-							id: 'selectContent',
-							title: Liferay.Language.get('journal-article'),
-							uri: instance._getWebContentSelectorURL()
-						},
-						event => {
-							if (event.details.length > 0) {
-								var selectedWebContent = event.details[0];
+					var portletNamespace = instance.get('portletNamespace');
 
-								instance.setValue({
-									className:
-										selectedWebContent.assetclassname,
-									classPK: selectedWebContent.assetclasspk,
-									title: selectedWebContent.assettitle
-								});
-							}
+					Liferay.Loader.require(
+						'frontend-js-web/liferay/ItemSelectorDialog.es',
+						ItemSelectorDialog => {
+							var itemSelectorDialog = new ItemSelectorDialog.default(
+								{
+									eventName: portletNamespace + 'selectContent',
+									singleSelect: true,
+									title: Liferay.Language.get('journal-article'),
+									url: instance._getWebContentSelectorURL()
+								}
+							);
+
+							itemSelectorDialog.on(
+								'selectedItemChange',
+								event => {
+									var selectedItem = event.selectedItem;
+
+									if (selectedItem) {
+										var itemValue = JSON.parse(
+											selectedItem.value
+										);
+
+										instance.setValue({
+											className: itemValue.className,
+											classPK: itemValue.classPK,
+											title: itemValue.title
+										});
+									}
+								}
+							);
+
+							itemSelectorDialog.open();
 						}
 					);
 				},

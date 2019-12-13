@@ -55,20 +55,7 @@ public class LayoutStructure {
 		for (Map.Entry<String, Item> entry : _items.entrySet()) {
 			Item item = entry.getValue();
 
-			itemsJSONObject.put(
-				entry.getKey(),
-				JSONUtil.put(
-					"children",
-					JSONFactoryUtil.createJSONArray(item.getChildrenItemIds())
-				).put(
-					"config", item.getItemConfigJSONObject()
-				).put(
-					"itemId", item.getItemId()
-				).put(
-					"parentId", item.getParentItemId()
-				).put(
-					"type", item.getItemType()
-				));
+			itemsJSONObject.put(entry.getKey(), item.toJSONObject());
 		}
 
 		return JSONUtil.put(
@@ -100,6 +87,21 @@ public class LayoutStructure {
 			_itemId = itemId;
 			_parentItemId = parentItemId;
 			_itemType = itemType;
+		}
+
+		public JSONObject toJSONObject() {
+			 return JSONUtil.put(
+				 "children",
+				 JSONFactoryUtil.createJSONArray(getChildrenItemIds())
+			 ).put(
+				 "config", getItemConfigJSONObject()
+			 ).put(
+				 "itemId", getItemId()
+			 ).put(
+				 "parentId", getParentItemId()
+			 ).put(
+				 "type", getItemType()
+			 );
 		}
 
 		public List<String> getChildrenItemIds() {

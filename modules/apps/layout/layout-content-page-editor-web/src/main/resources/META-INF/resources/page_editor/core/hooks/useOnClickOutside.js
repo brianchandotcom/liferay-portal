@@ -12,26 +12,17 @@
  * details.
  */
 
-import React, {useEffect} from 'react';
+import {useEventListener} from 'frontend-js-react-web';
 
 export default function useOnClickOutside(elements, handler) {
-	useEffect(() => {
-		const listener = event => {
-			if (
-				!elements.some(
-					element => element && element.contains(event.target)
-				)
-			) {
-				handler(event);
-			}
-		};
+	const listener = event => {
+		if (
+			!elements.some(element => element && element.contains(event.target))
+		) {
+			handler(event);
+		}
+	};
 
-		document.addEventListener('mousedown', listener);
-		document.addEventListener('touchstart', listener);
-
-		return () => {
-			document.removeEventListener('mousedown', listener);
-			document.removeEventListener('touchstart', listener);
-		};
-	}, [elements, handler]);
+	useEventListener('mousedown', listener, false, document);
+	useEventListener('touchstart', listener, false, document);
 }

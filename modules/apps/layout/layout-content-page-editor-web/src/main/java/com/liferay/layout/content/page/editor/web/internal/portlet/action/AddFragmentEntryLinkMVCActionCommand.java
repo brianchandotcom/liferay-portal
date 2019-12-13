@@ -30,6 +30,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,9 +44,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,10 +52,10 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,9 +69,19 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/add_fragment_entry_link"
 	},
-	service = MVCActionCommand.class
+	service = {AopService.class, MVCActionCommand.class}
 )
-public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
+public class AddFragmentEntryLinkMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	protected FragmentEntryLink addFragmentEntryLink(
 			ActionRequest actionRequest)
@@ -169,14 +178,11 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Callable<FragmentEntryLink> callable = new AddFragmentEntryLinkCallable(
-			actionRequest);
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			FragmentEntryLink fragmentEntryLink = TransactionInvokerUtil.invoke(
-				_transactionConfig, callable);
+			FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
+				actionRequest);
 
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
 				new DefaultFragmentRendererContext(fragmentEntryLink);
@@ -222,12 +228,12 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
 		}
-		catch (Throwable t) {
-			_log.error(t, t);
+		catch (Exception e) {
+			_log.error(e, e);
 
 			String errorMessage = "an-unexpected-error-occurred";
 
-			if (t.getCause() instanceof NoSuchEntryException) {
+			if (e instanceof NoSuchEntryException) {
 				errorMessage =
 					"the-fragment-can-no-longer-be-added-because-it-has-been-" +
 						"deleted";
@@ -243,10 +249,6 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddFragmentEntryLinkMVCActionCommand.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private FragmentCollectionContributorTracker
@@ -272,21 +274,5 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	private class AddFragmentEntryLinkCallable
-		implements Callable<FragmentEntryLink> {
-
-		@Override
-		public FragmentEntryLink call() throws Exception {
-			return addFragmentEntryLink(_actionRequest);
-		}
-
-		private AddFragmentEntryLinkCallable(ActionRequest actionRequest) {
-			_actionRequest = actionRequest;
-		}
-
-		private final ActionRequest _actionRequest;
-
-	}
 
 }

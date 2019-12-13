@@ -19,6 +19,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -26,17 +27,14 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.concurrent.Callable;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,32 +48,78 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/discard_draft_layout"
 	},
-	service = MVCActionCommand.class
+	service = {AopService.class, MVCActionCommand.class}
 )
-public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
+public class DiscardDraftLayoutMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DiscardDraftLayoutCallable discardDraftLayoutCallable =
-			new DiscardDraftLayoutCallable(actionRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig, discardDraftLayoutCallable);
+		long plid = ParamUtil.getLong(actionRequest, "classPK");
+
+		LayoutPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), plid, ActionKeys.UPDATE);
+
+		Layout draftLayout = _layoutLocalService.getLayout(plid);
+
+		if ((draftLayout.getClassPK() == 0) ||
+			(_portal.getClassNameId(Layout.class) !=
+				draftLayout.getClassNameId())) {
+
+			sendRedirect(actionRequest, actionResponse);
+
+			return;
 		}
-		catch (Throwable t) {
-			throw new Exception(t);
+
+		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
+
+		int fragmentEntryLinksCount =
+			_fragmentEntryLinkLocalService.
+				getClassedModelFragmentEntryLinksCount(
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
+					layout.getPlid());
+
+		if ((fragmentEntryLinksCount == 0) &&
+			(layout.getClassNameId() == _portal.getClassNameId(
+				LayoutPageTemplateEntry.class))) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(layout.getClassPK());
+
+			if (layoutPageTemplateEntry != null) {
+				layout = _layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid());
+			}
 		}
+
+		LayoutPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), layout.getPlid(),
+			ActionKeys.VIEW);
+
+		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
+
+		draftLayout.setModifiedDate(layout.getPublishDate());
+
+		_layoutLocalService.updateLayout(draftLayout);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
@@ -92,71 +136,5 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	private class DiscardDraftLayoutCallable implements Callable<Void> {
-
-		@Override
-		public Void call() throws Exception {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_actionRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			long plid = ParamUtil.getLong(_actionRequest, "classPK");
-
-			LayoutPermissionUtil.check(
-				themeDisplay.getPermissionChecker(), plid, ActionKeys.UPDATE);
-
-			Layout draftLayout = _layoutLocalService.getLayout(plid);
-
-			if ((draftLayout.getClassPK() == 0) ||
-				(_portal.getClassNameId(Layout.class) !=
-					draftLayout.getClassNameId())) {
-
-				return null;
-			}
-
-			Layout layout = _layoutLocalService.getLayout(
-				draftLayout.getClassPK());
-
-			int fragmentEntryLinksCount =
-				_fragmentEntryLinkLocalService.
-					getClassedModelFragmentEntryLinksCount(
-						layout.getGroupId(),
-						_portal.getClassNameId(Layout.class), layout.getPlid());
-
-			if ((fragmentEntryLinksCount == 0) &&
-				(layout.getClassNameId() == _portal.getClassNameId(
-					LayoutPageTemplateEntry.class))) {
-
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntry(layout.getClassPK());
-
-				if (layoutPageTemplateEntry != null) {
-					layout = _layoutLocalService.getLayout(
-						layoutPageTemplateEntry.getPlid());
-				}
-			}
-
-			LayoutPermissionUtil.check(
-				themeDisplay.getPermissionChecker(), layout.getPlid(),
-				ActionKeys.VIEW);
-
-			draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
-
-			draftLayout.setModifiedDate(layout.getPublishDate());
-
-			_layoutLocalService.updateLayout(draftLayout);
-
-			return null;
-		}
-
-		private DiscardDraftLayoutCallable(ActionRequest actionRequest) {
-			_actionRequest = actionRequest;
-		}
-
-		private final ActionRequest _actionRequest;
-
-	}
 
 }

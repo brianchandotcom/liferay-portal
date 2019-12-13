@@ -22,7 +22,7 @@ import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructure;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -95,12 +95,15 @@ public class AddPortletReactMVCActionCommand extends BaseMVCActionCommand {
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			actionRequest,
 			layoutStructure -> {
-				LayoutStructure.Item item = LayoutStructure.Item.create(
-					JSONFactoryUtil.createJSONObject(itemConfig),
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					parentItemId, itemType);
+				LayoutStructureItem layoutStructureItem =
+					LayoutStructureItem.create(
+						JSONFactoryUtil.createJSONObject(itemConfig),
+						String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId()),
+						parentItemId, itemType);
 
-				layoutStructure.addItem(item, parentItemId, position);
+				layoutStructure.addLayoutStructureItem(
+					layoutStructureItem, parentItemId, position);
 			});
 	}
 

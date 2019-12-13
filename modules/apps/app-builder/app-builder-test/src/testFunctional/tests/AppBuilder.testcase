@@ -412,6 +412,10 @@ definition {
 			title = "Text Field - Table View Title");
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "1",
+			title = "Text Field - Form View Title");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"

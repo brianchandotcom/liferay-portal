@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext, useReducer} from 'react';
+import React, {useContext, useReducer, useRef} from 'react';
 
 const INITIAL_STATE = {
 	activeItemId: null,
@@ -112,7 +112,10 @@ const useFloatingToolbar = () => {
 
 const useCurrentFloatingToolbar = () => {
 	const [state] = useContext(ControlsContext);
-	return state.floatingToolbarRef;
+
+	const fallback = useRef(null);
+
+	return state.floatingToolbarRef || fallback;
 };
 
 export {

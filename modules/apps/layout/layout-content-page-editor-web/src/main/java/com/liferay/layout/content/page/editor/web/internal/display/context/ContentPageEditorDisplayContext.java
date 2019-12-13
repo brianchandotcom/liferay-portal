@@ -213,6 +213,10 @@ public class ContentPageEditorDisplayContext {
 				"defaultSegmentsExperienceId",
 				editorSoyContext.get("defaultSegmentsExperienceId")
 			).put(
+				"deleteFragmentEntryLinkCommentURL",
+				getFragmentEntryActionURL(
+					"/content_layout/delete_fragment_entry_link_comment")
+			).put(
 				"editFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
 					"/content_layout/edit_fragment_entry_link_comment",

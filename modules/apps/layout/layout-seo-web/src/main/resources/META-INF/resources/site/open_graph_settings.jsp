@@ -18,10 +18,12 @@
 
 <%
 OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSettingsDisplayContext)request.getAttribute(OpenGraphSettingsDisplayContext.class.getName());
+
+boolean openGraphEnabled = openGraphSettingsDisplayContext.isOpenGraphEnabled();
 %>
 
 <div class="form-group" id="<portlet:namespace />idOptions">
-	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" />
+	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= openGraphEnabled %>" />
 </div>
 
 <p class="text-muted">
@@ -39,11 +41,11 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 <div class="form-group">
 	<label class="control-label"><liferay-ui:message key="image" /></label>
 
-	<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="mb-3" />
+	<aui:input disabled="<%= !openGraphEnabled %>" label="<%= StringPool.BLANK %>" name="openGraphImageURL" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageURL() %>" wrapperCssClass="mb-3" />
 
 	<aui:button-row cssClass="mt-0">
-		<aui:button name="openGraphImageButton" value="select" />
-		<aui:button name="openGraphClearImageButton" value="clear" />
+		<aui:button disabled="<%= !openGraphEnabled %>" name="openGraphImageButton" value="select" />
+		<aui:button disabled="<%= !openGraphEnabled %>" name="openGraphClearImageButton" value="clear" />
 	</aui:button-row>
 </div>
 

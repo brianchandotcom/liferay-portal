@@ -109,16 +109,6 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
-		if (userAccount.getContactInformation() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contactInformation\": ");
-
-			sb.append(String.valueOf(userAccount.getContactInformation()));
-		}
-
 		if (userAccount.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -406,6 +396,17 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
+		if (userAccount.getUserAccountContactInformation() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccountContactInformation\": ");
+
+			sb.append(
+				String.valueOf(userAccount.getUserAccountContactInformation()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -449,15 +450,6 @@ public class UserAccountSerDes {
 		map.put(
 			"birthDate",
 			liferayToJSONDateFormat.format(userAccount.getBirthDate()));
-
-		if (userAccount.getContactInformation() == null) {
-			map.put("contactInformation", null);
-		}
-		else {
-			map.put(
-				"contactInformation",
-				String.valueOf(userAccount.getContactInformation()));
-		}
 
 		if (userAccount.getCustomFields() == null) {
 			map.put("customFields", null);
@@ -588,6 +580,15 @@ public class UserAccountSerDes {
 			map.put("siteBriefs", String.valueOf(userAccount.getSiteBriefs()));
 		}
 
+		if (userAccount.getUserAccountContactInformation() == null) {
+			map.put("userAccountContactInformation", null);
+		}
+		else {
+			map.put(
+				"userAccountContactInformation",
+				String.valueOf(userAccount.getUserAccountContactInformation()));
+		}
+
 		return map;
 	}
 
@@ -623,15 +624,6 @@ public class UserAccountSerDes {
 				if (jsonParserFieldValue != null) {
 					userAccount.setBirthDate(
 						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "contactInformation")) {
-
-				if (jsonParserFieldValue != null) {
-					userAccount.setContactInformation(
-						ContactInformationSerDes.toDTO(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
@@ -759,6 +751,15 @@ public class UserAccountSerDes {
 						).toArray(
 							size -> new SiteBrief[size]
 						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "userAccountContactInformation")) {
+
+				if (jsonParserFieldValue != null) {
+					userAccount.setUserAccountContactInformation(
+						UserAccountContactInformationSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

@@ -50,28 +50,6 @@ public class Organization {
 
 	protected String comment;
 
-	public ContactInformation getContactInformation() {
-		return contactInformation;
-	}
-
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
-	}
-
-	public void setContactInformation(
-		UnsafeSupplier<ContactInformation, Exception>
-			contactInformationUnsafeSupplier) {
-
-		try {
-			contactInformation = contactInformationUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ContactInformation contactInformation;
-
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -257,6 +235,31 @@ public class Organization {
 	}
 
 	protected Integer numberOfOrganizations;
+
+	public OrganizationContactInformation getOrganizationContactInformation() {
+		return organizationContactInformation;
+	}
+
+	public void setOrganizationContactInformation(
+		OrganizationContactInformation organizationContactInformation) {
+
+		this.organizationContactInformation = organizationContactInformation;
+	}
+
+	public void setOrganizationContactInformation(
+		UnsafeSupplier<OrganizationContactInformation, Exception>
+			organizationContactInformationUnsafeSupplier) {
+
+		try {
+			organizationContactInformation =
+				organizationContactInformationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected OrganizationContactInformation organizationContactInformation;
 
 	public Organization getParentOrganization() {
 		return parentOrganization;

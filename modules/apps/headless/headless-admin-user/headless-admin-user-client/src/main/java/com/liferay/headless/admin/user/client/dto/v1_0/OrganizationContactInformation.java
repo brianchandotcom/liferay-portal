@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.user.client.dto.v1_0;
 
 import com.liferay.headless.admin.user.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.user.client.serdes.v1_0.ContactInformationSerDes;
+import com.liferay.headless.admin.user.client.serdes.v1_0.OrganizationContactInformationSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContactInformation {
+public class OrganizationContactInformation {
 
 	public EmailAddress[] getEmailAddresses() {
 		return emailAddresses;
@@ -50,67 +50,6 @@ public class ContactInformation {
 
 	protected EmailAddress[] emailAddresses;
 
-	public String getFacebook() {
-		return facebook;
-	}
-
-	public void setFacebook(String facebook) {
-		this.facebook = facebook;
-	}
-
-	public void setFacebook(
-		UnsafeSupplier<String, Exception> facebookUnsafeSupplier) {
-
-		try {
-			facebook = facebookUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String facebook;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
-	public String getJabber() {
-		return jabber;
-	}
-
-	public void setJabber(String jabber) {
-		this.jabber = jabber;
-	}
-
-	public void setJabber(
-		UnsafeSupplier<String, Exception> jabberUnsafeSupplier) {
-
-		try {
-			jabber = jabberUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String jabber;
-
 	public PostalAddress[] getPostalAddresses() {
 		return postalAddresses;
 	}
@@ -133,46 +72,6 @@ public class ContactInformation {
 
 	protected PostalAddress[] postalAddresses;
 
-	public String getSkype() {
-		return skype;
-	}
-
-	public void setSkype(String skype) {
-		this.skype = skype;
-	}
-
-	public void setSkype(
-		UnsafeSupplier<String, Exception> skypeUnsafeSupplier) {
-
-		try {
-			skype = skypeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String skype;
-
-	public String getSms() {
-		return sms;
-	}
-
-	public void setSms(String sms) {
-		this.sms = sms;
-	}
-
-	public void setSms(UnsafeSupplier<String, Exception> smsUnsafeSupplier) {
-		try {
-			sms = smsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String sms;
-
 	public Phone[] getTelephones() {
 		return telephones;
 	}
@@ -193,27 +92,6 @@ public class ContactInformation {
 	}
 
 	protected Phone[] telephones;
-
-	public String getTwitter() {
-		return twitter;
-	}
-
-	public void setTwitter(String twitter) {
-		this.twitter = twitter;
-	}
-
-	public void setTwitter(
-		UnsafeSupplier<String, Exception> twitterUnsafeSupplier) {
-
-		try {
-			twitter = twitterUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String twitter;
 
 	public WebUrl[] getWebUrls() {
 		return webUrls;
@@ -242,13 +120,15 @@ public class ContactInformation {
 			return true;
 		}
 
-		if (!(object instanceof ContactInformation)) {
+		if (!(object instanceof OrganizationContactInformation)) {
 			return false;
 		}
 
-		ContactInformation contactInformation = (ContactInformation)object;
+		OrganizationContactInformation organizationContactInformation =
+			(OrganizationContactInformation)object;
 
-		return Objects.equals(toString(), contactInformation.toString());
+		return Objects.equals(
+			toString(), organizationContactInformation.toString());
 	}
 
 	@Override
@@ -259,7 +139,7 @@ public class ContactInformation {
 	}
 
 	public String toString() {
-		return ContactInformationSerDes.toJSON(this);
+		return OrganizationContactInformationSerDes.toJSON(this);
 	}
 
 }

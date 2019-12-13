@@ -136,36 +136,6 @@ public class UserAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date birthDate;
 
-	@Schema(description = "The user's contact information.")
-	@Valid
-	public ContactInformation getContactInformation() {
-		return contactInformation;
-	}
-
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
-	}
-
-	@JsonIgnore
-	public void setContactInformation(
-		UnsafeSupplier<ContactInformation, Exception>
-			contactInformationUnsafeSupplier) {
-
-		try {
-			contactInformation = contactInformationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The user's contact information.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContactInformation contactInformation;
-
 	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
@@ -677,6 +647,39 @@ public class UserAccount {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SiteBrief[] siteBriefs;
 
+	@Schema(description = "The user's contact information.")
+	@Valid
+	public UserAccountContactInformation getUserAccountContactInformation() {
+		return userAccountContactInformation;
+	}
+
+	public void setUserAccountContactInformation(
+		UserAccountContactInformation userAccountContactInformation) {
+
+		this.userAccountContactInformation = userAccountContactInformation;
+	}
+
+	@JsonIgnore
+	public void setUserAccountContactInformation(
+		UnsafeSupplier<UserAccountContactInformation, Exception>
+			userAccountContactInformationUnsafeSupplier) {
+
+		try {
+			userAccountContactInformation =
+				userAccountContactInformationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The user's contact information.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected UserAccountContactInformation userAccountContactInformation;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -747,16 +750,6 @@ public class UserAccount {
 			sb.append(liferayToJSONDateFormat.format(birthDate));
 
 			sb.append("\"");
-		}
-
-		if (contactInformation != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contactInformation\": ");
-
-			sb.append(String.valueOf(contactInformation));
 		}
 
 		if (customFields != null) {
@@ -1039,6 +1032,16 @@ public class UserAccount {
 			}
 
 			sb.append("]");
+		}
+
+		if (userAccountContactInformation != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccountContactInformation\": ");
+
+			sb.append(String.valueOf(userAccountContactInformation));
 		}
 
 		sb.append("}");

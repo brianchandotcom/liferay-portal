@@ -14,10 +14,10 @@
 
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
-import com.liferay.headless.admin.user.client.dto.v1_0.ContactInformation;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
@@ -35,24 +35,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContactInformationSerDes {
+public class UserAccountContactInformationSerDes {
 
-	public static ContactInformation toDTO(String json) {
-		ContactInformationJSONParser contactInformationJSONParser =
-			new ContactInformationJSONParser();
+	public static UserAccountContactInformation toDTO(String json) {
+		UserAccountContactInformationJSONParser
+			userAccountContactInformationJSONParser =
+				new UserAccountContactInformationJSONParser();
 
-		return contactInformationJSONParser.parseToDTO(json);
+		return userAccountContactInformationJSONParser.parseToDTO(json);
 	}
 
-	public static ContactInformation[] toDTOs(String json) {
-		ContactInformationJSONParser contactInformationJSONParser =
-			new ContactInformationJSONParser();
+	public static UserAccountContactInformation[] toDTOs(String json) {
+		UserAccountContactInformationJSONParser
+			userAccountContactInformationJSONParser =
+				new UserAccountContactInformationJSONParser();
 
-		return contactInformationJSONParser.parseToDTOs(json);
+		return userAccountContactInformationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ContactInformation contactInformation) {
-		if (contactInformation == null) {
+	public static String toJSON(
+		UserAccountContactInformation userAccountContactInformation) {
+
+		if (userAccountContactInformation == null) {
 			return "null";
 		}
 
@@ -60,7 +64,7 @@ public class ContactInformationSerDes {
 
 		sb.append("{");
 
-		if (contactInformation.getEmailAddresses() != null) {
+		if (userAccountContactInformation.getEmailAddresses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -69,13 +73,18 @@ public class ContactInformationSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contactInformation.getEmailAddresses().length;
+			for (int i = 0;
+				 i < userAccountContactInformation.getEmailAddresses().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(contactInformation.getEmailAddresses()[i]));
+					String.valueOf(
+						userAccountContactInformation.getEmailAddresses()[i]));
 
-				if ((i + 1) < contactInformation.getEmailAddresses().length) {
+				if ((i + 1) <
+						userAccountContactInformation.
+							getEmailAddresses().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -83,7 +92,7 @@ public class ContactInformationSerDes {
 			sb.append("]");
 		}
 
-		if (contactInformation.getFacebook() != null) {
+		if (userAccountContactInformation.getFacebook() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -92,22 +101,22 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contactInformation.getFacebook()));
+			sb.append(_escape(userAccountContactInformation.getFacebook()));
 
 			sb.append("\"");
 		}
 
-		if (contactInformation.getId() != null) {
+		if (userAccountContactInformation.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(contactInformation.getId());
+			sb.append(userAccountContactInformation.getId());
 		}
 
-		if (contactInformation.getJabber() != null) {
+		if (userAccountContactInformation.getJabber() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -116,12 +125,12 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contactInformation.getJabber()));
+			sb.append(_escape(userAccountContactInformation.getJabber()));
 
 			sb.append("\"");
 		}
 
-		if (contactInformation.getPostalAddresses() != null) {
+		if (userAccountContactInformation.getPostalAddresses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -130,13 +139,18 @@ public class ContactInformationSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contactInformation.getPostalAddresses().length;
+			for (int i = 0;
+				 i < userAccountContactInformation.getPostalAddresses().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(contactInformation.getPostalAddresses()[i]));
+					String.valueOf(
+						userAccountContactInformation.getPostalAddresses()[i]));
 
-				if ((i + 1) < contactInformation.getPostalAddresses().length) {
+				if ((i + 1) <
+						userAccountContactInformation.
+							getPostalAddresses().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -144,7 +158,7 @@ public class ContactInformationSerDes {
 			sb.append("]");
 		}
 
-		if (contactInformation.getSkype() != null) {
+		if (userAccountContactInformation.getSkype() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -153,12 +167,12 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contactInformation.getSkype()));
+			sb.append(_escape(userAccountContactInformation.getSkype()));
 
 			sb.append("\"");
 		}
 
-		if (contactInformation.getSms() != null) {
+		if (userAccountContactInformation.getSms() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -167,12 +181,12 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contactInformation.getSms()));
+			sb.append(_escape(userAccountContactInformation.getSms()));
 
 			sb.append("\"");
 		}
 
-		if (contactInformation.getTelephones() != null) {
+		if (userAccountContactInformation.getTelephones() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -181,13 +195,17 @@ public class ContactInformationSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contactInformation.getTelephones().length;
+			for (int i = 0;
+				 i < userAccountContactInformation.getTelephones().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(contactInformation.getTelephones()[i]));
+					String.valueOf(
+						userAccountContactInformation.getTelephones()[i]));
 
-				if ((i + 1) < contactInformation.getTelephones().length) {
+				if ((i + 1) <
+						userAccountContactInformation.getTelephones().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -195,7 +213,7 @@ public class ContactInformationSerDes {
 			sb.append("]");
 		}
 
-		if (contactInformation.getTwitter() != null) {
+		if (userAccountContactInformation.getTwitter() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -204,12 +222,12 @@ public class ContactInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contactInformation.getTwitter()));
+			sb.append(_escape(userAccountContactInformation.getTwitter()));
 
 			sb.append("\"");
 		}
 
-		if (contactInformation.getWebUrls() != null) {
+		if (userAccountContactInformation.getWebUrls() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -218,10 +236,16 @@ public class ContactInformationSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contactInformation.getWebUrls().length; i++) {
-				sb.append(String.valueOf(contactInformation.getWebUrls()[i]));
+			for (int i = 0;
+				 i < userAccountContactInformation.getWebUrls().length; i++) {
 
-				if ((i + 1) < contactInformation.getWebUrls().length) {
+				sb.append(
+					String.valueOf(
+						userAccountContactInformation.getWebUrls()[i]));
+
+				if ((i + 1) <
+						userAccountContactInformation.getWebUrls().length) {
+
 					sb.append(", ");
 				}
 			}
@@ -235,122 +259,136 @@ public class ContactInformationSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ContactInformationJSONParser contactInformationJSONParser =
-			new ContactInformationJSONParser();
+		UserAccountContactInformationJSONParser
+			userAccountContactInformationJSONParser =
+				new UserAccountContactInformationJSONParser();
 
-		return contactInformationJSONParser.parseToMap(json);
+		return userAccountContactInformationJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		ContactInformation contactInformation) {
+		UserAccountContactInformation userAccountContactInformation) {
 
-		if (contactInformation == null) {
+		if (userAccountContactInformation == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (contactInformation.getEmailAddresses() == null) {
+		if (userAccountContactInformation.getEmailAddresses() == null) {
 			map.put("emailAddresses", null);
 		}
 		else {
 			map.put(
 				"emailAddresses",
-				String.valueOf(contactInformation.getEmailAddresses()));
+				String.valueOf(
+					userAccountContactInformation.getEmailAddresses()));
 		}
 
-		if (contactInformation.getFacebook() == null) {
+		if (userAccountContactInformation.getFacebook() == null) {
 			map.put("facebook", null);
 		}
 		else {
 			map.put(
-				"facebook", String.valueOf(contactInformation.getFacebook()));
+				"facebook",
+				String.valueOf(userAccountContactInformation.getFacebook()));
 		}
 
-		if (contactInformation.getId() == null) {
+		if (userAccountContactInformation.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(contactInformation.getId()));
+			map.put(
+				"id", String.valueOf(userAccountContactInformation.getId()));
 		}
 
-		if (contactInformation.getJabber() == null) {
+		if (userAccountContactInformation.getJabber() == null) {
 			map.put("jabber", null);
 		}
 		else {
-			map.put("jabber", String.valueOf(contactInformation.getJabber()));
+			map.put(
+				"jabber",
+				String.valueOf(userAccountContactInformation.getJabber()));
 		}
 
-		if (contactInformation.getPostalAddresses() == null) {
+		if (userAccountContactInformation.getPostalAddresses() == null) {
 			map.put("postalAddresses", null);
 		}
 		else {
 			map.put(
 				"postalAddresses",
-				String.valueOf(contactInformation.getPostalAddresses()));
+				String.valueOf(
+					userAccountContactInformation.getPostalAddresses()));
 		}
 
-		if (contactInformation.getSkype() == null) {
+		if (userAccountContactInformation.getSkype() == null) {
 			map.put("skype", null);
 		}
 		else {
-			map.put("skype", String.valueOf(contactInformation.getSkype()));
+			map.put(
+				"skype",
+				String.valueOf(userAccountContactInformation.getSkype()));
 		}
 
-		if (contactInformation.getSms() == null) {
+		if (userAccountContactInformation.getSms() == null) {
 			map.put("sms", null);
 		}
 		else {
-			map.put("sms", String.valueOf(contactInformation.getSms()));
+			map.put(
+				"sms", String.valueOf(userAccountContactInformation.getSms()));
 		}
 
-		if (contactInformation.getTelephones() == null) {
+		if (userAccountContactInformation.getTelephones() == null) {
 			map.put("telephones", null);
 		}
 		else {
 			map.put(
 				"telephones",
-				String.valueOf(contactInformation.getTelephones()));
+				String.valueOf(userAccountContactInformation.getTelephones()));
 		}
 
-		if (contactInformation.getTwitter() == null) {
+		if (userAccountContactInformation.getTwitter() == null) {
 			map.put("twitter", null);
 		}
 		else {
-			map.put("twitter", String.valueOf(contactInformation.getTwitter()));
+			map.put(
+				"twitter",
+				String.valueOf(userAccountContactInformation.getTwitter()));
 		}
 
-		if (contactInformation.getWebUrls() == null) {
+		if (userAccountContactInformation.getWebUrls() == null) {
 			map.put("webUrls", null);
 		}
 		else {
-			map.put("webUrls", String.valueOf(contactInformation.getWebUrls()));
+			map.put(
+				"webUrls",
+				String.valueOf(userAccountContactInformation.getWebUrls()));
 		}
 
 		return map;
 	}
 
-	public static class ContactInformationJSONParser
-		extends BaseJSONParser<ContactInformation> {
+	public static class UserAccountContactInformationJSONParser
+		extends BaseJSONParser<UserAccountContactInformation> {
 
 		@Override
-		protected ContactInformation createDTO() {
-			return new ContactInformation();
+		protected UserAccountContactInformation createDTO() {
+			return new UserAccountContactInformation();
 		}
 
 		@Override
-		protected ContactInformation[] createDTOArray(int size) {
-			return new ContactInformation[size];
+		protected UserAccountContactInformation[] createDTOArray(int size) {
+			return new UserAccountContactInformation[size];
 		}
 
 		@Override
 		protected void setField(
-			ContactInformation contactInformation, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			UserAccountContactInformation userAccountContactInformation,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "emailAddresses")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setEmailAddresses(
+					userAccountContactInformation.setEmailAddresses(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -362,24 +400,25 @@ public class ContactInformationSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "facebook")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setFacebook(
+					userAccountContactInformation.setFacebook(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setId(
+					userAccountContactInformation.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "jabber")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setJabber((String)jsonParserFieldValue);
+					userAccountContactInformation.setJabber(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "postalAddresses")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setPostalAddresses(
+					userAccountContactInformation.setPostalAddresses(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -391,17 +430,19 @@ public class ContactInformationSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "skype")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setSkype((String)jsonParserFieldValue);
+					userAccountContactInformation.setSkype(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sms")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setSms((String)jsonParserFieldValue);
+					userAccountContactInformation.setSms(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "telephones")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setTelephones(
+					userAccountContactInformation.setTelephones(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -413,12 +454,13 @@ public class ContactInformationSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "twitter")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setTwitter((String)jsonParserFieldValue);
+					userAccountContactInformation.setTwitter(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "webUrls")) {
 				if (jsonParserFieldValue != null) {
-					contactInformation.setWebUrls(
+					userAccountContactInformation.setWebUrls(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(

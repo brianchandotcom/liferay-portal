@@ -1243,16 +1243,6 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"contactInformation", additionalAssertFieldName)) {
-
-				if (userAccount.getContactInformation() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (userAccount.getCustomFields() == null) {
 					valid = false;
@@ -1375,6 +1365,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"userAccountContactInformation",
+					additionalAssertFieldName)) {
+
+				if (userAccount.getUserAccountContactInformation() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1456,19 +1457,6 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getBirthDate(),
 						userAccount2.getBirthDate())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"contactInformation", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						userAccount1.getContactInformation(),
-						userAccount2.getContactInformation())) {
 
 					return false;
 				}
@@ -1666,6 +1654,20 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getSiteBriefs(),
 						userAccount2.getSiteBriefs())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"userAccountContactInformation",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getUserAccountContactInformation(),
+						userAccount2.getUserAccountContactInformation())) {
 
 					return false;
 				}
@@ -1930,11 +1932,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("contactInformation")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2106,6 +2103,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("siteBriefs")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("userAccountContactInformation")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -82,40 +82,6 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String comment;
 
-	@Schema(
-		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
-	)
-	@Valid
-	public ContactInformation getContactInformation() {
-		return contactInformation;
-	}
-
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
-	}
-
-	@JsonIgnore
-	public void setContactInformation(
-		UnsafeSupplier<ContactInformation, Exception>
-			contactInformationUnsafeSupplier) {
-
-		try {
-			contactInformation = contactInformationUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected ContactInformation contactInformation;
-
 	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
@@ -381,6 +347,43 @@ public class Organization {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfOrganizations;
 
+	@Schema(
+		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
+	)
+	@Valid
+	public OrganizationContactInformation getOrganizationContactInformation() {
+		return organizationContactInformation;
+	}
+
+	public void setOrganizationContactInformation(
+		OrganizationContactInformation organizationContactInformation) {
+
+		this.organizationContactInformation = organizationContactInformation;
+	}
+
+	@JsonIgnore
+	public void setOrganizationContactInformation(
+		UnsafeSupplier<OrganizationContactInformation, Exception>
+			organizationContactInformationUnsafeSupplier) {
+
+		try {
+			organizationContactInformation =
+				organizationContactInformationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected OrganizationContactInformation organizationContactInformation;
+
 	@Schema(description = "The organization's parent organization.")
 	@Valid
 	public Organization getParentOrganization() {
@@ -486,16 +489,6 @@ public class Organization {
 			sb.append(_escape(comment));
 
 			sb.append("\"");
-		}
-
-		if (contactInformation != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contactInformation\": ");
-
-			sb.append(String.valueOf(contactInformation));
 		}
 
 		if (customFields != null) {
@@ -626,6 +619,16 @@ public class Organization {
 			sb.append("\"numberOfOrganizations\": ");
 
 			sb.append(numberOfOrganizations);
+		}
+
+		if (organizationContactInformation != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"organizationContactInformation\": ");
+
+			sb.append(String.valueOf(organizationContactInformation));
 		}
 
 		if (parentOrganization != null) {

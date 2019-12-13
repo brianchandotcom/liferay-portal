@@ -78,16 +78,6 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
-		if (organization.getContactInformation() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contactInformation\": ");
-
-			sb.append(String.valueOf(organization.getContactInformation()));
-		}
-
 		if (organization.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -220,6 +210,18 @@ public class OrganizationSerDes {
 			sb.append(organization.getNumberOfOrganizations());
 		}
 
+		if (organization.getOrganizationContactInformation() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"organizationContactInformation\": ");
+
+			sb.append(
+				String.valueOf(
+					organization.getOrganizationContactInformation()));
+		}
+
 		if (organization.getParentOrganization() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -277,15 +279,6 @@ public class OrganizationSerDes {
 		}
 		else {
 			map.put("comment", String.valueOf(organization.getComment()));
-		}
-
-		if (organization.getContactInformation() == null) {
-			map.put("contactInformation", null);
-		}
-		else {
-			map.put(
-				"contactInformation",
-				String.valueOf(organization.getContactInformation()));
 		}
 
 		if (organization.getCustomFields() == null) {
@@ -348,6 +341,16 @@ public class OrganizationSerDes {
 				String.valueOf(organization.getNumberOfOrganizations()));
 		}
 
+		if (organization.getOrganizationContactInformation() == null) {
+			map.put("organizationContactInformation", null);
+		}
+		else {
+			map.put(
+				"organizationContactInformation",
+				String.valueOf(
+					organization.getOrganizationContactInformation()));
+		}
+
 		if (organization.getParentOrganization() == null) {
 			map.put("parentOrganization", null);
 		}
@@ -388,15 +391,6 @@ public class OrganizationSerDes {
 			if (Objects.equals(jsonParserFieldName, "comment")) {
 				if (jsonParserFieldValue != null) {
 					organization.setComment((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "contactInformation")) {
-
-				if (jsonParserFieldValue != null) {
-					organization.setContactInformation(
-						ContactInformationSerDes.toDTO(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
@@ -457,6 +451,16 @@ public class OrganizationSerDes {
 				if (jsonParserFieldValue != null) {
 					organization.setNumberOfOrganizations(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"organizationContactInformation")) {
+
+				if (jsonParserFieldValue != null) {
+					organization.setOrganizationContactInformation(
+						OrganizationContactInformationSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

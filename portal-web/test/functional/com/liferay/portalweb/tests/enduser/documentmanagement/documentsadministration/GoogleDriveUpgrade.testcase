@@ -1,7 +1,7 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property database.types = "db2,mariadb,mysql";
 	property testray.component.names = "Documents Management";
 	property testray.main.component.name = "Upgrades Collaboration";
 
@@ -22,7 +22,6 @@ definition {
 	@priority = "5"
 	test ViewGoogleDriveArchive72101 {
 		property data.archive.type = "data-archive-googledrive";
-		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.10.1";
 
 		Upgrade.viewAndEditGoogleDriveDocuments();

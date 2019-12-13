@@ -83,6 +83,21 @@ definition {
 			titleMap = "${titleMap}");
 	}
 
+	@summary = "Delete a WC Article under an existing site via article title"
+	macro deleteWebContent {
+		Variables.assertDefined(parameterList = "${groupName},${title}");
+
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+
+		var articleId = JSONWebcontentSetter.setArticleId(
+			groupName = "${groupName}",
+			title = "${title}");
+
+		JSONWebcontentAPI._deleteWebContent(
+			articleId = "${articleId}",
+			groupId = "${groupId}");
+	}
+
 	@summary = "Get the 'folderId' for the folder '${folderName}' that is part of the Site '${groupName}' via JSON"
 	macro getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");

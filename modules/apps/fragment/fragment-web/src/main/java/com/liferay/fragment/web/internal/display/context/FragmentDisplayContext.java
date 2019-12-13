@@ -254,11 +254,18 @@ public class FragmentDisplayContext {
 		String fragmentCollectionName = fragmentCollection.getName();
 
 		if (!_isScopeGroup()) {
-			Group group = GroupLocalServiceUtil.getGroup(
+			Group group = GroupLocalServiceUtil.fetchGroup(
 				fragmentCollection.getGroupId());
 
+			String groupName = LanguageUtil.get(
+				_themeDisplay.getLocale(), "system");
+
+			if (group != null) {
+				groupName = getGroupName(group.getGroupId());
+			}
+
 			fragmentCollectionName = StringUtil.appendParentheticalSuffix(
-				fragmentCollectionName, getGroupName(group.getGroupId()));
+				fragmentCollectionName, groupName);
 		}
 
 		return HtmlUtil.escape(fragmentCollectionName);

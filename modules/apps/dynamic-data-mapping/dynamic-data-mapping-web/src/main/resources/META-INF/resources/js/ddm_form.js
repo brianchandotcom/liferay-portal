@@ -1656,12 +1656,14 @@ AUI.add(
 									var selectedItem = event.selectedItem;
 
 									if (selectedItem) {
+										var itemValue = JSON.parse(
+											selectedItem.value
+										);
+
 										instance.setValue({
-											className:
-												selectedItem.assetclassname,
-											classPK: selectedItem.assetclasspk,
-											title: selectedItem.assettitle || '',
-											titleMap: selectedItem.assettitlemap
+											className: itemValue.className,
+											classPK: itemValue.classPK,
+											title: itemValue.title || ''
 										});
 
 										instance._hideMessage();

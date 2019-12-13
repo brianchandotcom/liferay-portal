@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.dao.db;
+package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.db.BaseDB;
 import com.liferay.portal.kernel.dao.db.DBType;
 
 import java.io.IOException;

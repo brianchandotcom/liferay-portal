@@ -1984,6 +1984,51 @@ definition {
 		AssertElementPresent(locator1 = "Search#SEARCH_SUGGESTED_SPELLING");
 	}
 
+	macro viewSharedBlog {
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "Blogs Entry Title",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		BlogsEntry.viewSharedAsset(
+			contentSharingPermission = "View",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
+	macro viewSharedDocument {
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedContent(
+			contentSharingPermission = "viewing",
+			contentTitle = "DM Document Title 1",
+			openNotification = "true",
+			ownerName = "Test Test");
+
+		DMDocumentSharing.viewDocumentViaSharedContent(
+			contentSharingPermission = "View",
+			dmDocumentTitle = "DM Document Title 1");
+	}
+
 	macro viewStagingNestedPortlets {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

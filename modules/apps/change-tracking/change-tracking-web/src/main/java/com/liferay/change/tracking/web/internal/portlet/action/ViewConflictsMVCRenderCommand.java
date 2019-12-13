@@ -65,11 +65,9 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 		List<ObjectValuePair<ConflictInfo, CTEntry>> unresolvedConflicts =
 			new ArrayList<>();
 
-		CTCollection ctCollection;
-
 		try {
-			ctCollection = _ctCollectionLocalService.getCTCollection(
-				ctCollectionId);
+			CTCollection ctCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollectionId);
 
 			Map<Long, List<ConflictInfo>> conflictInfoMap =
 				_ctCollectionLocalService.checkConflicts(ctCollection);
@@ -77,29 +75,23 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 			for (Map.Entry<Long, List<ConflictInfo>> entry :
 					conflictInfoMap.entrySet()) {
 
-				List<CTEntry> ctEntries = _ctEntryLocalService.getCTEntries(
-					ctCollectionId, entry.getKey());
-
 				List<ConflictInfo> conflictInfos = entry.getValue();
 
 				for (ConflictInfo conflictInfo : conflictInfos) {
-					for (CTEntry ctEntry : ctEntries) {
-						if ((entry.getKey() == ctEntry.getModelClassNameId()) &&
-							(ctEntry.getModelClassPK() ==
-								conflictInfo.getSourcePrimaryKey())) {
+					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+						ctCollectionId, entry.getKey(),
+						conflictInfo.getSourcePrimaryKey());
 
-							if (conflictInfo.isResolved()) {
-								resolvedConflicts.add(
-									new ObjectValuePair<>(
-										conflictInfo, ctEntry));
-							}
-							else {
-								unresolvedConflicts.add(
-									new ObjectValuePair<>(
-										conflictInfo, ctEntry));
-							}
-
-							break;
+					if (ctEntry != null) {
+						if (conflictInfo.isResolved()) {
+							resolvedConflicts.add(
+								new ObjectValuePair<>(
+									conflictInfo, ctEntry));
+						}
+						else {
+							unresolvedConflicts.add(
+								new ObjectValuePair<>(
+									conflictInfo, ctEntry));
 						}
 					}
 				}
@@ -113,12 +105,12 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 				CTWebKeys.RESOLVED_CONFLICTS, resolvedConflicts);
 			renderRequest.setAttribute(
 				CTWebKeys.UNRESOLVED_CONFLICTS, unresolvedConflicts);
+
+			return "/change_lists/conflicts.jsp";
 		}
 		catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
-
-		return "/change_lists/conflicts.jsp";
 	}
 
 	@Reference

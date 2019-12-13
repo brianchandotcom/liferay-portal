@@ -9,3 +9,28 @@ buildscript {
 }
 
 task buildChangelogs
+task recordCommitIDs
+
+buildChangelogs {
+	description = "Builds the changelogs for each published version in `CHANGELOG.markdown`."
+	group = "changelogs"
+
+	doLast {
+		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
+
+		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
+
+		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName
+	}
+}
+
+recordCommitIDs {
+	description = "Records the commit ID for each published version in `CHANGELOG.properties`."
+	group = "changelogs"
+
+	doLast {
+		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
+
+		logger.lifecycle "Updated `CHANGELOG.properties` for '{}'", projectName
+	}
+}

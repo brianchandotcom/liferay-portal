@@ -397,6 +397,11 @@ definition {
 			tableViewName = "Single Selection Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
+
+		TableViewBuilder.createTableViewWithFieldView(
+			fieldType = "Upload",
+			formViewName = "Upload Field - Form View Title",
+			tableViewName = "Upload Field - Table View Title");
 	}
 
 	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"

@@ -217,15 +217,13 @@ function buildQueryString(criteria, queryConjunction, properties) {
  * @returns {string} The encoded odata query.
  */
 function encodeQueryString(queryString) {
-	return queryString.split(' ').reduce(
-		(query, queryPartial) => {
-			const formattedPartial = queryPartial.startsWith("'")
-				? encodeURIComponent(queryPartial)
-				: queryPartial;
+	return queryString.split(' ').reduce((query, queryPartial) => {
+		const formattedPartial = queryPartial.startsWith("'")
+			? encodeURIComponent(queryPartial)
+			: queryPartial;
 
-			return `${query} ${formattedPartial}`;
-		}
-	);
+		return `${query} ${formattedPartial}`;
+	});
 }
 
 /**
@@ -589,7 +587,9 @@ function transformNotNode({oDataASTNode}) {
 			{
 				operatorName: NOT_OPERATORS.NOT_CONTAINS,
 				propertyName: nextNodeExpression.value.parameters[0].raw,
-				value: formatCriterionValue(nextNodeExpression.value.parameters[1].raw)
+				value: formatCriterionValue(
+					nextNodeExpression.value.parameters[1].raw
+				)
 			}
 		];
 	} else if (nextNodeExpressionName == OPERATORS.EQ) {
@@ -622,7 +622,9 @@ function transformNotNode({oDataASTNode}) {
 				{
 					operatorName: NOT_OPERATORS.NOT_EQ,
 					propertyName: nextNodeExpression.value.current.raw,
-					value: formatCriterionValue(methodExpression.value.right.raw)
+					value: formatCriterionValue(
+						methodExpression.value.right.raw
+					)
 				}
 			];
 		}

@@ -18,6 +18,7 @@ import baseReducer from './baseReducer';
 import fragmentEntryLinksReducer from './fragmentEntryLinksReducer';
 import languageReducer from './languageReducer';
 import layoutDataReducer from './layoutDataReducer';
+import resolvedCommentsReducer from './resolvedCommentsReducer';
 
 export const DispatchContext = React.createContext(() => {});
 
@@ -31,6 +32,7 @@ export function reducer(state, action) {
 		fragmentEntryLinksReducer,
 		languageReducer,
 		layoutDataReducer,
+		resolvedCommentsReducer,
 		...Object.values(state.reducers)
 	].reduce((nextState, nextReducer) => {
 		return nextReducer(nextState, action);

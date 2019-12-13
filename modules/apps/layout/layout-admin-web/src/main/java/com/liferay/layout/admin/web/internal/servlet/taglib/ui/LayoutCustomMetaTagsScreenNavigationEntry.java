@@ -17,11 +17,7 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.web.internal.constants.LayoutScreenNavigationEntryConstants;
-import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -77,36 +73,24 @@ public class LayoutCustomMetaTagsScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		try {
-			if (!_layoutSEOLinkManager.isOpenGraphEnabled(layout)) {
-				return false;
-			}
+		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
 
-			Group group = _groupLocalService.fetchGroup(layout.getGroupId());
-
-			if ((group != null) && group.isLayoutPrototype()) {
-				return false;
-			}
-
-			Layout draftLayout = _layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class), layout.getPlid());
-
-			if ((Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
-				 Objects.equals(
-					 layout.getType(), LayoutConstants.TYPE_CONTENT)) &&
-				(draftLayout == null)) {
-
-				return false;
-			}
-
-			return true;
+		if ((group != null) && group.isLayoutPrototype()) {
+			return false;
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		if ((Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) &&
+			(draftLayout == null)) {
 
 			return false;
 		}
+
+		return true;
 	}
 
 	@Override
@@ -128,9 +112,6 @@ public class LayoutCustomMetaTagsScreenNavigationEntry
 			resourceBundle, _portal.getResourceBundle(locale));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutCustomMetaTagsScreenNavigationEntry.class);
-
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -139,9 +120,6 @@ public class LayoutCustomMetaTagsScreenNavigationEntry
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
 	private Portal _portal;

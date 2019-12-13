@@ -103,7 +103,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			actionRequest);
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			groupId, fragmentEntryKey, serviceContext);
+			groupId, fragmentEntryKey, serviceContext.getLocale());
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
@@ -158,17 +158,8 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			});
 	}
 
-	private FragmentEntry _getContributedFragmentEntry(
-		String fragmentEntryKey, Locale locale) {
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
-
-		return fragmentEntries.get(fragmentEntryKey);
-	}
-
 	private FragmentEntry _getFragmentEntry(
-		long groupId, String fragmentEntryKey, ServiceContext serviceContext) {
+		long groupId, String fragmentEntryKey, Locale locale) {
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(
@@ -178,8 +169,10 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			return fragmentEntry;
 		}
 
-		return _getContributedFragmentEntry(
-			fragmentEntryKey, serviceContext.getLocale());
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
+
+		return fragmentEntries.get(fragmentEntryKey);
 	}
 
 	private JSONObject _processAddFragmentEntryLink(

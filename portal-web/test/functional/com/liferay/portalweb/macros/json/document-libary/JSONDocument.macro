@@ -60,4 +60,25 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to delete a Document entry"
+	macro deleteFile {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileentry/delete-file-entry \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d folderId=${folderId} \
+			-d title=${dmDocumentTitle}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

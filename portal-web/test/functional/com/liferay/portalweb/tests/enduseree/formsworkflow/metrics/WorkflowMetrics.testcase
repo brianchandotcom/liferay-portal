@@ -384,7 +384,7 @@ definition {
 	@priority = "5"
 	test ViewWorkloadByAssignee {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssignee";
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
 

@@ -16,11 +16,13 @@ import {EDIT_FRAGMENT_ENTRY_LINK_COMMENT} from './types';
 
 export default function editFragmentEntryLink({
 	fragmentEntryLinkComment,
-	fragmentEntryLinkId
+	fragmentEntryLinkId,
+	parentCommentId = 0
 }) {
 	return {
 		fragmentEntryLinkComment,
 		fragmentEntryLinkId,
+		parentCommentId,
 		type: EDIT_FRAGMENT_ENTRY_LINK_COMMENT
 	};
 }

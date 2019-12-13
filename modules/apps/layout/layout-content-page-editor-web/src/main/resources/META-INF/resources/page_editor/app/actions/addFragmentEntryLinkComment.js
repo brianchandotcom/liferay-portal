@@ -14,13 +14,15 @@
 
 import {ADD_FRAGMENT_ENTRY_LINK_COMMENT} from './types';
 
-export default function addFragmentEntryLink({
+export default function addFragmentEntryLinkComment({
 	fragmentEntryLinkComment,
-	fragmentEntryLinkId
+	fragmentEntryLinkId,
+	parentCommentId
 }) {
 	return {
 		fragmentEntryLinkComment,
 		fragmentEntryLinkId,
+		parentCommentId,
 		type: ADD_FRAGMENT_ENTRY_LINK_COMMENT
 	};
 }

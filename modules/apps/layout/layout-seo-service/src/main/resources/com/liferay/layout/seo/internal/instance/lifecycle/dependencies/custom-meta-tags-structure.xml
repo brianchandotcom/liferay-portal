@@ -2,8 +2,8 @@
 
 <root>
 	<structure>
-		<name>custom-open-graph-meta-tags</name>
-		<description>custom-open-graph-meta-tags</description>
+		<name>custom-meta-tags</name>
+		<description>custom-meta-tags</description>
 		<definition>
 			<![CDATA[
 				{
@@ -82,7 +82,7 @@
 								}
 							],
 							"title": {
-								"[$LOCALE_DEFAULT$]": "Custom OpenGraph Meta Tags"
+								"[$LOCALE_DEFAULT$]": "Custom Meta Tags"
 							}
 						}
 					]

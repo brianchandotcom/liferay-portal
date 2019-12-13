@@ -216,7 +216,7 @@ public class LayoutSEOEntryLocalServiceImpl
 			companyGroup.getGroupId(),
 			_classNameLocalService.getClassNameId(
 				LayoutSEOEntry.class.getName()),
-			"custom-open-graph-meta-tags");
+			"custom-meta-tags");
 	}
 
 	@Reference

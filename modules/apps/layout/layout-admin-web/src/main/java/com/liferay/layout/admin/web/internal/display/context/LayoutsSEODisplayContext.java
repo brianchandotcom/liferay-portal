@@ -78,7 +78,7 @@ public class LayoutsSEODisplayContext {
 			company.getGroupId(),
 			ClassNameLocalServiceUtil.getClassNameId(
 				LayoutSEOEntry.class.getName()),
-			"custom-open-graph-meta-tags");
+			"custom-meta-tags");
 
 		return _ddmStructure.getPrimaryKey();
 	}

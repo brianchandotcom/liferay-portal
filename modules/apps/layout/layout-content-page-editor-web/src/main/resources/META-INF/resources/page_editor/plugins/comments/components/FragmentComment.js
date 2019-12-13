@@ -234,7 +234,11 @@ export default function FragmentComment({
 						{comment.children &&
 							comment.children.map(childComment => (
 								<FragmentComment
-									comment={{...childComment, resolved}}
+									comment={{
+										...childComment,
+										parentCommentId: comment.commentId,
+										resolved
+									}}
 									fragmentEntryLinkId={fragmentEntryLinkId}
 									key={childComment.commentId}
 									onDelete={onDelete}

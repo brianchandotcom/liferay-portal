@@ -29,10 +29,10 @@ public class LayoutStructure {
 
 	public LayoutStructure(
 		Map<String, LayoutStructureItem> layoutStructureItems,
-        RootItem rootItem) {
+		String mainItemId) {
 
 		_layoutStructureItems = layoutStructureItems;
-		_rootItem = rootItem;
+		_mainItemId = mainItemId;
 	}
 
 	public LayoutStructure addLayoutStructureItem(
@@ -71,27 +71,13 @@ public class LayoutStructure {
 		return JSONUtil.put(
 			"items", layoutStructureItemsJSONObject
 		).put(
-			"rootItems", JSONUtil.put("main", _rootItem.getMainItemId())
+			"rootItems", JSONUtil.put("main", _mainItemId)
 		).put(
 			"version", 1
 		);
 	}
 
-	public static class RootItem {
-
-		public RootItem(String mainItemId) {
-			_mainItemId = mainItemId;
-		}
-
-		public String getMainItemId() {
-			return _mainItemId;
-		}
-
-		private final String _mainItemId;
-
-	}
-
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
-	private final RootItem _rootItem;
+	private final String _mainItemId;
 
 }

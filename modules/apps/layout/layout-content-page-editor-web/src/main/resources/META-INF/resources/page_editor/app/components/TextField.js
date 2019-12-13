@@ -15,13 +15,16 @@
 import {ClayInput} from '@clayui/form';
 import React from 'react';
 
-export const TextField = ({field}) => (
+export const TextField = ({field, onValueSelect}) => (
 	<>
 		<label htmlFor={field.name}>{field.label}</label>
 
 		<ClayInput
 			defaultValue={field.defaultValue}
 			id={field.name}
+			onChange={event => {
+				onValueSelect(field.name, event.target.value);
+			}}
 			placeholder={field.typeOptions ? field.typeOptions.placeholder : ''}
 			sizing="sm"
 			type="text"

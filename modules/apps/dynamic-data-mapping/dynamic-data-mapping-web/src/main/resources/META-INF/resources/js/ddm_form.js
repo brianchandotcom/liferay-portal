@@ -1739,15 +1739,9 @@ AUI.add(
 						'webContentSelectorURL'
 					);
 
-					var retVal = instance.getWebContentURL(
+					return webContentSelectorURL ? webContentSelectorURL : instance.getWebContentURL(
 						'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion'
 					);
-
-					if (webContentSelectorURL) {
-						retVal = webContentSelectorURL;
-					}
-
-					return retVal;
 				},
 
 				getWebContentURL(criteria) {

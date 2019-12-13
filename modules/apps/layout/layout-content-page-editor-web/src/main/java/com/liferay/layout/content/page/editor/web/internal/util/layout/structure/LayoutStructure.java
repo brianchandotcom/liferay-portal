@@ -35,6 +35,16 @@ public class LayoutStructure {
 	}
 
 	public void addLayoutStructureItem(
+		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
+		String itemType, int position) {
+
+		LayoutStructureItem layoutStructureItem = new LayoutStructureItem(
+			itemConfigJSONObject, itemId, parentItemId, itemType);
+
+		addLayoutStructureItem(layoutStructureItem, parentItemId, position);
+	}
+
+	public void addLayoutStructureItem(
 		LayoutStructureItem layoutStructureItem, String parentItemId,
 		int position) {
 

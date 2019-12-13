@@ -92,17 +92,19 @@ public class LayoutStructureUtil {
 		JSONObject itemsJSONObject = layoutStructureJSONObject.getJSONObject(
 			"items");
 
-		Map<String, LayoutStructure.Item> items = new HashMap<>(
+		Map<String, LayoutStructureItem> layoutStructureItems = new HashMap<>(
 			itemsJSONObject.length());
 
 		for (String key : itemsJSONObject.keySet()) {
-			items.put(key, _toItem(itemsJSONObject.getJSONObject(key)));
+			layoutStructureItems.put(
+				key, _toItem(itemsJSONObject.getJSONObject(key)));
 		}
 
-		return new LayoutStructure(items, layoutStructureRootItem);
+		return new LayoutStructure(
+			layoutStructureItems, layoutStructureRootItem);
 	}
 
-	private static LayoutStructure.Item _toItem(JSONObject jsonObject) {
+	private static LayoutStructureItem _toItem(JSONObject jsonObject) {
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 		String itemId = jsonObject.getString("itemId");
 		String parentId = jsonObject.getString("parentId");
@@ -113,7 +115,7 @@ public class LayoutStructureUtil {
 		JSONUtil.addToStringCollection(
 			childrenItemIds, jsonObject.getJSONArray("children"));
 
-		return new LayoutStructure.Item(
+		return new LayoutStructureItem(
 			childrenItemIds, configJSONObject, itemId, parentId, type);
 	}
 

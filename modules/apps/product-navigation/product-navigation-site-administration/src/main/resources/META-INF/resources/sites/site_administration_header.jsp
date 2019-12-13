@@ -112,7 +112,9 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 	<script>
 		(function() {
-			var manageSitesLink = document.getElementById('<portlet:namespace />manageSitesLink');
+			var manageSitesLink = document.getElementById(
+				'<portlet:namespace />manageSitesLink'
+			);
 
 			if (manageSitesLink) {
 				manageSitesLink.addEventListener('click', function(event) {

@@ -372,9 +372,9 @@ definition {
 
 		var accessToken = OAuth2.getAccessToken(tokenCurl = "${tokenCurl}");
 
-		var articleId = JSONWebcontentAPI._getArticleIdByURLTitle(
+		var articleId = JSONWebcontentSetter.setArticleId(
 			groupName = "Guest",
-			urlTitle = "wc-title");
+			title = "WC Title");
 
 		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest");
 

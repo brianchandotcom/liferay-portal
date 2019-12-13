@@ -98,8 +98,6 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		FragmentEntryLink fragmentEntryLink = null;
-
 		if (fragmentEntry != null) {
 			String contributedRendererKey = null;
 
@@ -107,22 +105,19 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 				contributedRendererKey = fragmentEntryKey;
 			}
 
-			fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
+			return _fragmentEntryLinkService.addFragmentEntryLink(
 				serviceContext.getScopeGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
 				StringPool.BLANK, 0, contributedRendererKey, serviceContext);
 		}
-		else {
-			fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
-				serviceContext.getScopeGroupId(), 0, 0, classNameId, classPK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
-				fragmentEntryKey, serviceContext);
-		}
 
-		return fragmentEntryLink;
+		return _fragmentEntryLinkService.addFragmentEntryLink(
+			serviceContext.getScopeGroupId(), 0, 0, classNameId, classPK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
+			fragmentEntryKey, serviceContext);
 	}
 
 	@Override

@@ -127,9 +127,9 @@ const ItemSelectorUrl = ({eventName}) => {
 				)}
 				{previewError && url && loaded && (
 					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-						<span>
+						<strong className="text-secondary">
 							{Liferay.Language.get('no-preview-available')}
-						</span>
+						</strong>
 					</div>
 				)}
 			</div>

@@ -416,6 +416,10 @@ definition {
 		AppBuilderAdmin.validateFormViewTitle(
 			rowNumber = "1",
 			title = "Single Selection Field - Table View Title");
+
+		AppBuilderAdmin.validateFormViewTitle(
+			rowNumber = "2",
+			title = "Upload Field - Table View Title");
 	}
 
 	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"

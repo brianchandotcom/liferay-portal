@@ -173,11 +173,14 @@ export default function Topper({
 		}
 	});
 
-	useOnClickOutside([containerRef, floatingToolbarRef], event => {
-		if (!event.shiftKey) {
-			selectItem(null);
+	useOnClickOutside(
+		[containerRef.current, floatingToolbarRef.current],
+		event => {
+			if (!event.shiftKey) {
+				selectItem(null);
+			}
 		}
-	});
+	);
 
 	const styles = {
 		active: isSelected(item.itemId),

@@ -16,31 +16,27 @@ import React from 'react';
 
 const {useEffect} = React;
 
-export default function useOnClickOutside(references, handler) {
-	useEffect(
-		() => {
-			const listener = event => {
-				/**
-				 * Filter references that were clicked ref's element
-				 * or descendent elements
-				 */
-				const filtered = references.filter(
-					ref => ref.current && ref.current.contains(event.target)
-				);
+export default function useOnClickOutside(elements, handler) {
+	useEffect(() => {
+		const listener = event => {
+			/**
+			 * Detect clicks on elements or their descendent elements.
+			 */
+			const filtered = elements.filter(
+				element => element && element.contains(event.target)
+			);
 
-				if (!filtered.length) {
-					handler(event);
-				}
-			};
+			if (!filtered.length) {
+				handler(event);
+			}
+		};
 
-			document.addEventListener('mousedown', listener);
-			document.addEventListener('touchstart', listener);
+		document.addEventListener('mousedown', listener);
+		document.addEventListener('touchstart', listener);
 
-			return () => {
-				document.removeEventListener('mousedown', listener);
-				document.removeEventListener('touchstart', listener);
-			};
-		},
-		[references, handler]
-	);
+		return () => {
+			document.removeEventListener('mousedown', listener);
+			document.removeEventListener('touchstart', listener);
+		};
+	}, [elements, handler]);
 }

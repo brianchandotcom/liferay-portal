@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.util.BndBuilderUtil;
 
 import java.io.File;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -163,10 +164,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 			});
 
-		Set<File> tldFiles = fileTree.getFiles();
-
 		copy.from(
-			tldFiles,
+			fileTree.getFiles(),
 			new Action<CopySpec>() {
 
 				@Override
@@ -175,6 +174,27 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 				}
 
 			});
+
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		if (iterator.hasNext()) {
+			File tagsDir = new File(iterator.next(), "META-INF/tags");
+
+			if (tagsDir.exists()) {
+				copy.from(
+					tagsDir,
+					new Action<CopySpec>() {
+
+						@Override
+						public void execute(CopySpec copySpec) {
+							copySpec.into("META-INF/resources/META-INF/tags");
+						}
+
+					});
+			}
+		}
 	}
 
 }

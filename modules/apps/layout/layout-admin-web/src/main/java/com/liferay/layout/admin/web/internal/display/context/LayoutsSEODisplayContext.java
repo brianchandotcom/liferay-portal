@@ -61,7 +61,7 @@ public class LayoutsSEODisplayContext {
 
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.addDDMFormField(new DDMFormField("key", "String"));
+		ddmForm.addDDMFormField(new DDMFormField("name", "String"));
 		ddmForm.addDDMFormField(new DDMFormField("value", "String"));
 
 		return new DDMFormValues(ddmForm);

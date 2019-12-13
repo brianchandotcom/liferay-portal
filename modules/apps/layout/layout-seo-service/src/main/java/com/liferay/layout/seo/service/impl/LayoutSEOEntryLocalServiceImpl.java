@@ -196,7 +196,7 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.addDDMFormField(new DDMFormField("key", "String"));
+		ddmForm.addDDMFormField(new DDMFormField("name", "String"));
 		ddmForm.addDDMFormField(new DDMFormField("value", "String"));
 
 		long ddmStorageId = _storageEngine.create(

@@ -148,6 +148,12 @@ describe('odata-util', () => {
 			testConversionToAndFrom(testQuery, {properties});
 		});
 
+		it('is able to translate a query string with special characters to map and back to string', () => {
+			const testQuery = "(firstName eq 'test+/?%#&')";
+
+			testConversionToAndFrom(testQuery, {properties});
+		});
+
 		it('is able to translate a complex query string to map and back to string', () => {
 			const testQuery =
 				"((firstName eq 'test' or firstName eq 'test') and firstName eq 'test')";

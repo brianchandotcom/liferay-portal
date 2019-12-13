@@ -31,6 +31,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -107,7 +108,7 @@ public class LayoutStructureUtil {
 		String parentId = jsonObject.getString("parentId");
 		String type = jsonObject.getString("type");
 
-		ArrayList<String> childrenItemIds = new ArrayList<>();
+		List<String> childrenItemIds = new ArrayList<>();
 
 		JSONUtil.addToStringCollection(
 			childrenItemIds, jsonObject.getJSONArray("children"));

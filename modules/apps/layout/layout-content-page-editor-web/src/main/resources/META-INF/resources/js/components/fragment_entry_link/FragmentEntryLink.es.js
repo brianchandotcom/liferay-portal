@@ -166,6 +166,8 @@ class FragmentEntryLink extends Component {
 					) {
 						event.preventDefault();
 
+						this._duplicateFragmentEntryLink();
+
 						this._disposeFloatingToolbar();
 					}
 				}

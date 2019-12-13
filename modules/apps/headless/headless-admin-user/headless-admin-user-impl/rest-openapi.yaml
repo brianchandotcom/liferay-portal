@@ -203,7 +203,6 @@ components:
                                 The organization's postal addresses, with one optionally marked as primary.
                             items:
                                 $ref: "#/components/schemas/PostalAddress"
-                            readOnly: true
                             type: array
                         telephones:
                             description:
@@ -219,7 +218,6 @@ components:
                                 $ref: "#/components/schemas/WebUrl"
                             readOnly: true
                             type: array
-                    readOnly: true
                     type: object
                 parentOrganization:
                     allOf:
@@ -322,53 +320,43 @@ components:
                 addressCountry:
                     description:
                         The address's country (e.g., USA).
-                    readOnly: true
                     type: string
                 addressLocality:
                     description:
                         The address's locality (e.g., city).
-                    readOnly: true
                     type: string
                 addressRegion:
                     description:
                         The address's region (e.g., state).
-                    readOnly: true
                     type: string
                 addressType:
                     description:
                         The address's type.
-                    readOnly: true
                     type: string
                 id:
                     description:
                         The address's ID.
                     format: int64
-                    readOnly: true
                     type: integer
                 postalCode:
                     description:
                         The address's postal code (e.g., zip code).
-                    readOnly: true
                     type: string
                 primary:
                     description:
                         A flag that identifies whether this is the main address of the user/organization.
-                    readOnly: true
                     type: boolean
                 streetAddressLine1:
                     description:
                         The street address's first line (e.g., 1600 Amphitheatre Pkwy.).
-                    readOnly: true
                     type: string
                 streetAddressLine2:
                     description:
                         The street address's second line.
-                    readOnly: true
                     type: string
                 streetAddressLine3:
                     description:
                         The street address's third line.
-                    readOnly: true
                     type: string
             type: object
         Role:

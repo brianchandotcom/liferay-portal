@@ -159,7 +159,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			classPK, themeDisplay.getPlid(),
 			layoutStructure -> {
 				LayoutStructureItem layoutStructureItem =
-					LayoutStructureItem.create(
+					new LayoutStructureItem(
 						JSONFactoryUtil.createJSONObject(itemConfig),
 						String.valueOf(
 							fragmentEntryLink.getFragmentEntryLinkId()),

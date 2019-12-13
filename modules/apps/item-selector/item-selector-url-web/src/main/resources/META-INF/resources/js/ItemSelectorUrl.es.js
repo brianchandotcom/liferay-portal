@@ -122,16 +122,14 @@ const ItemSelectorUrl = ({eventName}) => {
 						src={url}
 					/>
 				)}
-				{isLoading && (
+				{(isLoading || previewError) && (
 					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-						<ClayLoadingIndicator />
-					</div>
-				)}
-				{previewError && (
-					<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid">
-						<strong className="text-secondary">
-							{Liferay.Language.get('no-preview-available')}
-						</strong>
+						{isLoading && <ClayLoadingIndicator />}
+						{previewError && (
+							<strong className="text-secondary">
+								{Liferay.Language.get('no-preview-available')}
+							</strong>
+						)}
 					</div>
 				)}
 			</div>

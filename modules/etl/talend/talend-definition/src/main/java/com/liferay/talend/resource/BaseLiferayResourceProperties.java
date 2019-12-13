@@ -240,7 +240,7 @@ public abstract class BaseLiferayResourceProperties
 
 		for (int i = 0; i < parameterNames.size(); i++) {
 			OASParameter.Location location = OASParameter.Location.valueOf(
-				parameterTypes.get(i));
+				StringUtil.toUpperCase(parameterTypes.get(i)));
 
 			if (location.isPath()) {
 				continue;

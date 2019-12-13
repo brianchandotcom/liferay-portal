@@ -29,10 +29,13 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
@@ -53,6 +56,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Locale;
 import java.util.Map;
@@ -91,6 +95,37 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+	}
+
+	private JSONObject _addDuplicateFragmentEntryLinkToLayoutDataJSONObject(
+			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
+		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
+		String itemType = ParamUtil.getString(actionRequest, "type");
+		int position = ParamUtil.getInteger(actionRequest, "position");
+
+		return LayoutStructureUtil.updateLayoutPageTemplateData(
+			themeDisplay.getScopeGroupId(), segmentsExperienceId,
+			themeDisplay.getPlid(),
+			layoutStructure -> {
+				LayoutStructureItem layoutStructureItem =
+					new LayoutStructureItem(
+						JSONFactoryUtil.createJSONObject(
+							fragmentEntryLink.getConfiguration()),
+						String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId()),
+						parentItemId, itemType);
+
+				layoutStructure.addLayoutStructureItem(
+					layoutStructureItem, parentItemId, position);
+			});
 	}
 
 	private void _copyPortletPreferences(
@@ -177,24 +212,6 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 			fragmentRendererContext.setLocale(serviceContext.getLocale());
 			fragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
 
-			jsonObject.put(
-				"configuration",
-				JSONFactoryUtil.createJSONObject(
-					_fragmentRendererController.getConfiguration(
-						fragmentRendererContext))
-			).put(
-				"defaultConfigurationValues",
-				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-					duplicateFragmentEntryLink.getConfiguration())
-			).put(
-				"editableValues",
-				JSONFactoryUtil.createJSONObject(
-					duplicateFragmentEntryLink.getEditableValues())
-			).put(
-				"fragmentEntryLinkId",
-				duplicateFragmentEntryLink.getFragmentEntryLinkId()
-			);
-
 			FragmentEntry fragmentEntry = _getFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId(),
 				fragmentEntryLink.getRendererKey(), serviceContext);
@@ -228,18 +245,42 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 				}
 			}
 
-			jsonObject.put(
-				"content",
-				_fragmentRendererController.render(
-					fragmentRendererContext, serviceContext.getRequest(),
-					serviceContext.getResponse())
-			).put(
-				"fragmentEntryKey", fragmentEntryKey
-			).put(
-				"name", name
-			);
-
 			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
+
+			jsonObject = JSONUtil.put(
+				"fragmentEntryLink",
+				JSONUtil.put(
+					"configuration",
+					JSONFactoryUtil.createJSONObject(
+						_fragmentRendererController.getConfiguration(
+							fragmentRendererContext))
+				).put(
+					"content",
+					_fragmentRendererController.render(
+						fragmentRendererContext, serviceContext.getRequest(),
+						serviceContext.getResponse())
+				).put(
+					"defaultConfigurationValues",
+					FragmentEntryConfigUtil.
+						getConfigurationDefaultValuesJSONObject(
+							duplicateFragmentEntryLink.getConfiguration())
+				).put(
+					"editableValues",
+					JSONFactoryUtil.createJSONObject(
+						duplicateFragmentEntryLink.getEditableValues())
+				).put(
+					"fragmentEntryKey", fragmentEntryKey
+				).put(
+					"fragmentEntryLinkId",
+					duplicateFragmentEntryLink.getFragmentEntryLinkId()
+				).put(
+					"name", name
+				)
+			).put(
+				"layoutData",
+				_addDuplicateFragmentEntryLinkToLayoutDataJSONObject(
+					actionRequest, duplicateFragmentEntryLink)
+			);
 		}
 		catch (PortalException pe) {
 			String errorMessage = "an-unexpected-error-occurred";

@@ -413,6 +413,8 @@ public class GitUtil {
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, workingDirectory, timeout, modifiedCommands);
 
+				_debugDNS(process);
+
 				break;
 			}
 			catch (IOException | TimeoutException e) {
@@ -459,6 +461,40 @@ public class GitUtil {
 			process.exitValue(), standardErr.trim(), standardOut.trim());
 	}
 
+	private static void _debugDNS(Process process) {
+		String standardErr = "";
+
+		try {
+			standardErr = JenkinsResultsParserUtil.readInputStream(
+				process.getErrorStream());
+		}
+		catch (IOException ioe) {
+			standardErr = "";
+		}
+
+		Matcher matcher = _dnsDebugPattern.matcher(standardErr);
+
+		if (matcher.find()) {
+			String hostname = matcher.group("hostname");
+
+			try {
+				Process digProcess =
+					JenkinsResultsParserUtil.executeBashCommands(
+						new String[] {
+							"dig " + hostname, "dig @10.0.1.11 " + hostname
+						});
+
+				System.out.println(
+					JenkinsResultsParserUtil.readInputStream(
+						digProcess.getInputStream()));
+			}
+			catch (Exception e) {
+				System.out.println(
+					"Unable to execute dig commands. " + e.getMessage());
+			}
+		}
+	}
+
 	private static String _getDefaultBranchName(
 		File workingDirectory, String gitRemoteName) {
 
@@ -490,6 +526,9 @@ public class GitUtil {
 	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =
 		"github-dev.liferay.com";
 
+	private static final Pattern _dnsDebugPattern = Pattern.compile(
+		"Could not resolve hostname (?<hostname>[^:]+): " +
+			"Name or service not known");
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",

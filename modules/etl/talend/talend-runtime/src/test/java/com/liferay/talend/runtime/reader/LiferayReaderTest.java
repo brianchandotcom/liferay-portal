@@ -15,10 +15,8 @@
 package com.liferay.talend.runtime.reader;
 
 import com.liferay.talend.BaseTestCase;
-import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.resource.LiferayInputResourceProperties;
+import com.liferay.talend.properties.input.LiferayInputProperties;
 import com.liferay.talend.runtime.LiferayFixedResponseContentSource;
-import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 import com.liferay.talend.tliferayoutput.Action;
 
 import java.util.Arrays;
@@ -30,8 +28,6 @@ import javax.json.JsonValue;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.talend.components.common.SchemaProperties;
-
 /**
  * @author Igor Beslic
  */
@@ -39,14 +35,14 @@ public class LiferayReaderTest extends BaseTestCase {
 
 	@Test(expected = NoSuchElementException.class)
 	public void testNoSuchElementException() throws Exception {
-		String endpoint =
-			"/v1.0/taxonomy-vocabularies/{id}/taxonomy-categories";
+		String openAPIModule = "/headless-commerce-admin-catalog/v1.0";
+		String endpoint = "/taxonomy-vocabularies/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
 			new LiferayFixedResponseContentSource(
 				readObject("page_content.json")),
 			_getTLiferayInputProperties(
-				Action.Unavailable, _OAS_URL, endpoint));
+				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		liferayReader.start();
 
@@ -57,12 +53,13 @@ public class LiferayReaderTest extends BaseTestCase {
 
 	@Test
 	public void testPaging() throws Exception {
-		String endpoint = "/v1.0/page-content/{id}/taxonomy-categories";
+		String openAPIModule = "/headless-commerce-admin-catalog/v1.0";
+		String endpoint = "/page-content/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
 			_getLiferayFixedResponseContentSource(),
 			_getTLiferayInputProperties(
-				Action.Unavailable, _OAS_URL, endpoint));
+				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		liferayReader.start();
 
@@ -85,14 +82,14 @@ public class LiferayReaderTest extends BaseTestCase {
 
 	@Test
 	public void testStartIfEmptyPageReturned() throws Exception {
-		String endpoint =
-			"/v1.0/taxonomy-vocabularies/{id}/taxonomy-categories";
+		String openAPIModule = "/headless-commerce-admin-catalog/v1.0";
+		String endpoint = "/taxonomy-vocabularies/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
 			_getLiferayFixedResponseContentSource(
 				readObject("page_no_content.json")),
 			_getTLiferayInputProperties(
-				Action.Unavailable, _OAS_URL, endpoint));
+				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		Assert.assertFalse(
 			"Liferay input reader must not be initialized and advanced",
@@ -101,14 +98,14 @@ public class LiferayReaderTest extends BaseTestCase {
 
 	@Test
 	public void testStartIfPageReturned() throws Exception {
-		String endpoint =
-			"/v1.0/taxonomy-vocabularies/{id}/taxonomy-categories";
+		String openAPIModule = "/headless-commerce-admin-catalog/v1.0";
+		String endpoint = "/taxonomy-vocabularies/{id}/taxonomy-categories";
 
 		LiferayReader liferayReader = new LiferayReader(
 			_getLiferayFixedResponseContentSource(
 				readObject("page_content.json")),
 			_getTLiferayInputProperties(
-				Action.Unavailable, _OAS_URL, endpoint));
+				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		Assert.assertTrue(
 			"Liferay input reader must be initialized and advanced",
@@ -144,40 +141,14 @@ public class LiferayReaderTest extends BaseTestCase {
 		return liferayFixedResponseContentSource;
 	}
 
-	private TLiferayInputProperties _getTLiferayInputProperties(
-		Action action, String apiSpecURL, String endpoint) {
+	private LiferayInputProperties _getTLiferayInputProperties(
+		Action action, String openAPIModule, String apiSpecURL,
+		String endpoint) {
 
-		TLiferayInputProperties testLiferayInputProperties =
-			new TLiferayInputProperties("testLiferayInputProperties");
-
-		testLiferayInputProperties.init();
-
-		LiferayConnectionProperties liferayConnectionProperties =
-			new LiferayConnectionProperties("connection");
-
-		liferayConnectionProperties.apiSpecURL.setValue(apiSpecURL);
-
-		LiferayInputResourceProperties testLiferayInputResourceProperties =
-			new LiferayInputResourceProperties("resource");
-
-		testLiferayInputResourceProperties.connection =
-			liferayConnectionProperties;
-		testLiferayInputResourceProperties.endpoint.setValue(endpoint);
-		testLiferayInputResourceProperties.operations.setValue(action);
-		testLiferayInputResourceProperties.parametersTable.columnName.setValue(
-			Arrays.asList("id"));
-		testLiferayInputResourceProperties.parametersTable.typeColumnName.
-			setValue(Arrays.asList("path"));
-		testLiferayInputResourceProperties.parametersTable.valueColumnName.
-			setValue(Arrays.asList("1234"));
-
-		testLiferayInputProperties.connection = liferayConnectionProperties;
-
-		testLiferayInputProperties.resource =
-			testLiferayInputResourceProperties;
-		testLiferayInputProperties.setSchema(SchemaProperties.EMPTY_SCHEMA);
-
-		return testLiferayInputProperties;
+		return new LiferayInputProperties(
+			"testLiferayInputProperties", action, openAPIModule, apiSpecURL,
+			endpoint, Arrays.asList("id"), Arrays.asList("path"),
+			Arrays.asList("1234"));
 	}
 
 	private static final String _OAS_URL =

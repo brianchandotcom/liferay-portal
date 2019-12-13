@@ -91,7 +91,7 @@ public class FragmentCollectionLocalServiceImpl
 
 		fragmentCollection.setUuid(serviceContext.getUuid());
 		fragmentCollection.setGroupId(groupId);
-		fragmentCollection.setCompanyId(user.getCompanyId());
+		fragmentCollection.setCompanyId(serviceContext.getCompanyId());
 		fragmentCollection.setUserId(user.getUserId());
 		fragmentCollection.setUserName(user.getFullName());
 		fragmentCollection.setCreateDate(

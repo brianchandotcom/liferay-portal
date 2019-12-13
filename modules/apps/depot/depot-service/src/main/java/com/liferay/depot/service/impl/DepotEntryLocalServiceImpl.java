@@ -129,7 +129,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		defaultNameOptional.ifPresent(
 			defaultName -> nameMap.put(locale, defaultName));
 
-		_groupLocalService.updateGroup(
+		group = _groupLocalService.updateGroup(
 			depotEntry.getGroupId(), group.getParentGroupId(), nameMap,
 			descriptionMap, group.getType(), group.isManualMembership(),
 			group.getMembershipRestriction(), group.getFriendlyURL(),

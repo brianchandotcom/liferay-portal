@@ -16,6 +16,11 @@ import React from 'react';
 
 import ColorPalette from '../../common/components/ColorPalette';
 
-export const ColorPaletteField = ({field}) => (
-	<ColorPalette label={field.label} onColorSelect={() => {}}></ColorPalette>
+export const ColorPaletteField = ({field, onValueSelect}) => (
+	<ColorPalette
+		label={field.label}
+		onColorSelect={color => {
+			onValueSelect(field.name, color);
+		}}
+	></ColorPalette>
 );

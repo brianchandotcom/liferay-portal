@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../config/constants/fragmentConfigurationFieldTypes';
 import {StoreContext} from '../store/index';
 
-const FieldSet = ({fields, label}) => (
+const FieldSet = ({fields, label, onValueSelect}) => (
 	<>
 		{label && <p className="mb-3 sheet-subtitle">{label}</p>}
 
@@ -30,7 +30,10 @@ const FieldSet = ({fields, label}) => (
 
 			return (
 				<ClayForm.Group key={index}>
-					<FieldComponent field={field} />
+					<FieldComponent
+						field={field}
+						onValueSelect={onValueSelect}
+					/>
 				</ClayForm.Group>
 			);
 		})}
@@ -43,6 +46,8 @@ export const FragmentConfigurationPanel = ({item}) => {
 	const configuration =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId].configuration;
 
+	const onValueSelect = (name, value) => {};
+
 	return (
 		<div className="floating-toolbar-configuration-panel">
 			{configuration.fieldSets.map((fieldSet, index) => {
@@ -51,6 +56,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 						fields={fieldSet.fields}
 						key={index}
 						label={fieldSet.label}
+						onValueSelect={onValueSelect}
 					/>
 				);
 			})}

@@ -48,6 +48,19 @@ export default {
 			parentCommentId
 		});
 	},
+
+	/**
+	 * Deletes a fragment comment
+	 * @param {object} options
+	 * @param {string} options.commentId Id of the comment
+	 * @param {object} options.config AppConfig
+	 * @return {Promise<void>}
+	 */
+	deleteFragmentEntryLinkComment({commentId, config}) {
+		const {deleteFragmentEntryLinkCommentURL} = config;
+
+		return serviceFetch(config, deleteFragmentEntryLinkCommentURL, {
+			commentId
 		});
 	},
 

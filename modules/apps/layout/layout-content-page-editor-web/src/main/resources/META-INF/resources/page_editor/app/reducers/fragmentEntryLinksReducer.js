@@ -68,6 +68,41 @@ export default function fragmentEntryLinksReducer(state, action) {
 				};
 			}
 			break;
+		case TYPES.DELETE_FRAGMENT_ENTRY_LINK_COMMENT:
+			{
+				const fragmentEntryLink =
+					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
+
+				const {comments = []} = fragmentEntryLink;
+
+				let nextComments;
+
+				if (action.parentCommentId) {
+					nextComments = comments.map(comment =>
+						comment.commentId === action.parentCommentId
+							? {
+									...comment,
+									children: comment.children.filter(
+										childComment =>
+											childComment.commentId !==
+											action.commentId
+									)
+							  }
+							: comment
+					);
+				} else {
+					nextComments = comments.filter(
+						comment => comment.commentId !== action.commentId
+					);
+				}
+
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...fragmentEntryLink,
+							comments: nextComments
 						}
 					}
 				};

@@ -12,16 +12,48 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import React from 'react';
+import React, {useContext, useState} from 'react';
+
+import addMappedInfoItem from '../actions/addMappedInfoItem';
+import updateItemConfig from '../actions/updateItemConfig';
+import {DispatchContext} from '../reducers/index';
+import {AssetSelectionPanel} from './AssetSelectionPanel';
+import {ManualSelectionPanel} from './ManualSelectionPanel';
+
+const IMAGE_SOURCE = {
+	contentMapping: 'content_mapping',
+	manualSelection: 'manual_selection'
+};
 
 /**
  * Renders Layout Background Image Configuration Panel.
- * *WARNING:* This component is unfinished since this is just used
- * to test FloatingToolbar ConfigurationPanel mechanism.
  */
-export const LayoutBackgroundImageConfigurationPanel = () => {
+export const LayoutBackgroundImageConfigurationPanel = ({item}) => {
+	const dispatch = useContext(DispatchContext);
+	const {
+		config: {backgroundImageTitle},
+		itemId
+	} = item;
+
+	const [imageSource, setImageSource] = useState(
+		IMAGE_SOURCE.manualSelection
+	);
+
+	const handleBackgroundImageItemChanged = image =>
+		dispatch(addMappedInfoItem(image));
+
+	const handleBackgroundImageConfig = ({imageTitle, imageURL}) =>
+		dispatch(
+			updateItemConfig({
+				config: {
+					backgroundImage: imageURL,
+					backgroundImageTitle: imageTitle
+				},
+				itemId
+			})
+		);
+
 	return (
 		<div className="floating-toolbar-layout-background-image-panel">
 			<ClayForm.Group>
@@ -30,35 +62,43 @@ export const LayoutBackgroundImageConfigurationPanel = () => {
 				</label>
 				<ClaySelectWithOption
 					aria-label={Liferay.Language.get('image-source')}
-					defaultValue="manual_selection"
+					defaultValue={IMAGE_SOURCE.manualSelection}
 					id="floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect"
+					onChange={({target: {value}}) => setImageSource(value)}
 					options={[
 						{
 							label: Liferay.Language.get('manual-selection'),
-							value: 'manual_selection'
+							value: IMAGE_SOURCE.manualSelection
 						},
 						{
 							label: Liferay.Language.get('content-mapping'),
-							value: 'content_mapping'
+							value: IMAGE_SOURCE.contentMapping
 						}
 					]}
 				/>
 			</ClayForm.Group>
-			<ClayForm.Group />
-			<ClayForm.Group>
-				<ClayButton.Group>
-					<div className="btn-group-item">
-						<ClayButton displayType="secondary" small>
-							{Liferay.Language.get('select')}
-						</ClayButton>
-					</div>
-					<div className="btn-group-item">
-						<ClayButton borderless displayType="secondary" small>
-							{Liferay.Language.get('clear')}
-						</ClayButton>
-					</div>
-				</ClayButton.Group>
-			</ClayForm.Group>
+			{imageSource === IMAGE_SOURCE.manualSelection ? (
+				<ManualSelectionPanel
+					backgroundImageTitle={backgroundImageTitle}
+					onClearButtonPressed={() =>
+						handleBackgroundImageConfig({
+							imageTitle: undefined,
+							imageURL: undefined
+						})
+					}
+					onImageSelected={image =>
+						handleBackgroundImageConfig({
+							imageTitle: image.title,
+							imageURL: image.url
+						})
+					}
+				/>
+			) : (
+				<AssetSelectionPanel
+					backgroundImageTitle={backgroundImageTitle}
+					onItemSelectorChanged={handleBackgroundImageItemChanged}
+				/>
+			)}
 		</div>
 	);
 };

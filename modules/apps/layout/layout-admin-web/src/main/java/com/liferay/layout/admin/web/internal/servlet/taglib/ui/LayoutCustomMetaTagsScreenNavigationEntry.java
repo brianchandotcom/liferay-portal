@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=3",
 	service = ScreenNavigationEntry.class
 )
-public class LayoutCustomOpenGraphMetaTagsScreenNavigationEntry
+public class LayoutCustomMetaTagsScreenNavigationEntry
 	implements ScreenNavigationEntry<Layout> {
 
 	@Override
@@ -61,8 +61,7 @@ public class LayoutCustomOpenGraphMetaTagsScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return LayoutScreenNavigationEntryConstants.
-			ENTRY_KEY_CUSTOM_OPEN_GRAPH_META_TAGS;
+		return LayoutScreenNavigationEntryConstants.ENTRY_KEY_CUSTOM_META_TAGS;
 	}
 
 	@Override
@@ -118,8 +117,7 @@ public class LayoutCustomOpenGraphMetaTagsScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/layout/screen/navigation/entries/custom_open_graph_meta_tags." +
-				"jsp");
+			"/layout/screen/navigation/entries/custom_meta_tags.jsp");
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -131,7 +129,7 @@ public class LayoutCustomOpenGraphMetaTagsScreenNavigationEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutCustomOpenGraphMetaTagsScreenNavigationEntry.class);
+		LayoutCustomMetaTagsScreenNavigationEntry.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

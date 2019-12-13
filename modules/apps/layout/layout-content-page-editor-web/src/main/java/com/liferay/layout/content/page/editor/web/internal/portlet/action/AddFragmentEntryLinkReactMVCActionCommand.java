@@ -197,10 +197,6 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			actionRequest);
 
-		JSONObject layoutDataJSONObject =
-			_addFragmentEntryLinkToLayoutDataJSONObject(
-				actionRequest, fragmentEntryLink);
-
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
@@ -220,30 +216,32 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			_portal.getLiferayPortletResponse(actionResponse),
 			configurationJSONObject);
 
-		JSONObject fragmentEntryLinkJSONObject = JSONUtil.put(
-			"configuration", configurationJSONObject
-		).put(
-			"content",
-			_fragmentRendererController.render(
-				defaultFragmentRendererContext,
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse))
-		).put(
-			"defaultConfigurationValues",
-			_fragmentEntryConfigurationParser.
-				getConfigurationDefaultValuesJSONObject(configuration)
-		).put(
-			"editableValues",
-			JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues())
-		).put(
-			"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId()
-		);
-
 		return JSONUtil.put(
-			"fragmentEntryLink", fragmentEntryLinkJSONObject
+			"fragmentEntryLink",
+			JSONUtil.put(
+				"configuration", configurationJSONObject
+			).put(
+				"content",
+				_fragmentRendererController.render(
+					defaultFragmentRendererContext,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse))
+			).put(
+				"defaultConfigurationValues",
+				_fragmentEntryConfigurationParser.
+					getConfigurationDefaultValuesJSONObject(configuration)
+			).put(
+				"editableValues",
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues())
+			).put(
+				"fragmentEntryLinkId",
+				fragmentEntryLink.getFragmentEntryLinkId()
+			)
 		).put(
-			"layoutData", layoutDataJSONObject
+			"layoutData",
+			_addFragmentEntryLinkToLayoutDataJSONObject(
+				actionRequest, fragmentEntryLink)
 		);
 	}
 

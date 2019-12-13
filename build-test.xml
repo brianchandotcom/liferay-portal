@@ -12275,6 +12275,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		/>
 	</target>
 
+	<target name="start-docker-database">
+		<start-docker-database />
+	</target>
+
 	<target name="start-lcs-server">
 		<start-lcs-app-server
 			app.server.bin.dir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/bin"
@@ -12308,6 +12312,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<stop-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 		/>
+	</target>
+
+	<target name="stop-docker-database">
+		<stop-docker-database />
 	</target>
 
 	<target name="stop-lcs-server">

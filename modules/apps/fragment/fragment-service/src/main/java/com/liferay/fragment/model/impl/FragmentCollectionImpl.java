@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.util.List;
@@ -57,9 +59,17 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			return _resourcesFolderId;
 		}
 
+		long groupId = getGroupId();
+
+		if (groupId == 0) {
+			User user = UserLocalServiceUtil.getUser(getUserId());
+
+			groupId = user.getGroupId();
+		}
+
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
-				getGroupId(), FragmentPortletKeys.FRAGMENT);
+				groupId, FragmentPortletKeys.FRAGMENT);
 
 		if (repository == null) {
 			ServiceContext serviceContext = new ServiceContext();
@@ -68,7 +78,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			serviceContext.setAddGuestPermissions(true);
 
 			repository = PortletFileRepositoryUtil.addPortletRepository(
-				getGroupId(), FragmentPortletKeys.FRAGMENT, serviceContext);
+				groupId, FragmentPortletKeys.FRAGMENT, serviceContext);
 		}
 
 		Folder folder = null;

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,10 +48,8 @@ public class LayoutStructure {
 		LayoutStructureItem parentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
-		List<String> childrenItemIds =
-			parentLayoutStructureItem.getChildrenItemIds();
-
-		childrenItemIds.add(position, layoutStructureItem.getItemId());
+		parentLayoutStructureItem.addChildrenItem(
+			position, layoutStructureItem.getItemId());
 	}
 
 	public JSONObject toJSONObject() {

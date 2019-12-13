@@ -573,14 +573,14 @@ AUI.add(
 				},
 
 				_getWebContentSelectorURL() {
+					var instance = this;
+
+					var portletNamespace = instance.get('portletNamespace');
+
 					var criterionJSON = {
 						desiredItemSelectorReturnTypes:
 							'com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType'
 					};
-
-					var instance = this;
-
-					var portletNamespace = instance.get('portletNamespace');
 
 					var webContentSelectorParameters = {
 						'0_json': JSON.stringify(criterionJSON),
@@ -591,8 +591,6 @@ AUI.add(
 						p_p_mode: 'view',
 						p_p_state: 'pop_up'
 					}
-
-					webContentSelectorParameters[portletNamespace + 'singleSelect'] = 'true';
 
 					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
 						themeDisplay.getURLControlPanel(),

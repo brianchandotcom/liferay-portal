@@ -1645,8 +1645,7 @@ AUI.add(
 						p_p_auth: container.getData('itemSelectorAuthToken'),
 						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 						p_p_mode: 'view',
-						p_p_state: 'pop_up',
-						singleSelect: 'true'
+						p_p_state: 'pop_up'
 					};
 
 					var webContentURL = Liferay.Util.PortletURL.createPortletURL(

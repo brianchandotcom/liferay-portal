@@ -21,16 +21,15 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState, useContext} from 'react';
 
+import {ConfigContext} from '../../../app/config/index';
+import {DispatchContext} from '../../../app/reducers/index';
 import {StoreContext} from '../../../app/store/index';
+import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
 import InlineConfirm from '../../../common/components/InlineConfirm';
 import UserIcon from '../../../common/components/UserIcon';
 import EditCommentForm from './EditCommentForm';
 import ReplyCommentForm from './ReplyCommentForm';
 import ResolveButton from './ResolveButton';
-
-function deleteFragmentEntryLinkComment() {
-	throw new Error('Not implemented');
-}
 
 function editFragmentEntryLinkComment() {
 	throw new Error('Not implemented');
@@ -63,6 +62,9 @@ export default function FragmentComment({
 	const [showResolveMask, setShowResolveMask] = useState(false);
 
 	const {showResolvedComments} = useContext(StoreContext);
+	const dispatch = useContext(DispatchContext);
+	const config = useContext(ConfigContext);
+
 	const showModifiedDateTooltip = !!(edited && modifiedDateDescription);
 
 	const commentClassname = classNames('small', {
@@ -267,17 +269,22 @@ export default function FragmentComment({
 					)}
 					onCancelButtonClick={() => setShowDeleteMask(false)}
 					onConfirmButtonClick={() =>
-						deleteFragmentEntryLinkComment(commentId)
-							.then(() => hideComment(() => onDelete(comment)))
-							.catch(() => {
-								openToast({
-									message: Liferay.Language.get(
-										'the-comment-could-not-be-deleted'
-									),
-									title: Liferay.Language.get('error'),
-									type: 'danger'
-								});
+						dispatch(
+							deleteFragmentComment({
+								commentId,
+								config,
+								fragmentEntryLinkId,
+								parentCommentId
 							})
+						).catch(() => {
+							openToast({
+								message: Liferay.Language.get(
+									'the-comment-could-not-be-deleted'
+								),
+								title: Liferay.Language.get('error'),
+								type: 'danger'
+							});
+						})
 					}
 				/>
 			)}

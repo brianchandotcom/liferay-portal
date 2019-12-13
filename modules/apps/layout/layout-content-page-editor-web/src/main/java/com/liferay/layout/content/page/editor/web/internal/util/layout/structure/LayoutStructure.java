@@ -52,6 +52,19 @@ public class LayoutStructure {
 			position, layoutStructureItem.getItemId());
 	}
 
+	public void deleteLayoutStructureItem(String itemId, String parentItemId) {
+		_layoutStructureItems.remove(itemId);
+
+		if (Validator.isNull(parentItemId)) {
+			return;
+		}
+
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		parentLayoutStructureItem.deleteChildrenItem(itemId);
+	}
+
 	public JSONObject toJSONObject() {
 		JSONObject layoutStructureItemsJSONObject =
 			JSONFactoryUtil.createJSONObject();

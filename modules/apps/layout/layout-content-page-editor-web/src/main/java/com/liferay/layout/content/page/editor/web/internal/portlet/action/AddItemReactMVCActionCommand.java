@@ -73,7 +73,7 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 			classPK, themeDisplay.getPlid(),
 			layoutStructure -> {
 				LayoutStructureItem layoutStructureItem =
-					LayoutStructureItem.create(
+					new LayoutStructureItem(
 						JSONFactoryUtil.createJSONObject(itemConfig), itemId,
 						parentItemId, itemType);
 

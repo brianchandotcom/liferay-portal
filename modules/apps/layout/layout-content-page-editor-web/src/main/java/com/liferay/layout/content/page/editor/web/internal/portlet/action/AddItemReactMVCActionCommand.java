@@ -15,7 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -69,15 +68,9 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
-			layoutStructure -> {
-				LayoutStructureItem layoutStructureItem =
-					new LayoutStructureItem(
-						JSONFactoryUtil.createJSONObject(itemConfig), itemId,
-						parentItemId, itemType);
-
-				layoutStructure.addLayoutStructureItem(
-					layoutStructureItem, parentItemId, position);
-			});
+			layoutStructure -> layoutStructure.addLayoutStructureItem(
+				JSONFactoryUtil.createJSONObject(itemConfig), itemId,
+				parentItemId, itemType, position));
 	}
 
 	@Override

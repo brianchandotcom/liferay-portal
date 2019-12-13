@@ -22,7 +22,6 @@ import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -110,17 +109,10 @@ public class AddPortletReactMVCActionCommand
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
-			layoutStructure -> {
-				LayoutStructureItem layoutStructureItem =
-					new LayoutStructureItem(
-						JSONFactoryUtil.createJSONObject(itemConfig),
-						String.valueOf(
-							fragmentEntryLink.getFragmentEntryLinkId()),
-						parentItemId, itemType);
-
-				layoutStructure.addLayoutStructureItem(
-					layoutStructureItem, parentItemId, position);
-			});
+			layoutStructure -> layoutStructure.addLayoutStructureItem(
+				JSONFactoryUtil.createJSONObject(itemConfig),
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				parentItemId, itemType, position));
 	}
 
 	@Override

@@ -29,7 +29,6 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -114,18 +113,11 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
-			layoutStructure -> {
-				LayoutStructureItem layoutStructureItem =
-					new LayoutStructureItem(
-						JSONFactoryUtil.createJSONObject(
-							fragmentEntryLink.getConfiguration()),
-						String.valueOf(
-							fragmentEntryLink.getFragmentEntryLinkId()),
-						parentItemId, itemType);
-
-				layoutStructure.addLayoutStructureItem(
-					layoutStructureItem, parentItemId, position);
-			});
+			layoutStructure -> layoutStructure.addLayoutStructureItem(
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getConfiguration()),
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				parentItemId, itemType, position));
 	}
 
 	private void _copyPortletPreferences(

@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import editFragmentEntryComment from '../../../app/actions/editFragmentEntryLinkComment';
 import {useSelectItem} from '../../../app/components/Controls';
 import {StoreContext} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
@@ -80,12 +81,13 @@ export default function FragmentComments({fragmentEntryLink}) {
 										type: 'deleteFragmentEntryLinkComment'
 									})
 								}
-								onEdit={({commentId}) =>
-									dispatch({
-										commentId,
-										fragmentEntryLinkId,
-										type: 'editComment'
-									})
+								onEdit={fragmentEntryLinkComment =>
+									dispatch(
+										editFragmentEntryComment({
+											fragmentEntryLinkComment,
+											fragmentEntryLinkId
+										})
+									)
 								}
 								onEditReply={parentCommentId => ({commentId}) =>
 									dispatch({

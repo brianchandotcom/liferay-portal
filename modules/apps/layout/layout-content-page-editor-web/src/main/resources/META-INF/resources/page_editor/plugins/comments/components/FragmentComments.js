@@ -74,13 +74,6 @@ export default function FragmentComments({fragmentEntryLink}) {
 								comment={comment}
 								fragmentEntryLinkId={fragmentEntryLinkId}
 								key={comment.commentId}
-								onDelete={({commentId}) =>
-									dispatch({
-										commentId,
-										fragmentEntryLinkId,
-										type: 'deleteFragmentEntryLinkComment'
-									})
-								}
 								onEdit={fragmentEntryLinkComment =>
 									dispatch(
 										editFragmentEntryComment({
@@ -89,13 +82,6 @@ export default function FragmentComments({fragmentEntryLink}) {
 										})
 									)
 								}
-								onEditReply={parentCommentId => ({commentId}) =>
-									dispatch({
-										commentId,
-										fragmentEntryLinkId,
-										parentCommentId,
-										type: 'editCommentReply'
-									})}
 							/>
 						);
 					})}

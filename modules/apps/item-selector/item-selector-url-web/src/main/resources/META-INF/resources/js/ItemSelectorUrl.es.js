@@ -17,9 +17,11 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 
 import {sub} from './utils.es';
+
+const TIMEOUT_MS = 5000;
 
 const ItemSelectorUrl = ({eventName}) => {
 	const inputName = 'urlInputReact';
@@ -27,11 +29,13 @@ const ItemSelectorUrl = ({eventName}) => {
 	const [loaded, setLoaded] = useState(false);
 	const [previewError, setPreviewError] = useState(false);
 	const isMounted = useIsMounted();
+	const timerTimeoutRef = useRef(null);
 
 	const handleImgPreviewError = () => {
 		if (isMounted()) {
 			setLoaded(true);
 			setPreviewError(true);
+			clearTimeout(timerTimeoutRef.current);
 		}
 	};
 
@@ -39,6 +43,7 @@ const ItemSelectorUrl = ({eventName}) => {
 		if (isMounted()) {
 			setLoaded(true);
 			setPreviewError(false);
+			clearTimeout(timerTimeoutRef.current);
 		}
 	};
 
@@ -59,10 +64,22 @@ const ItemSelectorUrl = ({eventName}) => {
 		Liferay.Util.getOpener().Liferay.fire(eventName, eventData);
 	};
 
-	const handleUrlChange = ({target}) => {
-		setUrl(target.value);
+	const handleUrlChange = event => {
+		const value = event.target.value.trim();
+		setUrl(value);
 		setLoaded(false);
 		setPreviewError(false);
+
+		if (timerTimeoutRef.current) {
+			clearTimeout(timerTimeoutRef.current);
+		}
+
+		if (value) {
+			timerTimeoutRef.current = setTimeout(
+				handleImgPreviewError,
+				TIMEOUT_MS
+			);
+		}
 	};
 
 	return (

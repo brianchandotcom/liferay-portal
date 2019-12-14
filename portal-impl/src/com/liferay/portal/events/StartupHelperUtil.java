@@ -45,7 +45,7 @@ import java.util.List;
  */
 public class StartupHelperUtil {
 
-	public static void initPermissions() {
+	public static void initResourceActions() {
 		List<String> modelNames = ResourceActionsUtil.getModelNames();
 
 		for (String modelName : modelNames) {

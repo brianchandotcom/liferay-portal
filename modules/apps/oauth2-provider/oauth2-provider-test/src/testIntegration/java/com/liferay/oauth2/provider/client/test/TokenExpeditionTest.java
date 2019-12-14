@@ -67,10 +67,19 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 		formData.add("client_secret", "");
 		formData.add("grant_type", "client_credentials");
 
-		try (CaptureAppender captureAppender =
+		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.oauth2.provider.rest.internal.endpoint." +
 						"liferay.LiferayOAuthDataProvider",
+					Level.WARN);
+			CaptureAppender captureAppender2 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"org.apache.cxf.jaxrs.impl.WebApplicationExceptionMapper",
+					Level.WARN);
+			CaptureAppender captureAppender3 =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"org.apache.cxf.rs.security.oauth2.services." +
+						"AbstractOAuthService",
 					Level.WARN)) {
 
 			Response response = invocationBuilder.post(Entity.form(formData));

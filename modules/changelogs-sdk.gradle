@@ -22,6 +22,46 @@ buildChangelogs {
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
+		String gitLog = "git --no-pager log --follow -p --pretty=format:%H:%cd:%s 6a1ce18c602e..ed274081137c5 -- sdk/gradle-plugins/build.gradle".execute().text
+
+		String commitId = ""
+		String ticket = ""
+		String bndVersion = "4.4.101"
+
+		gitLog.eachLine {
+			String line ->
+
+			def matcher = line =~ /([a-f0-9]+):.+:([A-Z]+-\d+).*/
+
+			String pluginName = ""
+			String version = ""
+
+			if (matcher.find()) {
+
+				commitId = matcher.group(1)
+				ticket = matcher.group(2)
+
+			}
+
+			matcher = line =~ /\+\s*compile group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+
+			if (matcher.find()) {
+				pluginName = matcher.group(1)
+
+				version = matcher.group(2)
+
+				def changelog = StringBuilder.newInstance()
+				changelog << """\
+## ${bndVersion} - 1970-01-01
+
+### Changed
+- [${ticket}]: Update the [${pluginName}] dependency to version ${version}.
+"""
+				println changelog
+			}
+
+		}
+
 		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName
 	}
 }

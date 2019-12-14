@@ -107,9 +107,9 @@ public class DBUpgrader {
 
 			StartupHelperUtil.printPatchLevel();
 
-			upgrade();
-
 			new VerifyProperties().verify();
+
+			upgrade();
 
 			_checkClassNamesAndResourceActions();
 

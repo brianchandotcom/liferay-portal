@@ -134,7 +134,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 					}
 
 					UpgradePrimaryKey upgradePrimaryKey = new UpgradePrimaryKey(
-						_COMPANYID_COLUMN_DEFINITION, false, _tableName);
+						_COMPANYID_COLUMN_DEFINITION, _tableName);
 
 					upgradePrimaryKey.upgrade();
 				}

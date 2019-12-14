@@ -20,7 +20,7 @@ package com.liferay.portal.kernel.upgrade;
 public class UpgradeCTModel extends UpgradePrimaryKey {
 
 	public UpgradeCTModel(String... tableNames) {
-		super("ctCollectionId LONG default 0 not null", true, tableNames);
+		super("ctCollectionId LONG default 0 not null", tableNames);
 	}
 
 }

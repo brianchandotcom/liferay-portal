@@ -37,10 +37,9 @@ import java.util.List;
 public class UpgradePrimaryKey extends UpgradeProcess {
 
 	public UpgradePrimaryKey(
-		String newPKColumnDefinition, boolean addColumn, String... tableNames) {
+		String newPKColumnDefinition, String... tableNames) {
 
 		_newPKColumnDefinition = newPKColumnDefinition;
-		_addColumn = addColumn;
 
 		if (tableNames.length == 0) {
 			throw new IllegalArgumentException("Table names is empty");
@@ -128,7 +127,14 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 				"No primary key column found for " + normalizedTableName);
 		}
 
-		if (_addColumn) {
+		if (primaryKeyColumnNames.contains(
+				dbInspector.normalizeName(
+					_newPKColumnName, databaseMetaData))) {
+
+			return;
+		}
+
+		if (!hasColumn(normalizedTableName, _newPKColumnName)) {
 			runSQL(
 				StringBundler.concat(
 					"alter table ", normalizedTableName, " add ",
@@ -193,7 +199,6 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 			getAlterPrimaryKeySQL(normalizedTableName, primaryKeyColumnNames));
 	}
 
-	private final boolean _addColumn;
 	private final String _newPKColumnDefinition;
 	private final String _newPKColumnName;
 	private final String[] _tableNames;

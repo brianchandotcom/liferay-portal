@@ -183,10 +183,11 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Check resource actions");
 		}
 
-		ResourceActionLocalServiceUtil.checkResourceActions();
-
 		if (StartupHelperUtil.isDBNew()) {
 			StartupHelperUtil.initPermissions();
+		}
+		else {
+			ResourceActionLocalServiceUtil.checkResourceActions();
 		}
 
 		// Verify

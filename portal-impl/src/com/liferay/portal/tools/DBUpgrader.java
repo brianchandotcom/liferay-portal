@@ -115,8 +115,6 @@ public class DBUpgrader {
 
 			_checkClassNamesAndResourceActions();
 
-			StartupHelperUtil.initPermissions();
-
 			verify();
 
 			DependencyManagerSyncUtil.sync();
@@ -330,7 +328,7 @@ public class DBUpgrader {
 			_log.debug("Check resource actions");
 		}
 
-		ResourceActionLocalServiceUtil.checkResourceActions();
+		StartupHelperUtil.initPermissions();
 	}
 
 	private static void _checkPermissionAlgorithm() throws Exception {

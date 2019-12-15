@@ -16,6 +16,7 @@ package com.liferay.layout.seo.internal.upgrade;
 
 import com.liferay.layout.seo.internal.upgrade.v2_0_0.UpgradeSEOEntry;
 import com.liferay.layout.seo.internal.upgrade.v2_1_0.UpgradeSchema;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

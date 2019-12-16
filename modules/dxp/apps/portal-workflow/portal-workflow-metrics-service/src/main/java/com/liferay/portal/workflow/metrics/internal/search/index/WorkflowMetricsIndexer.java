@@ -157,7 +157,7 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 				baseWorkflowMetricsIndexers) {
 
 			if (_hasIndex(baseWorkflowMetricsIndexer.getIndexName())) {
-				return;
+				continue;
 			}
 
 			CreateIndexRequest createIndexRequest = new CreateIndexRequest(
@@ -197,7 +197,7 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 				baseWorkflowMetricsIndexers) {
 
 			if (!_hasIndex(baseWorkflowMetricsIndexer.getIndexName())) {
-				return;
+				continue;
 			}
 
 			BooleanQuery booleanQuery = new BooleanQueryImpl();

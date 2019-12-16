@@ -50,7 +50,7 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
 
-	macro createFormViewandTableView {
+	macro createFormViewAndTableView {
 		FormViewBuilder.addFormView(
 			fieldType = "${fieldType}",
 			formViewName = "${formViewName}");

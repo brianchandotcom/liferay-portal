@@ -17,9 +17,9 @@ import WidgetService from '../services/WidgetService';
 
 export default function addWidget({
 	config,
+	parentId,
 	portletId,
 	position,
-	siblingId,
 	store
 }) {
 	return dispatch => {
@@ -27,9 +27,11 @@ export default function addWidget({
 
 		WidgetService.addPortlet({
 			config,
+			parentId,
 			portletId,
+			position,
 			segmentsExperienceId
-		}).then(fragmentEntryLink => {
+		}).then(({fragmentEntryLink, layoutData}) => {
 			// TODO: This is a temporary "hack"
 			//       until the backend is consitent
 			//       between both "metal+soy" and "react" versions
@@ -42,9 +44,7 @@ export default function addWidget({
 			dispatch(
 				addFragmentEntryLink({
 					fragmentEntryLink,
-					itemId: `thing-${Date.now()}`,
-					position,
-					siblingId
+					layoutData
 				})
 			);
 		});

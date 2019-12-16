@@ -29,6 +29,8 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_PREFERENCES = "preferences";
 
+	public static final String CATEGORY_KEY_ROLES = "roles";
+
 	public static final String CATEGORY_KEY_USERS = "users";
 
 	public static final String ENTRY_KEY_ADDRESSES = "addresses";
@@ -48,6 +50,8 @@ public class AccountScreenNavigationEntryConstants {
 	public static final String ENTRY_KEY_ORGANIZATIONS = "organizations";
 
 	public static final String ENTRY_KEY_PASSWORD = "password";
+
+	public static final String ENTRY_KEY_ROLES = "roles";
 
 	public static final String ENTRY_KEY_USERS = "users";
 

@@ -14,7 +14,7 @@
 
 import {EDIT_FRAGMENT_ENTRY_LINK_COMMENT} from './types';
 
-export default function editFragmentEntryLink({
+export default function editFragmentEntryLinkComment({
 	fragmentEntryLinkComment,
 	fragmentEntryLinkId,
 	parentCommentId = 0

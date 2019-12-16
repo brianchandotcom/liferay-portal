@@ -569,9 +569,9 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 	}
 
-	@description = "This test covers LPS-105119. It ensures that a depot web content can be viewed from the connected site."
+	@description = "This test covers LPS-105119. It ensures that workspaces can be selected in a web content field."
 	@priority = "4"
-	test ViewWebContentFromConnectedSite {
+	test SelectWorkspaceFromWebContentField {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -642,4 +642,4 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
-}
+	}

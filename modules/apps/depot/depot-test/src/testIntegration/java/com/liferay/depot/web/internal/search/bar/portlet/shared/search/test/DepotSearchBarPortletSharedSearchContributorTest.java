@@ -240,6 +240,33 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 		Assert.assertEquals(_group.getGroupId(), groupIds[0]);
 	}
 
+	@Test
+	public void testContributeWithUnsearchableConnectedGroupId()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId(), false);
+
+		PortletSharedSearchSettings portletSharedSearchSettings =
+			_getPortletSharedSearchSettings();
+
+		SearchContext searchContext =
+			portletSharedSearchSettings.getSearchContext();
+
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		_depotSearchBarPortletSharedSearchContributor.contribute(
+			portletSharedSearchSettings);
+
+		long[] groupIds = searchContext.getGroupIds();
+
+		Assert.assertEquals(Arrays.toString(groupIds), 1, groupIds.length);
+
+		Assert.assertEquals(_group.getGroupId(), groupIds[0]);
+	}
+
 	private DepotEntry _addDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(

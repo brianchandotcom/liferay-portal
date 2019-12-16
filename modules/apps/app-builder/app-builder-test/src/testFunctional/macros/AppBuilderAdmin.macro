@@ -180,13 +180,6 @@ definition {
 			value1 = "${description}");
 	}
 
-	macro validateFormViewTitle {
-		AssertTextEquals(
-			key_RowNumber = "${rowNumber}",
-			locator1 = "AppBuilder#VALIDATE_FORM_VIEW_NAME_AT_ROW",
-			value1 = "${title}");
-	}
-
 	macro validateIfSearchItemIsFound {
 		AssertTextEquals(
 			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
@@ -207,6 +200,13 @@ definition {
 		AssertTextEquals(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = "${itemName}");
+	}
+
+	macro validateListTitleAtRow {
+		AssertTextEquals(
+			key_RowNumber = "${rowNumber}",
+			locator1 = "AppBuilder#VALIDATE_FORM_VIEW_NAME_AT_ROW",
+			value1 = "${title}");
 	}
 
 	macro validateRequiredValidNameMessage {

@@ -10459,17 +10459,15 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<if>
 						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 						<then>
-							<antcall target="rebuild-database">
-								<param name="database.type" value="${database.type}" />
-								<param name="sql.dir" value="sql/create-bare/" />
-								<param name="sql.file" value="create-bare-${database.type}.sql" />
-							</antcall>
-
 							<property location="${project.dir}/setup_data_pump.sql" name="oracle.setup.file.path" />
 
 							<echo file="${oracle.setup.file.path}">
 								<![CDATA[
+									drop user lportal cascade;
+
 									create or replace directory DATA_PUMP_DIR as '/tmp/data_pump_dir';
+
+									select directory_name, directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
 
 									quit;
 								]]>

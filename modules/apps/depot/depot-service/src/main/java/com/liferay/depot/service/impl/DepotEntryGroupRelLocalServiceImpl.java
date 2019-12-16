@@ -37,6 +37,13 @@ public class DepotEntryGroupRelLocalServiceImpl
 	public DepotEntryGroupRel addDepotEntryGroupRel(
 		long depotEntryId, long toGroupId) {
 
+		return addDepotEntryGroupRel(depotEntryId, toGroupId, true);
+	}
+
+	@Override
+	public DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId, boolean searchable) {
+
 		DepotEntryGroupRel depotEntryGroupRel =
 			depotEntryGroupRelPersistence.fetchByD_TGI(depotEntryId, toGroupId);
 
@@ -48,6 +55,7 @@ public class DepotEntryGroupRelLocalServiceImpl
 			counterLocalService.increment());
 
 		depotEntryGroupRel.setDepotEntryId(depotEntryId);
+		depotEntryGroupRel.setSearchable(searchable);
 		depotEntryGroupRel.setToGroupId(toGroupId);
 
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
@@ -77,6 +85,19 @@ public class DepotEntryGroupRelLocalServiceImpl
 	@Override
 	public int getDepotEntryGroupRelsCount(long groupId) {
 		return depotEntryGroupRelPersistence.countByToGroupId(groupId);
+	}
+
+	@Override
+	public List<DepotEntryGroupRel> getSearchableDepotEntryGroupRels(
+		long groupId, int start, int end) {
+
+		return depotEntryGroupRelPersistence.findByS_TGI(
+			true, groupId, start, end);
+	}
+
+	@Override
+	public int getSearchableDepotEntryGroupRelsCount(long groupId) {
+		return depotEntryGroupRelPersistence.countByS_TGI(true, groupId);
 	}
 
 }

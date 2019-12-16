@@ -228,8 +228,10 @@ public class WikiPageStagedModelDataHandler
 
 				if (Validator.isNotNull(pageResourceUuid)) {
 					WikiPageResource wikiPageResource =
-						_wikiPageResourceLocalService.fetchPageResource(
-							pageResourceUuid);
+						_wikiPageResourceLocalService.
+							fetchWikiPageResourceByUuidAndGroupId(
+								pageResourceUuid,
+								portletDataContext.getScopeGroupId());
 
 					importedPageResource =
 						_wikiPageResourceLocalService.getPageResource(

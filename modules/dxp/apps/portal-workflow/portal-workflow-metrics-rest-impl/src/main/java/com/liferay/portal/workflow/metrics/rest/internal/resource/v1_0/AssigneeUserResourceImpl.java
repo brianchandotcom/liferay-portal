@@ -41,12 +41,14 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.AvgAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult;
+import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
+import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -174,6 +176,19 @@ public class AssigneeUserResourceImpl
 
 		return booleanQuery.addShouldQueryClauses(
 			slaTaskResultsBooleanQuery, tokensBooleanQuery);
+	}
+
+	private BucketSelectorPipelineAggregation
+		_createBucketSelectorPipelineAggregation() {
+
+		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
+			_aggregations.bucketSelector(
+				"bucketSelector", _scripts.script("params.taskCount > 0"));
+
+		bucketSelectorPipelineAggregation.addBucketPath(
+			"taskCount", "countFilter>taskCount.value");
+
+		return bucketSelectorPipelineAggregation;
 	}
 
 	private BooleanQuery _createCountFilterBooleanQuery() {
@@ -306,6 +321,9 @@ public class AssigneeUserResourceImpl
 		termsAggregation.addChildrenAggregations(
 			countFilterAggregation, onTimeFilterAggregation,
 			overdueFilterAggregation);
+
+		termsAggregation.addPipelineAggregations(
+			_createBucketSelectorPipelineAggregation());
 
 		if (fieldSort != null) {
 			termsAggregation.addPipelineAggregation(
@@ -648,6 +666,9 @@ public class AssigneeUserResourceImpl
 
 	@Reference
 	private ResourceHelper _resourceHelper;
+
+	@Reference
+	private Scripts _scripts;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

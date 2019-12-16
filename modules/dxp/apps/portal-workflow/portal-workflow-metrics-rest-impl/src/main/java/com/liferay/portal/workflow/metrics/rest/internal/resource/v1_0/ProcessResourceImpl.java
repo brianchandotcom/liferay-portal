@@ -181,6 +181,8 @@ public class ProcessResourceImpl
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
+		booleanQuery.setMinimumShouldMatch(1);
+
 		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
 
 		instancesBooleanQuery.addFilterQueryClauses(

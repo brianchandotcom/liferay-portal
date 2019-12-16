@@ -154,6 +154,8 @@ public class AssigneeUserResourceImpl
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
+		booleanQuery.setMinimumShouldMatch(1);
+
 		BooleanQuery slaTaskResultsBooleanQuery = _queries.booleanQuery();
 
 		slaTaskResultsBooleanQuery.addFilterQueryClauses(

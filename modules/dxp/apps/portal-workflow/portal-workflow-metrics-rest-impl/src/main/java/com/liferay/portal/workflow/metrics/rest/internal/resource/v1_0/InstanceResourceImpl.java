@@ -257,6 +257,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
+		booleanQuery.setMinimumShouldMatch(1);
+
 		BooleanQuery instancesBooleanQuery = _queries.booleanQuery();
 
 		instancesBooleanQuery.addFilterQueryClauses(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.storage;
+package com.liferay.data.engine.rest.internal.storage.v2_0;
 
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.portal.kernel.util.MapUtil;

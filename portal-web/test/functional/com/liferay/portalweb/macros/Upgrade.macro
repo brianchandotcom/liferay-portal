@@ -307,6 +307,33 @@ definition {
 			threadSubject = "Message Boards Subject 3");
 	}
 
+	macro addOneDriveDocument {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "${dmDocumentTypeName}");
+
+		OneDrive.AddDocument(dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTypeName} Title After Upgrade");
+	}
+
 	macro addOrganization {
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -1118,6 +1145,19 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.deletePG(dmDocumentTitle = "Edited Google Slide");
+	}
+
+	macro viewAndDeleteOneDriveDocument {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "OneDrive ${dmDocumentTypeName} Title");
+
+		DMDocument.deletePG(dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title");
 	}
 
 	macro viewAndEditGoogleDriveDocuments {

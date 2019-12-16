@@ -45,7 +45,7 @@ const DisabledArea = () => {
 	const [show, setShow] = useState(false);
 	const [position, setPosition] = useState('bottom');
 
-	const isBlockedArea = element => {
+	const isDisabled = element => {
 		const {height} = element.getBoundingClientRect();
 		const {position} = window.getComputedStyle(element);
 
@@ -125,7 +125,7 @@ const DisabledArea = () => {
 		while (element.parentElement && element !== document.body) {
 			Array.from(element.parentElement.children).forEach(
 				child =>
-					isBlockedArea(child) &&
+					isDisabled(child) &&
 					child.classList.add(DEFAULT_DISABLED_AREA_CLASS)
 			);
 

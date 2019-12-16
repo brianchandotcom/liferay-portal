@@ -18,8 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
 import com.liferay.data.engine.rule.function.DataRuleFunction;
 import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
-
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,11 +31,9 @@ public class IntegerLiteralDataRuleFunctionTest {
 	@Test
 	public void testInvalidInteger() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "number");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "number"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -49,11 +46,9 @@ public class IntegerLiteralDataRuleFunctionTest {
 	@Test
 	public void testNullInteger() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", null);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", (Object)null
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -66,13 +61,9 @@ public class IntegerLiteralDataRuleFunctionTest {
 	@Test
 	public void testOutOfBoundsInteger() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put(
-						"fieldName",
-						"2312321243423432423424234233234324324242");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "2312321243423432423424234233234324324242"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -85,11 +76,9 @@ public class IntegerLiteralDataRuleFunctionTest {
 	@Test
 	public void testValidInteger() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "132512");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "132512"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(

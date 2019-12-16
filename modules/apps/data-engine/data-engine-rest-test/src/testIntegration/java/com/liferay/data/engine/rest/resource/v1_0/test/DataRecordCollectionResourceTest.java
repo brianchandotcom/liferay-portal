@@ -21,9 +21,9 @@ import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -234,17 +234,13 @@ public class DataRecordCollectionResourceTest
 		};
 
 		dataRecordCollection.setDescription(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", description);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"en_US", description
+			).build());
 		dataRecordCollection.setName(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", name);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"en_US", name
+			).build());
 
 		return dataRecordCollection;
 	}

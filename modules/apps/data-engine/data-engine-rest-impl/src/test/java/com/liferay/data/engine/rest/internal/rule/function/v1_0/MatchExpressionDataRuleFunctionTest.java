@@ -18,8 +18,8 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
 import com.liferay.data.engine.rule.function.DataRuleFunction;
 import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -33,18 +33,14 @@ public class MatchExpressionDataRuleFunctionTest {
 	@Test
 	public void testInvalidMatch() {
 		Map<String, Object> dataDefinitionRuleParameters =
-			new HashMap<String, Object>() {
-				{
-					put(_EXPRESSION, "\\S+@\\S+\\.\\S+");
-				}
-			};
+			HashMapBuilder.<String, Object>put(
+				_EXPRESSION, "\\S+@\\S+\\.\\S+"
+			).build();
 
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "test@liferay");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "test@liferay"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -58,18 +54,14 @@ public class MatchExpressionDataRuleFunctionTest {
 	@Test
 	public void testInvalidRegex() {
 		Map<String, Object> dataDefinitionRuleParameters =
-			new HashMap<String, Object>() {
-				{
-					put(_EXPRESSION, "\\\\\\\\S+[@\\\\S+\\\\.\\\\S+");
-				}
-			};
+			HashMapBuilder.<String, Object>put(
+				_EXPRESSION, "\\\\\\\\S+[@\\\\S+\\\\.\\\\S+"
+			).build();
 
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "test@liferay");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "test@liferay"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -83,18 +75,14 @@ public class MatchExpressionDataRuleFunctionTest {
 	@Test
 	public void testValidMatch() {
 		Map<String, Object> dataDefinitionRuleParameters =
-			new HashMap<String, Object>() {
-				{
-					put(_EXPRESSION, "\\S+@\\S+\\.\\S+");
-				}
-			};
+			HashMapBuilder.<String, Object>put(
+				_EXPRESSION, "\\S+@\\S+\\.\\S+"
+			).build();
 
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "test@liferay.com");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "test@liferay.com"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(

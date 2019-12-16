@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,9 +42,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -260,23 +260,27 @@ public class DocumentLibraryFieldType extends BaseFieldType {
 		return sb.toString();
 	}
 
-	private Map<String, String> _getStrings(
-		HttpServletRequest httpServletRequest) {
-
-		Map<String, String> values = new HashMap<>();
-
+	private Locale _getLocale(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = new AggregateResourceBundle(
-			ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass()),
-			_portal.getResourceBundle(themeDisplay.getLocale()));
+		return themeDisplay.getLocale();
+	}
 
-		values.put("select", LanguageUtil.get(resourceBundle, "select"));
+	private Map<String, String> _getStrings(
+		HttpServletRequest httpServletRequest) {
 
-		return values;
+		return HashMapBuilder.put(
+			"select",
+			LanguageUtil.get(
+				new AggregateResourceBundle(
+					ResourceBundleUtil.getBundle(
+						"content.Language", _getLocale(httpServletRequest),
+						getClass()),
+					_portal.getResourceBundle(_getLocale(httpServletRequest))),
+				"select")
+		).build();
 	}
 
 	private JSONObject _toJSONObject(String string) {

@@ -21,9 +21,9 @@ import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -211,8 +211,8 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		DataLayout dataLayout = new DataLayout() {
 			{
 				dataDefinitionId = _ddmStructure.getStructureId();
-				dateCreated = RandomTestUtil.nextDate();
 				dataLayoutKey = RandomTestUtil.randomString();
+				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				paginationMode = "wizard";
@@ -221,11 +221,9 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		};
 
 		dataLayout.setName(
-			new HashMap<String, Object>() {
-				{
-					put("en_US", name);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"en_US", name
+			).build());
 
 		return dataLayout;
 	}

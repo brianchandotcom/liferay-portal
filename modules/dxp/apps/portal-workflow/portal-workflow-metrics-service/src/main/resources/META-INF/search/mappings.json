@@ -1059,6 +1059,11 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"completionDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
 			"deleted": {
 				"store": true,
 				"type": "boolean"

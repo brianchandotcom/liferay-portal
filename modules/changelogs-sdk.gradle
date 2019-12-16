@@ -24,8 +24,16 @@ buildChangelogs {
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
-		changelogPropertiesFile.getText("UTF-8").eachLine {
-			String recordCommitLine ->
+		String[] changelogPropertiesFileContent = changelogPropertiesFile
+
+		println changelogPropertiesFileContent.size()
+
+		for (int i = 0; i < changelogPropertiesFileContent.size() - 1;) {
+			String line1 = changelogPropertiesFileContent[i++]
+			String line2 = changelogPropertiesFileContent[i]
+
+			println line1
+			println line2
 
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 

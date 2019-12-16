@@ -34,6 +34,8 @@ export default {
 		config,
 		fragmentGroupId,
 		fragmentKey,
+		parentId,
+		position,
 		segmentsExperienceId
 	}) {
 		const {addFragmentEntryLinkURL, classNameId, classPK} = config;
@@ -43,6 +45,8 @@ export default {
 			classPK,
 			fragmentGroupId,
 			fragmentKey,
+			parentId,
+			position,
 			segmentsExperienceId
 		});
 	},

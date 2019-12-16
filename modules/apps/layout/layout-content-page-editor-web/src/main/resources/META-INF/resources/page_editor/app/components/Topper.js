@@ -30,6 +30,11 @@ import {
 	useHoverItem
 } from './Controls';
 
+const EDGE = {
+	BOTTOM: 1,
+	TOP: 0
+};
+
 const TopperListItem = React.forwardRef(
 	({children, className, expand, ...props}, ref) => (
 		<li
@@ -145,7 +150,7 @@ export default function Topper({
 					parentChildren[dragIndex + 1] !== hoverId &&
 					hoverClientY < hoverMiddleY
 				) {
-					setEdge(0);
+					setEdge(EDGE.TOP);
 					return;
 				}
 
@@ -154,17 +159,17 @@ export default function Topper({
 					parentChildren[dragIndex - 1] !== hoverId &&
 					hoverClientY > hoverMiddleY
 				) {
-					setEdge(1);
+					setEdge(EDGE.BOTTOM);
 					return;
 				}
 			} else {
 				if (hoverClientY < hoverMiddleY) {
-					setEdge(0);
+					setEdge(EDGE.TOP);
 					return;
 				}
 
 				if (hoverClientY > hoverMiddleY) {
-					setEdge(1);
+					setEdge(EDGE.BOTTOM);
 					return;
 				}
 			}

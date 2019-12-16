@@ -65,7 +65,7 @@ public class UpgradePrimaryKeyCompanyId extends BaseUpgradeCompanyId {
 				return String.valueOf(companyIds.get(0));
 			}
 
-			return String.valueOf(_NO_COMPANYID);
+			return String.valueOf(_DEFAULT_COMPANY_ID);
 		}
 
 		protected String getUpdateSQL(String selectSQL) {
@@ -80,7 +80,7 @@ public class UpgradePrimaryKeyCompanyId extends BaseUpgradeCompanyId {
 			return sb.toString();
 		}
 
-		private static final int _NO_COMPANYID = -1;
+		private static final long _DEFAULT_COMPANY_ID = 0;
 
 	}
 

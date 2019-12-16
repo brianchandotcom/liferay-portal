@@ -142,7 +142,7 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 			company = _companyLocalService.getCompanyByWebId(companyWebId);
 		}
 
-		if (deployJSONObject.has("groupKey")) {
+		if ((company != null) && deployJSONObject.has("groupKey")) {
 			group = _groupLocalService.getGroup(
 				company.getCompanyId(), deployJSONObject.getString("groupKey"));
 		}

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.test.util.DocumentsAssert;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.AssetSearcher;
@@ -92,7 +91,7 @@ public class AssetSearcherStagingTest {
 
 		User user = addUser();
 
-		ServiceTestUtil.setUser(user);
+		UserTestUtil.setUser(user);
 
 		addUserGroupRole(user, role);
 

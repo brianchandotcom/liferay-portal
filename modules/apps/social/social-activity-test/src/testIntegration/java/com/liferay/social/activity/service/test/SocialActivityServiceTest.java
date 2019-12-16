@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
@@ -106,14 +105,14 @@ public class SocialActivityServiceTest {
 
 		Assert.assertEquals(activities.toString(), 1, activities.size());
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		activities = SocialActivityServiceUtil.getGroupActivities(
 			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(activities.toString(), 0, activities.size());
 
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test
@@ -131,7 +130,7 @@ public class SocialActivityServiceTest {
 
 		long userId = PrincipalThreadLocal.getUserId();
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		try {
 			Assert.assertEquals(
@@ -171,7 +170,7 @@ public class SocialActivityServiceTest {
 		finally {
 			User user = UserLocalServiceUtil.getUser(userId);
 
-			ServiceTestUtil.setUser(user);
+			UserTestUtil.setUser(user);
 		}
 	}
 

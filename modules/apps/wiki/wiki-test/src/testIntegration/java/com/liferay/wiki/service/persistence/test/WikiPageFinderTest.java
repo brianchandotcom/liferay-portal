@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -79,7 +78,7 @@ public class WikiPageFinderTest {
 
 	@Test
 	public void testQueryByG_N_H_SApprovedStatus() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		int count = WikiPageServiceUtil.getPagesCount(
 			_group.getGroupId(), _node.getNodeId(), true, _user.getUserId(),
@@ -98,7 +97,7 @@ public class WikiPageFinderTest {
 	public void testQueryByG_N_H_SApprovedStatusIncludeOwner()
 		throws Exception {
 
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		int count = WikiPageServiceUtil.getPagesCount(
 			_group.getGroupId(), _node.getNodeId(), true,
@@ -117,7 +116,7 @@ public class WikiPageFinderTest {
 
 	@Test
 	public void testQueryByG_N_H_SDraftStatusIncludeOwner() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		int count = WikiPageServiceUtil.getPagesCount(
 			_group.getGroupId(), _node.getNodeId(), true, _user.getUserId(),

@@ -16,49 +16,55 @@ task buildChangelogs
 task recordCommits
 
 buildChangelogs {
+	dependsOn recordCommits
+
 	description = "Builds the changelogs for each published version in `CHANGELOG.markdown`."
 	group = "changelogs"
 
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
-		ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
+		changelogPropertiesFile.getText("UTF-8").eachLine {
+			String recordCommitLine ->
 
-		exec {
-			commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "-p", "6a1ce18c602e..ed274081137c5", "--", "modules/sdk/gradle-plugins/build.gradle"
-			standardOutput = standardOutputByteArrayOutputStream
-			workingDir = projectDir.parentFile
-		}
+			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
-		String gitLogOutput = standardOutputByteArrayOutputStream.toString()
-
-		String commitId = ""
-		String ticket = ""
-		String version = "4.4.101"
-
-		gitLogOutput.eachLine {
-			String line ->
-
-			def matcher = line =~ /([a-f0-9]+):.+:([A-Z]+-\d+).*/
-
-			if (matcher.find()) {
-				commitId = matcher.group(1)
-				ticket = matcher.group(2)
+			exec {
+				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "-p", "6a1ce18c602e..ed274081137c5", "--", "modules/sdk/gradle-plugins/build.gradle"
+				standardOutput = standardOutputByteArrayOutputStream
+				workingDir = projectDir.parentFile
 			}
 
-			matcher = line =~ /\+\s*compile group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-			if (matcher.find()) {
-				String dependencyName = matcher.group(1)
-				String dependencyVersion = matcher.group(2)
+			String commitId = ""
+			String ticket = ""
+			String version = "4.4.101"
 
-				String changelog = """\
-					|## ${version} - 1970-01-01
-					|
-					|### Changed
-					|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
+			gitLogOutput.eachLine {
+				String gitLogLine ->
 
-				logger.lifecycle changelog
+				def matcher = gitLogLine =~ /([a-f0-9]+):.+:([A-Z]+-\d+).*/
+
+				if (matcher.find()) {
+					commitId = matcher.group(1)
+					ticket = matcher.group(2)
+				}
+
+				matcher = gitLogLine =~ /\+\s*compile group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+
+				if (matcher.find()) {
+					String dependencyName = matcher.group(1)
+					String dependencyVersion = matcher.group(2)
+
+					String changelog = """\
+						|## ${version} - 1970-01-01
+						|
+						|### Changed
+						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
+
+					logger.lifecycle changelog
+				}
 			}
 		}
 

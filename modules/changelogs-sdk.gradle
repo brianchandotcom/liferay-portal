@@ -13,7 +13,7 @@ buildscript {
 File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 task buildChangelogs
-task recordCommitIDs
+task recordCommits
 
 buildChangelogs {
 	description = "Builds the changelogs for each published version in `CHANGELOG.markdown`."
@@ -26,7 +26,7 @@ buildChangelogs {
 	}
 }
 
-recordCommitIDs {
+recordCommits {
 	description = "Records the commit ID for each published version in `CHANGELOG.properties`."
 	group = "changelogs"
 

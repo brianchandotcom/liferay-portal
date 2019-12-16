@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -872,10 +873,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		for (MBMessage message : messages) {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			if (!message.isAnonymous()) {
-				String author = _portal.getUserName(message);
-
-				syndEntry.setAuthor(author);
+			if (message.isAnonymous()) {
+				syndEntry.setAuthor(
+					_language.get(themeDisplay.getLocale(), "anonymous"));
+			}
+			else {
+				syndEntry.setAuthor(_portal.getUserName(message));
 			}
 
 			SyndContent syndContent = _syndModelFactory.createSyndContent();
@@ -943,6 +946,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	)
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LockManager _lockManager;

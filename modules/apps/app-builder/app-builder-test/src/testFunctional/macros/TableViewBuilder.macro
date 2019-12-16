@@ -29,16 +29,6 @@ definition {
 		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
 	}
 
-	macro createTableViewWithFieldView {
-		FormViewBuilder.addFormView(
-			fieldType = "${fieldType}",
-			formViewName = "${formViewName}");
-
-		TableViewBuilder.addBasicTableView(
-			fieldType = "${fieldType}",
-			tableViewName = "${tableViewName}");
-	}
-
 	macro save {
 		AppBuilderAdmin.save();
 	}

@@ -79,11 +79,23 @@ import java.util.function.Function;
  * @author Michael Young
  * @author Alexander Chow
  * @author Manuel de la Peña
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class ServiceTestUtil {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             ServiceTestConstants#RETRY_COUNT}
+	 */
+	@Deprecated
 	public static final int RETRY_COUNT = 10;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 ServiceTestConstants#THREAD_COUNT}
+	 */
+	@Deprecated
 	public static final int THREAD_COUNT = 10;
 
 	/**
@@ -311,6 +323,11 @@ public class ServiceTestUtil {
 		return calendar.getTime();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             UserTestUtil#setUser(User)}
+	 */
+	@Deprecated
 	public static void setUser(User user) throws Exception {
 		if (user == null) {
 			return;

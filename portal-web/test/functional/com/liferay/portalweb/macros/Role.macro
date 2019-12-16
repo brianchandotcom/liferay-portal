@@ -503,6 +503,10 @@ definition {
 			var rowEntry = "${roleTitle}";
 		}
 
+		if (!(isSet(roleKey))) {
+			var roleKey = "${roleTitle}";
+		}
+
 		AssertClick(
 			key_itemName = "${rowEntry}",
 			locator1 = "ListGroupItem#ITEM_NAME_LINK",

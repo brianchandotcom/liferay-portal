@@ -26,19 +26,31 @@ buildChangelogs {
 
 		String[] changelogPropertiesFileContent = changelogPropertiesFile
 
-		println changelogPropertiesFileContent.size()
+		String bndVersion = ""
+		String rangeStart = ""
+		String rangeEnd = ""
 
 		for (int i = 0; i < changelogPropertiesFileContent.size() - 1;) {
 			String line1 = changelogPropertiesFileContent[i++]
 			String line2 = changelogPropertiesFileContent[i]
 
-			println line1
-			println line2
+			def matcher = line1 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
+
+			if (matcher.find()) {
+				bndVersion = matcher.group(1)
+				rangeEnd = matcher.group(2)
+			}
+
+			matcher = line2 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
+
+			if (matcher.find()) {
+				rangeStart = matcher.group(2)
+			}
 
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 			exec {
-				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "-p", "6a1ce18c602e..ed274081137c5", "--", "modules/sdk/gradle-plugins/build.gradle"
+				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "-p", "${rangeStart}..${rangeEnd}", "--", "modules/sdk/${projectName}/build.gradle"
 				standardOutput = standardOutputByteArrayOutputStream
 				workingDir = projectDir.parentFile
 			}
@@ -52,7 +64,7 @@ buildChangelogs {
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				def matcher = gitLogLine =~ /([a-f0-9]+):.+:([A-Z]+-\d+).*/
+				matcher = gitLogLine =~ /([a-f0-9]+):.+:([A-Z]+-\d+).*/
 
 				if (matcher.find()) {
 					commitId = matcher.group(1)

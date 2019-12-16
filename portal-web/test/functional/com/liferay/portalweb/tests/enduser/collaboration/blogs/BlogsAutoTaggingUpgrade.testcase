@@ -1,0 +1,34 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "mariadb,mysql,postgresql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Documents Management";
+	property testray.main.component.name = "Upgrades Collaboration";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@ignore = "true"
+	@priority = "5"
+	test ViewBlogsArchive72101 {
+		property data.archive.type = "data-archive-auto-tagging";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.viewAndDeleteAutoTaggingBlogsEntry();
+
+		Upgrade.addAutoTaggingBlogsEntry();
+	}
+
+}

@@ -48,6 +48,8 @@ if (Validator.isNull(backURL)) {
 			classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 			classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"
 			ddmFormValues="<%= layoutsSEODisplayContext.getDDMFormValues() %>"
+			defaultEditLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
+			defaultLocale="<%= PortalUtil.getSiteDefaultLocale(layoutsSEODisplayContext.getGroupId()) %>"
 			fieldsNamespace="<%= String.valueOf(layoutsSEODisplayContext.getDDMStructurePrimaryKey()) %>"
 			groupId="<%= layoutsSEODisplayContext.getGroupId() %>"
 			localizable="<%= true %>"

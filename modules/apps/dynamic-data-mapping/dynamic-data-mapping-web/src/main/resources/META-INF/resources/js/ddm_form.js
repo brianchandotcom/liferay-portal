@@ -1032,8 +1032,6 @@ AUI.add(
 										instance.get('displayLocale')
 									];
 							}
-						} else {
-							value = instance.getValue();
 						}
 
 						if (Lang.isUndefined(value)) {

@@ -116,7 +116,7 @@ public class BookmarksEntryLocalServiceImpl
 			name = url;
 		}
 
-		validate(url);
+		_validate(url);
 
 		long entryId = counterLocalService.increment();
 
@@ -158,7 +158,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Subscriptions
 
-		notifySubscribers(userId, entry, serviceContext);
+		_notifySubscribers(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -618,7 +618,7 @@ public class BookmarksEntryLocalServiceImpl
 			name = url;
 		}
 
-		validate(url);
+		_validate(url);
 
 		entry.setFolderId(folderId);
 		entry.setTreePath(entry.buildTreePath());
@@ -648,7 +648,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Subscriptions
 
-		notifySubscribers(userId, entry, serviceContext);
+		_notifySubscribers(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -704,7 +704,7 @@ public class BookmarksEntryLocalServiceImpl
 		return entry;
 	}
 
-	protected long getFolder(BookmarksEntry entry, long folderId) {
+	private long _getFolder(BookmarksEntry entry, long folderId) {
 		if ((entry.getFolderId() == folderId) ||
 			(folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
@@ -721,7 +721,7 @@ public class BookmarksEntryLocalServiceImpl
 		return entry.getFolderId();
 	}
 
-	protected void notifySubscribers(
+	private void _notifySubscribers(
 			long userId, BookmarksEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -855,7 +855,7 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected void validate(String url) throws PortalException {
+	private void _validate(String url) throws PortalException {
 		if (!Validator.isUrl(url)) {
 			throw new EntryURLException();
 		}

@@ -16,6 +16,7 @@
 		<field name="depotEntryGroupRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="depotEntryId" type="long" />
+		<field name="searchable" type="boolean" />
 		<field name="toGroupId" type="long" />
 	</model>
 </model-hints>

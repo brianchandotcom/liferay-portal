@@ -14,5 +14,6 @@ create table DepotEntryGroupRel (
 	depotEntryGroupRelId LONG not null primary key,
 	companyId LONG,
 	depotEntryId LONG,
+	searchable BOOLEAN,
 	toGroupId LONG
 );

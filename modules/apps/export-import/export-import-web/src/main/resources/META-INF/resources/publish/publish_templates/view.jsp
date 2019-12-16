@@ -57,6 +57,17 @@ exportImportConfigurationSearchContainer.setTotal(exportImportConfigurationsCoun
 			<liferay-ui:message key="publish-templates-can-be-administered-in-the-control-menu" />
 		</div>
 
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			<portlet:param name="publishConfigurationButtons" value="saved" />
+		</liferay-portlet:renderURL>
+
+		<clay:management-toolbar
+			itemsTotal="<%= exportImportConfigurationsCount %>"
+			selectable="<%= false %>"
+			searchActionURL="<%= searchURL.toString() %>"
+		/>
+
 		<aui:form action="<%= portletURL %>">
 			<liferay-ui:search-container
 				searchContainer="<%= exportImportConfigurationSearchContainer %>"

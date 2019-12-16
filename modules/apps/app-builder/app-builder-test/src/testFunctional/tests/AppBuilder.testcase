@@ -1070,6 +1070,8 @@ definition {
 			formViewName = "Upload Field - Form View Title",
 			tableViewName = "Upload Field - Table View Title");
 
+		FormViewBuilder.switchToFormViewTab();
+
 	}
 
 	@description = "Validate Table View search returns by search engine using a search term"

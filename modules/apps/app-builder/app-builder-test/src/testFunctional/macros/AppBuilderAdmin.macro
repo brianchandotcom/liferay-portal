@@ -77,11 +77,6 @@ definition {
 		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
-	macro viewItem {
-		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
-		MenuItem.clickNoError(menuItem = "View");
-	}
-
 	macro filterListAscendAndDescend {
 		Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
 	}
@@ -223,6 +218,11 @@ definition {
 
 	macro viewCheckboxChecked {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
+	}
+
+	macro viewItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "View");
 	}
 
 }

@@ -632,7 +632,6 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/1999");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1");
-
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"

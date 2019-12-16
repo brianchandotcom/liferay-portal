@@ -1,22 +1,8 @@
 definition {
 
-	macro nextEntry {
-		Click(locator1 = "DetailsView#NEXT_ENTRY");
-	}
-
-	macro previousEntry {
-		Click(locator1 = "DetailsView#PREVIOUS_ENTRY");
-	}
-
-	macro editEntry {
-		Click(locator1 = "DetailsView#EDIT_ENTRY");
-	}
-
 	macro backToTableView {
 		Click(locator1 = "DetailsView#BACK_TO_TABLE_VIEW");
 	}
-
-	
 
 	macro deleteEntry {
 
@@ -28,7 +14,18 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = "${itemName}");
+	}
 
+	macro editEntry {
+		Click(locator1 = "DetailsView#EDIT_ENTRY");
+	}
+
+	macro nextEntry {
+		Click(locator1 = "DetailsView#NEXT_ENTRY");
+	}
+
+	macro previousEntry {
+		Click(locator1 = "DetailsView#PREVIOUS_ENTRY");
 	}
 
 	macro validateEntry {

@@ -24,7 +24,7 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
-    @summary = "Directly calls the JSON WS API to delete a layout"
+	@summary = "Directly calls the JSON WS API to delete a layout"
 	macro _deleteLayout {
 		Variables.assertDefined(parameterList = "${groupId},${layoutId},${privateLayout},${serviceContext}");
 

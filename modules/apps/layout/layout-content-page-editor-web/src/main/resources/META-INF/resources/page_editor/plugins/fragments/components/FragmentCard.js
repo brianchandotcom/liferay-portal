@@ -58,15 +58,15 @@ export default function FragmentCard({
 				return;
 			}
 
-			const {position, siblingId} = result;
+			const {parentId, position} = result;
 
 			dispatch(
 				addFragment({
 					config,
 					fragmentGroupId,
 					fragmentKey,
+					parentId,
 					position,
-					siblingId,
 					store
 				})
 			);

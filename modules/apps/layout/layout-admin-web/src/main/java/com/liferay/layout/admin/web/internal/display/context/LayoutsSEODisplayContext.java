@@ -15,8 +15,6 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -59,12 +57,7 @@ public class LayoutsSEODisplayContext {
 				selLayoutSEOEntry.getDDMStorageId());
 		}
 
-		DDMForm ddmForm = new DDMForm();
-
-		ddmForm.addDDMFormField(new DDMFormField("name", "String"));
-		ddmForm.addDDMFormField(new DDMFormField("value", "String"));
-
-		return new DDMFormValues(ddmForm);
+		return null;
 	}
 
 	public long getDDMStructurePrimaryKey() throws PortalException {

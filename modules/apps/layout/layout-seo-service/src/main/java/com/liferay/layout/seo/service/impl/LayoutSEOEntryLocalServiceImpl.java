@@ -14,15 +14,11 @@
 
 package com.liferay.layout.seo.service.impl;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.layout.seo.exception.NoSuchEntryException;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.base.LayoutSEOEntryLocalServiceBaseImpl;
@@ -33,6 +29,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
 import java.util.Date;
@@ -111,21 +108,11 @@ public class LayoutSEOEntryLocalServiceImpl
 		DDMStructure ddmStructure = _getDDMStructure(
 			_groupLocalService.getGroup(groupId));
 
-		DDMFormValuesDeserializerDeserializeResponse
-			ddmFormValuesDeserializerDeserializeResponse =
-				_ddmFormValuesDeserializer.deserialize(
-					DDMFormValuesDeserializerDeserializeRequest.Builder.
-						newBuilder(
-							(String)serviceContext.getAttribute(
-								ddmStructure.getStructureId() +
-									"ddmFormValues"),
-							ddmStructure.getDDMForm()
-						).build());
+		long ddmStorageId = _updateDDMStorage(
+			layoutSEOEntry.getCompanyId(), layoutSEOEntry.getDDMStorageId(),
+			ddmStructure.getStructureId(), serviceContext);
 
-		_storageEngine.update(
-			layoutSEOEntry.getDDMStorageId(),
-			ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues(),
-			serviceContext);
+		layoutSEOEntry.setDDMStorageId(ddmStorageId);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
@@ -192,16 +179,12 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
 
-		DDMStructure ddmStructure = _getDDMStructure(group);
+		DDMStructure ddmStructure = _getDDMStructure(
+			_groupLocalService.getGroup(groupId));
 
-		DDMForm ddmForm = new DDMForm();
-
-		ddmForm.addDDMFormField(new DDMFormField("name", "String"));
-		ddmForm.addDDMFormField(new DDMFormField("value", "String"));
-
-		long ddmStorageId = _storageEngine.create(
-			group.getCompanyId(), ddmStructure.getStructureId(),
-			new DDMFormValues(ddmForm), serviceContext);
+		long ddmStorageId = _updateDDMStorage(
+			layoutSEOEntry.getCompanyId(), layoutSEOEntry.getDDMStorageId(),
+			ddmStructure.getStructureId(), serviceContext);
 
 		layoutSEOEntry.setDDMStorageId(ddmStorageId);
 
@@ -219,11 +202,33 @@ public class LayoutSEOEntryLocalServiceImpl
 			"custom-meta-tags");
 	}
 
+	private long _updateDDMStorage(
+			long companyId, long ddmStorageId, long structureId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMFormValues ddmFormValues = _ddm.getDDMFormValues(
+			structureId, String.valueOf(structureId), serviceContext);
+
+		if (ListUtil.isEmpty(ddmFormValues.getDDMFormFieldValues())) {
+			return ddmStorageId;
+		}
+
+		if (ddmStorageId == 0) {
+			return _storageEngine.create(
+				companyId, structureId, ddmFormValues, serviceContext);
+		}
+
+		_storageEngine.update(ddmStorageId, ddmFormValues, serviceContext);
+
+		return ddmStorageId;
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@Reference(target = "(ddm.form.values.deserializer.type=json)")
-	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
+	@Reference
+	private DDM _ddm;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

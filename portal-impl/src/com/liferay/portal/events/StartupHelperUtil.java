@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,24 +47,26 @@ import java.util.List;
 public class StartupHelperUtil {
 
 	public static void initResourceActions() {
-		List<String> modelNames = ResourceActionsUtil.getModelNames();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<String> modelNames = ResourceActionsUtil.getModelNames();
 
-		for (String modelName : modelNames) {
-			List<String> actionIds =
-				ResourceActionsUtil.getModelResourceActions(modelName);
+			for (String modelName : modelNames) {
+				List<String> actionIds =
+					ResourceActionsUtil.getModelResourceActions(modelName);
 
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				modelName, actionIds, true);
-		}
+				ResourceActionLocalServiceUtil.checkResourceActions(
+					modelName, actionIds, true);
+			}
 
-		List<String> portletNames = ResourceActionsUtil.getPortletNames();
+			List<String> portletNames = ResourceActionsUtil.getPortletNames();
 
-		for (String portletName : portletNames) {
-			List<String> actionIds =
-				ResourceActionsUtil.getPortletResourceActions(portletName);
+			for (String portletName : portletNames) {
+				List<String> actionIds =
+					ResourceActionsUtil.getPortletResourceActions(portletName);
 
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				portletName, actionIds, true);
+				ResourceActionLocalServiceUtil.checkResourceActions(
+					portletName, actionIds, true);
+			}
 		}
 	}
 

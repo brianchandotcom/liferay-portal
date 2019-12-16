@@ -318,7 +318,7 @@ definition {
 
 			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_INSTANCE");
 
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME");
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_TASK");
 		}
 
 		for (var isAssigneeNotPresent : list "${isNotPresent}") {

@@ -201,4 +201,18 @@ definition {
 			userName = "userfnEdit Test");
 	}
 
+	@description = "This is a use case for LPS-105387."
+	@priority = "5"
+	test UpdateUserPortrait {
+		UserBar.viewUserDefaultIcon();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		User.changeProfileImage(imageName = "marketplace_icon.png");
+
+		Button.click(button = "Save");
+
+		UserBar.viewUserPortraitMatchConfiguration();
+	}
+
 }

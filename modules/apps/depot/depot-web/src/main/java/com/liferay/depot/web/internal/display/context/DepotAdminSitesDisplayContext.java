@@ -85,6 +85,27 @@ public class DepotAdminSitesDisplayContext {
 									_liferayPortletRequest),
 								"disconnect"));
 					});
+
+				add(
+					dropdownItem -> {
+						ActionURL editDepotEntryGroupRelActionURL =
+							DepotEntryURLUtil.
+								getEditDepotEntryGroupRelActionURL(
+									depotEntryGroupRel.
+										getDepotEntryGroupRelId(),
+									!depotEntryGroupRel.isSearchable(),
+									_currentURL.toString(),
+									_liferayPortletResponse);
+
+						dropdownItem.setHref(
+							editDepotEntryGroupRelActionURL.toString());
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								PortalUtil.getHttpServletRequest(
+									_liferayPortletRequest),
+								_getSetSearchableKey(depotEntryGroupRel)));
+					});
 			}
 		};
 	}
@@ -124,6 +145,14 @@ public class DepotAdminSitesDisplayContext {
 			depotEntryGroupRel.getToGroupId());
 
 		return group.getDescriptiveName(locale);
+	}
+
+	private String _getSetSearchableKey(DepotEntryGroupRel depotEntryGroupRel) {
+		if (depotEntryGroupRel.isSearchable()) {
+			return "make-unsearchable";
+		}
+
+		return "make-searchable";
 	}
 
 	private final PortletURL _currentURL;

@@ -154,6 +154,22 @@ export default function fragmentEntryLinksReducer(state, action) {
 				};
 			}
 			break;
+		case TYPES.UPDATE_EDITABLE_VALUES:
+			{
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...nextState.fragmentEntryLinks[
+								action.fragmentEntryLinkId
+							],
+							editableValues: action.editableValues
+						}
+					}
+				};
+			}
+			break;
 		default:
 			break;
 	}

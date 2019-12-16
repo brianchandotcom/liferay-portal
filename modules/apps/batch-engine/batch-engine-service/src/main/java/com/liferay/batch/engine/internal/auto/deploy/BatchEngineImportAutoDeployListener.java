@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Enumeration;
@@ -76,9 +77,12 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 				ZipEntry zipEntry = iterator.nextElement();
 
 				if (Objects.equals(zipEntry.getName(), "batch-import.json")) {
-					batchImportConfiguration = _objectMapper.readValue(
-						zipFile.getInputStream(zipEntry),
-						BatchImportConfiguration.class);
+					try (InputStream inputStream = zipFile.getInputStream(
+							zipEntry)) {
+
+						batchImportConfiguration = _objectMapper.readValue(
+							inputStream, BatchImportConfiguration.class);
+					}
 				}
 				else {
 					UnsyncByteArrayOutputStream
@@ -179,21 +183,22 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 				return false;
 			}
 
-			BatchImportConfiguration batchImportConfiguration =
-				_objectMapper.readValue(
-					zipFile.getInputStream(zipEntry),
-					BatchImportConfiguration.class);
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				BatchImportConfiguration batchImportConfiguration =
+					_objectMapper.readValue(
+						inputStream, BatchImportConfiguration.class);
 
-			if (batchImportConfiguration == null) {
-				return false;
-			}
+				if (batchImportConfiguration == null) {
+					return false;
+				}
 
-			if ((batchImportConfiguration.companyId == 0) ||
-				(batchImportConfiguration.userId == 0) ||
-				Validator.isNull(batchImportConfiguration.className) ||
-				Validator.isNull(batchImportConfiguration.version)) {
+				if ((batchImportConfiguration.companyId == 0) ||
+					(batchImportConfiguration.userId == 0) ||
+					Validator.isNull(batchImportConfiguration.className) ||
+					Validator.isNull(batchImportConfiguration.version)) {
 
-				return false;
+					return false;
+				}
 			}
 		}
 		catch (Exception e) {

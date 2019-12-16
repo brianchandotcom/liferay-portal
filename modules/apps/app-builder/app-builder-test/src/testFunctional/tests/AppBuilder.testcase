@@ -391,14 +391,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		TableViewBuilder.createTableViewWithFieldView(
+		AppBuilderAdmin.createFormViewandTableView(
 			fieldType = "Single Selection",
 			formViewName = "Single Selection Field - Form View Title",
 			tableViewName = "Single Selection Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		TableViewBuilder.createTableViewWithFieldView(
+		AppBuilderAdmin.createFormViewandTableView(
 			fieldType = "Upload",
 			formViewName = "Upload Field - Form View Title",
 			tableViewName = "Upload Field - Table View Title");
@@ -432,14 +432,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		TableViewBuilder.createTableViewWithFieldView(
+		AppBuilderAdmin.createFormViewandTableView(
 			fieldType = "Text Field",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		TableViewBuilder.createTableViewWithFieldView(
+		AppBuilderAdmin.createFormViewandTableView(
 			fieldType = "Numeric",
 			formViewName = "Numeric Field - Form View Title",
 			tableViewName = "Numeric Field - Table View Title");
@@ -1065,14 +1065,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		TableViewBuilder.createTableViewWithFieldView(
+		AppBuilderAdmin.createFormViewandTableView(
 			fieldType = "Text Field",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		TableViewBuilder.createTableViewWithFieldView(
+		AppBuilderAdmin.createFormViewandTableView(
 			fieldType = "Date",
 			formViewName = "Date Field - Form View Title",
 			tableViewName = "Date Field - Table View Title");

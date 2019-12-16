@@ -160,6 +160,11 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					_dlurlHelper.getImagePreviewURL(fileEntry, themeDisplay)));
 
 			printWriter.println(
+				_getOpenGraphTag(
+					"og:image:alt",
+					_getImageAltTagValue(layout, themeDisplay)));
+
+			printWriter.println(
 				_getOpenGraphTag("og:image:type", fileEntry.getMimeType()));
 
 			printWriter.println(
@@ -243,6 +248,23 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		}
 
 		return layout.getDescription(themeDisplay.getLanguageId());
+	}
+
+	private String _getImageAltTagValue(
+		Layout layout, ThemeDisplay themeDisplay) {
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if ((layoutSEOEntry == null) ||
+			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
+
+			return null;
+		}
+
+		return layoutSEOEntry.getOpenGraphImageAlt(themeDisplay.getLocale());
 	}
 
 	private long _getOpenGraphImageFileEntryId(Layout layout)

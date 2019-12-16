@@ -223,16 +223,35 @@ public class WikiPageStagedModelDataHandler
 					page.getFormat(), page.isHead(), page.getParentTitle(),
 					page.getRedirectTitle(), serviceContext);
 
-				importedPageResource =
-					_wikiPageResourceLocalService.getPageResource(
-						importedPage.getResourcePrimKey());
-
 				String pageResourceUuid = GetterUtil.getString(
 					pageElement.attributeValue("page-resource-uuid"));
 
 				if (Validator.isNotNull(pageResourceUuid)) {
-					importedPageResource.setUuid(
-						pageElement.attributeValue("page-resource-uuid"));
+					WikiPageResource wikiPageResource =
+						_wikiPageResourceLocalService.fetchPageResource(
+							pageResourceUuid);
+
+					importedPageResource =
+						_wikiPageResourceLocalService.getPageResource(
+							importedPage.getResourcePrimKey());
+
+					if (wikiPageResource != null) {
+						importedPage.setResourcePrimKey(
+							wikiPageResource.getPrimaryKey());
+
+						importedPage = _wikiPageLocalService.updateWikiPage(
+							importedPage);
+
+						_wikiPageResourceLocalService.deleteWikiPageResource(
+							importedPageResource);
+					}
+					else {
+						importedPageResource.setUuid(
+							pageElement.attributeValue("page-resource-uuid"));
+
+						_wikiPageResourceLocalService.updateWikiPageResource(
+							importedPageResource);
+					}
 				}
 			}
 			else {
@@ -247,10 +266,10 @@ public class WikiPageStagedModelDataHandler
 						importedPage.getResourcePrimKey());
 
 				importedPageResource.setTitle(page.getTitle());
-			}
 
-			_wikiPageResourceLocalService.updateWikiPageResource(
-				importedPageResource);
+				_wikiPageResourceLocalService.updateWikiPageResource(
+					importedPageResource);
+			}
 		}
 		else {
 			existingPage = fetchStagedModelByUuidAndGroupId(

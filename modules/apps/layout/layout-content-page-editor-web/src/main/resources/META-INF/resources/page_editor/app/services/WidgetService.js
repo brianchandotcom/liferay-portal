@@ -20,16 +20,21 @@ export default {
 	 * @param {object} options
 	 * @param {object} options.config Application config
 	 * @param {string} options.portletId Portlet id of the Widget
+	 * @param {string} options.parentId id of the parent where the portlet is going to be added
+	 * @param {string} options.position position where the portlet is going to be added
+	 * @param {string} options.portletId Portlet id of the Widget
 	 * @param {string} options.segmentsExperienceId Current segmentsExperienceId
-	 * @return {Promise<FragmentEntryLink>} Created FragmentEntryLink
+	 * @return {Promise<object>}
 	 */
-	addPortlet({config, portletId, segmentsExperienceId}) {
+	addPortlet({config, parentId, portletId, position, segmentsExperienceId}) {
 		const {addPortletURL, classNameId, classPK} = config;
 
 		return serviceFetch(config, addPortletURL, {
 			classNameId,
 			classPK,
+			parentId,
 			portletId,
+			position,
 			segmentsExperienceId
 		});
 	}

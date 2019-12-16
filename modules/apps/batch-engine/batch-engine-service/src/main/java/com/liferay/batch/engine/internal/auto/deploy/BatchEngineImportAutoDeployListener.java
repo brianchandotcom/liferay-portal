@@ -24,7 +24,6 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
@@ -86,28 +85,19 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 				}
 				else {
 					UnsyncByteArrayOutputStream
-						uncompressedUnsyncByteArrayOutputStream =
-							new UnsyncByteArrayOutputStream();
-
-					StreamUtil.transfer(
-						zipFile.getInputStream(zipEntry),
-						uncompressedUnsyncByteArrayOutputStream);
-
-					UnsyncByteArrayOutputStream
 						compressedUnsyncByteArrayOutputStream =
 							new UnsyncByteArrayOutputStream();
 
-					try (ZipOutputStream zipOutputStream = new ZipOutputStream(
+					try (InputStream inputStream = zipFile.getInputStream(
+							zipEntry);
+						ZipOutputStream zipOutputStream = new ZipOutputStream(
 							compressedUnsyncByteArrayOutputStream)) {
 
 						zipOutputStream.putNextEntry(
 							new ZipEntry(zipEntry.getName()));
 
 						StreamUtil.transfer(
-							new UnsyncByteArrayInputStream(
-								uncompressedUnsyncByteArrayOutputStream.
-									toByteArray()),
-							zipOutputStream, false);
+							inputStream, zipOutputStream, false);
 					}
 
 					content =

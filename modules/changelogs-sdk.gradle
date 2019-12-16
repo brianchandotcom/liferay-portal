@@ -1,3 +1,5 @@
+import org.gradle.util.VersionNumber
+
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 
@@ -31,7 +33,7 @@ recordCommitIDs {
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
-		Map<String, String> commitIDsMap = _getCommitIDsMap(projectName)
+		Map<VersionNumber, String> commitIDsMap = _getCommitIDsMap(projectName)
 
 		String content = ""
 
@@ -47,7 +49,7 @@ recordCommitIDs {
 	}
 }
 
-private Map<String, String> _getCommitIDsMap(String projectName) {
+private Map<VersionNumber, String> _getCommitIDsMap(String projectName) {
 	ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 	exec {
@@ -59,7 +61,8 @@ private Map<String, String> _getCommitIDsMap(String projectName) {
 	String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
 	String lastPrepNextCommitId = null
-	Map<String, String> recordCommitIDs = [:]
+	VersionNumber lastVersionNumber = null
+	Map<VersionNumber, String> recordCommitIDs = [:]
 
 	int previousCommitPos = -1
 	int commitPos = -1
@@ -116,48 +119,20 @@ private Map<String, String> _getCommitIDsMap(String projectName) {
 			continue;
 		}
 
-		z = commitDiff.indexOf("\n", y);
+		VersionNumber publishedVersionNumber = VersionNumber.parse(publishedVersion)
 
-		String newVersion = commitDiff.substring(y + 17, z)
-
-		if (!_isValidVersionNumbers(publishedVersion, newVersion)) {
-			continue
-		}
-
-		if (!recordCommitIDs.containsKey(publishedVersion)) {
+		if (!recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
 			if (lastPrepNextCommitId) {
-				recordCommitIDs.put(publishedVersion, lastPrepNextCommitId)
+				recordCommitIDs.put(publishedVersionNumber, lastPrepNextCommitId)
 			}
 			else {
-				recordCommitIDs.put(publishedVersion, previousCommitId)
+				recordCommitIDs.put(publishedVersionNumber, previousCommitId)
 			}
 
 			lastPrepNextCommitId = null
+			lastVersionNumber = publishedVersionNumber
 		}
 	}
 
 	return recordCommitIDs
-}
-
-private boolean _isValidVersionNumbers(String version1, String version2) {
-	String[] array1 = version1.split("\\.")
-	String[] array2 = version2.split("\\.")
-
-	if ((array1.length != 3) || (array2.length != 3)) {
-		return false;
-	}
-
-	if ((array1[0] == array2[0]) && (array1[1] == array2[1]) && ((Integer.parseInt(array1[2]) + 1) == Integer.parseInt(array2[2]))) {
-		return true
-	}
-
-	if ((array1[0] == array2[0]) && ((Integer.parseInt(array1[1]) + 1) == Integer.parseInt(array2[1])) && (array2[2] == "0")) {
-		return true
-	}
-
-	if (((Integer.parseInt(array1[0]) + 1) == Integer.parseInt(array2[0])) && (array2[1] == "0") && (array2[2] == "0")) {
-		return true
-	}
-
-	return false
 }

@@ -76,22 +76,12 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text>
-
-				<%
-				ActionURL disconnectSiteActionURL = DepotEntryURLUtil.getDisconnectSiteActionURL(depotEntryGroupRel.getDepotEntryGroupRelId(), currentURL, liferayPortletResponse);
-
-				Map<String, String> data = HashMapBuilder.put(
-					"href", disconnectSiteActionURL.toString()
-				).build();
-				%>
-
-				<clay:button
-					data="<%= data %>"
-					elementClasses="btn-monospaced btn-outline-borderless btn-secondary disconnect-site-button"
-					icon="times-circle"
-					size="sm"
+				<clay:dropdown-menu
+					defaultEventHandler="<%= DepotAdminWebKeys.CONNECTED_SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+					dropdownItems="<%= depotAdminSitesDisplayContext.getConnectedSiteDropdownItems(depotEntryGroupRel) %>"
+					icon="ellipsis-v"
 					style="secondary"
-					title='<%= LanguageUtil.get(request, "disconnect-from-site") %>'
+					triggerCssClasses="btn-monospaced btn-outline-borderless btn-secondary btn-sm"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -100,6 +90,11 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
+
+	<liferay-frontend:component
+		componentId="<%= DepotAdminWebKeys.CONNECTED_SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+		module="js/ConnectedSiteDropdownDefaultEventHandler.es"
+	/>
 
 	<aui:script require="metal-dom/src/all/dom as dom">
 		var addConnectedSiteButton = document.querySelector(
@@ -138,31 +133,5 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 				}
 			);
 		});
-
-		var delegateHandler = dom.delegate(
-			document.body,
-			'click',
-			'.disconnect-site-button',
-			function(event) {
-				if (
-					confirm(
-						'<liferay-ui:message key="removing-this-site-connection-will-not-allow-the-site-to-consume-data-from-this-repository-directly" />'
-					)
-				) {
-					submitForm(
-						document.hrefFm,
-						event.delegateTarget.getAttribute('data-href')
-					);
-				}
-			}
-		);
-
-		var onDestroyPortlet = function() {
-			delegateHandler.removeListener();
-
-			Liferay.detach('destroyPortlet', onDestroyPortlet);
-		};
-
-		Liferay.on('destroyPortlet', onDestroyPortlet);
 	</aui:script>
 </div>

@@ -261,13 +261,14 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
 				layout.getGroupId());
 
-		if ((layoutSEOSite != null) &&
-			(layoutSEOSite.getOpenGraphImageFileEntryId() > 0)) {
+		if ((layoutSEOSite == null) ||
+			(layoutSEOSite.getOpenGraphImageFileEntryId() == 0) ||
+			!layoutSEOSite.isOpenGraphEnabled()) {
 
-			return layoutSEOSite.getOpenGraphImageFileEntryId();
+			return 0;
 		}
 
-		return 0;
+		return layoutSEOSite.getOpenGraphImageFileEntryId();
 	}
 
 	private String _getOpenGraphTag(String property, String content) {

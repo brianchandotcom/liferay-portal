@@ -504,7 +504,7 @@ const ManageCollaborators = ({
 
 	return (
 		<>
-			<div>
+			<div className="modal-body inline-scroller">
 				{currentCollaborators.length ? (
 					<>
 						{expirationDateError && (

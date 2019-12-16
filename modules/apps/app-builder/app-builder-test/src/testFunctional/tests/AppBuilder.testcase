@@ -1088,6 +1088,11 @@ definition {
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Grid Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Upload Field - Table View Title");
+
 	}
 
 	@description = "Validate Table View search returns by search engine using a search term"

@@ -36,6 +36,10 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphImageURL`
 	);
 
+	const openGraphImageAlt = document.getElementById(
+		`${namespace}openGraphImageAlt`
+	);
+
 	itemSelectorDialog.on('selectedItemChange', event => {
 		const selectedItem = event.selectedItem;
 
@@ -44,6 +48,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 			openGraphImageFileEntryId.value = itemValue.fileEntryId;
 			openGraphImageURL.value = itemValue.url;
+			Liferay.Util.toggleDisabled(openGraphImageAlt, false);
 
 			previewSeoFireChange(namespace, {
 				type: 'imgUrl',
@@ -63,6 +68,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 	openGraphClearImageButton.addEventListener('click', () => {
 		openGraphImageFileEntryId.value = '';
 		openGraphImageURL.value = '';
+		Liferay.Util.toggleDisabled(openGraphImageAlt, true);
 
 		previewSeoFireChange(namespace, {
 			type: 'imgUrl',

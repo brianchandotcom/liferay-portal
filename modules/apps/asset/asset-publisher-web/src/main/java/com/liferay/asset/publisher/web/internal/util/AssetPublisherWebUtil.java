@@ -198,13 +198,11 @@ public class AssetPublisherWebUtil {
 		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
 	}
 
-	public String filterAssetTagNames(long groupId, String assetTagNames) {
+	public String[] filterAssetTagNames(long groupId, String[] assetTagNames) {
 		List<String> filteredAssetTagNames = new ArrayList<>();
 
-		String[] assetTagNamesArray = StringUtil.split(assetTagNames);
-
 		long[] assetTagIds = _assetTagLocalService.getTagIds(
-			groupId, assetTagNamesArray);
+			groupId, assetTagNames);
 
 		for (long assetTagId : assetTagIds) {
 			AssetTag assetTag = _assetTagLocalService.fetchAssetTag(assetTagId);
@@ -214,7 +212,7 @@ public class AssetPublisherWebUtil {
 			}
 		}
 
-		return StringUtil.merge(filteredAssetTagNames);
+		return ArrayUtil.toStringArray(filteredAssetTagNames);
 	}
 
 	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {

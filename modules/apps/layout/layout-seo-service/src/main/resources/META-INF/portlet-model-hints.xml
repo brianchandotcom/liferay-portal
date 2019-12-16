@@ -21,6 +21,7 @@
 			<hint name="display-width">350</hint>
 		</field>
 		<field name="openGraphDescriptionEnabled" type="boolean" />
+		<field localized="true" name="openGraphImageAlt" type="String" />
 		<field name="openGraphImageFileEntryId" type="long" />
 		<field localized="true" name="openGraphTitle" type="String" />
 		<field name="openGraphTitleEnabled" type="boolean" />

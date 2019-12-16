@@ -157,6 +157,8 @@ public class LayoutSEOEntryPersistenceTest {
 		newLayoutSEOEntry.setOpenGraphDescriptionEnabled(
 			RandomTestUtil.randomBoolean());
 
+		newLayoutSEOEntry.setOpenGraphImageAlt(RandomTestUtil.randomString());
+
 		newLayoutSEOEntry.setOpenGraphImageFileEntryId(
 			RandomTestUtil.nextLong());
 
@@ -218,6 +220,9 @@ public class LayoutSEOEntryPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutSEOEntry.isOpenGraphDescriptionEnabled(),
 			newLayoutSEOEntry.isOpenGraphDescriptionEnabled());
+		Assert.assertEquals(
+			existingLayoutSEOEntry.getOpenGraphImageAlt(),
+			newLayoutSEOEntry.getOpenGraphImageAlt());
 		Assert.assertEquals(
 			existingLayoutSEOEntry.getOpenGraphImageFileEntryId(),
 			newLayoutSEOEntry.getOpenGraphImageFileEntryId());
@@ -299,8 +304,9 @@ public class LayoutSEOEntryPersistenceTest {
 			"modifiedDate", true, "privateLayout", true, "layoutId", true,
 			"canonicalURL", true, "canonicalURLEnabled", true, "DDMStorageId",
 			true, "openGraphDescription", true, "openGraphDescriptionEnabled",
-			true, "openGraphImageFileEntryId", true, "openGraphTitle", true,
-			"openGraphTitleEnabled", true, "lastPublishDate", true);
+			true, "openGraphImageAlt", true, "openGraphImageFileEntryId", true,
+			"openGraphTitle", true, "openGraphTitleEnabled", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -588,6 +594,8 @@ public class LayoutSEOEntryPersistenceTest {
 
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			RandomTestUtil.randomBoolean());
+
+		layoutSEOEntry.setOpenGraphImageAlt(RandomTestUtil.randomString());
 
 		layoutSEOEntry.setOpenGraphImageFileEntryId(RandomTestUtil.nextLong());
 

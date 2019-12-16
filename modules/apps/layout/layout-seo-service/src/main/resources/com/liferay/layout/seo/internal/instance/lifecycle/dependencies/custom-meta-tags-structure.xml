@@ -19,7 +19,7 @@
 							"label": {
 								"[$LOCALE_DEFAULT$]": "Name"
 							},
-							"localizable": true,
+							"localizable": false,
 							"name": "name",
 							"nestedFields": [
 								{

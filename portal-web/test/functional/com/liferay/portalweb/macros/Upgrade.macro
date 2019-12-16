@@ -1,5 +1,64 @@
 definition {
 
+	macro addAutoTaggingBlogsEntry {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		Blogs.addEntry(
+			entryContent = "Alice's Adventures in Wonderland",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		AssertClick.assertTextClickAt(
+			key_entryTitle = "Blogs Entry Title",
+			locator1 = "BlogsEntry#TITLE_LINK",
+			value1 = "Blogs Entry Title");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Blogs Entry Title",
+			tagName = "adventures");
+	}
+
+	macro addAutoTaggingDM {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "${dmDocumentFile}",
+			dmDocumentTitle = "${dmDocumentTitle}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+	}
+
+	macro addAutoTaggingWebContent {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Alice's Adventures in Wonderland",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssertTextEquals(
+			key_tagName = "alice",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "alice");
+	}
+
 	macro addContentPage {
 		task ("Add a content page in Test Site Name site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -907,6 +966,62 @@ definition {
 		BlogsEntry.viewEntryAsWorkflowAsset(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "New Blog After Upgrade");
+	}
+
+	macro viewAndDeleteAutoTaggingBlogsEntry {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "DXP");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+
+		BlogsEntry.viewNoPG(
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+	}
+
+	macro viewAndDeleteAutoTaggingDM {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
+	}
+
+	macro viewAndDeleteAutoTaggingWebContent {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssertTextEquals(
+			key_tagName = "dxp",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "dxp");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "site-name",
+			webContentTitle = "Digital Transformation or Digital Experience?");
 	}
 
 	macro viewAndDeleteFormEntry {

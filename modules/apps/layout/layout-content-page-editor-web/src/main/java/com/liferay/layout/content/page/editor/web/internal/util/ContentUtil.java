@@ -182,11 +182,21 @@ public class ContentUtil {
 						themeDisplay.getPermissionChecker(), assetEntry,
 						ActionKeys.PERMISSIONS)) {
 
+					InfoDisplayContributor infoDisplayContributor =
+						InfoDisplayContributorTrackerUtil.
+							getInfoDisplayContributor(
+								layoutClassedModelUsage.getClassName());
+
+					InfoDisplayObjectProvider infoDisplayObjectProvider =
+						infoDisplayContributor.getInfoDisplayObjectProvider(
+							layoutClassedModelUsage.getClassPK());
+
 					String permissionsURL = PermissionsURLTag.doTag(
 						StringPool.BLANK,
 						layoutClassedModelUsage.getClassName(),
 						HtmlUtil.escape(
-							assetEntry.getTitle(themeDisplay.getLocale())),
+							infoDisplayObjectProvider.getTitle(
+								themeDisplay.getLocale())),
 						null,
 						String.valueOf(layoutClassedModelUsage.getClassPK()),
 						LiferayWindowState.POP_UP.toString(), null,

@@ -30,6 +30,7 @@
 		<column name="DDMStorageId" type="long" />
 		<column localized="true" name="openGraphDescription" type="String" />
 		<column name="openGraphDescriptionEnabled" type="boolean" />
+		<column localized="true" name="openGraphImageAlt" type="String" />
 		<column name="openGraphImageFileEntryId" type="long" />
 		<column localized="true" name="openGraphTitle" type="String" />
 		<column name="openGraphTitleEnabled" type="boolean" />

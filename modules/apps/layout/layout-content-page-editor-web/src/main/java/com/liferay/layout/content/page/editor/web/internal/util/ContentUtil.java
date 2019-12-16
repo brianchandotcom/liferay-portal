@@ -145,29 +145,26 @@ public class ContentUtil {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		InfoDisplayContributor infoDisplayContributor =
+			InfoDisplayContributorTrackerUtil.getInfoDisplayContributor(
+				layoutClassedModelUsage.getClassName());
+
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(
+				layoutClassedModelUsage.getClassPK());
+
 		if (ModelResourcePermissiontUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE)) {
 
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						layoutClassedModelUsage.getClassName());
+			String editURL = InfoEditURLProviderUtil.getURLEdit(
+				layoutClassedModelUsage.getClassName(),
+				infoDisplayObjectProvider.getDisplayObject(),
+				httpServletRequest);
 
-			if (assetRendererFactory != null) {
-				AssetRenderer<?> assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						layoutClassedModelUsage.getClassPK());
-
-				if (assetRenderer != null) {
-					PortletURL portletURL = assetRenderer.getURLEdit(
-						httpServletRequest, LiferayWindowState.NORMAL, backURL);
-
-					if (portletURL != null) {
-						jsonObject.put("editURL", portletURL.toString());
-					}
-				}
+			if (editURL != null) {
+				jsonObject.put("editURL", editURL);
 			}
 		}
 
@@ -175,14 +172,6 @@ public class ContentUtil {
 				themeDisplay.getPermissionChecker(),
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.PERMISSIONS)) {
-
-			InfoDisplayContributor infoDisplayContributor =
-				InfoDisplayContributorTrackerUtil.getInfoDisplayContributor(
-					layoutClassedModelUsage.getClassName());
-
-			InfoDisplayObjectProvider infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(
-					layoutClassedModelUsage.getClassPK());
 
 			String permissionsURL = PermissionsURLTag.doTag(
 				StringPool.BLANK, layoutClassedModelUsage.getClassName(),

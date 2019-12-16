@@ -222,7 +222,8 @@ public class ContentPageEditorDisplayContext {
 					"/content_layout/add_fragment_entry_link_comment")
 			).put(
 				"addFragmentEntryLinkURL",
-				editorSoyContext.get("addFragmentEntryLinkURL")
+				getFragmentEntryActionURL(
+					"/content_layout/add_fragment_entry_link_react")
 			).put(
 				"addPortletURL", editorSoyContext.get("addPortletURL")
 			).put(

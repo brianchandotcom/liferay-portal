@@ -10,6 +10,8 @@ buildscript {
 	}
 }
 
+File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
+
 task buildChangelogs
 task recordCommitIDs
 
@@ -19,8 +21,6 @@ buildChangelogs {
 
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
-
-		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName
 	}
@@ -33,60 +33,50 @@ recordCommitIDs {
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
-		Map<VersionNumber, String> commitIDsMap = _getCommitIDsMap(projectName)
+		ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
-		String content = ""
-
-		commitIDsMap.each {
-			k, v -> content += "git-id[${k}]=${v}\n"
+		exec {
+			commandLine "git", "--no-pager", "log", "--follow", "--format=fuller", "-p", "--", "modules/sdk/" + projectName + "/"
+			standardOutput = standardOutputByteArrayOutputStream
+			workingDir = projectDir.parentFile
 		}
 
-		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
+		String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-		changelogPropertiesFile.write(content.trim())
+		List<String> commits = gitLogOutput.split("\ncommit ")
+
+		VersionNumber lastVersionNumber = null
+		Map<VersionNumber, String> recordCommitIDs = [:]
+
+		for (int i = 0; i < (commits.size() - 1); i++) {
+			String commit = commits.get(i)
+			String previousCommit = commits.get(i + 1)
+
+			String diff = commit.split("\n", 2)[1]
+
+			int x = diff.indexOf("/" + projectName + "/bnd.bnd");
+
+			int y = diff.indexOf("-Bundle-Version: ", x)
+
+			if ((x != -1) && (y != -1)) {
+				String publishedVersion = diff.substring(y + 17, diff.indexOf("\n", y))
+
+				VersionNumber publishedVersionNumber = VersionNumber.parse(publishedVersion)
+
+				if (!recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
+					recordCommitIDs.put(publishedVersionNumber, previousCommit.split("\n", 2)[0])
+
+					lastVersionNumber = publishedVersionNumber
+				}
+			}
+		}
+
+		changelogPropertiesFile.text = recordCommitIDs.collect {
+			VersionNumber versionNumber, String commitId ->
+
+			"git-id[${versionNumber}]=${commitId}"
+		} join "\n"
 
 		logger.lifecycle "Updated `CHANGELOG.properties` for '{}'", projectName
 	}
-}
-
-private Map<VersionNumber, String> _getCommitIDsMap(String projectName) {
-	ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
-
-	exec {
-		commandLine "git", "--no-pager", "log", "--follow", "--format=fuller", "-p", "--", "modules/sdk/" + projectName + "/"
-		standardOutput = standardOutputByteArrayOutputStream
-		workingDir = projectDir.parentFile
-	}
-
-	String gitLogOutput = standardOutputByteArrayOutputStream.toString()
-
-	List<String> commits = gitLogOutput.split("\ncommit ")
-
-	VersionNumber lastVersionNumber = null
-	Map<VersionNumber, String> recordCommitIDs = [:]
-
-	for (int i = 0; i < (commits.size() - 1); i++) {
-		String commit = commits.get(i)
-		String previousCommit = commits.get(i + 1)
-
-		String diff = commit.split("\n", 2)[1]
-
-		int x = diff.indexOf("/" + projectName + "/bnd.bnd");
-
-		int y = diff.indexOf("-Bundle-Version: ", x)
-
-		if ((x != -1) && (y != -1)) {
-			String publishedVersion = diff.substring(y + 17, diff.indexOf("\n", y))
-
-			VersionNumber publishedVersionNumber = VersionNumber.parse(publishedVersion)
-
-			if (!recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
-				recordCommitIDs.put(publishedVersionNumber, previousCommit.split("\n", 2)[0])
-
-				lastVersionNumber = publishedVersionNumber
-			}
-		}
-	}
-
-	return recordCommitIDs
 }

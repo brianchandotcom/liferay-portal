@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
@@ -127,6 +127,7 @@ const PageContent = props => {
 				{(editURL || permissionsURL || viewUsagesURL) && (
 					<ClayDropDown
 						active={active}
+						alignmentPosition={Align.BottomRight}
 						onActiveChange={setActive}
 						trigger={
 							<ClayButton

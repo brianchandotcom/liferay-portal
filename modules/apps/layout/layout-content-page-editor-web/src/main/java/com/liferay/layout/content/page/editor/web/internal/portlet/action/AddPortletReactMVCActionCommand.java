@@ -58,6 +58,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
+import java.util.UUID;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -101,18 +103,18 @@ public class AddPortletReactMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String itemConfig = ParamUtil.getString(actionRequest, "config");
 		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
-		String itemType = ParamUtil.getString(actionRequest, "type");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				JSONFactoryUtil.createJSONObject(itemConfig),
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				parentItemId, itemType, position));
+				JSONUtil.put(
+					"fragmentEntryLinkId",
+					fragmentEntryLink.getFragmentEntryLinkId()),
+				String.valueOf(UUID.randomUUID()), parentItemId, "fragment",
+				position));
 	}
 
 	@Override

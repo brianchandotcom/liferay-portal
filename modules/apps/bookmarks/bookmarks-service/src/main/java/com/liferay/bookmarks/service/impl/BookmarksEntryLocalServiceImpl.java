@@ -22,7 +22,6 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.EntryURLException;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
@@ -704,6 +703,41 @@ public class BookmarksEntryLocalServiceImpl
 		return entry;
 	}
 
+	private String _getBookmarksEntryURL(
+			BookmarksEntry entry, ServiceContext serviceContext)
+		throws PortalException {
+
+		String layoutURL = LayoutURLUtil.getLayoutURL(
+			entry.getGroupId(), BookmarksPortletKeys.BOOKMARKS, serviceContext);
+
+		if (Validator.isNotNull(layoutURL)) {
+			return StringBundler.concat(
+				layoutURL, Portal.FRIENDLY_URL_SEPARATOR, "bookmarks/folder/",
+				entry.getFolderId());
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return StringBundler.concat(
+				serviceContext.getLayoutFullURL(),
+				Portal.FRIENDLY_URL_SEPARATOR, "bookmarks/folder/",
+				entry.getFolderId());
+		}
+
+		Group group = groupLocalService.fetchGroup(entry.getGroupId());
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
+			0, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+		portletURL.setParameter(
+			"folderId", String.valueOf(entry.getFolderId()));
+
+		return portletURL.toString();
+	}
+
 	private void _notifySubscribers(
 			long userId, BookmarksEntry entry, ServiceContext serviceContext)
 		throws PortalException {
@@ -842,41 +876,6 @@ public class BookmarksEntryLocalServiceImpl
 		if (!Validator.isUrl(url)) {
 			throw new EntryURLException();
 		}
-	}
-
-	private String _getBookmarksEntryURL(
-			BookmarksEntry entry, ServiceContext serviceContext)
-		throws PortalException {
-
-		String layoutURL = LayoutURLUtil.getLayoutURL(
-			entry.getGroupId(), BookmarksPortletKeys.BOOKMARKS, serviceContext);
-
-		if (Validator.isNotNull(layoutURL)) {
-			return StringBundler.concat(
-				layoutURL, Portal.FRIENDLY_URL_SEPARATOR, "bookmarks/folder/",
-				entry.getFolderId());
-		}
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		if (httpServletRequest == null) {
-			return StringBundler.concat(
-				serviceContext.getLayoutFullURL(),
-				Portal.FRIENDLY_URL_SEPARATOR, "bookmarks/folder/",
-				entry.getFolderId());
-		}
-
-		Group group = groupLocalService.fetchGroup(entry.getGroupId());
-
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
-			0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
-		portletURL.setParameter(
-			"folderId", String.valueOf(entry.getFolderId()));
-
-		return portletURL.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -46,6 +46,7 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
+			Map<Locale, String> openGraphImageAltMap,
 			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
@@ -60,8 +61,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			getUserId(), groupId, privateLayout, layoutId, canonicalURLEnabled,
 			canonicalURLMap, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageFileEntryId,
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
 	}
 
 	@Override

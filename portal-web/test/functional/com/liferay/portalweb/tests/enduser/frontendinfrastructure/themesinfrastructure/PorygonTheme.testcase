@@ -37,6 +37,8 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Porygon Theme Site");
 
+		AssertVisible(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
 		AssertClick(
 			key_pageName = "Home",
 			locator1 = "Home#PAGE",

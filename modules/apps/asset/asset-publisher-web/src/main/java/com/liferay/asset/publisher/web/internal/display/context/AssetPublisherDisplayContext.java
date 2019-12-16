@@ -550,15 +550,17 @@ public class AssetPublisherDisplayContext {
 				"queryName" + queryLogicIndex, "assetTags");
 
 			if (Objects.equals(queryName, "assetTags")) {
-				queryValues = ParamUtil.getString(
-					_httpServletRequest, "queryTagNames" + queryLogicIndex,
-					queryValues);
-
-				queryValues = _assetPublisherWebUtil.filterAssetTagNames(
-					_themeDisplay.getScopeGroupId(), queryValues);
-
 				String[] tagNames = StringUtil.split(
-					queryValues, StringPool.COMMA);
+						queryValues, StringPool.COMMA);
+				
+				tagNames = ParamUtil.getStringValues(
+					_httpServletRequest, "queryTagNames" + queryLogicIndex,
+					tagNames);
+
+				tagNames = _assetPublisherWebUtil.filterAssetTagNames(
+					_themeDisplay.getScopeGroupId(), tagNames);
+
+				queryValues = StringUtil.merge(tagNames);
 
 				if (ArrayUtil.isEmpty(tagNames)) {
 					continue;

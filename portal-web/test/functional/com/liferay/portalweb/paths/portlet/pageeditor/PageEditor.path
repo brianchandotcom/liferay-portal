@@ -233,7 +233,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PAGE_IMAGE_CONTENT</td>
-	<td>//section[@class='bg-']//div[contains(@style,'${key_imageFileName}')]</td>
+	<td>//div[contains(@style,'${key_imageFileName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -238,7 +238,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PAGE_TEXT_CONTENT</td>
-	<td>//section[@class='bg-']//p | //section[@class='bg-']//div[contains(@class,'asset-summary')]</td>
+	<td>//div[contains(@class,'widget-content')]/p | //div[contains(@class,'asset-summary')]</td>
 	<td></td>
 </tr>
 <tr>

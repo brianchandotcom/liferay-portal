@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -125,11 +127,18 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 					if (!hasColumnType(
 							_tableName, "companyId", "LONG not null")) {
 
-						runSQL(
+						DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
 							StringBundler.concat(
 								"alter_column_type ", _tableName,
 								StringPool.SPACE,
 								_COMPANYID_NOTNULL_DEFINITION));
+
+						dbTypeToSQLMap.add(
+							DBType.DB2,
+							"alter table " + _tableName +
+								" alter column companyId set not null");
+
+						runSQL(dbTypeToSQLMap);
 					}
 
 					UpgradePrimaryKey upgradePrimaryKey = new UpgradePrimaryKey(

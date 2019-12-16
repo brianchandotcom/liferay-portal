@@ -78,6 +78,9 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> openGraphDescriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "openGraphDescription");
+		Map<Locale, String> openGraphImageAltMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "openGraphImageAlt");
 		long openGraphImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "openGraphImageFileEntryId");
 		boolean openGraphTitleEnabled = ParamUtil.getBoolean(
@@ -107,8 +110,9 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, canonicalURLEnabled,
 			canonicalURLMap, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageFileEntryId,
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -118,8 +122,8 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 				groupId, privateLayout, draftLayout.getLayoutId(),
 				canonicalURLEnabled, canonicalURLMap,
 				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageFileEntryId, openGraphTitleEnabled,
-				openGraphTitleMap, serviceContext);
+				openGraphImageAltMap, openGraphImageFileEntryId,
+				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 		}
 
 		LayoutTypePortlet layoutTypePortlet =

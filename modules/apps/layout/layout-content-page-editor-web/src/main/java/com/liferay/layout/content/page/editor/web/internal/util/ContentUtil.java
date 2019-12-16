@@ -15,10 +15,8 @@
 package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -50,7 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -148,28 +145,22 @@ public class ContentUtil {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				layoutClassedModelUsage.getClassName());
+		if (ModelResourcePermissiontUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				layoutClassedModelUsage.getClassName(),
+				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE)) {
 
-		if (assetRendererFactory != null) {
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					layoutClassedModelUsage.getClassPK());
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						layoutClassedModelUsage.getClassName());
 
-			if (assetRenderer != null) {
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					layoutClassedModelUsage.getClassNameId(),
-					layoutClassedModelUsage.getClassPK());
+			if (assetRendererFactory != null) {
+				AssetRenderer<?> assetRenderer =
+					assetRendererFactory.getAssetRenderer(
+						layoutClassedModelUsage.getClassPK());
 
-				if (assetEntry == null) {
-					return JSONFactoryUtil.createJSONObject();
-				}
-
-				if (AssetEntryPermission.contains(
-						themeDisplay.getPermissionChecker(), assetEntry,
-						ActionKeys.UPDATE)) {
-
+				if (assetRenderer != null) {
 					PortletURL portletURL = assetRenderer.getURLEdit(
 						httpServletRequest, LiferayWindowState.NORMAL, backURL);
 
@@ -177,35 +168,32 @@ public class ContentUtil {
 						jsonObject.put("editURL", portletURL.toString());
 					}
 				}
+			}
+		}
 
-				if (AssetEntryPermission.contains(
-						themeDisplay.getPermissionChecker(), assetEntry,
-						ActionKeys.PERMISSIONS)) {
+		if (ModelResourcePermissiontUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				layoutClassedModelUsage.getClassName(),
+				layoutClassedModelUsage.getClassPK(), ActionKeys.PERMISSIONS)) {
 
-					InfoDisplayContributor infoDisplayContributor =
-						InfoDisplayContributorTrackerUtil.
-							getInfoDisplayContributor(
-								layoutClassedModelUsage.getClassName());
+			InfoDisplayContributor infoDisplayContributor =
+				InfoDisplayContributorTrackerUtil.getInfoDisplayContributor(
+					layoutClassedModelUsage.getClassName());
 
-					InfoDisplayObjectProvider infoDisplayObjectProvider =
-						infoDisplayContributor.getInfoDisplayObjectProvider(
-							layoutClassedModelUsage.getClassPK());
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(
+					layoutClassedModelUsage.getClassPK());
 
-					String permissionsURL = PermissionsURLTag.doTag(
-						StringPool.BLANK,
-						layoutClassedModelUsage.getClassName(),
-						HtmlUtil.escape(
-							infoDisplayObjectProvider.getTitle(
-								themeDisplay.getLocale())),
-						null,
-						String.valueOf(layoutClassedModelUsage.getClassPK()),
-						LiferayWindowState.POP_UP.toString(), null,
-						httpServletRequest);
+			String permissionsURL = PermissionsURLTag.doTag(
+				StringPool.BLANK, layoutClassedModelUsage.getClassName(),
+				HtmlUtil.escape(
+					infoDisplayObjectProvider.getTitle(
+						themeDisplay.getLocale())),
+				null, String.valueOf(layoutClassedModelUsage.getClassPK()),
+				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
 
-					if (Validator.isNotNull(permissionsURL)) {
-						jsonObject.put("permissionsURL", permissionsURL);
-					}
-				}
+			if (Validator.isNotNull(permissionsURL)) {
+				jsonObject.put("permissionsURL", permissionsURL);
 			}
 		}
 

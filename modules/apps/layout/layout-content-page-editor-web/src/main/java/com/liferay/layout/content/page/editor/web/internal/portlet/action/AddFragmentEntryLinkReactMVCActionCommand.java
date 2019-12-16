@@ -54,6 +54,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -177,17 +178,15 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String itemConfig = ParamUtil.getString(actionRequest, "config");
 		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
-		String itemType = ParamUtil.getString(actionRequest, "type");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				JSONFactoryUtil.createJSONObject(itemConfig),
-				String.valueOf(fragmentEntryLinkId), parentItemId, itemType,
+				JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
+				String.valueOf(UUID.randomUUID()), parentItemId, "fragment",
 				position));
 	}
 

@@ -240,7 +240,7 @@ public class WikiPageStagedModelDataHandler
 							wikiPageResource.getPrimaryKey());
 
 						importedPage = _wikiPageLocalService.updateWikiPage(
-							importedPage);
+							importedPage, serviceContext);
 
 						_wikiPageResourceLocalService.deleteWikiPageResource(
 							importedPageResource);

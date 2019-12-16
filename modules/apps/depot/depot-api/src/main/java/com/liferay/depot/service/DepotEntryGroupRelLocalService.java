@@ -75,6 +75,9 @@ public interface DepotEntryGroupRelLocalService
 	public DepotEntryGroupRel addDepotEntryGroupRel(
 		long depotEntryId, long toGroupId);
 
+	public DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId, boolean searchable);
+
 	/**
 	 * Creates a new depot entry group rel with the primary key. Does not add the depot entry group rel to the database.
 	 *
@@ -247,6 +250,13 @@ public interface DepotEntryGroupRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DepotEntryGroupRel> getSearchableDepotEntryGroupRels(
+		long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSearchableDepotEntryGroupRelsCount(long groupId);
 
 	/**
 	 * Updates the depot entry group rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

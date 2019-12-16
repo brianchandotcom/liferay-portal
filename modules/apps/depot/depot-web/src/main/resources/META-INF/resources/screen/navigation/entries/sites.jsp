@@ -68,6 +68,13 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 				<%= HtmlUtil.escape(depotAdminSitesDisplayContext.getSiteName(depotEntryGroupRel)) %>
 			</liferay-ui:search-container-column-text>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="searchable-content"
+			>
+				<liferay-ui:message key='<%= depotEntryGroupRel.isSearchable() ? "yes" : "no" %>' />
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-text>
 
 				<%

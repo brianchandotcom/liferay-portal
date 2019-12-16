@@ -48,11 +48,15 @@ recordCommitIDs {
 }
 
 private Map<String, String> _getCommitIDsMap(String projectName) {
-	String command = "git --no-pager log --follow --format=fuller -p -- sdk/" + projectName + "/"
+	ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
-	Process process = command.execute()
+	exec {
+		commandLine "git", "--no-pager", "log", "--follow", "--format=fuller", "-p", "--", "modules/sdk/" + projectName + "/"
+		standardOutput = standardOutputByteArrayOutputStream
+		workingDir = projectDir.parentFile
+	}
 
-	String output = process.text
+	String output = standardOutputByteArrayOutputStream.toString()
 
 	String lastPrepNextCommitId
 	Map<String, String> map = [:]

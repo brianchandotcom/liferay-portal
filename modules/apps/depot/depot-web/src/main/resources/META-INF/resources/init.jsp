@@ -34,7 +34,6 @@ page import="com.liferay.depot.web.internal.constants.DepotScreenNavigationEntry
 page import="com.liferay.depot.web.internal.display.context.DepotAdminDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminSitesDisplayContext" %><%@
-page import="com.liferay.depot.web.internal.util.DepotEntryURLUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupKeyException" %><%@
@@ -46,7 +45,6 @@ page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.service.GroupServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
@@ -62,10 +60,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
-page import="java.util.Map" %><%@
 page import="java.util.Set" %>
-
-<%@ page import="javax.portlet.ActionURL" %>
 
 <liferay-frontend:defineObjects />
 

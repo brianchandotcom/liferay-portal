@@ -1080,6 +1080,8 @@ definition {
 		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 
 		AppBuilderAdmin.searchByItem(itemName = "Upload");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Upload");
 	}
 
 	@description = "Validate Table View search returns by search engine using a search term"

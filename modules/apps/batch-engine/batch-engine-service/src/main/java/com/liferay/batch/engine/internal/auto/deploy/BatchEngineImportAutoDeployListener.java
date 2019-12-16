@@ -207,7 +207,7 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 		throws IOException {
 
 		return _objectMapper.readValue(
-			StringUtil.read(inputStream), BatchImportConfiguration.class);
+			inputStream, BatchImportConfiguration.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

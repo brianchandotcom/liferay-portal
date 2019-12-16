@@ -30,7 +30,7 @@ definition {
 			value1 = "${buttonValue}");
 	}
 
-	macro cancelNewCustomObject {
+	macro cancel {
 		Click(locator1 = "AppBuilder#BUTTON_CANCEL");
 	}
 
@@ -75,6 +75,11 @@ definition {
 	macro editItem {
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
 		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
+	macro viewItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "View");
 	}
 
 	macro filterListAscendAndDescend {

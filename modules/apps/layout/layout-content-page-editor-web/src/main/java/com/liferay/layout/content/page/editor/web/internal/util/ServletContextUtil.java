@@ -14,6 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,9 +24,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -57,6 +62,21 @@ public class ServletContextUtil {
 		return false;
 	}
 
+	public static String getURLEdit(
+			String className, Object object,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		InfoEditURLProvider infoEditURLProvider =
+			_infoEditURLProviderTracker.getInfoEditURLProvider(className);
+
+		if (infoEditURLProvider == null) {
+			return null;
+		}
+
+		return infoEditURLProvider.getURL(object, httpServletRequest);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_modelResourcePermissionServiceTrackerMap =
@@ -65,9 +85,17 @@ public class ServletContextUtil {
 				"model.class.name");
 	}
 
+	@Reference(unbind = "-")
+	protected void setInfoEditURLProviderTracker(
+		InfoEditURLProviderTracker infoEditURLProviderTracker) {
+
+		_infoEditURLProviderTracker = infoEditURLProviderTracker;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServletContextUtil.class);
 
+	private static InfoEditURLProviderTracker _infoEditURLProviderTracker;
 	private static ServiceTrackerMap<String, ModelResourcePermission>
 		_modelResourcePermissionServiceTrackerMap;
 

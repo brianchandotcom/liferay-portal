@@ -10294,15 +10294,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<![CDATA[
 								#!/bin/bash
 
-								db2 uncatalog db lportal
-
-								if [[ "${databases.size}" != "" ]]
-								then
-									db2 uncatalog db lportal${databases.size}
-								fi
-
-								db2 terminate
-
 								echo "${db2.executable} restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
 
 								db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing

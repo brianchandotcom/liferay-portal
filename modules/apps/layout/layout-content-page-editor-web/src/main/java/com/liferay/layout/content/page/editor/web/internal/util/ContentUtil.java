@@ -22,11 +22,15 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProvider;
+import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +45,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,6 +68,8 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -141,6 +149,21 @@ public class ContentUtil {
 		return mappedContentsJSONArray;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_modelResourcePermissionServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ModelResourcePermission.class,
+				"model.class.name");
+	}
+
+	@Reference(unbind = "-")
+	protected void setInfoEditURLProviderTracker(
+		InfoEditURLProviderTracker infoEditURLProviderTracker) {
+
+		_infoEditURLProviderTracker = infoEditURLProviderTracker;
+	}
+
 	private JSONObject _getActionsJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
 			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
@@ -156,22 +179,27 @@ public class ContentUtil {
 			infoDisplayContributor.getInfoDisplayObjectProvider(
 				layoutClassedModelUsage.getClassPK());
 
-		if (ServletContextUtil.contains(
+		if (_hasPermission(
 				themeDisplay.getPermissionChecker(),
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE)) {
 
-			String editURL = ServletContextUtil.getURLEdit(
-				layoutClassedModelUsage.getClassName(),
-				infoDisplayObjectProvider.getDisplayObject(),
-				httpServletRequest);
+			InfoEditURLProvider infoEditURLProvider =
+				_infoEditURLProviderTracker.getInfoEditURLProvider(
+					layoutClassedModelUsage.getClassName());
 
-			if (editURL != null) {
-				jsonObject.put("editURL", editURL);
+			if (infoEditURLProvider != null) {
+				String editURL = infoEditURLProvider.getURL(
+					infoDisplayObjectProvider.getDisplayObject(),
+					httpServletRequest);
+
+				if (editURL != null) {
+					jsonObject.put("editURL", editURL);
+				}
 			}
 		}
 
-		if (ServletContextUtil.contains(
+		if (_hasPermission(
 				themeDisplay.getPermissionChecker(),
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.PERMISSIONS)) {
@@ -536,6 +564,31 @@ public class ContentUtil {
 		);
 	}
 
+	private boolean _hasPermission(
+		PermissionChecker permissionChecker, String className, long classPK,
+		String actionId) {
+
+		ModelResourcePermission modelResourcePermission =
+			_modelResourcePermissionServiceTrackerMap.getService(className);
+
+		if (modelResourcePermission == null) {
+			return false;
+		}
+
+		try {
+			if (modelResourcePermission.contains(
+					permissionChecker, classPK, actionId)) {
+
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			_log.error("An error occurred while checking permissions", pe);
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
 
 	@Reference
@@ -545,12 +598,18 @@ public class ContentUtil {
 	private Html _html;
 
 	@Reference
+	private InfoEditURLProviderTracker _infoEditURLProviderTracker;
+
+	@Reference
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	private ServiceTrackerMap<String, ModelResourcePermission>
+		_modelResourcePermissionServiceTrackerMap;
 
 	@Reference
 	private Portal _portal;

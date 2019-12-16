@@ -77,6 +77,6 @@ recordCommitIDs {
 			"git-id[${versionNumber}]=${commitId}"
 		} join "\n"
 
-		logger.lifecycle "Updated `CHANGELOG.properties` for '{}'", projectName
+		logger.lifecycle "Updated '{}'", changelogPropertiesFile
 	}
 }

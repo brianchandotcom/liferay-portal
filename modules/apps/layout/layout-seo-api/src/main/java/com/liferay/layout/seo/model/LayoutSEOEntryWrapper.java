@@ -60,6 +60,7 @@ public class LayoutSEOEntryWrapper
 		attributes.put("openGraphDescription", getOpenGraphDescription());
 		attributes.put(
 			"openGraphDescriptionEnabled", isOpenGraphDescriptionEnabled());
+		attributes.put("openGraphImageAlt", getOpenGraphImageAlt());
 		attributes.put(
 			"openGraphImageFileEntryId", getOpenGraphImageFileEntryId());
 		attributes.put("openGraphTitle", getOpenGraphTitle());
@@ -168,6 +169,12 @@ public class LayoutSEOEntryWrapper
 
 		if (openGraphDescriptionEnabled != null) {
 			setOpenGraphDescriptionEnabled(openGraphDescriptionEnabled);
+		}
+
+		String openGraphImageAlt = (String)attributes.get("openGraphImageAlt");
+
+		if (openGraphImageAlt != null) {
+			setOpenGraphImageAlt(openGraphImageAlt);
 		}
 
 		Long openGraphImageFileEntryId = (Long)attributes.get(
@@ -471,6 +478,84 @@ public class LayoutSEOEntryWrapper
 	@Override
 	public Map<java.util.Locale, String> getOpenGraphDescriptionMap() {
 		return model.getOpenGraphDescriptionMap();
+	}
+
+	/**
+	 * Returns the open graph image alt of this layout seo entry.
+	 *
+	 * @return the open graph image alt of this layout seo entry
+	 */
+	@Override
+	public String getOpenGraphImageAlt() {
+		return model.getOpenGraphImageAlt();
+	}
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized open graph image alt of this layout seo entry
+	 */
+	@Override
+	public String getOpenGraphImageAlt(java.util.Locale locale) {
+		return model.getOpenGraphImageAlt(locale);
+	}
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized open graph image alt of this layout seo entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getOpenGraphImageAlt(
+		java.util.Locale locale, boolean useDefault) {
+
+		return model.getOpenGraphImageAlt(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized open graph image alt of this layout seo entry
+	 */
+	@Override
+	public String getOpenGraphImageAlt(String languageId) {
+		return model.getOpenGraphImageAlt(languageId);
+	}
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized open graph image alt of this layout seo entry
+	 */
+	@Override
+	public String getOpenGraphImageAlt(String languageId, boolean useDefault) {
+		return model.getOpenGraphImageAlt(languageId, useDefault);
+	}
+
+	@Override
+	public String getOpenGraphImageAltCurrentLanguageId() {
+		return model.getOpenGraphImageAltCurrentLanguageId();
+	}
+
+	@Override
+	public String getOpenGraphImageAltCurrentValue() {
+		return model.getOpenGraphImageAltCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized open graph image alts of this layout seo entry.
+	 *
+	 * @return the locales and localized open graph image alts of this layout seo entry
+	 */
+	@Override
+	public Map<java.util.Locale, String> getOpenGraphImageAltMap() {
+		return model.getOpenGraphImageAltMap();
 	}
 
 	/**
@@ -944,6 +1029,75 @@ public class LayoutSEOEntryWrapper
 
 		model.setOpenGraphDescriptionMap(
 			openGraphDescriptionMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the open graph image alt of this layout seo entry.
+	 *
+	 * @param openGraphImageAlt the open graph image alt of this layout seo entry
+	 */
+	@Override
+	public void setOpenGraphImageAlt(String openGraphImageAlt) {
+		model.setOpenGraphImageAlt(openGraphImageAlt);
+	}
+
+	/**
+	 * Sets the localized open graph image alt of this layout seo entry in the language.
+	 *
+	 * @param openGraphImageAlt the localized open graph image alt of this layout seo entry
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setOpenGraphImageAlt(
+		String openGraphImageAlt, java.util.Locale locale) {
+
+		model.setOpenGraphImageAlt(openGraphImageAlt, locale);
+	}
+
+	/**
+	 * Sets the localized open graph image alt of this layout seo entry in the language, and sets the default locale.
+	 *
+	 * @param openGraphImageAlt the localized open graph image alt of this layout seo entry
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setOpenGraphImageAlt(
+		String openGraphImageAlt, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+
+		model.setOpenGraphImageAlt(openGraphImageAlt, locale, defaultLocale);
+	}
+
+	@Override
+	public void setOpenGraphImageAltCurrentLanguageId(String languageId) {
+		model.setOpenGraphImageAltCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized open graph image alts of this layout seo entry from the map of locales and localized open graph image alts.
+	 *
+	 * @param openGraphImageAltMap the locales and localized open graph image alts of this layout seo entry
+	 */
+	@Override
+	public void setOpenGraphImageAltMap(
+		Map<java.util.Locale, String> openGraphImageAltMap) {
+
+		model.setOpenGraphImageAltMap(openGraphImageAltMap);
+	}
+
+	/**
+	 * Sets the localized open graph image alts of this layout seo entry from the map of locales and localized open graph image alts, and sets the default locale.
+	 *
+	 * @param openGraphImageAltMap the locales and localized open graph image alts of this layout seo entry
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setOpenGraphImageAltMap(
+		Map<java.util.Locale, String> openGraphImageAltMap,
+		java.util.Locale defaultLocale) {
+
+		model.setOpenGraphImageAltMap(openGraphImageAltMap, defaultLocale);
 	}
 
 	/**

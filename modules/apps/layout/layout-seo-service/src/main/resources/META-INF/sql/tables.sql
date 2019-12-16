@@ -15,6 +15,7 @@ create table LayoutSEOEntry (
 	DDMStorageId LONG,
 	openGraphDescription STRING null,
 	openGraphDescriptionEnabled BOOLEAN,
+	openGraphImageAlt STRING null,
 	openGraphImageFileEntryId LONG,
 	openGraphTitle STRING null,
 	openGraphTitleEnabled BOOLEAN,

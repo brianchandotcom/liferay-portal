@@ -522,6 +522,108 @@ public interface LayoutSEOEntryModel
 		boolean openGraphDescriptionEnabled);
 
 	/**
+	 * Returns the open graph image alt of this layout seo entry.
+	 *
+	 * @return the open graph image alt of this layout seo entry
+	 */
+	public String getOpenGraphImageAlt();
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized open graph image alt of this layout seo entry
+	 */
+	@AutoEscape
+	public String getOpenGraphImageAlt(Locale locale);
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized open graph image alt of this layout seo entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getOpenGraphImageAlt(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized open graph image alt of this layout seo entry
+	 */
+	@AutoEscape
+	public String getOpenGraphImageAlt(String languageId);
+
+	/**
+	 * Returns the localized open graph image alt of this layout seo entry in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized open graph image alt of this layout seo entry
+	 */
+	@AutoEscape
+	public String getOpenGraphImageAlt(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getOpenGraphImageAltCurrentLanguageId();
+
+	@AutoEscape
+	public String getOpenGraphImageAltCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized open graph image alts of this layout seo entry.
+	 *
+	 * @return the locales and localized open graph image alts of this layout seo entry
+	 */
+	public Map<Locale, String> getOpenGraphImageAltMap();
+
+	/**
+	 * Sets the open graph image alt of this layout seo entry.
+	 *
+	 * @param openGraphImageAlt the open graph image alt of this layout seo entry
+	 */
+	public void setOpenGraphImageAlt(String openGraphImageAlt);
+
+	/**
+	 * Sets the localized open graph image alt of this layout seo entry in the language.
+	 *
+	 * @param openGraphImageAlt the localized open graph image alt of this layout seo entry
+	 * @param locale the locale of the language
+	 */
+	public void setOpenGraphImageAlt(String openGraphImageAlt, Locale locale);
+
+	/**
+	 * Sets the localized open graph image alt of this layout seo entry in the language, and sets the default locale.
+	 *
+	 * @param openGraphImageAlt the localized open graph image alt of this layout seo entry
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setOpenGraphImageAlt(
+		String openGraphImageAlt, Locale locale, Locale defaultLocale);
+
+	public void setOpenGraphImageAltCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized open graph image alts of this layout seo entry from the map of locales and localized open graph image alts.
+	 *
+	 * @param openGraphImageAltMap the locales and localized open graph image alts of this layout seo entry
+	 */
+	public void setOpenGraphImageAltMap(
+		Map<Locale, String> openGraphImageAltMap);
+
+	/**
+	 * Sets the localized open graph image alts of this layout seo entry from the map of locales and localized open graph image alts, and sets the default locale.
+	 *
+	 * @param openGraphImageAltMap the locales and localized open graph image alts of this layout seo entry
+	 * @param defaultLocale the default locale
+	 */
+	public void setOpenGraphImageAltMap(
+		Map<Locale, String> openGraphImageAltMap, Locale defaultLocale);
+
+	/**
 	 * Returns the open graph image file entry ID of this layout seo entry.
 	 *
 	 * @return the open graph image file entry ID of this layout seo entry

@@ -90,6 +90,7 @@ public class LayoutSEOEntryModelImpl
 		{"canonicalURLEnabled", Types.BOOLEAN}, {"DDMStorageId", Types.BIGINT},
 		{"openGraphDescription", Types.VARCHAR},
 		{"openGraphDescriptionEnabled", Types.BOOLEAN},
+		{"openGraphImageAlt", Types.VARCHAR},
 		{"openGraphImageFileEntryId", Types.BIGINT},
 		{"openGraphTitle", Types.VARCHAR},
 		{"openGraphTitleEnabled", Types.BOOLEAN},
@@ -116,6 +117,7 @@ public class LayoutSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("DDMStorageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("openGraphDescription", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphDescriptionEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("openGraphImageAlt", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("openGraphTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("openGraphTitleEnabled", Types.BOOLEAN);
@@ -123,7 +125,7 @@ public class LayoutSEOEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,DDMStorageId LONG,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null)";
+		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,DDMStorageId LONG,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 
@@ -189,6 +191,7 @@ public class LayoutSEOEntryModelImpl
 		model.setOpenGraphDescription(soapModel.getOpenGraphDescription());
 		model.setOpenGraphDescriptionEnabled(
 			soapModel.isOpenGraphDescriptionEnabled());
+		model.setOpenGraphImageAlt(soapModel.getOpenGraphImageAlt());
 		model.setOpenGraphImageFileEntryId(
 			soapModel.getOpenGraphImageFileEntryId());
 		model.setOpenGraphTitle(soapModel.getOpenGraphTitle());
@@ -427,6 +430,12 @@ public class LayoutSEOEntryModelImpl
 			"openGraphDescriptionEnabled",
 			(BiConsumer<LayoutSEOEntry, Boolean>)
 				LayoutSEOEntry::setOpenGraphDescriptionEnabled);
+		attributeGetterFunctions.put(
+			"openGraphImageAlt", LayoutSEOEntry::getOpenGraphImageAlt);
+		attributeSetterBiConsumers.put(
+			"openGraphImageAlt",
+			(BiConsumer<LayoutSEOEntry, String>)
+				LayoutSEOEntry::setOpenGraphImageAlt);
 		attributeGetterFunctions.put(
 			"openGraphImageFileEntryId",
 			LayoutSEOEntry::getOpenGraphImageFileEntryId);
@@ -952,6 +961,119 @@ public class LayoutSEOEntryModelImpl
 
 	@JSON
 	@Override
+	public String getOpenGraphImageAlt() {
+		if (_openGraphImageAlt == null) {
+			return "";
+		}
+		else {
+			return _openGraphImageAlt;
+		}
+	}
+
+	@Override
+	public String getOpenGraphImageAlt(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getOpenGraphImageAlt(languageId);
+	}
+
+	@Override
+	public String getOpenGraphImageAlt(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getOpenGraphImageAlt(languageId, useDefault);
+	}
+
+	@Override
+	public String getOpenGraphImageAlt(String languageId) {
+		return LocalizationUtil.getLocalization(
+			getOpenGraphImageAlt(), languageId);
+	}
+
+	@Override
+	public String getOpenGraphImageAlt(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getOpenGraphImageAlt(), languageId, useDefault);
+	}
+
+	@Override
+	public String getOpenGraphImageAltCurrentLanguageId() {
+		return _openGraphImageAltCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getOpenGraphImageAltCurrentValue() {
+		Locale locale = getLocale(_openGraphImageAltCurrentLanguageId);
+
+		return getOpenGraphImageAlt(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getOpenGraphImageAltMap() {
+		return LocalizationUtil.getLocalizationMap(getOpenGraphImageAlt());
+	}
+
+	@Override
+	public void setOpenGraphImageAlt(String openGraphImageAlt) {
+		_openGraphImageAlt = openGraphImageAlt;
+	}
+
+	@Override
+	public void setOpenGraphImageAlt(String openGraphImageAlt, Locale locale) {
+		setOpenGraphImageAlt(
+			openGraphImageAlt, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setOpenGraphImageAlt(
+		String openGraphImageAlt, Locale locale, Locale defaultLocale) {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(openGraphImageAlt)) {
+			setOpenGraphImageAlt(
+				LocalizationUtil.updateLocalization(
+					getOpenGraphImageAlt(), "OpenGraphImageAlt",
+					openGraphImageAlt, languageId, defaultLanguageId));
+		}
+		else {
+			setOpenGraphImageAlt(
+				LocalizationUtil.removeLocalization(
+					getOpenGraphImageAlt(), "OpenGraphImageAlt", languageId));
+		}
+	}
+
+	@Override
+	public void setOpenGraphImageAltCurrentLanguageId(String languageId) {
+		_openGraphImageAltCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setOpenGraphImageAltMap(
+		Map<Locale, String> openGraphImageAltMap) {
+
+		setOpenGraphImageAltMap(
+			openGraphImageAltMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setOpenGraphImageAltMap(
+		Map<Locale, String> openGraphImageAltMap, Locale defaultLocale) {
+
+		if (openGraphImageAltMap == null) {
+			return;
+		}
+
+		setOpenGraphImageAlt(
+			LocalizationUtil.updateLocalization(
+				openGraphImageAltMap, getOpenGraphImageAlt(),
+				"OpenGraphImageAlt", LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
 	public long getOpenGraphImageFileEntryId() {
 		return _openGraphImageFileEntryId;
 	}
@@ -1150,6 +1272,19 @@ public class LayoutSEOEntryModelImpl
 			}
 		}
 
+		Map<Locale, String> openGraphImageAltMap = getOpenGraphImageAltMap();
+
+		for (Map.Entry<Locale, String> entry :
+				openGraphImageAltMap.entrySet()) {
+
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
 		Map<Locale, String> openGraphTitleMap = getOpenGraphTitleMap();
 
 		for (Map.Entry<Locale, String> entry : openGraphTitleMap.entrySet()) {
@@ -1225,6 +1360,18 @@ public class LayoutSEOEntryModelImpl
 				defaultLocale);
 		}
 
+		String openGraphImageAlt = getOpenGraphImageAlt(defaultLocale);
+
+		if (Validator.isNull(openGraphImageAlt)) {
+			setOpenGraphImageAlt(
+				getOpenGraphImageAlt(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setOpenGraphImageAlt(
+				getOpenGraphImageAlt(defaultLocale), defaultLocale,
+				defaultLocale);
+		}
+
 		String openGraphTitle = getOpenGraphTitle(defaultLocale);
 
 		if (Validator.isNull(openGraphTitle)) {
@@ -1273,6 +1420,7 @@ public class LayoutSEOEntryModelImpl
 		layoutSEOEntryImpl.setOpenGraphDescription(getOpenGraphDescription());
 		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
 			isOpenGraphDescriptionEnabled());
+		layoutSEOEntryImpl.setOpenGraphImageAlt(getOpenGraphImageAlt());
 		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
 			getOpenGraphImageFileEntryId());
 		layoutSEOEntryImpl.setOpenGraphTitle(getOpenGraphTitle());
@@ -1447,6 +1595,14 @@ public class LayoutSEOEntryModelImpl
 		layoutSEOEntryCacheModel.openGraphDescriptionEnabled =
 			isOpenGraphDescriptionEnabled();
 
+		layoutSEOEntryCacheModel.openGraphImageAlt = getOpenGraphImageAlt();
+
+		String openGraphImageAlt = layoutSEOEntryCacheModel.openGraphImageAlt;
+
+		if ((openGraphImageAlt != null) && (openGraphImageAlt.length() == 0)) {
+			layoutSEOEntryCacheModel.openGraphImageAlt = null;
+		}
+
 		layoutSEOEntryCacheModel.openGraphImageFileEntryId =
 			getOpenGraphImageFileEntryId();
 
@@ -1575,6 +1731,8 @@ public class LayoutSEOEntryModelImpl
 	private String _openGraphDescription;
 	private String _openGraphDescriptionCurrentLanguageId;
 	private boolean _openGraphDescriptionEnabled;
+	private String _openGraphImageAlt;
+	private String _openGraphImageAltCurrentLanguageId;
 	private long _openGraphImageFileEntryId;
 	private String _openGraphTitle;
 	private String _openGraphTitleCurrentLanguageId;

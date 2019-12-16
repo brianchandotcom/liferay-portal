@@ -205,7 +205,7 @@ definition {
 	macro validateListTitleAtRow {
 		AssertTextEquals(
 			key_RowNumber = "${rowNumber}",
-			locator1 = "AppBuilder#VALIDATE_FORM_VIEW_NAME_AT_ROW",
+			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",
 			value1 = "${title}");
 	}
 

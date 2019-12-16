@@ -12,22 +12,43 @@
  * details.
  */
 
-package com.liferay.talend.common.oas;
+package com.liferay.talend.properties.parameters;
 
-import javax.json.JsonObject;
-
-import org.talend.components.api.properties.ComponentProperties;
-import org.talend.daikon.properties.ValidationResult;
+import java.util.Objects;
 
 /**
  * @author Igor Beslic
  */
-public interface OASSource {
+public class RequestParameter {
 
-	public JsonObject getOASJsonObject();
+	public RequestParameter(String location, String name, String value) {
+		_location = location;
+		_name = name;
+		_value = value;
+	}
 
-	public JsonObject getOASJsonObject(String oasUrl);
+	public String getLocation() {
+		return _location;
+	}
 
-	public ValidationResult initialize(ComponentProperties componentProperties);
+	public String getName() {
+		return _name;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+
+	public boolean isPathLocation() {
+		if (Objects.equals("path", _location)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final String _location;
+	private final String _name;
+	private final String _value;
 
 }

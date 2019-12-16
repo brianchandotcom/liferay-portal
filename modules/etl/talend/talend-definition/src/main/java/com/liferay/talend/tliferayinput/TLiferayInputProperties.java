@@ -14,49 +14,17 @@
 
 package com.liferay.talend.tliferayinput;
 
-import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
-import com.liferay.talend.resource.LiferayInputResourceProperties;
-
-import java.util.Collections;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.talend.components.api.component.PropertyPathConnector;
+import com.liferay.talend.properties.input.LiferayInputProperties;
 
 /**
  * @author Zoltán Takács
  * @author Ivica Cardic
  */
-public class TLiferayInputProperties
-	extends LiferayConnectionResourceBaseProperties {
+public class TLiferayInputProperties extends LiferayInputProperties {
 
 	public TLiferayInputProperties(String name) {
 		super(name);
-
-		resource = new LiferayInputResourceProperties("resource");
-
-		resource.setLiferayConnectionProperties(connection);
-
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Instantiated " + System.identityHashCode(this));
-		}
 	}
-
-	@Override
-	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(
-		boolean outputConnectors) {
-
-		if (outputConnectors) {
-			return Collections.singleton(mainConnector);
-		}
-
-		return Collections.<PropertyPathConnector>emptySet();
-	}
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		TLiferayInputProperties.class);
 
 	private static final long serialVersionUID = 8010931662185868407L;
 

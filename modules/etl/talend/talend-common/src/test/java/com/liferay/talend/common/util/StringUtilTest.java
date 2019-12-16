@@ -12,22 +12,35 @@
  * details.
  */
 
-package com.liferay.talend.common.oas;
+package com.liferay.talend.common.util;
 
-import javax.json.JsonObject;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.talend.components.api.properties.ComponentProperties;
-import org.talend.daikon.properties.ValidationResult;
+import org.hamcrest.Matchers;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Igor Beslic
  */
-public interface OASSource {
+public class StringUtilTest {
 
-	public JsonObject getOASJsonObject();
+	@Test
+	public void testStripPrefix() {
+		Set<String> testSet = new HashSet<>(
+			Arrays.asList(
+				"prefixTest1", "prefixTest2", "prefixTest3", "Test4"));
 
-	public JsonObject getOASJsonObject(String oasUrl);
+		testSet = StringUtil.stripPrefix("prefix", testSet);
 
-	public ValidationResult initialize(ComponentProperties componentProperties);
+		Assert.assertEquals(
+			"Transformed string collection size", 4, testSet.size());
+
+		Assert.assertThat(
+			testSet, Matchers.hasItems("Test1", "Test2", "Test3", "Test4"));
+	}
 
 }

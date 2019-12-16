@@ -16,10 +16,13 @@ import Icon from '../../../shared/components/Icon.es';
 const FieldError = ({error}) => (
 	<div className="form-feedback-group">
 		<div className="form-feedback-item">
-			<span className="form-feedback-indicator">
+			<span className="form-feedback-indicator mr-2">
 				<Icon iconName="exclamation-full" />
 			</span>
-			<span style={{marginLeft: '0.3125rem'}}>{error}</span>
+
+			<span className="text-semi-bold" data-testid="errorSpan">
+				{error}
+			</span>
 		</div>
 	</div>
 );

@@ -102,16 +102,16 @@ const useSLA = (
 				});
 
 				if (status === 2) {
-					const noLongerAvailableMsg = Liferay.Language.get(
-						'selected-option-is-no-longer-available'
-					);
-
 					if (!startNodeKeys.nodeKeys.length) {
-						errors[START_NODE_KEYS] = noLongerAvailableMsg;
+						errors[START_NODE_KEYS] = Liferay.Language.get(
+							'selected-option-is-no-longer-available'
+						);
 					}
 
 					if (!stopNodeKeys.nodeKeys.length) {
-						errors[STOP_NODE_KEYS] = noLongerAvailableMsg;
+						errors[STOP_NODE_KEYS] = Liferay.Language.get(
+							'selected-option-is-no-longer-available'
+						);
 					}
 
 					setErrors({...errors});

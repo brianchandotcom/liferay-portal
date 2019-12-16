@@ -17,14 +17,8 @@
 <%
 ExportImportConfigurationSearchTerms searchTerms = (ExportImportConfigurationSearchTerms)searchContainer.getSearchTerms();
 
-if (searchTerms.isAdvancedSearch()) {
-	results = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(company.getCompanyId(), groupId, searchTerms.getName(), searchTerms.getDescription(), exportImportConfigurationType, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(company.getCompanyId(), groupId, searchTerms.getName(), searchTerms.getDescription(), exportImportConfigurationType, searchTerms.isAndOperator());
-}
-else {
-	results = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(company.getCompanyId(), groupId, searchTerms.getKeywords(), exportImportConfigurationType, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(company.getCompanyId(), groupId, searchTerms.getKeywords(), exportImportConfigurationType);
-}
+results = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(company.getCompanyId(), groupId, searchTerms.getKeywords(), exportImportConfigurationType, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+total = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(company.getCompanyId(), groupId, searchTerms.getKeywords(), exportImportConfigurationType);
 
 searchContainer.setResults(results);
 searchContainer.setTotal(total);

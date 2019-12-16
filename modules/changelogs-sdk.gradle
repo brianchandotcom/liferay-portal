@@ -12,7 +12,6 @@ buildscript {
 }
 
 File changelogFile = file("sdk/" + projectName + "/CHANGELOG.markdown")
-File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 task buildChangelogs
 task recordCommits
@@ -31,6 +30,8 @@ buildChangelogs {
 		String version = ""
 		String rangeStart = ""
 		String rangeEnd = ""
+
+		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 		changelogPropertiesFile.getText("UTF-8").eachLine {
 			String recordCommitLine ->
@@ -150,6 +151,8 @@ recordCommits {
 				}
 			}
 		}
+
+		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 		changelogPropertiesFile.text = recordCommitIDs.collect {
 			VersionNumber versionNumber, String commitId ->

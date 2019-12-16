@@ -74,6 +74,8 @@ public class LayoutSEOEntryServiceSoap {
 				boolean openGraphDescriptionEnabled,
 				String[] openGraphDescriptionMapLanguageIds,
 				String[] openGraphDescriptionMapValues,
+				String[] openGraphImageAltMapLanguageIds,
+				String[] openGraphImageAltMapValues,
 				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
 				String[] openGraphTitleMapLanguageIds,
 				String[] openGraphTitleMapValues,
@@ -88,6 +90,10 @@ public class LayoutSEOEntryServiceSoap {
 				LocalizationUtil.getLocalizationMap(
 					openGraphDescriptionMapLanguageIds,
 					openGraphDescriptionMapValues);
+			Map<Locale, String> openGraphImageAltMap =
+				LocalizationUtil.getLocalizationMap(
+					openGraphImageAltMapLanguageIds,
+					openGraphImageAltMapValues);
 			Map<Locale, String> openGraphTitleMap =
 				LocalizationUtil.getLocalizationMap(
 					openGraphTitleMapLanguageIds, openGraphTitleMapValues);
@@ -96,8 +102,9 @@ public class LayoutSEOEntryServiceSoap {
 				LayoutSEOEntryServiceUtil.updateLayoutSEOEntry(
 					groupId, privateLayout, layoutId, canonicalURLEnabled,
 					canonicalURLMap, openGraphDescriptionEnabled,
-					openGraphDescriptionMap, openGraphImageFileEntryId,
-					openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+					openGraphDescriptionMap, openGraphImageAltMap,
+					openGraphImageFileEntryId, openGraphTitleEnabled,
+					openGraphTitleMap, serviceContext);
 
 			return com.liferay.layout.seo.model.LayoutSEOEntrySoap.toSoapModel(
 				returnValue);

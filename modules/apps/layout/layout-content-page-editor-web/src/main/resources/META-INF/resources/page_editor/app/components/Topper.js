@@ -22,6 +22,7 @@ import useOnClickOutside from '../../core/hooks/useOnClickOutside';
 import {moveItem, removeItem} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {DispatchContext} from '../reducers/index';
+import {StoreContext} from '../store';
 import {
 	useCurrentFloatingToolbar,
 	useIsSelected,
@@ -33,6 +34,22 @@ import {
 const EDGE = {
 	BOTTOM: 1,
 	TOP: 0
+};
+
+const LAYOUT_DATA_TYPE_TO_SUPPORTED_PARENT_TYPE = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.row],
+	[LAYOUT_DATA_ITEM_TYPES.container]: [LAYOUT_DATA_ITEM_TYPES.root],
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
+		LAYOUT_DATA_ITEM_TYPES.column,
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.root,
+		LAYOUT_DATA_ITEM_TYPES.row
+	],
+	[LAYOUT_DATA_ITEM_TYPES.root]: [],
+	[LAYOUT_DATA_ITEM_TYPES.row]: [
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.root
+	]
 };
 
 const TopperListItem = React.forwardRef(
@@ -103,11 +120,18 @@ export default function Topper({
 		},
 		drop(_item, _monitor) {
 			if (!_monitor.didDrop()) {
+				const {parentId, position} = getParentItemIdAndPositon(
+					layoutData.items,
+					item.itemId,
+					edge,
+					_monitor.getItemType()
+				);
+
 				return {
 					itemId: _item.itemId,
 					itemType: _monitor.getItemType(),
-					position: edge,
-					siblingId: item.itemId
+					parentId,
+					position
 				};
 			}
 		},
@@ -308,5 +332,32 @@ export default function Topper({
 				{childrenElement}
 			</div>
 		</div>
+	);
+}
+
+function getParentItemIdAndPositon(items, siblingOrParentId, edge, itemType) {
+	const siblingOrParent = items[siblingOrParentId];
+
+	if (isNestingSupported(itemType, siblingOrParent.type)) {
+		return {
+			parentId: siblingOrParentId,
+			position: siblingOrParent.children.length
+		};
+	} else {
+		const parent = items[siblingOrParent.parentId];
+
+		const siblingIndex = parent.children.indexOf(siblingOrParentId);
+		const position = edge === EDGE.TOP ? siblingIndex : siblingIndex + 1;
+
+		return {
+			parentId: parent.itemId,
+			position
+		};
+	}
+}
+
+function isNestingSupported(itemType, parentType) {
+	return LAYOUT_DATA_TYPE_TO_SUPPORTED_PARENT_TYPE[itemType].includes(
+		parentType
 	);
 }

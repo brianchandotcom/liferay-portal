@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Enumeration;
@@ -78,8 +76,9 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 				ZipEntry zipEntry = iterator.nextElement();
 
 				if (Objects.equals(zipEntry.getName(), "batch-import.json")) {
-					batchImportConfiguration = _toBatchImportConfiguration(
-						zipFile.getInputStream(zipEntry));
+					batchImportConfiguration = _objectMapper.readValue(
+						zipFile.getInputStream(zipEntry),
+						BatchImportConfiguration.class);
 				}
 				else {
 					UnsyncByteArrayOutputStream
@@ -181,7 +180,9 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 			}
 
 			BatchImportConfiguration batchImportConfiguration =
-				_toBatchImportConfiguration(zipFile.getInputStream(zipEntry));
+				_objectMapper.readValue(
+					zipFile.getInputStream(zipEntry),
+					BatchImportConfiguration.class);
 
 			if (batchImportConfiguration == null) {
 				return false;
@@ -200,14 +201,6 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 		}
 
 		return true;
-	}
-
-	private BatchImportConfiguration _toBatchImportConfiguration(
-			InputStream inputStream)
-		throws IOException {
-
-		return _objectMapper.readValue(
-			inputStream, BatchImportConfiguration.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

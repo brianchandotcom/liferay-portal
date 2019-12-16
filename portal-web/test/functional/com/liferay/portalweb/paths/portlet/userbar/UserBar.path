@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_AVATAR_PORTRAIT</td>
+	<td>//button//img[contains(@src,'user_portrait')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_FULL_NAME</td>
 	<td>//li[@class='dropdown-subheader']</td>
 	<td></td>

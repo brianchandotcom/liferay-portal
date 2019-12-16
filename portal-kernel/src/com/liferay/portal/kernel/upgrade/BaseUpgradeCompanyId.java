@@ -109,8 +109,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 					runSQL(
 						connection,
 						StringBundler.concat(
-							"alter table ", _tableName, " add ",
-							_COMPANYID_COLUMN_DEFINITION));
+							"alter table ", _tableName, " add companyId LONG"));
 				}
 				else {
 					if (_log.isDebugEnabled()) {
@@ -130,11 +129,11 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 							StringBundler.concat(
 								"alter_column_type ", _tableName,
 								StringPool.SPACE,
-								_COMPANYID_COLUMN_DEFINITION));
+								_COMPANYID_NOTNULL_DEFINITION));
 					}
 
 					UpgradePrimaryKey upgradePrimaryKey = new UpgradePrimaryKey(
-						_COMPANYID_COLUMN_DEFINITION, _tableName);
+						_COMPANYID_NOTNULL_DEFINITION, _tableName);
 
 					upgradePrimaryKey.upgrade();
 				}
@@ -228,7 +227,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 			return sb.toString();
 		}
 
-		private static final String _COMPANYID_COLUMN_DEFINITION =
+		private static final String _COMPANYID_NOTNULL_DEFINITION =
 			"companyId LONG not null";
 
 		private final String _columnName;

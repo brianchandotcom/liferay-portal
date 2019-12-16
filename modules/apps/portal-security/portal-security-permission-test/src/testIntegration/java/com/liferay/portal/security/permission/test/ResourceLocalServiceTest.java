@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceTestConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -52,9 +52,9 @@ public class ResourceLocalServiceTest {
 	public void testAddResourcesConcurrently() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_users = new User[ServiceTestUtil.THREAD_COUNT];
+		_users = new User[ServiceTestConstants.THREAD_COUNT];
 
-		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
+		for (int i = 0; i < ServiceTestConstants.THREAD_COUNT; i++) {
 			User user = UserTestUtil.addUser(
 				"ResourceLocalServiceTest" + (i + 1), _group.getGroupId());
 
@@ -62,7 +62,7 @@ public class ResourceLocalServiceTest {
 		}
 
 		DoAsUserThread[] doAsUserThreads =
-			new DoAsUserThread[ServiceTestUtil.THREAD_COUNT];
+			new DoAsUserThread[ServiceTestConstants.THREAD_COUNT];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
 			doAsUserThreads[i] = new AddResources(_users[i].getUserId());
@@ -86,9 +86,10 @@ public class ResourceLocalServiceTest {
 
 		Assert.assertTrue(
 			StringBundler.concat(
-				"Only ", successCount, " out of ", ServiceTestUtil.THREAD_COUNT,
+				"Only ", successCount, " out of ",
+				ServiceTestConstants.THREAD_COUNT,
 				" threads added resources successfully"),
-			successCount == ServiceTestUtil.THREAD_COUNT);
+			successCount == ServiceTestConstants.THREAD_COUNT);
 	}
 
 	@DeleteAfterTestRun

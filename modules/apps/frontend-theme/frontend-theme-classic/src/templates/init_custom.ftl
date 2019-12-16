@@ -8,5 +8,5 @@
 <#if wrap_widget_page_content && (layout.getType() == "portlet")>
 	<#assign portal_content_css_class = "container mt-4" />
 <#else>
-	<#assign portal_content_css_class = "" />
+	<#assign portal_content_css_class = "container-fluid" />
 </#if>

@@ -56,16 +56,16 @@ private Map<String, String> _getCommitIDsMap(String projectName) {
 		workingDir = projectDir.parentFile
 	}
 
-	String output = standardOutputByteArrayOutputStream.toString()
+	String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
 	String lastPrepNextCommitId = null
-	Map<String, String> map = [:]
+	Map<String, String> recordCommitIDs = [:]
 
 	int previousCommitPos = -1
 	int commitPos = -1
 
 	while (true) {
-		commitPos = output.indexOf("\ncommit ", commitPos + 1)
+		commitPos = gitLogOutput.indexOf("\ncommit ", commitPos + 1)
 
 		if (commitPos == -1) {
 			break;
@@ -77,17 +77,17 @@ private Map<String, String> _getCommitIDsMap(String projectName) {
 			continue
 		}
 
-		String commitDiff = output.substring(previousCommitPos, commitPos)
+		String commitDiff = gitLogOutput.substring(previousCommitPos, commitPos)
 
 		previousCommitPos = commitPos
 
-		int x = output.indexOf("\n", commitPos + 1)
+		int x = gitLogOutput.indexOf("\n", commitPos + 1)
 
-		String commitId = output.substring(commitPos + 7, x)
+		String previousCommitId = gitLogOutput.substring(commitPos + 7, x)
 
 		if (commitDiff.contains("prep next")) {
 			if (!lastPrepNextCommitId) {
-				lastPrepNextCommitId = commitId
+				lastPrepNextCommitId = previousCommitId
 			}
 		}
 		else {
@@ -108,7 +108,7 @@ private Map<String, String> _getCommitIDsMap(String projectName) {
 
 		int z = commitDiff.indexOf("\n", y);
 
-		String beforeVersion = commitDiff.substring(y + 17, z)
+		String publishedVersion = commitDiff.substring(y + 17, z)
 
 		y = commitDiff.indexOf("+Bundle-Version: ", x)
 
@@ -118,25 +118,25 @@ private Map<String, String> _getCommitIDsMap(String projectName) {
 
 		z = commitDiff.indexOf("\n", y);
 
-		String afterVersion = commitDiff.substring(y + 17, z)
+		String newVersion = commitDiff.substring(y + 17, z)
 
-		if (!_isValidVersionNumbers(beforeVersion, afterVersion)) {
+		if (!_isValidVersionNumbers(publishedVersion, newVersion)) {
 			continue
 		}
 
-		if (!map.containsKey(beforeVersion)) {
+		if (!recordCommitIDs.containsKey(publishedVersion)) {
 			if (lastPrepNextCommitId) {
-				map.put(beforeVersion, lastPrepNextCommitId)
+				recordCommitIDs.put(publishedVersion, lastPrepNextCommitId)
 			}
 			else {
-				map.put(beforeVersion, commitId)
+				recordCommitIDs.put(publishedVersion, previousCommitId)
 			}
 
 			lastPrepNextCommitId = null
 		}
 	}
 
-	return map
+	return recordCommitIDs
 }
 
 private boolean _isValidVersionNumbers(String version1, String version2) {

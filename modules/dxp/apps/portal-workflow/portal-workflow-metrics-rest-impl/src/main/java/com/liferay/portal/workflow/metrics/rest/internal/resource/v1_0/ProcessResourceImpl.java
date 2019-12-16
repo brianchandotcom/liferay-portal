@@ -177,7 +177,7 @@ public class ProcessResourceImpl
 	}
 
 	private BooleanQuery _createBooleanQuery(
-		boolean completed, Set<Long> processIds) {
+		boolean completed, Date dateEnd, Date dateStart, Set<Long> processIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -190,7 +190,8 @@ public class ProcessResourceImpl
 		instancesBooleanQuery.addMustNotQueryClauses(
 			_queries.term("instanceId", 0));
 		instancesBooleanQuery.addMustQueryClauses(
-			_createInstanceBooleanQuery(completed, processIds));
+			_createInstanceBooleanQuery(
+				completed, dateEnd, dateStart, processIds));
 
 		BooleanQuery slaProcessResultsBooleanQuery = _queries.booleanQuery();
 
@@ -199,7 +200,8 @@ public class ProcessResourceImpl
 		slaProcessResultsBooleanQuery.addMustNotQueryClauses(
 			_queries.term("slaDefinitionId", 0));
 		slaProcessResultsBooleanQuery.addMustQueryClauses(
-			_createSLAProcessResultsBooleanQuery(completed, processIds));
+			_createSLAProcessResultsBooleanQuery(
+				completed, dateEnd, dateStart, processIds));
 
 		return booleanQuery.addShouldQueryClauses(
 			instancesBooleanQuery, slaProcessResultsBooleanQuery);
@@ -218,10 +220,31 @@ public class ProcessResourceImpl
 		return bucketSelectorPipelineAggregation;
 	}
 
-	private BooleanQuery _createInstanceBooleanQuery(
-		boolean completed, Set<Long> processIds) {
+	private BooleanQuery _createCompletionDateBooleanQuery(
+		Date dateEnd, Date dateStart) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		return booleanQuery.addShouldQueryClauses(
+			_queries.rangeTerm(
+				"completionDate", true, true,
+				_resourceHelper.formatDate(dateStart),
+				_resourceHelper.formatDate(dateEnd)),
+			_queries.term("slaDefinitionId", 0));
+	}
+
+	private BooleanQuery _createInstanceBooleanQuery(
+		boolean completed, Date dateEnd, Date dateStart, Set<Long> processIds) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		if (completed && (dateEnd != null) && (dateStart != null)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.rangeTerm(
+					"completionDate", true, true,
+					_resourceHelper.formatDate(dateStart),
+					_resourceHelper.formatDate(dateEnd)));
+		}
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
@@ -277,7 +300,7 @@ public class ProcessResourceImpl
 	}
 
 	private BooleanQuery _createSLAProcessResultsBooleanQuery(
-		boolean completed, Set<Long> processIds) {
+		boolean completed, Date dateEnd, Date dateStart, Set<Long> processIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -290,6 +313,11 @@ public class ProcessResourceImpl
 					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 
 			booleanQuery.addMustQueryClauses(shouldBooleanQuery);
+
+			if ((dateEnd != null) && (dateStart != null)) {
+				booleanQuery.addMustQueryClauses(
+					_createCompletionDateBooleanQuery(dateEnd, dateStart));
+			}
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
@@ -352,7 +380,7 @@ public class ProcessResourceImpl
 
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
 		searchSearchRequest.setQuery(
-			_createInstanceBooleanQuery(completed, processIds));
+			_createInstanceBooleanQuery(completed, null, null, processIds));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -400,7 +428,9 @@ public class ProcessResourceImpl
 			"workflow-metrics-sla-process-results");
 
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(completed, Collections.singleton(processId)));
+			_createBooleanQuery(
+				completed, dateEnd, dateStart,
+				Collections.singleton(processId)));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -552,7 +582,8 @@ public class ProcessResourceImpl
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-sla-process-results");
 		searchSearchRequest.setQuery(
-			_createSLAProcessResultsBooleanQuery(completed, processIds));
+			_createSLAProcessResultsBooleanQuery(
+				completed, null, null, processIds));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

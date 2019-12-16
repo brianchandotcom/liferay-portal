@@ -151,9 +151,7 @@ if (Validator.isNotNull(requestParam) && !portletId.equals(rootPortletId)) {
 		String key = entry.getKey();
 
 		if (key.contains(rootPortletId) && !key.contains(portletId)) {
-			String updatedKey = key.replaceAll(rootPortletId, portletId);
-
-			((DynamicServletRequest)request).setParameterValues(updatedKey, entry.getValue());
+			((DynamicServletRequest)request).setParameterValues(StringUtil.replace(key, rootPortletId, portletId), entry.getValue());
 		}
 	}
 }

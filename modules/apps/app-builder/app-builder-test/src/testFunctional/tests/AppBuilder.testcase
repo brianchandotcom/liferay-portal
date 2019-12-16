@@ -279,28 +279,28 @@ definition {
 			isCreatingFormView = "false",
 			isCreatingViaPlusIcon = "true");
 		AppBuilderAdmin.validateRequiredValidNameMessage();
-		AppBuilderAdmin.cancelNewCustomObject();
+		AppBuilderAdmin.cancel();
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 		AppBuilderAdmin.validateRequiredValidNameMessage();
-		AppBuilderAdmin.cancelNewCustomObject();
+		AppBuilderAdmin.cancel();
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "false");
 		AppBuilderAdmin.validateRequiredValidNameMessage();
-		AppBuilderAdmin.cancelNewCustomObject();
+		AppBuilderAdmin.cancel();
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "",
 			isCreatingFormView = "false",
 			isCreatingViaPlusIcon = "false");
 		AppBuilderAdmin.validateRequiredValidNameMessage();
-		AppBuilderAdmin.cancelNewCustomObject();
+		AppBuilderAdmin.cancel();
 	}
 
 	@description = "Change order of list from default most recent on top to oldest."
@@ -478,7 +478,7 @@ definition {
 
 		FormViewBuilder.editText(
 			fieldName = "NumberOfChildren",
-			fieldValue = "2");
+			fieldValue = "4");
 
 		FormViewBuilder.selectSelectOption(
 			fieldName = "Occupation",
@@ -486,7 +486,7 @@ definition {
 
 		FormViewBuilder.selectSelectWithMultipleOptions(
 			fieldName = "Hobbies",
-			selectOptionsList = "Multiple 1,Multiple 2,Multiple 3");
+			selectOptionsList = "Multiple 1,Multiple 2");
 
 		FormViewBuilder.editDate(
 			fieldName = "DateOfBirth",
@@ -496,12 +496,68 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Alex");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "4");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 2");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2016");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2, Multiple 3");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 2");
 
-		AppBuilderAdmin.editItem(itemName = "Alex");
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Ferguson");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Mister Ferguson");
+
+		FormViewBuilder.editText(
+			fieldName = "NumberOfChildren",
+			fieldValue = "7");
+
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Occupation",
+			selectOption = "Select 3");
+
+		FormViewBuilder.selectSelectWithMultipleOptions(
+			fieldName = "Hobbies",
+			selectOptionsList = "Multiple 3");
+
+		FormViewBuilder.editDate(
+			fieldName = "DateOfBirth",
+			fieldValue = "05/02/2000");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Ferguson");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister Ferguson");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "7");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 3");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2000");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 3");
+
+		AppBuilderAdmin.viewItem(itemName = "Ferguson");
+
+		DetailsView.validateEntry(entry = "Ferguson");
+		DetailsView.validateEntry(entry = "Mister Ferguson");
+		DetailsView.validateEntry(entry = "7");
+		DetailsView.validateEntry(entry = "Select 3");
+		DetailsView.validateEntry(entry = "05/02/2000");
+		DetailsView.validateEntry(entry = "Multiple 3");
+
+		DetailsView.previousEntry();
+
+		DetailsView.validateEntry(entry = "Alex");
+		DetailsView.validateEntry(entry = "Mister");
+		DetailsView.validateEntry(entry = "4");
+		DetailsView.validateEntry(entry = "Select 2");
+		DetailsView.validateEntry(entry = "05/02/2016");
+		DetailsView.validateEntry(entry = "Multiple 1");
+		DetailsView.validateEntry(entry = "Multiple 2");
+
+		DetailsView.deleteEntry(itemName = "Alex");
+
+		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
 			fieldName = "FullName",
@@ -509,34 +565,74 @@ definition {
 
 		FormViewBuilder.editText(
 			fieldName = "Nickname",
-			fieldValue = "Guardi");
+			fieldValue = "Mister Guardi");
 
 		FormViewBuilder.editText(
 			fieldName = "NumberOfChildren",
-			fieldValue = "1");
+			fieldValue = "6");
 
 		FormViewBuilder.selectSelectOption(
 			fieldName = "Occupation",
 			selectOption = "Select 1");
 
-		FormViewBuilder.deselectSelectWithMultipleOptions(
+		FormViewBuilder.selectSelectWithMultipleOptions(
+			fieldName = "Hobbies",
+			selectOptionsList = "Multiple 1");
+
+		FormViewBuilder.editDate(
+			fieldName = "DateOfBirth",
+			fieldValue = "05/02/1999");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.viewItem(itemName = "Ferguson");
+
+		DetailsView.nextEntry();
+
+		DetailsView.editEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Klopp");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Mister Klopp");
+
+		FormViewBuilder.editText(
+			fieldName = "NumberOfChildren",
+			fieldValue = "4");
+
+		FormViewBuilder.selectSelectOption(
+			fieldName = "Occupation",
+			selectOption = "Select 3");
+
+		FormViewBuilder.selectSelectWithMultipleOptions(
 			fieldName = "Hobbies",
 			selectOptionsList = "Multiple 2");
 
 		FormViewBuilder.editDate(
 			fieldName = "DateOfBirth",
-			fieldValue = "05/02/2014");
+			fieldValue = "05/02/1989");
 
-		AppBuilderAdmin.save();
+		AppBuilderAdmin.cancel();
+
+		DetailsView.validateEntry(entry = "Pepe");
+		DetailsView.validateEntry(entry = "Mister Guardi");
+		DetailsView.validateEntry(entry = "6");
+		DetailsView.validateEntry(entry = "Select 1");
+		DetailsView.validateEntry(entry = "05/02/1999");
+		DetailsView.validateEntry(entry = "Multiple 1");
+
+		DetailsView.backToTableView();
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Guardi");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Mister Guardi");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "6");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/2014");
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1, Multiple 3");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/1999");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1");
 
-		AppBuilderAdmin.deleteEntry(itemName = "Pepe");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"

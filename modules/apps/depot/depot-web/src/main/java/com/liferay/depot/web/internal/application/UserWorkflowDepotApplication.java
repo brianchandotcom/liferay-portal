@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.apps;
+package com.liferay.depot.web.internal.application;
 
-import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.depot.application.DepotApplication;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DepotApplication.class)
-public class AssetTagsAdminDepotApplication implements DepotApplication {
+public class UserWorkflowDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN;
+		return WorkflowPortletKeys.USER_WORKFLOW;
 	}
 
 }

@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.apps;
+package com.liferay.depot.web.internal.application;
 
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
+import com.liferay.journal.constants.JournalPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DepotApplication.class)
-public class UserWorkflowDepotApplication implements DepotApplication {
+public class JournalDepotApplication implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return WorkflowPortletKeys.USER_WORKFLOW;
+		return JournalPortletKeys.JOURNAL;
 	}
 
 }

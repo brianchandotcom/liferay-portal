@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application;
+package com.liferay.depot.web.internal.application.controller;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

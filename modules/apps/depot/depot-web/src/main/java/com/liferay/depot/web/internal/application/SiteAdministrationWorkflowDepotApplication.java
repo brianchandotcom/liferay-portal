@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.application.apps;
+package com.liferay.depot.web.internal.application;
 
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.trash.constants.TrashPortletKeys;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DepotApplication.class)
-public class TrashDepotApplication implements DepotApplication {
+public class SiteAdministrationWorkflowDepotApplication
+	implements DepotApplication {
 
 	@Override
 	public String getPortletId() {
-		return TrashPortletKeys.TRASH;
+		return WorkflowPortletKeys.SITE_ADMINISTRATION_WORKFLOW;
 	}
 
 }

@@ -203,6 +203,17 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("processId", processId));
 	}
 
+	private BooleanQuery _createInstancesBooleanQuery(
+		long companyId, boolean completed, Date createDate, long instanceId,
+		long processId) {
+
+		BooleanQuery booleanQuery = _createInstancesBooleanQuery(
+			companyId, completed, createDate, processId);
+
+		return booleanQuery.addMustQueryClauses(
+			_queries.term("instanceId", instanceId));
+	}
+
 	private BooleanQuery _createSLAProcessResultsBooleanQuery(
 		long companyId, long processId, long slaDefinitionId) {
 
@@ -234,6 +245,37 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 			return null;
 		}
+	}
+
+	private LocalDateTime _getCompletionLocalDateTime(
+		long companyId, long instanceId, long processId) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames("workflow-metrics-instances");
+		searchSearchRequest.setQuery(
+			_createInstancesBooleanQuery(
+				companyId, true, null, instanceId, processId));
+		searchSearchRequest.setSize(1);
+
+		return Stream.of(
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getDocument
+		).map(
+			document -> LocalDateTime.parse(
+				document.getString("completionDate"),
+				DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN))
+		).findFirst(
+		).orElseGet(
+			null
+		);
 	}
 
 	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
@@ -409,6 +451,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			optional -> {
 				WorkflowMetricsSLAProcessResult
 					workflowMetricsSLAProcessResult = optional.get();
+
+				workflowMetricsSLAProcessResult.setCompletionLocalDateTime(
+					_getCompletionLocalDateTime(
+						workflowMetricsSLADefinitionVersion.getCompanyId(),
+						workflowMetricsSLAProcessResult.getInstanceId(),
+						workflowMetricsSLADefinitionVersion.getProcessId()));
 
 				workflowMetricsSLAProcessResult.setWorkflowMetricsSLAStatus(
 					WorkflowMetricsSLAStatus.COMPLETED);

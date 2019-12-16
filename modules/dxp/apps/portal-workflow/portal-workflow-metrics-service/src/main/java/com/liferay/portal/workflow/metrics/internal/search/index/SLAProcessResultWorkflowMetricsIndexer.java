@@ -45,7 +45,9 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatu
 import java.sql.Timestamp;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -82,19 +84,24 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				workflowMetricsSLAProcessResult.getSLADefinitionId()));
 		document.addKeyword(
 			"companyId", workflowMetricsSLAProcessResult.getCompanyId());
+
+		if (workflowMetricsSLAProcessResult.getCompletionLocalDateTime() !=
+				null) {
+
+			document.addDateSortable(
+				"completionDate",
+				Timestamp.valueOf(
+					workflowMetricsSLAProcessResult.
+						getCompletionLocalDateTime()));
+		}
+
 		document.addKeyword("deleted", false);
 		document.addKeyword(
 			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
-
-		KaleoInstance kaleoInstance =
-			kaleoInstanceLocalService.fetchKaleoInstance(
-				workflowMetricsSLAProcessResult.getInstanceId());
-
-		if (kaleoInstance != null) {
-			document.addKeyword(
-				"instanceCompleted", kaleoInstance.isCompleted());
-		}
-
+		document.addKeyword(
+			"instanceCompleted",
+			workflowMetricsSLAProcessResult.getCompletionLocalDateTime() !=
+				null);
 		document.addKeyword(
 			"instanceId", workflowMetricsSLAProcessResult.getInstanceId());
 		document.addDateSortable(
@@ -228,6 +235,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	@Reference
 	protected WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor;
 
+	private LocalDateTime _getLocalDateTime(Date date) {
+		return LocalDateTime.ofInstant(
+			date.toInstant(), ZoneId.systemDefault());
+	}
+
 	private long _getStartNodeId(KaleoInstance kaleoInstance) {
 		try {
 			KaleoDefinitionVersion kaleoDefinitionVersion =
@@ -279,10 +291,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				Optional<WorkflowMetricsSLAProcessResult> optional =
 					workflowMetricsSLAProcessor.process(
 						workflowMetricsSLADefinitionVersion.getCompanyId(),
-						new Timestamp(
-							kaleoInstance.getCreateDate(
-							).getTime()
-						).toLocalDateTime(),
+						_getLocalDateTime(kaleoInstance.getCreateDate()),
 						kaleoInstance.getKaleoInstanceId(), LocalDateTime.now(),
 						_getStartNodeId(kaleoInstance),
 						workflowMetricsSLADefinitionVersion);
@@ -292,6 +301,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 						workflowMetricsSLAProcessResult.
 							setWorkflowMetricsSLAStatus(
 								WorkflowMetricsSLAStatus.COMPLETED);
+						workflowMetricsSLAProcessResult.
+							setCompletionLocalDateTime(
+								_getLocalDateTime(
+									kaleoInstance.getCompletionDate()));
 
 						bulkDocumentRequest.addBulkableDocumentRequest(
 							new IndexDocumentRequest(

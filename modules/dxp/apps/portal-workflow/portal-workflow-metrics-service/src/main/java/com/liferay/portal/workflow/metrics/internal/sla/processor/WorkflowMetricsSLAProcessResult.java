@@ -30,6 +30,10 @@ public class WorkflowMetricsSLAProcessResult {
 		return _companyId;
 	}
 
+	public LocalDateTime getCompletionLocalDateTime() {
+		return _completionLocalDateTime;
+	}
+
 	public long getElapsedTime() {
 		return _elapsedTime;
 	}
@@ -74,6 +78,12 @@ public class WorkflowMetricsSLAProcessResult {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public void setCompletionLocalDateTime(
+		LocalDateTime completionLocalDateTime) {
+
+		_completionLocalDateTime = completionLocalDateTime;
 	}
 
 	public void setElapsedTime(long elapsedTime) {
@@ -123,6 +133,7 @@ public class WorkflowMetricsSLAProcessResult {
 	}
 
 	private long _companyId;
+	private LocalDateTime _completionLocalDateTime;
 	private long _elapsedTime;
 	private long _instanceId;
 	private LocalDateTime _lastCheckLocalDateTime;

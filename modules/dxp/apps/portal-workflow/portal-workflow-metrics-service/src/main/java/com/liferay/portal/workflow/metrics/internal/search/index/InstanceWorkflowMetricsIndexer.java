@@ -42,6 +42,8 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
+import java.text.ParseException;
+
 import java.time.Duration;
 
 import java.util.Date;
@@ -150,6 +152,17 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			_slaProcessResultWorkflowMetricsIndexer.updateDocuments(
 				documentImpl -> new DocumentImpl() {
 					{
+						try {
+							addDateSortable(
+								"completionDate",
+								document.getDate("completionDate"));
+						}
+						catch (ParseException pe) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(pe, pe);
+							}
+						}
+
 						addKeyword("instanceCompleted", true);
 						addKeyword(
 							"status", WorkflowMetricsSLAStatus.EXPIRED.name());

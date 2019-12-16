@@ -48,46 +48,36 @@ const buildInitialState = (filterKeys, filters, prefixKeys) => {
 	return initialState;
 };
 
-const reducer = (state, {filterKey, selectedItems}) => {
+const reducer = (state = {}, {filterKey, selectedItems}) => {
 	return {
 		...state,
 		[filterKey]: selectedItems
 	};
 };
 
-const useFilter = (filterKeys, prefixKeys = ['']) => {
-	const {filters} = useRouterParams();
+const useFilter = (filterKeys = [], prefixKeys = ['']) => {
+	const {filters: filterValues} = useRouterParams();
 	const {keys, titles} = useFiltersConstants(filterKeys);
 
 	const initialState = useMemo(
-		() => buildInitialState(keys, filters, prefixKeys),
+		() => buildInitialState(keys, filterValues, prefixKeys),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
 
 	const [filterState, dispatch] = useReducer(reducer, initialState);
 
-	const filterValues = {};
-
-	Object.keys(filterState).forEach(filterKey => {
-		if (filterState[filterKey]) {
-			filterValues[filterKey] = filterState[filterKey].map(
-				item => item.key
-			);
-		}
-	});
-
 	const filterResults = useMemo(
 		() => getFilterResults(keys, titles, filterState),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[filterValues]
+		[filterState, filterValues]
 	);
 
 	const selectedFilters = useMemo(() => getSelectedItems(filterResults), [
 		filterResults
 	]);
 
-	return {dispatch, filterValues, selectedFilters};
+	return {dispatch, filterState, filterValues, selectedFilters};
 };
 
 export {useFilter};

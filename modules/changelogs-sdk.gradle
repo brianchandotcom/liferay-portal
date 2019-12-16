@@ -1,3 +1,4 @@
+import org.gradle.util.GUtil
 import org.gradle.util.VersionNumber
 
 buildscript {
@@ -25,6 +26,9 @@ buildChangelogs {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
 		String[] changelogPropertiesFileContent = changelogPropertiesFile
+		changelogPropertiesFileContent = changelogPropertiesFileContent.reverse()
+
+		String changelog = ""
 
 		String version = ""
 		String rangeStart = ""
@@ -38,13 +42,13 @@ buildChangelogs {
 
 			if (matcher.find()) {
 				version = matcher.group(1)
-				rangeEnd = matcher.group(2)
+				rangeStart = matcher.group(2)
 			}
 
 			matcher = line2 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
 
 			if (matcher.find()) {
-				rangeStart = matcher.group(2)
+				rangeEnd = matcher.group(2)
 			}
 
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
@@ -63,8 +67,6 @@ buildChangelogs {
 
 			String ticket = ""
 
-			String changelog = ""
-
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
@@ -80,17 +82,37 @@ buildChangelogs {
 					String dependencyName = matcher.group(1)
 					String dependencyVersion = matcher.group(2)
 
-					changelog += """\
+					changelog = """\
 						|
 						|### Changed
-						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
+						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin() + changelog
 				}
 			}
 
-			changelog = "\n## ${version} - 1970-01-01\n" + changelog
-
-			logger.lifecycle changelog
+			changelog = "\n\n## ${version} - 1970-01-01\n" + changelog
 		}
+
+		def getBundleNameSymbolicName = {
+			dir ->
+
+			def properties = GUtil.loadProperties(new File(dir + "/bnd.bnd"))
+
+			[properties["Bundle-Name"], properties["Bundle-SymbolicName"]]
+		}
+
+		String pluginsName =""
+		if (projectName == "gradle-plugins") {
+			pluginsName = projectName
+		}
+		else {
+			pluginsName = "gradle-plugins" + projectName
+		}
+
+		def (pluginFullName, pluginSymbolicName) = getBundleNameSymbolicName("sdk/${pluginsName}")
+
+		changelog = "# ${pluginFullName} Change Log" + changelog
+
+		logger.lifecycle changelog
 
 		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName
 	}

@@ -170,6 +170,22 @@ export default function fragmentEntryLinksReducer(state, action) {
 				};
 			}
 			break;
+		case TYPES.UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
+			{
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...nextState.fragmentEntryLinks[
+								action.fragmentEntryLinkId
+							],
+							content: action.content
+						}
+					}
+				};
+			}
+			break;
 		default:
 			break;
 	}

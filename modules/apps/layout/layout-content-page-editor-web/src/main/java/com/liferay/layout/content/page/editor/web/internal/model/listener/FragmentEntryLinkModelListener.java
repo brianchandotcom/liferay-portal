@@ -221,7 +221,7 @@ public class FragmentEntryLinkModelListener
 			fragmentEntryLink.getClassPK());
 
 		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
-			ContentUtil.getFragmentEntryLinkMappedInfoDisplayObjectProviders(
+			_contentUtil.getFragmentEntryLinkMappedInfoDisplayObjectProviders(
 				fragmentEntryLink);
 
 		for (InfoDisplayObjectProvider infoDisplayObjectProvider :
@@ -262,6 +262,9 @@ public class FragmentEntryLinkModelListener
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private ContentUtil _contentUtil;
 
 	@Reference
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;

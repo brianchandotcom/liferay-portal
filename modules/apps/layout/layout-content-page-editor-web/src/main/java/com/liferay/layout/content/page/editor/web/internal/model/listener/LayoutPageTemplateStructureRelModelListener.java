@@ -65,7 +65,7 @@ public class LayoutPageTemplateStructureRelModelListener
 
 		try {
 			Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
-				ContentUtil.getLayoutMappedInfoDisplayObjectProviders(
+				_contentUtil.getLayoutMappedInfoDisplayObjectProviders(
 					layoutPageTemplateStructureRel.getData());
 
 			for (InfoDisplayObjectProvider infoDisplayObjectProvider :
@@ -108,6 +108,9 @@ public class LayoutPageTemplateStructureRelModelListener
 			throw new ModelListenerException(pe);
 		}
 	}
+
+	@Reference
+	private ContentUtil _contentUtil;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

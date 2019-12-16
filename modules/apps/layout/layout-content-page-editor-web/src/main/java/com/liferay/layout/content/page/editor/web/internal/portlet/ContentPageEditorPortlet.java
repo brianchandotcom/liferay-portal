@@ -19,6 +19,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.Content
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContext;
 import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContextProvider;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -92,6 +93,9 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 			ContentPageEditorTypeConfiguration.class.getName(),
 			_contentPageEditorTypeConfiguration);
 
+		httpServletRequest.setAttribute(
+			ContentUtil.class.getName(), _contentUtil);
+
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
 			(ContentPageEditorDisplayContext)httpServletRequest.getAttribute(
 				ContentPageEditorWebKeys.
@@ -144,6 +148,9 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 
 	private volatile ContentPageEditorTypeConfiguration
 		_contentPageEditorTypeConfiguration;
+
+	@Reference
+	private ContentUtil _contentUtil;
 
 	@Reference
 	private Http _http;

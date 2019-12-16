@@ -18,15 +18,15 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,8 +43,8 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,12 +62,16 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Víctor Galán
  */
+@Component(immediate = true, service = ContentUtil.class)
 public class ContentUtil {
 
-	public static Set<InfoDisplayObjectProvider>
+	public Set<InfoDisplayObjectProvider>
 		getFragmentEntryLinkMappedInfoDisplayObjectProviders(
 			FragmentEntryLink fragmentEntryLink) {
 
@@ -75,7 +79,7 @@ public class ContentUtil {
 			fragmentEntryLink, new HashSet<>());
 	}
 
-	public static Set<InfoDisplayObjectProvider>
+	public Set<InfoDisplayObjectProvider>
 			getLayoutMappedInfoDisplayObjectProviders(String layoutData)
 		throws PortalException {
 
@@ -83,8 +87,8 @@ public class ContentUtil {
 			layoutData, new HashSet<>());
 	}
 
-	public static Set<InfoDisplayObjectProvider>
-			getMappedInfoDisplayObjectProviders(long groupId, long plid)
+	public Set<InfoDisplayObjectProvider> getMappedInfoDisplayObjectProviders(
+			long groupId, long plid)
 		throws PortalException {
 
 		Set<Long> mappedClassPKs = new HashSet<>();
@@ -100,13 +104,13 @@ public class ContentUtil {
 		return infoDisplayObjectProviders;
 	}
 
-	public static JSONArray getPageContentsJSONArray(
+	public JSONArray getPageContentsJSONArray(
 		long plid, HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
-			LayoutClassedModelUsageLocalServiceUtil.
+			_layoutClassedModelUsageLocalService.
 				getLayoutClassedModelUsagesByPlid(plid);
 
 		try {
@@ -137,7 +141,7 @@ public class ContentUtil {
 		return mappedContentsJSONArray;
 	}
 
-	private static JSONObject _getActionsJSONObject(
+	private JSONObject _getActionsJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
 			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -174,7 +178,7 @@ public class ContentUtil {
 
 			String permissionsURL = PermissionsURLTag.doTag(
 				StringPool.BLANK, layoutClassedModelUsage.getClassName(),
-				HtmlUtil.escape(
+				_html.escape(
 					infoDisplayObjectProvider.getTitle(
 						themeDisplay.getLocale())),
 				null, String.valueOf(layoutClassedModelUsage.getClassPK()),
@@ -201,7 +205,7 @@ public class ContentUtil {
 		return jsonObject.put("viewUsagesURL", viewUsagesURL.toString());
 	}
 
-	private static Set<InfoDisplayObjectProvider>
+	private Set<InfoDisplayObjectProvider>
 		_getFragmentEntryLinkMappedInfoDisplayObjectProviders(
 			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
 
@@ -297,7 +301,7 @@ public class ContentUtil {
 		return infoDisplayObjectProviders;
 	}
 
-	private static Set<InfoDisplayObjectProvider>
+	private Set<InfoDisplayObjectProvider>
 		_getFragmentEntryLinksMappedInfoDisplayObjectProviders(
 			long groupId, long plid, Set<Long> mappedClassPKs) {
 
@@ -305,9 +309,8 @@ public class ContentUtil {
 			new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-				plid);
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				groupId, _portal.getClassNameId(Layout.class.getName()), plid);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			infoDisplayObjectProviders.addAll(
@@ -318,7 +321,7 @@ public class ContentUtil {
 		return infoDisplayObjectProviders;
 	}
 
-	private static InfoDisplayObjectProvider _getInfoDisplayObjectProvider(
+	private InfoDisplayObjectProvider _getInfoDisplayObjectProvider(
 		JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
 		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK")) {
@@ -346,7 +349,7 @@ public class ContentUtil {
 		try {
 			InfoDisplayContributor infoDisplayContributor =
 				InfoDisplayContributorTrackerUtil.getInfoDisplayContributor(
-					PortalUtil.getClassName(classNameId));
+					_portal.getClassName(classNameId));
 
 			if (infoDisplayContributor == null) {
 				return null;
@@ -367,15 +370,15 @@ public class ContentUtil {
 		return null;
 	}
 
-	private static Set<InfoDisplayObjectProvider>
+	private Set<InfoDisplayObjectProvider>
 			_getLayoutMappedInfoDisplayObjectProviders(
 				long groupId, long plid, Set<Long> mappedClassPKs)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
+			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					groupId, _portal.getClassNameId(Layout.class.getName()),
 					plid, false);
 
 		return _getLayoutMappedInfoDisplayObjectProviders(
@@ -384,7 +387,7 @@ public class ContentUtil {
 			mappedClassPKs);
 	}
 
-	private static Set<InfoDisplayObjectProvider>
+	private Set<InfoDisplayObjectProvider>
 			_getLayoutMappedInfoDisplayObjectProviders(
 				String layoutData, Set<Long> mappedClassPKs)
 		throws PortalException {
@@ -429,7 +432,7 @@ public class ContentUtil {
 		return infoDisplayObjectProviders;
 	}
 
-	private static JSONObject _getPageContentJSONObject(
+	private JSONObject _getPageContentJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -470,14 +473,14 @@ public class ContentUtil {
 			infoDisplayObjectProvider.getTitle(themeDisplay.getLocale())
 		).put(
 			"usagesCount",
-			LayoutClassedModelUsageLocalServiceUtil.
+			_layoutClassedModelUsageLocalService.
 				getUniqueLayoutClassedModelUsagesCount(
 					layoutClassedModelUsage.getClassNameId(),
 					layoutClassedModelUsage.getClassPK())
 		);
 	}
 
-	private static JSONObject _getStatusJSONObject(
+	private JSONObject _getStatusJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage)
 		throws PortalException {
 
@@ -534,5 +537,22 @@ public class ContentUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private Html _html;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

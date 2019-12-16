@@ -19,6 +19,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.Content
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContext;
 import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContextProvider;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -84,6 +85,9 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 			ContentPageEditorTypeConfiguration.class.getName(),
 			_contentPageEditorTypeConfiguration);
 
+		httpServletRequest.setAttribute(
+			ContentUtil.class.getName(), _contentUtil);
+
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
 			(ContentPageEditorDisplayContext)httpServletRequest.getAttribute(
 				ContentPageEditorWebKeys.
@@ -110,6 +114,9 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 
 	private volatile ContentPageEditorTypeConfiguration
 		_contentPageEditorTypeConfiguration;
+
+	@Reference
+	private ContentUtil _contentUtil;
 
 	@Reference
 	private Portal _portal;

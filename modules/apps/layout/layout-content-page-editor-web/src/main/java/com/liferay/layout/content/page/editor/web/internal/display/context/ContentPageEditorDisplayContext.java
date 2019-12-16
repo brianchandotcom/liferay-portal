@@ -162,6 +162,8 @@ public class ContentPageEditorDisplayContext {
 		_contentPageEditorTypeConfiguration =
 			(ContentPageEditorTypeConfiguration)httpServletRequest.getAttribute(
 				ContentPageEditorTypeConfiguration.class.getName());
+		_contentUtil = (ContentUtil)httpServletRequest.getAttribute(
+			ContentUtil.class.getName());
 		_fragmentCollectionContributorTracker =
 			(FragmentCollectionContributorTracker)
 				httpServletRequest.getAttribute(
@@ -359,7 +361,7 @@ public class ContentPageEditorDisplayContext {
 			JSONFactoryUtil.createJSONObject(_getMasterLayoutData())
 		).put(
 			"pageContents",
-			ContentUtil.getPageContentsJSONArray(
+			_contentUtil.getPageContentsJSONArray(
 				themeDisplay.getPlid(), request)
 		).put(
 			"pageType", String.valueOf(_getPageType())
@@ -1156,7 +1158,7 @@ public class ContentPageEditorDisplayContext {
 		Set<SoyContext> mappedInfoItemsSoyContexts = new HashSet<>();
 
 		Set<InfoDisplayObjectProvider> infoDisplayObjectProviders =
-			ContentUtil.getMappedInfoDisplayObjectProviders(
+			_contentUtil.getMappedInfoDisplayObjectProviders(
 				_groupId, themeDisplay.getPlid());
 
 		for (InfoDisplayObjectProvider infoDisplayObjectProvider :
@@ -1508,6 +1510,7 @@ public class ContentPageEditorDisplayContext {
 		_contentPageEditorSidebarPanels;
 	private final ContentPageEditorTypeConfiguration
 		_contentPageEditorTypeConfiguration;
+	private final ContentUtil _contentUtil;
 	private Map<String, Object> _defaultConfigurations;
 	private SoyContext _editorSoyContext;
 	private final FragmentCollectionContributorTracker

@@ -280,8 +280,9 @@ class FloatingToolbar extends Component {
 	_isAnchorElementVisible() {
 		if (this.anchorElement) {
 			const anchorElementRect = this.anchorElement.getBoundingClientRect();
+			const anchorElementY = anchorElementRect.y || anchorElementRect.top;
 			const anchorElementBottom =
-				anchorElementRect.y + anchorElementRect.height;
+				anchorElementY + anchorElementRect.height;
 
 			return (
 				anchorElementBottom >

@@ -48,7 +48,7 @@ recordCommitIDs {
 }
 
 private Map<String, String> _getCommitIDsMap(String projectName) {
-	String command = "git log --follow -p -- sdk/" + projectName + "/"
+	String command = "git log --follow --format=fuller -p -- sdk/" + projectName + "/"
 
 	Process process = command.execute()
 

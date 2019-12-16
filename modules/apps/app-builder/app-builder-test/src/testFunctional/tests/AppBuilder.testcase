@@ -1077,6 +1077,7 @@ definition {
 			formViewName = "Grid Field - Form View Title",
 			tableViewName = "Grid Field - Table View Title");
 
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 	}
 
 	@description = "Validate Table View search returns by search engine using a search term"

@@ -116,7 +116,11 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 								"id", "openGraphDescription"
 							).build()
 						).put(
-							"imgUrl", Collections.singletonMap("id", "openGraphImageURL")
+							"imgUrl", HashMapBuilder.<String, Object>put(
+								"defaultValue", layoutsAdminDisplayContext.getDefaultOpenGraphImageURL()
+							).put(
+								"id", "openGraphImageURL"
+							).build()
 						).put(
 							"title",
 							HashMapBuilder.<String, Object>put(

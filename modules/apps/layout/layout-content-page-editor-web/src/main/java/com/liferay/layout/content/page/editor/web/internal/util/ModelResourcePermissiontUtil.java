@@ -36,10 +36,14 @@ public class ModelResourcePermissiontUtil {
 		PermissionChecker permissionChecker, String className, long classPK,
 		String actionId) {
 
-		try {
-			ModelResourcePermission modelResourcePermission =
-				_modelResourcePermissionServiceTrackerMap.getService(className);
+		ModelResourcePermission modelResourcePermission =
+			_modelResourcePermissionServiceTrackerMap.getService(className);
 
+		if (modelResourcePermission == null) {
+			return false;
+		}
+
+		try {
 			if (modelResourcePermission.contains(
 					permissionChecker, classPK, actionId)) {
 

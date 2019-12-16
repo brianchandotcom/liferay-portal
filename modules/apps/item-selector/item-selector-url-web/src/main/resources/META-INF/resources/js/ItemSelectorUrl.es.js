@@ -127,7 +127,9 @@ const ItemSelectorUrl = ({eventName}) => {
 						{isLoading && <ClayLoadingIndicator />}
 						{previewError && (
 							<strong className="text-secondary">
-								{Liferay.Language.get('no-preview-available')}
+								{Liferay.Language.get(
+									'there-is-no-preview-available'
+								)}
 							</strong>
 						)}
 					</div>

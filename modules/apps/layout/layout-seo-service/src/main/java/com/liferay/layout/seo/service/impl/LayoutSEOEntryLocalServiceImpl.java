@@ -79,6 +79,7 @@ public class LayoutSEOEntryLocalServiceImpl
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
+			Map<Locale, String> openGraphImageAltMap,
 			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
@@ -91,8 +92,9 @@ public class LayoutSEOEntryLocalServiceImpl
 			return _addLayoutSEOEntry(
 				userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
 				canonicalURLMap, openGraphDescriptionEnabled,
-				openGraphDescriptionMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+				openGraphDescriptionMap, openGraphImageAltMap,
+				openGraphImageFileEntryId, openGraphTitleEnabled,
+				openGraphTitleMap, serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
@@ -111,6 +113,14 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
 		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
+
+		if (openGraphImageFileEntryId != 0) {
+			layoutSEOEntry.setOpenGraphImageAltMap(openGraphImageAltMap);
+		}
+		else {
+			layoutSEOEntry.setOpenGraphImageAltMap(Collections.emptyMap());
+		}
+
 		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
@@ -131,8 +141,9 @@ public class LayoutSEOEntryLocalServiceImpl
 		if (layoutSEOEntry == null) {
 			return _addLayoutSEOEntry(
 				userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
-				canonicalURLMap, false, Collections.emptyMap(), 0, false,
-				Collections.emptyMap(), serviceContext);
+				canonicalURLMap, false, Collections.emptyMap(),
+				Collections.emptyMap(), 0, false, Collections.emptyMap(),
+				serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
@@ -147,6 +158,7 @@ public class LayoutSEOEntryLocalServiceImpl
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
+			Map<Locale, String> openGraphImageAltMap,
 			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)
@@ -186,6 +198,11 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
 		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
+
+		if (openGraphImageFileEntryId != 0) {
+			layoutSEOEntry.setOpenGraphImageAltMap(openGraphImageAltMap);
+		}
+
 		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
 		layoutSEOEntry.setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);

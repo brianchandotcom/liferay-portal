@@ -551,7 +551,7 @@ const ManageCollaborators = ({
 			</div>
 			<div className="modal-footer">
 				<div className="modal-item-last">
-					<ClayButton.Group>
+					<ClayButton.Group spaced>
 						<ClayButton
 							disabled={loadingResponse}
 							displayType="secondary"

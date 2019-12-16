@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.exception.RestoreEntryException;
@@ -79,6 +80,11 @@ import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -719,9 +725,9 @@ public class BookmarksEntryLocalServiceImpl
 			long userId, BookmarksEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
+		if (!entry.isApproved() ||
+			Validator.isNull(serviceContext.getLayoutFullURL())) {
 
-		if (!entry.isApproved() || Validator.isNull(layoutFullURL)) {
 			return;
 		}
 
@@ -756,17 +762,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		String entryTitle = entry.getName();
 
-		StringBundler sb = new StringBundler(7);
-
-		sb.append(layoutFullURL);
-		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
-		sb.append("bookmarks");
-		sb.append(StringPool.SLASH);
-		sb.append("folder");
-		sb.append(StringPool.SLASH);
-		sb.append(entry.getFolderId());
-
-		String entryURL = sb.toString();
+		String entryURL = _getBookmarksEntryURL(entry, serviceContext);
 
 		String fromName =
 			bookmarksGroupServiceOverriddenConfiguration.emailFromName();
@@ -865,11 +861,49 @@ public class BookmarksEntryLocalServiceImpl
 		}
 	}
 
+	private String _getBookmarksEntryURL(
+			BookmarksEntry entry, ServiceContext serviceContext)
+		throws PortalException {
+
+		String layoutURL = LayoutURLUtil.getLayoutURL(
+			entry.getGroupId(), BookmarksPortletKeys.BOOKMARKS, serviceContext);
+
+		if (Validator.isNotNull(layoutURL)) {
+			return StringBundler.concat(
+				layoutURL, Portal.FRIENDLY_URL_SEPARATOR, "bookmarks/folder/",
+				entry.getFolderId());
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return StringBundler.concat(
+				serviceContext.getLayoutFullURL(),
+				Portal.FRIENDLY_URL_SEPARATOR, "bookmarks/folder/",
+				entry.getFolderId());
+		}
+
+		Group group = groupLocalService.fetchGroup(entry.getGroupId());
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, group, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
+			0, PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");
+		portletURL.setParameter(
+			"folderId", String.valueOf(entry.getFolderId()));
+
+		return portletURL.toString();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

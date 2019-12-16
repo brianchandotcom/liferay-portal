@@ -19,8 +19,8 @@ export default function addFragment({
 	config,
 	fragmentGroupId,
 	fragmentKey,
+	parentId,
 	position,
-	siblingId,
 	store
 }) {
 	return dispatch => {
@@ -30,8 +30,10 @@ export default function addFragment({
 			config,
 			fragmentGroupId,
 			fragmentKey,
+			parentId,
+			position,
 			segmentsExperienceId
-		}).then(fragmentEntryLink => {
+		}).then(({fragmentEntryLink, layoutData}) => {
 			// TODO: This is a temporary "hack"
 			//       until the backend is consitent
 			//       between both "metal+soy" and "react" versions
@@ -44,9 +46,7 @@ export default function addFragment({
 			dispatch(
 				addFragmentEntryLink({
 					fragmentEntryLink,
-					itemId: `thing-${Date.now()}`,
-					position,
-					siblingId
+					layoutData
 				})
 			);
 		});

@@ -642,22 +642,4 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		PortletEntry.publish();
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		WebContent.viewPGViaWCD(
-			webContentContent = "WC Depot WebContent",
-			webContentTitle = "Web Content Title");
-	}
-
 }

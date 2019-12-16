@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -200,6 +201,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			new MockHttpServletResponse();
 
 		FileEntry fileEntry = _addImageFileEntry(
+			"image.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
@@ -222,6 +224,100 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertMetaTag(
 			document, "og:image",
 			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+	}
+
+	@Test
+	public void testIncludeImageDefaultFromSite() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry fileEntry = _addImageFileEntry(
+			"image_site.jpg",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOSiteLocalService.updateLayoutSEOSite(
+			TestPropsValues.getUserId(), _layout.getGroupId(), true,
+			fileEntry.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(
+			document, "og:image",
+			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+	}
+
+	@Test
+	public void testIncludeImageFromLayout() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry fileEntry = _addImageFileEntry(
+			"image.jpg",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			false, Collections.emptyMap(), fileEntry.getFileEntryId(), false,
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		FileEntry fileEntrySite = _addImageFileEntry(
+			"image_site.jpg",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOSiteLocalService.updateLayoutSEOSite(
+			TestPropsValues.getUserId(), _layout.getGroupId(), true,
+			fileEntrySite.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(
+			document, "og:image",
+			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+	}
+
+	@Test
+	public void testIncludeImageNoImage() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry fileEntry = _addImageFileEntry(
+			"image_site.jpg",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOSiteLocalService.updateLayoutSEOSite(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			fileEntry.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoMetaTag(document, "og:image");
 	}
 
 	@Test
@@ -348,14 +444,15 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertNoLinkElements(document, "alternate");
 	}
 
-	private FileEntry _addImageFileEntry(ServiceContext serviceContext)
+	private FileEntry _addImageFileEntry(
+			String fileName, ServiceContext serviceContext)
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), "image.jpg"), serviceContext);
+			FileUtil.getBytes(getClass(), fileName), serviceContext);
 	}
 
 	private void _assertAlternateLinkTag(
@@ -424,6 +521,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	private void _assertNoLinkElements(Document document, String rel) {
 		Elements elements = document.select("link[rel='" + rel + "']");
+
+		Assert.assertEquals(0, elements.size());
+	}
+
+	private void _assertNoMetaTag(Document document, String property) {
+		Elements elements = document.select(
+			"meta[property='" + property + "']");
 
 		Assert.assertEquals(0, elements.size());
 	}
@@ -539,6 +643,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
+	@Inject
+	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

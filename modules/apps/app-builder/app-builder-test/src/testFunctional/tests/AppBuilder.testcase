@@ -1059,7 +1059,12 @@ definition {
 	@priority = "5"
 	test TableViewClearSearchResults {
 		property portal.acceptance = "false";
-		
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");	
+
 	}
 
 	@description = "Validate Table View search returns by search engine using a search term"

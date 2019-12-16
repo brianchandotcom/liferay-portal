@@ -50,6 +50,16 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
 
+	macro createFormViewandTableView {
+		FormViewBuilder.addFormView(
+			fieldType = "${fieldType}",
+			formViewName = "${formViewName}");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "${fieldType}",
+			tableViewName = "${tableViewName}");
+	}
+
 	macro deleteEntry {
 		Click(
 			key_itemName = "${itemName}",

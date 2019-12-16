@@ -228,6 +228,13 @@ export default function layoutDataReducer(state, action) {
 			};
 			break;
 
+		case TYPES.UPDATE_LAYOUT_DATA:
+			nextState = {
+				...state,
+				layoutData: action.layoutData
+			};
+			break;
+
 		case TYPES.ADD_FRAGMENT_ENTRY_LINK:
 			nextState = {
 				...state,

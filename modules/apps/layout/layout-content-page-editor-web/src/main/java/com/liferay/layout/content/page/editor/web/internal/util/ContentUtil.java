@@ -101,7 +101,7 @@ public class ContentUtil {
 	}
 
 	public static JSONArray getPageContentsJSONArray(
-		long plid, String backURL, HttpServletRequest httpServletRequest) {
+		long plid, HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -124,7 +124,7 @@ public class ContentUtil {
 
 				mappedContentsJSONArray.put(
 					_getPageContentJSONObject(
-						layoutClassedModelUsage, backURL, httpServletRequest));
+						layoutClassedModelUsage, httpServletRequest));
 
 				layoutClassedModelUsageIds.add(
 					layoutClassedModelUsage.getLayoutClassedModelUsageId());
@@ -139,8 +139,7 @@ public class ContentUtil {
 
 	private static JSONObject _getActionsJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
-			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest,
-			String backURL)
+			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -431,7 +430,7 @@ public class ContentUtil {
 	}
 
 	private static JSONObject _getPageContentJSONObject(
-			LayoutClassedModelUsage layoutClassedModelUsage, String backURL,
+			LayoutClassedModelUsage layoutClassedModelUsage,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -442,8 +441,7 @@ public class ContentUtil {
 		JSONObject mappedContentJSONObject = JSONUtil.put(
 			"actions",
 			_getActionsJSONObject(
-				layoutClassedModelUsage, themeDisplay, httpServletRequest,
-				backURL)
+				layoutClassedModelUsage, themeDisplay, httpServletRequest)
 		).put(
 			"className", layoutClassedModelUsage.getClassName()
 		).put(

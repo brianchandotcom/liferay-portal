@@ -378,7 +378,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
-				themeDisplay.getPlid(), themeDisplay.getURLCurrent(), request)
+				themeDisplay.getPlid(), request)
 		).put(
 			"pageType", String.valueOf(_getPageType())
 		).put(

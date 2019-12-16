@@ -17,8 +17,14 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../config/constants/fragmentConfigurationFieldTypes';
+import {ConfigContext} from '../config/index';
+import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
+import updateFragmentConfiguration from '../thunks/updateFragmentConfiguration';
+
+const SEGMENT_EXPERIENCE_ID_PREFIX = 'segments-experience-id-';
 
 const FieldSet = ({fields, label, onValueSelect}) => (
 	<>
@@ -41,12 +47,41 @@ const FieldSet = ({fields, label, onValueSelect}) => (
 );
 
 export const FragmentConfigurationPanel = ({item}) => {
-	const {fragmentEntryLinks} = useContext(StoreContext);
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+	const {fragmentEntryLinks, segmentsExperienceId} = useContext(StoreContext);
 
-	const configuration =
-		fragmentEntryLinks[item.config.fragmentEntryLinkId].configuration;
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+	const prefixedSegmentsExperienceId =
+		SEGMENT_EXPERIENCE_ID_PREFIX + segmentsExperienceId;
 
-	const onValueSelect = (name, value) => {};
+	const configuration = fragmentEntryLink.configuration;
+	const defaultConfigurationValues =
+		fragmentEntryLink.defaultConfigurationValues;
+
+	const configurationValues = {
+		...defaultConfigurationValues,
+		...fragmentEntryLink.editableValues[
+			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+		][prefixedSegmentsExperienceId]
+	};
+
+	const onValueSelect = (name, value) => {
+		const nextConfigurationValues = {
+			...configurationValues,
+			[name]: value
+		};
+
+		dispatch(
+			updateFragmentConfiguration({
+				config,
+				configurationValues: nextConfigurationValues,
+				fragmentEntryLink,
+				segmentsExperienceId: prefixedSegmentsExperienceId
+			})
+		);
+	};
 
 	return (
 		<div className="floating-toolbar-configuration-panel">

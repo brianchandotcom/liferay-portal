@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_AVATAR_ICON</td>
+	<td>//span[@class='user-avatar-link']//span[*[name()='svg'][contains(@class,'lexicon-icon-user')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_AVATAR_IMAGE</td>
 	<td>//span[@class='user-avatar-link']</td>
 	<td></td>

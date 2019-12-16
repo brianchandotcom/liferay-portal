@@ -58,7 +58,7 @@ private Map<String, String> _getCommitIDsMap(String projectName) {
 
 	String output = standardOutputByteArrayOutputStream.toString()
 
-	String lastPrepNextCommitId
+	String lastPrepNextCommitId = null
 	Map<String, String> map = [:]
 
 	int previousCommitPos = -1

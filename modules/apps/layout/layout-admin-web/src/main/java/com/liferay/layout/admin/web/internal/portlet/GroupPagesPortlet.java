@@ -31,6 +31,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -178,7 +179,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				new LayoutsAdminDisplayContext(
 					_dlurlHelper, _layoutSEOCanonicalURLProvider,
-					_layoutSEOLinkManager,
+					_layoutSEOLinkManager, _layoutSEOSiteLocalService,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 			renderRequest.setAttribute(
@@ -256,6 +257,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;
+
+	@Reference
+	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 
 	@Reference
 	private Portal _portal;

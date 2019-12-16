@@ -39,7 +39,9 @@ import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollec
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
+import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.template.LayoutConverter;
@@ -129,12 +131,14 @@ public class LayoutsAdminDisplayContext {
 		DLURLHelper dlurlHelper,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
+		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_dlurlHelper = dlurlHelper;
 		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
+		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -397,6 +401,31 @@ public class LayoutsAdminDisplayContext {
 	public String getDefaultCanonicalURL() throws PortalException {
 		return _layoutSEOCanonicalURLProvider.getDefaultCanonicalURL(
 			_selLayout, _themeDisplay);
+	}
+
+	public String getDefaultOpenGraphImageURL() {
+		try {
+			LayoutSEOSite layoutSEOSite =
+				_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
+					getGroupId());
+
+			if ((layoutSEOSite == null) ||
+				(layoutSEOSite.getOpenGraphImageFileEntryId() == 0) ||
+				!layoutSEOSite.isOpenGraphEnabled()) {
+
+				return null;
+			}
+
+			return _dlurlHelper.getImagePreviewURL(
+				DLAppLocalServiceUtil.getFileEntry(
+					layoutSEOSite.getOpenGraphImageFileEntryId()),
+				_themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return null;
+		}
 	}
 
 	public String getDeleteLayoutURL(Layout layout) throws PortalException {
@@ -2070,6 +2099,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _layoutId;
 	private final LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
+	private final LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -1084,6 +1084,10 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Upload");
 
 		AppBuilderAdmin.clearSearch();
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Grid Field - Table View Title");
 	}
 
 	@description = "Validate Table View search returns by search engine using a search term"

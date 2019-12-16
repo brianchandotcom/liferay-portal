@@ -36,14 +36,14 @@ export default function Widget({instanceable, portletId, title, used}) {
 				return;
 			}
 
-			const {position, siblingId} = result;
+			const {parentId, position} = result;
 
 			dispatch(
 				addWidget({
 					config,
+					parentId,
 					portletId,
 					position,
-					siblingId,
 					store
 				})
 			);

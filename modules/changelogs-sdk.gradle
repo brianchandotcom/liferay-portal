@@ -26,7 +26,7 @@ buildChangelogs {
 
 		String[] changelogPropertiesFileContent = changelogPropertiesFile
 
-		String bndVersion = ""
+		String version = ""
 		String rangeStart = ""
 		String rangeEnd = ""
 
@@ -37,7 +37,7 @@ buildChangelogs {
 			def matcher = line1 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
 
 			if (matcher.find()) {
-				bndVersion = matcher.group(1)
+				version = matcher.group(1)
 				rangeEnd = matcher.group(2)
 			}
 
@@ -57,18 +57,15 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-			String commitId = ""
 			String ticket = ""
-			String version = "4.4.101"
 
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				matcher = gitLogLine =~ /([a-f0-9]+):.+:([A-Z]+-\d+).*/
+				matcher = gitLogLine =~ /[a-f0-9]+:.+:([A-Z]+-\d+).*/
 
 				if (matcher.find()) {
-					commitId = matcher.group(1)
-					ticket = matcher.group(2)
+					ticket = matcher.group(1)
 				}
 
 				matcher = gitLogLine =~ /\+\s*compile group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/

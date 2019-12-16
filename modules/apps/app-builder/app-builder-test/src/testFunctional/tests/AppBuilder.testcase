@@ -323,21 +323,21 @@ definition {
 
 		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Date Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Text Field - Form View Title");
 
 		AppBuilderAdmin.filterListAscendAndDescend();
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Text Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Date Field - Form View Title");
 	}
@@ -362,21 +362,21 @@ definition {
 
 		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Date Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Text Field - Form View Title");
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Text Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Date Field - Form View Title");
 	}
@@ -403,21 +403,21 @@ definition {
 			formViewName = "Upload Field - Form View Title",
 			tableViewName = "Upload Field - Table View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Upload Field - Table View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Single Selection Field - Table View Title");
 
 		AppBuilderAdmin.filterListAscendAndDescend();
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Single Selection Field - Table View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Upload Field - Table View Title");
 	}
@@ -444,21 +444,21 @@ definition {
 			formViewName = "Numeric Field - Form View Title",
 			tableViewName = "Numeric Field - Table View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Numeric Field - Table View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Text Field - Table View Title");
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Text Field - Table View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Numeric Field - Table View Title");
 	}
@@ -948,11 +948,11 @@ definition {
 
 		AppBuilderAdmin.clearSearch();
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Date Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Text Field - Form View Title");
 	}

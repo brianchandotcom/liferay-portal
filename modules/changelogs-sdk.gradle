@@ -60,77 +60,31 @@ private Map<VersionNumber, String> _getCommitIDsMap(String projectName) {
 
 	String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-	String lastPrepNextCommitId = null
+	List<String> commits = gitLogOutput.split("\ncommit ")
+
 	VersionNumber lastVersionNumber = null
 	Map<VersionNumber, String> recordCommitIDs = [:]
 
-	int previousCommitPos = -1
-	int commitPos = -1
+	for (int i = 0; i < (commits.size() - 1); i++) {
+		String commit = commits.get(i)
+		String previousCommit = commits.get(i + 1)
 
-	while (true) {
-		commitPos = gitLogOutput.indexOf("\ncommit ", commitPos + 1)
+		String diff = commit.split("\n", 2)[1]
 
-		if (commitPos == -1) {
-			break;
-		}
+		int x = diff.indexOf("/" + projectName + "/bnd.bnd");
 
-		if (previousCommitPos == -1) {
-			previousCommitPos = commitPos
+		int y = diff.indexOf("-Bundle-Version: ", x)
 
-			continue
-		}
+		if ((x != -1) && (y != -1)) {
+			String publishedVersion = diff.substring(y + 17, diff.indexOf("\n", y))
 
-		String commitDiff = gitLogOutput.substring(previousCommitPos, commitPos)
+			VersionNumber publishedVersionNumber = VersionNumber.parse(publishedVersion)
 
-		previousCommitPos = commitPos
+			if (!recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
+				recordCommitIDs.put(publishedVersionNumber, previousCommit.split("\n", 2)[0])
 
-		int x = gitLogOutput.indexOf("\n", commitPos + 1)
-
-		String previousCommitId = gitLogOutput.substring(commitPos + 7, x)
-
-		if (commitDiff.contains("prep next")) {
-			if (!lastPrepNextCommitId) {
-				lastPrepNextCommitId = previousCommitId
+				lastVersionNumber = publishedVersionNumber
 			}
-		}
-		else {
-			lastPrepNextCommitId = null
-		}
-
-		x = commitDiff.indexOf("/" + projectName + "/bnd.bnd");
-
-		if (x == -1) {
-			continue
-		}
-
-		int y = commitDiff.indexOf("-Bundle-Version: ", x)
-
-		if (y == -1) {
-			continue;
-		}
-
-		int z = commitDiff.indexOf("\n", y);
-
-		String publishedVersion = commitDiff.substring(y + 17, z)
-
-		y = commitDiff.indexOf("+Bundle-Version: ", x)
-
-		if (y == -1) {
-			continue;
-		}
-
-		VersionNumber publishedVersionNumber = VersionNumber.parse(publishedVersion)
-
-		if (!recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
-			if (lastPrepNextCommitId) {
-				recordCommitIDs.put(publishedVersionNumber, lastPrepNextCommitId)
-			}
-			else {
-				recordCommitIDs.put(publishedVersionNumber, previousCommitId)
-			}
-
-			lastPrepNextCommitId = null
-			lastVersionNumber = publishedVersionNumber
 		}
 	}
 

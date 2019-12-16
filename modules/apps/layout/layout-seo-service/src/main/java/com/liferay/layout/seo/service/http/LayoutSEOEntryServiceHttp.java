@@ -59,6 +59,7 @@ public class LayoutSEOEntryServiceHttp {
 				java.util.Map<java.util.Locale, String> canonicalURLMap,
 				boolean openGraphDescriptionEnabled,
 				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
+				java.util.Map<java.util.Locale, String> openGraphImageAltMap,
 				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
 				java.util.Map<java.util.Locale, String> openGraphTitleMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -73,8 +74,8 @@ public class LayoutSEOEntryServiceHttp {
 				methodKey, groupId, privateLayout, layoutId,
 				canonicalURLEnabled, canonicalURLMap,
 				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageFileEntryId, openGraphTitleEnabled,
-				openGraphTitleMap, serviceContext);
+				openGraphImageAltMap, openGraphImageFileEntryId,
+				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -152,8 +153,8 @@ public class LayoutSEOEntryServiceHttp {
 	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes0 =
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
-			java.util.Map.class, boolean.class, java.util.Map.class, long.class,
-			boolean.class, java.util.Map.class,
+			java.util.Map.class, boolean.class, java.util.Map.class,
+			java.util.Map.class, long.class, boolean.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes1 =

@@ -311,6 +311,7 @@ public interface LayoutSEOEntryLocalService
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
+			Map<Locale, String> openGraphImageAltMap,
 			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
 			Map<Locale, String> openGraphTitleMap,
 			ServiceContext serviceContext)

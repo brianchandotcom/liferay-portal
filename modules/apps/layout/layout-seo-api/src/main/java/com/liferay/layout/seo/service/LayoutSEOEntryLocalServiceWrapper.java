@@ -398,6 +398,7 @@ public class LayoutSEOEntryLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> canonicalURLMap,
 			boolean openGraphDescriptionEnabled,
 			java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
+			java.util.Map<java.util.Locale, String> openGraphImageAltMap,
 			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
 			java.util.Map<java.util.Locale, String> openGraphTitleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -406,8 +407,9 @@ public class LayoutSEOEntryLocalServiceWrapper
 		return _layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
 			canonicalURLMap, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageFileEntryId,
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			openGraphDescriptionMap, openGraphImageAltMap,
+			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
+			serviceContext);
 	}
 
 	@Override

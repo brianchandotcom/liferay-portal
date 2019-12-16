@@ -11,6 +11,7 @@ buildscript {
 	}
 }
 
+File changelogFile = file("sdk/" + projectName + "/CHANGELOG.markdown")
 File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 task buildChangelogs
@@ -112,6 +113,7 @@ buildChangelogs {
 
 		changelog = "# ${pluginFullName} Change Log" + changelog
 
+		changelogFile.text = changelog
 		logger.lifecycle changelog
 
 		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName

@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.storage.v1_0;
 
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -30,10 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true,
-	service = com.liferay.data.engine.rest.internal.storage.v2_0.DataStorageTracker.class
-)
+@Component(immediate = true, service = DataStorageTracker.class)
 public class DataStorageTracker {
 
 	public DataStorage getDataStorage(String dataStorageType) {
@@ -51,7 +49,11 @@ public class DataStorageTracker {
 		String dataStorageType = MapUtil.getString(
 			properties, "data.storage.type");
 
-		_dataStorages.put(dataStorageType, dataStorage);
+		if (StringUtil.equals(
+				"1.0", MapUtil.getString(properties, "data.storage.version"))) {
+
+			_dataStorages.put(dataStorageType, dataStorage);
+		}
 	}
 
 	@Deactivate
@@ -65,7 +67,11 @@ public class DataStorageTracker {
 		String dataStorageType = MapUtil.getString(
 			properties, "data.storage.type");
 
-		_dataStorages.remove(dataStorageType);
+		if (StringUtil.equals(
+				"1.0", MapUtil.getString(properties, "data.storage.version"))) {
+
+			_dataStorages.remove(dataStorageType);
+		}
 	}
 
 	private final Map<String, DataStorage> _dataStorages = new TreeMap<>();

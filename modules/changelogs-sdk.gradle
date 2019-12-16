@@ -101,15 +101,7 @@ buildChangelogs {
 			[properties["Bundle-Name"], properties["Bundle-SymbolicName"]]
 		}
 
-		String pluginsName =""
-		if (projectName == "gradle-plugins") {
-			pluginsName = projectName
-		}
-		else {
-			pluginsName = "gradle-plugins" + projectName
-		}
-
-		def (pluginFullName, pluginSymbolicName) = getBundleNameSymbolicName("sdk/${pluginsName}")
+		def (pluginFullName, pluginSymbolicName) = getBundleNameSymbolicName("sdk/${projectName}")
 
 		changelog = "# ${pluginFullName} Change Log" + changelog
 

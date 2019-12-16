@@ -102,7 +102,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Collections.singletonMap(
 				LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()),
 				"http://example.com"),
-			true, Collections.emptyMap(), 0, false, Collections.emptyMap(),
+			true, Collections.emptyMap(), Collections.emptyMap(), 0, false,
+			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -126,8 +127,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, "customDescription"), 0,
-			false, Collections.emptyMap(),
+			Collections.singletonMap(LocaleUtil.US, "customDescription"),
+			Collections.emptyMap(), 0, false, Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -151,7 +152,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
-			false, Collections.emptyMap(), 0, true,
+			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
 			Collections.singletonMap(LocaleUtil.US, "customTitle"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -206,8 +207,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
-			false, Collections.emptyMap(), fileEntry.getFileEntryId(), false,
-			Collections.emptyMap(),
+			false, Collections.emptyMap(), Collections.emptyMap(),
+			fileEntry.getFileEntryId(), false, Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -222,6 +223,65 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertMetaTag(
 			document, "og:image",
 			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+	}
+
+	@Test
+	public void testIncludeImageAlt() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry fileEntry = _addImageFileEntry(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			false, Collections.emptyMap(),
+			Collections.singletonMap(LocaleUtil.US, "Image alternative text"),
+			fileEntry.getFileEntryId(), false, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(
+			document, "og:image",
+			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+
+		_assertMetaTag(document, "og:image:alt", "Image alternative text");
+	}
+
+	@Test
+	public void testIncludeImageAltNoImage() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			false, Collections.emptyMap(),
+			Collections.singletonMap(LocaleUtil.US, "Image alternative text"),
+			0, false, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoOpenGraphMeta(document, "og:image:alt");
 	}
 
 	@Test
@@ -424,6 +484,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	private void _assertNoLinkElements(Document document, String rel) {
 		Elements elements = document.select("link[rel='" + rel + "']");
+
+		Assert.assertEquals(0, elements.size());
+	}
+
+	private void _assertNoOpenGraphMeta(Document document, String property) {
+		Elements elements = document.select(
+			"meta[property='" + property + "']");
 
 		Assert.assertEquals(0, elements.size());
 	}

@@ -16,9 +16,11 @@ import classNames from 'classnames';
 import React, {useContext} from 'react';
 import {useDrag} from 'react-dnd';
 
-import addItem from '../../../app/actions/addItem';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../../app/config/constants/layoutDataItemDefaultConfigurations';
+import {ConfigContext} from '../../../app/config/index';
 import {DispatchContext} from '../../../app/reducers/index';
+import {StoreContext} from '../../../app/store/index';
+import addItem from '../../../app/thunks/addItem';
 import Collapse from '../../../common/components/Collapse';
 
 const layoutElements = [
@@ -35,11 +37,13 @@ const layoutElements = [
 ];
 
 const LayoutElementCard = ({label, layoutColumns, type}) => {
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
+	const store = useContext(StoreContext);
 
 	const [, drag] = useDrag({
 		end(item, monitor) {
-			const config = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[type];
+			const itemConfig = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[type];
 
 			const result = monitor.getDropResult();
 
@@ -47,18 +51,16 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 				return;
 			}
 
-			const {position, siblingId} = result;
-
-			const itemId = `layout-${Date.now()}`;
-			const itemType = item.type;
+			const {parentId, position} = result;
 
 			dispatch(
 				addItem({
 					config,
-					itemId,
-					itemType,
+					itemConfig,
+					parentId,
 					position,
-					siblingId
+					store,
+					type: item.type
 				})
 			);
 		},

@@ -57,6 +57,10 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
+			if (gitLogOutput.length() == 0) {
+				continue
+			}
+
 			String ticket = ""
 
 			String changelog = ""

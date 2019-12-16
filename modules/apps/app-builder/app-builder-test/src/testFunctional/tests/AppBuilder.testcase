@@ -1065,6 +1065,11 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");	
 
+		TableViewBuilder.createFormViewandTableView(
+			fieldType = "Upload",
+			formViewName = "Upload Field - Form View Title",
+			tableViewName = "Upload Field - Table View Title");
+
 	}
 
 	@description = "Validate Table View search returns by search engine using a search term"

@@ -1050,6 +1050,13 @@ public class WikiPageLocalServiceUtil {
 		return getService().updateWikiPage(wikiPage);
 	}
 
+	public static com.liferay.wiki.model.WikiPage updateWikiPage(
+		com.liferay.wiki.model.WikiPage wikiPage,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return getService().updateWikiPage(wikiPage, serviceContext);
+	}
+
 	public static WikiPageLocalService getService() {
 		return _serviceTracker.getService();
 	}

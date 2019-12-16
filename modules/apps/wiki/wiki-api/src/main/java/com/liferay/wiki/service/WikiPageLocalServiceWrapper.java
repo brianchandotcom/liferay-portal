@@ -1168,6 +1168,14 @@ public class WikiPageLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiPage updateWikiPage(
+		com.liferay.wiki.model.WikiPage wikiPage,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _wikiPageLocalService.updateWikiPage(wikiPage, serviceContext);
+	}
+
+	@Override
 	public WikiPageLocalService getWrappedService() {
 		return _wikiPageLocalService;
 	}

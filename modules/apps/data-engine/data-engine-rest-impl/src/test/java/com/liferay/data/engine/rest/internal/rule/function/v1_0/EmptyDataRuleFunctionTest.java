@@ -18,8 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
 import com.liferay.data.engine.rule.function.DataRuleFunction;
 import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
-
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,11 +31,9 @@ public class EmptyDataRuleFunctionTest {
 	@Test
 	public void testEmptyFieldName() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put(" ", "value");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				" ", "value"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -49,11 +46,9 @@ public class EmptyDataRuleFunctionTest {
 	@Test
 	public void testEmptyValue() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", " ");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", " "
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -66,13 +61,13 @@ public class EmptyDataRuleFunctionTest {
 	@Test
 	public void testMultipleValues() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "text1");
-					put("fieldName", "text2");
-					put("fieldName", "text3");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "text1"
+			).put(
+				"fieldName", "text2"
+			).put(
+				"fieldName", "text3"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -85,11 +80,9 @@ public class EmptyDataRuleFunctionTest {
 	@Test
 	public void testNotEmptyValue() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "text");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "text"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -102,11 +95,9 @@ public class EmptyDataRuleFunctionTest {
 	@Test
 	public void testNullValue() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", null);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", (Object)null
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(

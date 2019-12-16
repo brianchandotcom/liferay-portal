@@ -18,8 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
 import com.liferay.data.engine.rule.function.DataRuleFunction;
 import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
-
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,11 +31,9 @@ public class URLDataRuleFunctionTest {
 	@Test
 	public void testInvalidURL() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "INVALID");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "INVALID"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -49,11 +46,9 @@ public class URLDataRuleFunctionTest {
 	@Test
 	public void testNullURL() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", null);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", (Object)null
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -66,11 +61,9 @@ public class URLDataRuleFunctionTest {
 	@Test
 	public void testValidURL() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "http://www.liferay.com");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "http://www.liferay.com"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(

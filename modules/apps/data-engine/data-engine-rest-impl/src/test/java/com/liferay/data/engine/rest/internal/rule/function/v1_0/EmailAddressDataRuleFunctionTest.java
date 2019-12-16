@@ -18,8 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
 import com.liferay.data.engine.rule.function.DataRuleFunction;
 import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
-
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,11 +31,9 @@ public class EmailAddressDataRuleFunctionTest {
 	@Test
 	public void testInvalidEmailAddress1() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "TEXT");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "TEXT"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -49,11 +46,9 @@ public class EmailAddressDataRuleFunctionTest {
 	@Test
 	public void testInvalidEmailAddress2() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "TEXT,test@liferay.com");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "TEXT,test@liferay.com"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -66,11 +61,9 @@ public class EmailAddressDataRuleFunctionTest {
 	@Test
 	public void testMultipleEmailAddresses() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "test1@liferay.com,test2@liferay.com");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "test1@liferay.com,test2@liferay.com"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -83,11 +76,9 @@ public class EmailAddressDataRuleFunctionTest {
 	@Test
 	public void testNullEmailAddress() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", null);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", (Object)null
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -100,11 +91,9 @@ public class EmailAddressDataRuleFunctionTest {
 	@Test
 	public void testSingleEmailAddress() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "test@liferay.com");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "test@liferay.com"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(

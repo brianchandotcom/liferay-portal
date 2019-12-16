@@ -22,9 +22,9 @@ import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomProperti
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -133,12 +133,9 @@ public class KeyValueFieldType extends BaseFieldType {
 	private Map<String, String> _getStrings(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, String> values = new HashMap<>();
-
-		values.put(
-			"keyLabel", LanguageUtil.get(httpServletRequest, "field-name"));
-
-		return values;
+		return HashMapBuilder.put(
+			"keyLabel", LanguageUtil.get(httpServletRequest, "field-name")
+		).build();
 	}
 
 }

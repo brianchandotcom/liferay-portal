@@ -18,8 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataRecord;
 import com.liferay.data.engine.rest.internal.rule.function.v1_0.util.DataRuleFunctionTestUtil;
 import com.liferay.data.engine.rule.function.DataRuleFunction;
 import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
-
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,11 +31,9 @@ public class DecimalLiteralDataRuleFunctionTest {
 	@Test
 	public void testInvalidDecimal() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "NUMBER");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "NUMBER"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -49,11 +46,9 @@ public class DecimalLiteralDataRuleFunctionTest {
 	@Test
 	public void testNullDecimal() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", null);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", (Object)null
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -66,11 +61,9 @@ public class DecimalLiteralDataRuleFunctionTest {
 	@Test
 	public void testValidDecimal() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "1.2");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "1.2"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(
@@ -83,11 +76,9 @@ public class DecimalLiteralDataRuleFunctionTest {
 	@Test
 	public void testValidInteger() {
 		_dataRecord.setDataRecordValues(
-			new HashMap() {
-				{
-					put("fieldName", "1");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "1"
+			).build());
 
 		DataRuleFunctionResult dataRuleFunctionResult =
 			DataRuleFunctionTestUtil.validateDataRuleFunction(

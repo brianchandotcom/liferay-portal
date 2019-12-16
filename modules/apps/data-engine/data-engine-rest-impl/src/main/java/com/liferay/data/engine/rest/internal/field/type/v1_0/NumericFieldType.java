@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -184,17 +184,13 @@ public class NumericFieldType extends BaseFieldType {
 		DecimalFormatSymbols decimalFormatSymbols =
 			decimalFormat.getDecimalFormatSymbols();
 
-		return new HashMap<String, String>() {
-			{
-				put(
-					"decimalSymbol",
-					String.valueOf(decimalFormatSymbols.getDecimalSeparator()));
-				put(
-					"thousandsSeparator",
-					String.valueOf(
-						decimalFormatSymbols.getGroupingSeparator()));
-			}
-		};
+		return HashMapBuilder.put(
+			"decimalSymbol",
+			String.valueOf(decimalFormatSymbols.getDecimalSeparator())
+		).put(
+			"thousandsSeparator",
+			String.valueOf(decimalFormatSymbols.getGroupingSeparator())
+		).build();
 	}
 
 }

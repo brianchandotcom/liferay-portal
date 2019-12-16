@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,7 +51,6 @@ import java.io.Writer;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -151,17 +151,14 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		return Stream.of(
 			dataLayoutColumns
 		).map(
-			dataLayoutColumn -> new HashMap() {
-				{
-					put(
-						"fields",
-						_createDataDefinitionFieldContexts(
-							dataDefinitionFields,
-							dataLayoutColumn.getFieldNames(), fieldTypeTracker,
-							httpServletRequest, httpServletResponse));
-					put("size", dataLayoutColumn.getColumnSize());
-				}
-			}
+			dataLayoutColumn -> HashMapBuilder.<String, Object>put(
+				"fields",
+				_createDataDefinitionFieldContexts(
+					dataDefinitionFields, dataLayoutColumn.getFieldNames(),
+					fieldTypeTracker, httpServletRequest, httpServletResponse)
+			).put(
+				"size", dataLayoutColumn.getColumnSize()
+			).build()
 		).collect(
 			Collectors.toList()
 		);
@@ -176,29 +173,24 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		return Stream.of(
 			dataLayoutPages
 		).map(
-			dataLayoutPage -> new HashMap() {
-				{
-					put(
-						"description",
-						GetterUtil.getString(
-							LocalizedValueUtil.getLocalizedValue(
-								httpServletRequest.getLocale(),
-								dataLayoutPage.getDescription())));
-					put(
-						"rows",
-						_createDataLayoutRowContexts(
-							dataDefinitionFields,
-							dataLayoutPage.getDataLayoutRows(),
-							fieldTypeTracker, httpServletRequest,
-							httpServletResponse));
-					put(
-						"title",
-						GetterUtil.getString(
-							LocalizedValueUtil.getLocalizedValue(
-								httpServletRequest.getLocale(),
-								dataLayoutPage.getTitle())));
-				}
-			}
+			dataLayoutPage -> HashMapBuilder.<String, Object>put(
+				"description",
+				GetterUtil.getString(
+					LocalizedValueUtil.getLocalizedValue(
+						httpServletRequest.getLocale(),
+						dataLayoutPage.getDescription()))
+			).put(
+				"rows",
+				_createDataLayoutRowContexts(
+					dataDefinitionFields, dataLayoutPage.getDataLayoutRows(),
+					fieldTypeTracker, httpServletRequest, httpServletResponse)
+			).put(
+				"title",
+				GetterUtil.getString(
+					LocalizedValueUtil.getLocalizedValue(
+						httpServletRequest.getLocale(),
+						dataLayoutPage.getTitle()))
+			).build()
 		).collect(
 			Collectors.toList()
 		);
@@ -213,17 +205,12 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		return Stream.of(
 			dataLayoutRows
 		).map(
-			dataLayoutRow -> new HashMap() {
-				{
-					put(
-						"columns",
-						_createDataLayoutColumnContexts(
-							dataDefinitionFields,
-							dataLayoutRow.getDataLayoutColumns(),
-							fieldTypeTracker, httpServletRequest,
-							httpServletResponse));
-				}
-			}
+			dataLayoutRow -> HashMapBuilder.<String, Object>put(
+				"columns",
+				_createDataLayoutColumnContexts(
+					dataDefinitionFields, dataLayoutRow.getDataLayoutColumns(),
+					fieldTypeTracker, httpServletRequest, httpServletResponse)
+			).build()
 		).collect(
 			Collectors.toList()
 		);
@@ -309,33 +296,28 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 				_TEMPLATE_NAMESPACE,
 				_npmResolver.resolveModuleName(_MODULE_NAME),
 				dataLayoutRendererContext.getContainerId(), _getDependencies()),
-			new HashMap() {
-				{
-					put(
-						"pages",
-						_createDataLayoutPageContexts(
-							_getDataDefinitionFieldsMap(
-								dataDefinition,
-								dataLayoutRendererContext.
-									getDataRecordValues()),
-							dataLayout.getDataLayoutPages(), _fieldTypeTracker,
-							dataLayoutRendererContext.getHttpServletRequest(),
-							dataLayoutRendererContext.
-								getHttpServletResponse()));
-					put(
-						"paginationMode",
-						GetterUtil.getString(
-							dataLayout.getPaginationMode(), "single-page"));
-					put(
-						"portletNamespace",
-						dataLayoutRendererContext.getPortletNamespace());
-					put("showSubmitButton", false);
-					put(
-						"spritemap",
-						_getSpriteMap(
-							dataLayoutRendererContext.getHttpServletRequest()));
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"pages",
+				_createDataLayoutPageContexts(
+					_getDataDefinitionFieldsMap(
+						dataDefinition,
+						dataLayoutRendererContext.getDataRecordValues()),
+					dataLayout.getDataLayoutPages(), _fieldTypeTracker,
+					dataLayoutRendererContext.getHttpServletRequest(),
+					dataLayoutRendererContext.getHttpServletResponse())
+			).put(
+				"paginationMode",
+				GetterUtil.getString(
+					dataLayout.getPaginationMode(), "single-page")
+			).put(
+				"portletNamespace",
+				dataLayoutRendererContext.getPortletNamespace()
+			).put(
+				"showSubmitButton", false
+			).put(
+				"spritemap",
+				_getSpriteMap(dataLayoutRendererContext.getHttpServletRequest())
+			).build());
 
 		DynamicIncludeUtil.include(
 			dataLayoutRendererContext.getHttpServletRequest(),

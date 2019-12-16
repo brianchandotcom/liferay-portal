@@ -413,8 +413,6 @@ public class GitUtil {
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, workingDirectory, timeout, modifiedCommands);
 
-				_debugDNS(process);
-
 				break;
 			}
 			catch (IOException | TimeoutException e) {
@@ -433,6 +431,11 @@ public class GitUtil {
 				e.printStackTrace();
 
 				JenkinsResultsParserUtil.sleep(retryDelay);
+			}
+			finally {
+				if (process != null) {
+					_debugDNS(process);
+				}
 			}
 		}
 

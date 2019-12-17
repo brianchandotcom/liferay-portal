@@ -36,8 +36,11 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphImageURL`
 	);
 
-	const openGraphImageAlt = document.getElementById(
+	const openGraphImageAltField = document.getElementById(
 		`${namespace}openGraphImageAlt`
+	);
+	const openGraphImageAltFieldDefaultLocale = document.getElementById(
+		`${namespace}openGraphImageAlt_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
 
 	itemSelectorDialog.on('selectedItemChange', event => {
@@ -48,7 +51,12 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 			openGraphImageFileEntryId.value = itemValue.fileEntryId;
 			openGraphImageURL.value = itemValue.url;
-			Liferay.Util.toggleDisabled(openGraphImageAlt, false);
+
+			Liferay.Util.toggleDisabled(openGraphImageAltField, false);
+			Liferay.Util.toggleDisabled(
+				openGraphImageAltFieldDefaultLocale,
+				false
+			);
 
 			previewSeoFireChange(namespace, {
 				type: 'imgUrl',
@@ -68,7 +76,9 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 	openGraphClearImageButton.addEventListener('click', () => {
 		openGraphImageFileEntryId.value = '';
 		openGraphImageURL.value = '';
-		Liferay.Util.toggleDisabled(openGraphImageAlt, true);
+
+		Liferay.Util.toggleDisabled(openGraphImageAltField, true);
+		Liferay.Util.toggleDisabled(openGraphImageAltFieldDefaultLocale, true);
 
 		previewSeoFireChange(namespace, {
 			type: 'imgUrl',
@@ -90,7 +100,6 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		const disabled = !event.target.checked;
 
 		Liferay.Util.toggleDisabled(openGraphTitleField, disabled);
-
 		Liferay.Util.toggleDisabled(openGraphTitleFieldDefaultLocale, disabled);
 
 		previewSeoFireChange(namespace, {
@@ -114,7 +123,6 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		const disabled = !event.target.checked;
 
 		Liferay.Util.toggleDisabled(openGraphDescriptionField, disabled);
-
 		Liferay.Util.toggleDisabled(
 			openGraphDescriptionFieldDefaultLocale,
 			disabled

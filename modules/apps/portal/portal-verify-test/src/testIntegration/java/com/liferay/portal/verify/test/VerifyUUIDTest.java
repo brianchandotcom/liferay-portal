@@ -283,30 +283,10 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 			String logMessage = expectedLog.expectedLog();
 
-			ExpectedType expectedType = expectedLog.expectedType();
+			Assert.assertTrue(
+				message + " does not start " + logMessage,
+				message.startsWith(logMessage));
 
-			if (expectedType == ExpectedType.CONTAINS) {
-				Assert.assertTrue(
-					message + " does not contain " + logMessage,
-					message.contains(logMessage));
-			}
-			else if (expectedType == ExpectedType.EXACT) {
-				Assert.assertEquals(message, logMessage);
-			}
-			else if (expectedType == ExpectedType.POSTFIX) {
-				Assert.assertTrue(
-					message + " does not end " + logMessage,
-					message.endsWith(logMessage));
-			}
-			else if (expectedType == ExpectedType.PREFIX) {
-				Assert.assertTrue(
-					message + " does not start " + logMessage,
-					message.startsWith(logMessage));
-			}
-			else {
-				throw new IllegalStateException(
-					"Unknown ExpectedType" + expectedLog.expectedType(), e);
-			}
 		}
 	}
 

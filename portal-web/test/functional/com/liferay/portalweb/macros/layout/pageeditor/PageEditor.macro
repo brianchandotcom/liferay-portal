@@ -244,6 +244,8 @@ definition {
 				key_fieldLabel = "Align",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${alignment}");
+
+			Pause(2000);
 		}
 
 		if (isSet(contentAlign)) {
@@ -251,12 +253,16 @@ definition {
 				key_fieldLabel = "Content Align",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${contentAlign}");
+
+			Pause(2000);
 		}
 
 		if (isSet(borderColor)) {
 			Click(
 				key_paletteItem = "${borderColor}",
 				locator1 = "Button#PALETTE_ITEM");
+
+			Pause(2000);
 		}
 
 		if (isSet(borderRadius)) {
@@ -264,6 +270,8 @@ definition {
 				key_fieldLabel = "Border Radius",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${borderRadius}");
+
+			Pause(2000);
 		}
 
 		if (isSet(bottomSpacing)) {
@@ -271,6 +279,8 @@ definition {
 				key_fieldLabel = "Bottom Spacing",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${bottomSpacing}");
+
+			Pause(2000);
 		}
 
 		if (isSet(boxShadow)) {
@@ -278,6 +288,8 @@ definition {
 				key_fieldLabel = "Box Shadow",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${boxShadow}");
+
+			Pause(2000);
 		}
 
 		if (isSet(headingLevel)) {
@@ -285,6 +297,8 @@ definition {
 				key_fieldLabel = "Heading Level",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${headingLevel}");
+
+			Pause(2000);
 		}
 
 		if (isSet(height)) {
@@ -292,6 +306,8 @@ definition {
 				key_fieldLabel = "Height",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${height}");
+
+			Pause(2000);
 		}
 
 		if (isSet(imageSize)) {
@@ -299,6 +315,8 @@ definition {
 				key_fieldLabel = "Image Size",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${imageSize}");
+
+			Pause(2000);
 		}
 
 		if (isSet(size)) {
@@ -306,12 +324,16 @@ definition {
 				key_fieldLabel = "Size",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${size}");
+
+			Pause(2000);
 		}
 
 		if (isSet(textColor)) {
 			Click(
 				key_paletteItem = "${textColor}",
 				locator1 = "Button#PALETTE_ITEM");
+
+			Pause(2000);
 		}
 
 		if (isSet(textAlign)) {
@@ -319,6 +341,8 @@ definition {
 				key_fieldLabel = "Text Align",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${textAlign}");
+
+			Pause(2000);
 		}
 
 		if (isSet(type)) {
@@ -326,6 +350,8 @@ definition {
 				key_fieldLabel = "Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${type}");
+
+			Pause(2000);
 		}
 
 		if (isSet(verticalSpace)) {
@@ -333,6 +359,8 @@ definition {
 				key_fieldLabel = "Bottom Spacing",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${verticalSpace}");
+
+			Pause(2000);
 		}
 
 		PageEditor.waitForAutoSave();

@@ -118,6 +118,12 @@ public class LayoutSEOEntryLocalServiceImpl
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateLayoutSEOEntry(long, long, boolean, long, boolean,
+	 *             Map, boolean, Map, long,boolean, Map, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,

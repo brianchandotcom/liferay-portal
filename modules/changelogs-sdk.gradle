@@ -27,7 +27,6 @@ buildChangelogs {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
 		String[] changelogPropertiesFileContent = changelogPropertiesFile
-		changelogPropertiesFileContent = changelogPropertiesFileContent.reverse()
 
 		String changelog = ""
 
@@ -42,14 +41,14 @@ buildChangelogs {
 			def matcher = line1 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
 
 			if (matcher.find()) {
+				rangeEnd = matcher.group(2)
 				version = matcher.group(1)
-				rangeStart = matcher.group(2)
 			}
 
 			matcher = line2 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
 
 			if (matcher.find()) {
-				rangeEnd = matcher.group(2)
+				rangeStart = matcher.group(2)
 			}
 
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
@@ -68,6 +67,8 @@ buildChangelogs {
 
 			String ticket = ""
 
+			String changelogItem = "";
+
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
@@ -83,14 +84,16 @@ buildChangelogs {
 					String dependencyName = matcher.group(1)
 					String dependencyVersion = matcher.group(2)
 
-					changelog = """\
+					changelogItem = changelogItem + """\
 						|
 						|### Changed
-						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin() + changelog
+						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
 				}
 			}
 
-			changelog = "\n\n## ${version} - 1970-01-01\n" + changelog
+			changelogItem = "\n\n## ${version} - 1970-01-01\n" + changelogItem
+
+			changelog = changelog + changelogItem
 		}
 
 		def getBundleNameSymbolicName = {

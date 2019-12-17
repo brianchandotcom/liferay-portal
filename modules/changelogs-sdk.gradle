@@ -69,11 +69,11 @@ buildChangelogs {
 					ticket = matcher.group(2)
 				}
 
-				matcher = gitLogLine =~ /\+\s*compile(Only)? group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
 
 				if (matcher.find()) {
-					String dependencyName = matcher.group(2)
-					String dependencyVersion = matcher.group(3)
+					String dependencyName = matcher.group(1)
+					String dependencyVersion = matcher.group(2)
 
 					changelogItem = changelogItem + """\
 						|

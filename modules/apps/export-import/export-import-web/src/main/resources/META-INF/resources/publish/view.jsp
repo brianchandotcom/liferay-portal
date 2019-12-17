@@ -121,11 +121,6 @@ simplePublishURL.setParameter("remoteGroupId", liveGroupTypeSettings.getProperty
 simplePublishURL.setParameter("secureConnection", liveGroupTypeSettings.getProperty("secureConnection"));
 simplePublishURL.setParameter("sourceGroupId", String.valueOf(stagingGroupId));
 simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
-
-PortletURL searchURL = renderResponse.createRenderURL();
-
-searchURL.setParameter("mvcRenderCommandName", "publishLayouts");
-searchURL.setParameter("publishConfigurationButtons", "saved");
 %>
 
 <c:if test='<%= !publishConfigurationButtons.equals("template") %>'>
@@ -158,18 +153,6 @@ searchURL.setParameter("publishConfigurationButtons", "saved");
 				}
 			%>'
 		/>
-
-		<c:if test='<%= publishConfigurationButtons.equals("saved") %>'>
-			<div class="navbar-header-right">
-				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</div>
-		</c:if>
 	</div>
 </c:if>
 

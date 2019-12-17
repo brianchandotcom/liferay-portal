@@ -50,10 +50,6 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
 
-	macro deleteFromActionMenu{
-		
-	}
-
 	macro deleteEntry {
 		Click(
 			key_itemName = "${itemName}",
@@ -68,6 +64,10 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = "${key_itemName}");
+	}
+
+	macro deleteFromActionMenu{
+		
 	}
 
 	macro editCustomObjectNameAtPopover {

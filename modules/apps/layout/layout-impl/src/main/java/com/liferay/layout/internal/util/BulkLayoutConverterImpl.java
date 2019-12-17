@@ -237,19 +237,26 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		serviceContext.setScopeGroupId(layout.getGroupId());
 		serviceContext.setUserId(layout.getUserId());
 
-		_updatePortletDecorator(layout);
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		_addOrUpdateLayoutPageTemplateStructure(
-			layout, _getLayoutData(layout), serviceContext);
+			_updatePortletDecorator(layout);
 
-		layout = _layoutLocalService.updateType(
-			plid, LayoutConstants.TYPE_CONTENT);
+			_addOrUpdateLayoutPageTemplateStructure(
+				layout, _getLayoutData(layout), serviceContext);
 
-		_getOrCreateDraftLayout(layout, serviceContext);
+			layout = _layoutLocalService.updateType(
+				plid, LayoutConstants.TYPE_CONTENT);
 
-		return _layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			new Date());
+			_getOrCreateDraftLayout(layout, serviceContext);
+
+			return _layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), new Date());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private String _getDefaultPortletDecoratorId(Layout layout)

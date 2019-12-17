@@ -103,7 +103,7 @@ public class BookmarksPortletDataHandlerTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(stagingGroup.getGroupId());
 
-		BookmarksTestUtil.addEntry(folder1.getFolderId(), true, serviceContext);
+		BookmarksTestUtil.addEntry(folder1.getFolderId(), serviceContext);
 	}
 
 	@Override

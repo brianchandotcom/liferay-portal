@@ -64,7 +64,7 @@ public class BookmarksUserNotificationTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		return BookmarksTestUtil.addEntry(
-			_folder.getFolderId(), true, serviceContext);
+			_folder.getFolderId(), serviceContext);
 	}
 
 	@Override

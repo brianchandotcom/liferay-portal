@@ -98,7 +98,7 @@ public class BookmarksServiceVerifyProcessTest
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			parentFolder.getFolderId(), true, serviceContext);
+			parentFolder.getFolderId(), serviceContext);
 
 		BookmarksEntryLocalServiceUtil.moveEntryToTrash(
 			TestPropsValues.getUserId(), entry.getEntryId());
@@ -123,8 +123,7 @@ public class BookmarksServiceVerifyProcessTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		BookmarksTestUtil.addEntry(
-			parentFolder.getFolderId(), true, serviceContext);
+		BookmarksTestUtil.addEntry(parentFolder.getFolderId(), serviceContext);
 
 		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
 			TestPropsValues.getUserId(), parentFolder.getFolderId());

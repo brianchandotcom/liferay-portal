@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,64 +35,38 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
  */
 public class BookmarksTestUtil {
 
-	public static BookmarksEntry addEntry(boolean approved) throws Exception {
-		return addEntry(TestPropsValues.getGroupId(), approved);
+	public static BookmarksEntry addEntry() throws Exception {
+		return addEntry(TestPropsValues.getGroupId());
 	}
 
-	public static BookmarksEntry addEntry(long groupId, boolean approved)
-		throws Exception {
-
+	public static BookmarksEntry addEntry(long groupId) throws Exception {
 		return addEntry(
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved,
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static BookmarksEntry addEntry(
-			long folderId, boolean approved, ServiceContext serviceContext)
+			long folderId, ServiceContext serviceContext)
 		throws Exception {
 
-		return addEntry("Test Entry", folderId, approved, serviceContext);
+		return addEntry("Test Entry", folderId, serviceContext);
 	}
 
 	public static BookmarksEntry addEntry(
-			String name, long folderId, boolean approved,
-			ServiceContext serviceContext)
+			String name, long folderId, ServiceContext serviceContext)
 		throws Exception {
 
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+		String url = "http://www.liferay.com";
+		String description = "This is a test entry.";
 
-		try {
-			WorkflowThreadLocal.setEnabled(true);
+		serviceContext = (ServiceContext)serviceContext.clone();
 
-			String url = "http://www.liferay.com";
-			String description = "This is a test entry.";
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
-			serviceContext = (ServiceContext)serviceContext.clone();
-
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			BookmarksEntry entry = BookmarksEntryServiceUtil.addEntry(
-				serviceContext.getScopeGroupId(), folderId, name, url,
-				description, serviceContext);
-
-			serviceContext.setCommand(Constants.ADD);
-			serviceContext.setLayoutFullURL("http://localhost");
-
-			if (approved) {
-				entry.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-				entry = BookmarksEntryServiceUtil.updateEntry(
-					entry.getEntryId(), serviceContext.getScopeGroupId(),
-					entry.getFolderId(), entry.getName(), entry.getUrl(),
-					entry.getUrl(), serviceContext);
-			}
-
-			return entry;
-		}
-		finally {
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
+		return BookmarksEntryServiceUtil.addEntry(
+			serviceContext.getScopeGroupId(), folderId, name, url, description,
+			serviceContext);
 	}
 
 	public static BookmarksFolder addFolder(
@@ -154,8 +126,7 @@ public class BookmarksTestUtil {
 	}
 
 	public static void populateNotificationsServiceContext(
-			ServiceContext serviceContext, String command)
-		throws Exception {
+		ServiceContext serviceContext, String command) {
 
 		serviceContext.setAttribute("entryURL", "http://localhost");
 

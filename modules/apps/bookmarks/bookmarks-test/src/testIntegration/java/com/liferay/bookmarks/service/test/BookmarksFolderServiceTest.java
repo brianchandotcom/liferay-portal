@@ -108,7 +108,7 @@ public class BookmarksFolderServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			folder.getFolderId(), true, serviceContext);
+			folder.getFolderId(), serviceContext);
 
 		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
 			entry.getCompanyId(), entry.getGroupId(), entry.getFolderId(),
@@ -131,7 +131,7 @@ public class BookmarksFolderServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			folder.getFolderId(), true, serviceContext);
+			folder.getFolderId(), serviceContext);
 
 		long companyId = entry.getCompanyId();
 
@@ -169,7 +169,7 @@ public class BookmarksFolderServiceTest {
 			_group.getGroupId(), RandomTestUtil.randomString());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			folder.getFolderId(), true, serviceContext);
+			folder.getFolderId(), serviceContext);
 
 		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
 			entry.getCompanyId(), entry.getGroupId(), entry.getFolderId(),
@@ -202,12 +202,11 @@ public class BookmarksFolderServiceTest {
 
 	@Test
 	public void testSearchRange() throws Exception {
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), true);
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(_group.getGroupId());
 
-		BookmarksTestUtil.addEntry(_group.getGroupId(), true);
-		BookmarksTestUtil.addEntry(_group.getGroupId(), true);
-		BookmarksTestUtil.addEntry(_group.getGroupId(), true);
+		BookmarksTestUtil.addEntry(_group.getGroupId());
+		BookmarksTestUtil.addEntry(_group.getGroupId());
+		BookmarksTestUtil.addEntry(_group.getGroupId());
 
 		SearchContext searchContext = BookmarksTestUtil.getSearchContext(
 			_group.getCompanyId(), _group.getGroupId(), entry.getFolderId(),

@@ -69,7 +69,7 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
-		return BookmarksTestUtil.addEntry(groupId, true);
+		return BookmarksTestUtil.addEntry(groupId);
 	}
 
 	@Override
@@ -83,8 +83,7 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 		serviceContext.setModifiedDate(createdDate);
 
 		return BookmarksTestUtil.addEntry(
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, true,
-			serviceContext);
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}
 
 	@Override

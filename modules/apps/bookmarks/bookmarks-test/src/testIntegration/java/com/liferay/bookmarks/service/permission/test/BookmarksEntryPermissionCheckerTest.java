@@ -78,13 +78,13 @@ public class BookmarksEntryPermissionCheckerTest
 
 	@Override
 	protected void doSetUp() throws Exception {
-		_entry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
+		_entry = BookmarksTestUtil.addEntry(group.getGroupId());
 
 		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			group.getGroupId(), RandomTestUtil.randomString());
 
 		_subentry = BookmarksTestUtil.addEntry(
-			folder.getFolderId(), true, serviceContext);
+			folder.getFolderId(), serviceContext);
 	}
 
 	@Override

@@ -105,7 +105,7 @@ public class PortletDataContextReferencesTest {
 			_group.getGroupId(), RandomTestUtil.randomString());
 
 		_bookmarksEntry = BookmarksTestUtil.addEntry(
-			_bookmarksFolder.getFolderId(), true, _serviceContext);
+			_bookmarksFolder.getFolderId(), _serviceContext);
 	}
 
 	@Test
@@ -238,7 +238,7 @@ public class PortletDataContextReferencesTest {
 			PortletDataContext.REFERENCE_TYPE_PARENT, false);
 
 		BookmarksEntry bookmarksEntry = BookmarksTestUtil.addEntry(
-			_bookmarksFolder.getFolderId(), true, _serviceContext);
+			_bookmarksFolder.getFolderId(), _serviceContext);
 
 		Element bookmarksEntryElement2 =
 			_portletDataContext.getExportDataElement(bookmarksEntry);

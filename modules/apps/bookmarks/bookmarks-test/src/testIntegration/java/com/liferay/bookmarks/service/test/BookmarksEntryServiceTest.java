@@ -52,21 +52,19 @@ public class BookmarksEntryServiceTest {
 
 	@Test
 	public void testAddEntry() throws Exception {
-		BookmarksTestUtil.addEntry(_group.getGroupId(), true);
+		BookmarksTestUtil.addEntry(_group.getGroupId());
 	}
 
 	@Test
 	public void testDeleteEntry() throws Exception {
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), true);
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(_group.getGroupId());
 
 		BookmarksEntryServiceUtil.deleteEntry(entry.getEntryId());
 	}
 
 	@Test
 	public void testGetEntry() throws Exception {
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), true);
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(_group.getGroupId());
 
 		BookmarksEntryServiceUtil.getEntry(entry.getEntryId());
 	}

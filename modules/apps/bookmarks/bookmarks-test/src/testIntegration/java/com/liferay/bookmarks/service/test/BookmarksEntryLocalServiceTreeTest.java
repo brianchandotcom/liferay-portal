@@ -74,7 +74,7 @@ public class BookmarksEntryLocalServiceTreeTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			folderAA.getFolderId(), true, serviceContext);
+			folderAA.getFolderId(), serviceContext);
 
 		BookmarksFolderLocalServiceUtil.moveFolder(
 			folderAA.getFolderId(),
@@ -109,8 +109,7 @@ public class BookmarksEntryLocalServiceTreeTest {
 	protected List<BookmarksEntry> createTree() throws Exception {
 		List<BookmarksEntry> entries = new ArrayList<>();
 
-		BookmarksEntry entryA = BookmarksTestUtil.addEntry(
-			_group.getGroupId(), true);
+		BookmarksEntry entryA = BookmarksTestUtil.addEntry(_group.getGroupId());
 
 		entries.add(entryA);
 
@@ -121,7 +120,7 @@ public class BookmarksEntryLocalServiceTreeTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		BookmarksEntry entryAA = BookmarksTestUtil.addEntry(
-			folder.getFolderId(), true, serviceContext);
+			folder.getFolderId(), serviceContext);
 
 		entries.add(entryAA);
 

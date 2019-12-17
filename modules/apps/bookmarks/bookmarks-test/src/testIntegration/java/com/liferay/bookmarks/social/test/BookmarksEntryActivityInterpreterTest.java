@@ -58,7 +58,7 @@ public class BookmarksEntryActivityInterpreterTest
 
 	@Override
 	protected void addActivities() throws Exception {
-		_entry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
+		_entry = BookmarksTestUtil.addEntry(group.getGroupId());
 	}
 
 	@Override

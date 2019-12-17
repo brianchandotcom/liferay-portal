@@ -80,7 +80,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_bookmarksEntry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
+		_bookmarksEntry = BookmarksTestUtil.addEntry(group.getGroupId());
 
 		addAssetLink(_journalArticle, _bookmarksEntry, 1);
 	}
@@ -195,7 +195,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		BookmarksEntry bookmarksEntry = BookmarksTestUtil.addEntry(
-			stagingGroup.getGroupId(), true);
+			stagingGroup.getGroupId());
 
 		addAssetLink(article, bookmarksEntry, 1);
 

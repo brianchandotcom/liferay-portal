@@ -20,7 +20,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.test.util.BookmarksTestUtil;
-import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
+import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class BookmarksEntryStagedModelDataHandlerTest
-	extends BaseWorkflowedStagedModelDataHandlerTestCase {
+	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -83,20 +82,7 @@ public class BookmarksEntryStagedModelDataHandlerTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		return BookmarksTestUtil.addEntry(
-			folder.getFolderId(), true, serviceContext);
-	}
-
-	@Override
-	protected List<StagedModel> addWorkflowedStagedModels(Group group)
-		throws Exception {
-
-		List<StagedModel> stagedModels = new ArrayList<>();
-
-		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), true));
-		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), false));
-
-		return stagedModels;
+		return BookmarksTestUtil.addEntry(folder.getFolderId(), serviceContext);
 	}
 
 	@Override

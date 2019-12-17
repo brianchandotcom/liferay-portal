@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 
-export default function ItemSelector({label, onSelectItem, value}) {
+export default function ItemSelector({label, onItemSelect, selectedItem}) {
 	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
 
 	const openInfoItemSelector = () => {
@@ -37,7 +37,7 @@ export default function ItemSelector({label, onSelectItem, value}) {
 			if (selectedItem && selectedItem.value) {
 				const infoItem = JSON.parse(selectedItem.value);
 
-				onSelectItem({
+				onItemSelect({
 					className: infoItem.className,
 					classNameId: infoItem.classNameId,
 					classPK: infoItem.classPK,
@@ -60,7 +60,7 @@ export default function ItemSelector({label, onSelectItem, value}) {
 					readOnly
 					sizing="sm"
 					type="text"
-					value={value}
+					value={selectedItem.title}
 				/>
 
 				<ClayButton.Group>

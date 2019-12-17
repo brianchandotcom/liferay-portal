@@ -15,7 +15,7 @@
 import {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
-export const SelectField = ({field}) => (
+export const SelectField = ({field, onValueSelect, value}) => (
 	<>
 		<label htmlFor={field.name}>{field.label}</label>
 
@@ -23,8 +23,15 @@ export const SelectField = ({field}) => (
 			aria-label={field.label}
 			className="form-control-sm"
 			defaultValue={field.defaultValue}
-			id={`${field.name}`}
+			id={field.name}
+			onChange={event => {
+				onValueSelect(
+					field.name,
+					event.target.options[event.target.selectedIndex].value
+				);
+			}}
 			options={field.typeOptions.validValues}
+			value={value}
 		/>
 	</>
 );

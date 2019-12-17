@@ -17,50 +17,115 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../config/constants/fragmentConfigurationFieldTypes';
+import {ConfigContext} from '../config/index';
+import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
+import updateFragmentConfiguration from '../thunks/updateFragmentConfiguration';
 
-const FieldSet = ({fields, label}) => (
-	<>
-		{label && <p className="mb-3 sheet-subtitle">{label}</p>}
+const SEGMENT_EXPERIENCE_ID_PREFIX = 'segments-experience-id-';
 
-		{fields.map((field, index) => {
-			const FieldComponent =
-				field.type && FRAGMENT_CONFIGURATION_FIELD_TYPES[field.type];
+const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
+	return (
+		<>
+			{label && <p className="mb-3 sheet-subtitle">{label}</p>}
 
-			return (
-				<ClayForm.Group key={index}>
-					<FieldComponent field={field} />
-				</ClayForm.Group>
-			);
-		})}
-	</>
-);
+			{fields.map((field, index) => {
+				const FieldComponent =
+					field.type &&
+					FRAGMENT_CONFIGURATION_FIELD_TYPES[field.type];
+
+				const fieldValue = configurationValues[field.name];
+
+				return (
+					<ClayForm.Group key={index}>
+						<FieldComponent
+							field={field}
+							onValueSelect={onValueSelect}
+							value={fieldValue}
+						/>
+					</ClayForm.Group>
+				);
+			})}
+		</>
+	);
+};
 
 export const FragmentConfigurationPanel = ({item}) => {
-	const {fragmentEntryLinks} = useContext(StoreContext);
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+	const {fragmentEntryLinks, segmentsExperienceId} = useContext(StoreContext);
 
-	const configuration =
-		fragmentEntryLinks[item.config.fragmentEntryLinkId].configuration;
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+	const prefixedSegmentsExperienceId =
+		SEGMENT_EXPERIENCE_ID_PREFIX + segmentsExperienceId;
+
+	const configuration = fragmentEntryLink.configuration;
+	const defaultConfigurationValues =
+		fragmentEntryLink.defaultConfigurationValues;
+
+	const configurationValues = {
+		...defaultConfigurationValues,
+		...fragmentEntryLink.editableValues[
+			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+		][prefixedSegmentsExperienceId]
+	};
+
+	const onRestoreButtonClick = () => {
+		dispatch(
+			updateFragmentConfiguration({
+				config,
+				configurationValues: defaultConfigurationValues,
+				fragmentEntryLink,
+				segmentsExperienceId: prefixedSegmentsExperienceId
+			})
+		);
+	};
+
+	const onValueSelect = (name, value) => {
+		const nextConfigurationValues = {
+			...configurationValues,
+			[name]: value
+		};
+
+		dispatch(
+			updateFragmentConfiguration({
+				config,
+				configurationValues: nextConfigurationValues,
+				fragmentEntryLink,
+				segmentsExperienceId: prefixedSegmentsExperienceId
+			})
+		);
+	};
 
 	return (
 		<div className="floating-toolbar-configuration-panel">
 			{configuration.fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
+						configurationValues={configurationValues}
 						fields={fieldSet.fields}
 						key={index}
 						label={fieldSet.label}
+						onValueSelect={onValueSelect}
 					/>
 				);
 			})}
-			<RestoreButton />
+			<RestoreButton onRestoreButtonClick={onRestoreButtonClick} />
 		</div>
 	);
 };
 
-const RestoreButton = () => (
-	<ClayButton borderless className="w-100" displayType="secondary" small>
+const RestoreButton = ({onRestoreButtonClick}) => (
+	<ClayButton
+		borderless
+		className="w-100"
+		displayType="secondary"
+		onClick={onRestoreButtonClick}
+		small
+	>
 		<ClayIcon symbol="restore" />
 		<span className="ml-2">{Liferay.Language.get('restore-values')}</span>
 	</ClayButton>

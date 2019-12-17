@@ -225,6 +225,10 @@ public class ContentPageEditorDisplayContext {
 					"/content_layout/edit_fragment_entry_link_comment",
 					Constants.UPDATE)
 			).put(
+				"editFragmentEntryLinkURL",
+				getFragmentEntryActionURL(
+					"/content_layout/edit_fragment_entry_link")
+			).put(
 				"editSegmentsEntryURL",
 				editorSoyContext.get("editSegmentsEntryURL")
 			).put(
@@ -239,6 +243,9 @@ public class ContentPageEditorDisplayContext {
 				"infoItemSelectorURL", _getInfoItemSelectorURL()
 			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
+			).put(
+				"renderFragmentEntryURL",
+				editorSoyContext.get("renderFragmentEntryURL")
 			).put(
 				"sidebarPanels", editorSoyContext.get("sidebarPanels")
 			).put(

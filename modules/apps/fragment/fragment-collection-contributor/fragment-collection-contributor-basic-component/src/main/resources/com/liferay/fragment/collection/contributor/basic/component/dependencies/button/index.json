@@ -3,6 +3,84 @@
 		{
 			"fields": [
 				{
+					"name": "textField",
+					"label": "Text Field",
+					"description": "Text Field",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Placeholder"
+					},
+					"defaultValue": ""
+				},
+				{
+					"name": "itemSelectorField",
+					"label": "Asset Selector",
+					"description": "Asset Selector",
+					"type": "itemSelector"
+				},
+				{
+					"name": "hideBody",
+					"label": "Hide Body",
+					"description": "hide-body",
+					"type": "checkbox",
+					"defaultValue": false
+				},
+				{
+					"name": "numberOfFeatures",
+					"label": "Number Of Features",
+					"description": "number-of-features",
+					"type": "select",
+					"dataType": "int",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "1"
+							},
+							{
+								"value": "2"
+							},
+							{
+								"value": "3"
+							}
+						]
+					},
+					"defaultValue": "3"
+				}
+			]
+		},
+		{
+			"label": "Button",
+			"fields": [
+				{
+					"name": "buttonText",
+					"label": "Button Text",
+					"description": "button-text",
+					"type": "text",
+					"dataType": "string",
+					"defaultValue": "Go Somewhere"
+				}
+			]
+		},
+		{
+			"label": "Colors",
+			"fields": [
+				{
+					"name": "textColor",
+					"label": "Text color",
+					"type": "colorPalette",
+					"dataType": "object"
+				},
+				{
+					"name": "backgroundColor",
+					"label": "Background color",
+					"type": "colorPalette",
+					"dataType": "object"
+				}
+			]
+		},
+		{
+			"fields": [
+				{
 					"dataType": "string",
 					"defaultValue": "primary",
 					"label": "type",

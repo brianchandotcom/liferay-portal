@@ -18,10 +18,8 @@ import classNames from 'classnames';
 import React, {useState, useMemo} from 'react';
 
 import {updateLanguageId} from '../actions/index';
-import {
-	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
-} from '../config/constants/editableFragmentEntryProcessor';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {TRANSLATION_STATUS_TYPE} from '../config/constants/translationStatusType';
 
 const getEditableValues = fragmentEntryLinks =>

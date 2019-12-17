@@ -45,5 +45,42 @@ export default {
 			fragmentKey,
 			segmentsExperienceId
 		});
+	},
+
+	/**
+	 * Render the content of a fragmentEntryLink
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
+	 * @param {string} options.segmentsExperienceId Experience id
+	 */
+	renderFragmentEntryLinkContent({
+		config,
+		fragmentEntryLinkId,
+		segmentsExperienceId
+	}) {
+		const {renderFragmentEntryURL} = config;
+
+		return serviceFetch(config, renderFragmentEntryURL, {
+			fragmentEntryLinkId,
+			segmentsExperienceId
+		});
+	},
+
+	/**
+	 * Update editableValues of the fragmentEntryLink with the given fragmentEntryLinkId
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
+	 * @param {string} options.editableValues New editableValues
+	 */
+	updateEditableValues({config, editableValues, fragmentEntryLinkId}) {
+		const {editFragmentEntryLinkURL} = config;
+
+		return serviceFetch(config, editFragmentEntryLinkURL, {
+			editableValues: JSON.stringify(editableValues),
+			fragmentEntryLinkId,
+			updateClassedModel: true
+		});
 	}
 };

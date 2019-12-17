@@ -12,22 +12,17 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
-import React from 'react';
+import {UPDATE_EDITABLE_VALUES} from './types';
 
-export const TextField = ({field, onValueSelect}) => (
-	<>
-		<label htmlFor={field.name}>{field.label}</label>
-
-		<ClayInput
-			defaultValue={field.defaultValue}
-			id={field.name}
-			onChange={event => {
-				onValueSelect(field.name, event.target.value);
-			}}
-			placeholder={field.typeOptions ? field.typeOptions.placeholder : ''}
-			sizing="sm"
-			type="text"
-		/>
-	</>
-);
+export default function updateEditableValues({
+	editableValues,
+	fragmentEntryLinkId,
+	segmentsExperienceId
+}) {
+	return {
+		editableValues,
+		fragmentEntryLinkId,
+		segmentsExperienceId,
+		type: UPDATE_EDITABLE_VALUES
+	};
+}

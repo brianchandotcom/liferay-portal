@@ -959,10 +959,16 @@ definition {
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
+		
+		FormViewBuilder.addFormView(
+			fieldType = "Text Field",
+			formViewName = "My Form View 1")
 
 		AppBuilderAdmin.gotoBack();
 
 		AppBuilderAdmin.openActionMenu(itemName = "my custom object");
+
+		AppBuilderAdmin.deleteFromActionMenu(key_itemName = "");
 	}
 
 	@description = "Choose between the existing Form Views of an object when deploying an app"

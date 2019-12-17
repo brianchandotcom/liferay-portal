@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.DuplicateGoogleUserIdException;
 import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
-import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
@@ -4960,10 +4959,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Group group = groupLocalService.getUserGroup(
 			user.getCompanyId(), userId);
 
-		group.setFriendlyURL(
-			FriendlyURLNormalizerUtil.normalize(StringPool.SLASH + screenName));
+		String friendlyURL = FriendlyURLNormalizerUtil.normalize(
+			StringPool.SLASH + screenName);
 
-		groupPersistence.update(group);
+		groupLocalService.updateFriendlyURL(group.getGroupId(), friendlyURL);
 
 		return user;
 	}
@@ -5146,7 +5145,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setReminderQueryAnswer(reminderQueryAnswer);
 		}
 
-		if (!StringUtil.equalsIgnoreCase(user.getScreenName(), screenName)) {
+		boolean screenNameChanged = !StringUtil.equalsIgnoreCase(
+			user.getScreenName(), screenName);
+
+		if (screenNameChanged) {
 			user.setScreenName(screenName);
 
 			user.setDigest(StringPool.BLANK);
@@ -5244,13 +5246,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Group
 
-		Group group = groupLocalService.getUserGroup(
-			user.getCompanyId(), userId);
+		if (screenNameChanged) {
+			Group group = groupLocalService.getUserGroup(
+				user.getCompanyId(), userId);
 
-		group.setFriendlyURL(
-			FriendlyURLNormalizerUtil.normalize(StringPool.SLASH + screenName));
+			String friendlyURL = FriendlyURLNormalizerUtil.normalize(
+				StringPool.SLASH + screenName);
 
-		groupPersistence.update(group);
+			groupLocalService.updateFriendlyURL(
+				group.getGroupId(), friendlyURL);
+		}
 
 		// Groups and organizations
 
@@ -6822,18 +6827,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String friendlyURL = FriendlyURLNormalizerUtil.normalize(
 			StringPool.SLASH + screenName);
-
-		Group group = groupPersistence.fetchByC_F(companyId, friendlyURL);
-
-		if ((group != null) && (group.getClassPK() != userId)) {
-			GroupFriendlyURLException gfurle = new GroupFriendlyURLException(
-				GroupFriendlyURLException.DUPLICATE);
-
-			gfurle.setDuplicateClassPK(group.getGroupId());
-			gfurle.setDuplicateClassName(Group.class.getName());
-
-			throw gfurle;
-		}
 
 		int exceptionType = LayoutImpl.validateFriendlyURL(friendlyURL);
 

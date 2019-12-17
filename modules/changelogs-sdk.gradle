@@ -78,7 +78,7 @@ buildChangelogs {
 					changelogItem = changelogItem + """\
 						|
 						|### Changed
-						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
+						|- [${ticket}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 
 					changelogItem = changelogItem.replaceAll(/(\n(?=.{80,}).{1,80})[ \t]+(.*)/) {
 						String all, String s1, String s2 ->

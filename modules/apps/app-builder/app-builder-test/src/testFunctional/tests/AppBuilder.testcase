@@ -1127,6 +1127,11 @@ definition {
 	test TableViewSearchNoResultsFound {
 		property portal.acceptance = "false";
 
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

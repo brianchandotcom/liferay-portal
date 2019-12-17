@@ -82,6 +82,8 @@ if ((liveGroup.isStaged() && liveGroup.isStagedRemotely()) || cmd.equals(Constan
 	localPublishing = false;
 }
 
+UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
+
 PortletURL publishTemplatesURL = renderResponse.createRenderURL();
 
 publishTemplatesURL.setParameter("mvcRenderCommandName", "publishLayouts");
@@ -92,67 +94,73 @@ publishTemplatesURL.setParameter("layoutSetBranchName", layoutSetBranchName);
 publishTemplatesURL.setParameter("localPublishing", String.valueOf(localPublishing));
 publishTemplatesURL.setParameter("privateLayout", String.valueOf(privateLayout));
 publishTemplatesURL.setParameter("publishConfigurationButtons", "saved");
+
+PortletURL simplePublishRedirectURL = renderResponse.createRenderURL();
+
+simplePublishRedirectURL.setParameter("mvcRenderCommandName", "publishLayouts");
+simplePublishRedirectURL.setParameter("groupId", String.valueOf(groupId));
+simplePublishRedirectURL.setParameter("privateLayout", String.valueOf(privateLayout));
+simplePublishRedirectURL.setParameter("quickPublish", Boolean.TRUE.toString());
+
+PortletURL simplePublishURL = renderResponse.createRenderURL();
+
+simplePublishURL.setParameter("mvcRenderCommandName", "publishLayoutsSimple");
+simplePublishURL.setParameter(Constants.CMD, "localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE");
+simplePublishURL.setParameter("redirect", simplePublishRedirectURL.toString());
+simplePublishURL.setParameter("lastImportUserName", user.getFullName());
+simplePublishURL.setParameter("lastImportUserUuid", String.valueOf(user.getUserUuid()));
+simplePublishURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
+simplePublishURL.setParameter("layoutSetBranchName", layoutSetBranchName);
+simplePublishURL.setParameter("localPublishing", String.valueOf(localPublishing));
+simplePublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
+simplePublishURL.setParameter("quickPublish", Boolean.TRUE.toString());
+simplePublishURL.setParameter("remoteAddress", liveGroupTypeSettings.getProperty("remoteAddress"));
+simplePublishURL.setParameter("remotePort", liveGroupTypeSettings.getProperty("remotePort"));
+simplePublishURL.setParameter("remotePathContext", liveGroupTypeSettings.getProperty("remotePathContext"));
+simplePublishURL.setParameter("remoteGroupId", liveGroupTypeSettings.getProperty("remoteGroupId"));
+simplePublishURL.setParameter("secureConnection", liveGroupTypeSettings.getProperty("secureConnection"));
+simplePublishURL.setParameter("sourceGroupId", String.valueOf(stagingGroupId));
+simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 %>
 
 <c:if test='<%= !publishConfigurationButtons.equals("template") %>'>
-	<aui:nav-bar cssClass="collapse-basic-search navbar-collapse-absolute" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav" id="publishConfigurationButtons">
-			<aui:nav-item cssClass='<%= publishConfigurationButtons.equals("custom") ? "d-none d-sm-block" : StringPool.BLANK %>' data-value="custom" href="<%= customPublishURL.toString() %>" label="custom" selected='<%= publishConfigurationButtons.equals("custom") %>' />
+	<div class="container-fluid-1280 publish-navbar">
+		<div class="autofit-row autofit-row-center">
+			<div class="autofit-col autofit-col-expand">
+				<clay:navigation-bar
+					navigationItems='<%=
+						new JSPNavigationItemList(pageContext) {
+							{
+								add(
+									navigationItem -> {
+										navigationItem.setActive(publishConfigurationButtons.equals("custom"));
+										navigationItem.setHref(customPublishURL.toString());
+										navigationItem.setLabel(LanguageUtil.get(request, "custom"));
+									}
+								);
+								add(
+									navigationItem -> {
+										navigationItem.setActive(publishConfigurationButtons.equals("saved"));
+										navigationItem.setHref(publishTemplatesURL.toString());
+										navigationItem.setLabel(LanguageUtil.get(request, "publish-templates"));
+									}
+								);
+							}
+						}
+					%>'
+				/>
+			</div>
 
-			<aui:nav-item cssClass='<%= publishConfigurationButtons.equals("saved") ? "d-none d-sm-block" : StringPool.BLANK %>' data-value="saved" href="<%= publishTemplatesURL.toString() %>" label="publish-templates" selected='<%= publishConfigurationButtons.equals("saved") %>' />
-
-			<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:renderURL>
-
-			<%
-			UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
-			%>
-
-			<portlet:renderURL var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcRenderCommandName" value="publishLayoutsSimple" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-				<portlet:param name="redirect" value="<%= simplePublishRedirectURL %>" />
-				<portlet:param name="lastImportUserName" value="<%= user.getFullName() %>" />
-				<portlet:param name="lastImportUserUuid" value="<%= String.valueOf(user.getUserUuid()) %>" />
-				<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-				<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-				<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-				<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />
-				<portlet:param name="remoteAddress" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
-				<portlet:param name="remotePort" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
-				<portlet:param name="remotePathContext" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
-				<portlet:param name="remoteGroupId" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
-				<portlet:param name="secureConnection" value='<%= liveGroupTypeSettings.getProperty("secureConnection") %>' />
-				<portlet:param name="sourceGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
-				<portlet:param name="targetGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= simplePublishURL %>" label="switch-to-simple-publication" />
-		</aui:nav>
-
-		<c:if test='<%= publishConfigurationButtons.equals("saved") %>'>
-			<aui:nav-bar-search>
-				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-					<portlet:param name="publishConfigurationButtons" value="saved" />
-				</liferay-portlet:renderURL>
-
-				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<liferay-portlet:renderURLParams varImpl="searchURL" />
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</aui:nav-bar-search>
-		</c:if>
-	</aui:nav-bar>
+			<div class="autofit-col">
+				<clay:link
+					buttonStyle="link"
+					elementClasses="btn-sm"
+					href="<%= simplePublishURL.toString() %>"
+					label='<%= LanguageUtil.get(request, "switch-to-simple-publication") %>'
+				/>
+			</div>
+		</div>
+	</div>
 </c:if>
 
 <c:choose>

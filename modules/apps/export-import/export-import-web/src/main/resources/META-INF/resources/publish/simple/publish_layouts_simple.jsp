@@ -42,23 +42,26 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
 
 Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
+
+PortletURL advancedPublishURL = renderResponse.createRenderURL();
+
+advancedPublishURL.setParameter("mvcRenderCommandName", "publishLayouts");
+advancedPublishURL.setParameter(Constants.CMD, cmd);
+advancedPublishURL.setParameter("tabs1", privateLayout ? "private-pages" : "public-pages");
+advancedPublishURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getGroupId()));
+advancedPublishURL.setParameter("layoutSetBranchId", MapUtil.getString(parameterMap, "layoutSetBranchId"));
+advancedPublishURL.setParameter("selPlid", String.valueOf(selPlid));
+advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
-<aui:nav-bar cssClass="navbar-collapse-absolute">
-	<aui:nav cssClass="navbar-nav" id="publishConfigurationButtons">
-		<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= cmd %>" />
-			<portlet:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
-			<portlet:param name="layoutSetBranchId" value='<%= MapUtil.getString(parameterMap, "layoutSetBranchId") %>' />
-			<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= advancedPublishURL %>" label="switch-to-advanced-publication" selected="<%= false %>" />
-	</aui:nav>
-</aui:nav-bar>
+<div class="container-fluid-1280 mt-2 publish-navbar text-right">
+	<clay:link
+		buttonStyle="link"
+		elementClasses="btn-sm"
+		href="<%= advancedPublishURL.toString() %>"
+		label='<%= LanguageUtil.get(request, "switch-to-advanced-publication") %>'
+	/>
+</div>
 
 <portlet:actionURL name="editPublishConfiguration" var="confirmedActionURL">
 	<portlet:param name="mvcRenderCommandName" value="editPublishConfigurationSimple" />

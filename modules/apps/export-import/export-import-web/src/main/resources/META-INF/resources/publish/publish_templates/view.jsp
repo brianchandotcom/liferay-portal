@@ -18,6 +18,7 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
+String keywords = ParamUtil.getString(request, "keywords");
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
 boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
@@ -36,6 +37,21 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 <%
 int exportImportConfigurationType = localPublishing ? ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL : ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
+
+SearchContainer exportImportConfigurationSearchContainer = new SearchContainer(renderRequest, portletURL, null, "there-are-no-saved-publish-templates");
+
+exportImportConfigurationSearchContainer.setOrderByCol("name");
+exportImportConfigurationSearchContainer.setOrderByComparator(new ExportImportConfigurationNameComparator(true));
+exportImportConfigurationSearchContainer.setOrderByType("asc");
+
+List exportImportConfigurations = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(company.getCompanyId(), groupId, keywords, exportImportConfigurationType, exportImportConfigurationSearchContainer.getStart(), exportImportConfigurationSearchContainer.getEnd(), exportImportConfigurationSearchContainer.getOrderByComparator());
+int exportImportConfigurationsCount = ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(company.getCompanyId(), groupId, keywords, exportImportConfigurationType);
+
+exportImportConfigurationSearchContainer.setResults(exportImportConfigurations);
+exportImportConfigurationSearchContainer.setTotal(exportImportConfigurationsCount);
+
+PortletURL clearResultsURL = PortletURLUtil.clone(currentURLObj, renderResponse);
+clearResultsURL.setParameter("keywords", StringPool.BLANK);
 %>
 
 <div class="export-dialog-tree">
@@ -44,20 +60,22 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			<liferay-ui:message key="publish-templates-can-be-administered-in-the-control-menu" />
 		</div>
 
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			<portlet:param name="publishConfigurationButtons" value="saved" />
+		</liferay-portlet:renderURL>
+
+		<clay:management-toolbar
+			clearResultsURL="<%= clearResultsURL.toString() %>"
+			itemsTotal="<%= exportImportConfigurationsCount %>"
+			searchActionURL="<%= searchURL.toString() %>"
+			selectable="<%= false %>"
+		/>
+
 		<aui:form action="<%= portletURL %>">
 			<liferay-ui:search-container
-				displayTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
-				emptyResultsMessage="there-are-no-saved-publish-templates"
-				iteratorURL="<%= portletURL %>"
-				orderByCol="name"
-				orderByComparator="<%= new ExportImportConfigurationNameComparator(true) %>"
-				orderByType="asc"
-				searchTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
+				searchContainer="<%= exportImportConfigurationSearchContainer %>"
 			>
-				<liferay-ui:search-container-results>
-					<%@ include file="/export_import_configuration_search_results.jspf" %>
-				</liferay-ui:search-container-results>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.exportimport.kernel.model.ExportImportConfiguration"
 					keyProperty="exportImportConfigurationId"
@@ -78,7 +96,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 					<liferay-portlet:renderURL varImpl="rowURL">
 						<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
-						<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

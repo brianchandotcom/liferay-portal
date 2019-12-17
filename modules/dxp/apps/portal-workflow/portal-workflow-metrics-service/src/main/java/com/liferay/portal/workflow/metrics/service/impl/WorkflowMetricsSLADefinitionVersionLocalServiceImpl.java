@@ -58,10 +58,10 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceImpl
 	@Override
 	public List<WorkflowMetricsSLADefinitionVersion>
 		getWorkflowMetricsSLADefinitionVersions(
-			long companyId, Date createDate, int status) {
+			long companyId, Date createDate, Long processId, int status) {
 
-		return workflowMetricsSLADefinitionVersionFinder.findByC_WMSLAD_V(
-			companyId, createDate, status, QueryUtil.ALL_POS,
+		return workflowMetricsSLADefinitionVersionFinder.findByC_CD_P_S(
+			companyId, createDate, processId, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 	}
 

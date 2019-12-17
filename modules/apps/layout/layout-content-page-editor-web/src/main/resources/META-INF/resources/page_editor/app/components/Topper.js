@@ -20,6 +20,7 @@ import {useDrag, useDrop} from 'react-dnd';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
 import {removeItem} from '../actions/index';
+import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
@@ -36,22 +37,6 @@ import {
 const EDGE = {
 	BOTTOM: 1,
 	TOP: 0
-};
-
-const LAYOUT_DATA_TYPE_TO_SUPPORTED_PARENT_TYPE = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.row],
-	[LAYOUT_DATA_ITEM_TYPES.container]: [LAYOUT_DATA_ITEM_TYPES.root],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
-		LAYOUT_DATA_ITEM_TYPES.column,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.root,
-		LAYOUT_DATA_ITEM_TYPES.row
-	],
-	[LAYOUT_DATA_ITEM_TYPES.root]: [],
-	[LAYOUT_DATA_ITEM_TYPES.row]: [
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.root
-	]
 };
 
 const TopperListItem = React.forwardRef(
@@ -369,7 +354,5 @@ function getParentItemIdAndPositon({edge, item, items, siblingOrParentId}) {
 }
 
 function isNestingSupported(itemType, parentType) {
-	return LAYOUT_DATA_TYPE_TO_SUPPORTED_PARENT_TYPE[itemType].includes(
-		parentType
-	);
+	return LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(parentType);
 }

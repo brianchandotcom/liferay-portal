@@ -231,7 +231,12 @@ public class PortletTracker
 			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 				company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
-			portletCategory.separate(portletModel.getRootPortletId());
+			if (portletCategory == null) {
+				_log.error("Unable to find PortletCategory for " + company);
+			}
+			else {
+				portletCategory.separate(portletModel.getRootPortletId());
+			}
 		}
 
 		serviceRegistrations.removeServiceReference(serviceReference);

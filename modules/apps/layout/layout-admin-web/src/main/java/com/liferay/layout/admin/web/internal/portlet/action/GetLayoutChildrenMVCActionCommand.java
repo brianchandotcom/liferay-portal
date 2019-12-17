@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -62,7 +63,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
-				_dlurlHelper, _layoutSEOCanonicalURLProvider,
+				_dlAppService, _dlurlHelper, _layoutSEOCanonicalURLProvider,
 				_layoutSEOLinkManager, _layoutSEOSiteLocalService,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
@@ -75,6 +76,9 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private DLURLHelper _dlurlHelper;

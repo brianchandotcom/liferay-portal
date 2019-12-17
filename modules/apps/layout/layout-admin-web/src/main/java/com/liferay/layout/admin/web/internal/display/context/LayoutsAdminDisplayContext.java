@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -128,13 +129,14 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-		DLURLHelper dlurlHelper,
+		DLAppService dlAppService, DLURLHelper dlurlHelper,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
 		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
@@ -403,29 +405,22 @@ public class LayoutsAdminDisplayContext {
 			_selLayout, _themeDisplay);
 	}
 
-	public String getDefaultOpenGraphImageURL() {
-		try {
-			LayoutSEOSite layoutSEOSite =
-				_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
-					getGroupId());
+	public String getDefaultOpenGraphImageURL() throws Exception {
+		LayoutSEOSite layoutSEOSite =
+			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
+				getGroupId());
 
-			if ((layoutSEOSite == null) ||
-				(layoutSEOSite.getOpenGraphImageFileEntryId() == 0) ||
-				!layoutSEOSite.isOpenGraphEnabled()) {
-
-				return null;
-			}
-
-			return _dlurlHelper.getImagePreviewURL(
-				DLAppLocalServiceUtil.getFileEntry(
-					layoutSEOSite.getOpenGraphImageFileEntryId()),
-				_themeDisplay);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		if ((layoutSEOSite == null) ||
+			(layoutSEOSite.getOpenGraphImageFileEntryId() == 0) ||
+			!layoutSEOSite.isOpenGraphEnabled()) {
 
 			return null;
 		}
+
+		return _dlurlHelper.getImagePreviewURL(
+			_dlAppService.getFileEntry(
+				layoutSEOSite.getOpenGraphImageFileEntryId()),
+			_themeDisplay);
 	}
 
 	public String getDeleteLayoutURL(Layout layout) throws PortalException {
@@ -2086,6 +2081,7 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private String _displayStyle;
+	private final DLAppService _dlAppService;
 	private final DLURLHelper _dlurlHelper;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;

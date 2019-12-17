@@ -109,6 +109,8 @@ create table AssetEntries_AssetCategories (
 	companyId LONG not null,
 	categoryId LONG not null,
 	entryId LONG not null,
+	ctCollectionId LONG default 0 not null,
+	changeType BOOLEAN,
 	primary key (categoryId, entryId)
 );
 
@@ -116,6 +118,8 @@ create table AssetEntries_AssetTags (
 	companyId LONG not null,
 	entryId LONG not null,
 	tagId LONG not null,
+	ctCollectionId LONG default 0 not null,
+	changeType BOOLEAN,
 	primary key (entryId, tagId)
 );
 

@@ -32,7 +32,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	<liferay-ui:message key="enable-open-graph-description" />
 </p>
 
-<div class="openGraphSettings <%= openGraphSettingsDisplayContext.isOpenGraphEnabled() ? "" : "disabled" %>" id="<portlet:namespace />openGraphSettings">
+<div class="open-graph-settings <%= openGraphSettingsDisplayContext.isOpenGraphEnabled() ? "" : "disabled" %>" id="<portlet:namespace />openGraphSettings">
 	<h4 class="sheet-tertiary-title">
 		<liferay-ui:message key="open-graph-image" />
 	</h4>

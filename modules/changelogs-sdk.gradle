@@ -59,33 +59,31 @@ buildChangelogs {
 
 			String changelogItem = "";
 
-			if (gitLogOutput.length() > 0) {
+			gitLogOutput.eachLine {
+				String gitLogLine ->
 
-				gitLogOutput.eachLine {
-					String gitLogLine ->
+				matcher = gitLogLine =~ /[a-f0-9]+:(.+):([A-Z]+-\d+).*/
 
-					matcher = gitLogLine =~ /[a-f0-9]+:(.+):([A-Z]+-\d+).*/
-
-					if (matcher.find()) {
-						date = matcher.group(1)
-						ticket = matcher.group(2)
-					}
-
-					matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
-
-					if (matcher.find()) {
-						String dependencyName = matcher.group(1)
-						String dependencyVersion = matcher.group(2)
-
-						changelogItem = changelogItem + """\
-							|
-							|### Changed
-							|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
-					}
+				if (matcher.find()) {
+					date = matcher.group(1)
+					ticket = matcher.group(2)
 				}
 
-				changelogItem = "\n\n## ${version} - ${date}\n" + changelogItem
+				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
 
+				if (matcher.find()) {
+					String dependencyName = matcher.group(1)
+					String dependencyVersion = matcher.group(2)
+
+					changelogItem = changelogItem + """\
+						|
+						|### Changed
+						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
+				}
+			}
+
+			if (changelogItem.length() > 0) {
+				changelogItem = "\n\n## ${version} - ${date}\n" + changelogItem
 				changelog = changelog + changelogItem
 			}
 		}

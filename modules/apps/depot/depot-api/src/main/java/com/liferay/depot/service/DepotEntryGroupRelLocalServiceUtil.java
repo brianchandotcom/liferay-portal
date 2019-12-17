@@ -319,6 +319,13 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		return getService().updateDepotEntryGroupRel(depotEntryGroupRel);
 	}
 
+	public static com.liferay.depot.model.DepotEntryGroupRel updateSearchable(
+			long depotEntryGroupRelId, boolean searchable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateSearchable(depotEntryGroupRelId, searchable);
+	}
+
 	public static DepotEntryGroupRelLocalService getService() {
 		return _serviceTracker.getService();
 	}

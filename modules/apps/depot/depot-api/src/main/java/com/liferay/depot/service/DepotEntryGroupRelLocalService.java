@@ -268,4 +268,8 @@ public interface DepotEntryGroupRelLocalService
 	public DepotEntryGroupRel updateDepotEntryGroupRel(
 		DepotEntryGroupRel depotEntryGroupRel);
 
+	public DepotEntryGroupRel updateSearchable(
+			long depotEntryGroupRelId, boolean searchable)
+		throws PortalException;
+
 }

@@ -353,6 +353,15 @@ public class DepotEntryGroupRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.depot.model.DepotEntryGroupRel updateSearchable(
+			long depotEntryGroupRelId, boolean searchable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryGroupRelLocalService.updateSearchable(
+			depotEntryGroupRelId, searchable);
+	}
+
+	@Override
 	public DepotEntryGroupRelLocalService getWrappedService() {
 		return _depotEntryGroupRelLocalService;
 	}

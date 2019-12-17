@@ -107,7 +107,7 @@ definition {
 	@description = "This is a test for LPS-98031."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -137,7 +137,7 @@ definition {
 	@description = "This is a test for LPS-96794. Mapped Web Content will appear in the sidebar in a Page Editor's edit mode."
 	@priority = "5"
 	test MapWebContentURLToLinkFragment {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		JSONWebcontent.addWebContent(
 			content = "Test Content",

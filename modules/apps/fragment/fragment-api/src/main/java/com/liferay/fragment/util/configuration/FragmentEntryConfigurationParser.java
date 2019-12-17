@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 /**
  * @author Jürgen Kappler
  */
-public interface FragmentEntryConfigurationUtil {
+public interface FragmentEntryConfigurationParser {
 
 	public JSONObject getConfigurationDefaultValuesJSONObject(
 		String configuration);

@@ -18,7 +18,6 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -92,8 +92,7 @@ public class ViewFileEntryMVCRenderCommand
 
 			String assetDisplayPageFriendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					DLFileEntryConstants.getClassName(), fileEntryId,
-					themeDisplay);
+					FileEntry.class.getName(), fileEntryId, themeDisplay);
 
 			if (assetDisplayPageFriendlyURL != null) {
 				HttpServletResponse httpServletResponse =

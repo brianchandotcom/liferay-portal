@@ -356,19 +356,23 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		Assert.assertEquals(assetEntryId2, assetEntryPrimaryKeys[1]);
 	}
 
-	private void _addAssetEntryAssetCategoryRel(
+	private AssetEntryAssetCategoryRel _addAssetEntryAssetCategoryRel(
 		long assetEntryId, long assetCategoryId) {
 
-		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, 0);
+		return _addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, 0);
 	}
 
-	private void _addAssetEntryAssetCategoryRel(
+	private AssetEntryAssetCategoryRel _addAssetEntryAssetCategoryRel(
 		long assetEntryId, long assetCategoryId, int priority) {
 
-		_assetEntryAssetCategoryRels.add(
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
 			_assetEntryAssetCategoryRelLocalService.
 				addAssetEntryAssetCategoryRel(
-					assetEntryId, assetCategoryId, priority));
+					assetEntryId, assetCategoryId, priority);
+
+		_assetEntryAssetCategoryRels.add(assetEntryAssetCategoryRel);
+
+		return assetEntryAssetCategoryRel;
 	}
 
 	@Inject

@@ -19,10 +19,12 @@ import React, {useContext, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
-import {moveItem, removeItem} from '../actions/index';
+import {removeItem} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
-import {StoreContext} from '../store';
+import {StoreContext} from '../store/index';
+import moveItem from '../thunks/moveItem';
 import {
 	useCurrentFloatingToolbar,
 	useIsSelected,
@@ -80,6 +82,8 @@ export default function Topper({
 	const [edge, setEdge] = useState(null);
 	const containerRef = useRef(null);
 	const dispatch = useContext(DispatchContext);
+	const config = useContext(ConfigContext);
+	const store = useContext(StoreContext);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
@@ -98,10 +102,10 @@ export default function Topper({
 				return;
 			}
 
-			const {itemId, position, siblingId} = result;
+			const {itemId, parentId, position} = result;
 
-			if (itemId !== siblingId) {
-				dispatch(moveItem({itemId, position, siblingId}));
+			if (itemId !== parentId) {
+				dispatch(moveItem({config, itemId, parentId, position, store}));
 			}
 		},
 		item: {

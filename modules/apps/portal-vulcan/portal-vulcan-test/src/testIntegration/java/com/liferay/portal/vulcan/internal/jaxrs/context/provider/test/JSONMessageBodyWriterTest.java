@@ -54,6 +54,8 @@ public class JSONMessageBodyWriterTest {
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			"liferay.auth.verifier", true
 		).put(
+			"liferay.jackson", false
+		).put(
 			"liferay.oauth2", false
 		).put(
 			"osgi.jaxrs.application.base", "/test-vulcan"

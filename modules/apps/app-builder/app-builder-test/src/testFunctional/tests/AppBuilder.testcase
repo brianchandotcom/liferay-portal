@@ -1132,6 +1132,11 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
+		TableViewBuilder.createFormViewandTableView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title",
+			tableViewName = "Text Field - Table View Title");
+
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

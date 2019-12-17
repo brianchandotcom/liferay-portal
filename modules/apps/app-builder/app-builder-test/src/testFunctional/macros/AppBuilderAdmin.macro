@@ -78,7 +78,8 @@ definition {
 	}
 
 	macro deleteFromActionMenu{
-		
+		MenuItem.clickNoError(menuItem = "Delete");
+
 	}
 
 	macro editCustomObjectNameAtPopover {

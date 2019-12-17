@@ -17,6 +17,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
+import PropTypes from 'prop-types';
 import React, {useState, useRef} from 'react';
 
 import {sub} from './utils.es';
@@ -137,6 +138,10 @@ const ItemSelectorUrl = ({eventName}) => {
 			</div>
 		</>
 	);
+};
+
+ItemSelectorUrl.propTypes = {
+	eventName: PropTypes.string.isRequired
 };
 
 export default function(props) {

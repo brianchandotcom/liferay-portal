@@ -73,6 +73,17 @@ export const FragmentConfigurationPanel = ({item}) => {
 		][prefixedSegmentsExperienceId]
 	};
 
+	const onRestoreButtonClick = () => {
+		dispatch(
+			updateFragmentConfiguration({
+				config,
+				configurationValues: defaultConfigurationValues,
+				fragmentEntryLink,
+				segmentsExperienceId: prefixedSegmentsExperienceId
+			})
+		);
+	};
+
 	const onValueSelect = (name, value) => {
 		const nextConfigurationValues = {
 			...configurationValues,
@@ -102,13 +113,19 @@ export const FragmentConfigurationPanel = ({item}) => {
 					/>
 				);
 			})}
-			<RestoreButton />
+			<RestoreButton onRestoreButtonClick={onRestoreButtonClick} />
 		</div>
 	);
 };
 
-const RestoreButton = () => (
-	<ClayButton borderless className="w-100" displayType="secondary" small>
+const RestoreButton = ({onRestoreButtonClick}) => (
+	<ClayButton
+		borderless
+		className="w-100"
+		displayType="secondary"
+		onClick={onRestoreButtonClick}
+		small
+	>
 		<ClayIcon symbol="restore" />
 		<span className="ml-2">{Liferay.Language.get('restore-values')}</span>
 	</ClayButton>

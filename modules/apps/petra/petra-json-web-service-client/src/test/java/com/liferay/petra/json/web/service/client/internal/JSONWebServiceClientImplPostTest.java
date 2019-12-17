@@ -95,16 +95,6 @@ public class JSONWebServiceClientImplPostTest
 
 		jsonWebServiceClientImpl.activate(properties);
 
-		Map<String, String> params = new HashMap<String, String>();
-
-		params.put(
-			SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200");
-		params.put(
-			SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON, "true");
-		params.put("parameter1", "parameter1");
-		params.put("parameter2", "parameter2");
-		params.put("parameter3", "parameter3");
-
 		ResponseBody responseBody = jsonWebServiceClientImpl.doPutToObject(
 			ResponseBody.class, "/testPut/",
 			SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200",

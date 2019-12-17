@@ -591,9 +591,9 @@ definition {
 			else {
 				SelectFrame(locator1 = "IFrame#DIALOG");
 
-				AssertClick(
-					key_webContentTitle = "${webContentSelectWCFile}",
-					locator1 = "Link#WEB_CONTENT_ARTICLE",
+				AssertClick.assertPartialTextClickAt(
+					key_listEntry = "${webContentSelectWCFile}",
+					locator1 = "LexiconList#LIST_ENTRY",
 					value1 = "${webContentSelectWCFile}");
 
 				SelectFrame(value1 = "relative=top");
@@ -807,9 +807,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 
-			AssertClick(
-				key_webContentTitle = "${webContentSelectWCFile}",
-				locator1 = "Link#WEB_CONTENT_ARTICLE",
+			AssertClick.assertPartialTextClickAt(
+				key_listEntry = "${webContentSelectWCFile}",
+				locator1 = "LexiconList#LIST_ENTRY",
 				value1 = "${webContentSelectWCFile}");
 
 			SelectFrame(value1 = "relative=top");

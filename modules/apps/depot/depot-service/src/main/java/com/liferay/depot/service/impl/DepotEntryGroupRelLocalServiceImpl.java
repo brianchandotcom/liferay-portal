@@ -18,6 +18,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
@@ -98,6 +99,19 @@ public class DepotEntryGroupRelLocalServiceImpl
 	@Override
 	public int getSearchableDepotEntryGroupRelsCount(long groupId) {
 		return depotEntryGroupRelPersistence.countByS_TGI(true, groupId);
+	}
+
+	@Override
+	public DepotEntryGroupRel updateSearchable(
+			long depotEntryGroupRelId, boolean searchable)
+		throws PortalException {
+
+		DepotEntryGroupRel depotEntryGroupRel = getDepotEntryGroupRel(
+			depotEntryGroupRelId);
+
+		depotEntryGroupRel.setSearchable(searchable);
+
+		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
 	}
 
 }

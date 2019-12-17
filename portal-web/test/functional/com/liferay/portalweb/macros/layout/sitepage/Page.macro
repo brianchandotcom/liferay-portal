@@ -936,6 +936,14 @@ definition {
 
 		if (isSet(openGraph)) {
 			var url = StringUtil.upperCase("${url}");
+
+			if (isSet(locale)) {
+				var languageName = StringUtil.extractFirst("${locale}", "-");
+
+				var languageUpperName = StringUtil.upperCase("${languageName}");
+
+				var url = StringUtil.replace("${url}","WEB","${languageUpperName}/WEB");
+			}
 		}
 
 		AssertTextEquals(

@@ -88,7 +88,13 @@ buildChangelogs {
 			}
 
 			if (changelogItem.length() > 0) {
-				changelogItem = "\n\n## ${version} - ${date}\n\n### Changed" + changelogItem
+				changelogItem = """\
+					|
+					|
+					|## ${version} - ${date}
+					|
+					|### Changed""".stripMargin() + changelogItem
+
 				changelog = changelog + changelogItem
 			}
 		}

@@ -79,6 +79,12 @@ buildChangelogs {
 						|
 						|### Changed
 						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
+
+					changelogItem = changelogItem.replaceAll(/(\n(?=.{80,}).{1,80})[ \t]+(.*)/) {
+						String all, String s1, String s2 ->
+
+						"${s1}\n${s2}"
+					}
 				}
 			}
 
@@ -99,12 +105,6 @@ buildChangelogs {
 		def (pluginFullName, pluginSymbolicName) = getBundleNameSymbolicName("sdk/${projectName}")
 
 		changelog = "# ${pluginFullName} Change Log" + changelog
-
-		changelog = changelog.replaceAll(/(\n(?=- \[.+\]).{1,80})[ \t]+(.*)/) {
-			String all, String s1, String s2 ->
-
-			"${s1}\n${s2}"
-		}
 
 		changelogFile.text = changelog
 

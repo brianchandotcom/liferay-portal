@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import org.mule.runtime.api.util.MultiMap;
+import org.mule.runtime.core.api.util.IOUtils;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -62,7 +63,7 @@ public class LiferayOperations {
 
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = DELETEEndpointOutputTypeResolver.class)
-	public Result<InputStream, Void> delete(
+	public Result<String, Void> delete(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(DELETEEndpointTypeKeysResolver.class)
 				String endpoint,
@@ -83,15 +84,15 @@ public class LiferayOperations {
 
 		InputStream inputStream = httpEntity.getContent();
 
-		return Result.<InputStream, Void>builder(
+		return Result.<String, Void>builder(
 		).output(
-			inputStream
+			IOUtils.toString(inputStream)
 		).build();
 	}
 
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = GETEndpointOutputTypeResolver.class)
-	public Result<InputStream, Void> get(
+	public Result<String, Void> get(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint,
 			@DisplayName("Path Parameters") @NullSafe @Optional
@@ -111,16 +112,16 @@ public class LiferayOperations {
 
 		InputStream inputStream = httpEntity.getContent();
 
-		return Result.<InputStream, Void>builder(
+		return Result.<String, Void>builder(
 		).output(
-			inputStream
+			IOUtils.toString(inputStream)
 		).build();
 	}
 
 	@DisplayName("Update")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = PATCHEndpointOutputTypeResolver.class)
-	public Result<InputStream, Void> patch(
+	public Result<String, Void> patch(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Records")
@@ -141,16 +142,16 @@ public class LiferayOperations {
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
-		return Result.<InputStream, Void>builder(
+		return Result.<String, Void>builder(
 		).output(
-			httpEntity.getContent()
+			IOUtils.toString(httpEntity.getContent())
 		).build();
 	}
 
 	@DisplayName("Create")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = POSTEndpointOutputTypeResolver.class)
-	public Result<InputStream, Void> post(
+	public Result<String, Void> post(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Records")
@@ -171,9 +172,9 @@ public class LiferayOperations {
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
-		return Result.<InputStream, Void>builder(
+		return Result.<String, Void>builder(
 		).output(
-			httpEntity.getContent()
+			IOUtils.toString(httpEntity.getContent())
 		).build();
 	}
 

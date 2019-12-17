@@ -1136,6 +1136,11 @@ definition {
 			privacy = "Public Pages",
 			sitePageType = "Embedded");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
 		SitePages.addPublicPage(
 			pageName = "Panel Page",
 			sitePageType = "Panel");

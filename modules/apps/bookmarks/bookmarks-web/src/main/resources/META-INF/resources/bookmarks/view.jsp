@@ -157,6 +157,8 @@ request.setAttribute("view.jsp-bookmarksSearchContainer", bookmarksSearchContain
 BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 %>
 
+<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
+
 <portlet:actionURL name="/bookmarks/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>

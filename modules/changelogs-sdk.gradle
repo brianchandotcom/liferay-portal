@@ -130,6 +130,7 @@ recordCommits {
 
 		List<String> commits = gitLogOutput.split("\ncommit ")
 
+		String lastVersionCommitId = null
 		VersionNumber lastVersionNumber = null
 		Map<VersionNumber, String> recordCommitIDs = [:]
 
@@ -171,18 +172,21 @@ recordCommits {
 					commitId = lines[0]
 				}
 
-				recordCommitIDs.put(publishedVersionNumber, commitId)
+				if (lastVersionNumber != null) {
+					recordCommitIDs.put(lastVersionNumber, commitId + ".."  + lastVersionCommitId)
+				}
 
 				lastVersionNumber = publishedVersionNumber
+				lastVersionCommitId = commitId
 			}
 		}
 
 		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 		changelogPropertiesFile.text = recordCommitIDs.collect {
-			VersionNumber versionNumber, String commitId ->
+			VersionNumber versionNumber, String commitIds ->
 
-			"git-id[${versionNumber}]=${commitId}"
+			"${versionNumber}:${commitIds}"
 		} join "\n"
 
 		logger.lifecycle "Updated '{}'", changelogPropertiesFile

@@ -19,11 +19,19 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.search.engine.ConnectionInformation;
+import com.liferay.portal.search.engine.ConnectionInformationBuilder;
+import com.liferay.portal.search.engine.ConnectionInformationBuilderFactory;
+import com.liferay.portal.search.engine.NodeInformation;
+import com.liferay.portal.search.engine.NodeInformationBuilder;
+import com.liferay.portal.search.engine.NodeInformationBuilderFactory;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.solr7.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr7.internal.SolrSearchEngine;
 import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.lucene.util.Version;
@@ -53,28 +61,50 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 	}
 
 	@Override
+	public List<ConnectionInformation> getConnectionInformationList() {
+		List<ConnectionInformation> connectionInformationList =
+			new ArrayList<>();
+
+		ConnectionInformationBuilder connectionInformationBuilder =
+			connectionInformationBuilderFactory.
+				getConnectionInformationBuilder();
+
+		connectionInformationBuilder.connectionId(_defaultCollection);
+
+		try {
+			List<NodeInformation> nodeInformationList = new ArrayList<>();
+
+			NodeInformationBuilder nodeInformationBuilder =
+				nodeInformationBuilderFactory.getNodeInformationBuilder();
+
+			nodeInformationBuilder.name(_defaultCollection);
+			nodeInformationBuilder.version(getVersion());
+
+			nodeInformationList.add(nodeInformationBuilder.build());
+
+			connectionInformationBuilder.nodeInformationList(
+				nodeInformationList);
+		}
+		catch (Exception exception) {
+			connectionInformationBuilder.error(exception.toString());
+
+			_log.error("Could not retrieve node information", exception);
+		}
+
+		connectionInformationList.add(connectionInformationBuilder.build());
+
+		return connectionInformationList;
+	}
+
+	@Override
 	public String getNodesString() {
 		try {
-			SolrClient solrClient = solrClientManager.getSolrClient();
-
-			GenericSolrRequest request = new GenericSolrRequest(
-				SolrRequest.METHOD.POST, "/admin/info/system", null);
-
-			SimpleSolrResponse response = request.process(solrClient);
-
-			NamedList namedList = response.getResponse();
-
-			NamedList<Object> luceneInfo = (NamedList<Object>)namedList.get(
-				"lucene");
-
-			String version = (String)luceneInfo.get("solr-spec-version");
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(_defaultCollection);
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(version);
+			sb.append(getVersion());
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			return sb.toString();
@@ -106,6 +136,29 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 
 		_defaultCollection = _solrConfiguration.defaultCollection();
 	}
+
+	protected String getVersion() throws Exception {
+		SolrClient solrClient = solrClientManager.getSolrClient();
+
+		GenericSolrRequest request = new GenericSolrRequest(
+			SolrRequest.METHOD.POST, "/admin/info/system", null);
+
+		SimpleSolrResponse response = request.process(solrClient);
+
+		NamedList namedList = response.getResponse();
+
+		NamedList<Object> luceneInfo = (NamedList<Object>)namedList.get(
+			"lucene");
+
+		return (String)luceneInfo.get("solr-spec-version");
+	}
+
+	@Reference
+	protected ConnectionInformationBuilderFactory
+		connectionInformationBuilderFactory;
+
+	@Reference
+	protected NodeInformationBuilderFactory nodeInformationBuilderFactory;
 
 	@Reference
 	protected SolrClientManager solrClientManager;

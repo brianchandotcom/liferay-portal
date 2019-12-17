@@ -83,7 +83,7 @@ if (forcePost && (portletURL != null)) {
 	url = url.split(namespace)[0];
 %>
 
-	<form action="<%= url %>" id="<%= randomNamespace + namespace %>pageIteratorFm" method="post" name="<%= randomNamespace + namespace %>pageIteratorFm">
+	<form action="<%= HtmlUtil.escapeAttribute(url) %>" id="<%= randomNamespace + namespace %>pageIteratorFm" method="post" name="<%= randomNamespace + namespace %>pageIteratorFm">
 		<aui:input name="<%= curParam %>" type="hidden" />
 		<liferay-portlet:renderURLParams portletURL="<%= portletURL %>" />
 	</form>
@@ -204,7 +204,7 @@ if (forcePost && (portletURL != null)) {
 								<liferay-ui:icon
 									message="<%= String.valueOf(i) %>"
 									onClick='<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>'
-									url='<%= url + namespace + curParam + "=" + i + urlAnchor %>'
+									url='<%= HtmlUtil.escape(url + namespace + curParam + "=" + i + urlAnchor) %>'
 								/>
 
 							<%
@@ -239,7 +239,7 @@ if (forcePost && (portletURL != null)) {
 										<liferay-ui:icon
 											message="<%= String.valueOf(curDelta) %>"
 											onClick='<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>'
-											url='<%= deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor %>'
+											url='<%= HtmlUtil.escape(deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor) %>'
 										/>
 
 									<%

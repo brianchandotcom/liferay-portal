@@ -70,7 +70,7 @@ if (forcePost && (portletURL != null)) {
 %>
 
 	<liferay-util:html-bottom>
-		<form action="<%= url %>" id="<%= randomNamespace + namespace %>pageIteratorFm" method="post" name="<%= randomNamespace + namespace %>pageIteratorFm">
+		<form action="<%= HtmlUtil.escapeAttribute(url) %>" id="<%= randomNamespace + namespace %>pageIteratorFm" method="post" name="<%= randomNamespace + namespace %>pageIteratorFm">
 			<aui:input name="<%= curParam %>" type="hidden" />
 			<liferay-portlet:renderURLParams portletURL="<%= portletURL %>" />
 		</form>
@@ -102,7 +102,7 @@ if (forcePost && (portletURL != null)) {
 					%>
 
 						<li>
-							<a class="dropdown-icon" href="<%= curDeltaURL %>" onClick="<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>">
+							<a class="dropdown-icon" href="<%= HtmlUtil.escapeHREF(curDeltaURL) %>" onClick="<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>">
 								<%= String.valueOf(curDelta) %>
 
 								<span class="sr-only"><liferay-ui:message key="entries-per-page" /></span>
@@ -344,7 +344,7 @@ if (forcePost && (portletURL != null)) {
 				namespace: '<%= namespace %>',
 				pages: '<%= pages %>',
 				randomNamespace: '<%= randomNamespace %>',
-				url: '<%= url %>',
+				url: '<%= HtmlUtil.escapeJS(url) %>',
 				urlAnchor: '<%= urlAnchor %>'
 			}
 		);
@@ -369,7 +369,7 @@ if (forcePost && (portletURL != null)) {
 <%!
 private String _getHREF(String formName, String curParam, int cur, String jsCall, String url, String urlAnchor) throws Exception {
 	if (Validator.isNotNull(url)) {
-		return HttpUtil.addParameter(HttpUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur);
+		return HtmlUtil.escapeHREF(HttpUtil.addParameter(HttpUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur));
 	}
 
 	return "javascript:document." + formName + "." + curParam + ".value = '" + cur + "'; " + jsCall;

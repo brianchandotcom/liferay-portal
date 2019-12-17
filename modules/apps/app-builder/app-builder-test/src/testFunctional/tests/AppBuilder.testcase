@@ -1330,5 +1330,5 @@ definition {
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
 	}
-
+	
 }

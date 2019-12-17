@@ -14,12 +14,26 @@
 
 package com.liferay.fragment.util.configuration;
 
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Víctor Galán
@@ -47,12 +61,16 @@ public class FragmentConfigurationField {
 	}
 
 	public String getDefaultValue() {
-		if (Validator.isNotNull(_defaultValue)) {
+		if (Validator.isNotNull(_defaultValue) &&
+			!Objects.equals("itemSelector", _type)) {
+
 			return _defaultValue;
 		}
-
-		if (Objects.equals("colorPalette", _type)) {
+		else if (Objects.equals("colorPalette", _type)) {
 			return _getColorPaletteDefaultValue();
+		}
+		else if (Objects.equals("itemSelector", _type)) {
+			return _getItemSelectorDefaultValue();
 		}
 
 		return StringPool.BLANK;
@@ -74,6 +92,69 @@ public class FragmentConfigurationField {
 		);
 
 		return defaultValueJSONObject.toString();
+	}
+
+	private String _getItemSelectorDefaultValue() {
+		if (Validator.isNull(_defaultValue)) {
+			return _defaultValue;
+		}
+
+		try {
+			JSONObject defaultValueJSONObject =
+				JSONFactoryUtil.createJSONObject(_defaultValue);
+
+			if (defaultValueJSONObject.has("className") &&
+				defaultValueJSONObject.has("classPK")) {
+
+				String className = defaultValueJSONObject.getString(
+					"className");
+
+				InfoDisplayContributor infoDisplayContributor =
+					_serviceTrackerMap.getService(className);
+
+				if (infoDisplayContributor == null) {
+					return _defaultValue;
+				}
+
+				long classPK = defaultValueJSONObject.getLong("classPK");
+
+				InfoDisplayObjectProvider infoDisplayObjectProvider =
+					infoDisplayContributor.getInfoDisplayObjectProvider(
+						classPK);
+
+				defaultValueJSONObject.put(
+					"title",
+					infoDisplayObjectProvider.getTitle(
+						LocaleUtil.getMostRelevantLocale()));
+
+				return defaultValueJSONObject.toString();
+			}
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to parse default value JSON object", pe);
+		}
+
+		return _defaultValue;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentConfigurationField.class);
+
+	private static final ServiceTrackerMap<String, InfoDisplayContributor>
+		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			FragmentConfigurationField.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, InfoDisplayContributor.class, null,
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(infoDisplayContributor, emitter) -> emitter.emit(
+					infoDisplayContributor.getClassName())));
 	}
 
 	private final String _dataType;

@@ -36,7 +36,7 @@ class ItemSelectorField extends Component {
 	prepareStateForRender(state) {
 		let nextState = state;
 
-		const {typeOptions} = this.field;
+		const typeOptions = this.field.typeOptions || this.field.defaultValue;
 
 		if (typeOptions) {
 			const {className, enableSelectTemplate = false} = typeOptions;
@@ -175,7 +175,7 @@ ItemSelectorField.STATE = {
 	 */
 	field: Config.shapeOf({
 		dataType: Config.string(),
-		defaultValue: Config.string(),
+		defaultValue: Config.object(),
 		description: Config.string(),
 		label: Config.string(),
 		name: Config.string(),

@@ -397,6 +397,8 @@ public class FragmentEntryConfigUtil {
 				"template",
 				GetterUtil.getLong(
 					configurationValueJSONObject.getString("template"))
+			).put(
+				"title", configurationValueJSONObject.getString("title")
 			);
 
 			return jsonObject;

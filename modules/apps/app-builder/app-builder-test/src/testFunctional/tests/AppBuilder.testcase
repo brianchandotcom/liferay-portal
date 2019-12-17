@@ -1146,6 +1146,8 @@ definition {
 
 		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 
+		AppBuilderAdmin.searchByItem(itemName = "Apple");
+
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

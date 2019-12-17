@@ -10372,7 +10372,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
-							<property location="${project.dir}/setup_data_pump.sql" name="oracle.setup.file.path" />
+							<property location="${project.dir}/import-database.sql" name="oracle.setup.file.path" />
 
 							<echo file="${oracle.setup.file.path}">
 								<![CDATA[
@@ -10400,9 +10400,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 									docker exec ${database.host} chown -R oracle:oracle /tmp/data_pump_dir
 
-									docker cp ${oracle.setup.file.path} ${database.host}:/tmp/setup_data_pump.sql
+									docker cp ${oracle.setup.file.path} ${database.host}:/tmp/import-database.sql
 
-									docker exec ${database.host} sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/setup_data_pump.sql
+									docker exec ${database.host} sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/import-database.sql
 								]]>
 							</execute>
 
@@ -10454,16 +10454,16 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								]]>
 							</echo>
 
-							<property location="sybase.sql" name="sybase.sql.file.path" />
+							<property location="import-database.sql" name="import.database.sql.file.path" />
 
-							<echo file="sybase.sql">load database lportal from "/tmp/sybase.dmp"
+							<echo file="import-database.sql">load database lportal from "/tmp/sybase.dmp"
 go
 online database lportal
 go</echo>
 
 							<execute>
 								<![CDATA[
-									docker cp ${sybase.sql.file.path} ${database.host}:/tmp/sybase.sql
+									docker cp ${import.database.sql.file.path} ${database.host}:/tmp/import-database.sql
 								]]>
 							</execute>
 

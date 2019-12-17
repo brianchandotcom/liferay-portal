@@ -485,7 +485,9 @@ public class WorkflowTaskDisplayContext {
 
 	public Object getTaskCompletionMessageArguments(WorkflowLog workflowLog) {
 		return new Object[] {
-			HtmlUtil.escape(_getActorName(workflowLog)),
+			HtmlUtil.escape(
+				PortalUtil.getUserName(
+					workflowLog.getAuditUserId(), StringPool.BLANK)),
 			HtmlUtil.escape(workflowLog.getState())
 		};
 	}

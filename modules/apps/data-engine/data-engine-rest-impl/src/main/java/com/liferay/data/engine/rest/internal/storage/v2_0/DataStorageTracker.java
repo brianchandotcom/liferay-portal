@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.internal.storage.v2_0;
 
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -49,9 +48,7 @@ public class DataStorageTracker {
 		String dataStorageType = MapUtil.getString(
 			properties, "data.storage.type");
 
-		if (StringUtil.equals(
-				"2.0", MapUtil.getString(properties, "data.storage.version"))) {
-
+		if (!properties.containsKey("data.storage.version")) {
 			_dataStorages.put(dataStorageType, dataStorage);
 		}
 	}
@@ -67,9 +64,7 @@ public class DataStorageTracker {
 		String dataStorageType = MapUtil.getString(
 			properties, "data.storage.type");
 
-		if (StringUtil.equals(
-				"2.0", MapUtil.getString(properties, "data.storage.version"))) {
-
+		if (!properties.containsKey("data.storage.version")) {
 			_dataStorages.remove(dataStorageType);
 		}
 	}

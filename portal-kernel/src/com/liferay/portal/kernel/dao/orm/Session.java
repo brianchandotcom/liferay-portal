@@ -18,10 +18,13 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface Session {
 
 	public void clear() throws ORMException;
@@ -45,6 +48,10 @@ public interface Session {
 
 	public SQLQuery createSynchronizedSQLQuery(
 			String queryString, boolean strictName)
+		throws ORMException;
+
+	public SQLQuery createSynchronizedSQLQuery(
+			String queryString, boolean strictName, String[] tableNames)
 		throws ORMException;
 
 	public void delete(Object object) throws ORMException;

@@ -139,6 +139,17 @@ public class OrderByComparatorFactoryUtil {
 		}
 
 		@Override
+		public String[] getOrderByFields() {
+			String[] fields = new String[_columns.length / 2];
+
+			for (int i = 0; i < _columns.length; i += 2) {
+				fields[i / 2] = String.valueOf(_columns[i]);
+			}
+
+			return fields;
+		}
+
+		@Override
 		public boolean isAscending(String field) {
 			String orderBy = getOrderBy();
 

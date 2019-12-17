@@ -281,7 +281,7 @@ public interface WorkflowMetricsSLADefinitionVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WorkflowMetricsSLADefinitionVersion>
 		getWorkflowMetricsSLADefinitionVersions(
-			long companyId, Date createDate, int status);
+			long companyId, Date createDate, Long processId, int status);
 
 	/**
 	 * Returns all the workflow metrics sla definition versions matching the UUID and company.

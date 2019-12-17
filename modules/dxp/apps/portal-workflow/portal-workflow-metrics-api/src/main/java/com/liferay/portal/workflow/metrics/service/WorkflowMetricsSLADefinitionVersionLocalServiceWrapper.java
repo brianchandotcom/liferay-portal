@@ -379,11 +379,12 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceWrapper
 		<com.liferay.portal.workflow.metrics.model.
 			WorkflowMetricsSLADefinitionVersion>
 				getWorkflowMetricsSLADefinitionVersions(
-					long companyId, java.util.Date createDate, int status) {
+					long companyId, java.util.Date createDate, Long processId,
+					int status) {
 
 		return _workflowMetricsSLADefinitionVersionLocalService.
 			getWorkflowMetricsSLADefinitionVersions(
-				companyId, createDate, status);
+				companyId, createDate, processId, status);
 	}
 
 	/**

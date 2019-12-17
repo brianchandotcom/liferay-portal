@@ -25,8 +25,8 @@ public interface WorkflowMetricsSLADefinitionVersionFinder {
 
 	public java.util.List
 		<com.liferay.portal.workflow.metrics.model.
-			WorkflowMetricsSLADefinitionVersion> findByC_WMSLAD_V(
-				long companyId, java.util.Date createDate, int status,
-				int start, int end);
+			WorkflowMetricsSLADefinitionVersion> findByC_CD_P_S(
+				long companyId, java.util.Date createDate, Long processId,
+				int status, int start, int end);
 
 }

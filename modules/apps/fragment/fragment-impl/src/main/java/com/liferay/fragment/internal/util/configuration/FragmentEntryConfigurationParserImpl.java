@@ -15,7 +15,7 @@
 package com.liferay.fragment.internal.util.configuration;
 
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -47,9 +47,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = FragmentEntryConfigurationUtil.class)
-public class FragmentEntryConfigurationUtilImpl
-	implements FragmentEntryConfigurationUtil {
+@Component(service = FragmentEntryConfigurationParser.class)
+public class FragmentEntryConfigurationParserImpl
+	implements FragmentEntryConfigurationParser {
 
 	@Override
 	public JSONObject getConfigurationDefaultValuesJSONObject(
@@ -527,7 +527,7 @@ public class FragmentEntryConfigurationUtilImpl
 			"FreeMarkerFragmentEntryProcessor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryConfigurationUtilImpl.class);
+		FragmentEntryConfigurationParserImpl.class);
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;

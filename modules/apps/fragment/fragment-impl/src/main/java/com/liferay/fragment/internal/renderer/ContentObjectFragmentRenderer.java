@@ -17,7 +17,7 @@ package com.liferay.fragment.internal.renderer;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
@@ -177,7 +177,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 
-		return (JSONObject)_fragmentEntryConfigurationUtil.getFieldValue(
+		return (JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
 			getConfiguration(fragmentRendererContext),
 			fragmentEntryLink.getEditableValues(), segmentsExperienceIds,
 			"itemSelector");
@@ -227,7 +227,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Reference
-	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;

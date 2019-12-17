@@ -19,7 +19,7 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -118,7 +118,7 @@ public class FreeMarkerFragmentEntryProcessor
 				TemplateConstants.LANG_TYPE_FTL);
 
 		JSONObject configurationValuesJSONObject =
-			_fragmentEntryConfigurationUtil.getConfigurationJSONObject(
+			_fragmentEntryConfigurationParser.getConfigurationJSONObject(
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getSegmentsExperienceIds());
@@ -130,7 +130,7 @@ public class FreeMarkerFragmentEntryProcessor
 		).build();
 
 		contextObjects.putAll(
-			_fragmentEntryConfigurationUtil.getContextObjects(
+			_fragmentEntryConfigurationParser.getContextObjects(
 				configurationValuesJSONObject,
 				fragmentEntryLink.getConfiguration()));
 
@@ -191,7 +191,7 @@ public class FreeMarkerFragmentEntryProcessor
 						TemplateConstants.LANG_TYPE_FTL);
 
 				JSONObject configurationDefaultValuesJSONObject =
-					_fragmentEntryConfigurationUtil.
+					_fragmentEntryConfigurationParser.
 						getConfigurationDefaultValuesJSONObject(configuration);
 
 				Map<String, Object> contextObjects =
@@ -202,7 +202,7 @@ public class FreeMarkerFragmentEntryProcessor
 					).build();
 
 				contextObjects.putAll(
-					_fragmentEntryConfigurationUtil.getContextObjects(
+					_fragmentEntryConfigurationParser.getContextObjects(
 						configurationDefaultValuesJSONObject, configuration));
 
 				templateManager.addContextObjects(template, contextObjects);
@@ -245,6 +245,6 @@ public class FreeMarkerFragmentEntryProcessor
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 }

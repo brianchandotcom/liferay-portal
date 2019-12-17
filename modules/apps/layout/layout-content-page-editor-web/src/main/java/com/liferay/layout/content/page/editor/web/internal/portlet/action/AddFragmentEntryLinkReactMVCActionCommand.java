@@ -25,7 +25,7 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
@@ -207,7 +207,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 				_portal.getHttpServletResponse(actionResponse))
 		).put(
 			"defaultConfigurationValues",
-			_fragmentEntryConfigurationUtil.
+			_fragmentEntryConfigurationParser.
 				getConfigurationDefaultValuesJSONObject(configuration)
 		).put(
 			"editableValues",
@@ -295,7 +295,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		_fragmentCollectionContributorTracker;
 
 	@Reference
-	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;

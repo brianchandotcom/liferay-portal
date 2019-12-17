@@ -27,7 +27,7 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -184,7 +184,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 						fragmentRendererContext))
 			).put(
 				"defaultConfigurationValues",
-				_fragmentEntryConfigurationUtil.
+				_fragmentEntryConfigurationParser.
 					getConfigurationDefaultValuesJSONObject(
 						duplicateFragmentEntryLink.getConfiguration())
 			).put(
@@ -294,7 +294,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 		_fragmentCollectionContributorTracker;
 
 	@Reference
-	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

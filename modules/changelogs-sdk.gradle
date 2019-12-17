@@ -43,9 +43,6 @@ buildChangelogs {
 				rangeEnd = matcher.group(3)
 				version = matcher.group(1)
 			}
-			println rangeStart
-			println rangeEnd
-			println version
 
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 

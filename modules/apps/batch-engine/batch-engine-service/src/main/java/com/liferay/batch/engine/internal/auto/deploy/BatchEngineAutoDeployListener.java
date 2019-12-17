@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(service = AutoDeployListener.class)
-public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
+public class BatchEngineAutoDeployListener implements AutoDeployListener {
 
 	@Override
 	public int deploy(AutoDeploymentContext autoDeploymentContext)
@@ -68,19 +68,22 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> iterator = zipFile.entries();
 
-			BatchImportConfiguration batchImportConfiguration = null;
+			BatchEngineImportConfiguration batchEngineImportConfiguration =
+				null;
 			byte[] content = null;
 			String contentType = null;
 
 			while (iterator.hasMoreElements()) {
 				ZipEntry zipEntry = iterator.nextElement();
 
-				if (Objects.equals(zipEntry.getName(), "batch-import.json")) {
+				if (Objects.equals(zipEntry.getName(), "batch-engine.json")) {
 					try (InputStream inputStream = zipFile.getInputStream(
 							zipEntry)) {
 
-						batchImportConfiguration = _objectMapper.readValue(
-							inputStream, BatchImportConfiguration.class);
+						batchEngineImportConfiguration =
+							_objectMapper.readValue(
+								inputStream,
+								BatchEngineImportConfiguration.class);
 					}
 				}
 				else {
@@ -107,7 +110,7 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 				}
 			}
 
-			if ((batchImportConfiguration == null) || (content == null) ||
+			if ((batchEngineImportConfiguration == null) || (content == null) ||
 				Validator.isNull(contentType)) {
 
 				throw new IllegalStateException(
@@ -116,20 +119,20 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 
 			ExecutorService executorService =
 				_portalExecutorManager.getPortalExecutor(
-					BatchEngineImportAutoDeployListener.class.getName());
+					BatchEngineAutoDeployListener.class.getName());
 
 			BatchEngineImportTask batchEngineImportTask =
 				_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-					batchImportConfiguration.companyId,
-					batchImportConfiguration.userId, 100,
-					batchImportConfiguration.callbackURL,
-					batchImportConfiguration.className, content,
+					batchEngineImportConfiguration.companyId,
+					batchEngineImportConfiguration.userId, 100,
+					batchEngineImportConfiguration.callbackURL,
+					batchEngineImportConfiguration.className, content,
 					StringUtil.toUpperCase(contentType),
 					BatchEngineTaskExecuteStatus.INITIAL.name(),
-					batchImportConfiguration.fieldNameMappingMap,
+					batchEngineImportConfiguration.fieldNameMappingMap,
 					BatchEngineTaskOperation.CREATE.name(),
-					batchImportConfiguration.parameters,
-					batchImportConfiguration.version);
+					batchEngineImportConfiguration.parameters,
+					batchEngineImportConfiguration.version);
 
 			executorService.submit(
 				() -> {
@@ -167,25 +170,26 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 				return false;
 			}
 
-			ZipEntry zipEntry = zipFile.getEntry("batch-import.json");
+			ZipEntry zipEntry = zipFile.getEntry("batch-engine.json");
 
 			if (zipEntry == null) {
 				return false;
 			}
 
 			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
-				BatchImportConfiguration batchImportConfiguration =
+				BatchEngineImportConfiguration batchEngineImportConfiguration =
 					_objectMapper.readValue(
-						inputStream, BatchImportConfiguration.class);
+						inputStream, BatchEngineImportConfiguration.class);
 
-				if (batchImportConfiguration == null) {
+				if (batchEngineImportConfiguration == null) {
 					return false;
 				}
 
-				if ((batchImportConfiguration.companyId == 0) ||
-					(batchImportConfiguration.userId == 0) ||
-					Validator.isNull(batchImportConfiguration.className) ||
-					Validator.isNull(batchImportConfiguration.version)) {
+				if ((batchEngineImportConfiguration.companyId == 0) ||
+					(batchEngineImportConfiguration.userId == 0) ||
+					Validator.isNull(
+						batchEngineImportConfiguration.className) ||
+					Validator.isNull(batchEngineImportConfiguration.version)) {
 
 					return false;
 				}
@@ -199,7 +203,7 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineImportAutoDeployListener.class);
+		BatchEngineAutoDeployListener.class);
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
@@ -216,7 +220,7 @@ public class BatchEngineImportAutoDeployListener implements AutoDeployListener {
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
 
-	private static final class BatchImportConfiguration {
+	private static final class BatchEngineImportConfiguration {
 
 		@JsonProperty
 		protected String callbackURL;

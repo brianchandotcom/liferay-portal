@@ -144,6 +144,11 @@ public class BookmarksPortletToolbarContributor
 			"mvcRenderCommandName", "/bookmarks/edit_folder");
 		portletURL.setParameter(
 			"redirect", _portal.getCurrentURL(portletRequest));
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletURL.setParameter("portletResource", portletDisplay.getId());
+
 		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());

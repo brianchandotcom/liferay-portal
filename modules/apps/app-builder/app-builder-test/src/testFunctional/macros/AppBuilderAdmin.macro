@@ -51,6 +51,7 @@ definition {
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	macro createFormViewAndTableView {
 		FormViewBuilder.addFormView(
 			fieldType = "${fieldType}",
@@ -59,11 +60,6 @@ definition {
 		TableViewBuilder.addBasicTableView(
 			fieldType = "${fieldType}",
 			tableViewName = "${tableViewName}");
-=======
-	macro deleteFromActionMenu{
-		
->>>>>>> LRQA-53958 Adding delete from action menu macro
-	}
 
 	macro deleteEntry {
 		Click(
@@ -79,6 +75,10 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = "${key_itemName}");
+	}
+
+	macro deleteFromActionMenu{
+		
 	}
 
 	macro editCustomObjectNameAtPopover {

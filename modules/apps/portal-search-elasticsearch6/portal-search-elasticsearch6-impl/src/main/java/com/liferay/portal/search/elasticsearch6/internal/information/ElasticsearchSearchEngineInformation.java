@@ -22,6 +22,7 @@ import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchSearchEngi
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.OperationMode;
+import com.liferay.portal.search.engine.ConnectionInformation;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import java.util.List;
@@ -51,6 +52,11 @@ public class ElasticsearchSearchEngineInformation
 	@Override
 	public String getClientVersionString() {
 		return Version.CURRENT.toString();
+	}
+
+	@Override
+	public List<ConnectionInformation> getConnectionInformationList() {
+		return null;
 	}
 
 	@Override

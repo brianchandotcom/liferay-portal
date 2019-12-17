@@ -144,10 +144,10 @@ catch (RuntimeException re) {
 	_log.error(re, re);
 }
 
-if (!portletId.equals(rootPortletId)) {
-	Map<String, String[]> parameterMap = request.getParameterMap();
+Map<String, String[]> requestParam = request.getParameterMap();
 
-	for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+if (Validator.isNotNull(requestParam) && !portletId.equals(rootPortletId)) {
+	for (Map.Entry<String, String[]> entry : requestParam.entrySet()) {
 		String key = entry.getKey();
 
 		if (key.contains(rootPortletId) && !key.contains(portletId)) {

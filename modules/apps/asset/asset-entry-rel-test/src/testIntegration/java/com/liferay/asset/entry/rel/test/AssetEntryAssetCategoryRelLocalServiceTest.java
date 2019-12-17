@@ -111,18 +111,18 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		_assetEntryAssetCategoryRelLocalService.
 			deleteAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
 
-		_assetEntryAssetCategoryRels =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsByAssetCategoryId(
-					assetCategoryId);
-
 		Assert.assertEquals(
 			_initialAssetEntryAssetCategoryRelsCount + 1,
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsCount());
 
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsByAssetCategoryId(
+					assetCategoryId, 0, 1);
+
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_assetEntryAssetCategoryRels.get(0);
+			assetEntryAssetCategoryRels.get(0);
 
 		Assert.assertEquals(
 			assetEntryId2, assetEntryAssetCategoryRel.getAssetEntryId());
@@ -175,18 +175,18 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		_assetEntryAssetCategoryRelLocalService.
 			deleteAssetEntryAssetCategoryRelByAssetEntryId(assetEntryId1);
 
-		_assetEntryAssetCategoryRels =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsByAssetCategoryId(
-					assetCategoryId);
-
 		Assert.assertEquals(
 			_initialAssetEntryAssetCategoryRelsCount + 1,
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsCount());
 
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsByAssetCategoryId(
+					assetCategoryId, 0, 1);
+
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_assetEntryAssetCategoryRels.get(0);
+			assetEntryAssetCategoryRels.get(0);
 
 		Assert.assertEquals(
 			assetEntryId2, assetEntryAssetCategoryRel.getAssetEntryId());
@@ -258,18 +258,21 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		long assetEntryId = RandomTestUtil.randomLong();
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
-
-		_assetEntryAssetCategoryRels =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsByAssetCategoryId(
-					assetCategoryId);
+		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 
 		Assert.assertEquals(
 			_initialAssetEntryAssetCategoryRelsCount + 1,
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsCount());
+
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsByAssetCategoryId(
+					assetCategoryId, 0, 1);
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			assetEntryAssetCategoryRels.get(0);
+
 		Assert.assertEquals(
 			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
 		Assert.assertEquals(
@@ -282,23 +285,25 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		long assetEntryId = RandomTestUtil.randomLong();
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
-
-		_assetEntryAssetCategoryRels =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsByAssetEntryId(assetEntryId);
+		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 
 		Assert.assertEquals(
 			_initialAssetEntryAssetCategoryRelsCount + 1,
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsCount());
+
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsByAssetEntryId(
+					assetEntryId, 0, 1);
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			assetEntryAssetCategoryRels.get(0);
+
 		Assert.assertEquals(
 			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
-
 		Assert.assertEquals(
 			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
-
 		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
 	}
 
@@ -367,8 +372,8 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		_assetEntryAssetCategoryRelLocalService;
 
 	@DeleteAfterTestRun
-	private List<AssetEntryAssetCategoryRel> _assetEntryAssetCategoryRels =
-		new ArrayList<>();
+	private final List<AssetEntryAssetCategoryRel>
+		_assetEntryAssetCategoryRels = new ArrayList<>();
 
 	private int _initialAssetEntryAssetCategoryRelsCount;
 

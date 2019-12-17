@@ -69,7 +69,7 @@ public class ProjectTemplatesServiceTest
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction",
-			"--liferay-version", "7.0");
+			"--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -83,7 +83,7 @@ public class ProjectTemplatesServiceTest
 			mavenExecutor, "-DclassName=FooAction",
 			"-Dpackage=servicepreaction",
 			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		if (isBuildProjects()) {
 			_writeServiceClass(gradleProjectDir);
@@ -100,7 +100,7 @@ public class ProjectTemplatesServiceTest
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction",
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -112,7 +112,7 @@ public class ProjectTemplatesServiceTest
 			mavenExecutor, "-DclassName=FooAction",
 			"-Dpackage=servicepreaction",
 			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		if (isBuildProjects()) {
 			_writeServiceClass(gradleProjectDir);
@@ -129,7 +129,7 @@ public class ProjectTemplatesServiceTest
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction",
-			"--liferay-version", "7.2");
+			"--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -141,7 +141,7 @@ public class ProjectTemplatesServiceTest
 			mavenExecutor, "-DclassName=FooAction",
 			"-Dpackage=servicepreaction",
 			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 
 		if (isBuildProjects()) {
 			_writeServiceClass(gradleProjectDir);

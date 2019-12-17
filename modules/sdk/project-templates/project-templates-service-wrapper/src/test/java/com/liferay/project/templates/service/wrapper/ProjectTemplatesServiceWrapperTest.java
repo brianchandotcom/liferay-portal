@@ -62,7 +62,7 @@ public class ProjectTemplatesServiceWrapperTest
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--liferay-version", "7.0");
+			"--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -85,7 +85,7 @@ public class ProjectTemplatesServiceWrapperTest
 			"-Dpackage=serviceoverride",
 			"-DserviceWrapperClass=" +
 				"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		buildProjects(
 			_gradleDistribution, mavenExecutor, gradleProjectDir,
@@ -97,7 +97,7 @@ public class ProjectTemplatesServiceWrapperTest
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -109,7 +109,7 @@ public class ProjectTemplatesServiceWrapperTest
 			"-Dpackage=serviceoverride",
 			"-DserviceWrapperClass=" +
 				"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		buildProjects(
 			_gradleDistribution, mavenExecutor, gradleProjectDir,
@@ -121,7 +121,7 @@ public class ProjectTemplatesServiceWrapperTest
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-wrapper", "serviceoverride", "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--liferay-version", "7.2");
+			"--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -133,7 +133,7 @@ public class ProjectTemplatesServiceWrapperTest
 			"-Dpackage=serviceoverride",
 			"-DserviceWrapperClass=" +
 				"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 
 		buildProjects(
 			_gradleDistribution, mavenExecutor, gradleProjectDir,

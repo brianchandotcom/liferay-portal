@@ -183,7 +183,7 @@ public class ProjectTemplatesModulesExtTest
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 		completeArgs.add("-DgroupId=" + groupId);
-		completeArgs.add("-DliferayVersion=7.1");
+		completeArgs.add("-DliferayVersion=7.1.3");
 		completeArgs.add("-DoriginalModuleName=com.liferay.login.web");
 		completeArgs.add("-DoriginalModuleVersion=3.0.4");
 		completeArgs.add("-DprojectType=standalone");

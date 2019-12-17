@@ -77,7 +77,7 @@ public class ProjectTemplatesServiceBuilderTest
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", "foo-bar", "--liferay-version", "7.0");
+			"service-builder", "foo-bar", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "foo-bar-service/service.xml",
@@ -89,7 +89,7 @@ public class ProjectTemplatesServiceBuilderTest
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", "foo-bar", "--liferay-version", "7.1");
+			"service-builder", "foo-bar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "foo-bar-service/service.xml",
@@ -101,7 +101,7 @@ public class ProjectTemplatesServiceBuilderTest
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", "foo-bar", "--liferay-version", "7.2");
+			"service-builder", "foo-bar", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "foo-bar-service/service.xml",
@@ -115,7 +115,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.0");
+			"--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -136,7 +136,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.0");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.0.6");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -152,7 +152,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -173,7 +173,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.1");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.1.3");
 
 		_testBuildTemplateServiceBuilder(
 			gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
@@ -187,7 +187,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.2");
+			"--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -217,7 +217,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.2");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.2.1");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -233,7 +233,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.2", "--dependency-injector", "spring");
+			"--liferay-version", "7.2.1", "--dependency-injector", "spring");
 
 		testNotContains(
 			gradleProjectDir, name + "-api/build.gradle", "biz.aQute.bnd",
@@ -259,7 +259,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.2",
+			"-Dpackage=" + packageName, "-DliferayVersion=7.2.1",
 			"-DdependencyInjector=spring");
 
 		if (isBuildProjects()) {
@@ -276,7 +276,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.2");
+			"--liferay-version", "7.2.1");
 
 		File gradleServiceXml = new File(
 			new File(gradleProjectDir, name + "-service"), "service.xml");
@@ -291,7 +291,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.2");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.2.1");
 
 		File mavenServiceXml = new File(
 			new File(mavenProjectDir, name + "-service"), "service.xml");
@@ -338,7 +338,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			destinationDir, "service-builder", "sample", "--package-name",
-			"com.test.sample", "--liferay-version", "7.0");
+			"com.test.sample", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "sample-service/build.gradle",
@@ -346,7 +346,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", "sample", "com.test",
-			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.0");
+			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.0.6");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -367,7 +367,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			destinationDir, "service-builder", "sample", "--package-name",
-			"com.test.sample", "--liferay-version", "7.1");
+			"com.test.sample", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "sample-service/build.gradle",
@@ -375,7 +375,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", "sample", "com.test",
-			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.1");
+			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.1.3");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -396,7 +396,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			destinationDir, "service-builder", "sample", "--package-name",
-			"com.test.sample", "--liferay-version", "7.2");
+			"com.test.sample", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "sample-service/build.gradle",
@@ -404,7 +404,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", "sample", "com.test",
-			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.2");
+			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.2.1");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -426,7 +426,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File workspaceProjectDir = buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
-			"--liferay-version", "7.0", "--dependency-management-enabled");
+			"--liferay-version", "7.0.6", "--dependency-management-enabled");
 
 		testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
@@ -471,7 +471,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File workspaceProjectDir = buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
-			"--liferay-version", "7.1", "--dependency-management-enabled");
+			"--liferay-version", "7.1.3", "--dependency-management-enabled");
 
 		testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
@@ -516,7 +516,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File workspaceProjectDir = buildTemplateWithGradle(
 			modulesDir, "service-builder", "foo", "--package-name", "test",
-			"--liferay-version", "7.2", "--dependency-management-enabled");
+			"--liferay-version", "7.2.1", "--dependency-management-enabled");
 
 		testContains(
 			workspaceProjectDir, "foo-api/build.gradle",
@@ -556,7 +556,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.0");
+			"--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -567,7 +567,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.0");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.0.6");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -583,7 +583,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -594,7 +594,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.1");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.1.3");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -610,7 +610,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.2");
+			"--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, name + "-api/build.gradle",
@@ -621,7 +621,7 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.2");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.2.1");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(

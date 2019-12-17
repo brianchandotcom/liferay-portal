@@ -410,6 +410,12 @@ public class LayoutSEOEntryLocalServiceWrapper
 			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateLayoutSEOEntry(long, long, boolean, long, boolean,
+	 Map, boolean, Map, long,boolean, Map, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.seo.model.LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,

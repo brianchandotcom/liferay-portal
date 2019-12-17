@@ -316,6 +316,12 @@ public interface LayoutSEOEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateLayoutSEOEntry(long, long, boolean, long, boolean,
+	 Map, boolean, Map, long,boolean, Map, ServiceContext)}
+	 */
+	@Deprecated
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,

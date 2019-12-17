@@ -1,0 +1,710 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.dao.model.dsl.ast.impl;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.Column;
+import com.liferay.portal.kernel.dao.model.Table;
+import com.liferay.portal.kernel.dao.model.dsl.DSLFunctionUtil;
+import com.liferay.portal.kernel.dao.model.dsl.DSLStatementUtil;
+import com.liferay.portal.kernel.dao.model.dsl.Statement;
+import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
+import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
+import com.liferay.portal.kernel.dao.model.dsl.expressions.Scalar;
+import com.liferay.portal.kernel.dao.model.dsl.joins.Join;
+import com.liferay.portal.kernel.dao.model.dsl.query.From;
+import com.liferay.portal.kernel.dao.model.dsl.query.Limit;
+import com.liferay.portal.kernel.dao.model.dsl.query.OrderBy;
+import com.liferay.portal.kernel.dao.model.dsl.query.OrderByExpression;
+import com.liferay.portal.kernel.dao.model.dsl.query.Query;
+import com.liferay.portal.kernel.dao.model.dsl.query.Select;
+import com.liferay.portal.kernel.dao.model.dsl.query.Where;
+import com.liferay.portal.kernel.dao.model.dsl.set.Union;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+
+import java.sql.Types;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+/**
+ * @author Preston Crary
+ */
+public class DefaultASTNodeVisitorTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.add(DSLFunctionUtil.class);
+				assertClasses.add(DSLStatementUtil.class);
+			}
+
+		};
+
+	@Test
+	public void testCaseSelect() {
+		Alias<String> numberAlias = DSLFunctionUtil.casesWhenThen(
+			MainExampleTable.TABLE.mainExampleId.eq(1L), "one"
+		).whenThen(
+			MainExampleTable.TABLE.mainExampleId.eq(2L), "two"
+		).whenThen(
+			MainExampleTable.TABLE.mainExampleId.eq(3L), "three"
+		).elseEnd(
+			"unknown"
+		).as(
+			"number"
+		);
+
+		Statement statement = DSLStatementUtil.select(
+			numberAlias
+		).from(
+			MainExampleTable.TABLE
+		).where(
+			numberAlias.neq("unknown")
+		);
+
+		DefaultASTNodeVisitor defaultASTNodeVisitor =
+			new DefaultASTNodeVisitor();
+
+		statement.accept(defaultASTNodeVisitor);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select case when MainExample.mainExampleId = 1 then ? when ",
+				"MainExample.mainExampleId = 2 then ? when MainExample.",
+				"mainExampleId = 3 then ? else ? end number from MainExample ",
+				"where number != ?"),
+			defaultASTNodeVisitor.toString());
+
+		Assert.assertEquals(
+			Arrays.asList("one", "two", "three", "unknown", "unknown"),
+			defaultASTNodeVisitor.getScalarValues());
+	}
+
+	@Test
+	public void testConstructors() {
+		new DSLFunctionUtil();
+		new DSLStatementUtil();
+	}
+
+	@Test
+	public void testCreateSynchronizedSQLQuery() {
+		String[] inValues = {"1", "2", "3"};
+
+		Join join = DSLStatementUtil.select(
+		).from(
+			MainExampleTable.TABLE
+		).innerJoinON(
+			ReferenceExampleTable.TABLE,
+			ReferenceExampleTable.TABLE.mainExampleId.eq(
+				MainExampleTable.TABLE.mainExampleId)
+		);
+
+		String[] queryStringHolder = {join.toString()};
+
+		List<String> argsList = new ArrayList<>(3);
+
+		SQLQuery sqlQuery = (SQLQuery)ProxyUtil.newProxyInstance(
+			DefaultASTNodeVisitorTest.class.getClassLoader(),
+			new Class<?>[] {SQLQuery.class},
+			(proxy, method, args) -> {
+				Assert.assertEquals(
+					SQLQuery.class.getMethod(
+						"setString", int.class, String.class),
+					method);
+
+				Assert.assertEquals(Arrays.toString(args), 2, args.length);
+
+				argsList.add((int)args[0], (String)args[1]);
+
+				return null;
+			});
+
+		Session session = (Session)ProxyUtil.newProxyInstance(
+			DefaultASTNodeVisitorTest.class.getClassLoader(),
+			new Class<?>[] {Session.class},
+			(proxy, method, args) -> {
+				Assert.assertEquals(
+					Session.class.getMethod(
+						"createSynchronizedSQLQuery", String.class,
+						boolean.class, String[].class),
+					method);
+
+				Assert.assertEquals(args[0], queryStringHolder[0]);
+				Assert.assertEquals(args[1], true);
+				Assert.assertArrayEquals(
+					(String[])args[2],
+					new String[] {
+						MainExampleTable.TABLE.getTableName(),
+						ReferenceExampleTable.TABLE.getTableName()
+					});
+
+				return sqlQuery;
+			});
+
+		Assert.assertSame(
+			sqlQuery,
+			DSLStatementUtil.createSynchronizedSQLQuery(session, join));
+
+		Assert.assertTrue(argsList.toString(), argsList.isEmpty());
+
+		Query query = join.where(MainExampleTable.TABLE.name.in(inValues));
+
+		queryStringHolder[0] = query.toString();
+
+		Assert.assertSame(
+			sqlQuery,
+			DSLStatementUtil.createSynchronizedSQLQuery(session, query));
+
+		Assert.assertEquals(Arrays.asList(inValues), argsList);
+	}
+
+	@Test
+	public void testDerivedTable() {
+		Statement statement = DSLStatementUtil.select(
+		).from(
+			MainExampleTable.TABLE
+		).leftJoinOn(
+			DSLStatementUtil.select(
+				ReferenceExampleTable.TABLE.mainExampleId,
+				ReferenceExampleTable.TABLE.name
+			).from(
+				ReferenceExampleTable.TABLE
+			).groupBy(
+				ReferenceExampleTable.TABLE.mainExampleId,
+				ReferenceExampleTable.TABLE.name
+			).as(
+				"referenceExample"
+			),
+			ReferenceExampleTable.TABLE.mainExampleId.eq(
+				MainExampleTable.TABLE.mainExampleId)
+		).orderBy(
+			ReferenceExampleTable.TABLE.name.ascending()
+		);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from MainExample left join (select ",
+				"ReferenceExample.mainExampleId, ReferenceExample.name from ",
+				"ReferenceExample group by ReferenceExample.mainExampleId, ",
+				"ReferenceExample.name) referenceExample on ",
+				"ReferenceExample.mainExampleId = MainExample.mainExampleId ",
+				"order by ReferenceExample.name asc"),
+			statement.toString());
+	}
+
+	@Test
+	public void testFunctions() {
+		Assert.assertEquals(
+			"MainExample.mainExampleId + 2",
+			String.valueOf(
+				DSLFunctionUtil.add(MainExampleTable.TABLE.mainExampleId, 2L)));
+		Assert.assertEquals(
+			"BITAND(MainExample.mainExampleId, 2)",
+			String.valueOf(
+				DSLFunctionUtil.bitAnd(
+					MainExampleTable.TABLE.mainExampleId, 2L)));
+		Assert.assertEquals(
+			"CAST_CLOB_TEXT(MainExample.mainExampleId)",
+			String.valueOf(
+				DSLFunctionUtil.castClobText(
+					MainExampleTable.TABLE.mainExampleId)));
+		Assert.assertEquals(
+			"CAST_LONG(MainExample.name)",
+			String.valueOf(
+				DSLFunctionUtil.castLong(MainExampleTable.TABLE.name)));
+		Assert.assertEquals(
+			"CAST_TEXT(MainExample.mainExampleId)",
+			String.valueOf(
+				DSLFunctionUtil.castText(
+					MainExampleTable.TABLE.mainExampleId)));
+		Assert.assertEquals(
+			"CONCAT(MainExample.name, ?, ReferenceExample.name)",
+			String.valueOf(
+				DSLFunctionUtil.concat(
+					MainExampleTable.TABLE.name, new Scalar<>("__delimiter__"),
+					ReferenceExampleTable.TABLE.name)));
+		Assert.assertEquals(
+			"LOWER(MainExample.name)",
+			String.valueOf(DSLFunctionUtil.lower(MainExampleTable.TABLE.name)));
+		Assert.assertEquals(
+			"MainExample.mainExampleId / 2",
+			String.valueOf(
+				DSLFunctionUtil.divide(
+					MainExampleTable.TABLE.mainExampleId, 2L)));
+		Assert.assertEquals(
+			"MainExample.mainExampleId * 2",
+			String.valueOf(
+				DSLFunctionUtil.multiply(
+					MainExampleTable.TABLE.mainExampleId, 2L)));
+		Assert.assertEquals(
+			"MainExample.mainExampleId - 2",
+			String.valueOf(
+				DSLFunctionUtil.subtract(
+					MainExampleTable.TABLE.mainExampleId, 2L)));
+	}
+
+	@Test
+	public void testGroupBy() {
+		Statement statement = DSLStatementUtil.select(
+			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
+		).from(
+			MainExampleTable.TABLE
+		).groupBy(
+			MainExampleTable.TABLE.name
+		).limit(
+			0, 20
+		);
+
+		Assert.assertEquals(
+			"select MainExample.mainExampleId, MainExample.name from " +
+				"MainExample group by MainExample.name ",
+			statement.toString());
+	}
+
+	@Test
+	public void testJoinCount() {
+		Statement statement = DSLStatementUtil.countDistinct(
+			MainExampleTable.TABLE.name
+		).from(
+			MainExampleTable.TABLE
+		).innerJoinON(
+			ReferenceExampleTable.TABLE,
+			ReferenceExampleTable.TABLE.mainExampleId.eq(
+				MainExampleTable.TABLE.mainExampleId)
+		).where(
+			MainExampleTable.TABLE.name.neq("")
+		);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select count(distinct MainExample.name) from MainExample ",
+				"inner join ReferenceExample on ",
+				"ReferenceExample.mainExampleId = MainExample.mainExampleId ",
+				"where MainExample.name != ?"),
+			statement.toString());
+	}
+
+	@Test
+	public void testLeftJoin() {
+		Statement statement = DSLStatementUtil.select(
+			MainExampleTable.TABLE.mainExampleId
+		).from(
+			MainExampleTable.TABLE
+		).leftJoinOn(
+			ReferenceExampleTable.TABLE,
+			ReferenceExampleTable.TABLE.mainExampleId.eq(
+				MainExampleTable.TABLE.mainExampleId)
+		).where(
+			ReferenceExampleTable.TABLE.mainExampleId.isNull()
+		).orderBy(
+			MainExampleTable.TABLE.flag.descending(),
+			MainExampleTable.TABLE.name.ascending()
+		);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select MainExample.mainExampleId from MainExample left join ",
+				"ReferenceExample on ReferenceExample.mainExampleId = ",
+				"MainExample.mainExampleId where ",
+				"ReferenceExample.mainExampleId is NULL order by ",
+				"MainExample.flag desc, MainExample.name asc"),
+			statement.toString());
+	}
+
+	@Test
+	public void testOrderByComparatorAdaptor() {
+		OrderByComparator<MainExample> orderByComparator =
+			OrderByComparatorFactoryUtil.create(
+				MainExampleTable.TABLE.getTableName(),
+				MainExampleTable.TABLE.name.getColumnName(), true);
+
+		Statement statement = DSLStatementUtil.select(
+			MainExampleTable.TABLE.name
+		).from(
+			MainExampleTable.TABLE
+		).orderBy(
+			MainExampleTable.TABLE, orderByComparator
+		);
+
+		Assert.assertEquals(
+			"select MainExample.name from MainExample order by " +
+				"MainExample.name asc",
+			statement.toString());
+	}
+
+	@Test
+	public void testPredicateParentheses() {
+		Statement statement = DSLStatementUtil.count(
+		).from(
+			MainExampleTable.TABLE
+		).where(
+			MainExampleTable.TABLE.mainExampleId.gte(
+				1L
+			).andParentheses(
+				MainExampleTable.TABLE.name.eq("test").or(
+				MainExampleTable.TABLE.name.eq((String)null))
+			)
+		);
+
+		DefaultASTNodeVisitor defaultASTNodeVisitor =
+			new DefaultASTNodeVisitor();
+
+		statement.accept(defaultASTNodeVisitor);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select count(*) COUNT_VALUE from MainExample where ",
+				"MainExample.mainExampleId >= 1 and (MainExample.name = ? or ",
+				"MainExample.name = null)"),
+			defaultASTNodeVisitor.toString());
+
+		Assert.assertEquals(
+			Arrays.asList("test"), defaultASTNodeVisitor.getScalarValues());
+	}
+
+	@Test
+	public void testSelect1() {
+		Statement statement = DSLStatementUtil.select(new Scalar<>(1));
+
+		Assert.assertEquals("select 1", statement.toString());
+	}
+
+	@Test
+	public void testSelectDistinctWhereInWithAlias() {
+		MainExampleTable mainTable = MainExampleTable.TABLE.as("mainTable");
+
+		From from = DSLStatementUtil.selectDistinct(
+			mainTable.name
+		).from(
+			mainTable
+		);
+
+		Statement statement = from.where(
+			mainTable.flag.in(new Integer[] {1, 2}));
+
+		Assert.assertEquals(
+			"select distinct mainTable.name from MainExample mainTable where " +
+				"mainTable.flag in (1, 2)",
+			statement.toString());
+
+		statement = from.where(
+			mainTable.mainExampleId.in(new Long[] {1L, 2L, null})
+		).orderBy(
+			mainTable.name.ascending()
+		);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select distinct mainTable.name from MainExample mainTable ",
+				"where mainTable.mainExampleId in (1, 2, null) order by ",
+				"mainTable.name asc"),
+			statement.toString());
+
+		String[] strings = {"1", "2", "3"};
+
+		statement = from.where(
+			DSLFunctionUtil.castText(
+				mainTable.mainExampleId
+			).in(
+				strings
+			)
+		).orderBy(
+			mainTable.name.ascending()
+		);
+
+		DefaultASTNodeVisitor defaultASTNodeVisitor =
+			new DefaultASTNodeVisitor();
+
+		statement.accept(defaultASTNodeVisitor);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select distinct mainTable.name from MainExample mainTable ",
+				"where CAST_TEXT(mainTable.mainExampleId) in (?, ?, ?) order ",
+				"by mainTable.name asc"),
+			defaultASTNodeVisitor.toString());
+
+		Assert.assertEquals(
+			Arrays.asList(strings), defaultASTNodeVisitor.getScalarValues());
+	}
+
+	@Test
+	public void testSelfJoin() {
+		MainExampleTable tempMainExample = MainExampleTable.TABLE.as(
+			"tempMainExample");
+
+		Statement statement = DSLStatementUtil.select(
+			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
+		).from(
+			MainExampleTable.TABLE
+		).leftJoinOn(
+			tempMainExample,
+			MainExampleTable.TABLE.mainExampleId.lt(
+				tempMainExample.mainExampleId)
+		).where(
+			tempMainExample.mainExampleId.isNull()
+		);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select MainExample.mainExampleId, MainExample.name from ",
+				"MainExample left join MainExample tempMainExample on ",
+				"MainExample.mainExampleId < tempMainExample.mainExampleId ",
+				"where tempMainExample.mainExampleId is NULL"),
+			statement.toString());
+	}
+
+	@Test
+	public void testSimpleCount() {
+		Statement statement = DSLStatementUtil.count(
+		).from(
+			MainExampleTable.TABLE
+		);
+
+		Assert.assertEquals(
+			"select count(*) COUNT_VALUE from MainExample",
+			statement.toString());
+	}
+
+	@Test
+	public void testSimpleSelect() {
+		Select select = DSLStatementUtil.select();
+
+		Assert.assertEquals("select *", select.toString());
+
+		From from = select.from(MainExampleTable.TABLE);
+
+		Assert.assertEquals("select * from MainExample", from.toString());
+
+		Predicate predicate = MainExampleTable.TABLE.name.eq("test");
+
+		Assert.assertEquals("MainExample.name = ?", predicate.toString());
+
+		predicate = predicate.and(MainExampleTable.TABLE.mainExampleId.gt(0L));
+
+		Assert.assertEquals(
+			"MainExample.name = ? and MainExample.mainExampleId > 0",
+			predicate.toString());
+
+		Where where = from.where(predicate);
+
+		Assert.assertEquals(
+			"select * from MainExample where MainExample.name = ? and " +
+				"MainExample.mainExampleId > 0",
+			where.toString());
+
+		OrderByExpression orderByExpression =
+			MainExampleTable.TABLE.mainExampleId.descending();
+
+		Assert.assertEquals(
+			"MainExample.mainExampleId desc", orderByExpression.toString());
+
+		OrderBy orderBy = where.orderBy(orderByExpression);
+
+		DefaultASTNodeVisitor defaultASTNodeVisitor =
+			new DefaultASTNodeVisitor();
+
+		orderBy.accept(defaultASTNodeVisitor);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from MainExample where MainExample.name = ? and ",
+				"MainExample.mainExampleId > 0 order by ",
+				"MainExample.mainExampleId desc"),
+			defaultASTNodeVisitor.toString());
+
+		Set<Table<?>> tables = defaultASTNodeVisitor.getTables();
+
+		Assert.assertEquals(tables.toString(), 1, tables.size());
+
+		for (Table<?> table : tables) {
+			Assert.assertSame(MainExampleTable.TABLE, table);
+		}
+
+		Assert.assertEquals(
+			Collections.singletonList("test"),
+			defaultASTNodeVisitor.getScalarValues());
+
+		Assert.assertEquals(
+			QueryUtil.ALL_POS, defaultASTNodeVisitor.getStart());
+		Assert.assertEquals(QueryUtil.ALL_POS, defaultASTNodeVisitor.getEnd());
+
+		Limit limit = orderBy.limit(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		defaultASTNodeVisitor = new DefaultASTNodeVisitor();
+
+		limit.accept(defaultASTNodeVisitor);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from MainExample where MainExample.name = ? and ",
+				"MainExample.mainExampleId > 0 order by ",
+				"MainExample.mainExampleId desc "),
+			defaultASTNodeVisitor.toString());
+
+		Assert.assertEquals(
+			QueryUtil.ALL_POS, defaultASTNodeVisitor.getStart());
+		Assert.assertEquals(QueryUtil.ALL_POS, defaultASTNodeVisitor.getEnd());
+
+		limit = orderBy.limit(10, 30);
+
+		defaultASTNodeVisitor = new DefaultASTNodeVisitor();
+
+		limit.accept(defaultASTNodeVisitor);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from MainExample where MainExample.name = ? and ",
+				"MainExample.mainExampleId > 0 order by ",
+				"MainExample.mainExampleId desc "),
+			defaultASTNodeVisitor.toString());
+
+		Assert.assertEquals(10, defaultASTNodeVisitor.getStart());
+		Assert.assertEquals(30, defaultASTNodeVisitor.getEnd());
+	}
+
+	@Test
+	public void testSubqueryCount() {
+		Statement statement = DSLStatementUtil.count(
+		).from(
+			MainExampleTable.TABLE
+		).where(
+			MainExampleTable.TABLE.mainExampleId.in(
+				DSLStatementUtil.select(
+					ReferenceExampleTable.TABLE.mainExampleId
+				).from(
+					ReferenceExampleTable.TABLE
+				).where(
+					ReferenceExampleTable.TABLE.name.eq("test")
+				))
+		);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select count(*) COUNT_VALUE from MainExample where ",
+				"MainExample.mainExampleId in (select ",
+				"ReferenceExample.mainExampleId from ReferenceExample where ",
+				"ReferenceExample.name = ?)"),
+			statement.toString());
+	}
+
+	@Test
+	public void testUnionSelect() {
+		Query query = DSLStatementUtil.select(
+			MainExampleTable.TABLE.name.as("name")
+		).from(
+			MainExampleTable.TABLE
+		);
+
+		Union union = query.union(
+			DSLStatementUtil.select(
+				ReferenceExampleTable.TABLE.name.as("name")
+			).from(
+				ReferenceExampleTable.TABLE
+			));
+
+		Assert.assertEquals(
+			"select MainExample.name name from MainExample union select " +
+				"ReferenceExample.name name from ReferenceExample",
+			union.toString());
+
+		union = query.unionAll(
+			DSLStatementUtil.select(
+				ReferenceExampleTable.TABLE.name.as("name")
+			).from(
+				ReferenceExampleTable.TABLE
+			));
+
+		String sql =
+			"select MainExample.name name from MainExample union all select " +
+				"ReferenceExample.name name from ReferenceExample";
+
+		Assert.assertEquals(sql, union.toString());
+
+		union = union.union(union);
+
+		Assert.assertEquals(
+			StringBundler.concat(sql, " union ", sql), union.toString());
+	}
+
+	protected interface MainExample extends BaseModel<MainExample> {
+	}
+
+	private static class MainExampleTable extends Table<MainExampleTable> {
+
+		public static final MainExampleTable TABLE = new MainExampleTable();
+
+		public final Column<MainExampleTable, Integer> flag;
+		public final Column<MainExampleTable, Long> mainExampleId;
+		public final Column<MainExampleTable, String> name;
+
+		private MainExampleTable() {
+			super("MainExample", MainExampleTable::new);
+
+			mainExampleId = Column.create(
+				this, "mainExampleId", Long.class, Types.BIGINT);
+			name = Column.create(this, "name", String.class, Types.VARCHAR);
+			flag = Column.create(this, "flag", Integer.class, Types.INTEGER);
+
+			setColumns(mainExampleId, name, flag);
+		}
+
+	}
+
+	private static class ReferenceExampleTable
+		extends Table<ReferenceExampleTable> {
+
+		public static final ReferenceExampleTable TABLE =
+			new ReferenceExampleTable();
+
+		public final Column<ReferenceExampleTable, Long> mainExampleId;
+		public final Column<ReferenceExampleTable, String> name;
+		public final Column<ReferenceExampleTable, Long> referenceExampleId;
+
+		private ReferenceExampleTable() {
+			super("ReferenceExample", ReferenceExampleTable::new);
+
+			mainExampleId = Column.create(
+				this, "mainExampleId", Long.class, Types.BIGINT);
+
+			referenceExampleId = Column.create(
+				this, "referenceExampleId", Long.class, Types.BIGINT);
+
+			name = Column.create(this, "name", String.class, Types.VARCHAR);
+
+			setColumns(referenceExampleId, mainExampleId, name);
+		}
+
+	}
+
+}

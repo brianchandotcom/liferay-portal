@@ -41,5 +41,26 @@ export default {
 			segmentsExperienceId,
 			type
 		});
+	},
+
+	/**
+	 * Move an item inside layoutData
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {object} options.itemId id of the item to be moved
+	 * @param {object} options.parentId id of the target parent
+	 * @param {object} options.position position in the parent where the item is placed
+	 * @param {object} options.segmentsExperienceId
+	 * @return {Promise<object>}
+	 */
+	moveItem({config, itemId, parentId, position, segmentsExperienceId}) {
+		const {moveItemURL} = config;
+
+		return serviceFetch(config, moveItemURL, {
+			itemId,
+			parentId,
+			position,
+			segmentsExperienceId
+		});
 	}
 };

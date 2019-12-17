@@ -53,7 +53,7 @@ buildChangelogs {
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 			exec {
-				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "-p", "${rangeStart}..${rangeEnd}", "--", "modules/sdk/${projectName}/build.gradle"
+				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${rangeStart}..${rangeEnd}", "--", "modules/sdk/${projectName}/build.gradle"
 				standardOutput = standardOutputByteArrayOutputStream
 				workingDir = projectDir.parentFile
 			}

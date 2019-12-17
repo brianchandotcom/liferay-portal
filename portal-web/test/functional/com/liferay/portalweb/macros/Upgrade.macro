@@ -1,6 +1,6 @@
 definition {
 
-	macro addAutoTaggingBlogsEntry {
+	macro addAutoTaggedBlogsEntry {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntry(
@@ -19,7 +19,7 @@ definition {
 			tagName = "adventures");
 	}
 
-	macro addAutoTaggingDM {
+	macro addAutoTaggedDM {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
@@ -36,7 +36,7 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
 	}
 
-	macro addAutoTaggingWebContent {
+	macro addAutoTaggedWebContent {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -995,7 +995,7 @@ definition {
 			entryTitle = "New Blog After Upgrade");
 	}
 
-	macro viewAndDeleteAutoTaggingBlogsEntry {
+	macro viewAndDeleteAutoTaggedBlogsEntry {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		BlogsNavigator.gotoEntryPG(
@@ -1018,7 +1018,7 @@ definition {
 			entryTitle = "Digital Transformation or Digital Experience?");
 	}
 
-	macro viewAndDeleteAutoTaggingDM {
+	macro viewAndDeleteAutoTaggedDM {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
@@ -1032,7 +1032,7 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
 	}
 
-	macro viewAndDeleteAutoTaggingWebContent {
+	macro viewAndDeleteAutoTaggedWebContent {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");

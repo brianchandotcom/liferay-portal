@@ -38,23 +38,19 @@ public class KaleoDesignerWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.portal.workflow.kaleo.designer.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+
+		registry.register("0.0.1", "1.0.0", new UpgradePortletId());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.designer.web", "0.0.1", "1.0.0",
-			new UpgradePortletId());
-
-		registry.register(
-			"com.liferay.portal.workflow.kaleo.designer.web", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			new UpgradeKaleoDefinitionVersion(
 				_kaleoDefinitionVersionLocalService,
 				_resourceActionLocalService, _resourceActions,
 				_userLocalService));
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.designer.web", "1.0.1", "1.0.2",
+			"1.0.1", "1.0.2",
 			new UpgradeKaleoDefinition(
 				_counterLocalService, _kaleoDefinitionLocalService,
 				_userLocalService));

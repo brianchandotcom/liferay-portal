@@ -69,10 +69,11 @@ public class DepotSearchBarPortletSharedSearchContributor
 
 		for (long groupId : groupIds) {
 			List<DepotEntryGroupRel> depotEntryGroupRels =
-				_depotEntryGroupRelLocalService.getDepotEntryGroupRels(
-					groupId, 0,
-					_depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
-						groupId));
+				_depotEntryGroupRelLocalService.
+					getSearchableDepotEntryGroupRels(
+						groupId, 0,
+						_depotEntryGroupRelLocalService.
+							getSearchableDepotEntryGroupRelsCount(groupId));
 
 			Stream<DepotEntryGroupRel> stream = depotEntryGroupRels.stream();
 

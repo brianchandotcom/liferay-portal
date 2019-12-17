@@ -409,7 +409,7 @@ class CriteriaRow extends Component {
 
 				{error ? (
 					<ClayButton
-						className="btn-outline-danger"
+						className="btn-outline-danger btn-sm"
 						onClick={this._handleDelete}
 					>
 						{Liferay.Language.get('delete')}
@@ -417,7 +417,7 @@ class CriteriaRow extends Component {
 				) : (
 					<>
 						<ClayButton
-							className="btn-outline-borderless"
+							className="btn-outline-borderless btn-sm"
 							displayType="secondary"
 							monospaced
 							onClick={this._handleDuplicate}
@@ -426,7 +426,7 @@ class CriteriaRow extends Component {
 						</ClayButton>
 
 						<ClayButton
-							className="btn-outline-borderless"
+							className="btn-outline-borderless btn-sm"
 							displayType="secondary"
 							monospaced
 							onClick={this._handleDelete}

@@ -82,7 +82,7 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
-		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
+		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
-		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
+		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -135,13 +135,12 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateLayoutSEOEntry() throws PortalException {
-		LayoutSEOEntry originalLayoutSEOEntry =
-			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), false,
-				_layout.getLayoutId(), false,
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), false,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
@@ -165,9 +164,7 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
-		Assert.assertEquals(
-			originalLayoutSEOEntry.getDDMStorageId(),
-			layoutSEOEntry.getDDMStorageId());
+		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -204,7 +201,7 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
-		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
+		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@DeleteAfterTestRun

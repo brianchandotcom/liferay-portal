@@ -1,5 +1,64 @@
 definition {
 
+	macro addAutoTaggedBlogsEntry {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		Blogs.addEntry(
+			entryContent = "Alice's Adventures in Wonderland",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		AssertClick.assertTextClickAt(
+			key_entryTitle = "Blogs Entry Title",
+			locator1 = "BlogsEntry#TITLE_LINK",
+			value1 = "Blogs Entry Title");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Blogs Entry Title",
+			tagName = "adventures");
+	}
+
+	macro addAutoTaggedDM {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "${dmDocumentFile}",
+			dmDocumentTitle = "${dmDocumentTitle}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+	}
+
+	macro addAutoTaggedWebContent {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Alice's Adventures in Wonderland",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssertTextEquals(
+			key_tagName = "alice",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "alice");
+	}
+
 	macro addContentPage {
 		task ("Add a content page in Test Site Name site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -246,6 +305,33 @@ definition {
 		MessageboardsThread.addPG(
 			threadBody = "Message Boards Body",
 			threadSubject = "Message Boards Subject 3");
+	}
+
+	macro addOneDriveDocument {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "${dmDocumentTypeName}");
+
+		OneDrive.AddDocument(dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTypeName} Title After Upgrade");
 	}
 
 	macro addOrganization {
@@ -909,6 +995,62 @@ definition {
 			entryTitle = "New Blog After Upgrade");
 	}
 
+	macro viewAndDeleteAutoTaggedBlogsEntry {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = "Digital Transformation or Digital Experience?",
+			tagName = "DXP");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+
+		BlogsEntry.viewNoPG(
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
+	}
+
+	macro viewAndDeleteAutoTaggedDM {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+
+		AutoTagging.assertAutoTagPresent(tagName = "${tagName}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "${dmDocumentTitle}");
+	}
+
+	macro viewAndDeleteAutoTaggedWebContent {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience?");
+
+		Panel.expandPanel(panel = "Metadata");
+
+		AssertTextEquals(
+			key_tagName = "dxp",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "dxp");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "site-name",
+			webContentTitle = "Digital Transformation or Digital Experience?");
+	}
+
 	macro viewAndDeleteFormEntry {
 		Navigator.openURL();
 
@@ -1003,6 +1145,70 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.deletePG(dmDocumentTitle = "Edited Google Slide");
+	}
+
+	macro viewAndDeleteOneDriveDocument {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "OneDrive ${dmDocumentTypeName} Title");
+
+		DMDocument.deletePG(dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title");
+	}
+
+	macro viewAndEditContentPageReview {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		Click(
+			key_content = "This is static text.",
+			key_fragmentClass = "static-text",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.viewComment(fragmentComment = "This is a fragment comment");
+
+		PageEditor.viewCommentReply(
+			commentReply = "Fragment Comment 1",
+			user = "Test Test");
+
+		PageEditor.deleteComment(fragmentComment = "This is a fragment comment");
+
+		PageEditor.addComment(
+			content = "This is static text.",
+			fragmentClass = "static-text",
+			fragmentComment = "This is a new fragment comment",
+			fragmentName = "Static Text",
+			position = "1");
+
+		PageEditor.replyToComment(commentReply = "Fragment Comment 2");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		Click(
+			key_content = "This is static text.",
+			key_fragmentClass = "static-text",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.viewComment(fragmentComment = "This is a new fragment comment");
+
+		PageEditor.viewCommentReply(
+			commentReply = "Fragment Comment 2",
+			user = "Test Test");
 	}
 
 	macro viewAndEditGoogleDriveDocuments {

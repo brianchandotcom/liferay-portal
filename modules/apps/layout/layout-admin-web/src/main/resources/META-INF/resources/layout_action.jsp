@@ -40,7 +40,7 @@ Layout curLayout = (Layout)row.getObject();
 
 	<c:if test="<%= Validator.isNotNull(editLayoutURL) %>">
 		<liferay-ui:icon
-			message="edit"
+			message='<%= layoutsAdminDisplayContext.isConversionDraft(layout) ? "edit-conversion-draft" : "edit" %>'
 			url="<%= editLayoutURL %>"
 		/>
 	</c:if>

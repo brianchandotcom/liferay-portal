@@ -1337,6 +1337,556 @@ public class DepotEntryGroupRelPersistenceImpl
 	private static final String _FINDER_COLUMN_D_TGI_TOGROUPID_2 =
 		"depotEntryGroupRel.toGroupId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByS_TGI;
+	private FinderPath _finderPathWithoutPaginationFindByS_TGI;
+	private FinderPath _finderPathCountByS_TGI;
+
+	/**
+	 * Returns all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @return the matching depot entry group rels
+	 */
+	@Override
+	public List<DepotEntryGroupRel> findByS_TGI(
+		boolean searchable, long toGroupId) {
+
+		return findByS_TGI(
+			searchable, toGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param start the lower bound of the range of depot entry group rels
+	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
+	 * @return the range of matching depot entry group rels
+	 */
+	@Override
+	public List<DepotEntryGroupRel> findByS_TGI(
+		boolean searchable, long toGroupId, int start, int end) {
+
+		return findByS_TGI(searchable, toGroupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param start the lower bound of the range of depot entry group rels
+	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching depot entry group rels
+	 */
+	@Override
+	public List<DepotEntryGroupRel> findByS_TGI(
+		boolean searchable, long toGroupId, int start, int end,
+		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
+
+		return findByS_TGI(
+			searchable, toGroupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param start the lower bound of the range of depot entry group rels
+	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching depot entry group rels
+	 */
+	@Override
+	public List<DepotEntryGroupRel> findByS_TGI(
+		boolean searchable, long toGroupId, int start, int end,
+		OrderByComparator<DepotEntryGroupRel> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByS_TGI;
+				finderArgs = new Object[] {searchable, toGroupId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByS_TGI;
+			finderArgs = new Object[] {
+				searchable, toGroupId, start, end, orderByComparator
+			};
+		}
+
+		List<DepotEntryGroupRel> list = null;
+
+		if (useFinderCache) {
+			list = (List<DepotEntryGroupRel>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DepotEntryGroupRel depotEntryGroupRel : list) {
+					if ((searchable != depotEntryGroupRel.isSearchable()) ||
+						(toGroupId != depotEntryGroupRel.getToGroupId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE);
+
+			query.append(_FINDER_COLUMN_S_TGI_SEARCHABLE_2);
+
+			query.append(_FINDER_COLUMN_S_TGI_TOGROUPID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				query.append(DepotEntryGroupRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(searchable);
+
+				qPos.add(toGroupId);
+
+				list = (List<DepotEntryGroupRel>)QueryUtil.list(
+					q, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching depot entry group rel
+	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
+	 */
+	@Override
+	public DepotEntryGroupRel findByS_TGI_First(
+			boolean searchable, long toGroupId,
+			OrderByComparator<DepotEntryGroupRel> orderByComparator)
+		throws NoSuchEntryGroupRelException {
+
+		DepotEntryGroupRel depotEntryGroupRel = fetchByS_TGI_First(
+			searchable, toGroupId, orderByComparator);
+
+		if (depotEntryGroupRel != null) {
+			return depotEntryGroupRel;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("searchable=");
+		msg.append(searchable);
+
+		msg.append(", toGroupId=");
+		msg.append(toGroupId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryGroupRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the first depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
+	 */
+	@Override
+	public DepotEntryGroupRel fetchByS_TGI_First(
+		boolean searchable, long toGroupId,
+		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
+
+		List<DepotEntryGroupRel> list = findByS_TGI(
+			searchable, toGroupId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching depot entry group rel
+	 * @throws NoSuchEntryGroupRelException if a matching depot entry group rel could not be found
+	 */
+	@Override
+	public DepotEntryGroupRel findByS_TGI_Last(
+			boolean searchable, long toGroupId,
+			OrderByComparator<DepotEntryGroupRel> orderByComparator)
+		throws NoSuchEntryGroupRelException {
+
+		DepotEntryGroupRel depotEntryGroupRel = fetchByS_TGI_Last(
+			searchable, toGroupId, orderByComparator);
+
+		if (depotEntryGroupRel != null) {
+			return depotEntryGroupRel;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("searchable=");
+		msg.append(searchable);
+
+		msg.append(", toGroupId=");
+		msg.append(toGroupId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryGroupRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the last depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
+	 */
+	@Override
+	public DepotEntryGroupRel fetchByS_TGI_Last(
+		boolean searchable, long toGroupId,
+		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
+
+		int count = countByS_TGI(searchable, toGroupId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DepotEntryGroupRel> list = findByS_TGI(
+			searchable, toGroupId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the depot entry group rels before and after the current depot entry group rel in the ordered set where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * @param depotEntryGroupRelId the primary key of the current depot entry group rel
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next depot entry group rel
+	 * @throws NoSuchEntryGroupRelException if a depot entry group rel with the primary key could not be found
+	 */
+	@Override
+	public DepotEntryGroupRel[] findByS_TGI_PrevAndNext(
+			long depotEntryGroupRelId, boolean searchable, long toGroupId,
+			OrderByComparator<DepotEntryGroupRel> orderByComparator)
+		throws NoSuchEntryGroupRelException {
+
+		DepotEntryGroupRel depotEntryGroupRel = findByPrimaryKey(
+			depotEntryGroupRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DepotEntryGroupRel[] array = new DepotEntryGroupRelImpl[3];
+
+			array[0] = getByS_TGI_PrevAndNext(
+				session, depotEntryGroupRel, searchable, toGroupId,
+				orderByComparator, true);
+
+			array[1] = depotEntryGroupRel;
+
+			array[2] = getByS_TGI_PrevAndNext(
+				session, depotEntryGroupRel, searchable, toGroupId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DepotEntryGroupRel getByS_TGI_PrevAndNext(
+		Session session, DepotEntryGroupRel depotEntryGroupRel,
+		boolean searchable, long toGroupId,
+		OrderByComparator<DepotEntryGroupRel> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE);
+
+		query.append(_FINDER_COLUMN_S_TGI_SEARCHABLE_2);
+
+		query.append(_FINDER_COLUMN_S_TGI_TOGROUPID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DepotEntryGroupRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(searchable);
+
+		qPos.add(toGroupId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						depotEntryGroupRel)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DepotEntryGroupRel> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the depot entry group rels where searchable = &#63; and toGroupId = &#63; from the database.
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 */
+	@Override
+	public void removeByS_TGI(boolean searchable, long toGroupId) {
+		for (DepotEntryGroupRel depotEntryGroupRel :
+				findByS_TGI(
+					searchable, toGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(depotEntryGroupRel);
+		}
+	}
+
+	/**
+	 * Returns the number of depot entry group rels where searchable = &#63; and toGroupId = &#63;.
+	 *
+	 * @param searchable the searchable
+	 * @param toGroupId the to group ID
+	 * @return the number of matching depot entry group rels
+	 */
+	@Override
+	public int countByS_TGI(boolean searchable, long toGroupId) {
+		FinderPath finderPath = _finderPathCountByS_TGI;
+
+		Object[] finderArgs = new Object[] {searchable, toGroupId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE);
+
+			query.append(_FINDER_COLUMN_S_TGI_SEARCHABLE_2);
+
+			query.append(_FINDER_COLUMN_S_TGI_TOGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(searchable);
+
+				qPos.add(toGroupId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_S_TGI_SEARCHABLE_2 =
+		"depotEntryGroupRel.searchable = ? AND ";
+
+	private static final String _FINDER_COLUMN_S_TGI_TOGROUPID_2 =
+		"depotEntryGroupRel.toGroupId = ?";
+
 	public DepotEntryGroupRelPersistenceImpl() {
 		setModelClass(DepotEntryGroupRel.class);
 
@@ -1665,6 +2215,15 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByToGroupId, args);
 
+			args = new Object[] {
+				depotEntryGroupRelModelImpl.isSearchable(),
+				depotEntryGroupRelModelImpl.getToGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByS_TGI, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByS_TGI, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -1710,6 +2269,29 @@ public class DepotEntryGroupRelPersistenceImpl
 				finderCache.removeResult(_finderPathCountByToGroupId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByToGroupId, args);
+			}
+
+			if ((depotEntryGroupRelModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByS_TGI.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					depotEntryGroupRelModelImpl.getOriginalSearchable(),
+					depotEntryGroupRelModelImpl.getOriginalToGroupId()
+				};
+
+				finderCache.removeResult(_finderPathCountByS_TGI, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByS_TGI, args);
+
+				args = new Object[] {
+					depotEntryGroupRelModelImpl.isSearchable(),
+					depotEntryGroupRelModelImpl.getToGroupId()
+				};
+
+				finderCache.removeResult(_finderPathCountByS_TGI, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByS_TGI, args);
 			}
 		}
 
@@ -2061,6 +2643,29 @@ public class DepotEntryGroupRelPersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_TGI",
 			new String[] {Long.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByS_TGI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			DepotEntryGroupRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_TGI",
+			new String[] {
+				Boolean.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByS_TGI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			DepotEntryGroupRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_TGI",
+			new String[] {Boolean.class.getName(), Long.class.getName()},
+			DepotEntryGroupRelModelImpl.SEARCHABLE_COLUMN_BITMASK |
+			DepotEntryGroupRelModelImpl.TOGROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByS_TGI = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_TGI",
+			new String[] {Boolean.class.getName(), Long.class.getName()});
 	}
 
 	@Deactivate

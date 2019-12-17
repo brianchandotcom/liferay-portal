@@ -16,26 +16,50 @@ package com.liferay.talend.common.oas;
 
 import com.liferay.talend.common.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class OASParameter {
 
-	public OASParameter(String name, String type) {
+	public static final List<OASParameter> liferayOASParameters =
+		new ArrayList<OASParameter>() {
+			{
+				add(new OASParameter("nestedFields", "query"));
+				add(new OASParameter("includeFieldsParameters", "query"));
+			}
+		};
+
+	public OASParameter(String name, String location) {
 		_name = name;
-		_type = Type.valueOf(StringUtil.toUpperCase(type));
+		_location = Location.valueOf(StringUtil.toUpperCase(location));
+
+		if (isLocationPath()) {
+			_required = true;
+		}
+	}
+
+	public Location getLocation() {
+		return _location;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public Type getType() {
-		return _type;
+	public boolean isLocationPath() {
+		return _location.isPath();
 	}
 
 	public boolean isRequired() {
 		return _required;
+	}
+
+	public void setLocation(Location location) {
+		_location = location;
 	}
 
 	public void setName(String name) {
@@ -46,33 +70,37 @@ public class OASParameter {
 		_required = required;
 	}
 
-	public void setType(Type type) {
-		_type = type;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("(name=");
+		sb.append("{location=");
+		sb.append(_location);
+		sb.append(", name=");
 		sb.append(_name);
 		sb.append(", required=");
 		sb.append(_required);
-		sb.append(", type=");
-		sb.append(_type);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	public enum Type {
+	public enum Location {
 
-		PATH, QUERY
+		PATH, QUERY;
+
+		public boolean isPath() {
+			if (this == PATH) {
+				return true;
+			}
+
+			return false;
+		}
 
 	}
 
+	private Location _location;
 	private String _name;
 	private boolean _required;
-	private Type _type;
 
 }

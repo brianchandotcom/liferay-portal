@@ -27,10 +27,9 @@ const EditCommentForm = props => {
 		setEditingComment(true);
 
 		editFragmentEntryLinkComment(props.comment.commentId, textareaContent)
-			.then(comment => {
+			.then(() => {
 				setEditingComment(false);
 
-				props.onEdit(comment);
 				props.onCloseForm();
 			})
 			.catch(() => {
@@ -70,8 +69,7 @@ EditCommentForm.propTypes = {
 		body: PropTypes.string.isRequired,
 		commentId: PropTypes.string.isRequired
 	}),
-	onCloseForm: PropTypes.func.isRequired,
-	onEdit: PropTypes.func
+	onCloseForm: PropTypes.func.isRequired
 };
 
 export {EditCommentForm};

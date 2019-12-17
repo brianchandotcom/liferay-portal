@@ -211,7 +211,6 @@ const FragmentComment = props => {
 					comment={props.comment}
 					fragmentEntryLinkId={props.fragmentEntryLinkId}
 					onCloseForm={() => setEditing(false)}
-					onEdit={props.onEdit}
 				/>
 			) : (
 				<div
@@ -232,11 +231,6 @@ const FragmentComment = props => {
 										props.fragmentEntryLinkId
 									}
 									key={childComment.commentId}
-									onDelete={props.onDelete}
-									onEdit={props.onEditReply(
-										props.comment.commentId
-									)}
-									onEditReply={props.onEditReply}
 									parentCommentId={props.comment.commentId}
 								/>
 							))}
@@ -298,9 +292,7 @@ FragmentComment.propTypes = {
 	}),
 
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	onDelete: PropTypes.func,
 	onEdit: PropTypes.func,
-	onEditReply: PropTypes.func,
 	parentCommentId: PropTypes.string
 };
 

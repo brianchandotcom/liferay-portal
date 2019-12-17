@@ -31,7 +31,7 @@ definition {
 	@description = "This is a test for LPS-101330. A user should be able to add a video fragment and the video should play."
 	@priority = "5"
 	test AddContentPageWithVideoFragment {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

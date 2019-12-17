@@ -51,7 +51,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.module.config.generator", version: "2.1.69"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.transpiler", version: "2.4.48"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "3.0.12"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.0.44"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.rest.builder", version: "1.0.45"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "3.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "2.3.476"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.soy", version: "3.1.8"

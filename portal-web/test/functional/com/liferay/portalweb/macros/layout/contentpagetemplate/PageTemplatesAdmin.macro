@@ -65,10 +65,6 @@ definition {
 
 		Button.clickSave();
 
-		PageEditor.addFragment(
-			collectionName = "Drop Zone",
-			fragmentName = "Drop Zone Component");
-
 		PageEditor.clickPublish();
 	}
 

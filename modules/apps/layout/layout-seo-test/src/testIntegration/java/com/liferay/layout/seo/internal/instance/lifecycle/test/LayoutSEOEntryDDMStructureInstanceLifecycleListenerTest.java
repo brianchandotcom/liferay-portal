@@ -56,7 +56,7 @@ public class LayoutSEOEntryDDMStructureInstanceLifecycleListenerTest {
 					company.getGroupId(),
 					_classNameLocalService.getClassNameId(
 						LayoutSEOEntry.class.getName()),
-					"custom-open-graph-meta-tags"));
+					"custom-meta-tags"));
 		}
 		finally {
 			if (company != null) {

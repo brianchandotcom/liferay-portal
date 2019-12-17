@@ -56,6 +56,12 @@ public class HttpHelperImpl implements HttpHelper {
 			Map<String, String[]> parameterMap = _http.parameterMapFromString(
 				_http.getQueryString(urlString));
 
+			while (urlString.indexOf(CharPool.QUESTION) > -1) {
+				urlString = _http.getQueryString(urlString);
+
+				parameterMap.putAll(_http.parameterMapFromString(urlString));
+			}
+
 			String[] parameterValues = parameterMap.get(parameterName);
 
 			if (!ArrayUtil.isEmpty(parameterValues)) {

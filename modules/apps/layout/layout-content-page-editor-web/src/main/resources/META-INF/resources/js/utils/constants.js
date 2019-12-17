@@ -246,6 +246,7 @@ export const MAPPING_SOURCE_TYPE_IDS = {
  */
 export const PAGE_TYPES = {
 	content: '0',
+	conversion: '4',
 	display: '1',
 	master: '3'
 };

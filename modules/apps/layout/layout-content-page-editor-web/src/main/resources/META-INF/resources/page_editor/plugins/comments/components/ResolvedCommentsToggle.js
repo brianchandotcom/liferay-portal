@@ -15,6 +15,7 @@
 import {ClayCheckbox} from '@clayui/form';
 import React, {useContext} from 'react';
 
+import toggleShowResolvedComments from '../../../app/actions/toggleShowResolvedComments';
 import {StoreContext} from '../../../app/store/index';
 import AppContext from '../../../core/AppContext';
 
@@ -34,7 +35,13 @@ export default function ResolvedCommentsToggle() {
 				checked={showResolvedComments}
 				disabled={!showResolvedComments && !hasResolvedComments}
 				label={Liferay.Language.get('show-resolved-comments')}
-				onClick={() => dispatch({type: 'toggleShowResolvedComments'})}
+				onChange={event =>
+					dispatch(
+						toggleShowResolvedComments({
+							showResolvedComments: Boolean(event.target.checked)
+						})
+					)
+				}
 			/>
 		</div>
 	);

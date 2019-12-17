@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -127,9 +128,9 @@ public class UserSetDigestTest {
 
 		long creatorUserId = 0;
 
-		Company company = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 
-		long companyId = company.getCompanyId();
+		long companyId = _company.getCompanyId();
 
 		String password = RandomTestUtil.randomString();
 
@@ -168,5 +169,8 @@ public class UserSetDigestTest {
 
 	@Inject
 	private static UserLocalService _userLocalService;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 }

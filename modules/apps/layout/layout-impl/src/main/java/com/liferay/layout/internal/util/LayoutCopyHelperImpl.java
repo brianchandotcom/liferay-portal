@@ -486,6 +486,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings());
 
+			_targetLayout.setType(_sourceLayout.getType());
+
 			LayoutSEOEntry layoutSEOEntry =
 				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 					_sourceLayout.getGroupId(), _sourceLayout.isPrivateLayout(),

@@ -43,6 +43,14 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 			).put(
 				"assetListEntryTitle", assetListEntry.getTitle()
 			).build();
+
+			String title = HtmlUtil.escape(assetListEntry.getTitle());
+
+			if (assetListEntry.getGroupId() != scopeGroupId) {
+				Group group = GroupLocalServiceUtil.getGroup(assetListEntry.getGroupId());
+
+				title = StringUtil.appendParentheticalSuffix(title, HtmlUtil.escape(group.getName(locale)));
+			}
 			%>
 
 			<liferay-ui:search-container-column-icon
@@ -56,11 +64,11 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 					<c:choose>
 						<c:when test="<%= assetListEntry.getAssetListEntryId() != selectAssetListDisplayContext.getSelectedAssetListEntryId() %>">
 							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-								<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+								<%= title %>
 							</aui:a>
 						</c:when>
 						<c:otherwise>
-							<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+							<%= title %>
 						</c:otherwise>
 					</c:choose>
 				</h5>

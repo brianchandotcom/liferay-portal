@@ -66,7 +66,7 @@ function SegmentsExperiments({
 		? experiment.segmentsExperienceId
 		: selectedExperienceId;
 	const noExperimentIllustration = `${assetsPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
-	const winnerVariant = variants.filter(variant => variant.winner === true);
+	const winnerVariant = variants.find(variant => variant.winner === true);
 
 	return (
 		<>
@@ -186,7 +186,7 @@ function SegmentsExperiments({
 													'x-is-the-winner-variant'
 												),
 												'<strong>',
-												winnerVariant[0].name,
+												winnerVariant.name,
 												'</strong>'
 											)
 										}}
@@ -197,8 +197,7 @@ function SegmentsExperiments({
 											className="btn-success"
 											onClick={() =>
 												_handlePublishVariant(
-													winnerVariant[0]
-														.segmentsExperienceId
+													winnerVariant.segmentsExperienceId
 												)
 											}
 										>

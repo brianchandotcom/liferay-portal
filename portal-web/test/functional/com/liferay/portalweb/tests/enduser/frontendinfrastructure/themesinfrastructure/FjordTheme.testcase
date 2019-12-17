@@ -42,6 +42,10 @@ definition {
 			locator1 = "Home#PAGE",
 			value1 = "Home");
 
+		AssertVisible(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		takeScreenshot();
+
 		var key_title = "Dynamic and Customizable for a Healthier You";
 
 		if (IsElementNotPresent(locator1 = "Header#H2_TITLE")) {

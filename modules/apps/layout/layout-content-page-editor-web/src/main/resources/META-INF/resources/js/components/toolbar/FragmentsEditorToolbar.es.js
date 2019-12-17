@@ -26,6 +26,7 @@ import './ExperimentsLabel.es';
 import {TOGGLE_SIDEBAR} from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
+import {PAGE_TYPES} from '../../utils/constants';
 import templates from './FragmentsEditorToolbar.soy';
 
 /**
@@ -49,6 +50,10 @@ class FragmentsEditorToolbar extends Component {
 				['lastSaveDate'],
 				lastSaveDate.replace('{0}', state.lastSaveDate)
 			);
+		}
+
+		if (state.pageType && state.pageType === PAGE_TYPES.conversion) {
+			nextState = setIn(nextState, ['_conversionDraft'], true);
 		}
 
 		return nextState;
@@ -163,6 +168,19 @@ class FragmentsEditorToolbar extends Component {
 }
 
 FragmentsEditorToolbar.STATE = {
+	/**
+	 * If the page is conversion draft
+	 * @default false
+	 * @instance
+	 * @memberof FragmentsEditorToolbar
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_conversionDraft: Config.bool()
+		.internal()
+		.value(false),
+
 	/**
 	 * If fragments editor is online
 	 * @default true

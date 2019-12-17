@@ -59,7 +59,7 @@ public class LayoutSEOEntryDDMStructureInstanceLifecycleListener
 			_classNameLocalService.getClassNameId(LayoutSEOEntry.class),
 			clazz.getClassLoader(),
 			"com/liferay/layout/seo/internal/instance/lifecycle/dependencies" +
-				"/custom-open-graph-meta-tags-structure.xml",
+				"/custom-meta-tags-structure.xml",
 			serviceContext);
 	}
 

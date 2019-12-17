@@ -55,6 +55,14 @@ public class DepotEntryGroupRelLocalServiceWrapper
 			depotEntryId, toGroupId);
 	}
 
+	@Override
+	public com.liferay.depot.model.DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId, boolean searchable) {
+
+		return _depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntryId, toGroupId, searchable);
+	}
+
 	/**
 	 * Creates a new depot entry group rel with the primary key. Does not add the depot entry group rel to the database.
 	 *
@@ -314,6 +322,20 @@ public class DepotEntryGroupRelLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _depotEntryGroupRelLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+		getSearchableDepotEntryGroupRels(long groupId, int start, int end) {
+
+		return _depotEntryGroupRelLocalService.getSearchableDepotEntryGroupRels(
+			groupId, start, end);
+	}
+
+	@Override
+	public int getSearchableDepotEntryGroupRelsCount(long groupId) {
+		return _depotEntryGroupRelLocalService.
+			getSearchableDepotEntryGroupRelsCount(groupId);
 	}
 
 	/**

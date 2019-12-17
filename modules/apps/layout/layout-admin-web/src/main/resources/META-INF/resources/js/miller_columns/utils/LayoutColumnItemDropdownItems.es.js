@@ -19,6 +19,11 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	},
 
 	{
+		label: Liferay.Language.get('edit-conversion-draft'),
+		name: 'editConversionLayoutURL'
+	},
+
+	{
 		label: Liferay.Language.get('edit'),
 		name: 'editLayoutURL'
 	},
@@ -88,6 +93,16 @@ const LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS = [
 	{
 		label: Liferay.Language.get('convert-to-content-page'),
 		name: 'convertLayoutURL'
+	},
+
+	{
+		label: Liferay.Language.get('convert-to-content-page'),
+		name: 'layoutConversionPreviewURL'
+	},
+
+	{
+		label: Liferay.Language.get('discard-conversion-draft'),
+		name: 'deleteLayoutConversionPreviewURL'
 	},
 
 	{

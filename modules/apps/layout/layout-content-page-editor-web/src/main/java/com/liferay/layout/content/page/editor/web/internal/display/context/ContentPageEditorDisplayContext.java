@@ -55,6 +55,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -70,6 +71,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -116,6 +118,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -174,7 +177,7 @@ public class ContentPageEditorDisplayContext {
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
 
-	public String getDiscardDraftURL() {
+	public String getDiscardDraftURL() throws PortalException {
 		return getFragmentEntryActionURL(
 			"/content_layout/discard_draft_layout");
 	}
@@ -185,6 +188,10 @@ public class ContentPageEditorDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
+				"addFragmentEntryLinkCommentURL",
+				getFragmentEntryActionURL(
+					"/content_layout/add_fragment_entry_link_comment")
+			).put(
 				"addFragmentEntryLinkURL",
 				editorSoyContext.get("addFragmentEntryLinkURL")
 			).put(
@@ -199,6 +206,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"classPK", editorSoyContext.get("classPK")
 			).put(
+				"defaultEditorConfigurations", _getDefaultConfigurations()
+			).put(
 				"defaultLanguageId", editorSoyContext.get("defaultLanguageId")
 			).put(
 				"defaultSegmentsEntryId",
@@ -206,6 +215,15 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"defaultSegmentsExperienceId",
 				editorSoyContext.get("defaultSegmentsExperienceId")
+			).put(
+				"deleteFragmentEntryLinkCommentURL",
+				getFragmentEntryActionURL(
+					"/content_layout/delete_fragment_entry_link_comment")
+			).put(
+				"editFragmentEntryLinkCommentURL",
+				getFragmentEntryActionURL(
+					"/content_layout/edit_fragment_entry_link_comment",
+					Constants.UPDATE)
 			).put(
 				"editSegmentsEntryURL",
 				editorSoyContext.get("editSegmentsEntryURL")
@@ -409,8 +427,7 @@ public class ContentPageEditorDisplayContext {
 
 		Layout draftLayout = themeDisplay.getLayout();
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			draftLayout.getClassPK());
+		Layout layout = _getPublishedLayout();
 
 		Date modifiedDate = draftLayout.getModifiedDate();
 
@@ -424,6 +441,8 @@ public class ContentPageEditorDisplayContext {
 			"draft", modifiedDate.after(publishDate)
 		).put(
 			"lastSaveDate", StringPool.BLANK
+		).put(
+			"pageType", String.valueOf(_getPageType())
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		).put(
@@ -1216,7 +1235,15 @@ public class ContentPageEditorDisplayContext {
 		return null;
 	}
 
-	private int _getPageType() {
+	private int _getPageType() throws PortalException {
+		Layout publishedLayout = _getPublishedLayout();
+
+		if (Objects.equals(
+				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
+
+			return LayoutConverterTypeConstants.TYPE_CONVERSION;
+		}
+
 		Layout layout = themeDisplay.getLayout();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -1353,6 +1380,19 @@ public class ContentPageEditorDisplayContext {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private Layout _getPublishedLayout() throws PortalException {
+		if (_publishedLayout != null) {
+			return _publishedLayout;
+		}
+
+		Layout draftLayout = themeDisplay.getLayout();
+
+		_publishedLayout = LayoutLocalServiceUtil.getLayout(
+			draftLayout.getClassPK());
+
+		return _publishedLayout;
 	}
 
 	private String _getRedirect() {
@@ -1518,6 +1558,7 @@ public class ContentPageEditorDisplayContext {
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
+	private Layout _publishedLayout;
 	private String _redirect;
 	private final RenderResponse _renderResponse;
 	private List<SoyContext> _sidebarPanelSoyContexts;

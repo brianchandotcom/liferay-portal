@@ -254,7 +254,8 @@ public class FreeMarkerTool {
 
 		if (!methodName.equals("getSite") &&
 			!_hasMethodWithSameName(
-				methodName.replaceFirst("Site", ""), javaMethodSignatures)) {
+				methodName.replaceFirst("Site", ""), javaMethodSignatures) &&
+			!methodName.endsWith("SitesPage")) {
 
 			methodName = methodName.replaceFirst("Site", "");
 		}

@@ -70,9 +70,7 @@ definition {
 	test EditExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#EditExportTemplate";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
@@ -104,12 +102,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -293,15 +286,10 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
@@ -357,16 +345,11 @@ definition {
 	test ExportImportDDLViaGlobal {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportDDLViaGlobal";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		SitePages.addPublicPage(pageName = "Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
 
 		SitePages.openPagesAdmin(siteURLKey = "global");
 
@@ -465,11 +448,9 @@ definition {
 
 		LAR.exportPortlet(larFileName = "ExportWebContent.lar");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContent.deleteCP(
-			siteURLKey = "guest",
-			webContentTitle = "Web Content Title");
+		JSONWebcontent.deleteWebContent(
+			groupName = "Guest",
+			title = "Web Content Title");
 
 		LAR.exportPortlet(
 			exportIndividualDeletions = "true",
@@ -668,11 +649,10 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page",
+			widgetName = "Web Content Display");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
@@ -709,9 +689,9 @@ definition {
 	test ExportImportPortlet {
 		property portal.acceptance = "true";
 
-		SitePages.openPagesAdmin(siteURLKey = "Guest");
-
-		SitePages.addPublicPage(pageName = "Test Page Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name");
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 
@@ -731,16 +711,11 @@ definition {
 
 		LAR.exportPortlet(larFileName = "HelloWorld.lar");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		Site.addBlankCP(siteName = "Test Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		SitePages.addPublicPage(pageName = "Test Site Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Site Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Site Page",
@@ -770,18 +745,16 @@ definition {
 			adtFile = "adt_blogs_basic.ftl",
 			adtType = "Blogs");
 
-		SitePages.openPagesAdmin(siteURLKey = "Guest");
-
-		SitePages.addPublicPage(pageName = "Test Page Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Test Page Name",
 			widgetName = "Blogs");
 
-		Navigator.gotoPage(pageName = "Test Page Name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
@@ -807,14 +780,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Refresh();
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -836,9 +802,9 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		SitePages.openPagesAdmin(siteURLKey = "Guest");
-
-		SitePages.addPrivatePage(pageName = "Private Page");
+		JSONLayout.addPrivateLayout(
+			groupName = "Guest",
+			layoutName = "Private Page");
 
 		LAR.exportSiteCP(
 			larFileName = "ExportPrivatePage",
@@ -851,14 +817,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Refresh();
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -910,18 +869,13 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.deleteGroupByName(groupName = "Site Name A");
 
-		Site.deleteAllCP();
+		JSONGroup.deleteGroupByName(groupName = "Site Name B");
 
 		JSONGroup.addGroup(groupName = "Site Name A");
 
 		JSONGroup.addGroup(groupName = "Site Name B");
-
-		SitePages.openPagesAdmin(siteURLKey = "Site Name A");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -942,25 +896,16 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Blogs Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsEntry.viewEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -1015,8 +960,6 @@ definition {
 		LAR.downloadLar();
 
 		JSONGroup.addGroup(groupName = "Second Site");
-
-		SitePages.openPagesAdmin(siteURLKey = "Second Site");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -1115,12 +1058,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.deleteAllCP();
+		JSONGroup.deleteGroupByName(groupName = "Site A");
 
 		JSONGroup.addGroup(groupName = "Site B");
 
@@ -1193,12 +1131,9 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.deleteGroupByName(groupName = "Site Name A");
 
-		Site.deleteAllCP();
+		JSONGroup.deleteGroupByName(groupName = "Site Name B");
 
 		JSONGroup.addGroup(groupName = "Site Name C");
 
@@ -1228,9 +1163,7 @@ definition {
 
 		LAR.downloadLar();
 
-		Site.openSitesAdmin();
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -1243,12 +1176,7 @@ definition {
 	test ExportImportThemeSettings {
 		property osgi.app.includes = "frontend-theme-porygon";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -1276,14 +1204,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Refresh();
-
-		Site.addBlankCP(siteName = "Site Name 2");
+		JSONGroup.addGroup(groupName = "Site Name 2");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -1312,9 +1233,7 @@ definition {
 			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
@@ -1339,18 +1258,11 @@ definition {
 
 		LAR.downloadLar();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		Refresh();
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		LAR.importSiteCP(
 			importValidationMissingItem = "DM Document Title",
@@ -1494,12 +1406,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.deleteAllCP();
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
 
 		JSONGroup.addGroup(groupName = "Site Name A");
 
@@ -1544,12 +1451,7 @@ definition {
 	@description = "This is a use case for LPS-86608."
 	@priority = "3"
 	test ExportImportWebcontentWithRepeatField {
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Exported Site");
+		JSONGroup.addGroup(groupName = "Exported Site");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");
 
@@ -1606,12 +1508,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Imported Site");
+		JSONGroup.addGroup(groupName = "Imported Site");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "imported-site");
 
@@ -1681,12 +1578,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -1791,17 +1683,17 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name");
 
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
-
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
-
-		SitePages.deletePage(pageName = "Test Page");
+		JSONLayout.deletePublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -1904,12 +1796,9 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.deleteGroupByName(groupName = "Site Name A");
 
-		Site.deleteAllCP();
+		JSONGroup.deleteGroupByName(groupName = "Site Name B");
 
 		JSONGroup.addGroup(groupName = "Site C");
 
@@ -2148,9 +2037,9 @@ definition {
 
 		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

@@ -34,6 +34,7 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		soapModel.setDepotEntryGroupRelId(model.getDepotEntryGroupRelId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setDepotEntryId(model.getDepotEntryId());
+		soapModel.setSearchable(model.isSearchable());
 		soapModel.setToGroupId(model.getToGroupId());
 
 		return soapModel;
@@ -129,6 +130,18 @@ public class DepotEntryGroupRelSoap implements Serializable {
 		_depotEntryId = depotEntryId;
 	}
 
+	public boolean getSearchable() {
+		return _searchable;
+	}
+
+	public boolean isSearchable() {
+		return _searchable;
+	}
+
+	public void setSearchable(boolean searchable) {
+		_searchable = searchable;
+	}
+
 	public long getToGroupId() {
 		return _toGroupId;
 	}
@@ -141,6 +154,7 @@ public class DepotEntryGroupRelSoap implements Serializable {
 	private long _depotEntryGroupRelId;
 	private long _companyId;
 	private long _depotEntryId;
+	private boolean _searchable;
 	private long _toGroupId;
 
 }

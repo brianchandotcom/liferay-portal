@@ -53,7 +53,7 @@ public abstract class LiferayBaseComponentDefinition
 	}
 
 	public static LiferayOASSource getLiferayOASSource(
-		LiferayConnectionProperties liferayConnectionProperties) {
+		ComponentProperties componentProperties) {
 
 		try (SandboxedInstance sandboxedInstance = _getSandboxedInstance(
 				RUNTIME_SOURCE_OR_SINK_CLASS_NAME, false)) {
@@ -61,7 +61,7 @@ public abstract class LiferayBaseComponentDefinition
 			OASSource oasSource = (OASSource)sandboxedInstance.getInstance();
 
 			return new LiferayOASSource(
-				oasSource, oasSource.initialize(liferayConnectionProperties));
+				oasSource, oasSource.initialize(componentProperties));
 		}
 		catch (Exception e) {
 			return new LiferayOASSource(

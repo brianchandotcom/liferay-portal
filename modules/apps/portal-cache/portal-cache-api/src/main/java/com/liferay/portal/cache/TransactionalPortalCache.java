@@ -26,15 +26,6 @@ import java.io.Serializable;
 public class TransactionalPortalCache<K extends Serializable, V>
 	extends PortalCacheWrapper<K, V> {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #TransactionalPortalCache(PortalCache, boolean)}
-	 */
-	@Deprecated
-	public TransactionalPortalCache(PortalCache<K, V> portalCache) {
-		this(portalCache, false);
-	}
-
 	public TransactionalPortalCache(
 		PortalCache<K, V> portalCache, boolean mvcc) {
 

@@ -12,13 +12,14 @@
  * details.
  */
 
+import {ClayAlertBase} from 'clay-alert';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 
 import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';
 import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
+import {FRAGMENTS_EDITOR_ITEM_TYPES, PAGE_TYPES} from '../../utils/constants';
 
 const WRAPPER_CLASSES = {
 	default: 'fragment-entry-link-list-wrapper',
@@ -217,6 +218,26 @@ class EditModeWrapper extends Component {
 		if (wrapper) {
 			wrapper.classList.add(WRAPPER_CLASSES.default);
 
+			if (
+				this.pageType === PAGE_TYPES.conversion &&
+				!this._warningStripe
+			) {
+				this._warningStripe = new ClayAlertBase({
+					closeable: false,
+					message: Liferay.Language.get(
+						'page-conversion-description'
+					),
+					spritemap: this.spritemap,
+					title: '',
+					type: 'stripe'
+				});
+
+				this._warningStripe.attachElement(
+					wrapper,
+					wrapper.firstElementChild
+				);
+			}
+
 			if (sidebarPanel) {
 				wrapper.classList.add(WRAPPER_CLASSES.padded);
 			} else {
@@ -241,8 +262,10 @@ const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
 	'activeItemId',
 	'activeItemType',
 	'fragmentEntryLinks',
+	'pageType',
 	'selectedSidebarPanelId',
-	'sidebarPanels'
+	'sidebarPanels',
+	'spritemap'
 ]);
 
 export {ConnectedEditModeWrapper, EditModeWrapper, HIGHLIGHTED_COMMENT_ID_KEY};

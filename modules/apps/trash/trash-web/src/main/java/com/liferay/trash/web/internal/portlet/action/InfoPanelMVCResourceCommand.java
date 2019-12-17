@@ -17,7 +17,7 @@ package com.liferay.trash.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.trash.TrashHelper;
-import com.liferay.trash.web.internal.constants.TrashPortletKeys;
+import com.liferay.trash.constants.TrashPortletKeys;
 import com.liferay.trash.web.internal.constants.TrashWebKeys;
 
 import javax.portlet.ResourceRequest;

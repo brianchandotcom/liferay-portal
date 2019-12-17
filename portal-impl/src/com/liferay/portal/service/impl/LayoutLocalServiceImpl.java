@@ -645,9 +645,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			locale, name
 		).build();
 
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			locale, title
-		).build();
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(locale, title);
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.put(
 			locale, description

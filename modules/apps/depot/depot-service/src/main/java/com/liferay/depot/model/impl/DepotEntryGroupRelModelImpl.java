@@ -70,7 +70,7 @@ public class DepotEntryGroupRelModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"depotEntryGroupRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"depotEntryId", Types.BIGINT},
-		{"toGroupId", Types.BIGINT}
+		{"searchable", Types.BOOLEAN}, {"toGroupId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,11 +81,12 @@ public class DepotEntryGroupRelModelImpl
 		TABLE_COLUMNS_MAP.put("depotEntryGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("depotEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("searchable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("toGroupId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,depotEntryGroupRelId LONG not null primary key,companyId LONG,depotEntryId LONG,toGroupId LONG)";
+		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,depotEntryGroupRelId LONG not null primary key,companyId LONG,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 
@@ -103,9 +104,11 @@ public class DepotEntryGroupRelModelImpl
 
 	public static final long DEPOTENTRYID_COLUMN_BITMASK = 1L;
 
-	public static final long TOGROUPID_COLUMN_BITMASK = 2L;
+	public static final long SEARCHABLE_COLUMN_BITMASK = 2L;
 
-	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 4L;
+	public static final long TOGROUPID_COLUMN_BITMASK = 4L;
+
+	public static final long DEPOTENTRYGROUPRELID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -132,6 +135,7 @@ public class DepotEntryGroupRelModelImpl
 		model.setDepotEntryGroupRelId(soapModel.getDepotEntryGroupRelId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setDepotEntryId(soapModel.getDepotEntryId());
+		model.setSearchable(soapModel.isSearchable());
 		model.setToGroupId(soapModel.getToGroupId());
 
 		return model;
@@ -314,6 +318,12 @@ public class DepotEntryGroupRelModelImpl
 			(BiConsumer<DepotEntryGroupRel, Long>)
 				DepotEntryGroupRel::setDepotEntryId);
 		attributeGetterFunctions.put(
+			"searchable", DepotEntryGroupRel::getSearchable);
+		attributeSetterBiConsumers.put(
+			"searchable",
+			(BiConsumer<DepotEntryGroupRel, Boolean>)
+				DepotEntryGroupRel::setSearchable);
+		attributeGetterFunctions.put(
 			"toGroupId", DepotEntryGroupRel::getToGroupId);
 		attributeSetterBiConsumers.put(
 			"toGroupId",
@@ -384,6 +394,35 @@ public class DepotEntryGroupRelModelImpl
 
 	@JSON
 	@Override
+	public boolean getSearchable() {
+		return _searchable;
+	}
+
+	@JSON
+	@Override
+	public boolean isSearchable() {
+		return _searchable;
+	}
+
+	@Override
+	public void setSearchable(boolean searchable) {
+		_columnBitmask |= SEARCHABLE_COLUMN_BITMASK;
+
+		if (!_setOriginalSearchable) {
+			_setOriginalSearchable = true;
+
+			_originalSearchable = _searchable;
+		}
+
+		_searchable = searchable;
+	}
+
+	public boolean getOriginalSearchable() {
+		return _originalSearchable;
+	}
+
+	@JSON
+	@Override
 	public long getToGroupId() {
 		return _toGroupId;
 	}
@@ -448,6 +487,7 @@ public class DepotEntryGroupRelModelImpl
 			getDepotEntryGroupRelId());
 		depotEntryGroupRelImpl.setCompanyId(getCompanyId());
 		depotEntryGroupRelImpl.setDepotEntryId(getDepotEntryId());
+		depotEntryGroupRelImpl.setSearchable(isSearchable());
 		depotEntryGroupRelImpl.setToGroupId(getToGroupId());
 
 		depotEntryGroupRelImpl.resetOriginalValues();
@@ -516,6 +556,11 @@ public class DepotEntryGroupRelModelImpl
 
 		depotEntryGroupRelModelImpl._setOriginalDepotEntryId = false;
 
+		depotEntryGroupRelModelImpl._originalSearchable =
+			depotEntryGroupRelModelImpl._searchable;
+
+		depotEntryGroupRelModelImpl._setOriginalSearchable = false;
+
 		depotEntryGroupRelModelImpl._originalToGroupId =
 			depotEntryGroupRelModelImpl._toGroupId;
 
@@ -537,6 +582,8 @@ public class DepotEntryGroupRelModelImpl
 		depotEntryGroupRelCacheModel.companyId = getCompanyId();
 
 		depotEntryGroupRelCacheModel.depotEntryId = getDepotEntryId();
+
+		depotEntryGroupRelCacheModel.searchable = isSearchable();
 
 		depotEntryGroupRelCacheModel.toGroupId = getToGroupId();
 
@@ -622,6 +669,9 @@ public class DepotEntryGroupRelModelImpl
 	private long _depotEntryId;
 	private long _originalDepotEntryId;
 	private boolean _setOriginalDepotEntryId;
+	private boolean _searchable;
+	private boolean _originalSearchable;
+	private boolean _setOriginalSearchable;
 	private long _toGroupId;
 	private long _originalToGroupId;
 	private boolean _setOriginalToGroupId;

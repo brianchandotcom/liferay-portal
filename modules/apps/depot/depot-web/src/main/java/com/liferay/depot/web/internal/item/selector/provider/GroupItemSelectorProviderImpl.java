@@ -56,7 +56,7 @@ public class GroupItemSelectorProviderImpl
 		try {
 			List<DepotEntryGroupRel> depotEntryGroupRels =
 				_depotEntryGroupRelService.getDepotEntryGroupRels(
-					groupId, start, end);
+					_getLiveGroupId(groupId), start, end);
 
 			Stream<DepotEntryGroupRel> stream = depotEntryGroupRels.stream();
 
@@ -81,7 +81,7 @@ public class GroupItemSelectorProviderImpl
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
 		try {
 			return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(
-				groupId);
+				_getLiveGroupId(groupId));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -108,6 +108,16 @@ public class GroupItemSelectorProviderImpl
 	@Override
 	public boolean isEnabled() {
 		return _depotSupportChecker.isEnabled();
+	}
+
+	private long _getLiveGroupId(long groupId) throws PortalException {
+		Group group = _groupService.getGroup(groupId);
+
+		if (group.isStagingGroup()) {
+			return group.getLiveGroupId();
+		}
+
+		return groupId;
 	}
 
 	private Optional<Group> _toGroupOptional(

@@ -37,7 +37,7 @@ exports[`CriteriaRow renders 1`] = `
         value="test_val"
       />
       <button
-        class="btn-outline-borderless btn btn-monospaced btn-secondary"
+        class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
         type="button"
       >
         <svg
@@ -50,7 +50,7 @@ exports[`CriteriaRow renders 1`] = `
         </svg>
       </button>
       <button
-        class="btn-outline-borderless btn btn-monospaced btn-secondary"
+        class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
         type="button"
       >
         <svg
@@ -106,7 +106,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
         value="test_val"
       />
       <button
-        class="btn-outline-danger btn btn-primary"
+        class="btn-outline-danger btn-sm btn btn-primary"
         type="button"
       >
         delete

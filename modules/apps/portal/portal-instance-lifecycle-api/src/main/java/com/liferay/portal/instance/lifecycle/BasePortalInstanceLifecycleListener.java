@@ -25,14 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public abstract class BasePortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void portalInstancePreregistered(long companyId) {
-	}
-
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 	}

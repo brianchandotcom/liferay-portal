@@ -35,11 +35,6 @@
 </tr>
 <!--DOCUMENTS-->
 <tr>
-	<td>DOCUMENTS_PAGE_TITLE</td>
-	<td>title=${key_documentTitle}</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENTS_SAVE_STATUS</td>
 	<td>//span[@id='BreadcrumbSaveStatus']</td>
 	<td></td>

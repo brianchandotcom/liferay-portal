@@ -15,6 +15,7 @@
 package com.liferay.layout.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 
 /**
  * @author Rubén Pulido
@@ -60,6 +61,8 @@ public interface BulkLayoutConverter {
 	 *         successfully converted
 	 */
 	public long[] convertLayouts(long[] plids);
+
+	public Layout generatePreviewLayout(long plid) throws Exception;
 
 	/**
 	 * Returns the plids of the convertible layouts in the group

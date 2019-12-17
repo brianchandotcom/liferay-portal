@@ -748,16 +748,6 @@ public class UpgradeContentTargetingTest {
 
 				@Override
 				public void register(
-					String bundleSymbolicName, String fromSchemaVersionString,
-					String toSchemaVersionString, UpgradeStep... upgradeSteps) {
-
-					register(
-						fromSchemaVersionString, toSchemaVersionString,
-						upgradeSteps);
-				}
-
-				@Override
-				public void register(
 					String fromSchemaVersionString,
 					String toSchemaVersionString, UpgradeStep... upgradeSteps) {
 

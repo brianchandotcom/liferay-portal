@@ -16,7 +16,7 @@ import {EventHandler} from 'metal-events';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState, useContext} from 'react';
 
-import {StoreContext} from '../../app/store/index';
+import {ConfigContext} from '../../app/config/index';
 
 export default function Editor({
 	autoFocus = false,
@@ -27,7 +27,7 @@ export default function Editor({
 	placeholder
 }) {
 	const {defaultEditorConfigurations, portletNamespace} = useContext(
-		StoreContext
+		ConfigContext
 	);
 
 	const editorConfig =

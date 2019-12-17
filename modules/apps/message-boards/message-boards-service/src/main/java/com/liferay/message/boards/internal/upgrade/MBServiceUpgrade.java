@@ -54,9 +54,7 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService));
 
-		registry.register(
-			"com.liferay.message.boards.service", "1.0.1", "1.1.0",
-			new UpgradeMBThread());
+		registry.register("1.0.1", "1.1.0", new UpgradeMBThread());
 
 		registry.register(
 			"1.1.0", "2.0.0",

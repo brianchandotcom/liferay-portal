@@ -46,6 +46,12 @@ export default function InlineConfirm({
 
 	useEffect(() => {
 		if (wrapper.current) {
+			wrapper.current.focus();
+		}
+	}, []);
+
+	useEffect(() => {
+		if (wrapper.current) {
 			const confirmButton = wrapper.current.querySelector(
 				'page-editor__inline-confirm-button'
 			);

@@ -1946,6 +1946,8 @@ rerun your task.
 					<propertyref name="sdk.dir" />
 					<propertyref name="timeout.app.server.wait" />
 					<propertyref name="upgrade.table.dir" />
+					<propertyref prefix="compat.com.liferay.portal." />
+					<propertyref prefix="compat.com.liferay.util." />
 					<propertyref prefix="gradle.publish." />
 					<propertyref prefix="gradle.releng.pom." />
 					<propertyref prefix="ivy.pom." />

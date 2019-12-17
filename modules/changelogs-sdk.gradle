@@ -100,6 +100,12 @@ buildChangelogs {
 
 		changelog = "# ${pluginFullName} Change Log" + changelog
 
+		changelog = changelog.replaceAll(/(\n(?=- \[.+\]).{1,80})[ \t]+(.*)/) {
+			String all, String s1, String s2 ->
+
+			"${s1}\n${s2}"
+		}
+
 		changelogFile.text = changelog
 
 		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName

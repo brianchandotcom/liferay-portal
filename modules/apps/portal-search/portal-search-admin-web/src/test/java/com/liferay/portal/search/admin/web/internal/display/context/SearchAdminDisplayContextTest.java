@@ -179,39 +179,6 @@ public class SearchAdminDisplayContextTest {
 			"index-actions", searchAdminDisplayContext.getSelectedTab());
 	}
 
-	@Test
-	public void testIsIndexInformationAvailable() {
-		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
-			new SearchAdminDisplayBuilder(
-				_language, _portal, new MockRenderRequest(),
-				new MockRenderResponse());
-
-		searchAdminDisplayBuilder.setIndexInformation(
-			Mockito.mock(IndexInformation.class));
-
-		SearchAdminDisplayContext searchAdminDisplayContext =
-			searchAdminDisplayBuilder.build();
-
-		Assert.assertTrue(
-			searchAdminDisplayContext.isIndexInformationAvailable());
-	}
-
-	@Test
-	public void testIsIndexInformationAvailableFalse() {
-		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
-			new SearchAdminDisplayBuilder(
-				_language, _portal, new MockRenderRequest(),
-				new MockRenderResponse());
-
-		searchAdminDisplayBuilder.setIndexInformation(null);
-
-		SearchAdminDisplayContext searchAdminDisplayContext =
-			searchAdminDisplayBuilder.build();
-
-		Assert.assertTrue(
-			!searchAdminDisplayContext.isIndexInformationAvailable());
-	}
-
 	protected RenderRequest getRenderRequestWithSelectedTab(
 		String selectedTab) {
 

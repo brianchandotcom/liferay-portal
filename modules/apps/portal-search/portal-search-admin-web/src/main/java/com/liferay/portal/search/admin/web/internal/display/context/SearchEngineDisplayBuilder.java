@@ -19,25 +19,27 @@ import com.liferay.portal.search.engine.SearchEngineInformation;
 /**
  * @author Adam Brandizzi
  */
-public class IndexActionsDisplayBuilder {
+public class SearchEngineDisplayBuilder {
 
-	public IndexActionsDisplayContext build() {
-		IndexActionsDisplayContext indexActionsDisplayContext =
-			new IndexActionsDisplayContext();
+	public SearchEngineDisplayContext build() {
+		SearchEngineDisplayContext searchEngineDisplayContext =
+			new SearchEngineDisplayContext();
 
 		if (_searchEngineInformation != null) {
-			indexActionsDisplayContext.setClientVersionString(
+			searchEngineDisplayContext.setClientVersionString(
 				_searchEngineInformation.getClientVersionString());
-			indexActionsDisplayContext.setNodesString(
+			searchEngineDisplayContext.setConnectionInformationList(
+				_searchEngineInformation.getConnectionInformationList());
+			searchEngineDisplayContext.setNodesString(
 				_searchEngineInformation.getNodesString());
-			indexActionsDisplayContext.setVendorString(
+			searchEngineDisplayContext.setVendorString(
 				_searchEngineInformation.getVendorString());
 		}
 		else {
-			indexActionsDisplayContext.setMissingSearchEngine(true);
+			searchEngineDisplayContext.setMissingSearchEngine(true);
 		}
 
-		return indexActionsDisplayContext;
+		return searchEngineDisplayContext;
 	}
 
 	public void setSearchEngineInformation(

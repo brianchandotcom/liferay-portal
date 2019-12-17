@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminWebKeys;
 import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingsDisplayBuilder;
-import com.liferay.portal.search.admin.web.internal.display.context.IndexActionsDisplayBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
+import com.liferay.portal.search.admin.web.internal.display.context.SearchEngineDisplayBuilder;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
 
@@ -89,18 +89,18 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 		String tab = searchAdminDisplayContext.getSelectedTab();
 
-		if (tab.equals("index-actions")) {
-			IndexActionsDisplayBuilder indexActionsDisplayBuilder =
-				new IndexActionsDisplayBuilder();
+		if (tab.equals("search-engine")) {
+			SearchEngineDisplayBuilder searchEngineDisplayBuilder =
+				new SearchEngineDisplayBuilder();
 
-			indexActionsDisplayBuilder.setSearchEngineInformation(
+			searchEngineDisplayBuilder.setSearchEngineInformation(
 				searchEngineInformation);
 
 			renderRequest.setAttribute(
-				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,
-				indexActionsDisplayBuilder.build());
+				SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT,
+				searchEngineDisplayBuilder.build());
 		}
-		else {
+		else if (tab.equals("field-mappings")) {
 			FieldMappingsDisplayBuilder fieldMappingsDisplayBuilder =
 				new FieldMappingsDisplayBuilder(_http);
 

@@ -22,7 +22,7 @@ public class SearchAdminWebKeys {
 	public static final String FIELD_MAPPINGS_DISPLAY_CONTEXT =
 		"FIELD_MAPPINGS_DISPLAY_CONTEXT";
 
-	public static final String INDEX_ACTIONS_DISPLAY_CONTEXT =
-		"INDEX_ACTIONS_DISPLAY_CONTEXT";
+	public static final String SEARCH_ENGINE_DISPLAY_CONTEXT =
+		"SEARCH_ENGINE_DISPLAY_CONTEXT";
 
 }

@@ -29,16 +29,6 @@ public class SearchAdminDisplayContext {
 		return _selectedTab;
 	}
 
-	public boolean isIndexInformationAvailable() {
-		return _indexInformationAvailable;
-	}
-
-	public void setIndexInformationAvailable(
-		boolean indexInformationAvailable) {
-
-		_indexInformationAvailable = indexInformationAvailable;
-	}
-
 	public void setNavigationItemList(NavigationItemList navigationItemList) {
 		_navigationItemList = navigationItemList;
 	}
@@ -47,7 +37,6 @@ public class SearchAdminDisplayContext {
 		_selectedTab = selectedTab;
 	}
 
-	private boolean _indexInformationAvailable;
 	private NavigationItemList _navigationItemList;
 	private String _selectedTab;
 

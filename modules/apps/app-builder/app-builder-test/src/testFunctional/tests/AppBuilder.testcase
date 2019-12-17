@@ -1122,6 +1122,13 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Text");
 	}
 
+	@description = "No results found screen is shown when the Table View search doesn't retrieve any results"
+	@priority = "5"
+	test TableViewSearchNoResultsFound {
+		property portal.acceptance = "false";
+
+	}
+
 	@description = "Validate empty list state of Apps listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfAppsListingScreen {

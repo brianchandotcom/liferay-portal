@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:liferay="http://www.mulesoft.org/schema/mule/liferay" xmlns="http://www.mulesoft.org/schema/mule/core"
+	  xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd">
+
+	<configuration-properties file="automation-credentials.properties" />
+
+	<liferay:config name="Liferay_Config">
+		<liferay:basic-connection _openApiSpecPath="${liferay.openApiSpecPath}" _username="${liferay.username}" _password="${liferay.password}" />
+	</liferay:config>
+
+	<flow name="test-update-product-flow">
+		<liferay:post endpoint="/v1.0/products" config-ref="Liferay_Config">
+			<liferay:input-stream ><![CDATA[{
+      "active": true,
+      "catalogId": 38307,
+      "description": {
+        "en_US": "Test Product"
+      },
+      "name": {
+        "en_US": "Test Product"
+      },
+      "productType": "simple"
+}]]></liferay:input-stream>
+		</liferay:post>
+
+		<set-variable value="#[payload.productId]" variableName="productId"/>
+
+
+		<liferay:patch endpoint="/v1.0/products/{id}" config-ref="Liferay_Config">
+			<liferay:input-stream ><![CDATA[{
+      "active": true,
+      "catalogId": 38307,
+      "description": {
+        "en_US": "Updated Test Product"
+      },
+      "name": {
+        "en_US": "Updated Test Product"
+      },
+      "productType": "simple"
+    }]]></liferay:input-stream>
+			<liferay:path-params >
+				<liferay:path-param key="id" value="#[vars.productId]" />
+			</liferay:path-params>
+		</liferay:patch>
+		<liferay:get config-ref="Liferay_Config" endpoint="/v1.0/products/{id}">
+			<liferay:path-params >
+				<liferay:path-param key="id" value="#[vars.productId]" />
+			</liferay:path-params>
+		</liferay:get>
+	</flow>
+</mule>

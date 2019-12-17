@@ -15,8 +15,10 @@ apply plugin: "com.liferay.plugin"
 #end
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
+#if (!${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.util.freemarker.contributor"
+#end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.bridges"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"

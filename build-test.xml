@@ -9981,7 +9981,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 										db2 drop db lportal${databases.size}
 
-										db2 -f/tmp/create.sql -tvs
+										db2 -f/tmp/create.sql -st
 									]]>
 								</echo>
 							</then>

@@ -35,7 +35,6 @@ import org.osgi.util.tracker.ServiceTracker;
 @Deprecated
 public class FragmentEntryConfigUtil {
 
-	@Deprecated
 	public static JSONObject getConfigurationDefaultValuesJSONObject(
 		String configuration) {
 
@@ -46,7 +45,6 @@ public class FragmentEntryConfigUtil {
 			getConfigurationDefaultValuesJSONObject(configuration);
 	}
 
-	@Deprecated
 	public static JSONObject getConfigurationJSONObject(
 			String configuration, String editableValues,
 			long[] segmentsExperienceIds)
@@ -59,7 +57,6 @@ public class FragmentEntryConfigUtil {
 			configuration, editableValues, segmentsExperienceIds);
 	}
 
-	@Deprecated
 	public static Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration) {
 
@@ -70,7 +67,6 @@ public class FragmentEntryConfigUtil {
 			configurationValuesJSONObject, configuration);
 	}
 
-	@Deprecated
 	public static Object getFieldValue(
 		FragmentConfigurationField fragmentConfigurationField, String value) {
 
@@ -81,7 +77,6 @@ public class FragmentEntryConfigUtil {
 			fragmentConfigurationField, value);
 	}
 
-	@Deprecated
 	public static Object getFieldValue(
 		String configuration, String editableValues,
 		long[] segmentsExperienceIds, String name) {
@@ -93,14 +88,12 @@ public class FragmentEntryConfigUtil {
 			configuration, editableValues, segmentsExperienceIds, name);
 	}
 
-	@Deprecated
 	public static Object getFieldValue(
 		String configuration, String fieldName, String value) {
 
 		throw new UnsupportedOperationException();
 	}
 
-	@Deprecated
 	public static List<FragmentConfigurationField>
 		getFragmentConfigurationFields(String configuration) {
 
@@ -111,7 +104,6 @@ public class FragmentEntryConfigUtil {
 			configuration);
 	}
 
-	@Deprecated
 	public static JSONObject getSegmentedConfigurationValues(
 		long[] segmentsExperienceIds,
 		JSONObject configurationValuesJSONObject) {
@@ -123,7 +115,6 @@ public class FragmentEntryConfigUtil {
 			segmentsExperienceIds, configurationValuesJSONObject);
 	}
 
-	@Deprecated
 	public static boolean isPersonalizationSupported(JSONObject jsonObject) {
 		FragmentEntryConfigurationUtil fragmentEntryConfigurationUtil =
 			_serviceTracker.getService();
@@ -132,7 +123,6 @@ public class FragmentEntryConfigUtil {
 			jsonObject);
 	}
 
-	@Deprecated
 	public static String translateConfiguration(
 		JSONObject jsonObject, ResourceBundle resourceBundle) {
 

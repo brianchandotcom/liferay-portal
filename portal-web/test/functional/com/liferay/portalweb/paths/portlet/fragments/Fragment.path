@@ -136,8 +136,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_CONFIGURATION_HEADER_H2</td>
-	<td>//h2[contains(@class,'component-${key_fragmentName}')]</td>
+	<td>FRAGMENT_CONFIGURATION_HEADER</td>
+	<td>//${key_headingLevel}[contains(@class,'component-${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +44,13 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() {
+		_initialAssetEntryAssetCategoryRelsCount =
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount();
+	}
 
 	@Test
 	public void testAddAssetEntryAssetCategoryRel() {
@@ -78,8 +86,9 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		_addAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryId);
 
 		Assert.assertEquals(
-			_assetEntryAssetCategoryRels.toString(), 2,
-			_assetEntryAssetCategoryRels.size());
+			_initialAssetEntryAssetCategoryRelsCount + 2,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
 
 		_assetEntryAssetCategoryRelLocalService.
 			deleteAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
@@ -104,20 +113,17 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		_addAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryId);
 
 		Assert.assertEquals(
-			_assetEntryAssetCategoryRels.toString(), 2,
-			_assetEntryAssetCategoryRels.size());
+			_initialAssetEntryAssetCategoryRelsCount + 2,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
 
 		_assetEntryAssetCategoryRelLocalService.
 			deleteAssetEntryAssetCategoryRelByAssetCategoryId(assetCategoryId);
 
-		_assetEntryAssetCategoryRels =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsByAssetCategoryId(
-					assetCategoryId);
-
 		Assert.assertEquals(
-			_assetEntryAssetCategoryRels.toString(), 0,
-			_assetEntryAssetCategoryRels.size());
+			_initialAssetEntryAssetCategoryRelsCount,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
 	}
 
 	@Test
@@ -132,8 +138,9 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		_addAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryId);
 
 		Assert.assertEquals(
-			_assetEntryAssetCategoryRels.toString(), 2,
-			_assetEntryAssetCategoryRels.size());
+			_initialAssetEntryAssetCategoryRelsCount + 2,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
 
 		_assetEntryAssetCategoryRelLocalService.
 			deleteAssetEntryAssetCategoryRelByAssetEntryId(assetEntryId1);
@@ -283,8 +290,9 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		long assetEntryId, long assetCategoryId, int priority) {
 
 		Assert.assertEquals(
-			_assetEntryAssetCategoryRels.toString(), 1,
-			_assetEntryAssetCategoryRels.size());
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
 
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
 			_assetEntryAssetCategoryRels.get(0);
@@ -305,5 +313,7 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 	@DeleteAfterTestRun
 	private List<AssetEntryAssetCategoryRel> _assetEntryAssetCategoryRels =
 		new ArrayList<>();
+
+	private int _initialAssetEntryAssetCategoryRelsCount;
 
 }

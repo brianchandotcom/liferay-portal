@@ -27,15 +27,16 @@ import TreeviewContext from './TreeviewContext';
  * See: https://github.com/liferay/liferay-amd-loader/issues/225
  */
 function classNames(classes) {
-	return Object.entries(classes).map(([key, value]) => {
-		return value ? key : false;
-	})
+	return Object.entries(classes)
+		.map(([key, value]) => {
+			return value ? key : false;
+		})
 		.filter(Boolean)
 		.join(' ');
 }
 
 export default function TreeviewCard({node}) {
-	const {dispatch, state} = useContext(TreeviewContext);
+	const {state} = useContext(TreeviewContext);
 	const {filterQuery, focusedNodeId} = state;
 
 	const path =
@@ -48,13 +49,13 @@ export default function TreeviewCard({node}) {
 	return (
 		<div
 			className={classNames({
+				'card-type-directory': true,
 				disabled: node.disabled,
 				focused: node.id === focusedNodeId,
-				selected: node.selected,
-				'card-type-directory': true,
 				'form-check': true,
 				'form-check-card': true,
-				'form-check-middle-left': true
+				'form-check-middle-left': true,
+				selected: node.selected
 			})}
 		>
 			<div className="card card-horizontal">

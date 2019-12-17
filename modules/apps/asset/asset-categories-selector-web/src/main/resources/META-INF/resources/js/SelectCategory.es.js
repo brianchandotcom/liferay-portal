@@ -110,10 +110,10 @@ function SelectCategory({
 						id={`${namespace}categoryContainer`}
 					>
 						<Treeview
-							NodeComponent={Treeview.Card}
 							filterQuery={filterQuery}
 							initialSelectedNodeIds={initialSelectedNodeIds}
 							multiSelection={multiSelection}
+							NodeComponent={Treeview.Card}
 							nodes={nodes}
 							onSelectedNodesChange={handleSelectionChange}
 						/>

@@ -128,9 +128,9 @@ const SelectLayout = ({
 						id={`${namespace}layoutContainer`}
 					>
 						<Treeview
-							NodeComponent={Treeview.Card}
 							filterQuery={filterQuery}
 							multiSelection={multiSelection}
+							NodeComponent={Treeview.Card}
 							nodes={nodes}
 							onSelectedNodesChange={handleSelectionChange}
 						/>

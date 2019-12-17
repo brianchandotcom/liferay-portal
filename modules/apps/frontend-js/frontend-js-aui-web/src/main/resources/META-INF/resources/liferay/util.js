@@ -299,7 +299,7 @@
 				form = Util.getDOM(form);
 				allBox = Util.getDOM(allBox);
 
-				var selector;
+				let selector;
 
 				if (Array.isArray(name)) {
 					selector =
@@ -310,23 +310,29 @@
 					selector = 'input[name=' + name + STR_RIGHT_SQUARE_BRACKET;
 				}
 
-				form = $(form);
+				form = document.querySelector(form);
+				allBox = document.querySelector(allBox);
 
-				var allBoxChecked = $(allBox).prop(STR_CHECKED);
+				const allBoxChecked = allBox.checked;
 
-				form.find(selector).each((index, item) => {
-					item = $(item);
+				const uploadedItems = Array.from(
+					form.querySelectorAll(selector)
+				);
 
-					if (!item.prop('disabled')) {
-						item.prop(STR_CHECKED, allBoxChecked);
+				uploadedItems.forEach(item => {
+					if (!item.disabled) {
+						item.checked = allBoxChecked;
 					}
 				});
 
 				if (selectClassName) {
-					form.find(selectClassName).toggleClass(
-						'info',
-						allBoxChecked
-					);
+					const selectItem = form.querySelector(selectClassName);
+
+					if (allBoxChecked) {
+						selectItem.classList.add('info');
+					} else {
+						selectItem.classList.remove('info');
+					}
 				}
 			}
 		},

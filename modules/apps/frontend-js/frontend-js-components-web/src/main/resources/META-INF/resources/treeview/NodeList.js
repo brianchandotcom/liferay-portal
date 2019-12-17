@@ -13,10 +13,9 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import NodeListItem from './NodeListItem';
-import TreeviewContext from './TreeviewContext';
 
 export default function NodeList({
 	NodeComponent,
@@ -26,8 +25,6 @@ export default function NodeList({
 	role = 'group',
 	tabIndex = -1
 }) {
-	const {dispatch} = useContext(TreeviewContext);
-
 	const rootNodeId = nodes[0] && nodes[0].id;
 
 	if (!rootNodeId) {

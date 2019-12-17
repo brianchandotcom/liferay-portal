@@ -59,7 +59,19 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 
-		_assertAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, 0);
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
+		Assert.assertEquals(
+			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
+		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -70,8 +82,19 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, priority);
 
-		_assertAssetEntryAssetCategoryRel(
-			assetEntryId, assetCategoryId, priority);
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
+		Assert.assertEquals(
+			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
+		Assert.assertEquals(priority, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -98,7 +121,19 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 				getAssetEntryAssetCategoryRelsByAssetCategoryId(
 					assetCategoryId);
 
-		_assertAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryId, 0);
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntryId2, assetEntryAssetCategoryRel.getAssetEntryId());
+		Assert.assertEquals(
+			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
+		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -150,7 +185,19 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 				getAssetEntryAssetCategoryRelsByAssetCategoryId(
 					assetCategoryId);
 
-		_assertAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryId, 0);
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntryId2, assetEntryAssetCategoryRel.getAssetEntryId());
+		Assert.assertEquals(
+			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
+		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -165,7 +212,19 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 			_assetEntryAssetCategoryRelLocalService.
 				fetchAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId));
 
-		_assertAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, 0);
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
+		Assert.assertEquals(
+			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
+		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -213,7 +272,19 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 				getAssetEntryAssetCategoryRelsByAssetCategoryId(
 					assetCategoryId);
 
-		_assertAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, 0);
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
+		Assert.assertEquals(
+			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
+		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -227,7 +298,21 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 			_assetEntryAssetCategoryRelLocalService.
 				getAssetEntryAssetCategoryRelsByAssetEntryId(assetEntryId);
 
-		_assertAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, 0);
+		Assert.assertEquals(
+			_initialAssetEntryAssetCategoryRelsCount + 1,
+			_assetEntryAssetCategoryRelLocalService.
+				getAssetEntryAssetCategoryRelsCount());
+
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+			_assetEntryAssetCategoryRels.get(0);
+
+		Assert.assertEquals(
+			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
+
+		Assert.assertEquals(
+			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
+
+		Assert.assertEquals(0, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -284,26 +369,6 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 			_assetEntryAssetCategoryRelLocalService.
 				addAssetEntryAssetCategoryRel(
 					assetEntryId, assetCategoryId, priority));
-	}
-
-	private void _assertAssetEntryAssetCategoryRel(
-		long assetEntryId, long assetCategoryId, int priority) {
-
-		Assert.assertEquals(
-			_initialAssetEntryAssetCategoryRelsCount + 1,
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsCount());
-
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			_assetEntryAssetCategoryRels.get(0);
-
-		Assert.assertEquals(
-			assetEntryId, assetEntryAssetCategoryRel.getAssetEntryId());
-
-		Assert.assertEquals(
-			assetCategoryId, assetEntryAssetCategoryRel.getAssetCategoryId());
-
-		Assert.assertEquals(priority, assetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Inject

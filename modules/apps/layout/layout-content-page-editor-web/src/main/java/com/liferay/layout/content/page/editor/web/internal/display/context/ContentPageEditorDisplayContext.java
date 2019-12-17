@@ -269,7 +269,9 @@ public class ContentPageEditorDisplayContext {
 				"hasUpdatePermissions",
 				editorSoyContext.get("hasUpdatePermissions")
 			).put(
-				"infoItemSelectorURL", _getInfoItemSelectorURL()
+				"imageSelectorURL", editorSoyContext.get("imageSelectorURL")
+			).put(
+				"infoItemSelectorURL", editorSoyContext.get("infoItemSelectorURL")
 			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
 			).put(
@@ -296,6 +298,8 @@ public class ContentPageEditorDisplayContext {
 				"languageId", editorSoyContext.get("languageId")
 			).put(
 				"layoutData", editorSoyContext.get("layoutData")
+			).put(
+				"mappedInfoItems", editorSoyContext.get("mappedInfoItems")
 			).put(
 				"pageContents", editorSoyContext.get("pageContents")
 			).put(

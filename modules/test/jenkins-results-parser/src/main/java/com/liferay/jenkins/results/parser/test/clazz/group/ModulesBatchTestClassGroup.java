@@ -130,6 +130,11 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 				}
 			}
 
+			excludesPathMatchers.addAll(
+				getPathMatchers(
+					getFirstPropertyValue("modules.excludes." + buildProfile),
+					modulesDir));
+
 			if (testRelevantChanges) {
 				moduleDirsList.addAll(
 					getRequiredModuleDirs(

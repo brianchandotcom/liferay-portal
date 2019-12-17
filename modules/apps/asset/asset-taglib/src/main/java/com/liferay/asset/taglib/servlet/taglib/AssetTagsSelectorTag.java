@@ -154,6 +154,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_hiddenInput = "assetTagNames";
 		_id = null;
 		_ignoreRequestValue = false;
+		_namespace = null;
 		_removeCallback = null;
 		_showSelectButton = true;
 		_tagNames = null;

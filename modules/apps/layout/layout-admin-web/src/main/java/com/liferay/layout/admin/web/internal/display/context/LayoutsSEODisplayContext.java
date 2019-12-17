@@ -98,12 +98,14 @@ public class LayoutsSEODisplayContext {
 	public DDMFormValues getDDMFormValues() throws StorageException {
 		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
 
-		if (selLayoutSEOEntry != null) {
-			return _storageEngine.getDDMFormValues(
-				selLayoutSEOEntry.getDDMStorageId());
+		if ((selLayoutSEOEntry == null) ||
+			(selLayoutSEOEntry.getDDMStorageId() == 0)) {
+
+			return null;
 		}
 
-		return null;
+		return _storageEngine.getDDMFormValues(
+			selLayoutSEOEntry.getDDMStorageId());
 	}
 
 	public long getDDMStructurePrimaryKey() throws PortalException {

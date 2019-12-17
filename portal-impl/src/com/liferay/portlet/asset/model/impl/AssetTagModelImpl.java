@@ -200,7 +200,7 @@ public class AssetTagModelImpl
 		};
 
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_SQL_CREATE =
-		"create table AssetEntries_AssetTags (companyId LONG not null,entryId LONG not null,tagId LONG not null,primary key (entryId, tagId))";
+		"create table AssetEntries_AssetTags (companyId LONG not null,entryId LONG not null,tagId LONG not null,ctCollectionId LONG default 0 not null,changeType BOOLEAN,primary key (entryId, tagId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS =
 		GetterUtil.getBoolean(

@@ -383,7 +383,7 @@ definition {
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssignee {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssignee";
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");

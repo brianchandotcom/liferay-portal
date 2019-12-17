@@ -391,14 +391,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		AppBuilderAdmin.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Single Selection",
 			formViewName = "Single Selection Field - Form View Title",
 			tableViewName = "Single Selection Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		AppBuilderAdmin.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Upload",
 			formViewName = "Upload Field - Form View Title",
 			tableViewName = "Upload Field - Table View Title");
@@ -432,14 +432,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		AppBuilderAdmin.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Text Field",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		AppBuilderAdmin.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Numeric",
 			formViewName = "Numeric Field - Form View Title",
 			tableViewName = "Numeric Field - Table View Title");
@@ -1065,14 +1065,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");	
 
-		TableViewBuilder.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Upload",
 			formViewName = "Upload Field - Form View Title",
 			tableViewName = "Upload Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		AppBuilderAdmin.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Grid",
 			formViewName = "Grid Field - Form View Title",
 			tableViewName = "Grid Field - Table View Title");
@@ -1105,14 +1105,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		AppBuilderAdmin.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Text Field",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		AppBuilderAdmin.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Date",
 			formViewName = "Date Field - Form View Title",
 			tableViewName = "Date Field - Table View Title");
@@ -1132,14 +1132,14 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		TableViewBuilder.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Text Field",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
 		FormViewBuilder.switchToFormViewTab();
 
-		TableViewBuilder.createFormViewandTableView(
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Date",
 			formViewName = "Date Field - Form View Title",
 			tableViewName = "Date Field - Table View Title");

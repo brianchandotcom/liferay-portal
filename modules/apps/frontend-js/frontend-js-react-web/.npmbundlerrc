@@ -56,7 +56,6 @@
 		"scheduler": [
 			"umd/**/*"
 		],
-		"symbol-observable": true,
 		"tiny-warning": [
 			"src/**/*"
 		],

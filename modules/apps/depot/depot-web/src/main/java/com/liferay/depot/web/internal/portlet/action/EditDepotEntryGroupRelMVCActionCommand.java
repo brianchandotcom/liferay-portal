@@ -14,15 +14,16 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
-import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,21 +44,16 @@ public class EditDepotEntryGroupRelMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
-		long depotEntryGroupRelId = ParamUtil.getLong(
-			actionRequest, "depotEntryGroupRelId");
-
-		DepotEntryGroupRel depotEntryGroupRel =
-			_depotEntryGroupRelLocalService.fetchDepotEntryGroupRel(
-				depotEntryGroupRelId);
-
-		if (depotEntryGroupRel != null) {
-			depotEntryGroupRel.setSearchable(
+		try {
+			_depotEntryGroupRelLocalService.updateSearchable(
+				ParamUtil.getLong(actionRequest, "depotEntryGroupRelId"),
 				ParamUtil.getBoolean(actionRequest, "searchable"));
-
-			_depotEntryGroupRelLocalService.updateDepotEntryGroupRel(
-				depotEntryGroupRel);
+		}
+		catch (PortalException pe) {
+			throw new PortletException(pe);
 		}
 	}
 

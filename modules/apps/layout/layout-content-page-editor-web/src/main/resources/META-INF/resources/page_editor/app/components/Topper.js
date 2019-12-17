@@ -120,12 +120,12 @@ export default function Topper({
 		},
 		drop(_item, _monitor) {
 			if (!_monitor.didDrop()) {
-				const {parentId, position} = getParentItemIdAndPositon(
-					layoutData.items,
-					item.itemId,
+				const {parentId, position} = getParentItemIdAndPositon({
 					edge,
-					_monitor.getItemType()
-				);
+					item: _item,
+					items: layoutData.items,
+					siblingOrParentId: item.itemId
+				});
 
 				return {
 					itemId: _item.itemId,
@@ -335,10 +335,10 @@ export default function Topper({
 	);
 }
 
-function getParentItemIdAndPositon(items, siblingOrParentId, edge, itemType) {
+function getParentItemIdAndPositon({edge, item, items, siblingOrParentId}) {
 	const siblingOrParent = items[siblingOrParentId];
 
-	if (isNestingSupported(itemType, siblingOrParent.type)) {
+	if (isNestingSupported(item.type, siblingOrParent.type)) {
 		return {
 			parentId: siblingOrParentId,
 			position: siblingOrParent.children.length
@@ -347,7 +347,15 @@ function getParentItemIdAndPositon(items, siblingOrParentId, edge, itemType) {
 		const parent = items[siblingOrParent.parentId];
 
 		const siblingIndex = parent.children.indexOf(siblingOrParentId);
-		const position = edge === EDGE.TOP ? siblingIndex : siblingIndex + 1;
+
+		let position = edge === EDGE.TOP ? siblingIndex : siblingIndex + 1;
+
+		// Moving an item in the same parent
+		if (parent.children.includes(item.itemId)) {
+			const itemIndex = parent.children.indexOf(item.itemId);
+
+			position = itemIndex < siblingIndex ? position - 1 : position;
+		}
 
 		return {
 			parentId: parent.itemId,

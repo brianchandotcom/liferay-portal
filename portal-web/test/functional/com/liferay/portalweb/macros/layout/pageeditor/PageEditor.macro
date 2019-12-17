@@ -246,6 +246,13 @@ definition {
 				value1 = "${alignment}");
 		}
 
+		if (isSet(contentAlign)) {
+			Select(
+				key_fieldLabel = "Content Align",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${contentAlign}");
+		}
+
 		if (isSet(borderColor)) {
 			Click(
 				key_paletteItem = "${borderColor}",
@@ -305,6 +312,13 @@ definition {
 			Click(
 				key_paletteItem = "${textColor}",
 				locator1 = "Button#PALETTE_ITEM");
+		}
+
+		if (isSet(textAlign)) {
+			Select(
+				key_fieldLabel = "Text Align",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${textAlign}");
 		}
 
 		if (isSet(type)) {

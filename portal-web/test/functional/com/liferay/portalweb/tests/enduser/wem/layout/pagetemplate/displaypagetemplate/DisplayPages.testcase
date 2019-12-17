@@ -206,8 +206,6 @@ definition {
 		}
 
 		task ("Assert the configuration saved properly") {
-			PageEditor.gotoTab(tabName = "Look and Feel");
-
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Show Footer",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");

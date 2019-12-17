@@ -196,11 +196,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testIncludeImage() throws Exception {
+	public void testIncludeLayoutOpenGraphImage() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		FileEntry fileEntry = _addImageFileEntry(
+		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
 			"image.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -208,7 +208,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
-			false, Collections.emptyMap(), fileEntry.getFileEntryId(), false,
+			false, Collections.emptyMap(),
+			layoutOpenGraphImageFileEntry.getFileEntryId(), false,
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -223,21 +224,22 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertMetaTag(
 			document, "og:image",
-			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+			_dlurlHelper.getImagePreviewURL(
+				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 	}
 
 	@Test
-	public void testIncludeImageDefaultFromSite() throws Exception {
+	public void testIncludeSiteOpenGraphImage() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		FileEntry fileEntry = _addImageFileEntry(
+		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
 			"image_site.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_layoutSEOSiteLocalService.updateLayoutSEOSite(
 			TestPropsValues.getUserId(), _layout.getGroupId(), true,
-			fileEntry.getFileEntryId(),
+			siteOpenGraphImageFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -251,15 +253,18 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertMetaTag(
 			document, "og:image",
-			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+			_dlurlHelper.getImagePreviewURL(
+				siteOpenGraphImageFileEntry, _getThemeDisplay()));
 	}
 
 	@Test
-	public void testIncludeImageFromLayout() throws Exception {
+	public void testIncludeLayoutOpenGraphImageWhenBothDefined()
+		throws Exception {
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		FileEntry fileEntry = _addImageFileEntry(
+		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
 			"image.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -267,17 +272,18 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
-			false, Collections.emptyMap(), fileEntry.getFileEntryId(), false,
+			false, Collections.emptyMap(),
+			layoutOpenGraphImageFileEntry.getFileEntryId(), false,
 			Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		FileEntry fileEntrySite = _addImageFileEntry(
+		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
 			"image_site.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_layoutSEOSiteLocalService.updateLayoutSEOSite(
 			TestPropsValues.getUserId(), _layout.getGroupId(), true,
-			fileEntrySite.getFileEntryId(),
+			siteOpenGraphImageFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(
@@ -291,21 +297,24 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertMetaTag(
 			document, "og:image",
-			_dlurlHelper.getImagePreviewURL(fileEntry, _getThemeDisplay()));
+			_dlurlHelper.getImagePreviewURL(
+				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 	}
 
 	@Test
-	public void testIncludeImageNoImage() throws Exception {
+	public void testIncludeSiteOpenGraphImageWhenOpenGraphDisabled()
+		throws Exception {
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		FileEntry fileEntry = _addImageFileEntry(
+		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
 			"image_site.jpg",
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_layoutSEOSiteLocalService.updateLayoutSEOSite(
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
-			fileEntry.getFileEntryId(),
+			siteOpenGraphImageFileEntry.getFileEntryId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_testWithLayoutSEOCompanyConfiguration(

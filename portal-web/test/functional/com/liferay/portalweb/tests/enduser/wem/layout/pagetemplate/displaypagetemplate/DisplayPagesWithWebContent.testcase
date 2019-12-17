@@ -150,6 +150,10 @@ definition {
 
 			Button.clickSave();
 
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
 			Button.clickPublish();
 		}
 
@@ -240,10 +244,16 @@ definition {
 
 			Button.clickSave();
 
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
 			PageEditor.clickPublish();
 		}
 
 		task ("Assert the display page is using the Fjord Theme") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
 			AssertElementPresent(locator1 = "//link[contains(@href,'fjord-theme')]");
 
 			AssertElementNotPresent(locator1 = "//link[contains(@href,'classic-theme')]");

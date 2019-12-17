@@ -132,7 +132,6 @@ recordCommits {
 
 		for (int i = 0; i < (commits.size() - 1); i++) {
 			String commit = commits.get(i)
-			String previousCommit = commits.get(i + 1)
 
 			String diff = commit.split("\n", 2)[1]
 
@@ -146,7 +145,7 @@ recordCommits {
 				VersionNumber publishedVersionNumber = VersionNumber.parse(publishedVersion)
 
 				if (!recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
-					recordCommitIDs.put(publishedVersionNumber, previousCommit.split("\n", 2)[0])
+					recordCommitIDs.put(publishedVersionNumber, commit.split("\n", 2)[0])
 
 					lastVersionNumber = publishedVersionNumber
 				}

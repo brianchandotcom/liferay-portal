@@ -65,11 +65,11 @@ public abstract class BaseBeanPortletMethod implements BeanPortletMethod {
 			return false;
 		}
 
-		BeanPortletMethod beanMethod = (BeanPortletMethod)obj;
+		BeanPortletMethod beanPortletMethod = (BeanPortletMethod)obj;
 
-		if ((_ordinal == beanMethod.getOrdinal()) &&
-			Objects.equals(_method, beanMethod.getMethod()) &&
-			(_beanPortletMethodType == beanMethod.getMethodType())) {
+		if ((_ordinal == beanPortletMethod.getOrdinal()) &&
+			Objects.equals(_method, beanPortletMethod.getMethod()) &&
+			(_beanPortletMethodType == beanPortletMethod.getMethodType())) {
 
 			return true;
 		}

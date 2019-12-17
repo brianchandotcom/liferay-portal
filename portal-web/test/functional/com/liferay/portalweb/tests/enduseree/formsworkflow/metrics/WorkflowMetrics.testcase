@@ -383,7 +383,7 @@ definition {
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssignee {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssignee";
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
@@ -403,7 +403,33 @@ definition {
 				entryTitle = "Blogs Entry Title ${count}");
 		}
 
-		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 1",
+			assetType = "Blogs Entry",
+			assigneeName = "1user user1",
+			workflowTask = "Review");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 2",
+			assetType = "Blogs Entry",
+			assigneeName = "2user user2",
+			workflowTask = "Review");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 3",
+			assetType = "Blogs Entry",
+			assigneeName = "3user user3",
+			workflowTask = "Review");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 4",
+			assetType = "Blogs Entry",
+			assigneeName = "1user user1",
+			workflowTask = "Review");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 

@@ -165,6 +165,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro assignTaskToUser {
+		key_assetTitle = "${assetTitle}";
+		key_assetType = "${assetType}";
+		key_assigneeName = "${assigneeName}";
+		key_workflowTask = "${workflowTask}";
+
+		Workflow.viewPendingTasks(
+			workflowAssetTitle = "${assetTitle}",
+			workflowAssetType = "${assetType}",
+			workflowTask = "${workflowTask}");
+
+		Workflow.assignByDetails(user = "${assigneeName}");
+	}
+
 	macro assignToMeTaskByActions {
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = "${ddlDataDefinitionName}",

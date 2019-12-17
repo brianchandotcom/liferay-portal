@@ -127,6 +127,7 @@ page import="com.liferay.roles.admin.web.internal.display.context.ViewRolesManag
 page import="com.liferay.roles.admin.web.internal.role.type.contributor.RoleTypeContributor" %><%@
 page import="com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil" %><%@
 page import="com.liferay.roles.admin.web.internal.util.PortletDisplayTemplateUtil" %><%@
+page import="com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
@@ -203,13 +204,17 @@ private String _getAssigneesMessage(HttpServletRequest request, Role role) throw
 		return LanguageUtil.get(request, "this-role-is-automatically-assigned");
 	}
 
-	int count = RoleLocalServiceUtil.getAssigneesTotal(role.getRoleId());
+	int count = _getAssigneesTotal(role.getRoleId());
 
 	if (count == 1) {
 		return LanguageUtil.get(request, "one-assignee");
 	}
 
 	return LanguageUtil.format(request, "x-assignees", count);
+}
+
+private int _getAssigneesTotal(long roleId) throws Exception {
+	return RoleLocalServiceUtil.getAssigneesTotal(roleId) + SegmentsEntryRoleLocalServiceUtil.getSegmentsEntryRolesCountByRoleId(roleId);
 }
 
 private StringBundler _getResourceHtmlId(String resource) {

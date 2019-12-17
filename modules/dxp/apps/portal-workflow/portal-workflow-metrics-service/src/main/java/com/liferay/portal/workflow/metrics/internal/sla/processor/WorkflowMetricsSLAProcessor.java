@@ -112,14 +112,17 @@ public class WorkflowMetricsSLAProcessor {
 				startNodeId, workflowMetricsSLADefinitionVersion,
 				workflowMetricsSLAStatus);
 
+		LocalDateTime endLocalDateTime = nowLocalDateTime;
+
 		if (!workflowMetricsSLAStopwatch.isEmpty()) {
 			List<TaskInterval> taskIntervals = _toTaskIntervals(
 				documents, lastCheckLocalDateTime, nowLocalDateTime);
 
 			for (TaskInterval taskInterval : taskIntervals) {
+				endLocalDateTime = taskInterval.getEndLocalDateTime();
+
 				elapsedTime += _computeElapsedTime(
-					taskInterval.getEndLocalDateTime(),
-					taskInterval.getStartLocalDateTime(),
+					endLocalDateTime, taskInterval.getStartLocalDateTime(),
 					workflowMetricsSLACalendar, workflowMetricsSLAStopwatch);
 			}
 
@@ -129,9 +132,9 @@ public class WorkflowMetricsSLAProcessor {
 
 		return Optional.of(
 			_createWorkflowMetricsSLAProcessResult(
-				companyId, documents, elapsedTime, instanceId, nowLocalDateTime,
-				workflowMetricsSLACalendar, workflowMetricsSLADefinitionVersion,
-				workflowMetricsSLAStatus));
+				companyId, documents, elapsedTime, endLocalDateTime, instanceId,
+				nowLocalDateTime, workflowMetricsSLACalendar,
+				workflowMetricsSLADefinitionVersion, workflowMetricsSLAStatus));
 	}
 
 	protected WorkflowMetricsSLAProcessResult
@@ -396,7 +399,8 @@ public class WorkflowMetricsSLAProcessor {
 	private WorkflowMetricsSLAProcessResult
 		_createWorkflowMetricsSLAProcessResult(
 			long companyId, List<Document> documents, long elapsedTime,
-			long instanceId, LocalDateTime nowLocalDateTime,
+			LocalDateTime endLocalDateTime, long instanceId,
+			LocalDateTime nowLocalDateTime,
 			WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
 			WorkflowMetricsSLADefinitionVersion
 				workflowMetricsSLADefinitionVersion,
@@ -419,7 +423,7 @@ public class WorkflowMetricsSLAProcessor {
 
 					setOverdueLocalDateTime(
 						workflowMetricsSLACalendar.getOverdueLocalDateTime(
-							nowLocalDateTime,
+							endLocalDateTime,
 							Duration.ofMillis(remainingTime)));
 
 					setProcessId(

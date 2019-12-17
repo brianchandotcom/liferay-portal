@@ -29,6 +29,11 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Classic Theme Page");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
 			pageName = "Classic Theme Page");
@@ -42,6 +47,11 @@ definition {
 		Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
 
 		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",

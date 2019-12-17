@@ -135,8 +135,11 @@ public class AssigneeUserResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	private TermsQuery _createAssigneeIdTermsQuery(Set<Long> userIds) {
-		TermsQuery termsQuery = _queries.terms("assigneeId");
+	private TermsQuery _createAssigneeIdTermsQuery(
+		boolean completed, Set<Long> userIds) {
+
+		TermsQuery termsQuery = _queries.terms(
+			completed ? "completionUserId" : "assigneeId");
 
 		Stream<Long> stream = userIds.stream();
 
@@ -239,7 +242,7 @@ public class AssigneeUserResourceImpl
 
 		if (!userIds.isEmpty()) {
 			booleanQuery.addMustQueryClauses(
-				_createAssigneeIdTermsQuery(userIds));
+				_createAssigneeIdTermsQuery(completed, userIds));
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -275,7 +278,7 @@ public class AssigneeUserResourceImpl
 
 		if (!userIds.isEmpty()) {
 			booleanQuery.addMustQueryClauses(
-				_createAssigneeIdTermsQuery(userIds));
+				_createAssigneeIdTermsQuery(completed, userIds));
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -295,7 +298,7 @@ public class AssigneeUserResourceImpl
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
-			"assigneeId", "assigneeId");
+			"assigneeId", completed ? "completionUserId" : "assigneeId");
 
 		FilterAggregation countFilterAggregation = _aggregations.filter(
 			"countFilter", _createCountFilterBooleanQuery());
@@ -375,7 +378,7 @@ public class AssigneeUserResourceImpl
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
-			"assigneeId", "assigneeId");
+			"assigneeId", completed ? "completionUserId" : "assigneeId");
 
 		termsAggregation.setSize(10000);
 
@@ -417,7 +420,8 @@ public class AssigneeUserResourceImpl
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addAggregation(
-			_aggregations.cardinality("assigneeId", "assigneeId"));
+			_aggregations.cardinality(
+				"assigneeId", completed ? "completionUserId" : "assigneeId"));
 		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(

@@ -1148,6 +1148,10 @@
 				"store": true,
 				"type": "date"
 			},
+			"completionUserId": {
+				"store": true,
+				"type": "keyword"
+			},
 			"deleted": {
 				"store": true,
 				"type": "boolean"
@@ -1238,6 +1242,10 @@
 				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
+			},
+			"completionUserId": {
+				"store": true,
+				"type": "keyword"
 			},
 			"createDate": {
 				"format": "yyyyMMddHHmmss",

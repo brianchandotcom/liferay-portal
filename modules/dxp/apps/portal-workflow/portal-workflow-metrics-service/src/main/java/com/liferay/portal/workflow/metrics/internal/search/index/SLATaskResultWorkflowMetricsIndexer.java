@@ -107,6 +107,12 @@ public class SLATaskResultWorkflowMetricsIndexer
 					workflowMetricsSLATaskResult.getCompletionLocalDateTime()));
 		}
 
+		if (workflowMetricsSLATaskResult.getCompletionUserId() != null) {
+			document.addKeyword(
+				"completionUserId",
+				workflowMetricsSLATaskResult.getCompletionUserId());
+		}
+
 		document.addKeyword("deleted", false);
 		document.addKeyword(
 			"instanceCompleted",

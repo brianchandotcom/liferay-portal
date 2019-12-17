@@ -81,6 +81,9 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 		if (kaleoTaskInstanceToken.isCompleted()) {
 			document.addDateSortable("completionDate", completionDate);
+			document.addKeyword(
+				"completionUserId",
+				kaleoTaskInstanceToken.getCompletionUserId());
 		}
 
 		Date createDate = kaleoTaskInstanceToken.getCreateDate();

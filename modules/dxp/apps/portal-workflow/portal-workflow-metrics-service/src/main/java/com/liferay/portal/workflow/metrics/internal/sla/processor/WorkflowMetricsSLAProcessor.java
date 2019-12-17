@@ -552,6 +552,10 @@ public class WorkflowMetricsSLAProcessor {
 							_dateTimeFormatter));
 				}
 
+				if (Validator.isNotNull(document.getLong("completionUserId"))) {
+					setCompletionUserId(document.getLong("completionUserId"));
+				}
+
 				setInstanceId(workflowMetricsSLAProcessResult.getInstanceId());
 				setLastCheckLocalDateTime(
 					workflowMetricsSLAProcessResult.

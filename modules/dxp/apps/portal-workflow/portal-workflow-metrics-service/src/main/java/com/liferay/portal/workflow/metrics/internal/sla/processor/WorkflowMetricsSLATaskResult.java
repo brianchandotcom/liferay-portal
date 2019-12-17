@@ -35,6 +35,10 @@ public class WorkflowMetricsSLATaskResult {
 		return _completionLocalDateTime;
 	}
 
+	public Long getCompletionUserId() {
+		return _completionUserId;
+	}
+
 	public long getInstanceId() {
 		return _instanceId;
 	}
@@ -93,6 +97,10 @@ public class WorkflowMetricsSLATaskResult {
 		_completionLocalDateTime = completionLocalDateTime;
 	}
 
+	public void setCompletionUserId(Long completionUserId) {
+		_completionUserId = completionUserId;
+	}
+
 	public void setInstanceId(long instanceId) {
 		_instanceId = instanceId;
 	}
@@ -137,6 +145,7 @@ public class WorkflowMetricsSLATaskResult {
 	private boolean _breached;
 	private long _companyId;
 	private LocalDateTime _completionLocalDateTime;
+	private Long _completionUserId;
 	private long _instanceId;
 	private LocalDateTime _lastCheckLocalDateTime;
 	private boolean _onTime;

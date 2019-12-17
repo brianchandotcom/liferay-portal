@@ -651,6 +651,9 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addDateSortable(
 			"completionDate",
 			Objects.equals(status, "COMPLETED") ? new Date() : null);
+		document.addKeyword(
+			"completionUserId",
+			Objects.equals(status, "COMPLETED") ? assigneeId : null);
 		document.addKeyword("deleted", false);
 		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
 		document.addKeyword("instanceCompleted", instanceCompleted);
@@ -681,6 +684,8 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("completed", durationAvg > 0);
 		document.addDateSortable(
 			"completionDate", (durationAvg > 0) ? new Date() : null);
+		document.addKeyword(
+			"completionUserId", (durationAvg > 0) ? assigneeId : null);
 		document.addKeyword("deleted", false);
 		document.addKeyword("duration", durationAvg);
 		document.addKeyword("instanceCompleted", instanceCompleted);

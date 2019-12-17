@@ -119,7 +119,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 						"unsetRoleAssignments();"));
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "delete"));
+					LanguageUtil.get(_httpServletRequest, "remove"));
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;

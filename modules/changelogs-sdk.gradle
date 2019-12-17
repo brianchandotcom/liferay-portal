@@ -121,7 +121,7 @@ recordCommits {
 		ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 		exec {
-			commandLine "git", "--no-pager", "log", "--follow", "--format=fuller", "-p", "--", "modules/sdk/" + projectName + "/"
+			commandLine "git", "--no-pager", "log", "--date=rfc2822", "--follow", "--format=fuller", "-p", "--", "modules/sdk/" + projectName + "/"
 			standardOutput = standardOutputByteArrayOutputStream
 			workingDir = projectDir.parentFile
 		}
@@ -146,7 +146,7 @@ recordCommits {
 
 				String commitDateString = lines[4]
 
-				Date commitDate = Date.parse("E MMM dd H:m:s yyyy Z", commitDateString.substring(12))
+				Date commitDate = Date.parse("E, d MMM yyyy H:m:s Z", commitDateString.substring(12))
 
 				for (int j = i - 1; j >= 0; j--) {
 					String previousCommit = commits.get(j)
@@ -161,7 +161,7 @@ recordCommits {
 
 					String previousCommitDateString = lines[4]
 
-					Date previousCommitDate = Date.parse("E MMM dd H:m:s yyyy Z", previousCommitDateString.substring(12))
+					Date previousCommitDate = Date.parse("E, d MMM yyyy H:m:s Z", previousCommitDateString.substring(12))
 
 					TimeDuration duration = TimeCategory.minus(previousCommitDate, commitDate)
 

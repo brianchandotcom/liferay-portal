@@ -58,7 +58,7 @@ export const SpacingConfigurationPanel = ({item}) => {
 				config: {
 					[identifier]: value
 				},
-				itemId: item.itemId
+				itemId
 			})
 		);
 	};

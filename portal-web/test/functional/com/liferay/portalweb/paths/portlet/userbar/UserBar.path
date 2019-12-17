@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_AVATAR_ICON</td>
+	<td>//span[@class='user-avatar-link']//span[*[name()='svg'][contains(@class,'lexicon-icon-user')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_AVATAR_IMAGE</td>
 	<td>//span[@class='user-avatar-link']</td>
 	<td></td>
@@ -41,6 +46,11 @@
 <tr>
 	<td>USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET</td>
 	<td>//div[contains(@class,'portlet-user-personal-bar')]//div[@class='personal-menu-dropdown']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_AVATAR_PORTRAIT</td>
+	<td>//button//img[contains(@src,'user_portrait')]</td>
 	<td></td>
 </tr>
 <tr>

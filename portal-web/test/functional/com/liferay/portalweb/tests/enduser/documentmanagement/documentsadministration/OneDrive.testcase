@@ -101,9 +101,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Add Excel Sheet Title",
-			key_documentTitle = "Add Excel Sheet Title.xlsx");
+		OneDrive.AddDocument(dmDocumentTitle = "Add Excel Sheet Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -136,9 +134,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Add PowerPoint Presentation Title",
-			key_documentTitle = "Add PowerPoint Presentation Title.pptx");
+		OneDrive.AddDocument(dmDocumentTitle = "Add PowerPoint Presentation Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -171,9 +167,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Add Word Doc Title",
-			key_documentTitle = "Add Word Doc Title.docx");
+		OneDrive.AddDocument(dmDocumentTitle = "Add Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -208,9 +202,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Auto Checkin Word Doc Title",
-			key_documentTitle = "Auto Checkin Word Doc Title.docx");
+		OneDrive.AddDocument(dmDocumentTitle = "Auto Checkin Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -242,8 +234,7 @@ definition {
 
 		OneDrive.AddDocument(
 			dmDocumentContent = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "Auto Tagging Word Doc Title",
-			key_documentTitle = "Auto Tagging Word Doc Title.docx");
+			dmDocumentTitle = "Auto Tagging Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -269,9 +260,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Cancel Checkout Excel Sheet Title",
-			key_documentTitle = "Cancel Checkout Excel Sheet Title.xlsx");
+		OneDrive.AddDocument(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -296,9 +285,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Cancel Checkout Word Doc Title",
-			key_documentTitle = "Cancel Checkout Word Doc Title.docx");
+		OneDrive.AddDocument(dmDocumentTitle = "Cancel Checkout Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -322,9 +309,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Delete Excel Sheet Title",
-			key_documentTitle = "Delete Excel Sheet Title.xlsx");
+		OneDrive.AddDocument(dmDocumentTitle = "Delete Excel Sheet Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -348,9 +333,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Delete PowerPoint Presentation Title",
-			key_documentTitle = "Delete PowerPoint Presentation Title.pptx");
+		OneDrive.AddDocument(dmDocumentTitle = "Delete PowerPoint Presentation Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -374,9 +357,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(
-			dmDocumentTitle = "Delete Word Doc Title",
-			key_documentTitle = "Delete Word Doc Title.docx");
+		OneDrive.AddDocument(dmDocumentTitle = "Delete Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -407,9 +388,7 @@ definition {
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_1.xlsx");
 
-		OneDrive.editTitle(
-			dmDocumentTitle = "Excel Sheet Title Edited",
-			key_documentTitle = "Document_1.xlsx");
+		OneDrive.editTitle(dmDocumentTitle = "Excel Sheet Title Edited");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -449,9 +428,7 @@ definition {
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.pptx");
 
-		OneDrive.editTitle(
-			dmDocumentTitle = "Powerpoint Presentation Title Edited",
-			key_documentTitle = "Document_2.pptx");
+		OneDrive.editTitle(dmDocumentTitle = "Powerpoint Presentation Title Edited");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -491,9 +468,7 @@ definition {
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_3.docx");
 
-		OneDrive.editTitle(
-			dmDocumentTitle = "Word Doc Title Edited",
-			key_documentTitle = "Document_3.docx");
+		OneDrive.editTitle(dmDocumentTitle = "Word Doc Title Edited");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

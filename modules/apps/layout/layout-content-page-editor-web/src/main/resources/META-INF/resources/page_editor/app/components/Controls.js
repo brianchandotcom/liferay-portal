@@ -65,6 +65,11 @@ const ControlsProvider = ({children}) => {
 	);
 };
 
+const useActiveItemId = () => {
+	const [state] = useContext(ControlsContext);
+	return state.activeItemId;
+};
+
 const useHoverItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
@@ -121,6 +126,7 @@ const useCurrentFloatingToolbar = () => {
 export {
 	ControlsConsumer,
 	ControlsProvider,
+	useActiveItemId,
 	useCurrentFloatingToolbar,
 	useFloatingToolbar,
 	useHoverItem,

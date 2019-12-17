@@ -645,11 +645,54 @@ describe('Winner declared', () => {
 			winnerSegmentsVariantId: '1'
 		});
 
+		const winner = getByText('-is-the-winner-variant');
+		within(winner).getByText('Variant');
+
+		getByText('publish-winner');
 		getByText('discard-test');
 		getByText('Winner Declared');
 		const allPublishButtons = getAllByText('publish');
 
 		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
+	});
+
+	it('Variant publish winner action button in alert in winner declared status', async () => {
+		/**
+		 * The user accepts the confirmation message
+		 */
+		global.confirm = jest.fn(() => true);
+
+		const {APIServiceMocks, getByText} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'Winner Declared',
+					value: STATUS_FINISHED_WINNER
+				}
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: '1'
+		});
+		const {publishExperience} = APIServiceMocks;
+
+		const publishWinnerButton = getByText('publish-winner');
+
+		userEvent.click(publishWinnerButton);
+
+		/**
+		 * The user has accepted one confirmation message
+		 */
+		expect(global.confirm).toHaveBeenCalledTimes(1);
+
+		expect(publishExperience).toHaveBeenCalledWith({
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: segmentsVariants[1].segmentsExperienceId
+		});
+
+		await waitForElement(() => getByText('completed'));
 	});
 
 	it('Variant publish action button when confirming in winner declared status', async () => {

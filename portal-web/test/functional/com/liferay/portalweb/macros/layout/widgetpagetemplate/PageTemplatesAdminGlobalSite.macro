@@ -1,8 +1,6 @@
 definition {
 
 	macro addCP {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = "${pageTemplateName}");
@@ -15,8 +13,6 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
 		LexiconCard.viewCardLabel(
@@ -25,8 +21,6 @@ definition {
 	}
 
 	macro deactivateAndActivate {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
@@ -47,8 +41,6 @@ definition {
 	}
 
 	macro editCP {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
@@ -66,8 +58,6 @@ definition {
 		var key_pageTemplateName = "${pageTemplateName}";
 
 		Alert.viewSuccessMessage();
-
-		Navigator.gotoNavTab(navTab = "Page Templates");
 
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName} Edit");
 
@@ -93,8 +83,6 @@ definition {
 	}
 
 	macro gotoPageTemplateViaEdit {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
 		LexiconCard.clickCardTitle(card = "${pageTemplateName}");
@@ -115,8 +103,6 @@ definition {
 	}
 
 	macro viewCP {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		AssertTextEquals.assertPartialText(
 			key_pageTemplateName = "${pageTemplateName}",
 			locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME",
@@ -124,8 +110,6 @@ definition {
 	}
 
 	macro viewDefaultCP {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		for (var pageTemplateName : list "Search,Blog,Wiki") {
 			PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
@@ -138,8 +122,6 @@ definition {
 	}
 
 	macro viewDefaultLocalizedCP {
-		Navigator.gotoNavTab(navTab = "Plantillas de página");
-
 		for (var pageTemplateNameTranslation : list "${pageTemplateNameList}") {
 			var key_pageTemplateName = "${pageTemplateNameTranslation}";
 
@@ -170,8 +152,6 @@ definition {
 	}
 
 	macro viewDescription {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
@@ -190,8 +170,6 @@ definition {
 	macro viewPG {
 		var key_pageTemplateName = "${pageTemplateName}";
 
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME",
 			value1 = "${pageTemplateName}");
@@ -204,8 +182,6 @@ definition {
 	}
 
 	macro viewStatus {
-		Navigator.gotoNavTab(navTab = "Page Templates");
-
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = "${pageTemplateName}");
 
 		LexiconCard.viewCardLabel(

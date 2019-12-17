@@ -14,30 +14,38 @@
 
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
+import {ConfigContext} from '../../../app/config/index';
+import {DispatchContext} from '../../../app/reducers/index';
+import editFragmentComment from '../../../app/thunks/editFragmentComment';
 import CommentForm from './CommentForm';
-
-function editFragmentEntryLinkComment() {
-	throw new Error('Not implemented');
-}
 
 export default function EditCommentForm({
 	comment,
-	onCloseForm,
-	onEdit = () => {}
+	fragmentEntryLinkId,
+	onCloseForm
 }) {
 	const [editingComment, setEditingComment] = useState(false);
 	const [textareaContent, setTextareaContent] = useState(comment.body);
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
 
 	const _handleCommentButtonClick = () => {
 		setEditingComment(true);
 
-		editFragmentEntryLinkComment(comment.commentId, textareaContent)
-			.then(comment => {
+		dispatch(
+			editFragmentComment({
+				body: textareaContent,
+				commentId: comment.commentId,
+				config,
+				fragmentEntryLinkId,
+				parentCommentId: comment.parentCommentId
+			})
+		)
+			.then(() => {
 				setEditingComment(false);
 
-				onEdit(comment);
 				onCloseForm();
 			})
 			.catch(() => {
@@ -73,6 +81,5 @@ EditCommentForm.propTypes = {
 		body: PropTypes.string.isRequired,
 		commentId: PropTypes.string.isRequired
 	}),
-	onCloseForm: PropTypes.func.isRequired,
-	onEdit: PropTypes.func
+	onCloseForm: PropTypes.func.isRequired
 };

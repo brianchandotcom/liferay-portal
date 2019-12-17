@@ -90,7 +90,7 @@ public class DepotEntryURLUtil {
 		return disconnectSiteActionURL;
 	}
 
-	public static ActionURL getEditDepotEntryActionURL(
+	public static ActionURL getEditDepotEntryGroupRelActionURL(
 		LiferayPortletResponse liferayPortletResponse) {
 
 		ActionURL editDepotEntryActionURL =
@@ -100,6 +100,25 @@ public class DepotEntryURLUtil {
 			ActionRequest.ACTION_NAME, "/depot_entry/edit");
 
 		return editDepotEntryActionURL;
+	}
+
+	public static ActionURL getEditDepotEntryGroupRelActionURL(
+		long depotEntryGroupRelId, boolean searchable, String redirect,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		ActionURL editDepotEntryGroupRelActionURL =
+			liferayPortletResponse.createActionURL();
+
+		editDepotEntryGroupRelActionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/depot_entry/edit_depot_entry_group_rel");
+		editDepotEntryGroupRelActionURL.setParameter("redirect", redirect);
+		editDepotEntryGroupRelActionURL.setParameter(
+			"depotEntryGroupRelId", String.valueOf(depotEntryGroupRelId));
+		editDepotEntryGroupRelActionURL.setParameter(
+			"searchable", String.valueOf(searchable));
+
+		return editDepotEntryGroupRelActionURL;
 	}
 
 	public static PortletURL getEditDepotEntryPortletURL(

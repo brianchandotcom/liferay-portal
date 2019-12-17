@@ -2216,6 +2216,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		return wikiPagePersistence.update(page);
 	}
 
+	@Override
+	public WikiPage updateWikiPage(
+		WikiPage wikiPage, ServiceContext serviceContext) {
+
+		return wikiPagePersistence.update(wikiPage, serviceContext);
+	}
+
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {

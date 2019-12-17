@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.configuration.WorkflowInstanceWebConfiguration;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import javax.portlet.PortletRequest;
 

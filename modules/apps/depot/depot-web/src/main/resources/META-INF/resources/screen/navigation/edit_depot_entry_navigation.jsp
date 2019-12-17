@@ -24,9 +24,10 @@ String formDescription = (String)request.getAttribute(DepotAdminWebKeys.FORM_DES
 String formLabel = (String)request.getAttribute(DepotAdminWebKeys.FORM_LABEL);
 String jspPath = (String)request.getAttribute(DepotAdminWebKeys.JSP_PATH);
 
-portletDisplay.setShowBackIcon(true);
-
-portletDisplay.setURLBack(backURL);
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+}
 
 DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 
@@ -60,7 +61,7 @@ renderResponse.setTitle(group.getDescriptiveName(locale));
 			<div class="sheet-footer">
 				<aui:button primary="<%= true %>" type="submit" />
 
-				<aui:button href="<%= backURL %>" type="cancel" />
+				<aui:button href="<%= Validator.isNotNull(backURL) ? backURL : String.valueOf(renderResponse.createRenderURL()) %>" type="cancel" />
 			</div>
 		</c:if>
 	</div>

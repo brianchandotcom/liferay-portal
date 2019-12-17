@@ -54,10 +54,7 @@ $target-z-index: 900;
 
 	&.lfr-segments-experiment-click-goal-target-overlay-selected {
 		border-color: $target-overlay-border-color;
-	}
-
-	&.lfr-segments-experiment-click-goal-target-overlay-editing {
-		border-color: $blue;
+		border-color: #0053f0;
 	}
 }
 
@@ -70,6 +67,7 @@ $target-z-index: 900;
 	cursor: initial;
 	font-size: $dropdown-font-size;
 	pointer-events: auto;
+	z-index: 10;
 }
 
 .lfr-segments-experiment-click-goal-target-topper {
@@ -78,8 +76,4 @@ $target-z-index: 900;
 	cursor: initial;
 	pointer-events: auto;
 	position: absolute;
-}
-
-.lfr-segments-experiment-click-goal-target-topper-editing {
-	background-color: $blue;
 }

@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
+import com.liferay.trash.constants.TrashPortletKeys;
 import com.liferay.trash.model.TrashEntry;
-import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

@@ -15,6 +15,9 @@
 package com.liferay.talend.common.util;
 
 import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Zoltán Takács
@@ -50,6 +53,22 @@ public class StringUtil {
 		}
 
 		return replaced;
+	}
+
+	public static Set<String> stripPrefix(String prefix, Set<String> values) {
+		Stream<String> stream = values.stream();
+
+		return stream.map(
+			t -> {
+				if (t.startsWith(prefix)) {
+					return t.substring(prefix.length());
+				}
+
+				return t;
+			}
+		).collect(
+			Collectors.toSet()
+		);
 	}
 
 	public static String toLowerCase(String value) {

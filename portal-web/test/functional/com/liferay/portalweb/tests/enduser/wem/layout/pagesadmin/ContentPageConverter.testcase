@@ -47,6 +47,18 @@ definition {
 		AssertElementPresent(
 			key_pageType = "Content Page",
 			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
 	}
 
 	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."

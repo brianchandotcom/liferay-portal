@@ -144,6 +144,20 @@ catch (RuntimeException re) {
 	_log.error(re, re);
 }
 
+if (!portletId.equals(rootPortletId)) {
+	Map<String, String[]> parameterMap = request.getParameterMap();
+
+	for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+		String key = entry.getKey();
+
+		if (key.contains(rootPortletId) && !key.contains(portletId)) {
+			DynamicServletRequest dynamicServletRequest = (DynamicServletRequest)request;
+
+			dynamicServletRequest.setParameterValues(StringUtil.replace(key, rootPortletId, portletId), entry.getValue());
+		}
+	}
+}
+
 LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(request, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
 
 BufferCacheServletResponse bufferCacheServletResponse = new BufferCacheServletResponse(response);

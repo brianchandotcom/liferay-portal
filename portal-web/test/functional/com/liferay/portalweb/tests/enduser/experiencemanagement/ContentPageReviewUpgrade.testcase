@@ -1,0 +1,30 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql";
+	property testray.component.names = "Content Page Review";
+	property testray.main.component.name = "Upgrades Collaboration";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@ignore = "true"
+	@priority = "5"
+	test ViewContentPageReviewArchive72101 {
+		property data.archive.type = "data-archive-content-page-review";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.viewAndEditContentPageReview();
+	}
+
+}

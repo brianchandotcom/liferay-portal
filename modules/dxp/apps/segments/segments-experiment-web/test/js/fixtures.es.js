@@ -85,7 +85,7 @@ export const segmentsVariants = [
 	},
 	{
 		control: false,
-		name: 'Variant 1',
+		name: 'Variant',
 		segmentsExperienceId: '1',
 		segmentsExperimentId: '0',
 		segmentsExperimentRelId: '124',

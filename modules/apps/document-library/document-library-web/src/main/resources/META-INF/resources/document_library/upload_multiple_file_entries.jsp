@@ -108,6 +108,14 @@ if (portletTitleBasedNavigation) {
 						%>
 
 						<aui:script use="aui-base,aui-loading-mask-deprecated,node-load">
+							Liferay.on('tempFileRemoved', function() {
+								Liferay.Util.openToast({
+									message:
+										'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
+									title: '<%= LanguageUtil.get(request, "success") %>'
+								});
+							});
+
 							Liferay.provide(
 								window,
 								'<portlet:namespace />updateMultipleFiles',

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -137,6 +138,10 @@ public class EditWorkspaceConnectionMVCActionCommand
 		String token = ParamUtil.getString(actionRequest, "token");
 
 		try {
+			if (Validator.isBlank(token)) {
+				throw new IllegalArgumentException();
+			}
+
 			return JSONFactoryUtil.createJSONObject(
 				new String(Base64.decode(token)));
 		}

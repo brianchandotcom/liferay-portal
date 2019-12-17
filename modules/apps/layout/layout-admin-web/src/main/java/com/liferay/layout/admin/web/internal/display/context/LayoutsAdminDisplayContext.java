@@ -434,7 +434,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getEditLayoutURL(Layout layout) throws Exception {
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			return _getDraftLayoutURL(layout);
+		}
+
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 			return StringPool.BLANK;
 		}
 
@@ -442,31 +446,10 @@ public class LayoutsAdminDisplayContext {
 			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
 		if (draftLayout == null) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				_httpServletRequest);
-
-			draftLayout = LayoutLocalServiceUtil.addLayout(
-				layout.getUserId(), layout.getGroupId(),
-				layout.isPrivateLayout(), layout.getParentLayoutId(),
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
-				layout.getNameMap(), layout.getTitleMap(),
-				layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), layout.getType(),
-				layout.getTypeSettings(), true, true,
-				layout.getMasterLayoutPlid(), Collections.emptyMap(),
-				serviceContext);
-
-			_layoutCopyHelper.copyLayout(layout, draftLayout);
+			return StringPool.BLANK;
 		}
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			draftLayout, _themeDisplay);
-
-		layoutFullURL = HttpUtil.setParameter(
-			layoutFullURL, "p_l_mode", Constants.EDIT);
-
-		return HttpUtil.setParameter(
-			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+		return _getDraftLayoutURL(layout);
 	}
 
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
@@ -646,6 +629,21 @@ public class LayoutsAdminDisplayContext {
 		return layoutColumnsJSONArray;
 	}
 
+	public String getLayoutConversionPreviewURL(Layout layout) {
+		PortletURL layoutConversionPreviewURL =
+			_liferayPortletResponse.createActionURL();
+
+		layoutConversionPreviewURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/layout_conversion_preview");
+
+		layoutConversionPreviewURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		layoutConversionPreviewURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+
+		return layoutConversionPreviewURL.toString();
+	}
+
 	public LayoutConverterConfiguration getLayoutConverterConfiguration() {
 		return _layoutConverterConfiguration;
 	}
@@ -736,10 +734,20 @@ public class LayoutsAdminDisplayContext {
 				}
 
 				layoutJSONObject.put(
-					"draft", modifiedDate.getTime() > publishDate.getTime());
+					"conversionPreview", false
+				).put(
+					"draft", modifiedDate.getTime() > publishDate.getTime()
+				);
 			}
 			else {
-				layoutJSONObject.put("draft", false);
+				Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+				layoutJSONObject.put(
+					"conversionPreview", draftLayout != null
+				).put(
+					"draft", false
+				);
 			}
 
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
@@ -1339,6 +1347,19 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
+	public boolean isConversionDraft(Layout layout) {
+		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
+			(draftLayout != null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDraft() {
 		Layout layout = getSelLayout();
 
@@ -1626,8 +1647,20 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("configureURL", getConfigureLayoutURL(layout));
 		}
 
+		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
 		if (isShowConvertLayoutAction(layout)) {
-			jsonObject.put("convertLayoutURL", getConvertLayoutURL(layout));
+			if (draftLayout == null) {
+				jsonObject.put(
+					"layoutConversionPreviewURL",
+					getLayoutConversionPreviewURL(layout));
+			}
+			else {
+				jsonObject.put(
+					"deleteLayoutConversionPreviewURL",
+					getDeleteLayoutURL(draftLayout));
+			}
 		}
 
 		if (isShowCopyLayoutAction(layout)) {
@@ -1638,7 +1671,10 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
 		}
 
-		if (isShowConfigureAction(layout)) {
+		if (isConversionDraft(layout) && isShowConfigureAction(layout)) {
+			jsonObject.put("editConversionLayoutURL", getEditLayoutURL(layout));
+		}
+		else if (isShowConfigureAction(layout)) {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
 		}
 
@@ -1742,6 +1778,37 @@ public class LayoutsAdminDisplayContext {
 		breadcrumbEntryJSONObject.put("url", portletURL.toString());
 
 		return breadcrumbEntryJSONObject;
+	}
+
+	private String _getDraftLayoutURL(Layout layout) throws Exception {
+		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+		if (draftLayout == null) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				_httpServletRequest);
+
+			draftLayout = LayoutLocalServiceUtil.addLayout(
+				layout.getUserId(), layout.getGroupId(),
+				layout.isPrivateLayout(), layout.getParentLayoutId(),
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				layout.getNameMap(), layout.getTitleMap(),
+				layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), layout.getType(),
+				layout.getTypeSettings(), true, true,
+				layout.getMasterLayoutPlid(), Collections.emptyMap(),
+				serviceContext);
+
+			_layoutCopyHelper.copyLayout(layout, draftLayout);
+		}
+
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			draftLayout, _themeDisplay);
+
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+
+		return HttpUtil.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
 	private JSONObject _getFirstColumn(boolean privatePages, boolean active)

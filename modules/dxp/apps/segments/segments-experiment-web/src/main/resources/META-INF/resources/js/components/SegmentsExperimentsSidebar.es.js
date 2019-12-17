@@ -307,7 +307,7 @@ function SegmentsExperimentsSidebar({
 			segmentsExperimentId
 		};
 
-		APIService.editExperiment(body)
+		return APIService.editExperiment(body)
 			.then(function _successCallback(objectResponse) {
 				const {
 					confidenceLevel,

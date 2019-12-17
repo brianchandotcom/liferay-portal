@@ -23,8 +23,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verify(new VerifyProperties());
-
 		verify(new VerifyPermission());
 		verify(new VerifyGroup());
 

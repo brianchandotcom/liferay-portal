@@ -706,4 +706,7 @@ public interface WikiPageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public WikiPage updateWikiPage(WikiPage wikiPage);
 
+	public WikiPage updateWikiPage(
+		WikiPage wikiPage, ServiceContext serviceContext);
+
 }

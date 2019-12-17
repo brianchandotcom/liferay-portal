@@ -30,7 +30,7 @@ definition {
 			value1 = "${buttonValue}");
 	}
 
-	macro cancelNewCustomObject {
+	macro cancel {
 		Click(locator1 = "AppBuilder#BUTTON_CANCEL");
 	}
 
@@ -218,6 +218,11 @@ definition {
 
 	macro viewCheckboxChecked {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
+	}
+
+	macro viewItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "View");
 	}
 
 }

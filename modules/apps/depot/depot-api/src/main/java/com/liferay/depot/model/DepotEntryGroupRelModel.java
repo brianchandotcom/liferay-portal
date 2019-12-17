@@ -116,6 +116,27 @@ public interface DepotEntryGroupRelModel
 	public void setDepotEntryId(long depotEntryId);
 
 	/**
+	 * Returns the searchable of this depot entry group rel.
+	 *
+	 * @return the searchable of this depot entry group rel
+	 */
+	public boolean getSearchable();
+
+	/**
+	 * Returns <code>true</code> if this depot entry group rel is searchable.
+	 *
+	 * @return <code>true</code> if this depot entry group rel is searchable; <code>false</code> otherwise
+	 */
+	public boolean isSearchable();
+
+	/**
+	 * Sets whether this depot entry group rel is searchable.
+	 *
+	 * @param searchable the searchable of this depot entry group rel
+	 */
+	public void setSearchable(boolean searchable);
+
+	/**
 	 * Returns the to group ID of this depot entry group rel.
 	 *
 	 * @return the to group ID of this depot entry group rel

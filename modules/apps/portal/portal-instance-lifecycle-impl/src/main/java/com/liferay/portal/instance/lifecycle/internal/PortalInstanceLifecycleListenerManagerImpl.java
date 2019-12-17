@@ -91,23 +91,6 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		}
 	}
 
-	protected void preregisterCompany(
-		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
-		long companyId) {
-
-		if (!(portalInstanceLifecycleListener instanceof Clusterable) &&
-			!clusterMasterExecutor.isMaster()) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Skipping " + portalInstanceLifecycleListener);
-			}
-
-			return;
-		}
-
-		portalInstanceLifecycleListener.portalInstancePreregistered(companyId);
-	}
-
 	protected void preunregisterCompany(
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {

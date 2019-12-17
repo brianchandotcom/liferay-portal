@@ -384,7 +384,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if ((classNameId <= 0) || (type == GroupConstants.TYPE_DEPOT) ||
 			className.equals(Group.class.getName())) {
 
-			validateGroupKey(groupId, user.getCompanyId(), groupKey, site);
+			validateGroupKey(
+				groupId, user.getCompanyId(), groupKey, type, site);
 		}
 
 		validateInheritContent(parentGroupId, inheritContent);
@@ -2461,7 +2462,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
-		final long classNameId = classNameLocalService.getClassNameId(
+		long classNameId = classNameLocalService.getClassNameId(
 			Group.class);
 
 		TreePathUtil.rebuildTree(
@@ -3623,7 +3624,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		final Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		String className = group.getClassName();
 		long classNameId = group.getClassNameId();
@@ -3655,7 +3656,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			validateGroupKey(
 				group.getGroupId(), group.getCompanyId(), groupKey,
-				group.isSite());
+				group.getType(), group.isSite());
 		}
 		else if (className.equals(Organization.class.getName())) {
 			Organization organization =
@@ -3696,9 +3697,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (group.isActive() != active) {
 			group.setActive(active);
 
+			long companyId = group.getCompanyId();
+
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					reindex(group.getCompanyId(), getUserPrimaryKeys(groupId));
+					reindex(companyId, getUserPrimaryKeys(groupId));
 
 					return null;
 				});
@@ -3708,7 +3711,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setExpandoBridgeAttributes(serviceContext);
 		}
 
-		groupPersistence.update(group);
+		group = groupPersistence.update(group);
 
 		if (group.hasStagingGroup() && !group.isStagedRemotely()) {
 			Group stagingGroup = group.getStagingGroup();
@@ -3811,9 +3814,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		group.setTypeSettings(typeSettings);
 
-		groupPersistence.update(group);
-
-		return group;
+		return groupPersistence.update(group);
 	}
 
 	/**
@@ -4658,10 +4659,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void reindex(long companyId, long[] userIds)
 		throws PortalException {
 
-		final Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			User.class);
 
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			userLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
@@ -4907,7 +4908,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected void validateGroupKey(
-			long groupId, long companyId, String groupKey, boolean site)
+			long groupId, long companyId, String groupKey, int type,
+			boolean site)
 		throws PortalException {
 
 		int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
@@ -4937,7 +4939,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		if (site) {
+		if (site || (type == GroupConstants.TYPE_DEPOT)) {
 			try {
 				Company company = companyLocalService.getCompany(companyId);
 
@@ -5179,7 +5181,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		if (!Objects.equals(group.getClassName(), Group.class.getName())) {
+		if (!Objects.equals(group.getClassName(), Group.class.getName()) &&
+			(group.getType() != GroupConstants.TYPE_DEPOT)) {
+
 			return;
 		}
 
@@ -5200,7 +5204,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			validateGroupKey(
 				group.getGroupId(), group.getCompanyId(),
-				nameMap.get(defaultLocale), group.isSite());
+				nameMap.get(defaultLocale), group.getType(), group.isSite());
 		}
 	}
 

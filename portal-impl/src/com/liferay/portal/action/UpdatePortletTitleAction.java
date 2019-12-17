@@ -16,14 +16,19 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portlet.InvokerPortletUtil;
+
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -72,6 +77,24 @@ public class UpdatePortletTitleAction extends JSONAction {
 		portletSetup.setValue("portletSetupUseCustomTitle", "true");
 
 		portletSetup.store();
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+			if (draftLayout != null) {
+				PortletPreferences draftLayoutPortletSetup =
+					themeDisplay.getStrictLayoutPortletSetup(
+						draftLayout, portletId);
+
+				draftLayoutPortletSetup.setValue(
+					"portletSetupTitle_" + languageId, title);
+				draftLayoutPortletSetup.setValue(
+					"portletSetupUseCustomTitle", "true");
+
+				draftLayoutPortletSetup.store();
+			}
+		}
 
 		InvokerPortletUtil.clearResponse(
 			session, layout.getPrimaryKey(), portletId,

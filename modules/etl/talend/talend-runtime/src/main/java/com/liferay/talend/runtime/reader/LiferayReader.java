@@ -16,9 +16,8 @@ package com.liferay.talend.runtime.reader;
 
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.common.util.URIUtil;
-import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
+import com.liferay.talend.properties.input.LiferayInputProperties;
 import com.liferay.talend.runtime.LiferaySource;
-import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
 import java.io.IOException;
 
@@ -54,15 +53,15 @@ public class LiferayReader implements Reader<IndexedRecord> {
 
 	public LiferayReader(
 		LiferaySource liferaySource,
-		TLiferayInputProperties tLiferayInputProperties) {
+		LiferayInputProperties liferayInputProperties) {
 
 		_currentSource = liferaySource;
 
-		_liferayConnectionResourceBaseProperties = tLiferayInputProperties;
+		_liferayInputProperties = liferayInputProperties;
 
 		_jsonObjectIndexedRecordConverter =
 			new JsonObjectIndexedRecordConverter(
-				tLiferayInputProperties.getSchema());
+				liferayInputProperties.getSchema());
 	}
 
 	@Override
@@ -192,15 +191,14 @@ public class LiferayReader implements Reader<IndexedRecord> {
 		parameters.put("page", String.valueOf(_currentPage));
 		parameters.put(
 			"pageSize",
-			String.valueOf(
-				_liferayConnectionResourceBaseProperties.getItemsPerPage()));
+			String.valueOf(_liferayInputProperties.getItemsPerPage()));
 
 		return parameters;
 	}
 
 	private void _readEndpointJsonObject() {
 		URI resourceURI = URIUtil.updateWithQueryParameters(
-			_liferayConnectionResourceBaseProperties.getEndpointURI(),
+			_liferayInputProperties.getEndpointUrl(),
 			_getPageQueryParameters());
 
 		_currentItemIndex = 0;
@@ -260,8 +258,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 	private final JsonObjectIndexedRecordConverter
 		_jsonObjectIndexedRecordConverter;
 	private int _lastPage;
-	private final LiferayConnectionResourceBaseProperties
-		_liferayConnectionResourceBaseProperties;
+	private final LiferayInputProperties _liferayInputProperties;
 	private boolean _started;
 
 }

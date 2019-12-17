@@ -48,19 +48,19 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.forms.service", "0.0.1", "1.0.0",
+			"0.0.1", "1.0.0",
 			new com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_0.
 				UpgradeSchema());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.forms.service", "1.0.0", "1.0.1",
+			"1.0.0", "1.0.1",
 			new com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_1.
 				UpgradeKaleoProcess(),
 			new com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_1.
 				UpgradeSchema());
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.forms.service", "1.0.1", "1.0.2",
+			"1.0.1", "1.0.2",
 			new com.liferay.portal.workflow.kaleo.forms.internal.upgrade.v1_0_2.
 				UpgradeKaleoProcess(
 					_assetEntryLocalService, _ddlRecordLocalService,
@@ -69,7 +69,7 @@ public class KaleoFormsServiceUpgrade implements UpgradeStepRegistrator {
 				_classNameLocalService, _ddmTemplateLinkLocalService));
 
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.forms.service", "1.0.2", "1.1.0",
+			"1.0.2", "1.1.0",
 			new UpgradeKaleoProcess(
 				_ddlRecordSetLocalService, _ddmStructureLocalService,
 				_ddmStructureVersionLocalService, _ddmTemplateLocalService,

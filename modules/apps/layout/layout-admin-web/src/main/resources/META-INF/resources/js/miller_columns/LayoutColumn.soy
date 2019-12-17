@@ -9,6 +9,7 @@
 		actionURLs: map<string, string>,
 		active: bool,
 		checked: bool,
+		conversionPreview: bool,
 		description: string,
 		draft: bool,
 		dropdownItems: list<?>,
@@ -86,6 +87,7 @@
 		actionURLs: map<string, string>,
 		active: bool,
 		checked: bool,
+		conversionPreview: bool,
 		description: string,
 		draft: bool,
 		dropdownItems: list<?>,
@@ -196,6 +198,11 @@
 							&nbsp;
 							<span class="label label-secondary">
 								<span class="label-item label-item-expand">{msg desc=""}draft{/msg}</span>
+							</span>
+						{elseif $layoutColumnItem.conversionPreview}
+							&nbsp;
+							<span class="label label-info">
+								<span class="label-item label-item-expand">{msg desc=""}conversion-preview{/msg}</span>
 							</span>
 						{/if}
 					</h6>

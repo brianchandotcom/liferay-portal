@@ -413,8 +413,6 @@ public class GitUtil {
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, workingDirectory, timeout, modifiedCommands);
 
-				_debugDNS(process);
-
 				break;
 			}
 			catch (IOException | TimeoutException e) {
@@ -433,6 +431,11 @@ public class GitUtil {
 				e.printStackTrace();
 
 				JenkinsResultsParserUtil.sleep(retryDelay);
+			}
+			finally {
+				if (process != null) {
+					_debugDNS(process);
+				}
 			}
 		}
 
@@ -527,8 +530,7 @@ public class GitUtil {
 		"github-dev.liferay.com";
 
 	private static final Pattern _dnsDebugPattern = Pattern.compile(
-		"Could not resolve hostname (?<hostname>[^:]+): " +
-			"Name or service not known");
+		"Unable to resolve hostname (?<hostname>[^:]+): ");
 	private static final Pattern _gitHubRefURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",

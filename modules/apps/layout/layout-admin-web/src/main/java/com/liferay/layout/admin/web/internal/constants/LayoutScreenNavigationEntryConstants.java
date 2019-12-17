@@ -21,8 +21,7 @@ public class LayoutScreenNavigationEntryConstants {
 
 	public static final String CATEGORY_KEY_GENERAL = "general";
 
-	public static final String ENTRY_KEY_CUSTOM_OPEN_GRAPH_META_TAGS =
-		"custom-open-graph-meta-tags";
+	public static final String ENTRY_KEY_CUSTOM_META_TAGS = "custom-meta-tags";
 
 	public static final String ENTRY_KEY_GENERAL = "general";
 

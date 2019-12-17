@@ -9,18 +9,34 @@
  * distribution rights of the Software.
  */
 
-const REGEX_SUB = /(?<=-|^)x(?=-|\s)/g;
+window.Liferay.Util.sub = function(string = '', data) {
+	const REGEX_SUB = /(?<=-|^)x(?=-|\s)/g;
 
-window.Liferay.Util.sub = function(string, data) {
 	if (
 		arguments.length > 2 ||
 		(typeof data !== 'object' && typeof data !== 'function')
 	) {
 		data = Array.prototype.slice.call(arguments, 1);
 	}
-	return string.replace(REGEX_SUB, (match, key) => {
-		return data[key] === undefined ? match : data[key];
-	});
+
+	const dataCopy = [...data];
+	const max = REGEX_SUB.exec(string).length;
+	let replacedValues = 0;
+
+	const replacestring = string.replace
+		? string.replace(REGEX_SUB, () => {
+				replacedValues = replacedValues + 1;
+				const lastReplacement = replacedValues >= max;
+
+				if (lastReplacement) {
+					return dataCopy.join('');
+				} else {
+					return dataCopy.shift();
+				}
+		  })
+		: string;
+
+	return replacestring;
 };
 
 window.Liferay.Util.openToast = () => true;

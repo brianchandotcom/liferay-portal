@@ -11,9 +11,11 @@ definition {
 
 		Pause(locator1 = "10000");
 
-		SelectWindow(locator1 = "OneDrive#DOCUMENTS_PAGE_TITLE");
+		SelectWindow.selectPopUp(locator1 = "null");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
+
+		Pause(locator1 = "10000");
 
 		if (isSet(dmDocumentContent)) {
 			Pause(locator1 = "10000");
@@ -47,7 +49,7 @@ definition {
 	macro editTitle {
 		Pause(locator1 = "10000");
 
-		SelectWindow(locator1 = "OneDrive#DOCUMENTS_PAGE_TITLE");
+		SelectWindow.selectPopUp(locator1 = "null");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
@@ -86,9 +88,9 @@ definition {
 
 		MicrosoftLogin.confirmMicrosoftApp();
 
-		Pause(locator1 = "10000");
+		Pause(locator1 = "30000");
 
-		SelectWindow(locator1 = "OneDrive#PAGE_TITLE");
+		SelectWindow.selectPopUp(locator1 = "null");
 	}
 
 }

@@ -15,7 +15,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export default function SidebarPanelHeader(props) {
+export default function SidebarPanelHeader({padded = true, ...props}) {
 	return (
 		<h1
 			{...props}
@@ -23,9 +23,11 @@ export default function SidebarPanelHeader(props) {
 				'page-editor__sidebar-panel-header',
 				'align-items-center',
 				'd-flex',
-				'pt-2',
-				'px-3',
-				{[props.className]: !!props.className}
+				{
+					[props.className]: !!props.className,
+					'pt-2': padded,
+					'px-3': padded
+				}
 			)}
 		/>
 	);

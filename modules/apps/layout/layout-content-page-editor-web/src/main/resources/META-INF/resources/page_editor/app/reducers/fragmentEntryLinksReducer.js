@@ -28,7 +28,132 @@ export default function fragmentEntryLinksReducer(state, action) {
 				}
 			};
 			break;
+		case TYPES.ADD_FRAGMENT_ENTRY_LINK_COMMENT:
+			{
+				const fragmentEntryLink =
+					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
 
+				const {comments = []} = fragmentEntryLink;
+
+				let nextComments;
+
+				if (action.parentCommentId) {
+					nextComments = comments.map(comment =>
+						comment.commentId === action.parentCommentId
+							? {
+									...comment,
+									children: [
+										...(comment.children || []),
+										action.fragmentEntryLinkComment
+									]
+							  }
+							: comment
+					);
+				} else {
+					nextComments = [
+						...comments,
+						action.fragmentEntryLinkComment
+					];
+				}
+
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...fragmentEntryLink,
+							comments: nextComments
+						}
+					}
+				};
+			}
+			break;
+		case TYPES.DELETE_FRAGMENT_ENTRY_LINK_COMMENT:
+			{
+				const fragmentEntryLink =
+					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
+
+				const {comments = []} = fragmentEntryLink;
+
+				let nextComments;
+
+				if (action.parentCommentId) {
+					nextComments = comments.map(comment =>
+						comment.commentId === action.parentCommentId
+							? {
+									...comment,
+									children: comment.children.filter(
+										childComment =>
+											childComment.commentId !==
+											action.commentId
+									)
+							  }
+							: comment
+					);
+				} else {
+					nextComments = comments.filter(
+						comment => comment.commentId !== action.commentId
+					);
+				}
+
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...fragmentEntryLink,
+							comments: nextComments
+						}
+					}
+				};
+			}
+			break;
+		case TYPES.EDIT_FRAGMENT_ENTRY_LINK_COMMENT:
+			{
+				const fragmentEntryLink =
+					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
+
+				const {comments = []} = fragmentEntryLink;
+
+				let nextComments;
+
+				if (action.parentCommentId) {
+					nextComments = comments.map(comment =>
+						comment.commentId === action.parentCommentId
+							? {
+									...comment,
+									children: comment.children.map(
+										childComment =>
+											childComment.commentId ===
+											action.fragmentEntryLinkComment
+												.commentId
+												? action.fragmentEntryLinkComment
+												: childComment
+									)
+							  }
+							: comment
+					);
+				} else {
+					nextComments = comments.map(comment =>
+						comment.commentId ===
+						action.fragmentEntryLinkComment.commentId
+							? {...comment, ...action.fragmentEntryLinkComment}
+							: comment
+					);
+				}
+
+				nextState = {
+					...nextState,
+					fragmentEntryLinks: {
+						...nextState.fragmentEntryLinks,
+						[action.fragmentEntryLinkId]: {
+							...fragmentEntryLink,
+							comments: nextComments
+						}
+					}
+				};
+			}
+			break;
 		default:
 			break;
 	}

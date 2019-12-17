@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_PORTRAIT</td>
+	<td>//a//img[contains(@src,'user_portrait')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_PROFILE_IMAGE</td>
 	<td>//img[contains(@id,'avatar') and contains(@src,'${key_imageName}')]</td>
 	<td></td>

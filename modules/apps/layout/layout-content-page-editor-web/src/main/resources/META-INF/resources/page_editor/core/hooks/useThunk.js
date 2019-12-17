@@ -30,7 +30,7 @@ export default function useThunk([state, dispatch]) {
 	const thunkDispatch = useRef(action => {
 		if (isMounted()) {
 			if (typeof action === 'function') {
-				action(payload => {
+				return action(payload => {
 					if (isMounted()) {
 						dispatch(payload);
 					}

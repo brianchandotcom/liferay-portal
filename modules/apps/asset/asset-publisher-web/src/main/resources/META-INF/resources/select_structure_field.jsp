@@ -36,6 +36,7 @@ portletURL.setParameter("mvcPath", "/select_structure_field.jsp");
 portletURL.setParameter("portletResource", portletResource);
 portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
+portletURL.setParameter("eventName", eventName);
 %>
 
 <div class="alert alert-danger hide" id="<portlet:namespace />message">

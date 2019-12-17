@@ -45,6 +45,7 @@ public class DepotEntryGroupRelWrapper
 		attributes.put("depotEntryGroupRelId", getDepotEntryGroupRelId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("depotEntryId", getDepotEntryId());
+		attributes.put("searchable", isSearchable());
 		attributes.put("toGroupId", getToGroupId());
 
 		return attributes;
@@ -75,6 +76,12 @@ public class DepotEntryGroupRelWrapper
 
 		if (depotEntryId != null) {
 			setDepotEntryId(depotEntryId);
+		}
+
+		Boolean searchable = (Boolean)attributes.get("searchable");
+
+		if (searchable != null) {
+			setSearchable(searchable);
 		}
 
 		Long toGroupId = (Long)attributes.get("toGroupId");
@@ -135,6 +142,16 @@ public class DepotEntryGroupRelWrapper
 	}
 
 	/**
+	 * Returns the searchable of this depot entry group rel.
+	 *
+	 * @return the searchable of this depot entry group rel
+	 */
+	@Override
+	public boolean getSearchable() {
+		return model.getSearchable();
+	}
+
+	/**
 	 * Returns the to group ID of this depot entry group rel.
 	 *
 	 * @return the to group ID of this depot entry group rel
@@ -142,6 +159,16 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public long getToGroupId() {
 		return model.getToGroupId();
+	}
+
+	/**
+	 * Returns <code>true</code> if this depot entry group rel is searchable.
+	 *
+	 * @return <code>true</code> if this depot entry group rel is searchable; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSearchable() {
+		return model.isSearchable();
 	}
 
 	/**
@@ -202,6 +229,16 @@ public class DepotEntryGroupRelWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this depot entry group rel is searchable.
+	 *
+	 * @param searchable the searchable of this depot entry group rel
+	 */
+	@Override
+	public void setSearchable(boolean searchable) {
+		model.setSearchable(searchable);
 	}
 
 	/**

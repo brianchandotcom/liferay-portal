@@ -4,6 +4,7 @@
  * FragmentsEditorToolbar
  */
 {template .render}
+	{@param? _conversionDraft: bool}
 	{@param? _handleDiscardDraft: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _online: bool}
@@ -95,6 +96,8 @@
 						{let $discardLabel kind="text"}
 							{if $singleSegmentsExperienceMode}
 								{msg desc=""}discard-variant{/msg}
+							{elseif $_conversionDraft}
+								{msg desc=""}discard-conversion-draft{/msg}
 							{else}
 								{msg desc=""}discard-draft{/msg}
 							{/if}

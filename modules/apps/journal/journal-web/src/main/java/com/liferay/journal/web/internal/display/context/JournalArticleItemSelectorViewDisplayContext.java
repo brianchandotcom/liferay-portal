@@ -296,10 +296,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _folderId;
 	}
 
-	private BreadcrumbEntry _getHomeBreadcrumb() throws PortletException {
+	private BreadcrumbEntry _getHomeBreadcrumb() throws Exception {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(LanguageUtil.get(_httpServletRequest, "home"));
+		breadcrumbEntry.setTitle(_themeDisplay.getSiteGroupName());
 
 		PortletURL portletURL = getPortletURL();
 

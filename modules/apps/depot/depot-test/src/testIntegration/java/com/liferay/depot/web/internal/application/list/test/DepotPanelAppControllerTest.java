@@ -74,14 +74,6 @@ public class DepotPanelAppControllerTest {
 	}
 
 	@Test
-	public void testGetPanelAppsDoesNotShowTheConfigurationCategoryForADepotGroup()
-		throws Exception {
-
-		_assertIsHiddenForADepotGroup(
-			PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION);
-	}
-
-	@Test
 	public void testGetPanelAppsDoesNotShowThePeopleCategoryForADepotGroup()
 		throws Exception {
 
@@ -162,6 +154,9 @@ public class DepotPanelAppControllerTest {
 			_depotEntry.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_USERS);
 		_assertIsDisplayed(
 			_depotEntry.getGroupId(), PanelCategoryKeys.CONTROL_PANEL_WORKFLOW);
+		_assertIsDisplayed(
+			_depotEntry.getGroupId(),
+			PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION);
 	}
 
 	@Test

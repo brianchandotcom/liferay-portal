@@ -67,6 +67,7 @@ import java.io.Writer;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -278,11 +279,12 @@ public class DDMFormEmailNotificationSender {
 			}
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"label", labelString
-		).put(
-			"value", _soyDataFactory.createSoyRawData(sb.toString())
-		).build();
+		Map<String, Object> fieldMap = new HashMap<>();
+
+		fieldMap.put("label", labelString);
+		fieldMap.put("value", _soyDataFactory.createSoyRawData(sb.toString()));
+
+		return fieldMap;
 	}
 
 	protected List<String> getFieldNames(DDMFormLayoutPage ddmFormLayoutPage) {

@@ -316,6 +316,7 @@ definition {
 			portlet = "Roles");
 
 		Role.viewCP(
+			roleKey = '''<script>alert(123);</script>''',
 			roleTitle = '''<script>alert(123);</script>''',
 			roleType = "Regular");
 

@@ -39,6 +39,7 @@
 		<!-- Other fields -->
 
 		<column name="depotEntryId" type="long" />
+		<column name="searchable" type="boolean" />
 		<column name="toGroupId" type="long" />
 
 		<!-- Finder methods -->
@@ -51,6 +52,10 @@
 		</finder>
 		<finder name="D_TGI" return-type="DepotEntryGroupRel" unique="true">
 			<finder-column name="depotEntryId" />
+			<finder-column name="toGroupId" />
+		</finder>
+		<finder name="S_TGI" return-type="Collection">
+			<finder-column name="searchable" />
 			<finder-column name="toGroupId" />
 		</finder>
 	</entity>

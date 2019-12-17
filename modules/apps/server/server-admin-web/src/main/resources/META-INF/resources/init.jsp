@@ -71,6 +71,7 @@ page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.ShutdownUtil" %><%@
+page import="com.liferay.server.admin.web.internal.constants.ServerAdminNavigationEntryConstants" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ServerDisplayContext" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 

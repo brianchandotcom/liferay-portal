@@ -118,6 +118,10 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 
+			layout.setType(draftLayout.getType());
+
+			layout = _layoutLocalService.updateLayout(layout);
+
 			UnicodeProperties typeSettingsProperties =
 				draftLayout.getTypeSettingsProperties();
 

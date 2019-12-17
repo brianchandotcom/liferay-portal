@@ -29,9 +29,7 @@ if (status != WorkflowConstants.STATUS_ANY) {
 	previewQueryString += "&status=" + status;
 }
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("imageURL", DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString));
+String previewURL = DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), fileVersion, themeDisplay, previewQueryString);
 %>
 
 <liferay-util:html-top
@@ -40,9 +38,27 @@ data.put("imageURL", DLURLHelperUtil.getPreviewURL(fileVersion.getFileEntry(), f
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div id="<%= renderResponse.getNamespace() + randomNamespace + "previewImage" %>">
-	<react:component
-		data="<%= data %>"
-		module="preview/js/ImagePreviewer.es"
-	/>
-</div>
+<c:choose>
+	<c:when test="<%= Objects.equals(fileVersion.getMimeType(), ContentTypes.IMAGE_SVG_XML) %>">
+		<div class="preview-file">
+			<div class="preview-file-container preview-file-max-height">
+				<img class="preview-file-image-vectorial" src="<%= previewURL %>" />
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+
+		<%
+		Map<String, Object> data = HashMapBuilder.<String, Object>put(
+			"imageURL", previewURL
+		).build();
+		%>
+
+		<div id="<%= renderResponse.getNamespace() + randomNamespace + "previewImage" %>">
+			<react:component
+				data="<%= data %>"
+				module="preview/js/ImagePreviewer.es"
+			/>
+		</div>
+	</c:otherwise>
+</c:choose>

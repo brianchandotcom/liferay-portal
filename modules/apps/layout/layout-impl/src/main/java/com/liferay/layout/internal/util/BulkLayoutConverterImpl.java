@@ -113,6 +113,31 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 	}
 
 	@Override
+	public Layout generatePreviewLayout(long plid) throws Exception {
+		Layout layout = _layoutLocalService.getLayout(plid);
+
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			throw new LayoutConvertException(
+				"Layout with PLID " + layout.getPlid() + " is not convertible");
+		}
+
+		Layout draftLayout = _getOrCreateDraftLayout(layout);
+
+		_addOrUpdateLayoutPageTemplateStructure(
+			draftLayout, _getLayoutData(draftLayout));
+
+		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
+
+		draftLayout.setType(LayoutConstants.TYPE_CONTENT);
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+		_updatePortletDecorator(draftLayout);
+
+		return draftLayout;
+	}
+
+	@Override
 	public long[] getConvertibleLayoutPlids(long groupId)
 		throws PortalException {
 

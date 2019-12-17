@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -344,9 +345,12 @@ public class DDMFormFieldTemplateContextFactoryTest {
 				DDMFormField ddmFormField,
 				DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-				return HashMapBuilder.<String, Object>put(
-					"displayStyle", ddmFormField.getProperty("displayStyle")
-				).build();
+				Map<String, Object> parameters = new HashMap<>();
+
+				parameters.put(
+					"displayStyle", ddmFormField.getProperty("displayStyle"));
+
+				return parameters;
 			}
 
 		};

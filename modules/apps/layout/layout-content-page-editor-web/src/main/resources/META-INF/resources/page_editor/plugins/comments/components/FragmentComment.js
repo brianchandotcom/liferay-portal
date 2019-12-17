@@ -21,27 +21,21 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState, useContext} from 'react';
 
+import {ConfigContext} from '../../../app/config/index';
+import {DispatchContext} from '../../../app/reducers/index';
+import FragmentCommentService from '../../../app/services/FragmentCommentService';
 import {StoreContext} from '../../../app/store/index';
+import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
 import InlineConfirm from '../../../common/components/InlineConfirm';
 import UserIcon from '../../../common/components/UserIcon';
 import EditCommentForm from './EditCommentForm';
 import ReplyCommentForm from './ReplyCommentForm';
 import ResolveButton from './ResolveButton';
 
-function deleteFragmentEntryLinkComment() {
-	throw new Error('Not implemented');
-}
-
-function editFragmentEntryLinkComment() {
-	throw new Error('Not implemented');
-}
-
 export default function FragmentComment({
 	comment,
 	fragmentEntryLinkId,
-	onDelete,
 	onEdit,
-	onEditReply,
 	parentCommentId
 }) {
 	const {
@@ -63,6 +57,9 @@ export default function FragmentComment({
 	const [showResolveMask, setShowResolveMask] = useState(false);
 
 	const {showResolvedComments} = useContext(StoreContext);
+	const dispatch = useContext(DispatchContext);
+	const config = useContext(ConfigContext);
+
 	const showModifiedDateTooltip = !!(edited && modifiedDateDescription);
 
 	const commentClassname = classNames('small', {
@@ -78,7 +75,13 @@ export default function FragmentComment({
 	const handleResolveButtonClick = () => {
 		setChangingResolved(true);
 
-		editFragmentEntryLinkComment(commentId, body, !resolved)
+		FragmentCommentService.editFragmentEntryLinkComment({
+			body,
+			commentId,
+			config,
+			fragmentEntryLinkId,
+			resolved: !resolved
+		})
 			.then(comment => {
 				setChangingResolved(false);
 
@@ -218,7 +221,6 @@ export default function FragmentComment({
 					comment={comment}
 					fragmentEntryLinkId={fragmentEntryLinkId}
 					onCloseForm={() => setEditing(false)}
-					onEdit={onEdit}
 				/>
 			) : (
 				<div
@@ -234,12 +236,13 @@ export default function FragmentComment({
 						{comment.children &&
 							comment.children.map(childComment => (
 								<FragmentComment
-									comment={{...childComment, resolved}}
+									comment={{
+										...childComment,
+										parentCommentId: comment.commentId,
+										resolved
+									}}
 									fragmentEntryLinkId={fragmentEntryLinkId}
 									key={childComment.commentId}
-									onDelete={onDelete}
-									onEdit={onEditReply(commentId)}
-									onEditReply={onEditReply}
 									parentCommentId={commentId}
 								/>
 							))}
@@ -263,17 +266,22 @@ export default function FragmentComment({
 					)}
 					onCancelButtonClick={() => setShowDeleteMask(false)}
 					onConfirmButtonClick={() =>
-						deleteFragmentEntryLinkComment(commentId)
-							.then(() => hideComment(() => onDelete(comment)))
-							.catch(() => {
-								openToast({
-									message: Liferay.Language.get(
-										'the-comment-could-not-be-deleted'
-									),
-									title: Liferay.Language.get('error'),
-									type: 'danger'
-								});
+						dispatch(
+							deleteFragmentComment({
+								commentId,
+								config,
+								fragmentEntryLinkId,
+								parentCommentId
 							})
+						).catch(() => {
+							openToast({
+								message: Liferay.Language.get(
+									'the-comment-could-not-be-deleted'
+								),
+								title: Liferay.Language.get('error'),
+								type: 'danger'
+							});
+						})
 					}
 				/>
 			)}
@@ -295,12 +303,11 @@ FragmentComment.propTypes = {
 		}),
 		body: PropTypes.string,
 		commentId: PropTypes.string.isRequired,
-		dateDescription: PropTypes.string
+		dateDescription: PropTypes.string,
+		parentCommentId: PropTypes.string
 	}),
 
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	onDelete: PropTypes.func,
 	onEdit: PropTypes.func,
-	onEditReply: PropTypes.func,
 	parentCommentId: PropTypes.string
 };

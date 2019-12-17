@@ -15,7 +15,7 @@
 package com.liferay.talend.tliferayinput;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
-import com.liferay.talend.resource.LiferayInputResourceProperties;
+import com.liferay.talend.properties.input.LiferayInputProperties;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -45,7 +45,7 @@ public class TLiferayInputDefinition extends LiferayBaseComponentDefinition {
 		return concatPropertiesClasses(
 			super.getNestedCompatibleComponentPropertiesClass(),
 			(Class<? extends ComponentProperties>[])new Class<?>[] {
-				LiferayInputResourceProperties.class
+				LiferayInputProperties.class
 			});
 	}
 

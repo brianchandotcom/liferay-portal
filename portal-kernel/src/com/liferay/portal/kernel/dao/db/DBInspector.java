@@ -262,17 +262,9 @@ public class DBInspector {
 	private boolean _isColumnNullable(String typeName) {
 		typeName = typeName.trim();
 
-		int i = typeName.indexOf("null");
+		typeName = StringUtil.toLowerCase(typeName);
 
-		if (i == -1) {
-			return false;
-		}
-
-		if ((i > 0) && !Character.isSpaceChar(typeName.charAt(i - 1))) {
-			return false;
-		}
-
-		if ((i + 4) < typeName.length()) {
+		if (typeName.endsWith("not null")) {
 			return false;
 		}
 

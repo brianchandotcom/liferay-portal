@@ -98,6 +98,16 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		return this;
 	}
 
+	public String getHostUrl() {
+		URL openAPISpecURL = URIUtil.toURL(_getValue(apiSpecURL));
+
+		URL serverURL = URIUtil.extractServerURL(openAPISpecURL);
+
+		String serverHref = serverURL.toExternalForm();
+
+		return serverHref.concat("/o");
+	}
+
 	public int getItemsPerPage() {
 		return _getValue(itemsPerPage);
 	}

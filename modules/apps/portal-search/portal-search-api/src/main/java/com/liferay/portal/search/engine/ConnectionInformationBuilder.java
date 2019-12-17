@@ -15,18 +15,28 @@
 package com.liferay.portal.search.engine;
 
 import java.util.List;
+import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Adam Brandizzi
+ * @author Bryan Engler
  */
-public interface SearchEngineInformation {
+@ProviderType
+public interface ConnectionInformationBuilder {
 
-	public String getClientVersionString();
+	public ConnectionInformation build();
 
-	public List<ConnectionInformation> getConnectionInformationList();
+	public void clusterName(String clusterName);
 
-	public String getNodesString();
+	public void connectionId(String connectionId);
 
-	public String getVendorString();
+	public void error(String error);
+
+	public void health(String health);
+
+	public void labels(Set<String> labels);
+
+	public void nodeInformationList(List<NodeInformation> nodeInformationList);
 
 }

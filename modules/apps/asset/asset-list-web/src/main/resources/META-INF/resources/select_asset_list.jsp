@@ -47,9 +47,7 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 			String title = HtmlUtil.escape(assetListEntry.getTitle());
 
 			if (assetListEntry.getGroupId() != scopeGroupId) {
-				Group group = GroupLocalServiceUtil.getGroup(assetListEntry.getGroupId());
-
-				title = StringUtil.appendParentheticalSuffix(title, HtmlUtil.escape(group.getName(locale)));
+				title = HtmlUtil.escape(assetListEntry.getUnambiguousTitle(locale));
 			}
 			%>
 

@@ -1137,6 +1137,8 @@ definition {
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
+		FormViewBuilder.switchToFormViewTab();
+
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

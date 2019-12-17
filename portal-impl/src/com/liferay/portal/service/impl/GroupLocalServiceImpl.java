@@ -2462,8 +2462,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 */
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
-		long classNameId = classNameLocalService.getClassNameId(
-			Group.class);
+		long classNameId = classNameLocalService.getClassNameId(Group.class);
 
 		TreePathUtil.rebuildTree(
 			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID, StringPool.SLASH,

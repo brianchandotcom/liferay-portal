@@ -26,30 +26,25 @@ buildChangelogs {
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
-		String[] changelogPropertiesFileContent = changelogPropertiesFile
-
 		String changelog = ""
 
 		String version = ""
 		String rangeStart = ""
 		String rangeEnd = ""
 
-		for (int i = 0; i < changelogPropertiesFileContent.size() - 1;) {
-			String line1 = changelogPropertiesFileContent[i++]
-			String line2 = changelogPropertiesFileContent[i]
+		changelogPropertiesFile.getText("UTF-8").eachLine {
+			String recordCommitLine ->
 
-			def matcher = line1 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
-
-			if (matcher.find()) {
-				rangeEnd = matcher.group(2)
-				version = matcher.group(1)
-			}
-
-			matcher = line2 =~ /git-id\[(\d+\.\d+\.\d+)\]=([a-f0-9]+)/
+			def matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+)\.\.([a-f0-9]+)/
 
 			if (matcher.find()) {
 				rangeStart = matcher.group(2)
+				rangeEnd = matcher.group(3)
+				version = matcher.group(1)
 			}
+			println rangeStart
+			println rangeEnd
+			println version
 
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
@@ -60,10 +55,6 @@ buildChangelogs {
 			}
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
-
-			if (gitLogOutput.length() == 0) {
-				continue
-			}
 
 			String ticket = ""
 

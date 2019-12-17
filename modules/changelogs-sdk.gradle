@@ -27,6 +27,7 @@ buildChangelogs {
 
 		String changelog = ""
 
+		String date = ""
 		String version = ""
 		String rangeStart = ""
 		String rangeEnd = ""
@@ -61,10 +62,11 @@ buildChangelogs {
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				matcher = gitLogLine =~ /[a-f0-9]+:.+:([A-Z]+-\d+).*/
+				matcher = gitLogLine =~ /[a-f0-9]+:(.+):([A-Z]+-\d+).*/
 
 				if (matcher.find()) {
-					ticket = matcher.group(1)
+					date = matcher.group(1)
+					ticket = matcher.group(2)
 				}
 
 				matcher = gitLogLine =~ /\+\s*compile(Only)? group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
@@ -80,7 +82,7 @@ buildChangelogs {
 				}
 			}
 
-			changelogItem = "\n\n## ${version} - 1970-01-01\n" + changelogItem
+			changelogItem = "\n\n## ${version} - ${date}\n" + changelogItem
 
 			changelog = changelog + changelogItem
 		}

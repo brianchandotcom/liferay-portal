@@ -243,6 +243,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"infoItemSelectorURL", _getInfoItemSelectorURL()
 			).put(
+				"moveItemURL",
+				getFragmentEntryActionURL(
+					"/content_layout/move_fragment_entry_link_react")
+			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
 			).put(
 				"sidebarPanels", editorSoyContext.get("sidebarPanels")

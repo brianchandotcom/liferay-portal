@@ -99,15 +99,7 @@ buildChangelogs {
 			}
 		}
 
-		def getBundleNameSymbolicName = {
-			dir ->
-
-			def properties = GUtil.loadProperties(new File(dir + "/bnd.bnd"))
-
-			[properties["Bundle-Name"], properties["Bundle-SymbolicName"]]
-		}
-
-		def (pluginFullName, pluginSymbolicName) = getBundleNameSymbolicName("sdk/${projectName}")
+		String pluginFullName = GUtil.loadProperties(new File("sdk/${projectName}/bnd.bnd"))["Bundle-Name"]
 
 		changelog = "# ${pluginFullName} Change Log" + changelog
 

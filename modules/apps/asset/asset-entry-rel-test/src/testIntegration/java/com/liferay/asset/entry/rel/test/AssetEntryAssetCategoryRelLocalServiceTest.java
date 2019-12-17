@@ -133,14 +133,12 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testDeleteAssetEntryAssetCategoryRelByAssetCategoryId() {
-		long assetEntryId1 = RandomTestUtil.randomLong();
 		long assetCategoryId = RandomTestUtil.randomLong();
 
-		_addAssetEntryAssetCategoryRel(assetEntryId1, assetCategoryId);
-
-		long assetEntryId2 = RandomTestUtil.randomLong();
-
-		_addAssetEntryAssetCategoryRel(assetEntryId2, assetCategoryId);
+		_addAssetEntryAssetCategoryRel(
+			RandomTestUtil.randomLong(), assetCategoryId);
+		_addAssetEntryAssetCategoryRel(
+			RandomTestUtil.randomLong(), assetCategoryId);
 
 		Assert.assertEquals(
 			_initialAssetEntryAssetCategoryRelsCount + 2,
@@ -310,13 +308,12 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 	@Test
 	public void testGetAssetEntryAssetCategoryRelsCount() {
 		long assetEntryId = RandomTestUtil.randomLong();
-		long assetCategoryId1 = RandomTestUtil.randomLong();
 
-		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId1);
+		_addAssetEntryAssetCategoryRel(
+			assetEntryId, RandomTestUtil.randomLong());
 
-		long assetCategoryId2 = RandomTestUtil.randomLong();
-
-		_addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId2);
+		_addAssetEntryAssetCategoryRel(
+			assetEntryId, RandomTestUtil.randomLong());
 
 		int assetEntryAssetCategoryRelsCount =
 			_assetEntryAssetCategoryRelLocalService.

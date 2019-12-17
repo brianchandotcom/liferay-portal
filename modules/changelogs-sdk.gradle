@@ -67,11 +67,11 @@ buildChangelogs {
 					ticket = matcher.group(1)
 				}
 
-				matcher = gitLogLine =~ /\+\s*compile group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+				matcher = gitLogLine =~ /\+\s*compile(Only)? group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
 
 				if (matcher.find()) {
-					String dependencyName = matcher.group(1)
-					String dependencyVersion = matcher.group(2)
+					String dependencyName = matcher.group(2)
+					String dependencyVersion = matcher.group(3)
 
 					changelogItem = changelogItem + """\
 						|
@@ -98,7 +98,6 @@ buildChangelogs {
 		changelog = "# ${pluginFullName} Change Log" + changelog
 
 		changelogFile.text = changelog
-		logger.lifecycle changelog
 
 		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName
 	}

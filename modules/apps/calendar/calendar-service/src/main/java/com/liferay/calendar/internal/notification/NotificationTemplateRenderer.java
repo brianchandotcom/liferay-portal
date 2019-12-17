@@ -69,21 +69,21 @@ public class NotificationTemplateRenderer {
 		String calendarName = GetterUtil.getString(
 			attributes.get("calendarName"));
 		String location = GetterUtil.getString(attributes.get("location"));
-		String title = GetterUtil.getString(attributes.get("title"));
 		String siteName = GetterUtil.getString(attributes.get("siteName"));
+		String title = GetterUtil.getString(attributes.get("title"));
 
 		if (mode == MODE_HTML) {
 			calendarName = HtmlUtil.escapeAttribute(calendarName);
 			location = HtmlUtil.escapeAttribute(location);
-			title = HtmlUtil.escapeAttribute(title);
 			siteName = HtmlUtil.escapeAttribute(siteName);
+			title = HtmlUtil.escapeAttribute(title);
 		}
 
 		if (Validator.isNull(siteName)) {
 			return StringUtil.replace(
 				notificationTemplate,
 				new String[] {
-					"[$COMPANY_ID$]", "[$COMPANY_ID$]", "[$EVENT_END_DATE$]",
+					"[$COMPANY_ID$]", "[$CALENDAR_NAME$]", "[$EVENT_END_DATE$]",
 					"[$EVENT_LOCATION$]", "[$EVENT_START_DATE$]",
 					"[$EVENT_TITLE$]", "[$EVENT_URL$]",
 					"[$INSTANCE_START_TIME$]", "[$FROM_ADDRESS$]",

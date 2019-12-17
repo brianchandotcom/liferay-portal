@@ -133,7 +133,7 @@ public class NotificationTemplateContextFactory {
 						calendar.getGroupId());
 
 					if (calendarGroup.isSite()) {
-						return calendarGroup.getName(user.getLocale());
+						return calendarGroup.getName(user.getLocale(), true);
 					}
 
 					return StringPool.BLANK;
@@ -144,7 +144,7 @@ public class NotificationTemplateContextFactory {
 					userDateTimeFormat.format(calendarBooking.getStartTime()),
 					StringPool.SPACE, userTimezoneDisplayName)
 			).put(
-				"title", calendarBooking.getTitle(user.getLocale())
+				"title", calendarBooking.getTitle(user.getLocale(), true)
 			).put(
 				"url",
 				_getCalendarBookingURL(

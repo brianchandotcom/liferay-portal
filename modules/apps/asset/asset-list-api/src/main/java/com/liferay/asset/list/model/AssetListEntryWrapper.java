@@ -361,6 +361,13 @@ public class AssetListEntryWrapper
 		return model.getTypeSettings(segmentsEntryId);
 	}
 
+	@Override
+	public String getUnambiguousTitle(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getUnambiguousTitle(locale);
+	}
+
 	/**
 	 * Returns the user ID of this asset list entry.
 	 *

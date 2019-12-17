@@ -130,4 +130,7 @@ public interface AssetListEntry extends AssetListEntryModel, PersistedModel {
 
 	public String getTypeSettings(long segmentsEntryId);
 
+	public String getUnambiguousTitle(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

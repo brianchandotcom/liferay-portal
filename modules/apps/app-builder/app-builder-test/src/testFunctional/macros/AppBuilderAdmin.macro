@@ -50,6 +50,7 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
 
+<<<<<<< HEAD
 	macro createFormViewAndTableView {
 		FormViewBuilder.addFormView(
 			fieldType = "${fieldType}",
@@ -58,6 +59,10 @@ definition {
 		TableViewBuilder.addBasicTableView(
 			fieldType = "${fieldType}",
 			tableViewName = "${tableViewName}");
+=======
+	macro deleteFromActionMenu{
+		
+>>>>>>> LRQA-53958 Adding delete from action menu macro
 	}
 
 	macro deleteEntry {

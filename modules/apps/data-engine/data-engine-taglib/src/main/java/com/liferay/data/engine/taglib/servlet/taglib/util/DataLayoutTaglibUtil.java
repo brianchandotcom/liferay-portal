@@ -214,6 +214,10 @@ public class DataLayoutTaglibUtil {
 			long dataLayoutId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		if (dataLayoutId <= 0) {
+			return new DataLayout();
+		}
+
 		DataLayoutResource dataLayoutResource = DataLayoutResource.builder(
 		).endpoint(
 			_portal.getHost(httpServletRequest),

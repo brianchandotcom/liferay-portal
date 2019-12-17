@@ -27,6 +27,20 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.10.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mule.services</groupId>
+			<artifactId>mule-service-http</artifactId>
+			<version>1.1.1</version>
+			<classifier>mule-service</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mule.services</groupId>
+			<artifactId>mule-service-scheduler</artifactId>
+			<version>1.1.2</version>
+			<classifier>mule-service</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -58,7 +72,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.source.formatter</artifactId>
-				<version>1.0.947</version>
+				<version>1.0.948</version>
 			</plugin>
 		</plugins>
 	</build>

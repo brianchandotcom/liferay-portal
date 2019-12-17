@@ -16,12 +16,12 @@ import React from 'react';
 
 import ItemSelector from '../../common/components/ItemSelector';
 
-export const ItemSelectorField = ({field, onValueSelect}) => (
+export const ItemSelectorField = ({field, onValueSelect, value}) => (
 	<ItemSelector
 		label={field.label}
 		onItemSelect={item => {
 			onValueSelect(field.name, item);
 		}}
-		value={field.value}
-	></ItemSelector>
+		selectedItem={value}
+	/>
 );

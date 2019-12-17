@@ -18,7 +18,12 @@ import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 
-export default function ColorPalette({clearButton, label, onColorSelect}) {
+export default function ColorPalette({
+	clearButton,
+	label,
+	onColorSelect,
+	selectedColor
+}) {
 	const {themeColorsCssClasses} = useContext(ConfigContext);
 
 	return (
@@ -28,7 +33,12 @@ export default function ColorPalette({clearButton, label, onColorSelect}) {
 			<div className="palette-container" id="colorPalette">
 				<ul className="list-unstyled palette-items-container">
 					{themeColorsCssClasses.map(color => (
-						<li className="palette-item" key={color}>
+						<li
+							className={classNames('palette-item', {
+								'palette-item-selected': color === selectedColor
+							})}
+							key={color}
+						>
 							<ClayButton
 								block
 								className={classNames(
@@ -38,7 +48,7 @@ export default function ColorPalette({clearButton, label, onColorSelect}) {
 									'rounded-circle'
 								)}
 								displayType="unstyled"
-								onClick={() => onColorSelect(color)}
+								onClick={event => onColorSelect(color, event)}
 								small
 							/>
 						</li>

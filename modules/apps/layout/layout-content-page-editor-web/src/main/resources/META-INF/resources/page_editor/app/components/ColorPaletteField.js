@@ -16,11 +16,15 @@ import React from 'react';
 
 import ColorPalette from '../../common/components/ColorPalette';
 
-export const ColorPaletteField = ({field, onValueSelect}) => (
+export const ColorPaletteField = ({field, onValueSelect, value}) => (
 	<ColorPalette
 		label={field.label}
-		onColorSelect={color => {
-			onValueSelect(field.name, color);
+		onColorSelect={(color, event) => {
+			onValueSelect(field.name, {
+				cssClass: color,
+				rgbValue: getComputedStyle(event.target).backgroundColor
+			});
 		}}
-	></ColorPalette>
+		selectedColor={value && value.cssClass}
+	/>
 );

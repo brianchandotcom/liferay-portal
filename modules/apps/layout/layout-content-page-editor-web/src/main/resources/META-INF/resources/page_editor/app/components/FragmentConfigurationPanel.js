@@ -26,25 +26,31 @@ import updateFragmentConfiguration from '../thunks/updateFragmentConfiguration';
 
 const SEGMENT_EXPERIENCE_ID_PREFIX = 'segments-experience-id-';
 
-const FieldSet = ({fields, label, onValueSelect}) => (
-	<>
-		{label && <p className="mb-3 sheet-subtitle">{label}</p>}
+const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
+	return (
+		<>
+			{label && <p className="mb-3 sheet-subtitle">{label}</p>}
 
-		{fields.map((field, index) => {
-			const FieldComponent =
-				field.type && FRAGMENT_CONFIGURATION_FIELD_TYPES[field.type];
+			{fields.map((field, index) => {
+				const FieldComponent =
+					field.type &&
+					FRAGMENT_CONFIGURATION_FIELD_TYPES[field.type];
 
-			return (
-				<ClayForm.Group key={index}>
-					<FieldComponent
-						field={field}
-						onValueSelect={onValueSelect}
-					/>
-				</ClayForm.Group>
-			);
-		})}
-	</>
-);
+				const fieldValue = configurationValues[field.name];
+
+				return (
+					<ClayForm.Group key={index}>
+						<FieldComponent
+							field={field}
+							onValueSelect={onValueSelect}
+							value={fieldValue}
+						/>
+					</ClayForm.Group>
+				);
+			})}
+		</>
+	);
+};
 
 export const FragmentConfigurationPanel = ({item}) => {
 	const config = useContext(ConfigContext);
@@ -88,6 +94,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 			{configuration.fieldSets.map((fieldSet, index) => {
 				return (
 					<FieldSet
+						configurationValues={configurationValues}
 						fields={fieldSet.fields}
 						key={index}
 						label={fieldSet.label}

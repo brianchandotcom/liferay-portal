@@ -4714,6 +4714,16 @@ public class ServiceBuilder {
 			}
 		}
 
+		Entity leftEntity = entities[1];
+		Entity rightEntity = entities[2];
+
+		if (leftEntity.isChangeTrackingEnabled() &&
+			rightEntity.isChangeTrackingEnabled()) {
+
+			sb.append("\tctCollectionId LONG default 0 not null,\n");
+			sb.append("\tchangeType BOOLEAN,\n");
+		}
+
 		sb.append("\tprimary key (");
 
 		for (int i = 1; i < entities.length; i++) {

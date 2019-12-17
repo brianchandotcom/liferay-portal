@@ -106,7 +106,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
         value="test_val"
       />
       <button
-        class="btn-outline-danger btn-sm btn btn-primary"
+        class="btn-outline-danger btn-sm btn"
         type="button"
       >
         delete

@@ -147,15 +147,20 @@ catch (RuntimeException re) {
 Map<String, String[]> requestParam = request.getParameterMap();
 
 if (Validator.isNotNull(requestParam) && !portletId.equals(rootPortletId)) {
-	for (Map.Entry<String, String[]> entry : requestParam.entrySet()) {
-		String key = entry.getKey();
+	Set<Map.Entry<String, String[]>> requestParamSet = requestParam.entrySet();
 
-		if (key.contains(rootPortletId) && !key.contains(portletId)) {
-			String updatedKey = key.replaceAll(rootPortletId, portletId);
+	requestParamSet.forEach(
+		stringEntry -> {
+			String key = stringEntry.getKey();
 
-			((DynamicServletRequest)request).setParameterValues(updatedKey, entry.getValue());
-		}
-	}
+			if (key.contains(rootPortletId) && !key.contains(portletId)) {
+				String updatedKey = key.replaceAll(rootPortletId, portletId);
+
+				String[] value = stringEntry.getValue();
+
+				((DynamicServletRequest)request).setParameterValues(updatedKey, value);
+			}
+		});
 }
 
 LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(request, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);

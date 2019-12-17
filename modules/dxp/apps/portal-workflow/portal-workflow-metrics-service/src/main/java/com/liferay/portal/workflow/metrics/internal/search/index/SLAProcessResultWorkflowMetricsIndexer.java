@@ -224,12 +224,8 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	protected volatile WorkflowMetricsSLADefinitionLocalService
 		workflowMetricsSLADefinitionLocalService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile WorkflowMetricsSLADefinitionVersionLocalService
+	@Reference
+	protected WorkflowMetricsSLADefinitionVersionLocalService
 		workflowMetricsSLADefinitionVersionLocalService;
 
 	@Reference

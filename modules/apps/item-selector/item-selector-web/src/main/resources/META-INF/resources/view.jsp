@@ -39,6 +39,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 	</c:when>
 	<c:otherwise>
 		<clay:navigation-bar
+			elementClasses="border-bottom"
 			inverted="<%= false %>"
 			navigationItems="<%= navigationItems %>"
 		/>

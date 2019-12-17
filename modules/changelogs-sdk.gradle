@@ -59,32 +59,35 @@ buildChangelogs {
 
 			String changelogItem = "";
 
-			gitLogOutput.eachLine {
-				String gitLogLine ->
+			if (gitLogOutput.length() > 0) {
 
-				matcher = gitLogLine =~ /[a-f0-9]+:(.+):([A-Z]+-\d+).*/
+				gitLogOutput.eachLine {
+					String gitLogLine ->
 
-				if (matcher.find()) {
-					date = matcher.group(1)
-					ticket = matcher.group(2)
+					matcher = gitLogLine =~ /[a-f0-9]+:(.+):([A-Z]+-\d+).*/
+
+					if (matcher.find()) {
+						date = matcher.group(1)
+						ticket = matcher.group(2)
+					}
+
+					matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+
+					if (matcher.find()) {
+						String dependencyName = matcher.group(1)
+						String dependencyVersion = matcher.group(2)
+
+						changelogItem = changelogItem + """\
+							|
+							|### Changed
+							|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
+					}
 				}
 
-				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+				changelogItem = "\n\n## ${version} - ${date}\n" + changelogItem
 
-				if (matcher.find()) {
-					String dependencyName = matcher.group(1)
-					String dependencyVersion = matcher.group(2)
-
-					changelogItem = changelogItem + """\
-						|
-						|### Changed
-						|- [${ticket}]: Update the [${dependencyName}] dependency to version ${dependencyVersion}.""".stripMargin()
-				}
+				changelog = changelog + changelogItem
 			}
-
-			changelogItem = "\n\n## ${version} - ${date}\n" + changelogItem
-
-			changelog = changelog + changelogItem
 		}
 
 		def getBundleNameSymbolicName = {

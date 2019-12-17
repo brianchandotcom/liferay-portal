@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.PrintWriter;
@@ -462,10 +463,6 @@ public class SpringBeanPortletExtension {
 
 			};
 
-		_beanPortletRegistrar = (BeanPortletRegistrar)bundleContext.getService(
-			bundleContext.getServiceReference(
-				BeanPortletRegistrar.class.getName()));
-
 		_serviceRegistrations.addAll(
 			_beanPortletRegistrar.register(
 				_annotatedClasses, servletContext,
@@ -553,9 +550,13 @@ public class SpringBeanPortletExtension {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SpringBeanPortletExtension.class);
 
+	private static volatile BeanPortletRegistrar _beanPortletRegistrar =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			BeanPortletRegistrar.class, SpringBeanPortletExtension.class,
+			"_beanPortletRegistrar", true);
+
 	private Set<Class<?>> _annotatedClasses = new HashSet<>();
 	private final ApplicationContext _applicationContext;
-	private BeanPortletRegistrar _beanPortletRegistrar;
 	private BeanFactory _configurableBeanFactory;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();

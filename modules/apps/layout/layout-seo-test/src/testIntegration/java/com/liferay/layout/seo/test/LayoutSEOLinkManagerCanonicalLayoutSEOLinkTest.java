@@ -105,6 +105,7 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 			_layout.getLayoutId(), false,
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), "http://example.com"),
+			false, Collections.emptyMap(), 0, false, Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutSEOLink canonicalLayoutSEOLink =
@@ -123,6 +124,7 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), "http://example.com"),
+			false, Collections.emptyMap(), 0, false, Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		String canonicalURL = _portal.getCanonicalURL(

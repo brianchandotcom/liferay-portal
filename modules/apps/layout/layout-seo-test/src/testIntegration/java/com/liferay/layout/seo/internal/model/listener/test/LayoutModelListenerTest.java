@@ -68,6 +68,7 @@ public class LayoutModelListenerTest {
 			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 				layout.getUserId(), layout.getGroupId(),
 				layout.isPrivateLayout(), layout.getLayoutId(), false,
+				Collections.emptyMap(), false, Collections.emptyMap(), 0, false,
 				Collections.emptyMap(), _getServiceContext());
 
 		_layoutLocalService.deleteLayout(layout);

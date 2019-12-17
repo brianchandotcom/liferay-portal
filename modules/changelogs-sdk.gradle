@@ -1,3 +1,5 @@
+import java.util.regex.Matcher
+
 import org.gradle.util.GUtil
 import org.gradle.util.VersionNumber
 
@@ -11,8 +13,6 @@ buildscript {
 	}
 }
 
-File changelogFile = file("sdk/" + projectName + "/CHANGELOG.markdown")
-
 task buildChangelogs
 task recordCommits
 
@@ -25,23 +25,25 @@ buildChangelogs {
 	doLast {
 		assert project.properties["projectName"] : "Please provide a value for the '-PprojectName' property"
 
-		String changelog = ""
+		String pluginFullName = GUtil.loadProperties(new File("sdk/${projectName}/bnd.bnd"))["Bundle-Name"]
+
+		String text = "# ${pluginFullName} Change Log"
 
 		String date = ""
-		String version = ""
-		String rangeStart = ""
 		String rangeEnd = ""
+		String rangeStart = ""
+		String version = ""
 
 		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
 
 		changelogPropertiesFile.getText("UTF-8").eachLine {
 			String recordCommitLine ->
 
-			def matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+)\.\.([a-f0-9]+)/
+			Matcher matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+)\.\.([a-f0-9]+)/
 
 			if (matcher.find()) {
-				rangeStart = matcher.group(2)
 				rangeEnd = matcher.group(3)
+				rangeStart = matcher.group(2)
 				version = matcher.group(1)
 			}
 
@@ -55,9 +57,8 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
+			String changelogItem = ""
 			String ticket = ""
-
-			String changelogItem = "";
 
 			gitLogOutput.eachLine {
 				String gitLogLine ->
@@ -95,17 +96,15 @@ buildChangelogs {
 					|
 					|### Changed""".stripMargin() + changelogItem
 
-				changelog = changelog + changelogItem
+				text = text + changelogItem
 			}
 		}
 
-		String pluginFullName = GUtil.loadProperties(new File("sdk/${projectName}/bnd.bnd"))["Bundle-Name"]
+		File changelogMarkdownFile = file("sdk/" + projectName + "/CHANGELOG.markdown")
 
-		changelog = "# ${pluginFullName} Change Log" + changelog
+		changelogMarkdownFile.text = text
 
-		changelogFile.text = changelog
-
-		logger.lifecycle "Updated CHANGELOG.markdown for '{}'", projectName
+		logger.lifecycle "Updated '{}'", changelogMarkdownFile
 	}
 }
 

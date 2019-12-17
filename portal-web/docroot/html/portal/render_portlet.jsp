@@ -156,7 +156,7 @@ if (Validator.isNotNull(requestParam) && !portletId.equals(rootPortletId)) {
 			if (key.contains(rootPortletId) && !key.contains(portletId)) {
 				String updatedKey = key.replaceAll(rootPortletId, portletId);
 
-				String[] value = stringEntry.getValue();
+				String[] value = requestParam.get(key);
 
 				((DynamicServletRequest)request).setParameterValues(updatedKey, value);
 			}

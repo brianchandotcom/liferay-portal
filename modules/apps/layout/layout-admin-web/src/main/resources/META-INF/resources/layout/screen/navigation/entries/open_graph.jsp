@@ -68,11 +68,11 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 			<div id="<portlet:namespace />openGraphSettings">
 				<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /></label>
 
-				<aui:input disabled="<%= Validator.isNull(layoutsAdminDisplayContext.getOpenGraphImageURL()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
-
 				<c:choose>
 					<c:when test="<%= selLayoutSEOEntry != null %>">
 						<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
+
+						<aui:input disabled="<%= Validator.isNull(layoutsAdminDisplayContext.getOpenGraphImageURL()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
 
 						<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
@@ -85,6 +85,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 						<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 					</c:when>
 					<c:otherwise>
+						<aui:input disabled="<%= true %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
+
 						<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
 						<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" placeholder="title" type="text" />

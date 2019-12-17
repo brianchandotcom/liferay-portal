@@ -112,7 +112,21 @@ public class SearchEngineInitializer implements Runnable {
 			List<FutureTask<Void>> futureTasks = new ArrayList<>();
 			Set<String> searchEngineIds = new HashSet<>();
 
-			for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
+			Set<Indexer<?>> indexers = null;
+
+			if (_companyId == 0) {
+				indexers = new HashSet<>();
+
+				indexers.add(
+					IndexerRegistryUtil.getIndexer(
+						"com.liferay.configuration.admin.web.internal.model." +
+							"ConfigurationModel"));
+			}
+			else {
+				indexers = IndexerRegistryUtil.getIndexers();
+			}
+
+			for (Indexer<?> indexer : indexers) {
 				String searchEngineId = indexer.getSearchEngineId();
 
 				if (searchEngineIds.add(searchEngineId)) {

@@ -318,7 +318,7 @@ public class IconTag extends IncludeTag {
 			sb.append("event.preventDefault();");
 			sb.append(onClick);
 			sb.append("submitForm(document.hrefFm, '");
-			sb.append(getUrl());
+			sb.append(HtmlUtil.escapeJS(getUrl()));
 			sb.append("')");
 
 			onClick = sb.toString();

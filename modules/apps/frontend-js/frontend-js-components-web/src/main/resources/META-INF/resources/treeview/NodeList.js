@@ -17,8 +17,6 @@ import React, {useContext} from 'react';
 
 import NodeListItem from './NodeListItem';
 import TreeviewContext from './TreeviewContext';
-import useFocus from './useFocus';
-import useKeyboardNavigation from './useKeyboardNavigation';
 
 export default function NodeList({
 	NodeComponent,
@@ -31,10 +29,6 @@ export default function NodeList({
 	const {dispatch} = useContext(TreeviewContext);
 
 	const rootNodeId = nodes[0] && nodes[0].id;
-
-	const focusable = useFocus(rootNodeId);
-
-	const handleKeyDown = useKeyboardNavigation(rootNodeId);
 
 	if (!rootNodeId) {
 		// All nodes have been filtered.
@@ -54,8 +48,6 @@ export default function NodeList({
 					onFocus(event);
 				}
 			}}
-			onKeyDown={handleKeyDown}
-			ref={focusable}
 			role={role}
 			tabIndex={tabIndex}
 		>

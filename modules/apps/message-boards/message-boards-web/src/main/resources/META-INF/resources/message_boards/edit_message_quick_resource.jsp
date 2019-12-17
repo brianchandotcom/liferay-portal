@@ -63,8 +63,8 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 %>
 
 <div class="panel-heading">
-	<div class="card-body">
-		<div class="card-col-field">
+	<div class="autofit-padded autofit-row card-body">
+		<div class="autofit-col">
 			<div class="list-group-card-icon">
 				<liferay-ui:user-portrait
 					userId="<%= themeDisplay.getUserId() %>"
@@ -72,7 +72,7 @@ boolean showPermanentLink = GetterUtil.getBoolean(request.getAttribute("edit-mes
 			</div>
 		</div>
 
-		<div class="card-col-content card-col-gutters">
+		<div class="autofit-col autofit-col-expand">
 
 			<%
 			String userName = PortalUtil.getUserName(themeDisplay.getUserId(), StringPool.BLANK);

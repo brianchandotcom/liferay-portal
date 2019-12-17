@@ -116,23 +116,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			workflowMetricsSLADefinition.getProcessId(),
 			workflowMetricsSLADefinition.getProcessVersion());
 
-		Map<Long, LocalDateTime> createLocalDateTimes =
-			_getCreateLocalDateTimes(
-				workflowMetricsSLADefinition.getCompanyId(),
-				workflowMetricsSLADefinition.getProcessId());
-
-		Map<Long, LocalDateTime> missingCreateLocalDateTimes =
-			_getMissingCreateLocalDateTimes(
-				workflowMetricsSLADefinition.getCompanyId(),
-				workflowMetricsSLADefinitionVersion.getCreateDate(),
-				workflowMetricsSLADefinition.getProcessId(),
-				workflowMetricsSLADefinitionId);
-
-		missingCreateLocalDateTimes.putAll(createLocalDateTimes);
+		_processMissingInstances(
+			startNodeId, workflowMetricsSLADefinitionVersion);
 
 		_processRunningInstances(
-			missingCreateLocalDateTimes, startNodeId,
-			workflowMetricsSLADefinitionVersion);
+			startNodeId, workflowMetricsSLADefinitionVersion);
 
 		_processCompletedInstances(
 			startNodeId, workflowMetricsSLADefinitionVersion);
@@ -468,10 +456,62 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		);
 	}
 
-	private void _processRunningInstances(
-		Map<Long, LocalDateTime> createLocalDateTimes, long startNodeId,
+	private void _processMissingInstances(
+		long startNodeId,
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion) {
+
+		Map<Long, LocalDateTime> missingCreateLocalDateTimes =
+			_getMissingCreateLocalDateTimes(
+				workflowMetricsSLADefinitionVersion.getCompanyId(),
+				workflowMetricsSLADefinitionVersion.getCreateDate(),
+				workflowMetricsSLADefinitionVersion.getProcessId(),
+				workflowMetricsSLADefinitionVersion.
+					getWorkflowMetricsSLADefinitionId());
+
+		Set<Map.Entry<Long, LocalDateTime>> entrySet =
+			missingCreateLocalDateTimes.entrySet();
+
+		Stream<Map.Entry<Long, LocalDateTime>> stream =
+			entrySet.parallelStream();
+
+		stream.map(
+			entry -> _workflowMetricsSLAProcessor.process(
+				workflowMetricsSLADefinitionVersion.getCompanyId(),
+				entry.getValue(), entry.getKey(), LocalDateTime.now(),
+				startNodeId, workflowMetricsSLADefinitionVersion)
+		).filter(
+			Optional::isPresent
+		).map(
+			optional -> {
+				WorkflowMetricsSLAProcessResult
+					workflowMetricsSLAProcessResult = optional.get();
+
+				workflowMetricsSLAProcessResult.setCompletionLocalDateTime(
+					_getCompletionLocalDateTime(
+						workflowMetricsSLADefinitionVersion.getCompanyId(),
+						workflowMetricsSLAProcessResult.getInstanceId(),
+						workflowMetricsSLADefinitionVersion.getProcessId()));
+
+				workflowMetricsSLAProcessResult.setWorkflowMetricsSLAStatus(
+					WorkflowMetricsSLAStatus.COMPLETED);
+
+				return workflowMetricsSLAProcessResult;
+			}
+		).forEach(
+			this::_indexWorkflowMetricsSLAProcessResult
+		);
+	}
+
+	private void _processRunningInstances(
+		long startNodeId,
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion) {
+
+		Map<Long, LocalDateTime> createLocalDateTimes =
+			_getCreateLocalDateTimes(
+				workflowMetricsSLADefinitionVersion.getCompanyId(),
+				workflowMetricsSLADefinitionVersion.getProcessId());
 
 		Set<Map.Entry<Long, LocalDateTime>> entrySet =
 			createLocalDateTimes.entrySet();

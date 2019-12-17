@@ -88,23 +88,26 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		URL manifestJSONURL = bundle.getEntry(
 			"META-INF/resources/manifest.json");
 
-		futures.add(
-			_executorService.submit(
-				() -> {
-					String content = StringUtil.read(
-						manifestJSONURL.openStream());
+		if (manifestJSONURL != null) {
+			futures.add(
+				_executorService.submit(
+					() -> {
+						String content = StringUtil.read(
+							manifestJSONURL.openStream());
 
-					if (!content.contains("\"flags\"")) {
+						if (!content.contains("\"flags\"")) {
+							return new AbstractMap.SimpleImmutableEntry<>(
+								manifestJSONURL, null);
+						}
+
+						JSONObject jsonObject = _jsonFactory.createJSONObject(
+							content);
+
 						return new AbstractMap.SimpleImmutableEntry<>(
-							manifestJSONURL, null);
-					}
-
-					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						content);
-
-					return new AbstractMap.SimpleImmutableEntry<>(
-						manifestJSONURL, jsonObject.getJSONObject("packages"));
-				}));
+							manifestJSONURL,
+							jsonObject.getJSONObject("packages"));
+					}));
+		}
 
 		Enumeration<URL> enumeration = bundle.findEntries(
 			"META-INF/resources", "package.json", true);

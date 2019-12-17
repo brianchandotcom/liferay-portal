@@ -159,7 +159,7 @@ simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 					label='<%= LanguageUtil.get(request, "switch-to-simple-publication") %>'
 				/>
 			</div>
-		</div>		
+		</div>
 	</div>
 </c:if>
 

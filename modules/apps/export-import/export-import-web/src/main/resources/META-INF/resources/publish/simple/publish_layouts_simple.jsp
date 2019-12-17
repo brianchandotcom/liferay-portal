@@ -43,8 +43,6 @@ Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap
 
 Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
 
-
-
 PortletURL advancedPublishURL = renderResponse.createRenderURL();
 
 advancedPublishURL.setParameter("mvcRenderCommandName", "publishLayouts");
@@ -56,7 +54,7 @@ advancedPublishURL.setParameter("selPlid", String.valueOf(selPlid));
 advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
-<div class="container-fluid-1280 publish-navbar text-right mt-2">
+<div class="container-fluid-1280 mt-2 publish-navbar text-right">
 	<clay:link
 		buttonStyle="link"
 		elementClasses="btn-sm"

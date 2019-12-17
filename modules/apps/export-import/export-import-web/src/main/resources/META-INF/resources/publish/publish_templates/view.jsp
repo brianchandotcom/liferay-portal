@@ -68,8 +68,8 @@ clearResultsURL.setParameter("keywords", StringPool.BLANK);
 		<clay:management-toolbar
 			clearResultsURL="<%= clearResultsURL.toString() %>"
 			itemsTotal="<%= exportImportConfigurationsCount %>"
-			selectable="<%= false %>"
 			searchActionURL="<%= searchURL.toString() %>"
+			selectable="<%= false %>"
 		/>
 
 		<aui:form action="<%= portletURL %>">

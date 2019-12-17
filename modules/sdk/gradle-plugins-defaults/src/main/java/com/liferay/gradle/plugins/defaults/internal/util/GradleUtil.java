@@ -183,6 +183,19 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return null;
 	}
 
+	public static String getProjectGroup(Project project, String defaultValue) {
+		String projectPath = project.getPath();
+
+		if (projectPath.startsWith(":apps:commerce:") ||
+			projectPath.startsWith(":dxp:apps:commerce:") ||
+			projectPath.startsWith(":private:apps:commerce:")) {
+
+			return "com.liferay.commerce";
+		}
+
+		return getGradlePropertiesValue(project, "project.group", defaultValue);
+	}
+
 	public static Object getProperty(Object object, String name) {
 		try {
 			Class<?> clazz = object.getClass();

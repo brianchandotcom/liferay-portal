@@ -229,35 +229,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
-	public void testIncludeSiteOpenGraphImage() throws Exception {
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
-			"image_site.jpg",
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_layoutSEOSiteLocalService.updateLayoutSEOSite(
-			TestPropsValues.getUserId(), _layout.getGroupId(), true,
-			siteOpenGraphImageFileEntry.getFileEntryId(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_testWithLayoutSEOCompanyConfiguration(
-			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
-				RandomTestUtil.randomString()),
-			true);
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertMetaTag(
-			document, "og:image",
-			_dlurlHelper.getImagePreviewURL(
-				siteOpenGraphImageFileEntry, _getThemeDisplay()));
-	}
-
-	@Test
 	public void testIncludeLayoutOpenGraphImageWhenBothDefined()
 		throws Exception {
 
@@ -299,34 +270,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			document, "og:image",
 			_dlurlHelper.getImagePreviewURL(
 				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
-	}
-
-	@Test
-	public void testIncludeSiteOpenGraphImageWhenOpenGraphDisabled()
-		throws Exception {
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
-			"image_site.jpg",
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_layoutSEOSiteLocalService.updateLayoutSEOSite(
-			TestPropsValues.getUserId(), _layout.getGroupId(), false,
-			siteOpenGraphImageFileEntry.getFileEntryId(),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_testWithLayoutSEOCompanyConfiguration(
-			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
-				RandomTestUtil.randomString()),
-			true);
-
-		Document document = Jsoup.parse(
-			mockHttpServletResponse.getContentAsString());
-
-		_assertNoMetaTag(document, "og:image");
 	}
 
 	@Test
@@ -400,6 +343,63 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			document, "og:site_name",
 			_group.getDescriptiveName(
 				LocaleUtil.fromLanguageId(_group.getDefaultLanguageId())));
+	}
+
+	@Test
+	public void testIncludeSiteOpenGraphImage() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
+			"image_site.jpg",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOSiteLocalService.updateLayoutSEOSite(
+			TestPropsValues.getUserId(), _layout.getGroupId(), true,
+			siteOpenGraphImageFileEntry.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(
+			document, "og:image",
+			_dlurlHelper.getImagePreviewURL(
+				siteOpenGraphImageFileEntry, _getThemeDisplay()));
+	}
+
+	@Test
+	public void testIncludeSiteOpenGraphImageWhenOpenGraphDisabled()
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry siteOpenGraphImageFileEntry = _addImageFileEntry(
+			"image_site.jpg",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOSiteLocalService.updateLayoutSEOSite(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			siteOpenGraphImageFileEntry.getFileEntryId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertNoMetaTag(document, "og:image");
 	}
 
 	@Test

@@ -240,26 +240,12 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			date.toInstant(), ZoneId.systemDefault());
 	}
 
-	private long _getStartNodeId(KaleoInstance kaleoInstance) {
+	private long _getProcessId(KaleoDefinitionVersion kaleoDefinitionVersion) {
 		try {
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-					kaleoInstance.getKaleoDefinitionVersionId());
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.getKaleoDefinition();
 
-			List<KaleoNode> kaleoNodes =
-				kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
-					kaleoDefinitionVersion.getKaleoDefinitionVersionId());
-
-			Stream<KaleoNode> stream = kaleoNodes.stream();
-
-			return stream.filter(
-				KaleoNode::isInitial
-			).findFirst(
-			).map(
-				KaleoNode::getKaleoNodeId
-			).orElseGet(
-				() -> 0L
-			);
+			return kaleoDefinition.getKaleoDefinitionId();
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -270,8 +256,33 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		return 0L;
 	}
 
-	private void _reindexSLAProcessResults(KaleoInstance kaleoInstance) {
+	private long _getStartNodeId(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
+
+		List<KaleoNode> kaleoNodes =
+			kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
+				kaleoDefinitionVersion.getKaleoDefinitionVersionId());
+
+		Stream<KaleoNode> stream = kaleoNodes.stream();
+
+		return stream.filter(
+			KaleoNode::isInitial
+		).findFirst(
+		).map(
+			KaleoNode::getKaleoNodeId
+		).orElseGet(
+			() -> 0L
+		);
+	}
+
+	private void _reindexSLAProcessResults(KaleoInstance kaleoInstance)
+		throws PortalException {
+
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+				kaleoInstance.getKaleoDefinitionVersionId());
 
 		List<WorkflowMetricsSLADefinitionVersion>
 			workflowMetricsSLADefinitionVersions =
@@ -279,6 +290,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 					getWorkflowMetricsSLADefinitionVersions(
 						kaleoInstance.getCompanyId(),
 						kaleoInstance.getCompletionDate(),
+						_getProcessId(kaleoDefinitionVersion),
 						WorkflowConstants.STATUS_APPROVED);
 
 		Stream<WorkflowMetricsSLADefinitionVersion> stream =
@@ -293,7 +305,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 						workflowMetricsSLADefinitionVersion.getCompanyId(),
 						_getLocalDateTime(kaleoInstance.getCreateDate()),
 						kaleoInstance.getKaleoInstanceId(), LocalDateTime.now(),
-						_getStartNodeId(kaleoInstance),
+						_getStartNodeId(kaleoDefinitionVersion),
 						workflowMetricsSLADefinitionVersion);
 
 				optional.ifPresent(

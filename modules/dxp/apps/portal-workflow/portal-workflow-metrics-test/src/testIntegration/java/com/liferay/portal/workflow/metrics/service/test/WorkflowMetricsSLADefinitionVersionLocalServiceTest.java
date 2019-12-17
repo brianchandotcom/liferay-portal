@@ -69,7 +69,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions =
 				WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
 					getWorkflowMetricsSLADefinitionVersions(
-						_company.getCompanyId(), new Date(),
+						_company.getCompanyId(), new Date(), null,
 						WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
@@ -100,7 +100,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions =
 				WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
 					getWorkflowMetricsSLADefinitionVersions(
-						_company.getCompanyId(), new Date(),
+						_company.getCompanyId(), new Date(), null,
 						WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
@@ -132,7 +132,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions =
 				WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
 					getWorkflowMetricsSLADefinitionVersions(
-						_company.getCompanyId(), new Date(),
+						_company.getCompanyId(), new Date(), null,
 						WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(

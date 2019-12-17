@@ -1,3 +1,6 @@
+import groovy.time.TimeCategory
+import groovy.time.TimeDuration
+
 import java.util.regex.Matcher
 
 import org.gradle.util.GUtil
@@ -140,6 +143,10 @@ recordCommits {
 			if ((publishedVersionNumber != null) && !recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
 				String commitId = lines[0]
 
+				String commitDateString = lines[4]
+
+				Date commitDate = Date.parse("E MMM dd H:m:s yyyy Z", commitDateString.substring(12))
+
 				for (int j = i - 1; j >= 0; j--) {
 					String previousCommit = commits.get(j)
 
@@ -148,6 +155,16 @@ recordCommits {
 					String previousCommitMessage = lines[6]
 
 					if (!previousCommitMessage.contains("prep next") || (_getPublishedVersionNumber(lines[7], projectName) != null)) {
+						break
+					}
+
+					String previousCommitDateString = lines[4]
+
+					Date previousCommitDate = Date.parse("E MMM dd H:m:s yyyy Z", previousCommitDateString.substring(12))
+
+					TimeDuration duration = TimeCategory.minus(previousCommitDate, commitDate)
+
+					if (duration.toMilliseconds() > 1800000) {
 						break
 					}
 

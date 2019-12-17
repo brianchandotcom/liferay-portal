@@ -393,4 +393,118 @@ definition {
 			siteNameURL = "test-site-name");
 	}
 
+	@description = "This test ensures that OG can use the translated language that SEO has saved."
+	@priority = "5"
+	test ViewTranslatedLanguage {
+		property test.name.skip.portal.instance = "OpenGraphPreview#ViewTranslatedLanguage";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Page HTML Title");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Page Description");
+
+		OpenGraph.changeLocale(
+			fieldName = "titleBoundingBox",
+			locale = "ca-ES");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Título de la Prueba");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Descripción de la Prueba");
+
+		Button.clickSave();
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.changeLocale(
+			fieldName = "openGraphTitleBoundingBox",
+			locale = "ca-ES");
+
+		Page.viewPreview(
+			description = "Descripción de la Prueba",
+			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
+			locale = "ca-ES",
+			openGraph = "true",
+			pageName = "Test Page",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+	}
+
+	@description = "This test ensures that OG shows default translated language when switching SEO unsaved translations."
+	@priority = "5"
+	test ViewUntranslatedLanguage {
+		property test.name.skip.portal.instance = "OpenGraphPreview#ViewUntranslatedLanguage";
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Page HTML Title");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Page Description");
+
+		OpenGraph.changeLocale(
+			fieldName = "titleBoundingBox",
+			locale = "ja-JP");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Tテストhtmlタイトル");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "テスト記述");
+
+		Button.clickSave();
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.changeLocale(
+			fieldName = "openGraphTitleBoundingBox",
+			locale = "fr-FR");
+
+		Page.viewPreview(
+			description = "Page Description",
+			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
+			locale = "fr-FR",
+			openGraph = "true",
+			pageName = "Test Page",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+	}
+
 }

@@ -54,9 +54,10 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected FunctionalBatchTestClassGroup(
-		String batchName, PortalTestClassJob portalTestClassJob) {
+		String batchName, String buildProfile,
+		PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalTestClassJob);
+		super(batchName, buildProfile, portalTestClassJob);
 
 		axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
 

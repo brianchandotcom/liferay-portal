@@ -147,9 +147,10 @@ public class ServiceBuilderBatchTestClassGroup
 	}
 
 	protected ServiceBuilderBatchTestClassGroup(
-		String batchName, PortalTestClassJob portalTestClassJob) {
+		String batchName, String buildProfile,
+		PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalTestClassJob);
+		super(batchName, buildProfile, portalTestClassJob);
 	}
 
 	@Override

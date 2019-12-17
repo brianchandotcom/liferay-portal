@@ -31,9 +31,10 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected DefaultBatchTestClassGroup(
-		String batchName, PortalTestClassJob portalTestClassJob) {
+		String batchName, String buildProfile,
+		PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalTestClassJob);
+		super(batchName, buildProfile, portalTestClassJob);
 
 		addTestClass(
 			BatchTestClass.getInstance(batchName, portalGitWorkingDirectory));

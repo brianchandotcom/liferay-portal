@@ -64,9 +64,10 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected TCKJunitBatchTestClassGroup(
-		String batchName, PortalTestClassJob portalTestClassJob) {
+		String batchName, String buildProfile,
+		PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalTestClassJob);
+		super(batchName, buildProfile, portalTestClassJob);
 
 		_tckHomeDirectory = new File(
 			JenkinsResultsParserUtil.getProperty(jobProperties, "tck.home"));

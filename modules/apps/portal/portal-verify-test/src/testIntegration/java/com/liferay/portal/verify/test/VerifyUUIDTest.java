@@ -75,16 +75,6 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MARIADB,
-				expectedLog = "Unknown column 'Unknown' in 'field list'",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
-				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog = "Unknown column 'Unknown' in 'field list'",
-				expectedType = ExpectedType.EXACT
-			),
-			@ExpectedLog(
 				expectedDBType = ExpectedDBType.ORACLE,
 				expectedLog = "ORA-00904: \"UNKNOWN\": invalid identifier",
 				expectedType = ExpectedType.PREFIX

@@ -234,6 +234,9 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			new ServiceContext()
 		);
 
+		serviceContext.setScopeGroupId(layout.getGroupId());
+		serviceContext.setUserId(layout.getUserId());
+
 		_updatePortletDecorator(layout);
 
 		_addOrUpdateLayoutPageTemplateStructure(

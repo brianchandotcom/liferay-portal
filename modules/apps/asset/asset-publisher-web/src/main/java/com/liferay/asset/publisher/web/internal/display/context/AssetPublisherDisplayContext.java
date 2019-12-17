@@ -551,8 +551,8 @@ public class AssetPublisherDisplayContext {
 
 			if (Objects.equals(queryName, "assetTags")) {
 				String[] tagNames = StringUtil.split(
-						queryValues, StringPool.COMMA);
-				
+					queryValues, StringPool.COMMA);
+
 				tagNames = ParamUtil.getStringValues(
 					_httpServletRequest, "queryTagNames" + queryLogicIndex,
 					tagNames);

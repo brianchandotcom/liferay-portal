@@ -50,6 +50,10 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
 
+	macro deleteFromActionMenu{
+		
+	}
+
 	macro deleteEntry {
 		Click(
 			key_itemName = "${itemName}",

@@ -88,23 +88,21 @@ public class DepotAdminSitesDisplayContext {
 
 				add(
 					dropdownItem -> {
-						ActionURL editDepotEntryGroupRelActionURL =
-							DepotEntryURLUtil.
-								getEditDepotEntryGroupRelActionURL(
-									depotEntryGroupRel.
-										getDepotEntryGroupRelId(),
-									!depotEntryGroupRel.isSearchable(),
-									_currentURL.toString(),
-									_liferayPortletResponse);
+						ActionURL updateSearchableActionURL =
+							DepotEntryURLUtil.getUpdateSearchableActionURL(
+								depotEntryGroupRel.getDepotEntryGroupRelId(),
+								!depotEntryGroupRel.isSearchable(),
+								_currentURL.toString(),
+								_liferayPortletResponse);
 
 						dropdownItem.setHref(
-							editDepotEntryGroupRelActionURL.toString());
+							updateSearchableActionURL.toString());
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								PortalUtil.getHttpServletRequest(
 									_liferayPortletRequest),
-								_getSetSearchableKey(depotEntryGroupRel)));
+								_getUpdateSearchableKey(depotEntryGroupRel)));
 					});
 			}
 		};
@@ -147,7 +145,9 @@ public class DepotAdminSitesDisplayContext {
 		return group.getDescriptiveName(locale);
 	}
 
-	private String _getSetSearchableKey(DepotEntryGroupRel depotEntryGroupRel) {
+	private String _getUpdateSearchableKey(
+		DepotEntryGroupRel depotEntryGroupRel) {
+
 		if (depotEntryGroupRel.isSearchable()) {
 			return "make-unsearchable";
 		}

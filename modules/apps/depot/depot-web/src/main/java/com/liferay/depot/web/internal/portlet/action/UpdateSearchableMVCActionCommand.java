@@ -35,12 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + DepotPortletKeys.DEPOT_ADMIN,
 		"javax.portlet.name=" + DepotPortletKeys.DEPOT_SETTINGS,
-		"mvc.command.name=/depot_entry/edit_depot_entry_group_rel"
+		"mvc.command.name=/depot_entry_group_rel/update_searchable"
 	},
 	service = MVCActionCommand.class
 )
-public class EditDepotEntryGroupRelMVCActionCommand
-	extends BaseMVCActionCommand {
+public class UpdateSearchableMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

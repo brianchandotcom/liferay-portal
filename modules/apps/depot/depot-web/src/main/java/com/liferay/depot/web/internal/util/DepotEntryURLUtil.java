@@ -74,25 +74,6 @@ public class DepotEntryURLUtil {
 		return disconnectSiteActionURL;
 	}
 
-	public static ActionURL getEditDepotEntryGroupRelActionURL(
-		long depotEntryGroupRelId, boolean searchable, String redirect,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		ActionURL editDepotEntryGroupRelActionURL =
-			liferayPortletResponse.createActionURL();
-
-		editDepotEntryGroupRelActionURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/depot_entry/edit_depot_entry_group_rel");
-		editDepotEntryGroupRelActionURL.setParameter("redirect", redirect);
-		editDepotEntryGroupRelActionURL.setParameter(
-			"depotEntryGroupRelId", String.valueOf(depotEntryGroupRelId));
-		editDepotEntryGroupRelActionURL.setParameter(
-			"searchable", String.valueOf(searchable));
-
-		return editDepotEntryGroupRelActionURL;
-	}
-
 	public static PortletURL getEditDepotEntryPortletURL(
 		Group group, String redirect,
 		LiferayPortletRequest httpServletRequest) {
@@ -108,6 +89,25 @@ public class DepotEntryURLUtil {
 			"depotEntryId", String.valueOf(group.getClassPK()));
 
 		return editDepotEntryURL;
+	}
+
+	public static ActionURL getUpdateSearchableActionURL(
+		long depotEntryGroupRelId, boolean searchable, String redirect,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		ActionURL updateSearchableActionURL =
+			liferayPortletResponse.createActionURL();
+
+		updateSearchableActionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/depot_entry_group_rel/update_searchable");
+		updateSearchableActionURL.setParameter("redirect", redirect);
+		updateSearchableActionURL.setParameter(
+			"depotEntryGroupRelId", String.valueOf(depotEntryGroupRelId));
+		updateSearchableActionURL.setParameter(
+			"searchable", String.valueOf(searchable));
+
+		return updateSearchableActionURL;
 	}
 
 }

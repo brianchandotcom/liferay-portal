@@ -63,9 +63,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
-				_dlAppService, _dlurlHelper, _layoutSEOCanonicalURLProvider,
-				_layoutSEOLinkManager, _layoutSEOSiteLocalService,
-				_portal.getLiferayPortletRequest(actionRequest),
+				_dlurlHelper, _portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
 
 		JSONArray jsonArray = layoutsAdminDisplayContext.getLayoutsJSONArray(

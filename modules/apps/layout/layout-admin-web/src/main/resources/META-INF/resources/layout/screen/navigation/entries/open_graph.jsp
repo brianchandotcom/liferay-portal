@@ -33,7 +33,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 <aui:form action="<%= editOpenGraphURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-	<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
+	<aui:input name="groupId" type="hidden" value="<%= layoutsSEODisplayContext.getGroupId() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 
@@ -119,7 +119,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 							"imgUrl",
 							HashMapBuilder.<String, Object>put(
 								"defaultValue",
-								layoutsAdminDisplayContext.getDefaultOpenGraphImageURL()
+								layoutsSEODisplayContext.getDefaultOpenGraphImageURL()
 							).put(
 								"id", "openGraphImageURL"
 							).build()
@@ -134,10 +134,10 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 							).build()
 						).put(
 							"url",
-							Collections.singletonMap("defaultValue", layoutsAdminDisplayContext.getCanonicalLayoutURLMap())
+							Collections.singletonMap("defaultValue", layoutsSEODisplayContext.getCanonicalLayoutURLMap())
 						).build()
 					).put(
-						"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()
+						"titleSuffix", layoutsSEODisplayContext.getPageTitleSuffix()
 					).build();
 					%>
 
@@ -161,6 +161,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <liferay-frontend:component module="js/seo/openGraph.es" context="<%=
 	HashMapBuilder.<String, Object>put(
-		"uploadOpenGraphImageURL", layoutsAdminDisplayContext.getItemSelectorURL()
+		"uploadOpenGraphImageURL", layoutsSEODisplayContext.getItemSelectorURL()
 	).build()
  %>" />

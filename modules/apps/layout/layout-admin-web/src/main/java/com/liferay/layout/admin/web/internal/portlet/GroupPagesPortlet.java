@@ -179,14 +179,16 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
 				new LayoutsAdminDisplayContext(
-					_dlAppService, _dlurlHelper, _layoutSEOCanonicalURLProvider,
-					_layoutSEOLinkManager, _layoutSEOSiteLocalService,
+					_dlurlHelper,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT,
 				new LayoutsSEODisplayContext(
+					_dlAppService, _dlurlHelper, _layoutSEOCanonicalURLProvider,
+					_layoutSEOLinkManager, _layoutSEOSiteLocalService,
 					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse),
 					_storageEngine));
 
 			super.doDispatch(renderRequest, renderResponse);

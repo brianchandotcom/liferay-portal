@@ -35,7 +35,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <aui:form action="<%= editSEOURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
-	<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
+	<aui:input name="groupId" type="hidden" value="<%= layoutsSEODisplayContext.getGroupId() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 
@@ -80,7 +80,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
 							<div id="<portlet:namespace />customCanonicalURLSettings">
-								<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getDefaultCanonicalURL() %>">
+								<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>">
 									<aui:validator name="url" />
 								</aui:input>
 							</div>
@@ -95,7 +95,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
 							<div id="<portlet:namespace />customCanonicalURLSettings">
-								<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsAdminDisplayContext.getDefaultCanonicalURL() %>" type="text">
+								<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>" type="text">
 									<aui:validator name="url" />
 								</aui:input>
 							</div>
@@ -127,20 +127,20 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							).put(
 								"title",
 								HashMapBuilder.put(
-									"defaultValue", layoutsAdminDisplayContext.getPageTitle()
+									"defaultValue", layoutsSEODisplayContext.getPageTitle()
 								).put(
 									"id", "title"
 								).build()
 							).put(
 								"url",
 								HashMapBuilder.put(
-									"defaultValue", layoutsAdminDisplayContext.getDefaultCanonicalURL()
+									"defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURL()
 								).put(
 									"id", "canonicalURL"
 								).build()
 							).build()
 						).put(
-							"titleSuffix", layoutsAdminDisplayContext.getPageTitleSuffix()
+							"titleSuffix", layoutsSEODisplayContext.getPageTitleSuffix()
 						).build();
 						%>
 

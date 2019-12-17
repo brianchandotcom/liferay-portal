@@ -236,20 +236,33 @@ public class AddPortletReactMVCActionCommandTest {
 		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
 			"items");
 
-		JSONObject newItemJSONObject = itemsJSONObject.getJSONObject(
-			fragmentEntryLinkId);
+		for (String key : itemsJSONObject.keySet()) {
+			if (key.equals("root")) {
+				continue;
+			}
 
-		Assert.assertEquals(
-			fragmentEntryLinkId, newItemJSONObject.getString("itemId"));
-		Assert.assertEquals("root", newItemJSONObject.getString("parentId"));
+			JSONObject newItemJSONObject = itemsJSONObject.getJSONObject(key);
 
-		JSONObject rootItemJSONObject = itemsJSONObject.getJSONObject("root");
+			JSONObject configJSONObject = newItemJSONObject.getJSONObject(
+				"config");
 
-		JSONArray childrenJSONArray = rootItemJSONObject.getJSONArray(
-			"children");
+			Assert.assertEquals(
+				fragmentEntryLinkId,
+				configJSONObject.getString("fragmentEntryLinkId"));
 
-		Assert.assertEquals(
-			fragmentEntryLinkId, childrenJSONArray.getString(0));
+			Assert.assertEquals(
+				"root", newItemJSONObject.getString("parentId"));
+
+			JSONObject rootItemJSONObject = itemsJSONObject.getJSONObject(
+				"root");
+
+			JSONArray childrenJSONArray = rootItemJSONObject.getJSONArray(
+				"children");
+
+			Assert.assertEquals(
+				newItemJSONObject.getString("itemId"),
+				childrenJSONArray.getString(0));
+		}
 	}
 
 	private MockActionRequest _getMockActionRequest() throws PortalException {

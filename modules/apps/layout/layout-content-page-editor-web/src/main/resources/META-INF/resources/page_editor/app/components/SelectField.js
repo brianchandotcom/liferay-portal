@@ -15,7 +15,7 @@
 import {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
-export const SelectField = ({field, onValueSelect}) => (
+export const SelectField = ({field, onValueSelect, value}) => (
 	<>
 		<label htmlFor={field.name}>{field.label}</label>
 
@@ -31,6 +31,7 @@ export const SelectField = ({field, onValueSelect}) => (
 				);
 			}}
 			options={field.typeOptions.validValues}
+			value={value}
 		/>
 	</>
 );

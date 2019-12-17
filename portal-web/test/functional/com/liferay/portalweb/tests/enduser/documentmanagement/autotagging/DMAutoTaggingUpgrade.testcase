@@ -26,20 +26,20 @@ definition {
 		property data.archive.type = "data-archive-auto-tagging";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewAndDeleteAutoTaggingDM(
+		Upgrade.viewAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document JPG",
 			tagName = "carton");
 
-		Upgrade.viewAndDeleteAutoTaggingDM(
+		Upgrade.viewAndDeleteAutoTaggedDM(
 			dmDocumentTitle = "DM Document DOCX",
 			tagName = "alice");
 
-		Upgrade.addAutoTaggingDM(
+		Upgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Black.jpg",
 			dmDocumentTitle = "DM Document JPG",
 			tagName = "jersey");
 
-		Upgrade.addAutoTaggingDM(
+		Upgrade.addAutoTaggedDM(
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			dmDocumentTitle = "DM Document PDF",
 			tagName = "alice");

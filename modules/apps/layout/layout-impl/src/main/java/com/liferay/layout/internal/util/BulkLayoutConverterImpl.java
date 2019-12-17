@@ -121,10 +121,16 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				"Layout with PLID " + layout.getPlid() + " is not convertible");
 		}
 
-		Layout draftLayout = _getOrCreateDraftLayout(layout);
+		ServiceContext serviceContext = Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).orElse(
+			new ServiceContext()
+		);
+
+		Layout draftLayout = _getOrCreateDraftLayout(layout, serviceContext);
 
 		_addOrUpdateLayoutPageTemplateStructure(
-			draftLayout, _getLayoutData(draftLayout));
+			draftLayout, _getLayoutData(draftLayout), serviceContext);
 
 		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
 

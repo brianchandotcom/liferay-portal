@@ -961,6 +961,10 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.openActionMenu(
+
+		)
 	}
 
 	@description = "Choose between the existing Form Views of an object when deploying an app"

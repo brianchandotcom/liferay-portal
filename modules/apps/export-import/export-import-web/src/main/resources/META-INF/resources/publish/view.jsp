@@ -124,35 +124,42 @@ simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 %>
 
 <c:if test='<%= !publishConfigurationButtons.equals("template") %>'>
-	<div class="container-fluid-1280 flex-container publish-navbar">
-		<clay:navigation-bar
-			navigationItems='<%=
-				new JSPNavigationItemList(pageContext) {
-					{
-						add(
-							navigationItem -> {
-								navigationItem.setActive(publishConfigurationButtons.equals("custom"));
-								navigationItem.setHref(customPublishURL.toString());
-								navigationItem.setLabel(LanguageUtil.get(request, "custom"));
+	<div class="container-fluid-1280 publish-navbar">
+		<div class="autofit-row autofit-row-center">
+			<div class="autofit-col autofit-col-expand">
+				<clay:navigation-bar
+					navigationItems='<%=
+						new JSPNavigationItemList(pageContext) {
+							{
+								add(
+									navigationItem -> {
+										navigationItem.setActive(publishConfigurationButtons.equals("custom"));
+										navigationItem.setHref(customPublishURL.toString());
+										navigationItem.setLabel(LanguageUtil.get(request, "custom"));
+									}
+								);
+								add(
+									navigationItem -> {
+										navigationItem.setActive(publishConfigurationButtons.equals("saved"));
+										navigationItem.setHref(publishTemplatesURL.toString());
+										navigationItem.setLabel(LanguageUtil.get(request, "publish-templates"));
+									}
+								);
 							}
-						);
-						add(
-							navigationItem -> {
-								navigationItem.setActive(publishConfigurationButtons.equals("saved"));
-								navigationItem.setHref(publishTemplatesURL.toString());
-								navigationItem.setLabel(LanguageUtil.get(request, "publish-templates"));
-							}
-						);
-						add(
-							navigationItem -> {
-								navigationItem.setHref(simplePublishURL.toString());
-								navigationItem.setLabel(LanguageUtil.get(request, "switch-to-simple-publication"));
-							}
-						);
-					}
-				}
-			%>'
-		/>
+						}
+					%>'
+				/>
+			</div>
+
+			<div class="autofit-col">
+				<clay:link
+					buttonStyle="link"
+					elementClasses="btn-sm"
+					href="<%= simplePublishURL.toString() %>"
+					label='<%= LanguageUtil.get(request, "switch-to-simple-publication") %>'
+				/>
+			</div>
+		</div>		
 	</div>
 </c:if>
 

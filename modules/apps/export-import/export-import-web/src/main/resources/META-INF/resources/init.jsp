@@ -108,6 +108,7 @@ page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletBag" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletBagPool" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthException" %><%@

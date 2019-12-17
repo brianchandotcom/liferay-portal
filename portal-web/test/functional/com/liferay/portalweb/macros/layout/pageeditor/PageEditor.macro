@@ -911,7 +911,7 @@ definition {
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_headingLevel = "${headingLevel}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER_H2");
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER");
 		}
 
 		if (isSet(height)) {

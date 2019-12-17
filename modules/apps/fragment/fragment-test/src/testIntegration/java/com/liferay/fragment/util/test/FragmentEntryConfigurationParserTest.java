@@ -15,7 +15,7 @@
 package com.liferay.fragment.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class FragmentEntryConfigurationUtilTest {
+public class FragmentEntryConfigurationParserTest {
 
 	@ClassRule
 	@Rule
@@ -47,7 +47,7 @@ public class FragmentEntryConfigurationUtilTest {
 	@Test
 	public void testGetConfigurationDefaultValuesJSONObject() throws Exception {
 		JSONObject configurationDefaultValuesJSONObject =
-			_fragmentEntryConfigurationUtil.
+			_fragmentEntryConfigurationParser.
 				getConfigurationDefaultValuesJSONObject(
 					_read("configuration.json"));
 
@@ -98,11 +98,11 @@ public class FragmentEntryConfigurationUtilTest {
 
 		Assert.assertEquals(
 			expectedConfigurationTranslatedJSONObject.toJSONString(),
-			_fragmentEntryConfigurationUtil.translateConfiguration(
+			_fragmentEntryConfigurationParser.translateConfiguration(
 				configurationJSONOjbect, _getResourceBundle(language)));
 	}
 
 	@Inject
-	private FragmentEntryConfigurationUtil _fragmentEntryConfigurationUtil;
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -57,29 +58,19 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Override
 	public void onAfterRemove(User user) throws ModelListenerException {
 		try {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_kaleoTaskAssignmentInstanceLocalService.
-					getActionableDynamicQuery();
+			_reassignKaleoTaskInstance(user.getUserId());
+		}
+		catch (PortalException pe) {
+			throw new ModelListenerException(pe);
+		}
+	}
 
-			actionableDynamicQuery.setAddCriteriaMethod(
-				dynamicQuery -> {
-					Property assigneeClassNameProperty =
-						PropertyFactoryUtil.forName("assigneeClassName");
-
-					dynamicQuery.add(
-						assigneeClassNameProperty.like(User.class.getName()));
-
-					Property assigneeClassPKProperty =
-						PropertyFactoryUtil.forName("assigneeClassPK");
-
-					dynamicQuery.add(
-						assigneeClassPKProperty.eq(user.getUserId()));
-				});
-			actionableDynamicQuery.setPerformActionMethod(
-				(KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance) ->
-					_reassignKaleoTaskInstance(kaleoTaskAssignmentInstance));
-
-			actionableDynamicQuery.performActions();
+	@Override
+	public void onAfterUpdate(User user) throws ModelListenerException {
+		try {
+			if (user.getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+				_reassignKaleoTaskInstance(user.getUserId());
+			}
 		}
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);
@@ -156,6 +147,38 @@ public class UserModelListener extends BaseModelListener<User> {
 			previousTaskAssignmentInstances, kaleoTaskInstanceToken, null,
 			executionContext.getWorkflowContext(),
 			executionContext.getServiceContext());
+	}
+
+	private void _reassignKaleoTaskInstance(long userId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_kaleoTaskAssignmentInstanceLocalService.
+				getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property assigneeClassNameProperty =
+					PropertyFactoryUtil.forName("assigneeClassName");
+
+				dynamicQuery.add(
+					assigneeClassNameProperty.like(User.class.getName()));
+
+				Property assigneeClassPKProperty = PropertyFactoryUtil.forName(
+					"assigneeClassPK");
+
+				dynamicQuery.add(assigneeClassPKProperty.eq(userId));
+
+				Property completedProperty = PropertyFactoryUtil.forName(
+					"completed");
+
+				dynamicQuery.add(completedProperty.eq(false));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance) ->
+				_reassignKaleoTaskInstance(kaleoTaskAssignmentInstance));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Reference

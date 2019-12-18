@@ -177,7 +177,7 @@
 <!--URL-->
 <tr>
 	<td>URL_LABEL</td>
-	<td>//label[contains(.,'Image URL')]</td>
+	<td>//label[contains(.,'URL')]</td>
 	<td></td>
 </tr>
 <tr>

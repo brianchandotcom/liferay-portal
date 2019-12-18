@@ -31,8 +31,7 @@ buildChangelogs {
 		String text = "# " + GUtil.loadProperties(new File("sdk/${projectName}/bnd.bnd"))["Bundle-Name"] + " Change Log"
 
 		String date = ""
-		String rangeEnd = ""
-		String rangeStart = ""
+		String commitRange = ""
 		String version = ""
 
 		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
@@ -40,18 +39,17 @@ buildChangelogs {
 		changelogPropertiesFile.getText("UTF-8").split("\n").reverse().each {
 			String recordCommitLine ->
 
-			Matcher matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+)\.\.([a-f0-9]+)/
+			Matcher matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+\.\.[a-f0-9]+)/
 
 			if (matcher.find()) {
-				rangeEnd = matcher.group(3)
-				rangeStart = matcher.group(2)
+				commitRange = matcher.group(2)
 				version = matcher.group(1)
 			}
 
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 			exec {
-				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${rangeStart}..${rangeEnd}", "--", "modules/sdk/${projectName}/build.gradle"
+				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${commitRange}", "--", "modules/sdk/${projectName}/build.gradle"
 				standardOutput = standardOutputByteArrayOutputStream
 				workingDir = projectDir.parentFile
 			}
@@ -90,14 +88,14 @@ buildChangelogs {
 			}
 
 			if (changelogItem.length() > 0) {
-				changelogItem = """\
+				text += """\
 					|
 					|
 					|## ${version} - ${date}
 					|
-					|### Changed""".stripMargin() + changelogItem
+					|### Changed""".stripMargin()
 
-				text = text + changelogItem
+				text += changelogItem
 			}
 		}
 

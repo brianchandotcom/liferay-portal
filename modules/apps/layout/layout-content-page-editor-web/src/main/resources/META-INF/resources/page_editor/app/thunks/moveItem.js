@@ -12,32 +12,21 @@
  * details.
  */
 
-import {ADD_ITEM as type} from './types';
+import updateLayoutData from '../actions/updateLayoutData';
+import ItemService from '../services/ItemService';
 
-const ACTION = {type};
+export default function moveItem({config, itemId, parentId, position, store}) {
+	return dispatch => {
+		const {segmentsExperienceId} = store;
 
-/**
- * @param {object} options
- * @param {object} [options.config={}]
- * @param {string} options.itemId
- * @param {string} options.itemType
- * @param {string} options.siblingId
- * @param {number} [options.position]
- * @return {object}
- */
-export default function addItem({
-	config = {},
-	itemId,
-	itemType,
-	position,
-	siblingId
-}) {
-	return {
-		...ACTION,
-		config,
-		itemId,
-		itemType,
-		position,
-		siblingId
+		ItemService.moveItem({
+			config,
+			itemId,
+			parentId,
+			position,
+			segmentsExperienceId
+		}).then(layoutData => {
+			dispatch(updateLayoutData(layoutData));
+		});
 	};
 }

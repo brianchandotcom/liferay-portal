@@ -29,10 +29,9 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructure;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,9 +46,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -57,10 +54,11 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
+import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,13 +72,58 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"mvc.command.name=/content_layout/add_fragment_entry_link_react"
 	},
-	service = MVCActionCommand.class
+	service = {AopService.class, MVCActionCommand.class}
 )
 public class AddFragmentEntryLinkReactMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
 
-	protected FragmentEntryLink addFragmentEntryLink(
-			ActionRequest actionRequest)
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return super.processAction(actionRequest, actionResponse);
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			jsonObject = _processAddFragmentEntryLink(
+				actionRequest, actionResponse);
+
+			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			String errorMessage = "an-unexpected-error-occurred";
+
+			if (e instanceof NoSuchEntryException) {
+				errorMessage =
+					"the-fragment-can-no-longer-be-added-because-it-has-been-" +
+						"deleted";
+			}
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					errorMessage));
+		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLink(ActionRequest actionRequest)
 		throws PortalException {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -91,7 +134,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			actionRequest);
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			groupId, fragmentEntryKey, serviceContext);
+			groupId, fragmentEntryKey, serviceContext.getLocale());
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
@@ -103,8 +146,6 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		FragmentEntryLink fragmentEntryLink = null;
-
 		if (fragmentEntry != null) {
 			String contributedRendererKey = null;
 
@@ -112,71 +153,69 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 				contributedRendererKey = fragmentEntryKey;
 			}
 
-			fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
+			return _fragmentEntryLinkService.addFragmentEntryLink(
 				serviceContext.getScopeGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
 				StringPool.BLANK, 0, contributedRendererKey, serviceContext);
 		}
-		else {
-			fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
-				serviceContext.getScopeGroupId(), 0, 0, classNameId, classPK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
-				fragmentEntryKey, serviceContext);
-		}
 
-		return fragmentEntryLink;
+		return _fragmentEntryLinkService.addFragmentEntryLink(
+			serviceContext.getScopeGroupId(), 0, 0, classNameId, classPK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
+			fragmentEntryKey, serviceContext);
 	}
 
-	protected JSONObject addFragmentEntryLinkToLayoutData(
-			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
+	private JSONObject _addFragmentEntryLinkToLayoutDataJSONObject(
+			ActionRequest actionRequest, long fragmentEntryLinkId)
 		throws PortalException {
 
-		String itemConfig = ParamUtil.getString(actionRequest, "config");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
 		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
-		String itemType = ParamUtil.getString(actionRequest, "type");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			actionRequest,
-			layoutStructure -> {
-				LayoutStructure.Item item = LayoutStructure.Item.create(
-					JSONFactoryUtil.createJSONObject(itemConfig),
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-					parentItemId, itemType);
-
-				layoutStructure.addItem(item, parentItemId, position);
-			});
+			themeDisplay.getScopeGroupId(), segmentsExperienceId,
+			themeDisplay.getPlid(),
+			layoutStructure -> layoutStructure.addLayoutStructureItem(
+				JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
+				String.valueOf(UUID.randomUUID()), parentItemId, "fragment",
+				position));
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	private FragmentEntry _getFragmentEntry(
+		long groupId, String fragmentEntryKey, Locale locale) {
 
-		JSONObject jsonObject = _processAddFragmentEntryLinkAction(
-			actionRequest, actionResponse);
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				groupId, fragmentEntryKey);
 
-		hideDefaultSuccessMessage(actionRequest);
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
+
+		return fragmentEntries.get(fragmentEntryKey);
 	}
 
-	protected JSONObject processAddFragmentEntryLink(
+	private JSONObject _processAddFragmentEntryLink(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			actionRequest);
-
-		JSONObject layoutDataJSONObject = addFragmentEntryLinkToLayoutData(
-			actionRequest, fragmentEntryLink);
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
@@ -197,98 +236,37 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			_portal.getLiferayPortletResponse(actionResponse),
 			configurationJSONObject);
 
-		JSONObject fragmentEntryLinkJSONObject = JSONUtil.put(
-			"configuration", configurationJSONObject
-		).put(
-			"content",
-			_fragmentRendererController.render(
-				defaultFragmentRendererContext,
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse))
-		).put(
-			"defaultConfigurationValues",
-			_fragmentEntryConfigurationParser.
-				getConfigurationDefaultValuesJSONObject(configuration)
-		).put(
-			"editableValues",
-			JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues())
-		).put(
-			"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId()
-		);
-
 		return JSONUtil.put(
-			"fragmentEntryLink", fragmentEntryLinkJSONObject
-		).put(
-			"layoutData", layoutDataJSONObject
-		);
-	}
-
-	private FragmentEntry _getContributedFragmentEntry(
-		String fragmentEntryKey, Locale locale) {
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
-
-		return fragmentEntries.get(fragmentEntryKey);
-	}
-
-	private FragmentEntry _getFragmentEntry(
-		long groupId, String fragmentEntryKey, ServiceContext serviceContext) {
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				groupId, fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		return _getContributedFragmentEntry(
-			fragmentEntryKey, serviceContext.getLocale());
-	}
-
-	private JSONObject _processAddFragmentEntryLinkAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		Callable<JSONObject> callable = new AddFragmentEntryLinkCallable(
-			actionRequest, actionResponse);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		try {
-			jsonObject = TransactionInvokerUtil.invoke(
-				_transactionConfig, callable);
-
-			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
-
-			String errorMessage = "an-unexpected-error-occurred";
-
-			if (t.getCause() instanceof NoSuchEntryException) {
-				errorMessage =
-					"the-fragment-can-no-longer-be-added-because-it-has-been-" +
-						"deleted";
-			}
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
+			"fragmentEntryLink",
+			JSONUtil.put(
+				"configuration", configurationJSONObject
+			).put(
+				"content",
+				_fragmentRendererController.render(
+					defaultFragmentRendererContext,
 					_portal.getHttpServletRequest(actionRequest),
-					errorMessage));
-		}
-
-		return jsonObject;
+					_portal.getHttpServletResponse(actionResponse))
+			).put(
+				"defaultConfigurationValues",
+				_fragmentEntryConfigurationParser.
+					getConfigurationDefaultValuesJSONObject(configuration)
+			).put(
+				"editableValues",
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues())
+			).put(
+				"fragmentEntryLinkId",
+				fragmentEntryLink.getFragmentEntryLinkId()
+			)
+		).put(
+			"layoutData",
+			_addFragmentEntryLinkToLayoutDataJSONObject(
+				actionRequest, fragmentEntryLink.getFragmentEntryLinkId())
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddFragmentEntryLinkReactMVCActionCommand.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private FragmentCollectionContributorTracker
@@ -313,29 +291,6 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 	private ItemSelector _itemSelector;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureService;
-
-	@Reference
 	private Portal _portal;
-
-	private class AddFragmentEntryLinkCallable implements Callable<JSONObject> {
-
-		@Override
-		public JSONObject call() throws Exception {
-			return processAddFragmentEntryLink(_actionRequest, _actionResponse);
-		}
-
-		private AddFragmentEntryLinkCallable(
-			ActionRequest actionRequest, ActionResponse actionResponse) {
-
-			_actionRequest = actionRequest;
-			_actionResponse = actionResponse;
-		}
-
-		private final ActionRequest _actionRequest;
-		private final ActionResponse _actionResponse;
-
-	}
 
 }

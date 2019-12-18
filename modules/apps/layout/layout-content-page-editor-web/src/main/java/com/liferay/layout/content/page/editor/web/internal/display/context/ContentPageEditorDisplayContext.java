@@ -222,9 +222,14 @@ public class ContentPageEditorDisplayContext {
 					"/content_layout/add_fragment_entry_link_comment")
 			).put(
 				"addFragmentEntryLinkURL",
-				editorSoyContext.get("addFragmentEntryLinkURL")
+				getFragmentEntryActionURL(
+					"/content_layout/add_fragment_entry_link_react")
 			).put(
-				"addPortletURL", editorSoyContext.get("addPortletURL")
+				"addItemURL",
+				getFragmentEntryActionURL("/content_layout/add_item_react")
+			).put(
+				"addPortletURL",
+				getFragmentEntryActionURL("/content_layout/add_portlet_react")
 			).put(
 				"availableLanguages", editorSoyContext.get("availableLanguages")
 			).put(
@@ -270,6 +275,10 @@ public class ContentPageEditorDisplayContext {
 				editorSoyContext.get("hasUpdatePermissions")
 			).put(
 				"infoItemSelectorURL", _getInfoItemSelectorURL()
+			).put(
+				"moveItemURL",
+				getFragmentEntryActionURL(
+					"/content_layout/move_fragment_entry_link_react")
 			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
 			).put(

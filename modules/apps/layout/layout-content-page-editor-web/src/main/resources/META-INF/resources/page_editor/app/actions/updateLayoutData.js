@@ -12,15 +12,11 @@
  * details.
  */
 
-import {MOVE_ITEM as type} from './types';
+import {UPDATE_LAYOUT_DATA} from './types';
 
-const ACTION = {type};
-
-export default function moveItem({itemId, position, siblingId}) {
+export default function updateLayoutData(layoutData) {
 	return {
-		...ACTION,
-		itemId,
-		position,
-		siblingId
+		layoutData,
+		type: UPDATE_LAYOUT_DATA
 	};
 }

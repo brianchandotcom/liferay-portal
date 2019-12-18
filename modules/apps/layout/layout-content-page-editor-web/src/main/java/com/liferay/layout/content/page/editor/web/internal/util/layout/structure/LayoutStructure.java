@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,123 +26,95 @@ import java.util.Map;
  */
 public class LayoutStructure {
 
-	public LayoutStructure(Map<String, Item> items, RootItem rootItem) {
-		_items = items;
-		_rootItem = rootItem;
+	public LayoutStructure(
+		Map<String, LayoutStructureItem> layoutStructureItems,
+		String mainItemId) {
+
+		_layoutStructureItems = layoutStructureItems;
+		_mainItemId = mainItemId;
 	}
 
-	public LayoutStructure addItem(
-		Item item, String parentItemId, int position) {
+	public void addLayoutStructureItem(
+		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
+		String itemType, int position) {
 
-		_items.put(item.getItemId(), item);
+		LayoutStructureItem layoutStructureItem = new LayoutStructureItem(
+			itemConfigJSONObject, itemId, parentItemId, itemType);
 
-		if (Validator.isNotNull(parentItemId)) {
-			Item parentItem = _items.get(parentItemId);
+		addLayoutStructureItem(layoutStructureItem, parentItemId, position);
+	}
 
-			List<String> childrenItemIds = parentItem.getChildrenItemIds();
+	public void addLayoutStructureItem(
+		LayoutStructureItem layoutStructureItem, String parentItemId,
+		int position) {
 
-			childrenItemIds.add(position, item.getItemId());
+		_layoutStructureItems.put(
+			layoutStructureItem.getItemId(), layoutStructureItem);
+
+		if (Validator.isNull(parentItemId)) {
+			return;
 		}
 
-		return this;
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		parentLayoutStructureItem.addChildrenItem(
+			position, layoutStructureItem.getItemId());
+	}
+
+	public void deleteLayoutStructureItem(String itemId, String parentItemId) {
+		_layoutStructureItems.remove(itemId);
+
+		if (Validator.isNull(parentItemId)) {
+			return;
+		}
+
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		parentLayoutStructureItem.deleteChildrenItem(itemId);
+	}
+
+	public void moveLayoutStructureItem(
+		String itemId, String parentItemId, int position) {
+
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
+
+		LayoutStructureItem oldParentLayoutStructureItem =
+			_layoutStructureItems.get(layoutStructureItem.getParentItemId());
+
+		oldParentLayoutStructureItem.deleteChildrenItem(itemId);
+
+		LayoutStructureItem newParentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		newParentLayoutStructureItem.addChildrenItem(position, itemId);
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject itemsJSONObject = JSONFactoryUtil.createJSONObject();
+		JSONObject layoutStructureItemsJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
-		for (Map.Entry<String, Item> entry : _items.entrySet()) {
-			Item item = entry.getValue();
+		for (Map.Entry<String, LayoutStructureItem> entry :
+				_layoutStructureItems.entrySet()) {
 
-			itemsJSONObject.put(
-				entry.getKey(),
-				JSONUtil.put(
-					"children",
-					JSONFactoryUtil.createJSONArray(item.getChildrenItemIds())
-				).put(
-					"config", item.getItemConfigJSONObject()
-				).put(
-					"itemId", item.getItemId()
-				).put(
-					"parentId", item.getParentItemId()
-				).put(
-					"type", item.getItemType()
-				));
+			LayoutStructureItem layoutStructureItem = entry.getValue();
+
+			layoutStructureItemsJSONObject.put(
+				entry.getKey(), layoutStructureItem.toJSONObject());
 		}
 
 		return JSONUtil.put(
-			"items", itemsJSONObject
+			"items", layoutStructureItemsJSONObject
 		).put(
-			"rootItems", JSONUtil.put("main", _rootItem.getMainItemId())
+			"rootItems", JSONUtil.put("main", _mainItemId)
 		).put(
 			"version", 1
 		);
 	}
 
-	public static class Item {
-
-		public static Item create(
-			JSONObject itemConfigJSONObject, String itemId, String parentItemId,
-			String itemType) {
-
-			return new Item(
-				new ArrayList<>(), itemConfigJSONObject, itemId, parentItemId,
-				itemType);
-		}
-
-		public Item(
-			List<String> childrenItemIds, JSONObject itemConfigJSONObject,
-			String itemId, String parentItemId, String itemType) {
-
-			_childrenItemIds = childrenItemIds;
-			_itemConfigJSONObject = itemConfigJSONObject;
-			_itemId = itemId;
-			_parentItemId = parentItemId;
-			_itemType = itemType;
-		}
-
-		public List<String> getChildrenItemIds() {
-			return _childrenItemIds;
-		}
-
-		public JSONObject getItemConfigJSONObject() {
-			return _itemConfigJSONObject;
-		}
-
-		public String getItemId() {
-			return _itemId;
-		}
-
-		public String getItemType() {
-			return _itemType;
-		}
-
-		public String getParentItemId() {
-			return _parentItemId;
-		}
-
-		private final List<String> _childrenItemIds;
-		private final JSONObject _itemConfigJSONObject;
-		private final String _itemId;
-		private final String _itemType;
-		private final String _parentItemId;
-
-	}
-
-	public static class RootItem {
-
-		public RootItem(String mainItemId) {
-			_mainItemId = mainItemId;
-		}
-
-		public String getMainItemId() {
-			return _mainItemId;
-		}
-
-		private final String _mainItemId;
-
-	}
-
-	private final Map<String, Item> _items;
-	private final RootItem _rootItem;
+	private final Map<String, LayoutStructureItem> _layoutStructureItems;
+	private final String _mainItemId;
 
 }

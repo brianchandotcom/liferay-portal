@@ -19,9 +19,13 @@ import React, {useContext, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
-import {moveItem, removeItem} from '../actions/index';
+import {removeItem} from '../actions/index';
+import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
+import {StoreContext} from '../store/index';
+import moveItem from '../thunks/moveItem';
 import {
 	useCurrentFloatingToolbar,
 	useIsSelected,
@@ -29,6 +33,11 @@ import {
 	useSelectItem,
 	useHoverItem
 } from './Controls';
+
+const EDGE = {
+	BOTTOM: 1,
+	TOP: 0
+};
 
 const TopperListItem = React.forwardRef(
 	({children, className, expand, ...props}, ref) => (
@@ -58,6 +67,8 @@ export default function Topper({
 	const [edge, setEdge] = useState(null);
 	const containerRef = useRef(null);
 	const dispatch = useContext(DispatchContext);
+	const config = useContext(ConfigContext);
+	const store = useContext(StoreContext);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
@@ -76,10 +87,10 @@ export default function Topper({
 				return;
 			}
 
-			const {itemId, position, siblingId} = result;
+			const {itemId, parentId, position} = result;
 
-			if (itemId !== siblingId) {
-				dispatch(moveItem({itemId, position, siblingId}));
+			if (itemId !== parentId) {
+				dispatch(moveItem({config, itemId, parentId, position, store}));
 			}
 		},
 		item: {
@@ -98,11 +109,18 @@ export default function Topper({
 		},
 		drop(_item, _monitor) {
 			if (!_monitor.didDrop()) {
+				const {parentId, position} = getParentItemIdAndPositon({
+					edge,
+					item: _item,
+					items: layoutData.items,
+					siblingOrParentId: item.itemId
+				});
+
 				return {
 					itemId: _item.itemId,
 					itemType: _monitor.getItemType(),
-					position: edge,
-					siblingId: item.itemId
+					parentId,
+					position
 				};
 			}
 		},
@@ -145,7 +163,7 @@ export default function Topper({
 					parentChildren[dragIndex + 1] !== hoverId &&
 					hoverClientY < hoverMiddleY
 				) {
-					setEdge(0);
+					setEdge(EDGE.TOP);
 					return;
 				}
 
@@ -154,17 +172,17 @@ export default function Topper({
 					parentChildren[dragIndex - 1] !== hoverId &&
 					hoverClientY > hoverMiddleY
 				) {
-					setEdge(1);
+					setEdge(EDGE.BOTTOM);
 					return;
 				}
 			} else {
 				if (hoverClientY < hoverMiddleY) {
-					setEdge(0);
+					setEdge(EDGE.TOP);
 					return;
 				}
 
 				if (hoverClientY > hoverMiddleY) {
-					setEdge(1);
+					setEdge(EDGE.BOTTOM);
 					return;
 				}
 			}
@@ -304,4 +322,37 @@ export default function Topper({
 			</div>
 		</div>
 	);
+}
+
+function getParentItemIdAndPositon({edge, item, items, siblingOrParentId}) {
+	const siblingOrParent = items[siblingOrParentId];
+
+	if (isNestingSupported(item.type, siblingOrParent.type)) {
+		return {
+			parentId: siblingOrParentId,
+			position: siblingOrParent.children.length
+		};
+	} else {
+		const parent = items[siblingOrParent.parentId];
+
+		const siblingIndex = parent.children.indexOf(siblingOrParentId);
+
+		let position = edge === EDGE.TOP ? siblingIndex : siblingIndex + 1;
+
+		// Moving an item in the same parent
+		if (parent.children.includes(item.itemId)) {
+			const itemIndex = parent.children.indexOf(item.itemId);
+
+			position = itemIndex < siblingIndex ? position - 1 : position;
+		}
+
+		return {
+			parentId: parent.itemId,
+			position
+		};
+	}
+}
+
+function isNestingSupported(itemType, parentType) {
+	return LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(parentType);
 }

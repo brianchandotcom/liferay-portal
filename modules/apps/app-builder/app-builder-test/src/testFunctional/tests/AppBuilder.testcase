@@ -323,21 +323,21 @@ definition {
 
 		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Date Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Text Field - Form View Title");
 
 		AppBuilderAdmin.filterListAscendAndDescend();
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Text Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Date Field - Form View Title");
 	}
@@ -362,23 +362,105 @@ definition {
 
 		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Date Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Text Field - Form View Title");
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Text Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Date Field - Form View Title");
+	}
+
+	@description = "Change order of Table Views list from the default of most recent on top to oldest."
+	@priority = "5"
+	test ChangeTableViewsListOrderByDate {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Single Selection",
+			formViewName = "Single Selection Field - Form View Title",
+			tableViewName = "Single Selection Field - Table View Title");
+
+		FormViewBuilder.switchToFormViewTab();
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Upload",
+			formViewName = "Upload Field - Form View Title",
+			tableViewName = "Upload Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Upload Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Single Selection Field - Table View Title");
+
+		AppBuilderAdmin.filterListAscendAndDescend();
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Single Selection Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Upload Field - Table View Title");
+	}
+
+	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"
+	@priority = "5"
+	test ChangeTableViewsListOrderByName {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title",
+			tableViewName = "Text Field - Table View Title");
+
+		FormViewBuilder.switchToFormViewTab();
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Numeric",
+			formViewName = "Numeric Field - Form View Title",
+			tableViewName = "Numeric Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Numeric Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Text Field - Table View Title");
+
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Text Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Numeric Field - Table View Title");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"
@@ -961,11 +1043,11 @@ definition {
 
 		AppBuilderAdmin.clearSearch();
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Date Field - Form View Title");
 
-		AppBuilderAdmin.validateFormViewTitle(
+		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "2",
 			title = "Text Field - Form View Title");
 	}
@@ -1066,6 +1148,101 @@ definition {
 		AppBuilderAdmin.save();
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
+	}
+
+	@description = "Clear Table View search results when clicking the Clear button on the search results banner"
+	@priority = "5"
+	test TableViewClearSearchResults {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Upload",
+			formViewName = "Upload Field - Form View Title",
+			tableViewName = "Upload Field - Table View Title");
+
+		FormViewBuilder.switchToFormViewTab();
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Grid",
+			formViewName = "Grid Field - Form View Title",
+			tableViewName = "Grid Field - Table View Title");
+
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
+
+		AppBuilderAdmin.searchByItem(itemName = "Upload");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Upload");
+
+		AppBuilderAdmin.clearSearch();
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Grid Field - Table View Title");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "2",
+			title = "Upload Field - Table View Title");
+	}
+
+	@description = "Validate Table View search returns by search engine using a search term"
+	@priority = "5"
+	test TableViewSearchByTerm {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "My custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title",
+			tableViewName = "Text Field - Table View Title");
+
+		FormViewBuilder.switchToFormViewTab();
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Date",
+			formViewName = "Date Field - Form View Title",
+			tableViewName = "Date Field - Table View Title");
+
+		AppBuilderAdmin.searchByItem(itemName = "Text");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Text");
+	}
+
+	@description = "No results found screen is shown when the Table View search doesn't retrieve any results"
+	@priority = "5"
+	test TableViewSearchNoResultsFound {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "Custom Object Title",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title",
+			tableViewName = "Text Field - Table View Title");
+
+		FormViewBuilder.switchToFormViewTab();
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Date",
+			formViewName = "Date Field - Form View Title",
+			tableViewName = "Date Field - Table View Title");
+
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
+
+		AppBuilderAdmin.searchByItem(itemName = "Apple");
+
+		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

@@ -23,17 +23,12 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import javax.portlet.ActionRequest;
 
 /**
  * @author Víctor Galán
@@ -41,25 +36,15 @@ import javax.portlet.ActionRequest;
 public class LayoutStructureUtil {
 
 	public static JSONObject updateLayoutPageTemplateData(
-			ActionRequest actionRequest,
+			long groupId, long segmentsExperienceId, long plid,
 			UnsafeConsumer<LayoutStructure, PortalException> unsafeConsumer)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					PortalUtil.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(), true);
+					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					plid, true);
 
 		LayoutStructure layoutStructure = _parse(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
@@ -70,8 +55,8 @@ public class LayoutStructureUtil {
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructure(
-				themeDisplay.getScopeGroupId(), classNameId, classPK,
-				segmentsExperienceId, dataJSONObject.toString());
+				groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+				plid, segmentsExperienceId, dataJSONObject.toString());
 
 		return dataJSONObject;
 	}
@@ -85,34 +70,33 @@ public class LayoutStructureUtil {
 		JSONObject rootItemsJSONObject =
 			layoutStructureJSONObject.getJSONObject("rootItems");
 
-		LayoutStructure.RootItem layoutStructureRootItem =
-			new LayoutStructure.RootItem(rootItemsJSONObject.getString("main"));
-
 		JSONObject itemsJSONObject = layoutStructureJSONObject.getJSONObject(
 			"items");
 
-		Map<String, LayoutStructure.Item> items = new HashMap<>(
+		Map<String, LayoutStructureItem> layoutStructureItems = new HashMap<>(
 			itemsJSONObject.length());
 
 		for (String key : itemsJSONObject.keySet()) {
-			items.put(key, _toItem(itemsJSONObject.getJSONObject(key)));
+			layoutStructureItems.put(
+				key, _toItem(itemsJSONObject.getJSONObject(key)));
 		}
 
-		return new LayoutStructure(items, layoutStructureRootItem);
+		return new LayoutStructure(
+			layoutStructureItems, rootItemsJSONObject.getString("main"));
 	}
 
-	private static LayoutStructure.Item _toItem(JSONObject jsonObject) {
+	private static LayoutStructureItem _toItem(JSONObject jsonObject) {
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 		String itemId = jsonObject.getString("itemId");
 		String parentId = jsonObject.getString("parentId");
 		String type = jsonObject.getString("type");
 
-		ArrayList<String> childrenItemIds = new ArrayList<>();
+		List<String> childrenItemIds = new ArrayList<>();
 
 		JSONUtil.addToStringCollection(
 			childrenItemIds, jsonObject.getJSONArray("children"));
 
-		return new LayoutStructure.Item(
+		return new LayoutStructureItem(
 			childrenItemIds, configJSONObject, itemId, parentId, type);
 	}
 

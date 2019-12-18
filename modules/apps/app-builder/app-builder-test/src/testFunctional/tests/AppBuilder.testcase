@@ -1150,6 +1150,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
+<<<<<<< HEAD
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"
 	@priority = "5"
 	test TableViewClearSearchResults {
@@ -1243,6 +1244,17 @@ definition {
 		AppBuilderAdmin.searchByItem(itemName = "Apple");
 
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
+=======
+	@description = "Search for an object in the object list"
+	@priority = "5"
+	test SearchForObject {
+		property portal.acceptance = "true";
+​
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+>>>>>>> LRQA-53877 Added SearchForObject test
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

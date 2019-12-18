@@ -12,13 +12,9 @@
  * details.
  */
 
-import React, {useContext} from 'react';
-
-import TreeviewContext from './TreeviewContext';
+import React from 'react';
 
 export default function TreeviewLabel({node}) {
-	const {dispatch} = useContext(TreeviewContext);
-
 	const inputId = `${node.id}-treeview-label-input`;
 
 	return (
@@ -27,9 +23,9 @@ export default function TreeviewLabel({node}) {
 				checked={node.selected}
 				className="sr-only"
 				id={inputId}
-				onChange={() =>
-					dispatch({nodeId: node.id, type: 'TOGGLE_SELECT'})
-				}
+				onChange={() => {
+					// Let NodeListItem handle checked state.
+				}}
 				type="checkbox"
 			/>
 
@@ -38,6 +34,7 @@ export default function TreeviewLabel({node}) {
 					node.selected ? 'font-weight-bold' : 'font-weight-normal'
 				}
 				htmlFor={inputId}
+				onClick={event => event.preventDefault()}
 			>
 				{node.name}
 			</label>

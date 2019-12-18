@@ -13,12 +13,11 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import Treeview from '../../src/main/resources/META-INF/resources/treeview/Treeview';
-import TreeviewContext from '../../src/main/resources/META-INF/resources/treeview/TreeviewContext';
 
 const nodes = [
 	{
@@ -199,19 +198,11 @@ describe('Treeview', () => {
 			<Treeview
 				initialSelectedNodeIds={[]}
 				NodeComponent={({node}) => {
-					const {dispatch} = useContext(TreeviewContext);
-
 					return (
 						<button
 							data-icon={node.icon}
 							data-selected={node.selected}
 							data-size={node.size}
-							onClick={() =>
-								dispatch({
-									nodeId: node.id,
-									type: 'TOGGLE_SELECT'
-								})
-							}
 							type="button"
 						>
 							Super {node.name}

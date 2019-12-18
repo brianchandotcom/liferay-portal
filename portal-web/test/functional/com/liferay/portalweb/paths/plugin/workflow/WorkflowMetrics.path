@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_SLA_BREACHED_REVIEW_VALUE_</td>
+	<td>//tr[contains(*, 'Review')]//td[@data-testid='slaBreached']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_DASHBOARD_TAB</td>
 	<td>//li[contains(@class,'nav-item')]//a[contains(@href, 'dashboard')]</td>
 	<td></td>

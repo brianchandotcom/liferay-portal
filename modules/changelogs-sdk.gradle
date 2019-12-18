@@ -71,7 +71,7 @@ buildChangelogs {
 
 					commitInfo = commitInfo + """\
 						|
-						|- [${ticket}]: ${matcher.group(4)} (${matcher.group(1)})""".stripMargin()
+						|- [${ticket}]: ${matcher.group(4)} (${matcher.group(1).substring(0, 10)})""".stripMargin()
 				}
 
 				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/

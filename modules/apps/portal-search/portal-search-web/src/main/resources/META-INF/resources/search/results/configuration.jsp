@@ -62,7 +62,6 @@ SearchResultsPortletPreferences searchResultsPortletPreferences = new SearchResu
 						displayStyle="<%= searchResultsPortletInstanceConfiguration.displayStyle() %>"
 						displayStyleGroupId="<%= searchResultsPortletDisplayContext.getDisplayStyleGroupId() %>"
 						refreshURL="<%= configurationRenderURL %>"
-						showEmptyOption="<%= true %>"
 					/>
 				</div>
 			</liferay-frontend:fieldset>

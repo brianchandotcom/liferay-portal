@@ -87,7 +87,7 @@ buildChangelogs {
 					|
 					|## ${version} - ${publishDate}
 					|
-					|### Changed""".stripMargin()
+					|### Dependencies""".stripMargin()
 
 				text += changelog
 			}

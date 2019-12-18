@@ -96,7 +96,7 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 			RandomTestUtil.randomString(), _group);
 
 		_summaryFixture = new SummaryFixture<>(
-			JournalArticle.class, _group, null, _user);
+			JournalArticle.class, _group, LocaleUtil.US, _user);
 	}
 
 	@After

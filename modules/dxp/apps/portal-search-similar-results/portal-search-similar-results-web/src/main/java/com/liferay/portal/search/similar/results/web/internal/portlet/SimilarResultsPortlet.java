@@ -248,7 +248,11 @@ public class SimilarResultsPortlet extends MVCPortlet {
 				continue;
 			}
 
-			if (isReplyMBMessageDocument(legacyDocument)) {
+			if (_isReplyMBMessageDocument(legacyDocument)) {
+				continue;
+			}
+
+			if (!_isSupportedDocument(uid, legacyDocument)) {
 				continue;
 			}
 
@@ -267,7 +271,11 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		return liferayPortletRequest.getHttpServletRequest();
 	}
 
-	protected boolean isReplyMBMessageDocument(Document legacyDocument) {
+	@Reference
+	protected SimilarResultsContributorsRegistry
+		similarResultsContributorsRegistry;
+
+	private boolean _isReplyMBMessageDocument(Document legacyDocument) {
 		String className = legacyDocument.get(Field.ENTRY_CLASS_NAME);
 
 		boolean mbMessage = false;
@@ -290,9 +298,11 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		return mbMessage;
 	}
 
-	@Reference
-	protected SimilarResultsContributorsRegistry
-		similarResultsContributorsRegistry;
+	private boolean _isSupportedDocument(String uid, Document legacyDocument) {
+		String className = legacyDocument.get(Field.ENTRY_CLASS_NAME);
+
+		return uid.contains(className);
+	}
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

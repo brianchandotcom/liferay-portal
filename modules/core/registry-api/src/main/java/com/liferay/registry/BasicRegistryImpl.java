@@ -91,15 +91,6 @@ public class BasicRegistryImpl implements Registry {
 		return this;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public <T> T getService(Class<T> clazz) {
-		return getService(clazz.getName());
-	}
-
 	@Override
 	public <T> T getService(ServiceReference<T> serviceReference) {
 		BasicServiceReference<?> basicServiceReference =
@@ -109,25 +100,6 @@ public class BasicRegistryImpl implements Registry {
 				_services.entrySet()) {
 
 			if (basicServiceReference.matches(entry.getKey())) {
-				return (T)entry.getValue();
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public <T> T getService(String className) {
-		Filter filter = getFilter("(objectClass=" + className + ")");
-
-		for (Map.Entry<ServiceReference<?>, Object> entry :
-				_services.entrySet()) {
-
-			if (filter.matches(entry.getKey())) {
 				return (T)entry.getValue();
 			}
 		}

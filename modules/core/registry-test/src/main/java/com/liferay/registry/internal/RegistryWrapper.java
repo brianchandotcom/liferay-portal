@@ -69,15 +69,6 @@ public class RegistryWrapper implements Registry {
 		return this;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public <T> T getService(Class<T> clazz) {
-		return _registry.getService(_registry.getServiceReference(clazz));
-	}
-
 	@Override
 	public <T> T getService(ServiceReference<T> serviceReference) {
 		AtomicInteger serviceReferenceCount = _serviceReferenceCountsMap.get(
@@ -98,16 +89,6 @@ public class RegistryWrapper implements Registry {
 		serviceReferenceCount.incrementAndGet();
 
 		return _registry.getService(serviceReference);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public <T> T getService(String className) {
-		return (T)_registry.getService(
-			_registry.getServiceReference(className));
 	}
 
 	@Override

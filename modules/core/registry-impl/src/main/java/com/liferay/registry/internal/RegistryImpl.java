@@ -154,22 +154,6 @@ public class RegistryImpl implements Registry {
 		return this;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public <T> T getService(Class<T> clazz) {
-		org.osgi.framework.ServiceReference<T> serviceReference =
-			_bundleContext.getServiceReference(clazz);
-
-		if (serviceReference == null) {
-			return null;
-		}
-
-		return _bundleContext.getService(serviceReference);
-	}
-
 	@Override
 	public <T> T getService(ServiceReference<T> serviceReference) {
 		if (!(serviceReference instanceof ServiceReferenceWrapper)) {
@@ -181,22 +165,6 @@ public class RegistryImpl implements Registry {
 
 		return _bundleContext.getService(
 			serviceReferenceWrapper.getServiceReference());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public <T> T getService(String className) {
-		org.osgi.framework.ServiceReference<?> serviceReference =
-			_bundleContext.getServiceReference(className);
-
-		if (serviceReference == null) {
-			return null;
-		}
-
-		return (T)_bundleContext.getService(serviceReference);
 	}
 
 	@Override

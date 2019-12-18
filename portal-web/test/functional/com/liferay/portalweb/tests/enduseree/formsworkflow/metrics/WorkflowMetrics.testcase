@@ -418,8 +418,8 @@ var key_testSLADefinitionHours = "1";
 			value1 = "${key_testSLADefinitionEnd}");
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
-			value1 = "${key_testSLADefinitionDays}");
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
+			value1 = "${key_testSLADefinitionHours}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

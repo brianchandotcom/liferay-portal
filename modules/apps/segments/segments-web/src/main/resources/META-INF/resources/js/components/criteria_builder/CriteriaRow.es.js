@@ -42,6 +42,8 @@ import StringInput from '../inputs/StringInput.es';
 
 const acceptedDragTypes = [DragTypes.CRITERIA_ROW, DragTypes.PROPERTY];
 
+const DISPLAY_VALUE_NOT_FOUND_ERROR = 'displayValue not found';
+
 /**
  * Prevents rows from dropping onto itself and adding properties to not matching
  * contributors.
@@ -218,14 +220,22 @@ class CriteriaRow extends Component {
 			body: objectToFormData(data),
 			method: 'POST'
 		})
-			.then(response => response.text())
-			.then(displayValue => {
+			.then(response => response.json())
+			.then(({fieldValueName: displayValue}) => {
+				if (displayValue === undefined) {
+					throw new Error(DISPLAY_VALUE_NOT_FOUND_ERROR);
+				}
+
 				onChange({...criterion, displayValue});
 			})
-			.catch(() => {
-				this.setState({
-					unknownEntityError: true
-				});
+			.catch(error => {
+				onChange({...criterion, displayValue: value});
+
+				if (error && error.message === DISPLAY_VALUE_NOT_FOUND_ERROR) {
+					this.setState({
+						unknownEntityError: true
+					});
+				}
 			});
 	};
 

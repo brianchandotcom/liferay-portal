@@ -2,6 +2,14 @@ import org.gradle.api.artifacts.ResolveException
 
 apply plugin: "com.liferay.target.platform"
 
+allprojects {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
 task runGradleTest
 
 dependencies {
@@ -25,18 +33,7 @@ runGradleTest {
 
 		Project subproject2 = project.childProjects["subproject2"]
 
-		Configuration configuration = subproject2.configurations.compile
-
-		expectedException = null
-
-		try {
-			configuration.resolvedConfiguration.resolvedArtifacts
-		}
-		catch (ResolveException re) {
-			expectedException = re.cause
-		}
-
-		assert expectedException.message.contains("com.liferay.portal:com.liferay.portal.kernel:3.63.1")
+		assert subproject2.configurations.compile.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
 	}
 }
 

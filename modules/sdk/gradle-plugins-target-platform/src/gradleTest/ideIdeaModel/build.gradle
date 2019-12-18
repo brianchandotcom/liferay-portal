@@ -30,6 +30,6 @@ runGradleTest {
 
 		Set<Dependency> ideaDependencies = idea.module.resolveDependencies()
 
-		assert ideaDependencies.size() == 877
+		assert ideaDependencies.size() == 12
 	}
 }

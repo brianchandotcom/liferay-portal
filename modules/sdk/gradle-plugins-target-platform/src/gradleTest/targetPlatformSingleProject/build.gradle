@@ -9,6 +9,12 @@ dependencies {
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 }
 
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
 runGradleTest {
 	doLast {
 		Exception expectedException = null
@@ -22,19 +28,6 @@ runGradleTest {
 
 		assert expectedException.message == "Configuration with name 'targetPlatform' not found."
 
-		Configuration configuration = configurations.compile
-
-		expectedException = null
-
-		try {
-			configuration.resolvedConfiguration.resolvedArtifacts
-		}
-		catch (ResolveException re) {
-			re.printStackTrace()
-
-			expectedException = re.cause
-		}
-
-		assert expectedException.message.contains("com.liferay.portal:com.liferay.portal.kernel:3.63.1")
+		assert configurations.compile.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
 	}
 }

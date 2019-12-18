@@ -1,13 +1,19 @@
 apply plugin: "com.liferay.target.platform.ide"
 apply plugin: "java"
 
-dependencies {
-	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+task runGradleTest
 
-	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.service.component.annotations"
+
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.2.1"
 }
 
-task runGradleTest
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
 
 runGradleTest {
 	doLast {

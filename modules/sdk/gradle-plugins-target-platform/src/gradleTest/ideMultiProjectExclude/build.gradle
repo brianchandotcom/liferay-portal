@@ -1,9 +1,17 @@
 apply plugin: "com.liferay.target.platform.ide"
 
+allprojects {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
 task runGradleTest
 
 dependencies {
-	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.2.1"
 }
 
 runGradleTest {

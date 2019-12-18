@@ -263,6 +263,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 			ddmTemplate -> new RenderedContent() {
 				{
 					renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
+						"headless-delivery",
 						BaseStructuredContentResourceImpl.class,
 						"getStructuredContentRenderedContentTemplate",
 						uriInfoOptional.get(),

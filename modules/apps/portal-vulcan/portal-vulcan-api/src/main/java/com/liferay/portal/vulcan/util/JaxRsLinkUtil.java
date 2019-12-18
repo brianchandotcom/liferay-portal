@@ -27,7 +27,8 @@ import javax.ws.rs.core.UriInfo;
 public class JaxRsLinkUtil {
 
 	public static String getJaxRsLink(
-		Class clazz, String methodName, UriInfo uriInfo, Object... values) {
+		String applicationPath, Class clazz, String methodName, UriInfo uriInfo,
+		Object... values) {
 
 		String baseURIString = String.valueOf(uriInfo.getBaseUri());
 
@@ -35,6 +36,10 @@ public class JaxRsLinkUtil {
 			baseURIString = baseURIString.substring(
 				0, baseURIString.length() - 1);
 		}
+
+		baseURIString =
+			baseURIString.substring(0, baseURIString.lastIndexOf("/") + 1) +
+				applicationPath;
 
 		URI resourceURI = UriBuilder.fromResource(
 			clazz

@@ -14,16 +14,12 @@
 
 package com.liferay.portal.search.engine.adapter.index;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
- * @author Michael C. Han
+ * @author Leon Chi
  */
-@ProviderType
-public interface IndexRequest<T extends IndexResponse> {
+public interface MappingIndexRequest<T extends IndexResponse>
+	extends IndexRequest {
 
-	public T accept(IndexRequestExecutor indexRequestExecutor);
-
-	public String[] getIndexNames();
+	public String getMappingName();
 
 }

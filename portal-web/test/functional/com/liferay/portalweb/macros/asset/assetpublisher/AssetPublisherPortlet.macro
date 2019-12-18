@@ -1131,7 +1131,7 @@ definition {
 			else {
 				AssertTextEquals(
 					locator1 = "APConfigurationSites#SITES_TABLE_NAME",
-					value1 = "${liferaySiteName}");
+					value1 = "${liferaySiteName} (Opens New Window)");
 
 				AssertTextEquals(
 					locator1 = "APConfigurationSites#SITES_TABLE_TYPE",

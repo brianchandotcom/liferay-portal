@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -31,6 +32,7 @@ import com.liferay.portal.verify.model.AssetTagVerifiableModel;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.junit.Assert;
@@ -76,7 +78,21 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				});
 		}
 		catch (Exception e) {
-			_verifyException("testVerifyModelWithUnknownPKColumnName", e);
+			_verifyException(
+				e,
+				HashMapBuilder.put(
+					DBType.DB2, "DB2 SQL Error: SQLCODE="
+				).put(
+					DBType.HYPERSONIC,
+					"user lacks privilege or object not found:"
+				).put(
+					DBType.ORACLE, "ORA-00904: \"UNKNOWN\": invalid identifier"
+				).put(
+					DBType.POSTGRESQL,
+					"ERROR: column \"unknown\" does not exist"
+				).put(
+					DBType.SYBASE, "Invalid column name 'Unknown'."
+				).build());
 		}
 	}
 
@@ -108,7 +124,24 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		}
 		catch (Exception e) {
 			_verifyException(
-				"testVerifyParallelUnknownModelWithUnknownPKColumnName", e);
+				e,
+				HashMapBuilder.put(
+					DBType.DB2, "DB2 SQL Error: SQLCODE="
+				).put(
+					DBType.HYPERSONIC,
+					"user lacks privilege or object not found:"
+				).put(
+					DBType.MARIADB, "Table "
+				).put(
+					DBType.MYSQL, "Table "
+				).put(
+					DBType.ORACLE, "ORA-00942: table or view does not exist"
+				).put(
+					DBType.POSTGRESQL,
+					"ERROR: relation \"unknown\" does not exist"
+				).put(
+					DBType.SYBASE, "Unknown not found."
+				).build());
 		}
 	}
 
@@ -132,7 +165,24 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		}
 		catch (Exception e) {
 			_verifyException(
-				"testVerifyUnknownModelWithUnknownPKColumnName", e);
+				e,
+				HashMapBuilder.put(
+					DBType.DB2, "DB2 SQL Error: SQLCODE="
+				).put(
+					DBType.HYPERSONIC,
+					"user lacks privilege or object not found:"
+				).put(
+					DBType.MARIADB, "Table "
+				).put(
+					DBType.MYSQL, "Table "
+				).put(
+					DBType.ORACLE, "ORA-00942: table or view does not exist"
+				).put(
+					DBType.POSTGRESQL,
+					"ERROR: relation \"unknown\" does not exist"
+				).put(
+					DBType.SYBASE, "Unknown not found."
+				).build());
 		}
 	}
 
@@ -141,58 +191,16 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		return _verifyUUID;
 	}
 
-	private static void _verifyException(String methodName, Exception e) {
-		String message = e.getMessage();
+	private static void _verifyException(
+		Exception e, Map<DBType, String> expectedMessages) {
 
 		DB db = DBManagerUtil.getDB();
 
 		DBType dbType = db.getDBType();
 
-		String expectedMessagePrefix = "";
+		String expectedMessagePrefix = expectedMessages.get(dbType);
 
-		if (methodName.equals("testVerifyModelWithUnknownPKColumnName")) {
-			if (dbType == DBType.DB2) {
-				expectedMessagePrefix = "DB2 SQL Error: SQLCODE=";
-			}
-			else if (dbType == DBType.HYPERSONIC) {
-				expectedMessagePrefix =
-					"user lacks privilege or object not found:";
-			}
-			else if (dbType == DBType.ORACLE) {
-				expectedMessagePrefix =
-					"ORA-00904: \"UNKNOWN\": invalid identifie";
-			}
-			else if (dbType == DBType.POSTGRESQL) {
-				expectedMessagePrefix =
-					"ERROR: column \"unknown\" does not exist";
-			}
-			else {
-				expectedMessagePrefix = "Invalid column name 'Unknown";
-			}
-		}
-		else {
-			if (dbType == DBType.DB2) {
-				expectedMessagePrefix = "DB2 SQL Error: SQLCODE=";
-			}
-			else if (dbType == DBType.HYPERSONIC) {
-				expectedMessagePrefix =
-					"user lacks privilege or object not found:";
-			}
-			else if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
-				expectedMessagePrefix = "Table ";
-			}
-			else if (dbType == DBType.ORACLE) {
-				expectedMessagePrefix =
-					"ORA-00942: table or view does not exist";
-			}
-			else if (dbType == DBType.POSTGRESQL) {
-				expectedMessagePrefix =
-					"ERROR: relation \"unknown\" does not exist";
-			}
-			else {
-				expectedMessagePrefix = "Unknown not found.";
-			}
-		}
+		String message = e.getMessage();
 
 		Assert.assertTrue(
 			message + " does not start " + expectedMessagePrefix,

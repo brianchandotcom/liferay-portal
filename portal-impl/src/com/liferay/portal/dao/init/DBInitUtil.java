@@ -149,6 +149,8 @@ public class DBInitUtil {
 
 			if (!rs.next()) {
 				_addReleaseInfo(connection);
+
+				StartupHelperUtil.setDbNew(true);
 			}
 
 			return true;

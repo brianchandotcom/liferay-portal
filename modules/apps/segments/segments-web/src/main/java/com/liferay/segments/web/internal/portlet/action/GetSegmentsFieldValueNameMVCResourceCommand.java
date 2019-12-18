@@ -14,6 +14,9 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -22,8 +25,7 @@ import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizerRegistry;
 
-import java.io.PrintWriter;
-
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.portlet.ResourceRequest;
@@ -52,31 +54,41 @@ public class GetSegmentsFieldValueNameMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		PrintWriter printWriter = resourceResponse.getWriter();
-
-		printWriter.write(getText(resourceRequest, resourceResponse));
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			getFieldValueNameJSONObject(
+				ParamUtil.getString(resourceRequest, "entityName"),
+				ParamUtil.getString(resourceRequest, "fieldName"),
+				ParamUtil.getString(resourceRequest, "fieldValue"),
+				_portal.getLocale(resourceRequest)));
 	}
 
-	protected String getText(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+	protected JSONObject getFieldValueNameJSONObject(
+		String entityName, String fieldName, String fieldValue, Locale locale) {
 
-		String entityName = ParamUtil.getString(resourceRequest, "entityName");
-		String fieldName = ParamUtil.getString(resourceRequest, "fieldName");
-		String fieldValue = ParamUtil.getString(resourceRequest, "fieldValue");
+		Optional<String> fieldValueNameOptional = _getFieldValueName(
+			entityName, fieldName, fieldValue, locale);
+
+		return JSONUtil.put(
+			"fieldValueName", fieldValueNameOptional.orElse(null));
+	}
+
+	private Optional<String> _getFieldValueName(
+		String entityName, String fieldName, String fieldValue, Locale locale) {
 
 		Optional<SegmentsFieldCustomizer> segmentFieldCustomizerOptional =
 			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizerOptional(
 				entityName, fieldName);
 
 		if (!segmentFieldCustomizerOptional.isPresent()) {
-			return fieldValue;
+			return Optional.empty();
 		}
 
 		SegmentsFieldCustomizer segmentsFieldCustomizer =
 			segmentFieldCustomizerOptional.get();
 
-		return segmentsFieldCustomizer.getFieldValueName(
-			fieldValue, _portal.getLocale(resourceRequest));
+		return Optional.ofNullable(
+			segmentsFieldCustomizer.getFieldValueName(fieldValue, locale));
 	}
 
 	@Reference

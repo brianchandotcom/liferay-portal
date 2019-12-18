@@ -144,7 +144,7 @@ public class MasterLayoutVerticalCard
 	public String getSubtitle() {
 		int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 			_themeDisplay.getScopeGroupId(),
-			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			_layoutPageTemplateEntry.getPlid());
 
 		return LanguageUtil.format(
 			_httpServletRequest, "used-in-x-pages", layoutsCount);

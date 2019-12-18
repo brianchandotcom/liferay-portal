@@ -14,27 +14,28 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.service.base.CompanyInfoLocalServiceBaseImpl;
 
 /**
- * The implementation of the company info local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.kernel.service.CompanyInfoLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
+ * Provides the local service for adding, checking, and updating company infos.
+ * Each company info refers to a separate portal instance (company).
  *
  * @author Brian Wing Shun Chan
- * @see CompanyInfoLocalServiceBaseImpl
+ * @author Alberto Chaparo
  */
 public class CompanyInfoLocalServiceImpl
 	extends CompanyInfoLocalServiceBaseImpl {
 
 	/**
-	 * NOTE FOR DEVELOPERS:
+	 * Returns the company info with the companyId
 	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.kernel.service.CompanyInfoLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.CompanyInfoLocalServiceUtil</code>.
+	 * @param companyId the company ID
+	 * @return the matching company info, or <code>null</code> if a matching
+	 * 			company info could not be found
 	 */
+	public CompanyInfo fetchByCompanyId(long companyId) {
+		return companyInfoPersistence.fetchByCompanyId(companyId);
+	}
+
 }

@@ -179,7 +179,7 @@ public class AcceptLanguageContextProviderTest {
 		catch (Exception e) {
 			Assert.assertEquals(ClientErrorException.class, e.getClass());
 			Assert.assertEquals(
-				"No available locale matches the accepted languages: es-ES",
+				"No available locale matches the accepted languages: es-es",
 				e.getMessage());
 		}
 	}

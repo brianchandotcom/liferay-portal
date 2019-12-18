@@ -69,9 +69,13 @@ buildChangelogs {
 					publishDate = matcher.group(2)
 					ticket = matcher.group(3)
 
-					commitInfo = commitInfo + """\
-						|
-						|- [${ticket}]: ${matcher.group(4).trim()} (${matcher.group(1).substring(0, 10)})""".stripMargin()
+					String commitTitle = ""
+
+					if (matcher.group(4) ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
+						commitInfo = commitInfo + """\
+							|
+							|- [${ticket}]: ${matcher.group(4).trim()} (${matcher.group(1).substring(0, 10)})""".stripMargin()
+					}
 				}
 
 				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
@@ -86,11 +90,16 @@ buildChangelogs {
 				}
 			}
 
-			if (commitInfo.length() > 0) {
+			if (commitInfo.length() > 0 || dependencies.length() > 0) {
 				text += """\
 					|
 					|
-					|## ${version} - ${publishDate}
+					|## ${version} - ${publishDate}""".stripMargin()
+			}
+
+			if (commitInfo.length() > 0) {
+				text += """\
+					|
 					|
 					|### Commits""".stripMargin()
 
@@ -105,6 +114,7 @@ buildChangelogs {
 
 				text += dependencies
 			}
+
 		}
 
 		File changelogMarkdownFile = file("sdk/" + projectName + "/CHANGELOG.markdown")

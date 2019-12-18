@@ -450,7 +450,7 @@ definition {
 			siteNameURL = "test-site-name");
 	}
 
-	@description = "This test ensures that OG shows default translated language when switching SEO unsaved translations."
+	@description = "This test ensures that OG shows default translated language when switching to unsaved translations."
 	@priority = "5"
 	test ViewUntranslatedLanguage {
 		property test.name.skip.portal.instance = "OpenGraphPreview#ViewUntranslatedLanguage";

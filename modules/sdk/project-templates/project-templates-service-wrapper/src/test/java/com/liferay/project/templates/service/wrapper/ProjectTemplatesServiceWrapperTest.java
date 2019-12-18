@@ -144,7 +144,7 @@ public class ProjectTemplatesServiceWrapperTest
 	public void testBuildTemplateServiceWrapperInWorkspace() throws Exception {
 		File workspaceDir = buildWorkspace(temporaryFolder);
 
-		enableTargetPlatformInWorkspace(workspaceDir);
+		enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
 
 		File modulesDir = new File(workspaceDir, "modules");
 

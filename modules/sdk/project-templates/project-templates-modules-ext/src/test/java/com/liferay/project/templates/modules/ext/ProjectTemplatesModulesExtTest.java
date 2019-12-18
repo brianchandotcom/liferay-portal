@@ -102,7 +102,7 @@ public class ProjectTemplatesModulesExtTest
 	public void testBuildTemplateModuleExtInWorkspace() throws Exception {
 		File workspaceDir = buildWorkspace(temporaryFolder);
 
-		enableTargetPlatformInWorkspace(workspaceDir);
+		enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
 
 		File workspaceProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "ext"), "modules-ext", "loginExt",
@@ -125,7 +125,7 @@ public class ProjectTemplatesModulesExtTest
 
 			testExists(
 				workspaceProjectDir,
-				"build/libs/com.liferay.login.web-4.0.8.ext.jar");
+				"build/libs/com.liferay.login.web-4.0.20.ext.jar");
 		}
 	}
 

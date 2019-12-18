@@ -477,12 +477,6 @@ public interface BaseProjectTemplatesTestCase {
 		transformer.transform(domSource, new StreamResult(xmlFile));
 	}
 
-	public default File enableTargetPlatformInWorkspace(File workspaceDir)
-		throws IOException {
-
-		return enableTargetPlatformInWorkspace(workspaceDir, "7.2.0");
-	}
-
 	public default File enableTargetPlatformInWorkspace(
 			File workspaceDir, String liferayVersion)
 		throws IOException {
@@ -732,7 +726,17 @@ public interface BaseProjectTemplatesTestCase {
 
 		File workspaceDir = buildWorkspace(temporaryFolder);
 
-		enableTargetPlatformInWorkspace(workspaceDir);
+		List<String> argsList = Arrays.asList(args);
+
+		if (argsList.contains("7.0.6")) {
+			enableTargetPlatformInWorkspace(workspaceDir, "7.0.6");
+		}
+		else if (argsList.contains("7.1.3")) {
+			enableTargetPlatformInWorkspace(workspaceDir, "7.1.3");
+		}
+		else {
+			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
+		}
 
 		File modulesDir = new File(workspaceDir, "modules");
 

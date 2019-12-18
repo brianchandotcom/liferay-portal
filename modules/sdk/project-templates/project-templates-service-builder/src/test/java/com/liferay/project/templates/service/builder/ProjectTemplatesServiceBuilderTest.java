@@ -510,7 +510,7 @@ public class ProjectTemplatesServiceBuilderTest
 		File workspaceDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "workspace");
 
-		enableTargetPlatformInWorkspace(workspaceDir);
+		enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
 
 		File modulesDir = new File(workspaceDir, "modules");
 

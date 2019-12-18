@@ -243,7 +243,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"layout-template", "foo-bar", "--liferay-version", "7.0");
+			"layout-template", "foo-bar", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir,
@@ -256,7 +256,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"layout-template", "foo-bar", "--liferay-version", "7.1");
+			"layout-template", "foo-bar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir,
@@ -269,7 +269,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"layout-template", "foo-bar", "--liferay-version", "7.2");
+			"layout-template", "foo-bar", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir,
@@ -280,7 +280,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateContentDTDVersionWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "foo-bar", "--liferay-version", "7.0");
+			"war-hook", "foo-bar", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
@@ -290,7 +290,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateContentDTDVersionWarHook71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "foo-bar", "--liferay-version", "7.1");
+			"war-hook", "foo-bar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
@@ -300,7 +300,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateContentDTDVersionWarHook72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "foo-bar", "--liferay-version", "7.2");
+			"war-hook", "foo-bar", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
@@ -312,7 +312,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.0");
+			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -328,7 +328,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.1");
+			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -344,7 +344,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.2");
+			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
@@ -358,7 +358,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateContentTargetingReport70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-report", "foo-bar", "--liferay-version", "7.0");
+			"content-targeting-report", "foo-bar", "--liferay-version",
+			"7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -369,7 +370,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "content-targeting-report", "foo-bar", "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -377,7 +378,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateContentTargetingReport71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-report", "foo-bar", "--liferay-version", "7.1");
+			"content-targeting-report", "foo-bar", "--liferay-version",
+			"7.1.3");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -388,7 +390,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "content-targeting-report", "foo-bar", "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -399,7 +401,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateContentTargetingReport72() throws Exception {
 		_buildTemplateWithGradle(
-			"content-targeting-report", "foo-bar", "--liferay-version", "7.2");
+			"content-targeting-report", "foo-bar", "--liferay-version",
+			"7.2.1");
 	}
 
 	@Test
@@ -408,14 +411,14 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-report", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1",
+			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1.3",
 			"--dependency-management-enabled");
 	}
 
 	@Test
 	public void testBuildTemplateContentTargetingRule70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-rule", "foo-bar", "--liferay-version", "7.0");
+			"content-targeting-rule", "foo-bar", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -424,7 +427,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "content-targeting-rule", "foo-bar", "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -432,7 +435,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateContentTargetingRule71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"content-targeting-rule", "foo-bar", "--liferay-version", "7.1");
+			"content-targeting-rule", "foo-bar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -441,7 +444,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "content-targeting-rule", "foo-bar", "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -452,7 +455,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateContentTargetingRule72() throws Exception {
 		_buildTemplateWithGradle(
-			"content-targeting-rule", "foo-bar", "--liferay-version", "7.2");
+			"content-targeting-rule", "foo-bar", "--liferay-version", "7.2.1");
 	}
 
 	@Test
@@ -461,7 +464,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-rule", "foo-bar", "build/libs/foo.bar-1.0.0.jar",
-			"--liferay-version", "7.1", "--dependency-management-enabled");
+			"--liferay-version", "7.1.3", "--dependency-management-enabled");
 	}
 
 	@Test
@@ -479,7 +482,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "content-targeting-tracking-action", "foo-bar",
 			"com.test", mavenExecutor, "-DclassName=FooBar",
-			"-Dpackage=foo.bar", "-DliferayVersion=7.0");
+			"-Dpackage=foo.bar", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -499,7 +502,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "content-targeting-tracking-action", "foo-bar",
 			"com.test", mavenExecutor, "-DclassName=FooBar",
-			"-Dpackage=foo.bar", "-DliferayVersion=7.1");
+			"-Dpackage=foo.bar", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -522,14 +525,14 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		_testBuildTemplateWithWorkspace(
 			"content-targeting-tracking-action", "foo-bar",
-			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1",
+			"build/libs/foo.bar-1.0.0.jar", "--liferay-version", "7.1.3",
 			"--dependency-management-enabled");
 	}
 
 	@Test
 	public void testBuildTemplateControlMenuEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"control-menu-entry", "foo-bar", "--liferay-version", "7.0");
+			"control-menu-entry", "foo-bar", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -547,7 +550,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "control-menu-entry", "foo-bar", "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -555,7 +558,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateControlMenuEntry71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"control-menu-entry", "foo-bar", "--liferay-version", "7.1");
+			"control-menu-entry", "foo-bar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -564,7 +567,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "control-menu-entry", "foo-bar", "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -575,7 +578,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateControlMenuEntry72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"control-menu-entry", "foo-bar", "--liferay-version", "7.2");
+			"control-menu-entry", "foo-bar", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -584,7 +587,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "control-menu-entry", "foo-bar", "com.test",
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -604,7 +607,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateFormField70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"form-field", "foobar", "--liferay-version", "7.0");
+			"form-field", "foobar", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: foobar",
@@ -647,7 +650,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "form-field", "foobar", "com.test", mavenExecutor,
-			"-DclassName=Foobar", "-Dpackage=foobar", "-DliferayVersion=7.0");
+			"-DclassName=Foobar", "-Dpackage=foobar", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -656,7 +659,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateFormField71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"form-field", "foobar", "--liferay-version", "7.1");
+			"form-field", "foobar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: foobar",
@@ -711,7 +714,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "form-field", "foobar", "com.test", mavenExecutor,
-			"-DclassName=Foobar", "-Dpackage=foobar", "-DliferayVersion=7.1");
+			"-DclassName=Foobar", "-Dpackage=foobar", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -723,7 +726,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateFormField71WithHyphen() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"form-field", "foo-bar", "--liferay-version", "7.1");
+			"form-field", "foo-bar", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-Name: foo-bar",
@@ -778,7 +781,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "form-field", "foo-bar", "com.test", mavenExecutor,
-			"-DclassName=FooBar", "-Dpackage=foo.bar", "-DliferayVersion=7.1");
+			"-DclassName=FooBar", "-Dpackage=foo.bar",
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -790,7 +794,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateFormFieldInWorkspace() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"form-field", "foobar", "build/libs/foobar-1.0.0.jar",
-			"--liferay-version", "7.1", "--dependency-management-enabled");
+			"--liferay-version", "7.1.3", "--dependency-management-enabled");
 	}
 
 	@Test
@@ -819,12 +823,30 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
-	public void testBuildTemplateFreeMarkerPortletInWorkspace()
+	public void testBuildTemplateFreeMarkerPortletInWorkspace70()
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
 			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar",
-			"--dependency-management-enabled");
+			"--dependency-management-enabled", "--liferay-version", "7.0.6");
+	}
+
+	@Test
+	public void testBuildTemplateFreeMarkerPortletInWorkspace71()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateFreeMarkerPortletInWorkspace72()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"freemarker-portlet", "foo", "build/libs/foo-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.2.1");
 	}
 
 	@Test
@@ -1006,7 +1028,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateLiferayVersionValid70() throws Exception {
 		_buildTemplateWithGradle(
-			"mvc-portlet", "test", "--liferay-version", "7.0");
+			"mvc-portlet", "test", "--liferay-version", "7.0.6");
 	}
 
 	@Test
@@ -1037,10 +1059,24 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
-	public void testBuildTemplateMVCPortletInWorkspace() throws Exception {
+	public void testBuildTemplateMVCPortletInWorkspace70() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar",
-			"--dependency-management-enabled");
+			"--dependency-management-enabled", "--liferay-version", "7.0.6");
+	}
+
+	@Test
+	public void testBuildTemplateMVCPortletInWorkspace71() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateMVCPortletInWorkspace72() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"mvc-portlet", "foo", "build/libs/foo-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.2.1");
 	}
 
 	@Test
@@ -1122,7 +1158,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateNAPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-angular-portlet", "angular-dependency-management",
-			"--dependency-management-enabled", "--liferay-version", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
@@ -1186,7 +1222,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateNpmReactPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-react-portlet", "react-portlet-dependency-management",
-			"--dependency-management-enabled", "--liferay-version", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
@@ -1229,7 +1265,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateNpmVuejsPortletWithBOM() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"npm-vuejs-portlet", "vuejs-portlet-dependency-management",
-			"--dependency-management-enabled", "--liferay-version", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
@@ -1265,7 +1301,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplatePanelApp70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
-			"--liferay-version", "7.0");
+			"--liferay-version", "7.0.6");
 
 		testExists(
 			gradleProjectDir,
@@ -1299,7 +1335,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "panel-app", "gradle.test", "com.test",
 			mavenExecutor, "-DclassName=Foo", "-Dpackage=gradle.test",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
@@ -1315,7 +1351,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplatePanelApp71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1.3");
 
 		testExists(
 			gradleProjectDir,
@@ -1328,7 +1364,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "panel-app", "gradle.test", "com.test",
 			mavenExecutor, "-DclassName=Foo", "-Dpackage=gradle.test",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1347,7 +1383,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplatePanelApp72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"panel-app", "gradle.test", "--class-name", "Foo",
-			"--liferay-version", "7.2");
+			"--liferay-version", "7.2.1");
 
 		testExists(
 			gradleProjectDir,
@@ -1360,7 +1396,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "panel-app", "gradle.test", "com.test",
 			mavenExecutor, "-DclassName=Foo", "-Dpackage=gradle.test",
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1376,18 +1412,24 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
-	public void testBuildTemplatePanelAppInWorkspace() throws Exception {
+	public void testBuildTemplatePanelAppInWorkspace70() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar",
-			"--dependency-management-enabled");
+			"--dependency-management-enabled", "--liferay-version", "7.0.6");
 	}
 
 	@Test
-	public void testBuildTemplatePorletProviderInWorkspace() throws Exception {
+	public void testBuildTemplatePanelAppInWorkspace71() throws Exception {
 		_testBuildTemplateWithWorkspace(
-			"portlet-provider", "provider.test",
-			"build/libs/provider.test-1.0.0.jar",
-			"--dependency-management-enabled");
+			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplatePanelAppInWorkspace72() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"panel-app", "gradle.test", "build/libs/gradle.test-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.2.1");
 	}
 
 	@Test
@@ -1413,7 +1455,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet", "foo.test", "com.test", mavenExecutor,
-			"-DclassName=Foo", "-Dpackage=foo.test", "-DliferayVersion=7.0");
+			"-DclassName=Foo", "-Dpackage=foo.test", "-DliferayVersion=7.0.6");
 
 		testNotContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1444,7 +1486,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet", "foo.test", "com.test", mavenExecutor,
-			"-DclassName=Foo", "-Dpackage=foo.test", "-DliferayVersion=7.1");
+			"-DclassName=Foo", "-Dpackage=foo.test", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1475,7 +1517,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet", "foo.test", "com.test", mavenExecutor,
-			"-DclassName=Foo", "-Dpackage=foo.test", "-DliferayVersion=7.2");
+			"-DclassName=Foo", "-Dpackage=foo.test", "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1487,7 +1529,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplatePortletConfigurationIcon70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
-			"blade.test", "--liferay-version", "7.0");
+			"blade.test", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1505,7 +1547,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-configuration-icon", "icontest",
 			"com.test", mavenExecutor, "-DclassName=Icontest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.0");
+			"-Dpackage=blade.test", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -1514,7 +1556,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplatePortletConfigurationIcon71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
-			"blade.test", "--liferay-version", "7.1");
+			"blade.test", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -1524,7 +1566,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-configuration-icon", "icontest",
 			"com.test", mavenExecutor, "-DclassName=Icontest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.1");
+			"-Dpackage=blade.test", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1536,7 +1578,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplatePortletConfigurationIcon72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-configuration-icon", "icontest", "--package-name",
-			"blade.test", "--liferay-version", "7.2");
+			"blade.test", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -1546,7 +1588,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-configuration-icon", "icontest",
 			"com.test", mavenExecutor, "-DclassName=Icontest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.2");
+			"-Dpackage=blade.test", "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1574,7 +1616,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplatePortletProvider70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-provider", "provider.test", "--liferay-version", "7.0");
+			"portlet-provider", "provider.test", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -1607,7 +1649,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-provider", "provider.test", "com.test",
 			mavenExecutor, "-DclassName=ProviderTest",
-			"-Dpackage=provider.test", "-DliferayVersion=7.0");
+			"-Dpackage=provider.test", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
@@ -1622,7 +1664,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplatePortletProvider71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-provider", "provider.test", "--liferay-version", "7.1");
+			"portlet-provider", "provider.test", "--liferay-version", "7.1.3");
 
 		testExists(
 			gradleProjectDir,
@@ -1635,7 +1677,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-provider", "provider.test", "com.test",
 			mavenExecutor, "-DclassName=ProviderTest",
-			"-Dpackage=provider.test", "-DliferayVersion=7.1");
+			"-Dpackage=provider.test", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1653,7 +1695,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplatePortletProvider72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"portlet-provider", "provider.test", "--liferay-version", "7.2");
+			"portlet-provider", "provider.test", "--liferay-version", "7.2.1");
 
 		testExists(
 			gradleProjectDir,
@@ -1666,7 +1708,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-provider", "provider.test", "com.test",
 			mavenExecutor, "-DclassName=ProviderTest",
-			"-Dpackage=provider.test", "-DliferayVersion=7.2");
+			"-Dpackage=provider.test", "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1682,12 +1724,42 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	public void testBuildTemplatePortletProviderInWorkspace70()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"portlet-provider", "provider.test",
+			"build/libs/provider.test-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.0.6");
+	}
+
+	@Test
+	public void testBuildTemplatePortletProviderInWorkspace71()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"portlet-provider", "provider.test",
+			"build/libs/provider.test-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplatePortletProviderInWorkspace72()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"portlet-provider", "provider.test",
+			"build/libs/provider.test-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.2.1");
+	}
+
+	@Test
 	public void testBuildTemplatePortletToolbarContributor70()
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-toolbar-contributor", "toolbartest", "--package-name",
-			"blade.test", "--liferay-version", "7.0");
+			"blade.test", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1705,7 +1777,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-toolbar-contributor", "toolbartest",
 			"com.test", mavenExecutor, "-DclassName=Toolbartest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.0");
+			"-Dpackage=blade.test", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -1716,7 +1788,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-toolbar-contributor", "toolbartest", "--package-name",
-			"blade.test", "--liferay-version", "7.1");
+			"blade.test", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -1726,7 +1798,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-toolbar-contributor", "toolbartest",
 			"com.test", mavenExecutor, "-DclassName=Toolbartest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.1");
+			"-Dpackage=blade.test", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1740,7 +1812,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-toolbar-contributor", "toolbartest", "--package-name",
-			"blade.test", "--liferay-version", "7.2");
+			"blade.test", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -1750,7 +1822,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-toolbar-contributor", "toolbartest",
 			"com.test", mavenExecutor, "-DclassName=Toolbartest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.2");
+			"-Dpackage=blade.test", "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -1793,7 +1865,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateRest70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "my-rest", "--liferay-version", "7.0");
+			"rest", "my-rest", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1822,7 +1894,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "rest", "my-rest", "com.test", mavenExecutor,
-			"-DclassName=MyRest", "-Dpackage=my.rest", "-DliferayVersion=7.0");
+			"-DclassName=MyRest", "-Dpackage=my.rest",
+			"-DliferayVersion=7.0.6");
 
 		testContains(
 			mavenProjectDir,
@@ -1841,7 +1914,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateRest71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "my-rest", "--liferay-version", "7.1");
+			"rest", "my-rest", "--liferay-version", "7.1.3");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1867,7 +1940,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "rest", "my-rest", "com.test", mavenExecutor,
-			"-DclassName=MyRest", "-Dpackage=my.rest", "-DliferayVersion=7.1");
+			"-DclassName=MyRest", "-Dpackage=my.rest",
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir,
@@ -1886,7 +1960,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateRest72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"rest", "my-rest", "--liferay-version", "7.2");
+			"rest", "my-rest", "--liferay-version", "7.2.1");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1912,7 +1986,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "rest", "my-rest", "com.test", mavenExecutor,
-			"-DclassName=MyRest", "-Dpackage=my.rest", "-DliferayVersion=7.2");
+			"-DclassName=MyRest", "-Dpackage=my.rest",
+			"-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir,
@@ -1932,21 +2007,21 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateRestInWorkspace70() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
-			"--dependency-management-enabled", "--liferay-version", "7.0");
+			"--dependency-management-enabled", "--liferay-version", "7.0.6");
 	}
 
 	@Test
 	public void testBuildTemplateRestInWorkspace71() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
-			"--dependency-management-enabled", "--liferay-version", "7.1");
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
 	}
 
 	@Test
 	public void testBuildTemplateRestInWorkspace72() throws Exception {
 		_testBuildTemplateWithWorkspace(
 			"rest", "my-rest", "build/libs/my.rest-1.0.0.jar",
-			"--dependency-management-enabled", "--liferay-version", "7.2");
+			"--dependency-management-enabled", "--liferay-version", "7.2.0");
 	}
 
 	@Ignore
@@ -1954,7 +2029,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateSimulationPanelEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
-			"test.simulator", "--liferay-version", "7.0");
+			"test.simulator", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
@@ -1972,7 +2047,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "simulation-panel-entry", "simulator", "com.test",
 			mavenExecutor, "-DclassName=Simulator", "-Dpackage=test.simulator",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -1981,7 +2056,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateSimulationPanelEntry71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
-			"test.simulator", "--liferay-version", "7.1");
+			"test.simulator", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -1990,7 +2065,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "simulation-panel-entry", "simulator", "com.test",
 			mavenExecutor, "-DclassName=Simulator", "-Dpackage=test.simulator",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -2002,7 +2077,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	public void testBuildTemplateSimulationPanelEntry72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",
-			"test.simulator", "--liferay-version", "7.2");
+			"test.simulator", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2011,7 +2086,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "simulation-panel-entry", "simulator", "com.test",
 			mavenExecutor, "-DclassName=Simulator", "-Dpackage=test.simulator",
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -2020,27 +2095,47 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
-	public void testBuildTemplateSimulationPanelEntryInWorkspace()
+	public void testBuildTemplateSimulationPanelEntryInWorkspace70()
 		throws Exception {
 
 		_testBuildTemplateWithWorkspace(
 			"simulation-panel-entry", "test.simulator",
 			"build/libs/test.simulator-1.0.0.jar",
-			"--dependency-management-enabled");
+			"--dependency-management-enabled", "--liferay-version", "7.0.6");
+	}
+
+	@Test
+	public void testBuildTemplateSimulationPanelEntryInWorkspace71()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"simulation-panel-entry", "test.simulator",
+			"build/libs/test.simulator-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateSimulationPanelEntryInWorkspace72()
+		throws Exception {
+
+		_testBuildTemplateWithWorkspace(
+			"simulation-panel-entry", "test.simulator",
+			"build/libs/test.simulator-1.0.0.jar",
+			"--dependency-management-enabled", "--liferay-version", "7.2.1");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateSocialBookmark70() throws Exception {
 		_buildTemplateWithGradle(
 			"social-bookmark", "foo", "--package-name", "com.liferay.test",
-			"--liferay-version", "7.0");
+			"--liferay-version", "7.0.6");
 	}
 
 	@Test
 	public void testBuildTemplateSocialBookmark71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"social-bookmark", "foo", "--package-name", "com.liferay.test",
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1.3");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(gradleProjectDir, "build.gradle");
@@ -2071,7 +2166,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "social-bookmark", "foo", "com.test",
 			mavenExecutor, "-DclassName=Foo", "-Dpackage=com.liferay.test",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -2101,7 +2196,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "template-context-contributor", "blade-test",
 			"com.test", mavenExecutor, "-DclassName=BladeTest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.0");
+			"-Dpackage=blade.test", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -2124,7 +2219,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "template-context-contributor", "blade-test",
 			"com.test", mavenExecutor, "-DclassName=BladeTest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.1");
+			"-Dpackage=blade.test", "-DliferayVersion=7.1.3");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -2147,7 +2242,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "template-context-contributor", "blade-test",
 			"com.test", mavenExecutor, "-DclassName=BladeTest",
-			"-Dpackage=blade.test", "-DliferayVersion=7.2");
+			"-Dpackage=blade.test", "-DliferayVersion=7.2.1");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -2166,7 +2261,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateTheme70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme", "theme-test", "--liferay-version", "7.0");
+			"theme", "theme-test", "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2179,7 +2274,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "theme", "theme-test", "com.test", mavenExecutor,
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		testContains(
 			mavenProjectDir, "pom.xml",
@@ -2192,7 +2287,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateTheme71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme", "theme-test", "--liferay-version", "7.1");
+			"theme", "theme-test", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2205,7 +2300,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "theme", "theme-test", "com.test", mavenExecutor,
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "pom.xml",
@@ -2218,7 +2313,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateTheme72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme", "theme-test", "--liferay-version", "7.2");
+			"theme", "theme-test", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2231,7 +2326,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "theme", "theme-test", "com.test", mavenExecutor,
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "pom.xml",
@@ -2310,7 +2405,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "WarHook", "--liferay-version", "7.0");
+			"war-hook", "WarHook", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "src/main/resources/portal.properties");
 		testExists(
@@ -2333,7 +2428,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-hook", "WarHook", "warhook", mavenExecutor,
-			"-DclassName=WarHook", "-Dpackage=warhook", "-DliferayVersion=7.0");
+			"-DclassName=WarHook", "-Dpackage=warhook",
+			"-DliferayVersion=7.0.6");
 
 		testContains(mavenProjectDir, "pom.xml");
 
@@ -2343,7 +2439,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWarHook71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "WarHook", "--liferay-version", "7.1");
+			"war-hook", "WarHook", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2351,7 +2447,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-hook", "WarHook", "warhook", mavenExecutor,
-			"-DclassName=WarHook", "-Dpackage=warhook", "-DliferayVersion=7.1");
+			"-DclassName=WarHook", "-Dpackage=warhook",
+			"-DliferayVersion=7.1.3");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -2359,7 +2456,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWarHook72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-hook", "WarHook", "--liferay-version", "7.2");
+			"war-hook", "WarHook", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2367,20 +2464,31 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-hook", "WarHook", "warhook", mavenExecutor,
-			"-DclassName=WarHook", "-Dpackage=warhook", "-DliferayVersion=7.2");
+			"-DclassName=WarHook", "-Dpackage=warhook",
+			"-DliferayVersion=7.2.1");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
 	@Test
-	public void testBuildTemplateWarHookInWorkspace() throws Exception {
-		_testBuildTemplateProjectWarInWorkspace("war-hook", "WarHook");
+	public void testBuildTemplateWarHookInWorkspace70() throws Exception {
+		_testBuildTemplateProjectWarInWorkspace("war-hook", "WarHook", "7.0.6");
+	}
+
+	@Test
+	public void testBuildTemplateWarHookInWorkspace71() throws Exception {
+		_testBuildTemplateProjectWarInWorkspace("war-hook", "WarHook", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateWarHookInWorkspace72() throws Exception {
+		_testBuildTemplateProjectWarInWorkspace("war-hook", "WarHook", "7.2.1");
 	}
 
 	@Test
 	public void testBuildTemplateWarMVCPortlet70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.0");
+			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "src/main/webapp/init.jsp");
 		testExists(gradleProjectDir, "src/main/webapp/view.jsp");
@@ -2398,7 +2506,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-mvc-portlet", "WarMVCPortlet",
 			"warmvcportlet", mavenExecutor, "-DclassName=WarMVCPortlet",
-			"-Dpackage=WarMVCPortlet", "-DliferayVersion=7.0");
+			"-Dpackage=WarMVCPortlet", "-DliferayVersion=7.0.6");
 
 		testContains(
 			mavenProjectDir, "pom.xml", "maven-war-plugin",
@@ -2410,7 +2518,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWarMVCPortlet71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.1");
+			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2419,7 +2527,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-mvc-portlet", "WarMVCPortlet",
 			"warmvcportlet", mavenExecutor, "-DclassName=WarMVCPortlet",
-			"-Dpackage=WarMVCPortlet", "-DliferayVersion=7.1");
+			"-Dpackage=WarMVCPortlet", "-DliferayVersion=7.1.3");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
@@ -2427,7 +2535,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWarMVCPortlet72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.2");
+			"war-mvc-portlet", "WarMVCPortlet", "--liferay-version", "7.2.1");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -2436,15 +2544,27 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-mvc-portlet", "WarMVCPortlet",
 			"warmvcportlet", mavenExecutor, "-DclassName=WarMVCPortlet",
-			"-Dpackage=WarMVCPortlet", "-DliferayVersion=7.2");
+			"-Dpackage=WarMVCPortlet", "-DliferayVersion=7.2.1");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
 	@Test
-	public void testBuildTemplateWarMVCPortletInWorkspace() throws Exception {
+	public void testBuildTemplateWarMVCPortletInWorkspace70() throws Exception {
 		_testBuildTemplateProjectWarInWorkspace(
-			"war-mvc-portlet", "WarMVCPortlet");
+			"war-mvc-portlet", "WarMVCPortlet", "7.0.6");
+	}
+
+	@Test
+	public void testBuildTemplateWarMVCPortletInWorkspace71() throws Exception {
+		_testBuildTemplateProjectWarInWorkspace(
+			"war-mvc-portlet", "WarMVCPortlet", "7.1.3");
+	}
+
+	@Test
+	public void testBuildTemplateWarMVCPortletInWorkspace72() throws Exception {
+		_testBuildTemplateProjectWarInWorkspace(
+			"war-mvc-portlet", "WarMVCPortlet", "7.2.1");
 	}
 
 	@Test
@@ -2651,7 +2771,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWorkspaceWith70() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.0");
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version",
+			"7.0.6");
 
 		testContains(
 			gradleWorkspaceProjectDir, "gradle.properties", true,
@@ -2665,7 +2786,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenWorkspaceProjectDir = buildTemplateWithMaven(
 			temporaryFolder, WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
-			mavenExecutor, "-DliferayVersion=7.0");
+			mavenExecutor, "-DliferayVersion=7.0.6");
 
 		testContains(
 			mavenWorkspaceProjectDir, "pom.xml",
@@ -2675,7 +2796,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWorkspaceWith71() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.1");
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version",
+			"7.1.3");
 
 		testContains(
 			gradleWorkspaceProjectDir, "gradle.properties", true,
@@ -2689,7 +2811,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenWorkspaceProjectDir = buildTemplateWithMaven(
 			temporaryFolder, WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
-			mavenExecutor, "-DliferayVersion=7.1");
+			mavenExecutor, "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenWorkspaceProjectDir, "pom.xml",
@@ -2699,7 +2821,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateWorkspaceWith72() throws Exception {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version", "7.2");
+			WorkspaceUtil.WORKSPACE, "withportlet", "--liferay-version",
+			"7.2.1");
 
 		testContains(
 			gradleWorkspaceProjectDir, "gradle.properties", true,
@@ -2713,7 +2836,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenWorkspaceProjectDir = buildTemplateWithMaven(
 			temporaryFolder, WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
-			mavenExecutor, "-DliferayVersion=7.2");
+			mavenExecutor, "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenWorkspaceProjectDir, "pom.xml",
@@ -3028,7 +3151,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.0");
+			template, name, "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -3046,7 +3169,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.0");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.0.6");
 
 		testContains(
 			mavenProjectDir, "package.json",
@@ -3071,7 +3194,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.1");
+			template, name, "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -3089,7 +3212,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.1");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3117,7 +3240,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.0");
+			template, name, "--liferay-version", "7.0.6");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -3134,7 +3257,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.0");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.0.6");
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);
@@ -3151,7 +3274,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, name, "--liferay-version", "7.1");
+			template, name, "--liferay-version", "7.1.3");
 
 		testContains(
 			gradleProjectDir, "build.gradle",
@@ -3168,7 +3291,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.1");
+			"-Dpackage=" + packageName, "-DliferayVersion=7.1.3");
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_addNpmrc(gradleProjectDir);
@@ -3185,7 +3308,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		try {
 			_buildTemplateWithGradle(
-				template, "Foo", "--liferay-version", "7.2");
+				template, "Foo", "--liferay-version", "7.2.1");
 		}
 		catch (IllegalArgumentException iae) {
 			String exception = iae.getMessage();
@@ -3196,7 +3319,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		_buildTemplateWithMaven(
 			template, "foo", "foo", "-DclassName=foo", "-Dpackage=foo",
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 	}
 
 	private File _testBuildTemplatePortlet70(
@@ -3205,7 +3328,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "foo", "--liferay-version", "7.0");
+			template, "foo", "--liferay-version", "7.0.6");
 
 		for (String resourceFileName : resourceFileNames) {
 			testExists(
@@ -3238,7 +3361,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo", "-Dpackage=foo",
-			"-DliferayVersion=7.0");
+			"-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
@@ -3258,7 +3381,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "foo", "--liferay-version", "7.1");
+			template, "foo", "--liferay-version", "7.1.3");
 
 		for (String resourceFileName : resourceFileNames) {
 			testExists(
@@ -3290,7 +3413,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo", "-Dpackage=foo",
-			"-DliferayVersion=7.1");
+			"-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3313,7 +3436,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "foo", "--liferay-version", "7.2");
+			template, "foo", "--liferay-version", "7.2.1");
 
 		for (String resourceFileName : resourceFileNames) {
 			testExists(
@@ -3345,7 +3468,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo", "-Dpackage=foo",
-			"-DliferayVersion=7.2");
+			"-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3412,7 +3535,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			template, "foo", "--package-name", "com.liferay.test",
-			"--liferay-version", "7.1");
+			"--liferay-version", "7.1.3");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3436,7 +3559,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo",
-			"-Dpackage=com.liferay.test", "-DliferayVersion=7.1");
+			"-Dpackage=com.liferay.test", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3460,7 +3583,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			template, "foo", "--package-name", "com.liferay.test",
-			"--liferay-version", "7.2");
+			"--liferay-version", "7.2.1");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3484,7 +3607,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "foo", "com.test", "-DclassName=Foo",
-			"-Dpackage=com.liferay.test", "-DliferayVersion=7.2");
+			"-Dpackage=com.liferay.test", "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3507,7 +3630,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet", "--liferay-version", "7.0");
+			template, "portlet", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3537,7 +3660,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet", "-DliferayVersion=7.0");
+			"-Dpackage=portlet", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
@@ -3557,7 +3680,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet", "--liferay-version", "7.1");
+			template, "portlet", "--liferay-version", "7.1.3");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3587,7 +3710,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet", "-DliferayVersion=7.1");
+			"-Dpackage=portlet", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3610,7 +3733,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet", "--liferay-version", "7.2");
+			template, "portlet", "--liferay-version", "7.2.1");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3640,7 +3763,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet", "-DliferayVersion=7.2");
+			"-Dpackage=portlet", "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3663,7 +3786,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet-portlet", "--liferay-version", "7.0");
+			template, "portlet-portlet", "--liferay-version", "7.0.6");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3693,7 +3816,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet-portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet.portlet", "-DliferayVersion=7.0");
+			"-Dpackage=portlet.portlet", "-DliferayVersion=7.0.6");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
@@ -3713,7 +3836,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet-portlet", "--liferay-version", "7.1");
+			template, "portlet-portlet", "--liferay-version", "7.1.3");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3743,7 +3866,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet-portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet.portlet", "-DliferayVersion=7.1");
+			"-Dpackage=portlet.portlet", "-DliferayVersion=7.1.3");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3766,7 +3889,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			template, "portlet-portlet", "--liferay-version", "7.2");
+			template, "portlet-portlet", "--liferay-version", "7.2.1");
 
 		testExists(gradleProjectDir, "bnd.bnd");
 		testExists(
@@ -3796,7 +3919,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, "portlet-portlet", "com.test", "-DclassName=Portlet",
-			"-Dpackage=portlet.portlet", "-DliferayVersion=7.2");
+			"-Dpackage=portlet.portlet", "-DliferayVersion=7.2.1");
 
 		testContains(
 			mavenProjectDir, "bnd.bnd", "-contract: JavaPortlet,JavaServlet");
@@ -3814,12 +3937,20 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	private void _testBuildTemplateProjectWarInWorkspace(
-			String template, String name)
+			String template, String name, String liferayVersion)
 		throws Exception {
 
 		File workspaceDir = buildWorkspace(temporaryFolder);
 
-		enableTargetPlatformInWorkspace(workspaceDir);
+		if (liferayVersion.equals("7.0.6")) {
+			enableTargetPlatformInWorkspace(workspaceDir, "7.0.6");
+		}
+		else if (liferayVersion.equals("7.1.3")) {
+			enableTargetPlatformInWorkspace(workspaceDir, "7.1.3");
+		}
+		else {
+			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
+		}
 
 		File warsDir = new File(workspaceDir, "wars");
 

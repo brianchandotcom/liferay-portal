@@ -271,8 +271,9 @@ public class UpgradeKaleoDefinitionVersionTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			"com.liferay.portal.workflow.kaleo.internal.upgrade." +
-				"KaleoServiceUpgrade");
+			registry.getServiceReference(
+				"com.liferay.portal.workflow.kaleo.internal.upgrade." +
+					"KaleoServiceUpgrade"));
 
 		upgradeStepRegistror.register(
 			new UpgradeStepRegistrator.Registry() {

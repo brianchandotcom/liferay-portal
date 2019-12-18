@@ -98,7 +98,7 @@ public class DDMDataProviderTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_ddmDataProviderTracker = registry.getService(
-			DDMDataProviderTracker.class);
+			registry.getServiceReference(DDMDataProviderTracker.class));
 	}
 
 	protected static void setUpTestDDMDataProvider() {

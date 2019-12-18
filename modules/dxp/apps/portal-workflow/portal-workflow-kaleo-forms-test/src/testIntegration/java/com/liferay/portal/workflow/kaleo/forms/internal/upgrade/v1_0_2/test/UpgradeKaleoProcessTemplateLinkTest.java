@@ -197,8 +197,9 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			"com.liferay.portal.workflow.kaleo.forms.internal.upgrade." +
-				"KaleoFormsServiceUpgrade");
+			registry.getServiceReference(
+				"com.liferay.portal.workflow.kaleo.forms.internal.upgrade." +
+					"KaleoFormsServiceUpgrade"));
 
 		upgradeStepRegistror.register(
 			new UpgradeStepRegistrator.Registry() {

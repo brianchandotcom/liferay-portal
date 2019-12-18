@@ -209,10 +209,10 @@ public class DataRecordResourceImpl
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws PortalException {
 
-		Long dataDefinitionId = GetterUtil.getLong(
+		long dataDefinitionId = GetterUtil.getLong(
 			(String)multivaluedMap.getFirst("dataDefinitionId"));
 
-		if (Validator.isNull(dataDefinitionId)) {
+		if (dataDefinitionId <= 0) {
 			long dataRecordCollectionId = GetterUtil.getLong(
 				(String)multivaluedMap.getFirst("dataRecordCollectionId"));
 
@@ -347,9 +347,6 @@ public class DataRecordResourceImpl
 		_modelResourcePermission = modelResourcePermission;
 	}
 
-	@Reference
-	protected DDMIndexer ddmIndexer;
-
 	private DataStorage _getDataStorage(String dataStorageType) {
 		if (Validator.isNull(dataStorageType)) {
 			throw new ValidationException("Data storage type is null");
@@ -382,7 +379,7 @@ public class DataRecordResourceImpl
 		long ddmStructureId, String fieldName, Locale locale) {
 
 		StringBundler sb = new StringBundler(
-			ddmIndexer.encodeName(ddmStructureId, fieldName, locale));
+			_ddmIndexer.encodeName(ddmStructureId, fieldName, locale));
 
 		sb.append(StringPool.UNDERLINE);
 		sb.append("String");
@@ -525,6 +522,9 @@ public class DataRecordResourceImpl
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	private DDMIndexer _ddmIndexer;
 
 	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;

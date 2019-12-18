@@ -446,17 +446,16 @@
 		},
 
 		disableToggleBoxes(checkBoxId, toggleBoxId, checkDisabled) {
-			var checkBox = $('#' + checkBoxId);
-			var toggleBox = $('#' + toggleBoxId);
+			const checkBox = document.getElementById(checkBoxId);
+			const toggleBox = document.getElementById(toggleBoxId);
 
-			toggleBox.prop(
-				'disabled',
-				checkDisabled && checkBox.prop(STR_CHECKED)
-			);
+			if (checkBox && toggleBox) {
+				toggleBox.disabled = checkDisabled && checkBox.checked;
 
-			checkBox.on(EVENT_CLICK, () => {
-				toggleBox.prop('disabled', !toggleBox.prop('disabled'));
-			});
+				checkBox.addEventListener(EVENT_CLICK, () => {
+					toggleBox.disabled = !toggleBox.disabled;
+				});
+			}
 		},
 
 		enableFormButtons(inputs) {

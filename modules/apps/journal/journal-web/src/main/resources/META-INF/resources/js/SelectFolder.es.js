@@ -15,10 +15,26 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {Treeview} from 'frontend-js-components-web';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	const [filterQuery, setFilterQuery] = useState('');
+
+	const nodesById = useMemo(() => {
+		const result = {};
+
+		function visit(node) {
+			result[node.id] = node;
+
+			if (node.children) {
+				node.children.forEach(visit);
+			}
+		}
+
+		nodes.forEach(visit);
+
+		return result;
+	}, [nodes]);
 
 	const handleQueryChange = useCallback(event => {
 		const value = event.target.value;
@@ -27,31 +43,14 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	}, []);
 
 	const handleSelectionChange = selectedNodeIds => {
-		const selectedNodeId = [...selectedNodeIds][0];
+		const node = nodesById[[...selectedNodeIds][0]];
 
-		if (selectedNodeId) {
-			let data = {};
-
-			const parentNode = nodes[0];
-
-			if (parentNode.id === selectedNodeId) {
-				data = {
-					folderId: parentNode.id,
-					folderName: parentNode.name
-				};
-			} else {
-				const {id, name} = parentNode.children.find(node => {
-					return node.id === selectedNodeId;
-				});
-
-				data = {
-					folderId: id,
-					folderName: name
-				};
-			}
-
+		if (node) {
 			Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {
-				data
+				data: {
+					folderId: node.id,
+					folderName: node.name
+				}
 			});
 		}
 	};

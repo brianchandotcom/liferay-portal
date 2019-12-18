@@ -24,9 +24,8 @@ import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import updateLayoutData from '../thunks/updateLayoutData';
 import {useIsActive} from './Controls';
-import Topper from './Topper';
-import UnsafeHTML from './UnsafeHTML';
 import FragmentContent from './FragmentContent';
+import Topper from './Topper';
 
 const Root = React.forwardRef(({canDrop, children, isOver}, ref) => (
 	<div

@@ -14,20 +14,18 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useRef} from 'react';
 
 import {ConfigContext} from '../config/index';
 import * as Processors from '../processors/index';
 import selectEditableValueContent from '../selectors/selectEditableValueContent';
 import {StoreContext} from '../store/index';
+import {useSelectItem} from './Controls';
 import UnsafeHTML from './UnsafeHTML';
+import {showFloatingToolbar} from './showFloatingToolbar';
 
 const resolveEditableValue = (state, config, fragmentEntryLinkId, editableId) =>
 	new Promise(resolve => {
-		// TODO manage mapped fields
-		// both in display pages and content pages.
-		// They should be fetched from backend dynamically
-
 		resolve(
 			selectEditableValueContent(
 				state,
@@ -45,17 +43,12 @@ function FragmentContent({fragmentEntryLink}, ref) {
 	const isMounted = useIsMounted();
 	const state = useContext(StoreContext);
 
-	// TODO if we set this to null and we conditionally render
-	// UnsafeHTML we can avoid the initial double render.
+	const selectItem = useSelectItem();
+	const activeEditable = useRef(null);
+
 	const [content, setContent] = useState(defaultContent);
 
-	// Update content when defaultContent has changed.
-	// For example when fragment configuration is updated.
-	useEffect(() => {
-		if (content !== defaultContent) {
-			setContent(defaultContent);
-		}
-	}, [content, defaultContent]);
+	const [hasEditableActive, setHasEditableActive] = useState(false);
 
 	useEffect(() => {
 		let element = document.createElement('div');
@@ -66,9 +59,6 @@ function FragmentContent({fragmentEntryLink}, ref) {
 				setContent(element.innerHTML);
 			}
 		}, 50);
-
-		// TODO manage background images too
-		// Keep post-it
 
 		Array.from(element.querySelectorAll('lfr-editable')).forEach(
 			editable => {
@@ -94,26 +84,90 @@ function FragmentContent({fragmentEntryLink}, ref) {
 		return () => {
 			element = null;
 		};
-	}, [config, state, defaultContent, fragmentEntryLinkId, isMounted]);
+	}, [state, config, defaultContent, fragmentEntryLinkId, isMounted]);
 
-	// TODO add buggy buttons code to allow testing
-	// TODO migrate existing processors
-	// Render method can already be tested.
-	// - Image
-	// - RichText
-	// - Text
-	// - Link
-	// - HTML
+	const onDoubleClick = event => {
+		const target = event.target;
 
-	// TODO enable/disable editors when editable is clicked
-	// Needed in order to test all processors.
+		const editable = target.closest('lfr-editable');
 
-	// TODO activate editables on click,
-	// show floating toolbar over each editable field
+		if (editable) {
+			const editableId = `${fragmentEntryLinkId}-${editable.getAttribute(
+				'id'
+			)}`;
 
-	// TODO show different borders if the editable is active, translated, mapped, etc.
+			if (activeEditable.current) {
+				destroyProcessor(
+					activeEditable.current,
+					activeEditable.current.getAttribute('type')
+				);
+			}
 
-	return <UnsafeHTML markup={content} ref={ref} />;
+			activeEditable.current = editable;
+
+			initProcessor(
+				editable,
+				editable.getAttribute('id'),
+				editable.getAttribute('type'),
+				fragmentEntryLinkId,
+				state,
+				config
+			);
+
+			selectItem(editableId);
+
+			setHasEditableActive(true);
+		} else {
+			if (activeEditable.current) {
+				destroyProcessor(
+					activeEditable.current,
+					activeEditable.current.getAttribute('type')
+				);
+				activeEditable.current = null;
+
+				setHasEditableActive(false);
+
+				selectItem(null);
+			}
+		}
+	};
+
+	return (
+		<>
+			{hasEditableActive &&
+				showFloatingToolbar(activeEditable, fragmentEntryLinkId)}
+			<UnsafeHTML
+				markup={content}
+				onDoubleClick={onDoubleClick}
+				ref={ref}
+			/>
+		</>
+	);
+}
+
+function initProcessor(
+	element,
+	editableId,
+	editableType,
+	fragmentEntryLinkId,
+	store,
+	config
+) {
+	const processor = Processors[editableType] || Processors.fallback;
+
+	processor.enableEditor(
+		element,
+		editableId,
+		fragmentEntryLinkId,
+		store,
+		config
+	);
+}
+
+function destroyProcessor(element, editableType) {
+	const processor = Processors[editableType] || Processors.fallback;
+
+	processor.disableEditor(element);
 }
 
 export default React.forwardRef(FragmentContent);

@@ -199,6 +199,7 @@ public class TargetPlatformExtension {
 		_onlyIfSpec.and(onlyIfClosure);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setOnlyIf(Spec<Project> onlyIfSpec) {
 		_onlyIfSpec = new AndSpec<>(onlyIfSpec);
 	}
@@ -209,6 +210,7 @@ public class TargetPlatformExtension {
 		_resolveOnlyIfSpec.and(resolveOnlyIfClosure);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setResolveOnlyIf(Spec<Project> resolveOnlyIfSpec) {
 		_resolveOnlyIfSpec = new AndSpec<>(resolveOnlyIfSpec);
 	}
@@ -223,6 +225,7 @@ public class TargetPlatformExtension {
 		setSubprojects(Arrays.asList(subprojects));
 	}
 
+	@SuppressWarnings("unchecked")
 	public TargetPlatformExtension subprojects(Iterable<Project> subprojects) {
 		GUtil.addToCollection(_subprojects, subprojects);
 

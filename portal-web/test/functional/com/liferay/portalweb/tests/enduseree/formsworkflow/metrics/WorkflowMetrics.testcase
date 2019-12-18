@@ -379,7 +379,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var key_testSLADefinitionHours = "0001";
-		var key_testSLADefinitionHoursCheck = "00:01"
+		var key_testSLADefinitionHoursCheck = "00:01";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";

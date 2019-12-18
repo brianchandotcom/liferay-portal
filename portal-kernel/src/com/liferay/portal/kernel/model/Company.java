@@ -117,6 +117,8 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public boolean isStrangersWithMx();
 
+	public void setKey(String key);
+
 	public void setKeyObj(java.security.Key keyObj);
 
 	public void setVirtualHostname(String virtualHostname);

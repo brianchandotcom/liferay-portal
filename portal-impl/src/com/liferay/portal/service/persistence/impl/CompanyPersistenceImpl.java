@@ -1267,7 +1267,6 @@ public class CompanyPersistenceImpl
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
-		dbColumnNames.put("key", "key_");
 		dbColumnNames.put("system", "system_");
 		dbColumnNames.put("active", "active_");
 
@@ -2024,6 +2023,6 @@ public class CompanyPersistenceImpl
 		CompanyPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"key", "system", "active"});
+		new String[] {"system", "active"});
 
 }

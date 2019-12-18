@@ -70,7 +70,7 @@ public class CompanyModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"accountId", Types.BIGINT}, {"webId", Types.VARCHAR},
-		{"key_", Types.CLOB}, {"mx", Types.VARCHAR}, {"homeURL", Types.VARCHAR},
+		{"mx", Types.VARCHAR}, {"homeURL", Types.VARCHAR},
 		{"logoId", Types.BIGINT}, {"system_", Types.BOOLEAN},
 		{"maxUsers", Types.INTEGER}, {"active_", Types.BOOLEAN}
 	};
@@ -83,7 +83,6 @@ public class CompanyModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("webId", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("key_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("mx", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("homeURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
@@ -93,7 +92,7 @@ public class CompanyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Company (mvccVersion LONG default 0 not null,companyId LONG not null primary key,accountId LONG,webId VARCHAR(75) null,key_ TEXT null,mx VARCHAR(200) null,homeURL STRING null,logoId LONG,system_ BOOLEAN,maxUsers INTEGER,active_ BOOLEAN)";
+		"create table Company (mvccVersion LONG default 0 not null,companyId LONG not null primary key,accountId LONG,webId VARCHAR(75) null,mx VARCHAR(200) null,homeURL STRING null,logoId LONG,system_ BOOLEAN,maxUsers INTEGER,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Company";
 
@@ -150,7 +149,6 @@ public class CompanyModelImpl
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setAccountId(soapModel.getAccountId());
 		model.setWebId(soapModel.getWebId());
-		model.setKey(soapModel.getKey());
 		model.setMx(soapModel.getMx());
 		model.setHomeURL(soapModel.getHomeURL());
 		model.setLogoId(soapModel.getLogoId());
@@ -320,9 +318,6 @@ public class CompanyModelImpl
 		attributeGetterFunctions.put("webId", Company::getWebId);
 		attributeSetterBiConsumers.put(
 			"webId", (BiConsumer<Company, String>)Company::setWebId);
-		attributeGetterFunctions.put("key", Company::getKey);
-		attributeSetterBiConsumers.put(
-			"key", (BiConsumer<Company, String>)Company::setKey);
 		attributeGetterFunctions.put("mx", Company::getMx);
 		attributeSetterBiConsumers.put(
 			"mx", (BiConsumer<Company, String>)Company::setMx);
@@ -405,22 +400,6 @@ public class CompanyModelImpl
 
 	public String getOriginalWebId() {
 		return GetterUtil.getString(_originalWebId);
-	}
-
-	@JSON
-	@Override
-	public String getKey() {
-		if (_key == null) {
-			return "";
-		}
-		else {
-			return _key;
-		}
-	}
-
-	@Override
-	public void setKey(String key) {
-		_key = key;
 	}
 
 	@JSON
@@ -607,7 +586,6 @@ public class CompanyModelImpl
 		companyImpl.setCompanyId(getCompanyId());
 		companyImpl.setAccountId(getAccountId());
 		companyImpl.setWebId(getWebId());
-		companyImpl.setKey(getKey());
 		companyImpl.setMx(getMx());
 		companyImpl.setHomeURL(getHomeURL());
 		companyImpl.setLogoId(getLogoId());
@@ -713,14 +691,6 @@ public class CompanyModelImpl
 
 		if ((webId != null) && (webId.length() == 0)) {
 			companyCacheModel.webId = null;
-		}
-
-		companyCacheModel.key = getKey();
-
-		String key = companyCacheModel.key;
-
-		if ((key != null) && (key.length() == 0)) {
-			companyCacheModel.key = null;
 		}
 
 		companyCacheModel.mx = getMx();
@@ -831,7 +801,6 @@ public class CompanyModelImpl
 	private long _accountId;
 	private String _webId;
 	private String _originalWebId;
-	private String _key;
 	private String _mx;
 	private String _originalMx;
 	private String _homeURL;

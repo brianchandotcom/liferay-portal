@@ -74,7 +74,7 @@ public class CompanyCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -84,8 +84,6 @@ public class CompanyCacheModel
 		sb.append(accountId);
 		sb.append(", webId=");
 		sb.append(webId);
-		sb.append(", key=");
-		sb.append(key);
 		sb.append(", mx=");
 		sb.append(mx);
 		sb.append(", homeURL=");
@@ -116,13 +114,6 @@ public class CompanyCacheModel
 		}
 		else {
 			companyImpl.setWebId(webId);
-		}
-
-		if (key == null) {
-			companyImpl.setKey("");
-		}
-		else {
-			companyImpl.setKey(key);
 		}
 
 		if (mx == null) {
@@ -165,7 +156,6 @@ public class CompanyCacheModel
 
 		accountId = objectInput.readLong();
 		webId = objectInput.readUTF();
-		key = objectInput.readUTF();
 		mx = objectInput.readUTF();
 		homeURL = objectInput.readUTF();
 
@@ -196,13 +186,6 @@ public class CompanyCacheModel
 		}
 		else {
 			objectOutput.writeUTF(webId);
-		}
-
-		if (key == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(key);
 		}
 
 		if (mx == null) {
@@ -236,7 +219,6 @@ public class CompanyCacheModel
 	public long companyId;
 	public long accountId;
 	public String webId;
-	public String key;
 	public String mx;
 	public String homeURL;
 	public long logoId;

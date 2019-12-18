@@ -34,7 +34,6 @@ public class CompanySoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAccountId(model.getAccountId());
 		soapModel.setWebId(model.getWebId());
-		soapModel.setKey(model.getKey());
 		soapModel.setMx(model.getMx());
 		soapModel.setHomeURL(model.getHomeURL());
 		soapModel.setLogoId(model.getLogoId());
@@ -126,14 +125,6 @@ public class CompanySoap implements Serializable {
 		_webId = webId;
 	}
 
-	public String getKey() {
-		return _key;
-	}
-
-	public void setKey(String key) {
-		_key = key;
-	}
-
 	public String getMx() {
 		return _mx;
 	}
@@ -194,7 +185,6 @@ public class CompanySoap implements Serializable {
 	private long _companyId;
 	private long _accountId;
 	private String _webId;
-	private String _key;
 	private String _mx;
 	private String _homeURL;
 	private long _logoId;

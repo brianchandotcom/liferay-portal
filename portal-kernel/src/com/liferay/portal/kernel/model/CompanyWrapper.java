@@ -44,7 +44,6 @@ public class CompanyWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("accountId", getAccountId());
 		attributes.put("webId", getWebId());
-		attributes.put("key", getKey());
 		attributes.put("mx", getMx());
 		attributes.put("homeURL", getHomeURL());
 		attributes.put("logoId", getLogoId());
@@ -79,12 +78,6 @@ public class CompanyWrapper
 
 		if (webId != null) {
 			setWebId(webId);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
 		}
 
 		String mx = (String)attributes.get("mx");
@@ -215,16 +208,6 @@ public class CompanyWrapper
 	@Override
 	public String getHomeURL() {
 		return model.getHomeURL();
-	}
-
-	/**
-	 * Returns the key of this company.
-	 *
-	 * @return the key of this company
-	 */
-	@Override
-	public String getKey() {
-		return model.getKey();
 	}
 
 	@Override
@@ -456,11 +439,6 @@ public class CompanyWrapper
 		model.setHomeURL(homeURL);
 	}
 
-	/**
-	 * Sets the key of this company.
-	 *
-	 * @param key the key of this company
-	 */
 	@Override
 	public void setKey(String key) {
 		model.setKey(key);

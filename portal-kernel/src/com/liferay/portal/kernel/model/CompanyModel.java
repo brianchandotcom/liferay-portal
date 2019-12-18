@@ -112,21 +112,6 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	public void setWebId(String webId);
 
 	/**
-	 * Returns the key of this company.
-	 *
-	 * @return the key of this company
-	 */
-	@AutoEscape
-	public String getKey();
-
-	/**
-	 * Sets the key of this company.
-	 *
-	 * @param key the key of this company
-	 */
-	public void setKey(String key);
-
-	/**
 	 * Returns the mx of this company.
 	 *
 	 * @return the mx of this company

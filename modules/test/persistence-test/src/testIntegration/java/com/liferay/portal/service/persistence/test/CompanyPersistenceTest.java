@@ -128,8 +128,6 @@ public class CompanyPersistenceTest {
 
 		newCompany.setWebId(RandomTestUtil.randomString());
 
-		newCompany.setKey(RandomTestUtil.randomString());
-
 		newCompany.setMx(RandomTestUtil.randomString());
 
 		newCompany.setHomeURL(RandomTestUtil.randomString());
@@ -154,7 +152,6 @@ public class CompanyPersistenceTest {
 		Assert.assertEquals(
 			existingCompany.getAccountId(), newCompany.getAccountId());
 		Assert.assertEquals(existingCompany.getWebId(), newCompany.getWebId());
-		Assert.assertEquals(existingCompany.getKey(), newCompany.getKey());
 		Assert.assertEquals(existingCompany.getMx(), newCompany.getMx());
 		Assert.assertEquals(
 			existingCompany.getHomeURL(), newCompany.getHomeURL());
@@ -468,8 +465,6 @@ public class CompanyPersistenceTest {
 		company.setAccountId(RandomTestUtil.nextLong());
 
 		company.setWebId(RandomTestUtil.randomString());
-
-		company.setKey(RandomTestUtil.randomString());
 
 		company.setMx(RandomTestUtil.randomString());
 

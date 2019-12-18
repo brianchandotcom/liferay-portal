@@ -230,13 +230,19 @@ create table Company (
 	companyId LONG not null primary key,
 	accountId LONG,
 	webId VARCHAR(75) null,
-	key_ TEXT null,
 	mx VARCHAR(200) null,
 	homeURL STRING null,
 	logoId LONG,
 	system_ BOOLEAN,
 	maxUsers INTEGER,
 	active_ BOOLEAN
+);
+
+create table CompanyInfo (
+	mvccVersion LONG default 0 not null,
+	companyInfoId LONG not null primary key,
+	companyId LONG,
+	key_ TEXT null
 );
 
 create table Contact_ (

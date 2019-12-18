@@ -128,7 +128,8 @@ const Sharing = ({
 
 	const handleItemsChange = items => {
 		if (items.length) {
-			const newestItemValue = items[items.length - 1].value;
+			const newestItem = items[items.length - 1];
+			const newestItemValue = newestItem.value;
 
 			items.map((item, index) => {
 				if (index) {
@@ -137,6 +138,12 @@ const Sharing = ({
 					}
 				}
 			});
+
+			if (newestItem.id) {
+				setSelectedItems(items);
+
+				return;
+			}
 
 			if (isEmailAddressValid(newestItemValue)) {
 				const newItem = items.pop();

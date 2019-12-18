@@ -14,22 +14,13 @@
 
 package com.liferay.gradle.plugins.target.platform.internal.util;
 
-import groovy.lang.Closure;
-import groovy.lang.GroovyObjectSupport;
-
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementConfigurer;
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
-import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 
 /**
  * @author Gregory Amerson
@@ -38,85 +29,49 @@ public class TargetPlatformPluginUtil {
 
 	public static void configureDependencyManagement(
 		final Project project,
-		final Configuration targetPlatformBomsConfiguration,
-		Iterable<?> configurationNames) {
-
-		final DependencyManagementExtension dependencyManagementExtension =
-			GradleUtil.getExtension(
-				project, DependencyManagementExtension.class);
-
-		dependencyManagementExtension.setApplyMavenExclusions(false);
-
-		GroovyObjectSupport groovyObjectSupport =
-			(GroovyObjectSupport)dependencyManagementExtension;
-
-		List<Object> args = new ArrayList<>();
+		final Configuration targetPlatformBomsConfiguration) {
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
-		for (Object configurationName : configurationNames) {
-			Configuration configuration = null;
+		DependencyHandler dependencyHandler = project.getDependencies();
 
-			if (configurationName instanceof Configuration) {
-				configuration = (Configuration)configurationName;
-			}
-			else {
-				configuration = configurationContainer.findByName(
-					GradleUtil.toString(configurationName));
-			}
-
-			if (configuration != null) {
-				args.add(configuration);
-			}
-		}
-
-		Closure<Void> closure = new Closure<Void>(project) {
-
-			@SuppressWarnings("unused")
-			public void doCall() {
-				DependencySet dependencySet =
-					targetPlatformBomsConfiguration.getAllDependencies();
-
-				dependencySet.all(
-					new Action<Dependency>() {
-
-						@Override
-						public void execute(final Dependency dependency) {
-							_configureDependencyManagementImportsHandler(
-								(DependencyManagementConfigurer)getDelegate(),
-								dependency);
-						}
-
-					});
-			}
-
-		};
-
-		args.add(closure);
-
-		groovyObjectSupport.invokeMethod(
-			"configurations", args.toArray(new Object[0]));
-	}
-
-	private static void _configureDependencyManagementImportsHandler(
-		DependencyManagementConfigurer dependencyManagementConfigurer,
-		final Dependency dependency) {
-
-		dependencyManagementConfigurer.imports(
-			new Action<ImportsHandler>() {
+		configurationContainer.all(
+			new Action<Configuration>() {
 
 				@Override
-				public void execute(ImportsHandler importsHandler) {
-					StringBuilder sb = new StringBuilder();
+				public void execute(Configuration configuration) {
+					String name = configuration.getName();
 
-					sb.append(dependency.getGroup());
-					sb.append(':');
-					sb.append(dependency.getName());
-					sb.append(':');
-					sb.append(dependency.getVersion());
+					if (name.startsWith("targetPlatform")) {
+						return;
+					}
 
-					importsHandler.mavenBom(sb.toString());
+					DependencySet dependencySet =
+						targetPlatformBomsConfiguration.getDependencies();
+
+					dependencySet.all(
+						new Action<Dependency>() {
+
+							@Override
+							public void execute(Dependency dependency) {
+								StringBuilder sb = new StringBuilder();
+
+								sb.append(dependency.getGroup());
+								sb.append(':');
+								sb.append(dependency.getName());
+								sb.append(':');
+								sb.append(dependency.getVersion());
+
+								Dependency platformDependency =
+									dependencyHandler.platform(sb.toString());
+
+								dependencyHandler.add(
+									configuration.getName(),
+									platformDependency);
+							}
+
+						});
 				}
 
 			});

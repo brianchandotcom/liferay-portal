@@ -21,11 +21,8 @@ import com.liferay.gradle.plugins.target.platform.tasks.ResolveTask;
 
 import groovy.lang.Closure;
 
-import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
-
 import java.io.File;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import org.gradle.api.Action;
@@ -62,8 +59,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	@Override
 	@SuppressWarnings("serial")
 	public void apply(final Project project) {
-		GradleUtil.applyPlugin(project, DependencyManagementPlugin.class);
-
 		final TargetPlatformExtension targetPlatformExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, TargetPlatformExtension.class);
@@ -83,34 +78,13 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
 					TargetPlatformPluginUtil.configureDependencyManagement(
-						project, targetPlatformBomsConfiguration,
-						_configurationNames);
+						project, targetPlatformBomsConfiguration);
 				}
 
 			});
 
-		final Spec<Project> spec = targetPlatformExtension.getOnlyIf();
-
 		final Set<Project> subprojects =
 			targetPlatformExtension.getSubprojects();
-
-		for (final Project subproject : subprojects) {
-			PluginContainer subprojectPluginContainer = subproject.getPlugins();
-
-			subprojectPluginContainer.withType(
-				JavaPlugin.class,
-				new Action<JavaPlugin>() {
-
-					@Override
-					public void execute(JavaPlugin javaPlugin) {
-						if (spec.isSatisfiedBy(subproject)) {
-							GradleUtil.applyPlugin(
-								subproject, DependencyManagementPlugin.class);
-						}
-					}
-
-				});
-		}
 
 		Gradle gradle = project.getGradle();
 
@@ -194,7 +168,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		}
 
 		TargetPlatformPluginUtil.configureDependencyManagement(
-			afterProject, targetPlatformBomsConfiguration, _configurationNames);
+			afterProject, targetPlatformBomsConfiguration);
 
 		Spec<Project> resolveSpec = targetPlatformExtension.getResolveOnlyIf();
 
@@ -231,13 +205,5 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		resolveTask.setGroup("verification");
 		resolveTask.setReportOptional(false);
 	}
-
-	private static final Iterable<String> _configurationNames = Arrays.asList(
-		"compile", "compileClasspath", "compileInclude", "compileOnly",
-		"default", "implementation", "originalModule", "parentThemes",
-		"portalCommonCSS", "runtime", "runtimeClasspath",
-		"runtimeImplementation", "runtimeOnly", "testCompileClasspath",
-		"testCompileOnly", "testIntegration", "testImplementation",
-		"testRuntime", "testRuntimeClasspath", "testRuntimeOnly");
 
 }

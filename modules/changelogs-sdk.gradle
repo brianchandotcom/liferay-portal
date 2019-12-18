@@ -22,7 +22,7 @@ task recordCommits
 buildChangelogs {
 	dependsOn recordCommits
 
-	description = "Builds the changelogs for each published version in `CHANGELOG.markdown`."
+	description = "Builds the changelogs for each published version in 'CHANGELOG.markdown'."
 	group = "changelogs"
 
 	doLast {
@@ -106,7 +106,7 @@ buildChangelogs {
 }
 
 recordCommits {
-	description = "Records the commit ID for each published version in `CHANGELOG.properties`."
+	description = "Records the commit ID for each published version in 'CHANGELOG.properties'."
 	group = "changelogs"
 
 	doLast {

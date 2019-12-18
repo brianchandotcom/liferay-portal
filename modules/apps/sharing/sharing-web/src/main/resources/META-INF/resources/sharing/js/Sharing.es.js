@@ -139,6 +139,12 @@ const Sharing = ({
 			});
 
 			if (isEmailAddressValid(newestItemValue)) {
+				const newItem = items.pop();
+
+				setSelectedItems(items);
+
+				ignoreNextMultiSelectValue.current = true;
+
 				fetch(sharingVerifyEmailAddressURL, {
 					body: objectToFormData({
 						[`${portletNamespace}emailAddress`]: newestItemValue
@@ -158,10 +164,8 @@ const Sharing = ({
 									newestItemValue
 								)
 							);
-
-							const {label} = items.pop();
-
-							setMultiSelectValue(label);
+						} else {
+							items.push(newItem);
 						}
 					})
 					.then(() => {

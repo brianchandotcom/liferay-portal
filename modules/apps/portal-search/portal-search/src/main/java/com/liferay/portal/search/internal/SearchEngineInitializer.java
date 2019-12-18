@@ -15,6 +15,7 @@
 package com.liferay.portal.search.internal;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -125,12 +126,15 @@ public class SearchEngineInitializer implements Runnable {
 
 						@Override
 						public Void call() throws Exception {
-							BackgroundTaskThreadLocal.setBackgroundTaskId(
-								backgroundTaskId);
+							try (SafeClosable safeClosable =
+									BackgroundTaskThreadLocal.
+										setBackgroundTaskIdWithSafeClosable(
+											backgroundTaskId)) {
 
-							reindex(indexer);
+								reindex(indexer);
 
-							return null;
+								return null;
+							}
 						}
 
 					});

@@ -253,13 +253,6 @@
 						TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.joinAE_ByDLFileEntry">
-		<![CDATA[
-			INNER JOIN
-				DLFileEntry ON
-					DLFileEntry.fileEntryId = AssetEntry.classPK
-		]]>
-	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder.findByMismatchedCompanyId">
 		<![CDATA[
 			SELECT
@@ -633,13 +626,6 @@
 				(DLFileShortcut.active_ = ?) AND
 				([$STATUS$]) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
-		]]>
-	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinAE_ByDLFolder">
-		<![CDATA[
-			INNER JOIN
-				DLFolder ON
-					DLFolder.folderId = AssetEntry.classPK
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.joinFE_ByDLFileVersion">

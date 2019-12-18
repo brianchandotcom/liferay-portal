@@ -40,19 +40,7 @@ public interface Registry {
 
 	public Registry getRegistry() throws SecurityException;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public <T> T getService(Class<T> clazz);
-
 	public <T> T getService(ServiceReference<T> serviceReference);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public <T> T getService(String className);
 
 	public Collection<ServiceDependencyManager> getServiceDependencyManagers();
 

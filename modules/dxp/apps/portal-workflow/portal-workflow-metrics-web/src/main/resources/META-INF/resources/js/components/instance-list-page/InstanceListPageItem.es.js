@@ -61,7 +61,7 @@ const InstanceListPageItem = ({
 	const updateInstanceId = () => setInstanceId(id);
 
 	const formattedAssignees = !completed
-		? assigneeUsers
+		? assigneeUsers && assigneeUsers.length
 			? assigneeUsers.map(assigneeUser => assigneeUser.name).join(', ')
 			: Liferay.Language.get('unassigned')
 		: Liferay.Language.get('not-available');

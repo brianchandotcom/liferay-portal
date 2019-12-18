@@ -215,7 +215,7 @@ function InstanceListPageItemDetail({processId}) {
 									'current-assignee'
 								)}
 								detail={
-									assigneeUsers
+									assigneeUsers && assigneeUsers.length
 										? assigneeUsers
 												.map(user => user.name)
 												.join(', ')

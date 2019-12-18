@@ -157,6 +157,38 @@ definition {
 			value1 = "${key_slaDefinitionDays}");
 	}
 
+macro fillSLAFormHours {
+		var key_slaDefinitionHours = "${slaDefinitionHours}";
+		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
+		var key_slaDefinitionEnd = "${slaDefinitionEnd}";
+		var key_slaDefinitionName = "${slaDefinitionName}";
+		var key_slaDefinitionStart = "${slaDefinitionStart}";
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
+			value1 = "${key_slaDefinitionName}");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
+			value1 = "${key_slaDefinitionDescription}");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		AssertClick(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION",
+			value1 = "${key_slaDefinitionStart}");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+
+		AssertClick(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION",
+			value1 = "${key_slaDefinitionEnd}");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
+			value1 = "${key_slaDefinitionHours}");
+	}
+
 	macro goToCreatedSLAForm {
 		var key_workflowSLAName = "${workflowSLAName}";
 

@@ -28,7 +28,9 @@ if (Validator.isNull(redirect)) {
 AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 %>
 
-<portlet:actionURL name="/asset_list/update_asset_list_entry_dynamic" var="updateAssetListEntryDynamicURL" />
+<portlet:actionURL name="/asset_list/update_asset_list_entry_dynamic" var="updateAssetListEntryDynamicURL">
+	<portlet:param name="mvcPath" value="/edit_asset_list_entry.jsp" />
+</portlet:actionURL>
 
 <liferay-frontend:edit-form
 	action="<%= updateAssetListEntryDynamicURL %>"

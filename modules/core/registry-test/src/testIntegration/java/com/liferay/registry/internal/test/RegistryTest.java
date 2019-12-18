@@ -129,7 +129,7 @@ public class RegistryTest {
 		Assert.assertNotNull(serviceRegistration);
 
 		InterfaceOne registeredInterfaceOne = _registry.getService(
-			InterfaceOne.class);
+			_registry.getServiceReference(InterfaceOne.class));
 
 		Assert.assertEquals(interfaceOne, registeredInterfaceOne);
 
@@ -146,7 +146,7 @@ public class RegistryTest {
 		Assert.assertNotNull(serviceRegistration);
 
 		InterfaceOne registeredInterfaceOne = _registry.getService(
-			InterfaceOne.class.getName());
+			_registry.getServiceReference(InterfaceOne.class.getName()));
 
 		Assert.assertEquals(interfaceOne, registeredInterfaceOne);
 

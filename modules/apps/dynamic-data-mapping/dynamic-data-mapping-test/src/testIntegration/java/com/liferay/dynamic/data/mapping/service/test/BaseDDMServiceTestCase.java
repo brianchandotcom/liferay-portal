@@ -301,10 +301,11 @@ public abstract class BaseDDMServiceTestCase {
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
 
-	protected void setUpDDMXML() throws Exception {
+	protected void setUpDDMXML() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		ddmXML = registry.getService(DDMXML.class);
+		ddmXML = registry.getService(
+			registry.getServiceReference(DDMXML.class));
 	}
 
 	protected DDMForm toDDMForm(String definition) throws Exception {

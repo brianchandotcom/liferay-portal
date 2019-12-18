@@ -1407,6 +1407,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="poshi" name="functional.test.type" />
 		<attribute default="true" name="setup.proxy" />
 		<attribute default="true" name="setup.testable.jboss" />
 		<attribute default="true" name="setup.testable.tomcat" />
@@ -1442,6 +1443,8 @@ app.server.type=@{app.server.type}]]></echo>
 				</else>
 			</if>
 
+			<property name="functional.test.type" value="@{functional.test.type}" />
+
 			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false">
@@ -1453,6 +1456,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
 										<property name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
 										<property name="database.type" value="@{database.type}" />
+										<property name="functional.test.type" value="@{functional.test.type}" />
 										<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
 										<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
 										<property name="test.class" value="${test.class}" />
@@ -3108,6 +3112,15 @@ log.sanitizer.enabled=false</echo>
 			</if>
 		</sequential>
 	</macrodef>
+
+	<target name="analytics-cloud-cucumber-tomcat90-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mysql"
+			database.version="5.7"
+			functional.test.type="analytics-cloud"
+		/>
+	</target>
 
 	<target name="archived-module-smoke-jdk8">
 		<run-archived-module-smoke />

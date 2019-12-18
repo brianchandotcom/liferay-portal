@@ -3643,29 +3643,63 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
 
-			<replaceregexp
+			<copy
 				file="${analytics.cloud.asah.dir}/docker-compose.yml"
+				tofile="${analytics.cloud.asah.dir}/docker-compose.test.yml"
+			/>
+
+			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
+
+			<replaceregexp
+				file="${analytics.cloud.docker.test.yaml}"
 				match="container_name: com-liferay-osb-faro-private"
 				replace="container_name: ${analytics.cloud.faro.container.name}"
 			/>
 
 			<replaceregexp
-				file="${analytics.cloud.asah.dir}/docker-compose.yml"
+				file="${analytics.cloud.docker.test.yaml}"
 				match="image: liferay/com-liferay-osb-faro:\s+"
 				replace="image: ${analytics.cloud.faro.image.name}"
 			/>
 
 			<replaceregexp
-				file="${analytics.cloud.asah.dir}/docker-compose.yml"
+				file="${analytics.cloud.docker.test.yaml}"
 				match="\&quot;8080:8080\&quot;"
 				replace="&quot;${analytics.cloud.faro.dxp.port}:8080&quot;"
 			/>
 
 			<replaceregexp
-				file="${analytics.cloud.asah.dir}/docker-compose.yml"
+				file="${analytics.cloud.docker.test.yaml}"
+				match="\&quot;9090:9090\&quot;"
+				replace="&quot;${analytics.cloud.asah.prometheus.port}:9090&quot;"
+			/>
+
+			<replaceregexp
+				file="${analytics.cloud.docker.test.yaml}"
 				match="\&quot;11311:11311\&quot;"
 				replace="&quot;${analytics.cloud.faro.osgi.console.port}:11311&quot;"
 			/>
+
+			<local name="short.hostname" />
+
+			<propertyregex
+				input="${env.HOSTNAME}"
+				override="true"
+				property="short.hostname"
+				regexp="(cloud-[^\.]+)(\.lax\.liferay\.com)?"
+				replace="\1"
+			/>
+
+			<if>
+				<isset property="short.hostname" />
+				<then>
+					<echo append="true" file="${analytics.cloud.docker.test.yaml}"><![CDATA[
+networks:
+    default:
+        external:
+            name: ${short.hostname}]]></echo>
+				</then>
+			</if>
 
 			<replaceregexp
 				file="${analytics.cloud.faro.dir}/build-ext.gradle"
@@ -3685,6 +3719,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				replace="network \&quot;${analytics.cloud.project.name}_default\&quot;"
 			/>
 
+			<echo file="${analytics.cloud.asah.dir}/local.env">OSB_ASAH_PUBLISHER_URL=http://osbasahpublisher:8080</echo>
+
 			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
 				<then>
@@ -3695,7 +3731,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 						./gradlew clean assemble
 
-						docker-compose --file=docker-compose.yml --project-name=${analytics.cloud.project.name} build
+						docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
 					</execute>
 				</then>
 			</if>
@@ -3705,6 +3741,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<execute dir="${analytics.cloud.faro.dir}">
 						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=asah-local
+
+						docker rm ${analytics.cloud.faro.container.name}
 					</execute>
 				</then>
 			</if>
@@ -3716,7 +3754,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 				touch local.env
 
-				docker-compose --file=docker-compose.yml --project-name=${analytics.cloud.project.name} up --detach
+				docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach
 
 				while [[ -n $(docker ps | grep "health: starting") ]] || [[ -n $(docker ps | grep "unhealthy") ]]
 				do
@@ -11938,7 +11976,27 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<antcall target="run-selenium-test" />
+		<if>
+			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
+			<then>
+				<trycatch property="analytics.cloud.error">
+					<try>
+						<start-analytics-cloud />
+
+						<gradle-execute dir="${analytics.cloud.faro.dir}" task="testIntegration" />
+					</try>
+					<catch>
+						<fail message="${analytics.cloud.error}" />
+					</catch>
+					<finally>
+						<stop-analytics-cloud />
+					</finally>
+				</trycatch>
+			</then>
+			<else>
+				<antcall target="run-selenium-test" />
+			</else>
+		</if>
 
 		<get-testcase-property property.name="cmis.repository.type" />
 

@@ -384,7 +384,7 @@ definition {
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		for (var wikiPageTitle : list "Child Page Title,Child Page Title Rename,Child Page Title Rename 1") {
+		for (var wikiPageTitle : list "Child Page Title,Rename Page Title,Rename Page Title 1") {
 			LexiconEntry.viewEntryName(rowEntry = "${wikiPageTitle}");
 		}
 	}

@@ -740,8 +740,9 @@ public class UpgradeContentTargetingTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			"com.liferay.segments.content.targeting.upgrade.internal." +
-				"SegmentsContentTargetingUpgrade");
+			registry.getServiceReference(
+				"com.liferay.segments.content.targeting.upgrade.internal." +
+					"SegmentsContentTargetingUpgrade"));
 
 		upgradeStepRegistror.register(
 			new UpgradeStepRegistrator.Registry() {

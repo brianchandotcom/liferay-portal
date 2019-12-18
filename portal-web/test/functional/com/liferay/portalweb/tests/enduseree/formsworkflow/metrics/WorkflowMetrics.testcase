@@ -378,7 +378,48 @@ definition {
 
 		property portal.acceptance = "true";
 		
+var key_testSLADefinitionDays = "1";
+		var key_testSLADefinitionDescription = "SLA Description";
+		var key_testSLADefinitionEnd = "Process Ends: Approved";
+		var key_testSLADefinitionName = "SLA Name";
+		var key_testSLADefinitionStart = "Process Begins";
 
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "${key_testSLADefinitionDays}",
+			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
+			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionName = "${key_testSLADefinitionName}",
+			slaDefinitionStart = "${key_testSLADefinitionStart}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		WorkflowMetrics.goToCreatedSLAForm(workflowSLAName = "${key_testSLADefinitionName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
+			value1 = "${key_testSLADefinitionName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
+			value1 = "${key_testSLADefinitionDescription}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
+			value1 = "${key_testSLADefinitionStart}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
+			value1 = "${key_testSLADefinitionEnd}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
+			value1 = "${key_testSLADefinitionDays}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

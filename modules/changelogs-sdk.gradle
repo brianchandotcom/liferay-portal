@@ -149,9 +149,8 @@ recordCommits {
 			VersionNumber publishedVersionNumber = getPublishedVersionNumberClosure(lines[7], projectName)
 
 			if ((publishedVersionNumber != null) && !recordCommitIDs.containsKey(publishedVersionNumber) && (publishedVersionNumber.major > 0) && ((lastVersionNumber == null) || (publishedVersionNumber.compareTo(lastVersionNumber) < 0))) {
-				String commitId = lines[0]
-
 				String commitDateString = lines[4]
+				String commitId = lines[0]
 
 				Date commitDate = Date.parse("E, d MMM yyyy H:m:s Z", commitDateString.substring(12))
 
@@ -183,8 +182,8 @@ recordCommits {
 					recordCommitIDs.put(lastVersionNumber, commitId + ".."  + lastVersionCommitId)
 				}
 
-				lastVersionNumber = publishedVersionNumber
 				lastVersionCommitId = commitId
+				lastVersionNumber = publishedVersionNumber
 			}
 		}
 

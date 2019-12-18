@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.test.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayResourceRequest;
+import com.liferay.spring.mock.web.portlet.MockResourceRequest;
 
 import java.io.IOException;
 
@@ -35,8 +36,6 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-
-import org.springframework.mock.web.portlet.MockResourceRequest;
 
 /**
  * @author Cristina González

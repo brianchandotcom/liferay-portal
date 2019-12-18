@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.spring.mock.web.portlet.MockPortletPreferences;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,8 +34,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.portlet.MockPortletPreferences;
 
 /**
  * @author Eudaldo Alonso

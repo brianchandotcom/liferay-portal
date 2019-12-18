@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.spring.mock.web.portlet.MockActionResponse;
 
 import java.util.AbstractMap;
 import java.util.Collections;
@@ -62,7 +63,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockActionResponse;
 
 /**
  * @author Cristina González

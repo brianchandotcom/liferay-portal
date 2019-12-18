@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.util.HttpImpl;
+import com.liferay.spring.mock.web.portlet.MockRenderRequest;
+import com.liferay.spring.mock.web.portlet.MockRenderResponse;
 
 import javax.portlet.RenderRequest;
 
@@ -35,9 +37,6 @@ import org.junit.Test;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
-
-import org.springframework.mock.web.portlet.MockRenderRequest;
-import org.springframework.mock.web.portlet.MockRenderResponse;
 
 /**
  * @author Adam Brandizzi

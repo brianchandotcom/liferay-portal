@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.spring.mock.web.portlet.MockActionRequest;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -72,7 +73,6 @@ import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.portlet.MockActionRequest;
 
 /**
  * @author Jürgen Kappler

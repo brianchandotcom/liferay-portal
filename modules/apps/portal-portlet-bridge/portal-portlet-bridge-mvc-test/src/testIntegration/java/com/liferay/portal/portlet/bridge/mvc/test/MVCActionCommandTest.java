@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.spring.mock.web.portlet.MockActionRequest;
+import com.liferay.spring.mock.web.portlet.MockActionResponse;
 
 import java.util.Collection;
 import java.util.Map;
@@ -54,8 +56,6 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockActionRequest;
-import org.springframework.mock.web.portlet.MockActionResponse;
 
 /**
  * @author Manuel de la Peña

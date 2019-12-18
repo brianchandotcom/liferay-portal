@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.test.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.spring.mock.web.portlet.MockActionRequest;
 
 import java.io.IOException;
 
@@ -31,8 +32,6 @@ import javax.portlet.RenderParameters;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-
-import org.springframework.mock.web.portlet.MockActionRequest;
 
 /**
  * @author Alicia García

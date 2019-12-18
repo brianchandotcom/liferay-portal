@@ -184,8 +184,8 @@ definition {
 			${portalURL}/api/jsonws/user/update-password \
 				-u test@liferay.com:test \
 				-d userId=${userId} \
-				-d password1='${newPassword}' \
-				-d password2='${newPassword}' \
+				-d password1=${newPassword} \
+				-d password2=${newPassword} \
 				-d passwordReset=${requireReset}
 		''';
 

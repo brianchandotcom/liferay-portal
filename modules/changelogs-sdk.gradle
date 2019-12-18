@@ -56,17 +56,22 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-			String changelog = ""
+			String dependencies = ""
+			String commitInfo = ""
 			String ticket = ""
 
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				matcher = gitLogLine =~ /[a-f0-9]+:(.+):([A-Z]+-\d+).*/
+				matcher = gitLogLine =~ /([a-f0-9]+):(.+):([A-Z]+-\d+)(.*)/
 
 				if (matcher.find()) {
-					publishDate = matcher.group(1)
-					ticket = matcher.group(2)
+					publishDate = matcher.group(2)
+					ticket = matcher.group(3)
+
+					commitInfo = commitInfo + """\
+						|
+						|- [${ticket}]: ${matcher.group(4)} (${matcher.group(1)})""".stripMargin()
 				}
 
 				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
@@ -75,21 +80,30 @@ buildChangelogs {
 					String dependencyName = matcher.group(1)
 					String dependencyVersion = matcher.group(2)
 
-					changelog = changelog + """\
+					dependencies = dependencies + """\
 						|
 						|- [${ticket}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 				}
 			}
 
-			if (changelog.length() > 0) {
+			if (commitInfo.length() > 0) {
 				text += """\
 					|
 					|
 					|## ${version} - ${publishDate}
 					|
+					|### Commits""".stripMargin()
+
+				text += commitInfo
+			}
+
+			if (dependencies.length() > 0) {
+				text += """\
+					|
+					|
 					|### Dependencies""".stripMargin()
 
-				text += changelog
+				text += dependencies
 			}
 		}
 

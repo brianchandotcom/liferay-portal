@@ -28,7 +28,7 @@ function addMappedInfoItem(items, action) {
 	];
 }
 
-export default function mappedReducer(state, action) {
+export default function mappingReducer(state, action) {
 	let nextState = state;
 
 	switch (action.type) {

@@ -45,7 +45,7 @@
 			</then>
 		</if>
 
-		<ant antfile="${project.dir}/build-common-java.xml" dir="${project.dir}/portal-kernel" inheritRefs="true" target="compile" />
+		<antcall target="build-common-java.compile" />
 
 		<if>
 			<equals arg1="${release.info.uptodate}" arg2="false" />

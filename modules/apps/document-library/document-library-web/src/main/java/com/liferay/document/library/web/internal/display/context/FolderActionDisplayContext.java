@@ -242,6 +242,11 @@ public class FolderActionDisplayContext {
 		}
 
 		portletURL.setParameter("redirect", _dlRequestHelper.getCurrentURL());
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletURL.setParameter("portletResource", portletDisplay.getId());
+
 		portletURL.setParameter("folderId", String.valueOf(_getFolderId()));
 		portletURL.setParameter(
 			"repositoryId", String.valueOf(_getRepositoryId()));

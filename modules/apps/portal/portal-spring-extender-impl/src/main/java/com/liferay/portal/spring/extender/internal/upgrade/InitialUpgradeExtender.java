@@ -177,7 +177,7 @@ public class InitialUpgradeExtender
 				if (tablesSQL != null) {
 					try {
 						db.runSQLTemplateString(
-							connection, tablesSQL, true, true);
+							connection, tablesSQL, false, true);
 					}
 					catch (Exception e) {
 						throw new UpgradeException(
@@ -192,7 +192,7 @@ public class InitialUpgradeExtender
 				if (sequencesSQL != null) {
 					try {
 						db.runSQLTemplateString(
-							connection, sequencesSQL, true, true);
+							connection, sequencesSQL, false, true);
 					}
 					catch (Exception e) {
 						throw new UpgradeException(
@@ -207,7 +207,7 @@ public class InitialUpgradeExtender
 				if (indexesSQL != null) {
 					try {
 						db.runSQLTemplateString(
-							connection, indexesSQL, true, true);
+							connection, indexesSQL, false, true);
 					}
 					catch (Exception e) {
 						throw new UpgradeException(

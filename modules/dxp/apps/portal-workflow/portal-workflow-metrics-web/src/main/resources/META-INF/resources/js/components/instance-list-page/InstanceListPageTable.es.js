@@ -9,61 +9,56 @@
  * distribution rights of the Software.
  */
 
+import ClayTable from '@clayui/table';
 import React from 'react';
 
-import InstanceListPageItem from './InstanceListPageItem.es';
+import {Item} from './InstanceListPageItem.es';
 
-const InstanceListPageTable = ({items}) => {
+const Table = ({items}) => {
 	return (
-		<div className="table-responsive">
-			<table
-				className="show-quick-actions-on-hover table table-fixed table-heading-nowrap table-hover table-list"
-				style={{minWidth: '64rem'}}
-			>
-				<thead>
-					<tr>
-						<th style={{width: '4%'}} />
+		<ClayTable>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell headingCell />
+					<ClayTable.Cell headingCell style={{width: '8%'}}>
+						{Liferay.Language.get('id')}
+					</ClayTable.Cell>
 
-						<th className="table-head-title" style={{width: '8%'}}>
-							{Liferay.Language.get('id')}
-						</th>
+					<ClayTable.Cell headingCell style={{width: '17%'}}>
+						{Liferay.Language.get('item-subject')}
+					</ClayTable.Cell>
 
-						<th
-							className="table-cell-expand table-head-title"
-							style={{width: '22%'}}
-						>
-							{Liferay.Language.get('item-subject')}
-						</th>
+					<ClayTable.Cell headingCell style={{width: '18%'}}>
+						{Liferay.Language.get('process-step')}
+					</ClayTable.Cell>
 
-						<th className="table-head-title" style={{width: '20%'}}>
-							{Liferay.Language.get('process-step')}
-						</th>
+					<ClayTable.Cell headingCell style={{width: '14%'}}>
+						{Liferay.Language.get('assignee')}
+					</ClayTable.Cell>
 
-						<th className="table-head-title" style={{width: '14%'}}>
-							{Liferay.Language.get('assignee')}
-						</th>
+					<ClayTable.Cell headingCell style={{width: '17%'}}>
+						{Liferay.Language.get('created-by')}
+					</ClayTable.Cell>
+					<ClayTable.Cell
+						headingCell
+						style={{textAlign: 'right', width: '18%'}}
+					>
+						{Liferay.Language.get('creation-date')}
+					</ClayTable.Cell>
 
-						<th className="table-head-title" style={{width: '14%'}}>
-							{Liferay.Language.get('created-by')}
-						</th>
+					<ClayTable.Cell headingCell />
+				</ClayTable.Row>
+			</ClayTable.Head>
 
-						<th
-							className="pr-4 table-head-title text-right"
-							style={{width: '18%'}}
-						>
-							{Liferay.Language.get('creation-date')}
-						</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					{items.map((item, index) => (
-						<InstanceListPageItem {...item} key={index} />
-					))}
-				</tbody>
-			</table>
-		</div>
+			<ClayTable.Body>
+				{items.map((item, index) => (
+					<Table.Item {...item} key={index} />
+				))}
+			</ClayTable.Body>
+		</ClayTable>
 	);
 };
 
-export default InstanceListPageTable;
+Table.Item = Item;
+
+export {Table};

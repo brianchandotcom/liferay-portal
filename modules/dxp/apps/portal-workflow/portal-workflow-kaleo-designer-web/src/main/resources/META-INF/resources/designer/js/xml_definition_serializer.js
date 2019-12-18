@@ -494,16 +494,19 @@ AUI.add(
 
 					buffer.push(xmlDelay.close);
 
-					for (var i = 1; i < delay[index].duration.length; i++) {
+					if (
+						delay[index].duration.length > 1 &&
+						delay[index].duration[1]
+					) {
 						var xmlRecurrence = XMLUtil.createObj('recurrence');
 
 						buffer.push(xmlRecurrence.open);
 
 						buffer.push(
-							XMLUtil.create('duration', delay[index].duration[i])
+							XMLUtil.create('duration', delay[index].duration[1])
 						);
 						buffer.push(
-							XMLUtil.create('scale', delay[index].scale[i])
+							XMLUtil.create('scale', delay[index].scale[1])
 						);
 
 						buffer.push(xmlRecurrence.close);

@@ -2565,57 +2565,16 @@ AUI.add(
 			NAME: 'task-timer-delays-editor-form',
 
 			prototype: {
-				_countRecurrenceViews(val) {
-					var count = 0;
-
-					if (val) {
-						count = val.duration
-							? val.duration.filter(isValue).length - 1
-							: 0;
-					}
-
-					return count;
-				},
-
-				addDynamicViews(val) {
-					var instance = this;
-
-					instance.removeAllViews('recurrence');
-
-					instance.addRecurrenceView(
-						instance._countRecurrenceViews(val)
-					);
-				},
-
-				addRecurrenceView(num) {
-					var instance = this;
-
-					num = num || 0;
-
-					var timersViewTpl = instance.get('viewTemplate');
-
-					var buffer = [];
-
-					for (var i = 0; i < num; i++) {
-						var delayContent = instance.getDelayContent();
-
-						buffer.push(
-							timersViewTpl.parse({
-								content: delayContent,
-								viewId: 'recurrence'
-							})
-						);
-					}
-
-					instance.appendToDynamicView(buffer.join(STR_BLANK));
-				},
-
 				addStaticViews() {
 					var instance = this;
 
 					var delayContent = instance.getDelayContent();
 
 					instance.appendToStaticView(delayContent);
+
+					var recurrenceContent = instance.getRecurrenceContent();
+
+					instance.appendToStaticView(recurrenceContent);
 				},
 
 				getDelayContent() {
@@ -2646,24 +2605,19 @@ AUI.add(
 					].join(STR_BLANK);
 				},
 
-				handleAddViewSection(event) {
+				getRecurrenceContent() {
 					var instance = this;
 
-					var button = event.target;
+					var timersViewTpl = instance.get('viewTemplate');
 
-					if (!button.get('disabled')) {
-						instance.addRecurrenceView(1);
-					}
-				},
+					var delayContent = instance.getDelayContent();
 
-				syncToolbarUI() {
-					var instance = this;
-
-					var addSectionButton = instance.get('addSectionButton');
-
-					if (addSectionButton) {
-						addSectionButton.set('disabled', false);
-					}
+					return [
+						timersViewTpl.parse({
+							content: delayContent,
+							viewId: 'recurrence'
+						})
+					].join(STR_BLANK);
 				}
 			}
 		});

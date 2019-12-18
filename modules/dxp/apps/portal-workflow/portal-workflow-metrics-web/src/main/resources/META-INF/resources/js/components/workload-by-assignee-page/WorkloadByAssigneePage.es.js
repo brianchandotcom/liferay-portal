@@ -35,15 +35,15 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 
 	const filtered = search || selectedFilters.length > 0;
 
-	const {data, fetchData} = useFetch(
-		`/processes/${processId}/assignee-users`,
-		{
+	const {data, fetchData} = useFetch({
+		params: {
 			keywords: search,
 			roleIds,
 			taskKeys,
 			...routeParams
-		}
-	);
+		},
+		url: `/processes/${processId}/assignee-users`
+	});
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);
 

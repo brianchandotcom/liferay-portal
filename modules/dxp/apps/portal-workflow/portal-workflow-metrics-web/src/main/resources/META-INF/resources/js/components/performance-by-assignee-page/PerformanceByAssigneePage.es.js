@@ -48,17 +48,17 @@ const PerformanceByAssigneePage = ({query, routeParams}) => {
 		};
 	}
 
-	const {data, fetchData} = useFetch(
-		`/processes/${processId}/assignee-users`,
-		{
+	const {data, fetchData} = useFetch({
+		params: {
 			completed: true,
 			keywords: search,
 			roleIds,
 			taskKeys,
 			...routeParams,
 			...timeRangeParams
-		}
-	);
+		},
+		url: `/processes/${processId}/assignee-users`
+	});
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);
 

@@ -88,10 +88,10 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		params.dateStart = dateStart.toISOString();
 	}
 
-	const {data, fetchData} = useFetch(
-		`/processes/${processId}/assignee-users`,
-		params
-	);
+	const {data, fetchData} = useFetch({
+		params,
+		url: `/processes/${processId}/assignee-users`
+	});
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);
 

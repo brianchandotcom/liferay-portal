@@ -61,12 +61,15 @@ const PerformanceByStepCard = ({routeParams}) => {
 		};
 	}
 
-	const {data, fetchData} = useFetch(`/processes/${processId}/tasks`, {
-		completed: true,
-		page: 1,
-		pageSize: 10,
-		sort: 'durationAvg:desc',
-		...timeRangeParams
+	const {data, fetchData} = useFetch({
+		params: {
+			completed: true,
+			page: 1,
+			pageSize: 10,
+			sort: 'durationAvg:desc',
+			...timeRangeParams
+		},
+		url: `/processes/${processId}/tasks`
 	});
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);

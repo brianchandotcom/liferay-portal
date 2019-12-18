@@ -69,9 +69,12 @@ const CompletionVelocityCard = ({routeParams}) => {
 	);
 	const {key: unit} = velocityUnitValues;
 
-	const {data, fetchData} = useFetch(`processes/${processId}/metric`, {
-		...timeRangeParams,
-		unit
+	const {data, fetchData} = useFetch({
+		params: {
+			...timeRangeParams,
+			unit
+		},
+		url: `processes/${processId}/metric`
 	});
 
 	const promises = useMemo(() => {

@@ -44,11 +44,14 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 		};
 	}
 
-	const {data, fetchData} = useFetch(`/processes/${processId}/tasks`, {
-		completed: true,
-		key: search,
-		...routeParams,
-		...timeRangeParams
+	const {data, fetchData} = useFetch({
+		params: {
+			completed: true,
+			key: search,
+			...routeParams,
+			...timeRangeParams
+		},
+		url: `/processes/${processId}/tasks`
 	});
 
 	const promises = useMemo(() => [fetchData()], [fetchData]);

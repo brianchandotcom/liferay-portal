@@ -45,9 +45,12 @@ function ProcessItemsCard({
 		};
 	}
 
-	const {data, fetchData} = useFetch(`/processes/${processId}`, {
-		completed,
-		...timeRangeParams
+	const {data, fetchData} = useFetch({
+		params: {
+			completed,
+			...timeRangeParams
+		},
+		url: `/processes/${processId}`
 	});
 
 	useEffect(() => {

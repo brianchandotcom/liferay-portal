@@ -48,6 +48,10 @@ public class PortalImplUnitTest {
 	@BeforeClass
 	public static void setUpClass() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
+		HttpUtil httpUtil = new HttpUtil();
+
+		httpUtil.setHttp(new HttpImpl());
 	}
 
 	@Test
@@ -563,18 +567,60 @@ public class PortalImplUnitTest {
 	@Test
 	public void testIsValidResourceId() {
 		Assert.assertTrue(_portalImpl.isValidResourceId("/view.jsp"));
+		Assert.assertTrue(_portalImpl.isValidResourceId("%2fview.jsp"));
+		Assert.assertTrue(_portalImpl.isValidResourceId("%252fview.jsp"));
+
 		Assert.assertFalse(
 			_portalImpl.isValidResourceId("/META-INF/MANIFEST.MF"));
 		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fMETA-INF%2fMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fMETA-INF%252fMANIFEST.MF"));
+
+		Assert.assertFalse(
 			_portalImpl.isValidResourceId("/META-INF\\MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fMETA-INF%5cMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fMETA-INF%255cMANIFEST.MF"));
+
 		Assert.assertFalse(
 			_portalImpl.isValidResourceId("\\META-INF/MANIFEST.MF"));
 		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cMETA-INF%2fMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cMETA-INF%252fMANIFEST.MF"));
+
+		Assert.assertFalse(
 			_portalImpl.isValidResourceId("\\META-INF\\MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cMETA-INF%5cMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cMETA-INF%255cMANIFEST.MF"));
+
 		Assert.assertFalse(_portalImpl.isValidResourceId("/WEB-INF/web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fWEB-INF%2fweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fWEB-INF%252fweb.xml"));
+
 		Assert.assertFalse(_portalImpl.isValidResourceId("/WEB-INF\\web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fWEB-INF%5cweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fWEB-INF%255cweb.xml"));
+
 		Assert.assertFalse(_portalImpl.isValidResourceId("\\WEB-INF/web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cWEB-INF%2fweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cWEB-INF%252fweb.xml"));
+
 		Assert.assertFalse(_portalImpl.isValidResourceId("\\WEB-INF\\web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cWEB-INF%5cweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cWEB-INF%255cweb.xml"));
 	}
 
 	@Test

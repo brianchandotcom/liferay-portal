@@ -61,31 +61,15 @@ public class ElasticsearchConnectionManager
 	}
 
 	public ElasticsearchConnection getElasticsearchConnection(
-		String connectionId) {
+		boolean preferLocalCluster) {
 
-		return getElasticsearchConnection(connectionId, false);
+		return getElasticsearchConnection(null, preferLocalCluster);
 	}
 
 	public ElasticsearchConnection getElasticsearchConnection(
-		String connectionId, boolean preferLocalCluster) {
+		String connectionId) {
 
-		if (!Validator.isBlank(connectionId)) {
-			return _elasticsearchConnections.get(connectionId);
-		}
-
-		if (isOperationModeEmbedded()) {
-			return _elasticsearchConnections.get(
-				EmbeddedElasticsearchConnection.CONNECTION_ID);
-		}
-
-		if (preferLocalCluster && isCrossClusterReplicationEnabled()) {
-			return _elasticsearchConnections.get(
-				crossClusterReplicationConfigurationWrapper.
-					getCCRLocalClusterConnectionId());
-		}
-
-		return _elasticsearchConnections.get(
-			_elasticsearchConfiguration.remoteClusterConnectionId());
+		return _elasticsearchConnections.get(connectionId);
 	}
 
 	@Override
@@ -117,6 +101,21 @@ public class ElasticsearchConnectionManager
 		}
 
 		return restHighLevelClient;
+	}
+
+	public boolean isCrossClusterReplicationEnabled() {
+		if (crossClusterReplicationConfigurationWrapper == null) {
+			return false;
+		}
+
+		if (Validator.isBlank(
+				crossClusterReplicationConfigurationWrapper.
+					getCCRLocalClusterConnectionId())) {
+
+			return false;
+		}
+
+		return crossClusterReplicationConfigurationWrapper.isCCREnabled();
 	}
 
 	public synchronized void registerCompanyId(long companyId) {
@@ -214,12 +213,26 @@ public class ElasticsearchConnectionManager
 		_serviceTracker.close();
 	}
 
-	protected boolean isCrossClusterReplicationEnabled() {
-		if (crossClusterReplicationConfigurationWrapper == null) {
-			return false;
+	protected ElasticsearchConnection getElasticsearchConnection(
+		String connectionId, boolean preferLocalCluster) {
+
+		if (!Validator.isBlank(connectionId)) {
+			return _elasticsearchConnections.get(connectionId);
 		}
 
-		return crossClusterReplicationConfigurationWrapper.isCCREnabled();
+		if (isOperationModeEmbedded()) {
+			return _elasticsearchConnections.get(
+				EmbeddedElasticsearchConnection.CONNECTION_ID);
+		}
+
+		if (preferLocalCluster && isCrossClusterReplicationEnabled()) {
+			return _elasticsearchConnections.get(
+				crossClusterReplicationConfigurationWrapper.
+					getCCRLocalClusterConnectionId());
+		}
+
+		return _elasticsearchConnections.get(
+			_elasticsearchConfiguration.remoteClusterConnectionId());
 	}
 
 	protected boolean isOperationModeEmbedded() {

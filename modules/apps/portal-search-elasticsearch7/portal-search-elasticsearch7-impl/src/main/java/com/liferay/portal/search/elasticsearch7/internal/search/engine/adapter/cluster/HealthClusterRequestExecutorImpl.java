@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
+
+import java.io.IOException;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
@@ -57,8 +60,11 @@ public class HealthClusterRequestExecutorImpl
 	protected ClusterHealthRequest createClusterHealthRequest(
 		HealthClusterRequest healthClusterRequest) {
 
-		ClusterHealthRequest clusterHealthRequest = new ClusterHealthRequest(
-			healthClusterRequest.getIndexNames());
+		ClusterHealthRequest clusterHealthRequest = new ClusterHealthRequest();
+
+		if (ArrayUtil.isNotEmpty(healthClusterRequest.getIndexNames())) {
+			clusterHealthRequest.indices(healthClusterRequest.getIndexNames());
+		}
 
 		long timeout = healthClusterRequest.getTimeout();
 
@@ -91,8 +97,8 @@ public class HealthClusterRequestExecutorImpl
 			return clusterClient.health(
 				clusterHealthRequest, RequestOptions.DEFAULT);
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

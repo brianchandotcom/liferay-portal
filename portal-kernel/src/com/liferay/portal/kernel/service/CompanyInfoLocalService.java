@@ -170,6 +170,16 @@ public interface CompanyInfoLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	/**
+	 * Returns the company info with the companyId
+	 *
+	 * @param companyId the company ID
+	 * @return the matching company info, or <code>null</code> if a matching
+	 company info could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CompanyInfo fetchByCompanyId(long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CompanyInfo fetchCompanyInfo(long companyInfoId);
 

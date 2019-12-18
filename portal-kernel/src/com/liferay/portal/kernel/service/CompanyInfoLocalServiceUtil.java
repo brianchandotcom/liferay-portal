@@ -182,6 +182,19 @@ public class CompanyInfoLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	/**
+	 * Returns the company info with the companyId
+	 *
+	 * @param companyId the company ID
+	 * @return the matching company info, or <code>null</code> if a matching
+	 company info could not be found
+	 */
+	public static com.liferay.portal.kernel.model.CompanyInfo fetchByCompanyId(
+		long companyId) {
+
+		return getService().fetchByCompanyId(companyId);
+	}
+
 	public static com.liferay.portal.kernel.model.CompanyInfo fetchCompanyInfo(
 		long companyInfoId) {
 

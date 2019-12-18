@@ -186,6 +186,20 @@ public class CompanyInfoLocalServiceWrapper
 			dynamicQuery, projection);
 	}
 
+	/**
+	 * Returns the company info with the companyId
+	 *
+	 * @param companyId the company ID
+	 * @return the matching company info, or <code>null</code> if a matching
+	 company info could not be found
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.CompanyInfo fetchByCompanyId(
+		long companyId) {
+
+		return _companyInfoLocalService.fetchByCompanyId(companyId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.CompanyInfo fetchCompanyInfo(
 		long companyInfoId) {

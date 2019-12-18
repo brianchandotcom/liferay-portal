@@ -30,8 +30,8 @@ buildChangelogs {
 
 		String text = "# " + GUtil.loadProperties(new File("sdk/${projectName}/bnd.bnd"))["Bundle-Name"] + " Change Log"
 
-		String date = ""
 		String commitRange = ""
+		String publishDate = ""
 		String version = ""
 
 		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
@@ -56,7 +56,7 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-			String changelogItem = ""
+			String changelog = ""
 			String ticket = ""
 
 			gitLogOutput.eachLine {
@@ -65,7 +65,7 @@ buildChangelogs {
 				matcher = gitLogLine =~ /[a-f0-9]+:(.+):([A-Z]+-\d+).*/
 
 				if (matcher.find()) {
-					date = matcher.group(1)
+					publishDate = matcher.group(1)
 					ticket = matcher.group(2)
 				}
 
@@ -75,11 +75,11 @@ buildChangelogs {
 					String dependencyName = matcher.group(1)
 					String dependencyVersion = matcher.group(2)
 
-					changelogItem = changelogItem + """\
+					changelog = changelog + """\
 						|
 						|- [${ticket}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 
-					changelogItem = changelogItem.replaceAll(/(\n(?=.{80,}).{1,80})[ \t]+(.*)/) {
+					changelog = changelog.replaceAll(/(\n(?=.{80,}).{1,80})[ \t]+(.*)/) {
 						String all, String s1, String s2 ->
 
 						"${s1}\n${s2}"
@@ -87,15 +87,15 @@ buildChangelogs {
 				}
 			}
 
-			if (changelogItem.length() > 0) {
+			if (changelog.length() > 0) {
 				text += """\
 					|
 					|
-					|## ${version} - ${date}
+					|## ${version} - ${publishDate}
 					|
 					|### Changed""".stripMargin()
 
-				text += changelogItem
+				text += changelog
 			}
 		}
 

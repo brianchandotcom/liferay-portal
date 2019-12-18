@@ -58,7 +58,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Test
-	public void testVerifyModelWithUnknownPKColumnName() {
+	public void testVerifyModelWithUnknownPKColumnName() throws Exception {
 		try {
 			ReflectionTestUtil.invoke(
 				_verifyUUID, "verifyUUID",
@@ -97,7 +97,9 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Test
-	public void testVerifyParallelUnknownModelWithUnknownPKColumnName() {
+	public void testVerifyParallelUnknownModelWithUnknownPKColumnName()
+		throws Exception {
+
 		VerifiableUUIDModel[] verifiableUUIDModels = new VerifiableUUIDModel
 			[PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD];
 
@@ -146,7 +148,9 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Test
-	public void testVerifyUnknownModelWithUnknownPKColumnName() {
+	public void testVerifyUnknownModelWithUnknownPKColumnName()
+		throws Exception {
+
 		try {
 			_testDoVerify(
 				new VerifiableUUIDModel() {
@@ -192,13 +196,18 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 	}
 
 	private static void _verifyException(
-		Exception e, Map<DBType, String> expectedMessages) {
+			Exception e, Map<DBType, String> expectedMessages)
+		throws Exception {
 
 		DB db = DBManagerUtil.getDB();
 
 		DBType dbType = db.getDBType();
 
 		String expectedMessagePrefix = expectedMessages.get(dbType);
+
+		if (expectedMessagePrefix == null) {
+			throw e;
+		}
 
 		String message = e.getMessage();
 

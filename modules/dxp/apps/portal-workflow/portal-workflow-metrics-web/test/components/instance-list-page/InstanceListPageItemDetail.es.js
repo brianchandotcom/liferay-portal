@@ -185,7 +185,7 @@ describe('The instance item detail should', () => {
 		expect(instanceDetailSpans[0].innerHTML).toBe('Completed');
 	});
 
-	test('Be rendered with "OnTime", "Pending statuses', async () => {
+	test('Be rendered with "OnTime", "Pending statuses"', async () => {
 		const baseInstance = {
 			assetTitle: 'New Post',
 			assetType: 'Blog',

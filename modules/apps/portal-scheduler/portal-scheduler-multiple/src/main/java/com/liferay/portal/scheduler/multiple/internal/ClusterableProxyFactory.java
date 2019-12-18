@@ -15,14 +15,15 @@
 package com.liferay.portal.scheduler.multiple.internal;
 
 import com.liferay.petra.reflect.AnnotationLocator;
+import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
-import com.liferay.portal.kernel.cluster.NullClusterable;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -109,6 +110,31 @@ public class ClusterableProxyFactory {
 			new ConcurrentHashMap<>();
 
 		private final T _targetObject;
+
+	}
+
+	private static class NullClusterable implements Clusterable {
+
+		public static final Clusterable NULL_CLUSTERABLE =
+			new NullClusterable();
+
+		@Override
+		public Class<? extends ClusterInvokeAcceptor> acceptor() {
+			return null;
+		}
+
+		@Override
+		public Class<? extends Annotation> annotationType() {
+			return Clusterable.class;
+		}
+
+		@Override
+		public boolean onMaster() {
+			return false;
+		}
+
+		private NullClusterable() {
+		}
 
 	}
 

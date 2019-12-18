@@ -18,7 +18,6 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
@@ -58,6 +57,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -357,11 +357,21 @@ public class ServiceTestUtil {
 
 		messageBus.replace(baseDestination, false);
 
-		ExecutorService executorService =
-			PortalExecutorManagerUtil.getPortalExecutor(
-				oldDestination.getName());
+		ExecutorService executorService = null;
 
-		if (executorService == null) {
+		try {
+			Class<?> clazz = oldDestination.getClass();
+
+			Field field = ReflectionUtil.getDeclaredField(
+				clazz.getSuperclass(), "_portalExecutorManager");
+
+			PortalExecutorManager portalExecutorManager =
+				(PortalExecutorManager)field.get(oldDestination);
+
+			executorService = portalExecutorManager.getPortalExecutor(
+				oldDestination.getName());
+		}
+		catch (Exception e) {
 			return;
 		}
 

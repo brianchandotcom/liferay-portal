@@ -33,6 +33,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -73,7 +74,7 @@ public class WebSphereDeploymentExtension implements DeploymentExtension {
 		}
 
 		String wsadminContent = FileUtil.read(
-			DeployUtil.getResourcePath("wsadmin.py"));
+			DeployUtil.getResourcePath(new HashSet<>(), "wsadmin.py"));
 
 		String adminAppListOptions =
 			PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_LIST_OPTIONS;

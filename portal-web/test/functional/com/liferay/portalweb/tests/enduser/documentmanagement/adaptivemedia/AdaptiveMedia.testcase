@@ -286,8 +286,12 @@ definition {
 		Button.clickPublish();
 	}
 
+	// This is not an acceptance test and is temporarily quarantined.
+
 	@priority = "5"
 	test AssertAdaptedImageInWebContent {
+		property portal.acceptance = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -641,8 +645,11 @@ definition {
 		AdaptiveMedia.viewImageVariantID(imageVariantID = "custom-id");
 	}
 
+	// This is not an acceptance test and is temporarily quarantined.
+
 	@priority = "4"
 	test ViewNoImageResolutionInNewVirtualInstance {
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "AdaptiveMedia#ViewNoImageResolutionInNewVirtualInstance";
 
 		ProductMenu.gotoPortlet(

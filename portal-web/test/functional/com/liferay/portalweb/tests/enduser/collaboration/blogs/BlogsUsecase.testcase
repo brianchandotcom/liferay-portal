@@ -330,8 +330,11 @@ definition {
 		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
 	}
 
+	// This is not an acceptance test and is temporarily quarantined.
+
 	@priority = "4"
 	test DemoTrackbackURL {
+		property portal.acceptance = "quarantine";
 		property custom.properties = "blogs.trackback.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "BlogsUsecase#DemoTrackbackURL";

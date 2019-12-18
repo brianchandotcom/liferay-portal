@@ -9,11 +9,13 @@
  * distribution rights of the Software.
  */
 
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import {AppContext} from '../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
 import {PAUSE_NODE_KEYS} from '../../../src/main/resources/META-INF/resources/js/components/sla/Constants.es';
 import SLAForm from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAForm.es';
+import FieldError from '../../../src/main/resources/META-INF/resources/js/components/sla/form/fieldError.es';
 import {Errors} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/ErrorsStore.es';
 import {SLANodes} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLANodeStore.es';
 import {SLA} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLAStore.es';
@@ -550,4 +552,10 @@ test('Should update state after input changes', () => {
 		.simulate('blur');
 
 	expect(component).toMatchSnapshot();
+});
+
+test('Should render its FieldError component without crashing', () => {
+	const {getByTestId} = render(<FieldError error={'Mock Error Message'} />);
+	const errorSpan = getByTestId('errorSpan');
+	expect(errorSpan.innerHTML).toEqual('Mock Error Message');
 });

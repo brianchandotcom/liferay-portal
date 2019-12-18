@@ -184,4 +184,149 @@ describe('The instance item detail should', () => {
 
 		expect(instanceDetailSpans[0].innerHTML).toBe('Completed');
 	});
+
+	test('Be rendered with "OnTime", "Pending statuses', async () => {
+		const baseInstance = {
+			assetTitle: 'New Post',
+			assetType: 'Blog',
+			assigneeUsers: ['Test Test'],
+			creatorUser: {
+				name: 'User 1'
+			},
+			dateCreated: new Date('2019-01-03'),
+			id: 1,
+			slaResults: [
+				{
+					status: 'Paused'
+				}
+			],
+			slaStatus: 'Overdue',
+			taskNames: ['Update']
+		};
+
+		const getClientMock = (slaStatus, status, props) => ({
+			get: jest.fn().mockResolvedValue({
+				data: {
+					...baseInstance,
+					...props,
+					slaStatus,
+					status
+				}
+			})
+		});
+
+		const {getAllByTestId} = render(
+			<MockRouter client={getClientMock('OnTime', 'Pending', {})}>
+				<InstanceListContext.Provider value={{instanceId: 12345}}>
+					<InstanceListPageItemDetail processId="12345" />
+				</InstanceListContext.Provider>
+			</MockRouter>
+		);
+
+		const instanceDetailSpans = await waitForElement(() =>
+			getAllByTestId('instanceDetailSpan')
+		);
+
+		expect(instanceDetailSpans[0].innerHTML).toBe('Pending');
+	});
+
+	test('Be rendered with "OnTime", "Pending statuses', async () => {
+		const baseInstance = {
+			assetTitle: 'New Post',
+			assetType: 'Blog',
+			assigneeUsers: ['Test Test'],
+			creatorUser: {
+				name: 'User 1'
+			},
+			dateCreated: new Date('2019-01-03'),
+			id: 1,
+			slaResults: [
+				{
+					dateOverdue: '2019-12-10T17:41:59Z',
+					id: 39401,
+					name: 'One minute',
+					onTime: true,
+					remainingTime: -97238035,
+					status: 'Running'
+				}
+			],
+			slaStatus: 'Overdue',
+			taskNames: ['Update']
+		};
+
+		const getClientMock = (slaStatus, status, props) => ({
+			get: jest.fn().mockResolvedValue({
+				data: {
+					...baseInstance,
+					...props,
+					slaStatus,
+					status
+				}
+			})
+		});
+
+		const {getAllByTestId} = render(
+			<MockRouter client={getClientMock('OnTime', 'Stopped', {})}>
+				<InstanceListContext.Provider value={{instanceId: 12345}}>
+					<InstanceListPageItemDetail processId="12345" />
+				</InstanceListContext.Provider>
+			</MockRouter>
+		);
+
+		const instanceDetailSpans = await waitForElement(() =>
+			getAllByTestId('instanceDetailSpan')
+		);
+
+		expect(instanceDetailSpans[0].innerHTML).toBe('Stopped');
+	});
+
+	test('Be rendered with "OnTime", "Pending statuses', async () => {
+		const baseInstance = {
+			assetTitle: 'New Post',
+			assetType: 'Blog',
+			assigneeUsers: ['Test Test'],
+			creatorUser: {
+				name: 'User 1'
+			},
+			dateCreated: new Date('2019-01-03'),
+			id: 1,
+			slaResults: [
+				{
+					dateOverdue: '2019-12-10T17:41:59Z',
+					id: 39401,
+					name: 'One minute',
+					onTime: true,
+					remainingTime: -97238035,
+					status: 'Stopped'
+				}
+			],
+			slaStatus: 'Overdue',
+			taskNames: ['Update']
+		};
+
+		const getClientMock = (slaStatus, status, props) => ({
+			get: jest.fn().mockResolvedValue({
+				data: {
+					...baseInstance,
+					...props,
+					slaStatus,
+					status
+				}
+			})
+		});
+
+		const {getAllByTestId} = render(
+			<MockRouter client={getClientMock('Overdue', 'Stopped', {})}>
+				<InstanceListContext.Provider value={{instanceId: 12345}}>
+					<InstanceListPageItemDetail processId="12345" />
+				</InstanceListContext.Provider>
+			</MockRouter>
+		);
+
+		const instanceDetailSpans = await waitForElement(() =>
+			getAllByTestId('instanceDetailSpan')
+		);
+
+		expect(instanceDetailSpans[0].innerHTML).toBe('Stopped');
+	});
 });

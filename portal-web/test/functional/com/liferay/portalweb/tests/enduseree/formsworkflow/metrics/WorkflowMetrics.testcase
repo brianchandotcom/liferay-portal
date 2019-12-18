@@ -388,7 +388,7 @@ var key_testSLADefinitionHours = "0001";
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
-		WorkflowMetrics.fillSLAForm(
+		WorkflowMetrics.fillSLAFormHours(
 			slaDefinitionHours = "${key_testSLADefinitionHours}",
 			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
 			slaDefinitionEnd = "${key_testSLADefinitionEnd}",

@@ -378,7 +378,8 @@ definition {
 
 		property portal.acceptance = "true";
 
-var key_testSLADefinitionHours = "0001";
+		var key_testSLADefinitionHours = "0001";
+		var key_testSLADefinitionHoursCheck = "00:01"
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -419,7 +420,7 @@ var key_testSLADefinitionHours = "0001";
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
-			value1 = "${key_testSLADefinitionHours}");
+			value1 = "${key_testSLADefinitionHoursCheck}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

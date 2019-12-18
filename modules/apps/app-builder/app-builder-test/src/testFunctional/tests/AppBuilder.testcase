@@ -962,10 +962,6 @@ definition {
 		
 		FormViewBuilder.addFormView(
 			fieldType = "Text Field",
-			formViewName = "My Form View 1")
-
-		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
 			formViewName = "My Form View 1");
 
 		AppBuilderAdmin.deleteEntry(itemName = "My Form View 1");

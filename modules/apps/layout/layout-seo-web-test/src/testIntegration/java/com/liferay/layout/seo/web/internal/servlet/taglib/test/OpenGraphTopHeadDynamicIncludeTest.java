@@ -461,7 +461,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), fileName), serviceContext);
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
+			serviceContext);
 	}
 
 	private void _assertAlternateLinkTag(

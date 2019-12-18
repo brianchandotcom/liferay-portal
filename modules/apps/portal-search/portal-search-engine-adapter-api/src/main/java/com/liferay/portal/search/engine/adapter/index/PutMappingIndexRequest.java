@@ -21,7 +21,7 @@ import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
  */
 public class PutMappingIndexRequest
 	extends CrossClusterRequest
-	implements IndexRequest<PutMappingIndexResponse> {
+	implements MappingIndexRequest<PutMappingIndexResponse> {
 
 	public PutMappingIndexRequest(
 		String[] indexNames, String mappingName, String mapping) {

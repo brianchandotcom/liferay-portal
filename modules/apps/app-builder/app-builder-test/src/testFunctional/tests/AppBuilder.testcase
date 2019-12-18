@@ -1150,111 +1150,43 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
-<<<<<<< HEAD
-	@description = "Clear Table View search results when clicking the Clear button on the search results banner"
-	@priority = "5"
-	test TableViewClearSearchResults {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "Custom Object Title",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Upload",
-			formViewName = "Upload Field - Form View Title",
-			tableViewName = "Upload Field - Table View Title");
-
-		FormViewBuilder.switchToFormViewTab();
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Grid",
-			formViewName = "Grid Field - Form View Title",
-			tableViewName = "Grid Field - Table View Title");
-
-		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
-
-		AppBuilderAdmin.searchByItem(itemName = "Upload");
-
-		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Upload");
-
-		AppBuilderAdmin.clearSearch();
-
-		AppBuilderAdmin.validateListTitleAtRow(
-			rowNumber = "1",
-			title = "Grid Field - Table View Title");
-
-		AppBuilderAdmin.validateListTitleAtRow(
-			rowNumber = "2",
-			title = "Upload Field - Table View Title");
-	}
-
-	@description = "Validate Table View search returns by search engine using a search term"
-	@priority = "5"
-	test TableViewSearchByTerm {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "My custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
-			formViewName = "Text Field - Form View Title",
-			tableViewName = "Text Field - Table View Title");
-
-		FormViewBuilder.switchToFormViewTab();
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Date",
-			formViewName = "Date Field - Form View Title",
-			tableViewName = "Date Field - Table View Title");
-
-		AppBuilderAdmin.searchByItem(itemName = "Text");
-
-		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "Text");
-	}
-
-	@description = "No results found screen is shown when the Table View search doesn't retrieve any results"
-	@priority = "5"
-	test TableViewSearchNoResultsFound {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "Custom Object Title",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
-			formViewName = "Text Field - Form View Title",
-			tableViewName = "Text Field - Table View Title");
-
-		FormViewBuilder.switchToFormViewTab();
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Date",
-			formViewName = "Date Field - Form View Title",
-			tableViewName = "Date Field - Table View Title");
-
-		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
-
-		AppBuilderAdmin.searchByItem(itemName = "Apple");
-
-		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
-=======
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {
 		property portal.acceptance = "true";
-​
+
 		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
+			customObjectName = "my custom object 1",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
->>>>>>> LRQA-53877 Added SearchForObject test
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 3",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.searchByItem(itemName = "object");
+
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
+
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
+
+		AppBuilderAdmin.clearSearch();
+		
+		AppBuilderAdmin.searchByItem(itemName = "!@#");
+
+		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

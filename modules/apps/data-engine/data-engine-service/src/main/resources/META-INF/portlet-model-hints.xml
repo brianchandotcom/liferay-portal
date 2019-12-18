@@ -20,7 +20,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="appliedFilters" type="String" />
+		<field name="appliedFilters" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="ddmStructureId" type="long" />
 		<field name="fieldNames" type="String">
 			<hint-collection name="CLOB" />

@@ -264,6 +264,9 @@
 		<!-- Module Source Checks -->
 
 		<check name="JavaModuleComponentCheck" />
+		<check name="JavaModuleExposureCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaModuleExtendedObjectClassDefinitionCheck" />
 		<check name="JavaModuleIllegalImportsCheck">
 			<property name="checkRegistryInTestClasses" value="false" />

@@ -271,7 +271,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"imageSelectorURL", editorSoyContext.get("imageSelectorURL")
 			).put(
-				"infoItemSelectorURL", editorSoyContext.get("infoItemSelectorURL")
+				"infoItemSelectorURL",
+				editorSoyContext.get("infoItemSelectorURL")
 			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
 			).put(

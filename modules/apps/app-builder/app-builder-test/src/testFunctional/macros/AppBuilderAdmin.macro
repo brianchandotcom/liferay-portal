@@ -70,17 +70,10 @@ definition {
 
 			Alert.viewSuccessMessage();
 
-<<<<<<< HEAD
 			AssertElementNotPresent(
 				locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 				value1 = "${key_itemName}");
 		}
-=======
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		Alert.viewSuccessMessage();
-	}
->>>>>>> 30c82a921773... LRQA-53958 Confirms Alert success message
 
 		macro editCustomObjectNameAtPopover {
 			Type(

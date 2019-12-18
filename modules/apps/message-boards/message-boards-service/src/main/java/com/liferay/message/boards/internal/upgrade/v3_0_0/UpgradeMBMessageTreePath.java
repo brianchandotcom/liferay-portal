@@ -64,12 +64,13 @@ public class UpgradeMBMessageTreePath extends UpgradeProcess {
 
 	private void _populateTreePath() throws Exception {
 		runSQL(
-			"update MBMessage set treePath = CONCAT('/', messageId, '/') " +
-				"where parentMessageId = 0");
+			"update MBMessage set treePath = CONCAT('/', " +
+				"CAST_TEXT(messageId), '/') where parentMessageId = 0");
 
 		runSQL(
-			"update MBMessage set treePath = CONCAT('/', rootMessageId, '/', " +
-				"messageId, '/') where parentMessageId = rootMessageId");
+			"update MBMessage set treePath = CONCAT('/', " +
+				"CAST_TEXT(rootMessageId), '/', CAST_TEXT(messageId), '/') " +
+					"where parentMessageId = rootMessageId");
 
 		Map<Long, Long> relations = new HashMap<>();
 

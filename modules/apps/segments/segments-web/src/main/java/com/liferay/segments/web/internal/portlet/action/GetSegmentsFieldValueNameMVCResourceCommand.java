@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -25,7 +26,6 @@ import java.io.PrintWriter;
 
 import java.util.Optional;
 
-import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -45,23 +45,16 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCResourceCommand.class
 )
 public class GetSegmentsFieldValueNameMVCResourceCommand
-	implements MVCResourceCommand {
+	extends BaseMVCResourceCommand {
 
 	@Override
-	public boolean serveResource(
+	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
+		throws Exception {
 
-		try {
-			PrintWriter printWriter = resourceResponse.getWriter();
+		PrintWriter printWriter = resourceResponse.getWriter();
 
-			printWriter.write(getText(resourceRequest, resourceResponse));
-
-			return false;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
+		printWriter.write(getText(resourceRequest, resourceResponse));
 	}
 
 	protected String getText(

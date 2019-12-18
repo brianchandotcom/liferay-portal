@@ -82,8 +82,9 @@ public class AssetAutoTaggerOSGiCommandsTest
 		Registry registry = RegistryUtil.getRegistry();
 
 		_assetAutoTaggerOSGiCommands = registry.getService(
-			"com.liferay.asset.auto.tagger.internal.osgi.commands." +
-				"AssetAutoTaggerOSGiCommands");
+			registry.getServiceReference(
+				"com.liferay.asset.auto.tagger.internal.osgi.commands." +
+					"AssetAutoTaggerOSGiCommands"));
 	}
 
 	@Test

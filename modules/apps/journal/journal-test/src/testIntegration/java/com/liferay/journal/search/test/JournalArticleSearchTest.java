@@ -560,7 +560,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	protected void setUpDDMIndexer() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		_ddmIndexer = registry.getService(DDMIndexer.class);
+		_ddmIndexer = registry.getService(
+			registry.getServiceReference(DDMIndexer.class));
 	}
 
 	@Override

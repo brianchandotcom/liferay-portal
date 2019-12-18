@@ -237,9 +237,10 @@ public class AMThumbnailsOSGiCommandsTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceComponentRuntime serviceComponentRuntime = registry.getService(
-			ServiceComponentRuntime.class);
+			registry.getServiceReference(ServiceComponentRuntime.class));
 
-		Object service = registry.getService(_CLASS_NAME_PROCESSOR);
+		Object service = registry.getService(
+			registry.getServiceReference(_CLASS_NAME_PROCESSOR));
 
 		Bundle bundle = FrameworkUtil.getBundle(service.getClass());
 
@@ -278,9 +279,10 @@ public class AMThumbnailsOSGiCommandsTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceComponentRuntime serviceComponentRuntime = registry.getService(
-			ServiceComponentRuntime.class);
+			registry.getServiceReference(ServiceComponentRuntime.class));
 
-		Object service = registry.getService(_CLASS_NAME_OSGI_COMMAND);
+		Object service = registry.getService(
+			registry.getServiceReference(_CLASS_NAME_OSGI_COMMAND));
 
 		Bundle bundle = FrameworkUtil.getBundle(service.getClass());
 
@@ -378,7 +380,8 @@ public class AMThumbnailsOSGiCommandsTest {
 	private void _run(String functionName) throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Object service = registry.getService(_CLASS_NAME_OSGI_COMMAND);
+		Object service = registry.getService(
+			registry.getServiceReference(_CLASS_NAME_OSGI_COMMAND));
 
 		Class<?> clazz = service.getClass();
 

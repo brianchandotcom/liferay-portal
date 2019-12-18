@@ -111,8 +111,10 @@ public class JournalConverterUtilTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_ddmXML = registry.getService(DDMXML.class);
-		_journalConverter = registry.getService(JournalConverter.class);
+		_ddmXML = registry.getService(
+			registry.getServiceReference(DDMXML.class));
+		_journalConverter = registry.getService(
+			registry.getServiceReference(JournalConverter.class));
 	}
 
 	@Test
@@ -910,10 +912,11 @@ public class JournalConverterUtilTest {
 			});
 	}
 
-	protected void setUpDDMXML() throws Exception {
+	protected void setUpDDMXML() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		_ddmXML = registry.getService(DDMXML.class);
+		_ddmXML = registry.getService(
+			registry.getServiceReference(DDMXML.class));
 	}
 
 	protected void udpateFieldsMap(

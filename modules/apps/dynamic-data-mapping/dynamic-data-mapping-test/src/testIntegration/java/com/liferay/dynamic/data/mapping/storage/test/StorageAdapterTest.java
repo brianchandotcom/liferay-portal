@@ -650,21 +650,21 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_ddmFormValuesToFieldsConverter = registry.getService(
-			DDMFormValuesToFieldsConverter.class);
+			registry.getServiceReference(DDMFormValuesToFieldsConverter.class));
 	}
 
 	protected void setUpFieldsToDDMFormValuesConverter() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_fieldsToDDMFormValuesConverter = registry.getService(
-			FieldsToDDMFormValuesConverter.class);
+			registry.getServiceReference(FieldsToDDMFormValuesConverter.class));
 	}
 
 	protected void setUpJSONStorageAdapter() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_storageAdapterRegistry = registry.getService(
-			StorageAdapterRegistry.class);
+			registry.getServiceReference(StorageAdapterRegistry.class));
 
 		_jsonStorageAdapter = _storageAdapterRegistry.getStorageAdapter(
 			StorageType.JSON.toString());

@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.spring.mock.web.portlet.MockRenderRequest;
+import com.liferay.spring.mock.web.portlet.MockRenderResponse;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -65,8 +67,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockRenderRequest;
-import org.springframework.mock.web.portlet.MockRenderResponse;
 
 /**
  * @author Adam Brandizzi

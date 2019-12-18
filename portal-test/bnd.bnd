@@ -21,6 +21,7 @@ Export-Package:\
 	com.liferay.portlet.expando.util.test,\
 	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.passwordpoliciesadmin.util.test,\
+	com.liferay.spring.mock.web.portlet,\
 	\
 	junit.*,\
 	\
@@ -29,14 +30,14 @@ Export-Package:\
 	org.junit.runner.*,\
 	org.junit.*,\
 	\
-	org.springframework.mock.web,\
-	org.springframework.mock.web.portlet
+	org.springframework.mock.web
 Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/development/hamcrest-core.jar,\
 	@${project.dir}/../lib/development/junit.jar,\
+	@${project.dir}/../lib/development/portletmvc4spring-test.jar,\
 	@${project.dir}/../lib/development/spring-test.jar,\
 	@${project.dir}/../lib/portal/aspectj-rt.jar
 -include ../common.bnd

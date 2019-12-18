@@ -53,7 +53,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.util.promise", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly group: "org.springframework", name: "spring-tx", version: "4.1.9.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.2.RELEASE"
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:static:osgi:osgi-util")

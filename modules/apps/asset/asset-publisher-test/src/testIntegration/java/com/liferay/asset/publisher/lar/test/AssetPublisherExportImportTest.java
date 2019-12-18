@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.spring.mock.web.portlet.MockPortletRequest;
 
 import java.io.Serializable;
 
@@ -95,8 +96,6 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * Tests the export and import behavior of the Asset Publisher bundle with

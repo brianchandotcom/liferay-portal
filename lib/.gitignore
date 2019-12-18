@@ -53,6 +53,7 @@
 /development/osgi-annotation-versioning.jar
 /development/p6spy.jar
 /development/persistence.jar
+/development/portletmvc4spring-test.jar
 /development/postgresql.jar
 /development/powermock-api-mockito.jar
 /development/powermock-api-support.jar
@@ -219,6 +220,7 @@
 /portal/poi-ooxml-schemas.jar
 /portal/poi-scratchpad.jar
 /portal/poi.jar
+/portal/portletmvc4spring-framework.jar
 /portal/rdffilter.jar
 /portal/rhino.jar
 /portal/rmi-api.jar
@@ -246,7 +248,6 @@
 /portal/spring-tx.jar
 /portal/spring-web.jar
 /portal/spring-webmvc.jar
-/portal/spring-webmvc-portlet.jar
 /portal/stax-ex.jar
 /portal/stax.jar
 /portal/streambuffer.jar

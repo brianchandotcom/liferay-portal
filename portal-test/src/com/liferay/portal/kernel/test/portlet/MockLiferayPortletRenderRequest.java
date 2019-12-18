@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.test.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.spring.mock.web.portlet.MockRenderRequest;
 
 import java.util.Map;
 
@@ -25,8 +26,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.RenderParameters;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.mock.web.portlet.MockRenderRequest;
 
 /**
  * @author Jürgen Kappler

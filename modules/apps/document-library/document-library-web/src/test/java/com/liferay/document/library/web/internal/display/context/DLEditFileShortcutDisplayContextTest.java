@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portlet.internal.PortalContextImpl;
+import com.liferay.spring.mock.web.portlet.MockPortletURL;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -51,7 +52,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.portlet.MockPortletURL;
 
 /**
  * @author Cristina González

@@ -428,8 +428,6 @@ public class BeanPortletImpl implements BeanPortlet {
 
 		allPortletModes.addAll(beanApp.getCustomPortletModes());
 
-		StringBundler portletModesSB = new StringBundler();
-
 		List<String> supportedPortletModes = new ArrayList<>();
 
 		Map<String, Set<String>> supportedPortletModesMap =
@@ -437,6 +435,8 @@ public class BeanPortletImpl implements BeanPortlet {
 
 		for (Map.Entry<String, Set<String>> entry :
 				supportedPortletModesMap.entrySet()) {
+
+			StringBundler portletModesSB = new StringBundler();
 
 			portletModesSB.append(entry.getKey());
 			portletModesSB.append(";");
@@ -560,13 +560,13 @@ public class BeanPortletImpl implements BeanPortlet {
 
 		List<String> supportedWindowStates = new ArrayList<>();
 
-		StringBundler windowStatesSB = new StringBundler();
-
 		Map<String, Set<String>> supportedWindowStatesMap =
 			getSupportedWindowStates();
 
 		for (Map.Entry<String, Set<String>> entry :
 				supportedWindowStatesMap.entrySet()) {
+
+			StringBundler windowStatesSB = new StringBundler();
 
 			windowStatesSB.append(entry.getKey());
 			windowStatesSB.append(";");

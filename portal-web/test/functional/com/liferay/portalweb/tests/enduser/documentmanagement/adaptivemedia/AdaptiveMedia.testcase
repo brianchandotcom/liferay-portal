@@ -330,6 +330,43 @@ definition {
 		Button.clickPublish();
 	}
 
+	@description = "This ensures that the SVG image can be added to a blog entry."
+	@priority = "5"
+	test AssertAdaptedSVGImageInBlogsEntry {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Adaptive Media Image Description",
+			dmDocumentFile = "Document_1.svg",
+			dmDocumentTitle = "Document_1.svg");
+
+		Pause(locator1 = "3000");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry With Adaptive Media SVG Image");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+		ItemSelector.selectDMImage(
+			imageFileName = "Document_1.svg",
+			navTab = "Documents and Media");
+
+		Pause(locator1 = "2000");
+
+		AdaptiveMedia.viewImageVariantURL(imageName = "Document_1.svg");
+
+		Button.clickPublish();
+	}
+
 	@priority = "5"
 	test CannotAddNonNumericWidthOrHeight {
 		ProductMenu.gotoPortlet(

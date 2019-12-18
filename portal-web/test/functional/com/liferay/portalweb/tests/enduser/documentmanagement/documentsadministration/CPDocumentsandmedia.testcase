@@ -662,6 +662,25 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 	}
 
+	@description = "This ensures that the SVG file can be previewed."
+	@priority = "5"
+	test PreviewSVG {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.svg",
+			dmDocumentTitle = "Document_1.svg");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.svg");
+
+		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.expandInfo();
+
+		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
+	}
+
 	@priority = "4"
 	test RotateImageViaDMSiteAdmin {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

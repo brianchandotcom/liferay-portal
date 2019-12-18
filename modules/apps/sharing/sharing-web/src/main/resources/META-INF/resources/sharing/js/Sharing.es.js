@@ -28,6 +28,16 @@ import ClaySticker from '@clayui/sticker';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
+function filterDuplicateItems(items) {
+	return items.filter(
+		(item, index) =>
+			items.findIndex(
+				newItem =>
+					newItem.value.toLowerCase() === item.value.toLowerCase()
+			) === index
+	);
+}
+
 const Sharing = ({
 	classNameId,
 	classPK,
@@ -39,12 +49,14 @@ const Sharing = ({
 	sharingUserAutocompleteURL,
 	sharingVerifyEmailAddressURL
 }) => {
-	const [emailAddressErrorMessage, setEmailAddressErrorMessage] = useState();
+	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
+		[]
+	);
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [multiSelectValue, setMultiSelectValue] = useState('');
 	const [allowSharingChecked, setAllowSharingChecked] = useState(true);
 	const [sharingPermission, setSharingPermission] = useState('VIEW');
-	const ignoreNextMultiSelectValue = useRef(false);
+	const emailValidationInProgress = useRef(false);
 
 	const closeDialog = () => {
 		const sharingDialog = Liferay.Util.getWindow(dialogId);
@@ -126,82 +138,83 @@ const Sharing = ({
 		return emailRegex.test(email);
 	};
 
-	const handleItemsChange = items => {
-		if (items.length) {
-			const newestItem = items[items.length - 1];
-			const newestItemValue = newestItem.value;
+	const handleItemsChange = useCallback(
+		items => {
+			emailValidationInProgress.current = true;
 
-			items.map((item, index) => {
-				if (index) {
-					if (items[index - 1].emailAddress === newestItemValue) {
-						items.pop();
+			Promise.all(
+				items.map(item => {
+					if (
+						item.id ||
+						selectedItems.some(({value}) => item.value === value)
+					) {
+						return Promise.resolve({item});
 					}
-				}
-			});
 
-			if (newestItem.id) {
-				setSelectedItems(items);
+					if (!isEmailAddressValid(item.value)) {
+						return Promise.resolve({
+							error: Liferay.Util.sub(
+								Liferay.Language.get(
+									'x-is-not-a-valid-email-address'
+								),
+								item.value
+							),
+							item
+						});
+					}
 
-				return;
-			}
-
-			if (isEmailAddressValid(newestItemValue)) {
-				const newItem = items.pop();
-
-				setSelectedItems(items);
-
-				ignoreNextMultiSelectValue.current = true;
-
-				fetch(sharingVerifyEmailAddressURL, {
-					body: objectToFormData({
-						[`${portletNamespace}emailAddress`]: newestItemValue
-					}),
-					method: 'POST'
-				})
-					.then(response => response.json())
-					.then(result => {
-						const {userExists} = result;
-
-						if (!userExists) {
-							setEmailAddressErrorMessage(
-								Liferay.Util.sub(
-									Liferay.Language.get(
-										'user-x-does-not-exist'
-									),
-									newestItemValue
-								)
-							);
-						} else {
-							items.push(newItem);
-
-							setMultiSelectValue('');
-						}
+					return fetch(sharingVerifyEmailAddressURL, {
+						body: objectToFormData({
+							[`${portletNamespace}emailAddress`]: item.value
+						}),
+						method: 'POST'
 					})
-					.then(() => {
-						setSelectedItems(items);
-					});
-			} else {
-				setEmailAddressErrorMessage(
-					Liferay.Language.get('please-enter-a-valid-email-address')
+						.then(response => response.json())
+						.then(({userExists}) => ({
+							error: !userExists
+								? Liferay.Util.sub(
+										Liferay.Language.get(
+											'user-x-does-not-exist'
+										),
+										item.value
+								  )
+								: undefined,
+							item
+						}));
+				})
+			).then(results => {
+				emailValidationInProgress.current = false;
+
+				const erroredResults = results.filter(({error}) => !!error);
+
+				setEmailAddressErrorMessages(
+					erroredResults.map(({error}) => error)
 				);
 
-				items.pop();
+				if (erroredResults.length === 0) {
+					setMultiSelectValue('');
+				}
 
-				setSelectedItems(items);
+				if (erroredResults.length === 1) {
+					setMultiSelectValue(erroredResults[0].item.value);
+				}
 
-				ignoreNextMultiSelectValue.current = true;
-			}
-		} else {
-			setSelectedItems(items);
-		}
-	};
+				setSelectedItems(
+					filterDuplicateItems(
+						results
+							.filter(({error}) => !error)
+							.map(({item}) => item)
+					)
+				);
+			});
+		},
+		[portletNamespace, selectedItems, sharingVerifyEmailAddressURL]
+	);
 
 	const handleChange = useCallback(value => {
-		if (!ignoreNextMultiSelectValue.current) {
+		if (!emailValidationInProgress.current) {
 			setMultiSelectValue(value);
 		}
-
-		ignoreNextMultiSelectValue.current = false;
 	}, []);
 
 	const multiSelectFilter = useCallback(() => true, []);
@@ -219,7 +232,9 @@ const Sharing = ({
 		<ClayForm className="sharing-modal-content" onSubmit={handleSubmit}>
 			<div className="inline-scroller modal-body">
 				<ClayForm.Group
-					className={emailAddressErrorMessage ? 'has-error' : ''}
+					className={
+						emailAddressErrorMessages.length ? 'has-error' : ''
+					}
 				>
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
@@ -263,11 +278,17 @@ const Sharing = ({
 								</ClayForm.Text>
 							</ClayForm.FeedbackGroup>
 
-							{emailAddressErrorMessage && (
+							{emailAddressErrorMessages.length > 0 && (
 								<ClayForm.FeedbackGroup>
-									<ClayForm.FeedbackItem>
-										{emailAddressErrorMessage}
-									</ClayForm.FeedbackItem>
+									{emailAddressErrorMessages.map(
+										emailAddressErrorMessage => (
+											<ClayForm.FeedbackItem
+												key={emailAddressErrorMessage}
+											>
+												{emailAddressErrorMessage}
+											</ClayForm.FeedbackItem>
+										)
+									)}
 								</ClayForm.FeedbackGroup>
 							)}
 						</ClayInput.GroupItem>

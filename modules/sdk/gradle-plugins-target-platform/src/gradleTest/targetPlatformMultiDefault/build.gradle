@@ -10,8 +10,6 @@ runGradleTest {
 
 		Project subproject = project.childProjects["subproject"]
 
-		assert subproject.dependencyManagement.managedVersions.size() == 0
-
 		Exception expectedException = null
 
 		try {

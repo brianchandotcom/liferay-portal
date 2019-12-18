@@ -31,8 +31,11 @@ export function getConfig(config) {
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
+	const augmentedPanels = augmentPanelData(sidebarPanels);
+
 	const syntheticItems = {
-		sidebarPanels: partitionPanels(augmentPanelData(sidebarPanels)),
+		panels: generatePanels(augmentedPanels),
+		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,
 		toolbarPlugins: getToolbarPlugins(toolbarId)
 	};
@@ -89,6 +92,20 @@ function augmentPanelData(sidebarPanels) {
 	});
 }
 
+function generatePanels(sidebarPanels) {
+	return sidebarPanels.reduce(
+		(groups, panel) => {
+			if (isSeparator(panel)) {
+				groups.push([]);
+			} else {
+				groups[groups.length - 1].push(panel.sidebarPanelId);
+			}
+			return groups;
+		},
+		[[]]
+	);
+}
+
 /**
  * Currently we have segments experience data sprinkled throughout the
  * server data. In the future we may choose to encapsulate it better and
@@ -125,18 +142,13 @@ function isSeparator(panel) {
  * array into an array of arrays; we'll draw a separator between each group.
  */
 function partitionPanels(panels) {
-	return panels.reduce(
-		(groups, panel) => {
-			if (isSeparator(panel)) {
-				groups.push([]);
-			} else {
-				groups[groups.length - 1].push(panel);
-			}
-
-			return groups;
-		},
-		[[]]
-	);
+	return panels.reduce((map, panel) => {
+		const {sidebarPanelId} = panel;
+		if (!isSeparator(panel)) {
+			map[sidebarPanelId] = panel;
+		}
+		return map;
+	}, {});
 }
 
 function rendersSidebarContent(sidebarPanelId) {

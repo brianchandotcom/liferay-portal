@@ -42,10 +42,9 @@ export default function Sidebar() {
 	const store = useContext(StoreContext);
 
 	const [hasError, setHasError] = useStateSafe(false);
-	const [open, setOpen] = useStateSafe(false);
-	const [activePluginId, setActivePluginId] = useStateSafe(null);
 
-	const {sidebarPanels} = config;
+	const {panels, sidebarPanels} = config;
+	const {sidebarOpen, sidebarPanelId} = store;
 
 	const isMounted = useIsMounted();
 
@@ -53,20 +52,30 @@ export default function Sidebar() {
 
 	const {getInstance, register} = usePlugins();
 
+	const panel = sidebarPanels[sidebarPanelId];
+
+	const promise = load(sidebarPanelId, panel.pluginEntryPoint);
+
+	const app = {
+		Actions,
+		StoreContext,
+		config,
+		dispatch,
+		store
+	};
+
+	const registerPanel = register(sidebarPanelId, promise, {app, panel});
+
 	useEffect(
 		() => {
-			// Open first panel on mount.
-			const panel = sidebarPanels[0] && sidebarPanels[0][0];
-
 			if (panel) {
-				togglePanel(panel);
+				togglePlugin(panel);
 			} else {
 				adjustWrapperPadding({sidebarOpen: false});
 			}
 		},
-		// We really only want to do this once, on first mount.
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
+		/* eslint-disable react-hooks/exhaustive-deps */
+		[panel, sidebarOpen, sidebarPanelId]
 	);
 
 	const SidebarPanel = useLazy(
@@ -79,83 +88,58 @@ export default function Sidebar() {
 		}, [])
 	);
 
-	const togglePanel = panel => {
+	const handleClick = panel => {
+		const open =
+			panel.sidebarPanelId === sidebarPanelId ? !sidebarOpen : true;
+		dispatch(
+			Actions.switchSidebarPanel({
+				sidebarOpen: open,
+				sidebarPanelId: panel.sidebarPanelId
+			})
+		);
+	};
+
+	const togglePlugin = () => {
 		if (hasError) {
 			setHasError(false);
 		}
 
-		const {rendersSidebarContent, sidebarPanelId} = panel;
+		getInstance(sidebarPanelId);
 
-		const shouldActivate =
-			!rendersSidebarContent || sidebarPanelId !== activePluginId;
-
-		const wantOpen = rendersSidebarContent && shouldActivate;
-
-		if (open !== wantOpen) {
-			setOpen(wantOpen);
-
-			adjustWrapperPadding({sidebarOpen: wantOpen});
-		}
-
-		getInstance(activePluginId).then(activePlugin => {
-			if (activePlugin && typeof activePlugin.deactivate === 'function') {
-				activePlugin.deactivate();
+		registerPanel.then(plugin => {
+			if (
+				plugin &&
+				typeof plugin.activate === 'function' &&
+				isMounted()
+			) {
+				plugin.activate();
+			} else if (!plugin) {
+				setHasError(true);
 			}
 		});
-
-		if (shouldActivate) {
-			setActivePluginId(sidebarPanelId);
-
-			const promise = load(sidebarPanelId, panel.pluginEntryPoint);
-
-			const app = {
-				Actions,
-				StoreContext,
-				config,
-				dispatch,
-				store
-			};
-
-			register(sidebarPanelId, promise, {app, panel}).then(plugin => {
-				if (
-					plugin &&
-					typeof plugin.activate === 'function' &&
-					isMounted()
-				) {
-					plugin.activate();
-				} else if (!plugin) {
-					setHasError(true);
-				}
-			});
-		} else {
-			setActivePluginId(null);
-		}
 	};
 
 	return (
 		<ClayTooltipProvider>
 			<div className="page-editor-sidebar">
 				<div className="page-editor-sidebar-buttons">
-					{sidebarPanels.reduce((elements, group, groupIndex) => {
-						const buttons = group.map(panel => {
-							const {
-								icon,
-								label,
-								pluginEntryPoint,
-								sidebarPanelId
-							} = panel;
+					{panels.reduce((elements, group, groupIndex) => {
+						const buttons = group.map(panelId => {
+							const panel = sidebarPanels[panelId];
+							const {icon, label, pluginEntryPoint} = panel;
 
 							const prefetch = () =>
-								load(sidebarPanelId, pluginEntryPoint).then(
-									...swallow
-								);
+								load(
+									panel.sidebarPanelId,
+									pluginEntryPoint
+								).then(...swallow);
 
 							return (
 								<ClayButtonWithIcon
 									data-tooltip-align="left"
 									displayType="unstyled"
-									key={sidebarPanelId}
-									onClick={() => togglePanel(panel)}
+									key={panel.sidebarPanelId}
+									onClick={() => handleClick(panel)}
 									onFocus={prefetch}
 									onMouseEnter={prefetch}
 									symbol={icon}
@@ -178,7 +162,7 @@ export default function Sidebar() {
 				<div
 					className={classNames({
 						'page-editor-sidebar-content': true,
-						'page-editor-sidebar-content-open': open
+						'page-editor-sidebar-content-open': sidebarOpen
 					})}
 				>
 					{hasError ? (
@@ -187,9 +171,14 @@ export default function Sidebar() {
 								block
 								displayType="secondary"
 								onClick={() => {
-									setActivePluginId(null);
+									dispatch(
+										Actions.switchSidebarPanel({
+											sidebarOpen: false,
+											sidebarPanelId:
+												panels[0] && panels[0][0]
+										})
+									);
 									setHasError(false);
-									setOpen(false);
 								}}
 								small
 							>
@@ -197,11 +186,15 @@ export default function Sidebar() {
 							</ClayButton>
 						</div>
 					) : (
-						<ErrorBoundary handleError={() => setHasError(true)}>
+						<ErrorBoundary
+							handleError={() => {
+								setHasError(true);
+							}}
+						>
 							<Suspense fallback={<ClayLoadingIndicator />}>
 								<SidebarPanel
 									getInstance={getInstance}
-									pluginId={activePluginId}
+									pluginId={sidebarPanelId}
 								/>
 							</Suspense>
 						</ErrorBoundary>

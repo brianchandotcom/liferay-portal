@@ -173,6 +173,8 @@ const Sharing = ({
 							);
 						} else {
 							items.push(newItem);
+
+							setMultiSelectValue('');
 						}
 					})
 					.then(() => {

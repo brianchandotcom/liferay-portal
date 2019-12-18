@@ -158,7 +158,10 @@ const Sharing = ({
 									newestItemValue
 								)
 							);
-							items.pop();
+
+							const {label} = items.pop();
+
+							setMultiSelectValue(label);
 						}
 					})
 					.then(() => {

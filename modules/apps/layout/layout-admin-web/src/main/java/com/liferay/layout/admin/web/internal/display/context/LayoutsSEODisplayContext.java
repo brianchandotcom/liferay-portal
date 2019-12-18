@@ -35,7 +35,6 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -48,6 +47,7 @@ import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
 import java.util.Locale;
 import java.util.Map;
@@ -79,8 +79,13 @@ public class LayoutsSEODisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_storageEngine = storageEngine;
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(
-			_liferayPortletRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+
+		_groupDisplayContextHelper = new GroupDisplayContextHelper(
+			httpServletRequest);
+
+		_httpServletRequest = httpServletRequest;
 
 		_itemSelector = (ItemSelector)liferayPortletRequest.getAttribute(
 			LayoutAdminWebKeys.ITEM_SELECTOR);
@@ -149,7 +154,7 @@ public class LayoutsSEODisplayContext {
 		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
 
 		if (selLayoutSEOEntry == null) {
-			return GroupConstants.DEFAULT_LIVE_GROUP_ID;
+			return _groupDisplayContextHelper.getGroupId();
 		}
 
 		return selLayoutSEOEntry.getGroupId();
@@ -250,6 +255,7 @@ public class LayoutsSEODisplayContext {
 	private DDMStructure _ddmStructure;
 	private final DLAppService _dlAppService;
 	private final DLURLHelper _dlurlHelper;
+	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private Long _layoutId;

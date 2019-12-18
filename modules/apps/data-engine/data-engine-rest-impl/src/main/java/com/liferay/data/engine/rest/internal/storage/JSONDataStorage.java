@@ -20,7 +20,6 @@ import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordCollectionU
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordValuesUtil;
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -83,7 +82,7 @@ public class JSONDataStorage implements DataStorage {
 			dataDefinitionId);
 
 		return _toDataRecordValues(
-			deserialize(
+			_deserializeDDMFormValues(
 				ddmContent.getData(), ddmStructure.getFullHierarchyDDMForm()));
 	}
 
@@ -103,7 +102,7 @@ public class JSONDataStorage implements DataStorage {
 		DDMContent ddmContent = _ddmContentLocalService.addContent(
 			PrincipalThreadLocal.getUserId(), siteId,
 			DataRecord.class.getName(), null,
-			serialize(
+			_serializeDDMFormValues(
 				DataRecordValuesUtil.toDDMFormValues(
 					dataRecordValues, ddmStructure.getFullHierarchyDDMForm(),
 					_portal.getSiteDefaultLocale(siteId))),
@@ -117,7 +116,9 @@ public class JSONDataStorage implements DataStorage {
 		return ddmContent.getPrimaryKey();
 	}
 
-	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
+	private DDMFormValues _deserializeDDMFormValues(
+		String content, DDMForm ddmForm) {
+
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);
@@ -129,7 +130,7 @@ public class JSONDataStorage implements DataStorage {
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
 
-	protected String serialize(DDMFormValues ddmFormValues) {
+	private String _serializeDDMFormValues(DDMFormValues ddmFormValues) {
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormValues);
@@ -182,9 +183,6 @@ public class JSONDataStorage implements DataStorage {
 
 	@Reference
 	private DDMContentLocalService _ddmContentLocalService;
-
-	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -78,12 +78,6 @@ buildChangelogs {
 					changelog = changelog + """\
 						|
 						|- [${ticket}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
-
-					changelog = changelog.replaceAll(/(\n(?=.{80,}).{1,80})[ \t]+(.*)/) {
-						String all, String s1, String s2 ->
-
-						"${s1}\n${s2}"
-					}
 				}
 			}
 
@@ -101,7 +95,11 @@ buildChangelogs {
 
 		File changelogMarkdownFile = file("sdk/" + projectName + "/CHANGELOG.markdown")
 
-		changelogMarkdownFile.text = text
+		changelogMarkdownFile.text = text.replaceAll(/(\n(?=.{80,}).{1,80})[ \t]+(.*)/) {
+			String all, String s1, String s2 ->
+
+			"${s1}\n${s2}"
+		}
 
 		logger.lifecycle "Updated '{}'", changelogMarkdownFile
 	}

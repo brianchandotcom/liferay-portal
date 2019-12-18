@@ -146,15 +146,6 @@ public class DeployUtil {
 		return _deployUtil._getResourcePath(tempPaths, resource);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getResourcePath(Set, String)}
-	 */
-	@Deprecated
-	public static String getResourcePath(String resource) throws Exception {
-		return _deployUtil._getResourcePath(new HashSet<>(), resource);
-	}
-
 	public static void redeployTomcat(String context) throws Exception {
 		if (_isPortalContext(context)) {
 			throw new UnsupportedOperationException(

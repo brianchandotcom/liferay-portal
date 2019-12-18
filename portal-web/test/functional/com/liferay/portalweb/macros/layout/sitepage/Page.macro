@@ -931,7 +931,12 @@ definition {
 		var url = "${portalURL}/web/guest/${pageNameURL}";
 
 		if (isSet(siteNameURL)) {
-			var url = "${portalURL}/web/${siteNameURL}/${pageNameURL}";
+			if (isSet(pageName)) {
+				var url = "${portalURL}/web/${siteNameURL}/${pageNameURL}";
+			}
+			else {
+				var url = "${portalURL}/web/${siteNameURL}";
+			}
 		}
 
 		if (isSet(openGraph)) {

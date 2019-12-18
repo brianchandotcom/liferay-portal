@@ -217,10 +217,10 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
+			groupName = "Guest",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Guest");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
@@ -235,11 +235,10 @@ definition {
 
 		Page.viewPreview(
 			description = '''description@#$%^&amp;*()~`1234567890''',
-			htmlTitle = '''@#$%^&amp;*()~`1234567890title - Test Site Name - ${siteName}''',
+			htmlTitle = '''@#$%^&amp;*()~`1234567890title - ${siteName}''',
 			openGraph = "true",
 			pageName = "Test Page Name",
-			portalURL = "${portalURL}",
-			siteNameURL = "test-site-name");
+			portalURL = "${portalURL}");
 
 		Button.click(button = "Save");
 
@@ -247,11 +246,10 @@ definition {
 
 		Page.viewPreview(
 			description = '''description@#$%^&amp;*()~`1234567890''',
-			htmlTitle = '''@#$%^&amp;*()~`1234567890title - Test Site Name - ${siteName}''',
+			htmlTitle = '''@#$%^&amp;*()~`1234567890title - ${siteName}''',
 			openGraph = "true",
 			pageName = "Test Page Name",
-			portalURL = "${portalURL}",
-			siteNameURL = "test-site-name");
+			portalURL = "${portalURL}");
 	}
 
 	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."

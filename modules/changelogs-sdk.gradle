@@ -34,9 +34,9 @@ buildChangelogs {
 		String publishDate = ""
 		String version = ""
 
-		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
+		File changelogCommitsFile = file("sdk/" + projectName + "/CHANGELOG.commits")
 
-		changelogPropertiesFile.getText("UTF-8").split("\n").reverse().each {
+		changelogCommitsFile.getText("UTF-8").split("\n").reverse().each {
 			String recordCommitLine ->
 
 			Matcher matcher = recordCommitLine =~ /(\d+\.\d+\.\d+):([a-f0-9]+\.\.[a-f0-9]+)/
@@ -106,7 +106,7 @@ buildChangelogs {
 }
 
 recordCommits {
-	description = "Records the commit ID for each published version in 'CHANGELOG.properties'."
+	description = "Records the commit ID for each published version in 'CHANGELOG.commits'."
 	group = "changelogs"
 
 	doLast {
@@ -187,14 +187,14 @@ recordCommits {
 			}
 		}
 
-		File changelogPropertiesFile = file("sdk/" + projectName + "/CHANGELOG.properties")
+		File changelogCommitsFile = file("sdk/" + projectName + "/CHANGELOG.commits")
 
-		changelogPropertiesFile.text = recordCommitIDs.collect {
+		changelogCommitsFile.text = recordCommitIDs.collect {
 			VersionNumber versionNumber, String commitIds ->
 
 			"${versionNumber}:${commitIds}"
 		} join "\n"
 
-		logger.lifecycle "Updated '{}'", changelogPropertiesFile
+		logger.lifecycle "Updated '{}'", changelogCommitsFile
 	}
 }

@@ -966,7 +966,7 @@ definition {
 
 		AppBuilderAdmin.openActionMenu(itemName = "My Form View 1");
 
-		AppBuilderAdmin.deleteFromActionMenu(key_itemName = "My Form View 1");
+		AppBuilderAdmin.deleteFromActionMenu();
 	}
 
 	@description = "Choose between the existing Form Views of an object when deploying an app"

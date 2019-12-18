@@ -28,20 +28,6 @@ public class DeleteDocumentRequest
 		_uid = uid;
 	}
 
-	/**
-	 * @param      indexName
-	 * @param      type
-	 * @param      uid
-	 * @deprecated As of Judson (7.1.x), since 7.1.x, replaced by {@link
-	 *             DeleteDocumentRequest#DeleteDocumentRequest(String, String)}
-	 */
-	@Deprecated
-	public DeleteDocumentRequest(String indexName, String type, String uid) {
-		_indexName = indexName;
-		_type = type;
-		_uid = uid;
-	}
-
 	@Override
 	public void accept(Consumer<DeleteDocumentRequest> consumer) {
 		consumer.accept(this);

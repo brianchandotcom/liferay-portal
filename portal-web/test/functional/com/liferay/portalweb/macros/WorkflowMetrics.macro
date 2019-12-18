@@ -157,7 +157,7 @@ definition {
 			value1 = "${key_slaDefinitionDays}");
 	}
 
-macro fillSLAFormHours {
+	macro fillSLAFormHours {
 		var key_slaDefinitionHours = "${slaDefinitionHours}";
 		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
 		var key_slaDefinitionEnd = "${slaDefinitionEnd}";

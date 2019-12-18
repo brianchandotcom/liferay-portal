@@ -105,17 +105,6 @@ public class AnalyzeIndexRequest
 		return new String[] {_indexName};
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement. This method
-	 *             should not be in the parent interface.  Only certain
-	 *             IndexRequests work with mappings.
-	 */
-	@Deprecated
-	@Override
-	public String getMappingName() {
-		throw new UnsupportedOperationException();
-	}
-
 	public String getNormalizer() {
 		return _normalizer;
 	}

@@ -122,9 +122,15 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
 			fragmentEntryId);
 
+		long companyId = user.getCompanyId();
+
+		if (serviceContext != null) {
+			companyId = serviceContext.getCompanyId();
+		}
+
 		fragmentEntry.setUuid(serviceContext.getUuid());
 		fragmentEntry.setGroupId(groupId);
-		fragmentEntry.setCompanyId(serviceContext.getCompanyId());
+		fragmentEntry.setCompanyId(companyId);
 		fragmentEntry.setUserId(user.getUserId());
 		fragmentEntry.setUserName(user.getFullName());
 		fragmentEntry.setCreateDate(serviceContext.getCreateDate(new Date()));

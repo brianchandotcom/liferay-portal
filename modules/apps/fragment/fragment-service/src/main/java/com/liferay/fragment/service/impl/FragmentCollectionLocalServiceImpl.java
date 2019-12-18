@@ -84,6 +84,12 @@ public class FragmentCollectionLocalServiceImpl
 
 		validateFragmentCollectionKey(groupId, fragmentCollectionKey);
 
+		long companyId = user.getCompanyId();
+
+		if (serviceContext != null) {
+			companyId = serviceContext.getCompanyId();
+		}
+
 		long fragmentCollectionId = counterLocalService.increment();
 
 		FragmentCollection fragmentCollection =
@@ -91,7 +97,7 @@ public class FragmentCollectionLocalServiceImpl
 
 		fragmentCollection.setUuid(serviceContext.getUuid());
 		fragmentCollection.setGroupId(groupId);
-		fragmentCollection.setCompanyId(serviceContext.getCompanyId());
+		fragmentCollection.setCompanyId(companyId);
 		fragmentCollection.setUserId(user.getUserId());
 		fragmentCollection.setUserName(user.getFullName());
 		fragmentCollection.setCreateDate(

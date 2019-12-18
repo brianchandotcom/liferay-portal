@@ -28,6 +28,8 @@
 	</target>
 
 	<target name="no-default-access-to-gogo-shell-command">
+		<delete file="${app.server.tomcat.classes.portal.dir}/portal-ext.properties" />
+
 		<antcall inheritall="false" target="start-app-server" />
 
 		<exec executable="/bin/bash" outputproperty="gogo.shell.content.out">

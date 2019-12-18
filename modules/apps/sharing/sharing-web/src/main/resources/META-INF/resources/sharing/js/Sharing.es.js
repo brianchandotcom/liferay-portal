@@ -26,7 +26,7 @@ import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 const Sharing = ({
 	classNameId,
@@ -44,6 +44,7 @@ const Sharing = ({
 	const [multiSelectValue, setMultiSelectValue] = useState('');
 	const [allowSharingChecked, setAllowSharingChecked] = useState(true);
 	const [sharingPermission, setSharingPermission] = useState('VIEW');
+	const ignoreNextMultiSelectValue = useRef(false);
 
 	const closeDialog = () => {
 		const sharingDialog = Liferay.Util.getWindow(dialogId);
@@ -171,11 +172,21 @@ const Sharing = ({
 				items.pop();
 
 				setSelectedItems(items);
+
+				ignoreNextMultiSelectValue.current = true;
 			}
 		} else {
 			setSelectedItems(items);
 		}
 	};
+
+	const handleChange = useCallback(value => {
+		if (!ignoreNextMultiSelectValue.current) {
+			setMultiSelectValue(value);
+		}
+
+		ignoreNextMultiSelectValue.current = false;
+	}, []);
 
 	const multiSelectFilter = useCallback(() => true, []);
 
@@ -206,7 +217,7 @@ const Sharing = ({
 								inputValue={multiSelectValue}
 								items={selectedItems}
 								menuRenderer={SharingAutocomplete}
-								onChange={setMultiSelectValue}
+								onChange={handleChange}
 								onItemsChange={handleItemsChange}
 								placeholder={Liferay.Language.get(
 									'enter-name-or-email-address'

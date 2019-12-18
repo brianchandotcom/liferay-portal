@@ -78,8 +78,8 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 			</nav>
 
 			<Treeview
-				NodeComponent={Treeview.Card}
 				filterQuery={filterQuery}
+				NodeComponent={Treeview.Card}
 				nodes={nodes}
 				onSelectedNodesChange={handleSelectionChange}
 			/>

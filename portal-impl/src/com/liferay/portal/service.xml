@@ -161,7 +161,6 @@
 
 		<column name="accountId" type="long" />
 		<column name="webId" type="String" />
-		<column name="key" type="String" />
 		<column name="mx" type="String" />
 		<column name="homeURL" type="String" />
 		<column name="logoId" type="long" />
@@ -203,6 +202,23 @@
 		<reference entity="VirtualHost" package-path="com.liferay.portal" />
 		<reference entity="ExpandoColumn" package-path="com.liferay.portlet.expando" />
 		<reference entity="ExpandoTable" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CompanyInfo" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="companyInfoId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="companyId" type="long" />
+		<column name="key" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="CompanyInfo" unique="true">
+			<finder-column name="companyId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="Contact" remote-service="true">
 

@@ -77,7 +77,7 @@ public class SegmentsEntrySegmentsFieldCustomizer
 		SegmentsEntry segmentsEntry = _getSegmentsEntry(fieldValue);
 
 		if (segmentsEntry == null) {
-			return fieldValue;
+			return null;
 		}
 
 		return segmentsEntry.getName(locale);

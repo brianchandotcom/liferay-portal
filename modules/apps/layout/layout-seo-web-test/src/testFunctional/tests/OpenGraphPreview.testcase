@@ -57,7 +57,6 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "Document_1.png",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
@@ -71,7 +70,6 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "Document_2.jpeg",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
@@ -87,7 +85,6 @@ definition {
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			key_imageName = "Document_2.jpeg",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
@@ -133,7 +130,6 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
@@ -155,7 +151,6 @@ definition {
 			description = "Page Description",
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
@@ -198,7 +193,6 @@ definition {
 			htmlTitle = "Custom Title - Test Site Name - ${siteName}",
 			key_imageName = "Document_1.jpg",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
@@ -211,7 +205,6 @@ definition {
 			htmlTitle = "Custom Title - Test Site Name - ${siteName}",
 			key_imageName = "Document_1.jpg",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 	}
@@ -227,7 +220,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
@@ -290,7 +283,6 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - Test Site Name - ${siteName}",
 			openGraph = "true",
-			pageName = "Long Test Page Name To Check The URL",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name",
 			truncatedHTMLTitle = "true",
@@ -304,7 +296,6 @@ definition {
 			description = "Liferay Portal provides an excellent platform for building web applications, websites, and portals, but it can additionally be used for a new category of web ap…",
 			htmlTitle = "Liferay Portal provides an excellent platform for building web applications - Test Site Name - ${siteName}",
 			openGraph = "true",
-			pageName = "Long Test Page Name To Check The URL",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name",
 			truncatedHTMLTitle = "true",
@@ -347,7 +338,6 @@ definition {
 		Page.viewPreview(
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
 			openGraph = "true",
-			pageName = "Test Page Name",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
@@ -388,7 +378,6 @@ definition {
 			description = "وصف الاختبار",
 			htmlTitle = "عنوان الاختبار - Test Site Name - ${siteName}",
 			openGraph = "true",
-			pageName = "Test Page",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 	}

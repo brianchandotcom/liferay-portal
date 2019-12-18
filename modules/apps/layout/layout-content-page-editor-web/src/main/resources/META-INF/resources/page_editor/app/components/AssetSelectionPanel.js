@@ -50,7 +50,11 @@ export function AssetSelectionPanel({
 		});
 
 		itemSelectorDialog.on('visibleChange', event => {
-			if (event.newVal === false && destroyedCallback) {
+			if (
+				!event.newVal &&
+				destroyedCallback &&
+				typeof destroyedCallback === 'function'
+			) {
 				destroyedCallback();
 			}
 		});

@@ -216,7 +216,9 @@ public abstract class BaseMoreLikeThisQueryTestCase
 		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
 
 		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			String.valueOf(getCompanyId()), "LiferayDocumentType", id);
+			String.valueOf(getCompanyId()), id);
+
+		deleteDocumentRequest.setType("LiferayDocumentType");
 
 		searchEngineAdapter.execute(deleteDocumentRequest);
 	}

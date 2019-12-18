@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.Document;
@@ -134,7 +135,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 		throws PortletException {
 
 		SearchResultsPortletDisplayContext searchResultsPortletDisplayContext =
-			new SearchResultsPortletDisplayContext();
+			createSearchResultsPortletDisplayContext(renderRequest);
 
 		SearchResultsSummariesHolder searchResultsSummariesHolder =
 			buildSummaries(
@@ -178,6 +179,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 		searchResultsPortletDisplayContext.setTotalHits(
 			searchResponse.getTotalHits());
+
+		searchResultsPortletDisplayContext.
+			translateSearchResultSummaryDisplayContexts(documents);
 
 		return searchResultsPortletDisplayContext;
 	}
@@ -228,6 +232,18 @@ public class SearchResultsPortlet extends MVCPortlet {
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
+		}
+	}
+
+	protected SearchResultsPortletDisplayContext
+		createSearchResultsPortletDisplayContext(RenderRequest renderRequest) {
+
+		try {
+			return new SearchResultsPortletDisplayContext(
+				getHttpServletRequest(renderRequest));
+		}
+		catch (ConfigurationException ce) {
+			throw new RuntimeException(ce);
 		}
 	}
 

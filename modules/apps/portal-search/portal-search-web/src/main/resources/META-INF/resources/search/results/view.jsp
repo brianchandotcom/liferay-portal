@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -27,12 +28,25 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletDisplayContext" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <portlet:defineObjects />
 
 <%
 SearchResultsPortletDisplayContext searchResultsPortletDisplayContext = (SearchResultsPortletDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
+
+SearchResultsPortletInstanceConfiguration searchResultsPortletInstanceConfiguration = searchResultsPortletDisplayContext.getSearchResultsPortletInstanceConfiguration();
+
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("searchResultsPortletDisplayContext", searchResultsPortletDisplayContext);
+
+List<SearchResultSummaryDisplayContext> searchResultSummaryDisplayContexts = searchResultsPortletDisplayContext.getSearchResultSummaryDisplayContexts();
 
 if (searchResultsPortletDisplayContext.isRenderNothing()) {
 	return;
@@ -40,6 +54,32 @@ if (searchResultsPortletDisplayContext.isRenderNothing()) {
 
 com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.search.Document> searchContainer1 = searchResultsPortletDisplayContext.getSearchContainer();
 %>
+
+<p class="search-total-label text-default">
+	<liferay-ui:message arguments='<%= new String[] {String.valueOf(searchContainer1.getTotal()), "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"} %>' key="x-results-for-x" />
+</p>
+
+<c:choose>
+	<c:when test="<%= searchResultSummaryDisplayContexts.isEmpty() %>">
+		<div class="sheet taglib-empty-result-message">
+			<div class="taglib-empty-result-message-header">
+			</div>
+
+			<div class="sheet-text text-center">
+				<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false) %>
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<liferay-ddm:template-renderer
+			className="<%= SearchResultSummaryDisplayContext.class.getName() %>"
+			contextObjects="<%= contextObjects %>"
+			displayStyle="<%= searchResultsPortletInstanceConfiguration.displayStyle() %>"
+			displayStyleGroupId="<%= searchResultsPortletDisplayContext.getDisplayStyleGroupId() %>"
+			entries="<%= searchResultSummaryDisplayContexts %>"
+		/>
+	</c:otherwise>
+</c:choose>
 
 <style>
 	.taglib-asset-tags-summary a.badge, .taglib-asset-tags-summary a.badge:hover {

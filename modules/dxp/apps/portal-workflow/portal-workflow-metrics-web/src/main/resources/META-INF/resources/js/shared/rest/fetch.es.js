@@ -19,8 +19,12 @@ import qs from 'qs';
  * import fetch from '@/shared/rest/fetch';
  * fetch.get('/process').then(res => console.log(res));
  */
-const restClient = axios.create({
+const clientPortal = axios.create({
 	baseURL: '/o/portal-workflow-metrics/v1.0'
+});
+
+const clientHeadless = axios.create({
+	baseURL: '/o/headless-admin-workflow/v1.0'
 });
 
 axios.defaults.headers.common[
@@ -34,4 +38,5 @@ axios.defaults.params = {
 axios.defaults.paramsSerializer = params =>
 	qs.stringify(params, {arrayFormat: 'repeat'});
 
-export default restClient;
+export {clientHeadless};
+export default clientPortal;

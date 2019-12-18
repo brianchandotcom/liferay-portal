@@ -220,6 +220,77 @@ public class DepotEntryGroupRelLocalServiceTest {
 				RandomTestUtil.randomInt()));
 	}
 
+	@Test
+	public void testGetSearchableDepotEntryGroupRels() throws Exception {
+		DepotEntry depotEntry = _addDepotEntry();
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		int searchableDepotEntryGroupRelsCount =
+			_depotEntryGroupRelLocalService.
+				getSearchableDepotEntryGroupRelsCount(_group.getGroupId());
+
+		Assert.assertEquals(1, searchableDepotEntryGroupRelsCount);
+
+		List<DepotEntryGroupRel> searchableDepotEntryGroupRels =
+			_depotEntryGroupRelLocalService.getSearchableDepotEntryGroupRels(
+				_group.getGroupId(), 0, searchableDepotEntryGroupRelsCount);
+
+		Assert.assertEquals(
+			searchableDepotEntryGroupRels.toString(), 1,
+			searchableDepotEntryGroupRels.size());
+
+		Assert.assertEquals(
+			depotEntryGroupRel, searchableDepotEntryGroupRels.get(0));
+	}
+
+	@Test
+	public void testGetSearchableDepotEntryGroupRelsWithAnUnsearchableDepotEntryGroupRel()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), _group.getGroupId(), false);
+
+		int searchableDepotEntryGroupRelsCount =
+			_depotEntryGroupRelLocalService.
+				getSearchableDepotEntryGroupRelsCount(_group.getGroupId());
+
+		Assert.assertEquals(0, searchableDepotEntryGroupRelsCount);
+
+		List<DepotEntryGroupRel> searchableDepotEntryGroupRels =
+			_depotEntryGroupRelLocalService.getSearchableDepotEntryGroupRels(
+				_group.getGroupId(), 0, searchableDepotEntryGroupRelsCount);
+
+		Assert.assertTrue(
+			searchableDepotEntryGroupRels.toString(),
+			searchableDepotEntryGroupRels.isEmpty());
+	}
+
+	@Test
+	public void testUpdateSearchable() throws Exception {
+		DepotEntry depotEntry1 = _addDepotEntry();
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				depotEntry1.getDepotEntryId(), _group.getGroupId());
+
+		Assert.assertTrue(depotEntryGroupRel.isSearchable());
+
+		depotEntryGroupRel = _depotEntryGroupRelLocalService.updateSearchable(
+			depotEntryGroupRel.getDepotEntryGroupRelId(), false);
+
+		Assert.assertFalse(depotEntryGroupRel.isSearchable());
+
+		depotEntryGroupRel = _depotEntryGroupRelLocalService.updateSearchable(
+			depotEntryGroupRel.getDepotEntryGroupRelId(), true);
+
+		Assert.assertTrue(depotEntryGroupRel.isSearchable());
+	}
+
 	private DepotEntry _addDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(

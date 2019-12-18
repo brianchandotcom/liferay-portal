@@ -37,17 +37,6 @@ public class OpenIndexRequest implements IndexRequest<OpenIndexResponse> {
 		return _indicesOptions;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement. This method
-	 *             should not be in the parent interface.  Only certain
-	 *             IndexRequests work with mappings.
-	 */
-	@Deprecated
-	@Override
-	public String getMappingName() {
-		return null;
-	}
-
 	public long getTimeout() {
 		return _timeout;
 	}

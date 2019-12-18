@@ -54,10 +54,13 @@ public class ProjectTemplatesSpringPortletMVCTest
 				{"springportletmvc", "embedded", "jsp", "7.0"},
 				{"springportletmvc", "embedded", "jsp", "7.1"},
 				{"springportletmvc", "embedded", "jsp", "7.2"},
+				{"springportletmvc", "embedded", "jsp", "7.3"},
 				{"portletmvc4spring", "embedded", "jsp", "7.1"},
 				{"portletmvc4spring", "embedded", "jsp", "7.2"},
+				{"portletmvc4spring", "embedded", "jsp", "7.3"},
 				{"portletmvc4spring", "embedded", "thymeleaf", "7.1"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.2"}
+				{"portletmvc4spring", "embedded", "thymeleaf", "7.2"},
+				{"portletmvc4spring", "embedded", "thymeleaf", "7.3"}
 			});
 	}
 
@@ -126,6 +129,20 @@ public class ProjectTemplatesSpringPortletMVCTest
 			testContains(
 				gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 				"liferay-portlet-app_7_2_0.dtd");
+		}
+		else if (_liferayVersion.equals("7.3")) {
+
+			// TODO: Un-comment after 7.3 DTDs are released.
+			// testContains(
+
+			//	gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
+			//	"liferay-display_7_3_0.dtd");
+
+			// TODO: Un-comment after 7.3 DTDs are released.
+			// testContains(
+
+			//	gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
+			//	"liferay-portlet-app_7_3_0.dtd");
 		}
 
 		if (_viewType.equals("jsp")) {

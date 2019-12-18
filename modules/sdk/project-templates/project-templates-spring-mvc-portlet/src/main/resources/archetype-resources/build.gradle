@@ -71,7 +71,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "javax.portlet", name: "portlet-api"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "javax.validation", name: "validation-api"
 #end
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
@@ -152,7 +152,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
 #elseif (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
-#elseif (${liferayVersion.startsWith("7.2")})
+#elseif (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.4.0"
 #end
 #if (${framework.equals("portletmvc4spring")} && ${frameworkDependencies.equals("provided")})
@@ -168,7 +168,7 @@ dependencies {
 #else
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.1.0"
 #end
-#if (${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 #end
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
@@ -199,7 +199,7 @@ dependencies {
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "2.0.3"
 #elseif (${liferayVersion.startsWith("7.1")})
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "3.0.1"
-#elseif (${liferayVersion.startsWith("7.2")})
+#elseif (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "4.0.0"
 #end
 }

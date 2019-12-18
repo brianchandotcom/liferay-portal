@@ -6,7 +6,7 @@ task runGradleTest
 dependencies {
 	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 
-	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.1.3"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 	targetPlatformBoms group: "custom", name: "custom.bom", version: "1.0.0"
 }
 

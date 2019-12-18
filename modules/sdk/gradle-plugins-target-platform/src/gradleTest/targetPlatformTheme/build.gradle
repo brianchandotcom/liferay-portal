@@ -37,7 +37,7 @@ dependencies {
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
 
-	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.1.3"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 }
 
 repositories {

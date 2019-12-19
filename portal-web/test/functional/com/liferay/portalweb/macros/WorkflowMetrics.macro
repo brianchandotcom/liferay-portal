@@ -39,7 +39,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_SLA_BREACHED_VALUE",
 			rowName = "Review",
-			value1 = "1(100%)");
+			value1 = "${key_SLABreachedValue}");
 
 	}
 

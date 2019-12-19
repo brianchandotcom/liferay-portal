@@ -338,44 +338,52 @@
 		},
 
 		checkAllBox(form, name, allBox) {
-			var totalOn = 0;
+			let totalOn = 0;
 
 			if (form) {
 				form = Util.getDOM(form);
-				allBox = Util.getDOM(allBox);
 
-				form = $(form);
-
-				var allBoxNodes = $(allBox);
-
-				if (!allBoxNodes.length) {
-					allBoxNodes = form.find('input[name="' + allBox + '"]');
+				if (typeof form === 'string') {
+					form = document.querySelector(form);
 				}
 
-				var totalBoxes = 0;
+				allBox = Util.getDOM(allBox);
 
-				var inputs = form.find('input[type=checkbox]');
+				if (typeof allBox === 'string') {
+					if (document.querySelector(allBox)) {
+						allBox = document.querySelector(allBox);
+					} else {
+						allBox = form.querySelector(
+							'input[name="' + allBox + '"]'
+						);
+					}
+				}
+
+				const inputs = Array.from(
+					form.querySelectorAll('input[type=checkbox]')
+				);
 
 				if (!Array.isArray(name)) {
 					name = [name];
 				}
 
-				inputs.each((index, item) => {
-					item = $(item);
+				let totalBoxes = 0;
 
+				inputs.forEach(input => {
 					if (
-						!item.is(allBoxNodes) &&
-						name.indexOf(item.attr('name')) > -1
+						input.id !== allBox.id ||
+						(input.id !== allBox.name &&
+							name.indexOf(input.name) > -1)
 					) {
 						totalBoxes++;
 
-						if (item.prop(STR_CHECKED)) {
+						if (input.checked) {
 							totalOn++;
 						}
 					}
 				});
 
-				allBoxNodes.prop(STR_CHECKED, totalBoxes == totalOn);
+				allBox.checked = totalBoxes === totalOn;
 			}
 
 			return totalOn;

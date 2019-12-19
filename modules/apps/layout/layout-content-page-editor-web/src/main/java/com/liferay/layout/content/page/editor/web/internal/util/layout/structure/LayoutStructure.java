@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author Víctor Galán
@@ -73,6 +75,26 @@ public class LayoutStructure {
 			_layoutStructureItems.get(parentItemId);
 
 		parentLayoutStructureItem.deleteChildrenItem(itemId);
+	}
+
+	public void duplicateLayoutStructureItem(
+		long fragmentEntryLinkId, String itemId) {
+
+		LayoutStructureItem layoutStructureItem = getLayoutStructureItem(
+			itemId);
+
+		LayoutStructureItem parentLayoutStructureItem = getLayoutStructureItem(
+			layoutStructureItem.getParentItemId());
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
+		addLayoutStructureItem(
+			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
+			String.valueOf(UUID.randomUUID()),
+			layoutStructureItem.getParentItemId(),
+			layoutStructureItem.getItemType(),
+			childrenItemIds.indexOf(itemId) + 1);
 	}
 
 	public LayoutStructureItem getLayoutStructureItem(String itemId) {

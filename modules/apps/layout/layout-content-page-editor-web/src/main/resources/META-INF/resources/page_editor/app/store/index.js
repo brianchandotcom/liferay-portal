@@ -25,8 +25,10 @@ const INITIAL_STATE = {
 	 *
 	 * TODO: potentially allow us to specify a ranking here to determine order
 	 */
+	draft: true,
 	reducers: {},
-	sidebarOpen: true
+	sidebarOpen: true,
+	singleSegmentsExperienceMode: false
 };
 
 export const StoreContext = React.createContext(INITIAL_STATE);
@@ -56,8 +58,6 @@ export function getInitialState([data, config]) {
 	Object.keys(config).forEach(key => {
 		delete state[key];
 	});
-
-	// TODO: set the correct sidebarPanelId
 
 	return {
 		...INITIAL_STATE,

@@ -27,7 +27,7 @@ import {StoreContext} from '../store/index';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 
-const {discard, publish} = Actions;
+const {publish} = Actions;
 
 const {Suspense, useCallback, useContext, useRef} = React;
 
@@ -39,7 +39,16 @@ function ToolbarBody() {
 	const load = useLoad();
 	const store = useContext(StoreContext);
 
-	const {singleSegmentsExperienceMode, toolbarPlugins} = config;
+	const {portletNamespace} = useContext(ConfigContext);
+
+	const {draft, singleSegmentsExperienceMode} = store;
+
+	const {
+		classPK,
+		discardDraftRedirectURL,
+		discardDraftURL,
+		toolbarPlugins
+	} = config;
 
 	const loading = useRef(() => {
 		Promise.all(
@@ -93,6 +102,18 @@ function ToolbarBody() {
 		}, [])
 	);
 
+	const handleDiscardDraft = event => {
+		if (
+			!confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+				)
+			)
+		) {
+			event.preventDefault();
+		}
+	};
+
 	return (
 		<div className="container-fluid container-fluid-max-xl page-editor-toolbar">
 			<ul className="navbar-nav">
@@ -132,17 +153,32 @@ function ToolbarBody() {
 
 			<ul className="navbar-nav">
 				<li className="nav-item">
-					<ClayButton
-						className="nav-btn"
-						disabled
-						displayType="secondary"
-						onClick={() => dispatch(discard())}
-						small
-					>
-						{singleSegmentsExperienceMode
-							? Liferay.Language.get('discard-variant')
-							: Liferay.Language.get('discard-draft')}
-					</ClayButton>
+					<form action={discardDraftURL} method="POST">
+						<input
+							name={`${portletNamespace}classPK`}
+							type="hidden"
+							value={classPK ? classPK : ''}
+						/>
+
+						<input
+							name={`${portletNamespace}redirect`}
+							type="hidden"
+							value={discardDraftRedirectURL}
+						/>
+
+						<ClayButton
+							className="btn btn-secondary nav-btn"
+							disabled={!draft}
+							displayType="secondary"
+							onClick={handleDiscardDraft}
+							small
+							type="submit"
+						>
+							{singleSegmentsExperienceMode
+								? Liferay.Language.get('discard-variant')
+								: Liferay.Language.get('discard-draft')}
+						</ClayButton>
+					</form>
 				</li>
 				<li className="nav-item">
 					<ClayButton

@@ -77,16 +77,14 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 		).put(
 			"checkbox-field-name",
 			() -> {
-				String checkboxFieldName = StringPool.BLANK;
-
 				if (Objects.equals(
 						_siteInitializerItem.getType(),
 						SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
 
-					checkboxFieldName = "layoutSetVisibilityPrivate";
+					return "layoutSetVisibilityPrivate";
 				}
 
-				return checkboxFieldName;
+				return StringPool.BLANK;
 			}
 		).put(
 			"layout-set-prototype-id",

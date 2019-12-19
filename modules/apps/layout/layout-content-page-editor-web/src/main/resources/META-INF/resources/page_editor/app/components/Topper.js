@@ -19,7 +19,7 @@ import React, {useContext, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
-import {removeItem} from '../actions/index';
+import {removeItem, switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
@@ -66,8 +66,8 @@ export default function Topper({
 }) {
 	const [edge, setEdge] = useState(null);
 	const containerRef = useRef(null);
-	const dispatch = useContext(DispatchContext);
 	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
 	const store = useContext(StoreContext);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
@@ -238,6 +238,10 @@ export default function Topper({
 		});
 	}
 
+	const {sidebarPanels} = config;
+
+	const commentsPanelId = sidebarPanels.comments.sidebarPanelId;
+
 	return (
 		<div
 			className={classNames(styles)}
@@ -295,6 +299,14 @@ export default function Topper({
 						<ClayButton displayType="unstyled" small>
 							<ClayIcon
 								className="page-editor-topper__icon"
+								onClick={() => {
+									dispatch(
+										switchSidebarPanel({
+											sidebarOpen: true,
+											sidebarPanelId: commentsPanelId
+										})
+									);
+								}}
 								symbol="comments"
 							/>
 						</ClayButton>

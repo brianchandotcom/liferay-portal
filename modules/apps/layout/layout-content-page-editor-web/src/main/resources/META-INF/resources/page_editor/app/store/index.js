@@ -25,7 +25,8 @@ const INITIAL_STATE = {
 	 *
 	 * TODO: potentially allow us to specify a ranking here to determine order
 	 */
-	reducers: {}
+	reducers: {},
+	sidebarOpen: true
 };
 
 export const StoreContext = React.createContext(INITIAL_STATE);
@@ -48,7 +49,7 @@ export const StoreContext = React.createContext(INITIAL_STATE);
  */
 export function getInitialState([data, config]) {
 	const state = {
-		...transformServerData(data)
+		...transformServerData(data, config)
 	};
 
 	// Exclude keys that were partitioned off into config.
@@ -56,13 +57,15 @@ export function getInitialState([data, config]) {
 		delete state[key];
 	});
 
+	// TODO: set the correct sidebarPanelId
+
 	return {
 		...INITIAL_STATE,
 		...state
 	};
 }
 
-function transformServerData(data) {
+function transformServerData(data, config) {
 	let layoutData = data.layoutData;
 
 	if (!layoutData.version) {
@@ -82,10 +85,14 @@ function transformServerData(data) {
 		};
 	}
 
-	// Currently nothing happening here, but keeping this around so that we have
-	// a place to massage the server data into shape.
+	const {panels} = config;
+
+	// By default, show first panel of first section.
+	const sidebarPanelId = panels[0] && panels[0][0];
+
 	return {
 		...data,
-		layoutData
+		layoutData,
+		sidebarPanelId
 	};
 }

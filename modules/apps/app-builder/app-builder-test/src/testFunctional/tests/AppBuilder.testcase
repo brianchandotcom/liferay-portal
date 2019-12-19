@@ -959,7 +959,7 @@ definition {
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
-		
+
 		FormViewBuilder.addFormView(
 			fieldType = "Text Field",
 			formViewName = "My Form View 1");

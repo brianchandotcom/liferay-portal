@@ -51,6 +51,12 @@ definition {
 
 		AssertElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED");
 
+		if (IsElementPresent(key_text = "Back to Menu", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Back to Menu",
+				locator1 = "Button#ANY");
+		}
+
 		AssertVisible(locator1 = "ProductMenu#PRODUCT_MENU_BODY");
 	}
 

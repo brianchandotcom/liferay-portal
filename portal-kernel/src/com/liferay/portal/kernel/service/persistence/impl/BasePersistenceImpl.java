@@ -622,46 +622,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #appendOrderByComparator(
-	 *             com.liferay.petra.string.Stringbundler, String,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	protected void appendOrderByComparator(
-		StringBundler sb, String entityAlias,
-		OrderByComparator<T> orderByComparator) {
-
-		appendOrderByComparator(sb, entityAlias, orderByComparator, false);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #appendOrderByComparator(
-	 *             com.liferay.petra.string.Stringbundler, String,
-	 *             OrderByComparator, boolean)}
-	 */
-	@Deprecated
-	protected void appendOrderByComparator(
-		StringBundler sb, String entityAlias,
-		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
-
-		com.liferay.petra.string.StringBundler petraSB =
-			new com.liferay.petra.string.StringBundler(sb.getStrings());
-
-		int index = sb.index();
-
-		petraSB.setIndex(index);
-
-		appendOrderByComparator(
-			petraSB, entityAlias, orderByComparator, sqlQuery);
-
-		for (int i = index; i < petraSB.index(); i++) {
-			sb.append(petraSB.stringAt(i));
-		}
-	}
-
 	protected ClassLoader getClassLoader() {
 		Class<?> clazz = getClass();
 

@@ -28,7 +28,7 @@ import EditTableViewContext, {
 } from './EditTableViewContext.es';
 
 export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
-	const [{dataListViewFilters}, dispatch] = useContext(EditTableViewContext);
+	const [{dataListView}, dispatch] = useContext(EditTableViewContext);
 
 	const {
 		customProperties: {options = {}},
@@ -37,7 +37,7 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 	} = dataDefinitionField;
 	const localizedOptions = options[themeDisplay.getLanguageId()] || [];
 
-	const values = dataListViewFilters[fieldName] || [];
+	const values = dataListView.appliedFilters[fieldName] || [];
 
 	const [active, setActive] = useState(false);
 

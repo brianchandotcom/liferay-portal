@@ -28,12 +28,12 @@ export const initialState = {
 		dataDefinitionFields: []
 	},
 	dataListView: {
+		appliedFilters: {},
 		fieldNames: [],
 		name: {
 			en_US: ''
 		}
 	},
-	dataListViewFilters: {},
 	fieldTypes: [],
 	focusedColumn: null
 };
@@ -112,13 +112,16 @@ export const reducer = (state = initialState, action) => {
 		}
 		case UPDATE_FILTER_VALUE: {
 			const {fieldName, value} = action.payload;
-			const {dataListViewFilters} = state;
+			const {appliedFilters} = state;
 
 			return {
 				...state,
-				dataListViewFilters: {
-					...dataListViewFilters,
-					[fieldName]: value
+				dataListView: {
+					...state.dataListView,
+					appliedFilters: {
+						...appliedFilters,
+						[fieldName]: value
+					}
 				}
 			};
 		}

@@ -1184,6 +1184,10 @@ definition {
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
 
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "my custom object 3");
+
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
 
 		AppBuilderAdmin.validateListTitleAtRow(

@@ -159,9 +159,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				return;
 			}
 
-			boolean openGraphImageFromLayout = _isOpenGraphImageFromLayout(
-				layoutSEOEntry);
-
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 				openGraphImageFileEntryId);
 
@@ -173,9 +170,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			printWriter.println(
 				_getOpenGraphTag(
 					"og:image:alt",
-					_getImageAltTagValue(
-						layoutSEOEntry, group, openGraphImageFromLayout,
-						themeDisplay)));
+					_getImageAltTagValue(layoutSEOEntry, group, themeDisplay)));
 
 			printWriter.println(
 				_getOpenGraphTag("og:image:type", fileEntry.getMimeType()));
@@ -261,11 +256,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private String _getImageAltTagValue(
-		LayoutSEOEntry layoutSEOEntry, Group group,
-		boolean openGraphImageFromLayout, ThemeDisplay themeDisplay) {
+		LayoutSEOEntry layoutSEOEntry, Group group, ThemeDisplay themeDisplay) {
 
 		if ((layoutSEOEntry != null) &&
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() != 0)) {
+			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
 
 			return layoutSEOEntry.getOpenGraphImageAlt(
 				themeDisplay.getLocale());
@@ -275,13 +269,13 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
 				group.getGroupId());
 
-		if ((openGraphImageFromLayout && (layoutSEOSite == null)) ||
-			(layoutSEOSite.getOpenGraphImageFileEntryId() == 0)) {
+		if ((layoutSEOSite != null) &&
+			(layoutSEOSite.getOpenGraphImageFileEntryId() > 0)) {
 
-			return null;
+			return layoutSEOSite.getOpenGraphImageAlt(themeDisplay.getLocale());
 		}
 
-		return layoutSEOSite.getOpenGraphImageAlt(themeDisplay.getLocale());
+		return null;
 	}
 
 	private long _getOpenGraphImageFileEntryId(
@@ -351,16 +345,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			themeDisplay.getLayout(), portletId, themeDisplay.getTilesTitle(),
 			titleListMergeable, subtitleListMergeable, company.getName(),
 			themeDisplay.getLocale());
-	}
-
-	private boolean _isOpenGraphImageFromLayout(LayoutSEOEntry layoutSEOEntry) {
-		if ((layoutSEOEntry != null) &&
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference

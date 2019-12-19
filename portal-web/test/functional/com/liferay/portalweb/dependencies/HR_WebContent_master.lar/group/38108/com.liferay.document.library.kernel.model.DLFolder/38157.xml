@@ -1,0 +1,50 @@
+<com.liferay.portal.repository.liferayrepository.model.LiferayFolder>
+  <__dlFolder class="DLFolder">
+    <__cachedModel>true</__cachedModel>
+    <__new>false</__new>
+    <__mvccVersion>0</__mvccVersion>
+    <__uuid>486d540e-e556-13a2-43ac-1de9caab7aea</__uuid>
+    <__originalUuid>486d540e-e556-13a2-43ac-1de9caab7aea</__originalUuid>
+    <__folderId>38157</__folderId>
+    <__originalFolderId>38157</__originalFolderId>
+    <__setOriginalFolderId>false</__setOriginalFolderId>
+    <__groupId>38108</__groupId>
+    <__originalGroupId>38108</__originalGroupId>
+    <__setOriginalGroupId>false</__setOriginalGroupId>
+    <__companyId>20099</__companyId>
+    <__originalCompanyId>20099</__originalCompanyId>
+    <__setOriginalCompanyId>false</__setOriginalCompanyId>
+    <__userId>20103</__userId>
+    <__userName></__userName>
+    <__createDate>2019-12-17 07:27:48.661 UTC</__createDate>
+    <__modifiedDate>2019-12-17 07:27:49.732 UTC</__modifiedDate>
+    <__setModifiedDate>false</__setModifiedDate>
+    <__repositoryId>38156</__repositoryId>
+    <__originalRepositoryId>38156</__originalRepositoryId>
+    <__setOriginalRepositoryId>false</__setOriginalRepositoryId>
+    <__mountPoint>true</__mountPoint>
+    <__originalMountPoint>true</__originalMountPoint>
+    <__setOriginalMountPoint>false</__setOriginalMountPoint>
+    <__parentFolderId>0</__parentFolderId>
+    <__originalParentFolderId>0</__originalParentFolderId>
+    <__setOriginalParentFolderId>false</__setOriginalParentFolderId>
+    <__treePath>/38157/</__treePath>
+    <__originalTreePath>/38157/</__originalTreePath>
+    <__name>com.liferay.journal</__name>
+    <__originalName>com.liferay.journal</__originalName>
+    <__description></__description>
+    <__lastPostDate>2019-12-17 07:27:50.296 UTC</__lastPostDate>
+    <__defaultFileEntryTypeId>0</__defaultFileEntryTypeId>
+    <__hidden>true</__hidden>
+    <__originalHidden>true</__originalHidden>
+    <__setOriginalHidden>false</__setOriginalHidden>
+    <__restrictionType>0</__restrictionType>
+    <__status>0</__status>
+    <__originalStatus>0</__originalStatus>
+    <__setOriginalStatus>false</__setOriginalStatus>
+    <__statusByUserId>0</__statusByUserId>
+    <__statusByUserName></__statusByUserName>
+    <__columnBitmask>0</__columnBitmask>
+  </__dlFolder>
+  <__escapedModel>false</__escapedModel>
+</com.liferay.portal.repository.liferayrepository.model.LiferayFolder>

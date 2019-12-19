@@ -75,6 +75,10 @@ public class LayoutStructure {
 		parentLayoutStructureItem.deleteChildrenItem(itemId);
 	}
 
+	public LayoutStructureItem getLayoutStructureItem(String itemId) {
+		return _layoutStructureItems.get(itemId);
+	}
+
 	public void moveLayoutStructureItem(
 		String itemId, String parentItemId, int position) {
 

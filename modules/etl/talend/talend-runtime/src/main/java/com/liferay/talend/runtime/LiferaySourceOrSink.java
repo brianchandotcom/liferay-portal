@@ -54,29 +54,20 @@ import org.talend.daikon.properties.ValidationResult;
  */
 public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 
-	public JsonObject doDeleteRequest(
-		RuntimeContainer runtimeContainer, String resourceURL) {
-
+	public JsonObject doDeleteRequest(String resourceURL) {
 		RESTClient restClient = getRestClient(resourceURL);
 
 		return _getResponseContentJsonObject(restClient.executeDeleteRequest());
 	}
 
-	public JsonObject doGetRequest(
-		RuntimeContainer runtimeContainer, String resourceURL) {
-
+	public JsonObject doGetRequest(String resourceURL) {
 		RESTClient restClient = getRestClient(resourceURL);
 
 		return _getResponseContentJsonObject(restClient.executeGetRequest());
 	}
 
-	public JsonObject doGetRequest(String resourceURL) {
-		return doGetRequest(null, resourceURL);
-	}
-
 	public JsonObject doPatchRequest(
-		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonObject jsonObject) {
+		String resourceURL, JsonObject jsonObject) {
 
 		RESTClient restClient = getRestClient(resourceURL);
 
@@ -84,10 +75,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 			restClient.executePatchRequest(jsonObject));
 	}
 
-	public JsonObject doPostRequest(
-		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonObject jsonObject) {
-
+	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject) {
 		RESTClient restClient = getRestClient(resourceURL);
 
 		return _responseHandler.asJsonObject(
@@ -231,7 +219,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		RuntimeContainer runtimeContainer) {
 
 		try {
-			doGetRequest(runtimeContainer, null);
+			doGetRequest(null);
 
 			return new ValidationResult(
 				ValidationResult.Result.OK,

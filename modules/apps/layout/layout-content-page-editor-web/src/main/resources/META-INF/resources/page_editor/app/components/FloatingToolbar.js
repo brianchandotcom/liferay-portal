@@ -81,10 +81,12 @@ export default function FloatingToolbar({buttons, item, itemRef}) {
 							active={button.panelId === activeConfigurationPanel}
 							key={button.panelId}
 							onClick={panelId => {
-								if (activeConfigurationPanel === panelId) {
-									setActiveConfigurationPanel(null);
-								} else {
-									setActiveConfigurationPanel(panelId);
+								if (panelId) {
+									if (activeConfigurationPanel === panelId) {
+										setActiveConfigurationPanel(null);
+									} else {
+										setActiveConfigurationPanel(panelId);
+									}
 								}
 							}}
 							{...button}

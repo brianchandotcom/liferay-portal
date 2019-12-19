@@ -14,6 +14,12 @@ apply plugin: "com.liferay.portal.tools.theme.builder"
 
 dependencies {
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "@com.liferay.css.builder.version@"
+#if (${dependencyManagementEnabled} == "true")
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled"
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled"
+
+	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
+#else
 
 #if (${liferayVersion.startsWith("7.0")})
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.13"
@@ -30,6 +36,7 @@ dependencies {
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "4.0.1"
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "4.0.0"
+#end
 #end
 
 	themeBuilder group: "com.liferay", name: "com.liferay.portal.tools.theme.builder", version: "@com.liferay.portal.tools.theme.builder.version@"

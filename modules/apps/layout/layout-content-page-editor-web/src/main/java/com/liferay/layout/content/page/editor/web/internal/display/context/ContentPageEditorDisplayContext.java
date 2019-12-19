@@ -271,6 +271,9 @@ public class ContentPageEditorDisplayContext {
 				"hasEditSegmentsEntryPermission",
 				editorSoyContext.get("hasEditSegmentsEntryPermission")
 			).put(
+				"hasUpdateContentPermissions",
+				editorSoyContext.get("hasUpdateContentPermissions")
+			).put(
 				"hasUpdatePermissions",
 				editorSoyContext.get("hasUpdatePermissions")
 			).put(
@@ -408,6 +411,8 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"getPageContentsURL",
 			_getResourceURL("/content_layout/get_page_contents")
+		).put(
+			"hasUpdateContentPermissions", _hasUpdateContentPermissions()
 		).put(
 			"hasUpdatePermissions", _hasUpdatePermissions()
 		).put(
@@ -1548,6 +1553,24 @@ public class ContentPageEditorDisplayContext {
 			themeDisplay.getLayoutTypePortlet());
 
 		return _getWidgetCategoriesSoyContexts(portletCategory);
+	}
+
+	private boolean _hasUpdateContentPermissions() {
+		try {
+			if (LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _hasUpdatePermissions() {

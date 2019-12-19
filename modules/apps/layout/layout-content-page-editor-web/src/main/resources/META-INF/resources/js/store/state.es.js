@@ -445,6 +445,13 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {bool}
 	 */
+	hasUpdateContentPermissions: Config.bool().value(true),
+
+	/**
+	 * @default true
+	 * @review
+	 * @type {bool}
+	 */
 	hasUpdatePermissions: Config.bool().value(true),
 
 	/**

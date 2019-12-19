@@ -1,5 +1,151 @@
 definition {
 
+	macro _addPage {
+		SitePages._selectPageType(
+			collectionName = "${collectionName}",
+			pageTemplateName = "${pageTemplateName}",
+			sitePageType = "${sitePageType}");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		SitePages._addPageToNavigationMenu(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			navigationMenus = "${navigationMenus}");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		if ("${sitePageType}" == "Embedded") {
+			Type(
+				locator1 = "SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD",
+				value1 = "${pageTypeURL}");
+		}
+
+		if ("${sitePageType}" == "Link to URL") {
+			Type(
+				locator1 = "TextInput#URL",
+				value1 = "${pageTypeURL}");
+		}
+
+		if (isSet(inheritChanges)) {
+			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+		}
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertVisible(locator1 = "TextInput#NAME");
+
+		if (isSet(openGraph)) {
+			SitePages._configureOpenGraph(
+				customDescription = "${customDescription}",
+				customTitle = "${customTitle}");
+		}
+
+		Button.click(button = "Save");
+
+		WaitForSPARefresh();
+	}
+
+	macro addPrivatePage {
+		PagesFinder.selectPageType(optionValue = "Private Pages");
+
+		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Page");
+
+		PagesFinder._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			categoryName = "${categoryName}",
+			collectionName = "${collectionName}",
+			customDescription = "${customDescription}",
+			customTitle = "${customTitle}",
+			inheritChanges = "${inheritChanges}",
+			navigationMenus = "${navigationMenus}",
+			openGraph = "${openGraph}",
+			pageName = "${pageName}",
+			pageTemplateName = "${pageTemplateName}",
+			pageTypeURL = "${pageTypeURL}",
+			sitePageType = "${sitePageType}",
+			vocabularyName = "${vocabularyName}");
+	}
+
+	macro addPublicChildPage {
+		PagesFinder.selectPageType(optionValue = "Public Pages");
+
+		Click(
+			key_pageName = "${parentPageName}",
+			locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Child Page");
+
+		PagesFinder._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			navigationMenus = "${navigationMenus}",
+			pageName = "${childPageName}",
+			pageTemplateName = "${pageTemplateName}",
+			sitePageType = "${sitePageType}");
+	}
+
+	macro addPublicContentPage {
+		PagesFinder.selectPageType(optionValue = "Public Pages");
+
+		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Page");
+
+		ContentPages._selectCard(
+			collectionName = "${collectionName}",
+			pageTemplateName = "${pageTemplateName}");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
+	}
+
+	macro addPublicPage {
+		PagesFinder.selectPageType(optionValue = "Public Pages");
+
+		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Page");
+
+		PagesFinder._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			categoryName = "${categoryName}",
+			collectionName = "${collectionName}",
+			customDescription = "${customDescription}",
+			customTitle = "${customTitle}",
+			inheritChanges = "${inheritChanges}",
+			navigationMenus = "${navigationMenus}",
+			openGraph = "${openGraph}",
+			pageName = "${pageName}",
+			pageTemplateName = "${pageTemplateName}",
+			pageTypeURL = "${pageTypeURL}",
+			sitePageType = "${sitePageType}",
+			vocabularyName = "${vocabularyName}");
+	}
+
 	macro goToFindAPage {
 		ProductMenuHelper.openProductMenu();
 
@@ -12,6 +158,18 @@ definition {
 		Type(
 			locator1 = "PagesFinder#INPUT_FIELD",
 			value1 = "${keyword}");
+	}
+
+	macro navigateToChildPage {
+		AssertClick(
+			key_childPageName = "${childPageName}",
+			key_parentPageName = "${parentPageName}",
+			locator1 = "PagesFinder#CHILD_PAGE_NAME",
+			value1 = "${childPageName}");
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "${childPageName}");
 	}
 
 	macro navigateToPage {
@@ -32,6 +190,10 @@ definition {
 
 	macro viewInPagesAdministration {
 		Click(locator1 = "PagesFinder#VIEW_IN_PAGE_ADMINISTRATION");
+	}
+
+	macro viewPageNameInPagesFinder {
+		AssertElementPresent(locator1 = "PagesFinder#PAGE_NAME");
 	}
 
 }

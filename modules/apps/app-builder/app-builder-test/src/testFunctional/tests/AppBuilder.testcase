@@ -1194,6 +1194,12 @@ definition {
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Third App");
+
+		AppBuilderAdmin.searchByItem(itemName = "!@#");
+
+		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
+
+		AppBuilderAdmin.clearSearch();
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

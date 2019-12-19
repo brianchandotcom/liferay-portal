@@ -56,8 +56,8 @@ public class LayoutSEOSiteLocalServiceImpl
 
 		if (layoutSEOSite == null) {
 			return _addLayoutSEOSite(
-				userId, groupId, openGraphImageAltMap,
-				openGraphImageFileEntryId, openGraphEnabled, serviceContext);
+				userId, groupId, openGraphEnabled, openGraphImageAltMap,
+				openGraphImageFileEntryId, serviceContext);
 		}
 
 		layoutSEOSite.setModifiedDate(new Date());
@@ -76,9 +76,9 @@ public class LayoutSEOSiteLocalServiceImpl
 	}
 
 	private LayoutSEOSite _addLayoutSEOSite(
-			long userId, long groupId, Map<Locale, String> openGraphImageAltMap,
-			long openGraphImageFileEntryId, boolean openGraphEnabled,
-			ServiceContext serviceContext)
+			long userId, long groupId, boolean openGraphEnabled,
+			Map<Locale, String> openGraphImageAltMap,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutSEOSite layoutSEOSite = layoutSEOSitePersistence.create(

@@ -139,27 +139,19 @@ public class OrganizationResourceImpl
 	public Organization postOrganization(Organization organization)
 		throws Exception {
 
-		try {
-			long countryId = _getCountryId(organization);
+		long countryId = _getCountryId(organization);
 
-			return _toOrganization(
-				_organizationService.addOrganization(
-					_getDefaultParentOrganizationId(organization),
-					organization.getName(),
-					OrganizationConstants.TYPE_ORGANIZATION,
-					_getRegionId(organization, countryId), countryId,
-					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-					organization.getComment(), false,
-					_getAddresses(organization), Collections.emptyList(),
-					Collections.emptyList(), Collections.emptyList(),
-					Collections.emptyList(), new ServiceContext()));
-		}
-		catch (PortalException pe) {
-			Class<?> clazz = pe.getClass();
-
-			throw new BadRequestException(
-				"Could not add organization: " + clazz.getSimpleName());
-		}
+		return _toOrganization(
+			_organizationService.addOrganization(
+				_getDefaultParentOrganizationId(organization),
+				organization.getName(),
+				OrganizationConstants.TYPE_ORGANIZATION,
+				_getRegionId(organization, countryId), countryId,
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				organization.getComment(), false,
+				_getAddresses(organization), Collections.emptyList(),
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList(), new ServiceContext()));
 	}
 
 	private HoursAvailable _createHoursAvailable(

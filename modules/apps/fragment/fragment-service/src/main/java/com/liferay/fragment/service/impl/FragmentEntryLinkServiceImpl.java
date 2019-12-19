@@ -18,13 +18,16 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.base.FragmentEntryLinkServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -138,10 +141,18 @@ public class FragmentEntryLinkServiceImpl
 	private void _checkPermission(long groupId, String className, long classPK)
 		throws PortalException {
 
-		Boolean containsPermission =
+		Boolean containsPermission = Boolean.valueOf(
 			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 				getPermissionChecker(), groupId, className, classPK,
-				ActionKeys.UPDATE);
+				ActionKeys.UPDATE));
+
+		if (Objects.equals(className, Layout.class.getName())) {
+			containsPermission =
+				containsPermission ||
+				LayoutPermissionUtil.contains(
+					getPermissionChecker(), classPK,
+					ActionKeys.UPDATE_LAYOUT_CONTENT);
+		}
 
 		if ((containsPermission == null) || !containsPermission) {
 			throw new PrincipalException.MustHavePermission(

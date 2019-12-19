@@ -255,6 +255,11 @@ public class FragmentCollectionLocalServiceImpl
 		if (Validator.isNull(name)) {
 			throw new FragmentCollectionNameException("Name must not be null");
 		}
+
+		if (name.contains(StringPool.PERIOD)) {
+			throw new FragmentCollectionNameException(
+				"Name contains invalid characters");
+		}
 	}
 
 	protected void validateFragmentCollectionKey(

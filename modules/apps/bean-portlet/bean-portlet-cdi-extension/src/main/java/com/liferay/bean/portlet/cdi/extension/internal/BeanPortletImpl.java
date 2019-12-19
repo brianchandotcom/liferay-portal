@@ -443,19 +443,15 @@ public class BeanPortletImpl implements BeanPortlet {
 
 			Set<String> portletModes = entry.getValue();
 
-			boolean first = true;
-
 			for (String portletMode : portletModes) {
 				if (allPortletModes.contains(portletMode)) {
-					if (first) {
-						first = false;
-					}
-					else {
-						portletModesSB.append(",");
-					}
-
 					portletModesSB.append(portletMode);
+					portletModesSB.append(",");
 				}
+			}
+
+			if (portletModesSB.index() > 2) {
+				portletModesSB.setIndex(portletModesSB.index() - 1);
 			}
 
 			supportedPortletModes.add(portletModesSB.toString());
@@ -523,14 +519,13 @@ public class BeanPortletImpl implements BeanPortlet {
 		Map<String, String> securityRoleRefs = getSecurityRoleRefs();
 
 		for (Map.Entry<String, String> entry : securityRoleRefs.entrySet()) {
-			if (roleNamesSB.length() > 0) {
-				roleNamesSB.append(",");
-			}
-
 			roleNamesSB.append(entry.getKey());
+			roleNamesSB.append(",");
 		}
 
-		if (roleNamesSB.length() > 0) {
+		if (roleNamesSB.index() > 0) {
+			roleNamesSB.setIndex(roleNamesSB.index() - 1);
+
 			dictionary.put(
 				"javax.portlet.security-role-ref", roleNamesSB.toString());
 		}
@@ -573,17 +568,13 @@ public class BeanPortletImpl implements BeanPortlet {
 
 			Set<String> windowStates = entry.getValue();
 
-			boolean first = true;
-
 			for (String windowState : windowStates) {
-				if (first) {
-					first = false;
-				}
-				else {
-					windowStatesSB.append(",");
-				}
-
 				windowStatesSB.append(windowState);
+				windowStatesSB.append(",");
+			}
+
+			if (windowStatesSB.index() > 2) {
+				windowStatesSB.setIndex(windowStatesSB.index() - 1);
 			}
 
 			supportedWindowStates.add(windowStatesSB.toString());

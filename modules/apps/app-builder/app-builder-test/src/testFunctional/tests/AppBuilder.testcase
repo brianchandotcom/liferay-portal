@@ -1189,7 +1189,11 @@ definition {
 
 		AppBuilderAdmin.clearSearch();
 
-		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");();
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Third App");
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

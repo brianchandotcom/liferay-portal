@@ -201,32 +201,36 @@ public class DDMFormInstanceFieldSettingsValidator {
 					DDMFormField field = ddmFormFieldsMap.get(
 						jsonObject.getString("fieldName"));
 
-					DDMFormFieldType ddmFormFieldType =
-						_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
-							field.getType());
+					if (field != null) {
+						DDMFormFieldType ddmFormFieldType =
+							_ddmFormFieldTypeServicesTracker.
+								getDDMFormFieldType(field.getType());
 
-					DDMForm fieldDDMForm = DDMFormFactory.create(
-						ddmFormFieldType.getDDMFormFieldTypeSettings());
+						DDMForm fieldDDMForm = DDMFormFactory.create(
+							ddmFormFieldType.getDDMFormFieldTypeSettings());
 
-					DDMFormValues fieldDDMFormValues =
-						createDDMFormFieldFormValues(
-							jsonObject.getJSONObject("settingsContext"),
-							fieldDDMForm, ddmForm.getAvailableLocales(),
-							ddmForm.getDefaultLocale());
+						DDMFormValues fieldDDMFormValues =
+							createDDMFormFieldFormValues(
+								jsonObject.getJSONObject("settingsContext"),
+								fieldDDMForm, ddmForm.getAvailableLocales(),
+								ddmForm.getDefaultLocale());
 
-					DDMFormEvaluatorEvaluateResponse
-						ddmFormEvaluatorEvaluateResponse = doEvaluate(
-							portletRequest, fieldDDMForm, fieldDDMFormValues,
-							ddmForm.getDefaultLocale());
+						DDMFormEvaluatorEvaluateResponse
+							ddmFormEvaluatorEvaluateResponse = doEvaluate(
+								portletRequest, fieldDDMForm,
+								fieldDDMFormValues, ddmForm.getDefaultLocale());
 
-					Set<String> invalidDDMFormFields = getInvalidDDMFormFields(
-						fieldDDMForm, ddmFormEvaluatorEvaluateResponse,
-						fieldDDMForm.getDefaultLocale());
+						Set<String> invalidDDMFormFields =
+							getInvalidDDMFormFields(
+								fieldDDMForm, ddmFormEvaluatorEvaluateResponse,
+								fieldDDMForm.getDefaultLocale());
 
-					if (!invalidDDMFormFields.isEmpty()) {
-						fieldNamePropertiesMap.put(
-							getFieldLabel(field, ddmForm.getDefaultLocale()),
-							invalidDDMFormFields);
+						if (!invalidDDMFormFields.isEmpty()) {
+							fieldNamePropertiesMap.put(
+								getFieldLabel(
+									field, ddmForm.getDefaultLocale()),
+								invalidDDMFormFields);
+						}
 					}
 				}
 

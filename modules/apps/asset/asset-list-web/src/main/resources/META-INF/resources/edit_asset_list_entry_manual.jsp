@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL" />
+<portlet:actionURL name="/asset_list/add_asset_entry_selection" var="addAssetEntrySelectionURL">
+	<portlet:param name="mvcPath" value="/edit_asset_list_entry.jsp" />
+</portlet:actionURL>
 
 <liferay-frontend:edit-form
 	action="<%= addAssetEntrySelectionURL %>"

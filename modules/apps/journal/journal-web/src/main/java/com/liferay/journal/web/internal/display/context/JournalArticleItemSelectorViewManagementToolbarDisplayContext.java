@@ -15,10 +15,13 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import javax.portlet.PortletException;
+import java.util.Objects;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,11 +37,39 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 			HttpServletRequest httpServletRequest,
 			JournalArticleItemSelectorViewDisplayContext
 				journalArticleItemSelectorViewDisplayContext)
-		throws PortletException {
+		throws Exception {
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			journalArticleItemSelectorViewDisplayContext.getSearchContainer());
+
+		_journalArticleItemSelectorViewDisplayContext =
+			journalArticleItemSelectorViewDisplayContext;
+	}
+
+	@Override
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	@Override
+	public String getSortingOrder() {
+		if (Objects.equals(getOrderByCol(), "relevance")) {
+			return null;
+		}
+
+		return super.getSortingOrder();
 	}
 
 	@Override
@@ -58,7 +89,14 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
+		if (_journalArticleItemSelectorViewDisplayContext.isSearch()) {
+			return new String[] {"relevance", "modified-date", "title"};
+		}
+
 		return new String[] {"modified-date", "title"};
 	}
+
+	private final JournalArticleItemSelectorViewDisplayContext
+		_journalArticleItemSelectorViewDisplayContext;
 
 }

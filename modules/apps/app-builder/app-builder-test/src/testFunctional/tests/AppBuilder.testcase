@@ -1510,7 +1510,11 @@ definition {
 
 		AppBuilderAdmin.clearSearch();
 
-		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");();
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Third App");
 	}
 <<<<<<< HEAD
 	

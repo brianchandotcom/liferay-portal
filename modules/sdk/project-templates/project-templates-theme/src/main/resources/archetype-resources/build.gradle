@@ -22,8 +22,8 @@ dependencies {
 #else
 
 #if (${liferayVersion.startsWith("7.0")})
-	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.1.3"
-	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.2.10"
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.13"
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.0.13"
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "2.0.4"
 #elseif (${liferayVersion.startsWith("7.1")})

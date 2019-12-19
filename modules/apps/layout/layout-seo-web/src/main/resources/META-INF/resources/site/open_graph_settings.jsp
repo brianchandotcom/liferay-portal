@@ -54,11 +54,11 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 		<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /></label>
 
 		<%
-		LayoutSEOSite selLayoutSEOSite = openGraphSettingsDisplayContext.getSelLayoutSEOSite();
+		LayoutSEOSite layoutSEOSite = openGraphSettingsDisplayContext.getLayoutSEOSite();
 		%>
 
-		<c:if test="<%= selLayoutSEOSite != null %>">
-			<aui:model-context bean="<%= selLayoutSEOSite %>" model="<%= LayoutSEOSite.class %>" />
+		<c:if test="<%= layoutSEOSite != null %>">
+			<aui:model-context bean="<%= layoutSEOSite %>" model="<%= LayoutSEOSite.class %>" />
 		</c:if>
 
 		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() || Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />

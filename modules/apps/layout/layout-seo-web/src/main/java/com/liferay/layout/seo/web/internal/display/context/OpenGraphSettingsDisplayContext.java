@@ -83,9 +83,16 @@ public class OpenGraphSettingsDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
+	public LayoutSEOSite getLayoutSEOSite() {
+		Group group = _getGroup();
+
+		return _layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
+			group.getGroupId());
+	}
+
 	public long getOpenGraphImageFileEntryId() {
 		return Optional.ofNullable(
-			getSelLayoutSEOSite()
+			getLayoutSEOSite()
 		).map(
 			LayoutSEOSite::getOpenGraphImageFileEntryId
 		).orElse(
@@ -94,17 +101,15 @@ public class OpenGraphSettingsDisplayContext {
 	}
 
 	public String getOpenGraphImageTitle() {
-		LayoutSEOSite selLayoutSEOSite = getSelLayoutSEOSite();
+		long openGraphImageFileEntryId = getOpenGraphImageFileEntryId();
 
-		if ((selLayoutSEOSite == null) ||
-			(selLayoutSEOSite.getOpenGraphImageFileEntryId() == 0)) {
-
+		if (openGraphImageFileEntryId == 0) {
 			return null;
 		}
 
 		try {
 			FileEntry fileEntry = _dlAppService.getFileEntry(
-				selLayoutSEOSite.getOpenGraphImageFileEntryId());
+				openGraphImageFileEntryId);
 
 			return fileEntry.getTitle();
 		}
@@ -116,18 +121,15 @@ public class OpenGraphSettingsDisplayContext {
 	}
 
 	public String getOpenGraphImageURL() throws Exception {
-		LayoutSEOSite selLayoutSEOSite = getSelLayoutSEOSite();
+		long openGraphImageFileEntryId = getOpenGraphImageFileEntryId();
 
-		if ((selLayoutSEOSite == null) ||
-			(selLayoutSEOSite.getOpenGraphImageFileEntryId() == 0)) {
-
+		if (openGraphImageFileEntryId == 0) {
 			return null;
 		}
 
 		try {
 			return _dlurlHelper.getImagePreviewURL(
-				_dlAppService.getFileEntry(
-					selLayoutSEOSite.getOpenGraphImageFileEntryId()),
+				_dlAppService.getFileEntry(openGraphImageFileEntryId),
 				_themeDisplay);
 		}
 		catch (PortalException pe) {
@@ -135,13 +137,6 @@ public class OpenGraphSettingsDisplayContext {
 
 			return null;
 		}
-	}
-
-	public LayoutSEOSite getSelLayoutSEOSite() {
-		Group group = _getGroup();
-
-		return _layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
-			group.getGroupId());
 	}
 
 	public boolean isOpenGraphEnabled() throws PortalException {

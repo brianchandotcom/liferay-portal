@@ -56,8 +56,8 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
+			String commits = ""
 			String dependencies = ""
-			String commitInfo = ""
 			String ticket = ""
 
 			gitLogOutput.eachLine {
@@ -69,10 +69,8 @@ buildChangelogs {
 					publishDate = matcher.group(2)
 					ticket = matcher.group(3)
 
-					String commitTitle = ""
-
 					if (matcher.group(4) ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
-						commitInfo = commitInfo + """\
+						commits = commits + """\
 							|
 							|- [${ticket}]: ${matcher.group(4).trim()} (${matcher.group(1).substring(0, 10)})""".stripMargin()
 					}
@@ -90,20 +88,20 @@ buildChangelogs {
 				}
 			}
 
-			if (commitInfo.length() > 0 || dependencies.length() > 0) {
+			if (commits.length() > 0 || dependencies.length() > 0) {
 				text += """\
 					|
 					|
 					|## ${version} - ${publishDate}""".stripMargin()
 			}
 
-			if (commitInfo.length() > 0) {
+			if (commits.length() > 0) {
 				text += """\
 					|
 					|
 					|### Commits""".stripMargin()
 
-				text += commitInfo
+				text += commits
 			}
 
 			if (dependencies.length() > 0) {

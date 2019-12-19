@@ -43,10 +43,6 @@ repositories {
 
 runGradleTest {
 	doLast {
-		ResolvedArtifact resolvedArtifact = configurations.originalModule.resolvedConfiguration.resolvedArtifacts.find {
-			it.name == "com.liferay.login.web"
-		}
-
-		assert resolvedArtifact.file.name.contains("3.0.26")
+		assert configurations.originalModule.singleFile.name.equals("com.liferay.login.web-4.0.20.jar")
 	}
 }

@@ -52,12 +52,8 @@ runGradleTest {
 			it.name == "com.liferay.frontend.theme.styled"
 		}
 
-		assert resolvedArtifact.file.name.contains("3.0.16")
+		assert resolvedArtifact.file.name.equals("com.liferay.frontend.theme.styled-4.0.20.jar")
 
-		resolvedArtifact = configurations.portalCommonCSS.resolvedConfiguration.resolvedArtifacts.find {
-			it.name == "com.liferay.frontend.css.common"
-		}
-
-		assert resolvedArtifact.file.name.contains("3.0.1")
+		assert configurations.portalCommonCSS.singleFile.name.equals("com.liferay.frontend.css.common-4.0.3.jar")
 	}
 }

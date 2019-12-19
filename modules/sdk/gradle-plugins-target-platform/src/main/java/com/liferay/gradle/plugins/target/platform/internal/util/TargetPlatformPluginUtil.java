@@ -47,6 +47,15 @@ public class TargetPlatformPluginUtil {
 						return;
 					}
 
+					if (name.equals("frontendCSSCommon") ||
+						name.equals("originalModule") ||
+						name.equals("parentThemes") ||
+						name.equals("portalCommonCSS") ||
+						name.equals("providedModules")) {
+
+						configuration.setTransitive(true);
+					}
+
 					DependencySet dependencySet =
 						targetPlatformBomsConfiguration.getDependencies();
 

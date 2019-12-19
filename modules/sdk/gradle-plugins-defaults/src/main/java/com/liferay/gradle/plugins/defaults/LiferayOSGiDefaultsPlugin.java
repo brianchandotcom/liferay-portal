@@ -650,9 +650,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
 			"com.liferay.portal.test", "default");
-		GradleUtil.addDependency(
-			project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
-			"com.liferay.portal.test.integration", "default");
+
+		if (Validator.isNull(System.getenv("JENKINS_HOME"))) {
+			GradleUtil.addDependency(
+				project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
+				"com.liferay.portal.test.integration", "default");
+		}
 	}
 
 	private void _addDependenciesPortalTestSnapshot(Project project) {

@@ -26,6 +26,7 @@ import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask
 import com.liferay.gradle.plugins.test.integration.tasks.StopTestableTomcatTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.OSDetector;
+import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
 import groovy.lang.Closure;
@@ -197,9 +198,13 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
 			"com.liferay.portal.test", "3.0.0");
-		GradleUtil.addDependency(
-			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
-			"com.liferay.portal.test.integration", "3.0.0");
+
+		if (Validator.isNull(System.getenv("JENKINS_HOME"))) {
+			GradleUtil.addDependency(
+				project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
+				"com.liferay.portal.test.integration", "3.0.0");
+		}
+
 		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "org.apache.aries.jmx",
 			"org.apache.aries.jmx.core", "1.1.7");

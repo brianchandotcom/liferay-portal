@@ -256,7 +256,9 @@ public class FragmentCollectionLocalServiceImpl
 			throw new FragmentCollectionNameException("Name must not be null");
 		}
 
-		if (name.contains(StringPool.PERIOD)) {
+		if (name.contains(StringPool.PERIOD) ||
+			name.contains(StringPool.SLASH)) {
+
 			throw new FragmentCollectionNameException(
 				"Name contains invalid characters");
 		}

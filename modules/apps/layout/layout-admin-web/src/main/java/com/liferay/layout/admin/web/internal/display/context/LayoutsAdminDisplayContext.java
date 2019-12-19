@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
@@ -804,6 +805,28 @@ public class LayoutsAdminDisplayContext {
 		deleteLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 
 		return deleteLayoutURL.toString();
+	}
+
+	public String getOpenGraphImageTitle() {
+		LayoutSEOEntry layoutSEOEntry = _getSelLayoutSEOEntry();
+
+		if ((layoutSEOEntry == null) ||
+			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
+
+			return null;
+		}
+
+		try {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				layoutSEOEntry.getOpenGraphImageFileEntryId());
+
+			return fileEntry.getTitle();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return null;
+		}
 	}
 
 	public String getOpenGraphImageURL() {

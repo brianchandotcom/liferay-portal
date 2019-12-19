@@ -1176,7 +1176,9 @@ definition {
 
 		AppBuilderAdmin.gotoBack();
 
-		AppBuilderAdmin.searchByItem(itemName = "object");
+		AppBuilderAdmin.searchByItem(itemName = "my custom object 1");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "my custom object 1")
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
 

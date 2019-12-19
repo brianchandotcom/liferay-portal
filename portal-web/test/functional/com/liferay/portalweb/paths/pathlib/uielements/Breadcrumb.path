@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BREADCRUMB_ENTRY_EXACT_MATCH</td>
+	<td>//ol[contains(@class,'breadcrumb')]//*[text()='${key_breadcrumbName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BREADCRUMB_ENTRY_LINK</td>
 	<td>//ol[contains(@class,'breadcrumb')]//li/a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>

@@ -227,16 +227,9 @@ definition {
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
 			SitePages.gotoAddFirstPage(pageType = "Public Page");
 		}
-		else if (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM", key_itemName = "Public Pages")) {
-			Click(
-				key_itemName = "Public Pages",
-				locator1 = "SitePages#LIST_GROUP_ITEM");
-
-			LexiconEntry.gotoAdd();
-		}
 		else {
 			AssertClick(
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
 				value1 = "Pages");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");

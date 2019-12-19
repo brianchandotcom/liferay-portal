@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Optional;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,13 +84,13 @@ public class OpenGraphSettingsDisplayContext {
 	}
 
 	public long getOpenGraphImageFileEntryId() {
-		LayoutSEOSite selLayoutSEOSite = getSelLayoutSEOSite();
-
-		if (selLayoutSEOSite == null) {
-			return 0;
-		}
-
-		return selLayoutSEOSite.getOpenGraphImageFileEntryId();
+		return Optional.ofNullable(
+			getSelLayoutSEOSite()
+		).map(
+			LayoutSEOSite::getOpenGraphImageFileEntryId
+		).orElse(
+			0L
+		);
 	}
 
 	public String getOpenGraphImageTitle() {
@@ -147,14 +149,11 @@ public class OpenGraphSettingsDisplayContext {
 	}
 
 	private Group _getGroup() {
-		Group liveGroup = (Group)_httpServletRequest.getAttribute(
-			"site.liveGroup");
-
-		if (liveGroup != null) {
-			return liveGroup;
-		}
-
-		return (Group)_httpServletRequest.getAttribute("site.group");
+		return Optional.ofNullable(
+			(Group)_httpServletRequest.getAttribute("site.liveGroup")
+		).orElseGet(
+			() -> (Group)_httpServletRequest.getAttribute("site.group")
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

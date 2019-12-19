@@ -50,23 +50,28 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 
 	@Override
 	public Map<String, String> getData() {
-		PortletURL addDisplayPageURL = _renderResponse.createActionURL();
-
-		addDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template/add_display_page");
-		addDisplayPageURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		addDisplayPageURL.setParameter(
-			"type",
-			String.valueOf(
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
-		addDisplayPageURL.setParameter(
-			"masterLayoutPlid",
-			String.valueOf(_layoutPageTemplateEntry.getPlid()));
-
 		return HashMapBuilder.put(
-			"add-display-page-url", addDisplayPageURL.toString()
+			"add-display-page-url",
+			() -> {
+				PortletURL addDisplayPageURL =
+					_renderResponse.createActionURL();
+
+				addDisplayPageURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/layout_page_template/add_display_page");
+				addDisplayPageURL.setParameter(
+					"redirect", _themeDisplay.getURLCurrent());
+				addDisplayPageURL.setParameter(
+					"type",
+					String.valueOf(
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_DISPLAY_PAGE));
+				addDisplayPageURL.setParameter(
+					"masterLayoutPlid",
+					String.valueOf(_layoutPageTemplateEntry.getPlid()));
+
+				return addDisplayPageURL.toString();
+			}
 		).build();
 	}
 

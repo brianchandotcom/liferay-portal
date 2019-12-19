@@ -148,72 +148,98 @@ public class JournalManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() throws Exception {
-		PortletURL addArticleURL = liferayPortletResponse.createRenderURL();
-
-		addArticleURL.setParameter("mvcPath", "/edit_article.jsp");
-		addArticleURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		addArticleURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-		addArticleURL.setParameter(
-			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
-
-		PortletURL moveEntriesURL = liferayPortletResponse.createRenderURL();
-
-		moveEntriesURL.setParameter("mvcPath", "/move_entries.jsp");
-
-		String redirect = ParamUtil.getString(
-			liferayPortletRequest, "redirect", _themeDisplay.getURLCurrent());
-
-		moveEntriesURL.setParameter("redirect", redirect);
-
-		String referringPortletResource = ParamUtil.getString(
-			liferayPortletRequest, "referringPortletResource");
-
-		moveEntriesURL.setParameter(
-			"referringPortletResource", referringPortletResource);
-
-		PortletURL openViewMoreStructuresURL =
-			liferayPortletResponse.createRenderURL();
-
-		openViewMoreStructuresURL.setParameter(
-			"mvcPath", "/view_more_menu_items.jsp");
-		openViewMoreStructuresURL.setParameter(
-			"folderId", String.valueOf(_journalDisplayContext.getFolderId()));
-		openViewMoreStructuresURL.setParameter(
-			"eventName",
-			liferayPortletResponse.getNamespace() + "selectAddMenuItem");
-		openViewMoreStructuresURL.setWindowState(LiferayWindowState.POP_UP);
-
-		PortletURL selectEntityURL = liferayPortletResponse.createRenderURL();
-
-		selectEntityURL.setParameter("mvcPath", "/select_ddm_structure.jsp");
-		selectEntityURL.setWindowState(LiferayWindowState.POP_UP);
-
-		PortletURL viewDDMStructureArticlesURL =
-			liferayPortletResponse.createRenderURL();
-
-		viewDDMStructureArticlesURL.setParameter("navigation", "structure");
-		viewDDMStructureArticlesURL.setParameter(
-			"folderId",
-			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
 		return HashMapBuilder.<String, Object>put(
-			"addArticleURL", addArticleURL.toString()
+			"addArticleURL",
+			() -> {
+				PortletURL addArticleURL =
+					liferayPortletResponse.createRenderURL();
+
+				addArticleURL.setParameter("mvcPath", "/edit_article.jsp");
+				addArticleURL.setParameter(
+					"redirect", _themeDisplay.getURLCurrent());
+				addArticleURL.setParameter(
+					"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
+				addArticleURL.setParameter(
+					"folderId",
+					String.valueOf(_journalDisplayContext.getFolderId()));
+
+				return addArticleURL.toString();
+			}
 		).put(
 			"folderId",
 			String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
 		).put(
-			"moveEntriesURL", moveEntriesURL.toString()
+			"moveEntriesURL",
+			() -> {
+				PortletURL moveEntriesURL =
+					liferayPortletResponse.createRenderURL();
+
+				moveEntriesURL.setParameter("mvcPath", "/move_entries.jsp");
+
+				String redirect = ParamUtil.getString(
+					liferayPortletRequest, "redirect",
+					_themeDisplay.getURLCurrent());
+
+				moveEntriesURL.setParameter("redirect", redirect);
+
+				String referringPortletResource = ParamUtil.getString(
+					liferayPortletRequest, "referringPortletResource");
+
+				moveEntriesURL.setParameter(
+					"referringPortletResource", referringPortletResource);
+
+				return moveEntriesURL.toString();
+			}
 		).put(
-			"openViewMoreStructuresURL", openViewMoreStructuresURL.toString()
+			"openViewMoreStructuresURL",
+			() -> {
+				PortletURL openViewMoreStructuresURL =
+					liferayPortletResponse.createRenderURL();
+
+				openViewMoreStructuresURL.setParameter(
+					"mvcPath", "/view_more_menu_items.jsp");
+				openViewMoreStructuresURL.setParameter(
+					"folderId",
+					String.valueOf(_journalDisplayContext.getFolderId()));
+				openViewMoreStructuresURL.setParameter(
+					"eventName",
+					liferayPortletResponse.getNamespace() +
+						"selectAddMenuItem");
+				openViewMoreStructuresURL.setWindowState(
+					LiferayWindowState.POP_UP);
+
+				return openViewMoreStructuresURL.toString();
+			}
 		).put(
-			"selectEntityURL", selectEntityURL.toString()
+			"selectEntityURL",
+			() -> {
+				PortletURL selectEntityURL =
+					liferayPortletResponse.createRenderURL();
+
+				selectEntityURL.setParameter(
+					"mvcPath", "/select_ddm_structure.jsp");
+				selectEntityURL.setWindowState(LiferayWindowState.POP_UP);
+
+				return selectEntityURL.toString();
+			}
 		).put(
 			"trashEnabled",
 			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
 		).put(
 			"viewDDMStructureArticlesURL",
-			viewDDMStructureArticlesURL.toString()
+			() -> {
+				PortletURL viewDDMStructureArticlesURL =
+					liferayPortletResponse.createRenderURL();
+
+				viewDDMStructureArticlesURL.setParameter(
+					"navigation", "structure");
+				viewDDMStructureArticlesURL.setParameter(
+					"folderId",
+					String.valueOf(
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+				return viewDDMStructureArticlesURL.toString();
+			}
 		).build();
 	}
 

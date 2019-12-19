@@ -110,44 +110,54 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public Map<String, Object> getChangeDefaultLanguageData() {
-		List<Map<String, Object>> languages = new ArrayList<>();
-
-		LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<>();
-
-		uniqueLanguageIds.add(getSelectedLanguageId());
-
-		for (Locale availableLocale : getAvailableLocales()) {
-			uniqueLanguageIds.add(LocaleUtil.toLanguageId(availableLocale));
-		}
-
-		for (String languageId : uniqueLanguageIds) {
-			Map<String, Object> language = HashMapBuilder.<String, Object>put(
-				"icon",
-				StringUtil.toLowerCase(StringUtil.replace(languageId, '_', '-'))
-			).put(
-				"label", languageId
-			).build();
-
-			languages.add(language);
-		}
-
-		Map<String, Object> strings = new HashMap<>();
-
-		for (Locale availableLocale : getAvailableLocales()) {
-			strings.put(
-				LocaleUtil.toLanguageId(availableLocale),
-				StringBundler.concat(
-					availableLocale.getDisplayLanguage(), StringPool.SPACE,
-					StringPool.OPEN_PARENTHESIS, availableLocale.getCountry(),
-					StringPool.CLOSE_PARENTHESIS));
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"defaultLanguage", getDefaultArticleLanguageId()
 		).put(
-			"languages", languages
+			"languages",
+			() -> {
+				List<Map<String, Object>> languages = new ArrayList<>();
+
+				LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<>();
+
+				uniqueLanguageIds.add(getSelectedLanguageId());
+
+				for (Locale availableLocale : getAvailableLocales()) {
+					uniqueLanguageIds.add(
+						LocaleUtil.toLanguageId(availableLocale));
+				}
+
+				for (String languageId : uniqueLanguageIds) {
+					Map<String, Object> language =
+						HashMapBuilder.<String, Object>put(
+							"icon",
+							StringUtil.toLowerCase(
+								StringUtil.replace(languageId, '_', '-'))
+						).put(
+							"label", languageId
+						).build();
+
+					languages.add(language);
+				}
+
+				return languages;
+			}
 		).put(
-			"strings", strings
+			"strings",
+			() -> {
+				Map<String, Object> strings = new HashMap<>();
+
+				for (Locale availableLocale : getAvailableLocales()) {
+					strings.put(
+						LocaleUtil.toLanguageId(availableLocale),
+						StringBundler.concat(
+							availableLocale.getDisplayLanguage(),
+							StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+							availableLocale.getCountry(),
+							StringPool.CLOSE_PARENTHESIS));
+				}
+
+				return strings;
+			}
 		).build();
 	}
 

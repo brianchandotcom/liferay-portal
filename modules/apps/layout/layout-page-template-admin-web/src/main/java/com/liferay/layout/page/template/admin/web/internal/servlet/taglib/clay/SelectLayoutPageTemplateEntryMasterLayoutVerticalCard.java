@@ -51,27 +51,29 @@ public class SelectLayoutPageTemplateEntryMasterLayoutVerticalCard
 
 	@Override
 	public Map<String, String> getData() {
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			_httpServletRequest, "layoutPageTemplateCollectionId");
-
-		PortletURL addLayoutPageTemplateEntryURL =
-			_renderResponse.createActionURL();
-
-		addLayoutPageTemplateEntryURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout_page_template/add_layout_page_template_entry");
-		addLayoutPageTemplateEntryURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
-		addLayoutPageTemplateEntryURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(layoutPageTemplateCollectionId));
-		addLayoutPageTemplateEntryURL.setParameter(
-			"masterLayoutPlid",
-			String.valueOf(_layoutPageTemplateEntry.getPlid()));
-
 		return HashMapBuilder.put(
 			"add-layout-page-template-entry-url",
-			addLayoutPageTemplateEntryURL.toString()
+			() -> {
+				long layoutPageTemplateCollectionId = ParamUtil.getLong(
+					_httpServletRequest, "layoutPageTemplateCollectionId");
+
+				PortletURL addLayoutPageTemplateEntryURL =
+					_renderResponse.createActionURL();
+
+				addLayoutPageTemplateEntryURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/layout_page_template/add_layout_page_template_entry");
+				addLayoutPageTemplateEntryURL.setParameter(
+					"redirect", _themeDisplay.getURLCurrent());
+				addLayoutPageTemplateEntryURL.setParameter(
+					"layoutPageTemplateCollectionId",
+					String.valueOf(layoutPageTemplateCollectionId));
+				addLayoutPageTemplateEntryURL.setParameter(
+					"masterLayoutPlid",
+					String.valueOf(_layoutPageTemplateEntry.getPlid()));
+
+				return addLayoutPageTemplateEntryURL.toString();
+			}
 		).build();
 	}
 

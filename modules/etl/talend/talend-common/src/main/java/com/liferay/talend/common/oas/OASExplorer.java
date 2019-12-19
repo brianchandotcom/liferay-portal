@@ -68,14 +68,14 @@ public class OASExplorer {
 		return entitySchemaNames;
 	}
 
-	public List<OASParameter> getParameters(
-		String endpoint, String operation, JsonObject oasJsonObject) {
+	public List<OASParameter> getPathOperationParameters(
+		String path, String operation, JsonObject oasJsonObject) {
 
 		List<OASParameter> oasParameters = new ArrayList<>();
 
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
-			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+			"ENDPOINT_TPL", path, "OPERATION_TPL", operation);
 
 		JsonArray parametersJsonArray = _jsonFinder.getDescendantJsonArray(
 			jsonFinderPath, oasJsonObject);
@@ -88,11 +88,11 @@ public class OASExplorer {
 		return oasParameters;
 	}
 
-	public Set<String> getSupportedOperations(
-		String endpoint, JsonObject oasJsonObject) {
+	public Set<String> getPathOperations(
+		String path, JsonObject oasJsonObject) {
 
 		String jsonFinderPath = StringUtil.replace(
-			OASConstants.PATH_ENDPOINT_PATTERN, "ENDPOINT_TPL", endpoint);
+			OASConstants.PATH_ENDPOINT_PATTERN, "ENDPOINT_TPL", path);
 
 		JsonObject endpointJsonObject = _jsonFinder.getDescendantJsonObject(
 			jsonFinderPath, oasJsonObject);

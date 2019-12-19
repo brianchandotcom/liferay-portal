@@ -22,7 +22,7 @@ import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.schema.SchemaListener;
 import com.liferay.talend.source.LiferayOASSource;
-import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.tliferayoutput.Operation;
 
 import java.net.URI;
 
@@ -213,8 +213,8 @@ public abstract class BaseLiferayResourceProperties
 
 	};
 
-	public Property<Action> operations = PropertyFactory.newEnum(
-		"operations", Action.class);
+	public Property<Operation> operations = PropertyFactory.newEnum(
+		"operations", Operation.class);
 	public ParametersTable parametersTable = new ParametersTable(
 		"parametersTable");
 	public ISchemaListener schemaListener;

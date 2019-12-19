@@ -51,8 +51,8 @@ public class LiferaySource extends LiferaySourceOrSink implements Source {
 	}
 
 	@Override
-	protected String getLiferayConnectionProipertiesPath() {
-		return "resource." + super.getLiferayConnectionProipertiesPath();
+	protected String getLiferayConnectionPropertiesPath() {
+		return "resource." + super.getLiferayConnectionPropertiesPath();
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

@@ -26,7 +26,7 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.parameters.RequestParameter;
 import com.liferay.talend.properties.parameters.RequestParameterProperties;
 import com.liferay.talend.source.LiferayOASSource;
-import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.tliferayoutput.Operation;
 
 import java.net.URI;
 
@@ -80,15 +80,15 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 			return liferayOASSource.getValidationResult();
 		}
 
-		Action operation = operations.getValue();
+		Operation operation = operations.getValue();
 
-		if (operation == Action.Unavailable) {
+		if (operation == Operation.Unavailable) {
 			_resetProperties();
 
 			return liferayOASSource.getValidationResult();
 		}
 
-		_setupParametersProperties();
+		_setupRequestParameterProperties();
 
 		_updateRequestParameterProperties();
 
@@ -159,10 +159,10 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 			return;
 		}
 
-		_allowedOperations = new Action[operations.length];
+		_allowedOperations = new Operation[operations.length];
 
 		for (int i = 0; i < operations.length; i++) {
-			_allowedOperations[i] = Action.toAction(operations[i]);
+			_allowedOperations[i] = Operation.toOperation(operations[i]);
 		}
 	}
 
@@ -225,7 +225,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		operations.setPossibleValues(_allowedOperations);
 		operations.setValue(_allowedOperations[0]);
 
-		_setupParametersProperties();
+		_setupRequestParameterProperties();
 	}
 
 	public LiferayConnectionProperties connection =
@@ -234,8 +234,8 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	public SchemaProperties flowSchema = new SchemaProperties("flowSchema");
 	public SchemaProperties mainSchema = new SchemaProperties("mainSchema");
 	public StringProperty openAPIModule = new StringProperty("openAPIModule");
-	public Property<Action> operations = new EnumProperty<>(
-		Action.class, "operations");
+	public Property<Operation> operations = new EnumProperty<>(
+		Operation.class, "operations");
 	public RequestParameterProperties parameters =
 		new RequestParameterProperties("parameters");
 	public SchemaProperties rejectSchema = new SchemaProperties("rejectSchema");
@@ -255,7 +255,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 					getI18nMessage("error.validation.schema"));
 			}
 
-			_setupParametersProperties();
+			_setupRequestParameterProperties();
 
 			_updateRequestParameterProperties();
 
@@ -362,14 +362,14 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		String[] operations = new String[_allowedOperations.length];
 
 		for (int i = 0; i < operations.length; i++) {
-			operations[i] = _allowedOperations[i].getMethodName();
+			operations[i] = _allowedOperations[i].getHttpMethod();
 		}
 
 		return operations;
 	}
 
-	private boolean _isAllowedOperation(Action operation) {
-		for (Action supportedOperation : _allowedOperations) {
+	private boolean _isAllowedOperation(Operation operation) {
+		for (Operation supportedOperation : _allowedOperations) {
 			if (operation == supportedOperation) {
 				return true;
 			}
@@ -395,7 +395,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		operations.setValue(null);
 
-		_setupParametersProperties();
+		_setupRequestParameterProperties();
 	}
 
 	private void _setupOperations() throws TalendRuntimeException {
@@ -405,14 +405,14 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		OASSource oasSource = liferayOASSource.getOASSource();
 
-		Set<String> endpointOperations = oasExplorer.getSupportedOperations(
+		Set<String> endpointOperations = oasExplorer.getPathOperations(
 			_getOpenAPIEntityOperationPath(),
 			oasSource.getOASJsonObject(getOpenAPIUrl()));
 
-		List<Action> operations = new ArrayList<>();
+		List<Operation> operations = new ArrayList<>();
 
 		for (String endpointOperation : endpointOperations) {
-			Action operation = Action.toAction(endpointOperation);
+			Operation operation = Operation.toOperation(endpointOperation);
 
 			if (_isAllowedOperation(operation)) {
 				operations.add(operation);
@@ -420,7 +420,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		}
 
 		if (operations.isEmpty()) {
-			operations.add(Action.Unavailable);
+			operations.add(Operation.Unavailable);
 		}
 
 		this.operations.setPossibleValues(operations);
@@ -428,7 +428,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		_resetProperties();
 	}
 
-	private void _setupParametersProperties() {
+	private void _setupRequestParameterProperties() {
 		parameters.removeAll();
 
 		if (_includeLiferayOASParameters) {
@@ -441,7 +441,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 			return;
 		}
 
-		Action operation = operations.getValue();
+		Operation operation = operations.getValue();
 
 		OASExplorer oasExplorer = new OASExplorer();
 
@@ -450,8 +450,8 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		OASSource oasSource = liferayOASSource.getOASSource();
 
 		parameters.addParameters(
-			oasExplorer.getParameters(
-				_getOpenAPIEntityOperationPath(), operation.getMethodName(),
+			oasExplorer.getPathOperationParameters(
+				_getOpenAPIEntityOperationPath(), operation.getHttpMethod(),
 				oasSource.getOASJsonObject(getOpenAPIUrl())));
 	}
 
@@ -461,10 +461,10 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		SchemaBuilder schemaBuilder = new SchemaBuilder();
 
-		Action operation = operations.getValue();
+		Operation operation = operations.getValue();
 
 		Schema endpointSchema = schemaBuilder.inferSchema(
-			openAPIEntityOperationPath, operation.getMethodName(),
+			openAPIEntityOperationPath, operation.getHttpMethod(),
 			oasJsonObject);
 
 		flowSchema.schema.setValue(endpointSchema);
@@ -474,6 +474,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		}
 
 		mainSchema.schema.setValue(endpointSchema);
+
 		rejectSchema.schema.setValue(
 			SchemaUtils.createRejectSchema(endpointSchema));
 	}
@@ -491,7 +492,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	private static Logger _logger = LoggerFactory.getLogger(
 		LiferayResourceProperties.class);
 
-	private transient Action[] _allowedOperations = {Action.Get};
+	private transient Operation[] _allowedOperations = {Operation.Get};
 	private transient boolean _displayOperations;
 	private transient boolean _includeLiferayOASParameters;
 	private transient LiferayOASSource _liferayOASSource;

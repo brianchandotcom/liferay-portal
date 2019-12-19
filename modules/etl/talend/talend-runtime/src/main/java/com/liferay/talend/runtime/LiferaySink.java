@@ -48,7 +48,7 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 
 		_liferayOutputProperties = (LiferayOutputProperties)componentData;
 
-		if (_liferayOutputProperties.getAction() == null) {
+		if (_liferayOutputProperties.getOperation() == null) {
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
 				"Unable to configure Sink without operation properly set");
@@ -64,8 +64,8 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 	}
 
 	@Override
-	protected String getLiferayConnectionProipertiesPath() {
-		return "resource." + super.getLiferayConnectionProipertiesPath();
+	protected String getLiferayConnectionPropertiesPath() {
+		return "resource." + super.getLiferayConnectionPropertiesPath();
 	}
 
 	private LiferayOutputProperties _liferayOutputProperties;

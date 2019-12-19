@@ -2257,7 +2257,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"--dependency-management-enabled");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateTheme70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -2283,7 +2282,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateTheme71() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -2309,7 +2307,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateTheme72() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
@@ -2335,7 +2332,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateThemeInWorkspace() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle("theme", "theme-test");

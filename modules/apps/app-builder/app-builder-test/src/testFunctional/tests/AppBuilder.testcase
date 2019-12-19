@@ -1186,7 +1186,9 @@ definition {
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
 
-		AppBuilderAdmin.clearSearch();
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "my custom object 3");
 		
 		AppBuilderAdmin.searchByItem(itemName = "!@#");
 

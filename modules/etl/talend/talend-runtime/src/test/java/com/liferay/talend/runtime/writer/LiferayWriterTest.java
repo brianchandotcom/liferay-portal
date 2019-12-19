@@ -16,14 +16,16 @@ package com.liferay.talend.runtime.writer;
 
 import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
+import com.liferay.talend.properties.output.LiferayOutputProperties;
 import com.liferay.talend.runtime.LiferayRequestContentAggregatorSink;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
-import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.io.IOException;
 
 import java.math.BigDecimal;
+
+import java.util.Arrays;
 
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
@@ -34,8 +36,6 @@ import org.apache.avro.generic.IndexedRecord;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.talend.components.common.SchemaProperties;
-
 /**
  * @author Igor Beslic
  */
@@ -43,30 +43,32 @@ public class LiferayWriterTest extends BaseTestCase {
 
 	@Test
 	public void testWrite() throws Exception {
-		String endpoint = "/v1.0/catalogs/{siteId}/product";
+		String openApiModule = "/headless-openapi-module/v1.0";
+		String endpoint = "/catalogs/{siteId}/product";
 
 		LiferayRequestContentAggregatorSink
 			liferayRequestContentAggregatorSink =
 				new LiferayRequestContentAggregatorSink();
 
-		TLiferayOutputProperties testLiferayOutputProperties =
-			_getTLiferayOutputProperties(Action.Insert, _OAS_URL, endpoint);
-
-		_setResourceParametersTableValues(
-			"path", "siteId", "", testLiferayOutputProperties);
+		LiferayOutputProperties testLiferayOutputProperties =
+			_getLiferayOutputProperties(
+				Action.Insert, openApiModule, _OAS_URL, endpoint, "siteId");
 
 		JsonObject oasJsonObject = readObject("openapi.json");
 
 		Schema postContentSchema = getSchema(
 			"/v1.0/catalogs/{siteId}/product", "POST", oasJsonObject);
 
-		testLiferayOutputProperties.setSchema(postContentSchema);
+		testLiferayOutputProperties.resource.mainSchema.schema.setValue(
+			postContentSchema);
+		testLiferayOutputProperties.resource.flowSchema.schema.setValue(
+			postContentSchema);
 
 		LiferayWriter liferayWriter = new LiferayWriter(
 			new LiferayWriteOperation(
 				liferayRequestContentAggregatorSink,
 				testLiferayOutputProperties),
-			null, testLiferayOutputProperties);
+			testLiferayOutputProperties);
 
 		liferayWriter.open("aaaa-bbbb-cccc-dddd");
 
@@ -90,30 +92,32 @@ public class LiferayWriterTest extends BaseTestCase {
 
 	@Test
 	public void testWriteBigDecimal() throws Exception {
-		String endpoint = "/v1.0/bigdecimal/{id}";
+		String openApiModule = "/headless-openapi-module/v1.0";
+		String endpoint = "/bigdecimal/{id}";
 
 		LiferayRequestContentAggregatorSink
 			liferayRequestContentAggregatorSink =
 				new LiferayRequestContentAggregatorSink();
 
-		TLiferayOutputProperties testLiferayOutputProperties =
-			_getTLiferayOutputProperties(Action.Update, _OAS_URL, endpoint);
-
-		_setResourceParametersTableValues(
-			"path", "id", "1977", testLiferayOutputProperties);
+		LiferayOutputProperties testLiferayOutputProperties =
+			_getLiferayOutputProperties(
+				Action.Update, openApiModule, _OAS_URL, endpoint, "id");
 
 		JsonObject oasJsonObject = readObject("openapi_data_types.json");
 
 		Schema patchContentSchema = getSchema(
 			"/v1.0/bigdecimal/{id}", "PATCH", oasJsonObject);
 
-		testLiferayOutputProperties.setSchema(patchContentSchema);
+		testLiferayOutputProperties.resource.mainSchema.schema.setValue(
+			patchContentSchema);
+		testLiferayOutputProperties.resource.flowSchema.schema.setValue(
+			patchContentSchema);
 
 		LiferayWriter liferayWriter = new LiferayWriter(
 			new LiferayWriteOperation(
 				liferayRequestContentAggregatorSink,
 				testLiferayOutputProperties),
-			null, testLiferayOutputProperties);
+			testLiferayOutputProperties);
 
 		liferayWriter.open("aaaa-bbbb-cccc-dddd");
 
@@ -145,19 +149,19 @@ public class LiferayWriterTest extends BaseTestCase {
 
 	@Test(expected = IOException.class)
 	public void testWriteNullIndexedRecord() throws Exception {
-		TLiferayOutputProperties testLiferayOutputProperties =
-			new TLiferayOutputProperties("testLiferayOutputProperties");
+		String openApiModule = "/headless-openapi-module/v1.0";
+		String endpoint = "/bigdecimal/{id}";
 
-		testLiferayOutputProperties.setSchema(SchemaProperties.EMPTY_SCHEMA);
-
-		testLiferayOutputProperties.init();
+		LiferayOutputProperties testLiferayOutputProperties =
+			_getLiferayOutputProperties(
+				Action.Update, openApiModule, _OAS_URL, endpoint, "id");
 
 		testLiferayOutputProperties.setupProperties();
 
 		LiferayWriter liferayWriter = new LiferayWriter(
 			new LiferayWriteOperation(
 				new LiferaySink(), testLiferayOutputProperties),
-			null, testLiferayOutputProperties);
+			testLiferayOutputProperties);
 
 		liferayWriter.write(null);
 	}
@@ -172,32 +176,14 @@ public class LiferayWriterTest extends BaseTestCase {
 			readObject(name));
 	}
 
-	private TLiferayOutputProperties _getTLiferayOutputProperties(
-		Action action, String apiSpecURL, String endpoint) {
+	private LiferayOutputProperties _getLiferayOutputProperties(
+		Action action, String openAPIModule, String apiSpecURL, String endpoint,
+		String parameterName) {
 
-		TLiferayOutputProperties liferayOutputProperties =
-			new TLiferayOutputProperties("testLiferayOutputProperties");
-
-		liferayOutputProperties.init();
-
-		liferayOutputProperties.setConnectionApiSpecURLValue(apiSpecURL);
-		liferayOutputProperties.setResourceEndpointValue(endpoint);
-		liferayOutputProperties.setResourceOperationsValue(action);
-		liferayOutputProperties.setSchema(SchemaProperties.EMPTY_SCHEMA);
-
-		return liferayOutputProperties;
-	}
-
-	private void _setResourceParametersTableValues(
-		String parameterLocation, String parameterName, String parameterValue,
-		TLiferayOutputProperties tLiferayOutputProperties) {
-
-		tLiferayOutputProperties.setResourceParametersTableColumnNameValue(
-			parameterName);
-		tLiferayOutputProperties.setResourceParametersTableTypeColumnNameValue(
-			parameterLocation);
-		tLiferayOutputProperties.setResourceParametersTableValueColumnNameValue(
-			parameterValue);
+		return new LiferayOutputProperties(
+			"testLiferayOutputProperties", action, openAPIModule, apiSpecURL,
+			endpoint, Arrays.asList(parameterName), Arrays.asList("path"),
+			Arrays.asList("1977"));
 	}
 
 	private static final String _OAS_URL =

@@ -18,8 +18,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import org.talend.components.api.container.RuntimeContainer;
-
 /**
  * @author Igor Beslic
  */
@@ -27,17 +25,13 @@ public class LiferayRequestContentAggregatorSink extends LiferaySink {
 
 	@Override
 	public JsonObject doPatchRequest(
-		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonObject jsonObject) {
+		String resourceURL, JsonObject jsonObject) {
 
 		return _processRequest(resourceURL, jsonObject);
 	}
 
 	@Override
-	public JsonObject doPostRequest(
-		RuntimeContainer runtimeContainer, String resourceURL,
-		JsonObject jsonObject) {
-
+	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject) {
 		return _processRequest(resourceURL, jsonObject);
 	}
 

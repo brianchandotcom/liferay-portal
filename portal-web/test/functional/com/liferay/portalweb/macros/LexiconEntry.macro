@@ -145,6 +145,14 @@ definition {
 		MenuItem.click(menuItem = "${menuItem}");
 	}
 
+	macro gotoFragmentPageContentEllipsisMenuItem {
+		Click.waitForMenuToggleJSClick(
+			key_rowEntry = "${rowEntry}",
+			locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro gotoHeaderMenuItem {
 		var browserType = PropsUtil.get("browser.type");
 

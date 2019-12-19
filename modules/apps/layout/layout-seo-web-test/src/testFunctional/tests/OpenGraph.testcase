@@ -108,11 +108,71 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		AssertElementNotPresent(
+			key_tab = "Open Graph",
+			locator1 = "NavTab#TAB_LINK");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		AssertElementNotPresent(
+			key_panel = "open graph",
+			locator1 = "Panel#PANEL_COLLAPSED");
+
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:title",property="og:site_name",property="og:url",property="og:locale"''');
+	}
+
+	@description = "This ensures that OG configuration at site level."
+	@priority = "5"
+	test DisableConfigurationAtSiteLevel {
+		property test.name.skip.portal.instance = "OpenGraph#DisableConfigurationAtSiteLevel";
+
+		ProductMenu.gotoSite(site = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		OpenGraph.disableOpenGraphAtSiteLevel();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		AssertElementNotPresent(
+			key_tab = "Open Graph",
+			locator1 = "NavTab#TAB_LINK");
+
+		JSONGroup.addGroup(groupName = "Test Site Name 2");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name 2",
+			layoutName = "Test Page Name 2");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-2");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name 2");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.viewDefaultConfiguration();
 	}
 
 	@description = "This ensures that the user can edit existing OG tags."

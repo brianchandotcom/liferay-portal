@@ -106,9 +106,7 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
-		String itemType = ParamUtil.getString(actionRequest, "type");
-		int position = ParamUtil.getInteger(actionRequest, "position");
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,

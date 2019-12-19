@@ -1480,6 +1480,11 @@ definition {
 			customObjectName = "my custom object 1",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Upload",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
 	}
 <<<<<<< HEAD
 	

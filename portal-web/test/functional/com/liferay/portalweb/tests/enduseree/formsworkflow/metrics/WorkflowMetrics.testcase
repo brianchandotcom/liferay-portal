@@ -384,7 +384,7 @@ definition {
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
 		var key_testSLADefinitionStart = "Process Begins";
-		var key_SLABreachedValue = "1(100%)"
+		var key_SLABreachedValue = "1(100%)";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -459,10 +459,7 @@ definition {
 
 		WorkflowMetrics.assertDefaultChartRangesAndUnits();
 
-		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
-			locator1 = "Review",
-			value1 = "key_SLABreachedValue" 
-			);
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep();
 
 	}
 

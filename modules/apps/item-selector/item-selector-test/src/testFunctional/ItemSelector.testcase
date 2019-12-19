@@ -130,4 +130,21 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to 5 of 6 entries.");
 	}
 
+	@description = "This ensures that users can preview the SVG image in item selector."
+	@priority = "5"
+	test PreviewSVG {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.svg",
+			dmDocumentTitle = "Document_1.svg");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		ItemSelector.gotoPreviewViaSelectFile(navTab = "Documents and Media");
+
+		AssertVisible(locator1 = "ItemSelector#SELECT_IMAGE_PREVIEW");
+	}
+
 }

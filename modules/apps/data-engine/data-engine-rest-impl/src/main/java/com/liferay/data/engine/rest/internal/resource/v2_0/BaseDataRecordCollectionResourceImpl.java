@@ -15,7 +15,6 @@
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
-import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -206,59 +205,6 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions' -d $'{"addDataRecord": ___, "addDataRecordCollection": ___, "definePermissions": ___, "delete": ___, "deleteDataRecord": ___, "exportDataRecord": ___, "roleNames": ___, "update": ___, "updateDataRecord": ___, "view": ___, "viewDataRecord": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
-			@Parameter(in = ParameterIn.QUERY, name = "operation")
-		}
-	)
-	@Path(
-		"/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions"
-	)
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public void postDataRecordCollectionDataRecordCollectionPermission(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
-			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
-				operation,
-			DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-record-collection-permissions' -d $'{"addDataRecord": ___, "addDataRecordCollection": ___, "definePermissions": ___, "delete": ___, "deleteDataRecord": ___, "exportDataRecord": ___, "roleNames": ___, "update": ___, "updateDataRecord": ___, "view": ___, "viewDataRecord": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.QUERY, name = "operation")
-		}
-	)
-	@Path("/sites/{siteId}/data-record-collection-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public void postSiteDataRecordCollectionPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
-				operation,
-			DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-record-collections'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -286,7 +232,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-record-collections/{dataRecordCollectionKey}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
@@ -296,14 +242,18 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionKey")
 		}
 	)
-	@Path("/sites/{siteId}/data-record-collections/{dataRecordCollectionKey}")
+	@Path(
+		"/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}"
+	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public DataRecordCollection getSiteDataRecordCollection(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionKey") String
-				dataRecordCollectionKey)
+	public DataRecordCollection
+			getSiteDataRecordCollectionByDataRecordCollectionKey(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("dataRecordCollectionKey") String
+					dataRecordCollectionKey)
 		throws Exception {
 
 		return new DataRecordCollection();

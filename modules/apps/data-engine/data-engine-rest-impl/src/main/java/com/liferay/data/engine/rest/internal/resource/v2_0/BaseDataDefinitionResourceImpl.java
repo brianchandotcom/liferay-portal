@@ -15,7 +15,6 @@
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -61,6 +60,58 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v2.0")
 public abstract class BaseDataDefinitionResourceImpl
 	implements DataDefinitionResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/by-content-type/{contentType}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "contentType"),
+			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/data-definitions/by-content-type/{contentType}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public Page<DataDefinition> getDataDefinitionByContentTypeContentTypePage(
+			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
+				contentType,
+			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
+			@Context Pagination pagination, @Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/by-content-type/{contentType}' -d $'{"availableLanguageIds": ___, "contentType": ___, "dataDefinitionFields": ___, "dataDefinitionKey": ___, "dateCreated": ___, "dateModified": ___, "defaultLanguageId": ___, "description": ___, "id": ___, "name": ___, "siteId": ___, "storageType": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "contentType")}
+	)
+	@Path("/data-definitions/by-content-type/{contentType}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public DataDefinition postDataDefinitionByContentType(
+			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
+				contentType,
+			DataDefinition dataDefinition)
+		throws Exception {
+
+		return new DataDefinition();
+	}
 
 	/**
 	 * Invoke this method with the command line:
@@ -121,7 +172,7 @@ public abstract class BaseDataDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}' -d $'{"availableLanguageIds": ___, "classNameId": ___, "dataDefinitionFields": ___, "dataDefinitionKey": ___, "dataDefinitionRules": ___, "dateCreated": ___, "dateModified": ___, "defaultLanguageId": ___, "description": ___, "id": ___, "name": ___, "siteId": ___, "storageType": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}' -d $'{"availableLanguageIds": ___, "contentType": ___, "dataDefinitionFields": ___, "dataDefinitionKey": ___, "dateCreated": ___, "dateModified": ___, "defaultLanguageId": ___, "description": ___, "id": ___, "name": ___, "siteId": ___, "storageType": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -170,80 +221,32 @@ public abstract class BaseDataDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-definition-permissions' -d $'{"addDataDefinition": ___, "definePermissions": ___, "delete": ___, "roleNames": ___, "update": ___, "view": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
-			@Parameter(in = ParameterIn.QUERY, name = "operation")
-		}
-	)
-	@Path("/data-definitions/{dataDefinitionId}/data-definition-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataDefinition")})
-	public void postDataDefinitionDataDefinitionPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
-				Long dataDefinitionId,
-			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
-				operation,
-			DataDefinitionPermission dataDefinitionPermission)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definition-permissions' -d $'{"addDataDefinition": ___, "definePermissions": ___, "delete": ___, "roleNames": ___, "update": ___, "view": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.QUERY, name = "operation")
-		}
-	)
-	@Path("/sites/{siteId}/data-definition-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataDefinition")})
-	public void postSiteDataDefinitionPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
-				operation,
-			DataDefinitionPermission dataDefinitionPermission)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.QUERY, name = "classNameId"),
+			@Parameter(in = ParameterIn.PATH, name = "contentType"),
 			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
-	@Path("/sites/{siteId}/data-definitions")
+	@Path("/sites/{siteId}/data-definitions/by-content-type/{contentType}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public Page<DataDefinition> getSiteDataDefinitionsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Parameter(hidden = true) @QueryParam("classNameId") Long
-				classNameId,
-			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
-			@Context Pagination pagination, @Context Sort[] sorts)
+	public Page<DataDefinition>
+			getSiteDataDefinitionByContentTypeContentTypePage(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@NotNull @Parameter(hidden = true) @PathParam("contentType")
+					String contentType,
+				@Parameter(hidden = true) @QueryParam("keywords") String
+					keywords,
+				@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -252,17 +255,24 @@ public abstract class BaseDataDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions' -d $'{"availableLanguageIds": ___, "classNameId": ___, "dataDefinitionFields": ___, "dataDefinitionKey": ___, "dataDefinitionRules": ___, "dateCreated": ___, "dateModified": ___, "defaultLanguageId": ___, "description": ___, "id": ___, "name": ___, "siteId": ___, "storageType": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}' -d $'{"availableLanguageIds": ___, "contentType": ___, "dataDefinitionFields": ___, "dataDefinitionKey": ___, "dateCreated": ___, "dateModified": ___, "defaultLanguageId": ___, "description": ___, "id": ___, "name": ___, "siteId": ___, "storageType": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
-	@Path("/sites/{siteId}/data-definitions")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "contentType")
+		}
+	)
+	@Path("/sites/{siteId}/data-definitions/by-content-type/{contentType}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public DataDefinition postSiteDataDefinition(
+	public DataDefinition postSiteDataDefinitionByContentType(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
+				contentType,
 			DataDefinition dataDefinition)
 		throws Exception {
 
@@ -272,26 +282,28 @@ public abstract class BaseDataDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions/{dataDefinitionKey}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-data-definition-key/{dataDefinitionKey}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionKey"),
-			@Parameter(in = ParameterIn.QUERY, name = "classNameId")
+			@Parameter(in = ParameterIn.PATH, name = "contentType"),
+			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionKey")
 		}
 	)
-	@Path("/sites/{siteId}/data-definitions/{dataDefinitionKey}")
+	@Path(
+		"/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-data-definition-key/{dataDefinitionKey}"
+	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public DataDefinition getSiteDataDefinition(
+	public DataDefinition getSiteDataDefinitionByContentTypeByDataDefinitionKey(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
+				contentType,
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionKey")
-				String dataDefinitionKey,
-			@Parameter(hidden = true) @QueryParam("classNameId") Long
-				classNameId)
+				String dataDefinitionKey)
 		throws Exception {
 
 		return new DataDefinition();

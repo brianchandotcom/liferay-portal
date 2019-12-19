@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.client.serdes.v2_0;
 
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionRule;
 import com.liferay.data.engine.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -90,14 +89,18 @@ public class DataDefinitionSerDes {
 			sb.append("]");
 		}
 
-		if (dataDefinition.getClassNameId() != null) {
+		if (dataDefinition.getContentType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"classNameId\": ");
+			sb.append("\"contentType\": ");
 
-			sb.append(dataDefinition.getClassNameId());
+			sb.append("\"");
+
+			sb.append(_escape(dataDefinition.getContentType()));
+
+			sb.append("\"");
 		}
 
 		if (dataDefinition.getDataDefinitionFields() != null) {
@@ -136,29 +139,6 @@ public class DataDefinitionSerDes {
 			sb.append(_escape(dataDefinition.getDataDefinitionKey()));
 
 			sb.append("\"");
-		}
-
-		if (dataDefinition.getDataDefinitionRules() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dataDefinitionRules\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinition.getDataDefinitionRules().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(dataDefinition.getDataDefinitionRules()[i]));
-
-				if ((i + 1) < dataDefinition.getDataDefinitionRules().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (dataDefinition.getDateCreated() != null) {
@@ -302,12 +282,12 @@ public class DataDefinitionSerDes {
 				String.valueOf(dataDefinition.getAvailableLanguageIds()));
 		}
 
-		if (dataDefinition.getClassNameId() == null) {
-			map.put("classNameId", null);
+		if (dataDefinition.getContentType() == null) {
+			map.put("contentType", null);
 		}
 		else {
 			map.put(
-				"classNameId", String.valueOf(dataDefinition.getClassNameId()));
+				"contentType", String.valueOf(dataDefinition.getContentType()));
 		}
 
 		if (dataDefinition.getDataDefinitionFields() == null) {
@@ -326,15 +306,6 @@ public class DataDefinitionSerDes {
 			map.put(
 				"dataDefinitionKey",
 				String.valueOf(dataDefinition.getDataDefinitionKey()));
-		}
-
-		if (dataDefinition.getDataDefinitionRules() == null) {
-			map.put("dataDefinitionRules", null);
-		}
-		else {
-			map.put(
-				"dataDefinitionRules",
-				String.valueOf(dataDefinition.getDataDefinitionRules()));
 		}
 
 		map.put(
@@ -425,10 +396,9 @@ public class DataDefinitionSerDes {
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "classNameId")) {
+			else if (Objects.equals(jsonParserFieldName, "contentType")) {
 				if (jsonParserFieldValue != null) {
-					dataDefinition.setClassNameId(
-						Long.valueOf((String)jsonParserFieldValue));
+					dataDefinition.setContentType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -450,21 +420,6 @@ public class DataDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					dataDefinition.setDataDefinitionKey(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "dataDefinitionRules")) {
-
-				if (jsonParserFieldValue != null) {
-					dataDefinition.setDataDefinitionRules(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataDefinitionRuleSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new DataDefinitionRule[size]
-						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

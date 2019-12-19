@@ -15,14 +15,11 @@
 package com.liferay.data.engine.rest.internal.graphql.mutation.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
-import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPermission;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
-import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
@@ -102,6 +99,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DataDefinition createDataDefinitionByContentType(
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.postDataDefinitionByContentType(
+					contentType, dataDefinition));
+	}
+
+	@GraphQLField
 	public boolean deleteDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
@@ -129,46 +140,9 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean createDataDefinitionDataDefinitionPermission(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("operation") String operation,
-			@GraphQLName("dataDefinitionPermission") DataDefinitionPermission
-				dataDefinitionPermission)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.
-					postDataDefinitionDataDefinitionPermission(
-						dataDefinitionId, operation, dataDefinitionPermission));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean createSiteDataDefinitionPermission(
+	public DataDefinition createSiteDataDefinitionByContentType(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("operation") String operation,
-			@GraphQLName("dataDefinitionPermission") DataDefinitionPermission
-				dataDefinitionPermission)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.postSiteDataDefinitionPermission(
-					Long.valueOf(siteKey), operation,
-					dataDefinitionPermission));
-
-		return true;
-	}
-
-	@GraphQLField
-	public DataDefinition createSiteDataDefinition(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("contentType") String contentType,
 			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
 		throws Exception {
 
@@ -176,8 +150,8 @@ public class Mutation {
 			_dataDefinitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataDefinitionResource ->
-				dataDefinitionResource.postSiteDataDefinition(
-					Long.valueOf(siteKey), dataDefinition));
+				dataDefinitionResource.postSiteDataDefinitionByContentType(
+					Long.valueOf(siteKey), contentType, dataDefinition));
 	}
 
 	@GraphQLField
@@ -219,42 +193,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataLayoutResource -> dataLayoutResource.putDataLayout(
 				dataLayoutId, dataLayout));
-	}
-
-	@GraphQLField
-	public boolean createDataLayoutDataLayoutPermission(
-			@GraphQLName("dataLayoutId") Long dataLayoutId,
-			@GraphQLName("operation") String operation,
-			@GraphQLName("dataLayoutPermission") DataLayoutPermission
-				dataLayoutPermission)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataLayoutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataLayoutResource ->
-				dataLayoutResource.postDataLayoutDataLayoutPermission(
-					dataLayoutId, operation, dataLayoutPermission));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean createSiteDataLayoutPermission(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("operation") String operation,
-			@GraphQLName("dataLayoutPermission") DataLayoutPermission
-				dataLayoutPermission)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataLayoutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataLayoutResource ->
-				dataLayoutResource.postSiteDataLayoutPermission(
-					Long.valueOf(siteKey), operation, dataLayoutPermission));
-
-		return true;
 	}
 
 	@GraphQLField
@@ -450,46 +388,6 @@ public class Mutation {
 			dataRecordCollectionResource ->
 				dataRecordCollectionResource.putDataRecordCollection(
 					dataRecordCollectionId, dataRecordCollection));
-	}
-
-	@GraphQLField
-	public boolean createDataRecordCollectionDataRecordCollectionPermission(
-			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
-			@GraphQLName("operation") String operation,
-			@GraphQLName("dataRecordCollectionPermission")
-				DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataRecordCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordCollectionResource ->
-				dataRecordCollectionResource.
-					postDataRecordCollectionDataRecordCollectionPermission(
-						dataRecordCollectionId, operation,
-						dataRecordCollectionPermission));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean createSiteDataRecordCollectionPermission(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("operation") String operation,
-			@GraphQLName("dataRecordCollectionPermission")
-				DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataRecordCollectionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataRecordCollectionResource ->
-				dataRecordCollectionResource.
-					postSiteDataRecordCollectionPermission(
-						Long.valueOf(siteKey), operation,
-						dataRecordCollectionPermission));
-
-		return true;
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

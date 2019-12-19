@@ -93,34 +93,6 @@ public interface DataRecordCollectionResource {
 			DataRecordCollection dataRecordCollection)
 		throws Exception;
 
-	public void postDataRecordCollectionDataRecordCollectionPermission(
-			Long dataRecordCollectionId, String operation,
-			com.liferay.data.engine.rest.client.dto.v2_0.
-				DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
-				Long dataRecordCollectionId, String operation,
-				com.liferay.data.engine.rest.client.dto.v2_0.
-					DataRecordCollectionPermission
-						dataRecordCollectionPermission)
-		throws Exception;
-
-	public void postSiteDataRecordCollectionPermission(
-			Long siteId, String operation,
-			com.liferay.data.engine.rest.client.dto.v2_0.
-				DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postSiteDataRecordCollectionPermissionHttpResponse(
-				Long siteId, String operation,
-				com.liferay.data.engine.rest.client.dto.v2_0.
-					DataRecordCollectionPermission
-						dataRecordCollectionPermission)
-		throws Exception;
-
 	public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
 			Long siteId, String keywords, Pagination pagination)
 		throws Exception;
@@ -130,12 +102,14 @@ public interface DataRecordCollectionResource {
 				Long siteId, String keywords, Pagination pagination)
 		throws Exception;
 
-	public DataRecordCollection getSiteDataRecordCollection(
-			Long siteId, String dataRecordCollectionKey)
+	public DataRecordCollection
+			getSiteDataRecordCollectionByDataRecordCollectionKey(
+				Long siteId, String dataRecordCollectionKey)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getSiteDataRecordCollectionHttpResponse(
-			Long siteId, String dataRecordCollectionKey)
+	public HttpInvoker.HttpResponse
+			getSiteDataRecordCollectionByDataRecordCollectionKeyHttpResponse(
+				Long siteId, String dataRecordCollectionKey)
 		throws Exception;
 
 	public static class Builder {
@@ -588,143 +562,6 @@ public interface DataRecordCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postDataRecordCollectionDataRecordCollectionPermission(
-				Long dataRecordCollectionId, String operation,
-				com.liferay.data.engine.rest.client.dto.v2_0.
-					DataRecordCollectionPermission
-						dataRecordCollectionPermission)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
-					dataRecordCollectionId, operation,
-					dataRecordCollectionPermission);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse
-				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
-					Long dataRecordCollectionId, String operation,
-					com.liferay.data.engine.rest.client.dto.v2_0.
-						DataRecordCollectionPermission
-							dataRecordCollectionPermission)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				dataRecordCollectionPermission.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (operation != null) {
-				httpInvoker.parameter("operation", String.valueOf(operation));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions",
-				dataRecordCollectionId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void postSiteDataRecordCollectionPermission(
-				Long siteId, String operation,
-				com.liferay.data.engine.rest.client.dto.v2_0.
-					DataRecordCollectionPermission
-						dataRecordCollectionPermission)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postSiteDataRecordCollectionPermissionHttpResponse(
-					siteId, operation, dataRecordCollectionPermission);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse
-				postSiteDataRecordCollectionPermissionHttpResponse(
-					Long siteId, String operation,
-					com.liferay.data.engine.rest.client.dto.v2_0.
-						DataRecordCollectionPermission
-							dataRecordCollectionPermission)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				dataRecordCollectionPermission.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (operation != null) {
-				httpInvoker.parameter("operation", String.valueOf(operation));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/data-engine/v2.0/sites/{siteId}/data-record-collection-permissions",
-				siteId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
 		public Page<DataRecordCollection> getSiteDataRecordCollectionsPage(
 				Long siteId, String keywords, Pagination pagination)
 			throws Exception {
@@ -793,12 +630,13 @@ public interface DataRecordCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public DataRecordCollection getSiteDataRecordCollection(
-				Long siteId, String dataRecordCollectionKey)
+		public DataRecordCollection
+				getSiteDataRecordCollectionByDataRecordCollectionKey(
+					Long siteId, String dataRecordCollectionKey)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteDataRecordCollectionHttpResponse(
+				getSiteDataRecordCollectionByDataRecordCollectionKeyHttpResponse(
 					siteId, dataRecordCollectionKey);
 
 			String content = httpResponse.getContent();
@@ -821,8 +659,9 @@ public interface DataRecordCollectionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getSiteDataRecordCollectionHttpResponse(
-				Long siteId, String dataRecordCollectionKey)
+		public HttpInvoker.HttpResponse
+				getSiteDataRecordCollectionByDataRecordCollectionKeyHttpResponse(
+					Long siteId, String dataRecordCollectionKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -849,7 +688,7 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/sites/{siteId}/data-record-collections/{dataRecordCollectionKey}",
+						"/o/data-engine/v2.0/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}",
 				siteId, dataRecordCollectionKey);
 
 			httpInvoker.userNameAndPassword(

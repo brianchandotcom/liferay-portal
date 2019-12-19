@@ -15,7 +15,6 @@
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
-import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -178,57 +177,6 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}/data-layout-permissions' -d $'{"addDataLayout": ___, "definePermissions": ___, "delete": ___, "roleNames": ___, "update": ___, "view": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "dataLayoutId"),
-			@Parameter(in = ParameterIn.QUERY, name = "operation")
-		}
-	)
-	@Path("/data-layouts/{dataLayoutId}/data-layout-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataLayout")})
-	public void postDataLayoutDataLayoutPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
-				dataLayoutId,
-			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
-				operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-layout-permissions' -d $'{"addDataLayout": ___, "definePermissions": ___, "delete": ___, "roleNames": ___, "update": ___, "view": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@POST
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.QUERY, name = "operation")
-		}
-	)
-	@Path("/sites/{siteId}/data-layout-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataLayout")})
-	public void postSiteDataLayoutPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @QueryParam("operation") String
-				operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-layouts'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -257,7 +205,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-layouts/{dataLayoutKey}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-layouts/by-data-layout-key/{dataLayoutKey}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
@@ -267,10 +215,10 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 			@Parameter(in = ParameterIn.PATH, name = "dataLayoutKey")
 		}
 	)
-	@Path("/sites/{siteId}/data-layouts/{dataLayoutKey}")
+	@Path("/sites/{siteId}/data-layouts/by-data-layout-key/{dataLayoutKey}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataLayout")})
-	public DataLayout getSiteDataLayout(
+	public DataLayout getSiteDataLayoutByDataLayoutKey(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutKey")
 				String dataLayoutKey)

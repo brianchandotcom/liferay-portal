@@ -80,20 +80,20 @@ public class DataDefinition {
 	protected String[] availableLanguageIds;
 
 	@Schema
-	public Long getClassNameId() {
-		return classNameId;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setClassNameId(Long classNameId) {
-		this.classNameId = classNameId;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	@JsonIgnore
-	public void setClassNameId(
-		UnsafeSupplier<Long, Exception> classNameIdUnsafeSupplier) {
+	public void setContentType(
+		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
 
 		try {
-			classNameId = classNameIdUnsafeSupplier.get();
+			contentType = contentTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -105,7 +105,7 @@ public class DataDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long classNameId;
+	protected String contentType;
 
 	@Schema
 	@Valid
@@ -166,38 +166,6 @@ public class DataDefinition {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dataDefinitionKey;
-
-	@Schema
-	@Valid
-	public DataDefinitionRule[] getDataDefinitionRules() {
-		return dataDefinitionRules;
-	}
-
-	public void setDataDefinitionRules(
-		DataDefinitionRule[] dataDefinitionRules) {
-
-		this.dataDefinitionRules = dataDefinitionRules;
-	}
-
-	@JsonIgnore
-	public void setDataDefinitionRules(
-		UnsafeSupplier<DataDefinitionRule[], Exception>
-			dataDefinitionRulesUnsafeSupplier) {
-
-		try {
-			dataDefinitionRules = dataDefinitionRulesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DataDefinitionRule[] dataDefinitionRules;
 
 	@Schema
 	public Date getDateCreated() {
@@ -506,14 +474,18 @@ public class DataDefinition {
 			sb.append("]");
 		}
 
-		if (classNameId != null) {
+		if (contentType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"classNameId\": ");
+			sb.append("\"contentType\": ");
 
-			sb.append(classNameId);
+			sb.append("\"");
+
+			sb.append(_escape(contentType));
+
+			sb.append("\"");
 		}
 
 		if (dataDefinitionFields != null) {
@@ -548,26 +520,6 @@ public class DataDefinition {
 			sb.append(_escape(dataDefinitionKey));
 
 			sb.append("\"");
-		}
-
-		if (dataDefinitionRules != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dataDefinitionRules\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < dataDefinitionRules.length; i++) {
-				sb.append(String.valueOf(dataDefinitionRules[i]));
-
-				if ((i + 1) < dataDefinitionRules.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (dateCreated != null) {

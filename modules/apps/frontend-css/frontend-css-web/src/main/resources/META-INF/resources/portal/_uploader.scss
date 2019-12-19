@@ -75,11 +75,12 @@
 	}
 
 	.cancel-button {
-		margin-top: -0.85em;
 		position: absolute;
 		right: 5px;
 		top: 50%;
 		white-space: nowrap;
+		margin-top: 1px;
+		top: 0;
 
 		.cancel-button-text {
 			display: none;
@@ -149,25 +150,13 @@
 		}
 	}
 
-	.progress-bar {
-		display: none;
-		height: 15px;
-	}
-
 	.progress {
-		display: inline-block;
-		height: 15px;
-		min-width: 20px;
+		display: none;
 	}
 
 	.file-uploading {
-		.cancel-button {
-			margin-top: 1px;
-			top: 0;
-		}
-
-		.progress-bar {
-			display: block;
+		.progress {
+			display: flex;
 		}
 	}
 }

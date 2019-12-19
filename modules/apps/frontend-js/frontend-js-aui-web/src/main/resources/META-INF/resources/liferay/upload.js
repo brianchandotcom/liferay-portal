@@ -33,7 +33,7 @@ AUI.add(
 			'<div class="form-check form-check-card form-check-middle-left">',
 			'<div class="custom-checkbox custom-control">',
 			'<label>',
-			'<input class="{[ !values.temp ? "hide" : "" ]} custom-control-input entry-selector select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
+			'<input class="custom-control-input entry-selector select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" disabled={[ !values.temp ? "true" : "false" ]} id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
 			'<span class="custom-control-label"></span>',
 			'<div class="card card-horizontal">',
 			'<div class="card-body">',
@@ -49,8 +49,8 @@ AUI.add(
 			'<div class="clamp-container">',
 			'<span class="file-title text-truncate" title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}">{[ LString.escapeHTML(values.title ? values.title : values.name) ]}</span>',
 			'</div>',
-			'<span class="progress-bar">',
-			'<span class="progress" id="{id}progress"></span>',
+			'<span class="progress">',
+			'<span class="progress-bar progress-bar-animated progress-bar-striped" id="{id}progress"></span>',
 			'</span>',
 			'</div>',
 			'<div class="autofit-col delete-button-col">',
@@ -832,9 +832,9 @@ AUI.add(
 
 					if (
 						data.status &&
-						(data.status >=
+						data.status >=
 							STATUS_CODE.SC_DUPLICATE_FILE_EXCEPTION &&
-							data.status < STATUS_CODE.INTERNAL_SERVER_ERROR)
+						data.status < STATUS_CODE.INTERNAL_SERVER_ERROR
 					) {
 						file.error =
 							data.message || strings.unexpectedErrorOnUploadText;
@@ -877,6 +877,7 @@ AUI.add(
 
 								if (input) {
 									input.attr('checked', true);
+									input.attr('disabled', false);
 
 									input.show();
 								}
@@ -924,6 +925,7 @@ AUI.add(
 						);
 
 						progress.setStyle('width', percentLoaded + '%');
+						progress.setAttribute('aria-valuenow', percentLoaded);
 					}
 				},
 

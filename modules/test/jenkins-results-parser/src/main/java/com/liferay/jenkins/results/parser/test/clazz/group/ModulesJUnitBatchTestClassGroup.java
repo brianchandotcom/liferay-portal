@@ -41,7 +41,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 	}
 
 	protected ModulesJUnitBatchTestClassGroup(
-		String batchName, String buildProfile,
+		String batchName, BuildProfile buildProfile,
 		PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, buildProfile, portalTestClassJob);

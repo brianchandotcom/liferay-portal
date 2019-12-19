@@ -31,7 +31,7 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected DefaultBatchTestClassGroup(
-		String batchName, String buildProfile,
+		String batchName, BuildProfile buildProfile,
 		PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, buildProfile, portalTestClassJob);

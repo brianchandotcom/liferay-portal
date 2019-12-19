@@ -242,7 +242,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected NPMTestBatchTestClassGroup(
-		String batchName, String buildProfile,
+		String batchName, BuildProfile buildProfile,
 		PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, buildProfile, portalTestClassJob);

@@ -23,7 +23,8 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 public class TestClassGroupFactory {
 
 	public static BatchTestClassGroup newBatchTestClassGroup(
-		String batchName, String buildProfile, Job job) {
+		String batchName, BatchTestClassGroup.BuildProfile buildProfile,
+		Job job) {
 
 		if (job instanceof PortalTestClassJob) {
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;

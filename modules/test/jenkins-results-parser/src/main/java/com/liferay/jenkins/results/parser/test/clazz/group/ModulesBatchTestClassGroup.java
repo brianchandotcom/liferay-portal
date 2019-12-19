@@ -61,7 +61,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected ModulesBatchTestClassGroup(
-		String batchName, String buildProfile,
+		String batchName, BuildProfile buildProfile,
 		PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, buildProfile, portalTestClassJob);

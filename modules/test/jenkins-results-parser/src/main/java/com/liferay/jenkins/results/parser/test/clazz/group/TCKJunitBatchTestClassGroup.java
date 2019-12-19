@@ -64,7 +64,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected TCKJunitBatchTestClassGroup(
-		String batchName, String buildProfile,
+		String batchName, BuildProfile buildProfile,
 		PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, buildProfile, portalTestClassJob);

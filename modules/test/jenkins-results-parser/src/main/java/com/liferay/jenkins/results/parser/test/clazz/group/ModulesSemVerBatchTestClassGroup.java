@@ -129,7 +129,7 @@ public class ModulesSemVerBatchTestClassGroup
 	}
 
 	protected ModulesSemVerBatchTestClassGroup(
-		String batchName, String buildProfile,
+		String batchName, BuildProfile buildProfile,
 		PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, buildProfile, portalTestClassJob);

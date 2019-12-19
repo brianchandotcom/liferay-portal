@@ -192,7 +192,7 @@ public class OrganizationResourceImpl
 		String street3 = postalAddress.getStreetAddressLine3();
 		String city = postalAddress.getAddressLocality();
 		String zip = postalAddress.getPostalCode();
-		long countryId = _getCountryId(postalAddress.getAddressCountry());
+		long countryId = _toCountryId(postalAddress.getAddressCountry());
 
 		if (Validator.isNull(street1) && Validator.isNull(street2) &&
 			Validator.isNull(street3) && Validator.isNull(city) &&
@@ -282,11 +282,11 @@ public class OrganizationResourceImpl
 		).map(
 			Location::getAddressCountry
 		).map(
-			this::_getCountryId
+			this::_toCountryId
 		).get();
 	}
 
-	private long _getCountryId(String addressCountry) {
+	private long _toCountryId(String addressCountry) {
 		return Optional.ofNullable(
 			addressCountry
 		).map(

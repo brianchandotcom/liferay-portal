@@ -69,7 +69,6 @@ public class DataRecordValuesUtil {
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(locale);
-		ddmFormValues.setDefaultLocale(locale);
 
 		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
 			true);
@@ -79,6 +78,8 @@ public class DataRecordValuesUtil {
 				_createDDMFormFieldValue(
 					dataRecordValues, entry.getValue(), locale));
 		}
+
+		ddmFormValues.setDefaultLocale(locale);
 
 		return ddmFormValues;
 	}

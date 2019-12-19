@@ -59,7 +59,6 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 	public void testGetFieldValueNameJSONObjectWithExistingSegmentsFieldCustomizer() {
 		String entityName = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
-
 		String fieldValue = RandomTestUtil.randomString();
 		String fieldValueName = RandomTestUtil.randomString();
 		Locale locale = LocaleUtil.getDefault();

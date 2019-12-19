@@ -260,6 +260,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"discardDraftURL", editorSoyContext.get("discardDraftURL")
 			).put(
+				"duplicateFragmentEntryLinkURL",
+				getFragmentEntryActionURL(
+					"/content_layout/duplicate_fragment_entry_link_react")
+			).put(
 				"editFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
 					"/content_layout/edit_fragment_entry_link_comment",

@@ -1168,6 +1168,13 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 3",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

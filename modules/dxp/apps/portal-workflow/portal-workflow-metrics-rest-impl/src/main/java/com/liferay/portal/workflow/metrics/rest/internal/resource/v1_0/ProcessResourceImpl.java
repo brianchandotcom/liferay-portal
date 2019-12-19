@@ -193,18 +193,18 @@ public class ProcessResourceImpl
 			_createInstanceBooleanQuery(
 				completed, dateEnd, dateStart, processIds));
 
-		BooleanQuery slaProcessResultsBooleanQuery = _queries.booleanQuery();
+		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
 
-		slaProcessResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-process-results"));
-		slaProcessResultsBooleanQuery.addMustNotQueryClauses(
+		slaInstanceResultsBooleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-sla-instance-results"));
+		slaInstanceResultsBooleanQuery.addMustNotQueryClauses(
 			_queries.term("slaDefinitionId", 0));
-		slaProcessResultsBooleanQuery.addMustQueryClauses(
-			_createSLAProcessResultsBooleanQuery(
+		slaInstanceResultsBooleanQuery.addMustQueryClauses(
+			_createSLAInstanceResultsBooleanQuery(
 				completed, dateEnd, dateStart, processIds));
 
 		return booleanQuery.addShouldQueryClauses(
-			instancesBooleanQuery, slaProcessResultsBooleanQuery);
+			instancesBooleanQuery, slaInstanceResultsBooleanQuery);
 	}
 
 	private BucketSelectorPipelineAggregation
@@ -299,7 +299,7 @@ public class ProcessResourceImpl
 		return termsQuery;
 	}
 
-	private BooleanQuery _createSLAProcessResultsBooleanQuery(
+	private BooleanQuery _createSLAInstanceResultsBooleanQuery(
 		boolean completed, Date dateEnd, Date dateStart, Set<Long> processIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
@@ -425,7 +425,7 @@ public class ProcessResourceImpl
 
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
-			"workflow-metrics-sla-process-results");
+			"workflow-metrics-sla-instance-results");
 
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(
@@ -580,9 +580,9 @@ public class ProcessResourceImpl
 		searchSearchRequest.addAggregation(termsAggregation);
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-process-results");
+			"workflow-metrics-sla-instance-results");
 		searchSearchRequest.setQuery(
-			_createSLAProcessResultsBooleanQuery(
+			_createSLAInstanceResultsBooleanQuery(
 				completed, null, null, processIds));
 
 		SearchSearchResponse searchSearchResponse =

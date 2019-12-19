@@ -1040,7 +1040,7 @@
 			}
 		}
 	},
-	"WorkflowMetricsSLAProcessResultType": {
+	"WorkflowMetricsSLAInstanceResultType": {
 		"date_detection": false,
 		"dynamic_templates": [
 			{

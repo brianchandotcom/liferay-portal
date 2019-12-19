@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Rafael Praxedes
  */
 @RunWith(Arquillian.class)
-public class SLAProcessResultWorkflowMetricsIndexerTest
+public class SLAInstanceResultWorkflowMetricsIndexerTest
 	extends BaseWorkflowMetricsIndexerTestCase {
 
 	@ClassRule
@@ -112,8 +112,8 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 				KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
 
 				assertReindex(
-					new String[] {"workflow-metrics-sla-process-results"},
-					new String[] {"WorkflowMetricsSLAProcessResultType"},
+					new String[] {"workflow-metrics-sla-instance-results"},
+					new String[] {"WorkflowMetricsSLAInstanceResultType"},
 					"companyId", kaleoDefinition.getCompanyId(), "instanceId",
 					kaleoInstance.getKaleoInstanceId(), "processId",
 					kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",

@@ -153,7 +153,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 					"instanceId",
 					GetterUtil.getLong(document.get("instanceId"))));
 
-			_slaProcessResultWorkflowMetricsIndexer.updateDocuments(
+			_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
 				documentImpl -> new DocumentImpl() {
 					{
 						addKeyword(
@@ -219,8 +219,8 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		_kaleoTaskInstanceTokenLocalService;
 
 	@Reference
-	private SLAProcessResultWorkflowMetricsIndexer
-		_slaProcessResultWorkflowMetricsIndexer;
+	private SLAInstanceResultWorkflowMetricsIndexer
+		_slaInstanceResultWorkflowMetricsIndexer;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

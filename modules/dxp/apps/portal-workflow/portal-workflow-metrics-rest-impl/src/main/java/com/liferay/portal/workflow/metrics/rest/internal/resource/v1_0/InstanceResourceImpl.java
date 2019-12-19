@@ -136,7 +136,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
-			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
+			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
 
 		BooleanQuery booleanQuery = _createBooleanQuery(
 			new Long[0], processId, new String[0]);
@@ -266,12 +266,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		instancesBooleanQuery.addMustQueryClauses(
 			_createInstancesBooleanQuery(processId, statuses));
 
-		BooleanQuery slaProcessResultsBooleanQuery = _queries.booleanQuery();
+		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
 
-		slaProcessResultsBooleanQuery.addFilterQueryClauses(
-			_queries.term("_index", "workflow-metrics-sla-process-results"));
-		slaProcessResultsBooleanQuery.addMustQueryClauses(
-			_createSLAProcessResultsBooleanQuery(processId));
+		slaInstanceResultsBooleanQuery.addFilterQueryClauses(
+			_queries.term("_index", "workflow-metrics-sla-instance-results"));
+		slaInstanceResultsBooleanQuery.addMustQueryClauses(
+			_createSLAInstanceResultsBooleanQuery(processId));
 
 		BooleanQuery tokensBooleanQuery = _queries.booleanQuery();
 
@@ -281,7 +281,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_createTokensBooleanQuery(assigneeUserIds, processId));
 
 		return booleanQuery.addShouldQueryClauses(
-			instancesBooleanQuery, slaProcessResultsBooleanQuery,
+			instancesBooleanQuery, slaInstanceResultsBooleanQuery,
 			tokensBooleanQuery);
 	}
 
@@ -404,7 +404,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("processId", processId));
 	}
 
-	private BooleanQuery _createSLAProcessResultsBooleanQuery(long processId) {
+	private BooleanQuery _createSLAInstanceResultsBooleanQuery(long processId) {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(
@@ -547,7 +547,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
-			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
+			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
 
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeUserIds, processId, statuses));
@@ -623,7 +623,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				ListUtil.fromArray(taskKeys)));
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
-			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
+			"workflow-metrics-sla-instance-results", "workflow-metrics-tokens");
 		searchSearchRequest.setQuery(
 			_createBooleanQuery(assigneeUserIds, processId, statuses));
 

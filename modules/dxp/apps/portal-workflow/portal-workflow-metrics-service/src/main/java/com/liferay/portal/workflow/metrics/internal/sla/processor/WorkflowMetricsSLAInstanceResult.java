@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Rafael Praxedes
  */
-public class WorkflowMetricsSLAProcessResult {
+public class WorkflowMetricsSLAInstanceResult {
 
 	public long getCompanyId() {
 		return _companyId;

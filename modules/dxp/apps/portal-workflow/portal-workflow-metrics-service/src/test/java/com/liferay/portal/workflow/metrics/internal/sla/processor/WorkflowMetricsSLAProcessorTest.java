@@ -469,7 +469,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		_test(
 			nowLocalDateTime.minus(10, ChronoUnit.SECONDS), 10000,
-			new WorkflowMetricsSLAProcessResult() {
+			new WorkflowMetricsSLAInstanceResult() {
 				{
 					setElapsedTime(10000);
 					setLastCheckLocalDateTime(nowLocalDateTime);
@@ -562,7 +562,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 	private void _test(
 			LocalDateTime createLocalDateTime, long duration, long elapsedTime,
-			WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult,
+			WorkflowMetricsSLAInstanceResult
+				lastWorkflowMetricsSLAInstanceResult,
 			LocalDateTime nowLocalDateTime, boolean onTime, long remainingTime,
 			WorkflowMetricsSLAStatus workflowMetricsSLAStatus,
 			Document... documents)
@@ -586,14 +587,15 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		_test(
 			createLocalDateTime, elapsedTime,
-			lastWorkflowMetricsSLAProcessResult, nowLocalDateTime, onTime,
+			lastWorkflowMetricsSLAInstanceResult, nowLocalDateTime, onTime,
 			remainingTime, 0, workflowMetricsSLADefinitionVersion,
 			workflowMetricsSLAStatus, documents);
 	}
 
 	private void _test(
 			LocalDateTime createLocalDateTime, long elapsedTime,
-			WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult,
+			WorkflowMetricsSLAInstanceResult
+				lastWorkflowMetricsSLAInstanceResult,
 			LocalDateTime nowLocalDateTime, boolean onTime, long remainingTime,
 			long startNodeId,
 			WorkflowMetricsSLADefinitionVersion
@@ -606,13 +608,13 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			new WorkflowMetricsSLAProcessor() {
 
 				@Override
-				protected WorkflowMetricsSLAProcessResult
-					fetchLastWorkflowMetricsSLAProcessResult(
+				protected WorkflowMetricsSLAInstanceResult
+					fetchLastWorkflowMetricsSLAInstanceResult(
 						WorkflowMetricsSLADefinitionVersion
 							workflowMetricsSLADefinitionVersion,
 						long instanceId) {
 
-					return lastWorkflowMetricsSLAProcessResult;
+					return lastWorkflowMetricsSLAInstanceResult;
 				}
 
 				@Override
@@ -632,22 +634,23 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			workflowMetricsSLAProcessor, mockWorkflowMetricsSLACalendarTracker()
 		);
 
-		Optional<WorkflowMetricsSLAProcessResult> optional =
+		Optional<WorkflowMetricsSLAInstanceResult> optional =
 			workflowMetricsSLAProcessor.process(
 				0, createLocalDateTime, 0, nowLocalDateTime, startNodeId,
 				workflowMetricsSLADefinitionVersion);
 
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
+		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =
 			optional.get();
 
 		Assert.assertEquals(
-			elapsedTime, workflowMetricsSLAProcessResult.getElapsedTime());
+			elapsedTime, workflowMetricsSLAInstanceResult.getElapsedTime());
 		Assert.assertEquals(
-			remainingTime, workflowMetricsSLAProcessResult.getRemainingTime());
+			remainingTime, workflowMetricsSLAInstanceResult.getRemainingTime());
 		Assert.assertEquals(
-			workflowMetricsSLAProcessResult.getWorkflowMetricsSLAStatus(),
+			workflowMetricsSLAInstanceResult.getWorkflowMetricsSLAStatus(),
 			workflowMetricsSLAStatus);
-		Assert.assertEquals(workflowMetricsSLAProcessResult.isOnTime(), onTime);
+		Assert.assertEquals(
+			workflowMetricsSLAInstanceResult.isOnTime(), onTime);
 	}
 
 	private final DateTimeFormatter _dateTimeFormatter =

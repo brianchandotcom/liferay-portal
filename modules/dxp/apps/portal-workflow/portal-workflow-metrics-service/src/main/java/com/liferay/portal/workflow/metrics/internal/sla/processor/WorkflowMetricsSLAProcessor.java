@@ -68,14 +68,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = WorkflowMetricsSLAProcessor.class)
 public class WorkflowMetricsSLAProcessor {
 
-	public Optional<WorkflowMetricsSLAProcessResult> process(
+	public Optional<WorkflowMetricsSLAInstanceResult> process(
 		long companyId, LocalDateTime createLocalDateTime, long instanceId,
 		LocalDateTime nowLocalDateTime, long startNodeId,
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion) {
 
-		WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult =
-			fetchLastWorkflowMetricsSLAProcessResult(
+		WorkflowMetricsSLAInstanceResult lastWorkflowMetricsSLAInstanceResult =
+			fetchLastWorkflowMetricsSLAInstanceResult(
 				workflowMetricsSLADefinitionVersion, instanceId);
 
 		long elapsedTime = 0;
@@ -83,13 +83,14 @@ public class WorkflowMetricsSLAProcessor {
 		WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
 			WorkflowMetricsSLAStatus.NEW;
 
-		if (lastWorkflowMetricsSLAProcessResult != null) {
-			elapsedTime = lastWorkflowMetricsSLAProcessResult.getElapsedTime();
+		if (lastWorkflowMetricsSLAInstanceResult != null) {
+			elapsedTime = lastWorkflowMetricsSLAInstanceResult.getElapsedTime();
 
 			lastCheckLocalDateTime =
-				lastWorkflowMetricsSLAProcessResult.getLastCheckLocalDateTime();
+				lastWorkflowMetricsSLAInstanceResult.
+					getLastCheckLocalDateTime();
 			workflowMetricsSLAStatus =
-				lastWorkflowMetricsSLAProcessResult.
+				lastWorkflowMetricsSLAInstanceResult.
 					getWorkflowMetricsSLAStatus();
 
 			if (lastCheckLocalDateTime.isAfter(nowLocalDateTime) ||
@@ -131,14 +132,14 @@ public class WorkflowMetricsSLAProcessor {
 		}
 
 		return Optional.of(
-			_createWorkflowMetricsSLAProcessResult(
+			_createWorkflowMetricsSLAInstanceResult(
 				companyId, documents, elapsedTime, endLocalDateTime, instanceId,
 				nowLocalDateTime, workflowMetricsSLACalendar,
 				workflowMetricsSLADefinitionVersion, workflowMetricsSLAStatus));
 	}
 
-	protected WorkflowMetricsSLAProcessResult
-		fetchLastWorkflowMetricsSLAProcessResult(
+	protected WorkflowMetricsSLAInstanceResult
+		fetchLastWorkflowMetricsSLAInstanceResult(
 			WorkflowMetricsSLADefinitionVersion
 				workflowMetricsSLADefinitionVersion,
 			long instanceId) {
@@ -146,7 +147,7 @@ public class WorkflowMetricsSLAProcessor {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			"workflow-metrics-sla-process-results");
+			"workflow-metrics-sla-instance-results");
 		searchSearchRequest.setQuery(
 			new BooleanQueryImpl() {
 				{
@@ -180,7 +181,7 @@ public class WorkflowMetricsSLAProcessor {
 			SearchHit::getDocument
 		).findFirst(
 		).map(
-			document -> new WorkflowMetricsSLAProcessResult() {
+			document -> new WorkflowMetricsSLAInstanceResult() {
 				{
 					setCompanyId(
 						workflowMetricsSLADefinitionVersion.getCompanyId());
@@ -396,8 +397,8 @@ public class WorkflowMetricsSLAProcessor {
 		return completionDateRangeFilterBuilder.build();
 	}
 
-	private WorkflowMetricsSLAProcessResult
-		_createWorkflowMetricsSLAProcessResult(
+	private WorkflowMetricsSLAInstanceResult
+		_createWorkflowMetricsSLAInstanceResult(
 			long companyId, List<Document> documents, long elapsedTime,
 			LocalDateTime endLocalDateTime, long instanceId,
 			LocalDateTime nowLocalDateTime,
@@ -406,8 +407,8 @@ public class WorkflowMetricsSLAProcessor {
 				workflowMetricsSLADefinitionVersion,
 			WorkflowMetricsSLAStatus workflowMetricsSLAStatus) {
 
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
-			new WorkflowMetricsSLAProcessResult() {
+		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult =
+			new WorkflowMetricsSLAInstanceResult() {
 				{
 					setCompanyId(companyId);
 					setElapsedTime(elapsedTime);
@@ -436,11 +437,11 @@ public class WorkflowMetricsSLAProcessor {
 				}
 			};
 
-		workflowMetricsSLAProcessResult.setWorkflowMetricsSLATaskResults(
+		workflowMetricsSLAInstanceResult.setWorkflowMetricsSLATaskResults(
 			_createWorkflowMetricsSLATaskResults(
-				documents, nowLocalDateTime, workflowMetricsSLAProcessResult));
+				documents, nowLocalDateTime, workflowMetricsSLAInstanceResult));
 
-		return workflowMetricsSLAProcessResult;
+		return workflowMetricsSLAInstanceResult;
 	}
 
 	private WorkflowMetricsSLAStopwatch _createWorkflowMetricsSLAStopwatch(
@@ -537,7 +538,7 @@ public class WorkflowMetricsSLAProcessor {
 
 	private WorkflowMetricsSLATaskResult _createWorkflowMetricsSLATaskResult(
 		Document document, LocalDateTime nowLocalDateTime,
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
 		return new WorkflowMetricsSLATaskResult() {
 			{
@@ -545,9 +546,9 @@ public class WorkflowMetricsSLAProcessor {
 				setBreached(
 					WorkflowMetricsSLAProcessor.this.isBreached(
 						document, nowLocalDateTime,
-						workflowMetricsSLAProcessResult.
+						workflowMetricsSLAInstanceResult.
 							getOverdueLocalDateTime()));
-				setCompanyId(workflowMetricsSLAProcessResult.getCompanyId());
+				setCompanyId(workflowMetricsSLAInstanceResult.getCompanyId());
 
 				if (Validator.isNotNull(document.getString("completionDate"))) {
 					setCompletionLocalDateTime(
@@ -560,24 +561,24 @@ public class WorkflowMetricsSLAProcessor {
 					setCompletionUserId(document.getLong("completionUserId"));
 				}
 
-				setInstanceId(workflowMetricsSLAProcessResult.getInstanceId());
+				setInstanceId(workflowMetricsSLAInstanceResult.getInstanceId());
 				setLastCheckLocalDateTime(
-					workflowMetricsSLAProcessResult.
+					workflowMetricsSLAInstanceResult.
 						getLastCheckLocalDateTime());
 				setOnTime(
 					WorkflowMetricsSLAProcessor.this.isOnTime(
 						document, nowLocalDateTime,
-						workflowMetricsSLAProcessResult.
+						workflowMetricsSLAInstanceResult.
 							getOverdueLocalDateTime()));
-				setProcessId(workflowMetricsSLAProcessResult.getProcessId());
+				setProcessId(workflowMetricsSLAInstanceResult.getProcessId());
 				setSLADefinitionId(
-					workflowMetricsSLAProcessResult.getSLADefinitionId());
+					workflowMetricsSLAInstanceResult.getSLADefinitionId());
 				setTaskId(document.getLong("taskId"));
 				setTaskName(document.getString("taskName"));
 				setTokenId(document.getLong("tokenId"));
 				setWorkflowMetricsSLAStatus(
 					_getWorkflowMetricsSLAStatus(
-						document, workflowMetricsSLAProcessResult));
+						document, workflowMetricsSLAInstanceResult));
 			}
 		};
 	}
@@ -585,13 +586,13 @@ public class WorkflowMetricsSLAProcessor {
 	private List<WorkflowMetricsSLATaskResult>
 		_createWorkflowMetricsSLATaskResults(
 			List<Document> documents, LocalDateTime nowLocalDateTime,
-			WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+			WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
 		Stream<Document> stream = documents.stream();
 
 		return stream.map(
 			document -> _createWorkflowMetricsSLATaskResult(
-				document, nowLocalDateTime, workflowMetricsSLAProcessResult)
+				document, nowLocalDateTime, workflowMetricsSLAInstanceResult)
 		).collect(
 			Collectors.toList()
 		);
@@ -638,10 +639,10 @@ public class WorkflowMetricsSLAProcessor {
 
 	private WorkflowMetricsSLAStatus _getWorkflowMetricsSLAStatus(
 		Document document,
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
 		if (Objects.equals(
-				workflowMetricsSLAProcessResult.getWorkflowMetricsSLAStatus(),
+				workflowMetricsSLAInstanceResult.getWorkflowMetricsSLAStatus(),
 				WorkflowMetricsSLAStatus.NEW)) {
 
 			return WorkflowMetricsSLAStatus.NEW;

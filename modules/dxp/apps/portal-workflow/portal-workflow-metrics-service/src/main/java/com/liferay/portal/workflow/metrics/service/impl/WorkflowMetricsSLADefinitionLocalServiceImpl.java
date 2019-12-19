@@ -48,7 +48,7 @@ import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitio
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionStopNodeKeysException;
 import com.liferay.portal.workflow.metrics.exception.WorkflowMetricsSLADefinitionTimeframeException;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
-import com.liferay.portal.workflow.metrics.internal.search.index.SLAProcessResultWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
@@ -157,7 +157,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			user, workflowMetricsSLADefinition);
 
 		_workflowMetricsPortalExecutor.execute(
-			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+			() -> _slaInstanceResultWorkflowMetricsIndexer.deleteDocuments(
 				workflowMetricsSLADefinition.getCompanyId(),
 				workflowMetricsSLADefinition.getProcessId(),
 				workflowMetricsSLADefinition.
@@ -283,7 +283,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			user, workflowMetricsSLADefinition);
 
 		_workflowMetricsPortalExecutor.execute(
-			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+			() -> _slaInstanceResultWorkflowMetricsIndexer.deleteDocuments(
 				workflowMetricsSLADefinition.getCompanyId(),
 				workflowMetricsSLADefinition.getProcessId(),
 				workflowMetricsSLADefinition.
@@ -579,8 +579,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	private SearchRequestExecutor _searchRequestExecutor;
 
 	@Reference
-	private SLAProcessResultWorkflowMetricsIndexer
-		_slaProcessResultWorkflowMetricsIndexer;
+	private SLAInstanceResultWorkflowMetricsIndexer
+		_slaInstanceResultWorkflowMetricsIndexer;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

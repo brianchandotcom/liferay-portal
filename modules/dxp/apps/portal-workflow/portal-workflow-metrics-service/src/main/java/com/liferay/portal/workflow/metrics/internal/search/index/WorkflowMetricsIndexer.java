@@ -71,7 +71,7 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_createIndices(
 			_instanceWorkflowMetricsIndexer, _nodeWorkflowMetricsIndexer,
 			_processWorkflowMetricsIndexer,
-			_slaProcessResultWorkflowMetricsIndexer,
+			_slaInstanceResultWorkflowMetricsIndexer,
 			_slaTaskResultWorkflowMetricsIndexer, _tokenWorkflowMetricsIndexer);
 
 		if (!_INDEX_ON_STARTUP) {
@@ -81,7 +81,7 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 				_processWorkflowMetricsIndexer.reindex(company.getCompanyId());
 				_tokenWorkflowMetricsIndexer.reindex(company.getCompanyId());
 
-				_slaProcessResultWorkflowMetricsIndexer.reindex(
+				_slaInstanceResultWorkflowMetricsIndexer.reindex(
 					company.getCompanyId());
 				_slaTaskResultWorkflowMetricsIndexer.reindex(
 					company.getCompanyId());
@@ -127,13 +127,13 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_deleteIndices(
 			companyId, _instanceWorkflowMetricsIndexer,
 			_nodeWorkflowMetricsIndexer, _processWorkflowMetricsIndexer,
-			_slaProcessResultWorkflowMetricsIndexer,
+			_slaInstanceResultWorkflowMetricsIndexer,
 			_slaTaskResultWorkflowMetricsIndexer, _tokenWorkflowMetricsIndexer);
 
 		_createIndices(
 			_instanceWorkflowMetricsIndexer, _nodeWorkflowMetricsIndexer,
 			_processWorkflowMetricsIndexer,
-			_slaProcessResultWorkflowMetricsIndexer,
+			_slaInstanceResultWorkflowMetricsIndexer,
 			_slaTaskResultWorkflowMetricsIndexer, _tokenWorkflowMetricsIndexer);
 
 		_instanceWorkflowMetricsIndexer.reindex(companyId);
@@ -141,7 +141,7 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 		_processWorkflowMetricsIndexer.reindex(companyId);
 		_tokenWorkflowMetricsIndexer.reindex(companyId);
 
-		_slaProcessResultWorkflowMetricsIndexer.reindex(companyId);
+		_slaInstanceResultWorkflowMetricsIndexer.reindex(companyId);
 		_slaTaskResultWorkflowMetricsIndexer.reindex(companyId);
 	}
 
@@ -258,8 +258,8 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 	private volatile SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
-	private SLAProcessResultWorkflowMetricsIndexer
-		_slaProcessResultWorkflowMetricsIndexer;
+	private SLAInstanceResultWorkflowMetricsIndexer
+		_slaInstanceResultWorkflowMetricsIndexer;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

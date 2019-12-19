@@ -183,12 +183,12 @@ public class WorkflowMetricsRESTTestHelper {
 			Instance instance = addInstance(companyId, false, process.getId());
 
 			if (onTimeInstanceCount > 0) {
-				addSLAProcessResult(companyId, instance, true);
+				addSLAInstanceResult(companyId, instance, true);
 
 				onTimeInstanceCount--;
 			}
 			else if (overdueInstanceCount > 0) {
-				addSLAProcessResult(companyId, instance, false);
+				addSLAInstanceResult(companyId, instance, false);
 
 				overdueInstanceCount--;
 			}
@@ -216,21 +216,21 @@ public class WorkflowMetricsRESTTestHelper {
 		return addProcess(companyId, process, version);
 	}
 
-	public void addSLAProcessResult(
+	public void addSLAInstanceResult(
 			long companyId, Instance instance, boolean onTime)
 		throws Exception {
 
 		long slaDefinitionId = RandomTestUtil.randomLong();
 
 		_invokeAddDocument(
-			_getIndexer(_CLASS_NAME_SLA_PROCESS_RESULT_INDEXER),
-			_creatWorkflowMetricsSLAProcessResultDocument(
+			_getIndexer(_CLASS_NAME_SLA_INSTANCE_RESULT_INDEXER),
+			_creatWorkflowMetricsSLAInstanceResultDocument(
 				companyId, Objects.nonNull(instance.getDateCompletion()),
 				instance.getId(), onTime, instance.getProcessId(),
 				slaDefinitionId));
 
 		_retryAssertCount(
-			"workflow-metrics-sla-process-results", "companyId", companyId,
+			"workflow-metrics-sla-instance-results", "companyId", companyId,
 			"deleted", false, "instanceCompleted",
 			Objects.nonNull(instance.getDateCompletion()), "instanceId",
 			instance.getId(), "onTime", onTime, "processId",
@@ -612,14 +612,14 @@ public class WorkflowMetricsRESTTestHelper {
 		return document;
 	}
 
-	private Document _creatWorkflowMetricsSLAProcessResultDocument(
+	private Document _creatWorkflowMetricsSLAInstanceResultDocument(
 		long companyId, boolean instanceCompleted, long instanceId,
 		boolean onTime, long processId, long slaDefinitionId) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			"WorkflowMetricsSLAProcessResult",
+			"WorkflowMetricsSLAInstanceResult",
 			_digest(companyId, instanceId, processId, slaDefinitionId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
@@ -916,9 +916,9 @@ public class WorkflowMetricsRESTTestHelper {
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
 			"ProcessWorkflowMetricsIndexer";
 
-	private static final String _CLASS_NAME_SLA_PROCESS_RESULT_INDEXER =
+	private static final String _CLASS_NAME_SLA_INSTANCE_RESULT_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +
-			"SLAProcessResultWorkflowMetricsIndexer";
+			"SLAInstanceResultWorkflowMetricsIndexer";
 
 	private static final String _CLASS_NAME_SLA_TASK_RESULT_INDEXER =
 		"com.liferay.portal.workflow.metrics.internal.search.index." +

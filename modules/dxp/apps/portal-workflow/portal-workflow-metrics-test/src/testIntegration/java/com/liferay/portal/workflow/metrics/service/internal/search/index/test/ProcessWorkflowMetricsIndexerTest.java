@@ -52,8 +52,8 @@ public class ProcessWorkflowMetricsIndexerTest
 			"processId", kaleoDefinition.getKaleoDefinitionId(), "instanceId",
 			0);
 		retryAssertCount(
-			"workflow-metrics-sla-process-results",
-			"WorkflowMetricsSLAProcessResultType", "companyId",
+			"workflow-metrics-sla-instance-results",
+			"WorkflowMetricsSLAInstanceResultType", "companyId",
 			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId", 0);
 	}
@@ -78,11 +78,11 @@ public class ProcessWorkflowMetricsIndexerTest
 		assertReindex(
 			new String[] {
 				"workflow-metrics-processes", "workflow-metrics-instances",
-				"workflow-metrics-sla-process-results"
+				"workflow-metrics-sla-instance-results"
 			},
 			new String[] {
 				"WorkflowMetricsProcessType", "WorkflowMetricsInstanceType",
-				"WorkflowMetricsSLAProcessResultType"
+				"WorkflowMetricsSLAInstanceResultType"
 			},
 			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());

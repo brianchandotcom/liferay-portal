@@ -8,7 +8,7 @@ if (doc.uid.value.startsWith("WorkflowMetricsToken") &&
 	state.assigneeUserIdInstanceIds.add(instanceId);
 }
 
-if (doc.uid.value.startsWith("WorkflowMetricsSLAProcessResult")) {
+if (doc.uid.value.startsWith("WorkflowMetricsSLAInstanceResult")) {
 	state.slaStatusMap.compute(
 		instanceId,
 		(key, oldSLAStatus) -> {

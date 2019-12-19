@@ -126,7 +126,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	public void deleteDocument(Document document) {
 		super.deleteDocument(document);
 
-		_slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
+		_slaInstanceResultWorkflowMetricsIndexer.deleteDocuments(
 			GetterUtil.getLong(document.get("companyId")),
 			GetterUtil.getLong(document.get("instanceId")));
 
@@ -149,7 +149,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 					"instanceId",
 					GetterUtil.getLong(document.get("instanceId"))));
 
-			_slaProcessResultWorkflowMetricsIndexer.updateDocuments(
+			_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
 				documentImpl -> new DocumentImpl() {
 					{
 						try {
@@ -311,8 +311,8 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference
-	private SLAProcessResultWorkflowMetricsIndexer
-		_slaProcessResultWorkflowMetricsIndexer;
+	private SLAInstanceResultWorkflowMetricsIndexer
+		_slaInstanceResultWorkflowMetricsIndexer;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

@@ -34,7 +34,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
-import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
+import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAInstanceResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
@@ -65,66 +65,66 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Rafael Praxedes
  */
 @Component(
-	immediate = true, service = SLAProcessResultWorkflowMetricsIndexer.class
+	immediate = true, service = SLAInstanceResultWorkflowMetricsIndexer.class
 )
-public class SLAProcessResultWorkflowMetricsIndexer
+public class SLAInstanceResultWorkflowMetricsIndexer
 	extends BaseSLAWorkflowMetricsIndexer {
 
 	public Document createDocument(
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			"WorkflowMetricsSLAProcessResult",
+			"WorkflowMetricsSLAInstanceResult",
 			digest(
-				workflowMetricsSLAProcessResult.getCompanyId(),
-				workflowMetricsSLAProcessResult.getInstanceId(),
-				workflowMetricsSLAProcessResult.getProcessId(),
-				workflowMetricsSLAProcessResult.getSLADefinitionId()));
+				workflowMetricsSLAInstanceResult.getCompanyId(),
+				workflowMetricsSLAInstanceResult.getInstanceId(),
+				workflowMetricsSLAInstanceResult.getProcessId(),
+				workflowMetricsSLAInstanceResult.getSLADefinitionId()));
 		document.addKeyword(
-			"companyId", workflowMetricsSLAProcessResult.getCompanyId());
+			"companyId", workflowMetricsSLAInstanceResult.getCompanyId());
 
-		if (workflowMetricsSLAProcessResult.getCompletionLocalDateTime() !=
+		if (workflowMetricsSLAInstanceResult.getCompletionLocalDateTime() !=
 				null) {
 
 			document.addDateSortable(
 				"completionDate",
 				Timestamp.valueOf(
-					workflowMetricsSLAProcessResult.
+					workflowMetricsSLAInstanceResult.
 						getCompletionLocalDateTime()));
 		}
 
 		document.addKeyword("deleted", false);
 		document.addKeyword(
-			"elapsedTime", workflowMetricsSLAProcessResult.getElapsedTime());
+			"elapsedTime", workflowMetricsSLAInstanceResult.getElapsedTime());
 		document.addKeyword(
 			"instanceCompleted",
-			workflowMetricsSLAProcessResult.getCompletionLocalDateTime() !=
+			workflowMetricsSLAInstanceResult.getCompletionLocalDateTime() !=
 				null);
 		document.addKeyword(
-			"instanceId", workflowMetricsSLAProcessResult.getInstanceId());
+			"instanceId", workflowMetricsSLAInstanceResult.getInstanceId());
 		document.addDateSortable(
 			"lastCheckDate",
 			Timestamp.valueOf(
-				workflowMetricsSLAProcessResult.getLastCheckLocalDateTime()));
+				workflowMetricsSLAInstanceResult.getLastCheckLocalDateTime()));
 		document.addKeyword(
-			"onTime", workflowMetricsSLAProcessResult.isOnTime());
+			"onTime", workflowMetricsSLAInstanceResult.isOnTime());
 		document.addDateSortable(
 			"overdueDate",
 			Timestamp.valueOf(
-				workflowMetricsSLAProcessResult.getOverdueLocalDateTime()));
+				workflowMetricsSLAInstanceResult.getOverdueLocalDateTime()));
 		document.addKeyword(
-			"processId", workflowMetricsSLAProcessResult.getProcessId());
+			"processId", workflowMetricsSLAInstanceResult.getProcessId());
 		document.addKeyword(
 			"remainingTime",
-			workflowMetricsSLAProcessResult.getRemainingTime());
+			workflowMetricsSLAInstanceResult.getRemainingTime());
 		document.addKeyword(
 			"slaDefinitionId",
-			workflowMetricsSLAProcessResult.getSLADefinitionId());
+			workflowMetricsSLAInstanceResult.getSLADefinitionId());
 
 		WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
-			workflowMetricsSLAProcessResult.getWorkflowMetricsSLAStatus();
+			workflowMetricsSLAInstanceResult.getWorkflowMetricsSLAStatus();
 
 		document.addKeyword("status", workflowMetricsSLAStatus.name());
 
@@ -133,12 +133,12 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 	@Override
 	protected String getIndexName() {
-		return "workflow-metrics-sla-process-results";
+		return "workflow-metrics-sla-instance-results";
 	}
 
 	@Override
 	protected String getIndexType() {
-		return "WorkflowMetricsSLAProcessResultType";
+		return "WorkflowMetricsSLAInstanceResultType";
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				dynamicQuery.add(completedProperty.eq(true));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoInstance kaleoInstance) -> _reindexSLAProcessResults(
+			(KaleoInstance kaleoInstance) -> _reindexSLAInstanceResults(
 				kaleoInstance));
 
 		actionableDynamicQuery.performActions();
@@ -271,7 +271,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		);
 	}
 
-	private void _reindexSLAProcessResults(KaleoInstance kaleoInstance)
+	private void _reindexSLAInstanceResults(KaleoInstance kaleoInstance)
 		throws PortalException {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
@@ -296,7 +296,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			WorkflowMetricsSLADefinitionVersion::isActive
 		).forEach(
 			workflowMetricsSLADefinitionVersion -> {
-				Optional<WorkflowMetricsSLAProcessResult> optional =
+				Optional<WorkflowMetricsSLAInstanceResult> optional =
 					workflowMetricsSLAProcessor.process(
 						workflowMetricsSLADefinitionVersion.getCompanyId(),
 						_getLocalDateTime(kaleoInstance.getCreateDate()),
@@ -305,11 +305,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 						workflowMetricsSLADefinitionVersion);
 
 				optional.ifPresent(
-					workflowMetricsSLAProcessResult -> {
-						workflowMetricsSLAProcessResult.
+					workflowMetricsSLAInstanceResult -> {
+						workflowMetricsSLAInstanceResult.
 							setWorkflowMetricsSLAStatus(
 								WorkflowMetricsSLAStatus.COMPLETED);
-						workflowMetricsSLAProcessResult.
+						workflowMetricsSLAInstanceResult.
 							setCompletionLocalDateTime(
 								_getLocalDateTime(
 									kaleoInstance.getCompletionDate()));
@@ -318,7 +318,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 							new IndexDocumentRequest(
 								getIndexName(),
 								createDocument(
-									workflowMetricsSLAProcessResult)) {
+									workflowMetricsSLAInstanceResult)) {
 
 								{
 									setType(getIndexType());
@@ -326,7 +326,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 							});
 
 						slaTaskResultWorkflowMetricsIndexer.addDocuments(
-							workflowMetricsSLAProcessResult.
+							workflowMetricsSLAInstanceResult.
 								getWorkflowMetricsSLATaskResults());
 					});
 			}
@@ -344,6 +344,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SLAProcessResultWorkflowMetricsIndexer.class);
+		SLAInstanceResultWorkflowMetricsIndexer.class);
 
 }

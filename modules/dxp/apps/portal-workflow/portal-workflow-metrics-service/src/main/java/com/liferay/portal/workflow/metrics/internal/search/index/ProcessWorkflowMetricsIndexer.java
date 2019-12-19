@@ -59,14 +59,15 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				_slaProcessResultWorkflowMetricsIndexer.getIndexName(),
-				_creatWorkflowMetricsSLAProcessResultDocument(
+				_slaInstanceResultWorkflowMetricsIndexer.getIndexName(),
+				_creatWorkflowMetricsSLAInstanceResultDocument(
 					GetterUtil.getLong(document.get("companyId")),
 					GetterUtil.getLong(document.get("processId")))) {
 
 				{
 					setType(
-						_slaProcessResultWorkflowMetricsIndexer.getIndexType());
+						_slaInstanceResultWorkflowMetricsIndexer.
+							getIndexType());
 				}
 			});
 		bulkDocumentRequest.addBulkableDocumentRequest(
@@ -163,13 +164,13 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		return document;
 	}
 
-	private Document _creatWorkflowMetricsSLAProcessResultDocument(
+	private Document _creatWorkflowMetricsSLAInstanceResultDocument(
 		long companyId, long kaleoDefinitionId) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			"WorkflowMetricsSLAProcessResult",
+			"WorkflowMetricsSLAInstanceResult",
 			digest(companyId, 0, kaleoDefinitionId, 0));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
@@ -185,7 +186,7 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
 
 	@Reference
-	private SLAProcessResultWorkflowMetricsIndexer
-		_slaProcessResultWorkflowMetricsIndexer;
+	private SLAInstanceResultWorkflowMetricsIndexer
+		_slaInstanceResultWorkflowMetricsIndexer;
 
 }

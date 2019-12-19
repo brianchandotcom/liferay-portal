@@ -1,0 +1,14 @@
+@default = "isNotEditable"
+definition {
+
+	function isNotEditable {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		selenium.waitForVisible();
+
+		selenium.isNotEditable();
+	}
+
+}

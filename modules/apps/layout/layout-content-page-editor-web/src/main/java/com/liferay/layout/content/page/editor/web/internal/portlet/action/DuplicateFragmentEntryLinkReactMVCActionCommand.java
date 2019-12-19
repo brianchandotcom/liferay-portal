@@ -76,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/duplicate_fragment_entry_link"
+		"mvc.command.name=/content_layout/duplicate_fragment_entry_link_react"
 	},
 	service = MVCActionCommand.class
 )

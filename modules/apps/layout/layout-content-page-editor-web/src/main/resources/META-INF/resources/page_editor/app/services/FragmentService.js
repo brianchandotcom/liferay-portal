@@ -52,6 +52,29 @@ export default {
 	},
 
 	/**
+	 * Duplicates a fragmentEntryLink
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
+	 * @param {string} options.itemId id of the item
+	 * @param {string} options.segmentsExperienceId Experience id
+	 */
+	duplicateFragmentEntryLink({
+		config,
+		fragmentEntryLinkId,
+		itemId,
+		segmentsExperienceId
+	}) {
+		const {duplicateFragmentEntryLinkURL} = config;
+
+		return serviceFetch(config, duplicateFragmentEntryLinkURL, {
+			fragmentEntryLinkId,
+			itemId,
+			segmentsExperienceId
+		});
+	},
+
+	/**
 	 * Render the content of a fragmentEntryLink
 	 * @param {object} options
 	 * @param {object} options.config Application config

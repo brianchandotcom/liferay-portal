@@ -20,7 +20,7 @@
 EmailOTPConfiguration emailOTPConfiguration = (EmailOTPConfiguration)request.getAttribute(WebKeys.EMAIL_OTP_CONFIGURATION);
 %>
 
-<div id="<portlet:namespace/>phaseOne">
+<div id="<portlet:namespace />phaseOne">
 	<div class="portlet-msg-info">
 		<liferay-ui:message key="your-one-time-password-will-be-sent-to-your-email-address" />
 	</div>
@@ -30,10 +30,9 @@ EmailOTPConfiguration emailOTPConfiguration = (EmailOTPConfiguration)request.get
 	</aui:button-row>
 </div>
 
-<div id="<portlet:namespace/>messageContainer"></div>
+<div id="<portlet:namespace />messageContainer"></div>
 
-<div id="<portlet:namespace/>phaseTwo">
-
+<div id="<portlet:namespace />phaseTwo">
 	<aui:input label="please-enter-the-one-time-password-from-the-email" name="otp" showRequiredLabel="yes" />
 </div>
 

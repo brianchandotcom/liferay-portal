@@ -851,6 +851,10 @@ definition {
 	}
 
 	macro editTitle {
+		while (IsNotEditable(locator1 = "TextInput#TITLE")) {
+			Pause(locator1 = "5000");
+		}
+
 		PortletEntry.inputTitle(title = "${eventTitle}");
 	}
 

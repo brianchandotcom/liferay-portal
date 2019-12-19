@@ -115,57 +115,74 @@ public class BasicFragmentManagementToolbarDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL copyFragmentEntryURL =
-			liferayPortletResponse.createActionURL();
-
-		copyFragmentEntryURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/copy_fragment_entry");
-		copyFragmentEntryURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-
-		PortletURL deleteFragmentEntriesURL =
-			liferayPortletResponse.createActionURL();
-
-		deleteFragmentEntriesURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/delete_fragment_entries");
-		deleteFragmentEntriesURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-
-		ResourceURL exportFragmentEntriesURL =
-			liferayPortletResponse.createResourceURL();
-
-		exportFragmentEntriesURL.setResourceID(
-			"/fragment/export_fragment_entries");
-
-		PortletURL moveFragmentEntryURL =
-			liferayPortletResponse.createActionURL();
-
-		moveFragmentEntryURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/move_fragment_entry");
-		moveFragmentEntryURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-
-		PortletURL selectFragmentCollectionURL =
-			liferayPortletResponse.createActionURL();
-
-		selectFragmentCollectionURL.setParameter(
-			"mvcRenderCommandName", "/fragment/select_fragment_collection");
-		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
-
 		return HashMapBuilder.<String, Object>put(
-			"copyFragmentEntryURL", copyFragmentEntryURL.toString()
+			"copyFragmentEntryURL",
+			() -> {
+				PortletURL copyFragmentEntryURL =
+					liferayPortletResponse.createActionURL();
+
+				copyFragmentEntryURL.setParameter(
+					ActionRequest.ACTION_NAME, "/fragment/copy_fragment_entry");
+				copyFragmentEntryURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				return copyFragmentEntryURL.toString();
+			}
 		).put(
-			"deleteFragmentEntriesURL", deleteFragmentEntriesURL.toString()
+			"deleteFragmentEntriesURL",
+			() -> {
+				PortletURL deleteFragmentEntriesURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteFragmentEntriesURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/fragment/delete_fragment_entries");
+				deleteFragmentEntriesURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				return deleteFragmentEntriesURL.toString();
+			}
 		).put(
-			"exportFragmentEntriesURL", exportFragmentEntriesURL.toString()
+			"exportFragmentEntriesURL",
+			() -> {
+				ResourceURL exportFragmentEntriesURL =
+					liferayPortletResponse.createResourceURL();
+
+				exportFragmentEntriesURL.setResourceID(
+					"/fragment/export_fragment_entries");
+
+				return exportFragmentEntriesURL.toString();
+			}
 		).put(
 			"fragmentCollectionId",
 			ParamUtil.getLong(liferayPortletRequest, "fragmentCollectionId")
 		).put(
-			"moveFragmentEntryURL", moveFragmentEntryURL.toString()
+			"moveFragmentEntryURL",
+			() -> {
+				PortletURL moveFragmentEntryURL =
+					liferayPortletResponse.createActionURL();
+
+				moveFragmentEntryURL.setParameter(
+					ActionRequest.ACTION_NAME, "/fragment/move_fragment_entry");
+				moveFragmentEntryURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				return moveFragmentEntryURL.toString();
+			}
 		).put(
 			"selectFragmentCollectionURL",
-			selectFragmentCollectionURL.toString()
+			() -> {
+				PortletURL selectFragmentCollectionURL =
+					liferayPortletResponse.createActionURL();
+
+				selectFragmentCollectionURL.setParameter(
+					"mvcRenderCommandName",
+					"/fragment/select_fragment_collection");
+				selectFragmentCollectionURL.setWindowState(
+					LiferayWindowState.POP_UP);
+
+				return selectFragmentCollectionURL.toString();
+			}
 		).build();
 	}
 

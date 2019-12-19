@@ -274,58 +274,75 @@ public class FragmentDisplayContext {
 	public Map<String, Object> getFragmentCollectionsViewContext()
 		throws Exception {
 
-		LiferayPortletURL deleteFragmentCollectionURL =
-			_renderResponse.createActionURL();
-
-		deleteFragmentCollectionURL.setCopyCurrentRenderParameters(false);
-		deleteFragmentCollectionURL.setParameter(
-			ActionRequest.ACTION_NAME, "/fragment/delete_fragment_collection");
-
-		LiferayPortletURL exportFragmentCollectionsURL =
-			(LiferayPortletURL)_renderResponse.createResourceURL();
-
-		exportFragmentCollectionsURL.setCopyCurrentRenderParameters(false);
-		exportFragmentCollectionsURL.setResourceID(
-			"/fragment/export_fragment_collections");
-
-		PortletURL viewExportFragmentCollectionsURL =
-			_renderResponse.createRenderURL();
-
-		viewExportFragmentCollectionsURL.setParameter(
-			"mvcRenderCommandName", "/fragment/view_fragment_collections");
-		viewExportFragmentCollectionsURL.setParameter(
-			"includeGlobalFragmentCollections", Boolean.TRUE.toString());
-		viewExportFragmentCollectionsURL.setWindowState(
-			LiferayWindowState.POP_UP);
-
-		PortletURL viewDeleteFragmentCollectionsURL =
-			_renderResponse.createRenderURL();
-
-		viewDeleteFragmentCollectionsURL.setParameter(
-			"mvcRenderCommandName", "/fragment/view_fragment_collections");
-		viewDeleteFragmentCollectionsURL.setWindowState(
-			LiferayWindowState.POP_UP);
-
-		PortletURL viewImportURL = _renderResponse.createRenderURL();
-
-		viewImportURL.setParameter(
-			"mvcRenderCommandName", "/fragment/view_import");
-		viewImportURL.setWindowState(LiferayWindowState.POP_UP);
-
 		return HashMapBuilder.<String, Object>put(
 			"deleteFragmentCollectionURL",
-			deleteFragmentCollectionURL.toString()
+			() -> {
+				LiferayPortletURL deleteFragmentCollectionURL =
+					_renderResponse.createActionURL();
+
+				deleteFragmentCollectionURL.setCopyCurrentRenderParameters(
+					false);
+				deleteFragmentCollectionURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/fragment/delete_fragment_collection");
+
+				return deleteFragmentCollectionURL.toString();
+			}
 		).put(
 			"exportFragmentCollectionsURL",
-			exportFragmentCollectionsURL.toString()
+			() -> {
+				LiferayPortletURL exportFragmentCollectionsURL =
+					(LiferayPortletURL)_renderResponse.createResourceURL();
+
+				exportFragmentCollectionsURL.setCopyCurrentRenderParameters(
+					false);
+				exportFragmentCollectionsURL.setResourceID(
+					"/fragment/export_fragment_collections");
+
+				return exportFragmentCollectionsURL.toString();
+			}
 		).put(
 			"viewDeleteFragmentCollectionsURL",
-			viewDeleteFragmentCollectionsURL.toString()
+			() -> {
+				PortletURL viewDeleteFragmentCollectionsURL =
+					_renderResponse.createRenderURL();
+
+				viewDeleteFragmentCollectionsURL.setParameter(
+					"mvcRenderCommandName",
+					"/fragment/view_fragment_collections");
+				viewDeleteFragmentCollectionsURL.setWindowState(
+					LiferayWindowState.POP_UP);
+
+				return viewDeleteFragmentCollectionsURL.toString();
+			}
 		).put(
 			"viewExportFragmentCollectionsURL",
-			viewExportFragmentCollectionsURL.toString()
+			() -> {
+				PortletURL viewExportFragmentCollectionsURL =
+					_renderResponse.createRenderURL();
+
+				viewExportFragmentCollectionsURL.setParameter(
+					"mvcRenderCommandName",
+					"/fragment/view_fragment_collections");
+				viewExportFragmentCollectionsURL.setParameter(
+					"includeGlobalFragmentCollections",
+					Boolean.TRUE.toString());
+				viewExportFragmentCollectionsURL.setWindowState(
+					LiferayWindowState.POP_UP);
+
+				return viewExportFragmentCollectionsURL.toString();
+			}
 		).put(
-			"viewImportURL", viewImportURL.toString()
+			"viewImportURL",
+			() -> {
+				PortletURL viewImportURL = _renderResponse.createRenderURL();
+
+				viewImportURL.setParameter(
+					"mvcRenderCommandName", "/fragment/view_import");
+				viewImportURL.setWindowState(LiferayWindowState.POP_UP);
+
+				return viewImportURL.toString();
+			}
 		).build();
 	}
 

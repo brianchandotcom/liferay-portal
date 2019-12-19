@@ -90,31 +90,37 @@ public class ContributedFragmentManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getComponentContext() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL copyContributedFragmentEntryURL =
-			liferayPortletResponse.createActionURL();
-
-		copyContributedFragmentEntryURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/fragment/copy_contributed_fragment_entry");
-		copyContributedFragmentEntryURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-
-		PortletURL selectFragmentCollectionURL =
-			liferayPortletResponse.createActionURL();
-
-		selectFragmentCollectionURL.setParameter(
-			"mvcRenderCommandName", "/fragment/select_fragment_collection");
-		selectFragmentCollectionURL.setWindowState(LiferayWindowState.POP_UP);
-
 		return HashMapBuilder.<String, Object>put(
 			"copyContributedFragmentEntryURL",
-			copyContributedFragmentEntryURL.toString()
+			() -> {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				PortletURL copyContributedFragmentEntryURL =
+					liferayPortletResponse.createActionURL();
+
+				copyContributedFragmentEntryURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/fragment/copy_contributed_fragment_entry");
+				copyContributedFragmentEntryURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				return copyContributedFragmentEntryURL.toString();
+			}
 		).put(
 			"selectFragmentCollectionURL",
-			selectFragmentCollectionURL.toString()
+			() -> {
+				PortletURL selectFragmentCollectionURL =
+					liferayPortletResponse.createActionURL();
+
+				selectFragmentCollectionURL.setParameter(
+					"mvcRenderCommandName",
+					"/fragment/select_fragment_collection");
+				selectFragmentCollectionURL.setWindowState(
+					LiferayWindowState.POP_UP);
+
+				return selectFragmentCollectionURL.toString();
+			}
 		).build();
 	}
 

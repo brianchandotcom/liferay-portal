@@ -1283,8 +1283,11 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
 	}
 
+	// This is not an acceptance test and is temporarily quarantined.
+
 	@priority = "3"
 	test ViewBlogsEntryWithSpecialCharactersOnPrivateVirtualHost {
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesWithSpecialCharactersOnPublicAndPrivateVirtualHostPages";
 
 		ProductMenu.gotoPortlet(

@@ -14,7 +14,7 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
-import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -46,11 +46,11 @@ public class ConnectSiteMVCActionCommand extends BaseMVCActionCommand {
 		long depotEntryId = ParamUtil.getLong(actionRequest, "depotEntryId");
 		long toGroupId = ParamUtil.getLong(actionRequest, "toGroupId");
 
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+		_depotEntryGroupRelService.addDepotEntryGroupRel(
 			depotEntryId, toGroupId);
 	}
 
 	@Reference
-	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+	private DepotEntryGroupRelService _depotEntryGroupRelService;
 
 }

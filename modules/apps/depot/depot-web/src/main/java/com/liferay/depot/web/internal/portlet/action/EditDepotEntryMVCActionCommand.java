@@ -15,7 +15,7 @@
 package com.liferay.depot.web.internal.portlet.action;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -57,13 +57,12 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long depotEntryId = ParamUtil.getLong(actionRequest, "depotEntryId");
 
-		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
-			depotEntryId);
+		DepotEntry depotEntry = _depotEntryService.getDepotEntry(depotEntryId);
 
 		Group group = _groupService.getGroup(depotEntry.getGroupId());
 
 		try {
-			_depotEntryLocalService.updateDepotEntry(
+			_depotEntryService.updateDepotEntry(
 				depotEntryId,
 				LocalizationUtil.getLocalizationMap(
 					actionRequest, "name", group.getNameMap()),
@@ -88,7 +87,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		EditDepotEntryMVCActionCommand.class);
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private GroupService _groupService;

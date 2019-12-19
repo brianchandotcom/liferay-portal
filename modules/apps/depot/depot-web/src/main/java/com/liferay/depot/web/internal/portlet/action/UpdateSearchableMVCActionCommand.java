@@ -14,7 +14,7 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
-import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -47,7 +47,7 @@ public class UpdateSearchableMVCActionCommand extends BaseMVCActionCommand {
 		throws PortletException {
 
 		try {
-			_depotEntryGroupRelLocalService.updateSearchable(
+			_depotEntryGroupRelService.updateSearchable(
 				ParamUtil.getLong(actionRequest, "depotEntryGroupRelId"),
 				ParamUtil.getBoolean(actionRequest, "searchable"));
 		}
@@ -57,6 +57,6 @@ public class UpdateSearchableMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+	private DepotEntryGroupRelService _depotEntryGroupRelService;
 
 }

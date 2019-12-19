@@ -16,7 +16,7 @@ package com.liferay.depot.web.internal.portlet.action;
 
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
@@ -76,7 +76,7 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		try {
-			DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			DepotEntry depotEntry = _depotEntryService.addDepotEntry(
 				nameMap, descriptionMap,
 				ServiceContextFactory.getInstance(
 					DepotEntry.class.getName(), actionRequest));
@@ -126,7 +126,7 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

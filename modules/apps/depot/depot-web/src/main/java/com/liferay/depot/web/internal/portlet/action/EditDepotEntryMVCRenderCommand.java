@@ -15,7 +15,7 @@
 package com.liferay.depot.web.internal.portlet.action;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.item.selector.ItemSelector;
@@ -49,7 +49,7 @@ public class EditDepotEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+			DepotEntry depotEntry = _depotEntryService.getDepotEntry(
 				ParamUtil.getLong(renderRequest, "depotEntryId"));
 
 			renderRequest.setAttribute(
@@ -66,7 +66,7 @@ public class EditDepotEntryMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private ItemSelector _itemSelector;

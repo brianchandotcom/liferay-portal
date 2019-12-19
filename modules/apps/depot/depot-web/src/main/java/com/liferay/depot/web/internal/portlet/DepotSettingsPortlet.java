@@ -15,7 +15,7 @@
 package com.liferay.depot.web.internal.portlet;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.item.selector.ItemSelector;
@@ -67,7 +67,7 @@ public class DepotSettingsPortlet extends MVCPortlet {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+			DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 				themeDisplay.getScopeGroupId());
 
 			renderRequest.setAttribute(
@@ -93,7 +93,7 @@ public class DepotSettingsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private ItemSelector _itemSelector;

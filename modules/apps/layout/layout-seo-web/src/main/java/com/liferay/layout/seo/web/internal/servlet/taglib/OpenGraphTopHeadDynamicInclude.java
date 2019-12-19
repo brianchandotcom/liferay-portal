@@ -170,7 +170,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			printWriter.println(
 				_getOpenGraphTag(
 					"og:image:alt",
-					_getImageAltTagValue(layoutSEOEntry, group, themeDisplay)));
+					_getImageAltTagValue(
+						layoutSEOEntry, group, themeDisplay.getLocale())));
 
 			printWriter.println(
 				_getOpenGraphTag("og:image:type", fileEntry.getMimeType()));
@@ -256,13 +257,12 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private String _getImageAltTagValue(
-		LayoutSEOEntry layoutSEOEntry, Group group, ThemeDisplay themeDisplay) {
+		LayoutSEOEntry layoutSEOEntry, Group group, Locale locale) {
 
 		if ((layoutSEOEntry != null) &&
 			(layoutSEOEntry.getOpenGraphImageFileEntryId() > 0)) {
 
-			return layoutSEOEntry.getOpenGraphImageAlt(
-				themeDisplay.getLocale());
+			return layoutSEOEntry.getOpenGraphImageAlt(locale);
 		}
 
 		LayoutSEOSite layoutSEOSite =
@@ -272,7 +272,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		if ((layoutSEOSite != null) &&
 			(layoutSEOSite.getOpenGraphImageFileEntryId() > 0)) {
 
-			return layoutSEOSite.getOpenGraphImageAlt(themeDisplay.getLocale());
+			return layoutSEOSite.getOpenGraphImageAlt(locale);
 		}
 
 		return null;

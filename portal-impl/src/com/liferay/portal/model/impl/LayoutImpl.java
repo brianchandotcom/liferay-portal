@@ -772,8 +772,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
 		if (getMasterLayoutPlid() > 0) {
-			typeSettingsProperties = LayoutLocalServiceUtil.fetchLayout(
-				getMasterLayoutPlid()).getTypeSettingsProperties();
+			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
+				getMasterLayoutPlid());
+
+			if (masterLayout != null) {
+				typeSettingsProperties =
+					masterLayout.getTypeSettingsProperties();
+			}
 		}
 
 		String value = typeSettingsProperties.getProperty(

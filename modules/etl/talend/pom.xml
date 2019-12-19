@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<name>Liferay Talend</name>
 	<packaging>pom</packaging>
 	<repositories>
@@ -22,8 +22,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<properties>
-		<liferay.javadoc.formatter.version>1.0.28</liferay.javadoc.formatter.version>
-		<liferay.source.formatter.version>1.0.864</liferay.source.formatter.version>
+		<liferay.javadoc.formatter.version>1.0.33</liferay.javadoc.formatter.version>
+		<liferay.source.formatter.version>1.0.948</liferay.source.formatter.version>
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 	<modules>

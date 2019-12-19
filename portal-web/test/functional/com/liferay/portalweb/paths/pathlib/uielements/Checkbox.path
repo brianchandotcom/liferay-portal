@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPEN_GRAPH_CHECKBOX_DISABLED</td>
+	<td>//div[contains(@class,'open-graph-settings') and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PERMISSIONS</td>
 	<td>//label[contains(.,'Permissions')]/input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>

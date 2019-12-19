@@ -36,6 +36,15 @@ public class LayoutStructure {
 		_mainItemId = mainItemId;
 	}
 
+	public void addFragmentLayoutStructureItem(
+		long fragmentEntryLinkId, String parentItemId, int position) {
+
+		addLayoutStructureItem(
+			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
+			String.valueOf(UUID.randomUUID()), parentItemId, "fragment",
+			position);
+	}
+
 	public void addLayoutStructureItem(
 		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
 		String itemType, int position) {

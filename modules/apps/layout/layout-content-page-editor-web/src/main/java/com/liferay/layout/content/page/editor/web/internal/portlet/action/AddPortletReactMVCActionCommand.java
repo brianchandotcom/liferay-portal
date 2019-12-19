@@ -58,8 +58,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
-import java.util.UUID;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -110,10 +108,8 @@ public class AddPortletReactMVCActionCommand
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
-			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
-				String.valueOf(UUID.randomUUID()), parentItemId, "fragment",
-				position));
+			layoutStructure -> layoutStructure.addFragmentLayoutStructureItem(
+				fragmentEntryLinkId, parentItemId, position));
 	}
 
 	@Override

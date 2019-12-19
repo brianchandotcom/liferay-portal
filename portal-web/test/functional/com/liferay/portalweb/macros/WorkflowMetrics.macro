@@ -34,12 +34,12 @@ definition {
 	}
 
 	macro assertChartTotalValuePerformanceByStep {
-		var key_SLABreachedValue = "${velocityUnitTotal}";
-		var rowName = ${rowName};
+		var key_SLABreachedValue = "${slaBreachedValue}";
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_SLA_BREACHED_VALUE",
-			value1 = "${rowName}");
+			rowName = "Review",
+			value1 = "1(100%)");
 
 	}
 

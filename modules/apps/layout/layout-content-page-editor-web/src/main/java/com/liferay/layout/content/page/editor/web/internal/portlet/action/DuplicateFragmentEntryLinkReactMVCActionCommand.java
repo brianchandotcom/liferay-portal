@@ -29,6 +29,7 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -57,8 +58,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -111,11 +114,26 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
-			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getConfiguration()),
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				parentItemId, itemType, position));
+			layoutStructure -> {
+				LayoutStructureItem layoutStructureItem =
+					layoutStructure.getLayoutStructureItem(itemId);
+
+				LayoutStructureItem parentLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						layoutStructureItem.getParentItemId());
+
+				List<String> childrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
+				layoutStructure.addLayoutStructureItem(
+					JSONUtil.put(
+						"fragmentEntryLinkId",
+						fragmentEntryLink.getFragmentEntryLinkId()),
+					String.valueOf(UUID.randomUUID()),
+					layoutStructureItem.getParentItemId(),
+					layoutStructureItem.getItemType(),
+					childrenItemIds.indexOf(itemId) + 1);
+			});
 	}
 
 	private void _copyPortletPreferences(

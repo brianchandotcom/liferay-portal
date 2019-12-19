@@ -39,16 +39,18 @@
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
 			)
 		) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = document.<portlet:namespace />fm;
 
-			var searchContainer = AUI.$('#<portlet:namespace />kaleoProcess', form);
+			var searchContainer = form.querySelector(
+				'#<portlet:namespace />kaleoProcess'
+			);
 
-			form.attr('method', 'post');
-			form.fm('kaleoProcessIds').val(
-				Liferay.Util.listCheckedExcept(
-					searchContainer,
-					'<portlet:namespace />allRowIds'
-				)
+			form.setAttribute('method', 'post');
+			form.querySelector(
+				'#<portlet:namespace />kaleoProcessIds'
+			).value = Liferay.Util.listCheckedExcept(
+				searchContainer,
+				'<portlet:namespace />allRowIds'
 			);
 
 			submitForm(

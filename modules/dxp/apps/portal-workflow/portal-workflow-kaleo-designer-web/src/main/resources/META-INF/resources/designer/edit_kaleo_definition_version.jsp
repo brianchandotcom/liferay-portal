@@ -310,9 +310,9 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 															<liferay-util:buffer
 																var="importFileMark"
 															>
-																<aui:a href="#" id="uploadLink">
+																<label class="btn btn-link p-0" for="<portlet:namespace />upload">
 																	<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
-																</aui:a>
+																</label>
 															</liferay-util:buffer>
 
 															<c:if test="<%= !kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>">
@@ -331,12 +331,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 								</div>
 
 								<aui:script>
-									var sidenavSlider = $('#<portlet:namespace />infoPanelId');
-
-									sidenavSlider.on('open.lexicon.sidenav', function(event) {
-										$(document).trigger('screenChange.lexicon.sidenav');
-									});
-
 									Liferay.provide(
 										window,
 										'<portlet:namespace />afterTabViewChange',
@@ -536,9 +530,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 									<c:if test="<%= kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>">
 										<portlet:namespace />kaleoDesigner.after('render', function() {
-											$('#<portlet:namespace />propertyBuilder')
-												.find('.diagram-builder-controls')
-												.detach();
+											var diagramBuilderControlElements = document.querySelectorAll(
+												'#<portlet:namespace />propertyBuilder .diagram-builder-controls'
+											);
+
+											diagramBuilderControlElements.forEach(function(element) {
+												element.parentElement.removeChild(element);
+											});
 
 											<portlet:namespace />kaleoDesigner.detachAll();
 
@@ -546,11 +544,11 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										});
 									</c:if>
 
-									var uploadFile = $('#<portlet:namespace />upload');
+									var uploadFile = document.querySelector('#<portlet:namespace />upload');
 
 									var previousContent = '';
 
-									uploadFile.on('change', function(evt) {
+									uploadFile.addEventListener('change', function(evt) {
 										var files = evt.target.files;
 
 										if (files) {
@@ -564,7 +562,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 														evt.target.result
 													);
 
-													uploadFile.val('');
+													uploadFile.value = '';
 
 													Liferay.KaleoDesignerDialogs.showDefinitionImportSuccessMessage(
 														'<portlet:namespace />'
@@ -575,15 +573,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											reader.readAsText(files[0]);
 										}
 									});
-
-									<c:if test="<%= !kaleoDesignerDisplayContext.isDefinitionInputDisabled(isPreviewBeforeRestoreState, kaleoDefinitionVersion, permissionChecker) %>">
-										var uploadLink = $('#<portlet:namespace />uploadLink');
-
-										uploadLink.on('click', function(event) {
-											event.preventDefault();
-											uploadFile.trigger('click');
-										});
-									</c:if>
 
 									<portlet:namespace />kaleoDesigner.contentTabView.after({
 										selectionChange: <portlet:namespace />afterTabViewChange

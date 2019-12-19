@@ -16,7 +16,7 @@ package com.liferay.talend.properties.input;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.resource.LiferayResourceProperties;
-import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.tliferayoutput.Operation;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -41,8 +41,8 @@ public class LiferayInputProperties extends FixedConnectorsComponentProperties {
 	}
 
 	public LiferayInputProperties(
-		String name, Action action, String openAPIModule, String apiSpecURL,
-		String endpoint, List<String> parameterNamesColumn,
+		String name, Operation operation, String openAPIModule,
+		String apiSpecURL, String endpoint, List<String> parameterNamesColumn,
 		List<String> parameterLocationsColumn,
 		List<String> parameterValuesColumn) {
 

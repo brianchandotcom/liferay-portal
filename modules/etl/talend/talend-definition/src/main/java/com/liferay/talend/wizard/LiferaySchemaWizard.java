@@ -46,7 +46,11 @@ public class LiferaySchemaWizard extends ComponentWizard {
 	}
 
 	public boolean supportsProperties(ComponentProperties componentProperties) {
-		return componentProperties instanceof LiferaySchemaListProperties;
+		if (componentProperties instanceof LiferaySchemaListProperties) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public final LiferaySchemaListProperties schemaList;

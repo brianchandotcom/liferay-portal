@@ -19,30 +19,30 @@ import com.liferay.talend.common.oas.constants.OASConstants;
 /**
  * @author Zoltán Takács
  */
-public enum Action {
+public enum Operation {
 
 	Delete(OASConstants.OPERATION_DELETE), Get(OASConstants.OPERATION_GET),
 	Insert(OASConstants.OPERATION_POST), Unavailable("noop"),
 	Update(OASConstants.OPERATION_PATCH);
 
-	public static Action toAction(String methodName) {
-		for (Action action : values()) {
-			if (methodName.equals(action._method)) {
-				return action;
+	public static Operation toOperation(String methodName) {
+		for (Operation operation : values()) {
+			if (methodName.equals(operation._httpMethod)) {
+				return operation;
 			}
 		}
 
 		return Unavailable;
 	}
 
-	public String getMethodName() {
-		return _method;
+	public String getHttpMethod() {
+		return _httpMethod;
 	}
 
-	private Action(String method) {
-		_method = method;
+	private Operation(String httpMethod) {
+		_httpMethod = httpMethod;
 	}
 
-	private final String _method;
+	private final String _httpMethod;
 
 }

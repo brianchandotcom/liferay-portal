@@ -19,7 +19,7 @@ import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.properties.output.LiferayOutputProperties;
 import com.liferay.talend.runtime.LiferayRequestContentAggregatorSink;
 import com.liferay.talend.runtime.LiferaySink;
-import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.tliferayoutput.Operation;
 
 import java.io.IOException;
 
@@ -52,7 +52,7 @@ public class LiferayWriterTest extends BaseTestCase {
 
 		LiferayOutputProperties testLiferayOutputProperties =
 			_getLiferayOutputProperties(
-				Action.Insert, openApiModule, _OAS_URL, endpoint, "siteId");
+				Operation.Insert, openApiModule, _OAS_URL, endpoint, "siteId");
 
 		JsonObject oasJsonObject = readObject("openapi.json");
 
@@ -101,7 +101,7 @@ public class LiferayWriterTest extends BaseTestCase {
 
 		LiferayOutputProperties testLiferayOutputProperties =
 			_getLiferayOutputProperties(
-				Action.Update, openApiModule, _OAS_URL, endpoint, "id");
+				Operation.Update, openApiModule, _OAS_URL, endpoint, "id");
 
 		JsonObject oasJsonObject = readObject("openapi_data_types.json");
 
@@ -154,7 +154,7 @@ public class LiferayWriterTest extends BaseTestCase {
 
 		LiferayOutputProperties testLiferayOutputProperties =
 			_getLiferayOutputProperties(
-				Action.Update, openApiModule, _OAS_URL, endpoint, "id");
+				Operation.Update, openApiModule, _OAS_URL, endpoint, "id");
 
 		testLiferayOutputProperties.setupProperties();
 
@@ -177,11 +177,11 @@ public class LiferayWriterTest extends BaseTestCase {
 	}
 
 	private LiferayOutputProperties _getLiferayOutputProperties(
-		Action action, String openAPIModule, String apiSpecURL, String endpoint,
-		String parameterName) {
+		Operation operation, String openAPIModule, String apiSpecURL,
+		String endpoint, String parameterName) {
 
 		return new LiferayOutputProperties(
-			"testLiferayOutputProperties", action, openAPIModule, apiSpecURL,
+			"testLiferayOutputProperties", operation, openAPIModule, apiSpecURL,
 			endpoint, Arrays.asList(parameterName), Arrays.asList("path"),
 			Arrays.asList("1977"));
 	}

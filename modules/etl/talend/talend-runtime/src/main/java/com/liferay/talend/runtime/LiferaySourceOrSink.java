@@ -157,7 +157,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		}
 		else {
 			Properties aggregatedProperties = componentProperties.getProperties(
-				getLiferayConnectionProipertiesPath());
+				getLiferayConnectionPropertiesPath());
 
 			if (aggregatedProperties instanceof LiferayConnectionProperties) {
 				liferayConnectionProperties =
@@ -212,12 +212,10 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 			}
 		}
 
-		return validateConnection(runtimeContainer);
+		return validateConnection();
 	}
 
-	public ValidationResult validateConnection(
-		RuntimeContainer runtimeContainer) {
-
+	public ValidationResult validateConnection() {
 		try {
 			doGetRequest(null);
 
@@ -254,12 +252,8 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		}
 	}
 
-	protected String getLiferayConnectionProipertiesPath() {
+	protected String getLiferayConnectionPropertiesPath() {
 		return "connection";
-	}
-
-	protected LiferayConnectionProperties getLiferayConnectionProperties() {
-		return _liferayConnectionProperties;
 	}
 
 	protected static final I18nMessages i18nMessages;

@@ -17,7 +17,7 @@ package com.liferay.talend.runtime.reader;
 import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.properties.input.LiferayInputProperties;
 import com.liferay.talend.runtime.LiferayFixedResponseContentSource;
-import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.tliferayoutput.Operation;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -42,7 +42,7 @@ public class LiferayReaderTest extends BaseTestCase {
 			new LiferayFixedResponseContentSource(
 				readObject("page_content.json")),
 			_getTLiferayInputProperties(
-				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
+				Operation.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		liferayReader.start();
 
@@ -59,7 +59,7 @@ public class LiferayReaderTest extends BaseTestCase {
 		LiferayReader liferayReader = new LiferayReader(
 			_getLiferayFixedResponseContentSource(),
 			_getTLiferayInputProperties(
-				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
+				Operation.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		liferayReader.start();
 
@@ -89,7 +89,7 @@ public class LiferayReaderTest extends BaseTestCase {
 			_getLiferayFixedResponseContentSource(
 				readObject("page_no_content.json")),
 			_getTLiferayInputProperties(
-				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
+				Operation.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		Assert.assertFalse(
 			"Liferay input reader must not be initialized and advanced",
@@ -105,7 +105,7 @@ public class LiferayReaderTest extends BaseTestCase {
 			_getLiferayFixedResponseContentSource(
 				readObject("page_content.json")),
 			_getTLiferayInputProperties(
-				Action.Unavailable, openAPIModule, _OAS_URL, endpoint));
+				Operation.Unavailable, openAPIModule, _OAS_URL, endpoint));
 
 		Assert.assertTrue(
 			"Liferay input reader must be initialized and advanced",
@@ -142,11 +142,11 @@ public class LiferayReaderTest extends BaseTestCase {
 	}
 
 	private LiferayInputProperties _getTLiferayInputProperties(
-		Action action, String openAPIModule, String apiSpecURL,
+		Operation operation, String openAPIModule, String apiSpecURL,
 		String endpoint) {
 
 		return new LiferayInputProperties(
-			"testLiferayInputProperties", action, openAPIModule, apiSpecURL,
+			"testLiferayInputProperties", operation, openAPIModule, apiSpecURL,
 			endpoint, Arrays.asList("id"), Arrays.asList("path"),
 			Arrays.asList("1234"));
 	}

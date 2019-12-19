@@ -18,7 +18,7 @@ import com.liferay.talend.avro.IndexedRecordJsonObjectConverter;
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.properties.output.LiferayOutputProperties;
 import com.liferay.talend.runtime.LiferaySink;
-import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.tliferayoutput.Operation;
 
 import java.io.IOException;
 
@@ -165,22 +165,22 @@ public class LiferayWriter
 
 		cleanWrites();
 
-		Action action = _liferayOutputProperties.getAction();
+		Operation operation = _liferayOutputProperties.getOperation();
 
-		if (Action.Delete == action) {
+		if (Operation.Delete == operation) {
 			doDelete(indexedRecord);
 		}
-		else if (Action.Insert == action) {
+		else if (Operation.Insert == operation) {
 			doInsert(indexedRecord);
 		}
-		else if (Action.Update == action) {
+		else if (Operation.Update == operation) {
 			doUpdate(indexedRecord);
 		}
 		else {
 			_indexedRecordJsonObjectConverter.reject(
 				indexedRecord,
 				TalendRuntimeException.createUnexpectedException(
-					"Unsupported write action " + action));
+					"Unsupported write operation " + operation));
 		}
 
 		_result.totalCount++;

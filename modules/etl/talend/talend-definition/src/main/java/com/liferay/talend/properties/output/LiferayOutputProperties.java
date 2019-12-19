@@ -16,7 +16,7 @@ package com.liferay.talend.properties.output;
 
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.properties.resource.LiferayResourceProperties;
-import com.liferay.talend.tliferayoutput.Action;
+import com.liferay.talend.tliferayoutput.Operation;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -43,8 +43,8 @@ public class LiferayOutputProperties
 	}
 
 	public LiferayOutputProperties(
-		String name, Action action, String openAPIModule, String apiSpecURL,
-		String endpoint, List<String> parameterNamesColumn,
+		String name, Operation operation, String openAPIModule,
+		String apiSpecURL, String endpoint, List<String> parameterNamesColumn,
 		List<String> parameterLocationsColumn,
 		List<String> parameterValuesColumn) {
 
@@ -56,7 +56,7 @@ public class LiferayOutputProperties
 
 		resource.openAPIModule.setValue(openAPIModule);
 
-		resource.operations.setValue(action);
+		resource.operations.setValue(operation);
 
 		resource.parameters.parameterLocationColumn.setValue(
 			parameterLocationsColumn);
@@ -69,16 +69,16 @@ public class LiferayOutputProperties
 		return ValidationResult.OK;
 	}
 
-	public Action getAction() {
-		return resource.operations.getValue();
-	}
-
 	public boolean getDieOnError() {
 		return dieOnError.getValue();
 	}
 
 	public String getEndpointUrl() {
 		return resource.getEndpointUrl();
+	}
+
+	public Operation getOperation() {
+		return resource.operations.getValue();
 	}
 
 	@Override

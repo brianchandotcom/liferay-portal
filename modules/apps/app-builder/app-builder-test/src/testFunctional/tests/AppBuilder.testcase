@@ -1603,6 +1603,12 @@ definition {
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
 			title = "Third App");
+
+		AppBuilderAdmin.searchByItem(itemName = "!@#");
+
+		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
+
+		AppBuilderAdmin.clearSearch();
 	}
 <<<<<<< HEAD
 	

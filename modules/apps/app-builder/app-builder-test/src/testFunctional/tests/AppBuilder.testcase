@@ -1176,9 +1176,11 @@ definition {
 
 		AppBuilderAdmin.gotoBack();
 
-		AppBuilderAdmin.searchByItem(itemName = "my custom object 1");
+		AppBuilderAdmin.searchByItem(itemName = "1");
 
-		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "my custom object 1")
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "1");
+
+		AppBuilderAdmin.clearSearch();
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
 

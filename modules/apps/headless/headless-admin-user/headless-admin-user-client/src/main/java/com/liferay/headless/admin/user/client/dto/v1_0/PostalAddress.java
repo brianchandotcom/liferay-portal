@@ -28,38 +28,6 @@ import javax.annotation.Generated;
 @Generated("")
 public class PostalAddress {
 
-	public static enum AddressType {
-
-		BILLING("billing"), OTHER("other"), P_O_BOX("p-o-box"),
-		SHIPPING("shipping");
-
-		public static AddressType create(String value) {
-			for (AddressType addressType : values()) {
-				if (Objects.equals(addressType.getValue(), value)) {
-					return addressType;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private AddressType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
 	public String getAddressCountry() {
 		return addressCountry;
 	}
@@ -123,24 +91,16 @@ public class PostalAddress {
 
 	protected String addressRegion;
 
-	public AddressType getAddressType() {
+	public String getAddressType() {
 		return addressType;
 	}
 
-	public String getAddressTypeAsString() {
-		if (addressType == null) {
-			return null;
-		}
-
-		return addressType.toString();
-	}
-
-	public void setAddressType(AddressType addressType) {
+	public void setAddressType(String addressType) {
 		this.addressType = addressType;
 	}
 
 	public void setAddressType(
-		UnsafeSupplier<AddressType, Exception> addressTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> addressTypeUnsafeSupplier) {
 
 		try {
 			addressType = addressTypeUnsafeSupplier.get();
@@ -150,7 +110,7 @@ public class PostalAddress {
 		}
 	}
 
-	protected AddressType addressType;
+	protected String addressType;
 
 	public Long getId() {
 		return id;

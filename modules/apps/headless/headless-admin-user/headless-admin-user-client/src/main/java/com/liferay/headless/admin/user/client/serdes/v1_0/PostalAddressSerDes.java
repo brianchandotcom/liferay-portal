@@ -106,7 +106,7 @@ public class PostalAddressSerDes {
 
 			sb.append("\"");
 
-			sb.append(postalAddress.getAddressType());
+			sb.append(_escape(postalAddress.getAddressType()));
 
 			sb.append("\"");
 		}
@@ -331,9 +331,7 @@ public class PostalAddressSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "addressType")) {
 				if (jsonParserFieldValue != null) {
-					postalAddress.setAddressType(
-						PostalAddress.AddressType.create(
-							(String)jsonParserFieldValue));
+					postalAddress.setAddressType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

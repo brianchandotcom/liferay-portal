@@ -128,12 +128,14 @@ const PreviewSeoContainer = ({
 		};
 
 		const inputTargets = Object.entries(targets).reduce(
-			(acc, [type, {id}]) => {
+			(acc, [type, {id, value}]) => {
 				if (id) {
 					const node = document.getElementById(
 						`${portletNamespace}${id}`
 					);
 					acc.push({node, type});
+				} else if (value) {
+					setFieldState({type, value});
 				}
 
 				return acc;
@@ -193,7 +195,7 @@ const PreviewSeoContainer = ({
 			return acc;
 		}, {});
 
-		setFields(newFieldsState);
+		setFields(prevFieldsState => ({...prevFieldsState, ...newFieldsState}));
 	}, [inputTargets, isMounted, language]);
 
 	const getValue = type => {
@@ -224,16 +226,14 @@ const PreviewSeoContainer = ({
 
 const targetShape = PropTypes.shape({
 	defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-	id: PropTypes.string
+	id: PropTypes.string,
+	value: PropTypes.string
 });
 
 PreviewSeoContainer.propTypes = {
 	targets: PropTypes.shape({
 		description: targetShape,
-		imgUrl: PropTypes.shape({
-			defaultValue: PropTypes.string,
-			id: PropTypes.string
-		}),
+		imgUrl: targetShape,
 		title: targetShape,
 		url: targetShape
 	}).isRequired

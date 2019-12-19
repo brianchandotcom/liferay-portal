@@ -55,8 +55,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 				<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" title="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
 
-				<aui:input name="openGraphImageURL" type="hidden" value="<%= layoutsAdminDisplayContext.getOpenGraphImageURL() %>" />
-
 				<aui:button-row cssClass="mt-0">
 					<aui:button name="openGraphImageButton" value="select" />
 					<aui:button name="openGraphClearImageButton" value="clear" />
@@ -127,7 +125,8 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 								"defaultValue",
 								layoutsSEODisplayContext.getDefaultOpenGraphImageURL()
 							).put(
-								"id", "openGraphImageURL"
+								"value",
+								layoutsAdminDisplayContext.getOpenGraphImageURL()
 							).build()
 						).put(
 							"title",

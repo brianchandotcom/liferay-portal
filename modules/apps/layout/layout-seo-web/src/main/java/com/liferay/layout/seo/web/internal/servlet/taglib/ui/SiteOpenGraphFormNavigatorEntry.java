@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -72,7 +74,7 @@ public class SiteOpenGraphFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "open-graph");
+		return LanguageUtil.get(_getResourceBundle(locale), "open-graph");
 	}
 
 	@Override
@@ -130,6 +132,11 @@ public class SiteOpenGraphFormNavigatorEntry
 	@Override
 	protected String getJspPath() {
 		return "/site/open_graph_settings.jsp";
+	}
+
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

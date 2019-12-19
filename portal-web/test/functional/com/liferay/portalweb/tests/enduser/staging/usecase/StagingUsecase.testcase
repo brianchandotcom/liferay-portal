@@ -700,7 +700,7 @@ definition {
 			portlet = "Web Content");
 
 		LAR.importPortlet(
-			larFileName = "HR_WebContent.lar",
+			larFileName = "HR_WebContent_master.lar",
 			uploadFrom = "dependencies");
 
 		Navigator.gotoStagedSitePage(

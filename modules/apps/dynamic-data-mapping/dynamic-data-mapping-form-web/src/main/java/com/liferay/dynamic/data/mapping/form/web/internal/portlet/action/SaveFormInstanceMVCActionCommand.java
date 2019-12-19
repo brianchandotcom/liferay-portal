@@ -96,6 +96,11 @@ public class SaveFormInstanceMVCActionCommand
 
 			SessionErrors.add(actionRequest, msvve.getClass(), msvve);
 		}
+		catch (DDMFormValidationException.MustSetValidCharactersForFieldName
+					msvcffn) {
+
+			SessionErrors.add(actionRequest, msvcffn.getClass(), msvcffn);
+		}
 	}
 
 	@Reference

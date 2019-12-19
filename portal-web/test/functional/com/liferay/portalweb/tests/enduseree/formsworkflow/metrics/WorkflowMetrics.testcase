@@ -458,26 +458,6 @@ definition {
 
 		WorkflowMetrics.assertDefaultChartRangesAndUnits();
 
-		WorkflowMetrics.assertChartTotalValue(
-			velocityUnitTotal = "inst / day",
-			velocityValueTotal = "0.03");
-
-		WorkflowMetrics.selectDateRange(
-			completionVelocityDateRange = "Custom Range",
-			endDateRange = "11/11/2018",
-			startDateRange = "09/22/2018");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",
-			value1 = "Sep 22, 2018 - Nov 11, 2018");
-
-		WorkflowMetrics.selectVelocityUnit(velocityUnit = "INST_WEEK");
-
-		WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Week");
-
-		WorkflowMetrics.assertChartTotalValue(
-			velocityUnitTotal = "inst / week",
-			velocityValueTotal = "0");
 	}
 
 

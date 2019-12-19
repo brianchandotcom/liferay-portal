@@ -1179,6 +1179,8 @@ definition {
 		AppBuilderAdmin.searchByItem(itemName = "object");
 
 		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
+
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

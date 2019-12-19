@@ -69,29 +69,6 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private void _checkMissingVariable(
-		String fileName, String variableName, JavaClass javaClass) {
-
-		String setterMethodName = "set" + variableName.substring(1);
-
-		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (!javaTerm.isJavaMethod()) {
-				continue;
-			}
-
-			if (StringUtil.equalsIgnoreCase(
-					javaTerm.getName(), setterMethodName)) {
-
-				addMessage(
-					fileName,
-					"Variable '" + variableName +
-						"' is missing in method 'cleanUp'");
-
-				return;
-			}
-		}
-	}
-
 	private String _formatVariables(
 		String fileName, String cleanUpMethodContent, JavaClass javaClass) {
 
@@ -110,20 +87,6 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 
 			String variableName = javaTerm.getName();
 
-			int pos = cleanUpMethodContent.indexOf(variableName + " =");
-
-			if (pos == -1) {
-				_checkMissingVariable(fileName, variableName, javaClass);
-
-				continue;
-			}
-
-			if (previousPos > pos) {
-				return _sortVariables(cleanUpMethodContent, previousPos, pos);
-			}
-
-			previousPos = pos;
-
 			Pattern pattern = Pattern.compile(
 				"\t(private|protected|public)\\s+" +
 					"(((final|static|transient|volatile)( |\n))*)([\\s\\S]*?)" +
@@ -134,13 +97,38 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 			Matcher matcher = pattern.matcher(variableContent);
 
 			if (!matcher.find()) {
-				continue;
+				return cleanUpMethodContent;
 			}
 
 			String modifierDefinition = StringUtil.trim(
 				variableContent.substring(matcher.start(1), matcher.start(6)));
 
+			boolean isFinal = false;
+
 			if (modifierDefinition.contains("final")) {
+				isFinal = true;
+			}
+
+			int pos = cleanUpMethodContent.indexOf(variableName + " =");
+
+			if (pos == -1) {
+				if (!isFinal && !javaTerm.isStatic()) {
+					addMessage(
+						fileName,
+						"Variable '" + variableName +
+							"' is missing in method 'cleanUp'");
+				}
+
+				continue;
+			}
+
+			if (previousPos > pos) {
+				return _sortVariables(cleanUpMethodContent, previousPos, pos);
+			}
+
+			previousPos = pos;
+
+			if (isFinal) {
 				continue;
 			}
 

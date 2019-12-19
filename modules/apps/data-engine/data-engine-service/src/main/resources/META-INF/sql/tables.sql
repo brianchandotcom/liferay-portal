@@ -18,7 +18,7 @@ create table DEDataListView (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	appliedFilters VARCHAR(75) null,
+	appliedFilters TEXT null,
 	ddmStructureId LONG,
 	fieldNames TEXT null,
 	name STRING null,

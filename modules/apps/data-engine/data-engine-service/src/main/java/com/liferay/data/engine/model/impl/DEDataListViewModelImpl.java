@@ -81,7 +81,7 @@ public class DEDataListViewModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"appliedFilters", Types.VARCHAR}, {"ddmStructureId", Types.BIGINT},
+		{"appliedFilters", Types.CLOB}, {"ddmStructureId", Types.BIGINT},
 		{"fieldNames", Types.CLOB}, {"name", Types.VARCHAR},
 		{"sortField", Types.VARCHAR}
 	};
@@ -98,7 +98,7 @@ public class DEDataListViewModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("appliedFilters", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("appliedFilters", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("ddmStructureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fieldNames", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -106,7 +106,7 @@ public class DEDataListViewModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DEDataListView (uuid_ VARCHAR(75) null,deDataListViewId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,appliedFilters VARCHAR(75) null,ddmStructureId LONG,fieldNames TEXT null,name STRING null,sortField VARCHAR(75) null)";
+		"create table DEDataListView (uuid_ VARCHAR(75) null,deDataListViewId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,appliedFilters TEXT null,ddmStructureId LONG,fieldNames TEXT null,name STRING null,sortField VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DEDataListView";
 

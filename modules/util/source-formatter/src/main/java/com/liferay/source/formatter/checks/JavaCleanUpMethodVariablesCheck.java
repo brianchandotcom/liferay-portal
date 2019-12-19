@@ -88,9 +88,8 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 			String variableName = javaTerm.getName();
 
 			Pattern pattern = Pattern.compile(
-				"\t(private|protected|public)\\s+" +
-					"(((final|static|transient|volatile)( |\n))*)([\\s\\S]*?)" +
-						variableName);
+				"\tprivate\\s+(((final|static|transient|volatile)\\s+)*)" +
+					"([\\s\\S]*?)" + variableName);
 
 			String variableContent = javaTerm.getContent();
 
@@ -101,7 +100,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 			}
 
 			String modifierDefinition = StringUtil.trim(
-				variableContent.substring(matcher.start(1), matcher.start(6)));
+				variableContent.substring(matcher.start(1), matcher.start(4)));
 
 			boolean isFinal = false;
 
@@ -132,7 +131,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String javaFieldType = StringUtil.trim(matcher.group(6));
+			String javaFieldType = StringUtil.trim(matcher.group(4));
 
 			pattern = Pattern.compile(
 				javaTerm.getName() + " =\\s+[a-z]\\w*\\.");

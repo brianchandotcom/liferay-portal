@@ -104,16 +104,19 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 	}
 
 	private static String _getURLContent(URL url) {
-		String spiId = System.getProperty("spi.id");
-
-		if (spiId == null) {
-			spiId = StringPool.BLANK;
-		}
-
 		Map<String, String> variables = HashMapBuilder.put(
 			"@liferay.home@", _getLiferayHome()
 		).put(
-			"@spi.id@", spiId
+			"@spi.id@",
+			() -> {
+				String spiId = System.getProperty("spi.id");
+
+				if (spiId != null) {
+					return spiId;
+				}
+
+				return StringPool.BLANK;
+			}
 		).build();
 
 		String urlContent = null;

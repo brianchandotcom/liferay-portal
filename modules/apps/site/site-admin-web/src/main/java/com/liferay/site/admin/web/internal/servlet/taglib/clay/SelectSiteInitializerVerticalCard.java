@@ -50,33 +50,44 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 
 	@Override
 	public Map<String, String> getData() {
-		long parentGroupId = ParamUtil.getLong(
-			_httpServletRequest, "parentGroupId");
-
-		PortletURL addSiteURL = _renderResponse.createActionURL();
-
-		addSiteURL.setParameter(ActionRequest.ACTION_NAME, "addGroup");
-
-		addSiteURL.setParameter(
-			"mvcPath", "/select_layout_set_prototype_entry.jsp");
-		addSiteURL.setParameter("parentGroupId", String.valueOf(parentGroupId));
-		addSiteURL.setParameter("creationType", _siteInitializerItem.getType());
-		addSiteURL.setParameter(
-			"siteInitializerKey", _siteInitializerItem.getSiteInitializerKey());
-
-		String checkboxFieldName = StringPool.BLANK;
-
-		if (Objects.equals(
-				_siteInitializerItem.getType(),
-				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
-
-			checkboxFieldName = "layoutSetVisibilityPrivate";
-		}
-
 		return HashMapBuilder.put(
-			"add-site-url", addSiteURL.toString()
+			"add-site-url",
+			() -> {
+				PortletURL addSiteURL = _renderResponse.createActionURL();
+
+				addSiteURL.setParameter(ActionRequest.ACTION_NAME, "addGroup");
+
+				addSiteURL.setParameter(
+					"mvcPath", "/select_layout_set_prototype_entry.jsp");
+
+				long parentGroupId = ParamUtil.getLong(
+					_httpServletRequest, "parentGroupId");
+
+				addSiteURL.setParameter(
+					"parentGroupId", String.valueOf(parentGroupId));
+
+				addSiteURL.setParameter(
+					"creationType", _siteInitializerItem.getType());
+				addSiteURL.setParameter(
+					"siteInitializerKey",
+					_siteInitializerItem.getSiteInitializerKey());
+
+				return addSiteURL.toString();
+			}
 		).put(
-			"checkbox-field-name", checkboxFieldName
+			"checkbox-field-name",
+			() -> {
+				String checkboxFieldName = StringPool.BLANK;
+
+				if (Objects.equals(
+						_siteInitializerItem.getType(),
+						SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
+
+					checkboxFieldName = "layoutSetVisibilityPrivate";
+				}
+
+				return checkboxFieldName;
+			}
 		).put(
 			"layout-set-prototype-id",
 			String.valueOf(_siteInitializerItem.getLayoutSetPrototypeId())

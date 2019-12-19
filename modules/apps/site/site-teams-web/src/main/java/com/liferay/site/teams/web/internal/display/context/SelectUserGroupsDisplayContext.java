@@ -199,16 +199,19 @@ public class SelectUserGroupsDisplayContext {
 		UserGroupDisplayTerms searchTerms =
 			(UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
 
-		Group group = GroupLocalServiceUtil.fetchGroup(team.getGroupId());
-
-		if (group != null) {
-			group = StagingUtil.getLiveGroup(group.getGroupId());
-		}
-
 		LinkedHashMap<String, Object> userGroupParams =
 			LinkedHashMapBuilder.<String, Object>put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS,
-				Long.valueOf(group.getGroupId())
+				() -> {
+					Group group = GroupLocalServiceUtil.fetchGroup(
+						team.getGroupId());
+
+					if (group != null) {
+						group = StagingUtil.getLiveGroup(group.getGroupId());
+					}
+
+					return Long.valueOf(group.getGroupId());
+				}
 			).build();
 
 		int userGroupsCount = UserGroupLocalServiceUtil.searchCount(

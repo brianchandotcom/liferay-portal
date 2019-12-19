@@ -189,14 +189,17 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		expectedMap.put("page", 3);
 
-		List<Integer> list = new ArrayList<>();
-
-		list.add(9);
-		list.add(5);
-		list.add(7);
-
 		Map<String, Object> data = LinkedHashMapBuilder.<String, Object>put(
-			"array", list
+			"array",
+			() -> {
+				List<Integer> list = new ArrayList<>();
+
+				list.add(9);
+				list.add(5);
+				list.add(7);
+
+				return list;
+			}
 		).put(
 			"id", 2
 		).put(

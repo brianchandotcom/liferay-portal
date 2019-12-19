@@ -1153,7 +1153,7 @@ definition {
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",

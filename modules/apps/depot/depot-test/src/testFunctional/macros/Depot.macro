@@ -139,6 +139,12 @@ definition {
 			AssertElementPresent(
 				key_tableEntry = "${siteName}",
 				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			AssertTextEquals(
+				key_tableEntry = "${siteName}",
+				key_tableEntryText = "Yes",
+				locator1 = "LexiconTable#TABLE_ENTRY_TEXT",
+				value1 = "Yes");
 		}
 	}
 

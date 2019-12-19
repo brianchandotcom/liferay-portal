@@ -384,7 +384,6 @@ definition {
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
 		var key_testSLADefinitionStart = "Process Begins";
-		var key_SLABreachedValue = "1(100%)";
 
 		// WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -459,13 +458,17 @@ definition {
 
 		WorkflowMetrics.assertDefaultChartRangesAndUnits();
 
-		// WorkflowMetrics.assertChartTotalValuePerformanceByStep();
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			slaBreachedValue = "0 (0%)");
 
 		WorkflowMetrics.selectDateRangePerformanceByStep(
 			completionVelocityDateRange = "Custom Range",
 			endDateRange = "11/11/2018",
 			startDateRange = "09/22/2018");
 		
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			slaBreachedValue = "0 (0%)");
+
 
 	}
 

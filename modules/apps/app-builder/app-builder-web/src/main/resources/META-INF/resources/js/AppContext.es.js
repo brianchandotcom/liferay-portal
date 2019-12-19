@@ -28,7 +28,6 @@ const AppContextProvider = ({
 		<AppContext.Provider
 			value={{
 				getStandaloneURL,
-				siteId: Liferay.ThemeDisplay.getCompanyGroupId(),
 				...restProps
 			}}
 		>

@@ -46,7 +46,7 @@ const COLUMNS = [
 ];
 
 export default ({history}) => {
-	const {basePortletURL, siteId} = useContext(AppContext);
+	const {basePortletURL} = useContext(AppContext);
 	const addButtonRef = useRef();
 	const emptyStateButtonRef = useRef();
 	const popoverRef = useRef();
@@ -71,7 +71,7 @@ export default ({history}) => {
 	const onCancel = () => setPopoverVisible(false);
 
 	const onSubmit = ({isAddFormView, name}) => {
-		const addURL = `/o/data-engine/v2.0/sites/${siteId}/data-definitions`;
+		const addURL = `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`;
 
 		addItem(addURL, {
 			dataDefinitionFields: [],
@@ -195,7 +195,7 @@ export default ({history}) => {
 						'there-are-no-custom-objects-yet'
 					)
 				}}
-				endpoint={`/o/data-engine/v2.0/sites/${siteId}/data-definitions`}
+				endpoint={`/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`}
 			>
 				{item => ({
 					...item,

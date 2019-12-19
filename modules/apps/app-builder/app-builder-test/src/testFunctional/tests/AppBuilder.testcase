@@ -1598,6 +1598,7 @@ definition {
 
 		AppBuilderAdmin.clearSearch();
 
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");();
 	}
 <<<<<<< HEAD
 	

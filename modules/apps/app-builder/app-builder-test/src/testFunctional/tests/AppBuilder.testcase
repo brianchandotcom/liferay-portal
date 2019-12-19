@@ -1159,6 +1159,11 @@ definition {
 			customObjectName = "my custom object 1",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Upload",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

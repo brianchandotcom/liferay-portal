@@ -63,7 +63,6 @@ public class DataDefinitionUtil {
 			{
 				availableLanguageIds = _toLanguageIds(
 					ddmForm.getAvailableLocales());
-				classNameId = ddmStructure.getClassNameId();
 				dataDefinitionFields = _toDataDefinitionFields(
 					ddmForm.getDDMFormFields(),
 					ddmFormFieldTypeServicesTracker);

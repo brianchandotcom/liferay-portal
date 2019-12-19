@@ -16,17 +16,13 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionRule;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
-import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionFieldUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
 import com.liferay.data.engine.rest.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
-import com.liferay.data.engine.rule.function.DataRuleFunction;
-import com.liferay.data.engine.rule.function.DataRuleFunctionResult;
 import com.liferay.data.engine.rule.function.DataRuleFunctionTracker;
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -51,13 +47,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -350,72 +342,6 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			throw new ValidationException(
 				"Missing fields: " +
 					ArrayUtil.toStringArray(missingFieldNames));
-		}
-
-		if (ArrayUtil.isEmpty(dataDefinition.getDataDefinitionRules())) {
-			return;
-		}
-
-		// Field values
-
-		List<DataDefinitionRule> dataDefinitionRules = Stream.of(
-			dataDefinition.getDataDefinitionRules()
-		).filter(
-			dataDefinitionRule -> Objects.equals(
-				dataDefinitionRule.getRuleType(), "validation")
-		).collect(
-			Collectors.toList()
-		);
-
-		if (dataDefinitionRules.isEmpty()) {
-			return;
-		}
-
-		Map<String, DataDefinitionField> dataDefinitionFields = Stream.of(
-			dataDefinition.getDataDefinitionFields()
-		).collect(
-			Collectors.toMap(DataDefinitionField::getName, Function.identity())
-		);
-
-		Map<String, Set<String>> errorCodesMap = new HashMap<>();
-
-		for (DataDefinitionRule dataDefinitionRule : dataDefinitionRules) {
-			DataRuleFunction dataRuleFunction =
-				_dataRuleFunctionTracker.getDataRuleFunction(
-					dataDefinitionRule.getName());
-
-			if (dataRuleFunction == null) {
-				continue;
-			}
-
-			for (String dataDefinitionFieldName :
-					dataDefinitionRule.getDataDefinitionFieldNames()) {
-
-				DataDefinitionField dataDefinitionField =
-					dataDefinitionFields.get(dataDefinitionFieldName);
-
-				DataRuleFunctionResult dataRuleFunctionResult =
-					dataRuleFunction.validate(
-						dataDefinitionRule.getDataDefinitionRuleParameters(),
-						DataDefinitionFieldUtil.toSPIDataDefinitionField(
-							dataDefinitionField),
-						dataRecordValues.get(dataDefinitionField.getName()));
-
-				if (dataRuleFunctionResult.isValid()) {
-					continue;
-				}
-
-				Set<String> errorCodes = errorCodesMap.getOrDefault(
-					dataDefinitionFieldName, new HashSet<>());
-
-				errorCodes.add(dataRuleFunctionResult.getErrorCode());
-
-				errorCodesMap.put(dataDefinitionFieldName, errorCodes);
-			}
-		}
-
-		if (!errorCodesMap.isEmpty()) {
-			throw new ValidationException(errorCodesMap.toString());
 		}
 	}
 

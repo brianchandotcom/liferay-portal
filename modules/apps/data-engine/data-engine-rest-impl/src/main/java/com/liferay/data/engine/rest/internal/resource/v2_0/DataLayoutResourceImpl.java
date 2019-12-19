@@ -19,9 +19,7 @@ import com.jayway.jsonpath.JsonPath;
 
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
-import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPermission;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
-import com.liferay.data.engine.rest.internal.constants.DataLayoutConstants;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
@@ -67,7 +65,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.ValidationException;
@@ -184,7 +181,8 @@ public class DataLayoutResourceImpl
 	}
 
 	@Override
-	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
+	public DataLayout getSiteDataLayoutByDataLayoutKey(
+			Long siteId, String dataLayoutKey)
 		throws Exception {
 
 		return _toDataLayout(
@@ -299,73 +297,6 @@ public class DataLayoutResourceImpl
 			dataLayout.getSiteId());
 
 		return dataLayout;
-	}
-
-	public void postDataLayoutDataLayoutPermission(
-			Long dataLayoutId, String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception {
-
-		DDMStructureLayout ddmStructureLayout =
-			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
-
-		DataEnginePermissionUtil.checkOperationPermission(
-			_groupLocalService, operation, ddmStructureLayout.getGroupId());
-
-		List<String> actionIds = new ArrayList<>();
-
-		if (GetterUtil.getBoolean(dataLayoutPermission.getDelete())) {
-			actionIds.add(ActionKeys.DELETE);
-		}
-
-		if (GetterUtil.getBoolean(dataLayoutPermission.getUpdate())) {
-			actionIds.add(ActionKeys.UPDATE);
-		}
-
-		if (GetterUtil.getBoolean(dataLayoutPermission.getView())) {
-			actionIds.add(ActionKeys.VIEW);
-		}
-
-		if (actionIds.isEmpty()) {
-			return;
-		}
-
-		DataEnginePermissionUtil.persistModelPermission(
-			actionIds, contextCompany, dataLayoutId, operation,
-			DataLayoutConstants.RESOURCE_NAME, _resourcePermissionLocalService,
-			_roleLocalService, dataLayoutPermission.getRoleNames(),
-			ddmStructureLayout.getGroupId());
-	}
-
-	@Override
-	public void postSiteDataLayoutPermission(
-			Long siteId, String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception {
-
-		DataEnginePermissionUtil.checkOperationPermission(
-			_groupLocalService, operation, siteId);
-
-		List<String> actionIds = new ArrayList<>();
-
-		if (GetterUtil.getBoolean(dataLayoutPermission.getAddDataLayout())) {
-			actionIds.add(DataActionKeys.ADD_DATA_LAYOUT);
-		}
-
-		if (GetterUtil.getBoolean(
-				dataLayoutPermission.getDefinePermissions())) {
-
-			actionIds.add(ActionKeys.PERMISSIONS);
-		}
-
-		if (actionIds.isEmpty()) {
-			return;
-		}
-
-		DataEnginePermissionUtil.persistPermission(
-			actionIds, contextCompany, operation,
-			_resourcePermissionLocalService, _roleLocalService,
-			dataLayoutPermission.getRoleNames());
 	}
 
 	@Override

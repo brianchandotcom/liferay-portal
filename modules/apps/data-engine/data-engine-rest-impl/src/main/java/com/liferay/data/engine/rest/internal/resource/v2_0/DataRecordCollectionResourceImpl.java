@@ -15,7 +15,6 @@
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
-import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordCollectionUtil;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.resource.common.CommonDataRecordCollectionResource;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -102,8 +100,9 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public DataRecordCollection getSiteDataRecordCollection(
-			Long siteId, String dataRecordCollectionKey)
+	public DataRecordCollection
+			getSiteDataRecordCollectionByDataRecordCollectionKey(
+				Long siteId, String dataRecordCollectionKey)
 		throws Exception {
 
 		CommonDataRecordCollectionResource<DataRecordCollection>
@@ -153,59 +152,6 @@ public class DataRecordCollectionResourceImpl
 				contextCompany, dataDefinitionId, dataRecordCollectionKey,
 				dataRecordCollection.getDescription(),
 				dataRecordCollection.getName());
-	}
-
-	@Override
-	public void postDataRecordCollectionDataRecordCollectionPermission(
-			Long dataRecordCollectionId, String operation,
-			DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception {
-
-		CommonDataRecordCollectionResource<DataRecordCollection>
-			commonDataRecordCollectionResource =
-				_getCommonDataRecordCollectionResource();
-
-		commonDataRecordCollectionResource.
-			postDataRecordCollectionDataRecordCollectionPermissions(
-				contextCompany, dataRecordCollectionId,
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getAddDataRecord()),
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getDelete()),
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getDeleteDataRecord()),
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getExportDataRecord()),
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getUpdate()),
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getUpdateDataRecord()),
-				GetterUtil.getBoolean(dataRecordCollectionPermission.getView()),
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getViewDataRecord()),
-				operation, dataRecordCollectionPermission.getRoleNames());
-	}
-
-	@Override
-	public void postSiteDataRecordCollectionPermission(
-			Long siteId, String operation,
-			DataRecordCollectionPermission dataRecordCollectionPermission)
-		throws Exception {
-
-		CommonDataRecordCollectionResource<DataRecordCollection>
-			commonDataRecordCollectionResource =
-				_getCommonDataRecordCollectionResource();
-
-		commonDataRecordCollectionResource.
-			postSiteDataRecordCollectionPermissions(
-				contextCompany,
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.
-						getAddDataRecordCollection()),
-				GetterUtil.getBoolean(
-					dataRecordCollectionPermission.getDefinePermissions()),
-				operation, dataRecordCollectionPermission.getRoleNames(),
-				siteId);
 	}
 
 	@Override

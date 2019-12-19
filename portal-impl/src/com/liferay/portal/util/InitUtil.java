@@ -50,6 +50,7 @@ import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
+import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -254,6 +255,9 @@ public class InitUtil {
 				configurableApplicationContextConfigurator.configure(
 					configurableApplicationContext);
 			}
+
+			configurableApplicationContext.addBeanFactoryPostProcessor(
+				new CompatBeanDefinitionRegistryPostProcessor());
 
 			configurableApplicationContext.refresh();
 

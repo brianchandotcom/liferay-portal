@@ -8,19 +8,12 @@ components:
                     items:
                         type: string
                     type: array
-                classNameId:
-                    format: int64
-                    type: integer
                 dataDefinitionFields:
                     items:
                         $ref: "#/components/schemas/DataDefinitionField"
                     type: array
                 dataDefinitionKey:
                     type: string
-                dataDefinitionRules:
-                    items:
-                        $ref: "#/components/schemas/DataDefinitionRule"
-                    type: array
                 dateCreated:
                     format: date-time
                     type: string
@@ -98,39 +91,6 @@ components:
                 visible:
                     type: boolean
             type: object
-        DataDefinitionPermission:
-            properties:
-                addDataDefinition:
-                    type: boolean
-                definePermissions:
-                    type: boolean
-                delete:
-                    type: boolean
-                roleNames:
-                    items:
-                        type: string
-                    type:
-                        array
-                update:
-                    type: boolean
-                view:
-                    type: boolean
-            type: object
-        DataDefinitionRule:
-            properties:
-                dataDefinitionFieldNames:
-                    items:
-                        type: string
-                    type: array
-                dataDefinitionRuleParameters:
-                    additionalProperties:
-                        type: object
-                    type: object
-                name:
-                    type: string
-                ruleType:
-                    type: string
-            type: object
         DataLayout:
             properties:
                 dataDefinitionId:
@@ -194,24 +154,6 @@ components:
                     additionalProperties:
                         type: object
                     type: object
-            type: object
-        DataLayoutPermission:
-            properties:
-                addDataLayout:
-                    type: boolean
-                definePermissions:
-                    type: boolean
-                delete:
-                    type: boolean
-                roleNames:
-                    items:
-                        type: string
-                    type:
-                        array
-                update:
-                    type: boolean
-                view:
-                    type: boolean
             type: object
         DataLayoutRow:
             properties:
@@ -304,34 +246,6 @@ components:
                 siteId:
                     format: int64
                     type: integer
-            type: object
-        DataRecordCollectionPermission:
-            properties:
-                addDataRecord:
-                    type: boolean
-                addDataRecordCollection:
-                    type: boolean
-                definePermissions:
-                    type: boolean
-                delete:
-                    type: boolean
-                deleteDataRecord:
-                    type: boolean
-                exportDataRecord:
-                    type: boolean
-                roleNames:
-                    items:
-                        type: string
-                    type:
-                        array
-                update:
-                    type: boolean
-                updateDataRecord:
-                    type: boolean
-                view:
-                    type: boolean
-                viewDataRecord:
-                    type: boolean
             type: object
 info:
     description:
@@ -450,39 +364,6 @@ paths:
                         application/xml:
                             schema:
                                 type: string
-                    description:
-                        ""
-            tags: ["DataDefinition"]
-    "/data-definitions/{dataDefinitionId}/data-definition-permissions":
-        post:
-            operationId: postDataDefinitionDataDefinitionPermission
-            parameters:
-                - in: path
-                  name: dataDefinitionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: operation
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DataDefinitionPermission"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/DataDefinitionPermission"
-                description:
-                    ""
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
                     description:
                         ""
             tags: ["DataDefinition"]
@@ -914,39 +795,6 @@ paths:
                     description:
                         ""
             tags: ["DataLayout"]
-    "/data-layouts/{dataLayoutId}/data-layout-permissions":
-        post:
-            operationId: postDataLayoutDataLayoutPermission
-            parameters:
-                - in: path
-                  name: dataLayoutId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: operation
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DataLayoutPermission"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/DataLayoutPermission"
-                description:
-                    ""
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataLayout"]
     "/data-layouts/{dataLayoutId}/data-model-permissions":
         get:
             operationId: getDataLayoutDataModelPermissionsPage
@@ -1229,39 +1077,6 @@ paths:
                     description:
                         ""
             tags: ["DataModelPermission"]
-    "/data-record-collections/{dataRecordCollectionId}/data-record-collection-permissions":
-        post:
-            operationId: postDataRecordCollectionDataRecordCollectionPermission
-            parameters:
-                - in: path
-                  name: dataRecordCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: operation
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DataRecordCollectionPermission"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/DataRecordCollectionPermission"
-                description:
-                    ""
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataRecordCollection"]
     "/data-record-collections/{dataRecordCollectionId}/data-records":
         get:
             operationId: getDataRecordCollectionDataRecordsPage
@@ -1423,37 +1238,6 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
-    "/sites/{siteId}/data-definition-permissions":
-        post:
-            operationId: postSiteDataDefinitionPermission
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: operation
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DataDefinitionPermission"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/DataDefinitionPermission"
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataDefinition"]
     "/sites/{siteId}/data-definitions":
         get:
             operationId: getSiteDataDefinitionsPage
@@ -1563,37 +1347,6 @@ paths:
                     description:
                         ""
             tags: ["DataDefinition"]
-    "/sites/{siteId}/data-layout-permissions":
-        post:
-            operationId: postSiteDataLayoutPermission
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: operation
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DataLayoutPermission"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/DataLayoutPermission"
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataLayout"]
     "/sites/{siteId}/data-layouts":
         get:
             operationId: getSiteDataLayoutsPage
@@ -1664,37 +1417,6 @@ paths:
                     description:
                         ""
             tags: ["DataLayout"]
-    "/sites/{siteId}/data-record-collection-permissions":
-        post:
-            operationId: postSiteDataRecordCollectionPermission
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: operation
-                  required: true
-                  schema:
-                      type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/DataRecordCollectionPermission"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/DataRecordCollectionPermission"
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataRecordCollection"]
     "/sites/{siteId}/data-record-collections":
         get:
             operationId: getSiteDataRecordCollectionsPage

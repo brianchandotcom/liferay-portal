@@ -115,7 +115,26 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public static enum BuildProfile {
 
-		dxp, portal
+		DXP {
+
+			private static final String _TEXT = "dxp";
+
+			@Override
+			public String toString() {
+				return _TEXT;
+			}
+
+		},
+		PORTAL {
+
+			private static final String _TEXT = "portal";
+
+			@Override
+			public String toString() {
+				return _TEXT;
+			}
+
+		}
 
 	}
 

@@ -204,7 +204,7 @@ public class OrganizationResourceImpl
 		long addressId = GetterUtil.getLong(postalAddress.getId());
 		long regionId = _getRegionId(
 			postalAddress.getAddressRegion(), countryId);
-		long typeId = _getAddressTypeId(
+		long typeId = _toAddressTypeId(
 			Optional.ofNullable(
 				postalAddress.getAddressType()
 			).orElse(
@@ -244,7 +244,7 @@ public class OrganizationResourceImpl
 		);
 	}
 
-	private long _getAddressTypeId(PostalAddress.AddressType addressType) {
+	private long _toAddressTypeId(PostalAddress.AddressType addressType) {
 		ListType listType = _listTypeLocalService.getListType(
 			addressType.getValue(), ListTypeConstants.ORGANIZATION_ADDRESS);
 

@@ -1563,17 +1563,17 @@ definition {
 	@priority = "5"
 	test SearchForDeployedItem {
 		property portal.acceptance = "false";
-		
+
 		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object 1",
+			customObjectName = "my custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Upload",
+			fieldType = "Text Field",
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
-		
+
 		App.add(
 			appTitle = "First App",
 			deployOption = "Product Menu",

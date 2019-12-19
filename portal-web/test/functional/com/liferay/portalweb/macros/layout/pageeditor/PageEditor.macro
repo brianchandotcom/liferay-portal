@@ -245,7 +245,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${alignment}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(contentAlign)) {
@@ -254,7 +254,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${contentAlign}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(borderColor)) {
@@ -262,7 +262,7 @@ definition {
 				key_paletteItem = "${borderColor}",
 				locator1 = "Button#PALETTE_ITEM");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(borderRadius)) {
@@ -271,7 +271,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${borderRadius}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(bottomSpacing)) {
@@ -280,7 +280,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${bottomSpacing}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(boxShadow)) {
@@ -289,7 +289,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${boxShadow}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(headingLevel)) {
@@ -298,7 +298,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${headingLevel}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(height)) {
@@ -307,7 +307,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${height}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(imageSize)) {
@@ -316,7 +316,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${imageSize}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(size)) {
@@ -325,7 +325,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${size}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(textColor)) {
@@ -333,7 +333,7 @@ definition {
 				key_paletteItem = "${textColor}",
 				locator1 = "Button#PALETTE_ITEM");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(textAlign)) {
@@ -342,7 +342,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${textAlign}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(type)) {
@@ -351,7 +351,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${type}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		if (isSet(verticalSpace)) {
@@ -360,7 +360,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${verticalSpace}");
 
-			Pause(2000);
+			Pause(locator1 = "2000");
 		}
 
 		PageEditor.waitForAutoSave();

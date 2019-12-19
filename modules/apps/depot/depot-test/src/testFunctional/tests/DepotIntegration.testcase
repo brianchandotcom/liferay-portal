@@ -242,7 +242,7 @@ definition {
 
 	@description = "This ensures that users can search for depot document from connected site."
 	@priority = "5"
-	test SearchForDocumentFromConnectedSite {
+	test SearchForDocument {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -342,7 +342,7 @@ definition {
 
 	@description = "This ensures that a depot document associated with a tag can be searched from the connected site."
 	@priority = "5"
-	test SearchForTagFromConnectedSite {
+	test SearchForTag {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -602,7 +602,7 @@ definition {
 
 	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
 	@priority = "5"
-	test SearchForUserFromConnectedSite {
+	test SearchForUser {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
@@ -673,7 +673,7 @@ definition {
 
 	@description = "This ensures that a depot web content can be searched from the connected site."
 	@priority = "5"
-	test SearchForWebContentFromConnectedSite {
+	test SearchForWebContent {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");

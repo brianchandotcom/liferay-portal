@@ -1159,34 +1159,6 @@ definition {
 			customObjectName = "my custom object 1",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.gotoBack();
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object 2",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.gotoBack();
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object 3",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.gotoBack();
-
-		AppBuilderAdmin.searchByItem(itemName = "object");
-
-		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
-
-		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
-
-		AppBuilderAdmin.clearSearch();
-		
-		AppBuilderAdmin.searchByItem(itemName = "!@#");
-
-		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

@@ -308,6 +308,15 @@ public class AccountRoleLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
+			long accountEntryId, String keywords, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator obc) {
+
+		return getService().searchAccountRoles(
+			accountEntryId, keywords, start, end, obc);
+	}
+
 	public static void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {

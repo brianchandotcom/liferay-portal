@@ -424,7 +424,6 @@ definition {
 			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
 			locale = "ca-ES",
 			openGraph = "true",
-			pageName = "Test Page",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 	}
@@ -480,7 +479,6 @@ definition {
 			htmlTitle = "Page HTML Title - Test Site Name - ${siteName}",
 			locale = "fr-FR",
 			openGraph = "true",
-			pageName = "Test Page",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 	}

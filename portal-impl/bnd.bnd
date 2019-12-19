@@ -64,9 +64,7 @@ Export-Package:\
 	com.liferay.portlet.trash.util,\
 	com.liferay.portlet.usersadmin.search
 Import-Package: *
-Include-Resource:\
-	classes,\
-	@../tmp/lib-pre/com.liferay.portal.impl.trash.compat.jar
+Include-Resource: classes
 Liferay-Service: true
 Private-Package: com.liferay.*.dependencies
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)

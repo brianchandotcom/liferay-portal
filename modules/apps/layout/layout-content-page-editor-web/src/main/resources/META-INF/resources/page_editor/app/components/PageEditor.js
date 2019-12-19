@@ -22,6 +22,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
+import duplicateFragment from '../thunks/duplicateFragment';
 import updateLayoutData from '../thunks/updateLayoutData';
 import {useIsActive} from './Controls';
 import FragmentContent from './FragmentContent';
@@ -197,6 +198,9 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 	const isActiveTopper = LAYOUT_DATA_TOPPER_ACTIVE[item.type];
 	const isMounted = useIsMounted();
 	const componentRef = useRef(null);
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+	const store = useContext(StoreContext);
 
 	const fragmentEntryLink = fragmentEntryLinks[
 		item.config.fragmentEntryLinkId
@@ -227,6 +231,23 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 							buttons={floatingToolbarButtons}
 							item={item}
 							itemRef={componentRef}
+							onButtonClick={id => {
+								if (
+									id ===
+									LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS
+										.duplicateFragment.id
+								) {
+									dispatch(
+										duplicateFragment({
+											config,
+											fragmentEntryLinkId:
+												item.config.fragmentEntryLinkId,
+											itemId: item.itemId,
+											store
+										})
+									);
+								}
+							}}
 						/>
 					)}
 

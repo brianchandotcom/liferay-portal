@@ -32,7 +32,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphImageFileEntryId`
 	);
 
-	const openGraphImageURL = document.getElementById(
+	const openGraphImageTitle = document.getElementById(
 		`${namespace}openGraphImageURL`
 	);
 
@@ -50,7 +50,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 			const itemValue = JSON.parse(selectedItem.value);
 
 			openGraphImageFileEntryId.value = itemValue.fileEntryId;
-			openGraphImageURL.value = itemValue.url;
+			openGraphImageTitle.value = itemValue.title;
 
 			Liferay.Util.toggleDisabled(openGraphImageAltField, false);
 			Liferay.Util.toggleDisabled(
@@ -75,7 +75,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 	openGraphClearImageButton.addEventListener('click', () => {
 		openGraphImageFileEntryId.value = '';
-		openGraphImageURL.value = '';
+		openGraphImageTitle.value = '';
 
 		Liferay.Util.toggleDisabled(openGraphImageAltField, true);
 		Liferay.Util.toggleDisabled(openGraphImageAltFieldDefaultLocale, true);

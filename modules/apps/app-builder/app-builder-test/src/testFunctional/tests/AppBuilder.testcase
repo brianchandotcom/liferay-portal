@@ -1164,6 +1164,24 @@ definition {
 			fieldType = "Upload",
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
+		
+		App.add(
+			appTitle = "First App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Second App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Third App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");	
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

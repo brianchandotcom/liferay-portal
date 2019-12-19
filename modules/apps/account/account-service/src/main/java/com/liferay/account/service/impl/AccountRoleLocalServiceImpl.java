@@ -17,14 +17,25 @@ package com.liferay.account.service.impl;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -160,6 +171,28 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+		long accountEntryId, String keywords, int start, int end,
+		OrderByComparator obc) {
+
+		DynamicQuery roleDynamicQuery = _getRoleDynamicQuery(
+			accountEntryId, keywords, obc);
+
+		if (roleDynamicQuery == null) {
+			return new BaseModelSearchResult<>(
+				Collections.<AccountRole>emptyList(), 0);
+		}
+
+		List<AccountRole> accountRoles = TransformUtil.transform(
+			roleLocalService.<Role>dynamicQuery(roleDynamicQuery, start, end),
+			userGroupRole -> getAccountRoleByRoleId(userGroupRole.getRoleId()));
+
+		return new BaseModelSearchResult<>(
+			accountRoles,
+			(int)roleLocalService.dynamicQueryCount(roleDynamicQuery));
+	}
+
+	@Override
 	public void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException {
@@ -172,6 +205,55 @@ public class AccountRoleLocalServiceImpl
 		userGroupRoleLocalService.deleteUserGroupRoles(
 			userId, accountEntry.getAccountEntryGroupId(),
 			new long[] {accountRole.getRoleId()});
+	}
+
+	private DynamicQuery _getRoleDynamicQuery(
+		long accountEntryId, String keywords, OrderByComparator obc) {
+
+		DynamicQuery accountRoleDynamicQuery =
+			accountRoleLocalService.dynamicQuery();
+
+		accountRoleDynamicQuery.add(
+			RestrictionsFactoryUtil.eq("accountEntryId", accountEntryId));
+		accountRoleDynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("roleId"));
+
+		List<Long> roleIds = accountRoleLocalService.dynamicQuery(
+			accountRoleDynamicQuery);
+
+		if (roleIds.isEmpty()) {
+			return null;
+		}
+
+		DynamicQuery roleDynamicQuery = roleLocalService.dynamicQuery();
+
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+		disjunction.add(
+			RestrictionsFactoryUtil.ilike(
+				"description", StringUtil.quote(keywords, StringPool.PERCENT)));
+		disjunction.add(
+			RestrictionsFactoryUtil.ilike(
+				"name", StringUtil.quote(keywords, StringPool.PERCENT)));
+
+		roleDynamicQuery.add(disjunction);
+
+		roleDynamicQuery.add(RestrictionsFactoryUtil.in("roleId", roleIds));
+
+		if (obc != null) {
+			Order order;
+
+			if (obc.isAscending()) {
+				order = OrderFactoryUtil.asc(obc.getOrderByFields()[0]);
+			}
+			else {
+				order = OrderFactoryUtil.desc(obc.getOrderByFields()[0]);
+			}
+
+			roleDynamicQuery.addOrder(order);
+		}
+
+		return roleDynamicQuery;
 	}
 
 }

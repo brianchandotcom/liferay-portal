@@ -69,6 +69,25 @@ definition {
 		}
 	}
 
+	macro disableOpenGraphAtSiteLevel {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "open graph");
+
+		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable Open Graph")) {
+			Click(
+				checkboxName = "Enable Open Graph",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		AssertElementPresent(locator1 = "Checkbox#OPEN_GRAPH_CHECKBOX_DISABLED");
+
+		Button.click(button = "Save");
+	}
+
 	macro viewDefaultConfiguration {
 		task ("Assert open graph title") {
 			AssertTextEquals(

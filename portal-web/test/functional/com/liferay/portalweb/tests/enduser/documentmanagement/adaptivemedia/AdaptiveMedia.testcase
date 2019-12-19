@@ -330,7 +330,7 @@ definition {
 		Button.clickPublish();
 	}
 
-	@description = "This ensures that the SVG image can be added to a blog entry."
+	@description = "This ensures that the SVG image can be added and optimized in a blog entry."
 	@priority = "5"
 	test AssertAdaptedSVGImageInBlogsEntry {
 		ProductMenu.gotoPortlet(

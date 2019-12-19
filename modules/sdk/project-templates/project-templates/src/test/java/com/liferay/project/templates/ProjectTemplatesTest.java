@@ -2348,6 +2348,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File workspaceProjectDir = buildTemplateWithGradle(
 			warsDir, "theme", "theme-test", "--dependency-management-enabled");
 
+		enableTargetPlatformInWorkspace(workspaceDir);
+
 		testNotContains(
 			workspaceProjectDir, "build.gradle", true, "^repositories \\{.*");
 		testNotContains(

@@ -503,17 +503,15 @@ const ConnectedFragmentEditableField = getConnectedComponent(
 
 		const _itemId = `${props.fragmentEntryLinkId}-${props.editableId}`;
 
-		const _activable =
-			!state.hasUpdatePermissions ||
-			getItemPath(
-				state.activeItemId,
-				state.activeItemType,
-				state.layoutData.structure
-			).some(
-				({itemId, itemType}) =>
-					itemId === props.fragmentEntryLinkId &&
-					itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			);
+		const _activable = getItemPath(
+			state.activeItemId,
+			state.activeItemType,
+			state.layoutData.structure
+		).some(
+			({itemId, itemType}) =>
+				itemId === props.fragmentEntryLinkId &&
+				itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		);
 
 		const _active =
 			state.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable &&

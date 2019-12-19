@@ -16,14 +16,11 @@ package com.liferay.talend.runtime.writer;
 
 import com.liferay.talend.avro.IndexedRecordJsonObjectConverter;
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
-import com.liferay.talend.common.schema.SchemaUtils;
+import com.liferay.talend.properties.output.LiferayOutputProperties;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
-import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.io.IOException;
-
-import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.component.runtime.WriteOperation;
 import org.talend.components.api.component.runtime.WriterWithFeedback;
-import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.exception.TalendRuntimeException;
 
 /**
@@ -50,27 +46,28 @@ public class LiferayWriter
 	implements WriterWithFeedback<Result, IndexedRecord, IndexedRecord> {
 
 	public LiferayWriter(
-		LiferayWriteOperation writeOperation, RuntimeContainer runtimeContainer,
-		TLiferayOutputProperties tLiferayOutputProperties) {
+		LiferayWriteOperation writeOperation,
+		LiferayOutputProperties liferayOutputProperties) {
 
 		_liferayWriteOperation = writeOperation;
-		_runtimeContainer = runtimeContainer;
-		_tLiferayOutputProperties = tLiferayOutputProperties;
+		_liferayOutputProperties = liferayOutputProperties;
 
-		_dieOnError = tLiferayOutputProperties.getDieOnError();
+		_dieOnError = liferayOutputProperties.getDieOnError();
+		_endpointUrl = liferayOutputProperties.getEndpointUrl();
 		_liferaySink = writeOperation.getSink();
 		_result = new Result();
 		_successWrites = new ArrayList<>();
 
 		_indexedRecordJsonObjectConverter =
 			new IndexedRecordJsonObjectConverter(
-				_dieOnError, _tLiferayOutputProperties.getSchema(),
-				SchemaUtils.createRejectSchema(
-					_tLiferayOutputProperties.getSchema()),
+				_dieOnError,
+				_liferayOutputProperties.resource.mainSchema.schema.getValue(),
+				_liferayOutputProperties.resource.rejectSchema.schema.
+					getValue(),
 				_result);
 		_jsonObjectIndexedRecordConverter =
 			new JsonObjectIndexedRecordConverter(
-				_tLiferayOutputProperties.getSchema());
+				_liferayOutputProperties.resource.flowSchema.schema.getValue());
 	}
 
 	@Override
@@ -85,11 +82,8 @@ public class LiferayWriter
 	}
 
 	public void doDelete(IndexedRecord indexedRecord) throws IOException {
-		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
-
 		try {
-			_liferaySink.doDeleteRequest(
-				_runtimeContainer, resourceURI.toASCIIString());
+			_liferaySink.doDeleteRequest(_endpointUrl);
 		}
 		catch (Exception e) {
 			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
@@ -101,13 +95,11 @@ public class LiferayWriter
 	}
 
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
-		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
-
 		JsonObject jsonObject = null;
 
 		try {
 			jsonObject = _liferaySink.doPostRequest(
-				_runtimeContainer, resourceURI.toASCIIString(),
+				_endpointUrl,
 				_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
 		}
 		catch (Exception e) {
@@ -121,13 +113,11 @@ public class LiferayWriter
 	}
 
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
-		URI resourceURI = _tLiferayOutputProperties.resource.getEndpointURI();
-
 		JsonObject jsonObject = null;
 
 		try {
 			jsonObject = _liferaySink.doPatchRequest(
-				_runtimeContainer, resourceURI.toASCIIString(),
+				_endpointUrl,
 				_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
 		}
 		catch (Exception e) {
@@ -175,7 +165,7 @@ public class LiferayWriter
 
 		cleanWrites();
 
-		Action action = _tLiferayOutputProperties.getConfiguredAction();
+		Action action = _liferayOutputProperties.getAction();
 
 		if (Action.Delete == action) {
 			doDelete(indexedRecord);
@@ -233,15 +223,15 @@ public class LiferayWriter
 		LiferayWriter.class);
 
 	private final boolean _dieOnError;
+	private final String _endpointUrl;
 	private final IndexedRecordJsonObjectConverter
 		_indexedRecordJsonObjectConverter;
 	private final JsonObjectIndexedRecordConverter
 		_jsonObjectIndexedRecordConverter;
+	private final LiferayOutputProperties _liferayOutputProperties;
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
 	private final Result _result;
-	private final RuntimeContainer _runtimeContainer;
 	private final List<IndexedRecord> _successWrites;
-	private final TLiferayOutputProperties _tLiferayOutputProperties;
 
 }

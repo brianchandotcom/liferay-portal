@@ -14,8 +14,9 @@
 
 package com.liferay.talend.runtime.writer;
 
+import com.liferay.talend.exception.BaseComponentException;
+import com.liferay.talend.properties.output.LiferayOutputProperties;
 import com.liferay.talend.runtime.LiferaySink;
-import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.util.Map;
 
@@ -30,16 +31,15 @@ public class LiferayWriteOperation implements WriteOperation<Result> {
 
 	public LiferayWriteOperation(
 		LiferaySink liferaySink,
-		TLiferayOutputProperties tLiferayOutputProperties) {
+		LiferayOutputProperties liferayOutputProperties) {
 
 		_liferaySink = liferaySink;
-		_tLiferayOutputProperties = tLiferayOutputProperties;
+		_liferayOutputProperties = liferayOutputProperties;
 	}
 
 	@Override
 	public LiferayWriter createWriter(RuntimeContainer runtimeContainer) {
-		return new LiferayWriter(
-			this, runtimeContainer, _tLiferayOutputProperties);
+		return new LiferayWriter(this, _liferayOutputProperties);
 	}
 
 	@Override
@@ -56,9 +56,21 @@ public class LiferayWriteOperation implements WriteOperation<Result> {
 
 	@Override
 	public void initialize(RuntimeContainer runtimeContainer) {
+		Object componentData = runtimeContainer.getComponentData(
+			runtimeContainer.getCurrentComponentId(),
+			"COMPONENT_RUNTIME_PROPERTIES");
+
+		if (!(componentData instanceof LiferayOutputProperties)) {
+			throw new BaseComponentException(
+				"Unable to initialize write operation without Liferay output " +
+					"properties",
+				1);
+		}
+
+		_liferayOutputProperties = (LiferayOutputProperties)componentData;
 	}
 
+	private LiferayOutputProperties _liferayOutputProperties;
 	private final LiferaySink _liferaySink;
-	private final TLiferayOutputProperties _tLiferayOutputProperties;
 
 }

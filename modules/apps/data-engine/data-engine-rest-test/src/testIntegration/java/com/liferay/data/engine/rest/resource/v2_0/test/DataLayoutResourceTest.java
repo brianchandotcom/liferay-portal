@@ -102,7 +102,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGraphQLGetSiteDataLayout() {
+	public void testGraphQLGetSiteDataLayoutByDataLayoutKey() {
 	}
 
 	@Ignore
@@ -128,20 +128,6 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			assertEquals(randomDataLayout, postDataLayout);
 			assertValid(postDataLayout);
 		}
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostDataLayoutDataLayoutPermission() throws Exception {
-		super.testPostDataLayoutDataLayoutPermission();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostSiteDataLayoutPermission() throws Exception {
-		super.testPostSiteDataLayoutPermission();
 	}
 
 	@Override
@@ -185,7 +171,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
-	protected DataLayout testGetSiteDataLayout_addDataLayout()
+	protected DataLayout testGetSiteDataLayoutByDataLayoutKey_addDataLayout()
 		throws Exception {
 
 		return dataLayoutResource.postDataDefinitionDataLayout(

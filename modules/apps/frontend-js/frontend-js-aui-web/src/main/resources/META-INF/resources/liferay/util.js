@@ -297,7 +297,16 @@
 		checkAll(form, name, allBox, selectClassName) {
 			if (form) {
 				form = Util.getDOM(form);
+
+				if (typeof form === 'string') {
+					form = document.querySelector(form);
+				}
+
 				allBox = Util.getDOM(allBox);
+
+				if (typeof allBox === 'string') {
+					allBox = document.querySelector(allBox);
+				}
 
 				let selector;
 
@@ -309,9 +318,6 @@
 				} else {
 					selector = 'input[name=' + name + STR_RIGHT_SQUARE_BRACKET;
 				}
-
-				form = document.querySelector(form);
-				allBox = document.querySelector(allBox);
 
 				const allBoxChecked = allBox.checked;
 

@@ -94,7 +94,7 @@ public class AddPortletReactMVCActionCommand
 	}
 
 	protected JSONObject addFragmentEntryLinkToLayoutData(
-			ActionRequest actionRequest, FragmentEntryLink fragmentEntryLink)
+			ActionRequest actionRequest, long fragmentEntryLinkId)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -111,9 +111,7 @@ public class AddPortletReactMVCActionCommand
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				JSONUtil.put(
-					"fragmentEntryLinkId",
-					fragmentEntryLink.getFragmentEntryLinkId()),
+				JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
 				String.valueOf(UUID.randomUUID()), parentItemId, "fragment",
 				position));
 	}
@@ -226,7 +224,7 @@ public class AddPortletReactMVCActionCommand
 		);
 
 		JSONObject layoutDataJSONObject = addFragmentEntryLinkToLayoutData(
-			actionRequest, fragmentEntryLink);
+			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
 
 		return JSONUtil.put(
 			"fragmentEntryLink", jsonObject

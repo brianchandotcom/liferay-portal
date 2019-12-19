@@ -1590,7 +1590,14 @@ definition {
 			appTitle = "Third App",
 			deployOption = "Product Menu",
 			formViewName = "My Form View",
-			tableViewName = "My Table View");	
+			tableViewName = "My Table View");
+
+		AppBuilderAdmin.searchByItem(itemName = "First");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "First");
+
+		AppBuilderAdmin.clearSearch();
+
 	}
 <<<<<<< HEAD
 	

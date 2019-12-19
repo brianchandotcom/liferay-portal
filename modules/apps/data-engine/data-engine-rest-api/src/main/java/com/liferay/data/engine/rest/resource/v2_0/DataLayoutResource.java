@@ -15,7 +15,8 @@
 package com.liferay.data.engine.rest.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
-import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPermission;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -58,29 +59,19 @@ public interface DataLayoutResource {
 	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
 		throws Exception;
 
-	public void postDataLayoutDataLayoutPermission(
-			Long dataLayoutId, String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception;
-
-	public void postSiteDataLayoutPermission(
-			Long siteId, String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception;
-
 	public Page<DataLayout> getSiteDataLayoutsPage(
 			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
+	public DataLayout getSiteDataLayoutByDataLayoutKey(
+			Long siteId, String dataLayoutKey)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
 
-	public void setContextCompany(
-		com.liferay.portal.kernel.model.Company contextCompany);
+	public void setContextCompany(Company contextCompany);
 
 	public default void setContextHttpServletRequest(
 		HttpServletRequest contextHttpServletRequest) {
@@ -93,7 +84,6 @@ public interface DataLayoutResource {
 	public default void setContextUriInfo(UriInfo contextUriInfo) {
 	}
 
-	public void setContextUser(
-		com.liferay.portal.kernel.model.User contextUser);
+	public void setContextUser(User contextUser);
 
 }

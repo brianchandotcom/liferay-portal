@@ -15,7 +15,8 @@
 package com.liferay.data.engine.rest.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionPermission;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -42,6 +43,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DataDefinitionResource {
 
+	public Page<DataDefinition> getDataDefinitionByContentTypeContentTypePage(
+			String contentType, String keywords, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
+	public DataDefinition postDataDefinitionByContentType(
+			String contentType, DataDefinition dataDefinition)
+		throws Exception;
+
 	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception;
 
@@ -58,35 +68,25 @@ public interface DataDefinitionResource {
 			Long dataDefinitionId, String fieldName)
 		throws Exception;
 
-	public void postDataDefinitionDataDefinitionPermission(
-			Long dataDefinitionId, String operation,
-			DataDefinitionPermission dataDefinitionPermission)
+	public Page<DataDefinition>
+			getSiteDataDefinitionByContentTypeContentTypePage(
+				Long siteId, String contentType, String keywords,
+				Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public void postSiteDataDefinitionPermission(
-			Long siteId, String operation,
-			DataDefinitionPermission dataDefinitionPermission)
+	public DataDefinition postSiteDataDefinitionByContentType(
+			Long siteId, String contentType, DataDefinition dataDefinition)
 		throws Exception;
 
-	public Page<DataDefinition> getSiteDataDefinitionsPage(
-			Long siteId, Long classNameId, String keywords,
-			Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public DataDefinition postSiteDataDefinition(
-			Long siteId, DataDefinition dataDefinition)
-		throws Exception;
-
-	public DataDefinition getSiteDataDefinition(
-			Long siteId, String dataDefinitionKey, Long classNameId)
+	public DataDefinition getSiteDataDefinitionByContentTypeByDataDefinitionKey(
+			Long siteId, String contentType, String dataDefinitionKey)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
 
-	public void setContextCompany(
-		com.liferay.portal.kernel.model.Company contextCompany);
+	public void setContextCompany(Company contextCompany);
 
 	public default void setContextHttpServletRequest(
 		HttpServletRequest contextHttpServletRequest) {
@@ -99,7 +99,6 @@ public interface DataDefinitionResource {
 	public default void setContextUriInfo(UriInfo contextUriInfo) {
 	}
 
-	public void setContextUser(
-		com.liferay.portal.kernel.model.User contextUser);
+	public void setContextUser(User contextUser);
 
 }

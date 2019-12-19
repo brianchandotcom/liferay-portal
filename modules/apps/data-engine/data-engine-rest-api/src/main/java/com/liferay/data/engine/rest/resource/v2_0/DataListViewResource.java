@@ -15,6 +15,8 @@
 package com.liferay.data.engine.rest.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -62,8 +64,7 @@ public interface DataListViewResource {
 		AcceptLanguage contextAcceptLanguage) {
 	}
 
-	public void setContextCompany(
-		com.liferay.portal.kernel.model.Company contextCompany);
+	public void setContextCompany(Company contextCompany);
 
 	public default void setContextHttpServletRequest(
 		HttpServletRequest contextHttpServletRequest) {
@@ -76,7 +77,6 @@ public interface DataListViewResource {
 	public default void setContextUriInfo(UriInfo contextUriInfo) {
 	}
 
-	public void setContextUser(
-		com.liferay.portal.kernel.model.User contextUser);
+	public void setContextUser(User contextUser);
 
 }

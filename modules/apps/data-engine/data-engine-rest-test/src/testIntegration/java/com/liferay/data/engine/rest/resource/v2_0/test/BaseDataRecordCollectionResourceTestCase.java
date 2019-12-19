@@ -586,62 +586,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataRecordCollectionDataRecordCollectionPermission()
-		throws Exception {
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataRecordCollection dataRecordCollection =
-			testPostDataRecordCollectionDataRecordCollectionPermission_addDataRecordCollection();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordCollectionResource.
-				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
-					dataRecordCollection.getId(), null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataRecordCollectionResource.
-				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
-					0L, null, null));
-	}
-
-	protected DataRecordCollection
-			testPostDataRecordCollectionDataRecordCollectionPermission_addDataRecordCollection()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostSiteDataRecordCollectionPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataRecordCollection dataRecordCollection =
-			testPostSiteDataRecordCollectionPermission_addDataRecordCollection();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordCollectionResource.
-				postSiteDataRecordCollectionPermissionHttpResponse(
-					null, null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataRecordCollectionResource.
-				postSiteDataRecordCollectionPermissionHttpResponse(
-					null, null, null));
-	}
-
-	protected DataRecordCollection
-			testPostSiteDataRecordCollectionPermission_addDataRecordCollection()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetSiteDataRecordCollectionsPage() throws Exception {
 		Page<DataRecordCollection> page =
 			dataRecordCollectionResource.getSiteDataRecordCollectionsPage(
@@ -829,21 +773,24 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataRecordCollection() throws Exception {
+	public void testGetSiteDataRecordCollectionByDataRecordCollectionKey()
+		throws Exception {
+
 		DataRecordCollection postDataRecordCollection =
-			testGetSiteDataRecordCollection_addDataRecordCollection();
+			testGetSiteDataRecordCollectionByDataRecordCollectionKey_addDataRecordCollection();
 
 		DataRecordCollection getDataRecordCollection =
-			dataRecordCollectionResource.getSiteDataRecordCollection(
-				postDataRecordCollection.getSiteId(),
-				postDataRecordCollection.getDataRecordCollectionKey());
+			dataRecordCollectionResource.
+				getSiteDataRecordCollectionByDataRecordCollectionKey(
+					postDataRecordCollection.getSiteId(),
+					postDataRecordCollection.getDataRecordCollectionKey());
 
 		assertEquals(postDataRecordCollection, getDataRecordCollection);
 		assertValid(getDataRecordCollection);
 	}
 
 	protected DataRecordCollection
-			testGetSiteDataRecordCollection_addDataRecordCollection()
+			testGetSiteDataRecordCollectionByDataRecordCollectionKey_addDataRecordCollection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -851,7 +798,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteDataRecordCollection() throws Exception {
+	public void testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey()
+		throws Exception {
+
 		DataRecordCollection dataRecordCollection =
 			testGraphQLDataRecordCollection_addDataRecordCollection();
 
@@ -860,7 +809,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"siteDataRecordCollection",
+				"dataRecordCollectionByDataRecordCollectionKey",
 				new HashMap<String, Object>() {
 					{
 						put("siteId", dataRecordCollection.getSiteId());
@@ -879,7 +828,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Assert.assertTrue(
 			equalsJSONObject(
 				dataRecordCollection,
-				dataJSONObject.getJSONObject("siteDataRecordCollection")));
+				dataJSONObject.getJSONObject(
+					"dataRecordCollectionByDataRecordCollectionKey")));
 	}
 
 	protected DataRecordCollection

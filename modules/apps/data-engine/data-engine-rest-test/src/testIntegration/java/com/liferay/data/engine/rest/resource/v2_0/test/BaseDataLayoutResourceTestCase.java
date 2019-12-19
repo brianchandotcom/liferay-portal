@@ -582,54 +582,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataLayoutDataLayoutPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataLayout dataLayout =
-			testPostDataLayoutDataLayoutPermission_addDataLayout();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
-				dataLayout.getId(), null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
-				0L, null, null));
-	}
-
-	protected DataLayout testPostDataLayoutDataLayoutPermission_addDataLayout()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostSiteDataLayoutPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataLayout dataLayout =
-			testPostSiteDataLayoutPermission_addDataLayout();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
-				null, null, null));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
-				null, null, null));
-	}
-
-	protected DataLayout testPostSiteDataLayoutPermission_addDataLayout()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetSiteDataLayoutsPage() throws Exception {
 		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutsPage(
 			testGetSiteDataLayoutsPage_getSiteId(),
@@ -886,17 +838,19 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataLayout() throws Exception {
-		DataLayout postDataLayout = testGetSiteDataLayout_addDataLayout();
+	public void testGetSiteDataLayoutByDataLayoutKey() throws Exception {
+		DataLayout postDataLayout =
+			testGetSiteDataLayoutByDataLayoutKey_addDataLayout();
 
-		DataLayout getDataLayout = dataLayoutResource.getSiteDataLayout(
-			postDataLayout.getSiteId(), postDataLayout.getDataLayoutKey());
+		DataLayout getDataLayout =
+			dataLayoutResource.getSiteDataLayoutByDataLayoutKey(
+				postDataLayout.getSiteId(), postDataLayout.getDataLayoutKey());
 
 		assertEquals(postDataLayout, getDataLayout);
 		assertValid(getDataLayout);
 	}
 
-	protected DataLayout testGetSiteDataLayout_addDataLayout()
+	protected DataLayout testGetSiteDataLayoutByDataLayoutKey_addDataLayout()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -904,7 +858,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteDataLayout() throws Exception {
+	public void testGraphQLGetSiteDataLayoutByDataLayoutKey() throws Exception {
 		DataLayout dataLayout = testGraphQLDataLayout_addDataLayout();
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
@@ -912,7 +866,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"siteDataLayout",
+				"dataLayoutByDataLayoutKey",
 				new HashMap<String, Object>() {
 					{
 						put("siteId", dataLayout.getSiteId());
@@ -928,7 +882,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Assert.assertTrue(
 			equalsJSONObject(
-				dataLayout, dataJSONObject.getJSONObject("siteDataLayout")));
+				dataLayout,
+				dataJSONObject.getJSONObject("dataLayoutByDataLayoutKey")));
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()

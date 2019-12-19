@@ -52,26 +52,26 @@ public class DataDefinition {
 
 	protected String[] availableLanguageIds;
 
-	public Long getClassNameId() {
-		return classNameId;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setClassNameId(Long classNameId) {
-		this.classNameId = classNameId;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
-	public void setClassNameId(
-		UnsafeSupplier<Long, Exception> classNameIdUnsafeSupplier) {
+	public void setContentType(
+		UnsafeSupplier<String, Exception> contentTypeUnsafeSupplier) {
 
 		try {
-			classNameId = classNameIdUnsafeSupplier.get();
+			contentType = contentTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long classNameId;
+	protected String contentType;
 
 	public DataDefinitionField[] getDataDefinitionFields() {
 		return dataDefinitionFields;
@@ -117,30 +117,6 @@ public class DataDefinition {
 	}
 
 	protected String dataDefinitionKey;
-
-	public DataDefinitionRule[] getDataDefinitionRules() {
-		return dataDefinitionRules;
-	}
-
-	public void setDataDefinitionRules(
-		DataDefinitionRule[] dataDefinitionRules) {
-
-		this.dataDefinitionRules = dataDefinitionRules;
-	}
-
-	public void setDataDefinitionRules(
-		UnsafeSupplier<DataDefinitionRule[], Exception>
-			dataDefinitionRulesUnsafeSupplier) {
-
-		try {
-			dataDefinitionRules = dataDefinitionRulesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected DataDefinitionRule[] dataDefinitionRules;
 
 	public Date getDateCreated() {
 		return dateCreated;

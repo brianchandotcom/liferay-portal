@@ -132,6 +132,7 @@ public class JournalArticleTag extends IncludeTag {
 		super.cleanUp();
 
 		_article = null;
+		_articleDisplay = null;
 		_articleId = null;
 		_ddmTemplateKey = null;
 		_groupId = 0;

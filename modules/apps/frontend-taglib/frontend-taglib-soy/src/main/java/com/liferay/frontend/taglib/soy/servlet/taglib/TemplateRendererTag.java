@@ -199,6 +199,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		_dependencies = null;
 		_hydrate = null;
 		_module = null;
+		_setServletContext = false;
 		_templateNamespace = null;
 		_useNamespace = true;
 		_wrapper = null;

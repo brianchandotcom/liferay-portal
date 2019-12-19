@@ -124,6 +124,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		_componentId = null;
 		_data = null;
 		_module = null;
+		_setServletContext = false;
 	}
 
 	protected Map<String, Object> getData() {

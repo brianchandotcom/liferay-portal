@@ -44,6 +44,22 @@ import org.junit.runner.RunWith;
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_dataDefinitions = new ArrayList<>();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (DataDefinition dataDefinition : _dataDefinitions) {
+			dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
+		}
+	}
+
 	@Override
 	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {

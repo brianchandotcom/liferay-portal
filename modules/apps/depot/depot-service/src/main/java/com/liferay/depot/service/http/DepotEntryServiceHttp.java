@@ -14,13 +14,21 @@
 
 package com.liferay.depot.service.http;
 
+import com.liferay.depot.service.DepotEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.depot.service.DepotEntryServiceUtil</code> service
+ * <code>DepotEntryServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,224 @@ package com.liferay.depot.service.http;
  * @generated
  */
 public class DepotEntryServiceHttp {
+
+	public static com.liferay.depot.model.DepotEntry addDepotEntry(
+			HttpPrincipal httpPrincipal,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class, "addDepotEntry",
+				_addDepotEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, nameMap, descriptionMap, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.depot.model.DepotEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.depot.model.DepotEntry deleteDepotEntry(
+			HttpPrincipal httpPrincipal, long depotEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class, "deleteDepotEntry",
+				_deleteDepotEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, depotEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.depot.model.DepotEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.depot.model.DepotEntry getDepotEntry(
+			HttpPrincipal httpPrincipal, long depotEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class, "getDepotEntry",
+				_getDepotEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, depotEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.depot.model.DepotEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.depot.model.DepotEntry getGroupDepotEntry(
+			HttpPrincipal httpPrincipal, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class, "getGroupDepotEntry",
+				_getGroupDepotEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.depot.model.DepotEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.depot.model.DepotEntry updateDepotEntry(
+			HttpPrincipal httpPrincipal, long depotEntryId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class, "updateDepotEntry",
+				_updateDepotEntryParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, depotEntryId, nameMap, descriptionMap,
+				typeSettingsProperties, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.depot.model.DepotEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DepotEntryServiceHttp.class);
+
+	private static final Class<?>[] _addDepotEntryParameterTypes0 =
+		new Class[] {
+			java.util.Map.class, java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteDepotEntryParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getDepotEntryParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getGroupDepotEntryParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateDepotEntryParameterTypes4 =
+		new Class[] {
+			long.class, java.util.Map.class, java.util.Map.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+
 }

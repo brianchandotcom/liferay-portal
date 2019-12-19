@@ -39,12 +39,61 @@ public class DepotEntryServiceUtil {
 	 */
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link DepotEntryServiceUtil} to access the depot entry remote service. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
+	public static com.liferay.depot.model.DepotEntry addDepotEntry(
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addDepotEntry(
+			nameMap, descriptionMap, serviceContext);
+	}
+
+	public static com.liferay.depot.model.DepotEntry deleteDepotEntry(
+			long depotEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteDepotEntry(depotEntryId);
+	}
+
+	public static com.liferay.depot.model.DepotEntry getDepotEntry(
+			long depotEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDepotEntry(depotEntryId);
+	}
+
+	public static com.liferay.depot.model.DepotEntry getGroupDepotEntry(
+			long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getGroupDepotEntry(groupId);
+	}
+
+	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.depot.model.DepotEntry updateDepotEntry(
+			long depotEntryId, java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDepotEntry(
+			depotEntryId, nameMap, descriptionMap, typeSettingsProperties,
+			serviceContext);
 	}
 
 	public static DepotEntryService getService() {

@@ -31,6 +31,44 @@ public class DepotEntryServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link DepotEntryServiceUtil} to access the depot entry remote service. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
+	@Override
+	public com.liferay.depot.model.DepotEntry addDepotEntry(
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryService.addDepotEntry(
+			nameMap, descriptionMap, serviceContext);
+	}
+
+	@Override
+	public com.liferay.depot.model.DepotEntry deleteDepotEntry(
+			long depotEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryService.deleteDepotEntry(depotEntryId);
+	}
+
+	@Override
+	public com.liferay.depot.model.DepotEntry getDepotEntry(long depotEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryService.getDepotEntry(depotEntryId);
+	}
+
+	@Override
+	public com.liferay.depot.model.DepotEntry getGroupDepotEntry(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryService.getGroupDepotEntry(groupId);
+	}
+
+	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
@@ -38,6 +76,20 @@ public class DepotEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _depotEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.depot.model.DepotEntry updateDepotEntry(
+			long depotEntryId, java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryService.updateDepotEntry(
+			depotEntryId, nameMap, descriptionMap, typeSettingsProperties,
+			serviceContext);
 	}
 
 	@Override

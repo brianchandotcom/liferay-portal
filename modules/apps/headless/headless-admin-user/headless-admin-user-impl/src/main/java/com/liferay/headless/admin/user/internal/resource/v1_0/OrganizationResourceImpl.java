@@ -268,8 +268,8 @@ public class OrganizationResourceImpl
 			return _countryService.getCountryByName(addressCountry);
 		}
 		catch (Exception e) {
-			if (_log.isInfoEnabled()) {
-				_log.info(e, e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
 			}
 		}
 

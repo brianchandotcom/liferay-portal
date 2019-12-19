@@ -14,9 +14,9 @@
 
 package com.liferay.info.display.contributor;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.HashUtil;
 
 import java.util.Objects;
 

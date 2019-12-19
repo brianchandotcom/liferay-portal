@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.odata.entity.v1_0;
+package com.liferay.data.engine.rest.internal.odata.entity.v2_0;
 
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;

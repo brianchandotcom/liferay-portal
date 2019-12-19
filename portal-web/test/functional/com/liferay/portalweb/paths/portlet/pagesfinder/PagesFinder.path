@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CHILD_PAGE_NAME</td>
+	<td>//li[contains(@class,'tree-node') and div[contains(.,'${key_parentPageName}')]]/ul[contains(@class,'tree-container')]//a[contains(@class,'layout-tree')][contains(.,'${key_childPageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INPUT_FIELD</td>
 	<td>//div[contains(@id,'layout-finder')]//input</td>
 	<td></td>
@@ -19,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_ELLIPSIS_ICON</td>
+	<td>//span[contains(@class,'tree-label') and contains(.,'${key_pageName}')]//a[contains(@class,'dropdown')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_NAME</td>
 	<td>//a[contains(@class,'layout-tree')][contains(.,'${pageName}')]</td>
 	<td></td>
@@ -26,6 +36,11 @@
 <tr>
 	<td>PAGE_TYPE_SELECTOR</td>
 	<td>//div[contains(@class,'page-type-selector')]//select[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TYPE_SELECTOR_ELLIPSIS_ICON</td>
+	<td>//div[contains(@class,'page-type-selector')]//button[contains(@class,'dropdown')]</td>
 	<td></td>
 </tr>
 <tr>

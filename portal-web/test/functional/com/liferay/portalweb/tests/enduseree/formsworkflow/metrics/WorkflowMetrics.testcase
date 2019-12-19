@@ -386,67 +386,67 @@ definition {
 		var key_testSLADefinitionStart = "Process Begins";
 		var key_SLABreachedValue = "1(100%)";
 
-		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+		// WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+		// Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
-		WorkflowMetrics.fillSLAFormHours(
-			slaDefinitionHours = "${key_testSLADefinitionHours}",
-			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
-			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
-			slaDefinitionName = "${key_testSLADefinitionName}",
-			slaDefinitionStart = "${key_testSLADefinitionStart}");
+		// WorkflowMetrics.fillSLAFormHours(
+		// 	slaDefinitionHours = "${key_testSLADefinitionHours}",
+		// 	slaDefinitionDescription = "${key_testSLADefinitionDescription}",
+		// 	slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+		// 	slaDefinitionName = "${key_testSLADefinitionName}",
+		// 	slaDefinitionStart = "${key_testSLADefinitionStart}");
 
-		Button.clickSave();
+		// Button.clickSave();
 
-		Alert.viewSuccessMessage();
+		// Alert.viewSuccessMessage();
 
-		WorkflowMetrics.goToCreatedSLAForm(workflowSLAName = "${key_testSLADefinitionName}");
+		// WorkflowMetrics.goToCreatedSLAForm(workflowSLAName = "${key_testSLADefinitionName}");
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
-			value1 = "${key_testSLADefinitionName}");
+		// AssertTextEquals(
+		// 	locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
+		// 	value1 = "${key_testSLADefinitionName}");
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
-			value1 = "${key_testSLADefinitionDescription}");
+		// AssertTextEquals(
+		// 	locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
+		// 	value1 = "${key_testSLADefinitionDescription}");
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
-			value1 = "${key_testSLADefinitionStart}");
+		// AssertTextEquals(
+		// 	locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
+		// 	value1 = "${key_testSLADefinitionStart}");
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
-			value1 = "${key_testSLADefinitionEnd}");
+		// AssertTextEquals(
+		// 	locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
+		// 	value1 = "${key_testSLADefinitionEnd}");
 
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
-			value1 = "${key_testSLADefinitionHoursCheck}");
+		// AssertTextEquals(
+		// 	locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
+		// 	value1 = "${key_testSLADefinitionHoursCheck}");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
+		// ProductMenu.gotoPortlet(
+		// 	category = "Configuration",
+		// 	panel = "Site Administration",
+		// 	portlet = "Workflow");
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
+		// Workflow.configureWorkflow(
+		// 	workflowDefinition = "Single Approver",
+		// 	workflowResourceValue = "Blogs Entry");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry1 Content",
-			entryTitle = "Blogs Entry Title");
+		// JSONBlog.addEntry(
+		// 	entryContent = "Blogs Entry1 Content",
+		// 	entryTitle = "Blogs Entry Title");
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+		// UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+		// Workflow.assignToMeTaskByActions(
+		// 	workflowAssetTitle = "Blogs Entry Title",
+		// 	workflowAssetType = "Blogs Entry",
+		// 	workflowTask = "Review");
 
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+		// Workflow.approveTaskByActions(
+		// 	workflowAssetTitle = "Blogs Entry Title",
+		// 	workflowAssetType = "Blogs Entry",
+		// 	workflowTask = "Review");
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
@@ -459,7 +459,13 @@ definition {
 
 		WorkflowMetrics.assertDefaultChartRangesAndUnits();
 
-		WorkflowMetrics.assertChartTotalValuePerformanceByStep();
+		// WorkflowMetrics.assertChartTotalValuePerformanceByStep();
+
+		WorkflowMetrics.selectDateRangePerformanceByStep(
+			completionVelocityDateRange = "Custom Range",
+			endDateRange = "11/11/2018",
+			startDateRange = "09/22/2018");
+		
 
 	}
 

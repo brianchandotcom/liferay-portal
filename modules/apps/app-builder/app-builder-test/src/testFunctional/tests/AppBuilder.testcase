@@ -953,7 +953,7 @@ definition {
 	@description = "Delete an existing Form View with no active publishing through the kebab/action menu"
 	@priority = "5"
 	test DeleteFormViewThroughActionMenu {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

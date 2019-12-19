@@ -23,8 +23,10 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
+import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.item.selector.JournalArticleItemSelectorView;
 import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
@@ -82,12 +84,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 		String itemSelectedEventName,
 		JournalArticleItemSelectorView journalArticleItemSelectorView,
-		PortletURL portletURL, boolean search) {
+		JournalWebConfiguration journalWebConfiguration, PortletURL portletURL,
+		boolean search) {
 
 		_httpServletRequest = httpServletRequest;
 		_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		_journalArticleItemSelectorView = journalArticleItemSelectorView;
+		_journalWebConfiguration = journalWebConfiguration;
 		_portletURL = portletURL;
 		_search = search;
 
@@ -277,7 +281,12 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			Sort sort = null;
 
-			if (Objects.equals(_getOrderByCol(), "modified-date")) {
+			if (Objects.equals(_getOrderByCol(), "id")) {
+				sort = new Sort(
+					Field.getSortableFieldName(Field.ARTICLE_ID),
+					Sort.STRING_TYPE, !orderByAsc);
+			}
+			else if (Objects.equals(_getOrderByCol(), "modified-date")) {
 				sort = new Sort(
 					Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 			}
@@ -342,7 +351,11 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				orderByAsc = true;
 			}
 
-			if (Objects.equals(_getOrderByCol(), "modified-date")) {
+			if (Objects.equals(_getOrderByCol(), "id")) {
+				folderOrderByComparator = new FolderArticleArticleIdComparator(
+					orderByAsc);
+			}
+			else if (Objects.equals(_getOrderByCol(), "modified-date")) {
 				folderOrderByComparator =
 					new FolderArticleModifiedDateComparator(orderByAsc);
 			}
@@ -367,6 +380,10 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 	public boolean isSearch() {
 		return _search;
+	}
+
+	public boolean showArticleId() {
+		return !_journalWebConfiguration.journalArticleForceAutogenerateId();
 	}
 
 	protected SearchContext buildSearchContext(
@@ -537,6 +554,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private final String _itemSelectedEventName;
 	private final JournalArticleItemSelectorView
 		_journalArticleItemSelectorView;
+	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

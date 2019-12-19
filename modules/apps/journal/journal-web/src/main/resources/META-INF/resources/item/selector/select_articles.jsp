@@ -133,6 +133,13 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							row.setCssClass("item-preview " + row.getCssClass());
 							%>
 
+							<c:if test="<%= journalArticleItemSelectorViewDisplayContext.showArticleId() %>">
+								<liferay-ui:search-container-column-text
+									name="id"
+									value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
+								/>
+							</c:if>
+
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								name="title"

@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Objects;
 
@@ -89,11 +90,17 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
+		String[] orderColumns = {"modified-date", "title"};
+
 		if (_journalArticleItemSelectorViewDisplayContext.isSearch()) {
-			return new String[] {"relevance", "modified-date", "title"};
+			orderColumns = ArrayUtil.append(orderColumns, "relevance");
 		}
 
-		return new String[] {"modified-date", "title"};
+		if (_journalArticleItemSelectorViewDisplayContext.showArticleId()) {
+			orderColumns = ArrayUtil.append(orderColumns, "id");
+		}
+
+		return orderColumns;
 	}
 
 	private final JournalArticleItemSelectorViewDisplayContext

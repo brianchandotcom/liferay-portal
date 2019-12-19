@@ -37,8 +37,7 @@ EmailOTPConfiguration emailOTPConfiguration = (EmailOTPConfiguration)request.get
 </div>
 
 <aui:script use="aui-base,aui-io-request">
-	<liferay-portlet:resourceURL id="/mfa/sendemailotp" portletName="<%= MFAPortletKeys.MFA_VERIFY_PORTLET %>" var="sendOTPURL">
-	</liferay-portlet:resourceURL>
+	<liferay-portlet:resourceURL id="/mfa/sendemailotp" portletName="<%= MFAPortletKeys.MFA_VERIFY_PORTLET %>" var="sendOTPURL" />
 
 	A.one('#<portlet:namespace />sendEmailButton').on('click', function(event) {
 		var sendEmailButton = A.one('#<portlet:namespace />sendEmailButton');

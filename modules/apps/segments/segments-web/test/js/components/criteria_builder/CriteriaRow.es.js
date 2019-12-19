@@ -108,6 +108,7 @@ describe('CriteriaRow', () => {
 				criterion={{
 					operatorName: PROPERTY_TYPES.ID,
 					propertyName: 'test_prop',
+					unknownEntity: true,
 					value: '1234'
 				}}
 				groupId="group_01"
@@ -151,6 +152,7 @@ describe('CriteriaRow', () => {
 				criterion={{
 					operatorName: PROPERTY_TYPES.ID,
 					propertyName: 'test_prop',
+					unknownEntity: true,
 					value: '1234'
 				}}
 				editing={false}
@@ -225,6 +227,55 @@ describe('CriteriaRow', () => {
 		expect(onChangeMock).toHaveBeenCalledWith(
 			expect.objectContaining({
 				displayValue: 'Known Entity'
+			})
+		);
+	});
+
+	it('reports change when it cannot find an entity name', async () => {
+		const OriginalCriteriaRow = CriteriaRow.DecoratedComponent;
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () => Promise.resolve({})
+			})
+		);
+
+		const onChangeMock = jest.fn(() => {});
+
+		render(
+			<OriginalCriteriaRow
+				connectDragPreview={connectDnd}
+				connectDragSource={connectDnd}
+				connectDropTarget={connectDnd}
+				criterion={{
+					operatorName: PROPERTY_TYPES.ID,
+					propertyName: 'test_prop',
+					value: '1234'
+				}}
+				editing={false}
+				groupId="group_01"
+				index={0}
+				onAdd={jest.fn()}
+				onChange={onChangeMock}
+				onDelete={jest.fn()}
+				onMove={jest.fn()}
+				propertyKey="user"
+				supportedProperties={[
+					{
+						label: 'Test Property',
+						name: 'test_prop',
+						type: PROPERTY_TYPES.ID
+					}
+				]}
+			/>
+		);
+
+		await wait(() => expect(onChangeMock).toHaveBeenCalled());
+
+		expect(onChangeMock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				displayValue: '1234',
+				unknownEntity: true
 			})
 		);
 	});

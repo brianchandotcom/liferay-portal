@@ -181,10 +181,6 @@ class CriteriaRow extends Component {
 		supportedPropertyTypes: {}
 	};
 
-	state = {
-		unknownEntityError: false
-	};
-
 	componentDidMount() {
 		const {
 			criterion: {displayValue, propertyName, value},
@@ -226,15 +222,17 @@ class CriteriaRow extends Component {
 					throw new Error(DISPLAY_VALUE_NOT_FOUND_ERROR);
 				}
 
-				onChange({...criterion, displayValue});
+				onChange({...criterion, displayValue, unknownEntity: false});
 			})
 			.catch(error => {
-				onChange({...criterion, displayValue: value});
-
 				if (error && error.message === DISPLAY_VALUE_NOT_FOUND_ERROR) {
-					this.setState({
-						unknownEntityError: true
+					onChange({
+						...criterion,
+						displayValue: value,
+						unknownEntity: true
 					});
+				} else {
+					onChange({...criterion, displayValue: value});
 				}
 			});
 	};
@@ -492,7 +490,7 @@ class CriteriaRow extends Component {
 			supportedProperties
 		} = this.props;
 
-		const {unknownEntityError} = this.state;
+		const {unknownEntity} = criterion;
 
 		const selectedOperator = this._getSelectedItem(
 			supportedOperators,
@@ -508,7 +506,7 @@ class CriteriaRow extends Component {
 		const operatorLabel = selectedOperator ? selectedOperator.label : '';
 		const propertyLabel = selectedProperty ? selectedProperty.label : '';
 
-		const error = errorOnProperty || unknownEntityError;
+		const error = errorOnProperty || unknownEntity;
 		const value = criterion ? criterion.value : '';
 
 		const classes = getCN('criterion-row-root', {
@@ -547,7 +545,7 @@ class CriteriaRow extends Component {
 				{error &&
 					this._renderErrorMessages({
 						errorOnProperty,
-						unknownEntityError
+						unknownEntityError: unknownEntity
 					})}
 			</>
 		);

@@ -184,8 +184,7 @@ public class DataListViewResourceImpl
 
 		dataListView = _toDataListView(
 			_deDataListViewLocalService.updateDEDataListView(
-				dataListViewId,
-				_toAppliedFiltersJSON(dataListView.getAppliedFilters()),
+				dataListViewId, _toJSON(dataListView.getAppliedFilters()),
 				Arrays.toString(dataListView.getFieldNames()),
 				LocalizedValueUtil.toLocaleStringMap(dataListView.getName()),
 				dataListView.getSortField()));
@@ -215,20 +214,6 @@ public class DataListViewResourceImpl
 		return _portal.getClassNameId(DEDataListView.class);
 	}
 
-	private String _toAppliedFiltersJSON(Map<String, Object> appliedFilters) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (MapUtil.isEmpty(appliedFilters)) {
-			return jsonObject.toString();
-		}
-
-		for (Map.Entry<String, Object> entry : appliedFilters.entrySet()) {
-			jsonObject.put(entry.getKey(), entry.getValue());
-		}
-
-		return jsonObject.toString();
-	}
-
 	private DataListView _toDataListView(DEDataListView deDataListView)
 		throws Exception {
 
@@ -249,6 +234,20 @@ public class DataListViewResourceImpl
 				userId = deDataListView.getUserId();
 			}
 		};
+	}
+
+	private String _toJSON(Map<String, Object> appliedFilters) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (MapUtil.isEmpty(appliedFilters)) {
+			return jsonObject.toString();
+		}
+
+		for (Map.Entry<String, Object> entry : appliedFilters.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
+		}
+
+		return jsonObject.toString();
 	}
 
 	private Map<String, Object> _toMap(String json) throws Exception {

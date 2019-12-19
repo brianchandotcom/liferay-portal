@@ -24,7 +24,6 @@ import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.resource.LiferayOutputResourceProperties;
 import com.liferay.talend.source.LiferayOASSource;
 
 import java.util.Collections;
@@ -42,9 +41,6 @@ import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
 import org.talend.components.common.SchemaProperties;
-import org.talend.daikon.i18n.GlobalI18N;
-import org.talend.daikon.i18n.I18nMessageProvider;
-import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
@@ -109,7 +105,7 @@ public class LiferayBatchFileProperties
 			if (entitySchemaNames.isEmpty()) {
 				return new ValidationResult(
 					ValidationResult.Result.ERROR,
-					_i18nMessages.getMessage("error.validation.resources"));
+					"Unable to find any exposed resources");
 			}
 
 			entity.setPossibleNamedThingValues(
@@ -241,16 +237,6 @@ public class LiferayBatchFileProperties
 
 	private static Logger _logger = LoggerFactory.getLogger(
 		LiferayBatchFileProperties.class);
-
-	private static final I18nMessages _i18nMessages;
-
-	static {
-		I18nMessageProvider i18nMessageProvider =
-			GlobalI18N.getI18nMessageProvider();
-
-		_i18nMessages = i18nMessageProvider.getI18nMessages(
-			LiferayOutputResourceProperties.class);
-	}
 
 	private transient JsonObject _oasJsonObject;
 

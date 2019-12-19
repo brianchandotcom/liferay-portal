@@ -297,7 +297,7 @@ definition {
 
 		WorkflowMetrics.selectVelocityUnit(velocityUnit = "INST_WEEK");
 
-		WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Week");
+		WorkflowMetrics.assertChartIsPresent(chartVelocityUnit = "Inst / Week");
 
 		WorkflowMetrics.assertChartTotalValue(
 			velocityUnitTotal = "inst / week",
@@ -310,24 +310,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
 
-		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		for (var count : list "1,2,3,4") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry ${count} Content",
-				entryTitle = "Blogs Entry Title");
-		}
-
-		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
+		WorkflowMetrics.createUsersAndAssignInstances();
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -382,76 +365,34 @@ definition {
 
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
-	test ViewWorkloadByAssignee {
-		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssignee";
+	test ViewWorkloadByAssigneeCard {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 
-		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		for (var count : list "1,2,3,4") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry ${count} Content",
-				entryTitle = "Blogs Entry Title ${count}");
-		}
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 1",
-			assetType = "Blogs Entry",
-			assigneeName = "1user user1",
-			workflowTask = "Review");
-
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 2",
-			assetType = "Blogs Entry",
-			assigneeName = "2user user2",
-			workflowTask = "Review");
-
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 3",
-			assetType = "Blogs Entry",
-			assigneeName = "3user user3",
-			workflowTask = "Review");
-
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 4",
-			assetType = "Blogs Entry",
-			assigneeName = "1user user1",
-			workflowTask = "Review");
+		WorkflowMetrics.createUsersAndAssignInstances();
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "Review");
 
-		WorkflowMetrics.viewWorkloadByAssignee(
+		WorkflowMetrics.viewWorkloadByAssigneeCard(
 			assigneeName = "1user user1",
 			tabName = "Total",
 			taskCount = "2");
 
-		WorkflowMetrics.viewWorkloadByAssignee(
+		WorkflowMetrics.viewWorkloadByAssigneeCard(
 			assigneeName = "2user user2",
 			tabName = "Total",
 			taskCount = "1");
 
-		WorkflowMetrics.viewWorkloadByAssignee(
+		WorkflowMetrics.viewWorkloadByAssigneeCard(
 			assigneeName = "3user user3",
 			tabName = "Total",
 			taskCount = "1");
 
-		WorkflowMetrics.viewUserWorkloadByStep(
+		WorkflowMetrics.viewUserWorkloadByStepOnAllItems(
 			assigneeName = "1user user1",
+			callingFrom = "CARD",
 			isNotPresent = "2user user2,3user user3",
 			isPresent = "Blogs Entry Title 1,Blogs Entry Title 4",
 			taskName = "Review");
@@ -473,6 +414,60 @@ definition {
 		WorkflowMetrics.assertWorkloadByAssigneeCardEmptyMessage(
 			emptyMessage = "There are no items assigned to users at the moment.",
 			tabName = "Total");
+	}
+
+	@description = "LRQA-53630 Automate LPS-98518: [Dashboard] View workload distribution for all assignees"
+	@priority = "5"
+	test ViewWorkloadByAssigneePage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
+
+		WorkflowMetrics.createUsersAndAssignInstances();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "All Steps");
+
+		Click(
+			key_assigneesNumber = "3",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.viewWorkloadByAssigneePage(
+			assigneeName = "1user user1",
+			taskCount = "2");
+
+		WorkflowMetrics.viewWorkloadByAssigneePage(
+			assigneeName = "2user user2",
+			taskCount = "1");
+
+		WorkflowMetrics.viewWorkloadByAssigneePage(
+			assigneeName = "3user user3",
+			taskCount = "1");
+
+		WorkflowMetrics.viewUserWorkloadByStepOnAllItems(
+			assigneeName = "1user user1",
+			callingFrom = "PAGE",
+			isNotPresent = "2user user2,3user user3",
+			isPresent = "Blogs Entry Title 1,Blogs Entry Title 4",
+			taskName = "Review");
+
+		Navigator.gotoBack();
+
+		WorkflowMetrics.viewUserWorkloadByStepOnAllItems(
+			assigneeName = "2user user2",
+			callingFrom = "PAGE",
+			isNotPresent = "1user user1,3user user3",
+			isPresent = "Blogs Entry Title 2",
+			taskName = "Review");
+
+		Navigator.gotoBack();
+
+		WorkflowMetrics.viewUserWorkloadByStepOnAllItems(
+			assigneeName = "3user user3",
+			callingFrom = "PAGE",
+			isNotPresent = "1user user1,2user user2",
+			isPresent = "Blogs Entry Title 3",
+			taskName = "Review");
 	}
 
 }

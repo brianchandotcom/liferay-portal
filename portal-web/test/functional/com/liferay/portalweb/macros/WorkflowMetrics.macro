@@ -11,7 +11,7 @@ definition {
 		}
 	}
 
-	macro AssertChartIsPresent {
+	macro assertChartIsPresent {
 		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART");
 
 		AssertTextPresent(
@@ -55,12 +55,59 @@ definition {
 		var key_emptyMessage = "${emptyMessage}";
 
 		Click(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TAB",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB",
 			value1 = "${tabName}");
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE",
 			value1 = "${emptyMessage}");
+	}
+
+	macro createUsersAndAssignInstances {
+		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		for (var count : list "1,2,3,4") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${count} Content",
+				entryTitle = "Blogs Entry Title ${count}");
+		}
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 1",
+			assetType = "Blogs Entry",
+			assigneeName = "1user user1",
+			workflowTask = "Review");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 2",
+			assetType = "Blogs Entry",
+			assigneeName = "2user user2",
+			workflowTask = "Review");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 3",
+			assetType = "Blogs Entry",
+			assigneeName = "3user user3",
+			workflowTask = "Review");
+
+		Workflow.assignTaskToUser(
+			assetTitle = "Blogs Entry Title 4",
+			assetType = "Blogs Entry",
+			assigneeName = "1user user1",
+			workflowTask = "Review");
 	}
 
 	macro executeWorkflowScript {
@@ -224,7 +271,7 @@ definition {
 					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
 					value1 = "inst / hour");
 
-				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Hour");
+				WorkflowMetrics.assertChartIsPresent(chartVelocityUnit = "Inst / Hour");
 			}
 
 			if ("${isUnitPresent}" == "INST_DAY") {
@@ -234,7 +281,7 @@ definition {
 					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
 					value1 = "inst / day");
 
-				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Day");
+				WorkflowMetrics.assertChartIsPresent(chartVelocityUnit = "Inst / Day");
 			}
 
 			if ("${isUnitPresent}" == "INST_WEEK") {
@@ -244,7 +291,7 @@ definition {
 					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
 					value1 = "inst / week");
 
-				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Week");
+				WorkflowMetrics.assertChartIsPresent(chartVelocityUnit = "Inst / Week");
 			}
 
 			if ("${isUnitPresent}" == "INST_MONTH") {
@@ -254,7 +301,7 @@ definition {
 					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
 					value1 = "inst / month");
 
-				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Month");
+				WorkflowMetrics.assertChartIsPresent(chartVelocityUnit = "Inst / Month");
 			}
 
 			if ("${isUnitPresent}" == "INST_YEAR") {
@@ -264,7 +311,7 @@ definition {
 					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
 					value1 = "inst / year");
 
-				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Year");
+				WorkflowMetrics.assertChartIsPresent(chartVelocityUnit = "Inst / Year");
 			}
 		}
 
@@ -303,38 +350,42 @@ definition {
 			value1 = "${avgCompletionTime}");
 	}
 
-	macro viewUserWorkloadByStep {
+	macro viewUserWorkloadByStepOnAllItems {
 		var key_assigneeName = "${assigneeName}";
 		var key_taskName = "${taskName}";
 
-		Click(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME",
-			value1 = "${assigneeName}");
+		if ("${callingFrom}" == "CARD") {
+			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME");
+		}
+
+		if ("${callingFrom}" == "PAGE") {
+			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME");
+		}
 
 		for (var isInstancePresent : list "${isPresent}") {
 			var key_instanceInfo = "${isInstancePresent}";
 
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME");
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
 
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_INSTANCE");
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
 
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_TASK");
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_TASK");
 		}
 
 		for (var isAssigneeNotPresent : list "${isNotPresent}") {
 			var key_assigneeName = "${isAssigneeNotPresent}";
 
-			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME");
+			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
 		}
 	}
 
-	macro viewWorkloadByAssignee {
+	macro viewWorkloadByAssigneeCard {
 		var key_tabName = "${tabName}";
 		var key_taskCount = "${taskCount}";
 		var key_assigneeName = "${assigneeName}";
 
 		Click(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TAB",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB",
 			value1 = "${tabName}");
 
 		AssertTextEquals(
@@ -342,8 +393,17 @@ definition {
 			value1 = "${assigneeName}");
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT",
 			value1 = "${taskCount}");
+	}
+
+	macro viewWorkloadByAssigneePage {
+		var key_taskCount = "${taskCount}";
+		var key_assigneeName = "${assigneeName}";
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_TASKCOUNT");
 	}
 
 }

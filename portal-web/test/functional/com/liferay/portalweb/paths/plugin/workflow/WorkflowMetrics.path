@@ -44,6 +44,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_ALL_ITEMS_TABLE_INSTANCE</td>
+	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_ALL_ITEMS_TABLE_NAME</td>
+	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]/following-sibling::td[contains(@data-testid,'taskNamesCell') and contains(text(),'${key_taskName}')]/following-sibling::td[contains(@data-testid,'assigneesCell') and contains(text(),'${key_assigneeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_ALL_ITEMS_TABLE_TASK</td>
+	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]/following-sibling::td[contains(@data-testid,'taskNamesCell') and contains(text(),'${key_taskName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[1]</td>
 	<td></td>
@@ -195,28 +210,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TAB</td>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB</td>
 	<td>//div[contains(@class,'workload-by-assignee-card')]//*[contains(@role,'tablist')]//span[contains(text(),'${key_tabName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_NAME</td>
-	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]/following-sibling::td[contains(@data-testid,'taskNamesCell') and contains(text(),'${key_taskName}')]/following-sibling::td[contains(@data-testid,'assigneesCell') and contains(text(),'${key_assigneeName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_INSTANCE</td>
-	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TABLE_TASK</td>
-	<td>//td[contains(@data-testid,'assetInfoCell') and contains(text(),'${key_instanceInfo}')]/following-sibling::td[contains(@data-testid,'taskNamesCell') and contains(text(),'${key_taskName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT</td>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TASKCOUNT</td>
 	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'text-right')]//span[contains(text(),'${key_taskCount}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME</td>
+	<td>//td[contains(@class,'table-title')]//span[contains(text(),'${key_assigneeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_TASKCOUNT</td>
+	<td>//td[contains(@class,'table-title')]//span[contains(text(),'${key_assigneeName}')]/../../following-sibling::td[contains(@data-testid,'taskCount')]//a[contains(text(),'${key_taskCount}')]</td>
 	<td></td>
 </tr>
 </tbody>

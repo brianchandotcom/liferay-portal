@@ -95,7 +95,7 @@ public class DataRecordCollectionResourceTest
 	@Ignore
 	@Override
 	@Test
-	public void testGraphQLGetSiteDataRecordCollection() {
+	public void testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey() {
 	}
 
 	@Ignore
@@ -114,22 +114,6 @@ public class DataRecordCollectionResourceTest
 			dataRecordCollectionResource.
 				postDataDefinitionDataRecordCollectionHttpResponse(
 					0L, randomDataRecordCollection()));
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostDataRecordCollectionDataRecordCollectionPermission()
-		throws Exception {
-
-		super.testPostDataRecordCollectionDataRecordCollectionPermission();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testPostSiteDataRecordCollectionPermission() throws Exception {
-		super.testPostSiteDataRecordCollectionPermission();
 	}
 
 	@Override
@@ -197,7 +181,7 @@ public class DataRecordCollectionResourceTest
 
 	@Override
 	protected DataRecordCollection
-			testGetSiteDataRecordCollection_addDataRecordCollection()
+			testGetSiteDataRecordCollectionByDataRecordCollectionKey_addDataRecordCollection()
 		throws Exception {
 
 		return dataRecordCollectionResource.

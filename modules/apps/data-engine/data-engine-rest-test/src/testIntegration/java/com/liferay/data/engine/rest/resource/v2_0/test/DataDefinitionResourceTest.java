@@ -17,24 +17,22 @@ package com.liferay.data.engine.rest.resource.v2_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,13 +71,17 @@ public class DataDefinitionResourceTest
 
 	@Override
 	@Test
-	public void testGetSiteDataDefinitionsPage() throws Exception {
-		super.testGetSiteDataDefinitionsPage();
+	public void testGetSiteDataDefinitionByContentTypeContentTypePage()
+		throws Exception {
+
+		super.testGetSiteDataDefinitionByContentTypeContentTypePage();
 
 		Page<DataDefinition> page =
-			dataDefinitionResource.getSiteDataDefinitionsPage(
-				testGetSiteDataDefinitionsPage_getSiteId(), null, "definition",
-				Pagination.of(1, 2), null);
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeContentTypePage(
+					testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId(),
+					testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType(),
+					"definition", Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -97,22 +99,17 @@ public class DataDefinitionResourceTest
 		_testGetSiteDataDefinitionsPage(
 			"description", "nam", "definition name");
 
-		dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), randomDataDefinition());
+		dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(),
+			testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType(),
+			randomDataDefinition());
 
-		DataDefinition expectedDataDefinition = randomDataDefinition();
-
-		long classNameId = _portal.getClassNameId(
-			DDMFormInstance.class.getName());
-
-		expectedDataDefinition.setClassNameId(classNameId);
-
-		dataDefinitionResource.postSiteDataDefinition(
-			testGroup.getGroupId(), expectedDataDefinition);
-
-		page = dataDefinitionResource.getSiteDataDefinitionsPage(
-			testGetSiteDataDefinitionsPage_getSiteId(), classNameId, null,
-			Pagination.of(1, 2), null);
+		page =
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeContentTypePage(
+					testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId(),
+					testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType(),
+					null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 	}
@@ -132,52 +129,7 @@ public class DataDefinitionResourceTest
 	@Ignore
 	@Override
 	@Test
-	public void testGraphQLGetSiteDataDefinition() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteDataDefinitionsPage() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLPostSiteDataDefinition() {
-	}
-
-	@Override
-	public void testPostDataDefinitionDataDefinitionPermission()
-		throws Exception {
-
-		DataDefinition dataDefinition =
-			testGetSiteDataDefinition_addDataDefinition();
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		dataDefinitionResource.postDataDefinitionDataDefinitionPermission(
-			dataDefinition.getId(), _OPERATION_SAVE_PERMISSION,
-			new DataDefinitionPermission() {
-				{
-					roleNames = new String[] {role.getName()};
-					view = true;
-				}
-			});
-	}
-
-	@Override
-	public void testPostSiteDataDefinitionPermission() throws Exception {
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		dataDefinitionResource.postSiteDataDefinitionPermission(
-			testGroup.getGroupId(), _OPERATION_SAVE_PERMISSION,
-			new DataDefinitionPermission() {
-				{
-					addDataDefinition = true;
-					roleNames = new String[] {role.getName()};
-				}
-			});
+	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey() {
 	}
 
 	@Override
@@ -217,6 +169,112 @@ public class DataDefinitionResourceTest
 	protected DataDefinition randomDataDefinition() throws Exception {
 		return _createDataDefinition(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	}
+
+	@Override
+	protected DataDefinition testDeleteDataDefinition_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _DEFAULT_CONTENT_TYPE,
+			randomDataDefinition());
+	}
+
+	@Override
+	protected DataDefinition testGetDataDefinition_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _DEFAULT_CONTENT_TYPE,
+			randomDataDefinition());
+	}
+
+	@Override
+	protected DataDefinition
+			testGetDataDefinitionByContentTypeContentTypePage_addDataDefinition(
+				String contentType, DataDefinition dataDefinition)
+		throws Exception {
+
+		DataDefinition postDataDefinition =
+			dataDefinitionResource.postDataDefinitionByContentType(
+				contentType, dataDefinition);
+
+		_dataDefinitions.add(postDataDefinition);
+
+		return postDataDefinition;
+	}
+
+	@Override
+	protected String
+			testGetDataDefinitionByContentTypeContentTypePage_getContentType()
+		throws Exception {
+
+		return _DEFAULT_CONTENT_TYPE;
+	}
+
+	@Override
+	protected DataDefinition
+			testGetSiteDataDefinitionByContentTypeByDataDefinitionKey_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _DEFAULT_CONTENT_TYPE,
+			randomDataDefinition());
+	}
+
+	@Override
+	protected DataDefinition
+			testGetSiteDataDefinitionByContentTypeContentTypePage_addDataDefinition(
+				Long siteId, String contentType, DataDefinition dataDefinition)
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			siteId, contentType, dataDefinition);
+	}
+
+	@Override
+	protected String
+			testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType()
+		throws Exception {
+
+		return _DEFAULT_CONTENT_TYPE;
+	}
+
+	@Override
+	protected Long
+			testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	@Override
+	protected DataDefinition
+			testPostDataDefinitionByContentType_addDataDefinition(
+				DataDefinition dataDefinition)
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _DEFAULT_CONTENT_TYPE, dataDefinition);
+	}
+
+	@Override
+	protected DataDefinition
+			testPostSiteDataDefinitionByContentType_addDataDefinition(
+				DataDefinition dataDefinition)
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _DEFAULT_CONTENT_TYPE, dataDefinition);
+	}
+
+	@Override
+	protected DataDefinition testPutDataDefinition_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _DEFAULT_CONTENT_TYPE,
+			randomDataDefinition());
 	}
 
 	private DataDefinition _createDataDefinition(
@@ -266,15 +324,21 @@ public class DataDefinitionResourceTest
 			String description, String keywords, String name)
 		throws Exception {
 
-		Long siteId = testGetSiteDataDefinitionsPage_getSiteId();
+		Long siteId =
+			testGetSiteDataDefinitionByContentTypeContentTypePage_getSiteId();
 
 		DataDefinition dataDefinition =
-			testGetSiteDataDefinitionsPage_addDataDefinition(
-				siteId, _createDataDefinition(description, name));
+			testGetSiteDataDefinitionByContentTypeContentTypePage_addDataDefinition(
+				siteId,
+				testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType(),
+				_createDataDefinition(description, name));
 
 		Page<DataDefinition> page =
-			dataDefinitionResource.getSiteDataDefinitionsPage(
-				siteId, null, keywords, Pagination.of(1, 2), null);
+			dataDefinitionResource.
+				getSiteDataDefinitionByContentTypeContentTypePage(
+					siteId,
+					testGetSiteDataDefinitionByContentTypeContentTypePage_getContentType(),
+					keywords, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 
@@ -286,9 +350,11 @@ public class DataDefinitionResourceTest
 		dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
 	}
 
-	private static final String _OPERATION_SAVE_PERMISSION = "save";
+	private static final String _DEFAULT_CONTENT_TYPE = "default";
 
-	@Inject
+	private List<DataDefinition> _dataDefinitions;
+
+	@Inject(type = Portal.class)
 	private Portal _portal;
 
 }

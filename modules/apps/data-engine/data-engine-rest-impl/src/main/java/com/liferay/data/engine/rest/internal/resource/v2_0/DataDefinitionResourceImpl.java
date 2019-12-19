@@ -111,7 +111,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -304,6 +303,21 @@ public class DataDefinitionResourceImpl
 			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
 				contentType);
 
+		if (Validator.isNull(keywords)) {
+			return Page.of(
+				transform(
+					_ddmStructureLocalService.getStructures(
+						siteId, dataDefinitionContentType.getClassNameId(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition(),
+						_toOrderByComparator(
+							(Sort)ArrayUtil.getValue(sorts, 0))),
+					this::_toDataDefinition),
+				pagination,
+				_ddmStructureLocalService.getStructuresCount(
+					siteId, dataDefinitionContentType.getClassNameId()));
+		}
+
 		return SearchUtil.search(
 			booleanQuery -> {
 			},
@@ -314,20 +328,8 @@ public class DataDefinitionResourceImpl
 				searchContext.setAttribute(
 					Field.CLASS_NAME_ID,
 					dataDefinitionContentType.getClassNameId());
-				searchContext.setAttribute(
-					Field.DESCRIPTION,
-					Optional.ofNullable(
-						keywords
-					).orElse(
-						StringPool.BLANK
-					));
-				searchContext.setAttribute(
-					Field.NAME,
-					Optional.ofNullable(
-						keywords
-					).orElse(
-						StringPool.BLANK
-					));
+				searchContext.setAttribute(Field.DESCRIPTION, keywords);
+				searchContext.setAttribute(Field.NAME, keywords);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},

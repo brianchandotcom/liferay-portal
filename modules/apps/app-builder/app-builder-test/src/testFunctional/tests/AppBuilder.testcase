@@ -1159,6 +1159,15 @@ definition {
 			customObjectName = "my custom object 1",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

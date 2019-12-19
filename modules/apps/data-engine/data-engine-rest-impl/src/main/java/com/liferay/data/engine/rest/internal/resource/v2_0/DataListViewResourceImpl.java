@@ -218,6 +218,10 @@ public class DataListViewResourceImpl
 	private String _toAppliedFiltersJSON(Map<String, Object> appliedFilters) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		if (MapUtil.isEmpty(appliedFilters)) {
+			return jsonObject.toString();
+		}
+
 		for (Map.Entry<String, Object> entry : appliedFilters.entrySet()) {
 			jsonObject.put(entry.getKey(), entry.getValue());
 		}

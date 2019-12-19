@@ -16,7 +16,7 @@ package com.liferay.talend.properties.input;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.resource.LiferayResourceProperties;
-import com.liferay.talend.tliferayoutput.Operation;
+import com.liferay.talend.properties.resource.Operation;
 
 import java.util.Collections;
 import java.util.HashSet;

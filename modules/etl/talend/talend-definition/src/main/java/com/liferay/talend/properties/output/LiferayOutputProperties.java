@@ -16,7 +16,7 @@ package com.liferay.talend.properties.output;
 
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.properties.resource.LiferayResourceProperties;
-import com.liferay.talend.tliferayoutput.Operation;
+import com.liferay.talend.properties.resource.Operation;
 
 import java.util.Collections;
 import java.util.HashSet;

@@ -20,9 +20,9 @@ import com.liferay.talend.common.oas.OASParameter;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.properties.resource.Operation;
 import com.liferay.talend.schema.SchemaListener;
 import com.liferay.talend.source.LiferayOASSource;
-import com.liferay.talend.tliferayoutput.Operation;
 
 import java.net.URI;
 

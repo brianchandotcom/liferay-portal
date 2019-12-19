@@ -16,8 +16,8 @@ package com.liferay.talend.runtime.reader;
 
 import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.properties.input.LiferayInputProperties;
+import com.liferay.talend.properties.resource.Operation;
 import com.liferay.talend.runtime.LiferayFixedResponseContentSource;
-import com.liferay.talend.tliferayoutput.Operation;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;

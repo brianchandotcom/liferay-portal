@@ -40,6 +40,23 @@ public class DepotEntryGroupRelServiceImpl
 	extends DepotEntryGroupRelServiceBaseImpl {
 
 	@Override
+	public DepotEntryGroupRel addDepotEntryGroupRel(
+		long depotEntryId, long toGroupId) {
+
+		return depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntryId, toGroupId);
+	}
+
+	@Override
+	public DepotEntryGroupRel deleteDepotEntryGroupRel(
+			long depotEntryGroupRelId)
+		throws PortalException {
+
+		return depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
+			depotEntryGroupRelId);
+	}
+
+	@Override
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
 			long groupId, int start, int end)
 		throws PortalException {
@@ -60,6 +77,15 @@ public class DepotEntryGroupRelServiceImpl
 
 		return depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 			groupId);
+	}
+
+	@Override
+	public DepotEntryGroupRel updateSearchable(
+			long depotEntryGroupRelId, boolean searchable)
+		throws PortalException {
+
+		return depotEntryGroupRelLocalService.updateSearchable(
+			depotEntryGroupRelId, searchable);
 	}
 
 	@Reference

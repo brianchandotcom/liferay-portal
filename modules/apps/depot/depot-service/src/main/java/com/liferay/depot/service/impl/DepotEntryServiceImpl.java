@@ -14,8 +14,15 @@
 
 package com.liferay.depot.service.impl;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.base.DepotEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,4 +37,45 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
+
+	@Override
+	public DepotEntry addDepotEntry(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return depotEntryLocalService.addDepotEntry(
+			nameMap, descriptionMap, serviceContext);
+	}
+
+	@Override
+	public DepotEntry deleteDepotEntry(long depotEntryId)
+		throws PortalException {
+
+		return depotEntryLocalService.deleteDepotEntry(depotEntryId);
+	}
+
+	@Override
+	public DepotEntry getDepotEntry(long depotEntryId) throws PortalException {
+		return depotEntryLocalService.getDepotEntry(depotEntryId);
+	}
+
+	@Override
+	public DepotEntry getGroupDepotEntry(long groupId) throws PortalException {
+		return depotEntryLocalService.getGroupDepotEntry(groupId);
+	}
+
+	@Override
+	public DepotEntry updateDepotEntry(
+			long depotEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
+			UnicodeProperties typeSettingsProperties,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return depotEntryLocalService.updateDepotEntry(
+			depotEntryId, nameMap, descriptionMap, typeSettingsProperties,
+			serviceContext);
+	}
+
 }

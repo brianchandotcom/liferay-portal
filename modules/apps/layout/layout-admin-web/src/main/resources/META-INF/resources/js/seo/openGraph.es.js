@@ -33,7 +33,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 	);
 
 	const openGraphImageTitle = document.getElementById(
-		`${namespace}openGraphImageURL`
+		`${namespace}openGraphImageTitle`
 	);
 
 	const openGraphImageAltField = document.getElementById(

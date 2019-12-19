@@ -1238,9 +1238,9 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
-    "/sites/{siteId}/data-definitions":
+    "/sites/{siteId}/data-definitions/by-content-type/{contentType}":
         get:
-            operationId: getSiteDataDefinitionsPage
+            operationId: getSiteDataDefinitionByContentTypeContentTypePage
             parameters:
                 - in: path
                   name: siteId
@@ -1248,11 +1248,11 @@ paths:
                   schema:
                       format: int64
                       type: integer
-                - in: query
-                  name: classNameId
+                - in: path
+                  name: contentType
+                  required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: keywords
                   schema:
@@ -1287,7 +1287,7 @@ paths:
                         ""
             tags: ["DataDefinition"]
         post:
-            operationId: postSiteDataDefinition
+            operationId: postSiteDataDefinitionByContentType
             parameters:
                 - in: path
                   name: siteId
@@ -1295,6 +1295,11 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: path
+                  name: contentType
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -1315,9 +1320,9 @@ paths:
                     description:
                         ""
             tags: ["DataDefinition"]
-    "/sites/{siteId}/data-definitions/{dataDefinitionKey}":
+    "/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-data-definition-key/{dataDefinitionKey}":
         get:
-            operationId: getSiteDataDefinition
+            operationId: getSiteDataDefinitionByContentTypeByDataDefinitionKey
             parameters:
                 - in: path
                   name: siteId
@@ -1326,15 +1331,15 @@ paths:
                       format: int64
                       type: integer
                 - in: path
+                  name: contentType
+                  required: true
+                  schema:
+                      type: string
+                - in: path
                   name: dataDefinitionKey
                   required: true
                   schema:
                       type: string
-                - in: query
-                  name: classNameId
-                  schema:
-                      format: int64
-                      type: integer
             responses:
                 200:
                     content:
@@ -1390,9 +1395,9 @@ paths:
                     description:
                         ""
             tags: ["DataLayout"]
-    "/sites/{siteId}/data-layouts/{dataLayoutKey}":
+    "/sites/{siteId}/data-layouts/by-data-layout-key/{dataLayoutKey}":
         get:
-            operationId: getSiteDataLayout
+            operationId: getSiteDataLayoutByDataLayoutKey
             parameters:
                 - in: path
                   name: siteId
@@ -1455,9 +1460,9 @@ paths:
                     description:
                         ""
             tags: ["DataRecordCollection"]
-    "/sites/{siteId}/data-record-collections/{dataRecordCollectionKey}":
+    "/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}":
         get:
-            operationId: getSiteDataRecordCollection
+            operationId: getSiteDataRecordCollectionByDataRecordCollectionKey
             parameters:
                 - in: path
                   name: siteId

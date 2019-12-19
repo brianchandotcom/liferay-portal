@@ -63,10 +63,6 @@ definition {
 					layoutName = "Test Default Page ${i}");
 			}
 		}
-
-		task ("Navigate to the created site") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
-		}
 	}
 
 	tearDown {
@@ -82,6 +78,10 @@ definition {
 
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
 	test NavigateToBothPageTypesViaPageFinder {
+		task ("Navigate to Test site Name") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+		}
+
 		PagesFinder.goToFindAPage();
 
 		PagesFinder.selectPageType(optionValue = "Private Pages");
@@ -96,6 +96,10 @@ definition {
 	@description = "This is a test for LPS-90363. Assert that all page types can be found and counted in the pages finder."
 	@priority = "5"
 	test SearchAllPageTypes {
+		task ("Navigate to Test site Name") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+		}
+
 		task ("Type search term in pages finder") {
 			PagesFinder.goToFindAPage();
 

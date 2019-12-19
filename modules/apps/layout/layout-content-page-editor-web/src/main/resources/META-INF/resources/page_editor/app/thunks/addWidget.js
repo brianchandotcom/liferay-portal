@@ -17,7 +17,7 @@ import WidgetService from '../services/WidgetService';
 
 export default function addWidget({
 	config,
-	parentId,
+	parentItemId,
 	portletId,
 	position,
 	store
@@ -27,7 +27,7 @@ export default function addWidget({
 
 		WidgetService.addPortlet({
 			config,
-			parentId,
+			parentItemId,
 			portletId,
 			position,
 			segmentsExperienceId

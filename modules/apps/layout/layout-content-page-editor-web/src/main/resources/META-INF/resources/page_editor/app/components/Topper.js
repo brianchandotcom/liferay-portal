@@ -90,7 +90,15 @@ export default function Topper({
 			const {itemId, parentId, position} = result;
 
 			if (itemId !== parentId) {
-				dispatch(moveItem({config, itemId, parentId, position, store}));
+				dispatch(
+					moveItem({
+						config,
+						itemId,
+						parentItemId: parentId,
+						position,
+						store
+					})
+				);
 			}
 		},
 		item: {

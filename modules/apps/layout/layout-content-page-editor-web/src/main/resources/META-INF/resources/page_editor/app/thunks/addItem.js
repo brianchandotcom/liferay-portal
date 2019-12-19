@@ -18,10 +18,10 @@ import ItemService from '../services/ItemService';
 export default function addItem({
 	config,
 	itemConfig,
-	parentId,
+	itemType,
+	parentItemId,
 	position,
-	store,
-	type
+	store
 }) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
@@ -29,10 +29,10 @@ export default function addItem({
 		ItemService.addItem({
 			config,
 			itemConfig,
-			parentId,
+			itemType,
+			parentItemId,
 			position,
-			segmentsExperienceId,
-			type
+			segmentsExperienceId
 		}).then(layoutData => {
 			dispatch(updateLayoutData(layoutData));
 		});

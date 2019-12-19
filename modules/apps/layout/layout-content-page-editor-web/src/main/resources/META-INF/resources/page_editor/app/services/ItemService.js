@@ -19,27 +19,27 @@ export default {
 	 * Adds an item to layoutData
 	 * @param {object} options
 	 * @param {object} options.config Application config
-	 * @param {object} options.parentId A parent to be added
+	 * @param {string} options.itemType item type
+	 * @param {object} options.parentItemId A parent to be added
 	 * @param {object} options.segmentsExperienceId
-	 * @param {string} options.type item type
 	 * @return {Promise<object>}
 	 */
 	addItem({
 		config,
 		itemConfig,
-		parentId,
+		itemType,
+		parentItemId,
 		position,
-		segmentsExperienceId,
-		type
+		segmentsExperienceId
 	}) {
 		const {addItemURL} = config;
 
 		return serviceFetch(config, addItemURL, {
-			config: JSON.stringify(itemConfig),
-			parentId,
+			itemConfig: JSON.stringify(itemConfig),
+			itemType,
+			parentItemId,
 			position,
-			segmentsExperienceId,
-			type
+			segmentsExperienceId
 		});
 	},
 
@@ -48,17 +48,17 @@ export default {
 	 * @param {object} options
 	 * @param {object} options.config Application config
 	 * @param {object} options.itemId id of the item to be moved
-	 * @param {object} options.parentId id of the target parent
+	 * @param {object} options.parentItemId id of the target parent
 	 * @param {object} options.position position in the parent where the item is placed
 	 * @param {object} options.segmentsExperienceId
 	 * @return {Promise<object>}
 	 */
-	moveItem({config, itemId, parentId, position, segmentsExperienceId}) {
+	moveItem({config, itemId, parentItemId, position, segmentsExperienceId}) {
 		const {moveItemURL} = config;
 
 		return serviceFetch(config, moveItemURL, {
 			itemId,
-			parentId,
+			parentItemId,
 			position,
 			segmentsExperienceId
 		});

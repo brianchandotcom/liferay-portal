@@ -57,10 +57,10 @@ const LayoutElementCard = ({label, layoutColumns, type}) => {
 				addItem({
 					config,
 					itemConfig,
-					parentId,
+					itemType: item.type,
+					parentItemId: parentId,
 					position,
-					store,
-					type: item.type
+					store
 				})
 			);
 		},

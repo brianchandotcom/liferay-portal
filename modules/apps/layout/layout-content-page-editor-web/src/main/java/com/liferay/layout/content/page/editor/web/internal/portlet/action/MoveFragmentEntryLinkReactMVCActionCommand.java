@@ -72,7 +72,8 @@ public class MoveFragmentEntryLinkReactMVCActionCommand
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
-		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
+		String parentItemId = ParamUtil.getString(
+			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

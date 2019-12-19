@@ -194,10 +194,20 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 		String portletInstanceKey = portletName;
 
-		if (Validator.isNotNull(instanceId)) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Portlet portlet = getPortlet(
+			themeDisplay.getCompanyId(), portletInstanceKey);
+
+		if (portlet.isInstanceable() && Validator.isNotNull(instanceId)) {
 			portletInstanceKey = PortletIdCodec.encode(
 				PortletIdCodec.decodePortletName(portletName),
 				PortletIdCodec.decodeUserId(portletName), instanceId);
+
+			portlet = getPortlet(
+				themeDisplay.getCompanyId(), portletInstanceKey);
 		}
 
 		if (!Objects.equals(
@@ -234,13 +244,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 		try {
 			httpServletRequest.setAttribute(
 				WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Portlet portlet = getPortlet(
-				themeDisplay.getCompanyId(), portletInstanceKey);
 
 			Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
 

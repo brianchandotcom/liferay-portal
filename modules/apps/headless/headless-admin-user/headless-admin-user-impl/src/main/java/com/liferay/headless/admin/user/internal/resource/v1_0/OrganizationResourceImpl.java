@@ -324,23 +324,13 @@ public class OrganizationResourceImpl
 			_getRegionId(postalAddress.getAddressRegion(), countryId));
 		address.setCountryId(countryId);
 		address.setTypeId(
-			_toAddressTypeId(
-				Optional.ofNullable(
-					postalAddress.getAddressType()
-				).orElse(
-					PostalAddress.AddressType.OTHER
-				)));
+			_toListTypeId(
+				ListTypeConstants.ORGANIZATION_ADDRESS,
+				postalAddress.getAddressType(), "other"));
 		address.setMailing(true);
 		address.setPrimary(GetterUtil.getBoolean(postalAddress.getPrimary()));
 
 		return address;
-	}
-
-	private long _toAddressTypeId(PostalAddress.AddressType addressType) {
-		ListType listType = _listTypeLocalService.getListType(
-			addressType.getValue(), ListTypeConstants.ORGANIZATION_ADDRESS);
-
-		return listType.getListTypeId();
 	}
 
 	private Country _toCountry(String addressCountry) {
@@ -378,6 +368,16 @@ public class OrganizationResourceImpl
 		).orElse(
 			(long)0
 		);
+	}
+
+	private long _toListTypeId(String type, String name, String defaultName) {
+		ListType listType = _listTypeLocalService.getListType(name, type);
+
+		if (listType == null) {
+			listType = _listTypeLocalService.getListType(defaultName, type);
+		}
+
+		return listType.getListTypeId();
 	}
 
 	private Organization _toOrganization(

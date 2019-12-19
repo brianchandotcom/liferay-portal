@@ -36,6 +36,7 @@ public class LayoutSEOEntryTable {
 		{"canonicalURLEnabled", Types.BOOLEAN}, {"DDMStorageId", Types.BIGINT},
 		{"openGraphDescription", Types.VARCHAR},
 		{"openGraphDescriptionEnabled", Types.BOOLEAN},
+		{"openGraphImageAlt", Types.VARCHAR},
 		{"openGraphImageFileEntryId", Types.BIGINT},
 		{"openGraphTitle", Types.VARCHAR},
 		{"openGraphTitleEnabled", Types.BOOLEAN},
@@ -78,6 +79,8 @@ TABLE_COLUMNS_MAP.put("openGraphDescription", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("openGraphDescriptionEnabled", Types.BOOLEAN);
 
+TABLE_COLUMNS_MAP.put("openGraphImageAlt", Types.VARCHAR);
+
 TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("openGraphTitle", Types.VARCHAR);
@@ -88,7 +91,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,DDMStorageId LONG,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null)";
+"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURL STRING null,canonicalURLEnabled BOOLEAN,DDMStorageId LONG,openGraphDescription STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphImageAlt STRING null,openGraphImageFileEntryId LONG,openGraphTitle STRING null,openGraphTitleEnabled BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 

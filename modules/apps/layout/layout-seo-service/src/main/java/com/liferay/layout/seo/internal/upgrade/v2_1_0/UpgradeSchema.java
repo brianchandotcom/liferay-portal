@@ -26,7 +26,8 @@ public class UpgradeSchema extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alter(
-			LayoutSEOEntryTable.class, new AlterTableAddColumn("DDMStorageId"));
+			LayoutSEOEntryTable.class, new AlterTableAddColumn("DDMStorageId"),
+			new AlterTableAddColumn("openGraphImageAlt STRING null"));
 
 		String template = StringUtil.read(
 			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));

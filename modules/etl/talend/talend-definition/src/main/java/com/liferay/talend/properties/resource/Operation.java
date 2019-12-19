@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.tliferayoutput;
+package com.liferay.talend.properties.resource;
 
 import com.liferay.talend.common.oas.constants.OASConstants;
 

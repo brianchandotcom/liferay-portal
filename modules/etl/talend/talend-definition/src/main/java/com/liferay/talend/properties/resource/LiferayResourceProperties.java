@@ -26,7 +26,6 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.parameters.RequestParameter;
 import com.liferay.talend.properties.parameters.RequestParameterProperties;
 import com.liferay.talend.source.LiferayOASSource;
-import com.liferay.talend.tliferayoutput.Operation;
 
 import java.net.URI;
 

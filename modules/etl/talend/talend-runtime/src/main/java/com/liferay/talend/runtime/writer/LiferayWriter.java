@@ -17,8 +17,8 @@ package com.liferay.talend.runtime.writer;
 import com.liferay.talend.avro.IndexedRecordJsonObjectConverter;
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.properties.output.LiferayOutputProperties;
+import com.liferay.talend.properties.resource.Operation;
 import com.liferay.talend.runtime.LiferaySink;
-import com.liferay.talend.tliferayoutput.Operation;
 
 import java.io.IOException;
 

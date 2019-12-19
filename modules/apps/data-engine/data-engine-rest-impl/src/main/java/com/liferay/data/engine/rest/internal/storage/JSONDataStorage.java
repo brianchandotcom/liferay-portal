@@ -153,25 +153,27 @@ public class JSONDataStorage implements DataStorage {
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			Value value = ddmFormFieldValue.getValue();
 
-			if (value != null) {
-				DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+			if (value == null) {
+				continue;
+			}
 
-				String fieldType = ddmFormField.getType();
+			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
-				if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
-					fieldType.equals(DDMFormFieldType.SELECT)) {
+			String fieldType = ddmFormField.getType();
 
-					dataRecordValues.put(
-						ddmFormFieldValue.getName(),
-						JSONUtil.toStringList(
-							JSONFactoryUtil.createJSONArray(
-								value.getString(value.getDefaultLocale()))));
-				}
-				else {
-					dataRecordValues.put(
-						ddmFormFieldValue.getName(),
-						value.getString(value.getDefaultLocale()));
-				}
+			if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
+				fieldType.equals(DDMFormFieldType.SELECT)) {
+
+				dataRecordValues.put(
+					ddmFormFieldValue.getName(),
+					JSONUtil.toStringList(
+						JSONFactoryUtil.createJSONArray(
+							value.getString(value.getDefaultLocale()))));
+			}
+			else {
+				dataRecordValues.put(
+					ddmFormFieldValue.getName(),
+					value.getString(value.getDefaultLocale()));
 			}
 		}
 

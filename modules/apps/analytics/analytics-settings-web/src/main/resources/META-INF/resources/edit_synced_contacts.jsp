@@ -66,16 +66,28 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 				<liferay-ui:message key="sync-by-user-groups-and-organizations-help" />
 			</div>
 
+			<portlet:renderURL var="createUserGroupURL">
+				<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_contacts_groups" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<portlet:renderURL var="createOrganizationsURL">
+				<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_organizations" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
 			<ul class="list-group mt-4">
 				<li class="list-group-item list-group-item-flex">
-					<div class="autofit-col">
-						<div class="sticker sticker-light sticker-rounded">
-							<liferay-ui:icon
-								icon="user"
-								markupView="lexicon"
-							/>
+					<a href=<%= createUserGroupURL %> />
+						<div class="autofit-col">
+							<div class="sticker sticker-light sticker-rounded">
+								<liferay-ui:icon
+									icon="user"
+									markupView="lexicon"
+								/>
+							</div>
 						</div>
-					</div>
+					</a>
 
 					<div class="autofit-col">
 						<h4 class="list-group-title">
@@ -88,14 +100,16 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 					</div>
 				</li>
 				<li class="list-group-item list-group-item-flex">
-					<div class="autofit-col">
-						<div class="sticker sticker-light sticker-rounded">
-							<liferay-ui:icon
-								icon="organizations"
-								markupView="lexicon"
-							/>
+					<a href=<%= createOrganizationsURL %> />
+						<div class="autofit-col">
+							<div class="sticker sticker-light sticker-rounded">
+								<liferay-ui:icon
+									icon="organizations"
+									markupView="lexicon"
+								/>
+							</div>
 						</div>
-					</div>
+					</a>
 
 					<div class="autofit-col">
 						<h4 class="list-group-title">
@@ -109,66 +123,6 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 				</li>
 			</ul>
 		</aui:fieldset>
-
-		<liferay-ui:search-container
-			curParam="inheritedUserGroupsCur"
-			headerNames="name"
-			iteratorURL="<%= currentURLObj %>"
-			rowChecker="<%= new UserGroupChecker(renderResponse, syncedUserGroupIds) %>"
-			total="<%= UserGroupServiceUtil.getUserGroupsCount(themeDisplay.getCompanyId(), null) %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= UserGroupServiceUtil.getUserGroups(themeDisplay.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.UserGroup"
-				escapedModel="<%= true %>"
-				keyProperty="userGroupId"
-				modelVar="userGroup"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="user-group-name"
-					value="<%= HtmlUtil.escape(userGroup.getName()) %>"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-			/>
-		</liferay-ui:search-container>
-
-		<liferay-ui:search-container
-			curParam="inheritedOrganizationsCur"
-			headerNames="name"
-			iteratorURL="<%= currentURLObj %>"
-			rowChecker="<%= new OrganizationChecker(renderResponse, syncedOrganizationIds) %>"
-			total="<%= OrganizationServiceUtil.getOrganizationsCount(themeDisplay.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= OrganizationServiceUtil.getOrganizations(themeDisplay.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.Organization"
-				escapedModel="<%= true %>"
-				keyProperty="organizationId"
-				modelVar="organization"
-			>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
-					name="organization-name"
-					value="<%= HtmlUtil.escape(organization.getName()) %>"
-				/>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
-			/>
-		</liferay-ui:search-container>
 
 		<aui:button-row>
 			<aui:button type="submit" value="save" />

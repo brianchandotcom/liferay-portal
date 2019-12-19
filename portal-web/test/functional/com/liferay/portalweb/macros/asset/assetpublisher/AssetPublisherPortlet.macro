@@ -369,7 +369,15 @@ definition {
 	}
 
 	macro configureManualAssetSelectionPG {
-		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
+		if ("${contentPage}" == "true") {
+			Click.clickNoWaitForVisible(
+				key_portletName = "Asset Publisher",
+				locator1 = "PageEditor#WIDGETS_OPTIONS_ICON");
+			SelectFrame(locator1 = "IFrame#DIALOG");
+		}
+		else {
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
+		}
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
 

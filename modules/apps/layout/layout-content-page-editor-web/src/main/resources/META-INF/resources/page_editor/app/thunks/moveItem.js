@@ -15,14 +15,20 @@
 import updateLayoutData from '../actions/updateLayoutData';
 import ItemService from '../services/ItemService';
 
-export default function moveItem({config, itemId, parentId, position, store}) {
+export default function moveItem({
+	config,
+	itemId,
+	parentItemId,
+	position,
+	store
+}) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 
 		ItemService.moveItem({
 			config,
 			itemId,
-			parentId,
+			parentItemId,
 			position,
 			segmentsExperienceId
 		}).then(layoutData => {

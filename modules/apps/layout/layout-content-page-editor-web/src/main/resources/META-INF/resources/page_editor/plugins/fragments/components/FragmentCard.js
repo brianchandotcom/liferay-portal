@@ -42,8 +42,8 @@ const ImagePreview = ({imagePreviewURL}) => {
 };
 
 export default function FragmentCard({
-	fragmentGroupId,
-	fragmentKey,
+	fragmentEntryKey,
+	groupId,
 	imagePreviewURL,
 	name
 }) {
@@ -64,9 +64,9 @@ export default function FragmentCard({
 			dispatch(
 				addFragment({
 					config,
-					fragmentGroupId,
-					fragmentKey,
-					parentId,
+					fragmentEntryKey,
+					groupId,
+					parentItemId: parentId,
 					position,
 					store
 				})

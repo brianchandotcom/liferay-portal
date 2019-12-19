@@ -17,9 +17,9 @@ import FragmentService from '../services/FragmentService';
 
 export default function addFragment({
 	config,
-	fragmentGroupId,
-	fragmentKey,
-	parentId,
+	fragmentEntryKey,
+	groupId,
+	parentItemId,
 	position,
 	store
 }) {
@@ -28,9 +28,9 @@ export default function addFragment({
 
 		FragmentService.addFragmentEntryLink({
 			config,
-			fragmentGroupId,
-			fragmentKey,
-			parentId,
+			fragmentEntryKey,
+			groupId,
+			parentItemId,
 			position,
 			segmentsExperienceId
 		}).then(({fragmentEntryLink, layoutData}) => {

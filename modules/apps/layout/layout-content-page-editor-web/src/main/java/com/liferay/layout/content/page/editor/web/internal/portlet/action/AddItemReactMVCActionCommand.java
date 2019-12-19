@@ -58,12 +58,13 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String itemConfig = ParamUtil.getString(actionRequest, "config");
+		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(
 			actionRequest, "itemId", String.valueOf(UUID.randomUUID()));
-		String parentItemId = ParamUtil.getString(actionRequest, "parentId");
+		String parentItemId = ParamUtil.getString(
+			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
-		String itemType = ParamUtil.getString(actionRequest, "type");
+		String itemType = ParamUtil.getString(actionRequest, "itemType");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,

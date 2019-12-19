@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.debug.missing.component.internal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
 
 import java.util.Objects;
@@ -54,7 +55,7 @@ public class MissingComponentUtil {
 			bundleContext.getServiceReference(BundleBlacklistManager.class);
 
 		if (serviceReference != null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		ComponentDescriptionDTO componentDescriptionDTO =
@@ -64,6 +65,32 @@ public class MissingComponentUtil {
 					"BundleBlacklistManagerImpl");
 
 		StringBundler sb = new StringBundler();
+
+		if (componentDescriptionDTO == null) {
+			sb.append("Blacklist Manager not found\n");
+			sb.append("Available components for ");
+			sb.append(blacklistBundle.getSymbolicName());
+
+			for (ComponentDescriptionDTO bundleComponentDescriptionDTO :
+					serviceComponentRuntime.getComponentDescriptionDTOs(
+						blacklistBundle)) {
+
+				_describeComponent(
+					bundleComponentDescriptionDTO, sb, serviceComponentRuntime);
+			}
+
+			return sb.toString();
+		}
+
+		_describeComponent(
+			componentDescriptionDTO, sb, serviceComponentRuntime);
+
+		return sb.toString();
+	}
+
+	private static void _describeComponent(
+		ComponentDescriptionDTO componentDescriptionDTO, StringBundler sb,
+		ServiceComponentRuntime serviceComponentRuntime) {
 
 		sb.append("@@@@Name: ");
 		sb.append(componentDescriptionDTO.name);
@@ -95,8 +122,6 @@ public class MissingComponentUtil {
 				sb.append(unsatisfiedReference.name);
 			}
 		}
-
-		return sb.toString();
 	}
 
 }

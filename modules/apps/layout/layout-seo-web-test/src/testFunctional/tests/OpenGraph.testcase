@@ -37,7 +37,6 @@ definition {
 	@description = "This ensures that the user can customize OG tags."
 	@priority = "5"
 	test CustomizeMetaTags {
-		property test.name.skip.portal.instance = "OpenGraph#CustomizeMetaTags";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -69,7 +68,6 @@ definition {
 	@description = "This ensures that the user can customize OG tags with escape characters."
 	@priority = "4"
 	test CustomizeMetaTagsWithEscapeCharacters {
-		property test.name.skip.portal.instance = "OpenGraph#CustomizeMetaTagsWithEscapeCharacters";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -118,7 +116,6 @@ definition {
 	@description = "This ensures that the user can edit existing OG tags."
 	@priority = "5"
 	test EditMetaTagCustomizations {
-		property test.name.skip.portal.instance = "OpenGraph#EditMetaTagCustomizations";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -157,7 +154,6 @@ definition {
 	@description = "This ensures that the user can reset to the default OG title tag."
 	@priority = "5"
 	test RevertCustomTitle {
-		property test.name.skip.portal.instance = "OpenGraph#RevertCustomTitle";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -202,7 +198,6 @@ definition {
 	@description = "This ensures that OG tags will appear when Open Graph is enabled."
 	@priority = "5"
 	test Smoke {
-		property test.name.skip.portal.instance = "OpenGraph#Smoke";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -227,7 +222,6 @@ definition {
 	@description = "This ensures that meta tags can be viewed on a new page."
 	@priority = "5"
 	test ViewNewPageWithMetaTags {
-		property test.name.skip.portal.instance = "OpenGraph#ViewNewPageWithMetaTags";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");

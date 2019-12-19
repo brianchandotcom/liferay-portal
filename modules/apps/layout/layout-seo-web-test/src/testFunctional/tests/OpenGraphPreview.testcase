@@ -31,7 +31,6 @@ definition {
 	@description = "This ensures that the OG preview is updated when the image is changed."
 	@priority = "5"
 	test PreviewAfterReplacingImage {
-		property test.name.skip.portal.instance = "OpenGraphPreview#PreviewAfterReplacingImage";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -96,7 +95,6 @@ definition {
 	@description = "This ensures that the OG preview is inherited from the SEO."
 	@priority = "5"
 	test PreviewInheritedSEO {
-		property test.name.skip.portal.instance = "OpenGraphPreview#PreviewInheritedSEO";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -164,7 +162,6 @@ definition {
 	@description = "This ensures that the user can customize OG tags."
 	@priority = "5"
 	test Smoke {
-		property test.name.skip.portal.instance = "OpenGraphPreview#Smoke";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -212,7 +209,6 @@ definition {
 	@description = "This ensures that escape characters are present correctly in the preview."
 	@priority = "3"
 	test ValidateEscapeCharacters {
-		property test.name.skip.portal.instance = "OpenGraphPreview#ValidateEscapeCharacters";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -255,7 +251,6 @@ definition {
 	@description = "This test ensures that ellipses are shown in the preview when the text limit is reached."
 	@priority = "5"
 	test ValidateLongInputs {
-		property test.name.skip.portal.instance = "OpenGraphPreview#ValidateLongInputs";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -303,7 +298,6 @@ definition {
 	@description = "This ensures that the OG preview is returned to default when deselecting the customize checkboxes."
 	@priority = "5"
 	test ValidateReturnToDefault {
-		property test.name.skip.portal.instance = "OpenGraphPreview#ValidateReturnToDefault";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -347,7 +341,6 @@ definition {
 	@description = "This test ensures that a user can preview Open Graph tags with Arabic."
 	@priority = "4"
 	test ViewArabicTranslation {
-		property test.name.skip.portal.instance = "OpenGraphPreview#ViewArabicTranslation";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -383,7 +376,6 @@ definition {
 	@description = "This test ensures that OG can use the translated language that SEO has saved."
 	@priority = "5"
 	test ViewTranslatedLanguage {
-		property test.name.skip.portal.instance = "OpenGraphPreview#ViewTranslatedLanguage";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -440,7 +432,6 @@ definition {
 	@description = "This test ensures that OG shows default translated language when switching to unsaved translations."
 	@priority = "5"
 	test ViewUntranslatedLanguage {
-		property test.name.skip.portal.instance = "OpenGraphPreview#ViewUntranslatedLanguage";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

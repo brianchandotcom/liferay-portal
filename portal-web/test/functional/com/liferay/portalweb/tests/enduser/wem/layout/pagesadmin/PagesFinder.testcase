@@ -12,8 +12,12 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Create a Site for the user") {
+		task ("Create new Sites") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			JSONGroup.addGroup(groupName = "Test Site Name 2");
+
+			JSONGroup.addGroup(groupName = "Test Site Name 3");
 		}
 
 		task ("Add layouts of various types for the pages finder") {
@@ -62,6 +66,10 @@ definition {
 					groupName = "Test Site Name",
 					layoutName = "Test Default Page ${i}");
 			}
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 2",
+				layoutName = "Test Page Name");
 		}
 	}
 
@@ -73,7 +81,91 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name 2");
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name 3");
 		}
+	}
+
+	@description = "This is the test for LPS-103104. Can add a child page via page tree panel."
+	@priority = "5"
+	test AddChildPageViaPageFinder {
+		Navigator.openSiteURL(siteName = "Test Site Name 2");
+
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.addPublicChildPage(
+			childPageName = "Test Child Page",
+			parentPageName = "Test Page Name");
+
+		PagesFinder.navigateToChildPage(
+			childPageName = "Test Child Page",
+			parentPageName = "Test Page Name");
+	}
+
+	@description = "This is the test for LPS-103104. Can add pages of different types via page tree panel."
+	@priority = "3"
+	test AddPagesOfDifferentTypesViaPageFinder {
+		ProductMenu.gotoSite(site = "Test Site Name 3");
+
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.addPublicPage(
+			pageName = "Widget Page",
+			sitePageType = "Widget Page");
+
+		PagesFinder.addPublicPage(
+			pageName = "Panel",
+			sitePageType = "Panel");
+
+		PagesFinder.addPublicPage(
+			pageName = "Embedded",
+			pageTypeURL = "https://www.google.com",
+			sitePageType = "Embedded");
+
+		PagesFinder.addPublicPage(
+			pageName = "Link to URL",
+			pageTypeURL = "https://www.google.com",
+			sitePageType = "Link to URL");
+
+		PagesFinder.addPublicPage(
+			pageName = "Page Set",
+			sitePageType = "Page Set");
+
+		PagesFinder.addPublicPage(
+			pageName = "Link to a Page of This Site",
+			sitePageType = "Link to a Page of This Site");
+
+		PagesFinder.addPublicContentPage(pageName = "Content Page");
+
+		PageEditor.clickPublish();
+
+		PagesFinder.addPrivatePage(
+			pageName = "Private Widget Page",
+			sitePageType = "Widget Page");
+
+		PagesFinder.selectPageType(optionValue = "Public Pages");
+
+		for (var pageName : list "Content Page,Embedded,Link to a Page of This Site,Link to URL,Page Set,Panel") {
+			PagesFinder.viewPageNameInPagesFinder(pageName = "${pageName}");
+		}
+
+		PagesFinder.selectPageType(optionValue = "Private Pages");
+
+		PagesFinder.viewPageNameInPagesFinder(pageName = "Private Widget Page");
+	}
+
+	@description = "This is the test for LPS-103104. Can add a widget page via page tree panel."
+	@priority = "5"
+	test AddPageViaPageFinder {
+		Navigator.openSiteURL(siteName = "Test Site Name 2");
+
+		PagesFinder.goToFindAPage();
+
+		PagesFinder.addPublicPage(pageName = "Test Public Page");
+
+		PagesFinder.navigateToPage(pageName = "Test Public Page");
 	}
 
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."

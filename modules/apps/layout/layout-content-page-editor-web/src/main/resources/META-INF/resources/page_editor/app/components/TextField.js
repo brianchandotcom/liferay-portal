@@ -12,11 +12,11 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import React from 'react';
 
 export const TextField = ({field, onValueSelect}) => (
-	<>
+	<ClayForm.Group>
 		<label htmlFor={field.name}>{field.label}</label>
 
 		<ClayInput
@@ -29,5 +29,5 @@ export const TextField = ({field, onValueSelect}) => (
 			sizing="sm"
 			type="text"
 		/>
-	</>
+	</ClayForm.Group>
 );

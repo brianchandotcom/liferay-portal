@@ -12,19 +12,22 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
 import React from 'react';
 
 import ColorPalette from '../../common/components/ColorPalette';
 
 export const ColorPaletteField = ({field, onValueSelect, value}) => (
-	<ColorPalette
-		label={field.label}
-		onColorSelect={(color, event) => {
-			onValueSelect(field.name, {
-				cssClass: color,
-				rgbValue: getComputedStyle(event.target).backgroundColor
-			});
-		}}
-		selectedColor={value && value.cssClass}
-	/>
+	<ClayForm.Group>
+		<ColorPalette
+			label={field.label}
+			onColorSelect={(color, event) => {
+				onValueSelect(field.name, {
+					cssClass: color,
+					rgbValue: getComputedStyle(event.target).backgroundColor
+				});
+			}}
+			selectedColor={value && value.cssClass}
+		/>
+	</ClayForm.Group>
 );

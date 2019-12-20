@@ -13,7 +13,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
@@ -39,13 +38,12 @@ const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 				const fieldValue = configurationValues[field.name];
 
 				return (
-					<ClayForm.Group key={index}>
-						<FieldComponent
-							field={field}
-							onValueSelect={onValueSelect}
-							value={fieldValue}
-						/>
-					</ClayForm.Group>
+					<FieldComponent
+						field={field}
+						key={index}
+						onValueSelect={onValueSelect}
+						value={fieldValue}
+					/>
 				);
 			})}
 		</>

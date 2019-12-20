@@ -12,16 +12,19 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
 import React from 'react';
 
 import ItemSelector from '../../common/components/ItemSelector';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => (
-	<ItemSelector
-		label={field.label}
-		onItemSelect={item => {
-			onValueSelect(field.name, item);
-		}}
-		selectedItem={value}
-	/>
+	<ClayForm.Group>
+		<ItemSelector
+			label={field.label}
+			onItemSelect={item => {
+				onValueSelect(field.name, item);
+			}}
+			selectedItem={value}
+		/>
+	</ClayForm.Group>
 );

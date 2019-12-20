@@ -518,6 +518,62 @@ public interface AppBuilderAppPersistence
 		throws NoSuchAppException;
 
 	/**
+	 * Returns all the app builder apps that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching app builder apps that the user has permission to view
+	 */
+	public java.util.List<AppBuilderApp> filterFindByGroupId(long groupId);
+
+	/**
+	 * Returns a range of all the app builder apps that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps that the user has permission to view
+	 */
+	public java.util.List<AppBuilderApp> filterFindByGroupId(
+		long groupId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the app builder apps that the user has permissions to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps that the user has permission to view
+	 */
+	public java.util.List<AppBuilderApp> filterFindByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set of app builder apps that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public AppBuilderApp[] filterFindByGroupId_PrevAndNext(
+			long appBuilderAppId, long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
 	 * Removes all the app builder apps where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -531,6 +587,14 @@ public interface AppBuilderAppPersistence
 	 * @return the number of matching app builder apps
 	 */
 	public int countByGroupId(long groupId);
+
+	/**
+	 * Returns the number of app builder apps that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching app builder apps that the user has permission to view
+	 */
+	public int filterCountByGroupId(long groupId);
 
 	/**
 	 * Returns all the app builder apps where ddmStructureId = &#63;.
@@ -979,6 +1043,72 @@ public interface AppBuilderAppPersistence
 		throws NoSuchAppException;
 
 	/**
+	 * Returns all the app builder apps that the user has permission to view where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param ddmStructureId the ddm structure ID
+	 * @return the matching app builder apps that the user has permission to view
+	 */
+	public java.util.List<AppBuilderApp> filterFindByG_C_D(
+		long groupId, long companyId, long ddmStructureId);
+
+	/**
+	 * Returns a range of all the app builder apps that the user has permission to view where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param ddmStructureId the ddm structure ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps that the user has permission to view
+	 */
+	public java.util.List<AppBuilderApp> filterFindByG_C_D(
+		long groupId, long companyId, long ddmStructureId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the app builder apps that the user has permissions to view where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param ddmStructureId the ddm structure ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps that the user has permission to view
+	 */
+	public java.util.List<AppBuilderApp> filterFindByG_C_D(
+		long groupId, long companyId, long ddmStructureId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set of app builder apps that the user has permission to view where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param ddmStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public AppBuilderApp[] filterFindByG_C_D_PrevAndNext(
+			long appBuilderAppId, long groupId, long companyId,
+			long ddmStructureId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
+		throws NoSuchAppException;
+
+	/**
 	 * Removes all the app builder apps where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -997,6 +1127,17 @@ public interface AppBuilderAppPersistence
 	 * @return the number of matching app builder apps
 	 */
 	public int countByG_C_D(long groupId, long companyId, long ddmStructureId);
+
+	/**
+	 * Returns the number of app builder apps that the user has permission to view where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param ddmStructureId the ddm structure ID
+	 * @return the number of matching app builder apps that the user has permission to view
+	 */
+	public int filterCountByG_C_D(
+		long groupId, long companyId, long ddmStructureId);
 
 	/**
 	 * Caches the app builder app in the entity cache if it is enabled.

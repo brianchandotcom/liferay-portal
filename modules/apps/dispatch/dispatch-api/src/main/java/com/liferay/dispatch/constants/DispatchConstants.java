@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.commerce.data.integration.constants;
+package com.liferay.dispatch.constants;
 
 /**
  * @author Marco Leo
  */
-public class CommerceDataIntegrationConstants {
+public class DispatchConstants {
 
 	public static final String CATEGORY_KEY_COMMERCE_DATA_INTEGRATION_DETAILS =
 		"details";

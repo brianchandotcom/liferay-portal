@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.commerce.data.integration.constants;
+package com.liferay.dispatch.constants;
 
 /**
  * @author guywandji
  * @author Alessio Antonio Rendina
  */
-public class CommerceDataIntegrationPortletKeys {
+public class DispatchPortletKeys {
 
 	public static final String COMMERCE_DATA_INTEGRATION =
 		"com_liferay_commerce_data_integration_web_internal_portlet_" +

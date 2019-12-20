@@ -16,7 +16,6 @@ package com.liferay.analytics.settings.internal.configuration.persistence.listen
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.analytics.message.sender.util.EntityModelListenerRegistry;
-import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.analytics.settings.internal.security.auth.verifier.AnalyticsSecurityAuthVerifier;
@@ -502,9 +501,6 @@ public class AnalyticsConfigurationModelListener
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
-
-	@Reference
-	private AnalyticsMessageLocalService _analyticsMessageLocalService;
 
 	private boolean _authVerifierEnabled;
 

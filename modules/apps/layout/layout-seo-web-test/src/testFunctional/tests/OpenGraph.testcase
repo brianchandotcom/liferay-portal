@@ -134,7 +134,7 @@ definition {
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:title",property="og:site_name",property="og:url",property="og:locale"''');
 	}
 
-	@description = "This ensures that OG configuration at site level."
+	@description = "This ensures that OG configuration is properly disabled at the site level."
 	@priority = "5"
 	test DisableConfigurationAtSiteLevel {
 		property test.name.skip.portal.instance = "OpenGraph#DisableConfigurationAtSiteLevel";

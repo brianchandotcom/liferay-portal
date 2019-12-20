@@ -34,13 +34,19 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => (
 
 		{value.className && (
 			<ClayForm.Group>
-				<TemplateSelector item={value} />
+				<TemplateSelector
+					item={value}
+					onTemplateSelect={template => {
+						onValueSelect(field.name, {...value, template});
+					}}
+					selectedTemplate={value.template}
+				/>
 			</ClayForm.Group>
 		)}
 	</>
 );
 
-const TemplateSelector = ({item}) => {
+const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 	const config = useContext(ConfigContext);
 	const [availableTemplates, setAvailableTemplates] = useState([]);
 	const isMounted = useIsMounted();
@@ -67,13 +73,36 @@ const TemplateSelector = ({item}) => {
 				<select
 					className="form-control form-control-sm"
 					id="itemSelectorTemplateSelect"
+					onChange={event => {
+						onTemplateSelect(
+							event.target.options[event.target.selectedIndex]
+								.dataset
+						);
+					}}
 				>
 					{availableTemplates.map(entry => {
 						if (entry.templates) {
 							return (
 								<optgroup key={entry.label} label={entry.label}>
 									{entry.templates.map(template => (
-										<option key={template.label}>
+										<option
+											data-info-item-renderer-key={
+												template.infoItemRendererKey
+											}
+											data-template-key={
+												template.templateKey
+											}
+											key={template.label}
+											selected={
+												selectedTemplate &&
+												selectedTemplate.infoItemRendererKey ===
+													template.infoItemRendererKey &&
+												(!selectedTemplate.templateKey ||
+													(selectedTemplate.templateKey &&
+														selectedTemplate.templateKey ===
+															template.templateKey))
+											}
+										>
 											{template.label}
 										</option>
 									))}
@@ -81,7 +110,19 @@ const TemplateSelector = ({item}) => {
 							);
 						} else {
 							return (
-								<option key={entry.label}>{entry.label}</option>
+								<option
+									data-info-item-renderer-key={
+										entry.infoItemRendererKey
+									}
+									key={entry.label}
+									selected={
+										selectedTemplate &&
+										selectedTemplate.infoItemRendererKey ===
+											entry.infoItemRendererKey
+									}
+								>
+									{entry.label}
+								</option>
 							);
 						}
 					})}

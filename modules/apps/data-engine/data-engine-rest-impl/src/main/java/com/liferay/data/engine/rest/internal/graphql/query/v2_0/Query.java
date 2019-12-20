@@ -29,6 +29,8 @@ import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -410,14 +412,15 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataRecords(dataDefinitionId: ___, keywords: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataRecords(dataDefinitionId: ___, keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DataRecordPage dataDefinitionDataRecords(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -425,8 +428,8 @@ public class Query {
 			this::_populateResourceContext,
 			dataRecordResource -> new DataRecordPage(
 				dataRecordResource.getDataDefinitionDataRecordsPage(
-					dataDefinitionId, keywords,
-					Pagination.of(page, pageSize))));
+					dataDefinitionId, keywords, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(dataRecordResource, sortsString))));
 	}
 
 	/**
@@ -510,15 +513,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataRecordCollections(dataDefinitionId: ___, keywords: ___, page: ___, pageSize: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataRecordCollections(dataDefinitionId: ___, keywords: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DataRecordCollectionPage dataDefinitionDataRecordCollections(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("keywords") String keywords,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -528,9 +530,7 @@ public class Query {
 				dataRecordCollectionResource.
 					getDataDefinitionDataRecordCollectionsPage(
 						dataDefinitionId, keywords,
-						Pagination.of(page, pageSize),
-						_sortsBiFunction.apply(
-							dataRecordCollectionResource, sortsString))));
+						Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -633,8 +633,7 @@ public class Query {
 		public DataRecordCollectionPage dataRecordCollections(
 				@GraphQLName("keywords") String keywords,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page,
-				@GraphQLName("sort") String sortsString)
+				@GraphQLName("page") int page)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -644,9 +643,7 @@ public class Query {
 					dataRecordCollectionResource.
 						getDataDefinitionDataRecordCollectionsPage(
 							_dataDefinition.getId(), keywords,
-							Pagination.of(page, pageSize),
-							_sortsBiFunction.apply(
-								dataRecordCollectionResource, sortsString))));
+							Pagination.of(page, pageSize))));
 		}
 
 		private DataDefinition _dataDefinition;
@@ -873,7 +870,8 @@ public class Query {
 		public DataRecordPage dataRecords(
 				@GraphQLName("keywords") String keywords,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -882,7 +880,9 @@ public class Query {
 				dataRecordResource -> new DataRecordPage(
 					dataRecordResource.getDataDefinitionDataRecordsPage(
 						_dataDefinition.getId(), keywords,
-						Pagination.of(page, pageSize))));
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							dataRecordResource, sortsString))));
 		}
 
 		private DataDefinition _dataDefinition;
@@ -1260,10 +1260,10 @@ public class Query {
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
-	private com.liferay.portal.kernel.model.Company _company;
-	private com.liferay.portal.kernel.model.User _user;
+	private Company _company;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private UriInfo _uriInfo;
+	private User _user;
 
 }

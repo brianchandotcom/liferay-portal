@@ -16,6 +16,8 @@ package com.liferay.data.engine.rest.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionPermission;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -85,8 +87,7 @@ public interface DataDefinitionResource {
 		AcceptLanguage contextAcceptLanguage) {
 	}
 
-	public void setContextCompany(
-		com.liferay.portal.kernel.model.Company contextCompany);
+	public void setContextCompany(Company contextCompany);
 
 	public default void setContextHttpServletRequest(
 		HttpServletRequest contextHttpServletRequest) {
@@ -99,7 +100,6 @@ public interface DataDefinitionResource {
 	public default void setContextUriInfo(UriInfo contextUriInfo) {
 	}
 
-	public void setContextUser(
-		com.liferay.portal.kernel.model.User contextUser);
+	public void setContextUser(User contextUser);
 
 }

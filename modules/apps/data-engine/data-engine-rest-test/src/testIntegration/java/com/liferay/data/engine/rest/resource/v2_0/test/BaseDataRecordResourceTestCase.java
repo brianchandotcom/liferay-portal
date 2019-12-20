@@ -198,7 +198,7 @@ public abstract class BaseDataRecordResourceTestCase {
 		Page<DataRecord> page =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
 				testGetDataDefinitionDataRecordsPage_getDataDefinitionId(),
-				RandomTestUtil.randomString(), Pagination.of(1, 2));
+				RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -213,7 +213,7 @@ public abstract class BaseDataRecordResourceTestCase {
 					irrelevantDataDefinitionId, randomIrrelevantDataRecord());
 
 			page = dataRecordResource.getDataDefinitionDataRecordsPage(
-				irrelevantDataDefinitionId, null, Pagination.of(1, 2));
+				irrelevantDataDefinitionId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -232,7 +232,7 @@ public abstract class BaseDataRecordResourceTestCase {
 				dataDefinitionId, randomDataRecord());
 
 		page = dataRecordResource.getDataDefinitionDataRecordsPage(
-			dataDefinitionId, null, Pagination.of(1, 2));
+			dataDefinitionId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -267,7 +267,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page1 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, null, Pagination.of(1, 2));
+				dataDefinitionId, null, Pagination.of(1, 2), null);
 
 		List<DataRecord> dataRecords1 = (List<DataRecord>)page1.getItems();
 
@@ -275,7 +275,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page2 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, null, Pagination.of(2, 2));
+				dataDefinitionId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -285,11 +285,117 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page3 =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, null, Pagination.of(1, 3));
+				dataDefinitionId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dataRecord1, dataRecord2, dataRecord3),
 			(List<DataRecord>)page3.getItems());
+	}
+
+	@Test
+	public void testGetDataDefinitionDataRecordsPageWithSortDateTime()
+		throws Exception {
+
+		testGetDataDefinitionDataRecordsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, dataRecord1, dataRecord2) -> {
+				BeanUtils.setProperty(
+					dataRecord1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDataDefinitionDataRecordsPageWithSortInteger()
+		throws Exception {
+
+		testGetDataDefinitionDataRecordsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, dataRecord1, dataRecord2) -> {
+				BeanUtils.setProperty(dataRecord1, entityField.getName(), 0);
+				BeanUtils.setProperty(dataRecord2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetDataDefinitionDataRecordsPageWithSortString()
+		throws Exception {
+
+		testGetDataDefinitionDataRecordsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, dataRecord1, dataRecord2) -> {
+				Class<?> clazz = dataRecord1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						dataRecord1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						dataRecord2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						dataRecord1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						dataRecord2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetDataDefinitionDataRecordsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, DataRecord, DataRecord, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long dataDefinitionId =
+			testGetDataDefinitionDataRecordsPage_getDataDefinitionId();
+
+		DataRecord dataRecord1 = randomDataRecord();
+		DataRecord dataRecord2 = randomDataRecord();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, dataRecord1, dataRecord2);
+		}
+
+		dataRecord1 = testGetDataDefinitionDataRecordsPage_addDataRecord(
+			dataDefinitionId, dataRecord1);
+
+		dataRecord2 = testGetDataDefinitionDataRecordsPage_addDataRecord(
+			dataDefinitionId, dataRecord2);
+
+		for (EntityField entityField : entityFields) {
+			Page<DataRecord> ascPage =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(dataRecord1, dataRecord2),
+				(List<DataRecord>)ascPage.getItems());
+
+			Page<DataRecord> descPage =
+				dataRecordResource.getDataDefinitionDataRecordsPage(
+					dataDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(dataRecord2, dataRecord1),
+				(List<DataRecord>)descPage.getItems());
+		}
 	}
 
 	protected DataRecord testGetDataDefinitionDataRecordsPage_addDataRecord(

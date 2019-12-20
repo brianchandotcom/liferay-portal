@@ -120,21 +120,22 @@ export function applyCriteriaChangeToContributors(contributors, change) {
  * @param {Contributor[]} contributors
  * @return {Contributor[]} contributors
  */
-export function applyConjunctionChangeToContributor(contributors) {
-	const prevConjunction = contributors[0] && contributors[0].conjunctionId;
-
+export function applyConjunctionChangeToContributor(
+	contributors,
+	conjunctionName
+) {
 	const conjunctionIndex = SUPPORTED_CONJUNCTIONS.findIndex(
-		item => item.name === prevConjunction
+		item => item.name === conjunctionName
 	);
 
-	const conjunctionSelected =
-		conjunctionIndex === SUPPORTED_CONJUNCTIONS.length - 1
-			? SUPPORTED_CONJUNCTIONS[0].name
-			: SUPPORTED_CONJUNCTIONS[conjunctionIndex + 1].name;
+	if (conjunctionIndex === -1) {
+		return contributors;
+	}
 
 	const nextContributors = contributors.map(contributor => ({
 		...contributor,
-		conjunctionId: conjunctionSelected
+		conjunctionId: conjunctionName
 	}));
+
 	return nextContributors;
 }

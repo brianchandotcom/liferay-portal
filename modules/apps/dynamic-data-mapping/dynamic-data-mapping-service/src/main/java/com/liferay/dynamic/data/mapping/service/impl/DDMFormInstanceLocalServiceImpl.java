@@ -202,7 +202,8 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstance.getFormInstanceId());
 
 		_ddmFormInstanceRecordLocalService.deleteFormInstanceRecords(
-			ddmFormInstance.getFormInstanceId());
+			ddmFormInstance.getFormInstanceId(),
+			getStorageType(ddmFormInstance));
 
 		_ddmFormInstanceVersionLocalService.deleteByFormInstanceId(
 			ddmFormInstance.getFormInstanceId());
@@ -532,6 +533,23 @@ public class DDMFormInstanceLocalServiceImpl
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected String getStorageType(DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			DDMFormInstanceFactory.create(
+				DDMFormInstanceSettings.class,
+				ddmFormInstance.getSettingsDDMFormValues());
+
+		String storageType = ddmFormInstanceSettings.storageType();
+
+		if (Validator.isNotNull(storageType)) {
+			return storageType;
+		}
+
+		return StorageType.JSON.toString();
 	}
 
 	protected String getStorageType(DDMFormValues settingsDDMFormValues) {

@@ -23,7 +23,6 @@ definition {
 		var key_completionVelocityUnitTotal = "${velocityUnitTotal}";
 		var key_completionVelocityValueTotal = "${velocityValueTotal}";
 
-
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_ITEMS_UNIT",
 			value1 = "${velocityUnitTotal}");
@@ -40,7 +39,6 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_SLA_BREACHED_VALUE",
 			rowName = "Review",
 			value1 = "${key_SLABreachedValue}");
-
 	}
 
 	macro assertDefaultChartRangesAndUnits {

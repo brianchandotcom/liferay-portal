@@ -21,6 +21,17 @@ definition {
 
 	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
 	@priority = "5"
+	test ViewMSBAndAddContentPageAfterUpgrade713 {
+		property data.archive.type = "data-archive-msb";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		Upgrade.viewMSBUpgrade();
+
+		Upgrade.addContentPage();
+	}
+
+	@priority = "5"
 	test ViewMSBAndAddContentPageAfterUpgrade71102 {
 		property data.archive.type = "data-archive-msb";
 		property portal.version = "7.1.10.2";

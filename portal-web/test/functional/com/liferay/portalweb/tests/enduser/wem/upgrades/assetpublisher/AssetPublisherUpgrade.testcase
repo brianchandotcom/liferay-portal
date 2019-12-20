@@ -31,6 +31,15 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewAssetPublisherArchive713 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
+	}
+
+	@priority = "5"
 	test ViewAssetPublisherArchive70106 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";

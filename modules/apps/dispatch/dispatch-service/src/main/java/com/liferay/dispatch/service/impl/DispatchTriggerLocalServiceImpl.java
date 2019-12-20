@@ -14,10 +14,30 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.exception.DispatchTriggerEndDateException;
+import com.liferay.dispatch.exception.DispatchTriggerNameException;
+import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
+import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.scheduler.DispatchTriggerSchedulerEntryTracker;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -28,4 +48,202 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DispatchTriggerLocalServiceImpl
 	extends DispatchTriggerLocalServiceBaseImpl {
+
+	@Override
+	public DispatchTrigger addDispatchTrigger(
+			long userId, String name, String type,
+			UnicodeProperties typeSettingsProperties, boolean system)
+		throws PortalException {
+
+		// Commerce data integration process
+
+		User user = userLocalService.getUser(userId);
+
+		validate(user.getCompanyId(), 0, name);
+
+		Company company = companyLocalService.getCompany(user.getCompanyId());
+
+		DispatchTrigger dispatchTrigger = dispatchTriggerPersistence.create(
+			counterLocalService.increment());
+
+		dispatchTrigger.setCompanyId(company.getCompanyId());
+		dispatchTrigger.setUserId(user.getUserId());
+		dispatchTrigger.setUserName(user.getFullName());
+		dispatchTrigger.setName(name);
+		dispatchTrigger.setType(type);
+		dispatchTrigger.setTypeSettingsProperties(typeSettingsProperties);
+		dispatchTrigger.setSystem(system);
+
+		dispatchTriggerPersistence.update(dispatchTrigger);
+
+		// Resources
+
+		resourceLocalService.addResources(
+			company.getCompanyId(), 0, user.getUserId(),
+			DispatchTrigger.class.getName(),
+			dispatchTrigger.getDispatchTriggerId(), false, true, true);
+
+		return dispatchTrigger;
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public DispatchTrigger deleteDispatchTrigger(
+			DispatchTrigger dispatchTrigger)
+		throws PortalException {
+
+		if (dispatchTrigger.isSystem()) {
+			return dispatchTrigger;
+		}
+
+		dispatchLogPersistence.removeByDispatchTriggerId(
+			dispatchTrigger.getDispatchTriggerId());
+
+		dispatchTriggerPersistence.remove(dispatchTrigger);
+
+		resourceLocalService.deleteResource(
+			dispatchTrigger, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		_dispatchTriggerSchedulerEntryTracker.deleteScheduledTask(
+			dispatchTrigger.getDispatchTriggerId());
+
+		return dispatchTrigger;
+	}
+
+	@Override
+	public DispatchTrigger deleteDispatchTrigger(
+			long commerceDataIntegrationProcessId)
+		throws PortalException {
+
+		DispatchTrigger commerceDataIntegrationProcess =
+			dispatchTriggerPersistence.findByPrimaryKey(
+				commerceDataIntegrationProcessId);
+
+		return dispatchTriggerLocalService.deleteDispatchTrigger(
+			commerceDataIntegrationProcess);
+	}
+
+	@Override
+	public DispatchTrigger fetchDispatchTrigger(long companyId, String name) {
+		return dispatchTriggerPersistence.fetchByC_N(companyId, name);
+	}
+
+	@Override
+	public DispatchTrigger getDispatchTrigger(
+			long commerceDataIntegrationProcessId)
+		throws PortalException {
+
+		return dispatchTriggerPersistence.findByPrimaryKey(
+			commerceDataIntegrationProcessId);
+	}
+
+	@Override
+	public List<DispatchTrigger> getDispatchTriggers(
+		long companyId, int start, int end) {
+
+		return dispatchTriggerPersistence.findByCompanyId(
+			companyId, start, end);
+	}
+
+	@Override
+	public int getDispatchTriggersCount(long companyId) {
+		return dispatchTriggerPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, String name,
+			UnicodeProperties typeSettingsProperties)
+		throws PortalException {
+
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
+
+		validate(dispatchTrigger.getCompanyId(), dispatchTriggerId, name);
+
+		dispatchTrigger.setName(name);
+		dispatchTrigger.setTypeSettingsProperties(typeSettingsProperties);
+
+		return dispatchTriggerPersistence.update(dispatchTrigger);
+	}
+
+	@Override
+	public DispatchTrigger updateDispatchTriggerTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd)
+		throws PortalException {
+
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.fetchByPrimaryKey(dispatchTriggerId);
+
+		Date sartDate = null;
+		Date endDate = null;
+
+		sartDate = _portal.getDate(
+			startDateMonth, startDateDay, startDateYear, startDateHour,
+			startDateMinute, DispatchTriggerStartDateException.class);
+
+		if (!neverEnd) {
+			endDate = _portal.getDate(
+				endDateMonth, endDateDay, endDateYear, endDateHour,
+				endDateMinute, DispatchTriggerEndDateException.class);
+		}
+
+		dispatchTrigger.setActive(active);
+		dispatchTrigger.setCronExpression(cronExpression);
+		dispatchTrigger.setEndDate(endDate);
+		dispatchTrigger.setStartDate(sartDate);
+
+		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
+
+		if (active) {
+			_dispatchTriggerSchedulerEntryTracker.addScheduledTask(
+				dispatchTriggerId, cronExpression, sartDate, endDate);
+		}
+		else {
+			_dispatchTriggerSchedulerEntryTracker.deleteScheduledTask(
+				dispatchTriggerId);
+		}
+
+		return dispatchTrigger;
+	}
+
+	protected void validate(long companyId, long dispatchTriggerId, String name)
+		throws PortalException {
+
+		if (Validator.isNull(name)) {
+			throw new DispatchTriggerNameException(
+				"Dispatch trigger name cannot be null for company ID " +
+					companyId);
+		}
+
+		DispatchTrigger dispatchTrigger = dispatchTriggerPersistence.fetchByC_N(
+			companyId, name);
+
+		if (dispatchTrigger == null) {
+			return;
+		}
+
+		if ((dispatchTriggerId > 0) &&
+			(dispatchTrigger.getDispatchTriggerId() == dispatchTriggerId)) {
+
+			return;
+		}
+
+		throw new DuplicateDispatchTriggerException(
+			StringBundler.concat(
+				"Dispatch trigger name ", name,
+				" already exists for company ID", String.valueOf(companyId)));
+	}
+
+	@Reference
+	private DispatchTriggerSchedulerEntryTracker
+		_dispatchTriggerSchedulerEntryTracker;
+
+	@Reference
+	private Portal _portal;
+
 }

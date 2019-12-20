@@ -617,15 +617,16 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				DDMStorageLink.class.getName()
 			).build();
 
-		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
+
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter(
+			ddmFormInstance.getStorageType());
 
 		DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 			ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
 
 		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
-
-		DDMFormInstance ddmFormInstance =
-			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 

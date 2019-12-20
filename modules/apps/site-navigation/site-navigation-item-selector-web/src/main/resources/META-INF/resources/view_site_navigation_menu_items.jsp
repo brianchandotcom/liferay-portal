@@ -27,10 +27,6 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 		%>
 
-		<liferay-util:html-top>
-			<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
-		</liferay-util:html-top>
-
 		<%
 		Map<String, Object> data = new HashMap<>();
 
@@ -40,7 +36,7 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 		data.put("pathThemeImages", themeDisplay.getPathThemeImages());
 		%>
 
-		<div>
+		<div class="select-site-navigation-menu-item">
 			<react:component
 				data="<%= data %>"
 				module="js/SelectSiteNavigationMenuItem.es"

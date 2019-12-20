@@ -24,6 +24,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -266,9 +268,33 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 								accountEntryId);
 
 						add(
-							labelItem -> labelItem.setLabel(
-								LanguageUtil.get(
-									request, accountEntry.getName())));
+							labelItem -> {
+								PortletURL removeLabelURL = getPortletURL();
+
+								long[] newAccountEntryIds = ArrayUtil.remove(
+									accountEntryIds, accountEntryId);
+
+								if (newAccountEntryIds.length == 0) {
+									removeLabelURL.setParameter(
+										"accountEntriesNavigation",
+										(String)null);
+								}
+
+								removeLabelURL.setParameter(
+									"accountEntryIds",
+									StringUtil.merge(
+										newAccountEntryIds, StringPool.COMMA));
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
+								labelItem.setCloseable(true);
+
+								labelItem.setLabel(
+									LanguageUtil.get(
+										request, accountEntry.getName()));
+							});
 					}
 				}
 

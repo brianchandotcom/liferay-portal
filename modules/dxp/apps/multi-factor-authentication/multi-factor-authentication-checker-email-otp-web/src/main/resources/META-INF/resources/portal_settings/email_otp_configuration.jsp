@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-EmailOTPConfiguration emailOTPConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(EmailOTPConfiguration.class, themeDisplay.getCompanyId());
-%>
-
 <aui:fieldset>
 	<aui:input name="enabled" type="toggle-switch" value="<%= emailOTPConfiguration.enabled() %>" />
 

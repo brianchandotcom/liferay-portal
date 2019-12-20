@@ -36,3 +36,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+EmailOTPConfiguration emailOTPConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(EmailOTPConfiguration.class, themeDisplay.getCompanyId());
+%>

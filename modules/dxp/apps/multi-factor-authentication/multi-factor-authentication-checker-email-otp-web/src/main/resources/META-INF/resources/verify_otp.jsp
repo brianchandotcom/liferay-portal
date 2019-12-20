@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-EmailOTPConfiguration emailOTPConfiguration = (EmailOTPConfiguration)request.getAttribute(WebKeys.EMAIL_OTP_CONFIGURATION);
-%>
-
 <div id="<portlet:namespace />phaseOne">
 	<div class="portlet-msg-info">
 		<liferay-ui:message key="your-one-time-password-will-be-sent-to-your-email-address" />

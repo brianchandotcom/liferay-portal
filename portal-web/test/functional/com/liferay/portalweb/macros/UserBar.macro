@@ -6,6 +6,8 @@ definition {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
 			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
+
+		AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
 	}
 
 	@description = "Navigate to a dropdown item in the User Personal Bar."

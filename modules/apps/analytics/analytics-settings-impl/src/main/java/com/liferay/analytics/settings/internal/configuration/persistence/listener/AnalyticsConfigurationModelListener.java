@@ -161,10 +161,8 @@ public class AnalyticsConfigurationModelListener
 		_userLocalService.updateUser(user);
 	}
 
-	private void _addAnalyticsMessages(List<?> objects) {
-		for (Object object : objects) {
-			BaseModel<?> baseModel = (BaseModel<?>)object;
-
+	private void _addAnalyticsMessages(List<? extends BaseModel> baseModels) {
+		for (BaseModel baseModel : baseModels) {
 			EntityModelListener entityModelListener =
 				_entityModelListenerRegistry.getEntityModelListener(
 					baseModel.getModelClassName());

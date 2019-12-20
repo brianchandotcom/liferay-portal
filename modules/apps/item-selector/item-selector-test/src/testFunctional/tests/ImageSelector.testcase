@@ -162,7 +162,7 @@ definition {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsNavigator.gotoSelectFile();
-		
+
 		ItemSelector.gotoPreviewViaSelectFile(navTab = "Blog Images");
 
 		ItemSelector.viewPreview(

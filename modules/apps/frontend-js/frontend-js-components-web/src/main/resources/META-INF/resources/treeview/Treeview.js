@@ -506,6 +506,29 @@ function reducer(state, action) {
 			// Navigate away from tree.
 			break;
 
+		case 'UPDATE_NODES': {
+			const nodes = addLinks(action.newNodes).map(node => {
+				return visit(
+					node,
+					node => {
+						const oldNode = nodeMap[node.id];
+
+						return {
+							...node,
+							expanded: oldNode && oldNode.expanded,
+							selected: oldNode && oldNode.selected
+						};
+					},
+					nodeMap
+				);
+			});
+
+			return {
+				...state,
+				nodes
+			};
+		}
+
 		default:
 			break;
 	}

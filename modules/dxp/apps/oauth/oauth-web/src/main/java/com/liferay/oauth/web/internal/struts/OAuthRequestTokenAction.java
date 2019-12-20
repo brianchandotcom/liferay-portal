@@ -16,9 +16,9 @@ package com.liferay.oauth.web.internal.struts;
 
 import com.liferay.oauth.constants.OAuthConstants;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
+import com.liferay.oauth.util.OAuth;
 import com.liferay.oauth.util.OAuthAccessor;
 import com.liferay.oauth.util.OAuthMessage;
-import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.oauth.OAuthConsumer;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -50,15 +51,15 @@ public class OAuthRequestTokenAction implements StrutsAction {
 		throws Exception {
 
 		try {
-			OAuthMessage oAuthMessage = OAuthUtil.getOAuthMessage(
+			OAuthMessage oAuthMessage = _oAuth.getOAuthMessage(
 				httpServletRequest,
 				WebServerUtil.getWebServerURL(
 					httpServletRequest.getRequestURL()));
 
 			OAuthAccessor oAuthAccessor = new DefaultOAuthAccessor(
-				OAuthUtil.getOAuthConsumer(oAuthMessage));
+				_oAuth.getOAuthConsumer(oAuthMessage));
 
-			OAuthUtil.validateOAuthMessage(oAuthMessage, oAuthAccessor);
+			_oAuth.validateOAuthMessage(oAuthMessage, oAuthAccessor);
 
 			String oAuthAccessorSecret = oAuthMessage.getParameter(
 				OAuthConsumer.ACCESSOR_SECRET);
@@ -68,24 +69,27 @@ public class OAuthRequestTokenAction implements StrutsAction {
 					OAuthConsumer.ACCESSOR_SECRET, oAuthAccessorSecret);
 			}
 
-			OAuthUtil.generateRequestToken(oAuthAccessor);
+			_oAuth.generateRequestToken(oAuthAccessor);
 
 			httpServletResponse.setContentType(ContentTypes.TEXT_PLAIN);
 
 			OutputStream outputStream = httpServletResponse.getOutputStream();
 
-			OAuthUtil.formEncode(
+			_oAuth.formEncode(
 				oAuthAccessor.getRequestToken(), oAuthAccessor.getTokenSecret(),
 				outputStream);
 
 			outputStream.close();
 		}
 		catch (Exception e) {
-			OAuthUtil.handleException(
+			_oAuth.handleException(
 				httpServletRequest, httpServletResponse, e, true);
 		}
 
 		return null;
 	}
+
+	@Reference
+	private OAuth _oAuth;
 
 }

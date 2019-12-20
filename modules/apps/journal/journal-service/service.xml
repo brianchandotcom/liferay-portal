@@ -229,8 +229,6 @@
 		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity change-tracking-enabled="true" local-service="false" name="JournalArticleLocalization" remote-service="false">
 
@@ -508,8 +506,6 @@
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoValue" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
-		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<exceptions>
 		<exception>ArticleContent</exception>

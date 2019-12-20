@@ -129,7 +129,12 @@ definition {
 	}
 
 	macro gotoViewEntries {
-		AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		if (IsElementNotPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
+			AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS_IE");
+		}
+		else {
+			AssertElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		}
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "View Entries");
 	}

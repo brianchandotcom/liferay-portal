@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new TrashManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, trashDisplayContext);
+TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new TrashManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, trashDisplayContext);
 %>
 
 <clay:management-toolbar

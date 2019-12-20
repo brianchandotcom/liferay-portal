@@ -19,7 +19,7 @@
 <%
 JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new JournalDDMStructuresDisplayContext(renderRequest, renderResponse);
 
-JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManagementToolbarDisplayContext = new JournalDDMStructuresManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDDMStructuresDisplayContext);
+JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManagementToolbarDisplayContext = new JournalDDMStructuresManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalDDMStructuresDisplayContext);
 %>
 
 <clay:navigation-bar

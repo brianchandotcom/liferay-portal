@@ -21,7 +21,7 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectUserGroupsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectUserGroupsDisplayContext) %>"
+	displayContext="<%= new SelectUserGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUserGroupsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">

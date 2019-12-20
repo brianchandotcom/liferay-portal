@@ -21,7 +21,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new JournalArticleItemSelectorViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalArticleItemSelectorViewDisplayContext) %>"
+	displayContext="<%= new JournalArticleItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalArticleItemSelectorViewDisplayContext) %>"
 />
 
 <div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />articlesContainer">

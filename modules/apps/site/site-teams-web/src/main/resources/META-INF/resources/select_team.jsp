@@ -21,7 +21,7 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectTeamManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectTeamDisplayContext) %>"
+	displayContext="<%= new SelectTeamManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectTeamDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="selectTeamFm">

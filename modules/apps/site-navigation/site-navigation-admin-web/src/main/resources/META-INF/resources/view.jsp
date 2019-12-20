@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagementToolbarDisplayContext = new SiteNavigationAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteNavigationAdminDisplayContext);
+SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagementToolbarDisplayContext = new SiteNavigationAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationAdminDisplayContext);
 %>
 
 <clay:management-toolbar

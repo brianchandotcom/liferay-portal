@@ -20,7 +20,7 @@
 JournalManagementToolbarDisplayContext journalManagementToolbarDisplayContext = null;
 
 if (!journalDisplayContext.isSearch() || journalDisplayContext.isWebContentTabSelected()) {
-	journalManagementToolbarDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+	journalManagementToolbarDisplayContext = new JournalManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalDisplayContext, trashHelper);
 }
 else if (journalDisplayContext.isVersionsTabSelected()) {
 	journalManagementToolbarDisplayContext = new JournalArticleVersionsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);

@@ -19,7 +19,7 @@
 <%
 SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(renderRequest, renderResponse, request);
 
-SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContext = new SiteTeamsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteTeamsDisplayContext);
+SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContext = new SiteTeamsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteTeamsDisplayContext);
 %>
 
 <clay:management-toolbar

@@ -19,7 +19,7 @@
 <%
 OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
-OrphanPortletsManagementToolbarDisplayContext orphanPortletsManagementToolbarDisplayContext = new OrphanPortletsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, orphanPortletsDisplayContext);
+OrphanPortletsManagementToolbarDisplayContext orphanPortletsManagementToolbarDisplayContext = new OrphanPortletsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, orphanPortletsDisplayContext);
 
 Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 

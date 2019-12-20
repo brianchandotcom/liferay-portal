@@ -112,7 +112,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 				</h3>
 
 				<clay:management-toolbar
-					displayContext="<%= new LayoutClassedModelUsagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutClassedModelUsagesDisplayContext.getSearchContainer()) %>"
+					displayContext="<%= new LayoutClassedModelUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutClassedModelUsagesDisplayContext.getSearchContainer()) %>"
 				/>
 
 				<liferay-ui:search-container

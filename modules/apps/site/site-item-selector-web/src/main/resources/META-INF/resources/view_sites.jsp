@@ -27,7 +27,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SitesItemSelectorViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteItemSelectorViewDisplayContext) %>"
+	displayContext="<%= new SitesItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteItemSelectorViewDisplayContext) %>"
 />
 
 <aui:form action="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">

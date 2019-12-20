@@ -19,7 +19,7 @@
 <%
 JournalFeedsDisplayContext journalFeedsDisplayContext = new JournalFeedsDisplayContext(renderRequest, renderResponse);
 
-JournalFeedsManagementToolbarDisplayContext journalFeedsManagementToolbarDisplayContext = new JournalFeedsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalFeedsDisplayContext);
+JournalFeedsManagementToolbarDisplayContext journalFeedsManagementToolbarDisplayContext = new JournalFeedsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalFeedsDisplayContext);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(journalFeedsDisplayContext.getRedirect());

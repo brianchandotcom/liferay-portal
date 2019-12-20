@@ -21,7 +21,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectOrganizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectOrganizationsDisplayContext) %>"
+	displayContext="<%= new SelectOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectOrganizationsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

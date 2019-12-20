@@ -21,7 +21,7 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new BlogEntriesItemSelectorManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, blogEntriesItemSelectorDisplayContext.getSearchContainer()) %>"
+	displayContext="<%= new BlogEntriesItemSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, blogEntriesItemSelectorDisplayContext.getSearchContainer()) %>"
 	searchContainerId="blogEntries"
 />
 

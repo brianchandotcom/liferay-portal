@@ -19,7 +19,7 @@
 <%
 OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDisplayContext(request, renderRequest, renderResponse);
 
-OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDisplayContext = new OrganizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, organizationsDisplayContext);
+OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDisplayContext = new OrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationsDisplayContext);
 %>
 
 <clay:navigation-bar

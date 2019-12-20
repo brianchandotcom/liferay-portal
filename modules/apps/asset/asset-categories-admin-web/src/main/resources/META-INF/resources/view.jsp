@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementToolbarDisplayContext = new AssetVocabulariesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext);
+AssetVocabulariesManagementToolbarDisplayContext assetVocabulariesManagementToolbarDisplayContext = new AssetVocabulariesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetCategoriesDisplayContext);
 %>
 
 <clay:navigation-bar

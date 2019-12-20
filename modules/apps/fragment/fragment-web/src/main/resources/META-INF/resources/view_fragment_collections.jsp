@@ -21,7 +21,7 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new FragmentCollectionsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentCollectionsDisplayContext) %>"
+	displayContext="<%= new FragmentCollectionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

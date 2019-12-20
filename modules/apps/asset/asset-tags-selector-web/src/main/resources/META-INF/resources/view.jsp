@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:management-toolbar
-	displayContext="<%= new AssetTagsSelectorManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetTagsSelectorDisplayContext) %>"
+	displayContext="<%= new AssetTagsSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetTagsSelectorDisplayContext) %>"
 />
 
 <div class="container-fluid-1280">

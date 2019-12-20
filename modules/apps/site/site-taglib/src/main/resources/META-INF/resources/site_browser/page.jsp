@@ -22,7 +22,7 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteBrowserDisplayContext) %>"
+	displayContext="<%= new SiteBrowserManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteBrowserDisplayContext) %>"
 />
 
 <aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">

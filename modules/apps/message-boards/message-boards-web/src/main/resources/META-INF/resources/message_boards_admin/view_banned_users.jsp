@@ -27,7 +27,7 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_use
 <%@ include file="/message_boards_admin/nav.jspf" %>
 
 <%
-MBBannedUsersManagementToolbarDisplayContext mbBannedUsersManagementToolbarDisplayContext = new MBBannedUsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+MBBannedUsersManagementToolbarDisplayContext mbBannedUsersManagementToolbarDisplayContext = new MBBannedUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 %>

@@ -19,7 +19,7 @@
 <%
 LayoutPortletsDisplayContext layoutPortletsDisplayContext = new LayoutPortletsDisplayContext(renderRequest, renderResponse, request);
 
-LayoutPortletsManagementToolbarDisplayContext layoutPortletsManagementToolbarDisplayContext = new LayoutPortletsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutPortletsDisplayContext);
+LayoutPortletsManagementToolbarDisplayContext layoutPortletsManagementToolbarDisplayContext = new LayoutPortletsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutPortletsDisplayContext);
 %>
 
 <clay:management-toolbar

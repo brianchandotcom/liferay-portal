@@ -19,7 +19,7 @@
 <%
 UsersDisplayContext usersDisplayContext = new UsersDisplayContext(request, renderRequest, renderResponse);
 
-UsersManagementToolbarDisplayContext usersManagementToolbarDisplayContext = new UsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, usersDisplayContext);
+UsersManagementToolbarDisplayContext usersManagementToolbarDisplayContext = new UsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, usersDisplayContext);
 
 Role role = usersDisplayContext.getRole();
 %>

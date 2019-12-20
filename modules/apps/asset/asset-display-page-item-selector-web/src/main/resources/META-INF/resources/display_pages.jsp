@@ -21,7 +21,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetDisplayPagesItemSelectorViewDisplayContext) %>"
+	displayContext="<%= new AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPagesItemSelectorViewDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

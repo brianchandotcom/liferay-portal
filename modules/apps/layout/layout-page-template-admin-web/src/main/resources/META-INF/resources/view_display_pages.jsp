@@ -28,7 +28,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 <liferay-ui:success key="displayPagePublished" message="the-display-page-template-was-published-succesfully" />
 
 <%
-DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayContext = new DisplayPageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, displayPageDisplayContext);
+DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayContext = new DisplayPageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, displayPageDisplayContext);
 %>
 
 <clay:management-toolbar

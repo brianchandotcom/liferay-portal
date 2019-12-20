@@ -37,7 +37,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, viewUADEntitiesDisplay) %>"
+	displayContext="<%= new ViewUADEntitiesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewUADEntitiesDisplay) %>"
 />
 
 <aui:form method="post" name="viewUADEntitiesFm">

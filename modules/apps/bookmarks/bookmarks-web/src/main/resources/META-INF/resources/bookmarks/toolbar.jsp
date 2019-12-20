@@ -17,7 +17,7 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContext = new BookmarksManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, bookmarksGroupServiceOverriddenConfiguration, portalPreferences, trashHelper);
+BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContext = new BookmarksManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, bookmarksGroupServiceOverriddenConfiguration, portalPreferences, trashHelper);
 %>
 
 <clay:management-toolbar

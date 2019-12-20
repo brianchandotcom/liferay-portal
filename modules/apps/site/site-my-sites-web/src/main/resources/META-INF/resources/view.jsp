@@ -25,7 +25,7 @@
 />
 
 <clay:management-toolbar
-	displayContext="<%= new SiteMySitesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteMySitesDisplayContext) %>"
+	displayContext="<%= new SiteMySitesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteMySitesDisplayContext) %>"
 />
 
 <aui:form action="<%= siteMySitesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="get" name="fm">

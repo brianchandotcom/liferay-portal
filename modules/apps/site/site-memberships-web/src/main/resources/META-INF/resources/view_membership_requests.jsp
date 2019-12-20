@@ -32,7 +32,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 />
 
 <clay:management-toolbar
-	displayContext="<%= new ViewMembershipRequestsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, viewMembershipRequestsDisplayContext) %>"
+	displayContext="<%= new ViewMembershipRequestsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, viewMembershipRequestsDisplayContext) %>"
 />
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />

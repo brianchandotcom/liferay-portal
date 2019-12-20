@@ -23,7 +23,7 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteNavigationMenuItemSelectorViewDisplayContext) %>"
+	displayContext="<%= new SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteNavigationMenuItemSelectorViewDisplayContext) %>"
 />
 
 <aui:form action="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" name="selectSiteNavigationMenuFm">

@@ -27,7 +27,7 @@ SearchContainer entriesSearchContainer = blogEntriesDisplayContext.getSearchCont
 
 PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 
-BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, entriesSearchContainer, trashHelper, displayStyle);
+BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle);
 %>
 
 <clay:management-toolbar

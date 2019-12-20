@@ -21,7 +21,7 @@ LayoutPageTemplateCollectionsDisplayContext layoutPageTemplateCollectionsDisplay
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new LayoutPageTemplateCollectionsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutPageTemplateCollectionsDisplayContext) %>"
+	displayContext="<%= new LayoutPageTemplateCollectionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutPageTemplateCollectionsDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

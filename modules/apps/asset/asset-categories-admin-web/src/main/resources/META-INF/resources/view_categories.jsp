@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarDisplayContext = new AssetCategoriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetCategoriesDisplayContext);
+AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarDisplayContext = new AssetCategoriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetCategoriesDisplayContext);
 %>
 
 <clay:navigation-bar

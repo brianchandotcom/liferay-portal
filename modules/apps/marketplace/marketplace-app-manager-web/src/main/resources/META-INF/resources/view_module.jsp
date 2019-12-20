@@ -29,7 +29,7 @@ else {
 	backURL.setParameter("app", app);
 }
 
-ViewModuleManagementToolbarDisplayContext viewModuleManagementToolbarDisplayContext = new ViewModuleManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+ViewModuleManagementToolbarDisplayContext viewModuleManagementToolbarDisplayContext = new ViewModuleManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 AppDisplay appDisplay = viewModuleManagementToolbarDisplayContext.getAppDisplay();
 Bundle bundle = viewModuleManagementToolbarDisplayContext.getBundle();

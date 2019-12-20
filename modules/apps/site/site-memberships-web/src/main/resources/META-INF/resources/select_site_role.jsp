@@ -21,7 +21,7 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectSiteRolesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectSiteRolesDisplayContext) %>"
+	displayContext="<%= new SelectSiteRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectSiteRolesDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">

@@ -148,7 +148,7 @@ SiteAdminConfiguration siteAdminConfiguration = ConfigurationProviderUtil.getSys
 
 SiteAdminDisplayContext siteAdminDisplayContext = new SiteAdminDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
-SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContext = new SiteAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, siteAdminDisplayContext);
+SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContext = new SiteAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteAdminDisplayContext);
 
 portletDisplay.setShowStagingIcon(false);
 %>

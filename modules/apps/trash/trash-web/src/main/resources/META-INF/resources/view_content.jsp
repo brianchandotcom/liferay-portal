@@ -25,7 +25,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 <c:choose>
 	<c:when test="<%= trashHandler.isContainerModel() %>">
 		<clay:management-toolbar
-			displayContext="<%= new TrashContainerManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, trashDisplayContext) %>"
+			displayContext="<%= new TrashContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, trashDisplayContext) %>"
 		/>
 
 		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

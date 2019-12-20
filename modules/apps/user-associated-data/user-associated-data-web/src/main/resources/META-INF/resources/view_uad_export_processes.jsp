@@ -19,7 +19,7 @@
 <%
 UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportProcessDisplayContext(request, renderResponse);
 
-UADExportProcessManagementToolbarDisplayContext uadExportProcessManagementToolbarDisplayContext = new UADExportProcessManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, uadExportProcessDisplayContext.getSearchContainer());
+UADExportProcessManagementToolbarDisplayContext uadExportProcessManagementToolbarDisplayContext = new UADExportProcessManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, uadExportProcessDisplayContext.getSearchContainer());
 
 portletDisplay.setShowBackIcon(true);
 

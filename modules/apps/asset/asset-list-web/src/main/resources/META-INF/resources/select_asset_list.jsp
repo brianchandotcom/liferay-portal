@@ -21,7 +21,7 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectAssetListManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectAssetListDisplayContext) %>"
+	displayContext="<%= new SelectAssetListManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectAssetListDisplayContext) %>"
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />assetLists">

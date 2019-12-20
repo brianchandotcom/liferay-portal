@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetTagsManagementToolbarDisplayContext assetTagsManagementToolbarDisplayContext = new AssetTagsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetTagsDisplayContext);
+AssetTagsManagementToolbarDisplayContext assetTagsManagementToolbarDisplayContext = new AssetTagsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetTagsDisplayContext);
 %>
 
 <clay:management-toolbar

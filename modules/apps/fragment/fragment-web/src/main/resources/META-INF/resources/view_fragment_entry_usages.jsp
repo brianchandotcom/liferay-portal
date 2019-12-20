@@ -116,7 +116,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				</h2>
 
 				<%
-				FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentEntryLinkDisplayContext.getSearchContainer());
+				FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementToolbarDisplayContext = new FragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentEntryLinkDisplayContext.getSearchContainer());
 				%>
 
 				<clay:management-toolbar

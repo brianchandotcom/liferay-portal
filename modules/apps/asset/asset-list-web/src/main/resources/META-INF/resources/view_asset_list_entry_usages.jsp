@@ -118,7 +118,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				</h3>
 
 				<%
-				AssetListEntryUsagesManagementToolbarDisplayContext assetListEntryUsagesManagementToolbarDisplayContext = new AssetListEntryUsagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, assetListEntryUsagesDisplayContext.getSearchContainer());
+				AssetListEntryUsagesManagementToolbarDisplayContext assetListEntryUsagesManagementToolbarDisplayContext = new AssetListEntryUsagesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetListEntryUsagesDisplayContext.getSearchContainer());
 				%>
 
 				<clay:management-toolbar

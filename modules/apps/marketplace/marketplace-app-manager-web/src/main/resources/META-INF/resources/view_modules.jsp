@@ -19,7 +19,7 @@
 <%
 String app = ParamUtil.getString(request, "app");
 
-ViewModulesManagementToolbarDisplayContext viewModulesManagementToolbarDisplayContext = new ViewModulesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+ViewModulesManagementToolbarDisplayContext viewModulesManagementToolbarDisplayContext = new ViewModulesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 AppDisplay appDisplay = viewModulesManagementToolbarDisplayContext.getAppDisplay();
 

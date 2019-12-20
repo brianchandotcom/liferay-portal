@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewAppsManagerManagementToolbarDisplayContext viewAppsManagerManagementToolbarDisplayContext = new ViewAppsManagerManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+ViewAppsManagerManagementToolbarDisplayContext viewAppsManagerManagementToolbarDisplayContext = new ViewAppsManagerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), null);
 %>

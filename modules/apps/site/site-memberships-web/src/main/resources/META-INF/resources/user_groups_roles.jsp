@@ -21,7 +21,7 @@ UserGroupRolesDisplayContext userGroupRolesDisplayContext = new UserGroupRolesDi
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new UserGroupRolesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, userGroupRolesDisplayContext) %>"
+	displayContext="<%= new UserGroupRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userGroupRolesDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">

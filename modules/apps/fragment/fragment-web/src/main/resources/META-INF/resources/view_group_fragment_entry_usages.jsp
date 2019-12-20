@@ -33,7 +33,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 			<div class="col-lg-12">
 
 				<%
-				GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageManagementToolbarDisplayContext = new GroupFragmentEntryUsageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, groupFragmentEntryLinkDisplayContext.getSearchContainer());
+				GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageManagementToolbarDisplayContext = new GroupFragmentEntryUsageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupFragmentEntryLinkDisplayContext.getSearchContainer());
 				%>
 
 				<clay:management-toolbar

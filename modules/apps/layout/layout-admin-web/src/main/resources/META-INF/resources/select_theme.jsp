@@ -21,7 +21,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectThemeManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, selectThemeDisplayContext) %>"
+	displayContext="<%= new SelectThemeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectThemeDisplayContext) %>"
 />
 
 <c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PropsValues.AUTO_DEPLOY_ENABLED %>">

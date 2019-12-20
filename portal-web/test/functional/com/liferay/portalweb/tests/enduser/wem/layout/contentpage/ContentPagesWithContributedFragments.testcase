@@ -152,4 +152,56 @@ definition {
 			value1 = "This content maps from web content");
 	}
 
+	@description = "This is a test for LPS-101248. Can select any custom web content template as a "Template" for web content selected in content fragment."
+	@priority = "5"
+	test SelectCustomWebContentTemplateViaContentDisplay {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "This content maps from web content",
+			webContentTitle = "Webcontent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			generalVariables = "Site ID",
+			structureName = "Basic Web Content",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		var siteID = Site.getSiteId();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Page Name");
+
+		PageEditor.addContentDisplay(fragmentName = "Content");
+
+		PageEditor.editContentDisplay(
+			customWebcontenttemplate = "WC Template Name",
+			webcontent = "true",
+			webContentContent = "${siteID}",
+			webContentTitle = "Webcontent Title");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals.assertPartialTextAceEditor(
+			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+			value1 = "${siteID}");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+			value1 = "This content maps from web content");
+	}
+
 }

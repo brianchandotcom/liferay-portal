@@ -35,6 +35,11 @@ dependencies and the various artifacts used in resolving OSGi dependencies.
 ### Updated
 - [LPS-93873]: Update the `dependency-management-plugin` to `1.0.7.RELEASE`.
 
+## 2.0.7 - 2019-12-20
+
+### Updated
+- [LPS-105889]: Use native Gradle 5 BOM support for target platform capability
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration
 [LPS-77343]: https://issues.liferay.com/browse/LPS-77343
@@ -43,3 +48,4 @@ dependencies and the various artifacts used in resolving OSGi dependencies.
 [LPS-82491]: https://issues.liferay.com/browse/LPS-82491
 [LPS-83922]: https://issues.liferay.com/browse/LPS-83922
 [LPS-93873]: https://issues.liferay.com/browse/LPS-93873
+[LPS-105889]: https://issues.liferay.com/browse/LPS-105889

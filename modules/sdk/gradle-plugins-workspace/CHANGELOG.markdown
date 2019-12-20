@@ -304,6 +304,13 @@ version 1.1.12.
 - [LPS-94606]: The `initBundle` task failed when the `providedModules`
 configuration contained more than one dependency.
 
+## 2.2.2 - 2019-12-20
+
+### Updated
+- [LPS-105889]: Update the [Liferay Gradle Plugins Target Platform] dependency to
+version 2.0.7.
+- Updated target platform dependency which switches to native Gradle5 BOM support
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner

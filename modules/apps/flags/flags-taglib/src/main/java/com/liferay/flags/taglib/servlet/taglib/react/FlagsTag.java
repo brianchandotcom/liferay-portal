@@ -169,49 +169,52 @@ public class FlagsTag extends IncludeTag {
 	private Map<String, Object> _getData(String message)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Map<String, Object> props = HashMapBuilder.<String, Object>put(
-			"baseData", _getDataJSONObject(themeDisplay)
-		).put(
-			"companyName",
-			() -> {
-				Company company = themeDisplay.getCompany();
-
-				return company.getName();
-			}
-		).put(
-			"disabled", !_enabled
-		).put(
-			"forceLogin", !FlagsTagUtil.isFlagsEnabled(themeDisplay)
-		).build();
-
-		if (Validator.isNotNull(message)) {
-			props.put("message", message);
-		}
-
-		props.put("onlyIcon", !_label);
-		props.put(
-			"pathTermsOfUse",
-			PortalUtil.getPathMain() + "/portal/terms_of_use");
-		props.put(
-			"reasons",
-			FlagsTagUtil.getReasons(
-				themeDisplay.getCompanyId(), httpServletRequest));
-		props.put("signedIn", themeDisplay.isSignedIn());
-		props.put("uri", FlagsTagUtil.getURI(httpServletRequest));
-
 		return HashMapBuilder.<String, Object>put(
 			"context",
 			HashMapBuilder.<String, Object>put(
 				"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS)
 			).build()
 		).put(
-			"props", props
+			"props",
+			() -> {
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				Map<String, Object> props = HashMapBuilder.<String, Object>put(
+					"baseData", _getDataJSONObject(themeDisplay)
+				).put(
+					"companyName",
+					() -> {
+						Company company = themeDisplay.getCompany();
+
+						return company.getName();
+					}
+				).put(
+					"disabled", !_enabled
+				).put(
+					"forceLogin", !FlagsTagUtil.isFlagsEnabled(themeDisplay)
+				).build();
+
+				if (Validator.isNotNull(message)) {
+					props.put("message", message);
+				}
+
+				props.put("onlyIcon", !_label);
+				props.put(
+					"pathTermsOfUse",
+					PortalUtil.getPathMain() + "/portal/terms_of_use");
+				props.put(
+					"reasons",
+					FlagsTagUtil.getReasons(
+						themeDisplay.getCompanyId(), httpServletRequest));
+				props.put("signedIn", themeDisplay.isSignedIn());
+				props.put("uri", FlagsTagUtil.getURI(httpServletRequest));
+
+				return props;
+			}
 		).build();
 	}
 

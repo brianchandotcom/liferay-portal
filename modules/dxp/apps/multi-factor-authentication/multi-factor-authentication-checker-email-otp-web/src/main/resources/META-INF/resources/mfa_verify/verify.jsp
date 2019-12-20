@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 EmailOTPMFAChecker emailOTPMFAChecker = (EmailOTPMFAChecker)request.getAttribute(WebKeys.EMAIL_MFA_CHECKER);
 
 long mfaUserId = (Long)request.getAttribute(WebKeys.MFA_USER_ID);
@@ -28,7 +30,7 @@ long mfaUserId = (Long)request.getAttribute(WebKeys.MFA_USER_ID);
 
 <aui:form action="<%= verifyActionURL %>" cssClass="container-fluid-1280 sign-in-form" data-senna-off="true" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
-	<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error key="mfaFailed" message="multi-factor-authentication-failed" />
 

@@ -3590,21 +3590,21 @@ babel-plugin-named-asset-import@^0.3.1:
 babel-plugin-namespace-amd-define@2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-namespace-amd-define/-/babel-plugin-namespace-amd-define-2.16.2.tgz#9b2cf3fb7ecce935e6032e4ca4873f9a2e1fbdd0"
-  integrity "sha1-7Iz/wTrVJDBlI1wJZ8t2qwmP+cs= sha512-pNPXvJFZlOgw9VdVQn9kSkEwPwDKSWneBmsRz+zYmIWmgJNGwAVBdFPKzincD8Bl2wPoIZXMg6wvyvVj/DP7tA=="
+  integrity "sha1-myzz+37M6TXmAy5MpIc/mi4fvdA= sha512-ra9KIOxgOO/GL4ypsBiurFMpa3idbIuCLvjEPJ1Dp11jFnZv0usEgABQtH8shKPhdHAl7Xu6NM+WMNIKCqR9PA=="
   dependencies:
     liferay-npm-build-tools-common "2.16.2"
 
 babel-plugin-namespace-modules@2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-namespace-modules/-/babel-plugin-namespace-modules-2.16.2.tgz#c3057b3bebf984a0b39539d920e1558a04972ec8"
-  integrity "sha1-ypRvB7FZOcyworwoFtxWbzA44rs= sha512-y+Y9vdDcrsBD7w4L+M2JzTe3IZZ8+5ZExhtOa6MJBT10bV/RpozkOBetxaIF+L+0+M6eOfRJtDdrSlycZ4NuRA=="
+  integrity "sha1-wwV7O+v5hKCzlTnZIOFVigSXLsg= sha512-F+6f08jOOgVKOKsenUuDtFpE0Ubm7H0wNdpjO4iqOfsMYMPExL8yuGvhhaRaXWTists+CW86td078uLltlQHKg=="
   dependencies:
     liferay-npm-build-tools-common "2.16.2"
 
 babel-plugin-normalize-requires@2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-normalize-requires/-/babel-plugin-normalize-requires-2.16.2.tgz#b5f7ab39702bce16545b2e075383dc224c6c71d6"
-  integrity "sha1-rjYlxLMmCMxjDULDVocz/nhUeh8= sha512-IUk6ENW1g1oM7QHJU2npL3avI5CFDklItwg58OTccUq34fsaRLW30Tji73ge/f/kfzs7pZHKyEBaTgHkV9Y6tA=="
+  integrity "sha1-tferOXArzhZUWy4HU4PcIkxscdY= sha512-ug5GpIlHNL5CVBPBG/sgHy0eYLJ/2vfApQRRnkyT1TnNXtNhycbPsXzfPD2pIwNVK4Cn1kKp566rgN/b1O5h4w=="
   dependencies:
     liferay-npm-build-tools-common "2.16.2"
 
@@ -3899,7 +3899,7 @@ babel-plugin-transform-undefined-to-void@^6.9.4:
 babel-plugin-wrap-modules-amd@2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-wrap-modules-amd/-/babel-plugin-wrap-modules-amd-2.16.2.tgz#2c4350a048e3f347f6b149eb1380c4bf80b5df20"
-  integrity "sha1-cPlwc9qz6i0HnOyWQVGJspAo1po= sha512-k/WkzdSGOPiQNtSSsLtQc8X/WRzIMA5cXRkQlUnPFOO55YcXLYk4hfGleqD3CkIllAKmZaQR/Z6zvMF9CNDoAw=="
+  integrity "sha1-LENQoEjj80f2sUnrE4DEv4C13yA= sha512-CXdeFMEk68Nk9XKP8EDHAxdFXbkap7lD4xAe3RZD4wvfNW7EcHj4HaWKYmNf+9ZVZobSYa7kSIPghrm996q/+A=="
   dependencies:
     babel-template "^6.26.0"
     liferay-npm-build-tools-common "2.16.2"
@@ -11654,7 +11654,7 @@ liferay-npm-build-tools-common@2.16.2:
 liferay-npm-bundler-loader-css-loader@2.16.2:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/liferay-npm-bundler-loader-css-loader/-/liferay-npm-bundler-loader-css-loader-2.16.2.tgz#66cb8661054811470f7ecc0b389980f678f59146"
-  integrity "sha1-lJNN8Q/QGzWqx0adcCoX1p9iU5s= sha512-E6yH2JBs1wjdWeoRW8SB0LhUfrZzWyQdSRJPNynLcee4KN622NDdyIsANinsxKaDAZV143nuhx11HnVQUzH76g=="
+  integrity "sha1-ZsuGYQVIEUcPfswLOJmA9nj1kUY= sha512-nApromE24RvytmNzpOivvUvSxgTgYxI7deWTbQUQH5i4ZJONTtZ09T4cCIfhEmVz91OxZMmREnyF/nP2IXCxgQ=="
   dependencies:
     liferay-npm-build-tools-common "2.16.2"
 

@@ -620,6 +620,10 @@ function Treeview({
 	}, [filterQuery]);
 
 	useEffect(() => {
+		dispatch({newNodes: initialNodes, type: 'UPDATE_NODES'});
+	}, [initialNodes]);
+
+	useEffect(() => {
 		if (onSelectedNodesChange) {
 			onSelectedNodesChange(selectedNodeIds);
 		}

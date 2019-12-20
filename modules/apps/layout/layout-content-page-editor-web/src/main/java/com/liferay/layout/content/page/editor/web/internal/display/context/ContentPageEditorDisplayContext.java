@@ -279,6 +279,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragments", editorSoyContext.get("elements")
 			).put(
+				"getAvailableTemplatesURL",
+				editorSoyContext.get("getAvailableTemplatesURL")
+			).put(
 				"hasEditSegmentsEntryPermission",
 				editorSoyContext.get("hasEditSegmentsEntryPermission")
 			).put(

@@ -20,9 +20,9 @@ import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthApplicationLocalService;
 import com.liferay.oauth.service.OAuthUserLocalService;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
+import com.liferay.oauth.util.OAuth;
 import com.liferay.oauth.util.OAuthAccessor;
 import com.liferay.oauth.util.OAuthMessage;
-import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
 import com.liferay.oauth.web.internal.service.access.policy.OAuthSAPEntryActivator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,7 +44,6 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.oauth.OAuth;
 import net.oauth.OAuthProblemException;
 
 import org.osgi.service.component.annotations.Component;
@@ -85,7 +84,7 @@ public class OAuthVerifier implements AuthVerifier {
 		}
 
 		try {
-			OAuthMessage oAuthMessage = OAuthUtil.getOAuthMessage(
+			OAuthMessage oAuthMessage = _oAuth.getOAuthMessage(
 				httpServletRequest,
 				WebServerUtil.getWebServerURL(
 					httpServletRequest.getRequestURL()));
@@ -95,7 +94,7 @@ public class OAuthVerifier implements AuthVerifier {
 			OAuthAccessor oAuthAccessor = getOAuthAccessor(
 				oAuthMessage, oAuthUser);
 
-			OAuthUtil.validateOAuthMessage(oAuthMessage, oAuthAccessor);
+			_oAuth.validateOAuthMessage(oAuthMessage, oAuthAccessor);
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 			authVerifierResult.setUserId(oAuthUser.getUserId());
@@ -118,7 +117,7 @@ public class OAuthVerifier implements AuthVerifier {
 				boolean sendBody = GetterUtil.getBoolean(
 					properties.getProperty("send.body"));
 
-				OAuthUtil.handleException(
+				_oAuth.handleException(
 					httpServletRequest, accessControlContext.getResponse(), e,
 					sendBody);
 
@@ -146,7 +145,7 @@ public class OAuthVerifier implements AuthVerifier {
 		throws PortalException {
 
 		OAuthAccessor oAuthAccessor = new DefaultOAuthAccessor(
-			OAuthUtil.getOAuthConsumer(oAuthMessage));
+			_oAuth.getOAuthConsumer(oAuthMessage));
 
 		oAuthAccessor.setAccessToken(oAuthUser.getAccessToken());
 		oAuthAccessor.setRequestToken(null);
@@ -162,7 +161,7 @@ public class OAuthVerifier implements AuthVerifier {
 			Validator.isNull(oAuthMessage.getToken())) {
 
 			net.oauth.OAuthException oAuthException = new OAuthProblemException(
-				OAuth.Problems.PARAMETER_ABSENT);
+				net.oauth.OAuth.Problems.PARAMETER_ABSENT);
 
 			throw new OAuthException(oAuthException);
 		}
@@ -172,7 +171,7 @@ public class OAuthVerifier implements AuthVerifier {
 
 		if (oAuthUser == null) {
 			net.oauth.OAuthException oAuthException = new OAuthProblemException(
-				OAuth.Problems.TOKEN_REJECTED);
+				net.oauth.OAuth.Problems.TOKEN_REJECTED);
 
 			throw new OAuthException(oAuthException);
 		}
@@ -182,7 +181,7 @@ public class OAuthVerifier implements AuthVerifier {
 
 	protected boolean isUsingOAuth(HttpServletRequest httpServletRequest) {
 		String oAuthToken = ParamUtil.getString(
-			httpServletRequest, OAuth.OAUTH_TOKEN);
+			httpServletRequest, net.oauth.OAuth.OAUTH_TOKEN);
 
 		if (Validator.isNotNull(oAuthToken)) {
 			return true;
@@ -203,6 +202,9 @@ public class OAuthVerifier implements AuthVerifier {
 	}
 
 	private static final String _OAUTH = "OAuth";
+
+	@Reference
+	private OAuth _oAuth;
 
 	@Reference(unbind = "-")
 	private OAuthApplicationLocalService _oAuthApplicationLocalService;

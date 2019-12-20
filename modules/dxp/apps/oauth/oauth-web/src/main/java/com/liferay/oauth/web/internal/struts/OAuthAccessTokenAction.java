@@ -15,10 +15,10 @@
 package com.liferay.oauth.web.internal.struts;
 
 import com.liferay.oauth.constants.OAuthConstants;
+import com.liferay.oauth.util.OAuth;
 import com.liferay.oauth.util.OAuthAccessor;
 import com.liferay.oauth.util.OAuthAccessorConstants;
 import com.liferay.oauth.util.OAuthMessage;
-import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.oauth.util.WebServerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -31,10 +31,10 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.oauth.OAuth;
 import net.oauth.OAuthProblemException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -53,22 +53,21 @@ public class OAuthAccessTokenAction implements StrutsAction {
 		throws Exception {
 
 		try {
-			OAuthMessage oAuthMessage = OAuthUtil.getOAuthMessage(
+			OAuthMessage oAuthMessage = _oAuth.getOAuthMessage(
 				httpServletRequest,
 				WebServerUtil.getWebServerURL(
 					httpServletRequest.getRequestURL()));
 
-			OAuthAccessor oAuthAccessor = OAuthUtil.getOAuthAccessor(
-				oAuthMessage);
+			OAuthAccessor oAuthAccessor = _oAuth.getOAuthAccessor(oAuthMessage);
 
-			OAuthUtil.validateOAuthMessage(oAuthMessage, oAuthAccessor);
+			_oAuth.validateOAuthMessage(oAuthMessage, oAuthAccessor);
 
 			boolean authorized = GetterUtil.getBoolean(
 				oAuthAccessor.getProperty(OAuthAccessorConstants.AUTHORIZED));
 
 			if (!authorized) {
 				throw new OAuthProblemException(
-					OAuth.Problems.ADDITIONAL_AUTHORIZATION_REQUIRED);
+					net.oauth.OAuth.Problems.ADDITIONAL_AUTHORIZATION_REQUIRED);
 			}
 
 			long userId = (Long)oAuthAccessor.getProperty(
@@ -77,25 +76,27 @@ public class OAuthAccessTokenAction implements StrutsAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				httpServletRequest);
 
-			OAuthUtil.generateAccessToken(
-				oAuthAccessor, userId, serviceContext);
+			_oAuth.generateAccessToken(oAuthAccessor, userId, serviceContext);
 
 			httpServletResponse.setContentType(ContentTypes.TEXT_PLAIN);
 
 			OutputStream outputStream = httpServletResponse.getOutputStream();
 
-			OAuthUtil.formEncode(
+			_oAuth.formEncode(
 				oAuthAccessor.getAccessToken(), oAuthAccessor.getTokenSecret(),
 				outputStream);
 
 			outputStream.close();
 		}
 		catch (Exception e) {
-			OAuthUtil.handleException(
+			_oAuth.handleException(
 				httpServletRequest, httpServletResponse, e, false);
 		}
 
 		return null;
 	}
+
+	@Reference
+	private OAuth _oAuth;
 
 }

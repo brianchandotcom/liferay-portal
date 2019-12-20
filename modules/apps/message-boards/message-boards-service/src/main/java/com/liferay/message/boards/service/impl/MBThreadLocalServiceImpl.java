@@ -70,8 +70,10 @@ import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.model.TrashVersion;
+import com.liferay.trash.service.TrashEntryLocalService;
+import com.liferay.trash.service.TrashVersionLocalService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -563,7 +565,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 
 			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-				trashVersionLocalService.addTrashVersion(
+				_trashVersionLocalService.addTrashVersion(
 					trashEntryId, MBMessage.class.getName(),
 					message.getMessageId(), status, null);
 			}
@@ -691,7 +693,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Thread
 
-			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+			TrashVersion trashVersion = _trashVersionLocalService.fetchVersion(
 				MBThread.class.getName(), thread.getThreadId());
 
 			int status = WorkflowConstants.STATUS_APPROVED;
@@ -705,7 +707,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			// Trash
 
 			if (trashVersion != null) {
-				trashVersionLocalService.deleteTrashVersion(trashVersion);
+				_trashVersionLocalService.deleteTrashVersion(trashVersion);
 			}
 
 			// Messages
@@ -766,7 +768,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Trash
 
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, thread.getGroupId(), MBThread.class.getName(),
 			thread.getThreadId(), thread.getUuid(), null, oldStatus, null,
 			null);
@@ -813,7 +815,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				continue;
 			}
 
-			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+			TrashVersion trashVersion = _trashVersionLocalService.fetchVersion(
 				MBMessage.class.getName(), message.getMessageId());
 
 			int oldStatus = WorkflowConstants.STATUS_APPROVED;
@@ -831,7 +833,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			// Trash
 
 			if (trashVersion != null) {
-				trashVersionLocalService.deleteTrashVersion(trashVersion);
+				_trashVersionLocalService.deleteTrashVersion(trashVersion);
 			}
 
 			// Asset
@@ -884,7 +886,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return;
 		}
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
 			MBThread.class.getName(), threadId);
 
 		updateStatus(userId, threadId, trashEntry.getStatus());
@@ -896,7 +898,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Trash
 
-		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
+		_trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 
 		// Social
 
@@ -1244,6 +1246,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
+	private TrashVersionLocalService _trashVersionLocalService;
 
 	@Reference
 	private ViewCountManager _viewCountManager;

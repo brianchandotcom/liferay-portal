@@ -14,8 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,16 +26,15 @@ public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("update Group_ set active_ = [$FALSE$] where groupId ");
-		sb.append("in (select Group_.groupId from Group_ inner join ");
-		sb.append("User_ on Group_.companyId = User_.companyId and ");
-		sb.append("Group_.classPK = User_.userId where ");
-		sb.append("Group_.classNameId = (select classNameId from ");
+		sb.append("update Group_ set active_ = [$FALSE$] where groupId in ");
+		sb.append("(select Group_.groupId from Group_ inner join User_ on ");
+		sb.append("Group_.companyId = User_.companyId and Group_.classPK = ");
+		sb.append("User_.userId where Group_.classNameId = (select from ");
 		sb.append("ClassName_ where value = ");
-		sb.append("'com.liferay.portal.kernel.model.User') and ");
-		sb.append("User_.status = 5)");
+		sb.append("'com.liferay.portal.kernel.model.User') and User_.status ");
+		sb.append("= 5)");
 
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
 
@@ -45,10 +42,10 @@ public class UpgradeUser extends UpgradeProcess {
 
 		sb.append("update Group_ inner join User_ on Group_.companyId = ");
 		sb.append("User_.companyId and Group_.classPK = User_.userId set ");
-		sb.append("active_ = [$FALSE$] where Group_.classNameId = ");
-		sb.append("(select classNameId from ClassName_ where value = '");
-		sb.append("com.liferay.portal.kernel.model.User') and ");
-		sb.append("User_.status = 5");
+		sb.append("active_ = [$FALSE$] where Group_.classNameId = (select ");
+		sb.append("classNameId from ClassName_ where value = '");
+		sb.append("com.liferay.portal.kernel.model.User') and User_.status = ");
+		sb.append("5");
 
 		String sql = sb.toString();
 

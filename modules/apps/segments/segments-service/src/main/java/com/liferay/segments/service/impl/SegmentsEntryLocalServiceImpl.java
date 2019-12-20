@@ -75,6 +75,18 @@ import org.osgi.service.component.annotations.Reference;
 public class SegmentsEntryLocalServiceImpl
 	extends SegmentsEntryLocalServiceBaseImpl {
 
+	@Override
+	public SegmentsEntry addSegmentsEntry(
+			String segmentsEntryKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active, String criteria,
+			String type, ServiceContext serviceContext)
+		throws PortalException {
+
+		return segmentsEntryLocalService.addSegmentsEntry(
+			segmentsEntryKey, nameMap, descriptionMap, active, criteria, null,
+			type, serviceContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SegmentsEntry addSegmentsEntry(

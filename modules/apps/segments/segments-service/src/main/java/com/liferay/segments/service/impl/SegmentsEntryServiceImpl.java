@@ -53,6 +53,22 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	public SegmentsEntry addSegmentsEntry(
 			String segmentsEntryKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean active, String criteria,
+			String type, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+
+		return segmentsEntryLocalService.addSegmentsEntry(
+			segmentsEntryKey, nameMap, descriptionMap, active, criteria, type,
+			serviceContext);
+	}
+
+	@Override
+	public SegmentsEntry addSegmentsEntry(
+			String segmentsEntryKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, boolean active, String criteria,
 			String source, String type, ServiceContext serviceContext)
 		throws PortalException {
 

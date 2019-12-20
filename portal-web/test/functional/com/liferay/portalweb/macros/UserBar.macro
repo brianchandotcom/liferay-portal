@@ -1,10 +1,11 @@
 definition {
 
 	macro gotoDropdown {
-		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
-			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_PORTRAIT")) {
+			Click(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
+		}
+		else {
+			Click(locator1 = "UserBar#USER_AVATAR_ICON");
 		}
 
 		AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -62,7 +63,9 @@ public class UpgradeUserTest {
 
 		_groupLocalService.updateGroup(group);
 
-		new UpgradeUser().upgrade();
+		UpgradeProcess upgradeUser = new UpgradeUser();
+
+		upgradeUser.upgrade();
 
 		GroupUtil.clearCache();
 

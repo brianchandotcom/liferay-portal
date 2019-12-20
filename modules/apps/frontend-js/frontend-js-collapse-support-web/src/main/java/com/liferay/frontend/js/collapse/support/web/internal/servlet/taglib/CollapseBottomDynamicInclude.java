@@ -41,7 +41,7 @@ public class CollapseBottomDynamicInclude implements DynamicInclude {
 		ScriptData scriptData = new ScriptData();
 
 		String initModuleName = _npmResolver.resolveModuleName(
-			"frontend-js-collapse-support-web/index.es");
+			"frontend-js-collapse-support-web/index");
 
 		scriptData.append(
 			null, "CollapseProvider.default()",

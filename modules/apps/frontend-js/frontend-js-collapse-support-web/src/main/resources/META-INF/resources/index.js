@@ -12,7 +12,7 @@
  * details.
  */
 
-import CollapseProvider from './CollapseProvider.es';
+import CollapseProvider from './CollapseProvider';
 
 export default () => {
 	new CollapseProvider();

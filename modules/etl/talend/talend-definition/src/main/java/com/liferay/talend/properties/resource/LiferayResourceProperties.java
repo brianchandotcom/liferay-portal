@@ -449,7 +449,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		OASSource oasSource = liferayOASSource.getOASSource();
 
 		parameters.addParameters(
-			oasExplorer.getPathOperationParameters(
+			oasExplorer.getPathOperationOASParameters(
 				_getOpenAPIEntityOperationPath(), operation.getHttpMethod(),
 				oasSource.getOASJsonObject(getOpenAPIUrl())));
 	}

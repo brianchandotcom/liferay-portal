@@ -106,7 +106,7 @@ public class LiferayInputResourceProperties
 		OASExplorer oasExplorer = new OASExplorer();
 
 		populateParametersTable(
-			oasExplorer.getPathOperationParameters(
+			oasExplorer.getPathOperationOASParameters(
 				endpoint.getValue(), OASConstants.OPERATION_GET,
 				oasJsonObject));
 

@@ -68,7 +68,7 @@ public class OASExplorer {
 		return entitySchemaNames;
 	}
 
-	public List<OASParameter> getPathOperationParameters(
+	public List<OASParameter> getPathOperationOASParameters(
 		String path, String operation, JsonObject oasJsonObject) {
 
 		List<OASParameter> oasParameters = new ArrayList<>();

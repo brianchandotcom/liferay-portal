@@ -194,8 +194,6 @@ public class DDMFormInstanceLocalServiceImpl
 	public void deleteFormInstance(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
-		deleteDDMFormInstance(ddmFormInstance);
-
 		resourceLocalService.deleteResource(
 			ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
@@ -217,6 +215,8 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstance.getCompanyId(), ddmFormInstance.getGroupId(),
 			DDMFormInstance.class.getName(),
 			ddmFormInstance.getFormInstanceId(), 0);
+
+		deleteDDMFormInstance(ddmFormInstance);
 	}
 
 	@Override

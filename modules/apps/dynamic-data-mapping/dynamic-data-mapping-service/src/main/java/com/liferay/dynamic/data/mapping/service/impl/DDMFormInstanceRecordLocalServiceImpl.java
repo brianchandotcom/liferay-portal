@@ -266,6 +266,19 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return ddmStorageAdapterGetResponse.getDDMFormValues();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getDDMFormValues(DDMForm, long, String)}
+	 */
+	@Deprecated
+	@Override
+	public DDMFormValues getDDMFormValues(long storageId, DDMForm ddmForm)
+		throws StorageException {
+
+		return getDDMFormValues(
+			ddmForm, storageId, StorageType.JSON.toString());
+	}
+
 	@Override
 	public DDMFormInstanceRecord getFormInstanceRecord(
 			long ddmFormInstanceRecordId)

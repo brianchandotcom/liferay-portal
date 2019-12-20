@@ -782,6 +782,10 @@ public class JavadocFormatter {
 	private void _addFieldElement(Element parentElement, JavaField javaField)
 		throws Exception {
 
+		if (javaField == null) {
+			return;
+		}
+
 		Element fieldElement = parentElement.addElement("field");
 
 		Dom4jDocUtil.add(fieldElement, "name", javaField.getName());
@@ -1749,7 +1753,7 @@ public class JavadocFormatter {
 	}
 
 	private int _getJavaModelLineNumber(JavaModel javaModel, String content) {
-		if (javaModel.getLineNumber() == 0) {
+		if ((javaModel == null) || (javaModel.getLineNumber() == 0)) {
 			return -1;
 		}
 

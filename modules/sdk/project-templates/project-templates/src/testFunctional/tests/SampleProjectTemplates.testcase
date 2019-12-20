@@ -28,7 +28,7 @@ definition {
 
 	@priority = "5"
 	test MvcPortletTemplateSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property project.templates = "mvc-portlet";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#MvcPortletTemplateSmoke";
 
@@ -43,7 +43,7 @@ definition {
 
 	@priority = "5"
 	test RestTemplateSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property project.templates = "rest";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#RestTemplateSmoke";
 
@@ -89,7 +89,7 @@ definition {
 
 	@priority = "5"
 	test WarMvcPortletTemplateSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property project.templates = "war-mvc-portlet";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#WarMvcPortletTemplateSmoke";
 

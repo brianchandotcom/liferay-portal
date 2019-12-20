@@ -747,6 +747,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: dataListViewId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
                   name: keywords
                   schema:
                       type: string
@@ -1165,6 +1171,12 @@ paths:
                 - in: path
                   name: dataRecordCollectionId
                   required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: dataListViewId
+                  required: false
                   schema:
                       format: int64
                       type: integer

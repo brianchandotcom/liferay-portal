@@ -52,15 +52,13 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_2.jpg");
 
-		var customImageURL = selenium.getAttribute("TextInput#OPEN_GRAPH_CUSTOM_IMAGE_VALUE");
-
-		var customImageURLSource = StringUtil.replace("${customImageURL}", "&", "&amp;");
+		var siteID = Site.getSiteId();
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${customImageURLSource}"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
 	}
 
 	@description = "This makes sure that the previously added image can be cleared."

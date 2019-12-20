@@ -40,6 +40,37 @@ definition {
 			value1 = "${portlet}");
 	}
 
+	macro gotoDepotPortlet {
+		if (isSet(listView)) {
+			var key_listEntry = "${depotName}";
+
+			Click(
+				locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+				value1 = "${depotName}");
+		}
+
+		else if (isSet(tableView)) {
+			var key_tableEntry = "${depotName}";
+
+			Click(
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+				value1 = "${depotName}");
+		}
+
+		else {
+			var key_card = "${depotName}";
+
+			Click(
+				locator1 = "LexiconCard#CARD_TITLE",
+				value1 = "${depotName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "${category}",
+			panel = "Site Administration",
+			portlet = "${portlet}");
+	}
+
 	macro gotoDepotViaSpaceIcon {
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 

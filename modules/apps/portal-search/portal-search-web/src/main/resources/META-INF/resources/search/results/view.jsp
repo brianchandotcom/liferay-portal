@@ -18,10 +18,13 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext" %><%@
@@ -49,7 +52,7 @@ if (searchResultsPortletDisplayContext.isRenderNothing()) {
 	return;
 }
 
-com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.search.Document> searchContainer1 = searchResultsPortletDisplayContext.getSearchContainer();
+SearchContainer<Document> searchContainer1 = searchResultsPortletDisplayContext.getSearchContainer();
 %>
 
 <style>
@@ -103,10 +106,12 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 			entries="<%= searchResultSummaryDisplayContexts %>"
 		/>
 
-		<liferay-ui:search-paginator
-			id='<%= renderResponse.getNamespace() + "searchContainerTag" %>'
-			markupView="lexicon"
-			searchContainer="<%= searchContainer1 %>"
-		/>
+		<aui:form useNamespace="<%= false %>">
+			<liferay-ui:search-paginator
+				id='<%= renderResponse.getNamespace() + "searchContainerTag" %>'
+				markupView="lexicon"
+				searchContainer="<%= searchContainer1 %>"
+			/>
+		</aui:form>
 	</c:otherwise>
 </c:choose>

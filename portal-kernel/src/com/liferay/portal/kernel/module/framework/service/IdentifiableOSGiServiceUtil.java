@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.module.framework.service;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -39,9 +37,6 @@ public class IdentifiableOSGiServiceUtil {
 	private IdentifiableOSGiServiceUtil() {
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		IdentifiableOSGiServiceUtil.class);
-
 	private static final Map<String, IdentifiableOSGiService>
 		_identifiableOSGiServices = new ConcurrentHashMap<>();
 	private static final ServiceTracker
@@ -60,21 +55,9 @@ public class IdentifiableOSGiServiceUtil {
 			IdentifiableOSGiService identifiableOSGiService =
 				registry.getService(serviceReference);
 
-			try {
-				_identifiableOSGiServices.put(
-					identifiableOSGiService.getOSGiServiceIdentifier(),
-					identifiableOSGiService);
-			}
-			catch (UnsupportedOperationException uoe) {
-
-				// LPS-89569
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(uoe, uoe);
-				}
-
-				return null;
-			}
+			_identifiableOSGiServices.put(
+				identifiableOSGiService.getOSGiServiceIdentifier(),
+				identifiableOSGiService);
 
 			return identifiableOSGiService;
 		}
@@ -84,19 +67,9 @@ public class IdentifiableOSGiServiceUtil {
 			ServiceReference<IdentifiableOSGiService> serviceReference,
 			IdentifiableOSGiService identifiableOSGiService) {
 
-			try {
-				_identifiableOSGiServices.put(
-					identifiableOSGiService.getOSGiServiceIdentifier(),
-					identifiableOSGiService);
-			}
-			catch (UnsupportedOperationException uoe) {
-
-				// LPS-89569
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(uoe, uoe);
-				}
-			}
+			_identifiableOSGiServices.put(
+				identifiableOSGiService.getOSGiServiceIdentifier(),
+				identifiableOSGiService);
 		}
 
 		@Override
@@ -108,18 +81,8 @@ public class IdentifiableOSGiServiceUtil {
 
 			registry.ungetService(serviceReference);
 
-			try {
-				_identifiableOSGiServices.remove(
-					identifiableOSGiService.getOSGiServiceIdentifier());
-			}
-			catch (UnsupportedOperationException uoe) {
-
-				// LPS-89569
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(uoe, uoe);
-				}
-			}
+			_identifiableOSGiServices.remove(
+				identifiableOSGiService.getOSGiServiceIdentifier());
 		}
 
 	}

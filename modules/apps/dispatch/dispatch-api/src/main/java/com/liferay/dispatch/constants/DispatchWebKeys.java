@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.commerce.data.integration.constants;
+package com.liferay.dispatch.constants;
 
 /**
  * @author Riccardo Ferrari
  * @author Alessio Antonio Rendina
  */
-public class CommerceDataIntegrationWebKeys {
+public class DispatchWebKeys {
 
 	public static final String COMMERCE_DATA_INTEGRATION_PROCESS =
 		"COMMERCE_DATA_INTEGRATION_PROCESS";

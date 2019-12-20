@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.commerce.data.integration.constants;
+package com.liferay.dispatch.constants;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceDataIntegrationActionKeys {
+public class DispatchActionKeys {
 
 	public static final String ADD_COMMERCE_DATA_INTEGRATION_PROCESS =
 		"ADD_COMMERCE_DATA_INTEGRATION_PROCESS";

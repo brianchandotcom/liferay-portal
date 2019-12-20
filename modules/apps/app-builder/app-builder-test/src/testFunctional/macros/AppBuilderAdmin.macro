@@ -58,179 +58,181 @@ definition {
 		TableViewBuilder.addBasicTableView(
 			fieldType = "${fieldType}",
 			tableViewName = "${tableViewName}");
+	}
 
-		macro deleteEntry {
-			Click(
-				key_itemName = "${itemName}",
-				locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+	macro deleteEntry {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
-			MenuItem.clickNoError(menuItem = "Delete");
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${key_itemName}");
+	}
+
+	macro editCustomObjectNameAtPopover {
+		Type(
+			locator1 = "AppBuilder#INPUT_OBJECT_NAME",
+			value1 = "${customObjectName}");
+	}
+
+	macro editItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
+	macro filterListAscendAndDescend {
+		Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
+	}
+
+	macro gotoAddCustomObject {
+		AppBuilderAdmin.add();
+	}
+
+	macro gotoAddItemViaNewButton {
+		AssertClick(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "New Custom Object");
+	}
+
+	macro gotoBack {
+		Navigator.gotoBack();
+
+		if (IsElementPresent(locator1 = "Button#LEAVE")) {
+			Click(locator1 = "Button#LEAVE");
+		}
+	}
+
+	macro gotoCustomAppCP {
+		ProductMenuHelper.expandPanel(panel = "${panel}");
+
+		Click(
+			key_portlet = "${portlet}",
+			locator1 = "AppBuilder#CUSTOM_PORTLET");
+	}
+
+	macro openActionMenu {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+	}
+
+	macro openItem {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+	}
+
+	macro openStandAloneApp {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "Open Standalone App");
+	}
+
+	macro save {
+		Click(locator1 = "AppBuilder#SAVE_BUTTON");
+	}
+
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+	}
+
+	macro setName {
+		Type(
+			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
+			value1 = "${title}");
+	}
+
+	macro switchTab {
+		Navigator.gotoNavItem(navItem = "${tabName}");
+	}
+
+	macro teardownAppBuilder {
+		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
 
 			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-			Alert.viewSuccessMessage();
+			// TODO: Remove this comment to validade Success Messages when implemented on App Builder
+			// Alert.viewSuccessMessage();
 
-			AssertElementNotPresent(
-				locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-				value1 = "${key_itemName}");
-		}
-
-		macro editCustomObjectNameAtPopover {
-			Type(
-				locator1 = "AppBuilder#INPUT_OBJECT_NAME",
-				value1 = "${customObjectName}");
-		}
-
-		macro editItem {
-			AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
-			MenuItem.clickNoError(menuItem = "Edit");
-		}
-
-		macro filterListAscendAndDescend {
-			Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
-		}
-
-		macro gotoAddCustomObject {
-			AppBuilderAdmin.add();
-		}
-
-		macro gotoAddItemViaNewButton {
-			AssertClick(
-				locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
-				value1 = "New Custom Object");
-		}
-
-		macro gotoBack {
-			Navigator.gotoBack();
-
-			if (IsElementPresent(locator1 = "Button#LEAVE")) {
-				Click(locator1 = "Button#LEAVE");
-			}
-		}
-
-		macro gotoCustomAppCP {
-			ProductMenuHelper.expandPanel(panel = "${panel}");
-
-			Click(
-				key_portlet = "${portlet}",
-				locator1 = "AppBuilder#CUSTOM_PORTLET");
-		}
-
-		macro openActionMenu {
-			Click(
-				key_itemName = "${itemName}",
-				locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
-		}
-
-		macro openItem {
-			Click(
-				key_itemName = "${itemName}",
-				locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
-		}
-
-		macro openStandAloneApp {
-			AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
-			MenuItem.clickNoError(menuItem = "Open Standalone App");
-		}
-
-		macro save {
-			Click(locator1 = "AppBuilder#SAVE_BUTTON");
-		}
-
-		macro searchByItem {
-			Type(
-				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-				value1 = "${itemName}");
-
-			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
-		}
-
-		macro setName {
-			Type(
-				locator1 = "FormViewBuilder#FORM_VIEW_NAME",
-				value1 = "${title}");
-		}
-
-		macro switchTab {
-			Navigator.gotoNavItem(navItem = "${tabName}");
-		}
-
-		macro teardownAppBuilder {
-			while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
-				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
-
-				AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-				// TODO: Remove this comment to validade Success Messages when implemented on App Builder
-				// Alert.viewSuccessMessage();
-
-			}
-		}
-
-		macro uncheckCheckbox {
-			Click(
-				key_checkboxOption = "${checkboxOption}",
-				locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
-		}
-
-		macro validateCustomObjectNameOnHeader {
-			AssertTextEquals(
-				locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",
-				value1 = "${customObjectName}");
-		}
-
-		macro validateEmptyListMessage {
-			AssertTextEquals(
-				locator1 = "AppBuilder#MESSAGE_TITLE_EMPTY_LIST",
-				value1 = "${title}");
-
-			AssertTextEquals(
-				locator1 = "AppBuilder#MESSAGE_DESCRIPTION_EMPTY_LIST",
-				value1 = "${description}");
-		}
-
-		macro validateIfSearchItemIsFound {
-			AssertTextEquals(
-				locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
-				value1 = "1 Results for ${itemName}");
-		}
-
-		macro validateIfSearchItemIsNotFound {
-			AssertTextEquals(
-				locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
-				value1 = "0 Results for ${itemName}");
-
-			AssertTextEquals(
-				locator1 = "AppBuilder#VALIDATE_IF_ITEM_IS_NOT_FOUND",
-				value1 = "No results were found.");
-		}
-
-		macro validateItemNameOnTable {
-			AssertTextEquals(
-				locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-				value1 = "${itemName}");
-		}
-
-		macro validateListTitleAtRow {
-			AssertTextEquals(
-				key_RowNumber = "${rowNumber}",
-				locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",
-				value1 = "${title}");
-		}
-
-		macro validateRequiredValidNameMessage {
-
-			AssertTextEquals(
-				locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
-				value1 = "This field is required.");
-		}
-
-		macro viewCheckboxChecked {
-			AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
-		}
-
-		macro viewItem {
-			AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
-			MenuItem.clickNoError(menuItem = "View");
 		}
 	}
+
+	macro uncheckCheckbox {
+		Click(
+			key_checkboxOption = "${checkboxOption}",
+			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+	}
+
+	macro validateCustomObjectNameOnHeader {
+		AssertTextEquals(
+			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",
+			value1 = "${customObjectName}");
+	}
+
+	macro validateEmptyListMessage {
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_TITLE_EMPTY_LIST",
+			value1 = "${title}");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_DESCRIPTION_EMPTY_LIST",
+			value1 = "${description}");
+	}
+
+	macro validateIfSearchItemIsFound {
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
+			value1 = "1 Results for ${itemName}");
+	}
+
+	macro validateIfSearchItemIsNotFound {
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
+			value1 = "0 Results for ${itemName}");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_IF_ITEM_IS_NOT_FOUND",
+			value1 = "No results were found.");
+	}
+
+	macro validateItemNameOnTable {
+		AssertTextEquals(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${itemName}");
+	}
+
+	macro validateListTitleAtRow {
+		AssertTextEquals(
+			key_RowNumber = "${rowNumber}",
+			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",
+			value1 = "${title}");
+	}
+
+	macro validateRequiredValidNameMessage {
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
+			value1 = "This field is required.");
+	}
+
+	macro viewCheckboxChecked {
+		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
+	}
+
+	macro viewItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "View");
+	}
+
+}

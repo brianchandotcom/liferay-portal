@@ -6,19 +6,19 @@
 		<portlet-name>90</portlet-name>
 		<permissions>
 			<supports>
-				<action-key>ADD_COMMERCE_DATA_INTEGRATION_PROCESS</action-key>
+				<action-key>ADD_DISPATCH_TRIGGER</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_COMMERCE_DATA_INTEGRATION_PROCESS</action-key>
+				<action-key>ADD_DISPATCH_TRIGGER</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
 	<model-resource>
-		<model-name>com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess</model-name>
+		<model-name>com.liferay.dispatch.model.DispatchTrigger</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_data_integration_manager_web_internal_portlet_CommerceDataIntegrationPortlet</portlet-name>
+			<portlet-name>com_liferay_dispatch_web_internal_portlet_DispatchPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

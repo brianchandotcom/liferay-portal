@@ -368,6 +368,7 @@ definition {
 		Page.viewPreview(
 			description = "وصف الاختبار",
 			htmlTitle = "عنوان الاختبار - Test Site Name - ${siteName}",
+			locale = "ar-SA",
 			openGraph = "true",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");

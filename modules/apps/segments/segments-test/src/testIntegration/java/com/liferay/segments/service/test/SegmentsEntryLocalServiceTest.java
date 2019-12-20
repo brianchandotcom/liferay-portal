@@ -154,6 +154,22 @@ public class SegmentsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddSegmentsEntryWithoutSource() throws PortalException {
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.addSegmentsEntry(
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomBoolean(),
+				CriteriaSerializer.serialize(new Criteria()),
+				User.class.getName(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			SegmentsEntryConstants.SOURCE_DEFAULT, segmentsEntry.getSource());
+	}
+
+	@Test
 	public void testAddSegmentsEntryWithReferredSource()
 		throws PortalException {
 

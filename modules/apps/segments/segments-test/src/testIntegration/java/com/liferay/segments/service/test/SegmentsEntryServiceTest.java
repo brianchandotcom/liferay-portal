@@ -118,6 +118,36 @@ public class SegmentsEntryServiceTest {
 		}
 	}
 
+	@Test
+	public void testAddSegmentsEntryWithManageSegmentsEntriesPermissionWithoutSource()
+		throws Exception {
+
+		Role siteMemberRole = RoleLocalServiceUtil.getRole(
+			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_company.getCompanyId(), "com.liferay.segments",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			siteMemberRole.getRoleId(),
+			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_groupUser);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_groupUser, permissionChecker)) {
+
+			_segmentsEntryService.addSegmentsEntry(
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				CriteriaSerializer.serialize(new Criteria()),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					_group, _groupUser.getUserId()));
+		}
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddSegmentsEntryWithoutManageSegmentsEntriesPermission()
 		throws Exception {

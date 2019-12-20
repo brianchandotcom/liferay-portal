@@ -294,6 +294,13 @@ public class DispatchTriggerWrapper
 		return model.getTypeSettings();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties() {
+
+		return model.getTypeSettingsProperties();
+	}
+
 	/**
 	 * Returns the user ID of this dispatch trigger.
 	 *
@@ -487,6 +494,14 @@ public class DispatchTriggerWrapper
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		model.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties) {
+
+		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**

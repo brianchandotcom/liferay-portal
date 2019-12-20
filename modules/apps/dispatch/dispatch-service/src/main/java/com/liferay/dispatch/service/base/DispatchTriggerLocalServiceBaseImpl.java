@@ -117,11 +117,13 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 	 *
 	 * @param dispatchTrigger the dispatch trigger
 	 * @return the dispatch trigger that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DispatchTrigger deleteDispatchTrigger(
-		DispatchTrigger dispatchTrigger) {
+			DispatchTrigger dispatchTrigger)
+		throws PortalException {
 
 		return dispatchTriggerPersistence.remove(dispatchTrigger);
 	}
@@ -402,6 +404,10 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.CompanyLocalService
+		companyLocalService;
 
 	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService

@@ -1421,7 +1421,6 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
-<<<<<<< HEAD
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {
@@ -1470,7 +1469,6 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
 	}
 
-=======
 	@description = "Search for a deployment in the deployment lists"
 	@priority = "5"
 	test SearchForDeployedItem {
@@ -1522,12 +1520,7 @@ definition {
 
 		AppBuilderAdmin.clearSearch();
 	}
-<<<<<<< HEAD
 	
->>>>>>> LRQA-53956 Created SearchForDeployedItem test
-=======
-
->>>>>>> LRQA-53956 Added addCustomObject to test
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"
 	@priority = "5"
 	test TableViewClearSearchResults {

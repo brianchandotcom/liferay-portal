@@ -22,14 +22,17 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
 
@@ -70,6 +73,11 @@ public interface DispatchTriggerLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DispatchTrigger addDispatchTrigger(DispatchTrigger dispatchTrigger);
 
+	public DispatchTrigger addDispatchTrigger(
+			long userId, String name, String type,
+			UnicodeProperties typeSettingsProperties, boolean system)
+		throws PortalException;
+
 	/**
 	 * Creates a new dispatch trigger with the primary key. Does not add the dispatch trigger to the database.
 	 *
@@ -84,10 +92,13 @@ public interface DispatchTriggerLocalService
 	 *
 	 * @param dispatchTrigger the dispatch trigger
 	 * @return the dispatch trigger that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public DispatchTrigger deleteDispatchTrigger(
-		DispatchTrigger dispatchTrigger);
+			DispatchTrigger dispatchTrigger)
+		throws PortalException;
 
 	/**
 	 * Deletes the dispatch trigger with the primary key from the database. Also notifies the appropriate model listeners.
@@ -177,6 +188,9 @@ public interface DispatchTriggerLocalService
 	public DispatchTrigger fetchDispatchTrigger(long dispatchTriggerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DispatchTrigger fetchDispatchTrigger(long companyId, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -204,6 +218,10 @@ public interface DispatchTriggerLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DispatchTrigger> getDispatchTriggers(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DispatchTrigger> getDispatchTriggers(
+		long companyId, int start, int end);
+
 	/**
 	 * Returns the number of dispatch triggers.
 	 *
@@ -211,6 +229,9 @@ public interface DispatchTriggerLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDispatchTriggersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDispatchTriggersCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -236,5 +257,18 @@ public interface DispatchTriggerLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DispatchTrigger updateDispatchTrigger(
 		DispatchTrigger dispatchTrigger);
+
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, String name,
+			UnicodeProperties typeSettingsProperties)
+		throws PortalException;
+
+	public DispatchTrigger updateDispatchTriggerTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd)
+		throws PortalException;
 
 }

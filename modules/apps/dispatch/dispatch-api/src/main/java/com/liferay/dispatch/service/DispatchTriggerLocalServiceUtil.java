@@ -50,6 +50,17 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().addDispatchTrigger(dispatchTrigger);
 	}
 
+	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
+			long userId, String name, String type,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsProperties,
+			boolean system)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addDispatchTrigger(
+			userId, name, type, typeSettingsProperties, system);
+	}
+
 	/**
 	 * Creates a new dispatch trigger with the primary key. Does not add the dispatch trigger to the database.
 	 *
@@ -67,10 +78,12 @@ public class DispatchTriggerLocalServiceUtil {
 	 *
 	 * @param dispatchTrigger the dispatch trigger
 	 * @return the dispatch trigger that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.dispatch.model.DispatchTrigger
-		deleteDispatchTrigger(
-			com.liferay.dispatch.model.DispatchTrigger dispatchTrigger) {
+			deleteDispatchTrigger(
+				com.liferay.dispatch.model.DispatchTrigger dispatchTrigger)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteDispatchTrigger(dispatchTrigger);
 	}
@@ -191,6 +204,12 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().fetchDispatchTrigger(dispatchTriggerId);
 	}
 
+	public static com.liferay.dispatch.model.DispatchTrigger
+		fetchDispatchTrigger(long companyId, String name) {
+
+		return getService().fetchDispatchTrigger(companyId, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -228,6 +247,12 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getDispatchTriggers(start, end);
 	}
 
+	public static java.util.List<com.liferay.dispatch.model.DispatchTrigger>
+		getDispatchTriggers(long companyId, int start, int end) {
+
+		return getService().getDispatchTriggers(companyId, start, end);
+	}
+
 	/**
 	 * Returns the number of dispatch triggers.
 	 *
@@ -235,6 +260,10 @@ public class DispatchTriggerLocalServiceUtil {
 	 */
 	public static int getDispatchTriggersCount() {
 		return getService().getDispatchTriggersCount();
+	}
+
+	public static int getDispatchTriggersCount(long companyId) {
+		return getService().getDispatchTriggersCount(companyId);
 	}
 
 	public static
@@ -271,6 +300,33 @@ public class DispatchTriggerLocalServiceUtil {
 			com.liferay.dispatch.model.DispatchTrigger dispatchTrigger) {
 
 		return getService().updateDispatchTrigger(dispatchTrigger);
+	}
+
+	public static com.liferay.dispatch.model.DispatchTrigger
+			updateDispatchTrigger(
+				long dispatchTriggerId, String name,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDispatchTrigger(
+			dispatchTriggerId, name, typeSettingsProperties);
+	}
+
+	public static com.liferay.dispatch.model.DispatchTrigger
+			updateDispatchTriggerTrigger(
+				long dispatchTriggerId, boolean active, String cronExpression,
+				int startDateMonth, int startDateDay, int startDateYear,
+				int startDateHour, int startDateMinute, int endDateMonth,
+				int endDateDay, int endDateYear, int endDateHour,
+				int endDateMinute, boolean neverEnd)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDispatchTriggerTrigger(
+			dispatchTriggerId, active, cronExpression, startDateMonth,
+			startDateDay, startDateYear, startDateHour, startDateMinute,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd);
 	}
 
 	public static DispatchTriggerLocalService getService() {

@@ -56,4 +56,11 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 
 		};
 
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsProperties();
+
+	public void setTypeSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsProperties);
+
 }

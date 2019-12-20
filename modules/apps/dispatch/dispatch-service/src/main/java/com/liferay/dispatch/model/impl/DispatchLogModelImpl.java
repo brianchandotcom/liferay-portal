@@ -76,8 +76,8 @@ public class DispatchLogModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"dispatchTriggerId", Types.BIGINT},
-		{"endDate", Types.TIMESTAMP}, {"error", Types.VARCHAR},
-		{"output_", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
+		{"endDate", Types.TIMESTAMP}, {"error", Types.CLOB},
+		{"output_", Types.CLOB}, {"startDate", Types.TIMESTAMP},
 		{"status", Types.INTEGER}
 	};
 
@@ -94,14 +94,14 @@ public class DispatchLogModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("dispatchTriggerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("endDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("error", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("output_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("error", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("output_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchLog (mvccVersion LONG default 0 not null,dispatchLogId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dispatchTriggerId LONG,endDate DATE null,error VARCHAR(75) null,output_ VARCHAR(75) null,startDate DATE null,status INTEGER)";
+		"create table DispatchLog (mvccVersion LONG default 0 not null,dispatchLogId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dispatchTriggerId LONG,endDate DATE null,error TEXT null,output_ TEXT null,startDate DATE null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchLog";
 

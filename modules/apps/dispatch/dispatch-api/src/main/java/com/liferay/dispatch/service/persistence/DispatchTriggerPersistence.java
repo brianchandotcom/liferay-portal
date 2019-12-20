@@ -170,6 +170,63 @@ public interface DispatchTriggerPersistence
 		throws NoSuchTriggerException;
 
 	/**
+	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching dispatch triggers that the user has permission to view
+	 */
+	public java.util.List<DispatchTrigger> filterFindByCompanyId(
+		long companyId);
+
+	/**
+	 * Returns a range of all the dispatch triggers that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers that the user has permission to view
+	 */
+	public java.util.List<DispatchTrigger> filterFindByCompanyId(
+		long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers that the user has permission to view
+	 */
+	public java.util.List<DispatchTrigger> filterFindByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
+			orderByComparator);
+
+	/**
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param dispatchTriggerId the primary key of the current dispatch trigger
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next dispatch trigger
+	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
+	 */
+	public DispatchTrigger[] filterFindByCompanyId_PrevAndNext(
+			long dispatchTriggerId, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
+				orderByComparator)
+		throws NoSuchTriggerException;
+
+	/**
 	 * Removes all the dispatch triggers where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -183,6 +240,14 @@ public interface DispatchTriggerPersistence
 	 * @return the number of matching dispatch triggers
 	 */
 	public int countByCompanyId(long companyId);
+
+	/**
+	 * Returns the number of dispatch triggers that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching dispatch triggers that the user has permission to view
+	 */
+	public int filterCountByCompanyId(long companyId);
 
 	/**
 	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
@@ -373,6 +438,67 @@ public interface DispatchTriggerPersistence
 		throws NoSuchTriggerException;
 
 	/**
+	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching dispatch triggers that the user has permission to view
+	 */
+	public java.util.List<DispatchTrigger> filterFindByC_T(
+		long companyId, String type);
+
+	/**
+	 * Returns a range of all the dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers that the user has permission to view
+	 */
+	public java.util.List<DispatchTrigger> filterFindByC_T(
+		long companyId, String type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers that the user has permission to view
+	 */
+	public java.util.List<DispatchTrigger> filterFindByC_T(
+		long companyId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
+			orderByComparator);
+
+	/**
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * @param dispatchTriggerId the primary key of the current dispatch trigger
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next dispatch trigger
+	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
+	 */
+	public DispatchTrigger[] filterFindByC_T_PrevAndNext(
+			long dispatchTriggerId, long companyId, String type,
+			com.liferay.portal.kernel.util.OrderByComparator<DispatchTrigger>
+				orderByComparator)
+		throws NoSuchTriggerException;
+
+	/**
 	 * Removes all the dispatch triggers where companyId = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -388,6 +514,15 @@ public interface DispatchTriggerPersistence
 	 * @return the number of matching dispatch triggers
 	 */
 	public int countByC_T(long companyId, String type);
+
+	/**
+	 * Returns the number of dispatch triggers that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the number of matching dispatch triggers that the user has permission to view
+	 */
+	public int filterCountByC_T(long companyId, String type);
 
 	/**
 	 * Caches the dispatch trigger in the entity cache if it is enabled.

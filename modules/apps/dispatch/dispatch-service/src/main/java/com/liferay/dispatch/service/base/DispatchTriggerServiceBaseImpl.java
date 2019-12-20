@@ -131,6 +131,13 @@ public abstract class DispatchTriggerServiceBaseImpl
 		classNameService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.CompanyLocalService
+		companyLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.CompanyService companyService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 

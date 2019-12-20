@@ -80,7 +80,7 @@ public class DispatchTriggerModelImpl
 		{"cronExpression", Types.VARCHAR}, {"endDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
 		{"system_", Types.BOOLEAN}, {"type_", Types.VARCHAR},
-		{"typeSettings", Types.VARCHAR}
+		{"typeSettings", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,11 +101,11 @@ public class DispatchTriggerModelImpl
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,startDate DATE null,system_ BOOLEAN,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,startDate DATE null,system_ BOOLEAN,type_ VARCHAR(75) null,typeSettings TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 

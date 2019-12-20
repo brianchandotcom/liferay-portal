@@ -27,7 +27,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
  */
 public class TargetPlatformPluginUtil {
 
-	public static void configureDependencyManagement(
+	public static void configureTargetPlatform(
 		final Project project,
 		final Configuration targetPlatformBomsConfiguration) {
 

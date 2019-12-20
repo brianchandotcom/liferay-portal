@@ -77,7 +77,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					TargetPlatformPluginUtil.configureDependencyManagement(
+					TargetPlatformPluginUtil.configureTargetPlatform(
 						project, targetPlatformBomsConfiguration);
 				}
 
@@ -167,7 +167,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			return;
 		}
 
-		TargetPlatformPluginUtil.configureDependencyManagement(
+		TargetPlatformPluginUtil.configureTargetPlatform(
 			afterProject, targetPlatformBomsConfiguration);
 
 		Spec<Project> resolveSpec = targetPlatformExtension.getResolveOnlyIf();

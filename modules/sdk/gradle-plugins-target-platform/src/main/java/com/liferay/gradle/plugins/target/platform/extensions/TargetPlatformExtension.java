@@ -149,7 +149,7 @@ public class TargetPlatformExtension {
 				_project,
 				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
 
-		TargetPlatformPluginUtil.configureDependencyManagement(
+		TargetPlatformPluginUtil.configureTargetPlatform(
 			_project, targetPlatformBomsConfiguration);
 
 		return this;

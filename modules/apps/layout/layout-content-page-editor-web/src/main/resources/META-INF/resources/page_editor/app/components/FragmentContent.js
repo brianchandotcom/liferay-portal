@@ -55,7 +55,7 @@ function FragmentContent({fragmentEntryLink}, ref) {
 		element.innerHTML = defaultContent;
 
 		const updateContent = debounce(() => {
-			if (isMounted()) {
+			if (isMounted() && element) {
 				setContent(element.innerHTML);
 			}
 		}, 50);

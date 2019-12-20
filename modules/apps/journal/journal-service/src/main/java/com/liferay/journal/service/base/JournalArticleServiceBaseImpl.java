@@ -218,18 +218,6 @@ public abstract class JournalArticleServiceBaseImpl
 		ratingsStatsLocalService;
 
 	@Reference
-	protected com.liferay.trash.kernel.service.TrashEntryLocalService
-		trashEntryLocalService;
-
-	@Reference
-	protected com.liferay.trash.kernel.service.TrashEntryService
-		trashEntryService;
-
-	@Reference
-	protected com.liferay.trash.kernel.service.TrashVersionLocalService
-		trashVersionLocalService;
-
-	@Reference
 	protected JournalArticleLocalizationPersistence
 		journalArticleLocalizationPersistence;
 

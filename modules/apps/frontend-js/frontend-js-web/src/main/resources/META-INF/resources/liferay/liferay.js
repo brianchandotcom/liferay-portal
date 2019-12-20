@@ -47,21 +47,6 @@ Liferay = window.Liferay || {};
 		return obj;
 	};
 
-	$.ajaxSetup({
-		data: {},
-		type: 'POST'
-	});
-
-	$.ajaxPrefilter(options => {
-		if (options.crossDomain) {
-			options.contents.script = false;
-		}
-
-		if (options.url) {
-			options.url = Liferay.Util.getURLWithSessionId(options.url);
-		}
-	});
-
 	var jqueryInit = $.prototype.init;
 
 	$.prototype.init = function(selector, context, root) {

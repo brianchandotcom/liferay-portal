@@ -62,9 +62,10 @@ definition {
 			if (isSet(customImage)) {
 				Navigator.gotoNavTab(navTab = "Open Graph");
 
-				AssertElementPresent(
+				AssertTextEquals(
 					key_dmDocumentURL = "${uploadFileName}",
-					locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT");
+					locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT",
+					value1 = "${uploadFileName}");
 			}
 		}
 	}

@@ -48,6 +48,8 @@ public class PortalUpgradeProcessRegistryImpl
 				"AssetLink", "AssetTag", "AssetVocabulary", "Layout",
 				"LayoutFriendlyURL", "PortletPreferences",
 				"ResourcePermission"));
+
+		upgradeProcesses.put(new Version(8, 0, 0), new UpgradeCompanyInfo());
 	}
 
 }

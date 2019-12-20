@@ -463,7 +463,7 @@ public class DBUpgrader {
 	private static void _updateCompanyKey() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		db.runSQL("update Company set key_ = null");
+		db.runSQL("update CompanyInfo set key_ = null");
 	}
 
 	private static void _updateReleaseState(int state) throws Exception {

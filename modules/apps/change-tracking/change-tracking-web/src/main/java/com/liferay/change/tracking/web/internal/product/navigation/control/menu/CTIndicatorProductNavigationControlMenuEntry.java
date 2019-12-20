@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -130,7 +131,7 @@ public class CTIndicatorProductNavigationControlMenuEntry
 		Map<String, String> values = HashMapBuilder.put(
 			"changeTrackingURL", changeTrackingURL.toString()
 		).put(
-			"ctCollectionName", ctCollectionName
+			"ctCollectionName", HtmlUtil.escape(ctCollectionName)
 		).build();
 
 		try {

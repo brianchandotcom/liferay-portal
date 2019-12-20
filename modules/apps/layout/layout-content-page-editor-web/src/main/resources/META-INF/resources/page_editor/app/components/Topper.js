@@ -15,8 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useRef, useState, useEffect} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
 import {removeItem} from '../actions/index';
@@ -76,7 +77,7 @@ export default function Topper({
 
 	const floatingToolbarRef = useCurrentFloatingToolbar();
 
-	const [{isDragging}, drag] = useDrag({
+	const [{isDragging}, drag, preview] = useDrag({
 		collect: monitor => ({
 			isDragging: monitor.isDragging()
 		}),
@@ -190,6 +191,10 @@ export default function Topper({
 			setEdge(null);
 		}
 	});
+
+	useEffect(() => {
+		preview(getEmptyImage(), {captureDraggingState: true});
+	}, [preview]);
 
 	useOnClickOutside(
 		[containerRef.current, floatingToolbarRef.current],

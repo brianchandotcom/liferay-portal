@@ -24,6 +24,7 @@ import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import updateLayoutData from '../thunks/updateLayoutData';
 import {useIsActive} from './Controls';
+import DragPreview from './DragPreview';
 import FragmentContent from './FragmentContent';
 import Topper from './Topper';
 
@@ -283,10 +284,13 @@ export default function PageEditor() {
 	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 
 	return (
-		<LayoutDataItem
-			fragmentEntryLinks={fragmentEntryLinks}
-			item={mainItem}
-			layoutData={layoutData}
-		/>
+		<>
+			<DragPreview fragmentEntryLinks={fragmentEntryLinks} />
+			<LayoutDataItem
+				fragmentEntryLinks={fragmentEntryLinks}
+				item={mainItem}
+				layoutData={layoutData}
+			/>
+		</>
 	);
 }

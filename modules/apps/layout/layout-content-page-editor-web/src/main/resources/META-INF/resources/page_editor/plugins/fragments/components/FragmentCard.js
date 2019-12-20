@@ -15,8 +15,9 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useDrag} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../../app/config/index';
@@ -50,7 +51,7 @@ export default function FragmentCard({
 	const dispatch = useContext(DispatchContext);
 	const store = useContext(StoreContext);
 
-	const [, drag] = useDrag({
+	const [, drag, preview] = useDrag({
 		end(_item, monitor) {
 			const result = monitor.getDropResult();
 
@@ -72,9 +73,14 @@ export default function FragmentCard({
 			);
 		},
 		item: {
+			name,
 			type: LAYOUT_DATA_ITEM_TYPES.fragment
 		}
 	});
+
+	useEffect(() => {
+		preview(getEmptyImage(), {captureDraggingState: true});
+	}, [preview]);
 
 	return (
 		<div

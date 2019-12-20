@@ -14,8 +14,9 @@
 
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useDrag} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../../app/config/index';
@@ -28,7 +29,7 @@ export default function Widget({instanceable, portletId, title, used}) {
 	const dispatch = useContext(DispatchContext);
 	const store = useContext(StoreContext);
 
-	const [, drag] = useDrag({
+	const [, drag, preview] = useDrag({
 		end(_item, _monitor) {
 			const result = _monitor.getDropResult();
 
@@ -48,8 +49,15 @@ export default function Widget({instanceable, portletId, title, used}) {
 				})
 			);
 		},
-		item: {type: LAYOUT_DATA_ITEM_TYPES.fragment}
+		item: {
+			name: title,
+			type: LAYOUT_DATA_ITEM_TYPES.fragment
+		}
 	});
+
+	useEffect(() => {
+		preview(getEmptyImage(), {captureDraggingState: true});
+	}, [preview]);
 
 	return (
 		<button

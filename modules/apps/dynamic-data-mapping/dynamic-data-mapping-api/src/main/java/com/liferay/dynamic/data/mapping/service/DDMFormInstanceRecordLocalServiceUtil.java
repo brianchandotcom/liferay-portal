@@ -104,6 +104,10 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 		return getService().deleteDDMFormInstanceRecord(formInstanceRecordId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #deleteFormInstanceRecord(DDMFormInstanceRecord,String)}
+	 */
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
 			deleteFormInstanceRecord(
 				com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
@@ -114,16 +118,39 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
+			deleteFormInstanceRecord(
+				com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
+					ddmFormInstanceRecord,
+				String storageType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteFormInstanceRecord(
+			ddmFormInstanceRecord, storageType);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
 			deleteFormInstanceRecord(long ddmFormInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteFormInstanceRecord(ddmFormInstanceRecordId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #deleteFormInstanceRecords(long,String)}
+	 */
+	@Deprecated
 	public static void deleteFormInstanceRecords(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteFormInstanceRecords(ddmFormInstanceId);
+	}
+
+	public static void deleteFormInstanceRecords(
+			long ddmFormInstanceId, String storageType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteFormInstanceRecords(ddmFormInstanceId, storageType);
 	}
 
 	/**
@@ -349,6 +376,20 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 		return getService().getDDMFormInstanceRecordsCount();
 	}
 
+	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues
+			getDDMFormValues(
+				com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+				long storageId, String storageType)
+		throws com.liferay.dynamic.data.mapping.exception.StorageException {
+
+		return getService().getDDMFormValues(ddmForm, storageId, storageType);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getDDMFormValues(DDMForm, long, String)}
+	 */
+	@Deprecated
 	public static com.liferay.dynamic.data.mapping.storage.DDMFormValues
 			getDDMFormValues(
 				long storageId,

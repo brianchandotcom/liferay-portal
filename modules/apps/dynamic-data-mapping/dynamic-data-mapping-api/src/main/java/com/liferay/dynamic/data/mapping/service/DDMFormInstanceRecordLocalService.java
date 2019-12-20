@@ -119,6 +119,10 @@ public interface DDMFormInstanceRecordLocalService
 			long formInstanceRecordId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #deleteFormInstanceRecord(DDMFormInstanceRecord,String)}
+	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
@@ -129,11 +133,29 @@ public interface DDMFormInstanceRecordLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
+	public DDMFormInstanceRecord deleteFormInstanceRecord(
+			DDMFormInstanceRecord ddmFormInstanceRecord, String storageType)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.DELETE)
 	public DDMFormInstanceRecord deleteFormInstanceRecord(
 			long ddmFormInstanceRecordId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #deleteFormInstanceRecords(long,String)}
+	 */
+	@Deprecated
 	public void deleteFormInstanceRecords(long ddmFormInstanceId)
+		throws PortalException;
+
+	public void deleteFormInstanceRecords(
+			long ddmFormInstanceId, String storageType)
 		throws PortalException;
 
 	/**
@@ -307,6 +329,16 @@ public interface DDMFormInstanceRecordLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMFormInstanceRecordsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMFormValues getDDMFormValues(
+			DDMForm ddmForm, long storageId, String storageType)
+		throws StorageException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getDDMFormValues(DDMForm, long, String)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormValues getDDMFormValues(long storageId, DDMForm ddmForm)
 		throws StorageException;

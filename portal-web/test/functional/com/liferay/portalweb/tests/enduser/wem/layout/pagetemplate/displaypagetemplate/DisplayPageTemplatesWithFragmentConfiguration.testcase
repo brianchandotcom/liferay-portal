@@ -78,6 +78,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100545. An itemSelector fragment configuration can select an asset in a display page template"
+	@priority = "4"
+	test AddItemSelectorConfigurationFragmentToDisplayPageTemplate {
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "itemSelector Fragment Example");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "itemSelector Fragment Example");
+
+		PageEditor.editContentDisplay(
+			webcontent = "true",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "Edit");
+
+		task ("Assert correct content is visible") {
+			AssertVisible(
+				key_content = "WC WebContent Content",
+				key_fragmentClass = "configuration",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in a display page template."
 	test AddSelectConfigurationFragmentToDisplayPageTemplate {
 		property portal.acceptance = "true";

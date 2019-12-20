@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Time;
@@ -328,6 +329,8 @@ public class DBUpgrader {
 		}
 
 		StartupHelperUtil.initResourceActions();
+
+		ResourceActionLocalServiceUtil.checkResourceActions();
 	}
 
 	private static void _checkPermissionAlgorithm() throws Exception {

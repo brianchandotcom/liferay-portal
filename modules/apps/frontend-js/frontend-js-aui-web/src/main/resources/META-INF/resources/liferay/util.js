@@ -350,13 +350,9 @@
 				allBox = Util.getDOM(allBox);
 
 				if (typeof allBox === 'string') {
-					if (document.querySelector(allBox)) {
-						allBox = document.querySelector(allBox);
-					} else {
-						allBox = form.querySelector(
-							'input[name="' + allBox + '"]'
-						);
-					}
+					allBox =
+						document.querySelector(allBox) ||
+						form.querySelector(`input[name="${allBox}"]`);
 				}
 
 				const inputs = Array.from(

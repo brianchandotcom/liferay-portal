@@ -164,10 +164,25 @@ definition {
 	}
 
 	macro editText {
-		Type(
-			key_fieldName = "${fieldName}",
-			locator1 = "FormFields#TEXT_FIELD",
-			value1 = "${fieldValue}");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Type(
+				key_fieldName = "${fieldName}",
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "");
+
+			Type.sendKeys(
+				key_fieldName = "${fieldName}",
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "${fieldValue}");
+		}
+		else {
+			Type(
+				key_fieldName = "${fieldName}",
+				locator1 = "FormFields#TEXT_FIELD",
+				value1 = "${fieldValue}");
+		}
 	}
 
 	macro editTextAlt {

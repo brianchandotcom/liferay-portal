@@ -838,27 +838,29 @@
 		listCheckboxesExcept(form, except, name, checked) {
 			form = Util.getDOM(form);
 
-			var selector = 'input[type=checkbox]';
+			if (typeof form === 'string') {
+				form = document.querySelector(form);
+			}
+
+			let selector = 'input[type=checkbox]';
 
 			if (name) {
 				selector += '[name=' + name + ']';
 			}
 
-			return $(form)
-				.find(selector)
-				.toArray()
-				.reduce((prev, item) => {
-					item = $(item);
+			const checkboxes = Array.from(form.querySelectorAll(selector));
 
-					var val = item.val();
+			return checkboxes
+				.reduce((prev, item) => {
+					const value = item.value;
 
 					if (
-						val &&
-						item.attr('name') != except &&
-						item.prop('checked') == checked &&
-						!item.prop('disabled')
+						value &&
+						item.name !== except &&
+						item.checked === checked &&
+						!item.disabled
 					) {
-						prev.push(val);
+						prev.push(value);
 					}
 
 					return prev;

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCRIPT_GENERAL_VARIABLE</td>
+	<td>//*[contains(@class,'palette-section') and contains(@id,'variable')]//ul/li/span[contains(@class,'palette-item') and contains(.,'${key_generalVariable}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCRIPT_FIELD</td>
 	<td>//*[contains(@class,'palette-section') and contains(@id,'fields')]//ul/li/span[contains(@class,'palette-item') and contains(.,'${key_fieldName}')]</td>
 	<td></td>

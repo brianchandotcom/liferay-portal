@@ -12,8 +12,10 @@
  *
  */
 
-package com.liferay.oauth.util;
+package com.liferay.oauth.internal.listener;
 
+import com.liferay.oauth.util.OAuthAccessor;
+import com.liferay.oauth.util.OAuthAccessorConstants;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;

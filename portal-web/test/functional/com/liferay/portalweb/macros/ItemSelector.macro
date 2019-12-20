@@ -45,10 +45,6 @@ definition {
 	}
 
 	macro gotoPreviewViaSelectFile {
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsNavigator.gotoSelectFile();
-
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(

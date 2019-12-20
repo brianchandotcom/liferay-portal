@@ -46,6 +46,10 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
+
 		ItemSelector.gotoPreviewViaSelectFile(navTab = "Blog Images");
 
 		ItemSelector.viewPreview(
@@ -91,6 +95,10 @@ definition {
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.jpg,Document_3.jpg");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
 
 		ItemSelector.gotoPreviewViaSelectFile(navTab = "Documents and Media");
 
@@ -151,6 +159,10 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
+		
 		ItemSelector.gotoPreviewViaSelectFile(navTab = "Blog Images");
 
 		ItemSelector.viewPreview(

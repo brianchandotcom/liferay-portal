@@ -299,7 +299,7 @@ definition {
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a new title","og:description" content="This is a new description"''');
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:url" content="http://localhost:8080/web/test-site-name/test-new-page","og:locale" content="en_US","og:locale:alternate" content="en_US","og:site_name" content="Test Site Name"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:url" content="${portalURL}/web/test-site-name/test-new-page","og:locale" content="en_US","og:locale:alternate" content="en_US","og:site_name" content="Test Site Name"''');
 	}
 
 }

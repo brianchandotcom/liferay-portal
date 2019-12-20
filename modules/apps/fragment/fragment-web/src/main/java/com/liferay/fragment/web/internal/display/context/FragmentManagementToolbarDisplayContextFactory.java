@@ -42,8 +42,8 @@ public class FragmentManagementToolbarDisplayContextFactory {
 
 		if (Objects.equals(type, FragmentTypeConstants.BASIC_FRAGMENT_TYPE)) {
 			return new BasicFragmentManagementToolbarDisplayContext(
-				liferayPortletRequest, liferayPortletResponse,
-				httpServletRequest, fragmentDisplayContext);
+				httpServletRequest, liferayPortletRequest,
+				liferayPortletResponse, fragmentDisplayContext);
 		}
 
 		if (Objects.equals(

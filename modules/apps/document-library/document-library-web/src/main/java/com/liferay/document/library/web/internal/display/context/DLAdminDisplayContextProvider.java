@@ -52,8 +52,8 @@ public class DLAdminDisplayContextProvider {
 			httpServletRequest);
 
 		return new DLAdminManagementToolbarDisplayContext(
-			dlRequestHelper.getLiferayPortletRequest(),
-			dlRequestHelper.getLiferayPortletResponse(), httpServletRequest,
+			httpServletRequest, dlRequestHelper.getLiferayPortletRequest(),
+			dlRequestHelper.getLiferayPortletResponse(),
 			getDLAdminDisplayContext(httpServletRequest, httpServletResponse));
 	}
 

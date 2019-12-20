@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -27,36 +28,34 @@ public class UpgradeUser extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = null;
+		StringBundler sb = new StringBundler(8);
 
-		DB db = DBManagerUtil.getDB();
+		sb.append("update Group_ set active_ = [$FALSE$] where groupId ");
+		sb.append("in (select Group_.groupId from Group_ inner join ");
+		sb.append("User_ on Group_.companyId = User_.companyId and ");
+		sb.append("Group_.classPK = User_.userId where ");
+		sb.append("Group_.classNameId = (select classNameId from ");
+		sb.append("ClassName_ where value = ");
+		sb.append("'com.liferay.portal.kernel.model.User') and ");
+		sb.append("User_.status = 5)");
 
-		if ((db.getDBType() == DBType.MARIADB) ||
-			(db.getDBType() == DBType.MYSQL)) {
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
 
-			sb = new StringBundler(7);
+		sb = new StringBundler(6);
 
-			sb.append("update Group_ inner join User_ on Group_.companyId = ");
-			sb.append("User_.companyId and Group_.classPK = User_.userId set ");
-			sb.append("active_ = [$FALSE$] where Group_.classNameId = ");
-			sb.append("(select classNameId from ClassName_ where value = '");
-			sb.append("com.liferay.portal.kernel.model.User') and ");
-			sb.append("User_.status = 5");
-		}
-		else {
-			sb = new StringBundler(9);
+		sb.append("update Group_ inner join User_ on Group_.companyId = ");
+		sb.append("User_.companyId and Group_.classPK = User_.userId set ");
+		sb.append("active_ = [$FALSE$] where Group_.classNameId = ");
+		sb.append("(select classNameId from ClassName_ where value = '");
+		sb.append("com.liferay.portal.kernel.model.User') and ");
+		sb.append("User_.status = 5");
 
-			sb.append("update Group_ set active_ = [$FALSE$] where groupId ");
-			sb.append("in (select Group_.groupId from Group_ inner join ");
-			sb.append("User_ on Group_.companyId = User_.companyId and ");
-			sb.append("Group_.classPK = User_.userId where ");
-			sb.append("Group_.classNameId = (select classNameId from ");
-			sb.append("ClassName_ where value = ");
-			sb.append("'com.liferay.portal.kernel.model.User') and ");
-			sb.append("User_.status = 5)");
-		}
+		String sql = sb.toString();
 
-		runSQL(sb.toString());
+		dbTypeToSQLMap.add(DBType.MARIADB, sql);
+		dbTypeToSQLMap.add(DBType.MYSQL, sql);
+
+		runSQL(dbTypeToSQLMap);
 	}
 
 }

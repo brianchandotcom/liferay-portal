@@ -172,8 +172,10 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.model.TrashVersion;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.model.TrashVersion;
+import com.liferay.trash.service.TrashEntryLocalService;
+import com.liferay.trash.service.TrashVersionLocalService;
 import com.liferay.upload.AttachmentContentUpdater;
 
 import java.io.File;
@@ -1276,10 +1278,11 @@ public class JournalArticleLocalServiceImpl
 		// Trash
 
 		if (article.isInTrash()) {
-			TrashEntry trashEntry = article.getTrashEntry();
+			com.liferay.trash.kernel.model.TrashEntry trashEntry =
+				article.getTrashEntry();
 
 			if (trashEntry != null) {
-				trashVersionLocalService.deleteTrashVersion(
+				_trashVersionLocalService.deleteTrashVersion(
 					JournalArticle.class.getName(), article.getId());
 			}
 		}
@@ -1331,7 +1334,7 @@ public class JournalArticleLocalServiceImpl
 
 			// Trash
 
-			trashEntryLocalService.deleteEntry(
+			_trashEntryLocalService.deleteEntry(
 				JournalArticle.class.getName(), article.getResourcePrimKey());
 
 			// Resources
@@ -3938,7 +3941,7 @@ public class JournalArticleLocalServiceImpl
 
 			// Article
 
-			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+			TrashVersion trashVersion = _trashVersionLocalService.fetchVersion(
 				JournalArticle.class.getName(), article.getResourcePrimKey());
 
 			int status = WorkflowConstants.STATUS_APPROVED;
@@ -3960,7 +3963,7 @@ public class JournalArticleLocalServiceImpl
 			// Trash
 
 			if (trashVersion != null) {
-				trashVersionLocalService.deleteTrashVersion(trashVersion);
+				_trashVersionLocalService.deleteTrashVersion(trashVersion);
 			}
 		}
 
@@ -4028,7 +4031,7 @@ public class JournalArticleLocalServiceImpl
 
 		typeSettingsProperties.put("title", article.getArticleId());
 
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
 			article.getResourcePrimKey(), articleResource.getUuid(), null,
 			oldStatus, articleVersionStatusOVPs, typeSettingsProperties);
@@ -4237,7 +4240,7 @@ public class JournalArticleLocalServiceImpl
 
 		journalArticleResourcePersistence.update(articleResource);
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+		TrashEntry trashEntry = _trashEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -4250,8 +4253,8 @@ public class JournalArticleLocalServiceImpl
 
 		// Trash
 
-		List<TrashVersion> trashVersions = trashVersionLocalService.getVersions(
-			trashEntry.getEntryId());
+		List<TrashVersion> trashVersions =
+			_trashVersionLocalService.getVersions(trashEntry.getEntryId());
 
 		boolean visible = false;
 
@@ -4269,7 +4272,7 @@ public class JournalArticleLocalServiceImpl
 			journalArticlePersistence.update(trashArticleVersion);
 		}
 
-		trashEntryLocalService.deleteEntry(
+		_trashEntryLocalService.deleteEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		if (visible) {
@@ -8973,6 +8976,12 @@ public class JournalArticleLocalServiceImpl
 	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
+	private TrashEntryLocalService _trashEntryLocalService;
+
+	@Reference
 	private TrashHelper _trashHelper;
+
+	@Reference
+	private TrashVersionLocalService _trashVersionLocalService;
 
 }

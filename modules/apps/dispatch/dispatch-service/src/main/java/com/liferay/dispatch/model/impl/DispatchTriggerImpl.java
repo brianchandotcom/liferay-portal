@@ -14,6 +14,8 @@
 
 package com.liferay.dispatch.model.impl;
 
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -21,5 +23,38 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 
 	public DispatchTriggerImpl() {
 	}
+
+	@Override
+	public UnicodeProperties getTypeSettingsProperties() {
+		if (_typeSettingsProperties == null) {
+			_typeSettingsProperties = new UnicodeProperties(true);
+
+			_typeSettingsProperties.fastLoad(getTypeSettings());
+		}
+
+		return _typeSettingsProperties;
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		super.setTypeSettings(typeSettings);
+
+		_typeSettingsProperties = null;
+	}
+
+	@Override
+	public void setTypeSettingsProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		_typeSettingsProperties = typeSettingsProperties;
+
+		if (_typeSettingsProperties == null) {
+			_typeSettingsProperties = new UnicodeProperties();
+		}
+
+		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	private transient UnicodeProperties _typeSettingsProperties;
 
 }

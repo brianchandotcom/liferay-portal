@@ -65,9 +65,9 @@ public class BookmarksManagementToolbarDisplayContext {
 			bookmarksGroupServiceOverriddenConfiguration,
 		PortalPreferences portalPreferences, TrashHelper trashHelper) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_httpServletRequest = httpServletRequest;
 		_bookmarksGroupServiceOverriddenConfiguration =
 			bookmarksGroupServiceOverriddenConfiguration;
 		_portalPreferences = portalPreferences;

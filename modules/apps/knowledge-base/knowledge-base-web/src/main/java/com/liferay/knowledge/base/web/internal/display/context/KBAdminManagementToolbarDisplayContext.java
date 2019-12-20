@@ -76,9 +76,9 @@ public class KBAdminManagementToolbarDisplayContext {
 			PortletConfig portletConfig)
 		throws PortalException, PortletException {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_portletConfig = portletConfig;

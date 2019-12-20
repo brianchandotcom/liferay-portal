@@ -44,9 +44,9 @@ public class AMManagementToolbarDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		PortletURL currentURLObj) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_httpServletRequest = httpServletRequest;
 		_currentURLObj = currentURLObj;
 	}
 

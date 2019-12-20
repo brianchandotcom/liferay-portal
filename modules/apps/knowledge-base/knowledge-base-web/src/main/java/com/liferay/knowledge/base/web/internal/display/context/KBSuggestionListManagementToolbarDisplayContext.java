@@ -53,9 +53,9 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer searchContainer) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_httpServletRequest = httpServletRequest;
 		_searchContainer = searchContainer;
 
 		_currentURLObj = PortletURLUtil.getCurrent(

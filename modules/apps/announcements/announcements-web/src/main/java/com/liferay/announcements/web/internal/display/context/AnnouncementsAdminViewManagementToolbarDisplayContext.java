@@ -54,9 +54,9 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContainer searchContainer) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_httpServletRequest = httpServletRequest;
 		_searchContainer = searchContainer;
 
 		_announcementsAdminViewDisplayContext =

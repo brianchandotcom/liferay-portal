@@ -89,9 +89,9 @@ public class DLAdminManagementToolbarDisplayContext {
 		LiferayPortletResponse liferayPortletResponse,
 		DLAdminDisplayContext dlAdminDisplayContext) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_httpServletRequest = httpServletRequest;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
 
 		_currentURLObj = PortletURLUtil.getCurrent(

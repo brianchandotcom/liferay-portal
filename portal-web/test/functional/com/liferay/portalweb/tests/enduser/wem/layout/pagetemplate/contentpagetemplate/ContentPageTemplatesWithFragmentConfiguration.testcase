@@ -82,6 +82,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100545. An itemSelector fragment configuration can select an asset in a content page template"
+	@priority = "4"
+	test AddItemSelectorConfigurationFragmentToContentPageTemplate {
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "itemSelector Fragment Example");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "itemSelector Fragment Example");
+
+		PageEditor.editContentDisplay(
+			webcontent = "true",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		PageEditor.clickPublish();
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		task ("Assert correct content is visible") {
+			AssertVisible(
+				key_content = "WC WebContent Content",
+				key_fragmentClass = "configuration",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-96685. User can change select fragment configuration in a content page template."
 	test AddSelectConfigurationFragmentToContentPageTemplate {
 		property portal.acceptance = "true";

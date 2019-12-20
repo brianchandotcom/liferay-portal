@@ -1,0 +1,13 @@
+{
+  "fieldSets":[{
+    "fields":[{
+    "name":"itemSelector",
+    "description":"",
+    "label":"Content",
+    "type":"itemSelector",
+        "typeOptions":{
+            "enableSelectTemplate":true
+      },
+    }]
+  }]
+} 

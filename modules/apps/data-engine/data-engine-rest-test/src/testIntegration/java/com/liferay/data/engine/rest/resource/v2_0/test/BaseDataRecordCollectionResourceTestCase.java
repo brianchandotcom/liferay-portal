@@ -28,7 +28,6 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRecordCollectionSerDes;
-import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -54,14 +52,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,9 +68,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
 
 import org.junit.After;
@@ -266,7 +259,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
 					testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId(),
-					RandomTestUtil.randomString(), Pagination.of(1, 2), null);
+					RandomTestUtil.randomString(), Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -284,8 +277,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			page =
 				dataRecordCollectionResource.
 					getDataDefinitionDataRecordCollectionsPage(
-						irrelevantDataDefinitionId, null, Pagination.of(1, 2),
-						null);
+						irrelevantDataDefinitionId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -306,7 +298,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		page =
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null, Pagination.of(1, 2), null);
+					dataDefinitionId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -344,7 +336,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Page<DataRecordCollection> page1 =
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null, Pagination.of(1, 2), null);
+					dataDefinitionId, null, Pagination.of(1, 2));
 
 		List<DataRecordCollection> dataRecordCollections1 =
 			(List<DataRecordCollection>)page1.getItems();
@@ -356,7 +348,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Page<DataRecordCollection> page2 =
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null, Pagination.of(2, 2), null);
+					dataDefinitionId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -370,129 +362,13 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Page<DataRecordCollection> page3 =
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, null, Pagination.of(1, 3), null);
+					dataDefinitionId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
 				dataRecordCollection1, dataRecordCollection2,
 				dataRecordCollection3),
 			(List<DataRecordCollection>)page3.getItems());
-	}
-
-	@Test
-	public void testGetDataDefinitionDataRecordCollectionsPageWithSortDateTime()
-		throws Exception {
-
-		testGetDataDefinitionDataRecordCollectionsPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, dataRecordCollection1, dataRecordCollection2) -> {
-				BeanUtils.setProperty(
-					dataRecordCollection1, entityField.getName(),
-					DateUtils.addMinutes(new Date(), -2));
-			});
-	}
-
-	@Test
-	public void testGetDataDefinitionDataRecordCollectionsPageWithSortInteger()
-		throws Exception {
-
-		testGetDataDefinitionDataRecordCollectionsPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, dataRecordCollection1, dataRecordCollection2) -> {
-				BeanUtils.setProperty(
-					dataRecordCollection1, entityField.getName(), 0);
-				BeanUtils.setProperty(
-					dataRecordCollection2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetDataDefinitionDataRecordCollectionsPageWithSortString()
-		throws Exception {
-
-		testGetDataDefinitionDataRecordCollectionsPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, dataRecordCollection1, dataRecordCollection2) -> {
-				Class<?> clazz = dataRecordCollection1.getClass();
-
-				Method method = clazz.getMethod(
-					"get" +
-						StringUtil.upperCaseFirstLetter(entityField.getName()));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
-						dataRecordCollection1, entityField.getName(),
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
-						dataRecordCollection2, entityField.getName(),
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else {
-					BeanUtils.setProperty(
-						dataRecordCollection1, entityField.getName(), "Aaa");
-					BeanUtils.setProperty(
-						dataRecordCollection2, entityField.getName(), "Bbb");
-				}
-			});
-	}
-
-	protected void testGetDataDefinitionDataRecordCollectionsPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer
-				<EntityField, DataRecordCollection, DataRecordCollection,
-				 Exception> unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long dataDefinitionId =
-			testGetDataDefinitionDataRecordCollectionsPage_getDataDefinitionId();
-
-		DataRecordCollection dataRecordCollection1 =
-			randomDataRecordCollection();
-		DataRecordCollection dataRecordCollection2 =
-			randomDataRecordCollection();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(
-				entityField, dataRecordCollection1, dataRecordCollection2);
-		}
-
-		dataRecordCollection1 =
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				dataDefinitionId, dataRecordCollection1);
-
-		dataRecordCollection2 =
-			testGetDataDefinitionDataRecordCollectionsPage_addDataRecordCollection(
-				dataDefinitionId, dataRecordCollection2);
-
-		for (EntityField entityField : entityFields) {
-			Page<DataRecordCollection> ascPage =
-				dataRecordCollectionResource.
-					getDataDefinitionDataRecordCollectionsPage(
-						dataDefinitionId, null, Pagination.of(1, 2),
-						entityField.getName() + ":asc");
-
-			assertEquals(
-				Arrays.asList(dataRecordCollection1, dataRecordCollection2),
-				(List<DataRecordCollection>)ascPage.getItems());
-
-			Page<DataRecordCollection> descPage =
-				dataRecordCollectionResource.
-					getDataDefinitionDataRecordCollectionsPage(
-						dataDefinitionId, null, Pagination.of(1, 2),
-						entityField.getName() + ":desc");
-
-			assertEquals(
-				Arrays.asList(dataRecordCollection2, dataRecordCollection1),
-				(List<DataRecordCollection>)descPage.getItems());
-		}
 	}
 
 	protected DataRecordCollection

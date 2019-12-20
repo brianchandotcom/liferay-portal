@@ -15,6 +15,8 @@
 package com.liferay.data.engine.rest.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -42,7 +44,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DataRecordResource {
 
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public DataRecord postDataDefinitionDataRecord(
@@ -73,8 +76,7 @@ public interface DataRecordResource {
 		AcceptLanguage contextAcceptLanguage) {
 	}
 
-	public void setContextCompany(
-		com.liferay.portal.kernel.model.Company contextCompany);
+	public void setContextCompany(Company contextCompany);
 
 	public default void setContextHttpServletRequest(
 		HttpServletRequest contextHttpServletRequest) {
@@ -87,7 +89,6 @@ public interface DataRecordResource {
 	public default void setContextUriInfo(UriInfo contextUriInfo) {
 	}
 
-	public void setContextUser(
-		com.liferay.portal.kernel.model.User contextUser);
+	public void setContextUser(User contextUser);
 
 }

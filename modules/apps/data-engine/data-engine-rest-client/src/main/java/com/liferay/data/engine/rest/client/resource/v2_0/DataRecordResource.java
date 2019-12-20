@@ -40,12 +40,14 @@ public interface DataRecordResource {
 	}
 
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination)
+			Long dataDefinitionId, String keywords, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getDataDefinitionDataRecordsPageHttpResponse(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+				Long dataDefinitionId, String keywords, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public DataRecord postDataDefinitionDataRecord(
@@ -159,12 +161,13 @@ public interface DataRecordResource {
 	public static class DataRecordResourceImpl implements DataRecordResource {
 
 		public Page<DataRecord> getDataDefinitionDataRecordsPage(
-				Long dataDefinitionId, String keywords, Pagination pagination)
+				Long dataDefinitionId, String keywords, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDataDefinitionDataRecordsPageHttpResponse(
-					dataDefinitionId, keywords, pagination);
+					dataDefinitionId, keywords, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -180,7 +183,7 @@ public interface DataRecordResource {
 		public HttpInvoker.HttpResponse
 				getDataDefinitionDataRecordsPageHttpResponse(
 					Long dataDefinitionId, String keywords,
-					Pagination pagination)
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -213,6 +216,10 @@ public interface DataRecordResource {
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

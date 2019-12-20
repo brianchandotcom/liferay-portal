@@ -52,6 +52,11 @@ AUI.add(
 			Liferay.Util.getLexiconIconTpl('angle-left') +
 			'</button>';
 
+		var TPL_SCHEDULER_TODAY =
+			'<button aria-label="{ariaLabel}"" role="button" type="button" class="btn btn-secondary scheduler-base-today">' +
+			Liferay.Language.get('today') +
+			'</button>';
+
 		var WEEKLY = 'WEEKLY';
 
 		var Time = Liferay.Time;
@@ -154,6 +159,21 @@ AUI.add(
 				showAddEventBtn: {
 					validator: isBoolean,
 					value: true
+				},
+
+				todayNode: {
+					valueFn() {
+						var instance = this;
+
+						return A.Node.create(
+							A.Lang.sub(
+								this._processTemplate(TPL_SCHEDULER_TODAY),
+								{
+									ariaLabel: instance.getAriaLabel('today')
+								}
+							)
+						);
+					}
 				}
 			},
 

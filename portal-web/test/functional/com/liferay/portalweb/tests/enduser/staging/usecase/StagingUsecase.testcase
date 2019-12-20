@@ -12,21 +12,11 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Staging Test Page");
-
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 	}
@@ -504,23 +494,9 @@ definition {
 
 	@priority = "4"
 	test EditPublishTemplate {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
+		property test.name.skip.portal.instance = "StagingUsecase#EditPublishTemplate";
 
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.addPublicPage(pageName = "Page Name 2");
 
@@ -536,10 +512,13 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.addPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -557,10 +536,6 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLivePublishTemplate(
@@ -575,21 +550,11 @@ definition {
 
 		Page.viewNoPG(pageName = "Page Name 2");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsEntry.viewNoCP(entryTitle = "Blogs Entry Title");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.viewPublishTemplate(
 			publishTemplateDescription = "Publish Template Description",
@@ -612,10 +577,6 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLivePublishTemplate(
@@ -636,10 +597,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsEntry.viewContent(entryTitle = "Blogs Entry Title");
 	}

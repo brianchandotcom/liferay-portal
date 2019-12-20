@@ -276,6 +276,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100545. Ensure that the correct content is selected when using itemSelector."
+	@priority = "4"
+	test CanSelectSpecificWebContentUsingItemSelector {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${count}",
+				groupName = "Test Site Name",
+				title = "WebContent Title ${count}");
+		}
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "itemSelector_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "itemSelector Fragment Example");
+		}
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "itemSelector Fragment Example");
+
+		PageEditor.editContentDisplay(
+			webcontent = "true",
+			webContentContent = "WC WebContent Content 2",
+			webContentTitle = "WebContent Title 2");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert correct content is visible") {
+			AssertVisible(
+				key_content = "WC WebContent Content 2",
+				key_fragmentClass = "configuration",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-96685. User can restore and change fragment configuration value."
 	@priority = "5"
 	test RestoreAndChangeConfigurationFragmentToContentPage {

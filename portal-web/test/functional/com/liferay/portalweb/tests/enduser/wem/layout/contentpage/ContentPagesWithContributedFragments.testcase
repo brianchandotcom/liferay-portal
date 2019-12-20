@@ -55,13 +55,13 @@ definition {
 		YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
 	}
 
-	@description = "This case ensures that a user can map a blogs content field to a fragment via the content display."
+	@description = "This case ensures that a user can select a blogs content field to a fragment via the content display."
 	@priority = "5"
-	test MapBlogContentViaContentDisplay {
+	test CanSelectBlogContentViaContentDisplay {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
 		Blogs.addEntry(
-			entryContent = "This content maps from blog content",
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -72,7 +72,7 @@ definition {
 
 		PageEditor.editContentDisplay(
 			blogs = "true",
-			entryContent = "This content maps from blog content",
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
 		Button.clickPublish();
@@ -83,12 +83,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
-			value1 = "This content maps from blog content");
+			value1 = "Blogs Entry Content");
 	}
 
-	@description = "This case ensures that a user can map an image to a fragment via the content display."
+	@description = "This case ensures that a user can select an image to a fragment via the content display."
 	@priority = "5"
-	test MapImageViaContentDisplay {
+	test CanSelectImageViaContentDisplay {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.addCP(
@@ -117,15 +117,15 @@ definition {
 			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
 	}
 
-	@description = "This case ensures that a user can map the content field from web content to a fragment via the content display."
+	@description = "This case ensures that a user can select the content field from web content to a fragment via the content display."
 	@priority = "5"
-	test MapWebContentContentViaContentDisplay {
+	test CanSelectWebContentContentViaContentDisplay {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
-			webContentContent = "This content maps from web content",
+			webContentContent = "WC WebContent Content",
 			webContentTitle = "Webcontent Title");
 
 		PortletEntry.publish();
@@ -138,7 +138,7 @@ definition {
 
 		PageEditor.editContentDisplay(
 			webcontent = "true",
-			webContentContent = "This content maps from web content",
+			webContentContent = "WC WebContent Content",
 			webContentTitle = "Webcontent Title");
 
 		Button.clickPublish();
@@ -149,7 +149,7 @@ definition {
 
 		AssertTextEquals.assertPartialTextAceEditor(
 			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
-			value1 = "This content maps from web content");
+			value1 = "WC WebContent Content");
 	}
 
 }

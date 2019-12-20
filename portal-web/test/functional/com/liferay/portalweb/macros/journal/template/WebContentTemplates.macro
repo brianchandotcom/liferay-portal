@@ -13,6 +13,18 @@ definition {
 		}
 	}
 
+	macro _addGeneralVariables {
+		if (isSet(generalVariables)) {
+			for (var generalVariable : list "${generalVariables}") {
+				var key_generalVariable = "${generalVariable}";
+
+				AssertClick(
+					locator1 = "DDMEditTemplate#SCRIPT_GENERAL_VARIABLE",
+					value1 = "${generalVariable}");
+			}
+		}
+	}
+
 	@summary = "Helper function to add description '${description}' to the template"
 	macro _inputDescription {
 		if (isSet(templateDescription)) {
@@ -57,6 +69,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		WebContentTemplates.inputTemplateAddScreenFields(
+			generalVariables = "${generalVariables}",
 			imageSourceURL = "${imageSourceURL}",
 			structureName = "${structureName}",
 			templateDescription = "${templateDescription}",
@@ -158,6 +171,8 @@ definition {
 		}
 		else {
 			WebContentTemplates._addFields(templateFieldNames = "${templateFieldNames}");
+
+			WebContentTemplates._addGeneralVariables(generalVariables = "${generalVariables}");
 
 			WebContentTemplates._inputTemplateFile(templateFile = "${templateFile}");
 		}

@@ -12,13 +12,23 @@
  *
  */
 
-package com.liferay.oauth.util;
+package com.liferay.oauth.internal;
 
 import com.liferay.oauth.configuration.OAuthConfigurationValues;
+import com.liferay.oauth.internal.listener.V10aOAuthDebugCacheListener;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthApplicationLocalServiceUtil;
 import com.liferay.oauth.service.OAuthUserLocalServiceUtil;
+import com.liferay.oauth.util.DefaultOAuthAccessor;
+import com.liferay.oauth.util.DefaultOAuthConsumer;
+import com.liferay.oauth.util.DefaultOAuthMessage;
+import com.liferay.oauth.util.OAuth;
+import com.liferay.oauth.util.OAuthAccessor;
+import com.liferay.oauth.util.OAuthAccessorConstants;
+import com.liferay.oauth.util.OAuthConsumer;
+import com.liferay.oauth.util.OAuthMessage;
+import com.liferay.oauth.util.OAuthValidator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;

@@ -6891,6 +6891,177 @@ go</echo>
 		/>
 	</target>
 
+	<target name="hot-deploy-osgi-apps">
+		<get-testcase-property property.name="hot.deploy.osgi.app.includes" />
+
+		<if>
+			<isset property="hot.deploy.osgi.app.includes" />
+			<then>
+				<for list="${hot.deploy.osgi.app.includes}" param="osgi.app.name">
+					<sequential>
+						<antelope:stringutil property="osgi.app.name" string="@{osgi.app.name}">
+							<antelope:trim />
+						</antelope:stringutil>
+
+						<local name="app.dir.includes" />
+
+						<condition else="apps/${osgi.app.name}" property="app.dir.includes" value="apps/${osgi.app.name},dxp/apps/${osgi.app.name}">
+							<equals arg1="${build.profile}" arg2="dxp" />
+						</condition>
+
+						<for param="app.dir">
+							<path>
+								<dirset
+									dir="modules"
+									includes="${app.dir.includes}"
+								/>
+							</path>
+							<sequential>
+								<local name="Liferay-Releng-App-Title" />
+
+								<property file="@{app.dir}/app.bnd" />
+
+								<if>
+									<available file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									<then>
+										<delete file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									</then>
+								</if>
+
+								<gradle-execute dir="@{app.dir}" task="clean" />
+
+								<if>
+									<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+									<then>
+										<echo>Copying ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg.</echo>
+
+										<copy
+											file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg"
+											tofile="${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg"
+										/>
+									</then>
+									<elseif>
+										<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+										<then>
+											<echo>Copying ${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg.</echo>
+
+											<copy
+												file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg"
+												tofile="${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg"
+											/>
+										</then>
+									</elseif>
+									<else>
+										<echo>Generating and hot deploying all relevant modules that make up ${Liferay-Releng-App-Title}.lpkg.</echo>
+
+										<for param="module.dir.path">
+											<path>
+												<dirset
+													dir="@{app.dir}"
+												>
+													<exclude name="**/*-test*" />
+													<present targetdir="@{app.dir}">
+														<mapper
+															from="*"
+															to="*/bnd.bnd"
+															type="glob"
+														/>
+													</present>
+												</dirset>
+											</path>
+											<sequential>
+												<if>
+													<contains string="${test.modules.force.deploy}" substring="@{osgi.app.name}" />
+													<then>
+														<echo file="@{module.dir.path}/.lfrbuild-portal" />
+													</then>
+												</if>
+											</sequential>
+										</for>
+
+										<gradle-execute dir="@{app.dir}" task="deploy">
+											<arg value="clean" />
+											<arg value="-Pliferay.home=${liferay.home}/osgi-temp" />
+										</gradle-execute>
+
+										<move
+											todir="${liferay.home}/deploy-temp"
+										>
+											<fileset
+												dir="${liferay.home}/deploy/"
+												includes="**/*"
+											/>
+										</move>
+
+										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
+											<property name="app.name" value="${osgi.app.name}" />
+											<property name="output.dir" value="${liferay.home}/deploy" />
+											<property name="osgi.dir" value="${liferay.home}/osgi-temp/osgi" />
+										</ant>
+
+										<delete dir="${liferay.home}/osgi-temp" failonerror="false" />
+
+										<if>
+											<available file="${liferay.home}/deploy-temp" />
+											<then>
+												<move
+													todir="${liferay.home}/deploy"
+												>
+													<fileset
+														dir="${liferay.home}/deploy-temp/"
+														includes="**/*"
+													/>
+												</move>
+
+												<delete dir="${liferay.home}/deploy-temp" failonerror="false" />
+											</then>
+										</if>
+									</else>
+								</if>
+
+								<sleep seconds="5" />
+
+								<for param="lpkg.file.path">
+									<path>
+										<fileset
+											dir="${liferay.home}/deploy"
+										>
+											<include name="*${Liferay-Releng-App-Title}*.lpkg" />
+										</fileset>
+									</path>
+									<sequential>
+										<echo>Disabling restart requirement for @{lpkg.file.path}</echo>
+
+										<unzip
+											dest="${liferay.home}/lpkg-unzip-temp"
+											src="@{lpkg.file.path}"
+										/>
+
+										<echo append="true" file="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties" message="${line.separator}" />
+
+										<echo append="true" file="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties">restart-required=false</echo>
+
+										<zip
+											destfile="@{lpkg.file.path}"
+											update="true"
+										>
+											<zipfileset
+												dir="${liferay.home}/lpkg-unzip-temp"
+												includes="liferay-marketplace.properties"
+											/>
+										</zip>
+
+										<delete dir="${liferay.home}/lpkg-unzip-temp" failonerror="false" />
+									</sequential>
+								</for>
+							</sequential>
+						</for>
+					</sequential>
+				</for>
+			</then>
+		</if>
+	</target>
+
 	<target name="install-patch">
 		<fail message="Please set the property ${patch.file.zip.url}." unless="patch.file.zip.url" />
 
@@ -11787,6 +11958,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		</if>
 
 		<antcall target="deploy-osgi-apps" />
+
+		<antcall target="hot-deploy-osgi-apps" />
 
 		<antcall target="deploy-osgi-modules" />
 

@@ -186,6 +186,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecordVersionPersistence.findByFormInstanceRecordId(
 				ddmFormInstanceRecord.getFormInstanceRecordId());
 
+		String storageType = ddmFormInstanceRecord.getStorageType();
+
 		for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
 				ddmFormInstanceRecordVersions) {
 
@@ -194,7 +196,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 			long storageId = ddmFormInstanceRecordVersion.getStorageId();
 
-			deleteStorage(storageId);
+			deleteStorage(storageId, storageType);
 
 			_ddmStorageLinkLocalService.deleteClassStorageLink(storageId);
 
@@ -444,7 +446,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecordVersionPersistence.remove(
 				ddmFormInstanceRecordVersion);
 
-			deleteStorage(ddmFormInstanceRecordVersion.getStorageId());
+			deleteStorage(
+				ddmFormInstanceRecordVersion.getStorageId(),
+				ddmFormInstance.getStorageType());
 
 			return ddmFormInstanceRecord;
 		}
@@ -630,8 +634,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return primaryKey;
 	}
 
-	protected void deleteStorage(long storageId) throws StorageException {
-		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
+	protected void deleteStorage(long storageId, String storageType)
+		throws StorageException {
+
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter(storageType);
 
 		DDMStorageAdapterDeleteRequest.Builder builder =
 			DDMStorageAdapterDeleteRequest.Builder.newBuilder(storageId);
@@ -655,9 +661,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return _indexerRegistry.nullSafeGetIndexer(DDMFormInstanceRecord.class);
 	}
 
-	protected DDMStorageAdapter getDDMStorageAdapter() {
+	protected DDMStorageAdapter getDDMStorageAdapter(String type) {
 		return _ddmStorageAdapterTracker.getDDMStorageAdapter(
-			StorageType.JSON.toString());
+			GetterUtil.getString(type, StorageType.JSON.toString()));
 	}
 
 	protected List<DDMFormInstanceRecord> getFormInstanceRecords(Hits hits)

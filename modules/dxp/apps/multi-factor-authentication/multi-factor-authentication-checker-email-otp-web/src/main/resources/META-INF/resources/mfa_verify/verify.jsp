@@ -20,7 +20,6 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 EmailOTPMFAChecker emailOTPMFAChecker = (EmailOTPMFAChecker)request.getAttribute(WebKeys.EMAIL_MFA_CHECKER);
-
 long mfaUserId = (Long)request.getAttribute(WebKeys.MFA_USER_ID);
 %>
 

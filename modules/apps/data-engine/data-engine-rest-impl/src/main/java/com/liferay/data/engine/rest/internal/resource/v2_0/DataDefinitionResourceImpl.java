@@ -386,11 +386,11 @@ public class DataDefinitionResourceImpl
 				GetterUtil.getString(dataDefinition.getStorageType(), "json"),
 				serviceContext));
 
-		_resourceLocalService.addModelResources(
+		_resourceLocalService.addResources(
 			contextCompany.getCompanyId(), siteId,
 			PrincipalThreadLocal.getUserId(),
 			_portal.getClassName(dataDefinitionContentType.getClassNameId()),
-			dataDefinition.getId(), serviceContext.getModelPermissions());
+			dataDefinition.getId(), false, false, false);
 
 		CommonDataRecordCollectionResource<DataRecordCollection>
 			commonDataRecordCollectionResource =

@@ -1,5 +1,11 @@
 definition {
 
+	macro activateAppCP {
+		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
+
+		MenuItem.clickNoError(menuItem = "Activate");
+	}
+
 	macro deactivateAppCP {
 		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
 

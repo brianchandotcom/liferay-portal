@@ -13,18 +13,80 @@
  */
 
 import ClayForm from '@clayui/form';
-import React from 'react';
+import {useIsMounted} from 'frontend-js-react-web';
+import React, {useContext, useState, useEffect} from 'react';
 
 import ItemSelector from '../../common/components/ItemSelector';
+import {ConfigContext} from '../config/index';
+import AssetService from '../services/AssetService';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => (
-	<ClayForm.Group>
-		<ItemSelector
-			label={field.label}
-			onItemSelect={item => {
-				onValueSelect(field.name, item);
-			}}
-			selectedItem={value}
-		/>
-	</ClayForm.Group>
+	<>
+		<ClayForm.Group>
+			<ItemSelector
+				label={field.label}
+				onItemSelect={item => {
+					onValueSelect(field.name, item);
+				}}
+				selectedItem={value}
+			/>
+		</ClayForm.Group>
+
+		{value.className && (
+			<ClayForm.Group>
+				<TemplateSelector item={value} />
+			</ClayForm.Group>
+		)}
+	</>
 );
+
+const TemplateSelector = ({item}) => {
+	const config = useContext(ConfigContext);
+	const [availableTemplates, setAvailableTemplates] = useState([]);
+	const isMounted = useIsMounted();
+
+	useEffect(() => {
+		if (isMounted()) {
+			AssetService.getAvailableTemplates({
+				className: item.className,
+				classPK: item.classPK,
+				config
+			}).then(response => {
+				setAvailableTemplates(response);
+			});
+		}
+	}, [config, isMounted, item.className, item.classPK]);
+
+	return (
+		<>
+			<div className="form-group">
+				<label htmlFor="template">
+					{Liferay.Language.get('template')}
+				</label>
+
+				<select
+					className="form-control form-control-sm"
+					id="itemSelectorTemplateSelect"
+				>
+					{availableTemplates.map(entry => {
+						if (entry.templates) {
+							return (
+								<optgroup key={entry.label} label={entry.label}>
+									{entry.templates.map(template => (
+										<option key={template.label}>
+											{template.label}
+										</option>
+									))}
+								</optgroup>
+							);
+						} else {
+							return (
+								<option key={entry.label}>{entry.label}</option>
+							);
+						}
+					})}
+				</select>
+			</div>
+		</>
+	);
+};

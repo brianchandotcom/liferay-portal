@@ -251,10 +251,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(long storageId, DDMForm ddmForm)
+	public DDMFormValues getDDMFormValues(
+			DDMForm ddmForm, long storageId, String storageType)
 		throws StorageException {
 
-		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter(storageType);
 
 		DDMStorageAdapterGetRequest.Builder builder =
 			DDMStorageAdapterGetRequest.Builder.newBuilder(storageId, ddmForm);
@@ -350,9 +351,13 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return;
 		}
 
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecordVersion.getFormInstance();
+
 		DDMFormValues ddmFormValues = getDDMFormValues(
+			ddmFormInstanceRecordVersion.getDDMForm(),
 			ddmFormInstanceRecordVersion.getStorageId(),
-			ddmFormInstanceRecordVersion.getDDMForm());
+			ddmFormInstance.getStorageType());
 
 		serviceContext.setCommand(Constants.REVERT);
 
@@ -756,12 +761,21 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return false;
 		}
 
+		DDMFormInstance lastFormInstance =
+			lastDDMFormInstanceRecordVersion.getFormInstance();
+
 		DDMFormValues lastDDMFormValues = getDDMFormValues(
+			lastDDMFormInstanceRecordVersion.getDDMForm(),
 			lastDDMFormInstanceRecordVersion.getStorageId(),
-			lastDDMFormInstanceRecordVersion.getDDMForm());
+			lastFormInstance.getStorageType());
+
+		DDMFormInstance latestFormInstance =
+			latestDDMFormInstanceRecordVersion.getFormInstance();
+
 		DDMFormValues latestDDMFormValues = getDDMFormValues(
+			latestDDMFormInstanceRecordVersion.getDDMForm(),
 			latestDDMFormInstanceRecordVersion.getStorageId(),
-			latestDDMFormInstanceRecordVersion.getDDMForm());
+			latestFormInstance.getStorageType());
 
 		if (!lastDDMFormValues.equals(latestDDMFormValues)) {
 			return false;
@@ -859,7 +873,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				ddmFormInstanceRecordVersion.getStorageId()
 			).build();
 
-		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter();
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecordVersion.getFormInstance();
+
+		DDMStorageAdapter ddmStorageAdapter = getDDMStorageAdapter(
+			ddmFormInstance.getStorageType());
 
 		ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
 	}

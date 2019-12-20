@@ -87,6 +87,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="type" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="Company" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>DispatchTriggerEndDate</exception>

@@ -11,8 +11,12 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="dispatchTriggerId" type="long" />
 		<field name="endDate" type="Date" />
-		<field name="error" type="String" />
-		<field name="output" type="String" />
+		<field name="error" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="output" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="startDate" type="Date" />
 		<field name="status" type="int" />
 	</model>
@@ -31,6 +35,8 @@
 		<field name="startDate" type="Date" />
 		<field name="system" type="boolean" />
 		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

@@ -26,172 +26,174 @@ long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:rend
 
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("render_layout_data_structure.jsp-renderFragmentLayoutDisplayContext");
 
-JSONArray structureJSONArray = (JSONArray)request.getAttribute("render_layout_data_structure.jsp-structureJSONArray");
+JSONObject dataJSONObject = (JSONObject)request.getAttribute("render_layout_data_structure.jsp-dataJSONObject");
 
-for (int i = 0; i < structureJSONArray.length(); i++) {
-	JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
+JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 
-	JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject("config");
+if (structureJSONArray != null) {
+	for (int i = 0; i < structureJSONArray.length(); i++) {
+		JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
 
-	int type = rowJSONObject.getInt("type", FragmentConstants.TYPE_COMPONENT);
+		JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject("config");
+
+		int type = rowJSONObject.getInt("type", FragmentConstants.TYPE_COMPONENT);
 %>
 
-	<c:choose>
-		<c:when test="<%= type == FragmentConstants.TYPE_COMPONENT %>">
-
-			<%
-			String backgroundColorCssClass = StringPool.BLANK;
-			String backgroundImage = StringPool.BLANK;
-			boolean columnSpacing = true;
-			String containerType = StringPool.BLANK;
-			long paddingHorizontal = -1L;
-			long paddingVertical = -1L;
-
-			if (rowConfigJSONObject != null) {
-				backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
-				backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(rowConfigJSONObject);
-				columnSpacing = rowConfigJSONObject.getBoolean("columnSpacing", true);
-				containerType = rowConfigJSONObject.getString("containerType");
-				paddingHorizontal = rowConfigJSONObject.getLong("paddingHorizontal", paddingHorizontal);
-				paddingVertical = rowConfigJSONObject.getLong("paddingVertical", paddingVertical);
-			}
-			%>
-
-			<section class="<%= Validator.isNotNull(backgroundColorCssClass) ? "bg-" + backgroundColorCssClass : "" %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-				<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingVertical != -1L) ? "py-" + paddingVertical : "" %>">
-					<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
-
-						<%
-						JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
-
-						for (int j = 0; j < columnsJSONArray.length(); j++) {
-							JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-
-							String size = columnJSONObject.getString("size");
-						%>
-
-							<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : StringPool.BLANK %>">
-
-								<%
-								JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-								for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
-								%>
-
-									<c:choose>
-										<c:when test='<%= Objects.equals(fragmentEntryLinkIdsJSONArray.getString(k), "drop-zone") %>'>
-
-											<%
-											LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), themeDisplay.getPlid(), true);
-
-											String data = layoutPageTemplateStructure.getData(segmentsExperienceIds);
-											%>
-
-											<c:if test="<%= Validator.isNotNull(data) %>">
-
-												<%
-												JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
-
-												request.setAttribute("render_layout_data_structure.jsp-structureJSONArray", dataJSONObject.getJSONArray("structure"));
-												%>
-
-												<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
-											</c:if>
-										</c:when>
-										<c:otherwise>
-
-											<%
-											long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
-
-											if (fragmentEntryLinkId <= 0) {
-												continue;
-											}
-
-											FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
-
-											if (fragmentEntryLink == null) {
-												continue;
-											}
-
-											FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-											DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-											defaultFragmentRendererContext.setFieldValues(fieldValues);
-											defaultFragmentRendererContext.setLocale(locale);
-											defaultFragmentRendererContext.setMode(mode);
-											defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
-											defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
-											defaultFragmentRendererContext.setPreviewType(previewType);
-											defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-											%>
-
-											<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-										</c:otherwise>
-									</c:choose>
-
-								<%
-								}
-								%>
-
-							</div>
-
-						<%
-						}
-						%>
-
-					</div>
-				</div>
-			</section>
-		</c:when>
-		<c:otherwise>
-			<section>
+		<c:choose>
+			<c:when test="<%= type == FragmentConstants.TYPE_COMPONENT %>">
 
 				<%
-				JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+				String backgroundColorCssClass = StringPool.BLANK;
+				String backgroundImage = StringPool.BLANK;
+				boolean columnSpacing = true;
+				String containerType = StringPool.BLANK;
+				long paddingHorizontal = -1L;
+				long paddingVertical = -1L;
 
-				for (int j = 0; j < columnsJSONArray.length(); j++) {
-					JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-
-					JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-					for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
-						long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
-
-						if (fragmentEntryLinkId <= 0) {
-							continue;
-						}
-
-						FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
-
-						if (fragmentEntryLink == null) {
-							continue;
-						}
-
-						FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-						DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-						defaultFragmentRendererContext.setFieldValues(fieldValues);
-						defaultFragmentRendererContext.setLocale(locale);
-						defaultFragmentRendererContext.setMode(mode);
-						defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
-						defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
-						defaultFragmentRendererContext.setPreviewType(previewType);
-						defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-				%>
-
-						<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-
-				<%
-					}
+				if (rowConfigJSONObject != null) {
+					backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
+					backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(rowConfigJSONObject);
+					columnSpacing = rowConfigJSONObject.getBoolean("columnSpacing", true);
+					containerType = rowConfigJSONObject.getString("containerType");
+					paddingHorizontal = rowConfigJSONObject.getLong("paddingHorizontal", paddingHorizontal);
+					paddingVertical = rowConfigJSONObject.getLong("paddingVertical", paddingVertical);
 				}
 				%>
 
-			</section>
-		</c:otherwise>
-	</c:choose>
+				<section class="<%= Validator.isNotNull(backgroundColorCssClass) ? "bg-" + backgroundColorCssClass : "" %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
+					<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingVertical != -1L) ? "py-" + paddingVertical : "" %>">
+						<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
+
+							<%
+							JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+
+							for (int j = 0; j < columnsJSONArray.length(); j++) {
+								JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+
+								String size = columnJSONObject.getString("size");
+							%>
+
+								<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : StringPool.BLANK %>">
+
+									<%
+									JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+
+									for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
+									%>
+
+										<c:choose>
+											<c:when test='<%= Objects.equals(fragmentEntryLinkIdsJSONArray.getString(k), "drop-zone") %>'>
+
+												<%
+												LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), themeDisplay.getPlid(), true);
+
+												String data = layoutPageTemplateStructure.getData(segmentsExperienceIds);
+												%>
+
+												<c:if test="<%= Validator.isNotNull(data) %>">
+
+													<%
+													request.setAttribute("render_layout_data_structure.jsp-dataJSONObject", JSONFactoryUtil.createJSONObject(data));
+													%>
+
+													<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+												</c:if>
+											</c:when>
+											<c:otherwise>
+
+												<%
+												long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
+
+												if (fragmentEntryLinkId <= 0) {
+													continue;
+												}
+
+												FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
+
+												if (fragmentEntryLink == null) {
+													continue;
+												}
+
+												FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+
+												DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
+
+												defaultFragmentRendererContext.setFieldValues(fieldValues);
+												defaultFragmentRendererContext.setLocale(locale);
+												defaultFragmentRendererContext.setMode(mode);
+												defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
+												defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
+												defaultFragmentRendererContext.setPreviewType(previewType);
+												defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+												%>
+
+												<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+											</c:otherwise>
+										</c:choose>
+
+									<%
+									}
+									%>
+
+								</div>
+
+							<%
+							}
+							%>
+
+						</div>
+					</div>
+				</section>
+			</c:when>
+			<c:otherwise>
+				<section>
+
+					<%
+					JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+
+					for (int j = 0; j < columnsJSONArray.length(); j++) {
+						JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+
+						JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+
+						for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
+							long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
+
+							if (fragmentEntryLinkId <= 0) {
+								continue;
+							}
+
+							FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
+
+							if (fragmentEntryLink == null) {
+								continue;
+							}
+
+							FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+
+							DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
+
+							defaultFragmentRendererContext.setFieldValues(fieldValues);
+							defaultFragmentRendererContext.setLocale(locale);
+							defaultFragmentRendererContext.setMode(mode);
+							defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
+							defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
+							defaultFragmentRendererContext.setPreviewType(previewType);
+							defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+					%>
+
+							<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+
+					<%
+						}
+					}
+					%>
+
+				</section>
+			</c:otherwise>
+		</c:choose>
 
 <%
+	}
 }
 %>

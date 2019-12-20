@@ -17,10 +17,10 @@
 <%@ include file="/render_fragment_layout/init.jsp" %>
 
 <%
-JSONArray structureJSONArray = (JSONArray)request.getAttribute("liferay-layout:render-fragment-layout:structureJSONArray");
+JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-layout:render-fragment-layout:dataJSONObject");
 %>
 
-<c:if test="<%= structureJSONArray != null %>">
+<c:if test="<%= dataJSONObject != null %>">
 	<div class="layout-content portlet-layout" id="main-content" role="main">
 
 		<%
@@ -31,7 +31,7 @@ JSONArray structureJSONArray = (JSONArray)request.getAttribute("liferay-layout:r
 
 			request.setAttribute("render_layout_data_structure.jsp-renderFragmentLayoutDisplayContext", renderFragmentLayoutDisplayContext);
 
-			request.setAttribute("render_layout_data_structure.jsp-structureJSONArray", structureJSONArray);
+			request.setAttribute("render_layout_data_structure.jsp-dataJSONObject", dataJSONObject);
 		%>
 
 			<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>

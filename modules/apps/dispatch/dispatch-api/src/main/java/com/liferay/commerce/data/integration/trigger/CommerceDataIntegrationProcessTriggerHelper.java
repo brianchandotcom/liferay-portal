@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.data.integration.trigger;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
@@ -24,7 +22,6 @@ import java.util.Date;
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommerceDataIntegrationProcessTriggerHelper {
 
 	public void addScheduledTask(

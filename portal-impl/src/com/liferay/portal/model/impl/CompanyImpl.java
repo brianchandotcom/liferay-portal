@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -25,12 +26,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyInfoLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -99,6 +102,15 @@ public class CompanyImpl extends CompanyBaseImpl {
 	}
 
 	@Override
+	public CompanyInfo getCompanyInfo() {
+		if (_companyInfo == null) {
+			_initCompanyInfo();
+		}
+
+		return _companyInfo;
+	}
+
+	@Override
 	public CompanySecurityBag getCompanySecurityBag() {
 		if (_companySecurityBag == null) {
 			_companySecurityBag = new CompanySecurityBag(this);
@@ -154,6 +166,15 @@ public class CompanyImpl extends CompanyBaseImpl {
 		Group group = getGroup();
 
 		return group.getGroupId();
+	}
+
+	@Override
+	public String getKey() {
+		if (_companyInfo == null) {
+			_initCompanyInfo();
+		}
+
+		return _companyInfo.getKey();
 	}
 
 	@Override
@@ -341,9 +362,13 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public void setKey(String key) {
+		if (_companyInfo == null) {
+			_initCompanyInfo();
+		}
+
 		_keyObj = null;
 
-		super.setKey(key);
+		_companyInfo.setKey(key);
 	}
 
 	@Override
@@ -421,7 +446,24 @@ public class CompanyImpl extends CompanyBaseImpl {
 		return defaultValue;
 	}
 
+	private void _initCompanyInfo() {
+		CompanyInfo companyInfo = CompanyInfoLocalServiceUtil.fetchByCompanyId(
+			getCompanyId());
+
+		if (companyInfo == null) {
+			companyInfo = CompanyInfoLocalServiceUtil.createCompanyInfo(
+				CounterLocalServiceUtil.increment());
+
+			companyInfo.setCompanyId(getCompanyId());
+		}
+
+		_companyInfo = companyInfo;
+	}
+
 	private Account _account;
+
+	@CacheField(propagateToInterface = true)
+	private CompanyInfo _companyInfo;
 
 	@CacheField
 	private CompanySecurityBag _companySecurityBag;

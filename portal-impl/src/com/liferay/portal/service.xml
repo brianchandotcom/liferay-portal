@@ -186,6 +186,7 @@
 		<!-- References -->
 
 		<reference entity="Account" package-path="com.liferay.portal" />
+		<reference entity="CompanyInfo" package-path="com.liferay.portal" />
 		<reference entity="Contact" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Image" package-path="com.liferay.portal" />

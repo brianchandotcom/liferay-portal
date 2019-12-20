@@ -45,9 +45,9 @@ public class BaseManagementToolbarDisplayContext
 	implements ManagementToolbarDisplayContext {
 
 	public BaseManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
@@ -55,6 +55,18 @@ public class BaseManagementToolbarDisplayContext
 
 		currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BaseManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 */
+	@Deprecated
+	public BaseManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest) {
+
+		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	@Override

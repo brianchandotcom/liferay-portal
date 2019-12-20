@@ -31,13 +31,28 @@ public class SelectFragmentCollectionManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public SelectFragmentCollectionManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SearchContainer searchContainer) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectFragmentCollectionManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 */
+	@Deprecated
+	public SelectFragmentCollectionManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		SearchContainer searchContainer) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 	}
 

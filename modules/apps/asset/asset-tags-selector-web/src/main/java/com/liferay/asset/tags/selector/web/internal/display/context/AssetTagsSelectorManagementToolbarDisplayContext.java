@@ -30,14 +30,29 @@ public class AssetTagsSelectorManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public AssetTagsSelectorManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		AssetTagsSelectorDisplayContext assetTagsSelectorDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetTagsSelectorDisplayContext.getTagsSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetTagsSelectorManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetTagsSelectorDisplayContext)}
+	 */
+	@Deprecated
+	public AssetTagsSelectorManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		AssetTagsSelectorDisplayContext assetTagsSelectorDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			assetTagsSelectorDisplayContext.getTagsSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetTagsSelectorDisplayContext);
 	}
 
 	@Override

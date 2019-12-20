@@ -47,16 +47,31 @@ public class UserGroupsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public UserGroupsManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		UserGroupsDisplayContext userGroupsDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			userGroupsDisplayContext.getUserGroupSearchContainer());
+
+		_userGroupsDisplayContext = userGroupsDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #UserGroupsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, UserGroupsDisplayContext)}
+	 */
+	@Deprecated
+	public UserGroupsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		UserGroupsDisplayContext userGroupsDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			userGroupsDisplayContext.getUserGroupSearchContainer());
-
-		_userGroupsDisplayContext = userGroupsDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			userGroupsDisplayContext);
 	}
 
 	@Override

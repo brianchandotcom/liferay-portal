@@ -30,14 +30,29 @@ public class FragmentCollectionsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public FragmentCollectionsManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentCollectionsDisplayContext.getSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #FragmentCollectionsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentCollectionsDisplayContext)}
+	 */
+	@Deprecated
+	public FragmentCollectionsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			fragmentCollectionsDisplayContext.getSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentCollectionsDisplayContext);
 	}
 
 	@Override

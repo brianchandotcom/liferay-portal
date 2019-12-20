@@ -36,7 +36,7 @@ public class SelectUsersManagementToolbarDisplayContext
 		SelectUsersDisplayContext selectUsersDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			selectUsersDisplayContext.getUserSearchContainer());
 	}
 

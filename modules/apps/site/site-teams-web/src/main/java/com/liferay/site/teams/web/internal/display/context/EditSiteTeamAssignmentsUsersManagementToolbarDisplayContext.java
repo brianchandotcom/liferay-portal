@@ -39,19 +39,35 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		EditSiteTeamAssignmentsUsersDisplayContext
+			editSiteTeamAssignmentsUsersDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			editSiteTeamAssignmentsUsersDisplayContext.
+				getUserSearchContainer());
+
+		_editSiteTeamAssignmentsUsersDisplayContext =
+			editSiteTeamAssignmentsUsersDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, EditSiteTeamAssignmentsUsersDisplayContext)}
+	 */
+	@Deprecated
+	public EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		EditSiteTeamAssignmentsUsersDisplayContext
 			editSiteTeamAssignmentsUsersDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			editSiteTeamAssignmentsUsersDisplayContext.
-				getUserSearchContainer());
-
-		_editSiteTeamAssignmentsUsersDisplayContext =
-			editSiteTeamAssignmentsUsersDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			editSiteTeamAssignmentsUsersDisplayContext);
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 		MasterLayoutDisplayContext masterLayoutDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			masterLayoutDisplayContext.getMasterLayoutsSearchContainer());
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(

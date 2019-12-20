@@ -27,16 +27,32 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ViewMembershipRequestsManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		ViewMembershipRequestsDisplayContext
+			viewMembershipRequestsDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			viewMembershipRequestsDisplayContext.
+				getSiteMembershipSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ViewMembershipRequestsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, ViewMembershipRequestsDisplayContext)}
+	 */
+	@Deprecated
+	public ViewMembershipRequestsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		ViewMembershipRequestsDisplayContext
 			viewMembershipRequestsDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			viewMembershipRequestsDisplayContext.
-				getSiteMembershipSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			viewMembershipRequestsDisplayContext);
 	}
 
 	@Override

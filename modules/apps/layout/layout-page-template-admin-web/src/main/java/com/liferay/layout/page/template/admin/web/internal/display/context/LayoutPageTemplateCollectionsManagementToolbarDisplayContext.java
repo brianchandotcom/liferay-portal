@@ -32,15 +32,31 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public LayoutPageTemplateCollectionsManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		LayoutPageTemplateCollectionsDisplayContext
+			layoutPageTemplateCollectionsDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			layoutPageTemplateCollectionsDisplayContext.getSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #LayoutPageTemplateCollectionsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, LayoutPageTemplateCollectionsDisplayContext)}
+	 */
+	@Deprecated
+	public LayoutPageTemplateCollectionsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		LayoutPageTemplateCollectionsDisplayContext
 			layoutPageTemplateCollectionsDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			layoutPageTemplateCollectionsDisplayContext.getSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			layoutPageTemplateCollectionsDisplayContext);
 	}
 
 	@Override

@@ -28,13 +28,28 @@ public class BlogEntriesItemSelectorManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public BlogEntriesItemSelectorManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SearchContainer searchContainer) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BlogEntriesItemSelectorManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 */
+	@Deprecated
+	public BlogEntriesItemSelectorManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		SearchContainer searchContainer) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 	}
 

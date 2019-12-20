@@ -39,14 +39,29 @@ import javax.servlet.http.HttpServletRequest;
 public class AMManagementToolbarDisplayContext {
 
 	public AMManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
+		PortletURL currentURLObj) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_httpServletRequest = httpServletRequest;
 		_currentURLObj = currentURLObj;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AMManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletURL)}
+	 */
+	@Deprecated
+	public AMManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			currentURLObj);
 	}
 
 	public CreationMenu getCreationMenu() {

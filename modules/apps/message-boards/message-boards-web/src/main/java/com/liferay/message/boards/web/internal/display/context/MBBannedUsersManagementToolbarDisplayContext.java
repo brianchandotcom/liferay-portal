@@ -42,9 +42,9 @@ import javax.servlet.http.HttpServletRequest;
 public class MBBannedUsersManagementToolbarDisplayContext {
 
 	public MBBannedUsersManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -55,6 +55,18 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #MBBannedUsersManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 */
+	@Deprecated
+	public MBBannedUsersManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest) {
+
+		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

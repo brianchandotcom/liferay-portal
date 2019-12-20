@@ -67,15 +67,15 @@ public class JournalManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public JournalManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
 			JournalDisplayContext journalDisplayContext,
 			TrashHelper trashHelper)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			journalDisplayContext.getSearchContainer());
 
 		_journalDisplayContext = journalDisplayContext;
@@ -86,6 +86,23 @@ public class JournalManagementToolbarDisplayContext
 				JournalWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalDisplayContext, TrashHelper)}
+	 */
+	@Deprecated
+	public JournalManagementToolbarDisplayContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			HttpServletRequest httpServletRequest,
+			JournalDisplayContext journalDisplayContext,
+			TrashHelper trashHelper)
+		throws PortalException {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalDisplayContext, trashHelper);
 	}
 
 	@Override

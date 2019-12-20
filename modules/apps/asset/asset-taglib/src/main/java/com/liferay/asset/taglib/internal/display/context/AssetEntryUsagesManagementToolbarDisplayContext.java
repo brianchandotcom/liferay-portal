@@ -28,13 +28,28 @@ public class AssetEntryUsagesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public AssetEntryUsagesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SearchContainer searchContainer) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetEntryUsagesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 */
+	@Deprecated
+	public AssetEntryUsagesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		SearchContainer searchContainer) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 	}
 

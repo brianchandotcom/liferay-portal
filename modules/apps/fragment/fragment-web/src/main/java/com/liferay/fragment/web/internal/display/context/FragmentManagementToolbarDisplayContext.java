@@ -33,16 +33,32 @@ public abstract class FragmentManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public FragmentManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SearchContainer searchContainer,
+		FragmentDisplayContext fragmentDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
+
+		this.fragmentDisplayContext = fragmentDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #FragmentManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer, FragmentDisplayContext)}
+	 */
+	@Deprecated
+	public FragmentManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest, SearchContainer searchContainer,
 		FragmentDisplayContext fragmentDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			searchContainer);
-
-		this.fragmentDisplayContext = fragmentDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer, fragmentDisplayContext);
 	}
 
 	@Override

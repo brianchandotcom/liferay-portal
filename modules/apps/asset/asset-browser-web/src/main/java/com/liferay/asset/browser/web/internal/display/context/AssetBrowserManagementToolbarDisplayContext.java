@@ -47,13 +47,13 @@ public class AssetBrowserManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public AssetBrowserManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
 		AssetBrowserDisplayContext assetBrowserDisplayContext) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			assetBrowserDisplayContext.getAssetBrowserSearch());
 
 		_assetBrowserDisplayContext = assetBrowserDisplayContext;
@@ -62,6 +62,21 @@ public class AssetBrowserManagementToolbarDisplayContext
 			AssetWebKeys.ASSET_HELPER);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetBrowserManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetBrowserDisplayContext)}
+	 */
+	@Deprecated
+	public AssetBrowserManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest,
+		AssetBrowserDisplayContext assetBrowserDisplayContext) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetBrowserDisplayContext);
 	}
 
 	@Override

@@ -39,19 +39,35 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		EditSiteTeamAssignmentsUserGroupsDisplayContext
+			editSiteTeamAssignmentsUserGroupsDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			editSiteTeamAssignmentsUserGroupsDisplayContext.
+				getUserGroupSearchContainer());
+
+		_editSiteTeamAssignmentsUserGroupsDisplayContext =
+			editSiteTeamAssignmentsUserGroupsDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, EditSiteTeamAssignmentsUserGroupsDisplayContext)}
+	 */
+	@Deprecated
+	public EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		EditSiteTeamAssignmentsUserGroupsDisplayContext
 			editSiteTeamAssignmentsUserGroupsDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			editSiteTeamAssignmentsUserGroupsDisplayContext.
-				getUserGroupSearchContainer());
-
-		_editSiteTeamAssignmentsUserGroupsDisplayContext =
-			editSiteTeamAssignmentsUserGroupsDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			editSiteTeamAssignmentsUserGroupsDisplayContext);
 	}
 
 	@Override

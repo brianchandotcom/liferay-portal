@@ -30,15 +30,31 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public SelectOrganizationsManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			SelectOrganizationsDisplayContext selectOrganizationsDisplayContext)
+		throws Exception {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			selectOrganizationsDisplayContext.getOrganizationSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectOrganizationsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SelectOrganizationsDisplayContext)}
+	 */
+	@Deprecated
+	public SelectOrganizationsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			SelectOrganizationsDisplayContext selectOrganizationsDisplayContext)
 		throws Exception {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			selectOrganizationsDisplayContext.getOrganizationSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			selectOrganizationsDisplayContext);
 	}
 
 	@Override

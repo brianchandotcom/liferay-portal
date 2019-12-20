@@ -30,6 +30,26 @@ public class JournalSelectDDMStructureManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public JournalSelectDDMStructureManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalSelectDDMStructureDisplayContext
+				journalSelectDDMStructureDisplayContext)
+		throws Exception {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalSelectDDMStructureDisplayContext.getDDMStructureSearch());
+
+		_journalSelectDDMStructureDisplayContext =
+			journalSelectDDMStructureDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalSelectDDMStructureManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalSelectDDMStructureDisplayContext)}
+	 */
+	@Deprecated
+	public JournalSelectDDMStructureManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
@@ -37,12 +57,9 @@ public class JournalSelectDDMStructureManagementToolbarDisplayContext
 				journalSelectDDMStructureDisplayContext)
 		throws Exception {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			journalSelectDDMStructureDisplayContext.getDDMStructureSearch());
-
-		_journalSelectDDMStructureDisplayContext =
-			journalSelectDDMStructureDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalSelectDDMStructureDisplayContext);
 	}
 
 	@Override

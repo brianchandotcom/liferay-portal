@@ -30,14 +30,29 @@ public class SelectTeamManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public SelectTeamManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SelectTeamDisplayContext selectTeamDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			selectTeamDisplayContext.getTeamSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectTeamManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SelectTeamDisplayContext)}
+	 */
+	@Deprecated
+	public SelectTeamManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		SelectTeamDisplayContext selectTeamDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			selectTeamDisplayContext.getTeamSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			selectTeamDisplayContext);
 	}
 
 	@Override

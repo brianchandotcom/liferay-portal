@@ -41,16 +41,31 @@ public class OrganizationsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public OrganizationsManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		OrganizationsDisplayContext organizationsDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			organizationsDisplayContext.getOrganizationSearchContainer());
+
+		_organizationsDisplayContext = organizationsDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #OrganizationsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, OrganizationsDisplayContext)}
+	 */
+	@Deprecated
+	public OrganizationsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		OrganizationsDisplayContext organizationsDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			organizationsDisplayContext.getOrganizationSearchContainer());
-
-		_organizationsDisplayContext = organizationsDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			organizationsDisplayContext);
 	}
 
 	@Override

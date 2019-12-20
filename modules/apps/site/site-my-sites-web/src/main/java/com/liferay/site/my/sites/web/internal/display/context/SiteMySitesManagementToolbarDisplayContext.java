@@ -30,14 +30,29 @@ public class SiteMySitesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public SiteMySitesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SiteMySitesDisplayContext siteMySitesDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			siteMySitesDisplayContext.getGroupSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SiteMySitesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SiteMySitesDisplayContext)}
+	 */
+	@Deprecated
+	public SiteMySitesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		SiteMySitesDisplayContext siteMySitesDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			siteMySitesDisplayContext.getGroupSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			siteMySitesDisplayContext);
 	}
 
 	@Override

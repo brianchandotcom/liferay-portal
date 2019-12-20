@@ -31,6 +31,24 @@ public class AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			AssetDisplayPagesItemSelectorViewDisplayContext
+				assetDisplayPagesItemSelectorViewDisplayContext)
+		throws PortletException {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetDisplayPagesItemSelectorViewDisplayContext.
+				getAssetDisplayPageSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetDisplayPagesItemSelectorViewDisplayContext)}
+	 */
+	@Deprecated
+	public AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
@@ -38,10 +56,9 @@ public class AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext
 				assetDisplayPagesItemSelectorViewDisplayContext)
 		throws PortletException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			assetDisplayPagesItemSelectorViewDisplayContext.
-				getAssetDisplayPageSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetDisplayPagesItemSelectorViewDisplayContext);
 	}
 
 	@Override

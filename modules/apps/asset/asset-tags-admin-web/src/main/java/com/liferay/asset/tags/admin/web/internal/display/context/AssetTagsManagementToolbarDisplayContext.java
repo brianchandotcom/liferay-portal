@@ -42,17 +42,33 @@ public class AssetTagsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public AssetTagsManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			AssetTagsDisplayContext assetTagsDisplayContext)
+		throws PortalException {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetTagsDisplayContext.getTagsSearchContainer());
+
+		_assetTagsDisplayContext = assetTagsDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetTagsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetTagsDisplayContext)}
+	 */
+	@Deprecated
+	public AssetTagsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			AssetTagsDisplayContext assetTagsDisplayContext)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			assetTagsDisplayContext.getTagsSearchContainer());
-
-		_assetTagsDisplayContext = assetTagsDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetTagsDisplayContext);
 	}
 
 	@Override

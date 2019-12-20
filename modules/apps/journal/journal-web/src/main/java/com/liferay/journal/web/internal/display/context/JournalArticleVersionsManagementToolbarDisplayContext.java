@@ -32,6 +32,23 @@ public class JournalArticleVersionsManagementToolbarDisplayContext
 	extends JournalManagementToolbarDisplayContext {
 
 	public JournalArticleVersionsManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalDisplayContext journalDisplayContext,
+			TrashHelper trashHelper)
+		throws PortalException {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalDisplayContext, trashHelper);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalArticleVersionsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalDisplayContext, TrashHelper)}
+	 */
+	@Deprecated
+	public JournalArticleVersionsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
@@ -39,8 +56,8 @@ public class JournalArticleVersionsManagementToolbarDisplayContext
 			TrashHelper trashHelper)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			journalDisplayContext, trashHelper);
 	}
 

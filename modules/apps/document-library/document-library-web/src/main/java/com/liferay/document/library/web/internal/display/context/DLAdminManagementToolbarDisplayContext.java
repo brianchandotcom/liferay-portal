@@ -84,9 +84,9 @@ import javax.servlet.http.HttpServletRequest;
 public class DLAdminManagementToolbarDisplayContext {
 
 	public DLAdminManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
 		DLAdminDisplayContext dlAdminDisplayContext) {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -107,6 +107,21 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DLAdminManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, DLAdminDisplayContext)}
+	 */
+	@Deprecated
+	public DLAdminManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest,
+		DLAdminDisplayContext dlAdminDisplayContext) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			dlAdminDisplayContext);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {

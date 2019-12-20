@@ -46,12 +46,24 @@ public class ViewModulesManagementToolbarDisplayContext
 	extends BaseAppManagerManagementToolbarDisplayContext {
 
 	public ViewModulesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ViewModulesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 */
+	@Deprecated
+	public ViewModulesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
+		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getApp() {

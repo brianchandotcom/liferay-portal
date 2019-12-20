@@ -49,16 +49,31 @@ public class DepotAdminManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public DepotAdminManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		DepotAdminDisplayContext depotAdminDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			depotAdminDisplayContext.getGroupSearch());
+
+		_depotAdminDisplayContext = depotAdminDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DepotAdminManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, DepotAdminDisplayContext)}
+	 */
+	@Deprecated
+	public DepotAdminManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		DepotAdminDisplayContext depotAdminDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			depotAdminDisplayContext.getGroupSearch());
-
-		_depotAdminDisplayContext = depotAdminDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			depotAdminDisplayContext);
 	}
 
 	@Override

@@ -34,17 +34,33 @@ public class JournalSelectArticleTranslationsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public JournalSelectArticleTranslationsManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalDisplayContext journalDisplayContext)
+		throws Exception {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalDisplayContext.getArticleTranslationsSearchContainer());
+
+		_journalDisplayContext = journalDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalSelectArticleTranslationsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalDisplayContext)}
+	 */
+	@Deprecated
+	public JournalSelectArticleTranslationsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			JournalDisplayContext journalDisplayContext)
 		throws Exception {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			journalDisplayContext.getArticleTranslationsSearchContainer());
-
-		_journalDisplayContext = journalDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalDisplayContext);
 	}
 
 	@Override

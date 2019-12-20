@@ -41,19 +41,34 @@ public class UADExportProcessManagementToolbarDisplayContext
 	extends BaseManagementToolbarDisplayContext {
 
 	public UADExportProcessManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
 		SearchContainer searchContainer) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 
 		_liferayPortletResponse = liferayPortletResponse;
 		_searchContainer = searchContainer;
 
 		_currentURL = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #UADExportProcessManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 */
+	@Deprecated
+	public UADExportProcessManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
 	}
 
 	@Override

@@ -43,14 +43,29 @@ public class InheritedFragmentManagementToolbarDisplayContext
 	extends FragmentManagementToolbarDisplayContext {
 
 	public InheritedFragmentManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		FragmentDisplayContext fragmentDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentDisplayContext.getFragmentEntriesSearchContainer(),
+			fragmentDisplayContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #InheritedFragmentManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentDisplayContext)}
+	 */
+	@Deprecated
+	public InheritedFragmentManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		FragmentDisplayContext fragmentDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			fragmentDisplayContext.getFragmentEntriesSearchContainer(),
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			fragmentDisplayContext);
 	}
 

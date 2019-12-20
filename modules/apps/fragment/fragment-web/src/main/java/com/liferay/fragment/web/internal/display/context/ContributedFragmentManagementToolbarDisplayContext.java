@@ -42,17 +42,32 @@ public class ContributedFragmentManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ContributedFragmentManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		FragmentDisplayContext fragmentDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentDisplayContext.
+				getContributedFragmentEntriesSearchContainer());
+
+		_fragmentDisplayContext = fragmentDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ContributedFragmentManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentDisplayContext)}
+	 */
+	@Deprecated
+	public ContributedFragmentManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		FragmentDisplayContext fragmentDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			fragmentDisplayContext.
-				getContributedFragmentEntriesSearchContainer());
-
-		_fragmentDisplayContext = fragmentDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentDisplayContext);
 	}
 
 	@Override

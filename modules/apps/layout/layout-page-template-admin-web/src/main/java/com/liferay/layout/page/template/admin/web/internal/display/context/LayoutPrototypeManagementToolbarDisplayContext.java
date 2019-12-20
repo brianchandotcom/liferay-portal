@@ -47,16 +47,31 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public LayoutPrototypeManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		LayoutPrototypeDisplayContext layoutPrototypeDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			layoutPrototypeDisplayContext.getSearchContainer());
+
+		_layoutPrototypeDisplayContext = layoutPrototypeDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #LayoutPrototypeManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, LayoutPrototypeDisplayContext)}
+	 */
+	@Deprecated
+	public LayoutPrototypeManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		LayoutPrototypeDisplayContext layoutPrototypeDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			layoutPrototypeDisplayContext.getSearchContainer());
-
-		_layoutPrototypeDisplayContext = layoutPrototypeDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			layoutPrototypeDisplayContext);
 	}
 
 	@Override

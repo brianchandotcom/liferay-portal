@@ -30,6 +30,26 @@ public class JournalSelectDDMTemplateManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public JournalSelectDDMTemplateManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalSelectDDMTemplateDisplayContext
+				journalSelectDDMTemplateDisplayContext)
+		throws Exception {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalSelectDDMTemplateDisplayContext.getTemplateSearch());
+
+		_journalSelectDDMTemplateDisplayContext =
+			journalSelectDDMTemplateDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalSelectDDMTemplateManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalSelectDDMTemplateDisplayContext)}
+	 */
+	@Deprecated
+	public JournalSelectDDMTemplateManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
@@ -37,12 +57,9 @@ public class JournalSelectDDMTemplateManagementToolbarDisplayContext
 				journalSelectDDMTemplateDisplayContext)
 		throws Exception {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			journalSelectDDMTemplateDisplayContext.getTemplateSearch());
-
-		_journalSelectDDMTemplateDisplayContext =
-			journalSelectDDMTemplateDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalSelectDDMTemplateDisplayContext);
 	}
 
 	@Override

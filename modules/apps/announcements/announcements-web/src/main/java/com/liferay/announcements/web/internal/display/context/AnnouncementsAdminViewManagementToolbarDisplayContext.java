@@ -49,9 +49,9 @@ import javax.servlet.http.HttpServletRequest;
 public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 
 	public AnnouncementsAdminViewManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
 		SearchContainer searchContainer) {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -64,6 +64,21 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 				_httpServletRequest);
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AnnouncementsAdminViewManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 */
+	@Deprecated
+	public AnnouncementsAdminViewManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

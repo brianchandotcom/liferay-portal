@@ -42,9 +42,9 @@ import javax.servlet.http.HttpServletRequest;
 public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public ItemSelectorRepositoryEntryManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -52,6 +52,18 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ItemSelectorRepositoryEntryManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 */
+	@Deprecated
+	public ItemSelectorRepositoryEntryManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest) {
+
+		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

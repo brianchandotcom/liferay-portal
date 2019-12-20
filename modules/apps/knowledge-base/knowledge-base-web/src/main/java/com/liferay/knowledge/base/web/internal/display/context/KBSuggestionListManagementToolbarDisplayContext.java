@@ -48,9 +48,9 @@ import javax.servlet.http.HttpServletRequest;
 public class KBSuggestionListManagementToolbarDisplayContext {
 
 	public KBSuggestionListManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
 		SearchContainer searchContainer) {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -63,6 +63,21 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #KBSuggestionListManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 */
+	@Deprecated
+	public KBSuggestionListManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest,
+		SearchContainer searchContainer) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

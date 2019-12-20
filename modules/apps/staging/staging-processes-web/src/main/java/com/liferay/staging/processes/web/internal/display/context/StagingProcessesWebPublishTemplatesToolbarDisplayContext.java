@@ -47,13 +47,13 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 	extends BaseManagementToolbarDisplayContext {
 
 	public StagingProcessesWebPublishTemplatesToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PageContext pageContext,
+		LiferayPortletResponse liferayPortletResponse, PageContext pageContext,
 		PortletURL iteratorURL) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 
 		long companyId = PortalUtil.getCompanyId(liferayPortletRequest);
 		long groupId = (long)pageContext.getAttribute("groupId");
@@ -64,6 +64,21 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 
 		_searchContainer = _createSearchContainer(
 			companyId, groupId, iteratorURL, stagingGroup.isStagedRemotely());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #StagingProcessesWebPublishTemplatesToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PageContext, PortletURL)}
+	 */
+	@Deprecated
+	public StagingProcessesWebPublishTemplatesToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest, PageContext pageContext,
+		PortletURL iteratorURL) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			pageContext, iteratorURL);
 	}
 
 	@Override

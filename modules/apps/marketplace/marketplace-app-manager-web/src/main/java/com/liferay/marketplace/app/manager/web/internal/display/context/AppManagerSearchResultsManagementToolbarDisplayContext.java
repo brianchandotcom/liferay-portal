@@ -37,12 +37,24 @@ public class AppManagerSearchResultsManagementToolbarDisplayContext
 	extends BaseAppManagerManagementToolbarDisplayContext {
 
 	public AppManagerSearchResultsManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AppManagerSearchResultsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 */
+	@Deprecated
+	public AppManagerSearchResultsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
+		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getKeywords() {

@@ -47,15 +47,31 @@ public class TrashManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public TrashManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			TrashDisplayContext trashDisplayContext)
+		throws PortalException {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			trashDisplayContext.getEntrySearch());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #TrashManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, TrashDisplayContext)}
+	 */
+	@Deprecated
+	public TrashManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			TrashDisplayContext trashDisplayContext)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			trashDisplayContext.getEntrySearch());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			trashDisplayContext);
 	}
 
 	@Override

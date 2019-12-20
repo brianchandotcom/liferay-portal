@@ -32,16 +32,32 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public PortletConfigurationTemplatesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		PortletConfigurationTemplatesDisplayContext
+			portletConfigurationTemplatesDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			portletConfigurationTemplatesDisplayContext.
+				getArchivedSettingsSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #PortletConfigurationTemplatesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletConfigurationTemplatesDisplayContext)}
+	 */
+	@Deprecated
+	public PortletConfigurationTemplatesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		PortletConfigurationTemplatesDisplayContext
 			portletConfigurationTemplatesDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			portletConfigurationTemplatesDisplayContext.
-				getArchivedSettingsSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			portletConfigurationTemplatesDisplayContext);
 	}
 
 	@Override

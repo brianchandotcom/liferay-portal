@@ -45,14 +45,29 @@ public class BasicFragmentManagementToolbarDisplayContext
 	extends FragmentManagementToolbarDisplayContext {
 
 	public BasicFragmentManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		FragmentDisplayContext fragmentDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentDisplayContext.getFragmentEntriesSearchContainer(),
+			fragmentDisplayContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BasicFragmentManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentDisplayContext)}
+	 */
+	@Deprecated
+	public BasicFragmentManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		FragmentDisplayContext fragmentDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			fragmentDisplayContext.getFragmentEntriesSearchContainer(),
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			fragmentDisplayContext);
 	}
 

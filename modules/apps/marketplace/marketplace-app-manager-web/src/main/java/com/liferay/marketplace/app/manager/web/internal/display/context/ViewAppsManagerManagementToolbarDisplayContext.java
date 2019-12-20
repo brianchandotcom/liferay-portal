@@ -43,14 +43,26 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 	extends BaseAppManagerManagementToolbarDisplayContext {
 
 	public ViewAppsManagerManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
+
+		_searchContainer = _createSearchContainer(liferayPortletRequest);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ViewAppsManagerManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 */
+	@Deprecated
+	public ViewAppsManagerManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
-
-		_searchContainer = _createSearchContainer(liferayPortletRequest);
+		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getClearResultsURL() {

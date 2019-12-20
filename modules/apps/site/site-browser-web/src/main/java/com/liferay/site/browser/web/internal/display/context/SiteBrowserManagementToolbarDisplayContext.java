@@ -32,17 +32,33 @@ public class SiteBrowserManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public SiteBrowserManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			SiteBrowserDisplayContext siteBrowserDisplayContext)
+		throws Exception {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			siteBrowserDisplayContext.getGroupSearch());
+
+		_siteBrowserDisplayContext = siteBrowserDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SiteBrowserManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SiteBrowserDisplayContext)}
+	 */
+	@Deprecated
+	public SiteBrowserManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			SiteBrowserDisplayContext siteBrowserDisplayContext)
 		throws Exception {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			siteBrowserDisplayContext.getGroupSearch());
-
-		_siteBrowserDisplayContext = siteBrowserDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			siteBrowserDisplayContext);
 	}
 
 	@Override

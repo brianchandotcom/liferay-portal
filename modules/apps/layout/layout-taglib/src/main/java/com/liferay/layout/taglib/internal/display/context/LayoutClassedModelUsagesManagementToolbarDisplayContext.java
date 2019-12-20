@@ -28,13 +28,28 @@ public class LayoutClassedModelUsagesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public LayoutClassedModelUsagesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SearchContainer searchContainer) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #LayoutClassedModelUsagesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 */
+	@Deprecated
+	public LayoutClassedModelUsagesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		SearchContainer searchContainer) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 	}
 

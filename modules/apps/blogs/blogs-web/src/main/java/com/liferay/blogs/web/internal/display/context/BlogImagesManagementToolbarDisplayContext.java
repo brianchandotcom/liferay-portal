@@ -49,9 +49,10 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogImagesManagementToolbarDisplayContext {
 
 	public BlogImagesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
+		PortletURL currentURLObj) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -60,6 +61,20 @@ public class BlogImagesManagementToolbarDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BlogImagesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletURL)}
+	 */
+	@Deprecated
+	public BlogImagesManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			currentURLObj);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

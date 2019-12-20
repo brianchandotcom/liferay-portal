@@ -46,12 +46,24 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 	extends BaseManagementToolbarDisplayContext {
 
 	public BaseAppManagerManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BaseAppManagerManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 */
+	@Deprecated
+	public BaseAppManagerManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
+		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
 	public String getCategory() {

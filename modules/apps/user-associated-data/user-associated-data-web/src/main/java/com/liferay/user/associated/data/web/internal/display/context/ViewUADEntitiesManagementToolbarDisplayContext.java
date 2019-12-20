@@ -46,16 +46,31 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ViewUADEntitiesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		ViewUADEntitiesDisplay viewUADEntitiesDisplay) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			viewUADEntitiesDisplay.getSearchContainer());
+
+		_viewUADEntitiesDisplay = viewUADEntitiesDisplay;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ViewUADEntitiesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, ViewUADEntitiesDisplay)}
+	 */
+	@Deprecated
+	public ViewUADEntitiesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		ViewUADEntitiesDisplay viewUADEntitiesDisplay) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			viewUADEntitiesDisplay.getSearchContainer());
-
-		_viewUADEntitiesDisplay = viewUADEntitiesDisplay;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			viewUADEntitiesDisplay);
 	}
 
 	@Override

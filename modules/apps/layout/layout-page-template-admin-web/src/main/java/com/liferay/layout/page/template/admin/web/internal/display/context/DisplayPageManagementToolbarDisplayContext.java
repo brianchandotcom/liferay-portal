@@ -44,17 +44,32 @@ public class DisplayPageManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public DisplayPageManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		DisplayPageDisplayContext displayPageDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			displayPageDisplayContext.getDisplayPagesSearchContainer());
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DisplayPageManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, DisplayPageDisplayContext)}
+	 */
+	@Deprecated
+	public DisplayPageManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		DisplayPageDisplayContext displayPageDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			displayPageDisplayContext.getDisplayPagesSearchContainer());
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			displayPageDisplayContext);
 	}
 
 	@Override

@@ -45,15 +45,30 @@ public class ExportTemplatesToolbarDisplayContext
 	extends BaseManagementToolbarDisplayContext {
 
 	public ExportTemplatesToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, long liveGroupId,
+		Company company, PortletURL iteratorURL) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
+
+		searchContainer = _createSearchContainer(
+			liveGroupId, company, iteratorURL);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ExportTemplatesToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, long, Company, PortletURL)}
+	 */
+	@Deprecated
+	public ExportTemplatesToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest, long liveGroupId,
 		Company company, PortletURL iteratorURL) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest);
-
-		searchContainer = _createSearchContainer(
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			liveGroupId, company, iteratorURL);
 	}
 

@@ -30,6 +30,24 @@ public class JournalViewMoreMenuItemsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public JournalViewMoreMenuItemsManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalViewMoreMenuItemsDisplayContext
+				journalViewMoreMenuItemsDisplayContext)
+		throws Exception {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalViewMoreMenuItemsDisplayContext.
+				getDDMStructuresSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalViewMoreMenuItemsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalViewMoreMenuItemsDisplayContext)}
+	 */
+	@Deprecated
+	public JournalViewMoreMenuItemsManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
@@ -37,10 +55,9 @@ public class JournalViewMoreMenuItemsManagementToolbarDisplayContext
 				journalViewMoreMenuItemsDisplayContext)
 		throws Exception {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			journalViewMoreMenuItemsDisplayContext.
-				getDDMStructuresSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalViewMoreMenuItemsDisplayContext);
 	}
 
 	@Override

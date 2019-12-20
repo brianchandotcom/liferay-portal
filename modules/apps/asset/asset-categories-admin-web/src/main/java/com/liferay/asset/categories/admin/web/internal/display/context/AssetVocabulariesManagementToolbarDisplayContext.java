@@ -44,17 +44,33 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public AssetVocabulariesManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
+		throws PortalException {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetCategoriesDisplayContext.getVocabulariesSearchContainer());
+
+		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetVocabulariesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetCategoriesDisplayContext)}
+	 */
+	@Deprecated
+	public AssetVocabulariesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			assetCategoriesDisplayContext.getVocabulariesSearchContainer());
-
-		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetCategoriesDisplayContext);
 	}
 
 	@Override

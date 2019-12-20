@@ -31,15 +31,31 @@ public class UserRolesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public UserRolesManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			UserRolesDisplayContext userRolesDisplayContext)
+		throws PortalException {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			userRolesDisplayContext.getRoleSearchSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #UserRolesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, UserRolesDisplayContext)}
+	 */
+	@Deprecated
+	public UserRolesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			UserRolesDisplayContext userRolesDisplayContext)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			userRolesDisplayContext.getRoleSearchSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			userRolesDisplayContext);
 	}
 
 	@Override

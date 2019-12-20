@@ -54,9 +54,9 @@ import javax.servlet.http.HttpServletRequest;
 public class KBTemplatesManagementToolbarDisplayContext {
 
 	public KBTemplatesManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest, String templatePath)
+			LiferayPortletResponse liferayPortletResponse, String templatePath)
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -71,6 +71,21 @@ public class KBTemplatesManagementToolbarDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_createSearchContainer();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #KBTemplatesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, String)}
+	 */
+	@Deprecated
+	public KBTemplatesManagementToolbarDisplayContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			HttpServletRequest httpServletRequest, String templatePath)
+		throws PortalException {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			templatePath);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

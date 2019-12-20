@@ -50,15 +50,15 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public FragmentCollectionResourcesManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
 			FragmentCollectionResourcesDisplayContext
 				fragmentCollectionResourcesDisplayContext)
 		throws PortalException {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			fragmentCollectionResourcesDisplayContext.getSearchContainer());
 
 		_fragmentPortletConfiguration =
@@ -68,6 +68,23 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			FragmentWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #FragmentCollectionResourcesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentCollectionResourcesDisplayContext)}
+	 */
+	@Deprecated
+	public FragmentCollectionResourcesManagementToolbarDisplayContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			HttpServletRequest httpServletRequest,
+			FragmentCollectionResourcesDisplayContext
+				fragmentCollectionResourcesDisplayContext)
+		throws PortalException {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			fragmentCollectionResourcesDisplayContext);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

@@ -54,13 +54,14 @@ public class BlogEntriesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public BlogEntriesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, SearchContainer searchContainer,
-		TrashHelper trashHelper, String displayStyle) {
+		SearchContainer searchContainer, TrashHelper trashHelper,
+		String displayStyle) {
 
 		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
 
 		_trashHelper = trashHelper;
@@ -68,6 +69,21 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BlogEntriesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer, TrashHelper, String)}
+	 */
+	@Deprecated
+	public BlogEntriesManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest, SearchContainer searchContainer,
+		TrashHelper trashHelper, String displayStyle) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer, trashHelper, displayStyle);
 	}
 
 	@Override

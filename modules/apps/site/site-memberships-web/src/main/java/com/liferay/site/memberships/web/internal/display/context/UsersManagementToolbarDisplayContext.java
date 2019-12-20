@@ -52,16 +52,31 @@ public class UsersManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public UsersManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		UsersDisplayContext usersDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			usersDisplayContext.getUserSearchContainer());
+
+		_usersDisplayContext = usersDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #UsersManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, UsersDisplayContext)}
+	 */
+	@Deprecated
+	public UsersManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		UsersDisplayContext usersDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			usersDisplayContext.getUserSearchContainer());
-
-		_usersDisplayContext = usersDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			usersDisplayContext);
 	}
 
 	@Override

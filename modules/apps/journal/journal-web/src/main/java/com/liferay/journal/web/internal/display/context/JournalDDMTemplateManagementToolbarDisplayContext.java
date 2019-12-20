@@ -53,17 +53,33 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public JournalDDMTemplateManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext)
+		throws Exception {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalDDMTemplateDisplayContext.getDDMTemplateSearch());
+
+		_journalDDMTemplateDisplayContext = journalDDMTemplateDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalDDMTemplateManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalDDMTemplateDisplayContext)}
+	 */
+	@Deprecated
+	public JournalDDMTemplateManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext)
 		throws Exception {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			journalDDMTemplateDisplayContext.getDDMTemplateSearch());
-
-		_journalDDMTemplateDisplayContext = journalDDMTemplateDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalDDMTemplateDisplayContext);
 	}
 
 	@Override

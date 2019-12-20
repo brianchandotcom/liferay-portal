@@ -49,17 +49,33 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public AssetCategoriesManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
+		throws PortalException {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetCategoriesDisplayContext.getCategoriesSearchContainer());
+
+		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetCategoriesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetCategoriesDisplayContext)}
+	 */
+	@Deprecated
+	public AssetCategoriesManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest httpServletRequest,
 			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
 		throws PortalException {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			assetCategoriesDisplayContext.getCategoriesSearchContainer());
-
-		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			assetCategoriesDisplayContext);
 	}
 
 	@Override

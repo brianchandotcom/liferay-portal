@@ -30,16 +30,32 @@ public class SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		SiteNavigationMenuItemSelectorViewDisplayContext
+			siteNavigationMenuItemSelectorViewDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			siteNavigationMenuItemSelectorViewDisplayContext.
+				getSearchContainer());
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SiteNavigationMenuItemSelectorViewDisplayContext)}
+	 */
+	@Deprecated
+	public SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		SiteNavigationMenuItemSelectorViewDisplayContext
 			siteNavigationMenuItemSelectorViewDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			siteNavigationMenuItemSelectorViewDisplayContext.
-				getSearchContainer());
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			siteNavigationMenuItemSelectorViewDisplayContext);
 	}
 
 	@Override

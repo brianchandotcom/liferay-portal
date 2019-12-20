@@ -64,9 +64,9 @@ import javax.servlet.http.HttpServletRequest;
 public class MBEntriesManagementToolbarDisplayContext {
 
 	public MBEntriesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PortletURL currentURLObj,
+		LiferayPortletResponse liferayPortletResponse, PortletURL currentURLObj,
 		TrashHelper trashHelper) {
 
 		_liferayPortletRequest = liferayPortletRequest;
@@ -79,6 +79,21 @@ public class MBEntriesManagementToolbarDisplayContext {
 			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #MBEntriesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletURL, TrashHelper)}
+	 */
+	@Deprecated
+	public MBEntriesManagementToolbarDisplayContext(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest httpServletRequest, PortletURL currentURLObj,
+		TrashHelper trashHelper) {
+
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			currentURLObj, trashHelper);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

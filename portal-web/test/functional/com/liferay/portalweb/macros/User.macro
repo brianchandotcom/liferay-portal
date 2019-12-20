@@ -1653,11 +1653,7 @@ definition {
 
 		SelectWindow(locator1 = "title=Home - ${siteName}");
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
+		UserBar.gotoDropdown();
 	}
 
 	macro loginLocalizationPG {

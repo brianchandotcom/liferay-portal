@@ -10,39 +10,17 @@ definition {
 
 	@description = "Navigate to a dropdown item in the User Personal Bar."
 	macro gotoDropdownItem {
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		UserBar.gotoDropdown();
 
-			if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
-				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-			}
-
-			var key_dropdownItem = "${dropdownItem}";
-
-			AssertClick(
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
-				value1 = "${dropdownItem}");
-		}
-		else {
-			var key_dropdownItem = "${dropdownItem}";
-
-			AssertClick(
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
-				value1 = "${dropdownItem}");
-		}
+		AssertClick(
+			key_dropdownItem = "${dropdownItem}",
+			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
+			value1 = "${dropdownItem}");
 	}
 
 	macro signOut {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
-			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-			Pause(locator1 = "3000");
-
-			if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
-				Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-			}
-
-			AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
+			UserBar.gotoDropdown();
 
 			ScrollWebElementIntoView(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
 

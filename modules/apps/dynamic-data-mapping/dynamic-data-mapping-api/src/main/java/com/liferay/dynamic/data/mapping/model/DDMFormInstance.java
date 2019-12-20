@@ -73,6 +73,9 @@ public interface DDMFormInstance extends DDMFormInstanceModel, PersistedModel {
 	public DDMFormInstanceSettings getSettingsModel()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getStorageType()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

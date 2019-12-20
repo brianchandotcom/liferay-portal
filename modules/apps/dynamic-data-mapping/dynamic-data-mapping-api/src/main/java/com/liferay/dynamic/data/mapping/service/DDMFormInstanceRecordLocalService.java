@@ -308,6 +308,16 @@ public interface DDMFormInstanceRecordLocalService
 	public int getDDMFormInstanceRecordsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMFormValues getDDMFormValues(
+			DDMForm ddmForm, long storageId, String storageType)
+		throws StorageException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getDDMFormValues(DDMForm, long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormValues getDDMFormValues(long storageId, DDMForm ddmForm)
 		throws StorageException;
 

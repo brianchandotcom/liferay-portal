@@ -456,6 +456,13 @@ public class DDMFormInstanceWrapper
 	}
 
 	@Override
+	public String getStorageType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getStorageType();
+	}
+
+	@Override
 	public DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.persistence.AccountPersistence;
+import com.liferay.portal.kernel.service.persistence.CompanyInfoPersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.ContactPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
@@ -324,6 +325,49 @@ public abstract class CompanyServiceBaseImpl
 		ExpandoTablePersistence expandoTablePersistence) {
 
 		this.expandoTablePersistence = expandoTablePersistence;
+	}
+
+	/**
+	 * Returns the company info local service.
+	 *
+	 * @return the company info local service
+	 */
+	public com.liferay.portal.kernel.service.CompanyInfoLocalService
+		getCompanyInfoLocalService() {
+
+		return companyInfoLocalService;
+	}
+
+	/**
+	 * Sets the company info local service.
+	 *
+	 * @param companyInfoLocalService the company info local service
+	 */
+	public void setCompanyInfoLocalService(
+		com.liferay.portal.kernel.service.CompanyInfoLocalService
+			companyInfoLocalService) {
+
+		this.companyInfoLocalService = companyInfoLocalService;
+	}
+
+	/**
+	 * Returns the company info persistence.
+	 *
+	 * @return the company info persistence
+	 */
+	public CompanyInfoPersistence getCompanyInfoPersistence() {
+		return companyInfoPersistence;
+	}
+
+	/**
+	 * Sets the company info persistence.
+	 *
+	 * @param companyInfoPersistence the company info persistence
+	 */
+	public void setCompanyInfoPersistence(
+		CompanyInfoPersistence companyInfoPersistence) {
+
+		this.companyInfoPersistence = companyInfoPersistence;
 	}
 
 	/**
@@ -1363,6 +1407,15 @@ public abstract class CompanyServiceBaseImpl
 
 	@BeanReference(type = ExpandoTablePersistence.class)
 	protected ExpandoTablePersistence expandoTablePersistence;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.CompanyInfoLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.CompanyInfoLocalService
+		companyInfoLocalService;
+
+	@BeanReference(type = CompanyInfoPersistence.class)
+	protected CompanyInfoPersistence companyInfoPersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.ContactLocalService.class

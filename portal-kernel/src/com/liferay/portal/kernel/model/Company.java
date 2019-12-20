@@ -64,6 +64,8 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public String getAuthType();
 
+	public CompanyInfo getCompanyInfo();
+
 	public User getDefaultUser()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -76,6 +78,8 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public String getKey();
 
 	public java.security.Key getKeyObj();
 

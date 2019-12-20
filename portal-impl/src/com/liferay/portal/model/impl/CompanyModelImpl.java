@@ -524,6 +524,14 @@ public class CompanyModelImpl
 		_active = active;
 	}
 
+	public com.liferay.portal.kernel.model.CompanyInfo getCompanyInfo() {
+		return null;
+	}
+
+	public void setCompanyInfo(
+		com.liferay.portal.kernel.model.CompanyInfo companyInfo) {
+	}
+
 	public CompanyImpl.CompanySecurityBag getCompanySecurityBag() {
 		return null;
 	}
@@ -666,6 +674,8 @@ public class CompanyModelImpl
 
 		companyModelImpl._setOriginalSystem = false;
 
+		setCompanyInfo(null);
+
 		setCompanySecurityBag(null);
 
 		setKeyObj(null);
@@ -716,6 +726,8 @@ public class CompanyModelImpl
 		companyCacheModel.maxUsers = getMaxUsers();
 
 		companyCacheModel.active = isActive();
+
+		companyCacheModel._companyInfo = getCompanyInfo();
 
 		companyCacheModel._companySecurityBag = getCompanySecurityBag();
 

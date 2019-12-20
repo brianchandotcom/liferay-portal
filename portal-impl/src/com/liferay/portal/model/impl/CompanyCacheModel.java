@@ -137,6 +137,8 @@ public class CompanyCacheModel
 
 		companyImpl.resetOriginalValues();
 
+		companyImpl.setCompanyInfo(_companyInfo);
+
 		companyImpl.setCompanySecurityBag(_companySecurityBag);
 
 		companyImpl.setKeyObj(_keyObj);
@@ -167,6 +169,9 @@ public class CompanyCacheModel
 
 		active = objectInput.readBoolean();
 
+		_companyInfo =
+			(com.liferay.portal.kernel.model.CompanyInfo)
+				objectInput.readObject();
 		_companySecurityBag =
 			(CompanyImpl.CompanySecurityBag)objectInput.readObject();
 		_keyObj = (java.security.Key)objectInput.readObject();
@@ -210,6 +215,7 @@ public class CompanyCacheModel
 
 		objectOutput.writeBoolean(active);
 
+		objectOutput.writeObject(_companyInfo);
 		objectOutput.writeObject(_companySecurityBag);
 		objectOutput.writeObject(_keyObj);
 		objectOutput.writeObject(_virtualHostname);
@@ -225,6 +231,7 @@ public class CompanyCacheModel
 	public boolean system;
 	public int maxUsers;
 	public boolean active;
+	public com.liferay.portal.kernel.model.CompanyInfo _companyInfo;
 	public CompanyImpl.CompanySecurityBag _companySecurityBag;
 	public java.security.Key _keyObj;
 	public String _virtualHostname;

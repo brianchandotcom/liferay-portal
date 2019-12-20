@@ -170,6 +170,11 @@ public class CompanyWrapper
 	}
 
 	@Override
+	public CompanyInfo getCompanyInfo() {
+		return model.getCompanyInfo();
+	}
+
+	@Override
 	public User getDefaultUser()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -208,6 +213,11 @@ public class CompanyWrapper
 	@Override
 	public String getHomeURL() {
 		return model.getHomeURL();
+	}
+
+	@Override
+	public String getKey() {
+		return model.getKey();
 	}
 
 	@Override

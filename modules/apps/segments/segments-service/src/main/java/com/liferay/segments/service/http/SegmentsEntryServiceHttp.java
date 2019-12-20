@@ -55,7 +55,7 @@ public class SegmentsEntryServiceHttp {
 			HttpPrincipal httpPrincipal, String segmentsEntryKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean active, String criteria, String source, String type,
+			boolean active, String criteria, String type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -63,6 +63,49 @@ public class SegmentsEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "addSegmentsEntry",
 				_addSegmentsEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsEntryKey, nameMap, descriptionMap, active,
+				criteria, type, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
+			HttpPrincipal httpPrincipal, String segmentsEntryKey,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			boolean active, String criteria, String source, String type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsEntryServiceUtil.class, "addSegmentsEntry",
+				_addSegmentsEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryKey, nameMap, descriptionMap, active,
@@ -101,7 +144,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "deleteSegmentsEntry",
-				_deleteSegmentsEntryParameterTypes1);
+				_deleteSegmentsEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId);
@@ -140,7 +183,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "getSegmentsEntries",
-				_getSegmentsEntriesParameterTypes2);
+				_getSegmentsEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, includeAncestorSegmentsEntries);
@@ -175,7 +218,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "getSegmentsEntries",
-				_getSegmentsEntriesParameterTypes3);
+				_getSegmentsEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, includeAncestorSegmentsEntries, start, end,
@@ -208,7 +251,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "getSegmentsEntriesCount",
-				_getSegmentsEntriesCountParameterTypes4);
+				_getSegmentsEntriesCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, includeAncestorSegmentsEntries);
@@ -239,7 +282,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "getSegmentsEntry",
-				_getSegmentsEntryParameterTypes5);
+				_getSegmentsEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId);
@@ -280,7 +323,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "searchSegmentsEntries",
-				_searchSegmentsEntriesParameterTypes6);
+				_searchSegmentsEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, keywords,
@@ -325,7 +368,7 @@ public class SegmentsEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryServiceUtil.class, "updateSegmentsEntry",
-				_updateSegmentsEntryParameterTypes7);
+				_updateSegmentsEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId, segmentsEntryKey, nameMap,
@@ -363,28 +406,34 @@ public class SegmentsEntryServiceHttp {
 	private static final Class<?>[] _addSegmentsEntryParameterTypes0 =
 		new Class[] {
 			String.class, java.util.Map.class, java.util.Map.class,
+			boolean.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _addSegmentsEntryParameterTypes1 =
+		new Class[] {
+			String.class, java.util.Map.class, java.util.Map.class,
 			boolean.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteSegmentsEntryParameterTypes1 =
+	private static final Class<?>[] _deleteSegmentsEntryParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSegmentsEntriesParameterTypes2 =
-		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _getSegmentsEntriesParameterTypes3 =
+		new Class[] {long.class, boolean.class};
+	private static final Class<?>[] _getSegmentsEntriesParameterTypes4 =
 		new Class[] {
 			long.class, boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getSegmentsEntriesCountParameterTypes4 =
+	private static final Class<?>[] _getSegmentsEntriesCountParameterTypes5 =
 		new Class[] {long.class, boolean.class};
-	private static final Class<?>[] _getSegmentsEntryParameterTypes5 =
+	private static final Class<?>[] _getSegmentsEntryParameterTypes6 =
 		new Class[] {long.class};
-	private static final Class<?>[] _searchSegmentsEntriesParameterTypes6 =
+	private static final Class<?>[] _searchSegmentsEntriesParameterTypes7 =
 		new Class[] {
 			long.class, long.class, String.class, boolean.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateSegmentsEntryParameterTypes7 =
+	private static final Class<?>[] _updateSegmentsEntryParameterTypes8 =
 		new Class[] {
 			long.class, String.class, java.util.Map.class, java.util.Map.class,
 			boolean.class, String.class,

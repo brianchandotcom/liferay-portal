@@ -40,14 +40,14 @@ public interface DataRecordResource {
 	}
 
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination,
-			String sortString)
+			Long dataDefinitionId, Long dataListViewId, String keywords,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getDataDefinitionDataRecordsPageHttpResponse(
-				Long dataDefinitionId, String keywords, Pagination pagination,
-				String sortString)
+				Long dataDefinitionId, Long dataListViewId, String keywords,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public DataRecord postDataDefinitionDataRecord(
@@ -59,14 +59,14 @@ public interface DataRecordResource {
 		throws Exception;
 
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			Long dataRecordCollectionId, String keywords, Pagination pagination,
-			String sortString)
+			Long dataRecordCollectionId, Long dataListViewId, String keywords,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getDataRecordCollectionDataRecordsPageHttpResponse(
-				Long dataRecordCollectionId, String keywords,
-				Pagination pagination, String sortString)
+				Long dataRecordCollectionId, Long dataListViewId,
+				String keywords, Pagination pagination, String sortString)
 		throws Exception;
 
 	public DataRecord postDataRecordCollectionDataRecord(
@@ -161,13 +161,14 @@ public interface DataRecordResource {
 	public static class DataRecordResourceImpl implements DataRecordResource {
 
 		public Page<DataRecord> getDataDefinitionDataRecordsPage(
-				Long dataDefinitionId, String keywords, Pagination pagination,
-				String sortString)
+				Long dataDefinitionId, Long dataListViewId, String keywords,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDataDefinitionDataRecordsPageHttpResponse(
-					dataDefinitionId, keywords, pagination, sortString);
+					dataDefinitionId, dataListViewId, keywords, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -182,7 +183,7 @@ public interface DataRecordResource {
 
 		public HttpInvoker.HttpResponse
 				getDataDefinitionDataRecordsPageHttpResponse(
-					Long dataDefinitionId, String keywords,
+					Long dataDefinitionId, Long dataListViewId, String keywords,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -206,6 +207,11 @@ public interface DataRecordResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (dataListViewId != null) {
+				httpInvoker.parameter(
+					"dataListViewId", String.valueOf(dataListViewId));
+			}
 
 			if (keywords != null) {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));
@@ -303,13 +309,14 @@ public interface DataRecordResource {
 		}
 
 		public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-				Long dataRecordCollectionId, String keywords,
-				Pagination pagination, String sortString)
+				Long dataRecordCollectionId, Long dataListViewId,
+				String keywords, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDataRecordCollectionDataRecordsPageHttpResponse(
-					dataRecordCollectionId, keywords, pagination, sortString);
+					dataRecordCollectionId, dataListViewId, keywords,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -324,8 +331,8 @@ public interface DataRecordResource {
 
 		public HttpInvoker.HttpResponse
 				getDataRecordCollectionDataRecordsPageHttpResponse(
-					Long dataRecordCollectionId, String keywords,
-					Pagination pagination, String sortString)
+					Long dataRecordCollectionId, Long dataListViewId,
+					String keywords, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -348,6 +355,11 @@ public interface DataRecordResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (dataListViewId != null) {
+				httpInvoker.parameter(
+					"dataListViewId", String.valueOf(dataListViewId));
+			}
 
 			if (keywords != null) {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));

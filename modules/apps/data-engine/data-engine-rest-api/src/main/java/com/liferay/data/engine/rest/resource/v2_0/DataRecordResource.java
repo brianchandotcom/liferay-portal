@@ -42,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DataRecordResource {
 
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long dataDefinitionId, Long dataListViewId, String keywords,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public DataRecord postDataDefinitionDataRecord(
@@ -51,8 +51,8 @@ public interface DataRecordResource {
 		throws Exception;
 
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			Long dataRecordCollectionId, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long dataRecordCollectionId, Long dataListViewId, String keywords,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public DataRecord postDataRecordCollectionDataRecord(

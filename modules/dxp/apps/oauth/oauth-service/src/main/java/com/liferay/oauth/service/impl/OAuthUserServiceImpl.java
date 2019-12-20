@@ -18,14 +18,15 @@ import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.base.OAuthUserServiceBaseImpl;
 import com.liferay.oauth.service.permission.OAuthUserPermission;
+import com.liferay.oauth.util.OAuth;
 import com.liferay.oauth.util.OAuthActionKeys;
-import com.liferay.oauth.util.OAuthUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -57,10 +58,10 @@ public class OAuthUserServiceImpl extends OAuthUserServiceBaseImpl {
 			return oAuthUser;
 		}
 
-		String accessToken = OAuthUtil.randomizeToken(
+		String accessToken = _oAuth.randomizeToken(
 			oAuthApplication.getConsumerKey());
 
-		String accessSecret = OAuthUtil.randomizeToken(
+		String accessSecret = _oAuth.randomizeToken(
 			consumerKey.concat(accessToken));
 
 		return oAuthUserLocalService.addOAuthUser(
@@ -81,5 +82,8 @@ public class OAuthUserServiceImpl extends OAuthUserServiceBaseImpl {
 		return oAuthUserLocalService.deleteOAuthUser(
 			getUserId(), oAuthApplicationId);
 	}
+
+	@Reference
+	private OAuth _oAuth;
 
 }

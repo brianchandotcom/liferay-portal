@@ -292,6 +292,8 @@ public class ContentPageEditorDisplayContext {
 				"infoItemSelectorURL",
 				editorSoyContext.get("infoItemSelectorURL")
 			).put(
+				"lookAndFeelURL", _getLookAndFeelURL()
+			).put(
 				"moveItemURL",
 				getFragmentEntryActionURL(
 					"/content_layout/move_fragment_entry_link_react")

@@ -136,6 +136,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		_serviceTracker.open();
 	}
 
+	@Override
+	public Company addCompany(Company company) {
+		companyInfoPersistence.update(company.getCompanyInfo());
+
+		return super.addCompany(company);
+	}
+
 	/**
 	 * Adds a company.
 	 *
@@ -247,6 +254,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company.setActive(true);
 
 			company = companyPersistence.update(company);
+
+			// Company info
+
+			companyInfoPersistence.update(company.getCompanyInfo());
 
 			// Account
 
@@ -487,7 +498,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			throw new SystemException(ee);
 		}
 
-		companyPersistence.update(company);
+		companyInfoPersistence.update(company.getCompanyInfo());
 	}
 
 	@Override
@@ -817,6 +828,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		catch (SearchException se) {
 			throw new SystemException(se);
 		}
+	}
+
+	@Override
+	public Company updateCompany(Company company) {
+		companyInfoPersistence.update(company.getCompanyInfo());
+
+		return super.updateCompany(company);
 	}
 
 	/**
@@ -1280,6 +1298,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		preunregisterCompany(company);
 
 		companyPersistence.remove(company);
+
+		// Company info
+
+		companyInfoPersistence.remove(company.getCompanyInfo());
 
 		// Account
 

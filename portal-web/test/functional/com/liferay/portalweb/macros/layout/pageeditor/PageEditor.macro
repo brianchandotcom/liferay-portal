@@ -441,13 +441,32 @@ definition {
 
 			LexiconCard.clickCard(card = "${webContentTitle}");
 
-			AssertElementPresent(
-				key_contentName = "${webContentTitle}",
-				locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+			if (isSet(customWebcontenttemplate)) {
+				Select(
+					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
+					value1 = "${customWebcontenttemplate}");
 
-			AssertTextEquals(
-				locator1 = "Fragment#CONFIGURABLE_FIELD",
-				value1 = "${webContentContent}");
+				AssertElementPresent(
+					key_contentName = "${webContentTitle}",
+					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+				AssertElementPresent(
+					key_contentName = "${customWebcontenttemplate}",
+					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
+
+				AssertTextEquals(
+					locator1 = "Fragment#CONFIGURABLE_FIELD",
+					value1 = "${webContentContent}");
+			}
+			else {
+				AssertElementPresent(
+					key_contentName = "${webContentTitle}",
+					locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_INPUT");
+
+				AssertTextEquals(
+					locator1 = "Fragment#CONFIGURABLE_FIELD",
+					value1 = "${webContentContent}");
+			}
 		}
 	}
 

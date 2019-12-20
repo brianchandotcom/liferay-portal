@@ -18,11 +18,12 @@ import com.liferay.oauth.configuration.OAuthConfigurationValues;
 import com.liferay.oauth.internal.listener.V10aOAuthDebugCacheListener;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
-import com.liferay.oauth.service.OAuthApplicationLocalServiceUtil;
-import com.liferay.oauth.service.OAuthUserLocalServiceUtil;
+import com.liferay.oauth.service.OAuthApplicationLocalService;
+import com.liferay.oauth.service.OAuthUserLocalService;
 import com.liferay.oauth.util.DefaultOAuthAccessor;
 import com.liferay.oauth.util.DefaultOAuthConsumer;
 import com.liferay.oauth.util.DefaultOAuthMessage;
+import com.liferay.oauth.util.DefaultOAuthValidator;
 import com.liferay.oauth.util.OAuth;
 import com.liferay.oauth.util.OAuthAccessor;
 import com.liferay.oauth.util.OAuthAccessorConstants;
@@ -30,8 +31,8 @@ import com.liferay.oauth.util.OAuthConsumer;
 import com.liferay.oauth.util.OAuthMessage;
 import com.liferay.oauth.util.OAuthValidator;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,7 +46,7 @@ import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -64,21 +65,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.oauth.server.OAuthServlet;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ivica Cardic
  * @author Raymond Augé
  * @author Igor Beslic
  */
+@Component(immediate = true, service = OAuth.class)
 public class V10aOAuth implements OAuth {
-
-	public V10aOAuth(OAuthValidator oAuthValidator) {
-		_oAuthValidator = oAuthValidator;
-
-		if (_log.isDebugEnabled()) {
-			_portalCache.registerPortalCacheListener(
-				new V10aOAuthDebugCacheListener<>());
-		}
-	}
 
 	@Override
 	public String addParameters(String url, String... parameters)
@@ -162,11 +159,11 @@ public class V10aOAuth implements OAuth {
 
 		oAuthAccessor.setTokenSecret(tokenSecret);
 
-		OAuthUser oAuthUser = OAuthUserLocalServiceUtil.fetchOAuthUser(
+		OAuthUser oAuthUser = _oAuthUserLocalService.fetchOAuthUser(
 			userId, oAuthApplication.getOAuthApplicationId());
 
 		if (oAuthUser == null) {
-			OAuthUserLocalServiceUtil.addOAuthUser(
+			_oAuthUserLocalService.addOAuthUser(
 				userId, oAuthApplication.getOAuthApplicationId(),
 				oAuthAccessor.getAccessToken(), oAuthAccessor.getTokenSecret(),
 				serviceContext);
@@ -177,7 +174,7 @@ public class V10aOAuth implements OAuth {
 				oAuthAccessor.setTokenSecret(oAuthUser.getAccessSecret());
 			}
 			else {
-				OAuthUserLocalServiceUtil.updateOAuthUser(
+				_oAuthUserLocalService.updateOAuthUser(
 					userId, oAuthUser.getOAuthApplicationId(),
 					oAuthAccessor.getAccessToken(),
 					oAuthAccessor.getTokenSecret(), serviceContext);
@@ -244,7 +241,7 @@ public class V10aOAuth implements OAuth {
 		}
 
 		OAuthApplication oAuthApplication =
-			OAuthApplicationLocalServiceUtil.fetchOAuthApplication(consumerKey);
+			_oAuthApplicationLocalService.fetchOAuthApplication(consumerKey);
 
 		if (oAuthApplication == null) {
 			throw new OAuthException(
@@ -277,7 +274,7 @@ public class V10aOAuth implements OAuth {
 		PortletRequest portletRequest, String url) {
 
 		return getOAuthMessage(
-			PortalUtil.getHttpServletRequest(portletRequest), url);
+			_portal.getHttpServletRequest(portletRequest), url);
 	}
 
 	@Override
@@ -328,6 +325,20 @@ public class V10aOAuth implements OAuth {
 		return null;
 	}
 
+	@Activate
+	protected void activate() {
+		_oAuthValidator = new DefaultOAuthValidator();
+
+		_portalCache =
+			(PortalCache<Serializable, Object>)_singleVMPool.getPortalCache(
+				V10aOAuth.class.getName());
+
+		if (_log.isDebugEnabled()) {
+			_portalCache.registerPortalCacheListener(
+				new V10aOAuthDebugCacheListener<>());
+		}
+	}
+
 	protected byte[] serialize(OAuthAccessor oAuthAccessor) {
 		Serializer serializer = new Serializer();
 
@@ -355,7 +366,7 @@ public class V10aOAuth implements OAuth {
 			putMethodHandler, true);
 
 		FutureClusterResponses futureClusterResponses =
-			ClusterExecutorUtil.execute(clusterRequest);
+			_clusterExecutor.execute(clusterRequest);
 
 		futureClusterResponses.get();
 	}
@@ -363,7 +374,7 @@ public class V10aOAuth implements OAuth {
 	private void _put(String key, OAuthAccessor oAuthAccessor) {
 		_portalCache.put(key, oAuthAccessor);
 
-		if (ClusterExecutorUtil.isEnabled()) {
+		if (_clusterExecutor.isEnabled()) {
 			try {
 				_notifyCluster(key, oAuthAccessor);
 
@@ -379,11 +390,26 @@ public class V10aOAuth implements OAuth {
 
 	private static final Log _log = LogFactoryUtil.getLog(V10aOAuth.class);
 
-	private static final PortalCache<Serializable, Object> _portalCache =
-		SingleVMPoolUtil.getPortalCache(V10aOAuth.class.getName());
 	private static final MethodKey _putMethodKey = new MethodKey(
 		V10aOAuth.class, "_put", String.class, byte[].class);
 
-	private final OAuthValidator _oAuthValidator;
+	@Reference
+	private ClusterExecutor _clusterExecutor;
+
+	@Reference
+	private OAuthApplicationLocalService _oAuthApplicationLocalService;
+
+	@Reference
+	private OAuthUserLocalService _oAuthUserLocalService;
+
+	private OAuthValidator _oAuthValidator;
+
+	@Reference
+	private Portal _portal;
+
+	private PortalCache<Serializable, Object> _portalCache;
+
+	@Reference
+	private SingleVMPool _singleVMPool;
 
 }

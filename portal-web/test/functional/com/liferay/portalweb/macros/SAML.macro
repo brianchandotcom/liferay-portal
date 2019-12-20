@@ -2,7 +2,6 @@ definition {
 
 	@description = "Configures Liferay SAML as the IdP and Liferay SAML as the SP."
 	macro configureLiferaySAMLAsIdP {
-
 		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
 
 		if (isSet(idpURL)) {
@@ -88,7 +87,6 @@ definition {
 	}
 
 	macro connectSPAndIdP {
-
 		// Add a configured IdP connection to an SP
 
 		Navigator.openSpecificURL(url = "${spURL}");
@@ -151,7 +149,6 @@ definition {
 
 	@description = "Sign into portal by executing a IdP initiated SSO login. The IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
 	macro executeIdPInitiatedSSO {
-
 		if ("${autoLogin}" == "true") {
 			Navigator.openSpecificURL(url = "${idpInitiatedSSOURL}");
 

@@ -88,7 +88,6 @@ definition {
 
 	@summary = "Helper function to convert a localized list into JSON"
 	macro _convertLocalizedListToMap {
-
 		// Create list using '${listMap'
 
 		var localizedMap = "{";

@@ -4,7 +4,6 @@ definition {
 	var rowIndexNumber = "1";
 
 	macro enableLocalNetworkDataProvider {
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

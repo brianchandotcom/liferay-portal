@@ -2,7 +2,6 @@ definition {
 
 	@summary = "Basic Smoke test for the JSON WS API macros"
 	macro runSmoke {
-
 		//add role
 
 		JSONRole.addOrganizationRole(roleTitle = "organization role");

@@ -5,7 +5,6 @@ definition {
 	}
 
 	macro addCustomObject {
-
 		if ("${isCreatingViaPlusIcon}" == "false") {
 			AppBuilderAdmin.gotoAddItemViaNewButton();
 		}
@@ -220,7 +219,6 @@ definition {
 	}
 
 	macro validateRequiredValidNameMessage {
-
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
 			value1 = "This field is required.");

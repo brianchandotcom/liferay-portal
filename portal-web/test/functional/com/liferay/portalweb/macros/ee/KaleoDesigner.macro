@@ -63,7 +63,6 @@ definition {
 	}
 
 	macro addNodeViaSourceXML {
-
 		if ("${nodeType}" == "task") {
 
 			var sourceXML = '''
@@ -125,7 +124,6 @@ definition {
 	}
 
 	macro addSourceXMLBasicDefinition {
-
 		var sourceXML = '''
 <?xml version="1.0"?>
 <workflow-definition${line.separator} xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}

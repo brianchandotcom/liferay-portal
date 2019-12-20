@@ -1,7 +1,6 @@
 definition {
 
 	macro addFieldByDoubleClick {
-
 		var key_fieldType = "${fieldType}";
 
 		DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
@@ -10,7 +9,6 @@ definition {
 	}
 
 	macro addFieldByDragAndDrop {
-
 		Pause(locator1 = "10000");
 
 		var key_fieldType = "${fieldType}";
@@ -24,7 +22,6 @@ definition {
 	}
 
 	macro addFormView {
-
 		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB") && IsElementPresent(locator1 = "AppBuilder#FORM_VIEW_TAB")) {
 			FormViewBuilder.switchToFormViewTab();
 			AppBuilderAdmin.add();
@@ -38,7 +35,6 @@ definition {
 	}
 
 	macro addFormViewAndValidateFieldLabel {
-
 		FormViewBuilder.addFormView(
 			fieldType = "${fieldType}",
 			formViewName = "${formViewName}");
@@ -181,7 +177,6 @@ definition {
 	}
 
 	macro setName {
-
 		AppBuilderAdmin.setName(title = "${formViewName}");
 	}
 

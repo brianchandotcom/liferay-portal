@@ -143,7 +143,6 @@ definition {
 	}
 
 	macro gotoMonthViaSmallCalendar {
-
 		/*
 		To ensure the desired month will always be reached, click "Previous"
 		until it reaches our baseline of February 2016. Then click "Next" until

@@ -1,7 +1,6 @@
 definition {
 
 	macro enableMetal {
-
 		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(

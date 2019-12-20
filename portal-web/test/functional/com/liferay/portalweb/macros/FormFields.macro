@@ -10,7 +10,6 @@ definition {
 	}
 
 	macro changeFieldType {
-
 		while (IsElementNotPresent(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON_DROPDOWN")) {
 			Click(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON");
 		}
@@ -78,7 +77,6 @@ definition {
 	}
 
 	macro editFieldName {
-
 		Form.gotoAdvancedTab();
 
 		var key_fieldValue = "${fieldValue}";
@@ -127,7 +125,6 @@ definition {
 	}
 
 	macro editParagraphBody {
-
 		Type.clickAtType(
 			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_FIELD",
 			value1 = "${fieldValue}");
@@ -515,7 +512,6 @@ definition {
 	}
 
 	macro viewFieldName {
-
 		Form.gotoAdvancedTab();
 
 		AssertTextEquals(

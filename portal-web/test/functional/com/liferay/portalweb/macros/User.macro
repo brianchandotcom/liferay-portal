@@ -825,7 +825,6 @@ definition {
 	}
 
 	macro basicSearchCP {
-
 		if ("${userBasicSearch}" == "Basic") {
 			Search.searchCP(searchTerm = "${userScreenName}");
 

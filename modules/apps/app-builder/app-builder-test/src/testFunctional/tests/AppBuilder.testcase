@@ -1558,64 +1558,6 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
 	}
 
-=======
-	@description = "Search for a deployment in the deployment lists"
-	@priority = "5"
-	test SearchForDeployedItem {
-		property portal.acceptance = "false";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
-			formViewName = "My Form View",
-			tableViewName = "My Table View");
-
-		App.add(
-			appTitle = "First App",
-			deployOption = "Product Menu",
-			formViewName = "My Form View",
-			tableViewName = "My Table View");
-
-		App.add(
-			appTitle = "Second App",
-			deployOption = "Product Menu",
-			formViewName = "My Form View",
-			tableViewName = "My Table View");
-
-		App.add(
-			appTitle = "Third App",
-			deployOption = "Product Menu",
-			formViewName = "My Form View",
-			tableViewName = "My Table View");
-
-		AppBuilderAdmin.searchByItem(itemName = "First");
-
-		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "First");
-
-		AppBuilderAdmin.clearSearch();
-
-		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Modified Date");
-
-		AppBuilderAdmin.validateListTitleAtRow(
-			rowNumber = "1",
-			title = "Third App");
-
-		AppBuilderAdmin.searchByItem(itemName = "!@#");
-
-		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
-
-		AppBuilderAdmin.clearSearch();
-	}
-<<<<<<< HEAD
-	
->>>>>>> LRQA-53956 Created SearchForDeployedItem test
-=======
-
->>>>>>> LRQA-53956 Added addCustomObject to test
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"
 	@priority = "5"
 	test TableViewClearSearchResults {

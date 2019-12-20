@@ -24,8 +24,11 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.cache.CacheField;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.List;
 
@@ -75,6 +78,16 @@ public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
 		}
 
 		return _formInstanceSettings;
+	}
+
+	@Override
+	public String getStorageType() throws PortalException {
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			DDMFormInstanceFactory.create(
+				DDMFormInstanceSettings.class, getSettingsDDMFormValues());
+
+		return GetterUtil.getString(
+			ddmFormInstanceSettings.storageType(), StorageType.JSON.toString());
 	}
 
 	@Override

@@ -72,4 +72,11 @@ public class DDMFormInstanceRecordImpl extends DDMFormInstanceRecordBaseImpl {
 		return ddmFormInstanceRecordVersion.getStatus();
 	}
 
+	@Override
+	public String getStorageType() throws PortalException {
+		DDMFormInstance ddmFormInstance = getFormInstance();
+
+		return ddmFormInstance.getStorageType();
+	}
+
 }

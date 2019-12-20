@@ -99,6 +99,74 @@ definition {
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:image"''');
 	}
 
+	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
+	@priority = "5"
+	test ConfigurePageSpecificImage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "open-graph");
+
+		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_2.jpg");
+
+		var siteID = Site.getSiteId();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
+	}
+
+	@description = "This makes sure that the user can set a default image for OpenGraph at the site level."
+	@priority = "5"
+	test ConfigureSiteImage {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "open-graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		var siteID = Site.getSiteId();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
+	}
+
 	@description = "This ensures that the OG image tags will not appear when the HTTPS user disables Open Graph."
 	@priority = "5"
 	test DisableAfterAddingImage {

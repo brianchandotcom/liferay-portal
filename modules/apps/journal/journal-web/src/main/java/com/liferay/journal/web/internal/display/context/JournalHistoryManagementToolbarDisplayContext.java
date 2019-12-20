@@ -45,16 +45,31 @@ public class JournalHistoryManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public JournalHistoryManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, JournalArticle article,
+		JournalHistoryDisplayContext journalHistoryDisplayContext) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			journalHistoryDisplayContext.getArticleSearchContainer());
+
+		_article = article;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalHistoryManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalArticle, JournalHistoryDisplayContext)}
+	 */
+	@Deprecated
+	public JournalHistoryManagementToolbarDisplayContext(
 		JournalArticle article, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		HttpServletRequest httpServletRequest,
 		JournalHistoryDisplayContext journalHistoryDisplayContext) {
 
-		super(
-			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			journalHistoryDisplayContext.getArticleSearchContainer());
-
-		_article = article;
+		this(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			article, journalHistoryDisplayContext);
 	}
 
 	@Override

@@ -324,11 +324,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPEN_GRAPH_CUSTOM_IMAGE_VALUE</td>
-	<td>//input[contains(@name,'openGraphImageURL')]@value</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE</td>
 	<td>//div[label[contains(.,'Image')]]//input[@value='']</td>
 	<td></td>

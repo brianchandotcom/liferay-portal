@@ -728,6 +728,14 @@ public class ProjectTemplateFilesTest {
 
 			String artifactId = artifactIdElement.getTextContent();
 
+			String pomXml = pomXmlPath.toString();
+
+			if (artifactId.equals("com.liferay.css.builder") &&
+				pomXml.contains("project-templates-theme/")) {
+
+				continue;
+			}
+
 			String key = artifactId + ".version";
 
 			if (systemProperties.containsKey(key)) {

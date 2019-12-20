@@ -24,12 +24,35 @@ boolean connected = false;
 String[] syncedGroupIds = new String[0];
 String token = "";
 
+long totalContactsSelected = 0;
+
 if (analyticsConfiguration != null) {
 	syncedGroupIds = analyticsConfiguration.syncedGroupIds();
 	token = analyticsConfiguration.token();
 
 	if (!Validator.isBlank(token)) {
 		connected = true;
+	}
+
+	if (analyticsConfiguration.syncAllContacts()) {
+		totalContactsSelected = UserServiceUtil.getCompanyUsersCount(themeDisplay.getCompanyId());
+	}
+	else {
+		String[] syncedOrganizationIds = analyticsConfiguration.syncedOrganizationIds();
+		long[] syncedOrganizationIdsLong = new long[syncedOrganizationIds.length];
+
+		for (int i = 0; i < syncedOrganizationIds.length; i++) {
+			syncedOrganizationIdsLong[i] = Long.parseLong(syncedOrganizationIds[i]);
+		}
+
+		String[] syncedUserGroupIds = analyticsConfiguration.syncedUserGroupIds();
+		long[] syncedUserGroupIdsLong = new long[syncedUserGroupIds.length];
+
+		for (int i = 0; i < syncedUserGroupIds.length; i++) {
+			syncedUserGroupIdsLong[i] = Long.parseLong(syncedUserGroupIds[i]);
+		}
+
+		totalContactsSelected = UserServiceUtil.getOrganizationsAndUserGroupsUsersCount(syncedOrganizationIdsLong, syncedUserGroupIdsLong);
 	}
 }
 %>
@@ -101,7 +124,7 @@ if (analyticsConfiguration != null) {
 
 		<small>
 			<strong>
-				<liferay-ui:message arguments="<%= 0 %>" key="total-contacts-selected-x" />
+				<liferay-ui:message arguments="<%= totalContactsSelected %>" key="total-contacts-selected-x" />
 			</strong>
 		</small>
 

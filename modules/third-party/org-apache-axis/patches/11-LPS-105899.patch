@@ -1,0 +1,46 @@
+diff --git a/org/apache/axis/description/JavaServiceDesc.java b/org/apache/axis/description/JavaServiceDesc.java
+index d4e2f9b68f06..606b7d5b2507 100644
+--- a/org/apache/axis/description/JavaServiceDesc.java
++++ b/org/apache/axis/description/JavaServiceDesc.java
+@@ -642,6 +642,12 @@ public class JavaServiceDesc implements ServiceDesc {
+         
+         Method[] methods = getMethods(implClass);
+ 
++		Arrays.sort(methods, new Comparator<Method>() {
++			@Override
++			public int compare(Method m1, Method m2) {
++				return m2.toString().compareTo(m1.toString());
++			}
++		});
+         // A place to keep track of possible matches
+         Method possibleMatch = null;
+         
+@@ -794,12 +800,6 @@ public class JavaServiceDesc implements ServiceDesc {
+             // only return methods that are not part of start classes
+             List methodsList = new ArrayList();
+             Method[] methods = implClass.getMethods();
+-            Arrays.sort(methods, new Comparator<Method>() {
+-                @Override
+-                public int compare(Method m1, Method m2) {
+-                    return m2.toString().compareTo(m1.toString());
+-                }
+-            });
+             if (methods != null) {
+                 for (int i = 0; i < methods.length; i++) {
+                     String declaringClass = methods[i].getDeclaringClass().getName();
+@@ -811,14 +811,7 @@ public class JavaServiceDesc implements ServiceDesc {
+             }
+             return (Method[])methodsList.toArray(new Method[]{}); 
+         } else {
+-            Method[] methods = implClass.getDeclaredMethods();
+-            Arrays.sort(methods, new Comparator<Method>() {
+-                @Override
+-                public int compare(Method m1, Method m2) {
+-                    return m2.toString().compareTo(m1.toString());
+-                }
+-            });
+-        	return methods;
++            return implClass.getDeclaredMethods();
+         }
+     }
+ 

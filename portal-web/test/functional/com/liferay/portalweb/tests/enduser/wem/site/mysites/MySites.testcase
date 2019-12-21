@@ -95,7 +95,9 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.joinViaMySitesPG(siteName = "Site Name");
+		Site.joinViaMySitesPG(
+			siteName = "Site Name",
+			userRole = "Guest");
 
 		// Relog in to superadmin
 
@@ -146,7 +148,8 @@ definition {
 
 		Site.joinViaMySitesPG(
 			membershipType = "Private",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			userRole = "Guest");
 
 		// Relog in to superadmin
 
@@ -196,7 +199,8 @@ definition {
 
 		Site.joinViaMySitesPG(
 			membershipType = "Restricted",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			userRole = "Guest");
 
 		// View that the user's membership request is sent
 
@@ -279,13 +283,17 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.joinViaMySitesPG(siteName = "Site Name");
+		Site.joinViaMySitesPG(
+			siteName = "Site Name",
+			userRole = "Guest");
 
 		// Leave site
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
-		Site.leaveViaMySitesPG(siteName = "Site Name");
+		Site.leaveViaMySitesPG(
+			siteName = "Site Name",
+			userRole = "Guest");
 
 		// Relog in to superadmin
 

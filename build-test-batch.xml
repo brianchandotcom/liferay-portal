@@ -1432,6 +1432,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<sequential>
 			<var name="app.server.type" value="@{app.server.type}" />
 			<var name="app.server.version" value="@{app.server.version}" />
+			<var name="database.type" value="@{database.type}" />
 
 			<if>
 				<matches pattern="[A-z]+" string="${axis.variable}" />

@@ -31,7 +31,7 @@ definition {
 	}
 
 	macro clickEllipsisItem {
-		Click(
+		Click.waitForMenuToggleJSClick(
 			key_card = "${card}",
 			locator1 = "LexiconCard#CARD_ELLIPSIS");
 

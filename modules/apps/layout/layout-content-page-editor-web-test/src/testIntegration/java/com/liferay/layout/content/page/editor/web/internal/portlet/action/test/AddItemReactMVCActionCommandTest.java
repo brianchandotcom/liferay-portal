@@ -101,18 +101,13 @@ public class AddItemReactMVCActionCommandTest {
 		String newItemType = RandomTestUtil.randomString();
 
 		actionRequest.addParameter(
-			"classNameId",
-			String.valueOf(_portal.getClassNameId(Layout.class)));
-		actionRequest.addParameter(
-			"classPK", String.valueOf(_layout.getPlid()));
-		actionRequest.addParameter(
-			"config",
+			"itemConfig",
 			String.valueOf(
 				JSONUtil.put("someConfig", RandomTestUtil.randomString())));
 		actionRequest.addParameter("itemId", newItemId);
-		actionRequest.addParameter("parentId", "root");
+		actionRequest.addParameter("parentItemId", "root");
 		actionRequest.addParameter("position", "0");
-		actionRequest.addParameter("type", newItemType);
+		actionRequest.addParameter("itemType", newItemType);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addItemToLayoutData",
@@ -151,15 +146,11 @@ public class AddItemReactMVCActionCommandTest {
 
 		String newItemId = RandomTestUtil.randomString();
 
-		actionRequest.addParameter(
-			"classNameId",
-			String.valueOf(_portal.getClassNameId(Layout.class)));
-		actionRequest.addParameter(
-			"classPK", String.valueOf(_layout.getPlid()));
 		actionRequest.addParameter("itemId", newItemId);
-		actionRequest.addParameter("parentId", "root");
+
+		actionRequest.addParameter("parentItemId", "root");
 		actionRequest.addParameter("position", "1");
-		actionRequest.addParameter("type", RandomTestUtil.randomString());
+		actionRequest.addParameter("itemType", RandomTestUtil.randomString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addItemToLayoutData",

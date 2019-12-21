@@ -729,7 +729,8 @@ definition {
 
 			LexiconList.clickEllipsisItem(
 				item = "Request Membership",
-				listEntry = "${siteName}");
+				listEntry = "${siteName}",
+				userRole = "${userRole}");
 
 			Type(
 				locator1 = "TextArea#COMMENTS",
@@ -750,7 +751,8 @@ definition {
 
 			LexiconList.clickEllipsisItem(
 				item = "Join",
-				listEntry = "${siteName}");
+				listEntry = "${siteName}",
+				userRole = "${userRole}");
 
 			Alert.viewSuccessMessage();
 
@@ -760,7 +762,9 @@ definition {
 				listEntry = "${siteName}",
 				listEntrySubtitle = "Members: 2");
 
-			LexiconList.clickEllipsis(listEntry = "${siteName}");
+			LexiconList.clickEllipsis(
+				listEntry = "${siteName}",
+				userRole = "${userRole}");
 
 			AssertVisible(
 				key_menuItem = "Leave",
@@ -786,7 +790,8 @@ definition {
 
 		LexiconList.clickEllipsisItem(
 			item = "Leave",
-			listEntry = "${siteName}");
+			listEntry = "${siteName}",
+			userRole = "${userRole}");
 
 		Alert.viewSuccessMessage();
 
@@ -796,7 +801,9 @@ definition {
 			listEntry = "${siteName}",
 			listEntrySubtitle = "Members: 1");
 
-		LexiconList.clickEllipsis(listEntry = "${siteName}");
+		LexiconList.clickEllipsis(
+			listEntry = "${siteName}",
+			userRole = "${userRole}");
 
 		AssertVisible(
 			key_menuItem = "Join",

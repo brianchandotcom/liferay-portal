@@ -214,10 +214,10 @@ public class AddPortletReactMVCActionCommandTest {
 	public void testLayoutDataFromWidgetResponse() throws Exception {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 
-		actionRequest.addParameter("parentId", "root");
+		actionRequest.addParameter("parentItemId", "root");
 		actionRequest.addParameter("portletId", JournalPortletKeys.JOURNAL);
 		actionRequest.addParameter("position", "0");
-		actionRequest.addParameter("type", RandomTestUtil.randomString());
+		actionRequest.addParameter("itemType", RandomTestUtil.randomString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "processAddPortlet",

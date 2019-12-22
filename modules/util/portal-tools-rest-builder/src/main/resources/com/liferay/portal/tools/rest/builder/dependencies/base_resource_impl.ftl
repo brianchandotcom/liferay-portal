@@ -6,6 +6,7 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
@@ -75,6 +76,17 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>
 				return StringPool.BLANK;
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
+				_importTaskResource.setContextCompany(contextCompany);
+				_importTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
+				_importTaskResource.setContextUriInfo(contextUriInfo);
+				_importTaskResource.setContextUser(contextUser);
+
+				Response.ResponseBuilder responseBuilder = Response.accepted();
+
+				return responseBuilder.entity(
+					_importTaskResource.deleteImportTask(${schemaName}.class.getName(), "${openAPIYAML.info.version}", callbackURL, object)
+				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -157,5 +169,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

@@ -172,16 +172,16 @@ public class Organization {
 	protected Date dateModified;
 
 	@Schema(description = "The organization's ID.")
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -195,7 +195,7 @@ public class Organization {
 
 	@GraphQLField(description = "The organization's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+	protected String id;
 
 	@Schema(description = "A relative URL to the organization's image.")
 	public String getImage() {
@@ -546,7 +546,11 @@ public class Organization {
 
 			sb.append("\"id\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
 		}
 
 		if (image != null) {

@@ -113,15 +113,15 @@ public class Organization {
 
 	protected Date dateModified;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -130,7 +130,7 @@ public class Organization {
 		}
 	}
 
-	protected Long id;
+	protected String id;
 
 	public String getImage() {
 		return image;

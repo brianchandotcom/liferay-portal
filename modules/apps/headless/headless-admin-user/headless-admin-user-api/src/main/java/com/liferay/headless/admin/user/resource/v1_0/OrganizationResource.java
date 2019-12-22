@@ -47,12 +47,12 @@ public interface OrganizationResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public void deleteOrganization(Long organizationId) throws Exception;
+	public void deleteOrganization(String organizationId) throws Exception;
 
-	public Organization getOrganization(Long organizationId) throws Exception;
+	public Organization getOrganization(String organizationId) throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, Boolean flatten, String search,
+			String parentOrganizationId, Boolean flatten, String search,
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -281,21 +282,21 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected UserAccount testGetOrganizationUserAccountsPage_addUserAccount(
-			Long organizationId, UserAccount userAccount)
+			String organizationId, UserAccount userAccount)
 		throws Exception {
 
 		userAccount = _addUserAccount(
 			testGetSiteUserAccountsPage_getSiteId(), userAccount);
 
 		UserLocalServiceUtil.addOrganizationUser(
-			organizationId, userAccount.getId());
+			GetterUtil.getLong(organizationId), userAccount.getId());
 
 		return userAccount;
 	}
 
 	@Override
-	protected Long testGetOrganizationUserAccountsPage_getOrganizationId() {
-		return _organization.getOrganizationId();
+	protected String testGetOrganizationUserAccountsPage_getOrganizationId() {
+		return String.valueOf(_organization.getOrganizationId());
 	}
 
 	@Override

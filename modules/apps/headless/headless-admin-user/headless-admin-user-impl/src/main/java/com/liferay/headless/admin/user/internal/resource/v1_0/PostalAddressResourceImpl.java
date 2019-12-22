@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.internal.dto.v1_0.helper.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
 import com.liferay.portal.kernel.model.Contact;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.AddressService;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -44,10 +44,10 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			Long organizationId)
+			String organizationId)
 		throws Exception {
 
-		Organization organization = _organizationService.getOrganization(
+		Organization organization = _organizationResourceDTOConverter.getObject(
 			organizationId);
 
 		return Page.of(
@@ -96,7 +96,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	private AddressService _addressService;
 
 	@Reference
-	private OrganizationService _organizationService;
+	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

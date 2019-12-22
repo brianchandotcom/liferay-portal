@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +105,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	protected Organization testGetOrganizationOrganizationsPage_addOrganization(
-			Long parentOrganizationId, Organization organization)
+			String parentOrganizationId, Organization organization)
 		throws Exception {
 
 		return _toOrganization(
@@ -112,14 +113,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
-	protected Long
+	protected String
 			testGetOrganizationOrganizationsPage_getParentOrganizationId()
 		throws Exception {
 
 		com.liferay.portal.kernel.model.Organization organization =
-			_addOrganization(randomOrganization(), 0);
+			_addOrganization(randomOrganization(), "0");
 
-		return organization.getOrganizationId();
+		return String.valueOf(organization.getOrganizationId());
 	}
 
 	@Override
@@ -160,16 +161,16 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	private com.liferay.portal.kernel.model.Organization _addOrganization(
-			Organization organization, long parentOrganizationId)
+			Organization organization, String parentOrganizationId)
 		throws PortalException {
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
 				OrganizationLocalServiceUtil.addOrganization(
-					_user.getUserId(), parentOrganizationId,
+					_user.getUserId(), GetterUtil.getLong(parentOrganizationId),
 					organization.getName(), true);
 
-		if (parentOrganizationId == 0) {
+		if (parentOrganizationId.equals("0")) {
 			_organizations.add(serviceBuilderOrganization);
 		}
 		else {
@@ -184,11 +185,11 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		Organization parentOrganization = _toOrganization(
-			_addOrganization(organization, 0));
+			_addOrganization(organization, "0"));
 
 		if (userAccountId != null) {
 			UserLocalServiceUtil.addOrganizationUser(
-				parentOrganization.getId(), userAccountId);
+				GetterUtil.getLong(parentOrganization.getId()), userAccountId);
 		}
 
 		return parentOrganization;
@@ -229,7 +230,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			{
 				dateCreated = organization.getCreateDate();
 				dateModified = organization.getModifiedDate();
-				id = organization.getOrganizationId();
+				id = String.valueOf(organization.getOrganizationId());
 				name = organization.getName();
 			}
 		};

@@ -25,6 +25,7 @@ import com.liferay.headless.admin.user.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.headless.admin.user.internal.dto.v1_0.helper.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
@@ -98,9 +99,12 @@ public class UserAccountResourceImpl
 
 	@Override
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			Long organizationId, String search, Filter filter,
+			String organizationId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		Organization organization = _organizationResourceDTOConverter.getObject(
+			organizationId);
 
 		return _getUserAccountsPage(
 			booleanQuery -> {
@@ -109,7 +113,8 @@ public class UserAccountResourceImpl
 
 				booleanFilter.add(
 					new TermFilter(
-						"organizationIds", String.valueOf(organizationId)),
+						"organizationIds",
+						String.valueOf(organization.getOrganizationId())),
 					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
@@ -334,6 +339,9 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private ListTypeService _listTypeService;
+
+	@Reference
+	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
 
 	@Reference
 	private Portal _portal;

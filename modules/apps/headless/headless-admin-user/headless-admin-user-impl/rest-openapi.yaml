@@ -990,6 +990,35 @@ paths:
                     description:
                         ""
             tags: ["Organization"]
+    "/organizations/batch":
+        delete:
+            operationId: deleteOrganizationBatch
+            parameters:
+                - in: query
+                  name: callbackURL
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                    application/x-ndjson:
+                        schema:
+                            type: object
+                    text/csv:
+                        schema:
+                            type: object
+                required: true
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                    description:
+                        ""
+            tags: ["Organization"]
     "/organizations/{organizationId}":
         delete:
             # @review

@@ -261,7 +261,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
 									0L
 								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-									""
+									"-"
 								<#else>
 									null
 								</#if>

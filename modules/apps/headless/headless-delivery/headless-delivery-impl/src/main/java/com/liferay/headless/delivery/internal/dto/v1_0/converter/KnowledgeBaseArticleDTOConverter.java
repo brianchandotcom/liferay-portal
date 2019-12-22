@@ -21,8 +21,6 @@ import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
@@ -36,6 +34,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -50,10 +51,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	property = "asset.entry.class.name=com.liferay.knowledge.base.model.KBArticle",
+	property = "dto.class.name=com.liferay.knowledge.base.model.KBArticle",
 	service = {DTOConverter.class, KnowledgeBaseArticleDTOConverter.class}
 )
-public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
+public class KnowledgeBaseArticleDTOConverter
+	implements DTOConverter<KBArticle, KnowledgeBaseArticle> {
 
 	@Override
 	public String getContentType() {
@@ -65,7 +67,7 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
-			dtoConverterContext.getResourcePrimKey(),
+			(Long)dtoConverterContext.getId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		if (kbArticle == null) {
@@ -108,7 +110,7 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					kbArticle.getModelClassName(),
+					_dtoConverterRegistry, kbArticle.getModelClassName(),
 					kbArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				siteId = kbArticle.getGroupId();
@@ -148,6 +150,9 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private KBArticleService _kbArticleService;

@@ -15,13 +15,13 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.internal.dto.v1_0.helper.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.EmailAddressService;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -46,10 +46,10 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 
 	@Override
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
-			Long organizationId)
+			String organizationId)
 		throws Exception {
 
-		Organization organization = _organizationService.getOrganization(
+		Organization organization = _organizationResourceDTOConverter.getObject(
 			organizationId);
 
 		return Page.of(
@@ -78,7 +78,7 @@ public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 	private EmailAddressService _emailAddressService;
 
 	@Reference
-	private OrganizationService _organizationService;
+	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
 
 	@Reference
 	private UserService _userService;

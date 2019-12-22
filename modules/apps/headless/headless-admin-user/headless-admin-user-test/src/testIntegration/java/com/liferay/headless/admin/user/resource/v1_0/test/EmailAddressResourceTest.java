@@ -76,7 +76,7 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 	@Override
 	protected EmailAddress
 			testGetOrganizationEmailAddressesPage_addEmailAddress(
-				Long organizationId, EmailAddress emailAddress)
+				String organizationId, EmailAddress emailAddress)
 		throws Exception {
 
 		return _addEmailAddress(
@@ -86,8 +86,8 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetOrganizationEmailAddressesPage_getOrganizationId() {
-		return _organization.getOrganizationId();
+	protected String testGetOrganizationEmailAddressesPage_getOrganizationId() {
+		return String.valueOf(_organization.getOrganizationId());
 	}
 
 	@Override

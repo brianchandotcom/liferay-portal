@@ -26,8 +26,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
@@ -37,6 +35,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
@@ -47,10 +48,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	property = "asset.entry.class.name=com.liferay.blogs.model.BlogsEntry",
+	property = "dto.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = {BlogPostingDTOConverter.class, DTOConverter.class}
 )
-public class BlogPostingDTOConverter implements DTOConverter {
+public class BlogPostingDTOConverter
+	implements DTOConverter<BlogsEntry, BlogPosting> {
 
 	@Override
 	public String getContentType() {
@@ -62,7 +64,7 @@ public class BlogPostingDTOConverter implements DTOConverter {
 		throws Exception {
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		return new BlogPosting() {
 			{
@@ -93,8 +95,8 @@ public class BlogPostingDTOConverter implements DTOConverter {
 					BlogsEntry.class.getName(), blogsEntry.getEntryId());
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					blogsEntry.getModelClassName(), blogsEntry.getEntryId(),
-					dtoConverterContext.getLocale());
+					_dtoConverterRegistry, blogsEntry.getModelClassName(),
+					blogsEntry.getEntryId(), dtoConverterContext.getLocale());
 				siteId = blogsEntry.getGroupId();
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
@@ -153,6 +155,9 @@ public class BlogPostingDTOConverter implements DTOConverter {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Portal _portal;

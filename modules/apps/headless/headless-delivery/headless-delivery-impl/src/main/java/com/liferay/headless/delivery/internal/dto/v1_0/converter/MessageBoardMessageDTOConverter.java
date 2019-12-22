@@ -19,8 +19,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
@@ -33,6 +31,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -43,10 +44,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	property = "asset.entry.class.name=com.liferay.message.boards.model.MBMessage",
+	property = "dto.class.name=com.liferay.message.boards.model.MBMessage",
 	service = {DTOConverter.class, MessageBoardMessageDTOConverter.class}
 )
-public class MessageBoardMessageDTOConverter implements DTOConverter {
+public class MessageBoardMessageDTOConverter
+	implements DTOConverter<MBMessage, MessageBoardMessage> {
 
 	@Override
 	public String getContentType() {
@@ -58,7 +60,7 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 		throws Exception {
 
 		MBMessage mbMessage = _mbMessageService.getMessage(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		return new MessageBoardMessage() {
 			{
@@ -87,8 +89,8 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 						WorkflowConstants.STATUS_APPROVED);
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					mbMessage.getModelClassName(), mbMessage.getMessageId(),
-					dtoConverterContext.getLocale());
+					_dtoConverterRegistry, mbMessage.getModelClassName(),
+					mbMessage.getMessageId(), dtoConverterContext.getLocale());
 				showAsAnswer = mbMessage.isAnswer();
 				siteId = mbMessage.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
@@ -118,6 +120,9 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

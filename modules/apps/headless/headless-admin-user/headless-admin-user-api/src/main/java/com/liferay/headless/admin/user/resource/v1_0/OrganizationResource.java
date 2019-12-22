@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -45,6 +46,9 @@ public interface OrganizationResource {
 	public Page<Organization> getOrganizationsPage(
 			Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response deleteOrganizationBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteOrganization(Long organizationId) throws Exception;

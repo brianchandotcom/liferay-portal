@@ -14,8 +14,12 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -41,6 +45,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -48,6 +53,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -95,6 +101,40 @@ public abstract class BaseOrganizationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/x-ndjson", "text/csv"})
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/organizations/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "Organization")})
+	public Response deleteOrganizationBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		_importTaskResource.setContextCompany(contextCompany);
+		_importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		_importTaskResource.setContextUriInfo(contextUriInfo);
+		_importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			_importTaskResource.deleteImportTask(
+				Organization.class.getName(), "v1.0", callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -106,9 +146,13 @@ public abstract class BaseOrganizationResourceImpl
 	@Path("/organizations/{organizationId}")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Organization")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = Organization.class
+	)
 	public void deleteOrganization(
-			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
-				organizationId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("organizationId") Long organizationId)
 		throws Exception {
 	}
 
@@ -240,5 +284,7 @@ public abstract class BaseOrganizationResourceImpl
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

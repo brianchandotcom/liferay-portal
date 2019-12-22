@@ -482,6 +482,24 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOrganizationBatch() throws Exception {
+		Organization organization =
+			testDeleteOrganizationBatch_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.deleteOrganizationBatchHttpResponse(
+				null, null));
+	}
+
+	protected Organization testDeleteOrganizationBatch_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteOrganization() throws Exception {
 		Organization organization = testDeleteOrganization_addOrganization();
 

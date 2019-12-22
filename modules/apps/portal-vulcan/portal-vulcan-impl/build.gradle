@@ -55,6 +55,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.2.RELEASE"
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
+	compileOnly project(":apps:headless:headless-batch-engine:headless-batch-engine-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:static:osgi:osgi-util")

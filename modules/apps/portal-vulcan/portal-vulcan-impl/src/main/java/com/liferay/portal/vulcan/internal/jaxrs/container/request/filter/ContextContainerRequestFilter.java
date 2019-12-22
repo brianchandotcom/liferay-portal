@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -51,12 +52,14 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	public ContextContainerRequestFilter(
-		GroupLocalService groupLocalService, Language language, Portal portal,
+		GroupLocalService groupLocalService,
+		ImportTaskResource importTaskResource, Language language, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, Object scopeChecker) {
 
 		_groupLocalService = groupLocalService;
+		_importTaskResource = importTaskResource;
 		_language = language;
 		_portal = portal;
 		_resourceActionLocalService = resourceActionLocalService;
@@ -141,6 +144,11 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 				field.set(
 					instance, message.getContextualProperty("HTTP.RESPONSE"));
 			}
+			else if (fieldClass.isAssignableFrom(ImportTaskResource.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _importTaskResource);
+			}
 			else if (fieldClass.isAssignableFrom(
 						ResourceActionLocalService.class)) {
 
@@ -174,6 +182,7 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	}
 
 	private final GroupLocalService _groupLocalService;
+	private final ImportTaskResource _importTaskResource;
 	private final Language _language;
 	private final Portal _portal;
 	private final ResourceActionLocalService _resourceActionLocalService;

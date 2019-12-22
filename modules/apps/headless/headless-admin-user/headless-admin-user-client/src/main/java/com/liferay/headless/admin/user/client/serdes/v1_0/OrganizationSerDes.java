@@ -135,7 +135,11 @@ public class OrganizationSerDes {
 
 			sb.append("\"id\": ");
 
-			sb.append(organization.getId());
+			sb.append("\"");
+
+			sb.append(_escape(organization.getId()));
+
+			sb.append("\"");
 		}
 
 		if (organization.getImage() != null) {
@@ -419,8 +423,7 @@ public class OrganizationSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					organization.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					organization.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "image")) {

@@ -39,7 +39,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WebUrlResource {
 
-	public Page<WebUrl> getOrganizationWebUrlsPage(Long organizationId)
+	public Page<WebUrl> getOrganizationWebUrlsPage(String organizationId)
 		throws Exception;
 
 	public Page<WebUrl> getUserAccountWebUrlsPage(Long userAccountId)

@@ -42,7 +42,7 @@ public interface EmailAddressResource {
 	public EmailAddress getEmailAddress(Long emailAddressId) throws Exception;
 
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(

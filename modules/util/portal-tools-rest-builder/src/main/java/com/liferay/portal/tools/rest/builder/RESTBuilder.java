@@ -1107,8 +1107,18 @@ public class RESTBuilder {
 				freeMarkerTool.getResourceJavaMethodSignatures(
 					_configYAML, openAPIYAML, schemaName);
 
+			Set<String> methodNames = new HashSet<>();
+
 			for (JavaMethodSignature javaMethodSignature :
 					javaMethodSignatures) {
+
+				String methodName = javaMethodSignature.getMethodName();
+
+				if (methodNames.contains(methodName)) {
+					continue;
+				}
+
+				methodNames.add(methodName);
 
 				int x = s.indexOf(
 					StringUtil.quote(javaMethodSignature.getPath(), '"') + ":");
@@ -1157,7 +1167,7 @@ public class RESTBuilder {
 				sb.append(s.substring(0, z + 1));
 				sb.append(leadingWhiteSpace);
 				sb.append("operationId: ");
-				sb.append(javaMethodSignature.getMethodName());
+				sb.append(methodName);
 				sb.append("\n");
 				sb.append(s.substring(z + 1));
 

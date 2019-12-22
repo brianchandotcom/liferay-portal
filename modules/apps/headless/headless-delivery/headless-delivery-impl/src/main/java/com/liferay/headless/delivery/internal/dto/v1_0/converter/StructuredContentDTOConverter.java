@@ -36,8 +36,6 @@ import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.dto.v1_0.Value;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentDocumentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil;
@@ -59,6 +57,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -82,10 +83,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Víctor Galán
  */
 @Component(
-	property = "asset.entry.class.name=com.liferay.journal.model.JournalArticle",
+	property = "dto.class.name=com.liferay.journal.model.JournalArticle",
 	service = {DTOConverter.class, StructuredContentDTOConverter.class}
 )
-public class StructuredContentDTOConverter implements DTOConverter {
+public class StructuredContentDTOConverter implements DTOConverter<JournalArticle, StructuredContent> {
 
 	@Override
 	public String getContentType() {
@@ -97,7 +98,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 		throws Exception {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
@@ -141,7 +142,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 					journalArticle.getResourcePrimKey());
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					JournalArticle.class.getName(),
+					_dtoConverterRegistry, JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				renderedContents = _toRenderedContents(
@@ -439,6 +440,9 @@ public class StructuredContentDTOConverter implements DTOConverter {
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

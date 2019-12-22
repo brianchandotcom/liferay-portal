@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -305,7 +306,8 @@ public class WikiPageResourceImpl
 				);
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					wikiPage.getModelClassName(), wikiPage.getResourcePrimKey(),
+					_dtoConverterRegistry, wikiPage.getModelClassName(),
+					wikiPage.getResourcePrimKey(),
 					contextAcceptLanguage.getPreferredLocale());
 				siteId = wikiPage.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
@@ -338,6 +340,9 @@ public class WikiPageResourceImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

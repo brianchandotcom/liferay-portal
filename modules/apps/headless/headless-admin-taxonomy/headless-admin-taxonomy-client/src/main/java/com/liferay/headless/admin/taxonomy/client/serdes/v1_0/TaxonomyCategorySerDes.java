@@ -143,6 +143,20 @@ public class TaxonomyCategorySerDes {
 			sb.append("\"");
 		}
 
+		if (taxonomyCategory.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(taxonomyCategory.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (taxonomyCategory.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -150,7 +164,11 @@ public class TaxonomyCategorySerDes {
 
 			sb.append("\"id\": ");
 
-			sb.append(taxonomyCategory.getId());
+			sb.append("\"");
+
+			sb.append(_escape(taxonomyCategory.getId()));
+
+			sb.append("\"");
 		}
 
 		if (taxonomyCategory.getName() != null) {
@@ -268,6 +286,15 @@ public class TaxonomyCategorySerDes {
 				String.valueOf(taxonomyCategory.getDescription()));
 		}
 
+		if (taxonomyCategory.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(taxonomyCategory.getExternalReferenceCode()));
+		}
+
 		if (taxonomyCategory.getId() == null) {
 			map.put("id", null);
 		}
@@ -369,10 +396,17 @@ public class TaxonomyCategorySerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					taxonomyCategory.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					taxonomyCategory.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					taxonomyCategory.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

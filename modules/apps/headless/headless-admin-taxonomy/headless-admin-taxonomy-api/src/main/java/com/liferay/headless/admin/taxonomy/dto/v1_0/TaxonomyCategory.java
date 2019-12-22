@@ -233,17 +233,45 @@ public class TaxonomyCategory {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
 	@Schema(description = "The category's ID.")
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -257,7 +285,7 @@ public class TaxonomyCategory {
 
 	@GraphQLField(description = "The category's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
+	protected String id;
 
 	@Schema(description = "The category's name.")
 	public String getName() {
@@ -539,6 +567,20 @@ public class TaxonomyCategory {
 			sb.append("\"");
 		}
 
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -546,7 +588,11 @@ public class TaxonomyCategory {
 
 			sb.append("\"id\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
 		}
 
 		if (name != null) {

@@ -40,54 +40,54 @@ public interface TaxonomyCategoryResource {
 	}
 
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long parentTaxonomyCategoryId, String search, String filterString,
+			String parentTaxonomyCategoryId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
-				Long parentTaxonomyCategoryId, String search,
+				String parentTaxonomyCategoryId, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postTaxonomyCategoryTaxonomyCategoryHttpResponse(
-				Long parentTaxonomyCategoryId,
+				String parentTaxonomyCategoryId,
 				TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
-	public void deleteTaxonomyCategory(Long taxonomyCategoryId)
+	public void deleteTaxonomyCategory(String taxonomyCategoryId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteTaxonomyCategoryHttpResponse(
-			Long taxonomyCategoryId)
+			String taxonomyCategoryId)
 		throws Exception;
 
-	public TaxonomyCategory getTaxonomyCategory(Long taxonomyCategoryId)
+	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getTaxonomyCategoryHttpResponse(
-			Long taxonomyCategoryId)
+			String taxonomyCategoryId)
 		throws Exception;
 
 	public TaxonomyCategory patchTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchTaxonomyCategoryHttpResponse(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public TaxonomyCategory putTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putTaxonomyCategoryHttpResponse(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
@@ -167,7 +167,7 @@ public interface TaxonomyCategoryResource {
 		implements TaxonomyCategoryResource {
 
 		public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-				Long parentTaxonomyCategoryId, String search,
+				String parentTaxonomyCategoryId, String search,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -189,7 +189,7 @@ public interface TaxonomyCategoryResource {
 
 		public HttpInvoker.HttpResponse
 				getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
-					Long parentTaxonomyCategoryId, String search,
+					String parentTaxonomyCategoryId, String search,
 					String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
@@ -247,7 +247,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-				Long parentTaxonomyCategoryId,
+				String parentTaxonomyCategoryId,
 				TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
@@ -277,7 +277,7 @@ public interface TaxonomyCategoryResource {
 
 		public HttpInvoker.HttpResponse
 				postTaxonomyCategoryTaxonomyCategoryHttpResponse(
-					Long parentTaxonomyCategoryId,
+					String parentTaxonomyCategoryId,
 					TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
@@ -316,7 +316,7 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteTaxonomyCategory(Long taxonomyCategoryId)
+		public void deleteTaxonomyCategory(String taxonomyCategoryId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -332,7 +332,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteTaxonomyCategoryHttpResponse(
-				Long taxonomyCategoryId)
+				String taxonomyCategoryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -368,7 +368,7 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public TaxonomyCategory getTaxonomyCategory(Long taxonomyCategoryId)
+		public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -395,7 +395,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse getTaxonomyCategoryHttpResponse(
-				Long taxonomyCategoryId)
+				String taxonomyCategoryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -432,7 +432,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public TaxonomyCategory patchTaxonomyCategory(
-				Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -460,7 +460,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse patchTaxonomyCategoryHttpResponse(
-				Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -499,7 +499,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public TaxonomyCategory putTaxonomyCategory(
-				Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -527,7 +527,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse putTaxonomyCategoryHttpResponse(
-				Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+				String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

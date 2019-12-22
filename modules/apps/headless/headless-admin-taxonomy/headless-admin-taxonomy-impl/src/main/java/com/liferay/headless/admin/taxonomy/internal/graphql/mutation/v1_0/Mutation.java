@@ -111,7 +111,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Inserts a new child taxonomy category.")
 	public TaxonomyCategory createTaxonomyCategoryTaxonomyCategory(
-			@GraphQLName("parentTaxonomyCategoryId") Long
+			@GraphQLName("parentTaxonomyCategoryId") String
 				parentTaxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
@@ -128,7 +128,7 @@ public class Mutation {
 		description = "Deletes the taxonomy category and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
+			@GraphQLName("taxonomyCategoryId") String taxonomyCategoryId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -145,7 +145,7 @@ public class Mutation {
 		description = "Updates only the fields received in the request body. Other fields are left untouched."
 	)
 	public TaxonomyCategory patchTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
+			@GraphQLName("taxonomyCategoryId") String taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -161,7 +161,7 @@ public class Mutation {
 		description = "Replaces the taxonomy category with the information sent in the request body. Any missing fields are deleted unless they are required."
 	)
 	public TaxonomyCategory updateTaxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId,
+			@GraphQLName("taxonomyCategoryId") String taxonomyCategoryId,
 			@GraphQLName("taxonomyCategory") TaxonomyCategory taxonomyCategory)
 		throws Exception {
 

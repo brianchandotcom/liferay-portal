@@ -43,26 +43,26 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface TaxonomyCategoryResource {
 
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			Long parentTaxonomyCategoryId, String search, Filter filter,
+			String parentTaxonomyCategoryId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
-			Long parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String parentTaxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
-	public void deleteTaxonomyCategory(Long taxonomyCategoryId)
+	public void deleteTaxonomyCategory(String taxonomyCategoryId)
 		throws Exception;
 
-	public TaxonomyCategory getTaxonomyCategory(Long taxonomyCategoryId)
+	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
 		throws Exception;
 
 	public TaxonomyCategory patchTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public TaxonomyCategory putTaxonomyCategory(
-			Long taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
+			String taxonomyCategoryId, TaxonomyCategory taxonomyCategory)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(

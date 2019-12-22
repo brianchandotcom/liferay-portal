@@ -127,7 +127,7 @@ public class Query {
 		description = "Retrieves a taxonomy category's child taxonomy categories. Results can be paginated, filtered, searched, and sorted."
 	)
 	public TaxonomyCategoryPage taxonomyCategoryTaxonomyCategories(
-			@GraphQLName("parentTaxonomyCategoryId") Long
+			@GraphQLName("parentTaxonomyCategoryId") String
 				parentTaxonomyCategoryId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -153,11 +153,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategory(taxonomyCategoryId: ___){availableLanguages, creator, dateCreated, dateModified, description, id, name, numberOfTaxonomyCategories, parentTaxonomyCategory, parentTaxonomyVocabulary, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategory(taxonomyCategoryId: ___){availableLanguages, creator, dateCreated, dateModified, description, externalReferenceCode, id, name, numberOfTaxonomyCategories, parentTaxonomyCategory, parentTaxonomyVocabulary, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves a taxonomy category.")
 	public TaxonomyCategory taxonomyCategory(
-			@GraphQLName("taxonomyCategoryId") Long taxonomyCategoryId)
+			@GraphQLName("taxonomyCategoryId") String taxonomyCategoryId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

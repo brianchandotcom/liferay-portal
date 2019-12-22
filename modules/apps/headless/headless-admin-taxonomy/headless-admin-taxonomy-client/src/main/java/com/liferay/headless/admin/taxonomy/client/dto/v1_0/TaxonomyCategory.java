@@ -165,15 +165,36 @@ public class TaxonomyCategory {
 
 	protected String description;
 
-	public Long getId() {
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -182,7 +203,7 @@ public class TaxonomyCategory {
 		}
 	}
 
-	protected Long id;
+	protected String id;
 
 	public String getName() {
 		return name;

@@ -79,7 +79,7 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@Override
-	protected Long
+	protected String
 			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId()
 		throws Exception {
 

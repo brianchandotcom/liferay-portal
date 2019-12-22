@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -167,5 +168,7 @@ public abstract class BaseRoleResourceImpl implements RoleResource {
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

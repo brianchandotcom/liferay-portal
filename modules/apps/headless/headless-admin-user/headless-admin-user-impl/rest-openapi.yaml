@@ -997,6 +997,9 @@ paths:
                     application/x-ndjson:
                         schema:
                             type: object
+                    application/xml:
+                        schema:
+                            type: object
                     text/csv:
                         schema:
                             type: object
@@ -1005,6 +1008,9 @@ paths:
                 202:
                     content:
                         application/json:
+                            schema:
+                                type: object
+                        application/xml:
                             schema:
                                 type: object
                     description:

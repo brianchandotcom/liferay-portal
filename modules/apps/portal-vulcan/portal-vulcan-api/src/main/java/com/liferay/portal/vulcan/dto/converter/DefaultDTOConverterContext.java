@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.dto.v1_0.converter;
+package com.liferay.portal.vulcan.dto.converter;
 
 import com.liferay.portal.kernel.model.User;
 
@@ -28,40 +28,40 @@ import javax.ws.rs.core.UriInfo;
 public class DefaultDTOConverterContext implements DTOConverterContext {
 
 	public DefaultDTOConverterContext(
-		boolean acceptAllLanguages, Locale locale, long resourcePrimKey,
-		UriInfo uriInfo, User user) {
+		boolean acceptAllLanguages, Locale locale, Object id, UriInfo uriInfo,
+		User user) {
 
 		_acceptAllLanguages = acceptAllLanguages;
 		_locale = locale;
-		_resourcePrimKey = resourcePrimKey;
+		_id = id;
 		_uriInfo = uriInfo;
 		_user = user;
 	}
 
-	public DefaultDTOConverterContext(Locale locale, long resourcePrimKey) {
-		this(locale, resourcePrimKey, null, null);
+	public DefaultDTOConverterContext(Locale locale, Object id) {
+		this(locale, id, null, null);
 	}
 
 	public DefaultDTOConverterContext(
-		Locale locale, long resourcePrimKey, UriInfo uriInfo) {
+		Locale locale, Object id, UriInfo uriInfo) {
 
-		this(locale, resourcePrimKey, uriInfo, null);
+		this(locale, id, uriInfo, null);
 	}
 
 	public DefaultDTOConverterContext(
-		Locale locale, long resourcePrimKey, UriInfo uriInfo, User user) {
+		Locale locale, Object id, UriInfo uriInfo, User user) {
 
-		this(false, locale, resourcePrimKey, uriInfo, user);
+		this(false, locale, id, uriInfo, user);
+	}
+
+	@Override
+	public Object getId() {
+		return _id;
 	}
 
 	@Override
 	public Locale getLocale() {
 		return _locale;
-	}
-
-	@Override
-	public long getResourcePrimKey() {
-		return _resourcePrimKey;
 	}
 
 	@Override
@@ -89,8 +89,8 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	}
 
 	private final boolean _acceptAllLanguages;
+	private final Object _id;
 	private final Locale _locale;
-	private final long _resourcePrimKey;
 	private UriInfo _uriInfo;
 	private final User _user;
 

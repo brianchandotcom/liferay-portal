@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.headless.delivery.dto.v1_0.converter;
+package com.liferay.portal.vulcan.dto.converter;
 
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -27,18 +29,26 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface DTOConverterContext {
 
-	public Locale getLocale();
-
-	public long getResourcePrimKey();
-
-	public Optional<UriInfo> getUriInfoOptional();
-
-	public default User getUser() {
+	public default Object getId() {
 		return null;
 	}
 
+	public default Locale getLocale() {
+		return LocaleThreadLocal.getDefaultLocale();
+	}
+
+	public default Optional<UriInfo> getUriInfoOptional() {
+		return Optional.empty();
+	}
+
+	public default User getUser() {
+		return (User)PermissionThreadLocal.getPermissionChecker();
+	}
+
 	public default long getUserId() {
-		return 0;
+		User user = getUser();
+
+		return user.getUserId();
 	}
 
 	public default boolean isAcceptAllLanguages() {

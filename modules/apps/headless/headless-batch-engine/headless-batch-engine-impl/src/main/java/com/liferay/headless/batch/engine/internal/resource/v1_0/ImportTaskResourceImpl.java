@@ -15,7 +15,6 @@
 package com.liferay.headless.batch.engine.internal.resource.v1_0;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
@@ -57,11 +56,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Providers;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -96,12 +92,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			String className, String version, String callbackURL, Object object)
 		throws IOException {
 
-		MediaType mediaType = _httpHeaders.getMediaType();
+		String mediaType = contextHttpServletRequest.getHeader(
+			HttpHeaders.CONTENT_TYPE);
 
 		return _importFile(
 			BatchEngineTaskOperation.DELETE, _getBytes(object, mediaType),
-			callbackURL, className, _getContentType(mediaType.toString()), null,
-			version);
+			callbackURL, className, _getContentType(mediaType), null, version);
 	}
 
 	@Override
@@ -129,11 +125,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			String fieldNameMapping, Object object)
 		throws Exception {
 
-		MediaType mediaType = _httpHeaders.getMediaType();
+		String mediaType = contextHttpServletRequest.getHeader(
+			HttpHeaders.CONTENT_TYPE);
 
 		return _importFile(
 			BatchEngineTaskOperation.CREATE, _getBytes(object, mediaType),
-			callbackURL, className, _getContentType(mediaType.toString()),
+			callbackURL, className, _getContentType(mediaType),
 			fieldNameMapping, version);
 	}
 
@@ -154,12 +151,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			String className, String version, String callbackURL, Object object)
 		throws Exception {
 
-		MediaType mediaType = _httpHeaders.getMediaType();
+		String mediaType = contextHttpServletRequest.getHeader(
+			HttpHeaders.CONTENT_TYPE);
 
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE, _getBytes(object, mediaType),
-			callbackURL, className, _getContentType(mediaType.toString()), null,
-			version);
+			callbackURL, className, _getContentType(mediaType), null, version);
 	}
 
 	@Activate
@@ -184,21 +181,15 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		}
 	}
 
-	private byte[] _getBytes(Object object, MediaType mediaType)
+	private byte[] _getBytes(Object object, String mediaType)
 		throws IOException {
 
 		byte[] bytes = null;
 
-		if (mediaType.equals(MediaType.valueOf(MediaType.APPLICATION_JSON))) {
-			ContextResolver<ObjectMapper> contextResolver =
-				_providers.getContextResolver(ObjectMapper.class, mediaType);
+		if (mediaType.equals(MediaType.APPLICATION_JSON)) {
+			ObjectMapper objectMapper = new ObjectMapper();
 
-			ObjectMapper objectMapper = contextResolver.getContext(
-				Object.class);
-
-			ObjectWriter objectWriter = objectMapper.writer();
-
-			bytes = objectWriter.writeValueAsBytes(object);
+			bytes = objectMapper.writeValueAsBytes(object);
 		}
 		else {
 			String content = (String)object;
@@ -390,9 +381,6 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Reference
 	private File _file;
 
-	@Context
-	private HttpHeaders _httpHeaders;
-
 	private final Map<String, Integer> _itemClassBatchSizeMap = new HashMap<>();
 
 	@Reference
@@ -400,8 +388,5 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
-
-	@Context
-	private Providers _providers;
 
 }

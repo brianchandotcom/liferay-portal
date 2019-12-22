@@ -102,6 +102,32 @@ public class BatchEngineTaskMethodRegistryImpl
 		_serviceTracker.close();
 	}
 
+	private BatchEngineTaskMethod _findAnnotation(Method method) {
+		BatchEngineTaskMethod batchEngineTaskMethod = method.getAnnotation(
+			BatchEngineTaskMethod.class);
+
+		if (batchEngineTaskMethod == null) {
+			try {
+				Class<?> declaringClass = method.getDeclaringClass();
+
+				Class<?> superclass = declaringClass.getSuperclass();
+
+				if (superclass != null) {
+					Method superMethod = superclass.getMethod(
+						method.getName(), method.getParameterTypes());
+
+					batchEngineTaskMethod = superMethod.getAnnotation(
+						BatchEngineTaskMethod.class);
+				}
+			}
+			catch (NoSuchMethodException nsme) {
+				return null;
+			}
+		}
+
+		return batchEngineTaskMethod;
+	}
+
 	private final Map<CreatorKey, BatchEngineTaskItemResourceDelegateCreator>
 		_batchEngineTaskItemResourceDelegateCreators =
 			new ConcurrentHashMap<>();
@@ -167,8 +193,8 @@ public class BatchEngineTaskMethodRegistryImpl
 			List<CreatorKey> creatorKeys = null;
 
 			for (Method resourceMethod : resourceClass.getMethods()) {
-				BatchEngineTaskMethod batchEngineTaskMethod =
-					resourceMethod.getAnnotation(BatchEngineTaskMethod.class);
+				BatchEngineTaskMethod batchEngineTaskMethod = _findAnnotation(
+					resourceMethod);
 
 				if (batchEngineTaskMethod == null) {
 					continue;

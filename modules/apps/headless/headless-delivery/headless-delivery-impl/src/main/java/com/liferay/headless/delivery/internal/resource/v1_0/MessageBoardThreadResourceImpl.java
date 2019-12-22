@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -469,7 +470,8 @@ public class MessageBoardThreadResourceImpl
 						WorkflowConstants.STATUS_APPROVED);
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					mbMessage.getModelClassName(), mbMessage.getMessageId(),
+					_dtoConverterRegistry, mbMessage.getModelClassName(),
+					mbMessage.getMessageId(),
 					contextAcceptLanguage.getPreferredLocale());
 				showAsQuestion = mbThread.isQuestion();
 				siteId = mbThread.getGroupId();
@@ -566,6 +568,9 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

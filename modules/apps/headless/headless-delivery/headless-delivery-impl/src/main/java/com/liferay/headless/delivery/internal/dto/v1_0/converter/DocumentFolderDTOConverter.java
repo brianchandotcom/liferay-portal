@@ -17,13 +17,13 @@ package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverter;
-import com.liferay.headless.delivery.dto.v1_0.converter.DTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,10 +33,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	property = "asset.entry.class.name=com.liferay.document.library.kernel.model.DLFolder",
+	property = "dto.class.name=com.liferay.document.library.kernel.model.DLFolder",
 	service = {DocumentFolderDTOConverter.class, DTOConverter.class}
 )
-public class DocumentFolderDTOConverter implements DTOConverter {
+public class DocumentFolderDTOConverter
+	implements DTOConverter<DLFolder, DocumentFolder> {
 
 	@Override
 	public String getContentType() {
@@ -48,7 +49,7 @@ public class DocumentFolderDTOConverter implements DTOConverter {
 		throws Exception {
 
 		Folder folder = _dlAppService.getFolder(
-			dtoConverterContext.getResourcePrimKey());
+			(Long)dtoConverterContext.getId());
 
 		return new DocumentFolder() {
 			{

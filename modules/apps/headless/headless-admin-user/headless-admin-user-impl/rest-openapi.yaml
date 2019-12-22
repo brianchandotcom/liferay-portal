@@ -142,8 +142,7 @@ components:
                 id:
                     description:
                         The organization's ID.
-                    format: int64
-                    type: integer
+                    type: string
                 image:
                     description:
                         A relative URL to the organization's image.
@@ -1001,8 +1000,7 @@ paths:
                   name: organizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 204:
                     content:
@@ -1019,8 +1017,7 @@ paths:
                   name: organizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1043,8 +1040,7 @@ paths:
                   name: organizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1071,8 +1067,7 @@ paths:
                   name: organizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1099,8 +1094,7 @@ paths:
                   name: organizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1127,8 +1121,7 @@ paths:
                   name: organizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: filter
                   schema:
@@ -1175,8 +1168,7 @@ paths:
                   name: organizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:
@@ -1204,8 +1196,7 @@ paths:
                   name: parentOrganizationId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
                 - in: query
                   name: flatten
                   schema:

@@ -56,7 +56,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Deletes an organization.")
 	public boolean deleteOrganization(
-			@GraphQLName("organizationId") Long organizationId)
+			@GraphQLName("organizationId") String organizationId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(

@@ -45,11 +45,11 @@ public interface EmailAddressResource {
 		throws Exception;
 
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getOrganizationEmailAddressesPageHttpResponse(Long organizationId)
+			getOrganizationEmailAddressesPageHttpResponse(String organizationId)
 		throws Exception;
 
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(
@@ -180,7 +180,7 @@ public interface EmailAddressResource {
 		}
 
 		public Page<EmailAddress> getOrganizationEmailAddressesPage(
-				Long organizationId)
+				String organizationId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -199,7 +199,7 @@ public interface EmailAddressResource {
 
 		public HttpInvoker.HttpResponse
 				getOrganizationEmailAddressesPageHttpResponse(
-					Long organizationId)
+					String organizationId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

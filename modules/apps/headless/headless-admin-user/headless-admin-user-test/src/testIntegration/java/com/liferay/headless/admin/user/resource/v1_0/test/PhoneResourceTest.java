@@ -67,7 +67,7 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 
 	@Override
 	protected Phone testGetOrganizationPhonesPage_addPhone(
-			Long organizationId, Phone phone)
+			String organizationId, Phone phone)
 		throws Exception {
 
 		return _addPhone(
@@ -77,8 +77,8 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetOrganizationPhonesPage_getOrganizationId() {
-		return _organization.getOrganizationId();
+	protected String testGetOrganizationPhonesPage_getOrganizationId() {
+		return String.valueOf(_organization.getOrganizationId());
 	}
 
 	@Override

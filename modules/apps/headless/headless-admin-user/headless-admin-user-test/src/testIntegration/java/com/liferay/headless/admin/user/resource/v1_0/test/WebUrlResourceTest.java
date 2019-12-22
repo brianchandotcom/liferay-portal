@@ -66,7 +66,7 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 
 	@Override
 	protected WebUrl testGetOrganizationWebUrlsPage_addWebUrl(
-			Long organizationId, WebUrl webUrl)
+			String organizationId, WebUrl webUrl)
 		throws Exception {
 
 		return _addWebUrl(
@@ -76,8 +76,8 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetOrganizationWebUrlsPage_getOrganizationId() {
-		return _organization.getOrganizationId();
+	protected String testGetOrganizationWebUrlsPage_getOrganizationId() {
+		return String.valueOf(_organization.getOrganizationId());
 	}
 
 	@Override

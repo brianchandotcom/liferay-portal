@@ -237,6 +237,11 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
+
+	<#if configYAML.generateBatch>
+		protected Object importTaskResource;
+	</#if>
+
 	protected UriInfo contextUriInfo;
 
 }

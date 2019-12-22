@@ -463,6 +463,15 @@ public class FreeMarkerTool {
 			javaMethodParameters, openAPIYAML, operation, annotation);
 	}
 
+	public String getResourceParameters(
+		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
+		Operation operation, boolean annotation, String schemaName) {
+
+		return ResourceOpenAPIParser.getParameters(
+			javaMethodParameters, openAPIYAML, operation, annotation,
+			schemaName);
+	}
+
 	public String getResourceTestCaseArguments(
 		List<JavaMethodParameter> javaMethodParameters) {
 

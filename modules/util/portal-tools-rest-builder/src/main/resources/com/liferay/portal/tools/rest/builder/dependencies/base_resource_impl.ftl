@@ -6,6 +6,9 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -80,12 +83,25 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	/>
 
 	<#list javaMethodSignatures as javaMethodSignature>
+
 		/**
 		* ${freeMarkerTool.getRESTMethodJavadoc(configYAML, javaMethodSignature, openAPIYAML)}
 		*/
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true)}) throws Exception {
+		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) || stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName) || stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
+			@BatchEngineTaskMethod(
+				<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
+					batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+				<#elseif stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName)>
+					batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+				<#else>
+					batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+                </#if>
+				itemClass = ${schemaName}.class
+			)
+		</#if>
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true, schemaName)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>

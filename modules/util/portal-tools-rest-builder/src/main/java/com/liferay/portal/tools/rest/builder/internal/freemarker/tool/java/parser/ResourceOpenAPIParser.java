@@ -29,6 +29,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
+import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -187,6 +188,14 @@ public class ResourceOpenAPIParser {
 		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
 		Operation operation, boolean annotation) {
 
+		return getParameters(
+			javaMethodParameters, openAPIYAML, operation, annotation, null);
+	}
+
+	public static String getParameters(
+		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
+		Operation operation, boolean annotation, String schemaName) {
+
 		StringBuilder sb = new StringBuilder();
 
 		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
@@ -194,7 +203,7 @@ public class ResourceOpenAPIParser {
 
 			if (annotation) {
 				parameterAnnotation = _getParameterAnnotation(
-					javaMethodParameter, openAPIYAML, operation);
+					javaMethodParameter, openAPIYAML, operation, schemaName);
 			}
 
 			String parameter = OpenAPIParserUtil.getParameter(
@@ -245,6 +254,32 @@ public class ResourceOpenAPIParser {
 		}
 
 		return null;
+	}
+
+	private static String _getBatchParameterAnnotation(
+		OpenAPIYAML openAPIYAML, Operation operation, String schemaName,
+		String parameterName) {
+
+		String operationId = operation.getOperationId();
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		Schema schema = schemas.get(schemaName);
+
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if ((operationId != null) &&
+			(operationId.equals("delete" + schemaName) || operationId.equals("update" + schemaName)) &&
+			parameterName.equals(
+				StringUtil.lowerCaseFirstLetter(schemaName) + "Id") &&
+			propertySchemas.containsKey("id")) {
+
+			return "@BatchEngineTaskFieldId(\"id\") ";
+		}
+
+		return "";
 	}
 
 	private static String _getDefaultValue(
@@ -569,7 +604,7 @@ public class ResourceOpenAPIParser {
 
 	private static String _getParameterAnnotation(
 		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML,
-		Operation operation) {
+		Operation operation, String schemaName) {
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -611,6 +646,10 @@ public class ResourceOpenAPIParser {
 			}
 
 			StringBuilder sb = new StringBuilder();
+
+			sb.append(
+				_getBatchParameterAnnotation(
+					openAPIYAML, operation, schemaName, parameterName));
 
 			String defaultValue = _getDefaultValue(
 				openAPIYAML, parameter.getSchema());

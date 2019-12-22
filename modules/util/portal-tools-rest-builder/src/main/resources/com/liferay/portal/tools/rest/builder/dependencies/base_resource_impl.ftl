@@ -6,6 +6,9 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -66,12 +69,23 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	/>
 
 	<#list javaMethodSignatures as javaMethodSignature>
+
+		<#assign
+			hasBatchMethod = stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "Batch")
+		/>
+
 		/**
 		* ${freeMarkerTool.getRESTMethodJavadoc(configYAML, javaMethodSignature, openAPIYAML)}
 		*/
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true)}) throws Exception {
+		<#if hasBatchMethod>
+			@BatchEngineTaskMethod(
+				batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+				itemClass = ${schemaName}.class
+			)
+		</#if>
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true, hasBatchMethod)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>

@@ -186,6 +186,14 @@ public class ResourceOpenAPIParser {
 		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
 		Operation operation, boolean annotation) {
 
+		return getParameters(
+			javaMethodParameters, openAPIYAML, operation, annotation, false);
+	}
+
+	public static String getParameters(
+		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
+		Operation operation, boolean annotation, boolean hasBatchMethod) {
+
 		StringBuilder sb = new StringBuilder();
 
 		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
@@ -193,7 +201,8 @@ public class ResourceOpenAPIParser {
 
 			if (annotation) {
 				parameterAnnotation = _getParameterAnnotation(
-					javaMethodParameter, openAPIYAML, operation);
+					javaMethodParameter, openAPIYAML, operation,
+					hasBatchMethod);
 			}
 
 			String parameter = OpenAPIParserUtil.getParameter(
@@ -547,7 +556,7 @@ public class ResourceOpenAPIParser {
 
 	private static String _getParameterAnnotation(
 		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML,
-		Operation operation) {
+		Operation operation, boolean hasBatchMethod) {
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -589,6 +598,15 @@ public class ResourceOpenAPIParser {
 			}
 
 			StringBuilder sb = new StringBuilder();
+
+			List<String> tags = operation.getTags();
+
+			if (hasBatchMethod &&
+				parameterName.equals(
+					StringUtil.lowerCaseFirstLetter(tags.get(0)) + "Id")) {
+
+				sb.append("@BatchEngineTaskFieldId(\"id\") ");
+			}
 
 			String defaultValue = _getDefaultValue(
 				openAPIYAML, parameter.getSchema());

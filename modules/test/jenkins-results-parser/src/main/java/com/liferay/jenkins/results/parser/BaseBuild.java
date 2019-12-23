@@ -701,9 +701,7 @@ public abstract class BaseBuild implements Build {
 			slaveName = "master";
 		}
 
-		_jenkinsSlave = new JenkinsSlave(_jenkinsMaster, slaveName);
-
-		return _jenkinsSlave;
+		return _jenkinsMaster.getJenkinsSlave(slaveName);
 	}
 
 	@Override
@@ -1402,20 +1400,7 @@ public abstract class BaseBuild implements Build {
 
 		JenkinsSlave jenkinsSlave = getJenkinsSlave();
 
-		if (jenkinsSlave == null) {
-			return;
-		}
-
-		boolean slaveOffline = false;
-
-		try {
-			slaveOffline = jenkinsSlave.isOffline();
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-
-		if (slaveOffline) {
+		if ((jenkinsSlave == null) || jenkinsSlave.isOffline()) {
 			return;
 		}
 

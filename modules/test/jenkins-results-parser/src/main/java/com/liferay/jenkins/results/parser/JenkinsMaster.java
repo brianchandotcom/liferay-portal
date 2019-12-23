@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -75,10 +76,23 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 	@Override
 	public int compareTo(JenkinsMaster jenkinsMaster) {
-		Integer availableSlavesCount = getAvailableSlavesCount();
+		Integer value = null;
 
-		int value = availableSlavesCount.compareTo(
-			jenkinsMaster.getAvailableSlavesCount());
+		Integer availableSlavesCount = getAvailableSlavesCount();
+		Integer otherAvailableSlavesCount =
+			jenkinsMaster.getAvailableSlavesCount();
+
+		if ((availableSlavesCount > 0) || (otherAvailableSlavesCount > 0)) {
+			value = availableSlavesCount.compareTo(otherAvailableSlavesCount);
+		}
+
+		if ((value == null) || (value == 0)) {
+			Float averageQueueLength = getAverageQueueLength();
+			Float otherAverageQueueLength =
+				jenkinsMaster.getAverageQueueLength();
+
+			value = -1 * averageQueueLength.compareTo(otherAverageQueueLength);
+		}
 
 		if (value != 0) {
 			return -value;
@@ -96,32 +110,52 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 	}
 
 	public int getAvailableSlavesCount() {
-		int recentBatchSizesTotal = _getRecentBatchSizesTotal();
+		return getIdleSlavesCount() - _queueCount - _getRecentBatchSizesTotal();
+	}
 
-		StringBuilder sb = new StringBuilder();
+	public float getAverageQueueLength() {
+		return ((float)_queueCount + _getRecentBatchSizesTotal()) /
+			getOnlineSlavesCount();
+	}
 
-		sb.append("{availableSlavesCount=");
+	public int getIdleSlavesCount() {
+		int idleSlavesCount = 0;
 
-		int availableSlavesCount =
-			_reportedAvailableSlavesCount - recentBatchSizesTotal;
+		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
+			if (jenkinsSlave.isOffline()) {
+				continue;
+			}
 
-		sb.append(availableSlavesCount);
+			if (jenkinsSlave.isIdle()) {
+				idleSlavesCount++;
+			}
+		}
 
-		sb.append(", masterURL=");
-		sb.append(_masterURL);
-		sb.append(", recentBatchSizesTotal=");
-		sb.append(recentBatchSizesTotal);
-		sb.append(", reportedAvailableSlavesCount=");
-		sb.append(_reportedAvailableSlavesCount);
-		sb.append("}");
+		return idleSlavesCount;
+	}
 
-		_summary = sb.toString();
+	public JenkinsSlave getJenkinsSlave(String jenkinsSlaveName) {
+		if (_jenkinsSlavesMap == null) {
+			update();
+		}
 
-		return availableSlavesCount;
+		return _jenkinsSlavesMap.get(jenkinsSlaveName);
 	}
 
 	public String getName() {
 		return _masterName;
+	}
+
+	public int getOnlineSlavesCount() {
+		int onlineSlavesCount = 0;
+
+		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
+			if (!jenkinsSlave.isOffline()) {
+				onlineSlavesCount++;
+			}
+		}
+
+		return onlineSlavesCount;
 	}
 
 	public Integer getSlaveRAM() {
@@ -138,9 +172,12 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 	@Override
 	public String toString() {
-		getAvailableSlavesCount();
-
-		return _summary;
+		return JenkinsResultsParserUtil.combine(
+			"{availableSlavesCount=", String.valueOf(getAvailableSlavesCount()),
+			", masterURL=", _masterURL, ", recentBatchSizesTotal=",
+			String.valueOf(_getRecentBatchSizesTotal()),
+			", reportedAvailableSlavesCount=",
+			String.valueOf(_reportedAvailableSlavesCount), "}");
 	}
 
 	public void update() {
@@ -170,8 +207,6 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 		_available = true;
 
-		int idleCount = 0;
-
 		JSONArray computerJSONArray = computerJSONObject.getJSONArray(
 			"computer");
 
@@ -179,19 +214,26 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 			JSONObject curComputerJSONObject = computerJSONArray.getJSONObject(
 				i);
 
-			if (curComputerJSONObject.getBoolean("idle") &&
-				!curComputerJSONObject.getBoolean("offline")) {
+			String jenkinsSlaveName = curComputerJSONObject.getString(
+				"displayName");
 
-				String displayName = curComputerJSONObject.getString(
-					"displayName");
+			if (jenkinsSlaveName.equals("master")) {
+				continue;
+			}
 
-				if (!displayName.equals("master")) {
-					idleCount++;
-				}
+			JenkinsSlave jenkinsSlave = _jenkinsSlavesMap.get(jenkinsSlaveName);
+
+			if (jenkinsSlave != null) {
+				jenkinsSlave.update(curComputerJSONObject);
+			}
+			else {
+				jenkinsSlave = new JenkinsSlave(this, curComputerJSONObject);
+
+				_jenkinsSlavesMap.put(jenkinsSlave.getName(), jenkinsSlave);
 			}
 		}
 
-		int queueCount = 0;
+		_queueCount = 0;
 
 		if (queueJSONObject.has("items")) {
 			JSONArray itemsJSONArray = queueJSONObject.getJSONArray("items");
@@ -213,18 +255,17 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 				if (itemJSONObject.has("why")) {
 					String why = itemJSONObject.optString("why");
 
-					if (why.endsWith("is offline")) {
+					if (why.startsWith("There are no nodes") ||
+						why.contains("already in progress") ||
+						why.endsWith("is offline")) {
+
 						continue;
 					}
 				}
 
-				queueCount++;
+				_queueCount++;
 			}
 		}
-
-		_reportedAvailableSlavesCount = idleCount - queueCount;
-
-		getAvailableSlavesCount();
 	}
 
 	protected static long maxRecentBatchAge = 120 * 1000;
@@ -256,10 +297,11 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 	private boolean _available;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
+	private final Map<String, JenkinsSlave> _jenkinsSlavesMap = new HashMap<>();
 	private final String _masterName;
 	private final String _masterURL;
+	private int _queueCount;
 	private int _reportedAvailableSlavesCount;
 	private final Integer _slaveRAM;
-	private String _summary;
 
 }

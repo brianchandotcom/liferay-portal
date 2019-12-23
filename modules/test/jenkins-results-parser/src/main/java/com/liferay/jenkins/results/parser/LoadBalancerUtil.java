@@ -142,6 +142,8 @@ public class LoadBalancerUtil {
 						sb.append(jenkinsMaster.getName());
 						sb.append(" : ");
 						sb.append(jenkinsMaster.getAvailableSlavesCount());
+						sb.append(" : ");
+						sb.append(jenkinsMaster.getAverageQueueLength());
 						sb.append("\n");
 					}
 

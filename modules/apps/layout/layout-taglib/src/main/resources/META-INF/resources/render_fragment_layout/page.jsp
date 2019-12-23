@@ -30,13 +30,38 @@ JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-layout:ren
 			RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request, response);
 
 			request.setAttribute("render_layout_data_structure.jsp-renderFragmentLayoutDisplayContext", renderFragmentLayoutDisplayContext);
-
-			request.setAttribute("render_layout_data_structure.jsp-dataJSONObject", dataJSONObject);
 		%>
 
 			<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>
 
-			<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+			<c:choose>
+				<c:when test="<%= RenderFragmentLayoutTagUtil.isReactEditor(dataJSONObject) %>">
+
+					<%
+					JSONObject rootItemsJSONObject = dataJSONObject.getJSONObject("rootItems");
+
+					String mainItemId = rootItemsJSONObject.getString("main");
+
+					JSONObject itemsJSONObject = dataJSONObject.getJSONObject("items");
+
+					request.setAttribute("render_react_editor_layout_data_structure.jsp-itemsJSONObject", itemsJSONObject);
+
+					JSONObject mainJSONObject = itemsJSONObject.getJSONObject(mainItemId);
+
+					request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", mainJSONObject.getJSONArray("children"));
+					%>
+
+					<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+				</c:when>
+				<c:otherwise>
+
+					<%
+					request.setAttribute("render_layout_data_structure.jsp-dataJSONObject", dataJSONObject);
+					%>
+
+					<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
 
 		<%
 		}

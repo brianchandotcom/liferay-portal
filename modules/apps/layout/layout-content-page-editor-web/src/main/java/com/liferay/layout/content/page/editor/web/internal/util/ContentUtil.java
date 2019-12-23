@@ -152,7 +152,7 @@ public class ContentUtil {
 			infoDisplayContributor.getInfoDisplayObjectProvider(
 				layoutClassedModelUsage.getClassPK());
 
-		if (ModelResourcePermissiontUtil.contains(
+		if (ModelResourcePermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE)) {
@@ -167,7 +167,7 @@ public class ContentUtil {
 			}
 		}
 
-		if (ModelResourcePermissiontUtil.contains(
+		if (ModelResourcePermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				layoutClassedModelUsage.getClassName(),
 				layoutClassedModelUsage.getClassPK(), ActionKeys.PERMISSIONS)) {

@@ -301,6 +301,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
 			).put(
+				"publishURL", editorSoyContext.get("publishURL")
+			).put(
+				"redirectURL", editorSoyContext.get("redirectURL")
+			).put(
 				"renderFragmentEntryURL",
 				editorSoyContext.get("renderFragmentEntryURL")
 			).put(

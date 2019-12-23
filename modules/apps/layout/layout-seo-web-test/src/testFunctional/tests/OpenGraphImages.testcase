@@ -109,7 +109,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Settings");
 
-		Panel.expandPanel(panel = "open-graph");
+		Panel.expandPanel(panel = "Open Graph");
 
 		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
 

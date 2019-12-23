@@ -14,8 +14,7 @@
 
 package com.liferay.portal.spring.compat;
 
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
-import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.service.TrashVersionLocalService;
@@ -34,13 +33,6 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 public class CompatBeanDefinitionRegistryPostProcessor
 	implements BeanDefinitionRegistryPostProcessor {
 
-	public static Object create(Class<?> clazz) {
-		return ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(),
-			new Class<?>[] {clazz, IdentifiableOSGiService.class},
-			(proxy, method, args) -> null);
-	}
-
 	@Override
 	public void postProcessBeanDefinitionRegistry(
 			BeanDefinitionRegistry beanDefinitionRegistry)
@@ -48,10 +40,9 @@ public class CompatBeanDefinitionRegistryPostProcessor
 
 		for (Class<?> clazz : _COMPAT_CLASSES) {
 			BeanDefinitionBuilder builder =
-				BeanDefinitionBuilder.genericBeanDefinition(
-					CompatBeanDefinitionRegistryPostProcessor.class);
+				BeanDefinitionBuilder.genericBeanDefinition(ProxyFactory.class);
 
-			builder.setFactoryMethod("create");
+			builder.setFactoryMethod("newDummyInstance");
 			builder.addConstructorArgValue(clazz);
 
 			String beanName = clazz.getName();

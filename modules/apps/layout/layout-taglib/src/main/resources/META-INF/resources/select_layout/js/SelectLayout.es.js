@@ -48,6 +48,10 @@ const SelectLayout = ({
 	const [filterQuery, setFilterQuery] = useState();
 
 	const handleSelectionChange = selectedNodeIds => {
+		if (!selectedNodeIds.size) {
+			return;
+		}
+
 		let data = [];
 
 		visit(nodes, node => {

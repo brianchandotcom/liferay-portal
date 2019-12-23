@@ -17,7 +17,7 @@ package com.liferay.layout.util.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class LayoutDataItemTypesConstants {
+public class LayoutDataItemTypeConstants {
 
 	public static final String TYPE_COLUMN = "column";
 

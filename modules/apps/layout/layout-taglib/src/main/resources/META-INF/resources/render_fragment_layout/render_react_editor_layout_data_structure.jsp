@@ -41,7 +41,7 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 %>
 
 	<c:choose>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypesConstants.TYPE_COLUMN) %>">
+		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_COLUMN) %>">
 
 			<%
 			String size = childItemConfigJSONObject.getString("size");
@@ -56,7 +56,7 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypesConstants.TYPE_FRAGMENT) %>">
+		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT) %>">
 
 			<%
 			long fragmentEntryLinkId = childItemConfigJSONObject.getLong("fragmentEntryLinkId");
@@ -86,7 +86,7 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 			%>
 
 		</c:when>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypesConstants.TYPE_ROW) %>">
+		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_ROW) %>">
 
 			<%
 			String backgroundColorCssClass = childItemConfigJSONObject.getString("backgroundColorCssClass");

@@ -37,7 +37,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepotPortlet(
+		DepotNavigator.gotoDepotSettings(
 			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");
@@ -93,7 +93,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepotPortlet(
+		DepotNavigator.gotoDepotSettings(
 			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");
@@ -144,7 +144,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepotPortlet(
+		DepotNavigator.gotoDepotSettings(
 			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");

@@ -40,7 +40,7 @@ definition {
 			value1 = "${portlet}");
 	}
 
-	macro gotoDepotPortlet {
+	macro gotoDepotSettings {
 		if (isSet(listView)) {
 			var key_listEntry = "${depotName}";
 

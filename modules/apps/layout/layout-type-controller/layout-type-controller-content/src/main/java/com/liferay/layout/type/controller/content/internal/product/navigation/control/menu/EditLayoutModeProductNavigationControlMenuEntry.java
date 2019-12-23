@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
@@ -172,10 +172,10 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (!LayoutPermissionUtil.contains(
+		if (!_layoutPermission.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 				ActionKeys.UPDATE) &&
-			!LayoutPermissionUtil.contains(
+			!_layoutPermission.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
 			!_modelResourcePermission.contains(
@@ -196,6 +196,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private ModelResourcePermission _modelResourcePermission;

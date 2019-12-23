@@ -78,55 +78,6 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _addDependenciesTargetPlatformIDE(
-		Project project, Configuration ideBomsConfiguration) {
-
-		Set<File> bomFiles = ideBomsConfiguration.resolve();
-
-		for (File bomFile : bomFiles) {
-			try {
-				XmlSlurper xmlSlurper = new XmlSlurper();
-
-				GPathResult gPathResult = xmlSlurper.parse(bomFile);
-
-				gPathResult = (GPathResult)gPathResult.getProperty(
-					"dependencyManagement");
-
-				gPathResult = (GPathResult)gPathResult.getProperty(
-					"dependencies");
-
-				gPathResult = (GPathResult)gPathResult.getProperty(
-					"dependency");
-
-				Iterator<?> iterator = gPathResult.iterator();
-
-				while (iterator.hasNext()) {
-					gPathResult = (GPathResult)iterator.next();
-
-					StringBuilder sb = new StringBuilder();
-
-					sb.append(gPathResult.getProperty("groupId"));
-					sb.append(':');
-					sb.append(gPathResult.getProperty("artifactId"));
-					sb.append(':');
-					sb.append(gPathResult.getProperty("version"));
-
-					GradleUtil.addDependency(
-						project, TARGET_PLATFORM_IDE_CONFIGURATION_NAME,
-						sb.toString());
-				}
-			}
-			catch (Exception e) {
-				Logger logger = project.getLogger();
-
-				if (logger.isWarnEnabled()) {
-					logger.warn(
-						"Unable to add BOM dependencies from {}", bomFile);
-				}
-			}
-		}
-	}
-
 	private Configuration _addConfigurationTargetPlatformIDE(
 		final Project project) {
 
@@ -180,6 +131,55 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
+	}
+
+	private void _addDependenciesTargetPlatformIDE(
+		Project project, Configuration ideBomsConfiguration) {
+
+		Set<File> bomFiles = ideBomsConfiguration.resolve();
+
+		for (File bomFile : bomFiles) {
+			try {
+				XmlSlurper xmlSlurper = new XmlSlurper();
+
+				GPathResult gPathResult = xmlSlurper.parse(bomFile);
+
+				gPathResult = (GPathResult)gPathResult.getProperty(
+					"dependencyManagement");
+
+				gPathResult = (GPathResult)gPathResult.getProperty(
+					"dependencies");
+
+				gPathResult = (GPathResult)gPathResult.getProperty(
+					"dependency");
+
+				Iterator<?> iterator = gPathResult.iterator();
+
+				while (iterator.hasNext()) {
+					gPathResult = (GPathResult)iterator.next();
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(gPathResult.getProperty("groupId"));
+					sb.append(':');
+					sb.append(gPathResult.getProperty("artifactId"));
+					sb.append(':');
+					sb.append(gPathResult.getProperty("version"));
+
+					GradleUtil.addDependency(
+						project, TARGET_PLATFORM_IDE_CONFIGURATION_NAME,
+						sb.toString());
+				}
+			}
+			catch (Exception e) {
+				Logger logger = project.getLogger();
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(
+						"Unable to add BOM dependencies from {}", bomFile);
+				}
+			}
+		}
 	}
 
 	private void _configureEclipseModel(

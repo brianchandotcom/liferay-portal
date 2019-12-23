@@ -106,9 +106,9 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 					StringBuilder sb = new StringBuilder();
 
 					sb.append(gPathResult.getProperty("groupId"));
-					sb.append(":");
+					sb.append(':');
 					sb.append(gPathResult.getProperty("artifactId"));
-					sb.append(":");
+					sb.append(':');
 					sb.append(gPathResult.getProperty("version"));
 
 					GradleUtil.addDependency(

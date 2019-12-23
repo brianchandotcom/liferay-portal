@@ -185,6 +185,10 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
+
 		ItemSelector.gotoPreviewViaSelectFile(navTab = "Documents and Media");
 
 		AssertVisible(locator1 = "ItemSelector#SELECT_IMAGE_PREVIEW");

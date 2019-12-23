@@ -61,17 +61,17 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(
 			actionRequest, "itemId", String.valueOf(UUID.randomUUID()));
+		String itemType = ParamUtil.getString(actionRequest, "itemType");
 		String parentItemId = ParamUtil.getString(
 			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
-		String itemType = ParamUtil.getString(actionRequest, "itemType");
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				JSONFactoryUtil.createJSONObject(itemConfig), itemId,
-				parentItemId, itemType, position));
+				JSONFactoryUtil.createJSONObject(itemConfig), itemId, itemType,
+				parentItemId, position));
 	}
 
 	@Override

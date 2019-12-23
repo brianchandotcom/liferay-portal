@@ -41,13 +41,13 @@ public class LayoutStructure {
 
 		addLayoutStructureItem(
 			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
-			String.valueOf(UUID.randomUUID()), parentItemId, "fragment",
+			String.valueOf(UUID.randomUUID()), "fragment", parentItemId,
 			position);
 	}
 
 	public void addLayoutStructureItem(
-		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
-		String itemType, int position) {
+		JSONObject itemConfigJSONObject, String itemId, String itemType,
+		String parentItemId, int position) {
 
 		LayoutStructureItem layoutStructureItem = new LayoutStructureItem(
 			itemConfigJSONObject, itemId, parentItemId, itemType);
@@ -101,8 +101,8 @@ public class LayoutStructure {
 		addLayoutStructureItem(
 			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
 			String.valueOf(UUID.randomUUID()),
-			layoutStructureItem.getParentItemId(),
 			layoutStructureItem.getItemType(),
+			layoutStructureItem.getParentItemId(),
 			childrenItemIds.indexOf(itemId) + 1);
 	}
 

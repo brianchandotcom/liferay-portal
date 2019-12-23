@@ -27,6 +27,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
+import com.liferay.layout.util.permission.resource.ModelResourcePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -296,7 +297,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 					permissionChecker, layout, ActionKeys.UPDATE) ||
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+				_modelResourcePermission.contains(
+					permissionChecker, layout.getPlid(), ActionKeys.UPDATE)) {
 
 				return true;
 			}
@@ -350,6 +353,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private ModelResourcePermission _modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

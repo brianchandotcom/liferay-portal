@@ -18,6 +18,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.util.permission.resource.ModelResourcePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -176,7 +177,10 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 				ActionKeys.UPDATE) &&
 			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
+			!_modelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+				ActionKeys.UPDATE)) {
 
 			return false;
 		}
@@ -192,6 +196,9 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private ModelResourcePermission _modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

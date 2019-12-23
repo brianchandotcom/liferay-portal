@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=1",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=text",
 		"ddm.form.field.type.label=text-field-type-label",
-		"ddm.form.field.type.name=text"
+		"ddm.form.field.type.name=text", "ddm.form.field.type.scope=forms"
 	},
 	service = DDMFormFieldType.class
 )

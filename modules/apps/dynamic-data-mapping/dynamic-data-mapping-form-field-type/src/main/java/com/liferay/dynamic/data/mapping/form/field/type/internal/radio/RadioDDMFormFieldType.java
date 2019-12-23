@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=radio-button",
 		"ddm.form.field.type.label=radio-field-type-label",
-		"ddm.form.field.type.name=radio"
+		"ddm.form.field.type.name=radio", "ddm.form.field.type.scope=forms"
 	},
 	service = DDMFormFieldType.class
 )

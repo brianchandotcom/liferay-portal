@@ -142,6 +142,12 @@ if (fixedHeader) {
 						if (Validator.isNull(headerNameValue)) {
 							headerNameValue = StringPool.NBSP;
 						}
+
+						String helpMessage = null;
+
+						if (helpableHeaders != null) {
+							helpMessage = helpableHeaders.get(headerName);
+						}
 						%>
 
 						<c:choose>
@@ -153,10 +159,16 @@ if (fixedHeader) {
 							<c:when test="<%= truncate %>">
 								<span class="text-truncate">
 									<%= headerNameValue %>
+									<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+										<liferay-ui:icon-help message="<%= helpMessage %>" />
+									</c:if>
 								</span>
 							</c:when>
 							<c:otherwise>
 								<%= headerNameValue %>
+								<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+									<liferay-ui:icon-help message="<%= helpMessage %>" />
+								</c:if>
 							</c:otherwise>
 						</c:choose>
 					</th>

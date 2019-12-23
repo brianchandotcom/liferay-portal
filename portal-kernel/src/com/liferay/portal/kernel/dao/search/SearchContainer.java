@@ -220,6 +220,10 @@ public class SearchContainer<R> {
 		return _headerNames;
 	}
 
+	public Map<String, String> getHelpableHeaders() {
+		return _helpableHeaders;
+	}
+
 	public String getId(
 		HttpServletRequest httpServletRequest, String namespace) {
 
@@ -432,6 +436,10 @@ public class SearchContainer<R> {
 		_buildNormalizedHeaderNames(headerNames);
 	}
 
+	public void setHelpableHeaders(Map<String, String> helpableHeaders) {
+		_helpableHeaders = helpableHeaders;
+	}
+
 	public void setHover(boolean hover) {
 		_hover = hover;
 	}
@@ -573,6 +581,7 @@ public class SearchContainer<R> {
 	private int _end;
 	private boolean _forcePost = DEFAULT_FORCE_POST;
 	private List<String> _headerNames;
+	private Map<String, String> _helpableHeaders;
 	private boolean _hover = true;
 	private String _id;
 	private PortletURL _iteratorURL;

@@ -110,6 +110,7 @@ public class SearchContainerColumnTextTag<R>
 			_buffer = null;
 			colspan = SearchEntry.DEFAULT_COLSPAN;
 			cssClass = SearchEntry.DEFAULT_CSS_CLASS;
+			_helpMessage = null;
 			_href = null;
 			name = null;
 			_orderable = false;
@@ -148,6 +149,13 @@ public class SearchContainerColumnTextTag<R>
 			}
 
 			headerNames.add(name);
+
+			if (Validator.isNotNull(_helpMessage)) {
+				Map<String, String> helpableHeaders =
+					searchContainerRowTag.getHelpableHeaders();
+
+				helpableHeaders.put(name, _helpMessage);
+			}
 
 			if (_orderable) {
 				Map<String, String> orderableHeaders =
@@ -222,6 +230,10 @@ public class SearchContainerColumnTextTag<R>
 		_buffer = buffer;
 	}
 
+	public void setHelpMessage(String helpMessage) {
+		_helpMessage = helpMessage;
+	}
+
 	public void setHref(Object href) {
 		_href = href;
 	}
@@ -255,6 +267,7 @@ public class SearchContainerColumnTextTag<R>
 	}
 
 	private String _buffer;
+	private String _helpMessage;
 	private Object _href;
 	private boolean _orderable;
 	private String _orderableProperty;

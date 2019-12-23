@@ -73,6 +73,7 @@ public class SearchContainerRowTag<R>
 			!_headerNames.isEmpty()) {
 
 			_searchContainer.setHeaderNames(_headerNames);
+			_searchContainer.setHelpableHeaders(_helpableHeaders);
 			_searchContainer.setOrderableHeaders(_orderableHeaders);
 
 			_headerNamesAssigned = true;
@@ -105,6 +106,7 @@ public class SearchContainerRowTag<R>
 		_className = null;
 		_cssClass = StringPool.BLANK;
 		_escapedModel = false;
+		_helpableHeaders = null;
 		_indexVar = DEFAULT_INDEX_VAR;
 		_keyProperty = null;
 		_modelVar = DEFAULT_MODEL_VAR;
@@ -158,6 +160,14 @@ public class SearchContainerRowTag<R>
 		}
 
 		return _headerNames;
+	}
+
+	public Map<String, String> getHelpableHeaders() {
+		if (_helpableHeaders == null) {
+			_helpableHeaders = new LinkedHashMap<>();
+		}
+
+		return _helpableHeaders;
 	}
 
 	public String getIndexVar() {
@@ -230,6 +240,10 @@ public class SearchContainerRowTag<R>
 
 	public void setHeaderNamesAssigned(boolean headerNamesAssigned) {
 		_headerNamesAssigned = headerNamesAssigned;
+	}
+
+	public void setHelpableHeaders(Map<String, String> helpableHeaders) {
+		_helpableHeaders = helpableHeaders;
 	}
 
 	public void setIndexVar(String indexVar) {
@@ -333,6 +347,7 @@ public class SearchContainerRowTag<R>
 	private boolean _escapedModel;
 	private List<String> _headerNames;
 	private boolean _headerNamesAssigned;
+	private Map<String, String> _helpableHeaders;
 	private String _indexVar = DEFAULT_INDEX_VAR;
 	private String _keyProperty;
 	private String _modelVar = DEFAULT_MODEL_VAR;

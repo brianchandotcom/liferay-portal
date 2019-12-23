@@ -70,6 +70,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
+				helpMessage="shows-the-repository-content-in-search-results"
 				name="searchable-content"
 			>
 				<liferay-ui:message key='<%= depotEntryGroupRel.isSearchable() ? "yes" : "no" %>' />

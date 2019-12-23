@@ -113,6 +113,10 @@ definition {
 			MenuItem.click(menuItem = "Edit");
 		}
 
+		else if (isSet(settings)) {
+			AssertElementNotPresent(locator1 = "Button#BACK");
+		}
+
 		else {
 			DepotNavigator.gotoEdit(depotName = "${depotName}");
 		}

@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.util.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,6 +28,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -71,7 +73,9 @@ public class ContentsContentPageEditorSidebarPanel
 					permissionChecker, plid, ActionKeys.UPDATE) &&
 				!LayoutPermissionUtil.contains(
 					permissionChecker, plid,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+					ActionKeys.UPDATE_LAYOUT_CONTENT) &&
+				!_modelResourcePermission.contains(
+					permissionChecker, plid, ActionKeys.UPDATE)) {
 
 				return false;
 			}
@@ -87,5 +91,8 @@ public class ContentsContentPageEditorSidebarPanel
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentsContentPageEditorSidebarPanel.class);
+
+	@Reference
+	private ModelResourcePermission _modelResourcePermission;
 
 }

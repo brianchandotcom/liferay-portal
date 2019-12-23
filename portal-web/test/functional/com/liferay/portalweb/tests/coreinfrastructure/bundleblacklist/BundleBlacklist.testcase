@@ -113,4 +113,45 @@ definition {
 			portlet = "Gogo Shell");
 	}
 
+	@priority = "4"
+	test BlacklistModuleWar {
+		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleWar";
+
+		Page.viewCurrentTheme(
+			page = "Public Pages",
+			pageName = "Home",
+			themeName = "Classic Theme");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Module Container",
+			configurationName = "Bundle Blacklist",
+			configurationScope = "System Scope");
+
+		BundleBlacklist.blacklistModuleAndComponentConfiguration(
+			label = "Blacklist Bundle Symbolic Names",
+			symbolicName = "classic-theme");
+
+		AssertConsoleTextPresent(value1 = "STOPPED classic-theme");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Home");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
+		AssertTextNotPresent(
+			locator1 = "SitePagesEditPage#VIEW_THEME",
+			value1 = "Classic Theme");
+	}
+
 }

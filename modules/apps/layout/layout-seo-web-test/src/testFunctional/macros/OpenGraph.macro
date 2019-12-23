@@ -76,7 +76,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Settings");
 
-		Panel.expandPanel(panel = "open graph");
+		Panel.expandPanel(panel = "Open Graph");
 
 		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable Open Graph")) {
 			Click(

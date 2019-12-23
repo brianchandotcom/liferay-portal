@@ -145,8 +145,8 @@ if (fixedHeader) {
 
 						String helpMessage = null;
 
-						if (helpableHeaders != null) {
-							helpMessage = helpableHeaders.get(headerName);
+						if (helpMessages != null) {
+							helpMessage = helpMessages.get(headerName);
 						}
 						%>
 

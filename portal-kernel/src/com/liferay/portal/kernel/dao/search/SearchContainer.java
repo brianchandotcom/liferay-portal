@@ -220,8 +220,8 @@ public class SearchContainer<R> {
 		return _headerNames;
 	}
 
-	public Map<String, String> getHelpableHeaders() {
-		return _helpableHeaders;
+	public Map<String, String> getHelpMessages() {
+		return _helpMessages;
 	}
 
 	public String getId(
@@ -436,8 +436,8 @@ public class SearchContainer<R> {
 		_buildNormalizedHeaderNames(headerNames);
 	}
 
-	public void setHelpableHeaders(Map<String, String> helpableHeaders) {
-		_helpableHeaders = helpableHeaders;
+	public void setHelpMessages(Map<String, String> helpMessages) {
+		_helpMessages = helpMessages;
 	}
 
 	public void setHover(boolean hover) {
@@ -581,7 +581,7 @@ public class SearchContainer<R> {
 	private int _end;
 	private boolean _forcePost = DEFAULT_FORCE_POST;
 	private List<String> _headerNames;
-	private Map<String, String> _helpableHeaders;
+	private Map<String, String> _helpMessages;
 	private boolean _hover = true;
 	private String _id;
 	private PortletURL _iteratorURL;

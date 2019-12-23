@@ -151,10 +151,10 @@ public class SearchContainerColumnTextTag<R>
 			headerNames.add(name);
 
 			if (Validator.isNotNull(_helpMessage)) {
-				Map<String, String> helpableHeaders =
-					searchContainerRowTag.getHelpableHeaders();
+				Map<String, String> helpMessages =
+					searchContainerRowTag.getHelpMessages();
 
-				helpableHeaders.put(name, _helpMessage);
+				helpMessages.put(name, _helpMessage);
 			}
 
 			if (_orderable) {

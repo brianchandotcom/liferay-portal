@@ -208,6 +208,30 @@ definition {
 	}
 
 	@priority = "4"
+	test VerifyFriendlyURLRedirectToEnableDefualtLocale {
+		property custom.properties = "locales.enabled=en_US,zh_CN,fr_FR${line.separator}locale.use.default.if.not.available=true";
+		property custom.system.properties = "user.country=US${line.separator}user.language=en";
+
+		User.firstLoginPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest");
+
+		task ("Assert preferred locale persists by asserting Widget name.") {
+			AssertElementPresent(
+				key_portletName = "Bonjour le monde",
+				locator1 = "Portlet#TITLE");
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/guest");
+
+		task ("Assert preferred locale persists by asserting Widget name.") {
+			AssertElementPresent(
+				key_portletName = "Hello World",
+				locator1 = "Portlet#TITLE");
+		}
+	}
+
+	@priority = "4"
 	test ViewDefaultAvailableTimeZonesForInstancesAndUsers {
 		property test.name.skip.portal.instance = "Locale#ViewDefaultAvailableTimeZonesForInstancesAndUsers";
 

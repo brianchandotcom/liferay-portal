@@ -21,8 +21,8 @@ import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.internal.constants.DataActionKeys;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
+import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
-import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataLayoutEntityModel;
 import com.liferay.data.engine.rest.internal.resource.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
@@ -88,7 +88,10 @@ public class DataLayoutResourceImpl
 	@Override
 	public void deleteDataLayout(Long dataLayoutId) throws Exception {
 		_modelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataLayoutId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_getDDMStructureId(
+				_ddmStructureLayoutLocalService.getStructureLayout(
+					dataLayoutId)),
 			ActionKeys.DELETE);
 
 		_ddmStructureLayoutLocalService.deleteDDMStructureLayout(dataLayoutId);
@@ -165,7 +168,10 @@ public class DataLayoutResourceImpl
 	@Override
 	public DataLayout getDataLayout(Long dataLayoutId) throws Exception {
 		_modelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataLayoutId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_getDDMStructureId(
+				_ddmStructureLayoutLocalService.getStructureLayout(
+					dataLayoutId)),
 			ActionKeys.VIEW);
 
 		return _toDataLayout(
@@ -258,7 +264,7 @@ public class DataLayoutResourceImpl
 			dataDefinitionId);
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.ADD_DATA_LAYOUT, _groupLocalService,
+			DataActionKeys.ADD_DATA_DEFINITION, _groupLocalService,
 			ddmStructure.getGroupId());
 
 		DDMFormLayout ddmFormLayout = DataLayoutUtil.toDDMFormLayout(
@@ -308,7 +314,10 @@ public class DataLayoutResourceImpl
 		}
 
 		_modelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataLayoutId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_getDDMStructureId(
+				_ddmStructureLayoutLocalService.getStructureLayout(
+					dataLayoutId)),
 			ActionKeys.UPDATE);
 
 		DDMFormLayout ddmFormLayout = DataLayoutUtil.toDDMFormLayout(
@@ -344,11 +353,11 @@ public class DataLayoutResourceImpl
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataLayout)",
+		target = "(model.class.name=com.liferay.data.engine.rest.internal.model.InternalDataDefinition)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(
-		ModelResourcePermission<InternalDataRecordCollection>
+		ModelResourcePermission<InternalDataDefinition>
 			modelResourcePermission) {
 
 		_modelResourcePermission = modelResourcePermission;
@@ -457,7 +466,7 @@ public class DataLayoutResourceImpl
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	private ModelResourcePermission<InternalDataRecordCollection>
+	private ModelResourcePermission<InternalDataDefinition>
 		_modelResourcePermission;
 
 	@Reference

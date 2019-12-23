@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -204,6 +205,50 @@ public class LayoutsSEODisplayContext {
 		}
 
 		return _layoutId;
+	}
+
+	public String getOpenGraphImageTitle() {
+		LayoutSEOEntry layoutSEOEntry = getSelLayoutSEOEntry();
+
+		if ((layoutSEOEntry == null) ||
+			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
+
+			return StringPool.BLANK;
+		}
+
+		try {
+			FileEntry fileEntry = _dlAppService.getFileEntry(
+				layoutSEOEntry.getOpenGraphImageFileEntryId());
+
+			return fileEntry.getTitle();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return StringPool.BLANK;
+		}
+	}
+
+	public String getOpenGraphImageURL() {
+		LayoutSEOEntry layoutSEOEntry = getSelLayoutSEOEntry();
+
+		if ((layoutSEOEntry == null) ||
+			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
+
+			return StringPool.BLANK;
+		}
+
+		try {
+			return _dlurlHelper.getImagePreviewURL(
+				_dlAppService.getFileEntry(
+					layoutSEOEntry.getOpenGraphImageFileEntryId()),
+				_themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return StringPool.BLANK;
+		}
 	}
 
 	public String getPageTitle() throws PortalException {

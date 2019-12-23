@@ -17,8 +17,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -31,8 +29,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
-import com.liferay.layout.seo.model.LayoutSEOEntry;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.template.LayoutConverter;
@@ -62,7 +58,6 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
@@ -116,10 +111,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
-		DLURLHelper dlurlHelper, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_dlurlHelper = dlurlHelper;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -805,50 +799,6 @@ public class LayoutsAdminDisplayContext {
 		deleteLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 
 		return deleteLayoutURL.toString();
-	}
-
-	public String getOpenGraphImageTitle() {
-		LayoutSEOEntry layoutSEOEntry = _getSelLayoutSEOEntry();
-
-		if ((layoutSEOEntry == null) ||
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
-
-			return StringPool.BLANK;
-		}
-
-		try {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				layoutSEOEntry.getOpenGraphImageFileEntryId());
-
-			return fileEntry.getTitle();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return StringPool.BLANK;
-		}
-	}
-
-	public String getOpenGraphImageURL() {
-		LayoutSEOEntry layoutSEOEntry = _getSelLayoutSEOEntry();
-
-		if ((layoutSEOEntry == null) ||
-			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
-
-			return StringPool.BLANK;
-		}
-
-		try {
-			return _dlurlHelper.getImagePreviewURL(
-				DLAppLocalServiceUtil.getFileEntry(
-					layoutSEOEntry.getOpenGraphImageFileEntryId()),
-				_themeDisplay);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return StringPool.BLANK;
-		}
 	}
 
 	public String getOrphanPortletsURL(Layout layout) {
@@ -1939,18 +1889,6 @@ public class LayoutsAdminDisplayContext {
 		return _orderByType;
 	}
 
-	private LayoutSEOEntry _getSelLayoutSEOEntry() {
-		Layout layout = getSelLayout();
-
-		if (layout == null) {
-			return null;
-		}
-
-		return LayoutSEOEntryLocalServiceUtil.fetchLayoutSEOEntry(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getLayoutId());
-	}
-
 	private boolean _isActive(long plid) throws PortalException {
 		if (plid == getSelPlid()) {
 			return true;
@@ -1990,7 +1928,6 @@ public class LayoutsAdminDisplayContext {
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;
 	private String _displayStyle;
-	private final DLURLHelper _dlurlHelper;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;

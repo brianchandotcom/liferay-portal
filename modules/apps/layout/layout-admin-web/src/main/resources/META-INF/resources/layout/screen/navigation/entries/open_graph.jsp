@@ -53,7 +53,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 			<div class="form-group">
 				<label class="control-label"><liferay-ui:message key="image" /></label>
 
-				<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" title="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
+				<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" title="image" type="text" value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
 
 				<aui:button-row cssClass="mt-0">
 					<aui:button name="openGraphImageButton" value="select" />
@@ -72,7 +72,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 					<c:when test="<%= selLayoutSEOEntry != null %>">
 						<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-						<aui:input disabled="<%= Validator.isNull(layoutsAdminDisplayContext.getOpenGraphImageTitle()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
+						<aui:input disabled="<%= Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
 
 						<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
@@ -126,7 +126,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 								layoutsSEODisplayContext.getDefaultOpenGraphImageURL()
 							).put(
 								"value",
-								layoutsAdminDisplayContext.getOpenGraphImageURL()
+								layoutsSEODisplayContext.getOpenGraphImageURL()
 							).build()
 						).put(
 							"title",

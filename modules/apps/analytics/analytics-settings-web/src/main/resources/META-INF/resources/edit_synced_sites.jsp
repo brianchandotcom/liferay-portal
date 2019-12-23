@@ -25,33 +25,22 @@
 		</span>
 	</h2>
 
+	<%
+	GroupDisplayContext groupDisplayContext = new GroupDisplayContext(renderRequest, renderResponse);
+	%>
+
+	<clay:management-toolbar
+		displayContext="<%= new GroupManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, groupDisplayContext) %>"
+	/>
+
 	<aui:form action="<%= editSyncedSitesURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		<%
-		LinkedHashMap<String, Object> groupParams = LinkedHashMapBuilder.<String, Object>put(
-			"active", Boolean.TRUE
-		).put(
-			"site", Boolean.TRUE
-		).build();
-
-		List<Group> groups = GroupServiceUtil.search(themeDisplay.getCompanyId(), new long[] {PortalUtil.getClassNameId(Group.class)}, "", groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
-
-		Set<String> syncedGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedGroupIds());
-		%>
-
 		<liferay-ui:search-container
-			curParam="inheritedSitesCur"
-			headerNames="name"
-			rowChecker="<%= new GroupChecker(renderResponse, syncedGroupIds) %>"
-			total="<%= groups.size() %>"
+			id="selectGroups"
+			searchContainer="<%= groupDisplayContext.getGroupSearch() %>"
+			var="groupSearchContainer"
 		>
-			<liferay-ui:search-container-results
-				results="<%= groups %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Group"
 				escapedModel="<%= true %>"
@@ -70,16 +59,6 @@
 				searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 			/>
 		</liferay-ui:search-container>
-
-		<h3 class="autofit-row">
-			<span class="autofit-col autofit-col-expand">
-				<liferay-ui:message key="site-reporting-grouping" />
-			</span>
-		</h3>
-
-		<aui:input checked="<%= true %>" helpMessage="flat-site-reporting-grouping-help" label="separate-synced-sites-into-individual-site-reports-in-analytics-cloud" name="siteReportingGrouping" type="radio" value="flat" />
-
-		<aui:input helpMessage="aggregate-site-reporting-grouping-help" label="group-all-synced-sites-into-one-site-report-in-analytics-cloud" name="siteReportingGrouping" type="radio" value="aggregate" />
 
 		<aui:button-row>
 			<aui:button type="submit" value="save-and-sync" />

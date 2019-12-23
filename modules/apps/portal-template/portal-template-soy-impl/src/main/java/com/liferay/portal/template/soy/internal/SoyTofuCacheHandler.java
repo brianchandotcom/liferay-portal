@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.template.TemplateResource;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Bruno Basto
@@ -62,6 +63,16 @@ public class SoyTofuCacheHandler {
 
 					_portalCache.remove(key);
 				}
+			}
+		}
+	}
+
+	public void removeIfAny(Locale locale) {
+		for (String key : _portalCache.getKeys()) {
+			SoyTofuCacheBag soyTofuCacheBag = _portalCache.get(key);
+
+			if (soyTofuCacheBag != null) {
+				soyTofuCacheBag.remove(locale);
 			}
 		}
 	}

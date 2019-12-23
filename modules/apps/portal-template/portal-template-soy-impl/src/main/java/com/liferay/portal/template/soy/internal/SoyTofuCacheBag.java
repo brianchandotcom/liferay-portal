@@ -48,6 +48,10 @@ public class SoyTofuCacheBag {
 		_soyMsgBundleCache.put(locale, soyMsgBundle);
 	}
 
+	public void remove(Locale locale) {
+		_soyMsgBundleCache.remove(locale);
+	}
+
 	private final SoyFileSet _soyFileSet;
 	private final Map<Locale, SoyMsgBundle> _soyMsgBundleCache =
 		new HashMap<>();

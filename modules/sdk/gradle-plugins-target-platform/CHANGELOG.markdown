@@ -38,7 +38,7 @@ dependencies and the various artifacts used in resolving OSGi dependencies.
 ## 2.0.7 - 2019-12-20
 
 ### Updated
-- [LPS-105889]: Use native Gradle 5 BOM support for target platform capability
+- [LPS-105889]: Use native Gradle 5 BOM support for target platform capability.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration

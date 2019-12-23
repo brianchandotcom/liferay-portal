@@ -24,7 +24,7 @@ import org.junit.Assert;
 public class DateTestUtil {
 
 	public static void assertEquals(Date expectedDate, Date actualDate) {
-		if ((expectedDate == null) && (actualDate == null)) {
+		if (expectedDate == actualDate) {
 			return;
 		}
 
@@ -36,11 +36,11 @@ public class DateTestUtil {
 	}
 
 	public static void assertNotEquals(Date unexpectedDate, Date actualDate) {
-		if ((unexpectedDate == null) && (actualDate == null)) {
-			Assert.fail("Values should be different, but both are null");
-		}
+		Assert.assertNotSame(
+			unexpectedDate + " is same as " + actualDate, unexpectedDate,
+			actualDate);
 
-		if ((unexpectedDate == null) ^ (actualDate == null)) {
+		if ((unexpectedDate == null) || (actualDate == null)) {
 			return;
 		}
 

@@ -26,6 +26,35 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a depot can be edited via settings."
+	@priority = "4"
+	test EditName {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.editDepot(
+			depotDescriptionEdit = "This is an edited description of a depot",
+			depotName = "Test Depot Name",
+			depotNameEdit = "Edited Test Depot Name",
+			settings = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Edited Test Depot Name",
+			portlet = "Documents and Media");
+	}
+
 	@description = "This ensures that a user can set the depot site connection via settings."
 	@priority = "4"
 	test SearchForDocument {

@@ -26,6 +26,36 @@ public class OASConstants {
 
 	public static final String INFO = "info";
 
+	public static final String LOCATOR_COMPONENTS_SCHEMAS =
+		"components>schemas";
+
+	public static final String LOCATOR_COMPONENTS_SCHEMAS_PATTERN =
+		LOCATOR_COMPONENTS_SCHEMAS + ">SCHEMA_TPL";
+
+	public static final String LOCATOR_ENDPOINT_OPERATION_PARAMETERS_PATTERN =
+		"paths>ENDPOINT_TPL>OPERATION_TPL>parameters";
+
+	public static final String LOCATOR_PATHS_PATTERN = "paths>ENDPOINT_TPL";
+
+	public static final String LOCATOR_PROPERTIES_ITEMS_ITEMS =
+		"properties>items>items";
+
+	public static final String
+		LOCATOR_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN =
+			"paths>ENDPOINT_TPL>OPERATION_TPL>requestBody>content>" +
+				"application/json>schema";
+
+	public static final String LOCATOR_RESPONSE_SCHEMA_ITEMS_REFERENCE =
+		"responses>default>content>application/json>schema>items>$ref";
+
+	public static final String LOCATOR_RESPONSE_SCHEMA_REFERENCE =
+		"responses>default>content>application/json>schema>$ref";
+
+	public static final String
+		LOCATOR_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN =
+			"paths>ENDPOINT_TPL>OPERATION_TPL>responses>default>content>" +
+				"application/json>schema";
+
 	public static final String OPERATION_DELETE = "delete";
 
 	public static final String OPERATION_GET = "get";
@@ -33,35 +63,6 @@ public class OASConstants {
 	public static final String OPERATION_PATCH = "patch";
 
 	public static final String OPERATION_POST = "post";
-
-	public static final String PATH_COMPONENTS_SCHEMAS = "components>schemas";
-
-	public static final String PATH_COMPONENTS_SCHEMAS_PATTERN =
-		PATH_COMPONENTS_SCHEMAS + ">SCHEMA_TPL";
-
-	public static final String PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN =
-		"paths>ENDPOINT_TPL>OPERATION_TPL>parameters";
-
-	public static final String PATH_ENDPOINT_PATTERN = "paths>ENDPOINT_TPL";
-
-	public static final String PATH_PROPERTIES_ITEMS_ITEMS =
-		"properties>items>items";
-
-	public static final String
-		PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN =
-			"paths>ENDPOINT_TPL>OPERATION_TPL>requestBody>content>" +
-				"application/json>schema";
-
-	public static final String PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE =
-		"responses>default>content>application/json>schema>items>$ref";
-
-	public static final String PATH_RESPONSE_SCHEMA_REFERENCE =
-		"responses>default>content>application/json>schema>$ref";
-
-	public static final String
-		PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN =
-			"paths>ENDPOINT_TPL>OPERATION_TPL>responses>default>content>" +
-				"application/json>schema";
 
 	public static final String PATH_SCHEMA_REFERENCE = "#/components/schemas/";
 

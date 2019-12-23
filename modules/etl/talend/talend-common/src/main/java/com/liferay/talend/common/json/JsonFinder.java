@@ -24,10 +24,10 @@ import javax.json.JsonValue;
 public class JsonFinder {
 
 	public JsonArray getDescendantJsonArray(
-		String path, JsonObject jsonObject) {
+		String locatorExpression, JsonObject jsonObject) {
 
 		JsonValue descendantJsonValue = getDescendantJsonValue(
-			path, jsonObject);
+			locatorExpression, jsonObject);
 
 		if (_isNullJsonValue(descendantJsonValue)) {
 			return JsonValue.EMPTY_JSON_ARRAY;
@@ -37,10 +37,10 @@ public class JsonFinder {
 	}
 
 	public JsonObject getDescendantJsonObject(
-		String path, JsonObject jsonObject) {
+		String locatorExpression, JsonObject jsonObject) {
 
 		JsonValue descendantJsonValue = getDescendantJsonValue(
-			path, jsonObject);
+			locatorExpression, jsonObject);
 
 		if (_isNullJsonValue(descendantJsonValue)) {
 			return JsonValue.EMPTY_JSON_OBJECT;
@@ -50,42 +50,44 @@ public class JsonFinder {
 	}
 
 	public JsonValue getDescendantJsonValue(
-		String path, JsonObject jsonObject) {
+		String locatorExpression, JsonObject jsonObject) {
 
-		if (!path.contains(">")) {
-			if (jsonObject.containsKey(path)) {
-				return jsonObject.get(path);
+		if (!locatorExpression.contains(">")) {
+			if (jsonObject.containsKey(locatorExpression)) {
+				return jsonObject.get(locatorExpression);
 			}
 
 			return JsonValue.NULL;
 		}
 
-		int subpathEndIdx = path.indexOf(">");
+		int sublocationEndIdx = locatorExpression.indexOf(">");
 
-		String subpath = path.substring(0, subpathEndIdx);
+		String sublocation = locatorExpression.substring(0, sublocationEndIdx);
 
-		if (jsonObject.containsKey(subpath)) {
+		if (jsonObject.containsKey(sublocation)) {
 			return getDescendantJsonValue(
-				path.substring(subpathEndIdx + 1),
-				jsonObject.getJsonObject(subpath));
+				locatorExpression.substring(sublocationEndIdx + 1),
+				jsonObject.getJsonObject(sublocation));
 		}
 
 		return JsonValue.NULL;
 	}
 
-	public boolean hasPath(String path, JsonObject jsonObject) {
-		if (!path.contains(">")) {
-			return jsonObject.containsKey(path);
+	public boolean hasJsonObject(
+		String locatorExpression, JsonObject jsonObject) {
+
+		if (!locatorExpression.contains(">")) {
+			return jsonObject.containsKey(locatorExpression);
 		}
 
-		int subpathEndIdx = path.indexOf(">");
+		int sublocationEndIdx = locatorExpression.indexOf(">");
 
-		String subpath = path.substring(0, subpathEndIdx);
+		String sublocation = locatorExpression.substring(0, sublocationEndIdx);
 
-		if (jsonObject.containsKey(subpath)) {
-			return hasPath(
-				path.substring(subpathEndIdx + 1),
-				jsonObject.getJsonObject(subpath));
+		if (jsonObject.containsKey(sublocation)) {
+			return hasJsonObject(
+				locatorExpression.substring(sublocationEndIdx + 1),
+				jsonObject.getJsonObject(sublocation));
 		}
 
 		return false;

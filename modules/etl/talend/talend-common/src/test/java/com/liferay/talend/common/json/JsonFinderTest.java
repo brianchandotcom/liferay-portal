@@ -73,25 +73,26 @@ public class JsonFinderTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testHasPath() {
+	public void testHasJsonObject() {
 		JsonFinder jsonFinder = new JsonFinder();
 
 		JsonObject jsonObject = readObject("openapi.json");
 
 		Assert.assertFalse(
 			"Expect path \"invalid>path\" is invalid",
-			jsonFinder.hasPath("invalid>path", jsonObject));
+			jsonFinder.hasJsonObject("invalid>path", jsonObject));
 		Assert.assertFalse(
-			"Expect empty path is invalid", jsonFinder.hasPath("", jsonObject));
+			"Expect empty path is invalid",
+			jsonFinder.hasJsonObject("", jsonObject));
 		Assert.assertFalse(
 			"Expect path \"invalid\" is invalid",
-			jsonFinder.hasPath("invalid", jsonObject));
+			jsonFinder.hasJsonObject("invalid", jsonObject));
 		Assert.assertTrue(
 			"Expect path \"info\" is valid",
-			jsonFinder.hasPath("info", jsonObject));
+			jsonFinder.hasJsonObject("info", jsonObject));
 		Assert.assertTrue(
 			"Expect path \"info>description\" is valid",
-			jsonFinder.hasPath("info>description", jsonObject));
+			jsonFinder.hasJsonObject("info>description", jsonObject));
 	}
 
 }

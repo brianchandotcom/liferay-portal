@@ -60,7 +60,7 @@ public class SchemaBuilder {
 		if (Objects.equals(operation, OASConstants.OPERATION_GET)) {
 			String jsonFinderPath = StringUtil.replace(
 				OASConstants.
-					PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+					LOCATOR_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
 				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 			JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
@@ -74,7 +74,7 @@ public class SchemaBuilder {
 
 			JsonObject itemsPropertiesJsonObject =
 				_jsonFinder.getDescendantJsonObject(
-					OASConstants.PATH_PROPERTIES_ITEMS_ITEMS,
+					OASConstants.LOCATOR_PROPERTIES_ITEMS_ITEMS,
 					schemaDefinitionJsonObject);
 
 			if (!itemsPropertiesJsonObject.isEmpty() &&
@@ -95,7 +95,7 @@ public class SchemaBuilder {
 
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.
-				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+				LOCATOR_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
 			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 		JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
@@ -127,7 +127,7 @@ public class SchemaBuilder {
 		String schemaName, JsonObject oasJsonObject) {
 
 		String jsonFinderPath = StringUtil.replace(
-			OASConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
+			OASConstants.LOCATOR_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
 			schemaName);
 
 		return _jsonFinder.getDescendantJsonObject(

@@ -37,13 +37,13 @@ public class OASExplorer {
 		JsonObject oasJsonObject, String... operations) {
 
 		if (operations.length == 0) {
-			return _extractEndpoints(oasJsonObject, null);
+			return _extractPaths(oasJsonObject, null);
 		}
 
 		Set<String> endpoints = new HashSet<>();
 
 		for (String operation : operations) {
-			endpoints.addAll(_extractEndpoints(oasJsonObject, operation));
+			endpoints.addAll(_extractPaths(oasJsonObject, operation));
 		}
 
 		return endpoints;
@@ -54,7 +54,7 @@ public class OASExplorer {
 
 		JsonObject componentSchemaJsonObject =
 			_jsonFinder.getDescendantJsonObject(
-				OASConstants.PATH_COMPONENTS_SCHEMAS, oasJsonObject);
+				OASConstants.LOCATOR_COMPONENTS_SCHEMAS, oasJsonObject);
 
 		componentSchemaJsonObject.forEach(
 			(entityName, entityDefinition) -> {
@@ -74,7 +74,7 @@ public class OASExplorer {
 		List<OASParameter> oasParameters = new ArrayList<>();
 
 		String jsonFinderPath = StringUtil.replace(
-			OASConstants.PATH_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
+			OASConstants.LOCATOR_ENDPOINT_OPERATION_PARAMETERS_PATTERN,
 			"ENDPOINT_TPL", path, "OPERATION_TPL", operation);
 
 		JsonArray parametersJsonArray = _jsonFinder.getDescendantJsonArray(
@@ -91,13 +91,13 @@ public class OASExplorer {
 	public Set<String> getPathOperations(
 		String path, JsonObject oasJsonObject) {
 
-		String jsonFinderPath = StringUtil.replace(
-			OASConstants.PATH_ENDPOINT_PATTERN, "ENDPOINT_TPL", path);
+		String locatorExpression = StringUtil.replace(
+			OASConstants.LOCATOR_PATHS_PATTERN, "ENDPOINT_TPL", path);
 
-		JsonObject endpointJsonObject = _jsonFinder.getDescendantJsonObject(
-			jsonFinderPath, oasJsonObject);
+		JsonObject pathMethodsJsonObject = _jsonFinder.getDescendantJsonObject(
+			locatorExpression, oasJsonObject);
 
-		return endpointJsonObject.keySet();
+		return pathMethodsJsonObject.keySet();
 	}
 
 	public String getVersion(JsonObject oasJsonObject) {
@@ -107,49 +107,49 @@ public class OASExplorer {
 		return infoVersionJsonObject.getString(OASConstants.VERSION);
 	}
 
-	private Set<String> _extractEndpoints(
-		JsonObject oasJsonObject, String operation) {
+	private Set<String> _extractPaths(
+		JsonObject oasJsonObject, String httpMethod) {
 
-		Set<String> endpoints = new TreeSet<>();
+		Set<String> paths = new TreeSet<>();
 
 		JsonObject pathsJsonObject = oasJsonObject.getJsonObject(
 			OASConstants.PATHS);
 
 		pathsJsonObject.forEach(
-			(path, operationsJsonValue) -> {
-				JsonObject operationsJsonObject =
-					operationsJsonValue.asJsonObject();
+			(path, pathOperationsJsonValue) -> {
+				JsonObject pathOperationsJsonObject =
+					pathOperationsJsonValue.asJsonObject();
 
-				operationsJsonObject.forEach(
-					(operationName, operationJsonValue) -> {
-						if (operation != null) {
-							if (!Objects.equals(operation, operationName)) {
+				pathOperationsJsonObject.forEach(
+					(operation, operationJsonValue) -> {
+						if (httpMethod != null) {
+							if (!Objects.equals(httpMethod, operation)) {
 								return;
 							}
 
 							if (!Objects.equals(
-									operation, OASConstants.OPERATION_GET)) {
+									httpMethod, OASConstants.OPERATION_GET)) {
 
-								endpoints.add(path);
+								paths.add(path);
 
 								return;
 							}
 						}
 
-						if (_jsonFinder.hasPath(
-								OASConstants.PATH_RESPONSE_SCHEMA_REFERENCE,
+						if (_jsonFinder.hasJsonObject(
+								OASConstants.LOCATOR_RESPONSE_SCHEMA_REFERENCE,
 								operationJsonValue.asJsonObject()) ||
-							_jsonFinder.hasPath(
+							_jsonFinder.hasJsonObject(
 								OASConstants.
-									PATH_RESPONSE_SCHEMA_ITEMS_REFERENCE,
+									LOCATOR_RESPONSE_SCHEMA_ITEMS_REFERENCE,
 								operationJsonValue.asJsonObject())) {
 
-							endpoints.add(path);
+							paths.add(path);
 						}
 					});
 			});
 
-		return endpoints;
+		return paths;
 	}
 
 	private OASParameter _toParameter(JsonObject jsonObject) {

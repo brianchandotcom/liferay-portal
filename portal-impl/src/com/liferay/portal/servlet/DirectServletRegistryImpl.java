@@ -78,7 +78,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 	@Override
 	public void putServlet(String path, Servlet servlet) {
-		if (_servletInfos.containsKey(path)) {
+		if (path.startsWith("/o/") || _servletInfos.containsKey(path)) {
 			return;
 		}
 

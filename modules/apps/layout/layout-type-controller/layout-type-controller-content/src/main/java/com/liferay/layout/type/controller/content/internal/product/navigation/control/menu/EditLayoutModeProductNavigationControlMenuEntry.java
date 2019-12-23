@@ -172,20 +172,20 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (!_layoutPermission.contains(
+		if (_layoutPermission.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				ActionKeys.UPDATE) &&
-			!_layoutPermission.contains(
+				ActionKeys.UPDATE) ||
+			_layoutPermission.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				ActionKeys.UPDATE_LAYOUT_CONTENT) &&
-			!_modelResourcePermission.contains(
+				ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+			_modelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
 				ActionKeys.UPDATE)) {
 
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Reference

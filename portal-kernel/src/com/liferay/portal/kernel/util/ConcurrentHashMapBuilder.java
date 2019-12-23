@@ -93,7 +93,7 @@ public class ConcurrentHashMapBuilder<K, V> extends BaseMapBuilder {
 		}
 
 		public ConcurrentHashMapWrapper<K, V> put(K key, V value) {
-			doPut(key, value);
+			_concurrentHashMap.put(key, value);
 
 			return this;
 		}

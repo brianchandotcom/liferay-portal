@@ -16,6 +16,7 @@ package com.liferay.segments.experiment.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -98,12 +99,13 @@ public class SegmentsExperimentUtil {
 		);
 	}
 
-	public static JSONObject toSegmentsExperimentJSONObject(
+	public static JSONObject toSegmentsExperimentJSONObject
+		(
 			Locale locale, SegmentsExperiment segmentsExperiment)
 		throws PortalException {
 
 		if (segmentsExperiment == null) {
-			return null;
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		return JSONUtil.put(

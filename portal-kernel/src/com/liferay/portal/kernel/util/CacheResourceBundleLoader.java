@@ -22,11 +22,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class CacheResourceBundleLoader implements ResourceBundleLoader {
+
+	public static void notifyResourceBundleModification() {
+		_resourceBundlesModifiedCount.incrementAndGet();
+	}
 
 	public CacheResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
@@ -36,7 +41,14 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 
 	@Override
 	public ResourceBundle loadResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = _resourceBundles.get(locale);
+		ResourceBundle resourceBundle = null;
+
+		long resourceBundlesModifiedCount =
+			_resourceBundlesModifiedCount.longValue();
+
+		if (_cacheModifiedCount.longValue() >= resourceBundlesModifiedCount) {
+			resourceBundle = _resourceBundles.get(locale);
+		}
 
 		if (resourceBundle == _nullResourceBundle) {
 			return null;
@@ -59,6 +71,8 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 			else {
 				_resourceBundles.put(locale, resourceBundle);
 			}
+
+			_cacheModifiedCount.set(resourceBundlesModifiedCount);
 		}
 
 		return resourceBundle;
@@ -82,6 +96,10 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 
 		};
 
+	private static final AtomicLong _resourceBundlesModifiedCount =
+		new AtomicLong(0);
+
+	private final AtomicLong _cacheModifiedCount = new AtomicLong(0);
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final Map<Locale, ResourceBundle> _resourceBundles =
 		new ConcurrentHashMap<>();

@@ -99,11 +99,11 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:email-notification-settings
-						emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedBodyXml() %>"
+						emailBodyLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedBody() %>"
 						emailDefinitionTerms="<%= definitionTerms %>"
 						emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() %>"
 						emailParam="emailPageAdded"
-						emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedSubjectXml() %>"
+						emailSubjectLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedSubject() %>"
 					/>
 				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>
@@ -111,11 +111,11 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 			<liferay-ui:section>
 				<liferay-frontend:fieldset-group>
 					<liferay-frontend:email-notification-settings
-						emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedBodyXml() %>"
+						emailBodyLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedBody() %>"
 						emailDefinitionTerms="<%= definitionTerms %>"
 						emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled() %>"
 						emailParam="emailPageUpdated"
-						emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedSubjectXml() %>"
+						emailSubjectLocalizedValuesMap="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedSubject() %>"
 					/>
 				</liferay-frontend:fieldset-group>
 			</liferay-ui:section>

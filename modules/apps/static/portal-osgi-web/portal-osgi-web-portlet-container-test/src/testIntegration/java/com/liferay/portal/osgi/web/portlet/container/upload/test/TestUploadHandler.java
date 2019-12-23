@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -50,13 +49,12 @@ import javax.portlet.PortletResponse;
 /**
  * @author Manuel de la Peña
  */
-public class TestUploadHandler implements UploadHandler {
+public class TestUploadHandler {
 
 	public TestUploadHandler(TestUploadPortlet testUploadPortlet) {
 		_testUploadPortlet = testUploadPortlet;
 	}
 
-	@Override
 	public void upload(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {

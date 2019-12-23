@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.DateAssertionTestUtil;
+import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -201,8 +201,7 @@ public class DLCheckInCheckOutTest {
 
 		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
-		DateAssertionTestUtil.assertDateEquals(
-			lastPostDate, folder.getLastPostDate());
+		DateTestUtil.assertEquals(lastPostDate, folder.getLastPostDate());
 
 		fileEntry = DLAppServiceUtil.getFileEntry(_fileEntry.getFileEntryId());
 
@@ -413,8 +412,7 @@ public class DLCheckInCheckOutTest {
 
 		folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
-		DateAssertionTestUtil.assertDateEquals(
-			lastPostDate, folder.getLastPostDate());
+		DateTestUtil.assertEquals(lastPostDate, folder.getLastPostDate());
 
 		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 

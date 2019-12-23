@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.DateAssertionTestUtil;
+import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -244,9 +244,9 @@ public abstract class BaseExportImportTestCase {
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {
 
-		DateAssertionTestUtil.assertDateEquals(
+		DateTestUtil.assertEquals(
 			stagedModel.getCreateDate(), importedStagedModel.getCreateDate());
-		DateAssertionTestUtil.assertDateEquals(
+		DateTestUtil.assertEquals(
 			stagedModel.getModifiedDate(),
 			importedStagedModel.getModifiedDate());
 

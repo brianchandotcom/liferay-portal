@@ -69,7 +69,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.DateAssertionTestUtil;
+import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -702,7 +702,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {
 
-		DateAssertionTestUtil.assertDateEquals(
+		DateTestUtil.assertEquals(
 			stagedModel.getCreateDate(), importedStagedModel.getCreateDate());
 
 		Assert.assertEquals(
@@ -723,13 +723,13 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			article.getSmallImageURL(), importedArticle.getSmallImageURL());
 		Assert.assertEquals(article.getStatus(), importedArticle.getStatus());
 
-		DateAssertionTestUtil.assertDateEquals(
+		DateTestUtil.assertEquals(
 			article.getDisplayDate(), importedArticle.getDisplayDate());
-		DateAssertionTestUtil.assertDateEquals(
+		DateTestUtil.assertEquals(
 			article.getExpirationDate(), importedArticle.getExpirationDate());
-		DateAssertionTestUtil.assertDateEquals(
+		DateTestUtil.assertEquals(
 			article.getReviewDate(), importedArticle.getReviewDate());
-		DateAssertionTestUtil.assertDateEquals(
+		DateTestUtil.assertEquals(
 			article.getStatusDate(), importedArticle.getStatusDate());
 
 		JournalArticleResource articleResource = article.getArticleResource();

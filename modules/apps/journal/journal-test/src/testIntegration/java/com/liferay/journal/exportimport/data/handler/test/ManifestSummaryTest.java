@@ -26,7 +26,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.test.util.DateAssertionTestUtil;
+import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.Time;
@@ -242,8 +242,7 @@ public class ManifestSummaryTest
 			manifestSummary.getModelAdditionCount(
 				new StagedModelType(JournalFolder.class)));
 
-		DateAssertionTestUtil.assertDateEquals(
-			_exportDate, manifestSummary.getExportDate());
+		DateTestUtil.assertEquals(_exportDate, manifestSummary.getExportDate());
 	}
 
 	private Date _exportDate;

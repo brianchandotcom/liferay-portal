@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.DateAssertionTestUtil;
+import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -106,7 +106,7 @@ public class AssetDisplayPageEntryLocalServiceTest {
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
 				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-		DateAssertionTestUtil.assertDateNotEquals(
+		DateTestUtil.assertNotEquals(
 			originalModifiedDate, layoutPageTemplateEntry.getModifiedDate());
 	}
 
@@ -307,7 +307,7 @@ public class AssetDisplayPageEntryLocalServiceTest {
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-		DateAssertionTestUtil.assertDateNotEquals(
+		DateTestUtil.assertNotEquals(
 			originalModifiedDate, layoutPageTemplateEntry.getModifiedDate());
 	}
 

@@ -2,6 +2,8 @@ import org.gradle.api.artifacts.ResolveException
 
 apply plugin: "com.liferay.target.platform"
 
+task runGradleTest
+
 allprojects {
 	repositories {
 		maven {
@@ -9,8 +11,6 @@ allprojects {
 		}
 	}
 }
-
-task runGradleTest
 
 dependencies {
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"

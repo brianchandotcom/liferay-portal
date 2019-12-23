@@ -1,10 +1,21 @@
 apply plugin: "com.liferay.target.platform"
 
+task checkRule
+task runGradleTest
+
 allprojects {
 	repositories {
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
+	}
+}
+
+checkRule {
+	doLast {
+		Task resolveTask = project(":modules:foo-rule").tasks.findByPath("resolve")
+
+		assert resolveTask == null
 	}
 }
 
@@ -14,17 +25,6 @@ dependencies {
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.third.party", version: "7.2.1"
 
 	targetPlatformDistro group: "com.liferay.portal", name: "release.portal.distro", version: "7.2.1"
-}
-
-task checkRule
-task runGradleTest
-
-checkRule {
-	doLast {
-		Task resolveTask = project(":modules:foo-rule").tasks.findByPath("resolve")
-
-		assert resolveTask == null
-	}
 }
 
 runGradleTest {

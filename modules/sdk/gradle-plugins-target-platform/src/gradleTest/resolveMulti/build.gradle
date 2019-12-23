@@ -1,5 +1,10 @@
 apply plugin: "com.liferay.target.platform"
 
+task checkApi
+task checkPortlet
+task checkService
+task runGradleTest
+
 allprojects {
 	repositories {
 		maven {
@@ -7,11 +12,6 @@ allprojects {
 		}
 	}
 }
-
-task checkApi
-task checkPortlet
-task checkService
-task runGradleTest
 
 checkApi {
 	dependsOn ":modules:foo-api:resolve"

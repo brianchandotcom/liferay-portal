@@ -25,6 +25,7 @@ page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateStructure" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil" %><%@
 page import="com.liferay.layout.taglib.internal.display.context.RenderFragmentLayoutDisplayContext" %><%@
+page import="com.liferay.layout.taglib.internal.util.RenderFragmentLayoutTagUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@

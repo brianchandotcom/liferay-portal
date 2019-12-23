@@ -102,7 +102,7 @@ manually adding a dependency to the `javadocFormatter` configuration:
 
 ```gradle
 dependencies {
-	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "1.0.34"
+	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "1.0.35"
 }
 ```
 

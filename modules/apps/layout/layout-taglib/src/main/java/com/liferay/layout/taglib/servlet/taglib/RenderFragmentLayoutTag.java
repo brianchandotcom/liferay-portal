@@ -19,6 +19,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.util.RenderFragmentLayoutTagUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -139,6 +140,24 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		}
 
 		try {
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				LayoutPageTemplateStructureLocalServiceUtil.
+					fetchLayoutPageTemplateStructure(
+						getGroupId(),
+						PortalUtil.getClassNameId(Layout.class.getName()),
+						getPlid(), true);
+
+			String data = layoutPageTemplateStructure.getData(
+				_getSegmentsExperienceIds());
+
+			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+
+			if (RenderFragmentLayoutTagUtil.isReactEditor(dataJSONObject)) {
+				_dataJSONObject = dataJSONObject;
+
+				return _dataJSONObject;
+			}
+
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
 
 			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -159,7 +178,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 						PortalUtil.getClassNameId(Layout.class),
 						masterLayoutPageTemplateEntry.getPlid());
 
-			String data = masterLayoutPageTemplateStructure.getData(
+			data = masterLayoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT);
 
 			if (Validator.isNull(data)) {

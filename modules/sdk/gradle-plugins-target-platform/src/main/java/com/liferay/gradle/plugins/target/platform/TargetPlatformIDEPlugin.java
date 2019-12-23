@@ -78,7 +78,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _addBomDependenciesToIDEConfiguration(
+	private void _addDependenciesTargetPlatformIDE(
 		Project project, Configuration ideBomsConfiguration) {
 
 		Set<File> bomFiles = ideBomsConfiguration.resolve();
@@ -168,7 +168,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addBomDependenciesToIDEConfiguration(
+					_addDependenciesTargetPlatformIDE(
 						project, ideBomsConfiguration);
 				}
 

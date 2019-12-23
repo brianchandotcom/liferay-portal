@@ -3426,6 +3426,12 @@ go</echo>
 					</then>
 				</elseif>
 				<elseif>
+					<equals arg1="@{liferay.portal.bundle}" arg2="7.1.10.3" />
+					<then>
+						<var name="app.server.tomcat.version" value="9.0.17" />
+					</then>
+				</elseif>
+				<elseif>
 					<equals arg1="@{liferay.portal.bundle}" arg2="7.1.1" />
 					<then>
 						<var name="app.server.tomcat.version" value="9.0.10" />

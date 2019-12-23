@@ -1586,6 +1586,53 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-custom-system-properties">
+		<attribute name="custom.system.properties" />
+		<sequential>
+			<for delimiter="${line.separator}" list="@{custom.system.properties}" param="property">
+				<sequential>
+					<propertyregex
+						global="true"
+						input="@{property}"
+						override="true"
+						property="propertyName"
+						regexp="=.*"
+						replace=""
+					/>
+
+					<propertyregex
+						global="true"
+						input="${propertyName}"
+						override="true"
+						property="propertyName"
+						regexp="\["
+						replace="\\\\["
+					/>
+
+					<propertyregex
+						global="true"
+						input="${propertyName}"
+						override="true"
+						property="propertyName"
+						regexp="\]"
+						replace="\\\\]"
+					/>
+
+					<replaceregexp
+						file="${app.server.classes.portal.dir}/system-ext.properties"
+						flags="g"
+						match="${propertyName}=.*"
+						replace=""
+					/>
+
+					<echo append="true" file="${app.server.classes.portal.dir}/system-ext.properties">
+
+@{property}</echo>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-database-jndi">
 		<sequential>
 			<if>
@@ -9438,6 +9485,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 liferay.mode=test
 log.sanitizer.enabled=false</echo>
 
+		<get-testcase-property property.name="custom.system.properties" />
+
+		<if>
+			<isset property="custom.system.properties" />
+			<then>
+				<prepare-custom-system-properties custom.system.properties="${custom.system.properties}" />
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-test-build">

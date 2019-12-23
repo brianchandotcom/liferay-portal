@@ -32,11 +32,6 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
-				<name>excludeFields</name>
-				<inputType>java.util.List</inputType>
-				<required>false</required>
-			</attribute>
-			<attribute>
 				<name>localizable</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
@@ -47,6 +42,11 @@
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>scopes</name>
+				<inputType>java.util.Set</inputType>
+				<required>false</required>
 			</attribute>
 		</attributes>
 	</component>

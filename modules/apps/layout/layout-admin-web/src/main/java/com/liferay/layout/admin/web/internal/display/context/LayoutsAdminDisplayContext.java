@@ -813,7 +813,7 @@ public class LayoutsAdminDisplayContext {
 		if ((layoutSEOEntry == null) ||
 			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
 
-			return null;
+			return StringPool.BLANK;
 		}
 
 		try {
@@ -825,7 +825,7 @@ public class LayoutsAdminDisplayContext {
 		catch (Exception e) {
 			_log.error(e, e);
 
-			return null;
+			return StringPool.BLANK;
 		}
 	}
 
@@ -835,7 +835,7 @@ public class LayoutsAdminDisplayContext {
 		if ((layoutSEOEntry == null) ||
 			(layoutSEOEntry.getOpenGraphImageFileEntryId() == 0)) {
 
-			return null;
+			return StringPool.BLANK;
 		}
 
 		try {
@@ -847,7 +847,7 @@ public class LayoutsAdminDisplayContext {
 		catch (Exception e) {
 			_log.error(e, e);
 
-			return null;
+			return StringPool.BLANK;
 		}
 	}
 

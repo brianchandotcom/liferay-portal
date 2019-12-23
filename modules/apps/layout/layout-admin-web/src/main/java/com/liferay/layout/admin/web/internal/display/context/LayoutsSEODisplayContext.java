@@ -33,6 +33,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -146,7 +147,7 @@ public class LayoutsSEODisplayContext {
 			(layoutSEOSite.getOpenGraphImageFileEntryId() == 0) ||
 			!layoutSEOSite.isOpenGraphEnabled()) {
 
-			return null;
+			return StringPool.BLANK;
 		}
 
 		try {
@@ -158,7 +159,7 @@ public class LayoutsSEODisplayContext {
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 
-			return null;
+			return StringPool.BLANK;
 		}
 	}
 

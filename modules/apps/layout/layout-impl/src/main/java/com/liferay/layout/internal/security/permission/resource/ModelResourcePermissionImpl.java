@@ -14,6 +14,8 @@
 
 package com.liferay.layout.internal.security.permission.resource;
 
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.permission.resource.ModelResourcePermission;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -27,6 +29,7 @@ import java.util.List;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -36,6 +39,22 @@ public class ModelResourcePermissionImpl implements ModelResourcePermission {
 
 	public boolean contains(
 		PermissionChecker permissionChecker, long plid, String actionId) {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(plid);
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			if (contains(
+					permissionChecker, layoutClassedModelUsage.getClassName(),
+					layoutClassedModelUsage.getClassPK(), actionId)) {
+
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -82,5 +101,9 @@ public class ModelResourcePermissionImpl implements ModelResourcePermission {
 		<String,
 		 com.liferay.portal.kernel.security.permission.resource.
 			 ModelResourcePermission> _modelResourcePermissionServiceTrackerMap;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
 
 }

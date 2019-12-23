@@ -354,7 +354,7 @@ public class EditSegmentsEntryDisplayContext {
 		SegmentsEntry segmentsEntry = _getSegmentsEntry();
 
 		if (segmentsEntry == null) {
-			return null;
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();

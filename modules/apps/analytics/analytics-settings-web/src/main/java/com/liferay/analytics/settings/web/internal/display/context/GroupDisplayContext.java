@@ -41,8 +41,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Marcellus Tavares
  */
@@ -51,32 +49,24 @@ public class GroupDisplayContext {
 	public GroupDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-
 		_analyticsConfiguration =
 			(AnalyticsConfiguration)renderRequest.getAttribute(
 				AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 	}
 
 	public GroupSearch getGroupSearch() {
 		GroupSearch groupSearch = new GroupSearch(
 			_renderRequest, getPortletURL());
 
+		groupSearch.setOrderByCol(_getOrderByCol());
+		groupSearch.setOrderByType(getOrderByType());
+
 		groupSearch.setRowChecker(
 			new GroupChecker(
 				_renderResponse,
 				SetUtil.fromArray(_analyticsConfiguration.syncedGroupIds())));
-
-		groupSearch.setOrderByCol(_getOrderByCol());
-		groupSearch.setOrderByType(getOrderByType());
-
-		int total = GroupServiceUtil.searchCount(
-			_getCompanyId(), _getClassNameIds(), _getKeywords(),
-			_getGroupParams());
-
-		groupSearch.setTotal(total);
 
 		List<Group> groups = Collections.emptyList();
 
@@ -92,6 +82,12 @@ public class GroupDisplayContext {
 
 		groupSearch.setResults(groups);
 
+		int total = GroupServiceUtil.searchCount(
+			_getCompanyId(), _getClassNameIds(), _getKeywords(),
+			_getGroupParams());
+
+		groupSearch.setTotal(total);
+
 		return groupSearch;
 	}
 
@@ -101,7 +97,7 @@ public class GroupDisplayContext {
 		}
 
 		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -146,7 +142,7 @@ public class GroupDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		return _keywords;
 	}
@@ -157,7 +153,7 @@ public class GroupDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "name");
+			_renderRequest, "orderByCol", "site-name");
 
 		return _orderByCol;
 	}
@@ -175,7 +171,6 @@ public class GroupDisplayContext {
 
 	private final AnalyticsConfiguration _analyticsConfiguration;
 	private long[] _classNameIds;
-	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

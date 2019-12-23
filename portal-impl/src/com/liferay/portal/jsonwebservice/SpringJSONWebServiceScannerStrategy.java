@@ -88,6 +88,9 @@ public class SpringJSONWebServiceScannerStrategy
 					service = bean;
 				}
 			}
+			else {
+				break;
+			}
 		}
 
 		return service.getClass();

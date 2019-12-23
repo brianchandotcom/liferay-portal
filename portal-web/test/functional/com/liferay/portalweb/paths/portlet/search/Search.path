@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>CLASSIC_SEARCH_BAR</td>
-	<td>//input[contains(@id,'templateSearch') and @type='text']</td>
+	<td>//input[contains(@id,'SearchPortlet') and @type='text']</td>
 	<td></td>
 </tr>
 <tr>

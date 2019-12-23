@@ -104,7 +104,17 @@ public class CompanyImpl extends CompanyBaseImpl {
 	@Override
 	public CompanyInfo getCompanyInfo() {
 		if (_companyInfo == null) {
-			_initCompanyInfo();
+			CompanyInfo companyInfo =
+				CompanyInfoLocalServiceUtil.fetchByCompanyId(getCompanyId());
+
+			if (companyInfo == null) {
+				companyInfo = CompanyInfoLocalServiceUtil.createCompanyInfo(
+					CounterLocalServiceUtil.increment());
+
+				companyInfo.setCompanyId(getCompanyId());
+			}
+
+			_companyInfo = companyInfo;
 		}
 
 		return _companyInfo;
@@ -170,11 +180,9 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public String getKey() {
-		if (_companyInfo == null) {
-			_initCompanyInfo();
-		}
+		CompanyInfo companyInfo = getCompanyInfo();
 
-		return _companyInfo.getKey();
+		return companyInfo.getKey();
 	}
 
 	@Override
@@ -362,13 +370,11 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public void setKey(String key) {
-		if (_companyInfo == null) {
-			_initCompanyInfo();
-		}
+		CompanyInfo companyInfo = getCompanyInfo();
+
+		companyInfo.setKey(key);
 
 		_keyObj = null;
-
-		_companyInfo.setKey(key);
 	}
 
 	@Override
@@ -444,20 +450,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 		}
 
 		return defaultValue;
-	}
-
-	private void _initCompanyInfo() {
-		CompanyInfo companyInfo = CompanyInfoLocalServiceUtil.fetchByCompanyId(
-			getCompanyId());
-
-		if (companyInfo == null) {
-			companyInfo = CompanyInfoLocalServiceUtil.createCompanyInfo(
-				CounterLocalServiceUtil.increment());
-
-			companyInfo.setCompanyId(getCompanyId());
-		}
-
-		_companyInfo = companyInfo;
 	}
 
 	private Account _account;

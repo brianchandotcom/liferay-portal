@@ -306,6 +306,5 @@
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xz.jar"/>
 	<classpathentry kind="lib" path="lib/portal/yui-compressor.jar"/>
-	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.impl.trash.compat.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

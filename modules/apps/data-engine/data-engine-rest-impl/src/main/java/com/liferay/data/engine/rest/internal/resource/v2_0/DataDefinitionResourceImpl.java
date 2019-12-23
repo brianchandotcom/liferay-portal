@@ -602,6 +602,10 @@ public class DataDefinitionResourceImpl
 		).put(
 			"name", ddmFormFieldName
 		).put(
+			"scope",
+			MapUtil.getString(
+				ddmFormFieldTypeProperties, "ddm.form.field.type.scope")
+		).put(
 			"settingsContext",
 			_createFieldContextJSONObject(
 				ddmFormFieldType, httpServletRequest,

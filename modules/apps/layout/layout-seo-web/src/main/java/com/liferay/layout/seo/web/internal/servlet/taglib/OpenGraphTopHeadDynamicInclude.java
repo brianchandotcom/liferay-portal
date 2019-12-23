@@ -17,6 +17,10 @@ package com.liferay.layout.seo.web.internal.servlet.taglib;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
@@ -49,6 +53,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -109,16 +114,47 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				printWriter.println(_addLinkTag(layoutSEOLink));
 			}
 
+			LayoutSEOEntry layoutSEOEntry =
+				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId());
+
+			if (layoutSEOEntry != null) {
+				DDMFormValues ddmFormValues =
+					StorageEngineManagerUtil.getDDMFormValues(
+						layoutSEOEntry.getDDMStorageId());
+
+				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+					ddmFormValues.getDDMFormFieldValuesMap();
+
+				for (List<DDMFormFieldValue> ddmFormFieldValues :
+						ddmFormFieldValuesMap.values()) {
+
+					DDMFormFieldValue nameDDMFormFieldValue =
+						ddmFormFieldValues.get(0);
+
+					Value nameValue = nameDDMFormFieldValue.getValue();
+
+					List<DDMFormFieldValue> nestedDDMFormFieldValues =
+						nameDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+					DDMFormFieldValue valueDDMFormFieldValue =
+						nestedDDMFormFieldValues.get(0);
+
+					Value valueValue = valueDDMFormFieldValue.getValue();
+
+					printWriter.println(
+						_getOpenGraphTag(
+							nameValue.getString(themeDisplay.getLocale()),
+							valueValue.getString(themeDisplay.getLocale())));
+				}
+			}
+
 			if (!_openGraphConfiguration.isOpenGraphEnabled(
 					layout.getGroup())) {
 
 				return;
 			}
-
-			LayoutSEOEntry layoutSEOEntry =
-				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId());
 
 			printWriter.println(
 				_getOpenGraphTag(

@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.kernel.service.CompanyInfoLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -48,13 +48,6 @@ public class CompanyInfoLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_company != null) {
-			_companyLocalService.deleteCompany(_company);
-		}
 	}
 
 	@Test
@@ -90,7 +83,7 @@ public class CompanyInfoLocalServiceTest {
 	public void testUpdateCompanyInfoKey() {
 		_company.setKey(RandomTestUtil.randomString());
 
-		_companyLocalService.updateCompany(_company);
+		_company = _companyLocalService.updateCompany(_company);
 
 		CompanyInfo companyInfo = _companyInfoLocalService.fetchByCompanyId(
 			_company.getCompanyId());
@@ -102,7 +95,7 @@ public class CompanyInfoLocalServiceTest {
 	public void testUpdateCompanyInfoKeyObj() {
 		_company.setKey(RandomTestUtil.randomString());
 
-		_companyLocalService.updateCompany(_company);
+		_company = _companyLocalService.updateCompany(_company);
 
 		CompanyInfo companyInfo = _companyInfoLocalService.fetchByCompanyId(
 			_company.getCompanyId());
@@ -112,15 +105,16 @@ public class CompanyInfoLocalServiceTest {
 			_company.getKeyObj());
 	}
 
+	@Inject
+	private static CompanyInfoLocalService _companyInfoLocalService;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private static CounterLocalService _counterLocalService;
+
+	@DeleteAfterTestRun
 	private Company _company;
-
-	@Inject
-	private CompanyInfoLocalService _companyInfoLocalService;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
 
 }

@@ -34,6 +34,7 @@ public class CompanyInfoLocalServiceImpl
 	 * @return the matching company info, or <code>null</code> if a matching
 	 * 			company info could not be found
 	 */
+	@Override
 	public CompanyInfo fetchByCompanyId(long companyId) {
 		return companyInfoPersistence.fetchByCompanyId(companyId);
 	}

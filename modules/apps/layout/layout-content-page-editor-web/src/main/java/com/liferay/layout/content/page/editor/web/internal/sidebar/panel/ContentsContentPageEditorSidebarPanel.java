@@ -69,15 +69,15 @@ public class ContentsContentPageEditorSidebarPanel
 		boolean pageIsDisplayPage) {
 
 		try {
-			if (!_layoutPermission.contains(
-					permissionChecker, plid, ActionKeys.UPDATE) &&
-				!_layoutPermission.contains(
+			if (_layoutPermission.contains(
+					permissionChecker, plid, ActionKeys.UPDATE) ||
+				_layoutPermission.contains(
 					permissionChecker, plid,
-					ActionKeys.UPDATE_LAYOUT_CONTENT) &&
-				!_modelResourcePermission.contains(
+					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+				_modelResourcePermission.contains(
 					permissionChecker, plid, ActionKeys.UPDATE)) {
 
-				return false;
+				return true;
 			}
 		}
 		catch (Exception e) {
@@ -86,7 +86,7 @@ public class ContentsContentPageEditorSidebarPanel
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

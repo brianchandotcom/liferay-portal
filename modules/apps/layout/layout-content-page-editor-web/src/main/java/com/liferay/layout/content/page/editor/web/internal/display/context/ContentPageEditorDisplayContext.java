@@ -91,6 +91,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -326,7 +327,8 @@ public class ContentPageEditorDisplayContext {
 				editorSoyContext.get("segmentsExperienceId")
 			).put(
 				"showResolvedComments",
-				editorSoyContext.get("showResolvedComments")
+				GetterUtil.getBoolean(
+					editorSoyContext.get("showResolvedComments"))
 			).build()
 		).build();
 	}

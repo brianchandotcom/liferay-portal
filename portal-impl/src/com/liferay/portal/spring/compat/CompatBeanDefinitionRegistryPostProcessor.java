@@ -45,14 +45,8 @@ public class CompatBeanDefinitionRegistryPostProcessor
 			builder.setFactoryMethod("newDummyInstance");
 			builder.addConstructorArgValue(clazz);
 
-			String beanName = clazz.getName();
-
-			if (beanName.endsWith("Persistence")) {
-				builder.setParentName("basePersistence");
-			}
-
 			beanDefinitionRegistry.registerBeanDefinition(
-				beanName, builder.getBeanDefinition());
+				clazz.getName(), builder.getBeanDefinition());
 		}
 	}
 

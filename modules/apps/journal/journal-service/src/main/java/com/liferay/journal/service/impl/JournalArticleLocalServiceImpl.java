@@ -1277,14 +1277,9 @@ public class JournalArticleLocalServiceImpl
 
 		// Trash
 
-		if (article.isInTrash()) {
-			com.liferay.trash.kernel.model.TrashEntry trashEntry =
-				article.getTrashEntry();
-
-			if (trashEntry != null) {
-				_trashVersionLocalService.deleteTrashVersion(
-					JournalArticle.class.getName(), article.getId());
-			}
+		if (article.isInTrash() && (article.getTrashEntry() != null)) {
+			_trashVersionLocalService.deleteTrashVersion(
+				JournalArticle.class.getName(), article.getId());
 		}
 
 		// Workflow

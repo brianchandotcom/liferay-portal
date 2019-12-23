@@ -52,6 +52,7 @@ public class WikiPageAttachmentResourceTest
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCommand("update");
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
 		WikiNode wikiNode = WikiNodeLocalServiceUtil.addNode(

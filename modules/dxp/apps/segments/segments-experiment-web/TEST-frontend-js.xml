@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite hostname="" id="0" errors="0" failures="0" name="Jest" package=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web" skipped="0" tests="44" time="0" timestamp="1577119917352">
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="ReviewExperimentModal Estimated days Triggers on first render" time="0.097">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="ReviewExperimentModal Estimated days Triggers on confidence level change" time="0.129">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="ReviewExperimentModal Estimated days Triggers on every split level change" time="0.094">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="ReviewExperimentModal Estimated days Informs user about an error" time="0.043">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="ReviewExperimentModal Estimated days Informs user about estimation" time="0.034">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal Experiment renders when goal value is click" time="0.157">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal User clicks in set element button, the button turns from default to active mode" time="0.026">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal The user can set a click target element in a draft experiment" time="0.004">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal The user can edit a selected click target element in a draft experiment" time="0.005">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal When the user set element as click target, then the element is set as the click target and the id of the element as a link" time="0.004">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal All clickable elements highlighted when the user clicks on set element button" time="0">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal A tooltip click element to set as click target for your goal appears when the user clicks on set element button" time="0">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal Selectable as target elements show tooltips on hover" time="0">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal Cancel selection click target element proccess when clicking out of selection zone" time="0">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal When hovering over to invalid click target elements, the mouse is displayed in not-allowed mode" time="0">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal The user can remove a selected click target in a draft element" time="0">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Segments Experiments with Click Goal The user clicks in the UI reference to the selected click target element, the page scrolls to make it visible" time="0">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="SegmentsExperimentsSidebar Renders info message ab testing panel only available for content pages" time="0.049">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="SegmentsExperimentsSidebar Renders ab testing panel with experience selected and zero experiments" time="0.023">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="SegmentsExperimentsSidebar Renders ab testing panel with experience selected and an experiment" time="0.113">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="SegmentsExperimentsSidebar Renders modal to create experiment when the user clicks on create test button" time="0.183">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="SegmentsExperimentsSidebar Renders experiment status label" time="0.046">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="SegmentsExperimentsSidebar Renders experiment without actions when it&apos;s not editable" time="0.009">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="SegmentsExperimentsSidebar Sidebar indicates mandatory sections in sidebar with asterisks icons" time="0.052">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Variants Renders no variants message" time="0.041">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Variants Renders variant list" time="0.069">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Variants Create variant button" time="0.647">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Variants Renders variants without create variant button when it&apos;s not editable" time="0.006">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Review and Run test Can view review experiment modal" time="0.246">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Review and Run test Error messages appears when the user clicks in review and run and there is no click target element selected" time="0.064">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Review and Run test Error messages appears when the user clicks in review and run and there is only the control variant created" time="0.06">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Review and Run test Can run test that won&apos;t be editable" time="0.293">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Review and Run test Variants cannot be edited/deleted/added in a running experiment" time="0.011">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Experiment History Tab Experiment is archived after terminating it" time="0.056">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Experiment History Tab Experiment is archive after completing it" time="0.197">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Experiment History Tab Experiments have name, description and status label" time="0.152">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="No Winner Declared Experiment has basic no winner declared elements" time="0.011">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="No Winner Declared Variant publish action button when confirming in no winner declared status" time="0.057">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="No Winner Declared Variant publish action button when not confirming in no winner declared status" time="0.011">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Winner declared Experiment has basic winner declared elements" time="0.019">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Winner declared Variant publish winner action button in alert in winner declared status" time="0.05">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Winner declared Variant publish action button when confirming in winner declared status" time="0.053">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Winner declared Variant publish action button when not confirming in winner declared status" time="0.013">
+  </testcase>
+  <testcase classname=".Users.liferay.Documents.Liferay.liferay-portal.modules.dxp.apps.segments.segments-experiment-web.test.js.components" name="Winner declared Discard button action" time="0.049">
+  </testcase>
+</testsuite>

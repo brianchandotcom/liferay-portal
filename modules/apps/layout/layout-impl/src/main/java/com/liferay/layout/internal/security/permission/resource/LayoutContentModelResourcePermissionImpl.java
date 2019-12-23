@@ -16,13 +16,14 @@ package com.liferay.layout.internal.security.permission.resource;
 
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.layout.util.permission.resource.ModelResourcePermission;
+import com.liferay.layout.util.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import java.util.List;
 
@@ -34,8 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = ModelResourcePermission.class)
-public class ModelResourcePermissionImpl implements ModelResourcePermission {
+@Component(
+	immediate = true, service = LayoutContentModelResourcePermission.class
+)
+public class LayoutContentModelResourcePermissionImpl
+	implements LayoutContentModelResourcePermission {
 
 	public boolean contains(
 		PermissionChecker permissionChecker, long plid, String actionId) {
@@ -62,9 +66,8 @@ public class ModelResourcePermissionImpl implements ModelResourcePermission {
 		PermissionChecker permissionChecker, String className, long classPK,
 		String actionId) {
 
-		com.liferay.portal.kernel.security.permission.resource.
-			ModelResourcePermission modelResourcePermission =
-				_modelResourcePermissionServiceTrackerMap.getService(className);
+		ModelResourcePermission modelResourcePermission =
+			_modelResourcePermissionServiceTrackerMap.getService(className);
 
 		if (modelResourcePermission == null) {
 			return false;
@@ -88,19 +91,15 @@ public class ModelResourcePermissionImpl implements ModelResourcePermission {
 	protected void activate(BundleContext bundleContext) {
 		_modelResourcePermissionServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				com.liferay.portal.kernel.security.permission.resource.
-					ModelResourcePermission.class,
+				bundleContext, ModelResourcePermission.class,
 				"model.class.name");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ModelResourcePermissionImpl.class);
+		LayoutContentModelResourcePermissionImpl.class);
 
-	private static ServiceTrackerMap
-		<String,
-		 com.liferay.portal.kernel.security.permission.resource.
-			 ModelResourcePermission> _modelResourcePermissionServiceTrackerMap;
+	private static ServiceTrackerMap<String, ModelResourcePermission>
+		_modelResourcePermissionServiceTrackerMap;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

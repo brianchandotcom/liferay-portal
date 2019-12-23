@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
-import com.liferay.layout.util.permission.resource.ModelResourcePermission;
+import com.liferay.layout.util.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,11 +43,12 @@ public class ModelResourcePermissionUtil {
 
 	@Reference(unbind = "-")
 	protected void setsModelResourcePermission(
-		ModelResourcePermission modelResourcePermission) {
+		LayoutContentModelResourcePermission modelResourcePermission) {
 
 		_modelResourcePermission = modelResourcePermission;
 	}
 
-	private static ModelResourcePermission _modelResourcePermission;
+	private static LayoutContentModelResourcePermission
+		_modelResourcePermission;
 
 }

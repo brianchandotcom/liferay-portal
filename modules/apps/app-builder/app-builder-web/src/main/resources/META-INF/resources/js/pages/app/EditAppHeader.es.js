@@ -36,10 +36,14 @@ export default () => {
 		});
 	};
 
+	const maxLength = 30;
+
 	return (
 		<>
 			<div className="align-items-center bg-transparent card-header d-flex justify-content-between">
 				<UpperToolbarInput
+					charsLeft={maxLength - appName.length}
+					maxLength={maxLength}
 					onInput={onAppNameChange}
 					placeholder={Liferay.Language.get('untitled-app')}
 					value={appName}

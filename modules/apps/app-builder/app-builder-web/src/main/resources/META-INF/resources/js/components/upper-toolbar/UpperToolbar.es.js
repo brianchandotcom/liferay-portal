@@ -52,6 +52,7 @@ const UpperToolbarButton = ({children, ...otherProps}) => {
 const UpperToolbarInput = ({
 	onChange = () => {},
 	placeholder,
+	charsLeft,
 	...otherProps
 }) => {
 	return (
@@ -66,6 +67,13 @@ const UpperToolbarInput = ({
 						type="text"
 						{...otherProps}
 					/>
+					{charsLeft ? (
+						<div className="card-subtitle text-muted">
+							{charsLeft}
+						</div>
+					) : (
+						<div className="card-subtitle text-muted">{0}</div>
+					)}
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 		</UpperToolbarItem>

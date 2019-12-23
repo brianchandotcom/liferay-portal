@@ -34,7 +34,7 @@ public class TargetPlatformPluginUtil {
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
-		DependencyHandler dependencyHandler = project.getDependencies();
+		final DependencyHandler dependencyHandler = project.getDependencies();
 
 		configurationContainer.all(
 			new Action<Configuration>() {

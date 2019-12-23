@@ -14,8 +14,8 @@
 
 package com.liferay.sharepoint.connector.operation;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sharepoint.connector.SharepointConnectionInfo;
 import com.liferay.sharepoint.connector.SharepointObject;
 import com.liferay.sharepoint.connector.schema.XMLHelper;

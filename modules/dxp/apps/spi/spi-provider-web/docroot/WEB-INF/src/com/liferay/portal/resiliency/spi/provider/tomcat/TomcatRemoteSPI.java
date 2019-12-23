@@ -14,10 +14,10 @@
 
 package com.liferay.portal.resiliency.spi.provider.tomcat;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.remote.RemoteSPI;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 import java.io.FileOutputStream;

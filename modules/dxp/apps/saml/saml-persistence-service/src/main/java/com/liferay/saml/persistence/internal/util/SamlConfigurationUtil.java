@@ -14,8 +14,8 @@
 
 package com.liferay.saml.persistence.internal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 
 import java.io.IOException;

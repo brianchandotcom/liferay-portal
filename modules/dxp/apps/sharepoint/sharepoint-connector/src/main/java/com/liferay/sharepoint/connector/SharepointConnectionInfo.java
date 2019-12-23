@@ -15,7 +15,7 @@
 package com.liferay.sharepoint.connector;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.connector.operation.URLHelper;
 

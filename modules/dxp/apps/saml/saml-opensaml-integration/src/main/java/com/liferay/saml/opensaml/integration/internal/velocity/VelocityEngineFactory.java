@@ -14,7 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.velocity;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Map;
 

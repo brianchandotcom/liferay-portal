@@ -21,10 +21,10 @@ import com.documentum.fc.common.IDfTime;
 
 import com.liferay.document.library.repository.external.ExtRepositoryModel;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Date;
 import java.util.EnumSet;

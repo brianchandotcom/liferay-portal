@@ -14,8 +14,8 @@
 
 package com.liferay.portal.reports.engine.console.jasper.internal.exporter;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.ReportExportException;
 import com.liferay.portal.reports.engine.ReportFormatExporter;
 import com.liferay.portal.reports.engine.ReportRequest;

@@ -16,10 +16,10 @@ package com.liferay.oauth.util;
 
 import com.liferay.oauth.configuration.OAuthConfigurationValues;
 import com.liferay.oauth.constants.OAuthConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.OutputStream;
 

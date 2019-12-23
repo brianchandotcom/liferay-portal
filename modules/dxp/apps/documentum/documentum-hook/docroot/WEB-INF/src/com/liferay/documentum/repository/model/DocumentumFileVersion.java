@@ -20,8 +20,8 @@ import com.documentum.fc.common.IDfId;
 import com.documentum.fc.common.IDfTime;
 
 import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Date;
 

@@ -14,9 +14,9 @@
 
 package com.liferay.saml.runtime.internal.upgrade;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.saml.runtime.internal.upgrade.v1_0_0.UpgradeSamlKeyStoreProperties;
 
 import java.util.Dictionary;

@@ -15,8 +15,8 @@
 package com.liferay.sharepoint.connector;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sharepoint.connector.operation.AddFolderOperation;
 import com.liferay.sharepoint.connector.operation.AddOrUpdateFileOperation;
 import com.liferay.sharepoint.connector.operation.BatchOperation;

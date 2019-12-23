@@ -15,7 +15,7 @@
 package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model;
 
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Date;
 

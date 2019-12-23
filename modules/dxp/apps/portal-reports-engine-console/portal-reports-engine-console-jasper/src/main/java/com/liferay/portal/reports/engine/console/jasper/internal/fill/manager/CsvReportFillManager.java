@@ -14,7 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.jasper.internal.fill.manager;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.ReportRequest;
 

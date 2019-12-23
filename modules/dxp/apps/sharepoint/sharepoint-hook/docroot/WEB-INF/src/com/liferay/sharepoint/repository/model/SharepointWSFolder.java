@@ -15,7 +15,7 @@
 package com.liferay.sharepoint.repository.model;
 
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.sharepoint.connector.SharepointObject;
 
 /**

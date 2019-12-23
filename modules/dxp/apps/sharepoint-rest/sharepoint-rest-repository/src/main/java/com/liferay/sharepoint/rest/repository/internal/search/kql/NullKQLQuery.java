@@ -14,7 +14,7 @@
 
 package com.liferay.sharepoint.rest.repository.internal.search.kql;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Adolfo Pérez

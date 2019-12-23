@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 /**
  * @author Rubén Pulido
  */
-public interface ModelResourcePermission {
+public interface LayoutContentModelResourcePermission {
 
 	public boolean contains(
 		PermissionChecker permissionChecker, long plid, String actionId);

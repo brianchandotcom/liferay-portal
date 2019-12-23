@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
-import com.liferay.layout.util.permission.resource.ModelResourcePermission;
+import com.liferay.layout.util.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -96,6 +96,6 @@ public class ContentsContentPageEditorSidebarPanel
 	private LayoutPermission _layoutPermission;
 
 	@Reference
-	private ModelResourcePermission _modelResourcePermission;
+	private LayoutContentModelResourcePermission _modelResourcePermission;
 
 }

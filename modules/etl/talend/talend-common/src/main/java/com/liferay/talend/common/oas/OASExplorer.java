@@ -33,22 +33,6 @@ import javax.json.JsonObject;
  */
 public class OASExplorer {
 
-	public Set<String> getEndpointList(
-		JsonObject oasJsonObject, String... operations) {
-
-		if (operations.length == 0) {
-			return _extractPaths(oasJsonObject, null);
-		}
-
-		Set<String> endpoints = new HashSet<>();
-
-		for (String operation : operations) {
-			endpoints.addAll(_extractPaths(oasJsonObject, operation));
-		}
-
-		return endpoints;
-	}
-
 	public Set<String> getEntitySchemaNames(JsonObject oasJsonObject) {
 		Set<String> entitySchemaNames = new HashSet<>();
 
@@ -66,6 +50,22 @@ public class OASExplorer {
 			});
 
 		return entitySchemaNames;
+	}
+
+	public Set<String> getOperationPaths(
+		JsonObject oasJsonObject, String... operations) {
+
+		if (operations.length == 0) {
+			return _extractPaths(oasJsonObject, null);
+		}
+
+		Set<String> paths = new HashSet<>();
+
+		for (String operation : operations) {
+			paths.addAll(_extractPaths(oasJsonObject, operation));
+		}
+
+		return paths;
 	}
 
 	public List<OASParameter> getPathOperationOASParameters(

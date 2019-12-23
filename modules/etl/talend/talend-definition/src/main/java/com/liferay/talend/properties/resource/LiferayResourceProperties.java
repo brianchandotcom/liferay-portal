@@ -115,7 +115,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		try {
 			Set<String> endpoints = StringUtil.stripPrefix(
 				_getOpenAPIModuleVersionPath(),
-				_getEndpoints(liferayOASSource.getOASSource()));
+				_getPaths(liferayOASSource.getOASSource()));
 
 			if (!endpoints.isEmpty()) {
 				endpoint.setPossibleNamedThingValues(
@@ -300,13 +300,6 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		return uriBuilder.build();
 	}
 
-	private Set<String> _getEndpoints(OASSource oasSource) {
-		OASExplorer oasExplorer = new OASExplorer();
-
-		return oasExplorer.getEndpointList(
-			oasSource.getOASJsonObject(getOpenAPIUrl()), _getOperations());
-	}
-
 	private URI _getEndpointURI() {
 		UriBuilder uriBuilder = UriBuilder.fromPath(_getEndpointBase());
 
@@ -365,6 +358,13 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		}
 
 		return operations;
+	}
+
+	private Set<String> _getPaths(OASSource oasSource) {
+		OASExplorer oasExplorer = new OASExplorer();
+
+		return oasExplorer.getOperationPaths(
+			oasSource.getOASJsonObject(getOpenAPIUrl()), _getOperations());
 	}
 
 	private boolean _isAllowedOperation(Operation operation) {

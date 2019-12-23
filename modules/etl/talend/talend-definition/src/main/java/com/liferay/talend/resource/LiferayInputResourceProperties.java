@@ -117,7 +117,7 @@ public class LiferayInputResourceProperties
 	protected Set<String> getEndpoints(OASSource oasSource) {
 		OASExplorer oasExplorer = new OASExplorer();
 
-		return oasExplorer.getEndpointList(
+		return oasExplorer.getOperationPaths(
 			oasSource.getOASJsonObject(), OASConstants.OPERATION_GET);
 	}
 

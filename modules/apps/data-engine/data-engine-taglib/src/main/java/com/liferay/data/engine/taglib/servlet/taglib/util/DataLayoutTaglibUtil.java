@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -120,10 +121,10 @@ public class DataLayoutTaglibUtil {
 	}
 
 	public static JSONArray getFieldTypesJSONArray(
-		HttpServletRequest httpServletRequest) {
+		List<String> excludeFields, HttpServletRequest httpServletRequest) {
 
 		return _dataLayoutTaglibUtil._getFieldTypesJSONArray(
-			httpServletRequest);
+			excludeFields, httpServletRequest);
 	}
 
 	public static String renderDataLayout(
@@ -288,7 +289,9 @@ public class DataLayoutTaglibUtil {
 	}
 
 	private JSONArray _getFieldTypesJSONArray(
-		HttpServletRequest httpServletRequest) {
+		List<String> excludeFields, HttpServletRequest httpServletRequest) {
+
+		JSONArray fieldTypesJSONArray = _jsonFactory.createJSONArray();
 
 		String cookie = CookieKeys.getCookie(
 			httpServletRequest, CookieKeys.JSESSIONID);
@@ -306,12 +309,26 @@ public class DataLayoutTaglibUtil {
 			).build();
 
 		try {
-			return _jsonFactory.createJSONArray(
+			JSONArray jsonArray = _jsonFactory.createJSONArray(
 				dataDefinitionResource.
 					getDataDefinitionDataDefinitionFieldFieldTypes());
+
+			if (ListUtil.isEmpty(excludeFields)) {
+				return jsonArray;
+			}
+
+			for (JSONObject jsonObject : (Iterable<JSONObject>)jsonArray) {
+				if (excludeFields.contains(jsonObject.getString("name"))) {
+					continue;
+				}
+
+				fieldTypesJSONArray.put(jsonObject);
+			}
+
+			return fieldTypesJSONArray;
 		}
 		catch (Exception e) {
-			return _jsonFactory.createJSONArray();
+			return fieldTypesJSONArray;
 		}
 	}
 

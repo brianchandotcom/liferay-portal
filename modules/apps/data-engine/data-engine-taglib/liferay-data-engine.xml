@@ -32,6 +32,11 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<name>excludeFields</name>
+				<inputType>java.util.List</inputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>localizable</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

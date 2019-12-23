@@ -36,6 +36,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -116,6 +117,12 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 				}
 			}
 			catch (Exception e) {
+				Logger logger = project.getLogger();
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(
+						"Unable to add BOM dependencies from {}", bomFile);
+				}
 			}
 		}
 	}

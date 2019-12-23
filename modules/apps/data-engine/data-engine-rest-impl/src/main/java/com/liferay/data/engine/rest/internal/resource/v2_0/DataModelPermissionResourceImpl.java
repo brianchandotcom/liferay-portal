@@ -16,15 +16,12 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
 import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
-import com.liferay.data.engine.rest.internal.constants.DataLayoutConstants;
 import com.liferay.data.engine.rest.internal.constants.DataRecordCollectionConstants;
 import com.liferay.data.engine.rest.internal.resource.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataModelPermissionResource;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -149,26 +146,6 @@ public class DataModelPermissionResourceImpl
 	}
 
 	@Override
-	public void putDataLayoutDataModelPermission(
-			Long dataLayoutId, DataModelPermission[] dataModelPermissions)
-		throws Exception {
-
-		DDMStructureLayout ddmStructureLayout =
-			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
-
-		DataEnginePermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, _groupLocalService,
-			ddmStructureLayout.getGroupId());
-
-		_resourcePermissionLocalService.updateResourcePermissions(
-			ddmStructureLayout.getCompanyId(), ddmStructureLayout.getGroupId(),
-			DataLayoutConstants.RESOURCE_NAME, String.valueOf(dataLayoutId),
-			_getModelPermissions(
-				ddmStructureLayout.getCompanyId(), dataModelPermissions,
-				dataLayoutId, DataLayoutConstants.RESOURCE_NAME));
-	}
-
-	@Override
 	public void putDataRecordCollectionDataModelPermission(
 			Long dataRecordCollectionId,
 			DataModelPermission[] dataModelPermissions)
@@ -280,9 +257,6 @@ public class DataModelPermissionResourceImpl
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-
-	@Reference
-	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -876,68 +876,6 @@ paths:
                     description:
                         ""
             tags: ["DataLayout"]
-    "/data-layouts/{dataLayoutId}/data-model-permissions":
-        get:
-            operationId: getDataLayoutDataModelPermissionsPage
-            parameters:
-                - in: path
-                  name: dataLayoutId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: roleNames
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/DataModelPermission"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/DataModelPermission"
-                                type: array
-                    description:
-                        ""
-            tags: ["DataModelPermission"]
-        put:
-            operationId: putDataLayoutDataModelPermission
-            parameters:
-                - in: path
-                  name: dataLayoutId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            items:
-                                $ref: "#/components/schemas/DataModelPermission"
-                            type: array
-                    application/xml:
-                        schema:
-                            items:
-                                $ref: "#/components/schemas/DataModelPermission"
-                            type: array
-                description:
-                    ""
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataModelPermission"]
     "/data-list-views/{dataListViewId}":
         delete:
             operationId: deleteDataListView

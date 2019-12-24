@@ -17,6 +17,7 @@ package com.liferay.headless.batch.engine.internal.resource.v1_0;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
@@ -97,8 +98,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.DELETE, _getBytes(object, contentType),
-			callbackURL, className, _getContentType(contentType), null,
-			version);
+			callbackURL, className, _getBatchEngineTaskContentType(contentType),
+			null, version);
 	}
 
 	@Override
@@ -131,7 +132,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.CREATE, _getBytes(object, contentType),
-			callbackURL, className, _getContentType(contentType),
+			callbackURL, className, _getBatchEngineTaskContentType(contentType),
 			fieldNameMapping, version);
 	}
 
@@ -157,8 +158,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE, _getBytes(object, contentType),
-			callbackURL, className, _getContentType(contentType), null,
-			version);
+			callbackURL, className, _getBatchEngineTaskContentType(contentType),
+			null, version);
 	}
 
 	@Activate
@@ -181,6 +182,20 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				String.valueOf(entry.getKey()),
 				GetterUtil.getInteger(entry.getValue()));
 		}
+	}
+
+	private String _getBatchEngineTaskContentType(String contentType) {
+		if (contentType.equals(MediaType.APPLICATION_JSON)) {
+			return String.valueOf(BatchEngineTaskContentType.JSON);
+		}
+		else if (contentType.equals("application/x-ndjson")) {
+			return String.valueOf(BatchEngineTaskContentType.JSONL);
+		}
+		else if (contentType.equals("text/csv")) {
+			return String.valueOf(BatchEngineTaskContentType.CSV);
+		}
+
+		return contentType;
 	}
 
 	private byte[] _getBytes(Object object, String contentType)
@@ -237,20 +252,6 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return new AbstractMap.SimpleImmutableEntry<>(
 			unsyncByteArrayOutputStream.toByteArray(),
 			_file.getExtension(fileName));
-	}
-
-	private String _getContentType(String contentType) {
-		if (contentType.equals(MediaType.APPLICATION_JSON)) {
-			return "json";
-		}
-		else if (contentType.equals("application/x-ndjson")) {
-			return "jsonl";
-		}
-		else if (contentType.equals("text/csv")) {
-			return "csv";
-		}
-
-		return contentType;
 	}
 
 	private UnsyncByteArrayOutputStream _getUnsyncByteArrayOutputStream(

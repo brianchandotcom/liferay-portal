@@ -14,10 +14,8 @@
 
 package com.liferay.portal.service.test;
 
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.UserWorkflowHandler;
-import com.liferay.portlet.usersadmin.util.ContactIndexer;
 
 /**
  * @author     Roberto Díaz
@@ -27,13 +25,6 @@ import com.liferay.portlet.usersadmin.util.ContactIndexer;
 public class PortalRegisterTestUtil {
 
 	protected static void registerIndexers() {
-		if (_indexersRegistered) {
-			return;
-		}
-
-		IndexerRegistryUtil.register(new ContactIndexer());
-
-		_indexersRegistered = true;
 	}
 
 	protected static void registerWorkflowHandlers() {
@@ -46,7 +37,6 @@ public class PortalRegisterTestUtil {
 		_workflowHandlersRegistered = true;
 	}
 
-	private static boolean _indexersRegistered;
 	private static boolean _workflowHandlersRegistered;
 
 }

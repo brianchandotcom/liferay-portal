@@ -330,21 +330,6 @@ public class ExtRepositoryFileEntryAdapter
 	}
 
 	@Override
-	public long getVersionUserId() {
-		return getUserId();
-	}
-
-	@Override
-	public String getVersionUserName() {
-		return getUserName();
-	}
-
-	@Override
-	public String getVersionUserUuid() {
-		return getUserUuid();
-	}
-
-	@Override
 	public boolean hasLock() {
 		if (!isCheckedOut()) {
 			return false;

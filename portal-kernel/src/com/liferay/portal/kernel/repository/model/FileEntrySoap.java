@@ -34,8 +34,6 @@ public class FileEntrySoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
-		soapModel.setVersionUserId(model.getVersionUserId());
-		soapModel.setVersionUserName(model.getVersionUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRepositoryId(model.getRepositoryId());
@@ -158,14 +156,6 @@ public class FileEntrySoap implements Serializable {
 		return _version;
 	}
 
-	public long getVersionUserId() {
-		return _versionUserId;
-	}
-
-	public String getVersionUserName() {
-		return _versionUserName;
-	}
-
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 	}
@@ -234,14 +224,6 @@ public class FileEntrySoap implements Serializable {
 		_version = version;
 	}
 
-	public void setVersionUserId(long versionUserId) {
-		_versionUserId = versionUserId;
-	}
-
-	public void setVersionUserName(String versionUserName) {
-		_versionUserName = versionUserName;
-	}
-
 	private long _companyId;
 	private Date _createDate;
 	private String _description;
@@ -258,7 +240,5 @@ public class FileEntrySoap implements Serializable {
 	private String _userName;
 	private String _uuid;
 	private String _version;
-	private long _versionUserId;
-	private String _versionUserName;
 
 }

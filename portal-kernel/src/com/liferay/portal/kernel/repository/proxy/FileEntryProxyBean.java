@@ -16,11 +16,8 @@ package com.liferay.portal.kernel.repository.proxy;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -292,69 +289,6 @@ public class FileEntryProxyBean
 		return _fileEntry.getVersion();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             FileVersionProxyBean#getUserId()}
-	 */
-	@Deprecated
-	@Override
-	public long getVersionUserId() {
-		long versionUserId = 0;
-
-		try {
-			FileVersion fileVersion = _fileEntry.getFileVersion();
-
-			versionUserId = fileVersion.getUserId();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return versionUserId;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             FileVersionProxyBean#getUserName()}
-	 */
-	@Deprecated
-	@Override
-	public String getVersionUserName() {
-		String versionUserName = StringPool.BLANK;
-
-		try {
-			FileVersion fileVersion = _fileEntry.getFileVersion();
-
-			versionUserName = fileVersion.getUserName();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return versionUserName;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             FileVersionProxyBean#getUserUuid()}
-	 */
-	@Deprecated
-	@Override
-	public String getVersionUserUuid() {
-		String versionUserUuid = StringPool.BLANK;
-
-		try {
-			FileVersion fileVersion = _fileEntry.getFileVersion();
-
-			versionUserUuid = fileVersion.getUserUuid();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return versionUserUuid;
-	}
-
 	@Override
 	public boolean hasLock() {
 		return _fileEntry.hasLock();
@@ -475,9 +409,6 @@ public class FileEntryProxyBean
 
 		return newFileEntryProxyBean(fileEntry);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FileEntryProxyBean.class);
 
 	private final FileEntry _fileEntry;
 

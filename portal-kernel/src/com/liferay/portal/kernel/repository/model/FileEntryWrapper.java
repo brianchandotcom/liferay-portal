@@ -298,21 +298,6 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
-	public long getVersionUserId() {
-		return _fileEntry.getVersionUserId();
-	}
-
-	@Override
-	public String getVersionUserName() {
-		return _fileEntry.getVersionUserName();
-	}
-
-	@Override
-	public String getVersionUserUuid() {
-		return _fileEntry.getVersionUserUuid();
-	}
-
-	@Override
 	public FileEntry getWrappedModel() {
 		return _fileEntry;
 	}

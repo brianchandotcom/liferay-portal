@@ -175,12 +175,6 @@ public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 
 	public String getVersion();
 
-	public long getVersionUserId();
-
-	public String getVersionUserName();
-
-	public String getVersionUserUuid();
-
 	public boolean hasLock();
 
 	public boolean isCheckedOut();

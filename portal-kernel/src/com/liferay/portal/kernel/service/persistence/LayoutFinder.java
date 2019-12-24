@@ -24,9 +24,6 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface LayoutFinder {
 
 	public java.util.List<com.liferay.portal.kernel.model.Layout>
-		findByNoPermissions(long roleId);
-
-	public java.util.List<com.liferay.portal.kernel.model.Layout>
 		findByNullFriendlyURL();
 
 	public java.util.List<com.liferay.portal.kernel.model.Layout>

@@ -23,12 +23,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 public class LayoutFinderUtil {
 
 	public static java.util.List<com.liferay.portal.kernel.model.Layout>
-		findByNoPermissions(long roleId) {
-
-		return getFinder().findByNoPermissions(roleId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Layout>
 		findByNullFriendlyURL() {
 
 		return getFinder().findByNullFriendlyURL();

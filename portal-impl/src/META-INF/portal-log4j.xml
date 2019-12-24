@@ -576,10 +576,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.servlet.FriendlyURLServlet">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.servlet.LanguageServlet">
 		<priority value="WARN" />
 	</category>

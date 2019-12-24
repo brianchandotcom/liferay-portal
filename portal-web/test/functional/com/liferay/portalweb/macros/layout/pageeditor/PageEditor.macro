@@ -984,6 +984,12 @@ definition {
 		}
 	}
 
+	macro viewNoFragment {
+		AssertElementNotPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+	}
+
 	macro waitForAutoSave {
 		Pause(locator1 = "1000");
 

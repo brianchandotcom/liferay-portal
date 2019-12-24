@@ -268,9 +268,9 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationUserAccountsPage_getOrganizationId();
-		Long irrelevantOrganizationId =
+		String irrelevantOrganizationId =
 			testGetOrganizationUserAccountsPage_getIrrelevantOrganizationId();
 
 		if ((irrelevantOrganizationId != null)) {
@@ -320,7 +320,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return;
 		}
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationUserAccountsPage_getOrganizationId();
 
 		UserAccount userAccount1 = randomUserAccount();
@@ -352,7 +352,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return;
 		}
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationUserAccountsPage_getOrganizationId();
 
 		UserAccount userAccount1 =
@@ -381,7 +381,7 @@ public abstract class BaseUserAccountResourceTestCase {
 	public void testGetOrganizationUserAccountsPageWithPagination()
 		throws Exception {
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationUserAccountsPage_getOrganizationId();
 
 		UserAccount userAccount1 =
@@ -492,7 +492,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			return;
 		}
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationUserAccountsPage_getOrganizationId();
 
 		UserAccount userAccount1 = randomUserAccount();
@@ -530,21 +530,21 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	protected UserAccount testGetOrganizationUserAccountsPage_addUserAccount(
-			Long organizationId, UserAccount userAccount)
+			String organizationId, UserAccount userAccount)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationUserAccountsPage_getOrganizationId()
+	protected String testGetOrganizationUserAccountsPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
+	protected String
 			testGetOrganizationUserAccountsPage_getIrrelevantOrganizationId()
 		throws Exception {
 

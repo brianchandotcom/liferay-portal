@@ -14,29 +14,10 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
-import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
-import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
-import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
-import com.liferay.headless.admin.user.dto.v1_0.Phone;
-import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
-import com.liferay.headless.admin.user.dto.v1_0.Service;
-import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
-import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.helper.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.OrganizationEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.model.OrgLabor;
-import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -45,25 +26,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
-import com.liferay.portal.kernel.service.CountryService;
-import com.liferay.portal.kernel.service.EmailAddressService;
-import com.liferay.portal.kernel.service.OrgLaborService;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.PhoneService;
-import com.liferay.portal.kernel.service.RegionService;
-import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -82,8 +54,10 @@ public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements EntityModelResource {
 
 	@Override
-	public void deleteOrganization(Long organizationId) throws Exception {
-		_organizationService.deleteOrganization(organizationId);
+	public void deleteOrganization(String organizationId) throws Exception {
+		long id = _getOrganizationId(organizationId);
+
+		_organizationService.deleteOrganization(id);
 	}
 
 	@Override
@@ -92,14 +66,15 @@ public class OrganizationResourceImpl
 	}
 
 	@Override
-	public Organization getOrganization(Long organizationId) throws Exception {
-		return _toOrganization(
-			_organizationService.getOrganization(organizationId));
+	public Organization getOrganization(String organizationId)
+		throws Exception {
+
+		return _toOrganization(organizationId);
 	}
 
 	@Override
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, Boolean flatten, String search,
+			String parentOrganizationId, Boolean flatten, String search,
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -114,45 +89,31 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		return _getOrganizationsPage(
-			0L, flatten, search, filter, pagination, sorts);
+			null, flatten, search, filter, pagination, sorts);
 	}
 
-	private HoursAvailable _createHoursAvailable(
-		int closeHour, String day, int openHour) {
-
-		return new HoursAvailable() {
-			{
-				closes = _formatHour(closeHour);
-				dayOfWeek = day;
-				opens = _formatHour(openHour);
-			}
-		};
-	}
-
-	private String _formatHour(int hour) {
-		if (hour == -1) {
-			return null;
+	private long _getOrganizationId(String organizationId) {
+		if (organizationId == null) {
+			return 0;
 		}
 
-		DecimalFormat decimalFormat = new DecimalFormat("00,00") {
-			{
-				setDecimalFormatSymbols(
-					new DecimalFormatSymbols() {
-						{
-							setGroupingSeparator(':');
-						}
-					});
-				setGroupingSize(2);
-			}
-		};
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationLocalService.fetchOrganizationByReferenceCode(
+				CompanyThreadLocal.getCompanyId(), organizationId);
 
-		return decimalFormat.format(hour);
+		if (organization == null) {
+			return GetterUtil.getLong(organizationId);
+		}
+
+		return GetterUtil.getLong(organization.getOrganizationId());
 	}
 
 	private Page<Organization> _getOrganizationsPage(
-			Long organizationId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			String organizationId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		long id = _getOrganizationId(organizationId);
 
 		return SearchUtil.search(
 			booleanQuery -> {
@@ -160,7 +121,7 @@ public class OrganizationResourceImpl
 					booleanQuery.getPreBooleanFilter();
 
 				if (GetterUtil.getBoolean(flatten)) {
-					if (organizationId != 0) {
+					if (id != 0L) {
 						booleanFilter.add(
 							new QueryFilter(
 								new WildcardQueryImpl(
@@ -175,8 +136,7 @@ public class OrganizationResourceImpl
 				else {
 					booleanFilter.add(
 						new TermFilter(
-							"parentOrganizationId",
-							String.valueOf(organizationId)),
+							"parentOrganizationId", String.valueOf(id)),
 						BooleanClauseOccur.MUST);
 				}
 			},
@@ -187,179 +147,29 @@ public class OrganizationResourceImpl
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
 			document -> _toOrganization(
-				_organizationService.getOrganization(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
+				GetterUtil.getString(document.get(Field.ENTRY_CLASS_PK))),
 			sorts);
 	}
 
-	private Organization _toOrganization(
-			com.liferay.portal.kernel.model.Organization organization)
+	private Organization _toOrganization(Object organizationId)
 		throws Exception {
 
-		if (organization == null) {
-			return null;
-		}
-
-		return new Organization() {
-			{
-				comment = organization.getComments();
-				customFields = CustomFieldsUtil.toCustomFields(
-					com.liferay.portal.kernel.model.Organization.class.
-						getName(),
-					organization.getOrganizationId(),
-					organization.getCompanyId(),
-					contextAcceptLanguage.getPreferredLocale());
-				dateCreated = organization.getCreateDate();
-				dateModified = organization.getModifiedDate();
-				id = organization.getOrganizationId();
-				keywords = ListUtil.toArray(
-					_assetTagLocalService.getTags(
-						organization.getModelClassName(),
-						organization.getOrganizationId()),
-					AssetTag.NAME_ACCESSOR);
-				location = new Location() {
-					{
-						setAddressCountry(
-							() -> {
-								if (organization.getCountryId() <= 0) {
-									return null;
-								}
-
-								Country country = _countryService.getCountry(
-									organization.getCountryId());
-
-								return country.getName(
-									contextAcceptLanguage.getPreferredLocale());
-							});
-						setAddressRegion(
-							() -> {
-								if (organization.getRegionId() <= 0) {
-									return null;
-								}
-
-								Region region = _regionService.getRegion(
-									organization.getRegionId());
-
-								return region.getName();
-							});
-					}
-				};
-				name = organization.getName();
-				numberOfOrganizations =
-					_organizationService.getOrganizationsCount(
-						organization.getCompanyId(),
-						organization.getOrganizationId());
-				organizationContactInformation =
-					new OrganizationContactInformation() {
-						{
-							emailAddresses = transformToArray(
-								_emailAddressService.getEmailAddresses(
-									organization.getModelClassName(),
-									organization.getOrganizationId()),
-								EmailAddressUtil::toEmail, EmailAddress.class);
-							postalAddresses = transformToArray(
-								organization.getAddresses(),
-								address -> PostalAddressUtil.toPostalAddress(
-									address,
-									contextAcceptLanguage.getPreferredLocale()),
-								PostalAddress.class);
-							telephones = transformToArray(
-								_phoneService.getPhones(
-									organization.getModelClassName(),
-									organization.getOrganizationId()),
-								PhoneUtil::toPhone, Phone.class);
-							webUrls = transformToArray(
-								_websiteService.getWebsites(
-									organization.getModelClassName(),
-									organization.getOrganizationId()),
-								WebUrlUtil::toWebUrl, WebUrl.class);
-						}
-					};
-				parentOrganization = _toOrganization(
-					organization.getParentOrganization());
-				services = transformToArray(
-					_orgLaborService.getOrgLabors(
-						organization.getOrganizationId()),
-					OrganizationResourceImpl.this::_toService, Service.class);
-
-				setImage(
-					() -> {
-						if (organization.getLogoId() <= 0) {
-							return null;
-						}
-
-						return StringBundler.concat(
-							_portal.getPathImage(),
-							"/organization_logo?img_id=",
-							organization.getLogoId(), "&t=",
-							WebServerServletTokenUtil.getToken(
-								organization.getLogoId()));
-					});
-			}
-		};
-	}
-
-	private Service _toService(OrgLabor orgLabor) throws Exception {
-		ListType listType = orgLabor.getType();
-
-		return new Service() {
-			{
-				hoursAvailable = new HoursAvailable[] {
-					_createHoursAvailable(
-						orgLabor.getSunClose(), "Sunday",
-						orgLabor.getSunOpen()),
-					_createHoursAvailable(
-						orgLabor.getMonClose(), "Monday",
-						orgLabor.getMonOpen()),
-					_createHoursAvailable(
-						orgLabor.getTueClose(), "Tuesday",
-						orgLabor.getTueOpen()),
-					_createHoursAvailable(
-						orgLabor.getWedClose(), "Wednesday",
-						orgLabor.getWedOpen()),
-					_createHoursAvailable(
-						orgLabor.getThuClose(), "Thursday",
-						orgLabor.getThuOpen()),
-					_createHoursAvailable(
-						orgLabor.getFriClose(), "Friday",
-						orgLabor.getFriOpen()),
-					_createHoursAvailable(
-						orgLabor.getSatClose(), "Saturday",
-						orgLabor.getSatOpen())
-				};
-				serviceType = listType.getName();
-			}
-		};
+		return _organizationResourceDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.getPreferredLocale(), organizationId,
+				contextUriInfo, contextUser));
 	}
 
 	private static final EntityModel _entityModel =
 		new OrganizationEntityModel();
 
 	@Reference
-	private AssetTagLocalService _assetTagLocalService;
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
-	private CountryService _countryService;
-
-	@Reference
-	private EmailAddressService _emailAddressService;
+	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;
 
 	@Reference
 	private OrganizationService _organizationService;
-
-	@Reference
-	private OrgLaborService _orgLaborService;
-
-	@Reference
-	private PhoneService _phoneService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private RegionService _regionService;
-
-	@Reference
-	private WebsiteService _websiteService;
 
 }

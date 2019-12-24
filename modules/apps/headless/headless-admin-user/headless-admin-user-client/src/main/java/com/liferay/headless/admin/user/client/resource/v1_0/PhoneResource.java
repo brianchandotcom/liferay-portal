@@ -38,11 +38,11 @@ public interface PhoneResource {
 		return new Builder();
 	}
 
-	public Page<Phone> getOrganizationPhonesPage(Long organizationId)
+	public Page<Phone> getOrganizationPhonesPage(String organizationId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getOrganizationPhonesPageHttpResponse(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
 	public Phone getPhone(Long phoneId) throws Exception;
@@ -112,7 +112,7 @@ public interface PhoneResource {
 
 	public static class PhoneResourceImpl implements PhoneResource {
 
-		public Page<Phone> getOrganizationPhonesPage(Long organizationId)
+		public Page<Phone> getOrganizationPhonesPage(String organizationId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -130,7 +130,7 @@ public interface PhoneResource {
 		}
 
 		public HttpInvoker.HttpResponse getOrganizationPhonesPageHttpResponse(
-				Long organizationId)
+				String organizationId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

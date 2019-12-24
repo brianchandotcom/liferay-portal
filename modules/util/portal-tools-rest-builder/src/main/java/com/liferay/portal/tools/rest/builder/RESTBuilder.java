@@ -883,26 +883,6 @@ public class RESTBuilder {
 			return s;
 		}
 
-		Content content = contents.get("application/json");
-
-		String reference = null;
-
-		if (content.getSchema() != null) {
-			Schema schema = content.getSchema();
-
-			reference = schema.getReference();
-
-			if (schema.getItems() != null) {
-				Items items = schema.getItems();
-
-				reference = items.getReference();
-			}
-		}
-
-		if (reference == null) {
-			return s;
-		}
-
 		StringBuilder sb = new StringBuilder();
 
 		int x = s.lastIndexOf("\n", s.indexOf("application/json", index)) + 1;

@@ -139,18 +139,6 @@
 			<finder-column name="value" />
 		</finder>
 	</entity>
-	<entity deprecated="true" local-service="false" name="ClusterGroup" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="clusterGroupId" primary="true" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="name" type="String" />
-		<column name="clusterNodeIds" type="String" />
-		<column name="wholeCluster" type="boolean" />
-	</entity>
 	<entity local-service="true" name="Company" remote-service="true">
 
 		<!-- PK fields -->

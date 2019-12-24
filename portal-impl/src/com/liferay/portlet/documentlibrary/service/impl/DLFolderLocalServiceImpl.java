@@ -398,7 +398,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getFolders(long, long, boolean, int, int, OrderByComparator)}
+	 *             #getFolders(long, long, boolean, int, int,
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override

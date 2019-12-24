@@ -50,8 +50,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 public class LDAPUtil {
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             SafeLdapFilter}
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link SafeLdapFilter}
 	 */
 	@Deprecated
 	public static String escapeCharacters(String attribute) {

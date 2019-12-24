@@ -249,9 +249,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
-	 * @return the layout set's default virtual host name, or an empty string if
-	 *         the layout set has no virtual hosts configured
-	 *
+	 * @return     the layout set's default virtual host name, or an empty
+	 *             string if the layout set has no virtual hosts configured
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #getVirtualHostnames()}
 	 */
@@ -275,8 +274,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
-	 * @return the layout set's virtual host names, or an empty string if
-	 *         the layout set has no virtual hosts configured
+	 * @return the layout set's virtual host names, or an empty string if the
+	 *         layout set has no virtual hosts configured
 	 */
 	@Override
 	public TreeMap<String, String> getVirtualHostnames() {
@@ -356,9 +355,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	/**
 	 * Sets the name of the layout set's virtual host.
 	 *
-	 * @param virtualHostname the name of the layout set's virtual host
-	 * @see   #getVirtualHostname()
-	 *
+	 * @param      virtualHostname the name of the layout set's virtual host
+	 * @see        #getVirtualHostname()
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #setVirtualHostnames(TreeMap)}
 	 */

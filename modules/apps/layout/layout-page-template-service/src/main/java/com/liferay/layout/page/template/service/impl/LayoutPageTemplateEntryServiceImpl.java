@@ -50,8 +50,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addLayoutPageTemplateEntry(long, long, long, long,
-	 *             String, long, int, ServiceContext)}
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, String,
+	 *             long, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

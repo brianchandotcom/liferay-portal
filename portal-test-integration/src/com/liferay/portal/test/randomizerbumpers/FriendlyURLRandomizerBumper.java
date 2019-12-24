@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.model.impl.LayoutImpl;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *			 com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper}
+ *             com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper}
  */
 @Deprecated
 public class FriendlyURLRandomizerBumper implements RandomizerBumper<String> {

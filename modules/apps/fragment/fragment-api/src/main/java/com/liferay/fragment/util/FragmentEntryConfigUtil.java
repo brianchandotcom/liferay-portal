@@ -28,7 +28,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * @author Rubén Pulido
+ * @author     Rubén Pulido
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *             FragmentEntryConfigurationParser}
  */

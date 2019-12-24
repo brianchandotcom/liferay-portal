@@ -34,8 +34,7 @@ public interface DLPreviewRenderer {
 	 *
 	 * @param httpServletRequest the request
 	 * @param httpServletResponse the response
-	 * @see   DLPreviewRendererProvider#getPreviewDLPreviewRenderer(
-	 *        FileVersion)
+	 * @see   DLPreviewRendererProvider#getPreviewDLPreviewRenderer(FileVersion)
 	 * @see   DLPreviewRendererProvider#getThumbnailDLPreviewRenderer(
 	 *        FileVersion)
 	 */

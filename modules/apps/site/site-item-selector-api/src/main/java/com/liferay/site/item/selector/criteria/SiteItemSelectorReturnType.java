@@ -38,7 +38,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * </li>
  * </ul>
  *
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
  * @deprecated As of Athanasius (7.3.x), replaced by {@link
  *             com.liferay.item.selector.criteria.GroupItemSelectorReturnType}
  */

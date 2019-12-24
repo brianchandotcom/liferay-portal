@@ -91,7 +91,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             PortalToLDAPConverter#getGroupSafeLdapName(long, UserGroup, Properties)}
+	 *             PortalToLDAPConverter#getGroupSafeLdapName(long, UserGroup,
+	 *             Properties)}
 	 */
 	@Deprecated
 	@Override
@@ -403,7 +404,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             PortalToLDAPConverter#getUserSafeLdapName(long, User, Properties)}
+	 *             PortalToLDAPConverter#getUserSafeLdapName(long, User,
+	 *             Properties)}
 	 */
 	@Deprecated
 	@Override

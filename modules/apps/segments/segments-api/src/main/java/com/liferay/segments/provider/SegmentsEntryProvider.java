@@ -95,8 +95,8 @@ public interface SegmentsEntryProvider {
 	 * @param  segmentsEntryIds the IDs of the group's active segments entries
 	 *         that are currently related to the entity under the given context
 	 * @return the IDs of the active segments entries related to the entity
-	 * @review
 	 * @throws PortalException if a portal exception occurred
+	 * @review
 	 */
 	public default long[] getSegmentsEntryIds(
 			long groupId, String className, long classPK, Context context,

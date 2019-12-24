@@ -136,8 +136,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x),  replaced by {@link
-	 *             #importUser(long, long, SafeLdapContext, Attributes, String)}
+	 * @deprecated As of Mueller (7.2.x),  replaced by {@link #importUser(long,
+	 *             long, SafeLdapContext, Attributes, String)}
 	 */
 	@Deprecated
 	@Override

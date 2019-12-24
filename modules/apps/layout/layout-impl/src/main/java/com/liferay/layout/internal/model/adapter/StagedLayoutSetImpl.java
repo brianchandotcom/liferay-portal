@@ -311,7 +311,7 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #getVirtualHostnames()}
+	 *             #getVirtualHostnames()}
 	 */
 	@Deprecated
 	@Override
@@ -550,7 +550,7 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #setVirtualHostnames(TreeMap)}
+	 *             #setVirtualHostnames(TreeMap)}
 	 */
 	@Deprecated
 	@Override

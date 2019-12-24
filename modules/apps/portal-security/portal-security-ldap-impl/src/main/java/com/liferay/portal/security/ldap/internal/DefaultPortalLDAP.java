@@ -68,19 +68,18 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * @author Michael Young
- * @author Brian Wing Shun Chan
- * @author Jerry Niu
- * @author Scott Lee
- * @author Hervé Ménage
- * @author Samuel Kong
- * @author Ryan Park
- * @author Wesley Gong
- * @author Marcellus Tavares
- * @author Hugo Huijser
- * @author Edward Han
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *            SafePortalLDAPImpl}
+ * @author     Michael Young
+ * @author     Brian Wing Shun Chan
+ * @author     Jerry Niu
+ * @author     Scott Lee
+ * @author     Hervé Ménage
+ * @author     Samuel Kong
+ * @author     Ryan Park
+ * @author     Wesley Gong
+ * @author     Marcellus Tavares
+ * @author     Hugo Huijser
+ * @author     Edward Han
+ * @deprecated As of Mueller (7.2.x), replaced by {@link SafePortalLDAPImpl}
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.ldap.configuration.LDAPConfiguration",

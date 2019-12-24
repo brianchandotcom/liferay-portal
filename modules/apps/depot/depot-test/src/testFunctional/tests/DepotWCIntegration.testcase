@@ -112,90 +112,6 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot 2");
 	}
 
-	@description = "This ensures that a depot web content can be selected through a fragment in a content page on a connected site."
-	@priority = "5"
-	test SelectFromFragmentInContentPage {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
-
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addWidget(portletName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(
-			contentPage = "true",
-			depotName = "Test Depot Name",
-			webContentTitle = "WC WebContent Title");
-
-		PageEditor.clickPublish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
-	}
-
-	@description = "This ensures that a depot web content can be selected through a fragment in a display page template on a connected site."
-	@priority = "5"
-	test SelectFromFragmentInDisplayPageTemplate {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Depot",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
-
-		PageEditor.addWidget(portletName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(
-			contentPage = "true",
-			depotName = "Test Depot Name",
-			webContentTitle = "WC WebContent Title");
-
-		Refresh();
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
-	}
-
 	@description = "This ensures that a depot web content can be selected through WCD on a connected site."
 	@priority = "5"
 	test SelectFromWCD {
@@ -238,6 +154,90 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
+	}
+
+	@description = "This ensures that a depot web content can be selected through WCD in a content page on a connected site."
+	@priority = "4"
+	test SelectFromWidgetInContentPage {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Depot",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			contentPage = "true",
+			depotName = "Test Depot Name",
+			webContentTitle = "WC WebContent Title");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
+
+		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
+	}
+
+	@description = "This ensures that a depot web content can be selected through WCD in a display page template on a connected site."
+	@priority = "4"
+	test SelectFromWidgetInDisplayPageTemplate {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Depot",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			contentPage = "true",
+			depotName = "Test Depot Name",
+			webContentTitle = "WC WebContent Title");
+
+		Refresh();
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Depot");
 	}

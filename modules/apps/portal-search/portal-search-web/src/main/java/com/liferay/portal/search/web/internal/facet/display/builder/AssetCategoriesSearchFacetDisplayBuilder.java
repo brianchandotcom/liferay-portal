@@ -17,10 +17,12 @@ package com.liferay.portal.search.web.internal.facet.display.builder;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext;
@@ -36,17 +38,25 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.portlet.RenderRequest;
+
 /**
  * @author Lino Alves
  */
 public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
+
+	public AssetCategoriesSearchFacetDisplayBuilder(
+		RenderRequest renderRequest) {
+
+		_renderRequest = renderRequest;
+	}
 
 	public AssetCategoriesSearchFacetDisplayContext build() {
 		_buckets = collectBuckets(_facet.getFacetCollector());
 
 		AssetCategoriesSearchFacetDisplayContext
 			assetCategoriesSearchFacetDisplayContext =
-				new AssetCategoriesSearchFacetDisplayContext();
+				createAssetCategoriesSearchFacetDisplayContext();
 
 		assetCategoriesSearchFacetDisplayContext.setCloud(isCloud());
 		assetCategoriesSearchFacetDisplayContext.setNothingSelected(
@@ -250,6 +260,18 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		return buckets;
 	}
 
+	protected AssetCategoriesSearchFacetDisplayContext
+		createAssetCategoriesSearchFacetDisplayContext() {
+
+		try {
+			return new AssetCategoriesSearchFacetDisplayContext(
+				PortalUtil.getHttpServletRequest(_renderRequest));
+		}
+		catch (ConfigurationException ce) {
+			throw new RuntimeException(ce);
+		}
+	}
+
 	protected Optional<AssetCategoriesSearchFacetTermDisplayContext>
 		getEmptyTermDisplayContext(long assetCategoryId) {
 
@@ -382,6 +404,7 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 	private Locale _locale;
 	private int _maxTerms;
 	private String _parameterName;
+	private final RenderRequest _renderRequest;
 	private List<Long> _selectedCategoryIds = Collections.emptyList();
 
 }

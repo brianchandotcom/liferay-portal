@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class CacheResourceBundleLoader implements ResourceBundleLoader {
 
 	public static void notifyResourceBundleModification() {
-		_resourceBundlesModifiedCount.incrementAndGet();
+		_modifiedCount.incrementAndGet();
 	}
 
 	public CacheResourceBundleLoader(
@@ -43,11 +43,15 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 	public ResourceBundle loadResourceBundle(Locale locale) {
 		ResourceBundle resourceBundle = null;
 
-		long resourceBundlesModifiedCount =
-			_resourceBundlesModifiedCount.longValue();
+		long modifiedCount = _modifiedCount.get();
 
-		if (_cacheModifiedCount.longValue() >= resourceBundlesModifiedCount) {
-			resourceBundle = _resourceBundles.get(locale);
+		ResourceBundleCacheEntry resourceBundleCacheEntry =
+			_resourceBundleCache.get(locale);
+
+		if ((resourceBundleCacheEntry != null) &&
+			(resourceBundleCacheEntry.getModifiedCount() >= modifiedCount)) {
+
+			resourceBundle = resourceBundleCacheEntry.getResourceBundle();
 		}
 
 		if (resourceBundle == _nullResourceBundle) {
@@ -66,13 +70,15 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 			}
 
 			if (resourceBundle == null) {
-				_resourceBundles.put(locale, _nullResourceBundle);
+				resourceBundleCacheEntry = new ResourceBundleCacheEntry(
+					_nullResourceBundle, modifiedCount);
 			}
 			else {
-				_resourceBundles.put(locale, resourceBundle);
+				resourceBundleCacheEntry = new ResourceBundleCacheEntry(
+					resourceBundle, modifiedCount);
 			}
 
-			_cacheModifiedCount.set(resourceBundlesModifiedCount);
+			_resourceBundleCache.put(locale, resourceBundleCacheEntry);
 		}
 
 		return resourceBundle;
@@ -80,6 +86,8 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CacheResourceBundleLoader.class);
+
+	private static final AtomicLong _modifiedCount = new AtomicLong(0);
 
 	private static final ResourceBundle _nullResourceBundle =
 		new ResourceBundle() {
@@ -96,12 +104,30 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 
 		};
 
-	private static final AtomicLong _resourceBundlesModifiedCount =
-		new AtomicLong(0);
-
-	private final AtomicLong _cacheModifiedCount = new AtomicLong(0);
-	private final ResourceBundleLoader _resourceBundleLoader;
-	private final Map<Locale, ResourceBundle> _resourceBundles =
+	private final Map<Locale, ResourceBundleCacheEntry> _resourceBundleCache =
 		new ConcurrentHashMap<>();
+	private final ResourceBundleLoader _resourceBundleLoader;
+
+	private class ResourceBundleCacheEntry {
+
+		public ResourceBundleCacheEntry(
+			ResourceBundle resourceBundle, long modifiedCount) {
+
+			_resourceBundle = resourceBundle;
+			_modifiedCount = modifiedCount;
+		}
+
+		public long getModifiedCount() {
+			return _modifiedCount;
+		}
+
+		public ResourceBundle getResourceBundle() {
+			return _resourceBundle;
+		}
+
+		private final long _modifiedCount;
+		private final ResourceBundle _resourceBundle;
+
+	}
 
 }

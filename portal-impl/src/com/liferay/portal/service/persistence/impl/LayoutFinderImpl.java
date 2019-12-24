@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
-import com.liferay.portal.kernel.service.persistence.RoleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -44,9 +41,6 @@ import java.util.List;
 public class LayoutFinderImpl
 	extends LayoutFinderBaseImpl implements LayoutFinder {
 
-	public static final String FIND_BY_NO_PERMISSIONS =
-		LayoutFinder.class.getName() + ".findByNoPermissions";
-
 	public static final String FIND_BY_NULL_FRIENDLY_URL =
 		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
 
@@ -55,43 +49,6 @@ public class LayoutFinderImpl
 
 	public static final String FIND_BY_C_P_P =
 		LayoutFinder.class.getName() + ".findByC_P_P";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<Layout> findByNoPermissions(long roleId) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_NO_PERMISSIONS);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("Layout", LayoutImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(Layout.class.getName());
-			qPos.add(ResourceConstants.SCOPE_INDIVIDUAL);
-			qPos.add(roleId);
-
-			Role role = RoleUtil.findByPrimaryKey(roleId);
-
-			qPos.add(role.getCompanyId());
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
 
 	@Override
 	public List<Layout> findByNullFriendlyURL() {

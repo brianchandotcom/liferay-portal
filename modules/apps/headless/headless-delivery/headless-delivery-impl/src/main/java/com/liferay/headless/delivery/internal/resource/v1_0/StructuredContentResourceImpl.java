@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -865,6 +866,7 @@ public class StructuredContentResourceImpl
 
 		return _structuredContentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				_dtoConverterRegistry,
 				contextAcceptLanguage.getPreferredLocale(),
 				journalArticle.getResourcePrimKey(), contextUriInfo,
 				contextUser));
@@ -918,6 +920,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private EntityFieldsProvider _entityFieldsProvider;

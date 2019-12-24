@@ -139,7 +139,7 @@
 			<finder-column name="value" />
 		</finder>
 	</entity>
-	<entity deprecated="true" local-service="true" name="ClusterGroup" remote-service="false">
+	<entity deprecated="true" local-service="false" name="ClusterGroup" remote-service="false">
 
 		<!-- PK fields -->
 

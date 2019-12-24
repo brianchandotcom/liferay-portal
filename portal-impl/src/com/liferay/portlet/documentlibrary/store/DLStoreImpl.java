@@ -352,16 +352,6 @@ public class DLStoreImpl implements DLStore {
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             DLValidatorUtil#isValidName(String)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isValidName(String name) {
-		return DLValidatorUtil.isValidName(name);
-	}
-
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
@@ -554,18 +544,6 @@ public class DLStoreImpl implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension);
 
 		DLValidatorUtil.validateFileSize(fileName, is);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             DLValidatorUtil#validateDirectoryName(String)}
-	 */
-	@Deprecated
-	@Override
-	public void validateDirectoryName(String directoryName)
-		throws PortalException {
-
-		DLValidatorUtil.validateDirectoryName(directoryName);
 	}
 
 	protected void validate(

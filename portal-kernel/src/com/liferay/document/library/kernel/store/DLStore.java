@@ -105,8 +105,6 @@ public interface DLStore {
 			String versionLabel)
 		throws PortalException;
 
-	public boolean isValidName(String name);
-
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String fileExtension, boolean validateFileExtension,
@@ -152,9 +150,6 @@ public interface DLStore {
 	public void validate(
 			String fileName, String fileExtension, String sourceFileName,
 			boolean validateFileExtension, InputStream is)
-		throws PortalException;
-
-	public void validateDirectoryName(String directoryName)
 		throws PortalException;
 
 }

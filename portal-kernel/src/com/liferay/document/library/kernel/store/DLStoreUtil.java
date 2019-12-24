@@ -396,10 +396,6 @@ public class DLStoreUtil {
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
-	public static boolean isValidName(String name) {
-		return getStore().isValidName(name);
-	}
-
 	/**
 	 * Updates a file based on a {@link File} object.
 	 *
@@ -568,12 +564,6 @@ public class DLStoreUtil {
 
 		getStore().validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension, is);
-	}
-
-	public static void validateDirectoryName(String directoryName)
-		throws PortalException {
-
-		getStore().validateDirectoryName(directoryName);
 	}
 
 	/**

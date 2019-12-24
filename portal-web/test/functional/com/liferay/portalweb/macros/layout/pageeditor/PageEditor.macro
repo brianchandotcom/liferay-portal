@@ -813,6 +813,26 @@ definition {
 			value1 = "Draft saved at");
 	}
 
+	macro viewCannotAddFragmentToOutsideOfDropZone {
+		Pause(locator1 = "10000");
+
+		if (IsElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE", key_sidebarButton = "Fragments")) {
+			PageEditor.gotoTab(tabName = "Fragments");
+		}
+
+		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+		DragAndDrop(
+			fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+			locator2 = "PageEditor#OUTSIDE_OF_DROP_ZONE",
+			value1 = "");
+
+		AssertElementNotPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+	}
+
 	macro viewCollectionNotPresent {
 		AssertElementNotPresent(
 			key_collectionName = "${collectionName}",

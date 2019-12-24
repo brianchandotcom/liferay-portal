@@ -27,8 +27,8 @@ $ mvn clean install
 This gives you a definition OSGi bundle of the component in
 `talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar`
 and additional:
-`talend-common/target/com.liferay.talend.common-0.1.0-SNAPSHOT.jar`
-`talend-runtime/target/com.liferay.talend.runtime-0.1.0-SNAPSHOT.jar`
+`talend-common/target/com.liferay.talend.common-0.3.0-SNAPSHOT.jar`
+`talend-runtime/target/com.liferay.talend.runtime-0.3.0-SNAPSHOT.jar`
 
 Maven install task will succeed only if all tests pass. JAR files will be published
 to current user's local maven repository `USER_HOME/.m2`.
@@ -56,7 +56,7 @@ Here is a brief summary:
 3. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
 
 	```sh
-	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar \
+	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.3.0-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
 
@@ -71,7 +71,7 @@ Here is a brief summary:
 	 #The following osgi.framework key is required for the p2 update feature not to override the osgi.bundles values.
 	 osgi.framework=file\:plugins/org.eclipse.osgi_3.10.100.v20150521-1310.jar
 	-osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start
-	+osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start,com.liferay.talend.definition-0.1.0-SNAPSHOT.jar@start
+	+osgi.bundles=org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start,org.eclipse.equinox.ds@2:start,org.eclipse.core.runtime@start,org.talend.maven.resolver@start,org.ops4j.pax.url.mvn@start,org.talend.components.api.service.osgi@start,com.liferay.talend.definition-0.3.0-SNAPSHOT.jar@start
 	 osgi.bundles.defaultStartLevel=4
 	 osgi.bundlefile.limit=200
 	 osgi.framework.extensions=org.talend.osgi.lib.loader
@@ -117,7 +117,7 @@ When ever component codebase is changed user should reload generated JARs to Tal
 3. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
 
 	```sh
-	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar \
+	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.3.0-SNAPSHOT.jar \
 		 $STUDIO_ROOT/plugins
 	```
 

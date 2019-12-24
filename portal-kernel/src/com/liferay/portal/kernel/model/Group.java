@@ -35,6 +35,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.GroupImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final GroupTable TABLE = GroupTable.INSTANCE;
+
 	public static final Accessor<Group, Long> GROUP_ID_ACCESSOR =
 		new Accessor<Group, Long>() {
 

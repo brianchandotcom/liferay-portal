@@ -36,6 +36,9 @@ public interface PortletPreferences
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PortletPreferencesImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PortletPreferencesTable TABLE =
+		PortletPreferencesTable.INSTANCE;
+
 	public static final Accessor<PortletPreferences, Long>
 		PORTLET_PREFERENCES_ID_ACCESSOR =
 			new Accessor<PortletPreferences, Long>() {

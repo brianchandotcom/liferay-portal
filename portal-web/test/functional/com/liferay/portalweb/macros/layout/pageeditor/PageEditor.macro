@@ -437,9 +437,29 @@ definition {
 		if (isSet(webcontent)) {
 			NavItem.click(navItem = "Web Content");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+			if (isSet(depotName)) {
+				var key_contentName = "${webContentTitle}";
 
-			LexiconCard.clickCard(card = "${webContentTitle}");
+				AssertClick(
+					key_breadcrumbName = "Workspaces",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "Workspaces");
+
+				AssertClick(
+					key_groupTab = "Repository",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+					value1 = "Repository");
+
+				LexiconCard.clickCard(card = "${depotName}");
+
+				Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+			}
+
+			else {
+				LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+				LexiconCard.clickCard(card = "${webContentTitle}");
+			}
 
 			AssertElementPresent(
 				key_contentName = "${webContentTitle}",

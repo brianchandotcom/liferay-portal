@@ -77,7 +77,7 @@ public abstract class BaseDocumentFolderResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "documentFolderId")}
 	)
 	@Path("/document-folders/{documentFolderId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
 	public void deleteDocumentFolder(
 			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
@@ -218,7 +218,7 @@ public abstract class BaseDocumentFolderResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "documentFolderId")}
 	)
 	@Path("/document-folders/{documentFolderId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
 	public void putDocumentFolderSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
@@ -237,7 +237,7 @@ public abstract class BaseDocumentFolderResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "documentFolderId")}
 	)
 	@Path("/document-folders/{documentFolderId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
 	public void putDocumentFolderUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")

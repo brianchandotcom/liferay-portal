@@ -76,7 +76,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		}
 	)
 	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
 	public void deleteKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true)

@@ -79,7 +79,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		}
 	)
 	@Path("/message-board-sections/{messageBoardSectionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public void deleteMessageBoardSection(
 			@NotNull @Parameter(hidden = true)
@@ -231,7 +231,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		}
 	)
 	@Path("/message-board-sections/{messageBoardSectionId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public void putMessageBoardSectionSubscribe(
 			@NotNull @Parameter(hidden = true)
@@ -252,7 +252,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		}
 	)
 	@Path("/message-board-sections/{messageBoardSectionId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public void putMessageBoardSectionUnsubscribe(
 			@NotNull @Parameter(hidden = true)

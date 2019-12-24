@@ -73,7 +73,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		}
 	)
 	@Path("/message-board-attachments/{messageBoardAttachmentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardAttachment")})
 	public void deleteMessageBoardAttachment(
 			@NotNull @Parameter(hidden = true)

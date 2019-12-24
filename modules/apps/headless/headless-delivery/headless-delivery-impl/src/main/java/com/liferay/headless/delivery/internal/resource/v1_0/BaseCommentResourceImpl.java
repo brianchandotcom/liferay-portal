@@ -131,7 +131,7 @@ public abstract class BaseCommentResourceImpl implements CommentResource {
 	)
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "commentId")})
 	@Path("/comments/{commentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Comment")})
 	public void deleteComment(
 			@NotNull @Parameter(hidden = true) @PathParam("commentId") Long

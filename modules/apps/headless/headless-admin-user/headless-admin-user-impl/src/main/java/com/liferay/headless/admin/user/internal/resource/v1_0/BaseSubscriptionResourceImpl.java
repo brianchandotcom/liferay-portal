@@ -93,7 +93,7 @@ public abstract class BaseSubscriptionResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "subscriptionId")}
 	)
 	@Path("/my-user-account/subscriptions/{subscriptionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Subscription")})
 	public void deleteMyUserAccountSubscription(
 			@NotNull @Parameter(hidden = true) @PathParam("subscriptionId") Long

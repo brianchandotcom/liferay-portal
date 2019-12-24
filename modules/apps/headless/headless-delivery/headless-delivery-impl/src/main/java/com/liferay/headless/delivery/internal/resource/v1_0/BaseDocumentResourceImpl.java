@@ -140,7 +140,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
 	)
 	@Path("/documents/{documentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public void deleteDocument(
 			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
@@ -236,7 +236,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "documentId")}
 	)
 	@Path("/documents/{documentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
 	public void deleteDocumentMyRating(
 			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long

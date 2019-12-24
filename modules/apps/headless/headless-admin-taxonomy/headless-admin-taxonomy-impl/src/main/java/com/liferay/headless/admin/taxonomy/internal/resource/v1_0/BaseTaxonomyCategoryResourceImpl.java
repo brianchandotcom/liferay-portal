@@ -141,7 +141,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "taxonomyCategoryId")}
 	)
 	@Path("/taxonomy-categories/{taxonomyCategoryId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyCategory")})
 	public void deleteTaxonomyCategory(
 			@NotNull @Parameter(hidden = true) @PathParam("taxonomyCategoryId")

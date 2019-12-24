@@ -177,7 +177,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@Path("/message-board-threads/{messageBoardThreadId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public void deleteMessageBoardThread(
 			@NotNull @Parameter(hidden = true)
@@ -357,7 +357,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@Path("/message-board-threads/{messageBoardThreadId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public void deleteMessageBoardThreadMyRating(
 			@NotNull @Parameter(hidden = true)
@@ -456,7 +456,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@Path("/message-board-threads/{messageBoardThreadId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public void putMessageBoardThreadSubscribe(
 			@NotNull @Parameter(hidden = true)
@@ -477,7 +477,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@Path("/message-board-threads/{messageBoardThreadId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
 	public void putMessageBoardThreadUnsubscribe(
 			@NotNull @Parameter(hidden = true)

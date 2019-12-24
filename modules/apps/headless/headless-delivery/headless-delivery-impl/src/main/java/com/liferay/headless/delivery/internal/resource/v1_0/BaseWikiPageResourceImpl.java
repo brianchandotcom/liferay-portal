@@ -130,7 +130,7 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
 	)
 	@Path("/wiki-page/{wikiPageId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPage")})
 	public void putWikiPageSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
@@ -149,7 +149,7 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
 	)
 	@Path("/wiki-page/{wikiPageId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPage")})
 	public void putWikiPageUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
@@ -219,7 +219,7 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
 	)
 	@Path("/wiki-pages/{wikiPageId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPage")})
 	public void deleteWikiPage(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long

@@ -133,7 +133,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		}
 	)
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
 	public void deleteTaxonomyVocabulary(
 			@NotNull @Parameter(hidden = true)

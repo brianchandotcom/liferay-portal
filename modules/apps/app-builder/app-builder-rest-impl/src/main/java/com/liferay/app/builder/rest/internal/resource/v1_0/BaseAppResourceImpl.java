@@ -69,7 +69,7 @@ public abstract class BaseAppResourceImpl implements AppResource {
 	@DELETE
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "App")})
 	public void deleteApp(
 			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId)

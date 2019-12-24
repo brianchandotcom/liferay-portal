@@ -137,7 +137,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		}
 	)
 	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
 	public void deleteKnowledgeBaseAttachment(
 			@NotNull @Parameter(hidden = true)

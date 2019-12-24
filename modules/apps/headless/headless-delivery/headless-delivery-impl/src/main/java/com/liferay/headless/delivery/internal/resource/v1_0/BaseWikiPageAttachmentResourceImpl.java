@@ -73,7 +73,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		}
 	)
 	@Path("/wiki-page-attachments/{wikiPageAttachmentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPageAttachment")})
 	public void deleteWikiPageAttachment(
 			@NotNull @Parameter(hidden = true)

@@ -211,7 +211,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@Path("/structured-content-folders/{structuredContentFolderId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void deleteStructuredContentFolder(
 			@NotNull @Parameter(hidden = true)
@@ -377,7 +377,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@Path("/structured-content-folders/{structuredContentFolderId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void putStructuredContentFolderSubscribe(
 			@NotNull @Parameter(hidden = true)
@@ -401,7 +401,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@Path("/structured-content-folders/{structuredContentFolderId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void putStructuredContentFolderUnsubscribe(
 			@NotNull @Parameter(hidden = true)

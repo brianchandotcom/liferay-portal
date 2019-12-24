@@ -121,7 +121,7 @@ public abstract class BaseWorkflowInstanceResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId")}
 	)
 	@Path("/workflow-instances/{workflowInstanceId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowInstance")})
 	public void deleteWorkflowInstance(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")

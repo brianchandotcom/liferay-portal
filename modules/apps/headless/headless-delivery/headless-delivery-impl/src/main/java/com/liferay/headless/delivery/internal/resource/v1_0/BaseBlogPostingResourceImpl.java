@@ -78,7 +78,7 @@ public abstract class BaseBlogPostingResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
 	@Path("/blog-postings/{blogPostingId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void deleteBlogPosting(
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
@@ -240,7 +240,7 @@ public abstract class BaseBlogPostingResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
 	@Path("/blog-postings/{blogPostingId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void deleteBlogPostingMyRating(
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
@@ -387,7 +387,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-postings/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void putSiteBlogPostingSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
@@ -403,7 +403,7 @@ public abstract class BaseBlogPostingResourceImpl
 	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-postings/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void putSiteBlogPostingUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)

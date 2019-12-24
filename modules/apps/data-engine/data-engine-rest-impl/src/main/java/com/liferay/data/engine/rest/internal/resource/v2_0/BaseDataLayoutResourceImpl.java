@@ -123,7 +123,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
 	)
 	@Path("/data-layouts/{dataLayoutId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public void deleteDataLayout(
 			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
@@ -190,7 +190,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 		}
 	)
 	@Path("/data-layouts/{dataLayoutId}/data-layout-permissions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public void postDataLayoutDataLayoutPermission(
 			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
@@ -216,7 +216,7 @@ public abstract class BaseDataLayoutResourceImpl implements DataLayoutResource {
 		}
 	)
 	@Path("/sites/{siteId}/data-layout-permissions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public void postSiteDataLayoutPermission(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,

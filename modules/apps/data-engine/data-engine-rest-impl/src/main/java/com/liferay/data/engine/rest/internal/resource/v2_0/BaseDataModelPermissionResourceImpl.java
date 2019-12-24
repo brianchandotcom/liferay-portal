@@ -94,7 +94,7 @@ public abstract class BaseDataModelPermissionResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-model-permissions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataModelPermission")})
 	public void putDataDefinitionDataModelPermission(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
@@ -141,7 +141,7 @@ public abstract class BaseDataModelPermissionResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
 	)
 	@Path("/data-layouts/{dataLayoutId}/data-model-permissions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataModelPermission")})
 	public void putDataLayoutDataModelPermission(
 			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
@@ -196,7 +196,7 @@ public abstract class BaseDataModelPermissionResourceImpl
 	@Path(
 		"/data-record-collections/{dataRecordCollectionId}/data-model-permissions"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataModelPermission")})
 	public void putDataRecordCollectionDataModelPermission(
 			@NotNull @Parameter(hidden = true)
@@ -220,7 +220,7 @@ public abstract class BaseDataModelPermissionResourceImpl
 	@Path(
 		"/data-record-collections/{dataRecordCollectionId}/data-model-permissions/by-current-user"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataModelPermission")})
 	public String getDataRecordCollectionDataModelPermissionByCurrentUser(
 			@NotNull @Parameter(hidden = true)

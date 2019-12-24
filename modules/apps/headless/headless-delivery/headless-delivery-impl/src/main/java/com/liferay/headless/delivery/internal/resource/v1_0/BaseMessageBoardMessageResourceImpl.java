@@ -80,7 +80,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		}
 	)
 	@Path("/message-board-messages/{messageBoardMessageId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public void deleteMessageBoardMessage(
 			@NotNull @Parameter(hidden = true)
@@ -260,7 +260,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		}
 	)
 	@Path("/message-board-messages/{messageBoardMessageId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public void deleteMessageBoardMessageMyRating(
 			@NotNull @Parameter(hidden = true)
@@ -359,7 +359,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		}
 	)
 	@Path("/message-board-messages/{messageBoardMessageId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public void putMessageBoardMessageSubscribe(
 			@NotNull @Parameter(hidden = true)
@@ -380,7 +380,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		}
 	)
 	@Path("/message-board-messages/{messageBoardMessageId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
 	public void putMessageBoardMessageUnsubscribe(
 			@NotNull @Parameter(hidden = true)

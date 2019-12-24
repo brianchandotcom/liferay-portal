@@ -920,6 +920,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Subscription"]
@@ -1007,6 +1008,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Organization"]

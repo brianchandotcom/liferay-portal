@@ -73,7 +73,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	)
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "keywordId")})
 	@Path("/keywords/{keywordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
 	public void deleteKeyword(
 			@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long

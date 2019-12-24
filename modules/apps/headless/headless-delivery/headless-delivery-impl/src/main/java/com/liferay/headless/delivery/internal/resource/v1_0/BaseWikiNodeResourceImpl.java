@@ -126,7 +126,7 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
 	@Path("/wiki-node/{wikiNodeId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public void putWikiNodeSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
@@ -145,7 +145,7 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
 	@Path("/wiki-node/{wikiNodeId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public void putWikiNodeUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
@@ -167,7 +167,7 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
 	@Path("/wiki-nodes/{wikiNodeId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public void deleteWikiNode(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long

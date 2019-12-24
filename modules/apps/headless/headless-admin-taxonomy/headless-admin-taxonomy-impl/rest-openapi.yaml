@@ -290,6 +290,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["Keyword"]
@@ -602,6 +603,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["TaxonomyCategory"]
@@ -707,6 +709,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["TaxonomyVocabulary"]

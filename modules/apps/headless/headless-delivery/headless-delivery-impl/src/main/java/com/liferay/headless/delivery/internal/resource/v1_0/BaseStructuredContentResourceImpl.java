@@ -294,7 +294,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 	)
 	@Path("/structured-content/{structuredContentId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public void putStructuredContentSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
@@ -315,7 +315,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 	)
 	@Path("/structured-content/{structuredContentId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public void putStructuredContentUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
@@ -339,7 +339,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 	)
 	@Path("/structured-contents/{structuredContentId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public void deleteStructuredContent(
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
@@ -525,7 +525,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 	)
 	@Path("/structured-contents/{structuredContentId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public void deleteStructuredContentMyRating(
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")

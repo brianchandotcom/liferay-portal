@@ -70,7 +70,7 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Override
 	@GET
 	@Path("/data-definitions/data-definition-fields/field-types")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
@@ -89,7 +89,7 @@ public abstract class BaseDataDefinitionResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
 	@Path("/data-definitions/{dataDefinitionId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void deleteDataDefinition(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
@@ -155,7 +155,7 @@ public abstract class BaseDataDefinitionResourceImpl
 		}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-definition-field-links")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public String getDataDefinitionDataDefinitionFieldLinks(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
@@ -182,7 +182,7 @@ public abstract class BaseDataDefinitionResourceImpl
 		}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-definition-permissions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postDataDefinitionDataDefinitionPermission(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
@@ -208,7 +208,7 @@ public abstract class BaseDataDefinitionResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/data-definition-permissions")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataDefinition")})
 	public void postSiteDataDefinitionPermission(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,

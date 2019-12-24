@@ -80,7 +80,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void deleteKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
@@ -265,7 +265,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/my-rating")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void deleteKnowledgeBaseArticleMyRating(
 			@NotNull @Parameter(hidden = true)
@@ -364,7 +364,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putKnowledgeBaseArticleSubscribe(
 			@NotNull @Parameter(hidden = true)
@@ -385,7 +385,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 	)
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putKnowledgeBaseArticleUnsubscribe(
 			@NotNull @Parameter(hidden = true)
@@ -604,7 +604,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/knowledge-base-articles/subscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putSiteKnowledgeBaseArticleSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
@@ -620,7 +620,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/knowledge-base-articles/unsubscribe")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
 	public void putSiteKnowledgeBaseArticleUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)

@@ -551,6 +551,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WorkflowDefinition"]
@@ -698,6 +699,7 @@ paths:
                 204:
                     content:
                         application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WorkflowInstance"]

@@ -74,7 +74,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingImageId")}
 	)
 	@Path("/blog-posting-images/{blogPostingImageId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
 	public void deleteBlogPostingImage(
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingImageId")

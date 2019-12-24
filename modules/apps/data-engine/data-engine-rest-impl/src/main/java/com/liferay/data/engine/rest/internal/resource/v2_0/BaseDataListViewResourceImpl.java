@@ -123,7 +123,7 @@ public abstract class BaseDataListViewResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataListViewId")}
 	)
 	@Path("/data-list-views/{dataListViewId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataListView")})
 	public void deleteDataListView(
 			@NotNull @Parameter(hidden = true) @PathParam("dataListViewId") Long

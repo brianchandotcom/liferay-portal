@@ -104,7 +104,7 @@ public abstract class BaseOrganizationResourceImpl
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
 	@Path("/organizations/{organizationId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Organization")})
 	public void deleteOrganization(
 			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long

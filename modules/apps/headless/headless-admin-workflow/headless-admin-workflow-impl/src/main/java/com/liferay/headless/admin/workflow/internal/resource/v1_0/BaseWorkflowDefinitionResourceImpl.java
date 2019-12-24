@@ -149,7 +149,7 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 		}
 	)
 	@Path("/workflow-definitions/undeploy")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowDefinition")})
 	public void deleteWorkflowDefinitionUndeploy(
 			@NotNull @Parameter(hidden = true) @QueryParam("name") String name,

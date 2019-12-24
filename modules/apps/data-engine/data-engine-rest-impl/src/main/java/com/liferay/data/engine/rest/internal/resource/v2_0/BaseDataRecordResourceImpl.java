@@ -175,7 +175,7 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 	@Path(
 		"/data-record-collections/{dataRecordCollectionId}/data-records/export"
 	)
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public String getDataRecordCollectionDataRecordExport(
 			@NotNull @Parameter(hidden = true)
@@ -197,7 +197,7 @@ public abstract class BaseDataRecordResourceImpl implements DataRecordResource {
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataRecordId")}
 	)
 	@Path("/data-records/{dataRecordId}")
-	@Produces("application/json")
+	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecord")})
 	public void deleteDataRecord(
 			@NotNull @Parameter(hidden = true) @PathParam("dataRecordId") Long

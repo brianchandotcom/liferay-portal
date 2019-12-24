@@ -35,17 +35,6 @@ public class DLFileEntryFinderUtil {
 		return getFinder().countByG_F(groupId, folderIds, queryDefinition);
 	}
 
-	public static int countByG_M_R(
-		long groupId, com.liferay.portal.kernel.util.DateRange dateRange,
-		long repositoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.document.library.kernel.model.DLFileEntry>
-				queryDefinition) {
-
-		return getFinder().countByG_M_R(
-			groupId, dateRange, repositoryId, queryDefinition);
-	}
-
 	public static int countByG_R_F(
 		long groupId, java.util.List<Long> repositoryIds,
 		java.util.List<Long> folderIds,
@@ -78,12 +67,6 @@ public class DLFileEntryFinderUtil {
 		return getFinder().countByG_U_R_F_M(
 			groupId, userId, repositoryIds, folderIds, mimeTypes,
 			queryDefinition);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileEntry
-		fetchByAnyImageId(long imageId) {
-
-		return getFinder().fetchByAnyImageId(imageId);
 	}
 
 	public static int filterCountByG_F(
@@ -180,14 +163,6 @@ public class DLFileEntryFinderUtil {
 			queryDefinition);
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileEntry
-			findByAnyImageId(long imageId)
-		throws com.liferay.document.library.kernel.exception.
-			NoSuchFileEntryException {
-
-		return getFinder().findByAnyImageId(imageId);
-	}
-
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntry> findByCompanyId(
 			long companyId,
@@ -212,13 +187,6 @@ public class DLFileEntryFinderUtil {
 			findByDDMStructureIds(long[] ddmStructureIds, int start, int end) {
 
 		return getFinder().findByDDMStructureIds(ddmStructureIds, start, end);
-	}
-
-	public static java.util.List
-		<com.liferay.document.library.kernel.model.DLFileEntry>
-			findByMisversioned() {
-
-		return getFinder().findByMisversioned();
 	}
 
 	public static java.util.List

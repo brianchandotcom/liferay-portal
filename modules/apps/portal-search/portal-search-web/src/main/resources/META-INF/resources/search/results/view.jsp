@@ -40,6 +40,10 @@ page import="java.util.Map" %>
 <%
 SearchResultsPortletDisplayContext searchResultsPortletDisplayContext = (SearchResultsPortletDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 
+if (searchResultsPortletDisplayContext.isRenderNothing()) {
+	return;
+}
+
 SearchResultsPortletInstanceConfiguration searchResultsPortletInstanceConfiguration = searchResultsPortletDisplayContext.getSearchResultsPortletInstanceConfiguration();
 
 Map<String, Object> contextObjects = new HashMap<String, Object>();
@@ -47,10 +51,6 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 contextObjects.put("searchResultsPortletDisplayContext", searchResultsPortletDisplayContext);
 
 List<SearchResultSummaryDisplayContext> searchResultSummaryDisplayContexts = searchResultsPortletDisplayContext.getSearchResultSummaryDisplayContexts();
-
-if (searchResultsPortletDisplayContext.isRenderNothing()) {
-	return;
-}
 
 SearchContainer<Document> searchContainer1 = searchResultsPortletDisplayContext.getSearchContainer();
 %>

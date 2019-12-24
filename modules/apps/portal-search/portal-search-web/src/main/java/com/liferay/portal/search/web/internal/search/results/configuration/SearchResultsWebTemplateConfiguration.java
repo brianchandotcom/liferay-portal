@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SearchResultsWebTemplateConfiguration {
 
 	@Meta.AD(
-		deflt = "search-results-compact-ftl",
+		deflt = "search-results-list-ftl",
 		name = "search-results-template-key-default", required = false
 	)
 	public String searchResultsTemplateKeyDefault();

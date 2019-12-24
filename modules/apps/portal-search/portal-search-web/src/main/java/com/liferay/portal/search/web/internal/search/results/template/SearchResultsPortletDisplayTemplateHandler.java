@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.search.results.template;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
+import com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsWebTemplateConfiguration;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletDisplayContext;
 
@@ -28,8 +30,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -47,6 +51,12 @@ public class SearchResultsPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return SearchResultSummaryDisplayContext.class.getName();
+	}
+
+	@Override
+	public String getDefaultTemplateKey() {
+		return _searchResultsWebTemplateConfiguration.
+			searchResultsTemplateKeyDefault();
 	}
 
 	@Override
@@ -96,6 +106,14 @@ public class SearchResultsPortletDisplayTemplateHandler
 		return templateVariableGroups;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_searchResultsWebTemplateConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SearchResultsWebTemplateConfiguration.class, properties);
+	}
+
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/portal/search/web/internal/search/results/web" +
@@ -104,5 +122,8 @@ public class SearchResultsPortletDisplayTemplateHandler
 
 	@Reference
 	private Portal _portal;
+
+	private volatile SearchResultsWebTemplateConfiguration
+		_searchResultsWebTemplateConfiguration;
 
 }

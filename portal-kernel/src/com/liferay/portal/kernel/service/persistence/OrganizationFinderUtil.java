@@ -22,46 +22,6 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
  */
 public class OrganizationFinderUtil {
 
-	public static int countByKeywords(
-		long companyId, long parentOrganizationId,
-		String parentOrganizationIdComparator, String keywords, String type,
-		Long regionId, Long countryId,
-		java.util.LinkedHashMap<String, Object> params) {
-
-		return getFinder().countByKeywords(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			keywords, type, regionId, countryId, params);
-	}
-
-	public static int countByO_U(long organizationId, long userId) {
-		return getFinder().countByO_U(organizationId, userId);
-	}
-
-	public static int countByC_PO_N_T_S_C_Z_R_C(
-		long companyId, long parentOrganizationId,
-		String parentOrganizationIdComparator, String name, String type,
-		String street, String city, String zip, Long regionId, Long countryId,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
-
-		return getFinder().countByC_PO_N_T_S_C_Z_R_C(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			name, type, street, city, zip, regionId, countryId, params,
-			andOperator);
-	}
-
-	public static int countByC_PO_N_T_S_C_Z_R_C(
-		long companyId, long parentOrganizationId,
-		String parentOrganizationIdComparator, String[] names, String type,
-		String[] streets, String[] cities, String[] zips, Long regionId,
-		Long countryId, java.util.LinkedHashMap<String, Object> params,
-		boolean andOperator) {
-
-		return getFinder().countByC_PO_N_T_S_C_Z_R_C(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			names, type, streets, cities, zips, regionId, countryId, params,
-			andOperator);
-	}
-
 	public static int countO_ByKeywords(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String keywords, String type,
@@ -108,66 +68,6 @@ public class OrganizationFinderUtil {
 
 		return getFinder().countO_U_ByC_P(
 			companyId, parentOrganizationId, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Organization>
-		findByKeywords(
-			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String keywords, String type,
-			Long regionId, Long countryId,
-			java.util.LinkedHashMap<String, Object> params, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Organization> obc) {
-
-		return getFinder().findByKeywords(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			keywords, type, regionId, countryId, params, start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Organization>
-		findByNoAssets() {
-
-		return getFinder().findByNoAssets();
-	}
-
-	public static java.util.List<Long> findByC_P(
-		long companyId, long parentOrganizationId, long previousOrganizationId,
-		int size) {
-
-		return getFinder().findByC_P(
-			companyId, parentOrganizationId, previousOrganizationId, size);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Organization>
-		findByC_PO_N_T_S_C_Z_R_C(
-			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String name, String type,
-			String street, String city, String zip, Long regionId,
-			Long countryId, java.util.LinkedHashMap<String, Object> params,
-			boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Organization> obc) {
-
-		return getFinder().findByC_PO_N_T_S_C_Z_R_C(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			name, type, street, city, zip, regionId, countryId, params,
-			andOperator, start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Organization>
-		findByC_PO_N_T_S_C_Z_R_C(
-			long companyId, long parentOrganizationId,
-			String parentOrganizationIdComparator, String[] names, String type,
-			String[] streets, String[] cities, String[] zips, Long regionId,
-			Long countryId, java.util.LinkedHashMap<String, Object> params,
-			boolean andOperator, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.Organization> obc) {
-
-		return getFinder().findByC_PO_N_T_S_C_Z_R_C(
-			companyId, parentOrganizationId, parentOrganizationIdComparator,
-			names, type, streets, cities, zips, regionId, countryId, params,
-			andOperator, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Organization>

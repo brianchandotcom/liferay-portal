@@ -82,9 +82,6 @@ public class GroupFinderImpl
 	public static final String FIND_BY_LIVE_GROUPS =
 		GroupFinder.class.getName() + ".findByLiveGroups";
 
-	public static final String FIND_BY_NULL_FRIENDLY_URL =
-		GroupFinder.class.getName() + ".findByNullFriendlyURL";
-
 	public static final String FIND_BY_SYSTEM =
 		GroupFinder.class.getName() + ".findBySystem";
 
@@ -544,18 +541,6 @@ public class GroupFinderImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public List<Group> findByLayouts(
-		long companyId, long parentGroupId, boolean site, int start, int end) {
-
-		return findByLayouts(
-			companyId, parentGroupId, site, null, start, end, null);
-	}
-
 	@Override
 	public List<Group> findByLayouts(
 		long companyId, long parentGroupId, boolean site, int start, int end,
@@ -573,33 +558,6 @@ public class GroupFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_LIVE_GROUPS);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("Group_", GroupImpl.class);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<Group> findByNullFriendlyURL() {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_NULL_FRIENDLY_URL);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

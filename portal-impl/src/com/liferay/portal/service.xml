@@ -373,7 +373,7 @@
 		<reference entity="ListType" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="Group" remote-service="true" uuid="true">
+	<entity local-service="true" model-table="true" name="Group" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -594,7 +594,7 @@
 			<finder-column comparator="&lt;" name="size" />
 		</finder>
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" model-table="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1789,7 +1789,7 @@
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="PortletPreferences" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" model-table="true" name="PortletPreferences" remote-service="true">
 
 		<!-- PK fields -->
 

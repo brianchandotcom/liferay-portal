@@ -77,10 +77,6 @@ public interface UserGroupFinder {
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.portal.kernel.model.UserGroup> obc);
 
-	public com.liferay.portal.kernel.model.UserGroup findByC_N(
-			long companyId, String name)
-		throws com.liferay.portal.kernel.exception.NoSuchUserGroupException;
-
 	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
 		findByC_N_D(
 			long companyId, String name, String description,

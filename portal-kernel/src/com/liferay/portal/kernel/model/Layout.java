@@ -35,6 +35,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutTable TABLE = LayoutTable.INSTANCE;
+
 	public static final Accessor<Layout, Long> PLID_ACCESSOR =
 		new Accessor<Layout, Long>() {
 

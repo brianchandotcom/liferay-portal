@@ -309,4 +309,67 @@ definition {
 		Portlet.viewSpecificPG(portletName = "Documents and Media Custom");
 	}
 
+	@description = "This is a test for LPS-106198. check the status for convension draft page and can edit widget page to content page conversion in draft form."
+	@priority = "5"
+	test ViewAndEditConversionDraftPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page",
+			pageName = "Test Page Name");
+
+		var key_text = "Discard Conversion Draft";
+
+		AssertElementPresent(locator1 = "Button#ANY");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "The page conversion is shown in the preview below. Make modifications needed before publishing the conversion, or discard the draft to leave the widget page in its original state.");
+
+		PageEditor.clickBack();
+
+		AssertTextEquals(
+			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+			value1 = "Conversion Draft");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementNotPresent(locator1 = "Button#EDIT_PENCIL");
+
+		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Edit Conversion Draft",
+			pageName = "Test Page Name");
+
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		PageEditor.removeFragment(fragmentName = "Asset Publisher");
+
+		Portlet.viewNoSpecificPG(portletName = "Asset Publisher");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Edit Conversion Draft",
+			pageName = "Test Page Name");
+
+		PageEditor.viewFragment(fragmentName = "Web Content Display");
+
+		PageEditor.viewNoFragment(fragmentName = "Asset Publisher");
+	}
+
 }

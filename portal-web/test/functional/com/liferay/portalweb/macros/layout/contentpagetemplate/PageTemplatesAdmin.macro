@@ -15,7 +15,12 @@ definition {
 		}
 
 		if ("${pageTemplateType}" == "Content Page Template") {
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Blank");
+			if (isSet(masterLayoutName)) {
+				PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "${masterLayoutName}");
+			}
+			else {
+				PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Blank");
+			}
 		}
 
 		if ("${menuItem}" == "Content Page Template") {
@@ -70,6 +75,7 @@ definition {
 
 	macro addPageTemplate {
 		PageTemplatesAdmin._addPageTemplate(
+			masterLayoutName = "${masterLayoutName}",
 			menuItem = "${menuItem}",
 			pageTemplateName = "${pageTemplateName}",
 			pageTemplateType = "${pageTemplateType}",

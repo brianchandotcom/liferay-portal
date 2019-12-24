@@ -9,8 +9,73 @@
 </thead>
 <tbody>
 <tr>
+	<td>DETAIL_PAGE_ASSET_TITLE</td>
+	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'Asset Title')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_ASSET_TYPE</td>
+	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'Asset Type')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_CLOSE</td>
+	<td>//div[contains(@class,'modal-header')]//button[@class='close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_CREATED_BY</td>
+	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'Created By')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_CREATION_DATE</td>
+	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'Creation Date')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_CURRENT_ASSIGNEE</td>
+	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'Current Assignee')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_CURRENT_STEP</td>
+	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'Current Step')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_END_DATE</td>
+	<td>//div[contains(@class,'modal-body')]/p[@class='row'][contains(.,'End Date')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_PROCESS_STATUS</td>
+	<td>//h4[contains(.,'Process Details')]//following-sibling::p[1][contains(.,'Process Status')]//following-sibling::span[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_SLA_MESSAGE</td>
+	<td>//div[contains(@class,'modal-body')]/h4[contains(.,'Due Date by SLA')]//following-sibling::p/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_PAGE_TITLE</td>
+	<td>//div[contains(@class,'modal-header')]/div[contains(@class,'modal-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_VALUE</td>
 	<td>//div[contains(@class,'label-section')]//strong[contains(text(),'${key_workflowFilterValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_GET_INSTANCE_ID</td>
+	<td>//td[contains(@class,'table-title')]/a[@data-testid='instanceIdLink']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_INSTANCE_ID</td>
+	<td>//td[contains(@class,'table-title')]//strong</td>
 	<td></td>
 </tr>
 <tr>

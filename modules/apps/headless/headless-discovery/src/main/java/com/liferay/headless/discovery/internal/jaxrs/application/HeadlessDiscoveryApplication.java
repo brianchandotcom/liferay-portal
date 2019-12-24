@@ -128,9 +128,10 @@ public class HeadlessDiscoveryApplication extends Application {
 				for (ResourceMethodInfoDTO resourceMethodInfoDTO :
 						resourceDTO.resourceMethods) {
 
-					String path =
-						serverURL + applicationDTO.base +
-							resourceMethodInfoDTO.path;
+					resourceMethodInfoDTO.path =
+						applicationDTO.base + resourceMethodInfoDTO.path;
+
+					String path = serverURL + resourceMethodInfoDTO.path;
 
 					List<ResourceMethodInfoDTO> resourceMethodInfoDTOS =
 						resourcesMap.get(path);

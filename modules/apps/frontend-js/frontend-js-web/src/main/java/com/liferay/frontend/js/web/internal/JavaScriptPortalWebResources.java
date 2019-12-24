@@ -125,9 +125,7 @@ public class JavaScriptPortalWebResources implements PortalWebResources {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			_lastModified.getAndUpdate(
-				lastModified -> Math.max(
-					lastModified, bundle.getLastModified()));
+			_lastModified.accumulateAndGet(bundle.getLastModified(), Math::max);
 		}
 
 	}

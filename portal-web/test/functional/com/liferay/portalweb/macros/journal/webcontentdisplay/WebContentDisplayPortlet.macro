@@ -292,19 +292,46 @@ definition {
 
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
 
-		var key_webContentTitle = "${webContentTitle}";
+		if (isSet(depotName)) {
+			var key_contentName = "${webContentTitle}";
 
-		AssertClick(
-			key_listEntry = "${webContentTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_TITLE",
-			value1 = "${webContentTitle}");
+			AssertClick(
+				key_breadcrumbName = "Workspaces",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Workspaces");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+			AssertClick(
+				key_groupTab = "Repository",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Repository");
 
-		AssertTextEquals(
-			key_card = "${webContentTitle}",
-			locator1 = "LexiconCard#CARD_TITLE",
-			value1 = "${webContentTitle}");
+			LexiconCard.clickCard(card = "${depotName}");
+
+			Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertTextEquals.assertPartialText(
+				key_card = "${webContentTitle}",
+				locator1 = "LexiconCard#CARD_TITLE",
+				value1 = "${webContentTitle}");
+		}
+
+		else {
+			var key_webContentTitle = "${webContentTitle}";
+
+			AssertClick(
+				key_listEntry = "${webContentTitle}",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE",
+				value1 = "${webContentTitle}");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertTextEquals(
+				key_card = "${webContentTitle}",
+				locator1 = "LexiconCard#CARD_TITLE",
+				value1 = "${webContentTitle}");
+		}
 
 		PortletEntry.save();
 

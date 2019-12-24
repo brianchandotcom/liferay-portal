@@ -90,7 +90,8 @@ public class DLFolderServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFileEntriesAndFileShortcutsCount(long, long, String[], int)}
+	 #getFileEntriesAndFileShortcutsCount(long, long, String[],
+	 int)}
 	 */
 	@Deprecated
 	public static int getFileEntriesAndFileShortcutsCount(
@@ -144,7 +145,8 @@ public class DLFolderServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFolders(long, long, boolean, int, int, int, OrderByComparator)}
+	 #getFolders(long, long, boolean, int, int, int,
+	 OrderByComparator)}
 	 */
 	@Deprecated
 	public static java.util.List
@@ -184,7 +186,8 @@ public class DLFolderServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcuts(long, long, boolean, int, int, int, OrderByComparator)}
+	 #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	 boolean, int, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	public static java.util.List<Object>
@@ -200,7 +203,8 @@ public class DLFolderServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcuts(long, long, String[], boolean, int, int, int, OrderByComparator)}
+	 #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	 String[], boolean, int, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	public static java.util.List<Object>
@@ -263,7 +267,8 @@ public class DLFolderServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, int)}
+	 #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 String[], boolean, int)}
 	 */
 	@Deprecated
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(

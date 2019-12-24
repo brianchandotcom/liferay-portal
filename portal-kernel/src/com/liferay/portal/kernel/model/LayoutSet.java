@@ -115,8 +115,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
-	 * @return the layout set's default virtual host name, or an empty string if
-	 the layout set has no virtual hosts configured
+	 * @return the layout set's default virtual host name, or an empty
+	 string if the layout set has no virtual hosts configured
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 #getVirtualHostnames()}
 	 */
@@ -131,8 +131,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	 * "/web/sitename" or "/group/sitename" can be omitted.
 	 * </p>
 	 *
-	 * @return the layout set's virtual host names, or an empty string if
-	 the layout set has no virtual hosts configured
+	 * @return the layout set's virtual host names, or an empty string if the
+	 layout set has no virtual hosts configured
 	 */
 	public java.util.TreeMap<String, String> getVirtualHostnames();
 

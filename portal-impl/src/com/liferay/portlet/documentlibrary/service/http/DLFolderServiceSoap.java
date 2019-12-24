@@ -144,7 +144,8 @@ public class DLFolderServiceSoap {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFileEntriesAndFileShortcutsCount(long, long, String[], int)}
+	 #getFileEntriesAndFileShortcutsCount(long, long, String[],
+	 int)}
 	 */
 	@Deprecated
 	public static int getFileEntriesAndFileShortcutsCount(
@@ -261,7 +262,8 @@ public class DLFolderServiceSoap {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFolders(long, long, boolean, int, int, int, OrderByComparator)}
+	 #getFolders(long, long, boolean, int, int, int,
+	 OrderByComparator)}
 	 */
 	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFolderSoap[]
@@ -332,7 +334,8 @@ public class DLFolderServiceSoap {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, int)}
+	 #getFoldersAndFileEntriesAndFileShortcutsCount(long, long,
+	 String[], boolean, int)}
 	 */
 	@Deprecated
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(

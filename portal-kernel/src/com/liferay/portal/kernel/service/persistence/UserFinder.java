@@ -61,9 +61,6 @@ public interface UserFinder {
 		findByNoAnnouncementsDeliveries(String type);
 
 	public java.util.List<com.liferay.portal.kernel.model.User>
-		findByNoContacts();
-
-	public java.util.List<com.liferay.portal.kernel.model.User>
 		findByNoGroups();
 
 	public java.util.List<com.liferay.portal.kernel.model.User>

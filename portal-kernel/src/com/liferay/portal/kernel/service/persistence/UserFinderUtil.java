@@ -96,12 +96,6 @@ public class UserFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.User>
-		findByNoContacts() {
-
-		return getFinder().findByNoContacts();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.User>
 		findByNoGroups() {
 
 		return getFinder().findByNoGroups();

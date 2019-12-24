@@ -194,6 +194,28 @@ definition {
 			webcontent = "true",
 			webContentContent = "WC WebContent Depot",
 			webContentTitle = "WC WebContent Title");
+
+		PageEditor.clickPublish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title");
+
+		WebContent.editDisplayPage(
+			pageName = "Display Page Name",
+			pageType = "Display Page Templates");
+
+		PortletEntry.publish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/w/webcontent-title");
+
+		AssertTextEquals.assertPartialTextAceEditor(
+			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+			value1 = "WC WebContent Depot");
 	}
 
 	@description = "This ensures that a depot web content can be selected through WCD on a connected site."

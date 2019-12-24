@@ -62,6 +62,10 @@ public interface ${entity.name} extends
 	 * Never modify this interface directly. Add methods to <code>${packagePath}.model.impl.${entity.name}Impl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
+	<#if entity.isModelTable()>
+		public static final ${entity.name}Table TABLE = ${entity.name}Table.INSTANCE;
+	</#if>
+
 	<#if entity.hasUuidAccessor()>
 		public static final Accessor<${entity.name}, String> UUID_ACCESSOR = new Accessor<${entity.name}, String>() {
 

@@ -160,16 +160,6 @@ public class ClusterGroupWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this class directly. All methods that expect a cluster group model instance should use the <code>ClusterGroup</code> interface instead.
-	 */
-	@Override
-	public void persist() {
-		model.persist();
-	}
-
-	/**
 	 * Sets the cluster group ID of this cluster group.
 	 *
 	 * @param clusterGroupId the cluster group ID of this cluster group

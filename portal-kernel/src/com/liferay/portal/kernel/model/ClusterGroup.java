@@ -30,7 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @Deprecated
 @ImplementationClassName("com.liferay.portal.model.impl.ClusterGroupImpl")
 @ProviderType
-public interface ClusterGroup extends ClusterGroupModel, PersistedModel {
+public interface ClusterGroup extends ClusterGroupModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

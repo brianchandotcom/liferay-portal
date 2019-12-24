@@ -95,7 +95,6 @@
 	<bean class="com.liferay.portal.service.impl.ClassNameLocalServiceImpl" id="com.liferay.portal.kernel.service.ClassNameLocalService" />
 	<bean class="com.liferay.portal.service.impl.ClassNameServiceImpl" id="com.liferay.portal.kernel.service.ClassNameService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ClassNamePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ClassNamePersistence" />
-	<bean class="com.liferay.portal.service.impl.ClusterGroupLocalServiceImpl" id="com.liferay.portal.kernel.service.ClusterGroupLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ClusterGroupPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ClusterGroupPersistence" />
 	<bean class="com.liferay.portal.service.impl.CompanyLocalServiceImpl" id="com.liferay.portal.kernel.service.CompanyLocalService" />
 	<bean class="com.liferay.portal.service.impl.CompanyServiceImpl" id="com.liferay.portal.kernel.service.CompanyService" />

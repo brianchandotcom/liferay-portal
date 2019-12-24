@@ -175,8 +175,6 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 	@Override
 	public void setupLayout() {
-		super.setupLayout();
-
 		Form mainForm = new Form(this, Form.MAIN);
 
 		Widget openAPIModuleWidget = Widget.widget(openAPIModule);
@@ -213,15 +211,16 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 	@Override
 	public void setupProperties() {
-		super.setupProperties();
-
-		endpoint.setValue(null);
 		endpoint.setRequired(true);
 
-		openAPIModule.setValue(null);
 		openAPIModule.setRequired(true);
 
 		operations.setPossibleValues(_allowedOperations);
+
+		if (_displayOperations) {
+			operations.setRequired(true);
+		}
+
 		operations.setValue(_allowedOperations[0]);
 
 		_setupRequestParameterProperties();

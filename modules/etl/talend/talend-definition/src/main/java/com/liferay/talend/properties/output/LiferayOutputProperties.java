@@ -107,8 +107,6 @@ public class LiferayOutputProperties
 
 	@Override
 	public void setupProperties() {
-		super.setupProperties();
-
 		dieOnError.setValue(true);
 	}
 

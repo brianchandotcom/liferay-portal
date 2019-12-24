@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -89,8 +88,9 @@ public class MessageBoardMessageDTOConverter
 						WorkflowConstants.STATUS_APPROVED);
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					_dtoConverterRegistry, mbMessage.getModelClassName(),
-					mbMessage.getMessageId(), dtoConverterContext.getLocale());
+					dtoConverterContext.getDtoConverterRegistry(),
+					mbMessage.getModelClassName(), mbMessage.getMessageId(),
+					dtoConverterContext.getLocale());
 				showAsAnswer = mbMessage.isAnswer();
 				siteId = mbMessage.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
@@ -120,9 +120,6 @@ public class MessageBoardMessageDTOConverter
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

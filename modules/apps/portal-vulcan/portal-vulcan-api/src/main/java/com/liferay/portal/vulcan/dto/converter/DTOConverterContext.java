@@ -29,6 +29,10 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface DTOConverterContext {
 
+	public default DTOConverterRegistry getDtoConverterRegistry() {
+		return null;
+	}
+
 	public default Object getId() {
 		return null;
 	}

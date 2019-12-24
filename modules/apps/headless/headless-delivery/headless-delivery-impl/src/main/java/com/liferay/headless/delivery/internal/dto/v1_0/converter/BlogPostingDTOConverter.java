@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
@@ -95,8 +94,9 @@ public class BlogPostingDTOConverter
 					BlogsEntry.class.getName(), blogsEntry.getEntryId());
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					_dtoConverterRegistry, blogsEntry.getModelClassName(),
-					blogsEntry.getEntryId(), dtoConverterContext.getLocale());
+					dtoConverterContext.getDtoConverterRegistry(),
+					blogsEntry.getModelClassName(), blogsEntry.getEntryId(),
+					dtoConverterContext.getLocale());
 				siteId = blogsEntry.getGroupId();
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
@@ -155,9 +155,6 @@ public class BlogPostingDTOConverter
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Portal _portal;

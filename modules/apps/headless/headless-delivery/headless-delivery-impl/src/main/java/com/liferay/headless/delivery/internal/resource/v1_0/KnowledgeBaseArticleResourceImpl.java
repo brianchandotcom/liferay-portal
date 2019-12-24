@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -397,10 +398,14 @@ public class KnowledgeBaseArticleResourceImpl
 
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				_dtoConverterRegistry,
 				contextAcceptLanguage.getPreferredLocale(),
 				knowledgeBaseArticleResourcePrimKey, contextUriInfo,
 				contextUser));
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

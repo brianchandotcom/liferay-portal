@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -305,6 +306,7 @@ public class BlogPostingResourceImpl
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				_dtoConverterRegistry,
 				contextAcceptLanguage.getPreferredLocale(),
 				blogsEntry.getEntryId(), contextUriInfo, contextUser));
 	}
@@ -317,6 +319,9 @@ public class BlogPostingResourceImpl
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

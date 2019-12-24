@@ -160,6 +160,7 @@ public class ContentSetElementResourceImpl
 
 						return dtoConverter.toDTO(
 							new DefaultDTOConverterContext(
+								_dtoConverterRegistry,
 								contextAcceptLanguage.getPreferredLocale(),
 								assetEntry.getClassPK(), contextUriInfo,
 								contextUser));

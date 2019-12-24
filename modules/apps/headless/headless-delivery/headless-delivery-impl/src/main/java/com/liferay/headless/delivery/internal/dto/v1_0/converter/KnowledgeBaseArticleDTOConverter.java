@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -110,7 +109,8 @@ public class KnowledgeBaseArticleDTOConverter
 				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					_dtoConverterRegistry, kbArticle.getModelClassName(),
+					dtoConverterContext.getDtoConverterRegistry(),
+					kbArticle.getModelClassName(),
 					kbArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				siteId = kbArticle.getGroupId();
@@ -150,9 +150,6 @@ public class KnowledgeBaseArticleDTOConverter
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private KBArticleService _kbArticleService;

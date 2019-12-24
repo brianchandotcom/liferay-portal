@@ -28,10 +28,11 @@ import javax.ws.rs.core.UriInfo;
 public class DefaultDTOConverterContext implements DTOConverterContext {
 
 	public DefaultDTOConverterContext(
-		boolean acceptAllLanguages, Locale locale, Object id, UriInfo uriInfo,
-		User user) {
+		boolean acceptAllLanguages, DTOConverterRegistry dtoConverterRegistry, Locale locale, Object id,
+		UriInfo uriInfo, User user) {
 
 		_acceptAllLanguages = acceptAllLanguages;
+		_dtoConverterRegistry = dtoConverterRegistry;
 		_locale = locale;
 		_id = id;
 		_uriInfo = uriInfo;
@@ -51,7 +52,12 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	public DefaultDTOConverterContext(
 		Locale locale, Object id, UriInfo uriInfo, User user) {
 
-		this(false, locale, id, uriInfo, user);
+		this(false, null, locale, id, uriInfo, user);
+	}
+
+	@Override
+	public DTOConverterRegistry getDtoConverterRegistry() {
+		return _dtoConverterRegistry;
 	}
 
 	@Override
@@ -89,6 +95,7 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	}
 
 	private final boolean _acceptAllLanguages;
+	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final Object _id;
 	private final Locale _locale;
 	private UriInfo _uriInfo;

@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -152,7 +151,8 @@ public class StructuredContentDTOConverter
 					journalArticle.getResourcePrimKey());
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,
-					_dtoConverterRegistry, JournalArticle.class.getName(),
+					dtoConverterContext.getDtoConverterRegistry(),
+					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				renderedContents = _toRenderedContents(
@@ -495,9 +495,6 @@ public class StructuredContentDTOConverter
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

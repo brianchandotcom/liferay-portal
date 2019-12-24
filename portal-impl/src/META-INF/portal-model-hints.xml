@@ -514,13 +514,6 @@
 			<hint name="max-length">200</hint>
 		</field>
 	</model>
-	<model name="com.liferay.portal.kernel.model.ClusterGroup">
-		<field name="mvccVersion" type="long" />
-		<field name="clusterGroupId" type="long" />
-		<field name="name" type="String" />
-		<field name="clusterNodeIds" type="String" />
-		<field name="wholeCluster" type="boolean" />
-	</model>
 	<model name="com.liferay.portal.kernel.model.Company">
 		<default-hints>
 			<hint name="display-width">210</hint>

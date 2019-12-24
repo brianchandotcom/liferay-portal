@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -427,7 +428,8 @@ public class DocumentResourceImpl
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				null, fileEntry.getFileEntryId(), contextUriInfo, contextUser));
+				_dtoConverterRegistry, null, fileEntry.getFileEntryId(),
+				contextUriInfo, contextUser));
 	}
 
 	@Reference
@@ -441,6 +443,9 @@ public class DocumentResourceImpl
 
 	@Reference
 	private DocumentDTOConverter _documentDTOConverter;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

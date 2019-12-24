@@ -1,5 +1,48 @@
 definition {
 
+	macro changeWebContent {
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Pause(locator1 = "3000");
+
+		Click(locator1 = "Button#CHANGE");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#DIALOG");
+
+		if (isSet(depotName)) {
+			var key_contentName = "${webContentTitle}";
+
+			AssertClick(
+				key_breadcrumbName = "Workspaces",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Workspaces");
+
+			AssertClick(
+				key_groupTab = "Repository",
+				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+				value1 = "Repository");
+
+			LexiconCard.clickCard(card = "${depotName}");
+
+			Click(locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertTextEquals.assertPartialText(
+				key_card = "${webContentTitle}",
+				locator1 = "LexiconCard#CARD_TITLE",
+				value1 = "${webContentTitle}");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro configureScopePG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",

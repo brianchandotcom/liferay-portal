@@ -95,8 +95,9 @@ public class Entity implements Comparable<Entity> {
 		this(
 			serviceBuilder, null, null, null, name, null, null, null, false,
 			false, false, false, true, true, null, null, null, null, null, true,
-			false, false, false, false, false, null, false, null, null, false,
-			null, null, null, null, null, null, null, null, null, null, false);
+			false, false, false, false, false, false, null, false, null, null,
+			false, null, null, null, null, null, null, null, null, null, null,
+			false);
 	}
 
 	public Entity(
@@ -108,9 +109,9 @@ public class Entity implements Comparable<Entity> {
 		String persistenceClass, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
 		boolean changeTrackingEnabled, boolean dynamicUpdateEnabled,
-		boolean jsonEnabled, boolean mvccEnabled, boolean trashEnabled,
-		String uadApplicationName, boolean uadAutoDelete, String uadOutputPath,
-		String uadPackagePath, boolean deprecated,
+		boolean jsonEnabled, boolean modelTable, boolean mvccEnabled,
+		boolean trashEnabled, String uadApplicationName, boolean uadAutoDelete,
+		String uadOutputPath, String uadPackagePath, boolean deprecated,
 		List<EntityColumn> pkEntityColumns,
 		List<EntityColumn> regularEntityColumns,
 		List<EntityColumn> blobEntityColumns,
@@ -138,6 +139,7 @@ public class Entity implements Comparable<Entity> {
 		_changeTrackingEnabled = changeTrackingEnabled;
 		_dynamicUpdateEnabled = dynamicUpdateEnabled;
 		_jsonEnabled = jsonEnabled;
+		_modelTable = modelTable;
 		_mvccEnabled = mvccEnabled;
 		_trashEnabled = trashEnabled;
 		_uadApplicationName = uadApplicationName;
@@ -1032,6 +1034,10 @@ public class Entity implements Comparable<Entity> {
 		return false;
 	}
 
+	public boolean isModelTable() {
+		return _modelTable;
+	}
+
 	public boolean isMvccEnabled() {
 		return _mvccEnabled;
 	}
@@ -1294,6 +1300,7 @@ public class Entity implements Comparable<Entity> {
 	private Entity _localizedEntity;
 	private List<EntityColumn> _localizedEntityColumns;
 	private final boolean _localService;
+	private final boolean _modelTable;
 	private final boolean _mvccEnabled;
 	private final String _name;
 	private final String _packagePath;

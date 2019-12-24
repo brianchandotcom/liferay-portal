@@ -703,6 +703,9 @@ public class ServiceBuilder {
 				}
 			}
 
+			_modelTable = GetterUtil.getBoolean(
+				rootElement.attributeValue("model-table"));
+
 			_mvccEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("mvcc-enabled"));
 
@@ -807,6 +810,8 @@ public class ServiceBuilder {
 							_createModelWrapper(entity);
 
 							_createModelSoap(entity);
+
+							_createModelTable(entity);
 
 							_createBlobModels(entity);
 
@@ -2952,6 +2957,36 @@ public class ServiceBuilder {
 		_write(modelFile, content, _modifiedFileNames);
 	}
 
+	private void _createModelTable(Entity entity) throws Exception {
+		File modelTableFile = new File(
+			StringBundler.concat(
+				_serviceOutputPath, "/model/", entity.getName(), "Table.java"));
+
+		if (!entity.isModelTable()) {
+			if (modelTableFile.exists()) {
+				System.out.println("Removing " + modelTableFile);
+
+				modelTableFile.delete();
+			}
+
+			return;
+		}
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			StringBundler.concat(
+				_outputPath, "/model/impl/", entity.getName(), "Impl.java"));
+
+		_putDeprecatedKeys(context, modelImplJavaClass);
+
+		String content = _processTemplate(_tplModelTable, context);
+
+		_write(modelTableFile, content, _modifiedFileNames);
+	}
+
 	private void _createModelWrapper(Entity entity) throws Exception {
 		JavaClass modelJavaClass = _getJavaClass(
 			StringBundler.concat(
@@ -3015,9 +3050,9 @@ public class ServiceBuilder {
 			_write(file, content, _modifiedFileNames);
 		}
 		else {
-			System.out.println("Removing " + file);
-
 			if (file.exists()) {
+				System.out.println("Removing " + file);
+
 				file.delete();
 			}
 		}
@@ -3063,12 +3098,10 @@ public class ServiceBuilder {
 
 			_write(file, content, _modifiedFileNames);
 		}
-		else {
+		else if (file.exists()) {
 			System.out.println("Removing " + file);
 
-			if (file.exists()) {
-				file.delete();
-			}
+			file.delete();
 		}
 
 		file = new File(
@@ -3146,12 +3179,10 @@ public class ServiceBuilder {
 
 			_write(file, content, _modifiedFileNames);
 		}
-		else {
+		else if (file.exists()) {
 			System.out.println("Removing " + file);
 
-			if (file.exists()) {
-				file.delete();
-			}
+			file.delete();
 		}
 	}
 
@@ -5650,6 +5681,8 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
+		boolean modelTable = GetterUtil.getBoolean(
+			entityElement.attributeValue("model-table"), _modelTable);
 
 		String finderClassName = "";
 
@@ -6332,9 +6365,9 @@ public class ServiceBuilder {
 			externalReferenceCode, localService, remoteService, persistence,
 			persistenceClassName, finderClassName, dataSource, sessionFactory,
 			txManager, cacheEnabled, changeTrackingEnabled,
-			dynamicUpdateEnabled, jsonEnabled, mvccEnabled, trashEnabled,
-			uadApplicationName, uadAutoDelete, uadOutputPath, uadPackagePath,
-			deprecated, pkEntityColumns, regularEntityColumns,
+			dynamicUpdateEnabled, jsonEnabled, modelTable, mvccEnabled,
+			trashEnabled, uadApplicationName, uadAutoDelete, uadOutputPath,
+			uadPackagePath, deprecated, pkEntityColumns, regularEntityColumns,
 			blobEntityColumns, collectionEntityColumns, entityColumns,
 			entityOrder, entityFinders, referenceEntities,
 			unresolvedReferenceEntityNames, txRequiredMethodNames,
@@ -7470,6 +7503,7 @@ public class ServiceBuilder {
 	private String _implDirName;
 	private Map<String, JavaClass> _javaClasses = new HashMap<>();
 	private String _modelHintsFileName;
+	private boolean _modelTable;
 	private Set<String> _modifiedFileNames = new HashSet<>();
 	private boolean _mvccEnabled;
 	private String _oldServiceOutputPath;
@@ -7519,6 +7553,7 @@ public class ServiceBuilder {
 	private String _tplModelHintsXml = _TPL_ROOT + "model_hints_xml.ftl";
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";
 	private String _tplModelSoap = _TPL_ROOT + "model_soap.ftl";
+	private String _tplModelTable = _TPL_ROOT + "model_table.ftl";
 	private String _tplModelWrapper = _TPL_ROOT + "model_wrapper.ftl";
 	private String _tplPersistence = _TPL_ROOT + "persistence.ftl";
 	private String _tplPersistenceConstants =

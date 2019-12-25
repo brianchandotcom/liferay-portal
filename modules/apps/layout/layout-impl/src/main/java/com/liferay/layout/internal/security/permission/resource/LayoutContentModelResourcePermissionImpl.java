@@ -15,8 +15,8 @@
 package com.liferay.layout.internal.security.permission.resource;
 
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.layout.util.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;

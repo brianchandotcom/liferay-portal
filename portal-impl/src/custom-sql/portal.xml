@@ -333,24 +333,6 @@
 				(Users_Groups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByNoPermissions">
-		<![CDATA[
-			SELECT
-				{Layout.*}
-			FROM
-				Layout
-			LEFT JOIN
-				ResourcePermission ON
-					(ResourcePermission.companyId = Layout.companyId) AND
-					(ResourcePermission.name = ?) AND
-					(ResourcePermission.scope = ?) AND
-					(ResourcePermission.primKeyId = Layout.plid) AND
-					(ResourcePermission.roleId = ?)
-			WHERE
-				(Layout.companyId = ?) AND
-				(ResourcePermission.primKeyId IS NULL)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByNullFriendlyURL">
 		<![CDATA[
 			SELECT

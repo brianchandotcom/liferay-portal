@@ -401,6 +401,22 @@
 	<td>//span[contains(@class,'portlet-name') and contains(.,'${key_portletName}')]/../..//a[span//*[name()='path'][contains(@class,'lexicon-icon-body')]]</td>
 	<td></td>
 </tr>
+<!--BASED_ON_CUSTOM_MASETERS-->
+<tr>
+	<td>FRAGMENT_CHANGELESS</td>
+	<td>//div[@data-onclick='null' and //*[contains(@class,'component-${key_fragmentName}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS</td>
+	<td>//div[@data-onclick='null']//*[contains(@class,'component-${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OUTSIDE_OF_DROP_ZONE</td>
+	<td>//section[contains(@class,'container')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

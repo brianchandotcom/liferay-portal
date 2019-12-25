@@ -255,4 +255,56 @@ definition {
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}
 
+	@priority = "4"
+	test RemoveSegmentFromRegularRole {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "Role Assignee Test");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleTitle = "Remove Regrole Assignee");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoAssignees(roleTitle = "Remove Regrole Assignee");
+
+		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
+
+		Role.addAssignees(assigneeName = "Role Assignee Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.removeAssignee(
+			assigneeName = "Role Assignee Test",
+			assigneeType = "Segments",
+			roleTitle = "Remove Regrole Assignee");
+	}
+
 }

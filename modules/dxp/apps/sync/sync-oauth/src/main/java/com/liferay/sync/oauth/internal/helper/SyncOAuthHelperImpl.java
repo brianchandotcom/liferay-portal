@@ -17,12 +17,15 @@ package com.liferay.sync.oauth.internal.helper;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthApplicationConstants;
 import com.liferay.oauth.service.OAuthApplicationLocalService;
+import com.liferay.oauth.util.OAuth;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
 import com.liferay.sync.oauth.helper.SyncOAuthHelper;
@@ -63,8 +66,15 @@ public class SyncOAuthHelperImpl implements SyncOAuthHelper {
 			return;
 		}
 
+		String consumerKey = serviceContext.getUuid();
+
+		if (Validator.isNull(consumerKey)) {
+			consumerKey = PortalUUIDUtil.generate();
+		}
+
 		oAuthApplication = _oAuthApplicationLocalService.addOAuthApplication(
 			serviceContext.getUserId(), "Liferay Sync", StringPool.BLANK,
+			_oAuth.randomizeToken(consumerKey),
 			OAuthApplicationConstants.ACCESS_WRITE, true, "http://liferay-sync",
 			"http://liferay-sync", serviceContext);
 
@@ -145,5 +155,8 @@ public class SyncOAuthHelperImpl implements SyncOAuthHelper {
 
 	private static OAuthApplicationLocalService _oAuthApplicationLocalService;
 	private static UserLocalService _userLocalService;
+
+	@Reference
+	private OAuth _oAuth;
 
 }

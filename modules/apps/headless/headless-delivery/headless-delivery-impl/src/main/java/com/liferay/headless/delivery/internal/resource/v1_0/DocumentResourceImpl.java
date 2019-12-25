@@ -27,7 +27,6 @@ import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
-import com.liferay.headless.delivery.dto.v1_0.converter.DefaultDTOConverterContext;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
@@ -49,6 +48,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -427,7 +428,8 @@ public class DocumentResourceImpl
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				null, fileEntry.getFileEntryId(), contextUriInfo, contextUser));
+				_dtoConverterRegistry, null, fileEntry.getFileEntryId(),
+				contextUriInfo, contextUser));
 	}
 
 	@Reference
@@ -441,6 +443,9 @@ public class DocumentResourceImpl
 
 	@Reference
 	private DocumentDTOConverter _documentDTOConverter;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

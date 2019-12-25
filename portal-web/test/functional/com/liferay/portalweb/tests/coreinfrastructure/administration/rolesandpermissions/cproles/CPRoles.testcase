@@ -169,6 +169,63 @@ definition {
 			roleTitle = "Roles Regrole Name");
 	}
 
+	@priority = "4"
+	test AssignNewSegmentToRegularRole {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleTitle = "Roles Regrole Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
+
+		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "New RoleSegment Test");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
+
+		Search.searchCP(searchTerm = "New RoleSegment Test");
+
+		var key_assigneeName = "New RoleSegment Test";
+
+		Check(locator1 = "RolesAssignMembers#ADD_ASSIGNEE_TABLE_CHECKBOX");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		Button.clickAdd();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewAssignee(
+			assigneeName = "New RoleSegment Test",
+			assigneeType = "Segments",
+			roleTitle = "Roles Regrole Name");
+	}
+
 	@priority = "5"
 	test DeleteRegularRole {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

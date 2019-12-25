@@ -9,7 +9,12 @@ definition {
 		else {
 			Navigator.gotoNavNested(navNested = "Basic Templates");
 
-			LexiconCard.clickCard(card = "Blank");
+			if (isSet(masterLayoutName)) {
+				LexiconCard.clickCard(card = "${masterLayoutName}");
+			}
+			else {
+				LexiconCard.clickCard(card = "Blank");
+			}
 		}
 	}
 
@@ -31,6 +36,7 @@ definition {
 
 		ContentPages._selectCard(
 			collectionName = "${collectionName}",
+			masterLayoutName = "${masterLayoutName}",
 			pageTemplateName = "${pageTemplateName}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");

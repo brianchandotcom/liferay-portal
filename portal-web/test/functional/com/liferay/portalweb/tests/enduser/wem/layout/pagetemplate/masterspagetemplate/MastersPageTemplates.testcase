@@ -29,6 +29,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102566. There's a custom masters page created in site, when add a new page, there's an option to select the created masters, and the common elements added in masters page are added in page"
+	@priority = "5"
+	test AddPageBasedOnCustomMastersAndInheritElementsFromCustomMasters {
+		task ("Add a custom masters with Button fragment") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert custom masters as an option when add a new page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+		}
+
+		task ("Assert the new page inherits elements from custom masters") {
+			AssertVisible(
+				key_fragmentName = "button",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+		}
+	}
+
 	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
 	@priority = "5"
 	test CanDuplicateMastersPageTemplate {
@@ -82,6 +112,146 @@ definition {
 			AssertElementNotPresent(
 				key_card = "Blank",
 				locator1 = "LexiconCard#CARD_ELLIPSIS");
+		}
+	}
+
+	@description = "This is a test for LPS-102566. The new fragments can only be add into Drop Zone in a page based on custom master and the fragments inherited from the custom master are not editable"
+	@priority = "3"
+	test OnlyAddFragmentsInDropZoneOfPageAndFragmentsInheritedAreChangeless {
+		task ("Add a custom masters with Button fragment") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert Button fragment inherited from custom masters is changeless in page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+
+			AssertElementPresent(
+				key_fragmentName = "button",
+				locator1 = "PageEditor#FRAGMENT_CHANGELESS");
+		}
+
+		task ("Add a Heading fragment to drop zone") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Assert can not add a Paragraph fragment to outside of drop zone") {
+			PageEditor.viewCannotAddFragmentToOutsideOfDropZone(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+	}
+
+	@description = "This is a test for LPS-102566. Master page can be used in page, page template and display page, changes in master page will be propagated to page, page template and display page"
+	@priority = "5"
+	test PropagateChangesFromCustomMastersToAllBasedOnCustomMasters {
+		task ("Add a custom masters without elements") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a page based on custom masters") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a content page template based on custom masters") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				masterLayoutName = "Custom Masters Page Template",
+				pageTemplateName = "Page Template Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a display page template based on custom masters") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				displayPageName = "Display Page Name",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a Heading fragment to custom masters") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			MastersPageTemplates.clickPublishMaster();
+		}
+
+		task ("Assert the Heading fragment exist in page based on custom masters") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-page-name");
+
+			AssertVisible(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT");
+
+			ContentPages.clickPencil();
+
+			AssertVisible(
+				key_fragmentName = "heading",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+		}
+
+		task ("Assert the Heading fragment exist in content page template based on custom masters") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Page Template Name");
+
+			AssertVisible(
+				key_fragmentName = "heading",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+		}
+
+		task ("Assert the Heading fragment exist in display page template based on custom masters") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
+
+			AssertVisible(
+				key_fragmentName = "heading",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
 		}
 	}
 

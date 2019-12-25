@@ -39,10 +39,11 @@ public class OAuthApplicationLocalServiceUtil {
 	 */
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationLocalServiceUtil} to access the o auth application local service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x), replaced by
+	 {@link #addOAuthApplication(long, String, String, String, int
+	 boolean, String, String, ServiceContext)}
 	 */
+	@Deprecated
 	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
 			long userId, String name, String description, int accessLevel,
 			boolean shareableAccessToken, String callbackURI, String websiteURL,
@@ -51,6 +52,18 @@ public class OAuthApplicationLocalServiceUtil {
 
 		return getService().addOAuthApplication(
 			userId, name, description, accessLevel, shareableAccessToken,
+			callbackURI, websiteURL, serviceContext);
+	}
+
+	public static com.liferay.oauth.model.OAuthApplication addOAuthApplication(
+			long userId, String name, String description, String token,
+			int accessLevel, boolean shareableAccessToken, String callbackURI,
+			String websiteURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addOAuthApplication(
+			userId, name, description, token, accessLevel, shareableAccessToken,
 			callbackURI, websiteURL, serviceContext);
 	}
 

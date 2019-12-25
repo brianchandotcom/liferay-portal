@@ -411,6 +411,23 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_roles_admin_web_portlet_RolesAdminPortlet");
 	}
 
+	macro removeAssignee {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoAssignees(roleTitle = "${roleTitle}");
+
+		RoleNavigator.gotoAssigneeType(assigneeType = "${assigneeType}");
+
+		Search.searchCP(searchTerm = "${assigneeName}");
+
+		LexiconEntry.selectEntry(key_rowEntry = "${assigneeName}");
+
+		ClickNoError(locator1 = "Icon#DELETE");
+	}
+
 	macro removePermissionCP {
 		Role.editPermissionCmdCP(
 			permissionDefinitionKey = "${permissionDefinitionKey}",

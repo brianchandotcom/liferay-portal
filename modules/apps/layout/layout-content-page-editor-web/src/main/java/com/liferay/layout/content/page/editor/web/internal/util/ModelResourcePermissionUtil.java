@@ -14,7 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util;
 
-import com.liferay.layout.util.permission.resource.LayoutContentModelResourcePermission;
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;

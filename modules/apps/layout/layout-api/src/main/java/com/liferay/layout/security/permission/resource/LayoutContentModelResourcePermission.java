@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.util.permission.resource;
+package com.liferay.layout.security.permission.resource;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 

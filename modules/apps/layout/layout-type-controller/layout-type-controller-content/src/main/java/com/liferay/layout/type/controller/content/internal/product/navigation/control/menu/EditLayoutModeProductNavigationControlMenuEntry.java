@@ -16,9 +16,9 @@ package com.liferay.layout.type.controller.content.internal.product.navigation.c
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.type.controller.content.internal.controller.ContentLayoutTypeController;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.layout.util.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

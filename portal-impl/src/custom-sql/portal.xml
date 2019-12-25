@@ -111,24 +111,6 @@
 					)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByNullFriendlyURL">
-		<![CDATA[
-			SELECT
-				{Group_.*}
-			FROM
-				Group_
-			WHERE
-				(
-					(Group_.type_ != 4) OR
-					(Group_.type_ IS NULL)
-				) AND
-				(
-					(friendlyURL = '') OR
-					(friendlyURL IS NULL) OR
-					(friendlyURL = '/null')
-				)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findBySystem">
 		<![CDATA[
 			(

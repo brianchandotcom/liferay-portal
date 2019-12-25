@@ -33,6 +33,12 @@ public class OAuthApplicationLocalServiceWrapper
 		_oAuthApplicationLocalService = oAuthApplicationLocalService;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by
+	 {@link #addOAuthApplication(long, String, String, String, int
+	 boolean, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.oauth.model.OAuthApplication addOAuthApplication(
 			long userId, String name, String description, int accessLevel,
@@ -42,6 +48,19 @@ public class OAuthApplicationLocalServiceWrapper
 
 		return _oAuthApplicationLocalService.addOAuthApplication(
 			userId, name, description, accessLevel, shareableAccessToken,
+			callbackURI, websiteURL, serviceContext);
+	}
+
+	@Override
+	public com.liferay.oauth.model.OAuthApplication addOAuthApplication(
+			long userId, String name, String description, String token,
+			int accessLevel, boolean shareableAccessToken, String callbackURI,
+			String websiteURL,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthApplicationLocalService.addOAuthApplication(
+			userId, name, description, token, accessLevel, shareableAccessToken,
 			callbackURI, websiteURL, serviceContext);
 	}
 

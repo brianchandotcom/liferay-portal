@@ -150,7 +150,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Settings");
 
-		Panel.expandPanel(panel = "open-graph");
+		Panel.expandPanel(panel = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",

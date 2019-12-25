@@ -230,6 +230,8 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
+		AssertElementPresent(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
+
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 

@@ -206,7 +206,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public DLFileEntry fetchFileEntryByImageId(long imageId)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = dlFileEntryFinder.fetchByAnyImageId(imageId);
+		DLFileEntry dlFileEntry =
+			dlFileEntryLocalService.fetchFileEntryByAnyImageId(imageId);
 
 		if (dlFileEntry != null) {
 			_dlFileEntryModelResourcePermission.check(

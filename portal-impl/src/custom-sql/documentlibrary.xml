@@ -78,19 +78,6 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByAnyImageId">
-		<![CDATA[
-			SELECT
-				{DLFileEntry.*}
-			FROM
-				DLFileEntry
-			WHERE
-				(DLFileEntry.smallImageId = ?) OR
-				(DLFileEntry.largeImageId = ?) OR
-				(DLFileEntry.custom1ImageId = ?) OR
-				(DLFileEntry.custom2ImageId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByCompanyId">
 		<![CDATA[
 			SELECT
@@ -132,20 +119,6 @@
 								[$DDM_STRUCTURE_ID$]
 						)
 				)
-		]]>
-	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByMisversioned">
-		<![CDATA[
-			SELECT
-				{DLFileEntry.*}
-			FROM
-				DLFileEntry
-			LEFT JOIN
-				DLFileVersion ON
-					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId) AND
-					(DLFileVersion.version = DLFileEntry.version)
-			WHERE
-				DLFileVersion.fileEntryId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByNoAssets">

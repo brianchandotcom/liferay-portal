@@ -18,14 +18,18 @@ import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.service.base.OAuthApplicationServiceBaseImpl;
 import com.liferay.oauth.service.permission.OAuthApplicationPermission;
 import com.liferay.oauth.service.permission.OAuthPermission;
+import com.liferay.oauth.util.OAuth;
 import com.liferay.oauth.util.OAuthActionKeys;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -51,9 +55,16 @@ public class OAuthApplicationServiceImpl
 		OAuthPermission.check(
 			getPermissionChecker(), OAuthActionKeys.ADD_APPLICATION);
 
+		String consumerKey = serviceContext.getUuid();
+
+		if (Validator.isNull(consumerKey)) {
+			consumerKey = PortalUUIDUtil.generate();
+		}
+
 		return oAuthApplicationLocalService.addOAuthApplication(
-			getUserId(), name, description, accessLevel, shareableAccessToken,
-			callbackURI, websiteURL, serviceContext);
+			getUserId(), name, description, _oAuth.randomizeToken(consumerKey),
+			accessLevel, shareableAccessToken, callbackURI, websiteURL,
+			serviceContext);
 	}
 
 	@Override
@@ -104,5 +115,8 @@ public class OAuthApplicationServiceImpl
 			oAuthApplicationId, name, description, shareableAccessToken,
 			callbackURI, websiteURL, serviceContext);
 	}
+
+	@Reference
+	private OAuth _oAuth;
 
 }

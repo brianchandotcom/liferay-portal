@@ -20,14 +20,16 @@ import com.liferay.oauth.exception.OAuthApplicationWebsiteURLException;
 import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.base.OAuthApplicationLocalServiceBaseImpl;
-import com.liferay.oauth.util.OAuth;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -51,11 +53,38 @@ import org.osgi.service.component.annotations.Reference;
 public class OAuthApplicationLocalServiceImpl
 	extends OAuthApplicationLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by
+	 *             {@link #addOAuthApplication(long, String, String, String, int
+	 *             boolean, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public OAuthApplication addOAuthApplication(
 			long userId, String name, String description, int accessLevel,
 			boolean shareableAccessToken, String callbackURI, String websiteURL,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		String consumerKey = serviceContext.getUuid();
+
+		if (Validator.isNull(consumerKey)) {
+			consumerKey = PortalUUIDUtil.generate();
+		}
+
+		return oAuthApplicationLocalService.addOAuthApplication(
+			userId, name, description,
+			DigesterUtil.digestHex(
+				Digester.MD5, consumerKey, PwdGenerator.getPassword()),
+			accessLevel, shareableAccessToken, callbackURI, websiteURL,
+			serviceContext);
+	}
+
+	@Override
+	public OAuthApplication addOAuthApplication(
+			long userId, String name, String description, String token,
+			int accessLevel, boolean shareableAccessToken, String callbackURI,
+			String websiteURL, ServiceContext serviceContext)
 		throws PortalException {
 
 		// OAuth application
@@ -86,7 +115,7 @@ public class OAuthApplicationLocalServiceImpl
 
 		oAuthApplication.setConsumerKey(consumerKey);
 
-		oAuthApplication.setConsumerSecret(_oAuth.randomizeToken(consumerKey));
+		oAuthApplication.setConsumerSecret(token);
 		oAuthApplication.setAccessLevel(accessLevel);
 		oAuthApplication.setShareableAccessToken(shareableAccessToken);
 		oAuthApplication.setCallbackURI(callbackURI);
@@ -301,8 +330,5 @@ public class OAuthApplicationLocalServiceImpl
 
 	@Reference
 	private CustomSQL _customSQL;
-
-	@Reference
-	private OAuth _oAuth;
 
 }

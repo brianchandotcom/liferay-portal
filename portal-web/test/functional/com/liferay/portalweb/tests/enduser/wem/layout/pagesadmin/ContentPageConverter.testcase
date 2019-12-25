@@ -207,6 +207,8 @@ definition {
 			menuItem = "Convert to Content Page",
 			pageName = "Test Page Name");
 
+		Button.clickPublish();
+
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");

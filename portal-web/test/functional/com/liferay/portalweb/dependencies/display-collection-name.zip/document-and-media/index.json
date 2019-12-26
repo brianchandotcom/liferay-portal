@@ -1,0 +1,16 @@
+{
+      "fieldSets": [
+          		{
+          		"fields": [
+          			{
+                "label": "DM Title",
+          			"name": "itemSelectorName",
+          			"type": "itemSelector",
+          			"typeOptions": {
+          				"itemType" : "com.liferay.portal.kernel.repository.model.FileEntry"
+          			}
+          	}
+      	 ]
+	   }
+	]
+}

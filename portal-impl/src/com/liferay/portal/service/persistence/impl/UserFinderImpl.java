@@ -78,9 +78,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String FIND_BY_NO_ANNOUNCEMENTS_DELIVERIES =
 		UserFinder.class.getName() + ".findByNoAnnouncementsDeliveries";
 
-	public static final String FIND_BY_NO_CONTACTS =
-		UserFinder.class.getName() + ".findByNoContacts";
-
 	public static final String FIND_BY_NO_GROUPS =
 		UserFinder.class.getName() + ".findByNoGroups";
 

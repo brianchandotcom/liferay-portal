@@ -1451,19 +1451,6 @@
 				AnnouncementsDelivery.userId IS NULL
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.findByNoContacts">
-		<![CDATA[
-			SELECT
-				{User_.*}
-			FROM
-				User_
-			LEFT JOIN
-				Contact_ ON
-					Contact_.contactId = User_.contactId
-			WHERE
-				Contact_.contactId IS NULL
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.findByNoGroups">
 		<![CDATA[
 			SELECT

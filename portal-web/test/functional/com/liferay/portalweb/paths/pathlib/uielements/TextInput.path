@@ -399,6 +399,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STRUCTURE_KEY_FIELD</td>
+	<td>//input[contains(@id,'structureKey')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLIC_VIRTUAL_HOST_URL</td>
 	<td>//input[contains(@id,'publicVirtualHost')]</td>
 	<td></td>

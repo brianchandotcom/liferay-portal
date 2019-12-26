@@ -22,7 +22,7 @@ export default function renderApp({
 	initialGoals = segmentsGoals,
 	initialExperimentHistory = [],
 	initialSegmentsExperiences = [],
-	initialSegmentsExperiment = {},
+	initialSegmentsExperiment,
 	initialSegmentsVariants = [],
 	APIService = {},
 	selectedSegmentsExperienceId,

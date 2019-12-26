@@ -70,6 +70,7 @@ class SegmentEdit extends Component {
 		contributors: [],
 		handleBlur: () => {},
 		initialSegmentActive: true,
+		initialSegmentName: {},
 		portletNamespace: '',
 		showInEditMode: false
 	};

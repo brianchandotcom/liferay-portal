@@ -463,6 +463,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			_copyPortletPreferences(_sourceLayout, _targetLayout);
 
+			_layoutLocalService.updateMasterLayoutPlid(
+				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
+				_targetLayout.getLayoutId(),
+				_sourceLayout.getMasterLayoutPlid());
+
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());
 

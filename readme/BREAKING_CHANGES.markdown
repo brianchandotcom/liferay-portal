@@ -73,6 +73,32 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
+### Removed Portal Property user.groups.copy.layouts.to.user.personal.site
+- **Date:** 2019-Dec-26
+- **JIRA Ticket:** [LPS-106339](https://issues.liferay.com/browse/LPS-106339)
+
+#### What changed?
+
+The portal property `user.groups.copy.layouts.to.user.personal.site` and the
+behavior associated with it have been removed.
+
+#### Who is affected?
+
+This affects any one who set the property to `true` to copy user group pages to
+user personal sites.
+
+#### How should I update my code?
+
+There's no direct replacement for this property. If you have anything that
+depends on the behavior, you can copy the old implementations of
+`UserGroupLocalServiceImpl#copyUserGroupLayouts` to your own project.
+
+#### Why was this change made?
+
+The behavior associated with this property has been deprecated since 6.2.
+
+---------------------------------------
+
 ### Liferay FontAwesome Is No Longer Included by Default
 - **Date:** 2019-Aug-21
 - **JIRA Ticket:** [LPS-100021](https://issues.liferay.com/browse/LPS-100021)

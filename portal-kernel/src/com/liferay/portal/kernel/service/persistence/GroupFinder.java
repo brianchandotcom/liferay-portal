@@ -51,18 +51,12 @@ public interface GroupFinder {
 			<com.liferay.portal.kernel.model.Group> obc);
 
 	public java.util.List<com.liferay.portal.kernel.model.Group> findByLayouts(
-		long companyId, long parentGroupId, boolean site, int start, int end);
-
-	public java.util.List<com.liferay.portal.kernel.model.Group> findByLayouts(
 		long companyId, long parentGroupId, boolean site, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Group> obc);
 
 	public java.util.List<com.liferay.portal.kernel.model.Group>
 		findByLiveGroups();
-
-	public java.util.List<com.liferay.portal.kernel.model.Group>
-		findByNullFriendlyURL();
 
 	public java.util.List<com.liferay.portal.kernel.model.Group> findBySystem(
 		long companyId);

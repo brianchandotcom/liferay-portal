@@ -77,15 +77,6 @@ public class GroupFinderUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Group>
 		findByLayouts(
 			long companyId, long parentGroupId, boolean site, int start,
-			int end) {
-
-		return getFinder().findByLayouts(
-			companyId, parentGroupId, site, start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Group>
-		findByLayouts(
-			long companyId, long parentGroupId, boolean site, int start,
 			int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.portal.kernel.model.Group> obc) {
@@ -98,12 +89,6 @@ public class GroupFinderUtil {
 		findByLiveGroups() {
 
 		return getFinder().findByLiveGroups();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Group>
-		findByNullFriendlyURL() {
-
-		return getFinder().findByNullFriendlyURL();
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Group>

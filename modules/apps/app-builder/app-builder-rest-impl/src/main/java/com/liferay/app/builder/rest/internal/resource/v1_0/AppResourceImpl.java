@@ -33,7 +33,8 @@ import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.util.comparator.AppBuilderAppCreateDateComparator;
 import com.liferay.app.builder.util.comparator.AppBuilderAppModifiedDateComparator;
 import com.liferay.app.builder.util.comparator.AppBuilderAppNameComparator;
-import com.liferay.data.engine.rest.client.resource.v2_0.DataListViewResource;
+import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -45,10 +46,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -440,27 +439,12 @@ public class AppResourceImpl
 		}
 
 		if (dataListViewId != null) {
-			String sessionId = CookieKeys.getCookie(
-				contextHttpServletRequest, CookieKeys.JSESSIONID);
+			DEDataListView deDataListView =
+				_deDataListViewLocalService.fetchDEDataListView(dataListViewId);
 
-			DataListViewResource dataListViewResource =
-				DataListViewResource.builder(
-				).endpoint(
-					_portal.getHost(contextHttpServletRequest),
-					contextHttpServletRequest.getServerPort(),
-					contextHttpServletRequest.getScheme()
-				).header(
-					"Cookie", "JSESSIONID=" + sessionId
-				).parameter(
-					"p_auth", AuthTokenUtil.getToken(contextHttpServletRequest)
-				).build();
-
-			try {
-				dataListViewResource.getDataListView(dataListViewId);
-			}
-			catch (Exception e) {
+			if (deDataListView == null) {
 				throw new NoSuchDataListViewException(
-					"Data list view " + dataListViewId + " does not exist", e);
+					"Data list view " + dataListViewId + " does not exist");
 			}
 		}
 
@@ -487,6 +471,9 @@ public class AppResourceImpl
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DEDataListViewLocalService _deDataListViewLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -234,6 +234,9 @@ public class ContentPageEditorDisplayContext {
 				"addPortletURL",
 				getFragmentEntryActionURL("/content_layout/add_portlet_react")
 			).put(
+				"addSegmentsExperienceURL",
+				editorSoyContext.get("addSegmentsExperienceURL")
+			).put(
 				"availableLanguages", editorSoyContext.get("availableLanguages")
 			).put(
 				"availableSegmentsEntries",

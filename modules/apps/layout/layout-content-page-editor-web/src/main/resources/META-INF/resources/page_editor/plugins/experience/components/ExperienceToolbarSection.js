@@ -25,11 +25,13 @@ export default function ExperienceToolbarSection({selectId}) {
 		StoreContext
 	);
 	const {
+		addSegmentsExperienceURL,
 		availableSegmentsEntries,
 		classNameId,
 		classPK,
 		defaultSegmentsEntryId,
-		editSegmentsEntryURL
+		editSegmentsEntryURL,
+		portletNamespace
 	} = useContext(ConfigContext);
 
 	const experiences = useMemo(
@@ -55,14 +57,15 @@ export default function ExperienceToolbarSection({selectId}) {
 	// TODO get endpoints URL from the display context
 	const APIService = useMemo(() => {
 		return API({
-			addSegmentsExperience: '/',
+			addSegmentsExperienceURL,
 			classNameId,
 			classPK,
 			editSegmentsExperiencePriorityURL: '/',
 			editSegmentsExperienceURL: '/',
+			portletNamespace,
 			removeSegmentsExperienceURL: '/'
 		});
-	}, [classNameId, classPK]);
+	}, [addSegmentsExperienceURL, classNameId, classPK, portletNamespace]);
 
 	const selectedExperience =
 		availableSegmentsExperiences[segmentsExperienceId];

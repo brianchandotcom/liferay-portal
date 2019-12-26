@@ -14,6 +14,8 @@
 
 import React from 'react';
 
+import serviceFetch from '../../app/services/serviceFetch';
+
 export const APIContext = React.createContext({});
 
 // TODO grab urls from displayContext
@@ -21,29 +23,21 @@ const UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL =
 	'/segments.segmentsexperience/update-segments-experience-priority';
 
 export default function API({
-	addSegmentsExperienceURL: _addSegmentsExperienceURL,
-	classNameId: _classNameId,
-	classPK: _classPK,
-	editSegmentsExperiencePriorityURL: _editSegmentsExperiencePriorityURL,
-	editSegmentsExperienceURL: _editSegmentsExperienceURL,
-	removeSegmentsExperienceURL: _removeSegmentsExperienceURL
+	addSegmentsExperienceURL,
+	classNameId,
+	classPK,
+	portletNamespace
 }) {
 	function createExperience({name, segmentsEntryId}) {
-		// TODO actual call to server
+		const body = {
+			active: true,
+			classNameId,
+			classPK,
+			name,
+			segmentsEntryId
+		};
 
-		return new Promise(resolve => {
-			setTimeout(
-				() =>
-					resolve({
-						active: true,
-						name,
-						priority: 10,
-						segmentsEntryId,
-						segmentsExperienceId: Math.random().toString()
-					}),
-				1000
-			);
-		});
+		return serviceFetch({portletNamespace}, addSegmentsExperienceURL, body);
 	}
 
 	function removeExperience(

@@ -16,15 +16,48 @@ import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useState} from 'react';
 
 import {DispatchContext} from '../../app/reducers/index';
+import createColumn from '../actions/createColumn';
+import removeColumn from '../actions/removeColumn';
 import updateItemConfig from '../actions/updateItemConfig';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 const NUMBER_OF_COLUMNS_OPTIONS = ['0', '1', '2', '3', '4', '5', '6'];
 
-const PADDING_OPTIONS = ['0', '1', '2', '4', '6', '8', '10'];
+const PADDING_OPTIONS = [
+	{
+		label: '0',
+		value: '0'
+	},
+	{
+		label: '1',
+		value: '3'
+	},
+	{
+		label: '2',
+		value: '4'
+	},
+	{
+		label: '4',
+		value: '5'
+	},
+	{
+		label: '6',
+		value: '6'
+	},
+	{
+		label: '8',
+		value: '7'
+	},
+	{
+		label: '10',
+		value: '8'
+	}
+];
 
 const SELECTORS = {
-	columnSpacing: 'columnSpacing',
-	numberOfColumns: 'numberofColumns',
+	gutters: 'gutters',
+	numberOfColumns: 'numberOfColumns',
 	paddingHorizontal: 'paddingHorizontal',
 	paddingVertical: 'paddingVertical',
 	type: 'type'
@@ -45,12 +78,62 @@ const ClayCheckboxWithState = ({onChange, ...otherProps}) => {
 	);
 };
 
+function initializeColumn() {
+	const uuid = Math.random()
+		.toString(36)
+		.substr(2, 8);
+	const itemType = LAYOUT_DATA_ITEM_TYPES.column;
+	const config = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[itemType];
+	const itemId = `column-${uuid}`;
+
+	return {
+		config,
+		itemId,
+		itemType
+	};
+}
+
+function updateColumns(item, newNumberOfColumns, dispatchFn) {
+	const currentNumberOfColumns = item.config.numberOfColumns;
+
+	if (item && item.itemId && dispatchFn) {
+		const columnsToBeAdded = newNumberOfColumns - currentNumberOfColumns;
+
+		if (columnsToBeAdded === 0) {
+			return;
+		}
+
+		if (columnsToBeAdded > 0) {
+			for (let index = 0; index < columnsToBeAdded; index++) {
+				const {config, itemId, itemType} = initializeColumn();
+
+				dispatchFn(
+					createColumn({
+						config,
+						itemId,
+						itemType,
+						newNumberOfColumns,
+						rowItemId: item.itemId
+					})
+				);
+			}
+
+			return;
+		}
+
+		for (let index = 0; index < Math.abs(columnsToBeAdded); index++) {
+			dispatchFn(
+				removeColumn({
+					newNumberOfColumns,
+					rowItemId: item.itemId
+				})
+			);
+		}
+	}
+}
+
 export const SpacingConfigurationPanel = ({item}) => {
 	const dispatch = useContext(DispatchContext);
-	const [showSpaceBetweenCheckbox, setShowSpaceBetweenCheckbox] = useState(
-		false
-	);
-	const {itemId} = item;
 
 	const handleSelectValueChanged = (identifier, value) => {
 		dispatch(
@@ -58,9 +141,13 @@ export const SpacingConfigurationPanel = ({item}) => {
 				config: {
 					[identifier]: value
 				},
-				itemId
+				itemId: item.itemId
 			})
 		);
+
+		if (identifier === SELECTORS.numberOfColumns) {
+			updateColumns(item, value, dispatch);
+		}
 	};
 
 	return (
@@ -71,21 +158,18 @@ export const SpacingConfigurationPanel = ({item}) => {
 				</label>
 				<ClaySelectWithOption
 					aria-label={Liferay.Language.get('number-of-columns')}
-					defaultValue="1"
 					id="floatingToolbarSpacingPanelNumberOfColumnsOption"
 					onChange={({target: {value}}) => {
-						if (value > 1 && !showSpaceBetweenCheckbox) {
-							setShowSpaceBetweenCheckbox(true);
-						}
 						handleSelectValueChanged(
 							SELECTORS.numberOfColumns,
-							value
+							Number(value)
 						);
 					}}
 					options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
 						label: value,
 						value
 					}))}
+					value={String(item.config.numberOfColumns)}
 				/>
 			</ClayForm.Group>
 			<ClayForm.Group>
@@ -108,6 +192,7 @@ export const SpacingConfigurationPanel = ({item}) => {
 							value: 'fluid'
 						}
 					]}
+					value={item.config.type}
 				/>
 			</ClayForm.Group>
 			<ClayForm.Group className="form-group-autofit">
@@ -117,18 +202,15 @@ export const SpacingConfigurationPanel = ({item}) => {
 					</label>
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('padding-v')}
-						defaultValue="1"
 						id="floatingToolbarSpacingPanelPaddingVerticalOption"
 						onChange={({target: {value}}) =>
 							handleSelectValueChanged(
 								SELECTORS.paddingVertical,
-								value
+								Number(value)
 							)
 						}
-						options={PADDING_OPTIONS.map(value => ({
-							label: value,
-							value
-						}))}
+						options={PADDING_OPTIONS}
+						value={String(item.config.paddingVertical)}
 					/>
 				</div>
 
@@ -138,36 +220,33 @@ export const SpacingConfigurationPanel = ({item}) => {
 					</label>
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('padding-h')}
-						defaultValue="1"
 						id="floatingToolbarSpacingPanelPaddingHorizontalOption"
 						onChange={({target: {value}}) =>
 							handleSelectValueChanged(
 								SELECTORS.paddingHorizontal,
-								value
+								Number(value)
 							)
 						}
-						options={PADDING_OPTIONS.map(value => ({
-							label: value,
-							value
-						}))}
+						options={PADDING_OPTIONS}
+						value={String(item.config.paddingHorizontal)}
 					/>
 				</div>
 			</ClayForm.Group>
 
-			{showSpaceBetweenCheckbox && (
+			{item.config.numberOfColumns > 1 && (
 				<ClayForm.Group>
 					<ClayCheckboxWithState
 						aria-label={Liferay.Language.get(
 							'space-between-columns'
 						)}
-						defaultValue={true}
 						label={Liferay.Language.get('space-between-columns')}
 						onChange={({target: {value}}) =>
 							handleSelectValueChanged(
-								SELECTORS.columnSpacing,
-								value
+								SELECTORS.gutters,
+								value === 'true'
 							)
 						}
+						value={item.config.gutters}
 					/>
 				</ClayForm.Group>
 			)}

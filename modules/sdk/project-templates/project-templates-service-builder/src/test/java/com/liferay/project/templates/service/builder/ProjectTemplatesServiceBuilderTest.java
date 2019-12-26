@@ -346,7 +346,8 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", "sample", "com.test",
-			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.0.6");
+			mavenExecutor, "-Dpackage=com.test.sample",
+			"-DliferayVersion=7.0.6");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -375,7 +376,8 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", "sample", "com.test",
-			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.1.3");
+			mavenExecutor, "-Dpackage=com.test.sample",
+			"-DliferayVersion=7.1.3");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(
@@ -404,7 +406,8 @@ public class ProjectTemplatesServiceBuilderTest
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", "sample", "com.test",
-			mavenExecutor, "-Dpackage=com.test.sample", "-DliferayVersion=7.2.1");
+			mavenExecutor, "-Dpackage=com.test.sample",
+			"-DliferayVersion=7.2.1");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(

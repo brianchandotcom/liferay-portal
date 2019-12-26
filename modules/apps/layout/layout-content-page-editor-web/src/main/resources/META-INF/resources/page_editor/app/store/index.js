@@ -26,7 +26,6 @@ const INITIAL_STATE = {
 	 * TODO: potentially allow us to specify a ranking here to determine order
 	 */
 	draft: true,
-	publishButtonEnabled: true,
 	reducers: {},
 	sidebarOpen: true,
 	singleSegmentsExperienceMode: false

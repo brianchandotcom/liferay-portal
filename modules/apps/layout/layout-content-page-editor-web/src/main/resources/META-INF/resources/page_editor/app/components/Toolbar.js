@@ -39,7 +39,7 @@ function ToolbarBody() {
 
 	const {portletNamespace} = useContext(ConfigContext);
 
-	const {draft, publishButtonEnabled, singleSegmentsExperienceMode} = store;
+	const {draft, singleSegmentsExperienceMode} = store;
 
 	const {
 		classPK,
@@ -196,7 +196,6 @@ function ToolbarBody() {
 
 						<ClayButton
 							className="nav-btn"
-							disabled={!publishButtonEnabled}
 							displayType="primary"
 							small
 							type="submit"

@@ -695,6 +695,16 @@ definition {
 		DoubleClick(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
 	}
 
+	macro gotoSelectPanel {
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON");
+
+		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PLUS_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+	}
+
 	macro gotoTab {
 		if (IsElementNotPresent(key_tabName = "${tabName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE")) {
 			Click(

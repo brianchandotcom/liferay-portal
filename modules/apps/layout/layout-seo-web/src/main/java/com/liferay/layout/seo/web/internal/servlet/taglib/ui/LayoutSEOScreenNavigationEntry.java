@@ -46,6 +46,7 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -125,8 +126,16 @@ public class LayoutSEOScreenNavigationEntry
 				_storageEngine));
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/layout/screen/navigation/entries/seo.jsp");
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.seo.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
@@ -163,6 +172,8 @@ public class LayoutSEOScreenNavigationEntry
 
 	@Reference
 	private Portal _portal;
+
+	private ServletContext _servletContext;
 
 	@Reference
 	private StorageEngine _storageEngine;

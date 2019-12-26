@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -111,19 +109,6 @@ public class TestUploadHandler {
 		}
 	}
 
-	protected FileEntry addFileEntry(
-		long userId, long groupId, long folderId, String fileName,
-		String contentType, InputStream inputStream, long size,
-		ServiceContext serviceContext) {
-
-		TestFileEntry testFileEntry = new TestFileEntry(
-			fileName, folderId, groupId, inputStream);
-
-		_testUploadPortlet.put(testFileEntry);
-
-		return testFileEntry;
-	}
-
 	protected FileEntry fetchFileEntry(
 		long userId, long groupId, long folderId, String fileName) {
 
@@ -151,39 +136,31 @@ public class TestUploadHandler {
 
 			String parameterName = TestUploadPortlet.PARAMETER_NAME;
 
-			String fileName = uploadPortletRequest.getFileName(parameterName);
-			String contentType = uploadPortletRequest.getContentType(
-				parameterName);
-			long size = uploadPortletRequest.getSize(parameterName);
-
-			long folderId = 0;
-
-			String uniqueFileName = getUniqueFileName(
-				themeDisplay, fileName, folderId);
-
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					parameterName)) {
 
-				FileEntry fileEntry = addFileEntry(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					folderId, uniqueFileName, contentType, inputStream, size,
-					ServiceContextFactory.getInstance(
-						TestFileEntry.class.getName(), uploadPortletRequest));
+				TestFileEntry testFileEntry = new TestFileEntry(
+					getUniqueFileName(
+						themeDisplay,
+						uploadPortletRequest.getFileName(parameterName), 0),
+					0, themeDisplay.getScopeGroupId(), inputStream);
+
+				_testUploadPortlet.put(testFileEntry);
 
 				imageJSONObject.put(
-					"fileEntryId", fileEntry.getFileEntryId()
+					"fileEntryId", testFileEntry.getFileEntryId()
 				).put(
-					"groupId", fileEntry.getGroupId()
+					"groupId", testFileEntry.getGroupId()
 				).put(
-					"title", fileEntry.getTitle()
+					"title", testFileEntry.getTitle()
 				).put(
 					"type", "document"
 				).put(
 					"url",
 					PortletFileRepositoryUtil.getPortletFileEntryURL(
-						themeDisplay, fileEntry, StringPool.BLANK)
+						themeDisplay, testFileEntry, StringPool.BLANK)
 				).put(
-					"uuid", fileEntry.getUuid()
+					"uuid", testFileEntry.getUuid()
 				);
 
 				return imageJSONObject;

@@ -20,31 +20,21 @@ import ItemSelector from '../../common/components/ItemSelector';
 import {ConfigContext} from '../config/index';
 import AssetService from '../services/AssetService';
 
-export const ItemSelectorField = ({field, onValueSelect, value}) => (
-	<>
-		<ClayForm.Group>
-			<ItemSelector
-				label={field.label}
-				onItemSelect={item => {
-					onValueSelect(field.name, item);
-				}}
-				selectedItem={value}
-			/>
-		</ClayForm.Group>
+export const ItemSelectorField = ({field, onValueSelect, value}) => {
+	const {typeOptions = {}} = field;
 
-		{value.className && (
+	return (
+		<>
 			<ClayForm.Group>
-				<TemplateSelector
-					item={value}
-					onTemplateSelect={template => {
-						onValueSelect(field.name, {...value, template});
+				<ItemSelector
+					itemSelectorURL={typeOptions.itemSelectorUrl}
+					label={field.label}
+					onItemSelect={item => {
+						onValueSelect(field.name, item);
 					}}
-					selectedTemplate={value.template}
+					selectedItem={value}
 				/>
 			</ClayForm.Group>
-		)}
-	</>
-);
 
 			{typeOptions.enableSelectTemplate && value.className && (
 				<ClayForm.Group>

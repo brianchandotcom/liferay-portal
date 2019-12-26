@@ -1,0 +1,15 @@
+{
+	"layout-seo-web": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/layout-seo-web/$1"
+		},
+		"file-globs": "**/*.es.js,**/*.soy.js,!**/bridge",
+		"input": "build/node/packageRunBuild/resources",
+		"output": "build/node/packageRunBuild/resources/bridge/layout-seo-web",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "layout-seo-web/$1"
+		}
+	}
+}

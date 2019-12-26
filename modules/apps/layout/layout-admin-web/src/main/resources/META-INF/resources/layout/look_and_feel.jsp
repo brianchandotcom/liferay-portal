@@ -119,7 +119,7 @@ if (layoutPageTemplateEntry == null) {
 				<clay:button
 					elementClasses="btn-secondary"
 					id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
-					label="edit-master"
+					label='<%= LanguageUtil.get(request, "edit-master") %>'
 					style="<%= false %>"
 				/>
 			</c:if>
@@ -128,7 +128,7 @@ if (layoutPageTemplateEntry == null) {
 				<clay:button
 					elementClasses="btn-secondary"
 					id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
-					label="change-master"
+					label='<%= LanguageUtil.get(request, "change-master") %>'
 					style="<%= false %>"
 				/>
 			</c:if>

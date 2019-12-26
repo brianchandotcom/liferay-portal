@@ -58,11 +58,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/delete_fragment_entry_link_react"
+		"mvc.command.name=/content_layout/delete_item_react"
 	},
 	service = {AopService.class, MVCActionCommand.class}
 )
-public class DeleteFragmentEntryLinkReactMVCActionCommand
+public class DeleteItemReactMVCActionCommand
 	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
 
 	@Override
@@ -169,7 +169,7 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteFragmentEntryLinkReactMVCActionCommand.class);
+		DeleteItemReactMVCActionCommand.class);
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;

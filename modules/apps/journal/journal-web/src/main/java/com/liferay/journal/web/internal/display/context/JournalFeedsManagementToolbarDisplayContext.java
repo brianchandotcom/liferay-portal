@@ -54,7 +54,10 @@ public class JournalFeedsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalFeedsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalFeedsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #JournalFeedsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, JournalFeedsDisplayContext)}
 	 */
 	@Deprecated
 	public JournalFeedsManagementToolbarDisplayContext(

@@ -42,7 +42,10 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectSiteRolesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SelectSiteRolesDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SelectSiteRolesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SelectSiteRolesDisplayContext)}
 	 */
 	@Deprecated
 	public SelectSiteRolesManagementToolbarDisplayContext(

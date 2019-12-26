@@ -87,7 +87,11 @@ public class BookmarksManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BookmarksManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, BookmarksGroupServiceOverriddenConfiguration, PortalPreferences, TrashHelper)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #BookmarksManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse,
+	 *             BookmarksGroupServiceOverriddenConfiguration,
+	 *             PortalPreferences, TrashHelper)}
 	 */
 	@Deprecated
 	public BookmarksManagementToolbarDisplayContext(

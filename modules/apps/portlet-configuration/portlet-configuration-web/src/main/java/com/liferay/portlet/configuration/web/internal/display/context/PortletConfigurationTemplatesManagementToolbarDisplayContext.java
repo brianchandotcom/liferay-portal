@@ -45,7 +45,11 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #PortletConfigurationTemplatesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletConfigurationTemplatesDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #PortletConfigurationTemplatesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             PortletConfigurationTemplatesDisplayContext)}
 	 */
 	@Deprecated
 	public PortletConfigurationTemplatesManagementToolbarDisplayContext(

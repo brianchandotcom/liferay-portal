@@ -57,7 +57,10 @@ public class UADExportProcessManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #UADExportProcessManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #UADExportProcessManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SearchContainer)}
 	 */
 	@Deprecated
 	public UADExportProcessManagementToolbarDisplayContext(

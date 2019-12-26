@@ -74,7 +74,10 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #KBTemplatesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #KBTemplatesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, String)}
 	 */
 	@Deprecated
 	public KBTemplatesManagementToolbarDisplayContext(

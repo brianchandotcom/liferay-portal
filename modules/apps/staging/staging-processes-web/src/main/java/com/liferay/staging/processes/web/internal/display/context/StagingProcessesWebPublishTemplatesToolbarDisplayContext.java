@@ -67,7 +67,10 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #StagingProcessesWebPublishTemplatesToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PageContext, PortletURL)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #StagingProcessesWebPublishTemplatesToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, PageContext, PortletURL)}
 	 */
 	@Deprecated
 	public StagingProcessesWebPublishTemplatesToolbarDisplayContext(

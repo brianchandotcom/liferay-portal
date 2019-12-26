@@ -38,7 +38,10 @@ public class LayoutPortletsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #LayoutPortletsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, LayoutPortletsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #LayoutPortletsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, LayoutPortletsDisplayContext)}
 	 */
 	@Deprecated
 	public LayoutPortletsManagementToolbarDisplayContext(

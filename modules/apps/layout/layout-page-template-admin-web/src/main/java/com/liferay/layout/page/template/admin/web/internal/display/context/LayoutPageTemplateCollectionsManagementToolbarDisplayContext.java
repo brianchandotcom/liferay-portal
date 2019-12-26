@@ -44,7 +44,11 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #LayoutPageTemplateCollectionsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, LayoutPageTemplateCollectionsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #LayoutPageTemplateCollectionsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             LayoutPageTemplateCollectionsDisplayContext)}
 	 */
 	@Deprecated
 	public LayoutPageTemplateCollectionsManagementToolbarDisplayContext(

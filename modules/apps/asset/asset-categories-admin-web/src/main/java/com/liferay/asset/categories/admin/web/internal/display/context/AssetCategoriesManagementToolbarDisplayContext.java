@@ -63,7 +63,10 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetCategoriesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetCategoriesDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #AssetCategoriesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, AssetCategoriesDisplayContext)}
 	 */
 	@Deprecated
 	public AssetCategoriesManagementToolbarDisplayContext(

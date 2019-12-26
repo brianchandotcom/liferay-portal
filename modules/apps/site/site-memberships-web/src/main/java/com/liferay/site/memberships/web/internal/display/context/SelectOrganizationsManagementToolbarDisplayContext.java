@@ -42,7 +42,10 @@ public class SelectOrganizationsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectOrganizationsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SelectOrganizationsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SelectOrganizationsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SelectOrganizationsDisplayContext)}
 	 */
 	@Deprecated
 	public SelectOrganizationsManagementToolbarDisplayContext(

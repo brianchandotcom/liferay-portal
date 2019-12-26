@@ -55,7 +55,11 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, EditSiteTeamAssignmentsUserGroupsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             EditSiteTeamAssignmentsUserGroupsDisplayContext)}
 	 */
 	@Deprecated
 	public EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(

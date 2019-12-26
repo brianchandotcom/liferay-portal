@@ -44,7 +44,10 @@ public class SiteBrowserManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SiteBrowserManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SiteBrowserDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SiteBrowserManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SiteBrowserDisplayContext)}
 	 */
 	@Deprecated
 	public SiteBrowserManagementToolbarDisplayContext(

@@ -41,7 +41,10 @@ public class SelectUsersManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectUsersManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SelectUsersDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SelectUsersManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SelectUsersDisplayContext)}
 	 */
 	@Deprecated
 	public SelectUsersManagementToolbarDisplayContext(

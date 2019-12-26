@@ -43,7 +43,10 @@ public class SelectAssetListManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectAssetListManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SelectAssetListDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SelectAssetListManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SelectAssetListDisplayContext)}
 	 */
 	@Deprecated
 	public SelectAssetListManagementToolbarDisplayContext(

@@ -90,7 +90,10 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #KBAdminManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, RenderRequest, RenderResponse, PortletConfig)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #KBAdminManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse, RenderRequest,
+	 *             RenderResponse, PortletConfig)}
 	 */
 	@Deprecated
 	public KBAdminManagementToolbarDisplayContext(

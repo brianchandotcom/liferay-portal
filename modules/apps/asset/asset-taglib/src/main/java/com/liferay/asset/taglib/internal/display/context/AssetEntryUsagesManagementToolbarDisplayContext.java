@@ -39,7 +39,10 @@ public class AssetEntryUsagesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetEntryUsagesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #AssetEntryUsagesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SearchContainer)}
 	 */
 	@Deprecated
 	public AssetEntryUsagesManagementToolbarDisplayContext(

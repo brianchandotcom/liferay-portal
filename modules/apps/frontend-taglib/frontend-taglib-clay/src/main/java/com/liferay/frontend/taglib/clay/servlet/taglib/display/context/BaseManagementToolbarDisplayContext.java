@@ -58,7 +58,9 @@ public class BaseManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BaseManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #BaseManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse)}
 	 */
 	@Deprecated
 	public BaseManagementToolbarDisplayContext(

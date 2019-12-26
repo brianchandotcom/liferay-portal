@@ -64,7 +64,10 @@ public class BlogImagesManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BlogImagesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletURL)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #BlogImagesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, PortletURL)}
 	 */
 	@Deprecated
 	public BlogImagesManagementToolbarDisplayContext(

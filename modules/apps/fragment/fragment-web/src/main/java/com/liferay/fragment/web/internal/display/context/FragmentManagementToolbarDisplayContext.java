@@ -47,7 +47,10 @@ public abstract class FragmentManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #FragmentManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer, FragmentDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #FragmentManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse,
+	 *             SearchContainer, FragmentDisplayContext)}
 	 */
 	@Deprecated
 	public FragmentManagementToolbarDisplayContext(

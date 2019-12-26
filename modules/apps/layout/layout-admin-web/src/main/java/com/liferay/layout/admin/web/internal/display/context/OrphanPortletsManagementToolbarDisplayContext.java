@@ -43,7 +43,10 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #OrphanPortletsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, OrphanPortletsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #OrphanPortletsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, OrphanPortletsDisplayContext)}
 	 */
 	@Deprecated
 	public OrphanPortletsManagementToolbarDisplayContext(

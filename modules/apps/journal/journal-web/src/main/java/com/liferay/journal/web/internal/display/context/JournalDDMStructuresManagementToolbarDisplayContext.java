@@ -61,7 +61,10 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalDDMStructuresManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalDDMStructuresDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #JournalDDMStructuresManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, JournalDDMStructuresDisplayContext)}
 	 */
 	@Deprecated
 	public JournalDDMStructuresManagementToolbarDisplayContext(

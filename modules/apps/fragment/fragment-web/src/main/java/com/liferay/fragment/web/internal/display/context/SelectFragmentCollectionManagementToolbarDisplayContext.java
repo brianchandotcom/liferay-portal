@@ -42,7 +42,10 @@ public class SelectFragmentCollectionManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectFragmentCollectionManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SelectFragmentCollectionManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SearchContainer)}
 	 */
 	@Deprecated
 	public SelectFragmentCollectionManagementToolbarDisplayContext(

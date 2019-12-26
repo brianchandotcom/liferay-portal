@@ -58,7 +58,10 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetVocabulariesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetCategoriesDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #AssetVocabulariesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, AssetCategoriesDisplayContext)}
 	 */
 	@Deprecated
 	public AssetVocabulariesManagementToolbarDisplayContext(

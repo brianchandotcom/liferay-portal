@@ -58,7 +58,11 @@ public class JournalHistoryManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalHistoryManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalArticle, JournalHistoryDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #JournalHistoryManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, JournalArticle,
+	 *             JournalHistoryDisplayContext)}
 	 */
 	@Deprecated
 	public JournalHistoryManagementToolbarDisplayContext(

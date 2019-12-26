@@ -110,7 +110,10 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DLAdminManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, DLAdminDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #DLAdminManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse,
+	 *             DLAdminDisplayContext)}
 	 */
 	@Deprecated
 	public DLAdminManagementToolbarDisplayContext(

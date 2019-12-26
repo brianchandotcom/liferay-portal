@@ -46,7 +46,11 @@ public class JournalSelectDDMTemplateManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalSelectDDMTemplateManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalSelectDDMTemplateDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #JournalSelectDDMTemplateManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             JournalSelectDDMTemplateDisplayContext)}
 	 */
 	@Deprecated
 	public JournalSelectDDMTemplateManagementToolbarDisplayContext(

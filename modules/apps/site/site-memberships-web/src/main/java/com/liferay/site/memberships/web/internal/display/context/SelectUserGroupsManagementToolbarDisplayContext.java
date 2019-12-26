@@ -41,7 +41,10 @@ public class SelectUserGroupsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SelectUserGroupsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SelectUserGroupsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SelectUserGroupsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SelectUserGroupsDisplayContext)}
 	 */
 	@Deprecated
 	public SelectUserGroupsManagementToolbarDisplayContext(

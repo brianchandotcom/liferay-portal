@@ -39,7 +39,10 @@ public class BlogEntriesItemSelectorManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BlogEntriesItemSelectorManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #BlogEntriesItemSelectorManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SearchContainer)}
 	 */
 	@Deprecated
 	public BlogEntriesItemSelectorManagementToolbarDisplayContext(

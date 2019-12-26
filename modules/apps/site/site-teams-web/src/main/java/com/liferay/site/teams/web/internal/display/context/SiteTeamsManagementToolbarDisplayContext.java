@@ -54,7 +54,10 @@ public class SiteTeamsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SiteTeamsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SiteTeamsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SiteTeamsManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse,
+	 *             SiteTeamsDisplayContext)}
 	 */
 	@Deprecated
 	public SiteTeamsManagementToolbarDisplayContext(

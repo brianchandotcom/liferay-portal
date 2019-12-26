@@ -58,7 +58,10 @@ public class DisplayPageManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #DisplayPageManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, DisplayPageDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #DisplayPageManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, DisplayPageDisplayContext)}
 	 */
 	@Deprecated
 	public DisplayPageManagementToolbarDisplayContext(

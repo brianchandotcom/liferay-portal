@@ -62,7 +62,10 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #LayoutPageTemplateManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, LayoutPageTemplateDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #LayoutPageTemplateManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, LayoutPageTemplateDisplayContext)}
 	 */
 	@Deprecated
 	public LayoutPageTemplateManagementToolbarDisplayContext(

@@ -51,7 +51,9 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AMManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletURL)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #AMManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse, PortletURL)}
 	 */
 	@Deprecated
 	public AMManagementToolbarDisplayContext(

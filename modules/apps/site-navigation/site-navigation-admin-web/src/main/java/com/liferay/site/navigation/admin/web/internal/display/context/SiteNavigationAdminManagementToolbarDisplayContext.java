@@ -58,7 +58,10 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SiteNavigationAdminManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SiteNavigationAdminDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SiteNavigationAdminManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SiteNavigationAdminDisplayContext)}
 	 */
 	@Deprecated
 	public SiteNavigationAdminManagementToolbarDisplayContext(

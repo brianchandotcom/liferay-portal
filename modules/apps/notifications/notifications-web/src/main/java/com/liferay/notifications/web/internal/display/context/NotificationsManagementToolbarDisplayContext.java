@@ -54,7 +54,10 @@ public class NotificationsManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #NotificationsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletURL)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #NotificationsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, PortletURL)}
 	 */
 	@Deprecated
 	public NotificationsManagementToolbarDisplayContext(

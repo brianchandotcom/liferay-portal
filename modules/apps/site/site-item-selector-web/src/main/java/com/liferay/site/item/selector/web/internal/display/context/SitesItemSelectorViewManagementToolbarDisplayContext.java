@@ -47,7 +47,10 @@ public class SitesItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SitesItemSelectorViewManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SitesItemSelectorViewDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SitesItemSelectorViewManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SitesItemSelectorViewDisplayContext)}
 	 */
 	@Deprecated
 	public SitesItemSelectorViewManagementToolbarDisplayContext(

@@ -39,7 +39,10 @@ public class SearchContainerManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SearchContainerManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SearchContainerManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SearchContainer)}
 	 */
 	@Deprecated
 	public SearchContainerManagementToolbarDisplayContext(

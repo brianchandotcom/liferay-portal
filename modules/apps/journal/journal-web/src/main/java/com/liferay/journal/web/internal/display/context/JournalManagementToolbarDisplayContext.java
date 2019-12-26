@@ -89,7 +89,10 @@ public class JournalManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalDisplayContext, TrashHelper)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #JournalManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse,
+	 *             JournalDisplayContext, TrashHelper)}
 	 */
 	@Deprecated
 	public JournalManagementToolbarDisplayContext(

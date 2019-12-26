@@ -55,7 +55,10 @@ public class ViewModulesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ViewModulesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #ViewModulesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse)}
 	 */
 	@Deprecated
 	public ViewModulesManagementToolbarDisplayContext(

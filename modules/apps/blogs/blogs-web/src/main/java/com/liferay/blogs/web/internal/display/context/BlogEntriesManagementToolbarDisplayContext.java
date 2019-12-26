@@ -72,7 +72,11 @@ public class BlogEntriesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BlogEntriesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SearchContainer, TrashHelper, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #BlogEntriesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, SearchContainer, TrashHelper,
+	 *             String)}
 	 */
 	@Deprecated
 	public BlogEntriesManagementToolbarDisplayContext(

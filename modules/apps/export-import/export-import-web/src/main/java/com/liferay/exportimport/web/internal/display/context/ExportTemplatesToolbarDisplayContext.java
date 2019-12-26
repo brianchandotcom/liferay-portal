@@ -58,7 +58,10 @@ public class ExportTemplatesToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ExportTemplatesToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, long, Company, PortletURL)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #ExportTemplatesToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse, long, Company,
+	 *             PortletURL)}
 	 */
 	@Deprecated
 	public ExportTemplatesToolbarDisplayContext(

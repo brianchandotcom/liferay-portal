@@ -58,7 +58,10 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #MBBannedUsersManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #MBBannedUsersManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse)}
 	 */
 	@Deprecated
 	public MBBannedUsersManagementToolbarDisplayContext(

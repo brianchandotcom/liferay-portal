@@ -45,7 +45,11 @@ public class AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetDisplayPagesItemSelectorViewDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             AssetDisplayPagesItemSelectorViewDisplayContext)}
 	 */
 	@Deprecated
 	public AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(

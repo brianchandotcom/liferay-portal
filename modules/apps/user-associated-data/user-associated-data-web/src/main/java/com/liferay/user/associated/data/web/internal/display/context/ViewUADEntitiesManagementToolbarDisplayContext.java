@@ -59,7 +59,10 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ViewUADEntitiesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, ViewUADEntitiesDisplay)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #ViewUADEntitiesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, ViewUADEntitiesDisplay)}
 	 */
 	@Deprecated
 	public ViewUADEntitiesManagementToolbarDisplayContext(

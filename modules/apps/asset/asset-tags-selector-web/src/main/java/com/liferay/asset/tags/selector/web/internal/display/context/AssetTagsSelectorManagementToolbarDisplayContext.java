@@ -41,7 +41,10 @@ public class AssetTagsSelectorManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetTagsSelectorManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetTagsSelectorDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #AssetTagsSelectorManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, AssetTagsSelectorDisplayContext)}
 	 */
 	@Deprecated
 	public AssetTagsSelectorManagementToolbarDisplayContext(

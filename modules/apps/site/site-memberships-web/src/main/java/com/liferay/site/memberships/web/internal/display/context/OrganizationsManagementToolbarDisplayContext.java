@@ -54,7 +54,10 @@ public class OrganizationsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #OrganizationsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, OrganizationsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #OrganizationsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, OrganizationsDisplayContext)}
 	 */
 	@Deprecated
 	public OrganizationsManagementToolbarDisplayContext(

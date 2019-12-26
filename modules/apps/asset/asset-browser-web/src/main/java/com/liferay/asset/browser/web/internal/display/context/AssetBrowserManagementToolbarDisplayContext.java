@@ -65,7 +65,10 @@ public class AssetBrowserManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #AssetBrowserManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, AssetBrowserDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #AssetBrowserManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, AssetBrowserDisplayContext)}
 	 */
 	@Deprecated
 	public AssetBrowserManagementToolbarDisplayContext(

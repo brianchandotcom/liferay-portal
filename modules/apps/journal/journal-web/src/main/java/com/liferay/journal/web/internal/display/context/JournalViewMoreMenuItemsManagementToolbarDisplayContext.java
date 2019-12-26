@@ -44,7 +44,11 @@ public class JournalViewMoreMenuItemsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalViewMoreMenuItemsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalViewMoreMenuItemsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #JournalViewMoreMenuItemsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             JournalViewMoreMenuItemsDisplayContext)}
 	 */
 	@Deprecated
 	public JournalViewMoreMenuItemsManagementToolbarDisplayContext(

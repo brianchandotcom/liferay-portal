@@ -43,7 +43,10 @@ public class UserGroupRolesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #UserGroupRolesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, UserGroupRolesDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #UserGroupRolesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, UserGroupRolesDisplayContext)}
 	 */
 	@Deprecated
 	public UserGroupRolesManagementToolbarDisplayContext(

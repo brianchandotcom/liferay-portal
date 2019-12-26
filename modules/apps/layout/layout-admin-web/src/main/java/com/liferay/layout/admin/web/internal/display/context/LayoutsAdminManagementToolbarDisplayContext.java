@@ -64,7 +64,10 @@ public class LayoutsAdminManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #LayoutsAdminManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, LayoutsAdminDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #LayoutsAdminManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, LayoutsAdminDisplayContext)}
 	 */
 	@Deprecated
 	public LayoutsAdminManagementToolbarDisplayContext(

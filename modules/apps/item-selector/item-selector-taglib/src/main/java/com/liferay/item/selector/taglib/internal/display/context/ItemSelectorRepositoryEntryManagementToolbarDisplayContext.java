@@ -56,7 +56,10 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ItemSelectorRepositoryEntryManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #ItemSelectorRepositoryEntryManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse)}
 	 */
 	@Deprecated
 	public ItemSelectorRepositoryEntryManagementToolbarDisplayContext(

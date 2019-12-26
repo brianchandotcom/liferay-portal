@@ -40,7 +40,11 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ViewMembershipRequestsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, ViewMembershipRequestsDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #ViewMembershipRequestsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             ViewMembershipRequestsDisplayContext)}
 	 */
 	@Deprecated
 	public ViewMembershipRequestsManagementToolbarDisplayContext(

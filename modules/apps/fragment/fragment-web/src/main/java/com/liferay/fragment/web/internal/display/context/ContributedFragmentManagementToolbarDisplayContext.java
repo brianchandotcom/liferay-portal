@@ -56,7 +56,10 @@ public class ContributedFragmentManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #ContributedFragmentManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #ContributedFragmentManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, FragmentDisplayContext)}
 	 */
 	@Deprecated
 	public ContributedFragmentManagementToolbarDisplayContext(

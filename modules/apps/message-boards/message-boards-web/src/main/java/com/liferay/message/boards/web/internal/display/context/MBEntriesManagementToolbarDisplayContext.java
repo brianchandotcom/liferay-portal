@@ -82,7 +82,10 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #MBEntriesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, PortletURL, TrashHelper)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #MBEntriesManagementToolbarDisplayContext(HttpServletRequest,
+	 *             LiferayPortletRequest, LiferayPortletResponse, PortletURL,
+	 *             TrashHelper)}
 	 */
 	@Deprecated
 	public MBEntriesManagementToolbarDisplayContext(

@@ -48,7 +48,10 @@ public class JournalSelectArticleTranslationsManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #JournalSelectArticleTranslationsManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, JournalDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #JournalSelectArticleTranslationsManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, JournalDisplayContext)}
 	 */
 	@Deprecated
 	public JournalSelectArticleTranslationsManagementToolbarDisplayContext(

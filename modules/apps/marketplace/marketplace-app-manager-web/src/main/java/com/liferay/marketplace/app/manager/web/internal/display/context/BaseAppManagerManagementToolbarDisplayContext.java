@@ -55,7 +55,10 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #BaseAppManagerManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #BaseAppManagerManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse)}
 	 */
 	@Deprecated
 	public BaseAppManagerManagementToolbarDisplayContext(

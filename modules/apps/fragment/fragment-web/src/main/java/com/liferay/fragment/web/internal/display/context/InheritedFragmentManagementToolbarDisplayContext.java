@@ -55,7 +55,10 @@ public class InheritedFragmentManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #InheritedFragmentManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #InheritedFragmentManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, FragmentDisplayContext)}
 	 */
 	@Deprecated
 	public InheritedFragmentManagementToolbarDisplayContext(

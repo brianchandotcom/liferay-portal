@@ -71,7 +71,11 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #FragmentCollectionResourcesManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, FragmentCollectionResourcesDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #FragmentCollectionResourcesManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             FragmentCollectionResourcesDisplayContext)}
 	 */
 	@Deprecated
 	public FragmentCollectionResourcesManagementToolbarDisplayContext(

@@ -43,7 +43,10 @@ public class TrashContainerManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #TrashContainerManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, TrashDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #TrashContainerManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, TrashDisplayContext)}
 	 */
 	@Deprecated
 	public TrashContainerManagementToolbarDisplayContext(

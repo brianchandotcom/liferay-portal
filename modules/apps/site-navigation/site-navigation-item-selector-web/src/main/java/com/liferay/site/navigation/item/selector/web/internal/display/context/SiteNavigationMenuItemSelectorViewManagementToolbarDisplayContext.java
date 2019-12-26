@@ -43,7 +43,11 @@ public class SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(HttpServletRequest, LiferayPortletRequest, LiferayPortletResponse, SiteNavigationMenuItemSelectorViewDisplayContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse,
+	 *             SiteNavigationMenuItemSelectorViewDisplayContext)}
 	 */
 	@Deprecated
 	public SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(

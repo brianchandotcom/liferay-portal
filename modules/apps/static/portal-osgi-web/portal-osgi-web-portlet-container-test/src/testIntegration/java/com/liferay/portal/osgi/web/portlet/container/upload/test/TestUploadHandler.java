@@ -84,7 +84,7 @@ public class TestUploadHandler {
 				throw new PortalException(cause);
 			}
 
-			JSONObject imageJSONObject = getImageJSONObject(portletRequest);
+			JSONObject imageJSONObject = _getImageJSONObject(portletRequest);
 
 			String randomId = ParamUtil.getString(
 				uploadPortletRequest, "randomId");
@@ -104,12 +104,12 @@ public class TestUploadHandler {
 			throw new SystemException(ioe);
 		}
 		catch (PortalException pe) {
-			handleUploadException(
+			_handleUploadException(
 				portletRequest, portletResponse, pe, jsonObject);
 		}
 	}
 
-	protected FileEntry fetchFileEntry(
+	private FileEntry _fetchFileEntry(
 		long groupId, long folderId, String fileName) {
 
 		FileEntry fileEntry = new TestFileEntry(
@@ -118,7 +118,7 @@ public class TestUploadHandler {
 		return _testUploadPortlet.get(fileEntry.toString());
 	}
 
-	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
+	private JSONObject _getImageJSONObject(PortletRequest portletRequest)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -140,7 +140,7 @@ public class TestUploadHandler {
 					parameterName)) {
 
 				TestFileEntry testFileEntry = new TestFileEntry(
-					getUniqueFileName(
+					_getUniqueFileName(
 						themeDisplay,
 						uploadPortletRequest.getFileName(parameterName), 0),
 					0, themeDisplay.getScopeGroupId(), inputStream);
@@ -171,11 +171,11 @@ public class TestUploadHandler {
 		}
 	}
 
-	protected String getUniqueFileName(
+	private String _getUniqueFileName(
 			ThemeDisplay themeDisplay, String fileName, long folderId)
 		throws PortalException {
 
-		FileEntry fileEntry = fetchFileEntry(
+		FileEntry fileEntry = _fetchFileEntry(
 			themeDisplay.getScopeGroupId(), folderId, fileName);
 
 		if (fileEntry == null) {
@@ -188,7 +188,7 @@ public class TestUploadHandler {
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
-			fileEntry = fetchFileEntry(
+			fileEntry = _fetchFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, curFileName);
 
 			if (fileEntry == null) {
@@ -202,7 +202,7 @@ public class TestUploadHandler {
 			"Unable to get a unique file name for " + fileName);
 	}
 
-	protected void handleUploadException(
+	private void _handleUploadException(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		PortalException pe, JSONObject jsonObject) {
 

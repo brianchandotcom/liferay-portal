@@ -20,7 +20,12 @@ import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 
-export default function ItemSelector({label, onItemSelect, selectedItem}) {
+export default function ItemSelector({
+	itemSelectorURL,
+	label,
+	onItemSelect,
+	selectedItem
+}) {
 	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
 
 	const openInfoItemSelector = () => {
@@ -28,7 +33,7 @@ export default function ItemSelector({label, onItemSelect, selectedItem}) {
 			eventName: `${portletNamespace}selectInfoItem`,
 			singleSelect: true,
 			title: Liferay.Language.get('select'),
-			url: infoItemSelectorURL
+			url: itemSelectorURL || infoItemSelectorURL
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {

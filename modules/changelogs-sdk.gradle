@@ -115,14 +115,16 @@ buildChangelogs {
 				text += dependencies
 			}
 
-			changelogDescriptionsFile.text.eachMatch(/(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/) {
-				all, descriptions ->
+			if (changelogDescriptionsFile.exists()) {
+				changelogDescriptionsFile.text.eachMatch(/(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/) {
+					all, descriptions ->
 
-				text += """\
-					|
-					|
-					|### Description
-					|${descriptions.trim()}""".stripMargin()
+					text += """\
+						|
+						|
+						|### Description
+						|${descriptions.trim()}""".stripMargin()
+				}
 			}
 		}
 

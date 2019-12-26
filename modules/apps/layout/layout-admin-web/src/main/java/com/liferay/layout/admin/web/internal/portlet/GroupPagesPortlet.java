@@ -25,7 +25,6 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
-import com.liferay.layout.admin.web.internal.display.context.LayoutsSEODisplayContext;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -181,14 +180,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 				new LayoutsAdminDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT,
-				new LayoutsSEODisplayContext(
-					_dlAppService, _dlurlHelper, _layoutSEOCanonicalURLProvider,
-					_layoutSEOLinkManager, _layoutSEOSiteLocalService,
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse),
-					_storageEngine));
 
 			super.doDispatch(renderRequest, renderResponse);
 		}

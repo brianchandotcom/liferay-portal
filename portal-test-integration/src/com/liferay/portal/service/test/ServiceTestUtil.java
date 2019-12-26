@@ -57,7 +57,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -359,21 +358,12 @@ public class ServiceTestUtil {
 
 		ExecutorService executorService = null;
 
-		try {
-			Class<?> clazz = oldDestination.getClass();
+		PortalExecutorManager portalExecutorManager =
+			ReflectionTestUtil.getFieldValue(
+				oldDestination, "_portalExecutorManager");
 
-			Field field = ReflectionUtil.getDeclaredField(
-				clazz.getSuperclass(), "_portalExecutorManager");
-
-			PortalExecutorManager portalExecutorManager =
-				(PortalExecutorManager)field.get(oldDestination);
-
-			executorService = portalExecutorManager.getPortalExecutor(
-				oldDestination.getName());
-		}
-		catch (Exception e) {
-			return;
-		}
+		executorService = portalExecutorManager.getPortalExecutor(
+			oldDestination.getName());
 
 		executorService.shutdown();
 

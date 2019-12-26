@@ -52,7 +52,7 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 			}
 
 			try {
-				Thread.sleep(500);
+				Thread.sleep(1000);
 			}
 			catch (InterruptedException ie) {
 				if (_logger.isWarnEnabled()) {

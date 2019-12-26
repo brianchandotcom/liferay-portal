@@ -119,7 +119,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					layout.getGroupId(), layout.isPrivateLayout(),
 					layout.getLayoutId());
 
-			if (layoutSEOEntry != null) {
+			if ((layoutSEOEntry != null) &&
+				(layoutSEOEntry.getDDMStorageId() != 0)) {
+
 				DDMFormValues ddmFormValues =
 					StorageEngineManagerUtil.getDDMFormValues(
 						layoutSEOEntry.getDDMStorageId());

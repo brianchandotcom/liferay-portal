@@ -1311,7 +1311,7 @@ public class ContentPageEditorDisplayContext {
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get structure JSON array", e);
+				_log.debug("Unable to get master layout data", e);
 			}
 		}
 

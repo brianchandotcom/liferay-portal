@@ -3168,9 +3168,6 @@ public interface PropsKeys {
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED =
 		"upgrade.database.transactions.disabled";
 
-	public static final String USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE =
-		"user.groups.copy.layouts.to.user.personal.site";
-
 	public static final String USER_GROUPS_NAME_ALLOW_NUMERIC =
 		"user.groups.name.allow.numeric";
 

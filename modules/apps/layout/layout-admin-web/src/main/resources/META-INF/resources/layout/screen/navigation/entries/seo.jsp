@@ -126,8 +126,8 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 								).build()
 							).put(
 								"title",
-								HashMapBuilder.put(
-									"defaultValue", layoutsSEODisplayContext.getPageTitle()
+								HashMapBuilder.<String, Object>put(
+									"defaultValue", layoutsSEODisplayContext.getPageTitleMap()
 								).put(
 									"id", "title"
 								).build()

@@ -1,6 +1,4 @@
 dependencies {
-	compileInclude project(":apps:data-engine:data-engine-rest-client")
-
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
@@ -13,6 +11,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:app-builder:app-builder-api")
 	compileOnly project(":apps:app-builder:app-builder-rest-api")
+	compileOnly project(":apps:data-engine:data-engine-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")

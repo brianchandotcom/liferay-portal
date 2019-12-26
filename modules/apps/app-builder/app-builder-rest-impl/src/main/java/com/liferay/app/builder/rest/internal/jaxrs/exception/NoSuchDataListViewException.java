@@ -19,8 +19,8 @@ package com.liferay.app.builder.rest.internal.jaxrs.exception;
  */
 public class NoSuchDataListViewException extends Exception {
 
-	public NoSuchDataListViewException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchDataListViewException(String msg) {
+		super(msg);
 	}
 
 }

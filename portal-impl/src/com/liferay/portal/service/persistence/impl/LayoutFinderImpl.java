@@ -15,20 +15,23 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.model.dsl.DSLFunctionUtil;
+import com.liferay.portal.kernel.dao.model.dsl.DSLStatementUtil;
+import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,15 +43,6 @@ import java.util.List;
 public class LayoutFinderImpl
 	extends LayoutFinderBaseImpl implements LayoutFinder {
 
-	public static final String FIND_BY_NULL_FRIENDLY_URL =
-		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
-
-	public static final String FIND_BY_SCOPE_GROUP =
-		LayoutFinder.class.getName() + ".findByScopeGroup";
-
-	public static final String FIND_BY_C_P_P =
-		LayoutFinder.class.getName() + ".findByC_P_P";
-
 	@Override
 	public List<Layout> findByNullFriendlyURL() {
 		Session session = null;
@@ -56,9 +50,15 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NULL_FRIENDLY_URL);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
+				session,
+				DSLStatementUtil.select(
+				).from(
+					Layout.TABLE
+				).where(
+					Layout.TABLE.friendlyURL.eq("").or(
+					Layout.TABLE.friendlyURL.isNull())
+				));
 
 			q.addEntity("Layout", LayoutImpl.class);
 
@@ -79,21 +79,26 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_SCOPE_GROUP);
+			Query query = DSLStatementUtil.select(
+			).from(
+				Layout.TABLE
+			).innerJoinON(
+				Group.TABLE,
+				Group.TABLE.companyId.eq(Layout.TABLE.companyId).and(
+				Group.TABLE.classNameId.eq(
+					PortalUtil.getClassNameId(Layout.class)).and(
+				Group.TABLE.classPK.eq(Layout.TABLE.plid)))
+			).where(
+				Layout.TABLE.groupId.eq(groupId)
+			);
 
-			sql = StringUtil.removeSubstring(
-				sql, "AND (Layout.privateLayout = ?)");
-
-			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, Layout.class.getName(), "Layout.plid", groupId);
+			String sql = InlineSQLHelperUtil.replacePermissionCheck(
+				query.toString(), Layout.class.getName(), "Layout.plid",
+				groupId);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Layout", LayoutImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
 
 			return q.list(true);
 		}
@@ -112,16 +117,23 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_SCOPE_GROUP);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
+				session,
+				DSLStatementUtil.select(
+				).from(
+					Layout.TABLE
+				).innerJoinON(
+					Group.TABLE,
+					Group.TABLE.companyId.eq(Layout.TABLE.companyId).and(
+					Group.TABLE.classNameId.eq(
+						PortalUtil.getClassNameId(Layout.class))).and(
+					Group.TABLE.classPK.eq(Layout.TABLE.plid))
+				).where(
+					Layout.TABLE.groupId.eq(groupId).and(
+					Layout.TABLE.privateLayout.eq(privateLayout))
+				));
 
 			q.addEntity("Layout", LayoutImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(privateLayout);
 
 			return q.list(true);
 		}
@@ -138,28 +150,40 @@ public class LayoutFinderImpl
 		long companyId, String portletId, String preferencesKey,
 		String preferencesValue) {
 
-		String preferences = StringBundler.concat(
-			"%<preference><name>", preferencesKey, "</name><value>",
-			preferencesValue, "</value>%");
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_P_P);
+			Query query = DSLStatementUtil.selectDistinct(
+				Layout.TABLE.plid.as("layoutPlid"),
+				PortletPreferences.TABLE.portletId.as("preferencesPortletId")
+			).from(
+				Layout.TABLE
+			).innerJoinON(
+				PortletPreferences.TABLE,
+				PortletPreferences.TABLE.plid.eq(Layout.TABLE.plid)
+			).where(
+				Layout.TABLE.companyId.eq(companyId).andParentheses(
+					PortletPreferences.TABLE.portletId.eq(portletId).or(
+					PortletPreferences.TABLE.portletId.like(
+						portletId.concat("_INSTANCE_%")))
+				).and(
+					DSLFunctionUtil.castClobText(
+						PortletPreferences.TABLE.preferences
+					).like(
+						StringBundler.concat(
+							"%<preference><name>", preferencesKey,
+							"</name><value>", preferencesValue, "</value>%")
+					)
+				)
+			);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
+				session, query);
 
 			q.addScalar("layoutPlid", Type.LONG);
 			q.addScalar("preferencesPortletId", Type.STRING);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(portletId);
-			qPos.add(portletId.concat("_INSTANCE_%"));
-			qPos.add(preferences);
 
 			List<LayoutReference> layoutReferences = new ArrayList<>();
 

@@ -333,51 +333,6 @@
 				(Users_Groups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByNullFriendlyURL">
-		<![CDATA[
-			SELECT
-				{Layout.*}
-			FROM
-				Layout
-			WHERE
-				(friendlyURL = '') OR
-				(friendlyURL IS NULL)
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByScopeGroup">
-		<![CDATA[
-			SELECT
-				{Layout.*}
-			FROM
-				Layout
-			INNER JOIN
-				Group_ ON
-					(Group_.companyId = Layout.companyId) AND
-					(Group_.classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTAL.MODEL.LAYOUT$]) AND
-					(Group_.classPK = Layout.plid)
-			WHERE
-				(Layout.groupId = ?) AND
-				(Layout.privateLayout = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByC_P_P">
-		<![CDATA[
-			SELECT
-				DISTINCT Layout.plid AS layoutPlid, PortletPreferences.portletId AS preferencesPortletId
-			FROM
-				Layout
-			INNER JOIN
-				PortletPreferences ON
-					PortletPreferences.plid = Layout.plid
-			WHERE
-				(Layout.companyId = ?) AND
-				(
-					(PortletPreferences.portletId = ?) OR
-					(PortletPreferences.portletId LIKE ?)
-				) AND
-				(CAST_CLOB_TEXT(PortletPreferences.preferences) LIKE ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countO_ByGroupId">
 		<![CDATA[
 			SELECT

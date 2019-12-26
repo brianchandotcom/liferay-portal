@@ -60,7 +60,7 @@ export default function ItemSelector({label, onItemSelect, selectedItem}) {
 					readOnly
 					sizing="sm"
 					type="text"
-					value={selectedItem.title}
+					value={selectedItem.title || ''}
 				/>
 
 				<ClayButton.Group>

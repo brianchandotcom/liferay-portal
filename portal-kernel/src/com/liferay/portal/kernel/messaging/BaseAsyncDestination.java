@@ -204,10 +204,6 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		_maximumQueueSize = maximumQueueSize;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setRejectedExecutionHandler(
 		RejectedExecutionHandler rejectedExecutionHandler) {
 

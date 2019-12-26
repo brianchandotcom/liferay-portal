@@ -52,6 +52,11 @@ public abstract class BaseLayoutUADAnonymizer
 			autoAnonymizeAssetEntry(layout, anonymousUser);
 		}
 
+		if (layout.getStatusByUserId() == userId) {
+			layout.setStatusByUserId(anonymousUser.getUserId());
+			layout.setStatusByUserName(anonymousUser.getFullName());
+		}
+
 		layoutLocalService.updateLayout(layout);
 	}
 

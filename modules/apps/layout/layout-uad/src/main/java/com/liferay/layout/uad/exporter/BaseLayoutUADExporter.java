@@ -55,7 +55,7 @@ public abstract class BaseLayoutUADExporter
 
 	@Override
 	protected String toXmlString(Layout layout) {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.kernel.model.Layout");
@@ -64,6 +64,14 @@ public abstract class BaseLayoutUADExporter
 		sb.append(
 			"<column><column-name>plid</column-name><column-value><![CDATA[");
 		sb.append(layout.getPlid());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+		sb.append(layout.getStatusByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(layout.getStatusByUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");

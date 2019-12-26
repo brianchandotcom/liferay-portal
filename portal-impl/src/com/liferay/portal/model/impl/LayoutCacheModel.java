@@ -76,7 +76,7 @@ public class LayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(75);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -152,6 +152,14 @@ public class LayoutCacheModel
 		sb.append(publishDate);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -319,6 +327,23 @@ public class LayoutCacheModel
 			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		layoutImpl.setStatus(status);
+		layoutImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			layoutImpl.setStatusByUserName("");
+		}
+		else {
+			layoutImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			layoutImpl.setStatusDate(null);
+		}
+		else {
+			layoutImpl.setStatusDate(new Date(statusDate));
+		}
+
 		layoutImpl.resetOriginalValues();
 
 		return layoutImpl;
@@ -380,6 +405,12 @@ public class LayoutCacheModel
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
 		publishDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -530,6 +561,19 @@ public class LayoutCacheModel
 
 		objectOutput.writeLong(publishDate);
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -569,5 +613,9 @@ public class LayoutCacheModel
 	public String sourcePrototypeLayoutUuid;
 	public long publishDate;
 	public long lastPublishDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

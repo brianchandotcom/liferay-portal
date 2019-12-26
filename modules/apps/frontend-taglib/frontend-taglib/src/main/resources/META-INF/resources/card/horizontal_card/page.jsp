@@ -42,9 +42,11 @@ if ((rowChecker != null) && (resultRow != null)) {
 			</c:if>
 
 			<div class="autofit-col autofit-col-expand autofit-col-gutters">
-				<aui:a data="<%= linkData %>" href="<%= url %>" title="<%= HtmlUtil.escapeAttribute(text) %>">
-					<%= HtmlUtil.escape(text) %>
-				</aui:a>
+				<p class="card-title text-truncate">
+					<aui:a data="<%= linkData %>" href="<%= url %>" title="<%= HtmlUtil.escapeAttribute(text) %>">
+						<%= HtmlUtil.escape(text) %>
+					</aui:a>
+				</p>
 			</div>
 
 			<liferay-util:buffer

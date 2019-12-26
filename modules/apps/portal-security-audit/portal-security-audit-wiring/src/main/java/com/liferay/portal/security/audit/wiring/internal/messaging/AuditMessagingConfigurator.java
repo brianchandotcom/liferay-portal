@@ -15,9 +15,6 @@
 package com.liferay.portal.security.audit.wiring.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
-import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -29,6 +26,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.security.audit.configuration.AuditConfiguration;
 
 import java.util.Dictionary;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -66,7 +65,7 @@ public class AuditMessagingConfigurator {
 			auditConfiguration.auditMessageMaxQueueSize());
 
 		RejectedExecutionHandler rejectedExecutionHandler =
-			new CallerRunsPolicy() {
+			new ThreadPoolExecutor.CallerRunsPolicy() {
 
 				@Override
 				public void rejectedExecution(

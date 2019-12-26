@@ -15,9 +15,6 @@
 package com.liferay.portal.monitoring.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.concurrent.DiscardOldestPolicy;
-import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -29,6 +26,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
 
 import java.util.Dictionary;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -67,7 +66,7 @@ public class MonitoringMessagingConfigurator {
 			monitoringConfiguration.monitoringMessageMaxQueueSize());
 
 		RejectedExecutionHandler rejectedExecutionHandler =
-			new DiscardOldestPolicy() {
+			new ThreadPoolExecutor.DiscardOldestPolicy() {
 
 				@Override
 				public void rejectedExecution(

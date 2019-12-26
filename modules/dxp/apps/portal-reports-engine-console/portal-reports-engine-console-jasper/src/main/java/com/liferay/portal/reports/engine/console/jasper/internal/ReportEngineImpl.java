@@ -14,9 +14,6 @@
 
 package com.liferay.portal.reports.engine.console.jasper.internal;
 
-import com.liferay.portal.kernel.concurrent.CallerRunsPolicy;
-import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -45,6 +42,8 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.servlet.ServletContext;
 
@@ -205,7 +204,7 @@ public class ReportEngineImpl implements ReportEngine {
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
 
 		RejectedExecutionHandler rejectedExecutionHandler =
-			new CallerRunsPolicy() {
+			new ThreadPoolExecutor.CallerRunsPolicy() {
 
 				@Override
 				public void rejectedExecution(

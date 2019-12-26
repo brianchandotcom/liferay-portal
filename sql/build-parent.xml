@@ -12,6 +12,8 @@
 		<if>
 			<equals arg1="${build.profile}" arg2="dxp" />
 			<then>
+				<ant dir="${project.dir}/portal-impl" inheritAll="false" target="install-portal-snapshot" />
+
 				<gradle-execute dir="${project.dir}/modules" task=":dxp:apps:portal:portal-dao-db:jar" />
 
 				<path id="db.builder.classpath">

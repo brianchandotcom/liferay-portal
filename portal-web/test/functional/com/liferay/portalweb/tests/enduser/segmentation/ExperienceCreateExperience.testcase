@@ -57,8 +57,9 @@ definition {
 
 		ContentPages.clickPencil();
 
-		Experience.clickBasicSections();
-		Experience.addBannerCenterElement();
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			fragmentName = "Banner Center");
 
 		Button.clickPublish();
 

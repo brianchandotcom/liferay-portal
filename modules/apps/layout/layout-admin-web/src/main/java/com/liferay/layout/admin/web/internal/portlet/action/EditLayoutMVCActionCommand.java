@@ -92,6 +92,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
+		long masterLayoutPlid = ParamUtil.getLong(
+			uploadPortletRequest, "masterLayoutPlid");
 		Map<Locale, String> friendlyURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
@@ -136,7 +138,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 			nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), type, hidden,
-			friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
+			masterLayoutPlid, friendlyURLMap, !deleteLogo, iconBytes,
+			serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -147,8 +150,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				draftLayout.getParentLayoutId(), nameMap,
 				draftLayout.getTitleMap(), draftLayout.getDescriptionMap(),
 				draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(), type,
-				draftLayout.isHidden(), draftLayout.getFriendlyURLMap(),
-				!deleteLogo, iconBytes, serviceContext);
+				draftLayout.isHidden(), draftLayout.getMasterLayoutPlid(),
+				draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
+				serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

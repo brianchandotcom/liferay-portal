@@ -725,6 +725,10 @@
 		<field name="sourcePrototypeLayoutUuid" type="String" />
 		<field name="publishDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.LayoutBranch">
 		<field name="mvccVersion" type="long" />

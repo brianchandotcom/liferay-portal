@@ -17003,6 +17003,10 @@ public class LayoutPersistenceImpl
 		ctStrictColumnNames.add("sourcePrototypeLayoutUuid");
 		ctStrictColumnNames.add("publishDate");
 		ctStrictColumnNames.add("lastPublishDate");
+		ctStrictColumnNames.add("status");
+		ctStrictColumnNames.add("statusByUserId");
+		ctStrictColumnNames.add("statusByUserName");
+		ctStrictColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

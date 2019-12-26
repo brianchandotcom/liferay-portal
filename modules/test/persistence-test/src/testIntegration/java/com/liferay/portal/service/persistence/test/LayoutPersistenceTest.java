@@ -195,6 +195,14 @@ public class LayoutPersistenceTest {
 
 		newLayout.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newLayout.setStatus(RandomTestUtil.nextInt());
+
+		newLayout.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newLayout.setStatusByUserName(RandomTestUtil.randomString());
+
+		newLayout.setStatusDate(RandomTestUtil.nextDate());
+
 		_layouts.add(_persistence.update(newLayout));
 
 		Layout existingLayout = _persistence.findByPrimaryKey(
@@ -272,6 +280,15 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayout.getLastPublishDate()),
 			Time.getShortTimestamp(newLayout.getLastPublishDate()));
+		Assert.assertEquals(existingLayout.getStatus(), newLayout.getStatus());
+		Assert.assertEquals(
+			existingLayout.getStatusByUserId(), newLayout.getStatusByUserId());
+		Assert.assertEquals(
+			existingLayout.getStatusByUserName(),
+			newLayout.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingLayout.getStatusDate()),
+			Time.getShortTimestamp(newLayout.getStatusDate()));
 	}
 
 	@Test
@@ -530,7 +547,8 @@ public class LayoutPersistenceTest {
 			"colorSchemeId", true, "priority", true, "masterLayoutPlid", true,
 			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
 			"sourcePrototypeLayoutUuid", true, "publishDate", true,
-			"lastPublishDate", true);
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -899,6 +917,14 @@ public class LayoutPersistenceTest {
 		layout.setPublishDate(RandomTestUtil.nextDate());
 
 		layout.setLastPublishDate(RandomTestUtil.nextDate());
+
+		layout.setStatus(RandomTestUtil.nextInt());
+
+		layout.setStatusByUserId(RandomTestUtil.nextLong());
+
+		layout.setStatusByUserName(RandomTestUtil.randomString());
+
+		layout.setStatusDate(RandomTestUtil.nextDate());
 
 		_layouts.add(_persistence.update(layout));
 

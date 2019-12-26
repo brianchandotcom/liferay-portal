@@ -602,6 +602,10 @@ create table Layout (
 	sourcePrototypeLayoutUuid VARCHAR(75) null,
 	publishDate DATE null,
 	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
 	primary key (plid, ctCollectionId)
 );
 

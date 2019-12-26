@@ -48,7 +48,7 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 			}
 
 			if (_logger.isWarnEnabled()) {
-				_logger.warn("Mutated system property \"java.home\"");
+				_logger.warn("Mutated java.home system property");
 			}
 
 			try {
@@ -63,7 +63,7 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 			count = count + 1;
 		}
 
-		throw new SecurityException("Unable to locate security policy files");
+		throw new SecurityException("Cannot locate security policy files");
 	}
 
 	private static final int _MAX_RETRY_COUNT = 5;

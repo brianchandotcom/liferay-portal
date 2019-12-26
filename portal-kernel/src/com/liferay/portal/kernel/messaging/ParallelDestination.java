@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.messaging;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -41,8 +40,6 @@ public class ParallelDestination extends BaseAsyncDestination {
 		Set<MessageListener> messageListeners, final Message message) {
 
 		final Thread currentThread = Thread.currentThread();
-
-		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
 
 		for (final MessageListener messageListener : messageListeners) {
 			Runnable runnable = new MessageRunnable(message) {
@@ -69,7 +66,7 @@ public class ParallelDestination extends BaseAsyncDestination {
 
 			};
 
-			threadPoolExecutor.execute(runnable);
+			execute(runnable);
 		}
 	}
 

@@ -115,7 +115,7 @@ if (layoutPageTemplateEntry == null) {
 		<c:if test="<%= masterLayoutPageTemplateEntry != null %>">
 			<clay:button
 				elementClasses="btn-secondary"
-				id='<%= renderResponse.getNamespace() + "editMasterButton" %>'
+				id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
 				label="edit-master"
 				style="<%= false %>"
 			/>
@@ -145,20 +145,20 @@ if (layoutPageTemplateEntry == null) {
 
 		Layout masterDraftLayout = LayoutLocalServiceUtil.fetchLayout(PortalUtil.getClassNameId(Layout.class), masterLayout.getPlid());
 
-		String editPageURL = HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT);
+		String editLayoutURL = HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT);
 
-		String editMasterURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterDraftLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editPageURL);
+		String editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterDraftLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
 		%>
 
 		<aui:script>
-			var editMasterButton = document.getElementById(
-				'<portlet:namespace />editMasterButton'
+			var editMasterLayoutButton = document.getElementById(
+				'<portlet:namespace />editMasterLayoutButton'
 			);
 
-			var editMasterButtonEventListener = editMasterButton.addEventListener(
+			var editMasterLayoutButtonEventListener = editMasterLayoutButton.addEventListener(
 				'click',
 				function(event) {
-					Liferay.Util.navigate('<%= editMasterURL %>');
+					Liferay.Util.navigate('<%= editMasterLayoutURL %>');
 				}
 			);
 		</aui:script>

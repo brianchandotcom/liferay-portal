@@ -968,6 +968,26 @@ definition {
 		AppBuilderAdmin.deleteEntry(itemName = "My Form View 1");
 	}
 
+	@description = "Delete an existing Table View with no active publishing through the kebab/action menu"
+	@priority = "5"
+	test DeleteTableViewThroughActionMenu {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text Field",
+			formViewName = "Text Field - Form View Title",
+			tableViewName = "Text Field - Table View Title");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Text Field - Table View Title");
+
+		AppBuilderAdmin.deleteEntry(itemName = "Text Field - Table View Title");
+	}
+
 	@description = "Choose between the existing Form Views of an object when deploying an app"
 	@priority = "5"
 	test DeployAnAppChoosingBetweenTheExistingFormViews {

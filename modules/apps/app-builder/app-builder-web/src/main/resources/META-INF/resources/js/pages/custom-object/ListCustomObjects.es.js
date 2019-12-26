@@ -74,6 +74,7 @@ export default ({history}) => {
 		const addURL = `/o/data-engine/v2.0/sites/${siteId}/data-definitions`;
 
 		addItem(addURL, {
+			availableLanguageIds: ['en_US'],
 			dataDefinitionFields: [],
 			name: {
 				value: name

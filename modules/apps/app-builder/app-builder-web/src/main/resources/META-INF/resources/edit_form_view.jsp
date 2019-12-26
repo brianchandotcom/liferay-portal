@@ -70,6 +70,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 					dataLayoutId="<%= dataLayoutId %>"
 					dataLayoutInputId="dataLayout"
 					namespace="<%= renderResponse.getNamespace() %>"
+					scopes='<%= SetUtil.fromCollection(Arrays.asList("app-builder")) %>'
 				/>
 			</div>
 		</div>

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.icon=select-from-list",
 		"ddm.form.field.type.label=checkbox-multiple-field-type-label",
 		"ddm.form.field.type.name=checkbox_multiple",
-		"ddm.form.field.type.scope=forms"
+		"ddm.form.field.type.scope=app-builder,forms"
 	},
 	service = DDMFormFieldType.class
 )

@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=caret-double",
 		"ddm.form.field.type.label=numeric-field-type-label",
-		"ddm.form.field.type.name=numeric", "ddm.form.field.type.scope=forms"
+		"ddm.form.field.type.name=numeric",
+		"ddm.form.field.type.scope=app-builder,forms"
 	},
 	service = DDMFormFieldType.class
 )

@@ -31,8 +31,8 @@ public class UpgradeUser extends UpgradeProcess {
 		sb.append("update Group_ set active_ = [$FALSE$] where groupId in ");
 		sb.append("(select Group_.groupId from Group_ inner join User_ on ");
 		sb.append("Group_.companyId = User_.companyId and Group_.classPK = ");
-		sb.append("User_.userId where Group_.classNameId = (select from ");
-		sb.append("ClassName_ where value = ");
+		sb.append("User_.userId where Group_.classNameId = (select ");
+		sb.append("classNameId from ClassName_ where value = ");
 		sb.append("'com.liferay.portal.kernel.model.User') and User_.status ");
 		sb.append("= 5)");
 

@@ -20,8 +20,10 @@ import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -36,6 +38,21 @@ import org.osgi.service.component.annotations.Reference;
 	service = AMImageValidator.class
 )
 public class AMImageValidatorImpl implements AMImageValidator {
+
+	@Override
+	public boolean isProcessingSupported(FileVersion fileVersion) {
+		if (!isValid(fileVersion)) {
+			return false;
+		}
+
+		if (Objects.equals(
+				fileVersion.getMimeType(), ContentTypes.IMAGE_SVG_XML)) {
+
+			return false;
+		}
+
+		return true;
+	}
 
 	@Override
 	public boolean isValid(FileVersion fileVersion) {

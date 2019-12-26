@@ -58,7 +58,7 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 
 	@Override
 	public void process(FileVersion fileVersion) throws PortalException {
-		if (!_amImageValidator.isValid(fileVersion)) {
+		if (!_amImageValidator.isProcessingSupported(fileVersion)) {
 			return;
 		}
 
@@ -77,7 +77,7 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 	public void process(FileVersion fileVersion, String configurationEntryUuid)
 		throws PortalException {
 
-		if (!_amImageValidator.isValid(fileVersion)) {
+		if (!_amImageValidator.isProcessingSupported(fileVersion)) {
 			return;
 		}
 

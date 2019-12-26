@@ -24,6 +24,17 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 public interface AMImageValidator {
 
 	/**
+	 * Returns <code>true</code> if the provided file version supports image
+	 * processing. Adaptive Media works with some media types where the content
+	 * doesn't need to be processed or doesn't support processing at all (e.g.
+	 * SVG).
+	 *
+	 * @return <code>true</code> if the file version supports image processing.
+	 * @review
+	 */
+	public boolean isProcessingSupported(FileVersion fileVersion);
+
+	/**
 	 * Returns <code>true</code> if the provided file version is valid for
 	 * Adaptive Media.
 	 *

@@ -256,6 +256,9 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/delete_fragment_entry_link_comment")
 			).put(
+				"deleteItemURL",
+				getFragmentEntryActionURL("/content_layout/delete_item_react")
+			).put(
 				"discardDraftRedirectURL",
 				editorSoyContext.get("discardDraftRedirectURL")
 			).put(

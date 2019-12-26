@@ -1645,9 +1645,9 @@ definition {
 
 		ClassicSearch.search(searchTerm = "WC Title");
 
-		ClassicSearch.viewSearchResultPG(
+		/* ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "WC Title 1",
-			searchAssetType = "Web Content Article");
+			searchAssetType = "Web Content Article"); */
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "WC Title 2",

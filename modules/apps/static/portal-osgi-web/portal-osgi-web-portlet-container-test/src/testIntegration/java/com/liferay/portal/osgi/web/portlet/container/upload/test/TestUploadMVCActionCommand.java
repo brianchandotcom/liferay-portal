@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.portlet.container.upload.test;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -34,8 +33,7 @@ public class TestUploadMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		_testUploadHandler.upload(actionRequest, actionResponse);
 

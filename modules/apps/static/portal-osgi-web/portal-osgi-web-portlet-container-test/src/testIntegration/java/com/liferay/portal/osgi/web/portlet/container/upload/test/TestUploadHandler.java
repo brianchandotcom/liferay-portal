@@ -56,8 +56,7 @@ public class TestUploadHandler {
 	}
 
 	public void upload(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws PortalException {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(portletRequest);
@@ -229,9 +228,8 @@ public class TestUploadHandler {
 	}
 
 	protected void handleUploadException(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortalException pe, JSONObject jsonObject)
-		throws PortalException {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		PortalException pe, JSONObject jsonObject) {
 
 		jsonObject.put("success", Boolean.FALSE);
 

@@ -15,6 +15,7 @@
 	{@param? dropTargetItemId: ?}
 	{@param? dropTargetItemType: ?}
 	{@param? spritemap: string}
+	{@param? store: ?}
 
 	{let $wrapperClasses kind="text"}
 		fragment-entry-link-wrapper
@@ -80,6 +81,10 @@
 			<p>
 				{msg desc=""}fragments-and-widgets-for-pages-based-on-this-master-will-be-placed-here{/msg}
 			</p>
+
+			{call com.liferay.layout.content.page.editor.web.ManageAllowedFragment.render}
+				{param store: $store /}
+			{/call}
 		</div>
 	</div>
 {/template}

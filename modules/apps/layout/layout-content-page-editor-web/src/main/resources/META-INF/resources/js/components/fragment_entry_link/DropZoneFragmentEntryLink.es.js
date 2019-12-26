@@ -34,6 +34,8 @@ import {
 } from '../../utils/constants';
 import templates from './DropZoneFragmentEntryLink.soy';
 
+import '../master_layout/ManageAllowedFragment.es';
+
 /**
  * FragmentEntryLink
  * @review

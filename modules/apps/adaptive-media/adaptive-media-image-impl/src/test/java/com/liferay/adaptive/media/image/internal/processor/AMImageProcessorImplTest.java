@@ -144,7 +144,7 @@ public class AMImageProcessorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -194,7 +194,7 @@ public class AMImageProcessorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -264,7 +264,7 @@ public class AMImageProcessorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -311,7 +311,7 @@ public class AMImageProcessorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -336,7 +336,8 @@ public class AMImageProcessorImplTest {
 	@Test
 	public void testProcessConfigurationWhenNotSupported() throws Exception {
 		Mockito.when(
-			_amImageValidator.isValid(Mockito.any(FileVersion.class))
+			_amImageValidator.isProcessingSupported(
+				Mockito.any(FileVersion.class))
 		).thenReturn(
 			false
 		);
@@ -356,7 +357,7 @@ public class AMImageProcessorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -408,7 +409,7 @@ public class AMImageProcessorImplTest {
 	@Test
 	public void testProcessFileVersion() throws Exception {
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -464,7 +465,7 @@ public class AMImageProcessorImplTest {
 	@Test(expected = AMRuntimeException.InvalidConfiguration.class)
 	public void testProcessInvalidConfigurationException() throws Exception {
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -483,7 +484,7 @@ public class AMImageProcessorImplTest {
 	@Test(expected = AMRuntimeException.IOException.class)
 	public void testProcessIOExceptionInImageProcessor() throws Exception {
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -527,7 +528,7 @@ public class AMImageProcessorImplTest {
 	@Test(expected = AMRuntimeException.IOException.class)
 	public void testProcessIOExceptionInStorage() throws Exception {
 		Mockito.when(
-			_amImageValidator.isValid(_fileVersion)
+			_amImageValidator.isProcessingSupported(_fileVersion)
 		).thenReturn(
 			true
 		);
@@ -579,7 +580,8 @@ public class AMImageProcessorImplTest {
 	@Test
 	public void testProcessWhenNoConfigurationEntries() throws Exception {
 		Mockito.when(
-			_amImageValidator.isValid(Mockito.any(FileVersion.class))
+			_amImageValidator.isProcessingSupported(
+				Mockito.any(FileVersion.class))
 		).thenReturn(
 			true
 		);
@@ -612,7 +614,8 @@ public class AMImageProcessorImplTest {
 	@Test
 	public void testProcessWhenNotSupported() throws Exception {
 		Mockito.when(
-			_amImageValidator.isValid(Mockito.any(FileVersion.class))
+			_amImageValidator.isProcessingSupported(
+				Mockito.any(FileVersion.class))
 		).thenReturn(
 			false
 		);

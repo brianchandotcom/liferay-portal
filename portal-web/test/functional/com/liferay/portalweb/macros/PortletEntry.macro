@@ -85,6 +85,14 @@ definition {
 			value1 = "${name}");
 	}
 
+	macro inputStructureKeyTextInput {
+		Click(locator1 = "TextInput#STRUCTURE_KEY_FIELD");
+
+		Type(
+			locator1 = "TextInput#STRUCTURE_KEY_FIELD",
+			value1 = "${structureKey}");
+	}
+
 	macro inputText {
 		Click(
 			key_fieldLabel = "${fieldLabel}",

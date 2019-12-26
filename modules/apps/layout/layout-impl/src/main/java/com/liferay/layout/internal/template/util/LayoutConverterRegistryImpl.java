@@ -22,6 +22,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -31,7 +32,14 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 
 	@Override
 	public LayoutConverter getLayoutConverter(String layoutTemplateId) {
-		return _layoutConverters.getService(layoutTemplateId);
+		LayoutConverter layoutConverter = _layoutConverters.getService(
+			layoutTemplateId);
+
+		if (layoutConverter == null) {
+			layoutConverter = _defaultLayoutConverter;
+		}
+
+		return layoutConverter;
 	}
 
 	@Activate
@@ -39,6 +47,9 @@ public class LayoutConverterRegistryImpl implements LayoutConverterRegistry {
 		_layoutConverters = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, LayoutConverter.class, "layout.template.id");
 	}
+
+	@Reference(target = "(layout.template.id=default)")
+	private LayoutConverter _defaultLayoutConverter;
 
 	private ServiceTrackerMap<String, LayoutConverter> _layoutConverters;
 

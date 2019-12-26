@@ -166,10 +166,6 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 		);
 	}
 
-	if (fieldType === 'grid') {
-		return ({value}) => <StringRenderer value={Object.keys(value)} />;
-	}
-
 	if (fieldType === 'radio') {
 		const {options} = customProperties;
 

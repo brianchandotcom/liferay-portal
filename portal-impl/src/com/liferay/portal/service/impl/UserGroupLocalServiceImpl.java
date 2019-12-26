@@ -887,10 +887,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public void setUserUserGroups(long userId, long[] userGroupIds)
 		throws PortalException {
 
-		if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
-			copyUserGroupLayouts(userGroupIds, userId);
-		}
-
 		userPersistence.setUserGroups(userId, userGroupIds);
 
 		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(

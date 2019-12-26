@@ -157,49 +157,6 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	 * Copies the user group's layout to the user.
-	 *
-	 * @param userGroupId the primary key of the user group
-	 * @param userId the primary key of the user
-	 * @deprecated As of Paton (6.1.x)
-	 */
-	@Deprecated
-	public static void copyUserGroupLayouts(long userGroupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().copyUserGroupLayouts(userGroupId, userId);
-	}
-
-	/**
-	 * Copies the user group's layouts to the users who are not already members
-	 * of the user group.
-	 *
-	 * @param userGroupId the primary key of the user group
-	 * @param userIds the primary keys of the users
-	 * @deprecated As of Newton (6.2.x)
-	 */
-	@Deprecated
-	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().copyUserGroupLayouts(userGroupId, userIds);
-	}
-
-	/**
-	 * Copies the user groups' layouts to the user.
-	 *
-	 * @param userGroupIds the primary keys of the user groups
-	 * @param userId the primary key of the user
-	 * @deprecated As of Newton (6.2.x)
-	 */
-	@Deprecated
-	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		getService().copyUserGroupLayouts(userGroupIds, userId);
-	}
-
-	/**
 	 * Creates a new user group with the primary key. Does not add the user group to the database.
 	 *
 	 * @param userGroupId the primary key for the new user group

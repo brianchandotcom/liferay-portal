@@ -129,9 +129,8 @@ public class FragmentCollectionServiceImpl
 	public List<FragmentCollection> getFragmentCollections(
 		long groupId, boolean includeSystem) {
 
-		long[] groupIds = _getGroupIds(groupId, includeSystem);
-
-		return fragmentCollectionPersistence.findByGroupId(groupIds);
+		return fragmentCollectionPersistence.findByGroupId(
+			_getGroupIds(groupId, includeSystem));
 	}
 
 	@Override
@@ -139,10 +138,9 @@ public class FragmentCollectionServiceImpl
 		long groupId, boolean includeSystem, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
-		long[] groupIds = _getGroupIds(groupId, includeSystem);
-
 		return fragmentCollectionPersistence.findByGroupId(
-			groupIds, start, end, orderByComparator);
+			_getGroupIds(groupId, includeSystem), start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -166,10 +164,8 @@ public class FragmentCollectionServiceImpl
 		long groupId, String name, boolean includeSystem, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
-		long[] groupIds = _getGroupIds(groupId, includeSystem);
-
 		return fragmentCollectionPersistence.findByG_LikeN(
-			groupIds,
+			_getGroupIds(groupId, includeSystem),
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
 			end, orderByComparator);
 	}
@@ -223,9 +219,8 @@ public class FragmentCollectionServiceImpl
 	public int getFragmentCollectionsCount(
 		long groupId, boolean includeSystem) {
 
-		long[] groupIds = _getGroupIds(groupId, includeSystem);
-
-		return fragmentCollectionPersistence.countByGroupId(groupIds);
+		return fragmentCollectionPersistence.countByGroupId(
+			_getGroupIds(groupId, includeSystem));
 	}
 
 	@Override
@@ -237,10 +232,8 @@ public class FragmentCollectionServiceImpl
 	public int getFragmentCollectionsCount(
 		long groupId, String name, boolean includeSystem) {
 
-		long[] groupIds = _getGroupIds(groupId, includeSystem);
-
 		return fragmentCollectionPersistence.countByG_LikeN(
-			groupIds,
+			_getGroupIds(groupId, includeSystem),
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
 	}
 

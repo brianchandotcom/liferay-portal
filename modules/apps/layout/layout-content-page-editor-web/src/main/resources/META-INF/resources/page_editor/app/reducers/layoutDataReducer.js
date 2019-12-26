@@ -41,7 +41,7 @@ function updateColumnsSize({items, newNumberOfColumns, rowItem}) {
 	return newItems;
 }
 
-function addRowItem(items, action) {
+function createColumn(items, action) {
 	const {config, itemId, itemType, newNumberOfColumns, rowItemId} = action;
 	const defaultConfig = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[itemType];
 
@@ -81,7 +81,7 @@ function addRowItem(items, action) {
 	return newItems;
 }
 
-function removeRowItem(items, action) {
+function removeColumn(items, action) {
 	const {newNumberOfColumns, rowItemId} = action;
 
 	let newItems = items;
@@ -142,7 +142,7 @@ export default function layoutDataReducer(state, action) {
 				...state,
 				layoutData: {
 					...state.layoutData,
-					items: addRowItem(state.layoutData.items, {
+					items: createColumn(state.layoutData.items, {
 						itemId: action.itemId,
 						itemType: action.itemType,
 						newNumberOfColumns: action.newNumberOfColumns,
@@ -156,7 +156,7 @@ export default function layoutDataReducer(state, action) {
 				...state,
 				layoutData: {
 					...state.layoutData,
-					items: removeRowItem(state.layoutData.items, {
+					items: removeColumn(state.layoutData.items, {
 						newNumberOfColumns: action.newNumberOfColumns,
 						rowItemId: action.rowItemId
 					})

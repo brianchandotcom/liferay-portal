@@ -118,6 +118,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -632,6 +633,51 @@ public class ContentPageEditorDisplayContext {
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
 
+	private List<String> _getAllowedFragmentEntries() {
+		if (_allowedFragmentEntries != null) {
+			return _allowedFragmentEntries;
+		}
+
+		String masterLayoutData = _getMasterLayoutData();
+
+		if (Validator.isNull(masterLayoutData)) {
+			_allowedFragmentEntries = Collections.emptyList();
+
+			return _allowedFragmentEntries;
+		}
+
+		try {
+			List<String> allowedFragmentEntries = new ArrayList<>();
+
+			JSONObject masterLayoutDataJSONObject =
+				JSONFactoryUtil.createJSONObject(masterLayoutData);
+
+			JSONArray allowedFragmentEntriesJSONArray =
+				masterLayoutDataJSONObject.getJSONArray(
+					"allowedFragmentEntries");
+
+			Iterator<String> iteratorAllowedFragmentEntries =
+				allowedFragmentEntriesJSONArray.iterator();
+
+			iteratorAllowedFragmentEntries.forEachRemaining(
+				fragmentEntryKey -> allowedFragmentEntries.add(
+					fragmentEntryKey));
+
+			_allowedFragmentEntries = allowedFragmentEntries;
+
+			return _allowedFragmentEntries;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get structure JSON array", e);
+			}
+		}
+
+		_allowedFragmentEntries = Collections.emptyList();
+
+		return _allowedFragmentEntries;
+	}
+
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
@@ -902,6 +948,10 @@ public class ContentPageEditorDisplayContext {
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+			if (!_isFragmentEntryAllowed(fragmentEntry.getFragmentEntryKey())) {
+				continue;
+			}
 
 			soyContext.put(
 				"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
@@ -1628,6 +1678,18 @@ public class ContentPageEditorDisplayContext {
 		return false;
 	}
 
+	private boolean _isFragmentEntryAllowed(String fragmentEntryKey) {
+		List<String> allowedFragmentEntries = _getAllowedFragmentEntries();
+
+		if (ListUtil.isEmpty(allowedFragmentEntries) ||
+			allowedFragmentEntries.contains(fragmentEntryKey)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isMasterUsed() throws PortalException {
 		if (_getPageType() !=
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
@@ -1672,6 +1734,7 @@ public class ContentPageEditorDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
+	private List<String> _allowedFragmentEntries;
 	private final CommentManager _commentManager;
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;

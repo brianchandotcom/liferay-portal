@@ -7,6 +7,10 @@ definition {
 
 		WebContentStructures.addName(structureName = "${structureName}");
 
+		if (isSet(structureKey)) {
+			PortletEntry.inputStructureKeyTextInput(structureKey = "${structureKey}");
+		}
+
 		if (isSet(structureDescription)) {
 			PortletEntry.inputDescriptionTextInput(description = "${structureDescription}");
 		}

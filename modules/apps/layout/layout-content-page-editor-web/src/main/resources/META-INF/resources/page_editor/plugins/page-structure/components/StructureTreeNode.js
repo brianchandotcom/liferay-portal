@@ -17,14 +17,16 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext} from 'react';
 
-import {removeItem} from '../../../app/actions/index';
 import {
 	useHoverItem,
 	useIsHovered,
 	useIsSelected,
 	useSelectItem
 } from '../../../app/components/Controls';
+import {ConfigContext} from '../../../app/config/index';
 import {DispatchContext} from '../../../app/reducers/index';
+import {StoreContext} from '../../../app/store/index';
+import deleteItem from '../../../app/thunks/deleteItem';
 
 const NameButton = ({id, name}) => {
 	const isSelected = useIsSelected();
@@ -47,7 +49,9 @@ const NameButton = ({id, name}) => {
 };
 
 const RemoveButton = ({id}) => {
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
+	const store = useContext(StoreContext);
 
 	return (
 		<ClayButton
@@ -55,7 +59,7 @@ const RemoveButton = ({id}) => {
 			displayType="unstyled"
 			onClick={event => {
 				event.stopPropagation();
-				dispatch(removeItem({itemId: id}));
+				dispatch(deleteItem({config, itemId: id, store}));
 			}}
 		>
 			<ClayIcon symbol="times-circle" />

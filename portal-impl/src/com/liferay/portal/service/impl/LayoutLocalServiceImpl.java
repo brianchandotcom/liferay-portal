@@ -3320,9 +3320,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long parentLayoutId)
 		throws PortalException {
 
-		if (MergeLayoutPrototypesThreadLocal.isInProgress() ||
-			PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
-
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
 			return layouts;
 		}
 
@@ -3357,9 +3355,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long[] parentLayoutIds)
 		throws PortalException {
 
-		if (MergeLayoutPrototypesThreadLocal.isInProgress() ||
-			PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
-
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
 			return layouts;
 		}
 
@@ -3405,8 +3401,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (MergeLayoutPrototypesThreadLocal.isMergeComplete(
 				"getLayout", arguments) &&
-			(!group.isUser() ||
-			 PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE)) {
+			!group.isUser()) {
 
 			return false;
 		}
@@ -3450,8 +3445,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (MergeLayoutPrototypesThreadLocal.isMergeComplete(
 				"getLayouts", arguments) &&
-			(!group.isUser() ||
-			 PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE)) {
+			!group.isUser()) {
 
 			return false;
 		}

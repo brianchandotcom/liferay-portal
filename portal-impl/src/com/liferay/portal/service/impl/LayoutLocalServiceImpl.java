@@ -2608,7 +2608,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         prototype.
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #updateLayout(
+	 *             long, boolean, long, long, Map, Map, Map, Map, Map, String,
+	 *             boolean, long, Map, boolean, byte[], ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public Layout updateLayout(
 			long groupId, boolean privateLayout, long layoutId,

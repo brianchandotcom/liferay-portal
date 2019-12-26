@@ -210,6 +210,10 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	protected abstract void dispatch(
 		Set<MessageListener> messageListeners, Message message);
 
+	protected void execute(Runnable runnable) {
+		_noticeableThreadPoolExecutor.execute(runnable);
+	}
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */

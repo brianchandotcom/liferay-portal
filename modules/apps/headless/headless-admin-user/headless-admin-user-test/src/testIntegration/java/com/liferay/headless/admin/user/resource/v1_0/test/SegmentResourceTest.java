@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -196,9 +195,9 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 
 		return _toSegment(
 			SegmentsTestUtil.addSegmentsEntry(
-				segment.getName(), segment.getName(),
-				RandomTestUtil.randomString(), segment.getCriteria(),
-				segment.getSource(), User.class.getName(), serviceContext));
+				segment.getName(), segment.getName(), null,
+				segment.getCriteria(), segment.getSource(),
+				User.class.getName(), serviceContext));
 	}
 
 	private Segment _toSegment(SegmentsEntry segmentsEntry) {

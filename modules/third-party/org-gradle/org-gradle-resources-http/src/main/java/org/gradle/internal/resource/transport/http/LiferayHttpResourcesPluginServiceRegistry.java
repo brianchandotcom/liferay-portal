@@ -41,7 +41,7 @@ public class LiferayHttpResourcesPluginServiceRegistry
 
 		@SuppressWarnings("unused")
 		public SslContextFactory createSslContextFactory() {
-			return new LiferaySslContextFactory();
+			return new DefaultSslContextFactory();
 		}
 
 	}

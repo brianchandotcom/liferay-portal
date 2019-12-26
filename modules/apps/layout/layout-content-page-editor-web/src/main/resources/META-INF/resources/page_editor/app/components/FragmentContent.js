@@ -74,12 +74,12 @@ function FragmentContent({fragmentEntryLink}, ref) {
 							Processors.fallback;
 
 						processor.render(editable, value);
-
-						updateContent();
 					}
 				});
 			}
 		);
+
+		updateContent();
 
 		return () => {
 			element = null;

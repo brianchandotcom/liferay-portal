@@ -37,6 +37,8 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(6, 0, 2), new UpgradeLayoutSet());
 
+		upgradeProcesses.put(new Version(6, 0, 3), new UpgradeClusterGroup());
+
 		upgradeProcesses.put(new Version(6, 0, 4), new UpgradeAssetCategory());
 
 		upgradeProcesses.put(new Version(7, 0, 0), new UpgradeRatingsStats());

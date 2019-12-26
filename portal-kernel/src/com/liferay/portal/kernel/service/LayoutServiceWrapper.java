@@ -810,6 +810,7 @@ public class LayoutServiceWrapper
 	 * @param type the layout's new type (optionally {@link
 	 LayoutConstants#TYPE_PORTLET})
 	 * @param hidden whether the layout is hidden
+	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -821,6 +822,61 @@ public class LayoutServiceWrapper
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			long parentLayoutId,
+			java.util.Map<java.util.Locale, String> localeNamesMap,
+			java.util.Map<java.util.Locale, String> localeTitlesMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			java.util.Map<java.util.Locale, String> keywordsMap,
+			java.util.Map<java.util.Locale, String> robotsMap, String type,
+			boolean hidden, long masterLayoutPlid,
+			java.util.Map<java.util.Locale, String> friendlyURLMap,
+			boolean hasIconImage, byte[] iconBytes,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.updateLayout(
+			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
+			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
+			hidden, masterLayoutPlid, friendlyURLMap, hasIconImage, iconBytes,
+			serviceContext);
+	}
+
+	/**
+	 * Updates the layout with additional parameters.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param parentLayoutId the layout ID of the layout's new parent layout
+	 * @param localeNamesMap the layout's locales and localized names
+	 * @param localeTitlesMap the layout's locales and localized titles
+	 * @param descriptionMap the locales and localized descriptions to merge
+	 (optionally <code>null</code>)
+	 * @param keywordsMap the locales and localized keywords to merge
+	 (optionally <code>null</code>)
+	 * @param robotsMap the locales and localized robots to merge (optionally
+	 <code>null</code>)
+	 * @param type the layout's new type (optionally {@link
+	 LayoutConstants#TYPE_PORTLET})
+	 * @param hidden whether the layout is hidden
+	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
+	 To see how the URL is normalized when accessed see {@link
+	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 String)}.
+	 * @param hasIconImage if the layout has a custom icon image
+	 * @param iconBytes the byte array of the layout's new icon image
+	 * @param serviceContext the service context to be applied. Can set the
+	 modification date and expando bridge attributes for the layout.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #updateLayout(
+	 long, boolean, long, long, Map, Map, Map, Map, Map, String,
+	 boolean, long, Map, boolean, byte[], ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public Layout updateLayout(
 			long groupId, boolean privateLayout, long layoutId,

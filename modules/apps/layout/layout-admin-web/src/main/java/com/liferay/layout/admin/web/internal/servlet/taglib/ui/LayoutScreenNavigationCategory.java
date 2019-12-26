@@ -15,7 +15,7 @@
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
-import com.liferay.layout.admin.web.internal.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;

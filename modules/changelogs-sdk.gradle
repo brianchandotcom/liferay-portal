@@ -36,6 +36,8 @@ buildChangelogs {
 
 		File changelogCommitsFile = file("sdk/" + projectName + "/CHANGELOG.commits")
 
+		File changelogDescriptionsFile = file("sdk/" + projectName + "/CHANGELOG.descriptions")
+
 		changelogCommitsFile.getText("UTF-8").split("\n").reverse().each {
 			String recordCommitLine ->
 
@@ -113,6 +115,15 @@ buildChangelogs {
 				text += dependencies
 			}
 
+			changelogDescriptionsFile.text.eachMatch(/(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/) {
+				all, descriptions ->
+
+				text += """\
+					|
+					|
+					|### Description
+					|${descriptions.trim()}""".stripMargin()
+			}
 		}
 
 		File changelogMarkdownFile = file("sdk/" + projectName + "/CHANGELOG.markdown")

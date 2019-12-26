@@ -81,13 +81,12 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String parentItemId = ParamUtil.getString(
-			actionRequest, "parentItemId");
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.deleteFragmentEntryLink(
@@ -138,7 +137,7 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> layoutStructure.deleteLayoutStructureItem(
-				String.valueOf(fragmentEntryLinkId), parentItemId));
+				itemId));
 	}
 
 	@Override

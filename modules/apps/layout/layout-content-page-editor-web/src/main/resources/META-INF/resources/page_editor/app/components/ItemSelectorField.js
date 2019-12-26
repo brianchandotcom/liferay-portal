@@ -46,6 +46,21 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => (
 	</>
 );
 
+			{typeOptions.enableSelectTemplate && value.className && (
+				<ClayForm.Group>
+					<TemplateSelector
+						item={value}
+						onTemplateSelect={template => {
+							onValueSelect(field.name, {...value, template});
+						}}
+						selectedTemplate={value.template}
+					/>
+				</ClayForm.Group>
+			)}
+		</>
+	);
+};
+
 const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 	const config = useContext(ConfigContext);
 	const [availableTemplates, setAvailableTemplates] = useState([]);

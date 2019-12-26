@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,10 +62,10 @@ public class ${className}Portlet extends MVCPortlet {
 					renderRequest, portletId);
 
 			String className = preferences.getValue(
-				"className", StringPool.BLANK);
+				"className", null);
 
 			long classPK = GetterUtil.getLong(
-				preferences.getValue("classPK", StringPool.BLANK));
+				preferences.getValue("classPK", null));
 
 			if (Validator.isNotNull(className) && (classPK > 0)) {
 				AssetEntry assetEntry = _assetEntryLocalService.getEntry(

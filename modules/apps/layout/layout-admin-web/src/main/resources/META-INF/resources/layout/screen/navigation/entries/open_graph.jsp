@@ -133,13 +133,13 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 							HashMapBuilder.<String, Object>put(
 								"customizable", Boolean.TRUE
 							).put(
-								"defaultValue", layoutsSEODisplayContext.getPageTitleMap()
+								"defaultValue", layoutsSEODisplayContext.getDefaultPageTitleMap()
 							).put(
 								"id", "openGraphTitle"
 							).build()
 						).put(
 							"url",
-							Collections.singletonMap("defaultValue", layoutsSEODisplayContext.getCanonicalLayoutURLMap())
+							Collections.singletonMap("defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURLMap())
 						).build()
 					).put(
 						"titleSuffix", layoutsSEODisplayContext.getPageTitleSuffix()

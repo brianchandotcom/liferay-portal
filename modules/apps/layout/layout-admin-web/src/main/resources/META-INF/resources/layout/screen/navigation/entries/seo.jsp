@@ -127,14 +127,14 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 							).put(
 								"title",
 								HashMapBuilder.<String, Object>put(
-									"defaultValue", layoutsSEODisplayContext.getPageTitleMap()
+									"defaultValue", layoutsSEODisplayContext.getDefaultPageTitleMap()
 								).put(
 									"id", "title"
 								).build()
 							).put(
 								"url",
 								HashMapBuilder.<String, Object>put(
-									"defaultValue", layoutsSEODisplayContext.getCanonicalLayoutURLMap()
+									"defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURLMap()
 								).put(
 									"id", "canonicalURL"
 								).build()

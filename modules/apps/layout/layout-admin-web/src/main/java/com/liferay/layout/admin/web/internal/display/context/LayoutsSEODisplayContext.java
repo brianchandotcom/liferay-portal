@@ -97,13 +97,6 @@ public class LayoutsSEODisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<Locale, String> getCanonicalLayoutURLMap()
-		throws PortalException {
-
-		return _layoutSEOCanonicalURLProvider.getCanonicalURLMap(
-			_selLayout, _themeDisplay);
-	}
-
 	public DDMFormValues getDDMFormValues() throws StorageException {
 		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
 
@@ -138,6 +131,13 @@ public class LayoutsSEODisplayContext {
 			_selLayout, _themeDisplay);
 	}
 
+	public Map<Locale, String> getDefaultCanonicalURLMap()
+		throws PortalException {
+
+		return _layoutSEOCanonicalURLProvider.getCanonicalURLMap(
+			_selLayout, _themeDisplay);
+	}
+
 	public String getDefaultOpenGraphImageURL() throws Exception {
 		LayoutSEOSite layoutSEOSite =
 			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
@@ -161,6 +161,15 @@ public class LayoutsSEODisplayContext {
 
 			return StringPool.BLANK;
 		}
+	}
+
+	public Map<Locale, String> getDefaultPageTitleMap() {
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.putAll(_selLayout.getNameMap());
+		titleMap.putAll(_selLayout.getTitleMap());
+
+		return titleMap;
 	}
 
 	public long getGroupId() {
@@ -248,15 +257,6 @@ public class LayoutsSEODisplayContext {
 
 			return StringPool.BLANK;
 		}
-	}
-
-	public Map<Locale, String> getPageTitleMap() {
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.putAll(_selLayout.getNameMap());
-		titleMap.putAll(_selLayout.getTitleMap());
-
-		return titleMap;
 	}
 
 	public String getPageTitleSuffix() throws PortalException {

@@ -401,7 +401,7 @@
 	<td>//span[contains(@class,'portlet-name') and contains(.,'${key_portletName}')]/../..//a[span//*[name()='path'][contains(@class,'lexicon-icon-body')]]</td>
 	<td></td>
 </tr>
-<!--BASED_ON_CUSTOM_MASETERS-->
+<!--BASED_ON_CUSTOM_MASTERS-->
 <tr>
 	<td>FRAGMENT_CHANGELESS</td>
 	<td>//div[@data-onclick='null' and //*[contains(@class,'component-${key_fragmentName}')]]</td>

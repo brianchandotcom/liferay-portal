@@ -217,14 +217,6 @@ create table ClassName_ (
 	value VARCHAR(200) null
 );
 
-create table ClusterGroup (
-	mvccVersion LONG default 0 not null,
-	clusterGroupId LONG not null primary key,
-	name VARCHAR(75) null,
-	clusterNodeIds VARCHAR(75) null,
-	wholeCluster BOOLEAN
-);
-
 create table Company (
 	mvccVersion LONG default 0 not null,
 	companyId LONG not null primary key,

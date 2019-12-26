@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.Collections;
 import java.util.List;
@@ -504,6 +506,27 @@ public class FragmentDisplayContext {
 		}
 
 		return _updatePermission;
+	}
+
+	public boolean isLocked(FragmentCollection fragmentCollection) {
+		if ((fragmentCollection.getGroupId() != CompanyConstants.SYSTEM) &&
+			(fragmentCollection.getGroupId() !=
+				_themeDisplay.getScopeGroupId())) {
+
+			return true;
+		}
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if ((fragmentCollection.getGroupId() == CompanyConstants.SYSTEM) &&
+			((_themeDisplay.getCompanyId() !=
+				PortalInstances.getDefaultCompanyId()) ||
+			 !scopeGroup.isCompany())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearch() {

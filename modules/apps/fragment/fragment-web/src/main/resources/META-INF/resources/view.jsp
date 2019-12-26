@@ -161,7 +161,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												<a class="nav-link text-truncate <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
 													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 
-													<c:if test="<%= fragmentCollection.getGroupId() != scopeGroupId %>">
+													<c:if test="<%= fragmentDisplayContext.isLocked(fragmentCollection) %>">
 														<liferay-ui:icon
 															icon="lock"
 															iconCssClass="text-muted"

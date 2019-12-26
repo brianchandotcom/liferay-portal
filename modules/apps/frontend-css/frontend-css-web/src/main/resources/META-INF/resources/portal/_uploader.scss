@@ -131,22 +131,17 @@
 	.upload-complete {
 		padding-left: 5px;
 
-		label .select-file {
-			margin-top: -7px;
-		}
-
 		.error-message,
 		.success-message {
 			margin-left: 1em;
-
-			&.card-bottom {
-				bottom: 18px;
-				position: relative;
-			}
 		}
 
 		.delete-button {
 			display: inline-block;
+		}
+
+		.select-file:disabled + .custom-control-label {
+			display: none;
 		}
 	}
 

@@ -185,7 +185,7 @@ function ToolbarBody() {
 						<input
 							name={`${portletNamespace}classPK`}
 							type="hidden"
-							value={classPK ? classPK : ''}
+							value={classPK}
 						/>
 
 						<input

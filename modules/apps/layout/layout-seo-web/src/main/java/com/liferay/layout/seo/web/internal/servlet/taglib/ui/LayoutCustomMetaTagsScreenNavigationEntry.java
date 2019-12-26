@@ -14,9 +14,17 @@
 
 package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.layout.seo.web.internal.constants.LayoutSEOWebKeys;
+import com.liferay.layout.seo.web.internal.display.context.LayoutsSEODisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -25,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -33,6 +42,9 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,6 +111,19 @@ public class LayoutCustomMetaTagsScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		httpServletRequest.setAttribute(
+			LayoutSEOWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT,
+			new LayoutsSEODisplayContext(
+				_dlAppService, _dlurlHelper, _layoutSEOCanonicalURLProvider,
+				_layoutSEOLinkManager, _layoutSEOSiteLocalService,
+				_portal.getLiferayPortletRequest(
+					(PortletRequest)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST)),
+				_portal.getLiferayPortletResponse(
+					(RenderResponse)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE)),
+				_storageEngine));
+
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/layout/screen/navigation/entries/custom_meta_tags.jsp");
@@ -113,6 +138,12 @@ public class LayoutCustomMetaTagsScreenNavigationEntry
 	}
 
 	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -122,6 +153,18 @@ public class LayoutCustomMetaTagsScreenNavigationEntry
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
+
+	@Reference
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
+
+	@Reference
+	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StorageEngine _storageEngine;
 
 }

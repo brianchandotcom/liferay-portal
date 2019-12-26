@@ -26,18 +26,19 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.layout.seo.web.internal.constants.LayoutSEOWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -92,7 +93,7 @@ public class LayoutsSEODisplayContext {
 		_httpServletRequest = httpServletRequest;
 
 		_itemSelector = (ItemSelector)liferayPortletRequest.getAttribute(
-			LayoutAdminWebKeys.ITEM_SELECTOR);
+			LayoutSEOWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -206,7 +207,7 @@ public class LayoutsSEODisplayContext {
 
 		_layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
-		Layout selLayout = _getSelLayout();
+		Layout selLayout = getSelLayout();
 
 		if (selLayout != null) {
 			_layoutId = selLayout.getLayoutId();
@@ -266,8 +267,24 @@ public class LayoutsSEODisplayContext {
 			_selLayout, company.getName());
 	}
 
+	public Group getSelGroup() {
+		return _groupDisplayContextHelper.getSelGroup();
+	}
+
+	public Layout getSelLayout() {
+		if (_selLayout != null) {
+			return _selLayout;
+		}
+
+		if (_getSelPlid() != LayoutConstants.DEFAULT_PLID) {
+			_selLayout = LayoutLocalServiceUtil.fetchLayout(_getSelPlid());
+		}
+
+		return _selLayout;
+	}
+
 	public LayoutSEOEntry getSelLayoutSEOEntry() {
-		Layout layout = _getSelLayout();
+		Layout layout = getSelLayout();
 
 		if (layout == null) {
 			return null;
@@ -278,16 +295,39 @@ public class LayoutsSEODisplayContext {
 			layout.getLayoutId());
 	}
 
-	private Layout _getSelLayout() {
-		if (_selLayout != null) {
-			return _selLayout;
+	public boolean isPrivateLayout() {
+		if (_privateLayout != null) {
+			return _privateLayout;
 		}
 
-		if (_getSelPlid() != LayoutConstants.DEFAULT_PLID) {
-			_selLayout = LayoutLocalServiceUtil.fetchLayout(_getSelPlid());
+		Group selGroup = getSelGroup();
+
+		if (selGroup.isLayoutSetPrototype()) {
+			_privateLayout = true;
+
+			return _privateLayout;
 		}
 
-		return _selLayout;
+		Layout selLayout = getSelLayout();
+
+		if (getSelLayout() != null) {
+			_privateLayout = selLayout.isPrivateLayout();
+
+			return _privateLayout;
+		}
+
+		Layout layout = _themeDisplay.getLayout();
+
+		if (!layout.isTypeControlPanel()) {
+			_privateLayout = layout.isPrivateLayout();
+
+			return _privateLayout;
+		}
+
+		_privateLayout = ParamUtil.getBoolean(
+			_liferayPortletRequest, "privateLayout");
+
+		return _privateLayout;
 	}
 
 	private Long _getSelPlid() {
@@ -316,6 +356,7 @@ public class LayoutsSEODisplayContext {
 	private final LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Boolean _privateLayout;
 	private Layout _selLayout;
 	private Long _selPlid;
 	private final StorageEngine _storageEngine;

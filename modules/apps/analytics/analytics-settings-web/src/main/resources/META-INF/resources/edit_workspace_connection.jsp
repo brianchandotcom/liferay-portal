@@ -39,6 +39,7 @@ if (analyticsConfiguration != null) {
 	}
 	else {
 		String[] syncedOrganizationIds = analyticsConfiguration.syncedOrganizationIds();
+
 		long[] syncedOrganizationIdsLong = new long[syncedOrganizationIds.length];
 
 		for (int i = 0; i < syncedOrganizationIds.length; i++) {
@@ -46,6 +47,7 @@ if (analyticsConfiguration != null) {
 		}
 
 		String[] syncedUserGroupIds = analyticsConfiguration.syncedUserGroupIds();
+
 		long[] syncedUserGroupIdsLong = new long[syncedUserGroupIds.length];
 
 		for (int i = 0; i < syncedUserGroupIds.length; i++) {

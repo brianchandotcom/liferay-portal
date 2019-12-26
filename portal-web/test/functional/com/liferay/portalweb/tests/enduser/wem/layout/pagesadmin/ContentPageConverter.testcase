@@ -267,6 +267,60 @@ definition {
 			portletName = "Documents and Media");
 	}
 
+	@description = "This is a test for LPS-98325. Assert that widget pages with nested application and customization setting can be converted to content pages via API."
+	@priority = "5"
+	test ConvertWidgetPagesWithNestedApplicationAndCustomizationSettingToContentPagesViaAPI {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name 1");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name 1",
+			widgetName = "Asset Publisher");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name 2");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		PageCustomizations.enableSectionCustomizableCP(
+			columnId = "1",
+			pageName = "Test Page Name 2");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name 3");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name 3",
+			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Nested Applications");
+
+		ServerAdministration.openServerAdmin();
+
+		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${script}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "Convertible layouts before conversion");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		for (var i : list "1,2,3") {
+			AssertElementPresent(
+				key_pageName = "Test Page Name ${i}",
+				key_pageType = "Content Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+		}
+	}
+
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {

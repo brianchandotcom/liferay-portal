@@ -110,7 +110,7 @@ public class TestUploadHandler {
 	}
 
 	protected FileEntry fetchFileEntry(
-		long userId, long groupId, long folderId, String fileName) {
+		long groupId, long folderId, String fileName) {
 
 		FileEntry fileEntry = new TestFileEntry(
 			fileName, folderId, groupId, null);
@@ -176,8 +176,7 @@ public class TestUploadHandler {
 		throws PortalException {
 
 		FileEntry fileEntry = fetchFileEntry(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), folderId,
-			fileName);
+			themeDisplay.getScopeGroupId(), folderId, fileName);
 
 		if (fileEntry == null) {
 			return fileName;
@@ -190,8 +189,7 @@ public class TestUploadHandler {
 				fileName, String.valueOf(suffix));
 
 			fileEntry = fetchFileEntry(
-				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				folderId, curFileName);
+				themeDisplay.getScopeGroupId(), folderId, curFileName);
 
 			if (fileEntry == null) {
 				return curFileName;

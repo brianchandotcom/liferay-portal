@@ -97,6 +97,17 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection>
+		getFragmentCollections(
+			long groupId, boolean includeSystem, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentCollection>
+					orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupId, includeSystem, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentCollection>
 		getFragmentCollections(long groupId, int start, int end) {
 
 		return getService().getFragmentCollections(groupId, start, end);
@@ -111,6 +122,18 @@ public class FragmentCollectionServiceUtil {
 
 		return getService().getFragmentCollections(
 			groupId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentCollection>
+		getFragmentCollections(
+			long groupId, String name, boolean includeSystem, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentCollection>
+					orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupId, name, includeSystem, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection>
@@ -156,8 +179,21 @@ public class FragmentCollectionServiceUtil {
 		return getService().getFragmentCollectionsCount(groupId);
 	}
 
+	public static int getFragmentCollectionsCount(
+		long groupId, boolean includeSystem) {
+
+		return getService().getFragmentCollectionsCount(groupId, includeSystem);
+	}
+
 	public static int getFragmentCollectionsCount(long groupId, String name) {
 		return getService().getFragmentCollectionsCount(groupId, name);
+	}
+
+	public static int getFragmentCollectionsCount(
+		long groupId, String name, boolean includeSystem) {
+
+		return getService().getFragmentCollectionsCount(
+			groupId, name, includeSystem);
 	}
 
 	public static int getFragmentCollectionsCount(long[] groupIds) {

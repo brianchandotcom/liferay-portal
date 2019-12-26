@@ -15,11 +15,11 @@
 package com.liferay.portal.kernel.messaging;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 
 import java.io.Serializable;
 
 import java.util.Objects;
+import java.util.concurrent.RejectedExecutionHandler;
 
 /**
  * @author Michael C. Han
@@ -94,10 +94,6 @@ public class DestinationConfiguration implements Serializable {
 		return _maximumQueueSize;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	public RejectedExecutionHandler getRejectedExecutionHandler() {
 		return _rejectedExecutionHandler;
 	}
@@ -123,10 +119,6 @@ public class DestinationConfiguration implements Serializable {
 		_maximumQueueSize = maximumQueueSize;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setRejectedExecutionHandler(
 		RejectedExecutionHandler rejectedExecutionHandler) {
 

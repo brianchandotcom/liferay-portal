@@ -392,6 +392,13 @@ public class DDMFormEvaluatorHelper {
 		return false;
 	}
 
+	protected boolean isFieldReadOnly(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		return getBooleanPropertyValue(
+			ddmFormEvaluatorFieldContextKey, "readOnly", false);
+	}
+
 	protected boolean isFieldVisible(
 		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
 
@@ -452,6 +459,10 @@ public class DDMFormEvaluatorHelper {
 			entry.getKey();
 
 		if (isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
+			return;
+		}
+
+		if (isFieldReadOnly(ddmFormEvaluatorFieldContextKey)) {
 			return;
 		}
 

@@ -303,12 +303,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
 
-		if (layoutConverter == null) {
-			throw new LayoutConvertException(
-				"No layout converter exists for layout template ID " +
-					layoutTemplateId);
-		}
-
 		if (!layoutConverter.isConvertible(layout)) {
 			throw new LayoutConvertException(
 				"Layout with PLID " + layout.getPlid() + " is not convertible");

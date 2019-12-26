@@ -133,8 +133,8 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 								).build()
 							).put(
 								"url",
-								HashMapBuilder.put(
-									"defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURL()
+								HashMapBuilder.<String, Object>put(
+									"defaultValue", layoutsSEODisplayContext.getCanonicalLayoutURLMap()
 								).put(
 									"id", "canonicalURL"
 								).build()

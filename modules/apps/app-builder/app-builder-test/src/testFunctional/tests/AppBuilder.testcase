@@ -80,7 +80,7 @@ definition {
 			isCreatingFormView = "false",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldList = "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Grid,Upload";
+		var fieldList = "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload";
 
 		for (var field : list "${fieldList}") {
 
@@ -130,6 +130,7 @@ definition {
 	}
 
 	@description = "Add a Form View with a Grid field"
+	@ignore = "true"
 	@priority = "5"
 	test AddSimpleFormViewWithGridField {
 		property portal.acceptance = "false";
@@ -1095,6 +1096,7 @@ definition {
 	}
 
 	@description = "No results found screen is shown when the search doesn't retrieve any results"
+	@ignore = "true"
 	@priority = "5"
 	test FormViewSearchNoResultsFound {
 		property portal.acceptance = "false";
@@ -1231,13 +1233,6 @@ definition {
 			formViewName = "Upload Field - Form View Title",
 			tableViewName = "Upload Field - Table View Title");
 
-		FormViewBuilder.switchToFormViewTab();
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Grid",
-			formViewName = "Grid Field - Form View Title",
-			tableViewName = "Grid Field - Table View Title");
-
 		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "Custom Object Title");
 
 		AppBuilderAdmin.searchByItem(itemName = "Upload");
@@ -1248,10 +1243,6 @@ definition {
 
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
-			title = "Grid Field - Table View Title");
-
-		AppBuilderAdmin.validateListTitleAtRow(
-			rowNumber = "2",
 			title = "Upload Field - Table View Title");
 	}
 

@@ -2382,6 +2382,30 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Updates the layout replacing its master layout plid.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  layoutId the layout ID of the layout
+	 * @param  masterLayoutPlid the primary key of the master layout
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			long masterLayoutPlid)
+		throws PortalException {
+
+		Layout layout = layoutPersistence.findByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		layout.setMasterLayoutPlid(masterLayoutPlid);
+
+		return layoutPersistence.update(layout);
+	}
+
+	/**
 	 * Updates the layout replacing its entity class name ID and primary key.
 	 *
 	 * @param  groupId the primary key of the group

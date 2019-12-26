@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -249,23 +248,6 @@ public class LayoutsSEODisplayContext {
 
 			return StringPool.BLANK;
 		}
-	}
-
-	public String getPageTitle() throws PortalException {
-		String portletId = (String)_httpServletRequest.getAttribute(
-			WebKeys.PORTLET_ID);
-
-		ListMergeable<String> titleListMergeable =
-			(ListMergeable<String>)_httpServletRequest.getAttribute(
-				WebKeys.PAGE_TITLE);
-		ListMergeable<String> subtitleListMergeable =
-			(ListMergeable<String>)_httpServletRequest.getAttribute(
-				WebKeys.PAGE_SUBTITLE);
-
-		return _layoutSEOLinkManager.getPageTitle(
-			_selLayout, portletId, _themeDisplay.getTilesTitle(),
-			titleListMergeable, subtitleListMergeable,
-			_themeDisplay.getLocale());
 	}
 
 	public Map<Locale, String> getPageTitleMap() {

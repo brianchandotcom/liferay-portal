@@ -21,8 +21,6 @@ public class DataActionKeys {
 
 	public static final String ADD_DATA_DEFINITION = "ADD_DATA_DEFINITION";
 
-	public static final String ADD_DATA_LAYOUT = "ADD_DATA_LAYOUT";
-
 	public static final String ADD_DATA_RECORD = "ADD_DATA_RECORD";
 
 	public static final String ADD_DATA_RECORD_COLLECTION =

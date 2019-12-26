@@ -12,13 +12,11 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_DATA_DEFINITION</action-key>
-				<action-key>ADD_DATA_LAYOUT</action-key>
 				<action-key>ADD_DATA_RECORD_COLLECTION</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<guest-unsupported>
 				<action-key>ADD_DATA_DEFINITION</action-key>
-				<action-key>ADD_DATA_LAYOUT</action-key>
 				<action-key>ADD_DATA_RECORD_COLLECTION</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
@@ -28,32 +26,6 @@
 		<model-name>com.liferay.data.engine.rest.internal.model.InternalDataDefinition</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_data_engine_web_portlet_DataDefinitionPortlet</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.data.engine.rest.internal.model.InternalDataLayout</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_data_engine_web_portlet_DataLayoutPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

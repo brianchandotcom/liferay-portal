@@ -291,12 +291,6 @@ public class DataLayoutResourceImpl
 				ddmFormLayoutSerializerSerializeResponse.getContent(),
 				serviceContext));
 
-		_resourceLocalService.addModelResources(
-			contextCompany.getCompanyId(), ddmStructure.getGroupId(),
-			PrincipalThreadLocal.getUserId(),
-			InternalDataLayout.class.getName(), dataLayout.getId(),
-			serviceContext.getModelPermissions());
-
 		_addDataDefinitionFieldLinks(
 			dataDefinitionId, dataLayout.getId(),
 			ddmFormLayoutSerializerSerializeResponse.getContent(),

@@ -12,11 +12,16 @@
  * details.
  */
 
+/**
+ * Action creators.
+ */
+
+export {default as addFragmentEntryLink} from './addFragmentEntryLink';
 export {
 	default as addFragmentEntryLinkComment
 } from './addFragmentEntryLinkComment';
-export {default as addFragmentEntryLink} from './addFragmentEntryLink';
 export {default as addMappedInfoItem} from './addMappedInfoItem';
+export {default as createColumn} from './createColumn';
 export {
 	default as deleteFragmentEntryLinkComment
 } from './deleteFragmentEntryLinkComment';
@@ -24,6 +29,7 @@ export {
 	default as editFragmentEntryLinkComment
 } from './editFragmentEntryLinkComment';
 export {default as loadReducer} from './loadReducer';
+export {default as removeColumn} from './removeColumn';
 export {default as switchSidebarPanel} from './switchSidebarPanel';
 export {
 	default as toggleShowResolvedComments

@@ -1113,9 +1113,9 @@ public class DDMFormAdminDisplayContext {
 		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
 
 		return Optional.ofNullable(
-			themeDisplay.getLocale()
-		).orElse(
 			themeDisplay.getSiteDefaultLocale()
+		).orElse(
+			themeDisplay.getLocale()
 		);
 	}
 

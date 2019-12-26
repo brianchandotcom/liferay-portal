@@ -211,7 +211,7 @@ public class DDMFormLayoutFactoryHelper {
 	}
 
 	protected void setDefaultLocale() {
-		Locale defaultLocale = LocaleThreadLocal.getThemeDisplayLocale();
+		Locale defaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
 		if (defaultLocale == null) {
 			defaultLocale = LocaleUtil.getDefault();

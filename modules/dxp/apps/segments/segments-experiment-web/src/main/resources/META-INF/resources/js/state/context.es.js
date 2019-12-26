@@ -34,10 +34,7 @@ export function getInitialState(firstState) {
 	} = firstState;
 
 	const state = {
-		experiment:
-			Object.keys(initialSegmentsExperiment).length === 0
-				? null
-				: initialSegmentsExperiment,
+		experiment: initialSegmentsExperiment,
 		experimentHistory: initialExperimentHistory || [],
 		selectedExperienceId: initialSelectedSegmentsExperienceId,
 		variants: initialSegmentsVariants.map(initialVariant => {

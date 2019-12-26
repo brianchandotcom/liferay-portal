@@ -39,6 +39,8 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 <aui:input name="devices" type="hidden" value="regular" />
 
+<aui:input name="masterLayoutPlid" type="hidden" />
+
 <c:if test="<%= selLayout.getMasterLayoutPlid() <= 0 %>">
 	<liferay-util:buffer
 		var="rootNodeNameLink"
@@ -109,17 +111,28 @@ if (layoutPageTemplateEntry == null) {
 		<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
 
 		<p>
-			<b><liferay-ui:message key="master-name" />:</b> <%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %>
+			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %></span>
 		</p>
 
-		<c:if test="<%= masterLayoutPageTemplateEntry != null %>">
-			<clay:button
-				elementClasses="btn-secondary"
-				id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
-				label="edit-master"
-				style="<%= false %>"
-			/>
-		</c:if>
+		<div class="master-layout-buttons">
+			<c:if test="<%= masterLayoutPageTemplateEntry != null %>">
+				<clay:button
+					elementClasses="btn-secondary"
+					id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
+					label="edit-master"
+					style="<%= false %>"
+				/>
+			</c:if>
+
+			<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) %>">
+				<clay:button
+					elementClasses="btn-secondary"
+					id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
+					label="change-master"
+					style="<%= false %>"
+				/>
+			</c:if>
+		</div>
 	</div>
 </c:if>
 
@@ -164,3 +177,44 @@ if (layoutPageTemplateEntry == null) {
 		</aui:script>
 	</c:otherwise>
 </c:choose>
+
+<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) && ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) %>">
+	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+		var changeMasterLayoutButton = document.getElementById(
+			'<portlet:namespace />changeMasterLayoutButton'
+		);
+
+		var changeMasterLayoutButtonEventListener = changeMasterLayoutButton.addEventListener(
+			'click',
+			function(event) {
+				var itemSelectorDialog = new ItemSelectorDialog.default({
+					buttonAddLabel: '<liferay-ui:message key="done" />',
+					eventName: '<portlet:namespace />selectMasterLayout',
+					title: '<liferay-ui:message key="select-master" />',
+					url:
+						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_master_layout.jsp" /></portlet:renderURL>'
+				});
+
+				itemSelectorDialog.open();
+
+				itemSelectorDialog.on('selectedItemChange', function(event) {
+					var selectedItem = event.selectedItem;
+
+					if (selectedItem) {
+						var masterLayoutName = document.getElementById(
+							'<portlet:namespace />masterLayoutName'
+						);
+
+						masterLayoutName.innerHTML = selectedItem.name;
+
+						var masterLayoutPlid = document.getElementById(
+							'<portlet:namespace />masterLayoutPlid'
+						);
+
+						masterLayoutPlid.value = selectedItem.plid;
+					}
+				});
+			}
+		);
+	</aui:script>
+</c:if>

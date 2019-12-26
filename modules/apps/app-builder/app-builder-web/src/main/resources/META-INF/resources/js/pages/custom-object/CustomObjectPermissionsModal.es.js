@@ -37,17 +37,17 @@ const COLUMNS = [
 	{
 		key: ACTIONS.DELETE_DATA_RECORD,
 		sortable: false,
-		value: Liferay.Language.get('delete')
+		value: Liferay.Language.get('delete-entry')
 	},
 	{
 		key: ACTIONS.UPDATE_DATA_RECORD,
 		sortable: false,
-		value: Liferay.Language.get('update')
+		value: Liferay.Language.get('update-entry')
 	},
 	{
 		key: ACTIONS.VIEW_DATA_RECORD,
 		sortable: false,
-		value: Liferay.Language.get('view')
+		value: Liferay.Language.get('view-entry')
 	}
 ];
 
@@ -80,9 +80,8 @@ export default ({dataDefinitionId, onClose}) => {
 					roles = roles.filter(
 						({name, roleType}) =>
 							name !== 'Administrator' &&
-							name !== 'Site Administrator' &&
-							name !== 'Site Owner' &&
-							roleType !== 'organization'
+							roleType !== 'organization' &&
+							roleType !== 'site'
 					);
 
 					setRoles(roles);
@@ -166,14 +165,11 @@ export default ({dataDefinitionId, onClose}) => {
 
 	const filteredRoles = roles
 		.filter(({name}) => new RegExp(searchText, 'ig').test(name))
-		.map(({name, roleType}) => {
+		.map(({name}) => {
 			let item = {
 				name: (
 					<>
-						<ClayIcon
-							symbol={roleType === 'site' ? 'sites' : 'user'}
-						/>{' '}
-						{name}
+						<ClayIcon symbol="user" /> {name}
 					</>
 				)
 			};
@@ -202,7 +198,7 @@ export default ({dataDefinitionId, onClose}) => {
 	return (
 		<ClayModal observer={observer} size="full-screen">
 			<ClayModal.Header>
-				{Liferay.Language.get('permissions')}
+				{Liferay.Language.get('app-permissions')}
 			</ClayModal.Header>
 			<ClayModal.Body>
 				<ManagementToolbar>

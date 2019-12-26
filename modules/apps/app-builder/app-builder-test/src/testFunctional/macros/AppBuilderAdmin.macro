@@ -188,6 +188,16 @@ definition {
 			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
 	}
 
+	macro undeployApp {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Undeploy");
+
+		Click(locator1 = "AppBuilder#UNDEPLOY_APP_BUTTON");
+	}
+
 	macro validateCustomObjectNameOnHeader {
 		AssertTextEquals(
 			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",

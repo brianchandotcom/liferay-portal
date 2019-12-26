@@ -358,12 +358,16 @@ public class ServiceTestUtil {
 
 		ExecutorService executorService = null;
 
-		PortalExecutorManager portalExecutorManager =
-			ReflectionTestUtil.getFieldValue(
-				oldDestination, "_portalExecutorManager");
+		try {
+			executorService = ReflectionTestUtil.getFieldValue(
+				oldDestination, "_noticeableThreadPoolExecutor");
+		}
+		catch (Exception e) {
+		}
 
-		executorService = portalExecutorManager.getPortalExecutor(
-			oldDestination.getName());
+		if (executorService == null) {
+			return;
+		}
 
 		executorService.shutdown();
 

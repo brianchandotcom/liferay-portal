@@ -14,16 +14,24 @@
 
 import {LAYOUT_DATA_ITEM_TYPES} from './layoutDataItemTypes';
 
+const ROW_INITIAL_VALUES = {
+	gutters: true,
+	numberOfColumns: 0,
+	paddingHorizontal: 3,
+	paddingVertical: 3,
+	type: 'fixed'
+};
+
 export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: {
 		size: 0
 	},
 
 	[LAYOUT_DATA_ITEM_TYPES.container]: {
+		...ROW_INITIAL_VALUES,
 		backgroundColorCssClass: '',
 		backgroundImage: '',
-		paddingHorizontal: 3,
-		paddingVertical: 3,
+		gutters: false,
 		type: 'fluid'
 	},
 
@@ -33,7 +41,5 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 
 	[LAYOUT_DATA_ITEM_TYPES.root]: {},
 
-	[LAYOUT_DATA_ITEM_TYPES.row]: {
-		gutters: true
-	}
+	[LAYOUT_DATA_ITEM_TYPES.row]: ROW_INITIAL_VALUES
 };

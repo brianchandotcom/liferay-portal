@@ -18,14 +18,12 @@ import {UPDATE_ITEM_CONFIG} from './types';
  * @param {object} options
  * @param {object} [options.config={}]
  * @param {string} options.itemId
- * @param {string} options.itemType
  * @return {object}
  */
-export default function updateItem({config = {}, itemId, itemType}) {
+export default function updateItemConfig({config = {}, itemId}) {
 	return {
 		config,
 		itemId,
-		itemType,
 		type: UPDATE_ITEM_CONFIG
 	};
 }

@@ -344,8 +344,8 @@ public class SegmentsEntryLocalServiceTest {
 
 		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
 			_segmentsEntryLocalService.searchSegmentsEntries(
-				segmentsEntry1.getCompanyId(), segmentsEntry1.getGroupId(), "",
-				true, params, 0, 1, null);
+				segmentsEntry1.getCompanyId(), segmentsEntry1.getGroupId(),
+				null, true, params, 0, 1, null);
 
 		List<SegmentsEntry> segmentsEntries =
 			baseModelSearchResult.getBaseModels();
@@ -377,7 +377,7 @@ public class SegmentsEntryLocalServiceTest {
 
 		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
 			_segmentsEntryLocalService.searchSegmentsEntries(
-				segmentsEntry.getCompanyId(), segmentsEntry.getGroupId(), "",
+				segmentsEntry.getCompanyId(), segmentsEntry.getGroupId(), null,
 				true, params, 0, 1, null);
 
 		List<SegmentsEntry> segmentsEntries =
@@ -404,7 +404,7 @@ public class SegmentsEntryLocalServiceTest {
 
 		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
 			_segmentsEntryLocalService.searchSegmentsEntries(
-				segmentsEntry.getCompanyId(), segmentsEntry.getGroupId(), "",
+				segmentsEntry.getCompanyId(), segmentsEntry.getGroupId(), null,
 				true, params, 0, 1, null);
 
 		List<SegmentsEntry> segmentsEntries =

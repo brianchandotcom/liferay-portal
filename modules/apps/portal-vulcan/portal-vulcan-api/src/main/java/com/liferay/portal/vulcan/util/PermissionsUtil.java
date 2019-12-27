@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
+import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -38,7 +40,7 @@ public class PermissionsUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, GroupedModel groupedModel,
-		String methodName, UriInfo uriInfo) {
+		String methodName, ScopeChecker scopeChecker, UriInfo uriInfo) {
 
 		Class<? extends GroupedModel> groupedClass = groupedModel.getClass();
 
@@ -50,12 +52,12 @@ public class PermissionsUtil {
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			methodName, permissionName, groupedModel.getGroupId(), uriInfo);
+			methodName, permissionName, scopeChecker, groupedModel.getGroupId(), uriInfo);
 	}
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, Long siteId, UriInfo uriInfo) {
+		String permissionName, ScopeChecker scopeChecker, Long siteId, UriInfo uriInfo) {
 
 		MultivaluedMap<String, String> queryParameters =
 			uriInfo.getQueryParameters();
@@ -81,7 +83,10 @@ public class PermissionsUtil {
 
 			if (modelResourceActions.contains(actionName) &&
 				permissionChecker.hasPermission(
-					siteId, permissionName, id, actionName)) {
+					siteId, permissionName, id, actionName) &&
+				(!OAuth2ProviderScopeLiferayAccessControlContext.
+					isOAuth2AuthVerified() ||
+				 scopeChecker.checkScope(httpMethodName))) {
 
 				List<String> matchedURIs = uriInfo.getMatchedURIs();
 

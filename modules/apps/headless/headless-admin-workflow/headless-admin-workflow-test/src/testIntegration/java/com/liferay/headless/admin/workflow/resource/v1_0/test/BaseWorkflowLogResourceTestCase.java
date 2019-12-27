@@ -626,16 +626,16 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("taskId", additionalAssertFieldName)) {
-				if (workflowLog.getTaskId() == null) {
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (workflowLog.getType() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("type", additionalAssertFieldName)) {
-				if (workflowLog.getType() == null) {
+			if (Objects.equals("workflowTaskId", additionalAssertFieldName)) {
+				if (workflowLog.getWorkflowTaskId() == null) {
 					valid = false;
 				}
 
@@ -803,9 +803,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("taskId", additionalAssertFieldName)) {
+			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						workflowLog1.getTaskId(), workflowLog2.getTaskId())) {
+						workflowLog1.getType(), workflowLog2.getType())) {
 
 					return false;
 				}
@@ -813,9 +813,10 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("type", additionalAssertFieldName)) {
+			if (Objects.equals("workflowTaskId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						workflowLog1.getType(), workflowLog2.getType())) {
+						workflowLog1.getWorkflowTaskId(),
+						workflowLog2.getWorkflowTaskId())) {
 
 					return false;
 				}
@@ -878,10 +879,10 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("taskId", fieldName)) {
+			if (Objects.equals("workflowTaskId", fieldName)) {
 				if (!Objects.deepEquals(
-						workflowLog.getTaskId(),
-						jsonObject.getLong("taskId"))) {
+						workflowLog.getWorkflowTaskId(),
+						jsonObject.getLong("workflowTaskId"))) {
 
 					return false;
 				}
@@ -1032,12 +1033,12 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("taskId")) {
+		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("type")) {
+		if (entityFieldName.equals("workflowTaskId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1071,7 +1072,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				previousState = RandomTestUtil.randomString();
 				state = RandomTestUtil.randomString();
-				taskId = RandomTestUtil.randomLong();
+				workflowTaskId = RandomTestUtil.randomLong();
 			}
 		};
 	}

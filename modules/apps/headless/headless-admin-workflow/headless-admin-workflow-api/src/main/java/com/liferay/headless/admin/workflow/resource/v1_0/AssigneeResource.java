@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.workflow.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Creator;
+import com.liferay.headless.admin.workflow.dto.v1_0.Assignee;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -38,9 +38,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface CreatorResource {
+public interface AssigneeResource {
 
-	public Page<Creator> getWorkflowTaskAssignableUsersPage(
+	public Page<Assignee> getWorkflowTaskAssignableUsersPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception;
 

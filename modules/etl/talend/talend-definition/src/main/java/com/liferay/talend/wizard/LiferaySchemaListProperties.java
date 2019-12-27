@@ -22,7 +22,7 @@ import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.source.LiferayOASSource;
+import com.liferay.source.LiferayOASSource;
 
 import java.util.ArrayList;
 import java.util.List;

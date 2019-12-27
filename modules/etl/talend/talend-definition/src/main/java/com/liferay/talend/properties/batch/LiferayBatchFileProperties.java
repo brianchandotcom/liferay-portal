@@ -24,7 +24,7 @@ import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.source.LiferayOASSource;
+import com.liferay.source.LiferayOASSource;
 
 import java.util.Collections;
 import java.util.HashSet;

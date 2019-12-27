@@ -16,7 +16,7 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.common.util.URIUtil;
-import com.liferay.talend.source.LiferayOASSource;
+import com.liferay.source.LiferayOASSource;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
 

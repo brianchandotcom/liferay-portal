@@ -94,10 +94,11 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		_layout = LayoutTestUtil.addLayout(_group);
 
-		_fragmentCollection = _addFragmentCollection(_group.getGroupId());
+		FragmentCollection fragmentCollection = _addFragmentCollection(
+			_group.getGroupId());
 
 		_fragmentEntry = _addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
+			fragmentCollection.getFragmentCollectionId());
 	}
 
 	@Test
@@ -450,7 +451,6 @@ public class DeleteItemReactMVCActionCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private FragmentCollection _fragmentCollection;
 	private FragmentEntry _fragmentEntry;
 
 	@Inject

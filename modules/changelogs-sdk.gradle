@@ -60,6 +60,7 @@ buildChangelogs {
 
 			String commits = ""
 			String dependencies = ""
+			String descriptions = ""
 			String ticket = ""
 
 			gitLogOutput.eachLine {
@@ -90,7 +91,15 @@ buildChangelogs {
 				}
 			}
 
-			if (commits.length() > 0 || dependencies.length() > 0) {
+			if (changelogDescriptionsFile.exists()) {
+				matcher = changelogDescriptionsFile.text =~ /(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
+
+				if (matcher.find()) {
+					descriptions = "\n" + matcher.group(1).trim()
+				}
+			}
+
+			if (commits.length() > 0 || dependencies.length() > 0 || descriptions.length() > 0) {
 				text += """\
 					|
 					|
@@ -115,23 +124,13 @@ buildChangelogs {
 				text += dependencies
 			}
 
-			if (changelogDescriptionsFile.exists()) {
-				changelogDescriptionsFile.text.eachMatch(/(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/) {
-					all, descriptions ->
+			if (descriptions.length() > 0) {
+				text += """\
+					|
+					|
+					|### Description""".stripMargin()
 
-					if (commits.length() == 0 && dependencies.length() == 0) {
-						text += """\
-							|
-							|
-							|## ${version} - ${publishDate}""".stripMargin()
-					}
-
-					text += """\
-						|
-						|
-						|### Description
-						|${descriptions.trim()}""".stripMargin()
-				}
+				text += descriptions
 			}
 		}
 

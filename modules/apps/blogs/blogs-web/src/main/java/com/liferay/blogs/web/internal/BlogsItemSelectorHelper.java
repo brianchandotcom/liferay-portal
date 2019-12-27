@@ -15,22 +15,18 @@
 package com.liferay.blogs.web.internal;
 
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
-import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Activate;
@@ -70,26 +66,9 @@ public class BlogsItemSelectorHelper {
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new DownloadFileEntryItemSelectorReturnType());
 
-		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
-			BlogsPortletKeys.BLOGS);
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME, "/blogs/upload_cover_image");
-
-		ItemSelectorCriterion uploadItemSelectorCriterion =
-			new UploadItemSelectorCriterion(
-				BlogsPortletKeys.BLOGS, uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
-				_blogsFileUploadsConfiguration.imageMaxSize(),
-				_blogsFileUploadsConfiguration.imageExtensions());
-
-		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new DownloadFileEntryItemSelectorReturnType());
-
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,
-			blogsItemSelectorCriterion, imageItemSelectorCriterion,
-			uploadItemSelectorCriterion);
+			blogsItemSelectorCriterion, imageItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}

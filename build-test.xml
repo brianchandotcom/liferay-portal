@@ -12049,6 +12049,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							<arg value="-Dselenium.chrome.driver.executable=${selenium.chrome.driver.executable}" />
 							<arg value="-Dselenium.executable.dir.name=${selenium.executable.dir.path}" />
 							<arg value="-Dwebdriver.chrome.driver=${selenium.executable.dir.path}/${selenium.chrome.driver.executable}" />
+							<arg value="cleanNPM" />
+							<arg value="npmInstall" />
 						</gradle-execute>
 					</try>
 					<catch>

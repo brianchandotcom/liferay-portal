@@ -84,6 +84,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		_fragmentEntry = _addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group, TestPropsValues.getUserId());
 	}
 
 	@Test
@@ -121,8 +124,7 @@ public class DeleteItemReactMVCActionCommandTest {
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+				_serviceContext);
 
 		String layoutData = _read("layout_data_with_fragment_entry_link.json");
 
@@ -165,8 +167,7 @@ public class DeleteItemReactMVCActionCommandTest {
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+				_serviceContext);
 
 		String layoutData = _read("layout_data_with_fragment_entry_link.json");
 
@@ -211,8 +212,7 @@ public class DeleteItemReactMVCActionCommandTest {
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+				_serviceContext);
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -221,8 +221,7 @@ public class DeleteItemReactMVCActionCommandTest {
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+				_serviceContext);
 
 		String layoutData = _read(
 			"layout_data_with_several_nested_fragment_entry_link.json");
@@ -273,8 +272,7 @@ public class DeleteItemReactMVCActionCommandTest {
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+				_serviceContext);
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
@@ -283,8 +281,7 @@ public class DeleteItemReactMVCActionCommandTest {
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+				_serviceContext);
 
 		String layoutData = _read("layout_data_with_two_level_nesting.json");
 
@@ -328,32 +325,21 @@ public class DeleteItemReactMVCActionCommandTest {
 	private FragmentCollection _addFragmentCollection(long groupId)
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
 		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
 			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, _serviceContext);
 	}
 
 	private FragmentEntry _addFragmentEntry(long fragmentCollectionId)
 		throws PortalException {
 
-		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.getFragmentCollection(
-				fragmentCollectionId);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				fragmentCollection.getGroupId());
-
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollectionId, StringPool.BLANK,
 			RandomTestUtil.randomString(), StringPool.BLANK, "<div>TEST</div>",
 			StringPool.BLANK, StringPool.BLANK, 0,
 			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			_serviceContext);
 	}
 
 	private void _addLayoutPageTemplateStructure(String layoutData)
@@ -364,9 +350,7 @@ public class DeleteItemReactMVCActionCommandTest {
 				addLayoutPageTemplateStructure(
 					TestPropsValues.getUserId(), _group.getGroupId(),
 					_portal.getClassNameId(Layout.class.getName()),
-					_layout.getPlid(), layoutData,
-					ServiceContextTestUtil.getServiceContext(
-						_group, TestPropsValues.getUserId()));
+					_layout.getPlid(), layoutData, _serviceContext);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -400,5 +384,7 @@ public class DeleteItemReactMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	private ServiceContext _serviceContext;
 
 }

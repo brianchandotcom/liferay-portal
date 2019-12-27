@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Francisco Dias
  */
-public abstract class BasePortalSettingsMVCRenderCommand
+public abstract class BaseAnalyticsMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -91,6 +91,6 @@ public abstract class BasePortalSettingsMVCRenderCommand
 	protected volatile ServletContext servletContext;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BasePortalSettingsMVCRenderCommand.class);
+		BaseAnalyticsMVCRenderCommand.class);
 
 }

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCRenderCommand.class
 )
 public class EditContactsOrganizationsMVCRenderCommand
-	extends BasePortalSettingsMVCRenderCommand {
+	extends BaseAnalyticsMVCRenderCommand {
 
 	@Override
 	protected String getJspPath() {

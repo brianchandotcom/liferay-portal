@@ -56,8 +56,11 @@ public class LayoutFinderImpl
 				).from(
 					Layout.TABLE
 				).where(
-					Layout.TABLE.friendlyURL.eq("").or(
-					Layout.TABLE.friendlyURL.isNull())
+					Layout.TABLE.friendlyURL.eq(
+						""
+					).or(
+						Layout.TABLE.friendlyURL.isNull()
+					)
 				));
 
 			q.addEntity("Layout", LayoutImpl.class);
@@ -84,10 +87,15 @@ public class LayoutFinderImpl
 				Layout.TABLE
 			).innerJoinON(
 				Group.TABLE,
-				Group.TABLE.companyId.eq(Layout.TABLE.companyId).and(
-				Group.TABLE.classNameId.eq(
-					PortalUtil.getClassNameId(Layout.class)).and(
-				Group.TABLE.classPK.eq(Layout.TABLE.plid)))
+				Group.TABLE.companyId.eq(
+					Layout.TABLE.companyId
+				).and(
+					Group.TABLE.classNameId.eq(
+						PortalUtil.getClassNameId(Layout.class)
+					).and(
+						Group.TABLE.classPK.eq(Layout.TABLE.plid)
+					)
+				)
 			).where(
 				Layout.TABLE.groupId.eq(groupId)
 			);
@@ -124,13 +132,20 @@ public class LayoutFinderImpl
 					Layout.TABLE
 				).innerJoinON(
 					Group.TABLE,
-					Group.TABLE.companyId.eq(Layout.TABLE.companyId).and(
-					Group.TABLE.classNameId.eq(
-						PortalUtil.getClassNameId(Layout.class))).and(
-					Group.TABLE.classPK.eq(Layout.TABLE.plid))
+					Group.TABLE.companyId.eq(
+						Layout.TABLE.companyId
+					).and(
+						Group.TABLE.classNameId.eq(
+							PortalUtil.getClassNameId(Layout.class))
+					).and(
+						Group.TABLE.classPK.eq(Layout.TABLE.plid)
+					)
 				).where(
-					Layout.TABLE.groupId.eq(groupId).and(
-					Layout.TABLE.privateLayout.eq(privateLayout))
+					Layout.TABLE.groupId.eq(
+						groupId
+					).and(
+						Layout.TABLE.privateLayout.eq(privateLayout)
+					)
 				));
 
 			q.addEntity("Layout", LayoutImpl.class);
@@ -164,10 +179,15 @@ public class LayoutFinderImpl
 				PortletPreferences.TABLE,
 				PortletPreferences.TABLE.plid.eq(Layout.TABLE.plid)
 			).where(
-				Layout.TABLE.companyId.eq(companyId).andParentheses(
-					PortletPreferences.TABLE.portletId.eq(portletId).or(
-					PortletPreferences.TABLE.portletId.like(
-						portletId.concat("_INSTANCE_%")))
+				Layout.TABLE.companyId.eq(
+					companyId
+				).andParentheses(
+					PortletPreferences.TABLE.portletId.eq(
+						portletId
+					).or(
+						PortletPreferences.TABLE.portletId.like(
+							portletId.concat("_INSTANCE_%"))
+					)
 				).and(
 					DSLFunctionUtil.castClobText(
 						PortletPreferences.TABLE.preferences

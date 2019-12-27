@@ -18,8 +18,6 @@ import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
@@ -29,9 +27,6 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCol
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
-import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
-import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -225,9 +220,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 	private DLAppService _dlAppService;
 
 	@Reference
-	private DLURLHelper _dlurlHelper;
-
-	@Reference
 	private GroupProvider _groupProvider;
 
 	@Reference
@@ -249,18 +241,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Reference
-	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
-
-	@Reference
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
-
-	@Reference
-	private LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

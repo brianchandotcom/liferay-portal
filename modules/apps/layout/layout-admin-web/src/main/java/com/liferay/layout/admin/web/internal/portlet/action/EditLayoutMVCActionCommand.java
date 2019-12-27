@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -250,9 +249,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutSEOEntryService _layoutSEOEntryService;
 
 	@Reference
 	private LayoutService _layoutService;

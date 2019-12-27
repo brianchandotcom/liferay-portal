@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -54,6 +56,19 @@ public class PermissionsUtil {
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
 		String permissionName, Long siteId, UriInfo uriInfo) {
+
+		MultivaluedMap<String, String> queryParameters =
+			uriInfo.getQueryParameters();
+
+		String restrictFields = queryParameters.getFirst("restrictFields");
+
+		if (restrictFields != null) {
+			List<String> strings = Arrays.asList(restrictFields.split(","));
+
+			if (strings.contains("actions")) {
+				return null;
+			}
+		}
 
 		try {
 			List<String> modelResourceActions =

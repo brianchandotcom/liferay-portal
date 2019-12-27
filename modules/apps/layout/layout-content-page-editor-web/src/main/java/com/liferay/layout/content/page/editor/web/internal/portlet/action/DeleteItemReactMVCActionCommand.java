@@ -77,8 +77,7 @@ public class DeleteItemReactMVCActionCommand
 		return super.processAction(actionRequest, actionResponse);
 	}
 
-	protected JSONObject deleteFragmentEntryLinkJSONObject(
-			ActionRequest actionRequest)
+	protected JSONObject deleteItemJSONObject(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -107,7 +106,7 @@ public class DeleteItemReactMVCActionCommand
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			jsonObject = deleteFragmentEntryLinkJSONObject(actionRequest);
+			jsonObject = deleteItemJSONObject(actionRequest);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

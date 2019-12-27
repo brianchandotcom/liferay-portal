@@ -290,18 +290,13 @@ export default function PageEditor() {
 
 	useEffect(() => {
 		if (isMounted()) {
-			// Only run this after first render
-			if (!shouldUpdateLayoutData.current) {
-				shouldUpdateLayoutData.current = true;
-			} else {
-				dispatch(
-					updateLayoutData({
-						config,
-						layoutData,
-						segmentsExperienceId
-					})
-				);
-			}
+			dispatch(
+				updateLayoutData({
+					config,
+					layoutData,
+					segmentsExperienceId
+				})
+			);
 		}
 	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 

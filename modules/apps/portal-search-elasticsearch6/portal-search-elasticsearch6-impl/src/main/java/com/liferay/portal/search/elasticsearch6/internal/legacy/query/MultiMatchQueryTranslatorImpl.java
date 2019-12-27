@@ -51,20 +51,20 @@ public class MultiMatchQueryTranslatorImpl
 				multiMatchQuery.getCutOffFrequency());
 		}
 
-		Map<String, Float> fieldBoosts = multiMatchQuery.getFieldsBoosts();
+		Map<String, Float> fieldsBoosts = multiMatchQuery.getFieldsBoosts();
 
-		for (String field : multiMatchQuery.getFields()) {
+		for (String fields : multiMatchQuery.getFields()) {
 			Float fieldBoost = null;
 
-			if (fieldBoosts != null) {
-				fieldBoost = fieldBoosts.get(field);
+			if (fieldsBoosts != null) {
+				fieldBoost = fieldsBoosts.get(fields);
 			}
 
 			if (fieldBoost != null) {
-				multiMatchQueryBuilder.field(field, fieldBoost);
+				multiMatchQueryBuilder.field(fields, fieldBoost);
 			}
 			else {
-				multiMatchQueryBuilder.field(field);
+				multiMatchQueryBuilder.field(fields);
 			}
 		}
 

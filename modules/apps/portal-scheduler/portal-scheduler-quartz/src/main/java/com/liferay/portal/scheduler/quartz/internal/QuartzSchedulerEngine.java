@@ -780,10 +780,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		List<String> groupNames = _persistedScheduler.getJobGroupNames();
 
 		for (String groupName : groupNames) {
-			Set<JobKey> jobkeys = _persistedScheduler.getJobKeys(
+			Set<JobKey> jobKeys = _persistedScheduler.getJobKeys(
 				GroupMatcher.jobGroupEquals(groupName));
 
-			for (JobKey jobKey : jobkeys) {
+			for (JobKey jobKey : jobKeys) {
 				Trigger trigger = _persistedScheduler.getTrigger(
 					new TriggerKey(jobKey.getName(), jobKey.getGroup()));
 

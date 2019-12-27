@@ -128,11 +128,11 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 			clusterHealthStatus.equals(ClusterHealthStatus.GREEN) ||
 			clusterHealthStatus.equals(ClusterHealthStatus.YELLOW));
 
-		String statusMessage = statsClusterResponse.getStatsMessage();
+		String statsMessage = statsClusterResponse.getStatsMessage();
 
 		JSONFactory jsonFactory = new JSONFactoryImpl();
 
-		JSONObject jsonObject = jsonFactory.createJSONObject(statusMessage);
+		JSONObject jsonObject = jsonFactory.createJSONObject(statsMessage);
 
 		JSONObject indicesJSONObject = jsonObject.getJSONObject("indices");
 

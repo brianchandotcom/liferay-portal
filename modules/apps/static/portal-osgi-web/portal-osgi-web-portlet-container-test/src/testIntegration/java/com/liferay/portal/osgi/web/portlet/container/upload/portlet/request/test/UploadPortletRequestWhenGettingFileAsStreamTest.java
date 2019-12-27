@@ -73,15 +73,14 @@ public class UploadPortletRequestWhenGettingFileAsStreamTest {
 					fileParameters, new HashMap<String, List<String>>()),
 				null, _portletNamespace);
 
-		Map<String, FileItem[]> multipartParametersMap =
+		Map<String, FileItem[]> multipartParameterMap =
 			uploadPortletRequest.getMultipartParameterMap();
 
 		Assert.assertEquals(
-			multipartParametersMap.toString(), 1,
-			multipartParametersMap.size());
+			multipartParameterMap.toString(), 1, multipartParameterMap.size());
 
 		for (Map.Entry<String, FileItem[]> entry :
-				multipartParametersMap.entrySet()) {
+				multipartParameterMap.entrySet()) {
 
 			String key = entry.getKey();
 

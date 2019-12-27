@@ -515,16 +515,16 @@ public class WorkflowDefinitionDisplayContext {
 			String name)
 		throws PortalException {
 
-		List<WorkflowDefinition> workFlowDefinitions = getWorkflowDefinitions(
+		List<WorkflowDefinition> workflowDefinitions = getWorkflowDefinitions(
 			name);
 
-		if (workFlowDefinitions.size() <= 1) {
-			return workFlowDefinitions;
+		if (workflowDefinitions.size() <= 1) {
+			return workflowDefinitions;
 		}
 
-		Collections.reverse(workFlowDefinitions);
+		Collections.reverse(workflowDefinitions);
 
-		return workFlowDefinitions;
+		return workflowDefinitions;
 	}
 
 	public boolean isDisabledManagementBar(

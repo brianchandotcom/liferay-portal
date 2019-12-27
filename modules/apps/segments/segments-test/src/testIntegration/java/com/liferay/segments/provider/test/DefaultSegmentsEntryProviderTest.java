@@ -96,11 +96,11 @@ public class DefaultSegmentsEntryProviderTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
 				segmentsEntry.getSegmentsEntryId());
 
-		Assert.assertEquals(1, segmentsEntryClassPksCount);
+		Assert.assertEquals(1, segmentsEntryClassPKsCount);
 
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProvider.getSegmentsEntryClassPKs(
@@ -136,11 +136,11 @@ public class DefaultSegmentsEntryProviderTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
 				segmentsEntry.getSegmentsEntryId());
 
-		Assert.assertEquals(0, segmentsEntryClassPksCount);
+		Assert.assertEquals(0, segmentsEntryClassPKsCount);
 	}
 
 	@Test
@@ -157,11 +157,11 @@ public class DefaultSegmentsEntryProviderTest {
 			_portal.getClassNameId(User.class.getName()), _user1.getUserId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
 				segmentsEntry.getSegmentsEntryId());
 
-		Assert.assertEquals(1, segmentsEntryClassPksCount);
+		Assert.assertEquals(1, segmentsEntryClassPKsCount);
 
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProvider.getSegmentsEntryClassPKs(
@@ -189,11 +189,11 @@ public class DefaultSegmentsEntryProviderTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProvider.getSegmentsEntryClassPKsCount(
 				segmentsEntry.getSegmentsEntryId());
 
-		Assert.assertEquals(1, segmentsEntryClassPksCount);
+		Assert.assertEquals(1, segmentsEntryClassPKsCount);
 
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProvider.getSegmentsEntryClassPKs(

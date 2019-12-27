@@ -302,9 +302,9 @@ public class SoyPortlet extends MVCPortlet {
 
 		Map<String, Object> soyContextParametersMap = new HashMap<>();
 
-		Map<String, String[]> parametersMap = portletRequest.getParameterMap();
+		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
-		for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String parameterName = entry.getKey();
 			String[] parameterValues = entry.getValue();
 

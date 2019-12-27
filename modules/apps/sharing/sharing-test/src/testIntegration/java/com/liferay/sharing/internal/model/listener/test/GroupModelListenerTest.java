@@ -137,13 +137,13 @@ public class GroupModelListenerTest {
 			Assert.assertEquals(
 				groupSharingEntries.toString(), 1, groupSharingEntries.size());
 
-			List<SharingEntry> group2SharingEntries =
+			List<SharingEntry> groupSharingEntries2 =
 				_sharingEntryLocalService.getGroupSharingEntries(
 					group2.getGroupId());
 
 			Assert.assertEquals(
-				group2SharingEntries.toString(), 1,
-				group2SharingEntries.size());
+				groupSharingEntries2.toString(), 1,
+				groupSharingEntries2.size());
 
 			_groupLocalService.deleteGroup(_group.getGroupId());
 
@@ -154,13 +154,13 @@ public class GroupModelListenerTest {
 			Assert.assertEquals(
 				groupSharingEntries.toString(), 0, groupSharingEntries.size());
 
-			group2SharingEntries =
+			groupSharingEntries2 =
 				_sharingEntryLocalService.getGroupSharingEntries(
 					group2.getGroupId());
 
 			Assert.assertEquals(
-				group2SharingEntries.toString(), 1,
-				group2SharingEntries.size());
+				groupSharingEntries2.toString(), 1,
+				groupSharingEntries2.size());
 		}
 		finally {
 			_groupLocalService.deleteGroup(group2);

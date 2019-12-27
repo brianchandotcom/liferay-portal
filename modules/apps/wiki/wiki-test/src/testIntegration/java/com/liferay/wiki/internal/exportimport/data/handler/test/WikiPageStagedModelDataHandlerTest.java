@@ -341,11 +341,12 @@ public class WikiPageStagedModelDataHandlerTest
 
 		WikiPage page = (WikiPage)stagedModel;
 
-		List<FileEntry> attachmentFileEntries =
+		List<FileEntry> attachmentsFileEntries =
 			page.getAttachmentsFileEntries();
 
 		Assert.assertEquals(
-			attachmentFileEntries.toString(), 1, attachmentFileEntries.size());
+			attachmentsFileEntries.toString(), 1,
+			attachmentsFileEntries.size());
 
 		validateImport(dependentStagedModelsMap, group);
 	}

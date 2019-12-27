@@ -35,19 +35,19 @@ public class JavaAggregateTestRuleParameterOrderCheck extends BaseFileCheck {
 		Matcher matcher = _aggregateTestRulePattern.matcher(content);
 
 		while (matcher.find()) {
-			List<String> parametersList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				content.substring(matcher.start()));
 
-			if (Objects.equals(parametersList.get(0), "false")) {
+			if (Objects.equals(parameterList.get(0), "false")) {
 				return content;
 			}
 
-			for (int i = 1; i < parametersList.size(); i++) {
-				String parameter = parametersList.get(i);
+			for (int i = 1; i < parameterList.size(); i++) {
+				String parameter = parameterList.get(i);
 
 				String className = _getClassName(parameter);
 
-				String previousParameter = parametersList.get(i - 1);
+				String previousParameter = parameterList.get(i - 1);
 
 				String previousClassName = _getClassName(previousParameter);
 

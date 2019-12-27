@@ -43,10 +43,10 @@ public class NotificationUtil {
 		String body, String senderName, String subject,
 		String recipientEmailAddress) {
 
-		String hostname = JenkinsResultsParserUtil.getHostName(null);
+		String hostName = JenkinsResultsParserUtil.getHostName(null);
 
 		sendEmail(
-			JenkinsResultsParserUtil.combine(senderName, "@", hostname),
+			JenkinsResultsParserUtil.combine(senderName, "@", hostName),
 			senderName, recipientEmailAddress, subject, body);
 	}
 

@@ -46,14 +46,13 @@ public class SubstringCheck extends BaseFileCheck {
 
 			String match = content.substring(matcher.start(1));
 
-			List<String> parametersList = JavaSourceUtil.getParameterList(
-				match);
+			List<String> parameterList = JavaSourceUtil.getParameterList(match);
 
-			if (parametersList.size() != 2) {
+			if (parameterList.size() != 2) {
 				continue;
 			}
 
-			String secondParameter = StringUtil.trim(parametersList.get(1));
+			String secondParameter = StringUtil.trim(parameterList.get(1));
 			String variableName = matcher.group(1);
 
 			if (secondParameter.equals(variableName + ".length()")) {

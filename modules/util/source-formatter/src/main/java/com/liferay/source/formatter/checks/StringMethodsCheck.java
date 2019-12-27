@@ -109,12 +109,12 @@ public class StringMethodsCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> parametersList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				content.substring(matcher.start()));
 
-			if ((parametersList.size() != 2) ||
-				!_isSingleLenghtString(parametersList.get(0)) ||
-				!_isSingleLenghtString(parametersList.get(1))) {
+			if ((parameterList.size() != 2) ||
+				!_isSingleLenghtString(parameterList.get(0)) ||
+				!_isSingleLenghtString(parameterList.get(1))) {
 
 				continue;
 			}
@@ -149,11 +149,11 @@ public class StringMethodsCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> parametersList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				content.substring(matcher.start()));
 
-			if ((parametersList.size() != 3) ||
-				!_isSingleLenghtString(parametersList.get(1))) {
+			if ((parameterList.size() != 3) ||
+				!_isSingleLenghtString(parameterList.get(1))) {
 
 				continue;
 			}

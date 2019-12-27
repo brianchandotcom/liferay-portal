@@ -124,12 +124,12 @@ public class UADApplicationSummaryHelper {
 		List<UADApplicationSummaryDisplay>
 			generatedUADApplicationSummaryDisplays = new ArrayList<>();
 
-		Set<String> applicationUADDisplayKeySet =
+		Set<String> applicationUADDisplaysKeySet =
 			_uadRegistry.getApplicationUADDisplaysKeySet();
 
 		int count = 0;
 
-		Iterator<String> iterator = applicationUADDisplayKeySet.iterator();
+		Iterator<String> iterator = applicationUADDisplaysKeySet.iterator();
 
 		while (iterator.hasNext()) {
 			String applicationKey = iterator.next();

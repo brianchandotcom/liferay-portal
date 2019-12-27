@@ -75,14 +75,14 @@ public class JavaBooleanUsageCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> parametersList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				methodCall);
 
-			if (parametersList.size() != 2) {
+			if (parameterList.size() != 2) {
 				continue;
 			}
 
-			String secondParameterName = parametersList.get(1);
+			String secondParameterName = parameterList.get(1);
 
 			if (secondParameterName.equals("false") ||
 				secondParameterName.equals("true")) {

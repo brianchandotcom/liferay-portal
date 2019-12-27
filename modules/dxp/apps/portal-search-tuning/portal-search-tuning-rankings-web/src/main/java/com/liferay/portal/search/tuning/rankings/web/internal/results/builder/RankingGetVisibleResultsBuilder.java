@@ -124,9 +124,9 @@ public class RankingGetVisibleResultsBuilder {
 	protected JSONArray buildDocuments(
 		Ranking ranking, SearchResponse searchResponse) {
 
-		Stream<Document> documentStream = searchResponse.getDocumentsStream();
+		Stream<Document> documentsStream = searchResponse.getDocumentsStream();
 
-		Stream<JSONObject> jsonObjectStream = documentStream.map(
+		Stream<JSONObject> jsonObjectStream = documentsStream.map(
 			document -> translate(document, ranking));
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

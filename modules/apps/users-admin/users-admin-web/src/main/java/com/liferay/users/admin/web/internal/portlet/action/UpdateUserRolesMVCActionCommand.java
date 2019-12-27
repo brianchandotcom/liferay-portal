@@ -188,7 +188,7 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 			String backURL = null;
 			long organizationId = 0;
-			String portletNameSpace = _portal.getPortletNamespace(
+			String portletNamespace = _portal.getPortletNamespace(
 				UsersAdminPortletKeys.MY_ORGANIZATIONS);
 			String redirect = ParamUtil.getString(
 				httpServletRequest, "redirect");
@@ -197,7 +197,7 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				Map<String, String[]> parameterMap = _http.getParameterMap(
 					redirect);
 
-				backURL = parameterMap.get(portletNameSpace + "backURL")[0];
+				backURL = parameterMap.get(portletNamespace + "backURL")[0];
 			}
 
 			if (Validator.isNotNull(backURL)) {
@@ -205,7 +205,7 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 					backURL);
 
 				organizationId = GetterUtil.getLong(
-					parameterMap.get(portletNameSpace + "organizationId")[0]);
+					parameterMap.get(portletNamespace + "organizationId")[0]);
 			}
 
 			if ((organizationId > 0) &&

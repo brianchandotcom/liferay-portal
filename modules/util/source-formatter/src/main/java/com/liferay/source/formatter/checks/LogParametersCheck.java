@@ -45,14 +45,14 @@ public abstract class LogParametersCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> parametersList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				matcher.group());
 
-			if (parametersList.isEmpty()) {
+			if (parameterList.isEmpty()) {
 				continue;
 			}
 
-			String firstParameter = StringUtil.trim(parametersList.get(0));
+			String firstParameter = StringUtil.trim(parameterList.get(0));
 
 			if (!Validator.isVariableName(firstParameter)) {
 				continue;
@@ -71,7 +71,7 @@ public abstract class LogParametersCheck extends BaseFileCheck {
 					matcher.start(2));
 			}
 
-			if ((parametersList.size() == 1) &&
+			if ((parameterList.size() == 1) &&
 				variableTypeName.endsWith("Exception")) {
 
 				return StringUtil.replaceFirst(

@@ -232,12 +232,12 @@ public class ServiceBuilderBatchTestClassGroup
 		}
 
 		for (File moduleDir : moduleDirsList) {
-			List<File> modulesProjectsDirs = getModulesProjectDirs(moduleDir);
+			List<File> modulesProjectDirs = getModulesProjectDirs(moduleDir);
 
-			if (!modulesProjectsDirs.isEmpty()) {
+			if (!modulesProjectDirs.isEmpty()) {
 				testClasses.add(
 					ServiceBuilderBatchTestClass.getInstance(
-						moduleDir, portalModulesBaseDir, modulesProjectsDirs));
+						moduleDir, portalModulesBaseDir, modulesProjectDirs));
 			}
 		}
 	}

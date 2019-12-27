@@ -49,13 +49,13 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 			jsonObject.put("description", description);
 		}
 
-		String labelsRequestURL = getLabelRequestURL();
+		String labelRequestURL = getLabelRequestURL();
 
 		try {
 			JenkinsResultsParserUtil.toString(
-				labelsRequestURL, jsonObject.toString());
+				labelRequestURL, jsonObject.toString());
 
-			_labelsLists.remove(labelsRequestURL);
+			_labelsLists.remove(labelRequestURL);
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to add label " + name);

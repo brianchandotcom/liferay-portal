@@ -221,10 +221,10 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
 			new ArrayList<>();
 
-		Set<String> applicationUADAnonymizerKeySet =
+		Set<String> applicationUADAnonymizersKeySet =
 			_uadRegistry.getApplicationUADAnonymizersKeySet();
 
-		Iterator<String> iterator = applicationUADAnonymizerKeySet.iterator();
+		Iterator<String> iterator = applicationUADAnonymizersKeySet.iterator();
 
 		while (iterator.hasNext()) {
 			String applicationKey = iterator.next();

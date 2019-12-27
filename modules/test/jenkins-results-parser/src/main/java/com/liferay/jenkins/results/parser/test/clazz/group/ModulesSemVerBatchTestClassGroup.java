@@ -164,16 +164,16 @@ public class ModulesSemVerBatchTestClassGroup
 		}
 
 		for (File moduleDir : moduleDirsList) {
-			List<File> modulesProjectsDirs = getModulesProjectDirs(
+			List<File> modulesProjectDirs = getModulesProjectDirs(
 				moduleDir, portalModulesBaseDir);
 
-			if (!modulesProjectsDirs.isEmpty()) {
+			if (!modulesProjectDirs.isEmpty()) {
 				testClasses.add(
 					ModulesSemVerBatchTestClass.getInstance(
 						new TestClass.TestClassFile(
 							JenkinsResultsParserUtil.getCanonicalPath(
 								moduleDir)),
-						portalModulesBaseDir, modulesProjectsDirs));
+						portalModulesBaseDir, modulesProjectDirs));
 			}
 		}
 	}

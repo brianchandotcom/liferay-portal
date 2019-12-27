@@ -94,17 +94,17 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> parametersList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				content.substring(matcher1.start()));
 
-			if (parametersList.size() <= 4) {
+			if (parameterList.size() <= 4) {
 				continue;
 			}
 
 			String previousUpgradeClassName = null;
 
-			for (int i = 3; i < parametersList.size(); i++) {
-				String parameter = parametersList.get(i);
+			for (int i = 3; i < parameterList.size(); i++) {
+				String parameter = parameterList.get(i);
 
 				Matcher matcher2 = _upgradeClassNamePattern.matcher(parameter);
 

@@ -243,9 +243,9 @@ public class KaleoFormsViewRecordsDisplayContext {
 	public List<String> getHeaderNames() throws PortalException {
 		List<String> headerNames = new ArrayList<>();
 
-		List<DDMFormField> ddmFormfields = getDDMFormFields();
+		List<DDMFormField> ddmFormFields = getDDMFormFields();
 
-		for (DDMFormField ddmFormField : ddmFormfields) {
+		for (DDMFormField ddmFormField : ddmFormFields) {
 			LocalizedValue label = ddmFormField.getLabel();
 
 			headerNames.add(

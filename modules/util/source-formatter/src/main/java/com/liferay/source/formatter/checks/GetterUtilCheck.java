@@ -54,10 +54,10 @@ public class GetterUtilCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> parametersList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				matcher.group());
 
-			if (parametersList.size() != 2) {
+			if (parameterList.size() != 2) {
 				continue;
 			}
 
@@ -71,7 +71,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 
 			defaultValue = defaultValue.replaceFirst("\\.0", StringPool.BLANK);
 
-			String value = parametersList.get(1);
+			String value = parameterList.get(1);
 
 			value = value.replaceFirst("0(\\.0)?[dDfFlL]?", "0");
 
@@ -82,7 +82,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 			if (Objects.equals(value, defaultValue)) {
 				addMessage(
 					fileName,
-					"No need to pass default value '" + parametersList.get(1) +
+					"No need to pass default value '" + parameterList.get(1) +
 						"'",
 					getLineNumber(content, matcher.start()));
 			}

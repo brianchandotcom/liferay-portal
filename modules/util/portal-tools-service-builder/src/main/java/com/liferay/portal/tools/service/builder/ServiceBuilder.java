@@ -5446,15 +5446,15 @@ public class ServiceBuilder {
 		DefaultJavaParameterizedType defaultJavaParameterizedType =
 			(DefaultJavaParameterizedType)type;
 
-		List<JavaType> actualArgumentTypes =
+		List<JavaType> actualTypeArguments =
 			defaultJavaParameterizedType.getActualTypeArguments();
 
-		if (actualArgumentTypes.size() != 2) {
+		if (actualTypeArguments.size() != 2) {
 			return false;
 		}
 
-		if (!_isTypeValue(actualArgumentTypes.get(0), Locale.class.getName()) ||
-			!_isTypeValue(actualArgumentTypes.get(1), String.class.getName())) {
+		if (!_isTypeValue(actualTypeArguments.get(0), Locale.class.getName()) ||
+			!_isTypeValue(actualTypeArguments.get(1), String.class.getName())) {
 
 			return false;
 		}

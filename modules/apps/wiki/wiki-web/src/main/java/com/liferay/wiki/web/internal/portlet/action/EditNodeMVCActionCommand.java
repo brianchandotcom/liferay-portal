@@ -75,10 +75,10 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		int nodeCount = _wikiNodeLocalService.getNodesCount(
+		int nodesCount = _wikiNodeLocalService.getNodesCount(
 			themeDisplay.getScopeGroupId());
 
-		if (nodeCount == 1) {
+		if (nodesCount == 1) {
 			SessionErrors.add(actionRequest, RequiredNodeException.class);
 
 			return;

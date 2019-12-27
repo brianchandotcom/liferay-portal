@@ -180,13 +180,13 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 		List<ScopeDisplay> scopeDisplays = new ArrayList<>();
 
 		for (String scope : UADConstants.SCOPES) {
-			long[] gropuIds = GroupUtil.getGroupIds(
+			long[] groupIds = GroupUtil.getGroupIds(
 				_groupLocalService, user, scope);
 
 			ScopeDisplay scopeDisplay = new ScopeDisplay(
-				scope, gropuIds,
+				scope, groupIds,
 				_uadApplicationSummaryHelper.getUADApplicationSummaryDisplays(
-					user.getUserId(), gropuIds));
+					user.getUserId(), groupIds));
 
 			scopeDisplays.add(scopeDisplay);
 		}

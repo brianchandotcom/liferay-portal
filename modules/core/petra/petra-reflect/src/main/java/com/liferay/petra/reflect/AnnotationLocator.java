@@ -196,10 +196,10 @@ public class AnnotationLocator {
 	private static void _queueSuperTypes(
 		Queue<Class<?>> queue, Class<?> clazz) {
 
-		Class<?> superClass = clazz.getSuperclass();
+		Class<?> superclass = clazz.getSuperclass();
 
-		if ((superClass != null) && (superClass != Object.class)) {
-			queue.offer(superClass);
+		if ((superclass != null) && (superclass != Object.class)) {
+			queue.offer(superclass);
 		}
 
 		Class<?>[] interfaceClasses = clazz.getInterfaces();

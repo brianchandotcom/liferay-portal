@@ -88,7 +88,8 @@ public class PermissionsUtil {
 					siteId, permissionName, id, actionName) &&
 				(!OAuth2ProviderScopeLiferayAccessControlContext.
 					isOAuth2AuthVerified() ||
-				 scopeChecker.checkScope(httpMethodName))) {
+				 ((scopeChecker != null) &&
+				  scopeChecker.checkScope(httpMethodName)))) {
 
 				List<String> matchedURIs = uriInfo.getMatchedURIs();
 

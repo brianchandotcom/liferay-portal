@@ -29,11 +29,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -79,8 +77,6 @@ public class DeleteItemReactMVCActionCommandTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
 		_layout = LayoutTestUtil.addLayout(_group);
 
 		FragmentCollection fragmentCollection = _addFragmentCollection(
@@ -100,7 +96,7 @@ public class DeleteItemReactMVCActionCommandTest {
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
@@ -140,7 +136,7 @@ public class DeleteItemReactMVCActionCommandTest {
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
@@ -184,7 +180,7 @@ public class DeleteItemReactMVCActionCommandTest {
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
@@ -245,7 +241,7 @@ public class DeleteItemReactMVCActionCommandTest {
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
@@ -306,7 +302,7 @@ public class DeleteItemReactMVCActionCommandTest {
 			new Class<?>[] {
 				long.class, long.class, String.class, long.class, long.class
 			},
-			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
@@ -381,11 +377,6 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		return StringUtil.read(inputStream);
 	}
-
-	private Company _company;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	private FragmentEntry _fragmentEntry;
 

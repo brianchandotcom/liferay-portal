@@ -65,6 +65,182 @@ public class ReferredSegmentsEntryProviderTest {
 	}
 
 	@Test
+	public void testGetSegmentsEntryClassPKsWithAllReferredSegments()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+
+		Criteria criteria = new Criteria();
+
+		_segmentsEntrySegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format(
+				"(segmentsEntryIds eq '%s') and (segmentsEntryIds eq '%s')",
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+
+		Thread.sleep(2000);
+
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
+				segmentsEntry3.getSegmentsEntryId());
+
+		Assert.assertEquals(0, segmentsEntryClassPksCount);
+	}
+
+	@Test
+	public void testGetSegmentsEntryClassPKsWithAnyReferredSegments()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+
+		Criteria criteria = new Criteria();
+
+		_segmentsEntrySegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format(
+				"(segmentsEntryIds eq '%s') or (segmentsEntryIds eq '%s')",
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+
+		Thread.sleep(2000);
+
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
+				segmentsEntry3.getSegmentsEntryId());
+
+		Assert.assertEquals(2, segmentsEntryClassPksCount);
+
+		long[] segmentsEntryClassPKs =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+				segmentsEntry3.getSegmentsEntryId(), 0, 2);
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new long[] {_user1.getUserId(), _user2.getUserId()},
+				segmentsEntryClassPKs));
+	}
+
+	@Test
+	public void testGetSegmentsEntryClassPKsWithCriteriaAndReferredSegments()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		_segmentsEntrySegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format(
+				"(segmentsEntryIds eq '%s') or (segmentsEntryIds eq '%s')",
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+
+		Thread.sleep(2000);
+
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
+				segmentsEntry3.getSegmentsEntryId());
+
+		Assert.assertEquals(1, segmentsEntryClassPksCount);
+
+		long[] segmentsEntryClassPKs =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+				segmentsEntry3.getSegmentsEntryId(), 0, 1);
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new long[] {_user1.getUserId()}, segmentsEntryClassPKs));
+	}
+
+	@Test
+	public void testGetSegmentsEntryClassPKsWithCriteriaOrReferredSegments()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user2.getUserId());
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.OR);
+
+		_segmentsEntrySegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format(
+				"(segmentsEntryIds eq '%s') or (segmentsEntryIds eq '%s')",
+				segmentsEntry1.getSegmentsEntryId(),
+				segmentsEntry2.getSegmentsEntryId()),
+			Criteria.Conjunction.OR);
+
+		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
+			User.class.getName());
+
+		Thread.sleep(2000);
+
+		int segmentsEntryClassPksCount =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
+				segmentsEntry3.getSegmentsEntryId());
+
+		Assert.assertEquals(2, segmentsEntryClassPksCount);
+
+		long[] segmentsEntryClassPKs =
+			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+				segmentsEntry3.getSegmentsEntryId(), 0, 2);
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new long[] {_user1.getUserId(), _user2.getUserId()},
+				segmentsEntryClassPKs));
+	}
+
+	@Test
 	public void testGetSegmentsEntryIdsWithAllReferredSegments()
 		throws Exception {
 

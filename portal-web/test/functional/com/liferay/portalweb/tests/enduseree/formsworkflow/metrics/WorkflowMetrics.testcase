@@ -55,6 +55,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var key_testSLADefinitionDays = "1";
+		var key_testSLADefinitionHours = "0000";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -69,7 +70,8 @@ definition {
 			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
 			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
 			slaDefinitionName = "${key_testSLADefinitionName}",
-			slaDefinitionStart = "${key_testSLADefinitionStart}");
+			slaDefinitionStart = "${key_testSLADefinitionStart}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}");
 
 		Button.clickSave();
 
@@ -376,7 +378,8 @@ definition {
 	test VerifyFilterTopStepPerformance {
 
 		property portal.acceptance = "true";
-
+		
+		var key_testSLADefinitionDays = "1";
 		var key_testSLADefinitionHours = "0001";
 		var key_testSLADefinitionHoursCheck = "00:01";
 		var key_testSLADefinitionDescription = "SLA Description";
@@ -388,12 +391,13 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
-		WorkflowMetrics.fillSLAFormHours(
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "${key_testSLADefinitionDays}",
 			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
 			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
-			slaDefinitionHours = "${key_testSLADefinitionHours}",
 			slaDefinitionName = "${key_testSLADefinitionName}",
-			slaDefinitionStart = "${key_testSLADefinitionStart}");
+			slaDefinitionStart = "${key_testSLADefinitionStart}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}");
 
 		Button.clickSave();
 

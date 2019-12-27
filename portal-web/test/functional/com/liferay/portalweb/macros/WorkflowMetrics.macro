@@ -136,6 +136,7 @@ definition {
 
 	macro fillSLAForm {
 		var key_slaDefinitionDays = "${slaDefinitionDays}";
+		var key_slaDefinitionHours = "${slaDefinitionHours}";
 		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
 		var key_slaDefinitionEnd = "${slaDefinitionEnd}";
 		var key_slaDefinitionName = "${slaDefinitionName}";
@@ -164,6 +165,11 @@ definition {
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
 			value1 = "${key_slaDefinitionDays}");
+		
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
+			value1 = "${key_slaDefinitionHours}");
+
 	}
 
 	macro fillSLAFormHours {

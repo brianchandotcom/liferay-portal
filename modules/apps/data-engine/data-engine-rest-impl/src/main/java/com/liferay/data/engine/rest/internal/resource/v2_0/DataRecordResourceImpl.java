@@ -188,6 +188,7 @@ public class DataRecordResourceImpl
 				searchContext.setAttribute(
 					"recordSetScope", ddlRecordSet.getScope());
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setUserId(0);
 			},
 			document -> _toDataRecord(
 				_ddlRecordLocalService.getRecord(

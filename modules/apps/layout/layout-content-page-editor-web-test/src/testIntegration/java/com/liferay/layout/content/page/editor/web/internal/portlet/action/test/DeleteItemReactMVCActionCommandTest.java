@@ -22,7 +22,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -340,12 +339,10 @@ public class DeleteItemReactMVCActionCommandTest {
 	private void _addLayoutPageTemplateStructure(String layoutData)
 		throws Exception {
 
-		_layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				addLayoutPageTemplateStructure(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					_layout.getPlid(), layoutData, _serviceContext);
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
+			layoutData, _serviceContext);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -372,9 +369,6 @@ public class DeleteItemReactMVCActionCommandTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	@DeleteAfterTestRun
-	private LayoutPageTemplateStructure _layoutPageTemplateStructure;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

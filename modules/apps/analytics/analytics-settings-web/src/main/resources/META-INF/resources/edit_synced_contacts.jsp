@@ -67,13 +67,13 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 			</div>
 
 			<ul class="list-group mt-4">
-				<li class="list-group-item list-group-item-flex">
-					<portlet:renderURL var="createUserGroupURL">
-						<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_contacts_groups" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</portlet:renderURL>
+				<portlet:renderURL var="createUserGroupURL">
+					<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_contacts_groups" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:renderURL>
 
-					<a href=<%= createUserGroupURL %> />
+				<a class="text-decoration-none" href=<%= createUserGroupURL %> />
+					<li class="list-group-item list-group-item-flex">
 						<div class="autofit-col">
 							<div class="sticker sticker-light sticker-rounded">
 								<liferay-ui:icon
@@ -82,25 +82,26 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 								/>
 							</div>
 						</div>
-					</a>
 
-					<div class="autofit-col">
-						<h4 class="list-group-title">
-							<liferay-ui:message key="sync-by-user-groups" />
-						</h4>
+						<div class="autofit-col">
+							<h4 class="list-group-title">
+								<liferay-ui:message key="sync-by-user-groups" />
+							</h4>
 
-						<p class="list-group-subtext">
-							<liferay-ui:message arguments='<%= syncAllContacts ? "all" : syncedUserGroupIds.size() %>' key="x-user-groups-selected" />
-						</p>
-					</div>
-				</li>
-				<li class="list-group-item list-group-item-flex">
-					<portlet:renderURL var="createOrganizationsURL">
-						<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_organizations" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</portlet:renderURL>
+							<p class="list-group-subtext">
+								<liferay-ui:message arguments='<%= syncAllContacts ? "all" : syncedUserGroupIds.size() %>' key="x-user-groups-selected" />
+							</p>
+						</div>
+					</li>
+				</a>
 
-					<a href=<%= createOrganizationsURL %> />
+				<portlet:renderURL var="createOrganizationsURL">
+					<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_organizations" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:renderURL>
+
+				<a class="text-decoration-none" href=<%= createOrganizationsURL %> />
+					<li class="list-group-item list-group-item-flex">
 						<div class="autofit-col">
 							<div class="sticker sticker-light sticker-rounded">
 								<liferay-ui:icon
@@ -109,18 +110,18 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 								/>
 							</div>
 						</div>
-					</a>
 
-					<div class="autofit-col">
-						<h4 class="list-group-title">
-							<liferay-ui:message key="sync-by-organizations" />
-						</h4>
+						<div class="autofit-col">
+							<h4 class="list-group-title">
+								<liferay-ui:message key="sync-by-organizations" />
+							</h4>
 
-						<p class="list-group-subtext">
-							<liferay-ui:message arguments='<%= syncAllContacts ? "all" : syncedOrganizationIds.size() %>' key="x-organizations-selected" />
-						</p>
-					</div>
-				</li>
+							<p class="list-group-subtext">
+								<liferay-ui:message arguments='<%= syncAllContacts ? "all" : syncedOrganizationIds.size() %>' key="x-organizations-selected" />
+							</p>
+						</div>
+					</li>
+				</a>
 			</ul>
 		</aui:fieldset>
 

@@ -622,14 +622,15 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 	protected int searchCount(String keywords) throws Exception {
 		return WorkflowTaskManagerUtil.searchCount(
-			adminUser.getCompanyId(), adminUser.getUserId(), keywords, keywords,
-			null, null, null, null, false, true, false);
+			adminUser.getCompanyId(), adminUser.getUserId(), keywords,
+			new String[] {keywords}, null, null, null, null, null, false, true,
+			null, false);
 	}
 
 	protected int searchCountByUserRoles(User user) throws Exception {
 		return WorkflowTaskManagerUtil.searchCount(
 			user.getCompanyId(), user.getUserId(), null, null, null, null, null,
-			null, false, true, false);
+			null, null, false, true, null, false);
 	}
 
 	protected FileVersion updateFileVersion(long fileEntryId) throws Exception {

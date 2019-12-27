@@ -996,6 +996,13 @@ paths:
                           type: string
                       type: array
                 - in: query
+                  name: assigneeUserIds
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+                - in: query
                   name: completed
                   schema:
                       type: boolean
@@ -1014,9 +1021,18 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: taskName
+                  name: taskNames
                   schema:
-                      type: string
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: workflowInstanceIds
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
                 - in: query
                   name: page
                   schema:

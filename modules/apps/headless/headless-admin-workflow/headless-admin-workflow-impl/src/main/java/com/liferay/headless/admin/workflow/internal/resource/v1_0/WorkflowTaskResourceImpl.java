@@ -214,8 +214,9 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	@Override
 	public Page<WorkflowTask> getWorkflowTasksPage(
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-			String[] assetTypes, Boolean completed, Date dateDueEnd,
-			Date dateDueStart, Boolean searchByUserRoles, String taskName,
+			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
+			Date dateDueEnd, Date dateDueStart, Boolean searchByUserRoles,
+			String[] taskNames, Long[] workflowInstanceIds,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -223,17 +224,20 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			transform(
 				_workflowTaskManager.search(
 					contextCompany.getCompanyId(), contextUser.getUserId(),
-					assetTitle, taskName, assetTypes, assetPrimaryKeys,
-					dateDueStart, dateDueEnd, completed, searchByUserRoles,
-					andOperator, pagination.getStartPosition(),
-					pagination.getEndPosition(), null),
+					assetTitle, taskNames, assetTypes, assetPrimaryKeys,
+					assigneeUserIds, dateDueStart, dateDueEnd, completed,
+					searchByUserRoles, workflowInstanceIds,
+					GetterUtil.getBoolean(andOperator, true),
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
 				this::_toWorkflowTask),
 			pagination,
 			_workflowTaskManager.searchCount(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				assetTitle, taskName, assetTypes, assetPrimaryKeys,
-				dateDueStart, dateDueEnd, completed, searchByUserRoles,
-				andOperator));
+				assetTitle, taskNames, assetTypes, assetPrimaryKeys,
+				assigneeUserIds, dateDueStart, dateDueEnd, completed,
+				searchByUserRoles, workflowInstanceIds,
+				GetterUtil.getBoolean(andOperator, true)));
 	}
 
 	@Override

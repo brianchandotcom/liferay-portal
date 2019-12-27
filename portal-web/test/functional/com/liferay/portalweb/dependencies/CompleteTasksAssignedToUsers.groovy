@@ -1,5 +1,6 @@
 //Complete ALL open tasks from all users 
 
+import com.liferay.petra.string.*
 import com.liferay.portal.kernel.dao.orm.*
 import com.liferay.portal.kernel.model.*
 import com.liferay.portal.kernel.service.*

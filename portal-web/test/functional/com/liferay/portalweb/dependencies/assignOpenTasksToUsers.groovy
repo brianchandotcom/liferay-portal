@@ -1,5 +1,6 @@
 //Assign ALL open tasks to available users. The script assigns 1 task per user until the tasks are finished. 
 
+import com.liferay.petra.string.*
 import com.liferay.portal.kernel.dao.orm.*
 import com.liferay.portal.kernel.model.*
 import com.liferay.portal.kernel.service.*

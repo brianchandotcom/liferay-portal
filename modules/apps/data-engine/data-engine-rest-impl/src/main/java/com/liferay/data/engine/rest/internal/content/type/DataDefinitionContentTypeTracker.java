@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class DataDefinitionContentTypeTracker {
 
 	public DataDefinitionContentType getDataDefinitionContentType(
-		String dataDefinitionContentType) {
+		String contentType) {
 
 		return _dataDefinitionContentTypes.getOrDefault(
-			dataDefinitionContentType, new DefaultDataDefinitionContentType());
+			contentType, new DefaultDataDefinitionContentType());
 	}
 
 	@Reference(
@@ -51,12 +51,12 @@ public class DataDefinitionContentTypeTracker {
 		DataDefinitionContentType dataDefinitionContentType,
 		Map<String, Object> properties) {
 
-		if (!properties.containsKey("data.definition.content.type")) {
+		if (!properties.containsKey("content.type")) {
 			return;
 		}
 
 		_dataDefinitionContentTypes.put(
-			MapUtil.getString(properties, "data.definition.content.type"),
+			MapUtil.getString(properties, "content.type"),
 			dataDefinitionContentType);
 	}
 
@@ -70,7 +70,7 @@ public class DataDefinitionContentTypeTracker {
 		Map<String, Object> properties) {
 
 		_dataDefinitionContentTypes.remove(
-			MapUtil.getString(properties, "data.definition.content.type"));
+			MapUtil.getString(properties, "content.type"));
 	}
 
 	private final Map<String, DataDefinitionContentType>

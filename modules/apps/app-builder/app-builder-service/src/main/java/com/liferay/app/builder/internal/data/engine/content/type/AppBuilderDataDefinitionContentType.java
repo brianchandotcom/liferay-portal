@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jeyvison Nascimento
  */
 @Component(
-	immediate = true, property = "data.definition.content.type=app-builder",
+	immediate = true, property = "content.type=app-builder",
 	service = DataDefinitionContentType.class
 )
 public class AppBuilderDataDefinitionContentType

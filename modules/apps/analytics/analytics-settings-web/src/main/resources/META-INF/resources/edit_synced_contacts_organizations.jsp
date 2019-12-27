@@ -21,17 +21,24 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", redirect));
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "select-contacts"), redirect);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sync-by-organizations"), currentURL);
 %>
 
 <portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
 
-<div id="breadcrumb">
-	<liferay-ui:breadcrumb
-		showCurrentGroup="<%= false %>"
-		showGuestGroup="<%= true %>"
-		showLayout="<%= true %>"
-		showPortletBreadcrumb="<%= true %>"
-	/>
+<div class="container-fluid container-fluid-max-xl">
+	<div class="col-12">
+		<div id="breadcrumb">
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showPortletBreadcrumb="<%= true %>"
+			/>
+		</div>
+	</div>
 </div>
 
 <div class="sheet sheet-lg">

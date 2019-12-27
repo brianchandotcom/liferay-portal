@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -105,7 +106,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 					String columnId =
 						LayoutTypePortletConstants.COLUMN_PREFIX + columnIndex;
 
-					Integer columnSize = Integer.valueOf(
+					int columnSize = GetterUtil.getInteger(
 						filteredAttributeParts[0].substring(
 							"col-md-".length()));
 

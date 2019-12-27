@@ -21,10 +21,13 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Dictionary;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -64,10 +67,22 @@ public class EditSyncedContactsMVCActionCommand
 			"syncAllContacts", String.valueOf(syncAllContacts));
 
 		if (!syncAllContacts) {
-			configurationProperties.put(
-				"syncedOrganizationIds", syncedOrganizationIds);
-			configurationProperties.put(
-				"syncedUserGroupIds", syncedUserGroupIds);
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+			if (Objects.equals(cmd, "groups")) {
+				configurationProperties.put(
+					"syncedUserGroupIds", syncedUserGroupIds);
+
+				syncedOrganizationIds = GetterUtil.getStringValues(
+					configurationProperties.get("syncedOrganizationIds"));
+			}
+			else if (Objects.equals(cmd, "organizations")) {
+				configurationProperties.put(
+					"syncedOrganizationIds", syncedOrganizationIds);
+
+				syncedUserGroupIds = GetterUtil.getStringValues(
+					configurationProperties.get("syncedGroupIds"));
+			}
 		}
 
 		_notifyAnalyticsCloud(

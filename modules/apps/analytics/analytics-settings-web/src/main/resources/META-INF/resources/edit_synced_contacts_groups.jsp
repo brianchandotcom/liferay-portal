@@ -51,6 +51,7 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", redirect));
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="groups" />
 
 		<liferay-ui:search-container
 			id="selectUserGroups"

@@ -48,6 +48,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sync-by
 		</span>
 	</h2>
 
+	<hr />
+
+	<div class="autofit-row form-text">
+		<span class="autofit-col autofit-col-expand pb-3">
+			<liferay-ui:message key="select-contacts-by-user-groups-help" />
+		</span>
+	</div>
+
 	<%
 	UserGroupDisplayContext userGroupDisplayContext = new UserGroupDisplayContext(renderRequest, renderResponse);
 	%>

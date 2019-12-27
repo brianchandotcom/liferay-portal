@@ -16,13 +16,12 @@ package com.liferay.talend.wizard;
 
 import static org.talend.daikon.properties.property.PropertyFactory.newProperty;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.common.oas.OASExplorer;
-import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.source.LiferayOASSource;
+import com.liferay.talend.internal.oas.LiferayOASSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 		Repository<Properties> repository) {
 
 		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(
+			LiferayDefinition.getLiferayOASSource(
 				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
@@ -70,8 +69,6 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 
 		String connectionRepositoryLocation = repository.storeProperties(
 			connection, connection.name.getValue(), repositoryLocation, null);
-
-		OASSource oasSource = liferayOASSource.getOASSource();
 
 		for (NamedThing namedThing : selectedSchemaNames.getValue()) {
 			String operationPath = namedThing.getName();
@@ -82,7 +79,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 
 			Schema operationPathSchema = schemaBuilder.inferSchema(
 				operationPath, OASConstants.OPERATION_GET,
-				oasSource.getOASJsonObject());
+				liferayOASSource.getOASJsonObject());
 
 			schemaProperties.schema.setValue(operationPathSchema);
 
@@ -96,7 +93,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 
 	public void beforeFormPresentMain() {
 		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(
+			LiferayDefinition.getLiferayOASSource(
 				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
@@ -104,12 +101,11 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 				"Liferay open API specificatio0n source unavailable");
 		}
 
-		OASSource oasSource = liferayOASSource.getOASSource();
-
 		try {
 			Map<String, String> operationPathSchemaNames =
 				_getOperationPathSchemaNames(
-					oasSource.getOASJsonObject(), OASConstants.OPERATION_GET);
+					liferayOASSource.getOASJsonObject(),
+					OASConstants.OPERATION_GET);
 
 			for (Map.Entry<String, String> entry :
 					operationPathSchemaNames.entrySet()) {

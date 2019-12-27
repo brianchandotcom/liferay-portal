@@ -14,7 +14,7 @@
 
 package com.liferay.talend.properties.resource;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.OASParameter;
@@ -23,9 +23,9 @@ import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.schema.SchemaUtils;
 import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.internal.oas.LiferayOASSource;
 import com.liferay.talend.properties.parameters.RequestParameter;
 import com.liferay.talend.properties.parameters.RequestParameterProperties;
-import com.liferay.source.LiferayOASSource;
 
 import java.net.URI;
 
@@ -63,13 +63,13 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 	public ValidationResult afterEndpoint() {
 		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(this);
+			LiferayDefinition.getLiferayOASSource(this);
 
 		if (!liferayOASSource.isValid()) {
 			return liferayOASSource.getValidationResult();
 		}
 
-		return _afterEndpoint(liferayOASSource.getOASSource());
+		return _afterEndpoint(liferayOASSource);
 	}
 
 	public ValidationResult afterOperations() {
@@ -91,7 +91,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		_updateRequestParameterProperties();
 
-		_updateSchemas(liferayOASSource.getOASSource());
+		_updateSchemas(liferayOASSource);
 
 		return ValidationResult.OK;
 	}
@@ -104,7 +104,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		}
 
 		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(this);
+			LiferayDefinition.getLiferayOASSource(this);
 
 		if (!liferayOASSource.isValid()) {
 			return liferayOASSource.getValidationResult();
@@ -114,8 +114,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		try {
 			Set<String> endpoints = StringUtil.stripPrefix(
-				_getOpenAPIModuleVersionPath(),
-				_getPaths(liferayOASSource.getOASSource()));
+				_getOpenAPIModuleVersionPath(), _getPaths(liferayOASSource));
 
 			if (!endpoints.isEmpty()) {
 				endpoint.setPossibleNamedThingValues(
@@ -330,8 +329,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 			return _liferayOASSource;
 		}
 
-		_liferayOASSource = LiferayBaseComponentDefinition.getLiferayOASSource(
-			this);
+		_liferayOASSource = LiferayDefinition.getLiferayOASSource(this);
 
 		return _liferayOASSource;
 	}
@@ -401,11 +399,9 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		LiferayOASSource liferayOASSource = _getLiferayOASSource();
 
-		OASSource oasSource = liferayOASSource.getOASSource();
-
 		Set<String> endpointOperations = oasExplorer.getPathOperations(
 			_getOpenAPIEntityOperationPath(),
-			oasSource.getOASJsonObject(getOpenAPIUrl()));
+			liferayOASSource.getOASJsonObject(getOpenAPIUrl()));
 
 		List<Operation> operations = new ArrayList<>();
 
@@ -445,12 +441,10 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		LiferayOASSource liferayOASSource = _getLiferayOASSource();
 
-		OASSource oasSource = liferayOASSource.getOASSource();
-
 		parameters.addParameters(
 			oasExplorer.getPathOperationOASParameters(
 				_getOpenAPIEntityOperationPath(), operation.getHttpMethod(),
-				oasSource.getOASJsonObject(getOpenAPIUrl())));
+				liferayOASSource.getOASJsonObject(getOpenAPIUrl())));
 	}
 
 	private void _updateSchemas(OASSource oasSource) {

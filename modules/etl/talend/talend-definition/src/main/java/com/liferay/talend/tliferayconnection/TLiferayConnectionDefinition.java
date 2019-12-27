@@ -14,7 +14,7 @@
 
 package com.liferay.talend.tliferayconnection;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 
 import java.util.EnumSet;
@@ -29,8 +29,7 @@ import org.talend.daikon.runtime.RuntimeInfo;
 /**
  * @author Zoltán Takács
  */
-public class TLiferayConnectionDefinition
-	extends LiferayBaseComponentDefinition {
+public class TLiferayConnectionDefinition extends LiferayDefinition {
 
 	public static final String COMPONENT_NAME = "tLiferayConnection";
 
@@ -58,7 +57,7 @@ public class TLiferayConnectionDefinition
 		assertEngineCompatibility(executionEngine);
 
 		if (connectorTopology == ConnectorTopology.NONE) {
-			return getCommonRuntimeInfo(RUNTIME_SOURCE_OR_SINK_CLASS_NAME);
+			return getCommonRuntimeInfo(SOURCE_OR_SINK_CLASS_NAME);
 		}
 
 		return null;

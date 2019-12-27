@@ -14,7 +14,7 @@
 
 package com.liferay.talend.tliferayinput;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.properties.input.LiferayInputProperties;
 
 import java.util.EnumSet;
@@ -30,7 +30,7 @@ import org.talend.daikon.runtime.RuntimeInfo;
  * @author Zoltán Takács
  * @author Ivica Cardic
  */
-public class TLiferayInputDefinition extends LiferayBaseComponentDefinition {
+public class TLiferayInputDefinition extends LiferayDefinition {
 
 	public static final String COMPONENT_NAME = "tLiferayInput";
 
@@ -68,7 +68,7 @@ public class TLiferayInputDefinition extends LiferayBaseComponentDefinition {
 
 		assertEngineCompatibility(executionEngine);
 
-		return getCommonRuntimeInfo(RUNTIME_SOURCE_CLASS_NAME);
+		return getCommonRuntimeInfo(SOURCE_CLASS_NAME);
 	}
 
 	@Override

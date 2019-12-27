@@ -14,9 +14,9 @@
 
 package com.liferay.talend.connection;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.common.util.URIUtil;
-import com.liferay.source.LiferayOASSource;
+import com.liferay.talend.internal.oas.LiferayOASSource;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
 
@@ -291,7 +291,7 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 	public ValidationResult validateTestConnection() {
 		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(
+			LiferayDefinition.getLiferayOASSource(
 				getEffectiveLiferayConnectionProperties());
 
 		Form form = getForm(UIKeys.FORM_WIZARD);

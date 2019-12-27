@@ -14,7 +14,6 @@
 
 package com.liferay.talend.tliferayconnection;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 
 import java.util.Set;
@@ -72,7 +71,7 @@ public class TLiferayConnectionDefinitionTest {
 		Assert.assertNotNull(jarRuntimeInfo.getDepTxtPath());
 		Assert.assertNotNull(jarRuntimeInfo.getJarUrl());
 		Assert.assertEquals(
-			LiferayBaseComponentDefinition.RUNTIME_SOURCE_OR_SINK_CLASS_NAME,
+			"com.liferay.talend.runtime.LiferaySourceOrSink",
 			jarRuntimeInfo.getRuntimeClassName());
 	}
 

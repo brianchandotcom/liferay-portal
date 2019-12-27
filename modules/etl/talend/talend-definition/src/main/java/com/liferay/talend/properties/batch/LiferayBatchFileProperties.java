@@ -16,15 +16,14 @@ package com.liferay.talend.properties.batch;
 
 import static org.talend.daikon.properties.presentation.Widget.widget;
 
-import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.common.daikon.DaikonUtil;
 import com.liferay.talend.common.oas.OASException;
 import com.liferay.talend.common.oas.OASExplorer;
-import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.source.LiferayOASSource;
+import com.liferay.talend.internal.oas.LiferayOASSource;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -211,16 +210,14 @@ public class LiferayBatchFileProperties
 		}
 
 		LiferayOASSource liferayOASSource =
-			LiferayBaseComponentDefinition.getLiferayOASSource(
+			LiferayDefinition.getLiferayOASSource(
 				connection.getEffectiveLiferayConnectionProperties());
 
 		if (!liferayOASSource.isValid()) {
 			throw new OASException("Unable to obtain OpenAPI specification");
 		}
 
-		OASSource oasSource = liferayOASSource.getOASSource();
-
-		_oasJsonObject = oasSource.getOASJsonObject();
+		_oasJsonObject = liferayOASSource.getOASJsonObject();
 
 		return _oasJsonObject;
 	}

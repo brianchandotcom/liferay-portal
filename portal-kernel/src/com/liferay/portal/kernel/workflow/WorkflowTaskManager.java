@@ -169,17 +169,6 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
-	public default List<WorkflowTask> search(
-			long companyId, long userId, String assetTitle, String taskName,
-			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
-			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-			Boolean andOperator, int start, int end,
-			OrderByComparator<WorkflowTask> orderByComparator)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String, String[], Long[], Date, Date, Boolean,
@@ -191,6 +180,18 @@ public interface WorkflowTaskManager {
 			Boolean completed, Boolean searchByUserRoles, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
+
+	public default List<WorkflowTask> search(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long[] workflowInstanceIds, Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -215,16 +216,6 @@ public interface WorkflowTaskManager {
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException;
 
-	public default int searchCount(
-			long companyId, long userId, String assetTitle, String taskName,
-			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
-			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-			Boolean andOperator)
-		throws WorkflowException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String, String[], Long[],
@@ -235,6 +226,17 @@ public interface WorkflowTaskManager {
 			long companyId, long userId, String keywords, String[] assetTypes,
 			Boolean completed, Boolean searchByUserRoles)
 		throws WorkflowException;
+
+	public default int searchCount(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long[] workflowInstanceIds, Boolean andOperator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public WorkflowTask updateDueDate(
 			long companyId, long userId, long workflowTaskId, String comment,

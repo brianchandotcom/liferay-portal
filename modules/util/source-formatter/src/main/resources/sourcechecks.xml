@@ -247,6 +247,7 @@
 		<check name="JavaTaglibMethodCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />
 		<check name="JavaUnsafeCastingCheck" />
+		<check name="JavaUnusedSourceFormatterChecksCheck" />
 		<check name="JavaUpgradeClassCheck" />
 		<check name="JavaUpgradeConnectionCheck" />
 		<check name="JavaUpgradeVersionCheck" />

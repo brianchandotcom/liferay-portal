@@ -119,6 +119,13 @@ buildChangelogs {
 				changelogDescriptionsFile.text.eachMatch(/(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/) {
 					all, descriptions ->
 
+					if (commits.length() == 0 && dependencies.length() == 0) {
+						text += """\
+							|
+							|
+							|## ${version} - ${publishDate}""".stripMargin()
+					}
+
 					text += """\
 						|
 						|

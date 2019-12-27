@@ -19,9 +19,9 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -325,7 +325,7 @@ public class DeleteItemReactMVCActionCommandTest {
 	private FragmentCollection _addFragmentCollection(long groupId)
 		throws PortalException {
 
-		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
+		return _fragmentCollectionLocalService.addFragmentCollection(
 			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
 			StringPool.BLANK, _serviceContext);
 	}
@@ -333,7 +333,7 @@ public class DeleteItemReactMVCActionCommandTest {
 	private FragmentEntry _addFragmentEntry(long fragmentCollectionId)
 		throws PortalException {
 
-		return FragmentEntryLocalServiceUtil.addFragmentEntry(
+		return _fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			fragmentCollectionId, StringPool.BLANK,
 			RandomTestUtil.randomString(), StringPool.BLANK, "<div>TEST</div>",
@@ -362,10 +362,16 @@ public class DeleteItemReactMVCActionCommandTest {
 		return StringUtil.read(inputStream);
 	}
 
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
 	private FragmentEntry _fragmentEntry;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -270,20 +270,6 @@ public class WorkflowTaskManagerUtil {
 			orderByComparator);
 	}
 
-	public static List<WorkflowTask> search(
-			long companyId, long userId, String assetTitle, String taskName,
-			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
-			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-			Boolean andOperator, int start, int end,
-			OrderByComparator<WorkflowTask> orderByComparator)
-		throws WorkflowException {
-
-		return getWorkflowTaskManager().search(
-			companyId, userId, assetTitle, taskName, assetTypes,
-			assetPrimaryKeys, dueDateGT, dueDateLT, completed,
-			searchByUserRoles, andOperator, start, end, orderByComparator);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String, String[], Long[], Date, Date, Boolean,
@@ -299,6 +285,22 @@ public class WorkflowTaskManagerUtil {
 		return getWorkflowTaskManager().search(
 			companyId, userId, keywords, assetTypes, completed,
 			searchByUserRoles, start, end, orderByComparator);
+	}
+
+	public static List<WorkflowTask> search(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long[] workflowInstanceIds, Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().search(
+			companyId, userId, assetTitle, taskNames, assetTypes,
+			assetPrimaryKeys, assigneeUserIds, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, workflowInstanceIds, andOperator, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -333,19 +335,6 @@ public class WorkflowTaskManagerUtil {
 			dueDateLT, completed, searchByUserRoles, andOperator);
 	}
 
-	public static int searchCount(
-			long companyId, long userId, String assetTitle, String taskName,
-			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
-			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-			Boolean andOperator)
-		throws WorkflowException {
-
-		return getWorkflowTaskManager().searchCount(
-			companyId, userId, assetTitle, taskName, assetTypes,
-			assetPrimaryKeys, dueDateGT, dueDateLT, completed,
-			searchByUserRoles, andOperator);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String, String[], Long[],
@@ -360,6 +349,20 @@ public class WorkflowTaskManagerUtil {
 		return getWorkflowTaskManager().searchCount(
 			companyId, userId, keywords, assetTypes, completed,
 			searchByUserRoles);
+	}
+
+	public static int searchCount(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long[] workflowInstanceIds, Boolean andOperator)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().searchCount(
+			companyId, userId, assetTitle, taskNames, assetTypes,
+			assetPrimaryKeys, assigneeUserIds, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, workflowInstanceIds, andOperator);
 	}
 
 	public static WorkflowTask updateDueDate(

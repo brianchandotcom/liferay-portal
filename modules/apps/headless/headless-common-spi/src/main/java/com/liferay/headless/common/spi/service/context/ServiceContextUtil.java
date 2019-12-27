@@ -47,38 +47,39 @@ public class ServiceContextUtil {
 		Map<String, Serializable> expandoBridgeAttributes, Long groupId,
 		String viewableBy) {
 
-		return new ServiceContext() {
-			{
-				if (StringUtil.equalsIgnoreCase(viewableBy, "anyone")) {
-					setAddGuestPermissions(true);
-					setAddGroupPermissions(true);
-				}
-				else if (StringUtil.equalsIgnoreCase(viewableBy, "members")) {
-					setAddGuestPermissions(false);
-					setAddGroupPermissions(true);
-				}
-				else {
-					setAddGuestPermissions(false);
-					setAddGroupPermissions(false);
-				}
+		ServiceContext serviceContext = new ServiceContext();
 
-				if (assetCategoryIds != null) {
-					setAssetCategoryIds(ArrayUtil.toArray(assetCategoryIds));
-				}
+		if (StringUtil.equalsIgnoreCase(viewableBy, "anyone")) {
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setAddGroupPermissions(true);
+		}
+		else if (StringUtil.equalsIgnoreCase(viewableBy, "members")) {
+			serviceContext.setAddGuestPermissions(false);
+			serviceContext.setAddGroupPermissions(true);
+		}
+		else {
+			serviceContext.setAddGuestPermissions(false);
+			serviceContext.setAddGroupPermissions(false);
+		}
 
-				if (assetTagNames != null) {
-					setAssetTagNames(assetTagNames);
-				}
+		if (assetCategoryIds != null) {
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toArray(assetCategoryIds));
+		}
 
-				if (expandoBridgeAttributes != null) {
-					setExpandoBridgeAttributes(expandoBridgeAttributes);
-				}
+		if (assetTagNames != null) {
+			serviceContext.setAssetTagNames(assetTagNames);
+		}
 
-				if (groupId != null) {
-					setScopeGroupId(groupId);
-				}
-			}
-		};
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
+		if (groupId != null) {
+			serviceContext.setScopeGroupId(groupId);
+		}
+
+		return serviceContext;
 	}
 
 	public static ServiceContext createServiceContext(

@@ -33,7 +33,7 @@ AUI.add(
 			'<div class="form-check form-check-card form-check-middle-left">',
 			'<div class="custom-checkbox custom-control">',
 			'<label>',
-			'<input class="custom-control-input entry-selector select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" disabled={[ !values.temp ? "true" : "false" ]} id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
+			'<input class="custom-control-input entry-selector select-file" data-fileName="{[ LString.escapeHTML(values.name) ]}" data-title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}" {[ !values.temp ? "disabled" : "" ]} id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ LString.escapeHTML(values.name) ]}" />',
 			'<span class="custom-control-label"></span>',
 			'<div class="card card-horizontal">',
 			'<div class="card-body">',

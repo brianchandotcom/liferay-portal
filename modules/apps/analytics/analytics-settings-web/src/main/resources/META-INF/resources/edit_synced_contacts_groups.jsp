@@ -17,19 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
-
-boolean syncAllContacts = analyticsConfiguration.syncAllContacts();
-Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syncedOrganizationIds());
-Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedUserGroupIds());
-
 String redirect = ParamUtil.getString(request, "redirect");
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", redirect));
 %>
+
+<portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
 
 <div id="breadcrumb">
 	<liferay-ui:breadcrumb
@@ -47,22 +41,22 @@ portletDisplay.setURLBack(backURL);
 		</span>
 	</h2>
 
-	<portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
+	<%
+	UserGroupDisplayContext userGroupDisplayContext = new UserGroupDisplayContext(renderRequest, renderResponse);
+	%>
+
+	<clay:management-toolbar
+		displayContext="<%= new UserGroupManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, userGroupDisplayContext) %>"
+	/>
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 		<liferay-ui:search-container
-			curParam="inheritedUserGroupsCur"
-			headerNames="name"
-			iteratorURL="<%= currentURLObj %>"
-			rowChecker="<%= new UserGroupChecker(renderResponse, syncedUserGroupIds) %>"
-			total="<%= UserGroupServiceUtil.getUserGroupsCount(themeDisplay.getCompanyId(), null) %>"
+			id="selectUserGroups"
+			searchContainer="<%= userGroupDisplayContext.getUserGroupSearch() %>"
+			var="userGroupSearchContainer"
 		>
-			<liferay-ui:search-container-results
-				results="<%= UserGroupServiceUtil.getUserGroups(themeDisplay.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.UserGroup"
 				escapedModel="<%= true %>"

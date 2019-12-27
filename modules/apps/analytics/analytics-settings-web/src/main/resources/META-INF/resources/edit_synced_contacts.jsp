@@ -66,18 +66,13 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 				<liferay-ui:message key="sync-by-user-groups-and-organizations-help" />
 			</div>
 
-			<portlet:renderURL var="createUserGroupURL">
-				<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_contacts_groups" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<portlet:renderURL var="createOrganizationsURL">
-				<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_organizations" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
 			<ul class="list-group mt-4">
 				<li class="list-group-item list-group-item-flex">
+					<portlet:renderURL var="createUserGroupURL">
+						<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_contacts_groups" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:renderURL>
+
 					<a href=<%= createUserGroupURL %> />
 						<div class="autofit-col">
 							<div class="sticker sticker-light sticker-rounded">
@@ -100,6 +95,11 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 					</div>
 				</li>
 				<li class="list-group-item list-group-item-flex">
+					<portlet:renderURL var="createOrganizationsURL">
+						<portlet:param name="mvcRenderCommandName" value="/analytics_settings/edit_synced_organizations" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:renderURL>
+
 					<a href=<%= createOrganizationsURL %> />
 						<div class="autofit-col">
 							<div class="sticker sticker-light sticker-rounded">

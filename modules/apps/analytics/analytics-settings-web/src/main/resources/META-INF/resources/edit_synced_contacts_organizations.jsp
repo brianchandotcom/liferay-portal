@@ -17,19 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
-
-boolean syncAllContacts = analyticsConfiguration.syncAllContacts();
-Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syncedOrganizationIds());
-Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedUserGroupIds());
-
 String redirect = ParamUtil.getString(request, "redirect");
 
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", redirect));
 %>
+
+<portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
 
 <div id="breadcrumb">
 	<liferay-ui:breadcrumb
@@ -47,22 +41,22 @@ portletDisplay.setURLBack(backURL);
 		</span>
 	</h2>
 
-	<portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
+	<%
+	OrganizationDisplayContext organizationDisplayContext = new OrganizationDisplayContext(renderRequest, renderResponse);
+	%>
+
+	<clay:management-toolbar
+		displayContext="<%= new OrganizationManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, organizationDisplayContext) %>"
+	/>
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 		<liferay-ui:search-container
-			curParam="inheritedOrganizationsCur"
-			headerNames="name"
-			iteratorURL="<%= currentURLObj %>"
-			rowChecker="<%= new OrganizationChecker(renderResponse, syncedOrganizationIds) %>"
-			total="<%= OrganizationServiceUtil.getOrganizationsCount(themeDisplay.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) %>"
+			id="selectOrganizations"
+			searchContainer="<%= organizationDisplayContext.getOrganizationSearch() %>"
+			var="organizationSearchContainer"
 		>
-			<liferay-ui:search-container-results
-				results="<%= OrganizationServiceUtil.getOrganizations(themeDisplay.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.Organization"
 				escapedModel="<%= true %>"

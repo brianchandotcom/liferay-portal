@@ -29,11 +29,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys" %><%@
 page import="com.liferay.analytics.settings.web.internal.display.context.GroupDisplayContext" %><%@
 page import="com.liferay.analytics.settings.web.internal.display.context.GroupManagementToolbarDisplayContext" %><%@
-page import="com.liferay.analytics.settings.web.internal.search.OrganizationChecker" %><%@
-page import="com.liferay.analytics.settings.web.internal.search.UserGroupChecker" %><%@
-page import="com.liferay.portal.kernel.model.OrganizationConstants" %><%@
-page import="com.liferay.portal.kernel.service.OrganizationServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.UserGroupServiceUtil" %><%@
+page import="com.liferay.analytics.settings.web.internal.display.context.OrganizationDisplayContext" %><%@
+page import="com.liferay.analytics.settings.web.internal.display.context.OrganizationManagementToolbarDisplayContext" %><%@
+page import="com.liferay.analytics.settings.web.internal.display.context.UserGroupDisplayContext" %><%@
+page import="com.liferay.analytics.settings.web.internal.display.context.UserGroupManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.kernel.service.UserServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

@@ -334,7 +334,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		return _liferayOASSource;
 	}
 
-	private String _getOpenAPIEntityOperationPath() {
+	private String _getOpenAPIEntityOperationsPath() {
 		String openAPIModuleVersionPath = _getOpenAPIModuleVersionPath();
 
 		return openAPIModuleVersionPath.concat(endpoint.getValue());
@@ -395,31 +395,34 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	}
 
 	private void _setupOperations() throws TalendRuntimeException {
+		_resetProperties();
+
 		OASExplorer oasExplorer = new OASExplorer();
 
 		LiferayOASSource liferayOASSource = _getLiferayOASSource();
 
-		Set<String> endpointOperations = oasExplorer.getPathOperations(
-			_getOpenAPIEntityOperationPath(),
+		Set<String> pathOperations = oasExplorer.getPathOperations(
+			_getOpenAPIEntityOperationsPath(),
 			liferayOASSource.getOASJsonObject(getOpenAPIUrl()));
 
-		List<Operation> operations = new ArrayList<>();
+		List<Operation> possibleOperations = new ArrayList<>();
 
-		for (String endpointOperation : endpointOperations) {
+		for (String endpointOperation : pathOperations) {
 			Operation operation = Operation.toOperation(endpointOperation);
 
 			if (_isAllowedOperation(operation)) {
-				operations.add(operation);
+				possibleOperations.add(operation);
 			}
 		}
 
-		if (operations.isEmpty()) {
-			operations.add(Operation.Unavailable);
+		if (possibleOperations.isEmpty()) {
+			possibleOperations.add(Operation.Unavailable);
 		}
 
-		this.operations.setPossibleValues(operations);
+		operations.setPossibleValues(possibleOperations);
+		operations.setValue(possibleOperations.get(0));
 
-		_resetProperties();
+		afterOperations();
 	}
 
 	private void _setupRequestParameterProperties() {
@@ -443,12 +446,12 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		parameters.addParameters(
 			oasExplorer.getPathOperationOASParameters(
-				_getOpenAPIEntityOperationPath(), operation.getHttpMethod(),
+				_getOpenAPIEntityOperationsPath(), operation.getHttpMethod(),
 				liferayOASSource.getOASJsonObject(getOpenAPIUrl())));
 	}
 
 	private void _updateSchemas(OASSource oasSource) {
-		String openAPIEntityOperationPath = _getOpenAPIEntityOperationPath();
+		String openAPIEntityOperationPath = _getOpenAPIEntityOperationsPath();
 		JsonObject oasJsonObject = oasSource.getOASJsonObject(getOpenAPIUrl());
 
 		SchemaBuilder schemaBuilder = new SchemaBuilder();

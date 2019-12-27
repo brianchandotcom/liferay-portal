@@ -56,18 +56,6 @@ public interface WikiNodeResource {
 			Long siteId, WikiNode wikiNode)
 		throws Exception;
 
-	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception;
-
-	public HttpInvoker.HttpResponse putWikiNodeSubscribeHttpResponse(
-			Long wikiNodeId)
-		throws Exception;
-
-	public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception;
-
-	public HttpInvoker.HttpResponse putWikiNodeUnsubscribeHttpResponse(
-			Long wikiNodeId)
-		throws Exception;
-
 	public void deleteWikiNode(Long wikiNodeId) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteWikiNodeHttpResponse(Long wikiNodeId)
@@ -83,6 +71,18 @@ public interface WikiNodeResource {
 
 	public HttpInvoker.HttpResponse putWikiNodeHttpResponse(
 			Long wikiNodeId, WikiNode wikiNode)
+		throws Exception;
+
+	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception;
+
+	public HttpInvoker.HttpResponse putWikiNodeSubscribeHttpResponse(
+			Long wikiNodeId)
+		throws Exception;
+
+	public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception;
+
+	public HttpInvoker.HttpResponse putWikiNodeUnsubscribeHttpResponse(
+			Long wikiNodeId)
 		throws Exception;
 
 	public static class Builder {
@@ -282,110 +282,6 @@ public interface WikiNodeResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse =
-				putWikiNodeSubscribeHttpResponse(wikiNodeId);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse putWikiNodeSubscribeHttpResponse(
-				Long wikiNodeId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(wikiNodeId.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-delivery/v1.0/wiki-node/{wikiNodeId}/subscribe",
-				wikiNodeId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse =
-				putWikiNodeUnsubscribeHttpResponse(wikiNodeId);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse putWikiNodeUnsubscribeHttpResponse(
-				Long wikiNodeId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(wikiNodeId.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-delivery/v1.0/wiki-node/{wikiNodeId}/unsubscribe",
-				wikiNodeId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
 		public void deleteWikiNode(Long wikiNodeId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteWikiNodeHttpResponse(
 				wikiNodeId);
@@ -553,6 +449,110 @@ public interface WikiNodeResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}",
+				wikiNodeId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				putWikiNodeSubscribeHttpResponse(wikiNodeId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putWikiNodeSubscribeHttpResponse(
+				Long wikiNodeId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(wikiNodeId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/subscribe",
+				wikiNodeId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse =
+				putWikiNodeUnsubscribeHttpResponse(wikiNodeId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putWikiNodeUnsubscribeHttpResponse(
+				Long wikiNodeId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(wikiNodeId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/unsubscribe",
 				wikiNodeId);
 
 			httpInvoker.userNameAndPassword(

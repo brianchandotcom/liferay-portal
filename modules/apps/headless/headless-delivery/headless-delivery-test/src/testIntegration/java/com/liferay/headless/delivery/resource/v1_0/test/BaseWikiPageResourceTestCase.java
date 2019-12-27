@@ -488,46 +488,6 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
-	public void testPutWikiPageSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiPage wikiPage = testPutWikiPageSubscribe_addWikiPage();
-
-		assertHttpResponseStatusCode(
-			204,
-			wikiPageResource.putWikiPageSubscribeHttpResponse(
-				wikiPage.getId()));
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.putWikiPageSubscribeHttpResponse(0L));
-	}
-
-	protected WikiPage testPutWikiPageSubscribe_addWikiPage() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutWikiPageUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiPage wikiPage = testPutWikiPageUnsubscribe_addWikiPage();
-
-		assertHttpResponseStatusCode(
-			204,
-			wikiPageResource.putWikiPageUnsubscribeHttpResponse(
-				wikiPage.getId()));
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.putWikiPageUnsubscribeHttpResponse(0L));
-	}
-
-	protected WikiPage testPutWikiPageUnsubscribe_addWikiPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetWikiPageWikiPagesPage() throws Exception {
 		Page<WikiPage> page = wikiPageResource.getWikiPageWikiPagesPage(
 			testGetWikiPageWikiPagesPage_getParentWikiPageId());
@@ -742,6 +702,46 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	protected WikiPage testPutWikiPage_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutWikiPageSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage = testPutWikiPageSubscribe_addWikiPage();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageResource.putWikiPageSubscribeHttpResponse(
+				wikiPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.putWikiPageSubscribeHttpResponse(0L));
+	}
+
+	protected WikiPage testPutWikiPageSubscribe_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutWikiPageUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage = testPutWikiPageUnsubscribe_addWikiPage();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageResource.putWikiPageUnsubscribeHttpResponse(
+				wikiPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.putWikiPageUnsubscribeHttpResponse(0L));
+	}
+
+	protected WikiPage testPutWikiPageUnsubscribe_addWikiPage()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

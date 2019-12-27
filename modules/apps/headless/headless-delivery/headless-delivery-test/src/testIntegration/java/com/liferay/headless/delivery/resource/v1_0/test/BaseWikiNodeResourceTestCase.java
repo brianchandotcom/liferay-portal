@@ -541,46 +541,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
-	public void testPutWikiNodeSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiNode wikiNode = testPutWikiNodeSubscribe_addWikiNode();
-
-		assertHttpResponseStatusCode(
-			204,
-			wikiNodeResource.putWikiNodeSubscribeHttpResponse(
-				wikiNode.getId()));
-
-		assertHttpResponseStatusCode(
-			404, wikiNodeResource.putWikiNodeSubscribeHttpResponse(0L));
-	}
-
-	protected WikiNode testPutWikiNodeSubscribe_addWikiNode() throws Exception {
-		return wikiNodeResource.postSiteWikiNode(
-			testGroup.getGroupId(), randomWikiNode());
-	}
-
-	@Test
-	public void testPutWikiNodeUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WikiNode wikiNode = testPutWikiNodeUnsubscribe_addWikiNode();
-
-		assertHttpResponseStatusCode(
-			204,
-			wikiNodeResource.putWikiNodeUnsubscribeHttpResponse(
-				wikiNode.getId()));
-
-		assertHttpResponseStatusCode(
-			404, wikiNodeResource.putWikiNodeUnsubscribeHttpResponse(0L));
-	}
-
-	protected WikiNode testPutWikiNodeUnsubscribe_addWikiNode()
-		throws Exception {
-
-		return wikiNodeResource.postSiteWikiNode(
-			testGroup.getGroupId(), randomWikiNode());
-	}
-
-	@Test
 	public void testDeleteWikiNode() throws Exception {
 		WikiNode wikiNode = testDeleteWikiNode_addWikiNode();
 
@@ -708,6 +668,46 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	protected WikiNode testPutWikiNode_addWikiNode() throws Exception {
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
+	public void testPutWikiNodeSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode = testPutWikiNodeSubscribe_addWikiNode();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiNodeResource.putWikiNodeSubscribeHttpResponse(
+				wikiNode.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.putWikiNodeSubscribeHttpResponse(0L));
+	}
+
+	protected WikiNode testPutWikiNodeSubscribe_addWikiNode() throws Exception {
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
+	public void testPutWikiNodeUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode = testPutWikiNodeUnsubscribe_addWikiNode();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiNodeResource.putWikiNodeUnsubscribeHttpResponse(
+				wikiNode.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.putWikiNodeUnsubscribeHttpResponse(0L));
+	}
+
+	protected WikiNode testPutWikiNodeUnsubscribe_addWikiNode()
+		throws Exception {
+
 		return wikiNodeResource.postSiteWikiNode(
 			testGroup.getGroupId(), randomWikiNode());
 	}

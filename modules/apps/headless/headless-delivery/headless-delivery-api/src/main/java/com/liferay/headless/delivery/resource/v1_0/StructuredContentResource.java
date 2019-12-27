@@ -75,12 +75,6 @@ public interface StructuredContentResource {
 			Long structuredContentFolderId, StructuredContent structuredContent)
 		throws Exception;
 
-	public void putStructuredContentSubscribe(Long structuredContentId)
-		throws Exception;
-
-	public void putStructuredContentUnsubscribe(Long structuredContentId)
-		throws Exception;
-
 	public void deleteStructuredContent(Long structuredContentId)
 		throws Exception;
 
@@ -111,6 +105,12 @@ public interface StructuredContentResource {
 
 	public String getStructuredContentRenderedContentTemplate(
 			Long structuredContentId, Long templateId)
+		throws Exception;
+
+	public void putStructuredContentSubscribe(Long structuredContentId)
+		throws Exception;
+
+	public void putStructuredContentUnsubscribe(Long structuredContentId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

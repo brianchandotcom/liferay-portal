@@ -1392,57 +1392,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
-	public void testPutStructuredContentSubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContent structuredContent =
-			testPutStructuredContentSubscribe_addStructuredContent();
-
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.putStructuredContentSubscribeHttpResponse(
-				structuredContent.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.putStructuredContentSubscribeHttpResponse(
-				0L));
-	}
-
-	protected StructuredContent
-			testPutStructuredContentSubscribe_addStructuredContent()
-		throws Exception {
-
-		return structuredContentResource.postSiteStructuredContent(
-			testGroup.getGroupId(), randomStructuredContent());
-	}
-
-	@Test
-	public void testPutStructuredContentUnsubscribe() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContent structuredContent =
-			testPutStructuredContentUnsubscribe_addStructuredContent();
-
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.
-				putStructuredContentUnsubscribeHttpResponse(
-					structuredContent.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.
-				putStructuredContentUnsubscribeHttpResponse(0L));
-	}
-
-	protected StructuredContent
-			testPutStructuredContentUnsubscribe_addStructuredContent()
-		throws Exception {
-
-		return structuredContentResource.postSiteStructuredContent(
-			testGroup.getGroupId(), randomStructuredContent());
-	}
-
-	@Test
 	public void testDeleteStructuredContent() throws Exception {
 		StructuredContent structuredContent =
 			testDeleteStructuredContent_addStructuredContent();
@@ -1666,6 +1615,57 @@ public abstract class BaseStructuredContentResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutStructuredContentSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testPutStructuredContentSubscribe_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.putStructuredContentSubscribeHttpResponse(
+				structuredContent.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.putStructuredContentSubscribeHttpResponse(
+				0L));
+	}
+
+	protected StructuredContent
+			testPutStructuredContentSubscribe_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
+	public void testPutStructuredContentUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testPutStructuredContentUnsubscribe_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.
+				putStructuredContentUnsubscribeHttpResponse(
+					structuredContent.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.
+				putStructuredContentUnsubscribeHttpResponse(0L));
+	}
+
+	protected StructuredContent
+			testPutStructuredContentUnsubscribe_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	@Test

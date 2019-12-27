@@ -284,48 +284,6 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content/{structuredContentId}/subscribe'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@PUT
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
-		}
-	)
-	@Path("/structured-content/{structuredContentId}/subscribe")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public void putStructuredContentSubscribe(
-			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
-				Long structuredContentId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content/{structuredContentId}/unsubscribe'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@PUT
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
-		}
-	)
-	@Path("/structured-content/{structuredContentId}/unsubscribe")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public void putStructuredContentUnsubscribe(
-			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
-				Long structuredContentId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -640,6 +598,48 @@ public abstract class BaseStructuredContentResourceImpl
 		throws Exception {
 
 		return StringPool.BLANK;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/subscribe")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public void putStructuredContentSubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
+				Long structuredContentId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/unsubscribe")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public void putStructuredContentUnsubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
+				Long structuredContentId)
+		throws Exception {
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

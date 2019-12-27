@@ -55,13 +55,6 @@ public class SyncServiceConfigurationKeys {
 	public static final String SYNC_FILE_CHECKSUM_THRESHOLD_SIZE =
 		"sync.file.checksum.threshold.size";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL =
-		"sync.file.diff.cache.delete.interval";
-
 	public static final String SYNC_FILE_DIFF_CACHE_ENABLED =
 		"sync.file.diff.cache.enabled";
 

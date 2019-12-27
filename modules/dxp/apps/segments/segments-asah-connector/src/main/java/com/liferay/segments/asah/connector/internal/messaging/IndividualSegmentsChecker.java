@@ -177,12 +177,9 @@ public class IndividualSegmentsChecker {
 		}
 
 		try {
-			long userClassNameId = _classNameLocalService.getClassNameId(
-				User.class.getName());
-
-			_segmentsEntryRelLocalService.addSegmentsEntryRel(
-				segmentsEntry.getSegmentsEntryId(), userClassNameId,
-				userIdOptional.get(), _getServiceContext());
+			_segmentsEntryLocalService.addSegmentsEntryClassPKs(
+				segmentsEntry.getSegmentsEntryId(),
+				new long[] {userIdOptional.get()}, _getServiceContext());
 		}
 		catch (PortalException pe) {
 			_log.error(

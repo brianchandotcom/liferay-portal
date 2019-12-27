@@ -79,14 +79,9 @@ public class SegmentsEntryDemoDataCreatorImpl
 				User.class.getName(), serviceContext);
 
 		if (Validator.isNull(criteria)) {
-			long[] groupUserIds = _userLocalService.getGroupUserIds(groupId);
-
-			for (long groupUserId : groupUserIds) {
-				_segmentsEntryRelLocalService.addSegmentsEntryRel(
-					segmentsEntry.getSegmentsEntryId(),
-					_portal.getClassNameId(User.class), groupUserId,
-					serviceContext);
-			}
+			_segmentsEntryLocalService.addSegmentsEntryClassPKs(
+				segmentsEntry.getSegmentsEntryId(),
+				_userLocalService.getGroupUserIds(groupId), serviceContext);
 		}
 
 		_segmentsEntryIds.add(segmentsEntry.getSegmentsEntryId());

@@ -286,7 +286,6 @@ export default function PageEditor() {
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
 	const isMounted = useIsMounted();
-	const shouldUpdateLayoutData = useRef();
 
 	useEffect(() => {
 		if (isMounted()) {

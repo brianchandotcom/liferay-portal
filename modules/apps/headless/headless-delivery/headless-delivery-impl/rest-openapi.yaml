@@ -40,6 +40,13 @@ components:
             description:
                 Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -228,6 +235,13 @@ components:
             description:
                 Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -267,6 +281,13 @@ components:
                 Represents a document (binary data and metadata) associated with structured content. Properties follow
                 the [Media Object](https://schema.org/MediaObject) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 contentType:
                     readOnly: true
                     type: string
@@ -650,6 +671,13 @@ components:
                 Represents a Document Library file, storing binary and metadata information. Properties follow the
                 [MediaObject](https://schema.org/MediaObject) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 adaptedImages:
                     description:
                         An array of images in several resolutions and sizes, created by the Adaptive Media framework.
@@ -803,6 +831,13 @@ components:
             description:
                 Represents a document folder that can contain documents and other folders.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -871,6 +906,13 @@ components:
             description:
                 Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1053,6 +1095,13 @@ components:
             description:
                 Represents a folder for organizing Knowledge Base articles.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1176,6 +1225,13 @@ components:
                 Represents a message on a message board. Properties follow the [Discussion Forum
                 Posting](https://schema.org/DiscussionForumPosting) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1279,6 +1335,13 @@ components:
             description:
                 Represents a section/folder on a message board, used to organize messages.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1348,6 +1411,13 @@ components:
             description:
                 Represents a discussion thread in a message board.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1454,6 +1524,13 @@ components:
                 Represents a rating/score received by any kind of asset. Properties follow the
                 [Rating](https://schema.org/Rating) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 bestRating:
                     description:
                         The best possible rating an asset can receive (normalized to 1.0 by default).
@@ -1522,6 +1599,13 @@ components:
                 Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is
                 modeled internally as a `JournalArticle`.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"
@@ -1683,6 +1767,13 @@ components:
             description:
                 Represents a folder that can be used to organize structured content.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1752,6 +1843,13 @@ components:
             description:
                 Represents a wiki node that can be used to organize wiki pages.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1810,6 +1908,13 @@ components:
             description:
                 Represents a wiki page.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 aggregateRating:
                     allOf:
                         - $ref: "#/components/schemas/AggregateRating"

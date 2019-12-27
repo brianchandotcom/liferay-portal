@@ -18,6 +18,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -132,12 +133,16 @@ public class Query {
 		public class ${schemaName}Page {
 
 			public ${schemaName}Page(Page ${freeMarkerTool.getSchemaVarName(schemaName)}Page) {
+				actions = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getActions();
 				items = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getItems();
 				lastPage = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getLastPage();
 				page = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getPage();
 				pageSize = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getPageSize();
 				totalCount = ${freeMarkerTool.getSchemaVarName(schemaName)}Page.getTotalCount();
 			}
+
+			@GraphQLField
+			protected Map<String, Map> actions;
 
 			@GraphQLField
 			protected java.util.Collection<${schemaName}> items;

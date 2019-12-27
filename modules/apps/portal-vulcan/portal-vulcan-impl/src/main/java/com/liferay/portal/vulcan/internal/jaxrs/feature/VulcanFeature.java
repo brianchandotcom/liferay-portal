@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -68,6 +69,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -124,7 +126,8 @@ public class VulcanFeature implements Feature {
 			new AcceptLanguageContextProvider(_language, _portal));
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
-			new ContextContainerRequestFilter(_language, _portal));
+			new ContextContainerRequestFilter(
+				_language, _portal, _scopeChecker));
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));
@@ -176,6 +179,9 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	private ScopeChecker _scopeChecker;
 
 	@Reference
 	private SortParserProvider _sortParserProvider;

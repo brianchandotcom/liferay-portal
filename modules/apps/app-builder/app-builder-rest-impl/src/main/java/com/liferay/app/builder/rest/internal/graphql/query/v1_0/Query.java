@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -115,12 +116,16 @@ public class Query {
 	public class AppPage {
 
 		public AppPage(Page appPage) {
+			actions = appPage.getActions();
 			items = appPage.getItems();
 			lastPage = appPage.getLastPage();
 			page = appPage.getPage();
 			pageSize = appPage.getPageSize();
 			totalCount = appPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<App> items;

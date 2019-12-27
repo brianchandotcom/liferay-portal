@@ -14,7 +14,7 @@
 
 package com.liferay.talend.properties.input;
 
-import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.resource.LiferayResourceProperties;
 import com.liferay.talend.properties.resource.Operation;
 

@@ -20,8 +20,8 @@ import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.common.oas.OASExplorer;
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.schema.SchemaBuilder;
-import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.internal.oas.LiferayOASSource;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 
 import java.util.ArrayList;
 import java.util.List;

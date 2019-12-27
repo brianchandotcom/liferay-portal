@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.connection;
+package com.liferay.talend.properties.connection;
 
 import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.common.util.URIUtil;
@@ -49,10 +49,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 	public LiferayConnectionProperties(String name) {
 		super(name);
-
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Instantiated " + System.identityHashCode(this));
-		}
 	}
 
 	public void afterLoginType() {
@@ -134,17 +130,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 	public String getUserId() {
 		return _getValue(basicAuthorizationProperties.userId);
-	}
-
-	@Override
-	public Properties init() {
-		Properties properties = super.init();
-
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Initialized " + System.identityHashCode(this));
-		}
-
-		return properties;
 	}
 
 	public boolean isBasicAuthorization() {
@@ -232,8 +217,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 	public void setupLayout() {
 		super.setupLayout();
 
-		// Wizard form
-
 		Form wizardForm = _createForm(this, UIKeys.FORM_WIZARD);
 
 		_addAuthorizationProps(wizardForm);
@@ -248,14 +231,9 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 		wizardForm.addColumn(testConnectionWidget);
 
-		// Main form
-
 		Form mainForm = _createForm(this, Form.MAIN);
 
 		_addAuthorizationProps(mainForm);
-
-		// A form for a reference to a connection, used in a tLiferayInput
-		// for example
 
 		Form referenceForm = _createForm(this, Form.REFERENCE);
 
@@ -263,16 +241,10 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 		refreshLayout(referenceForm);
 
-		// Advanced form
-
 		advanced.setFormtoShow(
 			_createAdvancedForm(
 				this, connectTimeout, readTimeout, itemsPerPage,
 				followRedirects, forceHttps));
-
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Layout set " + System.identityHashCode(this));
-		}
 	}
 
 	@Override
@@ -280,13 +252,15 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		super.setupProperties();
 
 		apiSpecURL.setValue(_COMMERCE_CATALOG_OAS_URL);
+
 		followRedirects.setValue(true);
+
 		forceHttps.setValue(false);
+
+		loginType.setRequired();
 		loginType.setValue(LoginType.BASIC);
 
-		if (_logger.isTraceEnabled()) {
-			_logger.trace("Properties set " + System.identityHashCode(this));
-		}
+		name.setRequired();
 	}
 
 	public ValidationResult validateTestConnection() {
@@ -322,11 +296,8 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
 		"itemsPerPage", _ITEMS_PER_PAGE);
 	public Property<LoginType> loginType = PropertyFactory.newEnum(
-		"loginType", LoginType.class
-	).setRequired();
-	public Property<String> name = PropertyFactory.newString(
-		"name"
-	).setRequired();
+		"loginType", LoginType.class);
+	public Property<String> name = PropertyFactory.newString("name");
 	public OAuthAuthorizationProperties oAuthAuthorizationProperties =
 		new OAuthAuthorizationProperties("oAuthAuthorizationProperties");
 	public Property<Integer> readTimeout = PropertyFactory.newInteger(

@@ -16,7 +16,7 @@ package com.liferay.talend.runtime;
 
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.util.StringUtil;
-import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.resource.LiferayResourceProperties;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.runtime.client.ResponseHandler;

@@ -14,9 +14,9 @@
 
 package com.liferay.talend.runtime;
 
-import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.batch.LiferayBatchFileProperties;
 import com.liferay.talend.properties.batch.LiferayBatchOutputProperties;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.runtime.reader.LiferayBatchFileReader;
 import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;

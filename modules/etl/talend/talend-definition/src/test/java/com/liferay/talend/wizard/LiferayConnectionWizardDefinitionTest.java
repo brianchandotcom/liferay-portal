@@ -14,7 +14,7 @@
 
 package com.liferay.talend.wizard;
 
-import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
 import java.util.Locale;

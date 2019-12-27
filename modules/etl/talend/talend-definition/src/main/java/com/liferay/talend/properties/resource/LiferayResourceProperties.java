@@ -22,8 +22,8 @@ import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.schema.SchemaUtils;
 import com.liferay.talend.common.util.StringUtil;
-import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.internal.oas.LiferayOASSource;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.parameters.RequestParameter;
 import com.liferay.talend.properties.parameters.RequestParameterProperties;
 

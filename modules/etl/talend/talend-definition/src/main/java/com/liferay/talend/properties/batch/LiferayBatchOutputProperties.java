@@ -15,7 +15,7 @@
 package com.liferay.talend.properties.batch;
 
 import com.liferay.talend.common.schema.constants.BatchSchemaConstants;
-import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
 
 import java.util.Collections;

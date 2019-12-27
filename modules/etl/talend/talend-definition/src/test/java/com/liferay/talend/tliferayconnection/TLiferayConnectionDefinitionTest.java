@@ -14,7 +14,7 @@
 
 package com.liferay.talend.tliferayconnection;
 
-import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 
 import java.util.Set;
 

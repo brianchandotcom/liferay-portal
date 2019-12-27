@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.talend.connection;
+package com.liferay.talend.properties.connection;
 
 import com.liferay.talend.ui.UIKeys;
-
-import java.util.EnumSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,18 +27,10 @@ import org.talend.daikon.properties.property.PropertyFactory;
 /**
  * @author Igor Beslic
  */
-public class BasicAuthorizationProperties extends PropertiesImpl {
+public class OAuthAuthorizationProperties extends PropertiesImpl {
 
-	public BasicAuthorizationProperties(String name) {
+	public OAuthAuthorizationProperties(String name) {
 		super(name);
-
-		password = PropertyFactory.newString("password");
-
-		password.setFlags(
-			EnumSet.of(
-				Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
-
-		userId = PropertyFactory.newString("userId");
 
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Instantiated " + System.identityHashCode(this));
@@ -51,11 +41,10 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 	public void setupLayout() {
 		super.setupLayout();
 
-		Form referenceForm = new Form(this, UIKeys.FORM_BASIC_AUTHORIZATION);
+		Form referenceForm = new Form(this, UIKeys.FORM_OAUTH_AUTHORIZATION);
 
-		referenceForm.addRow(userId);
-
-		referenceForm.addColumn(password);
+		referenceForm.addRow(oauthClientId);
+		referenceForm.addRow(oauthClientSecret);
 
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Layout set " + System.identityHashCode(this));
@@ -66,18 +55,20 @@ public class BasicAuthorizationProperties extends PropertiesImpl {
 	public void setupProperties() {
 		super.setupProperties();
 
-		password.setValue(UIKeys.LIFERAY_DEFAULT_PASSWORD);
-		userId.setValue(UIKeys.LIFERAY_DEFAULT_USER_ID);
+		oauthClientId.setValue("");
+		oauthClientSecret.setValue("");
 
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Properties set " + System.identityHashCode(this));
 		}
 	}
 
-	public Property<String> password;
-	public Property<String> userId;
+	public Property<String> oauthClientId = PropertyFactory.newString(
+		"oauthClientId");
+	public Property<String> oauthClientSecret = PropertyFactory.newString(
+		"oauthClientSecret");
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		BasicAuthorizationProperties.class);
+		OAuthAuthorizationProperties.class);
 
 }

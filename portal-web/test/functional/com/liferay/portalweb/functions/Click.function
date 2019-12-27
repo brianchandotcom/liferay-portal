@@ -192,4 +192,20 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function waitForPersonalMenuJSClick {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent(
+			"//script[contains(@src,'personal_menu/js/PersonalMenu.es.js')]"
+		);
+
+		selenium.pause("3000");
+
+		Click();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

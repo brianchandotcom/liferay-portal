@@ -648,16 +648,18 @@ public class WorkflowTaskDisplayContext {
 		int total = WorkflowTaskManagerUtil.searchCount(
 			_workflowTaskRequestHelper.getCompanyId(),
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			searchTerms.getKeywords(), _getAssetType(searchTerms.getKeywords()),
-			null, null, null, _getCompleted(), searchByUserRoles, false);
+			new String[] {searchTerms.getKeywords()},
+			_getAssetType(searchTerms.getKeywords()), null, null, null, null,
+			_getCompleted(), searchByUserRoles, null, false);
 
 		_workflowTaskSearch.setTotal(total);
 
 		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
 			_workflowTaskRequestHelper.getCompanyId(),
 			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			searchTerms.getKeywords(), _getAssetType(searchTerms.getKeywords()),
-			null, null, null, _getCompleted(), searchByUserRoles, false,
+			new String[] {searchTerms.getKeywords()},
+			_getAssetType(searchTerms.getKeywords()), null, null, null, null,
+			_getCompleted(), searchByUserRoles, null, false,
 			_workflowTaskSearch.getStart(), _workflowTaskSearch.getEnd(),
 			_workflowTaskSearch.getOrderByComparator());
 

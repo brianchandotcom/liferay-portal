@@ -204,6 +204,85 @@ definition {
 		}
 	}
 
+	macro validateInstanceDetails {
+		var key_instanceId = "${instanceId}";
+		var key_slaMessage = "${slaMessage}";
+		var key_processStatus = "${processStatus}";
+		var key_createdBy = "${createdBy}";
+		var key_assetType = "${assetType}";
+		var key_assetTitle = "${assetTitle}";
+		var key_currentStep = "${currentStep}";
+		var key_currentAssignee = "${currentAssignee}";
+		var key_currentDateDay = DateUtil.getCurrentDate();
+		var key_currentDateMonth = DateUtil.getCurrentMonthName();
+		var key_currentDateMonthShort = StringUtil.substring("${currentDateMonth}", "0", "3");
+		var key_currentDateYear = DateUtil.getCurrentYear();
+		var key_currentDate = "${currentDateMonthShort} ${currentDateDay}, ${currentDateYear}";
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		if ("${processStatus}" == "Pending") {
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_TITLE",
+				value1 = "Item #${key_instanceId}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_MESSAGE",
+				value1 = "${key_slaMessage}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_PROCESS_STATUS",
+				value1 = "${key_processStatus}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATED_BY",
+				value1 = "${key_createdBy}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATION_DATE",
+				value1 = "${key_currentDate}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_ASSET_TYPE",
+				value1 = "${key_assetType}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_ASSET_TITLE",
+				value1 = "${key_assetTitle}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_CURRENT_STEP",
+				value1 = "${key_currentStep}");
+
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_CURRENT_ASSIGNEE",
+				value1 = "${key_currentAssignee}");
+
+			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
+		}
+		else if ("${processStatus}" == "Completed") {
+			AssertTextEquals(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_PROCESS_STATUS",
+				value1 = "Completed");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_END_DATE",
+				value1 = "${currentDate}");
+
+			AssertTextNotPresent(value1 = "Current Step");
+
+			AssertTextNotPresent(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_CURRENT_STEP",
+				value1 = "Review");
+
+			AssertTextNotPresent(value1 = "Current Assignee");
+
+			AssertTextNotPresent(
+				locator1 = "WorkflowAllItems#DETAIL_PAGE_CURRENT_ASSIGNEE",
+				value1 = "Unassigned");
+		}
+	}
+
 	macro verifyDefaultUnitsForEachDateRange {
 		var key_completionVelocityDateRange = "${completionVelocityDateRange}";
 

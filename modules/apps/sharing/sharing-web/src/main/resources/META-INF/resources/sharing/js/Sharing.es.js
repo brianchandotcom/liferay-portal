@@ -220,6 +220,10 @@ const Sharing = ({
 	const multiSelectFilter = useCallback(() => true, []);
 
 	const resource = useResource({
+		fetchOptions: {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken})
+		},
 		link: multiSelectValue ? sharingUserAutocompleteURL : undefined,
 		variables: {
 			[`${portletNamespace}query`]: multiSelectValue

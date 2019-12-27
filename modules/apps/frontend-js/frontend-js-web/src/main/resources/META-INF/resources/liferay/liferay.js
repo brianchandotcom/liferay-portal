@@ -169,9 +169,9 @@ Liferay = window.Liferay || {};
 				callbackException = callbackSuccess;
 			}
 
-			ioConfig.complete = function(xhr) {
-				var response = xhr.responseJSON;
+			ioConfig.error = callbackException;
 
+			ioConfig.complete = function(response) {
 				if (
 					response !== null &&
 					!Object.prototype.hasOwnProperty.call(response, 'exception')
@@ -207,12 +207,11 @@ Liferay = window.Liferay || {};
 		var form = args[1];
 
 		if (isNode(form)) {
-			ioConfig.form = form;
-
-			if (ioConfig.form.enctype == STR_MULTIPART) {
-				ioConfig.contentType = false;
-				ioConfig.processData = false;
+			if (form.enctype == STR_MULTIPART) {
+				ioConfig.contentType = 'multipart/form-data';
 			}
+
+			ioConfig.formData = new FormData(form);
 		}
 	};
 
@@ -235,38 +234,24 @@ Liferay = window.Liferay || {};
 		var instance = this;
 
 		var cmd = JSON.stringify(payload);
-		var p_auth = Liferay.authToken;
 
-		ioConfig = {
-			data: {
-				cmd,
-				p_auth
-			},
-			dataType: 'JSON',
-			...ioConfig
-		};
+		var data = cmd;
 
-		if (ioConfig.form) {
-			if (
-				ioConfig.form.enctype == STR_MULTIPART &&
-				isFunction(window.FormData)
-			) {
-				ioConfig.data = new FormData(ioConfig.form);
-
-				ioConfig.data.append('cmd', cmd);
-				ioConfig.data.append('p_auth', p_auth);
-			} else {
-				$(ioConfig.form)
-					.serializeArray()
-					.forEach(item => {
-						ioConfig.data[item.name] = item.value;
-					});
-			}
-
-			delete ioConfig.form;
+		if (ioConfig.formData) {
+			ioConfig.formData.append('cmd', cmd);
+			data = ioConfig.formData;
 		}
 
-		return $.ajax(instance.URL_INVOKE, ioConfig);
+		return Liferay.Util.fetch(instance.URL_INVOKE, {
+			body: data,
+			headers: {
+				contentType: ioConfig.contentType
+			},
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(ioConfig.complete)
+			.catch(ioConfig.error);
 	};
 
 	function getHttpMethodFunction(httpMethodName) {

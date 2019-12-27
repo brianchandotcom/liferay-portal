@@ -60,9 +60,6 @@ public class AssetEntryFinderImpl
 	public static final String FIND_BY_AND_TAG_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndTagIds";
 
-	public static final String FIND_BY_CLASS_NAME_ID =
-		AssetEntryFinder.class.getName() + ".findByClassNameId";
-
 	public static final String FIND_PRIORITY_BY_C_C =
 		AssetEntryFinder.class.getName() + ".findPriorityByC_C";
 

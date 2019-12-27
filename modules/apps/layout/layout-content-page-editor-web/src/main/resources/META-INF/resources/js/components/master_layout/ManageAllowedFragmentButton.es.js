@@ -13,20 +13,42 @@
  */
 
 import ClayButton from '@clayui/button';
-import React from 'react';
+import {useModal} from '@clayui/modal';
+import {useIsMounted} from 'frontend-js-react-web';
+import React, {useState} from 'react';
+
 import ManageAllowedFragmentModal from './ManageAllowedFragmentModal.es';
 
 const ManageAllowedFragmentButton = () => {
-	const handleOpenModalClick = event => {
-		event.preventDefault();
+	const isMounted = useIsMounted();
 
+	const [openModal, setOpenModal] = useState(false);
 
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			if (isMounted()) {
+				setOpenModal(false);
+			}
+		}
+	});
+
+	const handleOpenModalClick = () => {
+		setOpenModal(true);
 	};
 
 	return (
-		<ClayButton displayType="secondary" onClick={handleOpenModalClick}>
-			{Liferay.Language.get('manage-allowed-fragments')}
-		</ClayButton>
+		<>
+			{openModal && (
+				<ManageAllowedFragmentModal
+					observer={observer}
+					onClose={onClose}
+				/>
+			)}
+
+			<ClayButton displayType="secondary" onClick={handleOpenModalClick}>
+				{Liferay.Language.get('manage-allowed-fragments')}
+			</ClayButton>
+		</>
 	);
 };
 

@@ -14,10 +14,17 @@
 
 import ClayButton from '@clayui/button';
 import React from 'react';
+import ManageAllowedFragmentModal from './ManageAllowedFragmentModal.es';
 
 const ManageAllowedFragmentButton = () => {
+	const handleOpenModalClick = event => {
+		event.preventDefault();
+
+
+	};
+
 	return (
-		<ClayButton displayType="secondary" onClick="">
+		<ClayButton displayType="secondary" onClick={handleOpenModalClick}>
 			{Liferay.Language.get('manage-allowed-fragments')}
 		</ClayButton>
 	);

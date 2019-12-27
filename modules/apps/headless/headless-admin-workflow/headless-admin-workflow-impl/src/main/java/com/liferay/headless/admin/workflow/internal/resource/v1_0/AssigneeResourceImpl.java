@@ -14,9 +14,9 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Creator;
-import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.admin.workflow.resource.v1_0.CreatorResource;
+import com.liferay.headless.admin.workflow.dto.v1_0.Assignee;
+import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.AssigneeUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.AssigneeResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -34,13 +34,13 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/creator.properties",
-	scope = ServiceScope.PROTOTYPE, service = CreatorResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/assignee.properties",
+	scope = ServiceScope.PROTOTYPE, service = AssigneeResource.class
 )
-public class CreatorResourceImpl extends BaseCreatorResourceImpl {
+public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 
 	@Override
-	public Page<Creator> getWorkflowTaskAssignableUsersPage(
+	public Page<Assignee> getWorkflowTaskAssignableUsersPage(
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 
@@ -52,7 +52,7 @@ public class CreatorResourceImpl extends BaseCreatorResourceImpl {
 				ListUtil.subList(
 					users, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				user -> CreatorUtil.toCreator(_portal, user)),
+				user -> AssigneeUtil.toAssignee(_portal, user)),
 			pagination, users.size());
 	}
 

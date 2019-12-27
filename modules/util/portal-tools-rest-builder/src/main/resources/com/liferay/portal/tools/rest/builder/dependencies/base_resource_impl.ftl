@@ -6,6 +6,7 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -136,11 +137,11 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	}
 
 	protected Map<String, String> addAction(String actionName, GroupedModel groupedModel, String methodName) {
-		return ActionUtil.addAction(actionName, getClass(), groupedModel, methodName, contextUriInfo);
+		return ActionUtil.addAction(actionName, getClass(), groupedModel, methodName, contextScopeChecker, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(String actionName, Long id, String methodName, String permissionName, Long siteId) {
-		return ActionUtil.addAction(actionName, getClass(), id, methodName, permissionName, siteId, contextUriInfo);
+		return ActionUtil.addAction(actionName, getClass(), id, methodName, permissionName, contextScopeChecker, siteId, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(String actionName, String methodName, String permissionName, Long siteId) {
@@ -171,6 +172,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected com.liferay.portal.kernel.model.User contextUser;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ScopeChecker contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

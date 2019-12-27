@@ -69,3 +69,6 @@ export const UPDATE_DROP_TARGET = 'updateDragTarget';
 export const UPDATE_HOVERED_ITEM = 'updateHoveredItem';
 
 export const UPDATE_WIDGETS = 'updateWidgets';
+
+export const UPDATE_ALLOWED_FRAGMENT_ENTRIES =
+	'UPDATE_ALLOWED_FRAGMENT_ENTRIES';

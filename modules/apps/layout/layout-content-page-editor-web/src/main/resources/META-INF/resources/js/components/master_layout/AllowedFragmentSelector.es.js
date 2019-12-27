@@ -43,6 +43,9 @@ const toNodes = collections => {
 
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	const elements = useSelector(state => state.elements);
+	const allowedFragmentEntries = useSelector(
+		state => state.layoutData.allowedFragmentEntries
+	);
 
 	const nodes = toNodes(elements);
 

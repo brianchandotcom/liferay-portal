@@ -484,6 +484,24 @@ function removeFragmentEntryLinkReducer(state, action) {
  * @param {object} state
  * @param {object} action
  * @param {string} action.type
+ * @param {object} action.allowedFragmentEntries
+ * @return {object}
+ * @review
+ */
+function updateAllowedFragmentEntriesReducer(state, action) {
+	return {
+		...state,
+		layoutData: {
+			...state.layoutData,
+			allowedFragmentEntries: action.allowedFragmentEntries
+		}
+	};
+}
+
+/**
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.type
  * @param {string} action.fragmentEntryLinkId
  * @param {string} action.editableValues
  * @param {Date} action.date
@@ -852,6 +870,7 @@ export {
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	toggleShowResolvedCommentsReducer,
+	updateAllowedFragmentEntriesReducer,
 	updateEditableValueReducer,
 	updateFragmentEntryLinkConfigReducer,
 	updateFragmentEntryLinkCommentReducer,

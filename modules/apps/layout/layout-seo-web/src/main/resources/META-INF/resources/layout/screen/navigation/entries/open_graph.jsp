@@ -30,6 +30,10 @@ if (Validator.isNull(backURL)) {
 Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <portlet:actionURL name="/layout/edit_open_graph" var="editOpenGraphURL" />
 
 <aui:form action="<%= editOpenGraphURL %>" method="post" name="fm">

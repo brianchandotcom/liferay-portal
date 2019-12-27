@@ -189,6 +189,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean patchWorkflowTaskAssignToUserBatch(
+			@GraphQLName("workflowTaskAssignToUsers") WorkflowTaskAssignToUser[]
+				workflowTaskAssignToUsers)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource ->
+				workflowTaskResource.patchWorkflowTaskAssignToUserBatch(
+					workflowTaskAssignToUsers));
+
+		return true;
+	}
+
+	@GraphQLField
 	public WorkflowTask createWorkflowTaskAssignToMe(
 			@GraphQLName("workflowTaskId") Long workflowTaskId,
 			@GraphQLName("workflowTaskAssignToMe") WorkflowTaskAssignToMe

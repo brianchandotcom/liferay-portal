@@ -22,6 +22,7 @@ import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPor
  */
 public class UpgradePortletId extends BaseUpgradePortletId {
 
+	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			{

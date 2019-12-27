@@ -57,6 +57,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -170,7 +172,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return true;
 		}
 
-		if (Validator.isNotNull(kaleoTaskInstanceTokenQuery.getTaskName())) {
+		if (ArrayUtil.isNotEmpty(kaleoTaskInstanceTokenQuery.getTaskNames())) {
 			return true;
 		}
 
@@ -198,11 +200,11 @@ public class KaleoTaskInstanceTokenFinderImpl
 		sql = _customSQL.appendCriteria(
 			sql, getAssigneeClassName(kaleoTaskInstanceTokenQuery));
 		sql = _customSQL.appendCriteria(
-			sql, getAssigneeClassPK(kaleoTaskInstanceTokenQuery));
+			sql, getAssigneeClassPKs(kaleoTaskInstanceTokenQuery));
 		sql = _customSQL.appendCriteria(
 			sql, getCompleted(kaleoTaskInstanceTokenQuery));
 		sql = _customSQL.appendCriteria(
-			sql, getKaleoInstanceId(kaleoTaskInstanceTokenQuery));
+			sql, getKaleoInstanceIds(kaleoTaskInstanceTokenQuery));
 		sql = _customSQL.appendCriteria(
 			sql, getRoleIds(kaleoTaskInstanceTokenQuery));
 		sql = _customSQL.appendCriteria(
@@ -255,7 +257,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 					(kaleoTaskInstanceTokenQuery.getDueDateGT() == null)));
 			sql = _customSQL.appendCriteria(
 				sql,
-				getTaskName(
+				getTaskNames(
 					kaleoTaskInstanceTokenQuery,
 					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
@@ -273,8 +275,8 @@ public class KaleoTaskInstanceTokenFinderImpl
 						kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					(kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
 					(kaleoTaskInstanceTokenQuery.getDueDateLT() == null) &&
-					Validator.isNull(
-						kaleoTaskInstanceTokenQuery.getTaskName())));
+					ArrayUtil.isEmpty(
+						kaleoTaskInstanceTokenQuery.getTaskNames())));
 			sql = _customSQL.appendCriteria(sql, ")");
 
 			sql = _customSQL.replaceAndOperator(
@@ -327,15 +329,13 @@ public class KaleoTaskInstanceTokenFinderImpl
 		qPos.add(kaleoTaskInstanceTokenQuery.getCompanyId());
 
 		setAssigneeClassName(qPos, kaleoTaskInstanceTokenQuery);
-		setAssigneeClassPK(qPos, kaleoTaskInstanceTokenQuery);
 		setCompleted(qPos, kaleoTaskInstanceTokenQuery);
-		setKaleoInstanceId(qPos, kaleoTaskInstanceTokenQuery);
 
 		setAssetPrimaryKey(qPos, kaleoTaskInstanceTokenQuery);
 		setAssetType(qPos, kaleoTaskInstanceTokenQuery);
 		setDueDateGT(qPos, kaleoTaskInstanceTokenQuery);
 		setDueDateLT(qPos, kaleoTaskInstanceTokenQuery);
-		setTaskName(qPos, kaleoTaskInstanceTokenQuery);
+		setTaskNames(qPos, kaleoTaskInstanceTokenQuery);
 
 		setAssetTitle(qPos, kaleoTaskInstanceTokenQuery);
 
@@ -449,16 +449,32 @@ public class KaleoTaskInstanceTokenFinderImpl
 		return "AND (KaleoTaskAssignmentInstance.assigneeClassName = ?)";
 	}
 
-	protected String getAssigneeClassPK(
+	protected String getAssigneeClassPKs(
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
-		Long assigneeClassPK = kaleoTaskInstanceTokenQuery.getAssigneeClassPK();
+		Long[] assigneeClassPKs =
+			kaleoTaskInstanceTokenQuery.getAssigneeClassPKs();
 
-		if (assigneeClassPK == null) {
+		if (ArrayUtil.isEmpty(assigneeClassPKs)) {
 			return StringPool.BLANK;
 		}
 
-		return "AND (KaleoTaskAssignmentInstance.assigneeClassPK = ?)";
+		StringBundler sb = new StringBundler((assigneeClassPKs.length * 2) + 1);
+
+		sb.append("AND (KaleoTaskAssignmentInstance.assigneeClassPK IN (");
+
+		sb.append(
+			Stream.of(
+				assigneeClassPKs
+			).map(
+				String::valueOf
+			).collect(
+				Collectors.joining(StringPool.COMMA_AND_SPACE)
+			));
+
+		sb.append("))");
+
+		return sb.toString();
 	}
 
 	protected String getCompleted(
@@ -507,16 +523,32 @@ public class KaleoTaskInstanceTokenFinderImpl
 		return NOT_FIRST_DUE_DATE_LT;
 	}
 
-	protected String getKaleoInstanceId(
+	protected String getKaleoInstanceIds(
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
-		Long kaleoInstanceId = kaleoTaskInstanceTokenQuery.getKaleoInstanceId();
+		Long[] kaleoInstanceIds =
+			kaleoTaskInstanceTokenQuery.getKaleoInstanceIds();
 
-		if (kaleoInstanceId == null) {
+		if (ArrayUtil.isEmpty(kaleoInstanceIds)) {
 			return StringPool.BLANK;
 		}
 
-		return "AND (KaleoTaskInstanceToken.kaleoInstanceId = ?)";
+		StringBundler sb = new StringBundler((kaleoInstanceIds.length * 2) + 1);
+
+		sb.append("AND (KaleoTaskInstanceToken.kaleoInstanceId IN (");
+
+		sb.append(
+			Stream.of(
+				kaleoInstanceIds
+			).map(
+				String::valueOf
+			).collect(
+				Collectors.joining(StringPool.COMMA_AND_SPACE)
+			));
+
+		sb.append("))");
+
+		return sb.toString();
 	}
 
 	protected String getRoleIds(
@@ -717,17 +749,25 @@ public class KaleoTaskInstanceTokenFinderImpl
 		return KaleoTaskInstanceTokenModelImpl.TABLE_COLUMNS_MAP;
 	}
 
-	protected String getTaskName(
+	protected String getTaskNames(
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery,
 		boolean firstCriteria) {
 
-		String taskName = kaleoTaskInstanceTokenQuery.getTaskName();
+		String[] taskNames = kaleoTaskInstanceTokenQuery.getTaskNames();
 
-		if (Validator.isNull(taskName)) {
+		if (ArrayUtil.isEmpty(taskNames)) {
 			return StringPool.BLANK;
 		}
 
-		String[] taskNames = _customSQL.keywords(taskName, false);
+		taskNames = Stream.of(
+			taskNames
+		).map(
+			taskName -> _customSQL.keywords(taskName, false)
+		).flatMap(
+			Stream::of
+		).toArray(
+			String[]::new
+		);
 
 		if (ArrayUtil.isEmpty(taskNames)) {
 			return StringPool.BLANK;
@@ -750,7 +790,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}
@@ -844,19 +884,6 @@ public class KaleoTaskInstanceTokenFinderImpl
 		qPos.add(assigneeClassName);
 	}
 
-	protected void setAssigneeClassPK(
-		QueryPos qPos,
-		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
-
-		Long assigneeClassPK = kaleoTaskInstanceTokenQuery.getAssigneeClassPK();
-
-		if (assigneeClassPK == null) {
-			return;
-		}
-
-		qPos.add(assigneeClassPK);
-	}
-
 	protected void setCompleted(
 		QueryPos qPos,
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
@@ -900,30 +927,29 @@ public class KaleoTaskInstanceTokenFinderImpl
 		qPos.add(dueDateLT_TS);
 	}
 
-	protected void setKaleoInstanceId(
+	protected void setTaskNames(
 		QueryPos qPos,
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
-		Long kaleoInstanceId = kaleoTaskInstanceTokenQuery.getKaleoInstanceId();
+		String[] taskNames = kaleoTaskInstanceTokenQuery.getTaskNames();
 
-		if (kaleoInstanceId == null) {
+		if (ArrayUtil.isEmpty(taskNames)) {
 			return;
 		}
 
-		qPos.add(kaleoInstanceId);
-	}
+		taskNames = Stream.of(
+			taskNames
+		).map(
+			taskName -> _customSQL.keywords(taskName, false)
+		).flatMap(
+			Stream::of
+		).toArray(
+			String[]::new
+		);
 
-	protected void setTaskName(
-		QueryPos qPos,
-		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
-
-		String taskName = kaleoTaskInstanceTokenQuery.getTaskName();
-
-		if (Validator.isNull(taskName)) {
+		if (ArrayUtil.isEmpty(taskNames)) {
 			return;
 		}
-
-		String[] taskNames = _customSQL.keywords(taskName, false);
 
 		qPos.add(taskNames);
 	}

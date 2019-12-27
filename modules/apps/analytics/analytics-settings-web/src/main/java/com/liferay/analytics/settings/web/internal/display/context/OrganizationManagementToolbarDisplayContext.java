@@ -15,10 +15,19 @@
 package com.liferay.analytics.settings.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -41,6 +50,13 @@ public class OrganizationManagementToolbarDisplayContext
 			organizationDisplayContext.getOrganizationSearch());
 
 		_organizationDisplayContext = organizationDisplayContext;
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		_resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
 	}
 
 	@Override
@@ -80,6 +96,36 @@ public class OrganizationManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected List<DropdownItem> getDropdownItems(
+		Map<String, String> entriesMap, PortletURL entryURL,
+		String parameterName, String parameterValue) {
+
+		if ((entriesMap == null) || entriesMap.isEmpty()) {
+			return null;
+		}
+
+		return new DropdownItemList() {
+			{
+				for (Map.Entry<String, String> entry : entriesMap.entrySet()) {
+					add(
+						dropdownItem -> {
+							if (parameterValue != null) {
+								dropdownItem.setActive(
+									parameterValue.equals(entry.getValue()));
+							}
+
+							dropdownItem.setHref(
+								entryURL, parameterName, entry.getValue());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_resourceBundle, entry.getKey()));
+						});
+				}
+			}
+		};
+	}
+
+	@Override
 	protected String getFilterNavigationDropdownItemsLabel() {
 		return LanguageUtil.get(request, "organizations");
 	}
@@ -90,5 +136,6 @@ public class OrganizationManagementToolbarDisplayContext
 	}
 
 	private final OrganizationDisplayContext _organizationDisplayContext;
+	private final ResourceBundle _resourceBundle;
 
 }

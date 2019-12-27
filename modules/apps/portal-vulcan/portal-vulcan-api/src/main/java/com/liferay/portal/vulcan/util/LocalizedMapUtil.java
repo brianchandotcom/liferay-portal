@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.util;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,22 @@ import java.util.stream.Stream;
  * @author Brian Wing Shun Chan
  */
 public class LocalizedMapUtil {
+
+	public static Map<String, String> getLocalizedMap(
+		boolean acceptAllLanguages, Map<Locale, String> localizedMap) {
+
+		if (!acceptAllLanguages) {
+			return null;
+		}
+
+		Map<String, String> map = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : localizedMap.entrySet()) {
+			map.put(String.valueOf(entry.getKey()), entry.getValue());
+		}
+
+		return map;
+	}
 
 	public static Map<Locale, String> merge(
 		Map<Locale, String> map, Map.Entry<Locale, String> entry) {

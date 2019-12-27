@@ -712,14 +712,10 @@ definition {
 		}
 
 		if ("${remoteStaging}" == "true") {
-			AssertClickNoError(
-				locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON",
-				value1 = "Publish to Remote Live");
+			Click(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
 		}
 		else {
-			AssertClickNoError(
-				locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON",
-				value1 = "Publish to Live");
+			Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 		}
 
 		Pause(locator1 = "30000");

@@ -98,6 +98,16 @@ public class ContentFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (contentField.getLabels() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"labels\": ");
+
+			sb.append(_toJSON(contentField.getLabels()));
+		}
+
 		if (contentField.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -155,6 +165,16 @@ public class ContentFieldSerDes {
 			sb.append(String.valueOf(contentField.getValue()));
 		}
 
+		if (contentField.getValues() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"values\": ");
+
+			sb.append(_toJSON(contentField.getValues()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -196,6 +216,13 @@ public class ContentFieldSerDes {
 			map.put("label", String.valueOf(contentField.getLabel()));
 		}
 
+		if (contentField.getLabels() == null) {
+			map.put("labels", null);
+		}
+		else {
+			map.put("labels", String.valueOf(contentField.getLabels()));
+		}
+
 		if (contentField.getName() == null) {
 			map.put("name", null);
 		}
@@ -224,6 +251,13 @@ public class ContentFieldSerDes {
 		}
 		else {
 			map.put("value", String.valueOf(contentField.getValue()));
+		}
+
+		if (contentField.getValues() == null) {
+			map.put("values", null);
+		}
+		else {
+			map.put("values", String.valueOf(contentField.getValues()));
 		}
 
 		return map;
@@ -262,6 +296,13 @@ public class ContentFieldSerDes {
 					contentField.setLabel((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "labels")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setLabels(
+						(Map)ContentFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					contentField.setName((String)jsonParserFieldValue);
@@ -290,6 +331,13 @@ public class ContentFieldSerDes {
 				if (jsonParserFieldValue != null) {
 					contentField.setValue(
 						ValueSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "values")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setValues(
+						(Map)ContentFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

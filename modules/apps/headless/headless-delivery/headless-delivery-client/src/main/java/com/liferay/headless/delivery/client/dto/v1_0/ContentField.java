@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentFieldSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -90,6 +91,27 @@ public class ContentField {
 	}
 
 	protected String label;
+
+	public Map<String, String> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Map<String, String> labels) {
+		this.labels = labels;
+	}
+
+	public void setLabels(
+		UnsafeSupplier<Map<String, String>, Exception> labelsUnsafeSupplier) {
+
+		try {
+			labels = labelsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> labels;
 
 	public String getName() {
 		return name;
@@ -171,6 +193,27 @@ public class ContentField {
 	}
 
 	protected Value value;
+
+	public Map<String, Object> getValues() {
+		return values;
+	}
+
+	public void setValues(Map<String, Object> values) {
+		this.values = values;
+	}
+
+	public void setValues(
+		UnsafeSupplier<Map<String, Object>, Exception> valuesUnsafeSupplier) {
+
+		try {
+			values = valuesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> values;
 
 	@Override
 	public boolean equals(Object object) {

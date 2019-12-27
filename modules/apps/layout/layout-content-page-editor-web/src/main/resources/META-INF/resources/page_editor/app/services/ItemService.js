@@ -44,6 +44,23 @@ export default {
 	},
 
 	/**
+	 * Remove an item inside layoutData
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {object} options.itemId id of the item to be removed
+	 * @param {object} options.segmentsExperienceId
+	 * @return {Promise<object>}
+	 */
+	deleteItem({config, itemId, segmentsExperienceId}) {
+		const {deleteItemURL} = config;
+
+		return serviceFetch(config, deleteItemURL, {
+			itemId,
+			segmentsExperienceId
+		});
+	},
+
+	/**
 	 * Move an item inside layoutData
 	 * @param {object} options
 	 * @param {object} options.config Application config

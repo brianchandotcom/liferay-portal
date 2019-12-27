@@ -73,17 +73,16 @@ public class LayoutStructure {
 			position, layoutStructureItem.getItemId());
 	}
 
-	public void deleteLayoutStructureItem(String itemId, String parentItemId) {
-		_layoutStructureItems.remove(itemId);
-
-		if (Validator.isNull(parentItemId)) {
-			return;
-		}
+	public void deleteLayoutStructureItem(String itemId) {
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
 
 		LayoutStructureItem parentLayoutStructureItem =
-			_layoutStructureItems.get(parentItemId);
+			_layoutStructureItems.get(layoutStructureItem.getParentItemId());
 
 		parentLayoutStructureItem.deleteChildrenItem(itemId);
+
+		_layoutStructureItems.remove(itemId);
 	}
 
 	public void duplicateLayoutStructureItem(

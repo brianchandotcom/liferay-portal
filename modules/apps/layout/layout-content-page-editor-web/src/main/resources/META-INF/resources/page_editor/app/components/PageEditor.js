@@ -286,22 +286,16 @@ export default function PageEditor() {
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
 	const isMounted = useIsMounted();
-	const shouldUpdateLayoutData = useRef();
 
 	useEffect(() => {
 		if (isMounted()) {
-			// Only run this after first render
-			if (!shouldUpdateLayoutData.current) {
-				shouldUpdateLayoutData.current = true;
-			} else {
-				dispatch(
-					updateLayoutData({
-						config,
-						layoutData,
-						segmentsExperienceId
-					})
-				);
-			}
+			dispatch(
+				updateLayoutData({
+					config,
+					layoutData,
+					segmentsExperienceId
+				})
+			);
 		}
 	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 

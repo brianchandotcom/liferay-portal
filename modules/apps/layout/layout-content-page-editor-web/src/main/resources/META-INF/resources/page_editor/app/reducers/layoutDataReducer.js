@@ -14,33 +14,6 @@
 
 import {TYPES} from '../actions/index';
 
-function removeItem(items, action) {
-	const {itemId} = action;
-	let newItems = items;
-
-	if (itemId in items) {
-		const item = items[itemId];
-		const parentItem = items[item.parentId];
-
-		if (parentItem) {
-			newItems = {
-				...newItems,
-
-				[parentItem.itemId]: {
-					...parentItem,
-					children: parentItem.children.filter(id => id !== itemId)
-				}
-			};
-		} else {
-			newItems = {...newItems};
-		}
-
-		delete newItems[itemId];
-	}
-
-	return newItems;
-}
-
 function updateItemConfig(items, action) {
 	const {config, itemId} = action;
 
@@ -66,16 +39,6 @@ export default function layoutDataReducer(state, action) {
 	let nextState = state;
 
 	switch (action.type) {
-		case TYPES.REMOVE_ITEM:
-			nextState = {
-				...state,
-				layoutData: {
-					...state.layoutData,
-					items: removeItem(state.layoutData.items, action)
-				}
-			};
-			break;
-
 		case TYPES.UPDATE_ITEM_CONFIG:
 			nextState = {
 				...state,

@@ -20,12 +20,13 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
-import {removeItem, switchSidebarPanel} from '../actions/index';
+import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
+import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import {
 	useCurrentFloatingToolbar,
@@ -329,7 +330,13 @@ export default function Topper({
 							displayType="unstyled"
 							onClick={event => {
 								event.stopPropagation();
-								dispatch(removeItem({itemId: item.itemId}));
+								dispatch(
+									deleteItem({
+										config,
+										itemId: item.itemId,
+										store
+									})
+								);
 							}}
 							small
 						>

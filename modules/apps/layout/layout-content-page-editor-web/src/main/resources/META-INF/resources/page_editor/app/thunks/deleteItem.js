@@ -12,13 +12,19 @@
  * details.
  */
 
-import {REMOVE_ITEM as type} from './types';
+import updateLayoutData from '../actions/updateLayoutData';
+import ItemService from '../services/ItemService';
 
-const ACTION = {type};
+export default function deleteItem({config, itemId, store}) {
+	return dispatch => {
+		const {segmentsExperienceId} = store;
 
-export default function removeItem({itemId}) {
-	return {
-		...ACTION,
-		itemId
+		return ItemService.deleteItem({
+			config,
+			itemId,
+			segmentsExperienceId
+		}).then(layoutData => {
+			dispatch(updateLayoutData(layoutData));
+		});
 	};
 }

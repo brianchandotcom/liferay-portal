@@ -18,6 +18,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructure;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -58,11 +61,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/delete_fragment_entry_link_react"
+		"mvc.command.name=/content_layout/delete_item_react"
 	},
 	service = {AopService.class, MVCActionCommand.class}
 )
-public class DeleteFragmentEntryLinkReactMVCActionCommand
+public class DeleteItemReactMVCActionCommand
 	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
 
 	@Override
@@ -74,20 +77,55 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 		return super.processAction(actionRequest, actionResponse);
 	}
 
-	protected JSONObject deleteFragmentEntryLinkJSONObject(
-			ActionRequest actionRequest)
+	protected JSONObject deleteItemJSONObject(
+			long companyId, long groupId, String itemId, long plid,
+			long segmentsExperienceId)
 		throws PortalException {
+
+		return LayoutStructureUtil.updateLayoutPageTemplateData(
+			groupId, segmentsExperienceId, plid,
+			layoutStructure -> _deleteLayoutStructureItem(
+				companyId, itemId, layoutStructure, plid));
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long fragmentEntryLinkId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryLinkId");
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String parentItemId = ParamUtil.getString(
-			actionRequest, "parentItemId");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			jsonObject = deleteItemJSONObject(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				itemId, themeDisplay.getPlid(), segmentsExperienceId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	private void _deleteFragmentEntryLink(
+			long companyId, long fragmentEntryLinkId, long plid)
+		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.deleteFragmentEntryLink(
@@ -105,15 +143,13 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 					"instanceId", StringPool.BLANK);
 
 				_portletLocalService.deletePortlet(
-					themeDisplay.getCompanyId(),
-					PortletIdCodec.encode(portletId, instanceId),
-					themeDisplay.getPlid());
+					companyId, PortletIdCodec.encode(portletId, instanceId),
+					plid);
 
 				_layoutClassedModelUsageLocalService.
 					deleteLayoutClassedModelUsages(
 						PortletIdCodec.encode(portletId, instanceId),
-						_portal.getClassNameId(Portlet.class),
-						themeDisplay.getPlid());
+						_portal.getClassNameId(Portlet.class), plid);
 			}
 		}
 
@@ -121,56 +157,48 @@ public class DeleteFragmentEntryLinkReactMVCActionCommand
 			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
 
 		for (String portletId : portletIds) {
-			_portletLocalService.deletePortlet(
-				themeDisplay.getCompanyId(), portletId, themeDisplay.getPlid());
+			_portletLocalService.deletePortlet(companyId, portletId, plid);
 
 			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
-				portletId, _portal.getClassNameId(Portlet.class),
-				themeDisplay.getPlid());
+				portletId, _portal.getClassNameId(Portlet.class), plid);
 		}
 
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLinkId),
-			_portal.getClassNameId(FragmentEntryLink.class),
-			themeDisplay.getPlid());
-
-		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			themeDisplay.getScopeGroupId(), segmentsExperienceId,
-			themeDisplay.getPlid(),
-			layoutStructure -> layoutStructure.deleteLayoutStructureItem(
-				String.valueOf(fragmentEntryLinkId), parentItemId));
+			_portal.getClassNameId(FragmentEntryLink.class), plid);
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	private void _deleteLayoutStructureItem(
+			long companyId, String itemId, LayoutStructure layoutStructure,
+			long plid)
+		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject itemConfigJSONObject =
+			layoutStructureItem.getItemConfigJSONObject();
 
-		try {
-			jsonObject = deleteFragmentEntryLinkJSONObject(actionRequest);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+		long fragmentEntryLinkId = itemConfigJSONObject.getLong(
+			"fragmentEntryLinkId");
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+		if (fragmentEntryLinkId > 0) {
+			_deleteFragmentEntryLink(companyId, fragmentEntryLinkId, plid);
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
+		List<String> childrenItemIds = new ArrayList<>(
+			layoutStructureItem.getChildrenItemIds());
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		for (String childrenItemId : childrenItemIds) {
+			_deleteLayoutStructureItem(
+				companyId, childrenItemId, layoutStructure, plid);
+		}
+
+		layoutStructure.deleteLayoutStructureItem(itemId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteFragmentEntryLinkReactMVCActionCommand.class);
+		DeleteItemReactMVCActionCommand.class);
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;

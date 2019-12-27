@@ -33,11 +33,9 @@ const {useReducer} = React;
  * components (the default export is not a functional component but rather a
  * function that returns a component).
  */
-function Container({data}) {
-	const config = getConfig(data.config);
-
+function Container({config, state}) {
 	const [store, dispatch] = useThunk(
-		useReducer(reducer, [data.state, config], getInitialState)
+		useReducer(reducer, [state, config], getInitialState)
 	);
 
 	return (
@@ -60,9 +58,11 @@ function Container({data}) {
  * is re-rendered when hooks change.
  */
 export default function(data) {
+	const config = getConfig(data.config);
+
 	return (
 		<DragDropContextProvider backend={HTML5Backend}>
-			<Container data={data} />
+			<Container config={config} state={data.state} />
 		</DragDropContextProvider>
 	);
 }

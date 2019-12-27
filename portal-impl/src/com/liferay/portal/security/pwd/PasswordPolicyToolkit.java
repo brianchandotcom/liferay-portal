@@ -182,13 +182,13 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 
-		Date passwordModfiedDate = user.getPasswordModifiedDate();
+		Date passwordModifiedDate = user.getPasswordModifiedDate();
 
-		if (passwordModfiedDate != null) {
+		if (passwordModifiedDate != null) {
 			Date now = new Date();
 
 			long passwordModificationElapsedTime =
-				now.getTime() - passwordModfiedDate.getTime();
+				now.getTime() - passwordModifiedDate.getTime();
 
 			long minAge = passwordPolicy.getMinAge() * 1000;
 
@@ -196,7 +196,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 				!user.isPasswordReset()) {
 
 				throw new UserPasswordException.MustNotBeChangedYet(
-					userId, new Date(passwordModfiedDate.getTime() + minAge));
+					userId, new Date(passwordModifiedDate.getTime() + minAge));
 			}
 		}
 

@@ -4804,9 +4804,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			else if (group.hasStagingGroup()) {
 				liveGroupId = group.getGroupId();
 
-				Group staginGroup = group.getStagingGroup();
+				Group stagingGroup = group.getStagingGroup();
 
-				stagingGroupId = staginGroup.getGroupId();
+				stagingGroupId = stagingGroup.getGroupId();
 			}
 
 			if ((liveGroupId != 0) && (stagingGroupId != 0)) {
@@ -5040,9 +5040,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Group parentGroup = groupPersistence.findByPrimaryKey(
 				parentGroupId);
 
-			Group staginGroup = parentGroup.getStagingGroup();
+			Group stagingGroup = parentGroup.getStagingGroup();
 
-			long stagingGroupId = staginGroup.getGroupId();
+			long stagingGroupId = stagingGroup.getGroupId();
 
 			if (groupId == stagingGroupId) {
 				throw new GroupParentException.MustNotHaveStagingParent(

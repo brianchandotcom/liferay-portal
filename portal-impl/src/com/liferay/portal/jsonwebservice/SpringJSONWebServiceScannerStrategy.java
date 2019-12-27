@@ -103,10 +103,10 @@ public class SpringJSONWebServiceScannerStrategy
 		Queue<Class<?>> queue = new LinkedList<>(
 			Arrays.asList(declaringClass.getInterfaces()));
 
-		Class<?> superClass = declaringClass.getSuperclass();
+		Class<?> superclass = declaringClass.getSuperclass();
 
-		if (superClass != null) {
-			queue.add(superClass);
+		if (superclass != null) {
+			queue.add(superclass);
 		}
 
 		Class<?> clazz = null;
@@ -125,10 +125,10 @@ public class SpringJSONWebServiceScannerStrategy
 			else {
 				Collections.addAll(queue, clazz.getInterfaces());
 
-				superClass = clazz.getSuperclass();
+				superclass = clazz.getSuperclass();
 
-				if (superClass != null) {
-					queue.add(superClass);
+				if (superclass != null) {
+					queue.add(superclass);
 				}
 			}
 		}

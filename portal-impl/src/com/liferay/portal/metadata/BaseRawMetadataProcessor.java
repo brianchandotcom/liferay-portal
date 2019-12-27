@@ -150,10 +150,10 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 
 			DDMFormValues ddmFormValues = createDDMFormValues(metadata, fields);
 
-			Map<String, List<DDMFormFieldValue>> ddmFormFieldsValuesMap =
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 				ddmFormValues.getDDMFormFieldValuesMap();
 
-			Set<String> names = ddmFormFieldsValuesMap.keySet();
+			Set<String> names = ddmFormFieldValuesMap.keySet();
 
 			if (names.isEmpty()) {
 				continue;

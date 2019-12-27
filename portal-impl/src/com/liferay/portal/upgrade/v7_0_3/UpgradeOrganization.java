@@ -45,16 +45,14 @@ public class UpgradeOrganization extends UpgradeProcess {
 	}
 
 	protected void updateOrganizationsType() throws Exception {
-		List<String> organizationsTypes = getOrganizationTypes();
-
-		String organizationsTypesString = ListUtil.toString(
-			organizationsTypes, StringPool.NULL, "', '");
+		String organizationTypesString = ListUtil.toString(
+			getOrganizationTypes(), StringPool.NULL, "', '");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				StringBundler.concat(
 					"update Organization_ set type_ = 'organization' where ",
-					"type_ not in ('", organizationsTypesString, "')"));
+					"type_ not in ('", organizationTypesString, "')"));
 		}
 	}
 

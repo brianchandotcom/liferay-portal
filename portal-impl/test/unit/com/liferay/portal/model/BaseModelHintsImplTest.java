@@ -206,19 +206,19 @@ public class BaseModelHintsImplTest {
 
 	@Test
 	public void testGetSanitizeTuples() {
-		List<Tuple> sanitizedTuples = _testBaseModelHintsImpl.getSanitizeTuples(
+		List<Tuple> sanitizeTuples = _testBaseModelHintsImpl.getSanitizeTuples(
 			_MODEL);
 
 		Assert.assertEquals(
-			sanitizedTuples.toString(), 2, sanitizedTuples.size());
+			sanitizeTuples.toString(), 2, sanitizeTuples.size());
 
-		Tuple sanitizeFieldTuple = sanitizedTuples.get(0);
+		Tuple sanitizeFieldTuple = sanitizeTuples.get(0);
 
 		Assert.assertEquals("sanitizeField", sanitizeFieldTuple.getObject(0));
 		Assert.assertEquals("text/html", sanitizeFieldTuple.getObject(1));
 		Assert.assertEquals("ALL", sanitizeFieldTuple.getObject(2));
 
-		Tuple combinedFieldTuple = sanitizedTuples.get(1);
+		Tuple combinedFieldTuple = sanitizeTuples.get(1);
 
 		Assert.assertEquals("combinedField", combinedFieldTuple.getObject(0));
 		Assert.assertEquals("text/plain", combinedFieldTuple.getObject(1));

@@ -14,15 +14,13 @@
 
 package com.liferay.headless.admin.workflow.client.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.client.dto.v1_0.Creator;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignableUsers;
 import com.liferay.headless.admin.workflow.client.http.HttpInvoker;
-import com.liferay.headless.admin.workflow.client.pagination.Page;
-import com.liferay.headless.admin.workflow.client.pagination.Pagination;
-import com.liferay.headless.admin.workflow.client.serdes.v1_0.CreatorSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Generated;
@@ -32,19 +30,18 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface CreatorResource {
+public interface WorkflowTaskAssignableUsersResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<Creator> getWorkflowTaskAssignableUsersPage(
-			Long workflowTaskId, Pagination pagination)
+	public WorkflowTaskAssignableUsers getWorkflowTaskAssignableUser(
+			Long[] workflowTaskIds)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getWorkflowTaskAssignableUsersPageHttpResponse(
-				Long workflowTaskId, Pagination pagination)
+	public HttpInvoker.HttpResponse getWorkflowTaskAssignableUserHttpResponse(
+			Long[] workflowTaskIds)
 		throws Exception;
 
 	public static class Builder {
@@ -56,8 +53,8 @@ public interface CreatorResource {
 			return this;
 		}
 
-		public CreatorResource build() {
-			return new CreatorResourceImpl(this);
+		public WorkflowTaskAssignableUsersResource build() {
+			return new WorkflowTaskAssignableUsersResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -100,15 +97,15 @@ public interface CreatorResource {
 
 	}
 
-	public static class CreatorResourceImpl implements CreatorResource {
+	public static class WorkflowTaskAssignableUsersResourceImpl
+		implements WorkflowTaskAssignableUsersResource {
 
-		public Page<Creator> getWorkflowTaskAssignableUsersPage(
-				Long workflowTaskId, Pagination pagination)
+		public WorkflowTaskAssignableUsers getWorkflowTaskAssignableUser(
+				Long[] workflowTaskIds)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowTaskAssignableUsersPageHttpResponse(
-					workflowTaskId, pagination);
+				getWorkflowTaskAssignableUserHttpResponse(workflowTaskIds);
 
 			String content = httpResponse.getContent();
 
@@ -118,12 +115,22 @@ public interface CreatorResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			return Page.of(content, CreatorSerDes::toDTO);
+			try {
+				return com.liferay.headless.admin.workflow.client.serdes.v1_0.
+					WorkflowTaskAssignableUsersSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
 		}
 
 		public HttpInvoker.HttpResponse
-				getWorkflowTaskAssignableUsersPageHttpResponse(
-					Long workflowTaskId, Pagination pagination)
+				getWorkflowTaskAssignableUserHttpResponse(
+					Long[] workflowTaskIds)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -147,18 +154,17 @@ public interface CreatorResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
+			if (workflowTaskIds != null) {
+				for (int i = 0; i < workflowTaskIds.length; i++) {
+					httpInvoker.parameter(
+						"workflowTaskIds", String.valueOf(workflowTaskIds[i]));
+				}
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assignable-users",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/assignable-users");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -166,12 +172,12 @@ public interface CreatorResource {
 			return httpInvoker.invoke();
 		}
 
-		private CreatorResourceImpl(Builder builder) {
+		private WorkflowTaskAssignableUsersResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			CreatorResource.class.getName());
+			WorkflowTaskAssignableUsersResource.class.getName());
 
 		private Builder _builder;
 

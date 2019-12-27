@@ -22,12 +22,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.admin.workflow.client.dto.v1_0.Creator;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Assignee;
 import com.liferay.headless.admin.workflow.client.http.HttpInvoker;
 import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
-import com.liferay.headless.admin.workflow.client.resource.v1_0.CreatorResource;
-import com.liferay.headless.admin.workflow.client.serdes.v1_0.CreatorSerDes;
+import com.liferay.headless.admin.workflow.client.resource.v1_0.AssigneeResource;
+import com.liferay.headless.admin.workflow.client.serdes.v1_0.AssigneeSerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -80,7 +80,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseCreatorResourceTestCase {
+public abstract class BaseAssigneeResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -101,11 +101,11 @@ public abstract class BaseCreatorResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_creatorResource.setContextCompany(testCompany);
+		_assigneeResource.setContextCompany(testCompany);
 
-		CreatorResource.Builder builder = CreatorResource.builder();
+		AssigneeResource.Builder builder = AssigneeResource.builder();
 
-		creatorResource = builder.locale(
+		assigneeResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -134,13 +134,13 @@ public abstract class BaseCreatorResourceTestCase {
 			}
 		};
 
-		Creator creator1 = randomCreator();
+		Assignee assignee1 = randomAssignee();
 
-		String json = objectMapper.writeValueAsString(creator1);
+		String json = objectMapper.writeValueAsString(assignee1);
 
-		Creator creator2 = CreatorSerDes.toDTO(json);
+		Assignee assignee2 = AssigneeSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(creator1, creator2));
+		Assert.assertTrue(equals(assignee1, assignee2));
 	}
 
 	@Test
@@ -160,10 +160,10 @@ public abstract class BaseCreatorResourceTestCase {
 			}
 		};
 
-		Creator creator = randomCreator();
+		Assignee assignee = randomAssignee();
 
-		String json1 = objectMapper.writeValueAsString(creator);
-		String json2 = CreatorSerDes.toJSON(creator);
+		String json1 = objectMapper.writeValueAsString(assignee);
+		String json2 = AssigneeSerDes.toJSON(assignee);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -173,36 +173,25 @@ public abstract class BaseCreatorResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Creator creator = randomCreator();
+		Assignee assignee = randomAssignee();
 
-		creator.setAdditionalName(regex);
-		creator.setContentType(regex);
-		creator.setFamilyName(regex);
-		creator.setGivenName(regex);
-		creator.setImage(regex);
-		creator.setName(regex);
-		creator.setProfileURL(regex);
+		assignee.setName(regex);
 
-		String json = CreatorSerDes.toJSON(creator);
+		String json = AssigneeSerDes.toJSON(assignee);
 
 		Assert.assertFalse(json.contains(regex));
 
-		creator = CreatorSerDes.toDTO(json);
+		assignee = AssigneeSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, creator.getAdditionalName());
-		Assert.assertEquals(regex, creator.getContentType());
-		Assert.assertEquals(regex, creator.getFamilyName());
-		Assert.assertEquals(regex, creator.getGivenName());
-		Assert.assertEquals(regex, creator.getImage());
-		Assert.assertEquals(regex, creator.getName());
-		Assert.assertEquals(regex, creator.getProfileURL());
+		Assert.assertEquals(regex, assignee.getName());
 	}
 
 	@Test
 	public void testGetWorkflowTaskAssignableUsersPage() throws Exception {
-		Page<Creator> page = creatorResource.getWorkflowTaskAssignableUsersPage(
-			testGetWorkflowTaskAssignableUsersPage_getWorkflowTaskId(),
-			Pagination.of(1, 2));
+		Page<Assignee> page =
+			assigneeResource.getWorkflowTaskAssignableUsersPage(
+				testGetWorkflowTaskAssignableUsersPage_getWorkflowTaskId(),
+				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -212,34 +201,35 @@ public abstract class BaseCreatorResourceTestCase {
 			testGetWorkflowTaskAssignableUsersPage_getIrrelevantWorkflowTaskId();
 
 		if ((irrelevantWorkflowTaskId != null)) {
-			Creator irrelevantCreator =
-				testGetWorkflowTaskAssignableUsersPage_addCreator(
-					irrelevantWorkflowTaskId, randomIrrelevantCreator());
+			Assignee irrelevantAssignee =
+				testGetWorkflowTaskAssignableUsersPage_addAssignee(
+					irrelevantWorkflowTaskId, randomIrrelevantAssignee());
 
-			page = creatorResource.getWorkflowTaskAssignableUsersPage(
+			page = assigneeResource.getWorkflowTaskAssignableUsersPage(
 				irrelevantWorkflowTaskId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
 			assertEquals(
-				Arrays.asList(irrelevantCreator),
-				(List<Creator>)page.getItems());
+				Arrays.asList(irrelevantAssignee),
+				(List<Assignee>)page.getItems());
 			assertValid(page);
 		}
 
-		Creator creator1 = testGetWorkflowTaskAssignableUsersPage_addCreator(
-			workflowTaskId, randomCreator());
+		Assignee assignee1 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
+			workflowTaskId, randomAssignee());
 
-		Creator creator2 = testGetWorkflowTaskAssignableUsersPage_addCreator(
-			workflowTaskId, randomCreator());
+		Assignee assignee2 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
+			workflowTaskId, randomAssignee());
 
-		page = creatorResource.getWorkflowTaskAssignableUsersPage(
+		page = assigneeResource.getWorkflowTaskAssignableUsersPage(
 			workflowTaskId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(creator1, creator2), (List<Creator>)page.getItems());
+			Arrays.asList(assignee1, assignee2),
+			(List<Assignee>)page.getItems());
 		assertValid(page);
 	}
 
@@ -250,44 +240,44 @@ public abstract class BaseCreatorResourceTestCase {
 		Long workflowTaskId =
 			testGetWorkflowTaskAssignableUsersPage_getWorkflowTaskId();
 
-		Creator creator1 = testGetWorkflowTaskAssignableUsersPage_addCreator(
-			workflowTaskId, randomCreator());
+		Assignee assignee1 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
+			workflowTaskId, randomAssignee());
 
-		Creator creator2 = testGetWorkflowTaskAssignableUsersPage_addCreator(
-			workflowTaskId, randomCreator());
+		Assignee assignee2 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
+			workflowTaskId, randomAssignee());
 
-		Creator creator3 = testGetWorkflowTaskAssignableUsersPage_addCreator(
-			workflowTaskId, randomCreator());
+		Assignee assignee3 = testGetWorkflowTaskAssignableUsersPage_addAssignee(
+			workflowTaskId, randomAssignee());
 
-		Page<Creator> page1 =
-			creatorResource.getWorkflowTaskAssignableUsersPage(
+		Page<Assignee> page1 =
+			assigneeResource.getWorkflowTaskAssignableUsersPage(
 				workflowTaskId, Pagination.of(1, 2));
 
-		List<Creator> creators1 = (List<Creator>)page1.getItems();
+		List<Assignee> assignees1 = (List<Assignee>)page1.getItems();
 
-		Assert.assertEquals(creators1.toString(), 2, creators1.size());
+		Assert.assertEquals(assignees1.toString(), 2, assignees1.size());
 
-		Page<Creator> page2 =
-			creatorResource.getWorkflowTaskAssignableUsersPage(
+		Page<Assignee> page2 =
+			assigneeResource.getWorkflowTaskAssignableUsersPage(
 				workflowTaskId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
-		List<Creator> creators2 = (List<Creator>)page2.getItems();
+		List<Assignee> assignees2 = (List<Assignee>)page2.getItems();
 
-		Assert.assertEquals(creators2.toString(), 1, creators2.size());
+		Assert.assertEquals(assignees2.toString(), 1, assignees2.size());
 
-		Page<Creator> page3 =
-			creatorResource.getWorkflowTaskAssignableUsersPage(
+		Page<Assignee> page3 =
+			assigneeResource.getWorkflowTaskAssignableUsersPage(
 				workflowTaskId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(creator1, creator2, creator3),
-			(List<Creator>)page3.getItems());
+			Arrays.asList(assignee1, assignee2, assignee3),
+			(List<Assignee>)page3.getItems());
 	}
 
-	protected Creator testGetWorkflowTaskAssignableUsersPage_addCreator(
-			Long workflowTaskId, Creator creator)
+	protected Assignee testGetWorkflowTaskAssignableUsersPage_addAssignee(
+			Long workflowTaskId, Assignee assignee)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -308,7 +298,7 @@ public abstract class BaseCreatorResourceTestCase {
 		return null;
 	}
 
-	protected Creator testGraphQLCreator_addCreator() throws Exception {
+	protected Assignee testGraphQLAssignee_addAssignee() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -321,35 +311,35 @@ public abstract class BaseCreatorResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Creator creator1, Creator creator2) {
+	protected void assertEquals(Assignee assignee1, Assignee assignee2) {
 		Assert.assertTrue(
-			creator1 + " does not equal " + creator2,
-			equals(creator1, creator2));
+			assignee1 + " does not equal " + assignee2,
+			equals(assignee1, assignee2));
 	}
 
 	protected void assertEquals(
-		List<Creator> creators1, List<Creator> creators2) {
+		List<Assignee> assignees1, List<Assignee> assignees2) {
 
-		Assert.assertEquals(creators1.size(), creators2.size());
+		Assert.assertEquals(assignees1.size(), assignees2.size());
 
-		for (int i = 0; i < creators1.size(); i++) {
-			Creator creator1 = creators1.get(i);
-			Creator creator2 = creators2.get(i);
+		for (int i = 0; i < assignees1.size(); i++) {
+			Assignee assignee1 = assignees1.get(i);
+			Assignee assignee2 = assignees2.get(i);
 
-			assertEquals(creator1, creator2);
+			assertEquals(assignee1, assignee2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Creator> creators1, List<Creator> creators2) {
+		List<Assignee> assignees1, List<Assignee> assignees2) {
 
-		Assert.assertEquals(creators1.size(), creators2.size());
+		Assert.assertEquals(assignees1.size(), assignees2.size());
 
-		for (Creator creator1 : creators1) {
+		for (Assignee assignee1 : assignees1) {
 			boolean contains = false;
 
-			for (Creator creator2 : creators2) {
-				if (equals(creator1, creator2)) {
+			for (Assignee assignee2 : assignees2) {
+				if (equals(assignee1, assignee2)) {
 					contains = true;
 
 					break;
@@ -357,18 +347,18 @@ public abstract class BaseCreatorResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				creators2 + " does not contain " + creator1, contains);
+				assignees2 + " does not contain " + assignee1, contains);
 		}
 	}
 
 	protected void assertEqualsJSONArray(
-		List<Creator> creators, JSONArray jsonArray) {
+		List<Assignee> assignees, JSONArray jsonArray) {
 
-		for (Creator creator : creators) {
+		for (Assignee assignee : assignees) {
 			boolean contains = false;
 
 			for (Object object : jsonArray) {
-				if (equalsJSONObject(creator, (JSONObject)object)) {
+				if (equalsJSONObject(assignee, (JSONObject)object)) {
 					contains = true;
 
 					break;
@@ -376,70 +366,22 @@ public abstract class BaseCreatorResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				jsonArray + " does not contain " + creator, contains);
+				jsonArray + " does not contain " + assignee, contains);
 		}
 	}
 
-	protected void assertValid(Creator creator) {
+	protected void assertValid(Assignee assignee) {
 		boolean valid = true;
 
-		if (creator.getId() == null) {
+		if (assignee.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("additionalName", additionalAssertFieldName)) {
-				if (creator.getAdditionalName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("contentType", additionalAssertFieldName)) {
-				if (creator.getContentType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("familyName", additionalAssertFieldName)) {
-				if (creator.getFamilyName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("givenName", additionalAssertFieldName)) {
-				if (creator.getGivenName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("image", additionalAssertFieldName)) {
-				if (creator.getImage() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (creator.getName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("profileURL", additionalAssertFieldName)) {
-				if (creator.getProfileURL() == null) {
+				if (assignee.getName() == null) {
 					valid = false;
 				}
 
@@ -454,12 +396,12 @@ public abstract class BaseCreatorResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Creator> page) {
+	protected void assertValid(Page<Assignee> page) {
 		boolean valid = false;
 
-		java.util.Collection<Creator> creators = page.getItems();
+		java.util.Collection<Assignee> assignees = page.getItems();
 
-		int size = creators.size();
+		int size = assignees.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -491,67 +433,16 @@ public abstract class BaseCreatorResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Creator creator1, Creator creator2) {
-		if (creator1 == creator2) {
+	protected boolean equals(Assignee assignee1, Assignee assignee2) {
+		if (assignee1 == assignee2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("additionalName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						creator1.getAdditionalName(),
-						creator2.getAdditionalName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("contentType", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						creator1.getContentType(), creator2.getContentType())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("familyName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						creator1.getFamilyName(), creator2.getFamilyName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("givenName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						creator1.getGivenName(), creator2.getGivenName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(creator1.getId(), creator2.getId())) {
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("image", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						creator1.getImage(), creator2.getImage())) {
-
+				if (!Objects.deepEquals(assignee1.getId(), assignee2.getId())) {
 					return false;
 				}
 
@@ -560,17 +451,7 @@ public abstract class BaseCreatorResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						creator1.getName(), creator2.getName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("profileURL", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						creator1.getProfileURL(), creator2.getProfileURL())) {
+						assignee1.getName(), assignee2.getName())) {
 
 					return false;
 				}
@@ -586,65 +467,13 @@ public abstract class BaseCreatorResourceTestCase {
 		return true;
 	}
 
-	protected boolean equalsJSONObject(Creator creator, JSONObject jsonObject) {
+	protected boolean equalsJSONObject(
+		Assignee assignee, JSONObject jsonObject) {
+
 		for (String fieldName : getAdditionalAssertFieldNames()) {
-			if (Objects.equals("additionalName", fieldName)) {
-				if (!Objects.deepEquals(
-						creator.getAdditionalName(),
-						jsonObject.getString("additionalName"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("contentType", fieldName)) {
-				if (!Objects.deepEquals(
-						creator.getContentType(),
-						jsonObject.getString("contentType"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("familyName", fieldName)) {
-				if (!Objects.deepEquals(
-						creator.getFamilyName(),
-						jsonObject.getString("familyName"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("givenName", fieldName)) {
-				if (!Objects.deepEquals(
-						creator.getGivenName(),
-						jsonObject.getString("givenName"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.deepEquals(
-						creator.getId(), jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("image", fieldName)) {
-				if (!Objects.deepEquals(
-						creator.getImage(), jsonObject.getString("image"))) {
+						assignee.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -654,18 +483,7 @@ public abstract class BaseCreatorResourceTestCase {
 
 			if (Objects.equals("name", fieldName)) {
 				if (!Objects.deepEquals(
-						creator.getName(), jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("profileURL", fieldName)) {
-				if (!Objects.deepEquals(
-						creator.getProfileURL(),
-						jsonObject.getString("profileURL"))) {
+						assignee.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -683,13 +501,13 @@ public abstract class BaseCreatorResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_creatorResource instanceof EntityModelResource)) {
+		if (!(_assigneeResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_creatorResource;
+			(EntityModelResource)_assigneeResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -718,7 +536,7 @@ public abstract class BaseCreatorResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Creator creator) {
+		EntityField entityField, String operator, Assignee assignee) {
 
 		StringBundler sb = new StringBundler();
 
@@ -730,62 +548,14 @@ public abstract class BaseCreatorResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("additionalName")) {
-			sb.append("'");
-			sb.append(String.valueOf(creator.getAdditionalName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("contentType")) {
-			sb.append("'");
-			sb.append(String.valueOf(creator.getContentType()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("familyName")) {
-			sb.append("'");
-			sb.append(String.valueOf(creator.getFamilyName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("givenName")) {
-			sb.append("'");
-			sb.append(String.valueOf(creator.getGivenName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("image")) {
-			sb.append("'");
-			sb.append(String.valueOf(creator.getImage()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
-			sb.append(String.valueOf(creator.getName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("profileURL")) {
-			sb.append("'");
-			sb.append(String.valueOf(creator.getProfileURL()));
+			sb.append(String.valueOf(assignee.getName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -812,32 +582,26 @@ public abstract class BaseCreatorResourceTestCase {
 		return httpResponse.getContent();
 	}
 
-	protected Creator randomCreator() throws Exception {
-		return new Creator() {
+	protected Assignee randomAssignee() throws Exception {
+		return new Assignee() {
 			{
-				additionalName = RandomTestUtil.randomString();
-				contentType = RandomTestUtil.randomString();
-				familyName = RandomTestUtil.randomString();
-				givenName = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
-				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
-				profileURL = RandomTestUtil.randomString();
 			}
 		};
 	}
 
-	protected Creator randomIrrelevantCreator() throws Exception {
-		Creator randomIrrelevantCreator = randomCreator();
+	protected Assignee randomIrrelevantAssignee() throws Exception {
+		Assignee randomIrrelevantAssignee = randomAssignee();
 
-		return randomIrrelevantCreator;
+		return randomIrrelevantAssignee;
 	}
 
-	protected Creator randomPatchCreator() throws Exception {
-		return randomCreator();
+	protected Assignee randomPatchAssignee() throws Exception {
+		return randomAssignee();
 	}
 
-	protected CreatorResource creatorResource;
+	protected AssigneeResource assigneeResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -901,7 +665,7 @@ public abstract class BaseCreatorResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseCreatorResourceTestCase.class);
+		BaseAssigneeResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -918,7 +682,7 @@ public abstract class BaseCreatorResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.headless.admin.workflow.resource.v1_0.CreatorResource
-		_creatorResource;
+	private com.liferay.headless.admin.workflow.resource.v1_0.AssigneeResource
+		_assigneeResource;
 
 }

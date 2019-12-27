@@ -14,8 +14,8 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
-import com.liferay.headless.admin.workflow.dto.v1_0.Creator;
-import com.liferay.headless.admin.workflow.resource.v1_0.CreatorResource;
+import com.liferay.headless.admin.workflow.dto.v1_0.Assignee;
+import com.liferay.headless.admin.workflow.resource.v1_0.AssigneeResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -54,7 +54,7 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseCreatorResourceImpl implements CreatorResource {
+public abstract class BaseAssigneeResourceImpl implements AssigneeResource {
 
 	/**
 	 * Invoke this method with the command line:
@@ -72,8 +72,8 @@ public abstract class BaseCreatorResourceImpl implements CreatorResource {
 	)
 	@Path("/workflow-tasks/{workflowTaskId}/assignable-users")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Creator")})
-	public Page<Creator> getWorkflowTaskAssignableUsersPage(
+	@Tags(value = {@Tag(name = "Assignee")})
+	public Page<Assignee> getWorkflowTaskAssignableUsersPage(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
 				workflowTaskId,
 			@Context Pagination pagination)
@@ -138,7 +138,7 @@ public abstract class BaseCreatorResourceImpl implements CreatorResource {
 			actionName, siteId, methodName, permissionName, siteId);
 	}
 
-	protected void preparePatch(Creator creator, Creator existingCreator) {
+	protected void preparePatch(Assignee assignee, Assignee existingAssignee) {
 	}
 
 	protected <T, R> List<R> transform(

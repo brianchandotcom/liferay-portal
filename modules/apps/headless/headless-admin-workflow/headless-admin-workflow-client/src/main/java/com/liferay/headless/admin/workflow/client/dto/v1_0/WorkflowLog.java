@@ -267,27 +267,6 @@ public class WorkflowLog {
 
 	protected String state;
 
-	public Long getTaskId() {
-		return taskId;
-	}
-
-	public void setTaskId(Long taskId) {
-		this.taskId = taskId;
-	}
-
-	public void setTaskId(
-		UnsafeSupplier<Long, Exception> taskIdUnsafeSupplier) {
-
-		try {
-			taskId = taskIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long taskId;
-
 	public Type getType() {
 		return type;
 	}
@@ -314,6 +293,27 @@ public class WorkflowLog {
 	}
 
 	protected Type type;
+
+	public Long getWorkflowTaskId() {
+		return workflowTaskId;
+	}
+
+	public void setWorkflowTaskId(Long workflowTaskId) {
+		this.workflowTaskId = workflowTaskId;
+	}
+
+	public void setWorkflowTaskId(
+		UnsafeSupplier<Long, Exception> workflowTaskIdUnsafeSupplier) {
+
+		try {
+			workflowTaskId = workflowTaskIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long workflowTaskId;
 
 	@Override
 	public boolean equals(Object object) {

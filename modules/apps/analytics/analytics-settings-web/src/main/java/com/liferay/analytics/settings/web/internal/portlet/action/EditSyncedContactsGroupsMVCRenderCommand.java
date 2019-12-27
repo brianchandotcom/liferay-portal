@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditContactsGroupsMVCRenderCommand
+public class EditSyncedContactsGroupsMVCRenderCommand
 	extends BaseAnalyticsMVCRenderCommand {
 
 	@Override

@@ -421,8 +421,8 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 		return doSearch(
 			companyId,
-			HashMapBuilder.put(
-				"kaleoInstanceId", (Serializable)kaleoInstanceId
+			HashMapBuilder.<String, Serializable>put(
+				"kaleoInstanceId", kaleoInstanceId
 			).put(
 				"logTypes", _toIntegerArraySupplier(logTypes)
 			).build(),

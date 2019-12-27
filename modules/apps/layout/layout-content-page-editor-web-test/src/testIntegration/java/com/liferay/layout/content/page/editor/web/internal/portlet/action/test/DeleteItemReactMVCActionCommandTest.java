@@ -28,17 +28,14 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -46,11 +43,9 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -59,18 +54,12 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.InputStream;
 
-import javax.portlet.ActionRequest;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Víctor Galán
@@ -106,13 +95,13 @@ public class DeleteItemReactMVCActionCommandTest {
 		_addLayoutPageTemplateStructure(
 			_read("layout_data_with_children.json"));
 
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-
-		actionRequest.addParameter("itemId", "newItemId");
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -146,13 +135,13 @@ public class DeleteItemReactMVCActionCommandTest {
 				layoutData, "<id>",
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())));
 
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-
-		actionRequest.addParameter("itemId", "newItemId");
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -190,13 +179,13 @@ public class DeleteItemReactMVCActionCommandTest {
 				layoutData, "<id>",
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())));
 
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-
-		actionRequest.addParameter("itemId", "newItemId");
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -251,13 +240,13 @@ public class DeleteItemReactMVCActionCommandTest {
 				layoutData, "<id2>",
 				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())));
 
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-
-		actionRequest.addParameter("itemId", "newItemId");
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -312,13 +301,13 @@ public class DeleteItemReactMVCActionCommandTest {
 				layoutData, "<id2>",
 				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())));
 
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-
-		actionRequest.addParameter("itemId", "newItemId");
-
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
-			new Class<?>[] {ActionRequest.class}, actionRequest);
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_company.getCompanyId(), _group.getGroupId(), "newItemId",
+			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -384,39 +373,6 @@ public class DeleteItemReactMVCActionCommandTest {
 						_group, TestPropsValues.getUserId()));
 	}
 
-	private MockActionRequest _getMockActionRequest() throws PortalException {
-		MockActionRequest mockActionRequest = new MockActionRequest();
-
-		mockActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		mockActionRequest.addParameter(
-			"classNameId",
-			String.valueOf(PortalUtil.getClassNameId(Layout.class.getName())));
-		mockActionRequest.addParameter(
-			"classPK", String.valueOf(_layout.getPlid()));
-		mockActionRequest.addParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
-
-		return mockActionRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws PortalException {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLayoutSet(_layout.getLayoutSet());
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setPlid(_layout.getPlid());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
-	}
-
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -453,15 +409,5 @@ public class DeleteItemReactMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
-
-	private static class MockActionRequest
-		extends MockLiferayPortletActionRequest {
-
-		@Override
-		public HttpServletRequest getHttpServletRequest() {
-			return new MockHttpServletRequest();
-		}
-
-	}
 
 }

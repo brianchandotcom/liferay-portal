@@ -95,13 +95,13 @@ networks:
 			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
 				<then>
+					<gradle-execute dir="${analytics.cloud.asah.dir}" task="jar" />
+
+					<gradle-execute dir="${analytics.cloud.asah.dir}" task="clean" />
+
+					<gradle-execute dir="${analytics.cloud.asah.dir}" task="assemble" />
+
 					<execute dir="${analytics.cloud.asah.dir}">
-						touch local.env
-
-						./gradlew jar
-
-						./gradlew clean assemble
-
 						docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
 					</execute>
 				</then>
@@ -110,11 +110,15 @@ networks:
 			<if>
 				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
 				<then>
+					<gradle-execute dir="${analytics.cloud.faro.dir}" task="cleanNPM" />
+
+					<gradle-execute dir="${analytics.cloud.faro.dir}" task="npmInstall" />
+
+					<gradle-execute dir="${analytics.cloud.faro.dir}" task="createDocker">
+						<arg value="-Pcom.liferay.osb.faro.environment.name=asah-local" />
+					</gradle-execute>
+
 					<execute dir="${analytics.cloud.faro.dir}">
-						./gradlew cleanNPM npmInstall
-
-						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=asah-local
-
 						docker rm ${analytics.cloud.faro.container.name}
 					</execute>
 				</then>

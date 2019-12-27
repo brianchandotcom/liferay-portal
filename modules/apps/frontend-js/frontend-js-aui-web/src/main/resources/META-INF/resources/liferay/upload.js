@@ -50,7 +50,7 @@ AUI.add(
 			'<span class="file-title text-truncate" title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}">{[ LString.escapeHTML(values.title ? values.title : values.name) ]}</span>',
 			'</div>',
 			'<span class="progress">',
-			'<span class="progress-bar progress-bar-animated progress-bar-striped" id="{id}progress"></span>',
+			'<span class="progress-bar progress-bar-animated" id="{id}progress"></span>',
 			'</span>',
 			'</div>',
 			'<div class="autofit-col delete-button-col">',

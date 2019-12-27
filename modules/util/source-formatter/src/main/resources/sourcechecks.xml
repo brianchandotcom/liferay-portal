@@ -489,9 +489,11 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="XMLCheckstyleFileCheck" />
 		<check name="XMLEmptyLinesCheck" />
 		<check name="XMLIvyFileCheck" />
 		<check name="XMLServiceReferenceCheck" />
+		<check name="XMLSourcechecksFileCheck" />
 		<check name="XMLSpringFileCheck" />
 		<check name="XMLStrutsConfigFileCheck" />
 		<check name="XMLTestIgnorableErrorLinesFileCheck" />

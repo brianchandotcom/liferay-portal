@@ -79,7 +79,7 @@ public class WorkflowTaskAssignableUsersResourceImpl
 						workflowTaskAssignableUsers.add(
 							_createWorkflowTaskAssignableUser(
 								commonPooledActors,
-								_COMMON_POOLED_ACTORS_TASK_ID));
+								_COMMON_ASSIGNABLE_USERS_TASK_ID));
 
 						return workflowTaskAssignableUsers.toArray(
 							new WorkflowTaskAssignableUser[0]);
@@ -101,7 +101,7 @@ public class WorkflowTaskAssignableUsersResourceImpl
 		};
 	}
 
-	private static final Long _COMMON_POOLED_ACTORS_TASK_ID = 0L;
+	private static final Long _COMMON_ASSIGNABLE_USERS_TASK_ID = 0L;
 
 	@Reference
 	private Portal _portal;

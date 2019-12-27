@@ -15,7 +15,7 @@
 package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.layout.seo.web.internal.constants.LayoutSEOScreenNavigationEntryConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +31,8 @@ public class LayoutCustomMetaTagsScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return LayoutScreenNavigationEntryConstants.ENTRY_KEY_CUSTOM_META_TAGS;
+		return LayoutSEOScreenNavigationEntryConstants.
+			ENTRY_KEY_CUSTOM_META_TAGS;
 	}
 
 	@Override

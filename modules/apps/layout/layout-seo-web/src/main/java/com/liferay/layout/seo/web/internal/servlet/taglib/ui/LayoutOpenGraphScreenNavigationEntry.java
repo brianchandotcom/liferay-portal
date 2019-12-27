@@ -15,8 +15,8 @@
 package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
+import com.liferay.layout.seo.web.internal.constants.LayoutSEOScreenNavigationEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,7 +38,7 @@ public class LayoutOpenGraphScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return LayoutScreenNavigationEntryConstants.ENTRY_KEY_OPEN_GRAPH;
+		return LayoutSEOScreenNavigationEntryConstants.ENTRY_KEY_OPEN_GRAPH;
 	}
 
 	@Override

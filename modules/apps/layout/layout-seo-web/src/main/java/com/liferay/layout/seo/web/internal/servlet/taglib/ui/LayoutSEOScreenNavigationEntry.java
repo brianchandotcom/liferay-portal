@@ -15,7 +15,7 @@
 package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.layout.seo.web.internal.constants.LayoutSEOScreenNavigationEntryConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +31,7 @@ public class LayoutSEOScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return LayoutScreenNavigationEntryConstants.ENTRY_KEY_SEO;
+		return LayoutSEOScreenNavigationEntryConstants.ENTRY_KEY_SEO;
 	}
 
 	@Override

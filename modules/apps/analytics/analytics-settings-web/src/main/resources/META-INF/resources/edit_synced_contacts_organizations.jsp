@@ -22,8 +22,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", redirect));
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "select-contacts"), redirect);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sync-by-organizations"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "select-contacts"), redirect);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "sync-by-organizations"), currentURL);
 %>
 
 <portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />

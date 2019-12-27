@@ -19,3 +19,7 @@
 		}
 	}
 }
+
+.manage-allowed-fragment-modal .modal-body {
+	max-height: calc(100vh - 300px);
+}

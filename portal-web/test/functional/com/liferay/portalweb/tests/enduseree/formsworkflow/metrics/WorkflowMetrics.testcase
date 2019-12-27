@@ -380,6 +380,75 @@ definition {
 			taskCount = "1");
 	}
 
+	@description = "LRQA-53662 Automate LPS-92053 View process item detail page"
+	@priority = "5"
+	test ViewProcessItemDetailPage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewProcessItemDetailPage";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_GET_INSTANCE_ID");
+
+		WorkflowMetrics.validateInstanceDetails(
+			assetTitle = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			createdBy = "Test Test",
+			currentAssignee = "Unassigned",
+			currentStep = "Review",
+			instanceId = "${getInstanceId}",
+			processStatus = "Pending",
+			slaMessage = "No SLA records for this item.");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		WorkflowMetrics.validateInstanceDetails(processStatus = "Completed");
+	}
+
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssignee {

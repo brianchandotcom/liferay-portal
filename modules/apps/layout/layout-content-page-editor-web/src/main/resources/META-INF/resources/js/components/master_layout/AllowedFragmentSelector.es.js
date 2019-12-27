@@ -12,9 +12,10 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
 import useSelector from '../../store/hooks/useSelector.es';
 
@@ -47,10 +48,26 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 		state => state.layoutData.allowedFragmentEntries
 	);
 
+	const [filter, setFilter] = useState('');
+
 	const nodes = toNodes(elements);
 
 	return (
-		<Treeview nodes={nodes} onSelectedNodesChange={onSelectedFragment} />
+		<>
+			<ClayInput
+				className="mb-3"
+				onChange={event => setFilter(event.target.value)}
+				placeholder={`${Liferay.Language.get('search')}...`}
+				sizing="sm"
+				type="text"
+			/>
+			<Treeview
+				filterQuery={filter}
+				initialSelectedNodeIds={allowedFragmentEntries}
+				nodes={nodes}
+				onSelectedNodesChange={onSelectedFragment}
+			/>
+		</>
 	);
 };
 

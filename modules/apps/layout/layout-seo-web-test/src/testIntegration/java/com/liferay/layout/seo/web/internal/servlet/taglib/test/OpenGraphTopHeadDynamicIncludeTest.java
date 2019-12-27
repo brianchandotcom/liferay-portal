@@ -18,6 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -29,7 +32,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -51,6 +56,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -142,6 +149,40 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(document, "og:description", "customDescription");
+	}
+
+	@Test
+	public void testIncludeCustomMetaTags() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies/custom_meta_tags_ddm_form_values.json"),
+				StandardCharsets.UTF_8));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			_layout.getUserId(), _layout.getGroupId(),
+			_layout.isPrivateLayout(), _layout.getLayoutId(), false,
+			Collections.emptyMap(), false, Collections.emptyMap(),
+			Collections.emptyMap(), 0, false, Collections.emptyMap(),
+			serviceContext);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			_getHttpServletRequest(), mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "name1", "value1");
+		_assertMetaTag(document, "name2", "value2");
 	}
 
 	@Test
@@ -702,6 +743,19 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Assert.assertEquals(0, elements.size());
 	}
 
+	private long _getDDMStructureId() throws PortalException {
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(
+				LayoutSEOEntry.class.getName()),
+			"custom-meta-tags");
+
+		return ddmStructure.getStructureId();
+	}
+
 	private HttpServletRequest _getHttpServletRequest() throws PortalException {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -784,7 +838,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			"LayoutSEOCompanyConfiguration";
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
@@ -799,6 +859,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private Language _language;

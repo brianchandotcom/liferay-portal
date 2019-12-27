@@ -21,12 +21,7 @@ import com.liferay.petra.json.web.service.client.server.simulator.SimulatorConst
 
 import java.security.KeyStore;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -42,19 +37,10 @@ public class JSONWebServiceClientImplSSLGetTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			_createJsonWebServiceClient();
 
-		List<NameValuePair> params = new LinkedList<NameValuePair>();
-
-		params.add(
-			new BasicNameValuePair(
-				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200"));
-		params.add(
-			new BasicNameValuePair(
-				SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON,
-				"true"));
-
 		HTTPSServerSimulator.start("TLSv1.1");
 
-		String json = jsonWebServiceClientImpl.doGet("/testGet/", params);
+		String json = jsonWebServiceClientImpl.doGet(
+			"/testGet/", getParameters("200"));
 
 		HTTPSServerSimulator.stop();
 
@@ -69,19 +55,10 @@ public class JSONWebServiceClientImplSSLGetTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			_createJsonWebServiceClient();
 
-		List<NameValuePair> params = new LinkedList<NameValuePair>();
-
-		params.add(
-			new BasicNameValuePair(
-				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200"));
-		params.add(
-			new BasicNameValuePair(
-				SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON,
-				"true"));
-
 		HTTPSServerSimulator.start("TLSv1.2");
 
-		String json = jsonWebServiceClientImpl.doGet("/testGet/", params);
+		String json = jsonWebServiceClientImpl.doGet(
+			"/testGet/", getParameters("200"));
 
 		HTTPSServerSimulator.stop();
 
@@ -98,20 +75,11 @@ public class JSONWebServiceClientImplSSLGetTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			_createJsonWebServiceClient();
 
-		List<NameValuePair> params = new LinkedList<NameValuePair>();
-
-		params.add(
-			new BasicNameValuePair(
-				SimulatorConstants.HTTP_PARAMETER_RESPOND_WITH_STATUS, "200"));
-		params.add(
-			new BasicNameValuePair(
-				SimulatorConstants.HTTP_PARAMETER_RETURN_PARMS_IN_JSON,
-				"true"));
-
 		HTTPSServerSimulator.start("TLSv1");
 
 		try {
-			String json = jsonWebServiceClientImpl.doGet("/testGet/", params);
+			String json = jsonWebServiceClientImpl.doGet(
+				"/testGet/", getParameters("200"));
 
 			Assert.assertTrue(
 				json,

@@ -32,7 +32,6 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
-import com.liferay.layout.seo.web.internal.constants.LayoutSEOWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -68,6 +67,7 @@ public class LayoutsSEODisplayContext {
 
 	public LayoutsSEODisplayContext(
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
+		ItemSelector itemSelector,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
@@ -77,6 +77,7 @@ public class LayoutsSEODisplayContext {
 
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
+		_itemSelector = itemSelector;
 		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
@@ -92,8 +93,6 @@ public class LayoutsSEODisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
-		_itemSelector = (ItemSelector)liferayPortletRequest.getAttribute(
-			LayoutSEOWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

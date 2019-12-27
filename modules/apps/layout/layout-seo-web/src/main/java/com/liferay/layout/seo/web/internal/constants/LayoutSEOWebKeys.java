@@ -19,8 +19,6 @@ package com.liferay.layout.seo.web.internal.constants;
  */
 public class LayoutSEOWebKeys {
 
-	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
-
 	public static final String LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT =
 		"LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT";
 

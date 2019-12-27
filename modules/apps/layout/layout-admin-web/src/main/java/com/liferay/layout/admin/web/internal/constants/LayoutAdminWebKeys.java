@@ -19,8 +19,6 @@ package com.liferay.layout.admin.web.internal.constants;
  */
 public class LayoutAdminWebKeys {
 
-	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
-
 	public static final String LAYOUT_CONVERTER_REGISTRY =
 		"LAYOUT_CONVERTER_REGISTRY";
 

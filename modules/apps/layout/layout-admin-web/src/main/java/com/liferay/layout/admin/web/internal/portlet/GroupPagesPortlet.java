@@ -18,7 +18,6 @@ import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
@@ -163,8 +162,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
 			renderRequest.setAttribute(
-				LayoutAdminWebKeys.ITEM_SELECTOR, _itemSelector);
-			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_CONVERTER_REGISTRY,
 				_layoutConverterRegistry);
 			renderRequest.setAttribute(
@@ -221,9 +218,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupProvider _groupProvider;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	private volatile LayoutConverterConfiguration _layoutConverterConfiguration;
 

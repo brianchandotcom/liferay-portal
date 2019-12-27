@@ -19,23 +19,17 @@ import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutData;
 import com.liferay.layout.util.template.LayoutRow;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.xml.Attribute;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,77 +44,53 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
-		try {
-			return _convert(layout);
-		}
-		catch (DocumentException de) {
-			throw new RuntimeException(de);
-		}
-	}
+		List<UnsafeConsumer<LayoutRow, Exception>> rowUnsafeConsumers =
+			new ArrayList<>();
 
-	private LayoutData _convert(Layout layout) throws DocumentException {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
 
-		Document document = SAXReaderUtil.read(layoutTemplate.getContent());
+		Document document = Jsoup.parseBodyFragment(
+			layoutTemplate.getContent());
 
-		XPath rowsXPath = SAXReaderUtil.createXPath(
-			"//div[contains(@class, 'portlet-layout') and contains(@class, " +
-				"'row')]");
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
 
-		List<Node> rowNodes = rowsXPath.selectNodes(document);
+		outputSettings.prettyPrint(false);
 
-		List<UnsafeConsumer<LayoutRow, Exception>> rowUnsafeConsumers =
-			new ArrayList<>();
+		document.outputSettings(outputSettings);
 
-		int columnIndex = 1;
-
-		XPath columnsXPath = SAXReaderUtil.createXPath(
-			"child::div[contains(@class, 'portlet-column')]");
-
-		for (Node rowNode : rowNodes) {
-			List<Node> columnNodes = columnsXPath.selectNodes(rowNode);
-
+		for (Element rowElement : document.select(".portlet-layout.row")) {
 			List<UnsafeConsumer<LayoutColumn, Exception>>
 				columnUnsafeConsumers = new ArrayList<>();
 
-			for (Node columnNode : columnNodes) {
-				String columnXML = columnNode.asXML();
+			for (Element columnElement :
+					rowElement.getElementsByClass("portlet-column")) {
 
-				Document columnDocument = SAXReaderUtil.read(columnXML);
+				UnsafeConsumer<LayoutColumn, Exception> columnUnsafeConsumer =
+					layoutColumn -> {
+						layoutColumn.addPortlets(columnElement.id());
 
-				Element element = columnDocument.getRootElement();
+						int columnSize = 12;
 
-				Attribute attribute = element.attribute("class");
+						for (String className : columnElement.classNames()) {
+							if (className.startsWith(
+									_CSS_CLASS_COLUMN_PREFIX)) {
 
-				String attributeData = (String)attribute.getData();
+								columnSize = GetterUtil.getInteger(
+									className.substring(
+										_CSS_CLASS_COLUMN_PREFIX.length()),
+									12);
 
-				String[] attributeParts = attributeData.split(StringPool.SPACE);
+								break;
+							}
+						}
 
-				String[] filteredAttributeParts = ArrayUtil.filter(
-					attributeParts,
-					s -> s.startsWith(_CSS_CLASS_COLUMN_PREFIX));
+						layoutColumn.setSize(columnSize);
+					};
 
-				if (filteredAttributeParts.length > 0) {
-					String columnId =
-						LayoutTypePortletConstants.COLUMN_PREFIX + columnIndex;
-
-					int columnSize = GetterUtil.getInteger(
-						filteredAttributeParts[0].substring(
-							_CSS_CLASS_COLUMN_PREFIX.length()));
-
-					UnsafeConsumer<LayoutColumn, Exception>
-						columnUnsafeConsumer = layoutColumn -> {
-							layoutColumn.addPortlets(columnId);
-							layoutColumn.setSize(columnSize);
-						};
-
-					columnUnsafeConsumers.add(columnUnsafeConsumer);
-				}
-
-				columnIndex++;
+				columnUnsafeConsumers.add(columnUnsafeConsumer);
 			}
 
 			UnsafeConsumer<LayoutRow, Exception> rowUnsafeConsumer =

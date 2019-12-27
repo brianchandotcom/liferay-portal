@@ -88,33 +88,6 @@ if (analyticsConfiguration != null) {
 
 	<aui:fieldset>
 		<label class="control-label">
-			<liferay-ui:message key="synced-sites" />
-		</label>
-
-		<div class="form-text">
-			<liferay-ui:message key="synced-sites-help" />
-		</div>
-
-		<small>
-			<strong>
-				<liferay-ui:message arguments="<%= ArrayUtil.getLength(syncedGroupIds) %>" key="total-sites-selected-x" />
-			</strong>
-		</small>
-
-		<aui:button-row>
-			<liferay-portlet:renderURL varImpl="selectSitesURL">
-				<portlet:param name="mvcRenderCommandName" value="/view_configuration_screen" />
-				<portlet:param name="configurationScreenKey" value="synced-sites" />
-			</liferay-portlet:renderURL>
-
-			<a href="<%= selectSitesURL.toString() %>">
-				<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-sites" />
-			</a>
-		</aui:button-row>
-	</aui:fieldset>
-
-	<aui:fieldset>
-		<label class="control-label">
 			<liferay-ui:message key="synced-contacts" />
 		</label>
 
@@ -136,6 +109,33 @@ if (analyticsConfiguration != null) {
 
 			<a href="<%= selectContactsURL.toString() %>">
 				<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-contacts" />
+			</a>
+		</aui:button-row>
+	</aui:fieldset>
+
+	<aui:fieldset>
+		<label class="control-label">
+			<liferay-ui:message key="synced-sites" />
+		</label>
+
+		<div class="form-text">
+			<liferay-ui:message key="synced-sites-help" />
+		</div>
+
+		<small>
+			<strong>
+				<liferay-ui:message arguments="<%= ArrayUtil.getLength(syncedGroupIds) %>" key="total-sites-selected-x" />
+			</strong>
+		</small>
+
+		<aui:button-row>
+			<liferay-portlet:renderURL varImpl="selectSitesURL">
+				<portlet:param name="mvcRenderCommandName" value="/view_configuration_screen" />
+				<portlet:param name="configurationScreenKey" value="synced-sites" />
+			</liferay-portlet:renderURL>
+
+			<a href="<%= selectSitesURL.toString() %>">
+				<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-sites" />
 			</a>
 		</aui:button-row>
 	</aui:fieldset>

@@ -58,7 +58,7 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 			booleanQuery, kaleoTaskInstanceTokenQuery.getAssetTypes(),
 			keywordQueryContributorHelper);
 		appendTaskNameTerm(
-			booleanQuery, kaleoTaskInstanceTokenQuery.getTaskName(),
+			booleanQuery, kaleoTaskInstanceTokenQuery.getTaskNames(),
 			keywordQueryContributorHelper);
 	}
 
@@ -104,10 +104,10 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 	}
 
 	protected void appendTaskNameTerm(
-		BooleanQuery booleanQuery, String taskName,
+		BooleanQuery booleanQuery, String[] taskNames,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
-		if (Validator.isNull(taskName)) {
+		if (ArrayUtil.isEmpty(taskNames)) {
 			return;
 		}
 
@@ -115,7 +115,7 @@ public class KaleoTaskInstanceTokenKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		searchContext.setAttribute(
-			KaleoTaskInstanceTokenField.TASK_NAME, taskName);
+			KaleoTaskInstanceTokenField.TASK_NAME, taskNames);
 
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, KaleoTaskInstanceTokenField.TASK_NAME,

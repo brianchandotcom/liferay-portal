@@ -71,9 +71,14 @@ public class DataModelPermissionResourceImpl
 			ActionKeys.PERMISSIONS, _groupLocalService,
 			ddmStructure.getGroupId());
 
-		return _getDataModelPermissionPage(
-			ddmStructure.getCompanyId(), dataDefinitionId,
-			DataDefinitionConstants.RESOURCE_NAME, roleNames);
+		return Page.of(
+			transform(
+				DataEnginePermissionUtil.getRoles(
+					contextCompany, _roleLocalService,
+					StringUtil.split(roleNames)),
+				role -> _toDataModelPermission(
+					ddmStructure.getCompanyId(), dataDefinitionId,
+					DataDefinitionConstants.RESOURCE_NAME, role)));
 	}
 
 	@Override
@@ -119,9 +124,14 @@ public class DataModelPermissionResourceImpl
 			ActionKeys.PERMISSIONS, _groupLocalService,
 			ddlRecordSet.getGroupId());
 
-		return _getDataModelPermissionPage(
-			ddlRecordSet.getCompanyId(), dataRecordCollectionId,
-			DataRecordCollectionConstants.RESOURCE_NAME, roleNames);
+		return Page.of(
+			transform(
+				DataEnginePermissionUtil.getRoles(
+					contextCompany, _roleLocalService,
+					StringUtil.split(roleNames)),
+				role -> _toDataModelPermission(
+					ddlRecordSet.getCompanyId(), dataRecordCollectionId,
+					DataRecordCollectionConstants.RESOURCE_NAME, role)));
 	}
 
 	@Override
@@ -168,22 +178,6 @@ public class DataModelPermissionResourceImpl
 				DataRecordCollectionConstants.RESOURCE_NAME));
 	}
 
-	private Page<DataModelPermission> _getDataModelPermissionPage(
-			Long companyId, Long id, String resourceName, String roleNames)
-		throws PortalException {
-
-		List<ResourceAction> resourceActions =
-			_resourceActionLocalService.getResourceActions(resourceName);
-
-		return Page.of(
-			transform(
-				DataEnginePermissionUtil.getRoles(
-					contextCompany, _roleLocalService,
-					StringUtil.split(roleNames)),
-				role -> _toDataModelPermission(
-					companyId, id, resourceActions, resourceName, role)));
-	}
-
 	private ModelPermissions _getModelPermissions(
 			long companyId, DataModelPermission[] dataModelPermissions,
 			long primKey, String resourceName)
@@ -223,8 +217,7 @@ public class DataModelPermissionResourceImpl
 	}
 
 	private DataModelPermission _toDataModelPermission(
-		Long companyId, Long id, List<ResourceAction> resourceActions,
-		String resourceName, Role role) {
+		Long companyId, Long id, String resourceName, Role role) {
 
 		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.fetchResourcePermission(
@@ -234,6 +227,9 @@ public class DataModelPermissionResourceImpl
 		if (resourcePermission == null) {
 			return null;
 		}
+
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(resourceName);
 
 		Set<String> actionsIdsSet = new HashSet<>();
 

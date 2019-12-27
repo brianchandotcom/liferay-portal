@@ -100,7 +100,8 @@ public class DefaultLayoutConverter implements LayoutConverter {
 				String[] attributeParts = attributeData.split(StringPool.SPACE);
 
 				String[] filteredAttributeParts = ArrayUtil.filter(
-					attributeParts, s -> s.startsWith("col-md-"));
+					attributeParts,
+					s -> s.startsWith(_CSS_CLASS_COLUMN_PREFIX));
 
 				if (filteredAttributeParts.length > 0) {
 					String columnId =
@@ -108,7 +109,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 					int columnSize = GetterUtil.getInteger(
 						filteredAttributeParts[0].substring(
-							"col-md-".length()));
+							_CSS_CLASS_COLUMN_PREFIX.length()));
 
 					UnsafeConsumer<LayoutColumn, Exception>
 						columnUnsafeConsumer = layoutColumn -> {
@@ -132,5 +133,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 		return LayoutData.of(
 			layout, rowUnsafeConsumers.toArray(new UnsafeConsumer[0]));
 	}
+
+	private static final String _CSS_CLASS_COLUMN_PREFIX = "col-md-";
 
 }

@@ -1073,6 +1073,12 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			<property name="to.branch.name" value="${to.branch.name}" />
 		</ant>
 
+		<property file="working.dir.properties" />
+
+		<ant antfile="build-working-dir.xml" inheritAll="false" target="checkout-private-projects">
+			<property name="working.dir.checkout.dxp.apps.project.names" value="${working.dir.checkout.dxp.apps.project.names}" />
+		</ant>
+
 		<gradle-execute setupbinariescache="false" task="removeDXPScript">
 			<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
 		</gradle-execute>

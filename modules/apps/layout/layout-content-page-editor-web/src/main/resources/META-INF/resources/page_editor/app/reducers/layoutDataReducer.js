@@ -23,7 +23,9 @@ function updateColumnsSize({items, newNumberOfColumns, rowItem}) {
 	if (rowItem.children.length > 0) {
 		rowItem.children.forEach((child, columnIndex) => {
 			const columnConfig = newItems[child].config;
+
 			if (columnConfig) {
+
 				let newColumnSize = columnsSize;
 				const middleColumnPosition =
 					Math.ceil(newNumberOfColumns / 2) - 1;
@@ -53,27 +55,25 @@ function createColumn(items, action) {
 
 	const rowItem = newItems[rowItemId];
 
-	newItems = {
-		...newItems,
-		[itemId]: {
-			children: [],
-			config: {
-				...defaultConfig,
-				...config
-			},
-			itemId,
-			parentId: rowItemId,
-			type: itemType
-		},
-
-		[rowItemId]: {
-			...rowItem,
-			children: [...rowItem.children, itemId]
-		}
-	};
-
 	newItems = updateColumnsSize({
-		items: newItems,
+		items: {
+			...newItems,
+			[itemId]: {
+				children: [],
+				config: {
+					...defaultConfig,
+					...config
+				},
+				itemId,
+				parentId: rowItemId,
+				type: itemType
+			},
+
+			[rowItemId]: {
+				...rowItem,
+				children: [...rowItem.children, itemId]
+			}
+		},
 		newNumberOfColumns,
 		rowItem
 	});
@@ -93,16 +93,15 @@ function removeColumn(items, action) {
 		const columnItemIdToBeRemoved = children.pop();
 
 		if (Array.isArray(children) && children.length) {
-			newItems = {
-				...newItems,
-				[rowItemId]: {
-					...rowItem,
-					children
-				}
-			};
 
 			newItems = updateColumnsSize({
-				items: newItems,
+				items: {
+					...newItems,
+					[rowItemId]: {
+						...rowItem,
+						children
+					}
+				},
 				newNumberOfColumns,
 				rowItem
 			});

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
@@ -92,7 +93,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendAssigneeClassPKsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendCompletedTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
-		appendKaleoInstanceIdTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
+		appendKaleoInstanceIdsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendRoleIdsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendSearchByUserRolesTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 
@@ -142,17 +143,26 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 		BooleanFilter booleanFilter,
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
-		Long assigneeClassPK = kaleoTaskInstanceTokenQuery.getAssigneeClassPK();
+		Long[] assigneeClassPKs =
+			kaleoTaskInstanceTokenQuery.getAssigneeClassPKs();
 
-		if (assigneeClassPK == null) {
+		if (ArrayUtil.isEmpty(assigneeClassPKs)) {
 			return;
 		}
 
-		TermFilter assigneeClassPKsTermFilter = new TermFilter(
-			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS,
-			String.valueOf(assigneeClassPK));
+		TermsFilter assigneeClassPKsTermsFilter = new TermsFilter(
+			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_PKS);
 
-		booleanFilter.add(assigneeClassPKsTermFilter, BooleanClauseOccur.MUST);
+		assigneeClassPKsTermsFilter.addValues(
+			Stream.of(
+				assigneeClassPKs
+			).map(
+				String::valueOf
+			).toArray(
+				String[]::new
+			));
+
+		booleanFilter.add(assigneeClassPKsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendCompletedTerm(
@@ -204,18 +214,30 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			dueDateRangeFilterBuilder.build(), BooleanClauseOccur.MUST);
 	}
 
-	protected void appendKaleoInstanceIdTerm(
+	protected void appendKaleoInstanceIdsTerm(
 		BooleanFilter booleanFilter,
 		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
 
-		Long kaleoInstanceId = kaleoTaskInstanceTokenQuery.getKaleoInstanceId();
+		Long[] kaleoInstanceIds =
+			kaleoTaskInstanceTokenQuery.getKaleoInstanceIds();
 
-		if (kaleoInstanceId == null) {
+		if (ArrayUtil.isEmpty(kaleoInstanceIds)) {
 			return;
 		}
 
-		booleanFilter.addRequiredTerm(
-			KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID, kaleoInstanceId);
+		TermsFilter kaleoInstanceIdsTermsFilter = new TermsFilter(
+			KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID);
+
+		kaleoInstanceIdsTermsFilter.addValues(
+			Stream.of(
+				kaleoInstanceIds
+			).map(
+				String::valueOf
+			).toArray(
+				String[]::new
+			));
+
+		booleanFilter.add(kaleoInstanceIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void appendRoleIdsTerm(

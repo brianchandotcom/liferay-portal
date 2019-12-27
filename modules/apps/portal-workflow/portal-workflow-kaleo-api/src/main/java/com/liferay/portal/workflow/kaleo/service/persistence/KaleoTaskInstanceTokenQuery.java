@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
@@ -52,8 +53,23 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		return _assigneeClassName;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getAssigneeClassPKs()}
+	 */
+	@Deprecated
 	public Long getAssigneeClassPK() {
-		return _assigneeClassPK;
+		Long[] assigneeClassPKs = getAssigneeClassPKs();
+
+		if (ArrayUtil.isEmpty(assigneeClassPKs)) {
+			return null;
+		}
+
+		return assigneeClassPKs[0];
+	}
+
+	public Long[] getAssigneeClassPKs() {
+		return _assigneeClassPKs;
 	}
 
 	public long getCompanyId() {
@@ -72,8 +88,23 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		return _end;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getKaleoInstanceIds()}
+	 */
+	@Deprecated
 	public Long getKaleoInstanceId() {
-		return _kaleoInstanceId;
+		Long[] kaleoInstanceIds = getKaleoInstanceIds();
+
+		if (ArrayUtil.isEmpty(kaleoInstanceIds)) {
+			return null;
+		}
+
+		return kaleoInstanceIds[0];
+	}
+
+	public Long[] getKaleoInstanceIds() {
+		return _kaleoInstanceIds;
 	}
 
 	public OrderByComparator<KaleoTaskInstanceToken> getOrderByComparator() {
@@ -92,8 +123,22 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		return _start;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getTaskNames()}
+	 */
+	@Deprecated
 	public String getTaskName() {
-		return _taskName;
+		String[] taskNames = getTaskNames();
+
+		if (ArrayUtil.isEmpty(taskNames)) {
+			return null;
+		}
+
+		return taskNames[0];
+	}
+
+	public String[] getTaskNames() {
+		return _taskNames;
 	}
 
 	public long getUserId() {
@@ -132,8 +177,17 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		_assigneeClassName = assigneeClassName;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setAssigneeClassPKs(Long[])}
+	 */
+	@Deprecated
 	public void setAssigneeClassPK(Long assigneeClassPK) {
-		_assigneeClassPK = assigneeClassPK;
+		setAssigneeClassPKs(new Long[] {assigneeClassPK});
+	}
+
+	public void setAssigneeClassPKs(Long[] assigneeClassPKs) {
+		_assigneeClassPKs = assigneeClassPKs;
 	}
 
 	public void setCompanyId(long companyId) {
@@ -156,8 +210,17 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		_end = end;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setKaleoInstanceIds(Long[])}
+	 */
+	@Deprecated
 	public void setKaleoInstanceId(Long kaleoInstanceId) {
-		_kaleoInstanceId = kaleoInstanceId;
+		setKaleoInstanceIds(new Long[] {kaleoInstanceId});
+	}
+
+	public void setKaleoInstanceIds(Long[] kaleoInstanceIds) {
+		_kaleoInstanceIds = kaleoInstanceIds;
 	}
 
 	public void setOrderByComparator(
@@ -182,8 +245,17 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		_start = start;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setTaskNames(String[])}
+	 */
+	@Deprecated
 	public void setTaskName(String taskName) {
-		_taskName = taskName;
+		setTaskNames(new String[] {taskName});
+	}
+
+	public void setTaskNames(String[] taskNames) {
+		_taskNames = taskNames;
 	}
 
 	public void setUserId(long userId) {
@@ -195,19 +267,19 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 	private String _assetTitle;
 	private String[] _assetTypes;
 	private String _assigneeClassName;
-	private Long _assigneeClassPK;
+	private Long[] _assigneeClassPKs;
 	private long _companyId;
 	private Boolean _completed;
 	private Date _dueDateGT;
 	private Date _dueDateLT;
 	private int _end = QueryUtil.ALL_POS;
-	private Long _kaleoInstanceId;
+	private Long[] _kaleoInstanceIds;
 	private OrderByComparator<KaleoTaskInstanceToken> _orderByComparator;
 	private List<Long> _roleIds;
 	private Boolean _searchByUserRoles;
 	private ServiceContext _serviceContext;
 	private int _start = QueryUtil.ALL_POS;
-	private String _taskName;
+	private String[] _taskNames;
 	private long _userId;
 
 }

@@ -24,9 +24,6 @@ import com.liferay.portal.workflow.UserWorkflowHandler;
 @Deprecated
 public class PortalRegisterTestUtil {
 
-	protected static void registerIndexers() {
-	}
-
 	protected static void registerWorkflowHandlers() {
 		if (_workflowHandlersRegistered) {
 			return;

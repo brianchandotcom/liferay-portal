@@ -193,10 +193,6 @@ public class ServiceTestUtil {
 	@Deprecated
 	public static void initStaticServices() {
 
-		// Indexers
-
-		PortalRegisterTestUtil.registerIndexers();
-
 		// Messaging
 
 		if (TestPropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {

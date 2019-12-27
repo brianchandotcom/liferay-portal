@@ -132,23 +132,25 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				for (List<DDMFormFieldValue> ddmFormFieldValues :
 						ddmFormFieldValuesMap.values()) {
 
-					DDMFormFieldValue nameDDMFormFieldValue =
-						ddmFormFieldValues.get(0);
+					for (DDMFormFieldValue nameDDMFormFieldValue :
+							ddmFormFieldValues) {
 
-					Value nameValue = nameDDMFormFieldValue.getValue();
+						Value nameValue = nameDDMFormFieldValue.getValue();
 
-					List<DDMFormFieldValue> nestedDDMFormFieldValues =
-						nameDDMFormFieldValue.getNestedDDMFormFieldValues();
+						List<DDMFormFieldValue> nestedDDMFormFieldValues =
+							nameDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-					DDMFormFieldValue valueDDMFormFieldValue =
-						nestedDDMFormFieldValues.get(0);
+						DDMFormFieldValue valueDDMFormFieldValue =
+							nestedDDMFormFieldValues.get(0);
 
-					Value valueValue = valueDDMFormFieldValue.getValue();
+						Value valueValue = valueDDMFormFieldValue.getValue();
 
-					printWriter.println(
-						_getOpenGraphTag(
-							nameValue.getString(themeDisplay.getLocale()),
-							valueValue.getString(themeDisplay.getLocale())));
+						printWriter.println(
+							_getOpenGraphTag(
+								nameValue.getString(themeDisplay.getLocale()),
+								valueValue.getString(
+									themeDisplay.getLocale())));
+					}
 				}
 			}
 

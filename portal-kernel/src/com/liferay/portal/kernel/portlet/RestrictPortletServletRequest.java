@@ -77,16 +77,16 @@ public class RestrictPortletServletRequest
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		Enumeration<String> superEnumeration = super.getAttributeNames();
+		Enumeration<String> superenumeration = super.getAttributeNames();
 
 		if (_attributes.isEmpty()) {
-			return superEnumeration;
+			return superenumeration;
 		}
 
 		Set<String> names = new HashSet<>();
 
-		while (superEnumeration.hasMoreElements()) {
-			names.add(superEnumeration.nextElement());
+		while (superenumeration.hasMoreElements()) {
+			names.add(superenumeration.nextElement());
 		}
 
 		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {

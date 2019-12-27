@@ -224,6 +224,9 @@ const Sharing = ({
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken})
 		},
+		fetchRetry: {
+			attempts: 0
+		},
 		link: multiSelectValue ? sharingUserAutocompleteURL : undefined,
 		variables: {
 			[`${portletNamespace}query`]: multiSelectValue

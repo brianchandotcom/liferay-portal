@@ -66,7 +66,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="groups" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="update_synced_groups" />
 
 		<liferay-ui:search-container
 			id="selectUserGroups"

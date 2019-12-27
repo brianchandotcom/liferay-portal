@@ -68,8 +68,14 @@ export default function FloatingToolbar({
 		floatingToolbar
 	]);
 
-	/* eslint-disable-next-line react-hooks/exhaustive-deps */
-	useEffect(() => setFloatingToolbarRef(popoverRef), [show]);
+	useEffect(() => {
+		if (!show) {
+			setActiveConfigurationPanel(false);
+		}
+
+		setFloatingToolbarRef(popoverRef);
+		/* eslint-disable-next-line react-hooks/exhaustive-deps */
+	}, [show]);
 
 	return (
 		show &&

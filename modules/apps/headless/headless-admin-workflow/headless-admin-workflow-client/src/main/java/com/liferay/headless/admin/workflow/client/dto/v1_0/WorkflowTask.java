@@ -258,27 +258,6 @@ public class WorkflowTask {
 
 	protected Long id;
 
-	public Long getInstanceId() {
-		return instanceId;
-	}
-
-	public void setInstanceId(Long instanceId) {
-		this.instanceId = instanceId;
-	}
-
-	public void setInstanceId(
-		UnsafeSupplier<Long, Exception> instanceIdUnsafeSupplier) {
-
-		try {
-			instanceId = instanceIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long instanceId;
-
 	public String getName() {
 		return name;
 	}
@@ -319,6 +298,27 @@ public class WorkflowTask {
 	}
 
 	protected ObjectReviewed objectReviewed;
+
+	public Long getWorkflowInstanceId() {
+		return workflowInstanceId;
+	}
+
+	public void setWorkflowInstanceId(Long workflowInstanceId) {
+		this.workflowInstanceId = workflowInstanceId;
+	}
+
+	public void setWorkflowInstanceId(
+		UnsafeSupplier<Long, Exception> workflowInstanceIdUnsafeSupplier) {
+
+		try {
+			workflowInstanceId = workflowInstanceIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long workflowInstanceId;
 
 	@Override
 	public boolean equals(Object object) {

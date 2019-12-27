@@ -211,16 +211,6 @@ public class WorkflowTaskSerDes {
 			sb.append(workflowTask.getId());
 		}
 
-		if (workflowTask.getInstanceId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"instanceId\": ");
-
-			sb.append(workflowTask.getInstanceId());
-		}
-
 		if (workflowTask.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -243,6 +233,16 @@ public class WorkflowTaskSerDes {
 			sb.append("\"objectReviewed\": ");
 
 			sb.append(String.valueOf(workflowTask.getObjectReviewed()));
+		}
+
+		if (workflowTask.getWorkflowInstanceId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowInstanceId\": ");
+
+			sb.append(workflowTask.getWorkflowInstanceId());
 		}
 
 		sb.append("}");
@@ -345,13 +345,6 @@ public class WorkflowTaskSerDes {
 			map.put("id", String.valueOf(workflowTask.getId()));
 		}
 
-		if (workflowTask.getInstanceId() == null) {
-			map.put("instanceId", null);
-		}
-		else {
-			map.put("instanceId", String.valueOf(workflowTask.getInstanceId()));
-		}
-
 		if (workflowTask.getName() == null) {
 			map.put("name", null);
 		}
@@ -366,6 +359,15 @@ public class WorkflowTaskSerDes {
 			map.put(
 				"objectReviewed",
 				String.valueOf(workflowTask.getObjectReviewed()));
+		}
+
+		if (workflowTask.getWorkflowInstanceId() == null) {
+			map.put("workflowInstanceId", null);
+		}
+		else {
+			map.put(
+				"workflowInstanceId",
+				String.valueOf(workflowTask.getWorkflowInstanceId()));
 		}
 
 		return map;
@@ -459,12 +461,6 @@ public class WorkflowTaskSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "instanceId")) {
-				if (jsonParserFieldValue != null) {
-					workflowTask.setInstanceId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setName((String)jsonParserFieldValue);
@@ -475,6 +471,14 @@ public class WorkflowTaskSerDes {
 					workflowTask.setObjectReviewed(
 						ObjectReviewedSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowInstanceId")) {
+
+				if (jsonParserFieldValue != null) {
+					workflowTask.setWorkflowInstanceId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

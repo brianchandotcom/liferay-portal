@@ -64,7 +64,7 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(CreatorResourceImpl.class);
+			add(AssigneeResourceImpl.class);
 
 			add(TransitionResourceImpl.class);
 
@@ -75,6 +75,8 @@ public class OpenAPIResourceImpl {
 			add(WorkflowLogResourceImpl.class);
 
 			add(WorkflowTaskResourceImpl.class);
+
+			add(WorkflowTaskAssignableUsersResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

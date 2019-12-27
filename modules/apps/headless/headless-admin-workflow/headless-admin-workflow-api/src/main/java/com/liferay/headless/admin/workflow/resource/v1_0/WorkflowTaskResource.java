@@ -63,9 +63,14 @@ public interface WorkflowTaskResource {
 
 	public Page<WorkflowTask> getWorkflowTasksPage(
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-			String[] assetTypes, Boolean completed, Date dateDueEnd,
-			Date dateDueStart, Boolean searchByUserRoles, String taskName,
+			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
+			Date dateDueEnd, Date dateDueStart, Boolean searchByUserRoles,
+			String[] taskNames, Long[] workflowInstanceIds,
 			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public void patchWorkflowTaskAssignToUser(
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(

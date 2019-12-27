@@ -372,34 +372,6 @@ public class WorkflowLog {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String state;
 
-	@Schema(description = "The task asociated with this workflow log.")
-	public Long getTaskId() {
-		return taskId;
-	}
-
-	public void setTaskId(Long taskId) {
-		this.taskId = taskId;
-	}
-
-	@JsonIgnore
-	public void setTaskId(
-		UnsafeSupplier<Long, Exception> taskIdUnsafeSupplier) {
-
-		try {
-			taskId = taskIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The task asociated with this workflow log.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long taskId;
-
 	@Schema(description = "The workflow log's type.")
 	@Valid
 	public Type getType() {
@@ -435,6 +407,34 @@ public class WorkflowLog {
 	@GraphQLField(description = "The workflow log's type.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Type type;
+
+	@Schema(description = "The task asociated with this workflow log.")
+	public Long getWorkflowTaskId() {
+		return workflowTaskId;
+	}
+
+	public void setWorkflowTaskId(Long workflowTaskId) {
+		this.workflowTaskId = workflowTaskId;
+	}
+
+	@JsonIgnore
+	public void setWorkflowTaskId(
+		UnsafeSupplier<Long, Exception> workflowTaskIdUnsafeSupplier) {
+
+		try {
+			workflowTaskId = workflowTaskIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The task asociated with this workflow log.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long workflowTaskId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -582,16 +582,6 @@ public class WorkflowLog {
 			sb.append("\"");
 		}
 
-		if (taskId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taskId\": ");
-
-			sb.append(taskId);
-		}
-
 		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -604,6 +594,16 @@ public class WorkflowLog {
 			sb.append(type);
 
 			sb.append("\"");
+		}
+
+		if (workflowTaskId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowTaskId\": ");
+
+			sb.append(workflowTaskId);
 		}
 
 		sb.append("}");

@@ -389,6 +389,36 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema
+	@Valid
+	public Map<String, String> getDescriptions() {
+		return descriptions;
+	}
+
+	public void setDescriptions(Map<String, String> descriptions) {
+		this.descriptions = descriptions;
+	}
+
+	@JsonIgnore
+	public void setDescriptions(
+		UnsafeSupplier<Map<String, String>, Exception>
+			descriptionsUnsafeSupplier) {
+
+		try {
+			descriptions = descriptionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> descriptions;
+
 	@Schema(
 		description = "A relative URL to the structured content's rendered content."
 	)
@@ -420,6 +450,36 @@ public class StructuredContent {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
+
+	@Schema
+	@Valid
+	public Map<String, String> getFriendlyUrlPaths() {
+		return friendlyUrlPaths;
+	}
+
+	public void setFriendlyUrlPaths(Map<String, String> friendlyUrlPaths) {
+		this.friendlyUrlPaths = friendlyUrlPaths;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPaths(
+		UnsafeSupplier<Map<String, String>, Exception>
+			friendlyUrlPathsUnsafeSupplier) {
+
+		try {
+			friendlyUrlPaths = friendlyUrlPathsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> friendlyUrlPaths;
 
 	@Schema(description = "The structured content's ID.")
 	public Long getId() {
@@ -760,6 +820,35 @@ public class StructuredContent {
 	@NotEmpty
 	protected String title;
 
+	@Schema
+	@Valid
+	public Map<String, String> getTitles() {
+		return titles;
+	}
+
+	public void setTitles(Map<String, String> titles) {
+		this.titles = titles;
+	}
+
+	@JsonIgnore
+	public void setTitles(
+		UnsafeSupplier<Map<String, String>, Exception> titlesUnsafeSupplier) {
+
+		try {
+			titles = titlesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> titles;
+
 	@Schema(
 		description = "A valid external identifier to reference this structured content."
 	)
@@ -1012,6 +1101,16 @@ public class StructuredContent {
 			sb.append("\"");
 		}
 
+		if (descriptions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptions\": ");
+
+			sb.append(_toJSON(descriptions));
+		}
+
 		if (friendlyUrlPath != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1024,6 +1123,16 @@ public class StructuredContent {
 			sb.append(_escape(friendlyUrlPath));
 
 			sb.append("\"");
+		}
+
+		if (friendlyUrlPaths != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPaths\": ");
+
+			sb.append(_toJSON(friendlyUrlPaths));
 		}
 
 		if (id != null) {
@@ -1196,6 +1305,16 @@ public class StructuredContent {
 			sb.append(_escape(title));
 
 			sb.append("\"");
+		}
+
+		if (titles != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"titles\": ");
+
+			sb.append(_toJSON(titles));
 		}
 
 		if (uuid != null) {

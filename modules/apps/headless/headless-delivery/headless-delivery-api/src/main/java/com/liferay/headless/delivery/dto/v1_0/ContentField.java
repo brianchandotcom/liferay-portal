@@ -134,6 +134,35 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@Schema
+	@Valid
+	public Map<String, String> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Map<String, String> labels) {
+		this.labels = labels;
+	}
+
+	@JsonIgnore
+	public void setLabels(
+		UnsafeSupplier<Map<String, String>, Exception> labelsUnsafeSupplier) {
+
+		try {
+			labels = labelsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> labels;
+
 	@Schema(
 		description = "The field's internal name. This is valid for comparisons and unique in the structured content."
 	)
@@ -257,6 +286,35 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Value value;
 
+	@Schema
+	@Valid
+	public Map<String, Object> getValues() {
+		return values;
+	}
+
+	public void setValues(Map<String, Object> values) {
+		this.values = values;
+	}
+
+	@JsonIgnore
+	public void setValues(
+		UnsafeSupplier<Map<String, Object>, Exception> valuesUnsafeSupplier) {
+
+		try {
+			values = valuesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> values;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -326,6 +384,16 @@ public class ContentField {
 			sb.append("\"");
 		}
 
+		if (labels != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"labels\": ");
+
+			sb.append(_toJSON(labels));
+		}
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -378,6 +446,16 @@ public class ContentField {
 			sb.append("\"value\": ");
 
 			sb.append(String.valueOf(value));
+		}
+
+		if (values != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"values\": ");
+
+			sb.append(_toJSON(values));
 		}
 
 		sb.append("}");

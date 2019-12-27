@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -271,6 +272,28 @@ public class StructuredContent {
 
 	protected String description;
 
+	public Map<String, String> getDescriptions() {
+		return descriptions;
+	}
+
+	public void setDescriptions(Map<String, String> descriptions) {
+		this.descriptions = descriptions;
+	}
+
+	public void setDescriptions(
+		UnsafeSupplier<Map<String, String>, Exception>
+			descriptionsUnsafeSupplier) {
+
+		try {
+			descriptions = descriptionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> descriptions;
+
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -291,6 +314,28 @@ public class StructuredContent {
 	}
 
 	protected String friendlyUrlPath;
+
+	public Map<String, String> getFriendlyUrlPaths() {
+		return friendlyUrlPaths;
+	}
+
+	public void setFriendlyUrlPaths(Map<String, String> friendlyUrlPaths) {
+		this.friendlyUrlPaths = friendlyUrlPaths;
+	}
+
+	public void setFriendlyUrlPaths(
+		UnsafeSupplier<Map<String, String>, Exception>
+			friendlyUrlPathsUnsafeSupplier) {
+
+		try {
+			friendlyUrlPaths = friendlyUrlPathsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> friendlyUrlPaths;
 
 	public Long getId() {
 		return id;
@@ -521,6 +566,27 @@ public class StructuredContent {
 	}
 
 	protected String title;
+
+	public Map<String, String> getTitles() {
+		return titles;
+	}
+
+	public void setTitles(Map<String, String> titles) {
+		this.titles = titles;
+	}
+
+	public void setTitles(
+		UnsafeSupplier<Map<String, String>, Exception> titlesUnsafeSupplier) {
+
+		try {
+			titles = titlesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> titles;
 
 	public String getUuid() {
 		return uuid;

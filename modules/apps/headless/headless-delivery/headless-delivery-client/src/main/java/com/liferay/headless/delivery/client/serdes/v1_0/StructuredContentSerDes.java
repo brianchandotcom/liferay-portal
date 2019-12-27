@@ -234,6 +234,16 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
+		if (structuredContent.getDescriptions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptions\": ");
+
+			sb.append(_toJSON(structuredContent.getDescriptions()));
+		}
+
 		if (structuredContent.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -246,6 +256,16 @@ public class StructuredContentSerDes {
 			sb.append(_escape(structuredContent.getFriendlyUrlPath()));
 
 			sb.append("\"");
+		}
+
+		if (structuredContent.getFriendlyUrlPaths() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPaths\": ");
+
+			sb.append(_toJSON(structuredContent.getFriendlyUrlPaths()));
 		}
 
 		if (structuredContent.getId() != null) {
@@ -436,6 +456,16 @@ public class StructuredContentSerDes {
 			sb.append("\"");
 		}
 
+		if (structuredContent.getTitles() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"titles\": ");
+
+			sb.append(_toJSON(structuredContent.getTitles()));
+		}
+
 		if (structuredContent.getUuid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -563,6 +593,15 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getDescription()));
 		}
 
+		if (structuredContent.getDescriptions() == null) {
+			map.put("descriptions", null);
+		}
+		else {
+			map.put(
+				"descriptions",
+				String.valueOf(structuredContent.getDescriptions()));
+		}
+
 		if (structuredContent.getFriendlyUrlPath() == null) {
 			map.put("friendlyUrlPath", null);
 		}
@@ -570,6 +609,15 @@ public class StructuredContentSerDes {
 			map.put(
 				"friendlyUrlPath",
 				String.valueOf(structuredContent.getFriendlyUrlPath()));
+		}
+
+		if (structuredContent.getFriendlyUrlPaths() == null) {
+			map.put("friendlyUrlPaths", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPaths",
+				String.valueOf(structuredContent.getFriendlyUrlPaths()));
 		}
 
 		if (structuredContent.getId() == null) {
@@ -660,6 +708,13 @@ public class StructuredContentSerDes {
 		}
 		else {
 			map.put("title", String.valueOf(structuredContent.getTitle()));
+		}
+
+		if (structuredContent.getTitles() == null) {
+			map.put("titles", null);
+		}
+		else {
+			map.put("titles", String.valueOf(structuredContent.getTitles()));
 		}
 
 		if (structuredContent.getUuid() == null) {
@@ -776,10 +831,24 @@ public class StructuredContentSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "descriptions")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setDescriptions(
+						(Map)StructuredContentSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setFriendlyUrlPath(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPaths")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setFriendlyUrlPaths(
+						(Map)StructuredContentSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -868,6 +937,13 @@ public class StructuredContentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "titles")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setTitles(
+						(Map)StructuredContentSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {

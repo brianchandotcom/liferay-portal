@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -104,6 +106,36 @@ public class RenderedContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateName;
 
+	@Schema
+	@Valid
+	public Map<String, String> getTemplateNames() {
+		return templateNames;
+	}
+
+	public void setTemplateNames(Map<String, String> templateNames) {
+		this.templateNames = templateNames;
+	}
+
+	@JsonIgnore
+	public void setTemplateNames(
+		UnsafeSupplier<Map<String, String>, Exception>
+			templateNamesUnsafeSupplier) {
+
+		try {
+			templateNames = templateNamesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> templateNames;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -157,6 +189,16 @@ public class RenderedContent {
 			sb.append(_escape(templateName));
 
 			sb.append("\"");
+		}
+
+		if (templateNames != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"templateNames\": ");
+
+			sb.append(_toJSON(templateNames));
 		}
 
 		sb.append("}");

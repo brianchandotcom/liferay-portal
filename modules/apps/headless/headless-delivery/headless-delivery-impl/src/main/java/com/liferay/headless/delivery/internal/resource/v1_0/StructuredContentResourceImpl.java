@@ -863,8 +863,12 @@ public class StructuredContentResourceImpl
 			JournalArticle journalArticle)
 		throws Exception {
 
+		String acceptAllLanguages = contextHttpServletRequest.getHeader(
+			"X-Accept-All-Languages");
+
 		return _structuredContentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				GetterUtil.getBoolean(acceptAllLanguages),
 				contextAcceptLanguage.getPreferredLocale(),
 				journalArticle.getResourcePrimKey(), contextUriInfo,
 				contextUser));

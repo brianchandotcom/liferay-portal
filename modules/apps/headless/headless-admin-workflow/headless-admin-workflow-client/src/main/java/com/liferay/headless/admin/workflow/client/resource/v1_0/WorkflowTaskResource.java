@@ -28,6 +28,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -76,16 +78,30 @@ public interface WorkflowTaskResource {
 
 	public Page<WorkflowTask> getWorkflowTasksPage(
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-			String[] assetTypes, Boolean completed, java.util.Date dateDueEnd,
-			java.util.Date dateDueStart, Boolean searchByUserRoles,
-			String taskName, Pagination pagination, String sortString)
+			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
+			java.util.Date dateDueEnd, java.util.Date dateDueStart,
+			Boolean searchByUserRoles, String[] taskNames,
+			Long[] workflowInstanceIds, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowTasksPageHttpResponse(
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-			String[] assetTypes, Boolean completed, java.util.Date dateDueEnd,
-			java.util.Date dateDueStart, Boolean searchByUserRoles,
-			String taskName, Pagination pagination, String sortString)
+			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
+			java.util.Date dateDueEnd, java.util.Date dateDueStart,
+			Boolean searchByUserRoles, String[] taskNames,
+			Long[] workflowInstanceIds, Pagination pagination,
+			String sortString)
+		throws Exception;
+
+	public void patchWorkflowTaskAssignToUser(
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchWorkflowTaskAssignToUserHttpResponse(
+			com.liferay.headless.admin.workflow.client.dto.v1_0.
+				WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
@@ -490,17 +506,19 @@ public interface WorkflowTaskResource {
 
 		public Page<WorkflowTask> getWorkflowTasksPage(
 				Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-				String[] assetTypes, Boolean completed,
+				String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 				java.util.Date dateDueEnd, java.util.Date dateDueStart,
-				Boolean searchByUserRoles, String taskName,
-				Pagination pagination, String sortString)
+				Boolean searchByUserRoles, String[] taskNames,
+				Long[] workflowInstanceIds, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkflowTasksPageHttpResponse(
 					andOperator, assetPrimaryKeys, assetTitle, assetTypes,
-					completed, dateDueEnd, dateDueStart, searchByUserRoles,
-					taskName, pagination, sortString);
+					assigneeUserIds, completed, dateDueEnd, dateDueStart,
+					searchByUserRoles, taskNames, workflowInstanceIds,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -515,10 +533,11 @@ public interface WorkflowTaskResource {
 
 		public HttpInvoker.HttpResponse getWorkflowTasksPageHttpResponse(
 				Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
-				String[] assetTypes, Boolean completed,
+				String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 				java.util.Date dateDueEnd, java.util.Date dateDueStart,
-				Boolean searchByUserRoles, String taskName,
-				Pagination pagination, String sortString)
+				Boolean searchByUserRoles, String[] taskNames,
+				Long[] workflowInstanceIds, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -569,6 +588,13 @@ public interface WorkflowTaskResource {
 				}
 			}
 
+			if (assigneeUserIds != null) {
+				for (int i = 0; i < assigneeUserIds.length; i++) {
+					httpInvoker.parameter(
+						"assigneeUserIds", String.valueOf(assigneeUserIds[i]));
+				}
+			}
+
 			if (completed != null) {
 				httpInvoker.parameter("completed", String.valueOf(completed));
 			}
@@ -589,8 +615,19 @@ public interface WorkflowTaskResource {
 					"searchByUserRoles", String.valueOf(searchByUserRoles));
 			}
 
-			if (taskName != null) {
-				httpInvoker.parameter("taskName", String.valueOf(taskName));
+			if (taskNames != null) {
+				for (int i = 0; i < taskNames.length; i++) {
+					httpInvoker.parameter(
+						"taskNames", String.valueOf(taskNames[i]));
+				}
+			}
+
+			if (workflowInstanceIds != null) {
+				for (int i = 0; i < workflowInstanceIds.length; i++) {
+					httpInvoker.parameter(
+						"workflowInstanceIds",
+						String.valueOf(workflowInstanceIds[i]));
+				}
 			}
 
 			if (pagination != null) {
@@ -608,6 +645,72 @@ public interface WorkflowTaskResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-admin-workflow/v1.0/workflow-tasks");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void patchWorkflowTaskAssignToUser(
+				com.liferay.headless.admin.workflow.client.dto.v1_0.
+					WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchWorkflowTaskAssignToUserHttpResponse(
+					workflowTaskAssignToUsers);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				patchWorkflowTaskAssignToUserHttpResponse(
+					com.liferay.headless.admin.workflow.client.dto.v1_0.
+						WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					workflowTaskAssignToUsers
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/assign-to-user");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

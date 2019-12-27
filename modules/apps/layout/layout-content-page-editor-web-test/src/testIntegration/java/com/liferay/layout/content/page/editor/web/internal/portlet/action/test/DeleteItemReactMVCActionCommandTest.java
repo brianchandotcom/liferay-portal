@@ -110,13 +110,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		actionRequest.addParameter("itemId", "newItemId");
 
-		ReflectionTestUtil.invoke(
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -154,13 +150,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		actionRequest.addParameter("itemId", "newItemId");
 
-		ReflectionTestUtil.invoke(
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -202,13 +194,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		actionRequest.addParameter("itemId", "newItemId");
 
-		ReflectionTestUtil.invoke(
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -267,13 +255,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		actionRequest.addParameter("itemId", "newItemId");
 
-		ReflectionTestUtil.invoke(
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
@@ -332,13 +316,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		actionRequest.addParameter("itemId", "newItemId");
 
-		ReflectionTestUtil.invoke(
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 

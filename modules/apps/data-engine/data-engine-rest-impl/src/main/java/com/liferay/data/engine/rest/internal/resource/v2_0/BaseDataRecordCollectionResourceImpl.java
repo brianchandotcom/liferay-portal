@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollectionPermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -348,7 +349,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		String actionName, GroupedModel groupedModel, String methodName) {
 
 		return PermissionsUtil.addAction(
-			actionName, getClass(), groupedModel, methodName, contextUriInfo);
+			actionName, getClass(), groupedModel, methodName,
+			contextScopeChecker, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(
@@ -356,8 +358,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		Long siteId) {
 
 		return PermissionsUtil.addAction(
-			actionName, getClass(), id, methodName, permissionName, siteId,
-			contextUriInfo);
+			actionName, getClass(), id, methodName, permissionName,
+			contextScopeChecker, siteId, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(
@@ -406,6 +408,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	protected com.liferay.portal.kernel.model.User contextUser;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ScopeChecker contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

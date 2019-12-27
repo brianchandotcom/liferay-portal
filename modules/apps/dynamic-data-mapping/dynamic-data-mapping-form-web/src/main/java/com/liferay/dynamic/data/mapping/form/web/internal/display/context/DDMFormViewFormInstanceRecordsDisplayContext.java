@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -142,9 +141,11 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 			return StringPool.BLANK;
 		}
 
+		String formFieldType = formField.getType();
+
 		final DDMFormFieldValueRenderer fieldValueRenderer =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
-				formField.getType());
+				formFieldType);
 
 		List<String> renderedFormFieldValues = ListUtil.toList(
 			formFieldValues,
@@ -158,23 +159,16 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 			});
 
-		String columnValue = StringPool.BLANK;
-
-		String formFieldType = formField.getType();
-
-		if (!formFieldType.equals("select")) {
-			columnValue = StringUtil.merge(
-				renderedFormFieldValues, StringPool.COMMA_AND_SPACE);
-		}
-		else {
+		if (formFieldType.equals("select")) {
 			DDMFormFieldOptions formFieldOptions =
 				formField.getDDMFormFieldOptions();
 
-			columnValue = _getColumnValueFieldTypeSelect(
+			renderedFormFieldValues = _getOptionsRenderedFormFieldValues(
 				formFieldOptions, renderedFormFieldValues);
 		}
 
-		return columnValue;
+		return StringUtil.merge(
+			renderedFormFieldValues, StringPool.COMMA_AND_SPACE);
 	}
 
 	public List<DDMFormField> getDDMFormFields() {
@@ -596,18 +590,19 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		ddmFormInstanceRecordSearch.setTotal(total);
 	}
 
-	private String _getColumnValueFieldTypeSelect(
+	private List<String> _getOptionsRenderedFormFieldValues(
 		DDMFormFieldOptions formFieldOptions,
 		List<String> renderedFormFieldValues) {
 
 		Stream<String> stream = renderedFormFieldValues.stream();
 
 		List<String> convertedFormFieldValues = stream.flatMap(
-			s -> Arrays.stream(StringUtil.split(s, CharPool.COMMA))
+			renderedFormFieldValue -> Arrays.stream(
+				StringUtil.split(renderedFormFieldValue, CharPool.COMMA))
 		).map(
 			String::trim
 		).collect(
-			Collectors.toCollection(LinkedList::new)
+			Collectors.toList()
 		);
 
 		List<String> renderedFormFieldLabels = ListUtil.toList(
@@ -624,8 +619,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 			});
 
-		return StringUtil.merge(
-			renderedFormFieldLabels, StringPool.COMMA_AND_SPACE);
+		return renderedFormFieldLabels;
 	}
 
 	private static final int _MAX_COLUMNS = 5;

@@ -371,8 +371,11 @@ public class DefaultASTNodeVisitorTest {
 			MainExampleTable.TABLE.mainExampleId.gte(
 				1L
 			).andParentheses(
-				MainExampleTable.TABLE.name.eq("test").or(
-				MainExampleTable.TABLE.name.eq((String)null))
+				MainExampleTable.TABLE.name.eq(
+					"test"
+				).or(
+					MainExampleTable.TABLE.name.eq((String)null)
+				)
 			)
 		);
 

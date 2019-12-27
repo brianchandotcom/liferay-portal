@@ -2,3 +2,4 @@ Bundle-Name: Liferay Layout SEO Web
 Bundle-SymbolicName: com.liferay.layout.seo.web
 Bundle-Version: 1.0.0
 Web-ContextPath: /layout-seo-web
+-dsannotations-options: inherit

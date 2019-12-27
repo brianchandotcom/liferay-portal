@@ -69,14 +69,14 @@ public class EditSyncedContactsMVCActionCommand
 		if (!syncAllContacts) {
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-			if (Objects.equals(cmd, "groups")) {
+			if (Objects.equals(cmd, "update_synced_groups")) {
 				configurationProperties.put(
 					"syncedUserGroupIds", syncedUserGroupIds);
 
 				syncedOrganizationIds = GetterUtil.getStringValues(
 					configurationProperties.get("syncedOrganizationIds"));
 			}
-			else if (Objects.equals(cmd, "organizations")) {
+			else if (Objects.equals(cmd, "update_synced_organizations")) {
 				configurationProperties.put(
 					"syncedOrganizationIds", syncedOrganizationIds);
 

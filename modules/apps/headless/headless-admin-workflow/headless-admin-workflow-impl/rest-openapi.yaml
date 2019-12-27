@@ -440,6 +440,9 @@ components:
                     format: date-time
                     type: string
                     writeOnly: true
+                taskId:
+                    format: int64
+                    type: integer
             type: object
 info:
     description:
@@ -1071,6 +1074,29 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/WorkflowTask"
                                 type: array
+                    description:
+                        ""
+            tags: ["WorkflowTask"]
+    "/workflow-tasks/assign-to-user":
+        patch:
+            operationId: patchWorkflowTaskAssignToUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/WorkflowTaskAssignToUser"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/WorkflowTaskAssignToUser"
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WorkflowTask"]

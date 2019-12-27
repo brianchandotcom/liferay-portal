@@ -24,12 +24,18 @@ import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.ObjectReviewedUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -258,6 +264,38 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	}
 
 	@Override
+	public void patchWorkflowTaskAssignToUser(
+			WorkflowTaskAssignToUser[] workflowTaskAssignToUsers)
+		throws Exception {
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					for (WorkflowTaskAssignToUser workflowTaskAssignToUser :
+							workflowTaskAssignToUsers) {
+
+						_workflowTaskManager.assignWorkflowTaskToUser(
+							contextCompany.getCompanyId(),
+							contextUser.getUserId(),
+							workflowTaskAssignToUser.getTaskId(),
+							workflowTaskAssignToUser.getAssigneeId(),
+							workflowTaskAssignToUser.getComment(),
+							workflowTaskAssignToUser.getDueDate(), null);
+					}
+
+					return null;
+				});
+		}
+		catch (WorkflowException we) {
+			throw we;
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+		}
+	}
+
+	@Override
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
 		throws Exception {
@@ -400,6 +438,20 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 					workflowTask.getOptionalAttributes());
 			}
 		};
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowTaskResourceImpl.class);
+
+	private static final TransactionConfig _transactionConfig;
+
+	static {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRES_NEW);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionConfig = builder.build();
 	}
 
 	@Reference

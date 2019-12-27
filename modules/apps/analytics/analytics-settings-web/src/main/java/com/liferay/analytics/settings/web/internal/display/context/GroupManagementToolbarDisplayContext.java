@@ -70,6 +70,11 @@ public class GroupManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		return false;
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list"};
 	}

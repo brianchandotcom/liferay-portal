@@ -15,18 +15,48 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState} from 'react';
 
-const ManageAllowedFragmentModal = ({
-	observer,
-	onClose,
-}) => {
+import {updateAllowedFragmentEntries} from '../../actions/updateAllowedFragmentEntries.es';
+import useDispatch from '../../store/hooks/useDispatch.es';
+import AllowedFragmentSelector from './AllowedFragmentSelector.es';
+
+const ManageAllowedFragmentModal = ({observer, onClose}) => {
+	const dispatch = useDispatch();
+
+	const [selectedFragments, setSelectedFragments] = useState(new Set([]));
+	const [loading, setLoading] = useState();
+
+	const handleSaveClick = () => {
+		setLoading(true);
+
+		dispatch(updateAllowedFragmentEntries([...selectedFragments])).done(
+			() => {
+				setLoading(true);
+				onClose();
+			}
+		);
+	};
+
 	return (
-		<ClayModal observer={observer} size="md">
-			<ClayModal.Header>{Liferay.Language.get('allowed-fragments')}</ClayModal.Header>
+		<ClayModal
+			className="manage-allowed-fragment-modal"
+			observer={observer}
+			size="md"
+		>
+			<ClayModal.Header>
+				{Liferay.Language.get('allowed-fragments')}
+			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<p>{Liferay.Language.get('specify-which-fragments-a-page-author-is-allowed-to-use-within-the-drop-zone-when-creating-a-page-from-this-master')}</p>
+				<p>
+					{Liferay.Language.get(
+						'specify-which-fragments-a-page-author-is-allowed-to-use-within-the-drop-zone-when-creating-a-page-from-this-master'
+					)}
+				</p>
+				<AllowedFragmentSelector
+					onSelectedFragment={setSelectedFragments}
+				/>
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -38,7 +68,16 @@ const ManageAllowedFragmentModal = ({
 
 						<ClayButton
 							displayType="primary"
+							onClick={handleSaveClick}
 						>
+							{loading && (
+								<span className="inline-item inline-item-before">
+									<span
+										aria-hidden="true"
+										className="loading-animation"
+									></span>
+								</span>
+							)}
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

@@ -86,6 +86,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "sync-by
 
 		<aui:button-row>
 			<aui:button type="submit" value="save" />
+			<aui:button href="<%= redirect %>" type="cancel" value="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

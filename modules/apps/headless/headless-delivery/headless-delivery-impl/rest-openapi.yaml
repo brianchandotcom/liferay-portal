@@ -6604,42 +6604,6 @@ paths:
                     description:
                         ""
             tags: ["StructuredContentFolder"]
-    "/structured-content/{structuredContentId}/subscribe":
-        put:
-            operationId: putStructuredContentSubscribe
-            parameters:
-                - in: path
-                  name: structuredContentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["StructuredContent"]
-    "/structured-content/{structuredContentId}/unsubscribe":
-        put:
-            operationId: putStructuredContentUnsubscribe
-            parameters:
-                - in: path
-                  name: structuredContentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}":
         delete:
             description:
@@ -6971,12 +6935,12 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
-    "/wiki-node/{wikiNodeId}/subscribe":
+    "/structured-contents/{structuredContentId}/subscribe":
         put:
-            operationId: putWikiNodeSubscribe
+            operationId: putStructuredContentSubscribe
             parameters:
                 - in: path
-                  name: wikiNodeId
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -6988,13 +6952,13 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: ["WikiNode"]
-    "/wiki-node/{wikiNodeId}/unsubscribe":
+            tags: ["StructuredContent"]
+    "/structured-contents/{structuredContentId}/unsubscribe":
         put:
-            operationId: putWikiNodeUnsubscribe
+            operationId: putStructuredContentUnsubscribe
             parameters:
                 - in: path
-                  name: wikiNodeId
+                  name: structuredContentId
                   required: true
                   schema:
                       format: int64
@@ -7006,7 +6970,7 @@ paths:
                         application/xml: {}
                     description:
                         ""
-            tags: ["WikiNode"]
+            tags: ["StructuredContent"]
     "/wiki-nodes/{wikiNodeId}":
         # @review
         delete:
@@ -7080,6 +7044,42 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/WikiNode"
+                    description:
+                        ""
+            tags: ["WikiNode"]
+    "/wiki-nodes/{wikiNodeId}/subscribe":
+        put:
+            operationId: putWikiNodeSubscribe
+            parameters:
+                - in: path
+                  name: wikiNodeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["WikiNode"]
+    "/wiki-nodes/{wikiNodeId}/unsubscribe":
+        put:
+            operationId: putWikiNodeUnsubscribe
+            parameters:
+                - in: path
+                  name: wikiNodeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiNode"]
@@ -7205,42 +7205,6 @@ paths:
                     description:
                         ""
             tags: ["WikiPageAttachment"]
-    "/wiki-page/{wikiPageId}/subscribe":
-        put:
-            operationId: putWikiPageSubscribe
-            parameters:
-                - in: path
-                  name: wikiPageId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["WikiPage"]
-    "/wiki-page/{wikiPageId}/unsubscribe":
-        put:
-            operationId: putWikiPageUnsubscribe
-            parameters:
-                - in: path
-                  name: wikiPageId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["WikiPage"]
     "/wiki-pages/{parentWikiPageId}/wiki-pages":
         get:
             # @review
@@ -7372,6 +7336,42 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/WikiPage"
+                    description:
+                        ""
+            tags: ["WikiPage"]
+    "/wiki-pages/{wikiPageId}/subscribe":
+        put:
+            operationId: putWikiPageSubscribe
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["WikiPage"]
+    "/wiki-pages/{wikiPageId}/unsubscribe":
+        put:
+            operationId: putWikiPageUnsubscribe
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
                     description:
                         ""
             tags: ["WikiPage"]

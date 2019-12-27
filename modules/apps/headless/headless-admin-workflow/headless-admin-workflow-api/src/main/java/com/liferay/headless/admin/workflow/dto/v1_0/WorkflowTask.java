@@ -360,34 +360,6 @@ public class WorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema
-	public Long getInstanceId() {
-		return instanceId;
-	}
-
-	public void setInstanceId(Long instanceId) {
-		this.instanceId = instanceId;
-	}
-
-	@JsonIgnore
-	public void setInstanceId(
-		UnsafeSupplier<Long, Exception> instanceIdUnsafeSupplier) {
-
-		try {
-			instanceId = instanceIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long instanceId;
-
 	@Schema(description = "The task's name.")
 	public String getName() {
 		return name;
@@ -447,6 +419,34 @@ public class WorkflowTask {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected ObjectReviewed objectReviewed;
+
+	@Schema
+	public Long getWorkflowInstanceId() {
+		return workflowInstanceId;
+	}
+
+	public void setWorkflowInstanceId(Long workflowInstanceId) {
+		this.workflowInstanceId = workflowInstanceId;
+	}
+
+	@JsonIgnore
+	public void setWorkflowInstanceId(
+		UnsafeSupplier<Long, Exception> workflowInstanceIdUnsafeSupplier) {
+
+		try {
+			workflowInstanceId = workflowInstanceIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long workflowInstanceId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -622,16 +622,6 @@ public class WorkflowTask {
 			sb.append(id);
 		}
 
-		if (instanceId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"instanceId\": ");
-
-			sb.append(instanceId);
-		}
-
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -654,6 +644,16 @@ public class WorkflowTask {
 			sb.append("\"objectReviewed\": ");
 
 			sb.append(String.valueOf(objectReviewed));
+		}
+
+		if (workflowInstanceId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowInstanceId\": ");
+
+			sb.append(workflowInstanceId);
 		}
 
 		sb.append("}");

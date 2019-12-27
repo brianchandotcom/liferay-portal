@@ -25,16 +25,14 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
+
+import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,26 +41,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WorkflowTaskAssignToUser")
+@GraphQLName("WorkflowTaskAssignableUser")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "WorkflowTaskAssignToUser")
-public class WorkflowTaskAssignToUser {
+@XmlRootElement(name = "WorkflowTaskAssignableUser")
+public class WorkflowTaskAssignableUser {
 
-	@Schema(description = "The ID of the user to assign the workflow task.")
-	public Long getAssigneeId() {
-		return assigneeId;
+	@Schema
+	@Valid
+	public Assignee[] getAssignableUsers() {
+		return assignableUsers;
 	}
 
-	public void setAssigneeId(Long assigneeId) {
-		this.assigneeId = assigneeId;
+	public void setAssignableUsers(Assignee[] assignableUsers) {
+		this.assignableUsers = assignableUsers;
 	}
 
 	@JsonIgnore
-	public void setAssigneeId(
-		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
+	public void setAssignableUsers(
+		UnsafeSupplier<Assignee[], Exception> assignableUsersUnsafeSupplier) {
 
 		try {
-			assigneeId = assigneeIdUnsafeSupplier.get();
+			assignableUsers = assignableUsersUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -72,75 +71,9 @@ public class WorkflowTaskAssignToUser {
 		}
 	}
 
-	@GraphQLField(
-		description = "The ID of the user to assign the workflow task."
-	)
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long assigneeId;
-
-	@Schema(
-		description = "An optional comment to add when assigning the workflow task."
-	)
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	@JsonIgnore
-	public void setComment(
-		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
-
-		try {
-			comment = commentUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "An optional comment to add when assigning the workflow task."
-	)
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String comment;
-
-	@Schema(
-		description = "The date on which the workflow task should be executed."
-	)
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	@JsonIgnore
-	public void setDueDate(
-		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
-
-		try {
-			dueDate = dueDateUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The date on which the workflow task should be executed."
-	)
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Date dueDate;
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Assignee[] assignableUsers;
 
 	@Schema
 	public Long getWorkflowTaskId() {
@@ -176,14 +109,15 @@ public class WorkflowTaskAssignToUser {
 			return true;
 		}
 
-		if (!(object instanceof WorkflowTaskAssignToUser)) {
+		if (!(object instanceof WorkflowTaskAssignableUser)) {
 			return false;
 		}
 
-		WorkflowTaskAssignToUser workflowTaskAssignToUser =
-			(WorkflowTaskAssignToUser)object;
+		WorkflowTaskAssignableUser workflowTaskAssignableUser =
+			(WorkflowTaskAssignableUser)object;
 
-		return Objects.equals(toString(), workflowTaskAssignToUser.toString());
+		return Objects.equals(
+			toString(), workflowTaskAssignableUser.toString());
 	}
 
 	@Override
@@ -198,45 +132,24 @@ public class WorkflowTaskAssignToUser {
 
 		sb.append("{");
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (assigneeId != null) {
+		if (assignableUsers != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"assigneeId\": ");
+			sb.append("\"assignableUsers\": ");
 
-			sb.append(assigneeId);
-		}
+			sb.append("[");
 
-		if (comment != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
+			for (int i = 0; i < assignableUsers.length; i++) {
+				sb.append(String.valueOf(assignableUsers[i]));
+
+				if ((i + 1) < assignableUsers.length) {
+					sb.append(", ");
+				}
 			}
 
-			sb.append("\"comment\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(comment));
-
-			sb.append("\"");
-		}
-
-		if (dueDate != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dueDate\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dueDate));
-
-			sb.append("\"");
+			sb.append("]");
 		}
 
 		if (workflowTaskId != null) {
@@ -255,7 +168,7 @@ public class WorkflowTaskAssignToUser {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser",
+		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignableUser",
 		name = "x-class-name"
 	)
 	public String xClassName;

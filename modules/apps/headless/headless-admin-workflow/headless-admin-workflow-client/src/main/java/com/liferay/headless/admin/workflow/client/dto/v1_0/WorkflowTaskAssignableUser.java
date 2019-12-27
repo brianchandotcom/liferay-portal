@@ -15,9 +15,8 @@
 package com.liferay.headless.admin.workflow.client.dto.v1_0;
 
 import com.liferay.headless.admin.workflow.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowTaskAssignToUserSerDes;
+import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowTaskAssignableUserSerDes;
 
-import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -27,70 +26,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class WorkflowTaskAssignToUser {
+public class WorkflowTaskAssignableUser {
 
-	public Long getAssigneeId() {
-		return assigneeId;
+	public Assignee[] getAssignableUsers() {
+		return assignableUsers;
 	}
 
-	public void setAssigneeId(Long assigneeId) {
-		this.assigneeId = assigneeId;
+	public void setAssignableUsers(Assignee[] assignableUsers) {
+		this.assignableUsers = assignableUsers;
 	}
 
-	public void setAssigneeId(
-		UnsafeSupplier<Long, Exception> assigneeIdUnsafeSupplier) {
+	public void setAssignableUsers(
+		UnsafeSupplier<Assignee[], Exception> assignableUsersUnsafeSupplier) {
 
 		try {
-			assigneeId = assigneeIdUnsafeSupplier.get();
+			assignableUsers = assignableUsersUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long assigneeId;
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public void setComment(
-		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
-
-		try {
-			comment = commentUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String comment;
-
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public void setDueDate(
-		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
-
-		try {
-			dueDate = dueDateUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date dueDate;
+	protected Assignee[] assignableUsers;
 
 	public Long getWorkflowTaskId() {
 		return workflowTaskId;
@@ -119,14 +76,15 @@ public class WorkflowTaskAssignToUser {
 			return true;
 		}
 
-		if (!(object instanceof WorkflowTaskAssignToUser)) {
+		if (!(object instanceof WorkflowTaskAssignableUser)) {
 			return false;
 		}
 
-		WorkflowTaskAssignToUser workflowTaskAssignToUser =
-			(WorkflowTaskAssignToUser)object;
+		WorkflowTaskAssignableUser workflowTaskAssignableUser =
+			(WorkflowTaskAssignableUser)object;
 
-		return Objects.equals(toString(), workflowTaskAssignToUser.toString());
+		return Objects.equals(
+			toString(), workflowTaskAssignableUser.toString());
 	}
 
 	@Override
@@ -137,7 +95,7 @@ public class WorkflowTaskAssignToUser {
 	}
 
 	public String toString() {
-		return WorkflowTaskAssignToUserSerDes.toJSON(this);
+		return WorkflowTaskAssignableUserSerDes.toJSON(this);
 	}
 
 }

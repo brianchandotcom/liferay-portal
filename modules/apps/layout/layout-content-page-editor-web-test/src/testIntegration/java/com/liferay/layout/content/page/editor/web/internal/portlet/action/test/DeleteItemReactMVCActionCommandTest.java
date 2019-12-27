@@ -121,9 +121,8 @@ public class DeleteItemReactMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
-				"css value", "<div>HTML value</div>", "js value",
-				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
 		String layoutData = StringUtil.replace(
 			_read("layout_data_with_fragment_entry_link.json"), "<id>",
@@ -163,9 +162,8 @@ public class DeleteItemReactMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
-				"css value", "<div>HTML value</div>", "js value",
-				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
 		String layoutData = StringUtil.replace(
 			_read("layout_data_with_fragment_entry_link.json"), "<id>",
@@ -207,18 +205,16 @@ public class DeleteItemReactMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
-				"css value", "<div>HTML value</div>", "js value",
-				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
-				"css value", "<div>HTML value</div>", "js value",
-				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
 		String layoutData = StringUtil.replace(
 			_read("layout_data_with_several_nested_fragment_entry_link.json"),
@@ -265,18 +261,16 @@ public class DeleteItemReactMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
-				"css value", "<div>HTML value</div>", "js value",
-				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
 				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
-				"css value", "<div>HTML value</div>", "js value",
-				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, "html", StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
 
 		String layoutData = StringUtil.replace(
 			_read("layout_data_with_two_level_nesting.json"),

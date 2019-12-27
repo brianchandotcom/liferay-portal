@@ -24,6 +24,25 @@ import {
 } from './actions';
 import ExperienceToolbarSection from './components/ExperienceToolbarSection';
 
+/**
+ * Stores a the layout data of a new experience in layoutDataList
+ * @param {object} state
+ * @param {Array<{segmentsExperienceId: string}>} state.layoutDataList
+ * @param {object} state.layoutData
+ * @param {string} state.defaultSegmentsExperienceId
+ * @param {string} segmentsExperienceId The segmentsExperience id that owns this LayoutData
+ * @param {string} layoutData The new LayoutData to store
+ * @returns {object}
+ */
+function _storeNewLayoutData(state, segmentsExperienceId, layoutData) {
+	const nextState = state;
+	nextState.layoutDataList.push({
+		layoutData,
+		segmentsExperienceId
+	});
+	return nextState;
+}
+
 function editExperienceReducer(state, payload) {
 	let nextState = state;
 
@@ -52,7 +71,7 @@ function editExperienceReducer(state, payload) {
 function createExperienceReducer(state, payload) {
 	let nextState = state;
 
-	const {segmentsExperience: newExperience} = payload;
+	const {layoutData, segmentsExperience: newExperience} = payload;
 
 	nextState = {
 		...nextState,
@@ -62,11 +81,18 @@ function createExperienceReducer(state, payload) {
 		},
 		segmentsExperienceId: newExperience.segmentsExperienceId
 
-		//_storeNewLayoutData
 		//_updateFragmentEntryLinksEditableValues
 		//_setExperienceLock
 		//_switchLayoutDataList -> _updateFragmentEntryLinks and _setUsedWidgets
 	};
+
+	nextState = _storeNewLayoutData(
+		nextState,
+		newExperience.segmentsExperienceId,
+		layoutData
+	);
+
+	// TODO update layoutData
 
 	return nextState;
 }
@@ -76,8 +102,30 @@ function selectExperienceReducer(state, payload) {
 
 	const newExperience = payload;
 
+	// TODO updatePageEditorLayoutData call
+
+	const {layoutData: prevLayoutData} = nextState;
+
+	// TODO refactor this pile of object
 	nextState = {
 		...nextState,
+		layoutData: nextState.layoutDataList.find(
+			layoutDataItem =>
+				newExperience.segmentsExperienceId ===
+				layoutDataItem.segmentsExperienceId
+		).layoutData,
+		layoutDataList: nextState.layoutDataList.map(layoutDataItem => {
+			if (
+				layoutDataItem.segmentsExperienceId ===
+				nextState.segmentsExperienceId
+			) {
+				return {
+					...layoutDataItem,
+					layoutData: prevLayoutData
+				};
+			}
+			return layoutDataItem;
+		}),
 		segmentsExperienceId: newExperience.segmentsExperienceId
 	};
 

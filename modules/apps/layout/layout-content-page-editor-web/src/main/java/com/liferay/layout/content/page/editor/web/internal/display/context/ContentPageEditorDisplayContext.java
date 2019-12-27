@@ -361,6 +361,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"layoutData", editorSoyContext.get("layoutData")
 			).put(
+				"layoutDataList", editorSoyContext.get("layoutDataList")
+			).put(
 				"mappedInfoItems", editorSoyContext.get("mappedInfoItems")
 			).put(
 				"pageContents", editorSoyContext.get("pageContents")

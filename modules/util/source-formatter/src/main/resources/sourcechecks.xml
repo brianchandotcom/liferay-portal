@@ -134,10 +134,10 @@
 		<check name="XMLTagAttributesCheck" />
 	</source-processor>
 	<source-processor name="JavaSourceProcessor">
+		<check name="ArrayCheck" />
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
-		<check name="ArrayCheck" />
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />
@@ -152,8 +152,8 @@
 		<check name="JavaConfigurationCategoryCheck" />
 		<check name="JavaConstructorParametersCheck" />
 		<check name="JavaConstructorSuperCallCheck" />
-		<check name="JavaDiamondOperatorCheck" />
 		<check name="JavaDeserializationSecurityCheck" />
+		<check name="JavaDiamondOperatorCheck" />
 		<check name="JavaElseStatementCheck" />
 		<check name="JavaEmptyLineAfterSuperCallCheck" />
 		<check name="JavaEmptyLinesCheck" />
@@ -305,15 +305,15 @@
 		<!-- Liferay Source Checks -->
 
 		<check name="JSONDeprecatedPackagesCheck" />
-		<check name="JSONPackageJSONCheck" />
 		<check name="JSONPackageJSONBNDVersionCheck" />
+		<check name="JSONPackageJSONCheck" />
 		<check name="JSONPackageJSONDependencyVersionCheck" />
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">
+		<check name="ArrayCheck" />
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
-		<check name="ArrayCheck" />
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
 		<check name="JSPButtonTagCheck" />

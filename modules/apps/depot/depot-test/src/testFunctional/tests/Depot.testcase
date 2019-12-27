@@ -142,6 +142,23 @@ definition {
 			depotName = "título");
 	}
 
+	@description = "This ensures that users cannot create a site with the same name as an existing depot."
+	@priority = "5"
+	test AddSiteThatDuplicatesName {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.addDepot(depotName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(
+			duplicate = "true",
+			siteName = "Site Name");
+	}
+
 	@description = "This ensures that a depot can be deleted."
 	@priority = "5"
 	test DeleteDepot {

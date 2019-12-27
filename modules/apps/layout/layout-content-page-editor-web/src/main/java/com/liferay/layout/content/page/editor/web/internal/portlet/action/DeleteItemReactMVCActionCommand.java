@@ -77,22 +77,15 @@ public class DeleteItemReactMVCActionCommand
 		return super.processAction(actionRequest, actionResponse);
 	}
 
-	protected JSONObject deleteItemJSONObject(ActionRequest actionRequest)
+	protected JSONObject deleteItemJSONObject(
+			long companyId, long groupId, String itemId, long plid,
+			long segmentsExperienceId)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
-
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			themeDisplay.getScopeGroupId(), segmentsExperienceId,
-			themeDisplay.getPlid(),
+			groupId, segmentsExperienceId, plid,
 			layoutStructure -> _deleteLayoutStructureItem(
-				itemId, layoutStructure, themeDisplay));
+				companyId, itemId, layoutStructure, plid));
 	}
 
 	@Override
@@ -103,10 +96,17 @@ public class DeleteItemReactMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId",
+			SegmentsExperienceConstants.ID_DEFAULT);
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			jsonObject = deleteItemJSONObject(actionRequest);
+			jsonObject = deleteItemJSONObject(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				itemId, themeDisplay.getPlid(), segmentsExperienceId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -124,7 +124,7 @@ public class DeleteItemReactMVCActionCommand
 	}
 
 	private void _deleteFragmentEntryLink(
-			long fragmentEntryLinkId, ThemeDisplay themeDisplay)
+			long companyId, long fragmentEntryLinkId, long plid)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -143,15 +143,13 @@ public class DeleteItemReactMVCActionCommand
 					"instanceId", StringPool.BLANK);
 
 				_portletLocalService.deletePortlet(
-					themeDisplay.getCompanyId(),
-					PortletIdCodec.encode(portletId, instanceId),
-					themeDisplay.getPlid());
+					companyId, PortletIdCodec.encode(portletId, instanceId),
+					plid);
 
 				_layoutClassedModelUsageLocalService.
 					deleteLayoutClassedModelUsages(
 						PortletIdCodec.encode(portletId, instanceId),
-						_portal.getClassNameId(Portlet.class),
-						themeDisplay.getPlid());
+						_portal.getClassNameId(Portlet.class), plid);
 			}
 		}
 
@@ -159,23 +157,20 @@ public class DeleteItemReactMVCActionCommand
 			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
 
 		for (String portletId : portletIds) {
-			_portletLocalService.deletePortlet(
-				themeDisplay.getCompanyId(), portletId, themeDisplay.getPlid());
+			_portletLocalService.deletePortlet(companyId, portletId, plid);
 
 			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
-				portletId, _portal.getClassNameId(Portlet.class),
-				themeDisplay.getPlid());
+				portletId, _portal.getClassNameId(Portlet.class), plid);
 		}
 
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLinkId),
-			_portal.getClassNameId(FragmentEntryLink.class),
-			themeDisplay.getPlid());
+			_portal.getClassNameId(FragmentEntryLink.class), plid);
 	}
 
 	private void _deleteLayoutStructureItem(
-			String itemId, LayoutStructure layoutStructure,
-			ThemeDisplay themeDisplay)
+			long companyId, String itemId, LayoutStructure layoutStructure,
+			long plid)
 		throws PortalException {
 
 		LayoutStructureItem layoutStructureItem =
@@ -188,7 +183,7 @@ public class DeleteItemReactMVCActionCommand
 			"fragmentEntryLinkId");
 
 		if (fragmentEntryLinkId > 0) {
-			_deleteFragmentEntryLink(fragmentEntryLinkId, themeDisplay);
+			_deleteFragmentEntryLink(companyId, fragmentEntryLinkId, plid);
 		}
 
 		List<String> childrenItemIds = new ArrayList<>(
@@ -196,7 +191,7 @@ public class DeleteItemReactMVCActionCommand
 
 		for (String childrenItemId : childrenItemIds) {
 			_deleteLayoutStructureItem(
-				childrenItemId, layoutStructure, themeDisplay);
+				companyId, childrenItemId, layoutStructure, plid);
 		}
 
 		layoutStructure.deleteLayoutStructureItem(itemId);

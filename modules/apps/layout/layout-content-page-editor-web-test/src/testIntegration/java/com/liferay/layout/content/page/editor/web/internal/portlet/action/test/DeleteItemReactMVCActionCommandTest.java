@@ -78,8 +78,7 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		_layout = LayoutTestUtil.addLayout(_group);
 
-		FragmentCollection fragmentCollection = _addFragmentCollection(
-			_group.getGroupId());
+		FragmentCollection fragmentCollection = _addFragmentCollection();
 
 		_fragmentEntry = _addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());
@@ -316,12 +315,10 @@ public class DeleteItemReactMVCActionCommandTest {
 				fragmentEntryLink2.getFragmentEntryLinkId()));
 	}
 
-	private FragmentCollection _addFragmentCollection(long groupId)
-		throws PortalException {
-
+	private FragmentCollection _addFragmentCollection() throws PortalException {
 		return _fragmentCollectionLocalService.addFragmentCollection(
-			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
-			StringPool.BLANK, _serviceContext);
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), StringPool.BLANK, _serviceContext);
 	}
 
 	private FragmentEntry _addFragmentEntry(long fragmentCollectionId)

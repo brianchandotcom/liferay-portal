@@ -126,12 +126,11 @@ public class DeleteItemReactMVCActionCommandTest {
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
 				_serviceContext);
 
-		String layoutData = _read("layout_data_with_fragment_entry_link.json");
+		String layoutData = StringUtil.replace(
+			_read("layout_data_with_fragment_entry_link.json"), "<id>",
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 
-		_addLayoutPageTemplateStructure(
-			StringUtil.replace(
-				layoutData, "<id>",
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())));
+		_addLayoutPageTemplateStructure(layoutData);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
@@ -169,12 +168,11 @@ public class DeleteItemReactMVCActionCommandTest {
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
 				_serviceContext);
 
-		String layoutData = _read("layout_data_with_fragment_entry_link.json");
+		String layoutData = StringUtil.replace(
+			_read("layout_data_with_fragment_entry_link.json"), "<id>",
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 
-		_addLayoutPageTemplateStructure(
-			StringUtil.replace(
-				layoutData, "<id>",
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())));
+		_addLayoutPageTemplateStructure(layoutData);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
@@ -223,17 +221,15 @@ public class DeleteItemReactMVCActionCommandTest {
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
 				_serviceContext);
 
-		String layoutData = _read(
-			"layout_data_with_several_nested_fragment_entry_link.json");
+		String layoutData = StringUtil.replace(
+			_read("layout_data_with_several_nested_fragment_entry_link.json"),
+			new String[] {"<id1>", "<id2>"},
+			new String[] {
+				String.valueOf(fragmentEntryLink1.getFragmentEntryLinkId()),
+				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())
+			});
 
-		layoutData = StringUtil.replace(
-			layoutData, "<id1>",
-			String.valueOf(fragmentEntryLink1.getFragmentEntryLinkId()));
-
-		_addLayoutPageTemplateStructure(
-			StringUtil.replace(
-				layoutData, "<id2>",
-				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())));
+		_addLayoutPageTemplateStructure(layoutData);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",
@@ -283,16 +279,15 @@ public class DeleteItemReactMVCActionCommandTest {
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
 				_serviceContext);
 
-		String layoutData = _read("layout_data_with_two_level_nesting.json");
+		String layoutData = StringUtil.replace(
+			_read("layout_data_with_two_level_nesting.json"),
+			new String[] {"<id1>", "<id2>"},
+			new String[] {
+				String.valueOf(fragmentEntryLink1.getFragmentEntryLinkId()),
+				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())
+			});
 
-		layoutData = StringUtil.replace(
-			layoutData, "<id1>",
-			String.valueOf(fragmentEntryLink1.getFragmentEntryLinkId()));
-
-		_addLayoutPageTemplateStructure(
-			StringUtil.replace(
-				layoutData, "<id2>",
-				String.valueOf(fragmentEntryLink2.getFragmentEntryLinkId())));
+		_addLayoutPageTemplateStructure(layoutData);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "deleteItemJSONObject",

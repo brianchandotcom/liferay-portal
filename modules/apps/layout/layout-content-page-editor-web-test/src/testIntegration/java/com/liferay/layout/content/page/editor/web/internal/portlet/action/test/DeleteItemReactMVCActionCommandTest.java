@@ -104,9 +104,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
-
 		Assert.assertEquals(1, itemsJSONObject.length());
+
+		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
 
 		Assert.assertNotNull(rootJSONObject);
 
@@ -142,9 +142,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
-
 		Assert.assertEquals(1, itemsJSONObject.length());
+
+		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
 
 		Assert.assertNotNull(rootJSONObject);
 
@@ -184,9 +184,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
-
 		Assert.assertEquals(1, itemsJSONObject.length());
+
+		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
 
 		Assert.assertNotNull(rootJSONObject);
 
@@ -241,9 +241,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
-
 		Assert.assertEquals(1, itemsJSONObject.length());
+
+		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
 
 		Assert.assertNotNull(rootJSONObject);
 
@@ -299,9 +299,9 @@ public class DeleteItemReactMVCActionCommandTest {
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
-		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
-
 		Assert.assertEquals(1, itemsJSONObject.length());
+
+		JSONObject rootJSONObject = itemsJSONObject.getJSONObject("root");
 
 		Assert.assertNotNull(rootJSONObject);
 

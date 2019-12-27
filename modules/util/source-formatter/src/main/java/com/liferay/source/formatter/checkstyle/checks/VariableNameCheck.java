@@ -304,6 +304,13 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
+		List<String> allowedVariableNames = getAttributeValues(
+			_ALLOWED_VARIABLE_NAMES_KEY);
+
+		if (allowedVariableNames.contains(variableName)) {
+			return;
+		}
+
 		String nameTrailingDigits = _getTrailingDigits(variableName);
 
 		String trimmedName = StringUtil.replaceLast(
@@ -541,6 +548,9 @@ public class VariableNameCheck extends BaseCheck {
 	private static final String[][] _ALL_CAPS_STRINGS = {
 		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"PK", "Pk"}
 	};
+
+	private static final String _ALLOWED_VARIABLE_NAMES_KEY =
+		"allowedVariableNames";
 
 	private static final String _CHECK_TYPE_NAME_KEY = "checkTypeName";
 

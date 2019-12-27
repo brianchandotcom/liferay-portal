@@ -64,25 +64,75 @@ public class VariableNameCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = typeDetailAST.getFirstChild();
 
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.IDENT)) {
-
+		if (firstChildDetailAST == null) {
 			return;
 		}
 
-		String typeName = firstChildDetailAST.getText();
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			String typeName = firstChildDetailAST.getText();
 
-		if (isAttributeValue(_CHECK_TYPE_NAME_KEY)) {
-			_checkExceptionVariableName(detailAST, name, typeName);
+			if (isAttributeValue(_CHECK_TYPE_NAME_KEY)) {
+				_checkExceptionVariableName(detailAST, name, typeName);
 
-			_checkInstanceVariableName(detailAST, name, typeName);
+				_checkInstanceVariableName(detailAST, name, typeName);
 
-			_checkTypeName(
-				detailAST, name, typeName, "DetailAST", "HttpServletRequest",
-				"HttpServletResponse", "ServletRequest", "ServletResponse");
+				_checkTypeName(
+					detailAST, name, typeName, "DetailAST",
+					"HttpServletRequest", "HttpServletResponse",
+					"ServletRequest", "ServletResponse");
+			}
+
+			_checkTypo(detailAST, name, typeName);
 		}
 
-		_checkTypo(detailAST, name, typeName);
+		DetailAST parentDetailAST = DetailASTUtil.getParentWithTokenType(
+			detailAST, TokenTypes.CLASS_DEF, TokenTypes.CTOR_DEF,
+			TokenTypes.METHOD_DEF);
+
+		if (parentDetailAST == null) {
+			return;
+		}
+
+		List<DetailAST> assignDetailASTList = DetailASTUtil.getAllChildTokens(
+			parentDetailAST, true, TokenTypes.ASSIGN);
+
+		for (DetailAST assignDetailAST : assignDetailASTList) {
+			firstChildDetailAST = assignDetailAST.getFirstChild();
+
+			if (firstChildDetailAST == null) {
+				continue;
+			}
+
+			String methodName = StringPool.BLANK;
+
+			if (DetailASTUtil.equals(assignDetailAST.getParent(), detailAST)) {
+				if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
+					continue;
+				}
+
+				firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+					methodName = DetailASTUtil.getMethodName(
+						firstChildDetailAST);
+				}
+			}
+			else if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
+					 name.equals(firstChildDetailAST.getText())) {
+
+				DetailAST nextSiblingDetailAST =
+					firstChildDetailAST.getNextSibling();
+
+				if (nextSiblingDetailAST.getType() == TokenTypes.METHOD_CALL) {
+					methodName = DetailASTUtil.getMethodName(
+						nextSiblingDetailAST);
+				}
+			}
+
+			if (methodName.matches("get[A-Z].*")) {
+				_checkTypo(detailAST, name, methodName.substring(3));
+			}
+		}
 	}
 
 	private void _checkCaps(DetailAST detailAST, String name) {
@@ -408,7 +458,7 @@ public class VariableNameCheck extends BaseCheck {
 	}
 
 	private String _getExpectedVariableName(String typeName) {
-		if (StringUtil.isUpperCase(typeName)) {
+		if (StringUtil.isUpperCase(typeName) || typeName.matches("[A-Z]+s")) {
 			return StringUtil.toLowerCase(typeName);
 		}
 

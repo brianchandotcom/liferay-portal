@@ -3,7 +3,7 @@
 		"nestedItemId": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "<id>"
+				"fragmentEntryLinkId": "[$FRAGMENT_ENTRY_LINK_ID$]"
 			},
 			"itemId": "nestedItemId",
 			"parentId": "newItemId",

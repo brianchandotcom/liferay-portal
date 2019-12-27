@@ -3,7 +3,7 @@
 		"newItemId": {
 			"children": [],
 			"config": {
-				"fragmentEntryLinkId": "<id>"
+				"fragmentEntryLinkId": "[$FRAGMENT_ENTRY_LINK_ID$]"
 			},
 			"itemId": "newItemId",
 			"parentId": "root",

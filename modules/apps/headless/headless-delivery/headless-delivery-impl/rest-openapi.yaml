@@ -6907,6 +6907,24 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/structured-contents/{structuredContentId}/permissions":
+        put:
+            operationId: putStructuredContentPermission
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/rendered-content/{templateId}":
         get:
             description:

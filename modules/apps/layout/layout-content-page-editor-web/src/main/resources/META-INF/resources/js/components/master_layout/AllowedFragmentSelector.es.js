@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import useSelector from '../../store/hooks/useSelector.es';
+import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
 const toNodes = collections => {
 	return [
@@ -66,6 +67,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 			<Treeview
 				filterQuery={filter}
 				initialSelectedNodeIds={allowedFragmentEntries}
+				NodeComponent={AllowedFragmentTreeNode}
 				nodes={nodes}
 				onSelectedNodesChange={onSelectedFragment}
 			/>

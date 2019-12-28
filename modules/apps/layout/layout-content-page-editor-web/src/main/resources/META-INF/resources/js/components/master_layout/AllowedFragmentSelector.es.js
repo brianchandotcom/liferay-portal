@@ -33,6 +33,7 @@ const toNodes = collections => {
 
 				return {
 					children,
+					expanded: false,
 					id: collection.fragmentCollectionId,
 					name: collection.name
 				};

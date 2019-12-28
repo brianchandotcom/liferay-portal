@@ -37,7 +37,7 @@ const toNodes = collections => {
 				};
 			}),
 			id: 'lfr-all-fragments-id',
-			name: 'All Fragments'
+			name: Liferay.Language.get('all-fragments')
 		}
 	];
 };

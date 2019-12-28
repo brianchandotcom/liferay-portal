@@ -17,6 +17,9 @@ package com.liferay.headless.batch.engine.internal.resource.v1_0;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -364,6 +367,9 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	protected com.liferay.portal.kernel.model.User contextUser;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ResourceActionLocalService resourceActionLocalService;
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+	protected RoleLocalService roleLocalService;
 	protected UriInfo contextUriInfo;
 
 }

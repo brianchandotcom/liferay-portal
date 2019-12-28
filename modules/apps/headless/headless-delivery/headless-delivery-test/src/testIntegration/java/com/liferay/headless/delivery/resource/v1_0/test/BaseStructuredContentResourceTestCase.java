@@ -1611,6 +1611,32 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPutStructuredContentPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testPutStructuredContentPermission_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.
+				putStructuredContentPermissionHttpResponse(
+					null, structuredContent.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.
+				putStructuredContentPermissionHttpResponse(null, 0L));
+	}
+
+	protected StructuredContent
+			testPutStructuredContentPermission_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
 	public void testGetStructuredContentRenderedContentTemplate()
 		throws Exception {
 

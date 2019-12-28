@@ -14,6 +14,8 @@
 
 package com.liferay.headless.delivery.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -153,6 +155,12 @@ public class StructuredContentResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetSiteStructuredContentByUuid() {
+	}
+
+	@JsonIgnore
+	@Override
+	@Test
+	public void testPutStructuredContentPermission() {
 	}
 
 	@Override

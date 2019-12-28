@@ -37,6 +37,7 @@ const toNodes = collections => {
 					name: collection.name
 				};
 			}),
+			expanded: true,
 			id: 'lfr-all-fragments-id',
 			name: Liferay.Language.get('all-fragments')
 		}

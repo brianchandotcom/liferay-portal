@@ -22,6 +22,7 @@ import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es'
 function updateAllowedFragmentEntries(allowedFragmentEntries) {
 	return function(dispatch) {
 		dispatch(_updateAllowedFragmentEntries(allowedFragmentEntries));
+
 		return dispatch(updatePageEditorLayoutDataAction());
 	};
 }

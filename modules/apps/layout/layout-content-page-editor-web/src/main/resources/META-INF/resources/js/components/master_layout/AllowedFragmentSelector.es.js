@@ -43,10 +43,11 @@ const toNodes = collections => {
 };
 
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
-	const elements = useSelector(state => state.elements);
 	const allowedFragmentEntries = useSelector(
 		state => state.layoutData.allowedFragmentEntries
 	);
+
+	const elements = useSelector(state => state.elements);
 
 	const [filter, setFilter] = useState('');
 
@@ -61,6 +62,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 				sizing="sm"
 				type="text"
 			/>
+
 			<Treeview
 				filterQuery={filter}
 				initialSelectedNodeIds={allowedFragmentEntries}

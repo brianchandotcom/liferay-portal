@@ -148,6 +148,7 @@ public class RESTBuilder {
 		if (Validator.isNotNull(_configYAML.getClientDir())) {
 			_createClientBaseJSONParserFile(context);
 			_createClientHttpInvokerFile(context);
+			_createClientModelPermission(context);
 			_createClientPageFile(context);
 			_createClientPaginationFile(context);
 			_createClientUnsafeSupplierFile(context);
@@ -490,6 +491,27 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "client_http_invoker", context));
+	}
+
+	private void _createClientModelPermission(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+		sb.append(
+			StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'));
+		sb.append("/client/permission/ModelPermission.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "client_model_permission", context));
 	}
 
 	private void _createClientPageFile(Map<String, Object> context)

@@ -1688,6 +1688,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateStructuredContentPermission(
+			@GraphQLName("modelPermissions")
+				com.liferay.portal.vulcan.permissions.ModelPermission[]
+					modelPermissions,
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContentPermission(
+					modelPermissions, structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean updateStructuredContentSubscribe(
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {

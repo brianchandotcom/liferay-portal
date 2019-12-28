@@ -484,16 +484,16 @@ function removeFragmentEntryLinkReducer(state, action) {
  * @param {object} state
  * @param {object} action
  * @param {string} action.type
- * @param {object} action.allowedFragmentEntries
+ * @param {object} action.allowedFragmentEntryKeys
  * @return {object}
  * @review
  */
-function updateAllowedFragmentEntriesReducer(state, action) {
+function updateAllowedFragmentEntryKeysReducer(state, action) {
 	return {
 		...state,
 		layoutData: {
 			...state.layoutData,
-			allowedFragmentEntries: action.allowedFragmentEntries
+			allowedFragmentEntryKeys: action.allowedFragmentEntryKeys
 		}
 	};
 }
@@ -870,7 +870,7 @@ export {
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	toggleShowResolvedCommentsReducer,
-	updateAllowedFragmentEntriesReducer,
+	updateAllowedFragmentEntryKeysReducer,
 	updateEditableValueReducer,
 	updateFragmentEntryLinkConfigReducer,
 	updateFragmentEntryLinkCommentReducer,

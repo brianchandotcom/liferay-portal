@@ -17,7 +17,7 @@ import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {updateAllowedFragmentEntries} from '../../actions/updateAllowedFragmentEntries.es';
+import {updateAllowedFragmentEntryKeys} from '../../actions/updateAllowedFragmentEntryKeys.es';
 import useDispatch from '../../store/hooks/useDispatch.es';
 import AllowedFragmentSelector from './AllowedFragmentSelector.es';
 
@@ -30,7 +30,7 @@ const ManageAllowedFragmentModal = ({observer, onClose}) => {
 	const handleSaveClick = () => {
 		setLoading(true);
 
-		dispatch(updateAllowedFragmentEntries([...selectedFragments])).done(
+		dispatch(updateAllowedFragmentEntryKeys([...selectedFragments])).done(
 			() => {
 				setLoading(true);
 				onClose();

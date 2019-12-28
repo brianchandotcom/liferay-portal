@@ -11,12 +11,20 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
+import com.liferay.portal.vulcan.util.PermissionsUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,6 +84,32 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Permission")>
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				String resourceName = get${schemaName}ResourceName();
+
+				if (!permissionChecker.hasPermission(
+						0, resourceName, 0, ActionKeys.PERMISSIONS)) {
+
+					return;
+				}
+
+				resourcePermissionLocalService.updateResourcePermissions(
+					contextCompany.getCompanyId(), 0, resourceName,
+					String.valueOf(structuredContentId),
+					PermissionsUtil.getModelPermissions(
+						contextCompany.getCompanyId(), modelPermissions,
+						structuredContentId, resourceName,
+						resourceActionLocalService,
+						resourcePermissionLocalService,
+						roleLocalService));
+				}
+
+				protected String getStructuredContentResourceName() {
+					return null;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>
 				return StringPool.BLANK;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
@@ -171,6 +205,9 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected com.liferay.portal.kernel.model.User contextUser;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ResourceActionLocalService resourceActionLocalService;
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+	protected RoleLocalService roleLocalService;
 	protected UriInfo contextUriInfo;
 
 }

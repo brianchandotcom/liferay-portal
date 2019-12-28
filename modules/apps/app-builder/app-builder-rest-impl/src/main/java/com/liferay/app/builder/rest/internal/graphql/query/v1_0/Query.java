@@ -176,12 +176,16 @@ public class Query {
 	public class AppModelPermissionPage {
 
 		public AppModelPermissionPage(Page appModelPermissionPage) {
+			actions = appModelPermissionPage.getActions();
 			items = appModelPermissionPage.getItems();
 			lastPage = appModelPermissionPage.getLastPage();
 			page = appModelPermissionPage.getPage();
 			pageSize = appModelPermissionPage.getPageSize();
 			totalCount = appModelPermissionPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<AppModelPermission> items;

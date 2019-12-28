@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.jaxrs.exception.mapper,\
 	com.liferay.portal.vulcan.multipart,\
 	com.liferay.portal.vulcan.pagination,\
+	com.liferay.portal.vulcan.permissions,\
 	com.liferay.portal.vulcan.resource,\
 	com.liferay.portal.vulcan.status,\
 	com.liferay.portal.vulcan.util,\

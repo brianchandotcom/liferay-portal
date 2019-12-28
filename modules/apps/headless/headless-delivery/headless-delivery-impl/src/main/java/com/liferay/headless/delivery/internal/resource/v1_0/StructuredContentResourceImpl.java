@@ -73,6 +73,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
@@ -514,6 +517,11 @@ public class StructuredContentResourceImpl
 
 		_journalArticleService.unsubscribe(
 			journalArticle.getGroupId(), journalArticle.getResourcePrimKey());
+	}
+
+	@Override
+	protected String getStructuredContentResourceName() {
+		return JournalArticle.class.getName();
 	}
 
 	private StructuredContent _addStructuredContent(
@@ -960,6 +968,15 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private StructuredContentDTOConverter _structuredContentDTOConverter;

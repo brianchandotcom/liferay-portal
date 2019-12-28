@@ -523,6 +523,11 @@ public class StructuredContentResourceImpl
 			journalArticle.getGroupId(), journalArticle.getResourcePrimKey());
 	}
 
+	@Override
+	protected String getStructuredContentResourceName() {
+		return JournalArticle.class.getName();
+	}
+
 	private StructuredContent _addStructuredContent(
 			Long siteId, Long parentStructuredContentFolderId,
 			StructuredContent structuredContent)

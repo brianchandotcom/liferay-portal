@@ -633,39 +633,39 @@ public class ContentPageEditorDisplayContext {
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
 
-	private List<String> _getAllowedFragmentEntries() {
-		if (_allowedFragmentEntries != null) {
-			return _allowedFragmentEntries;
+	private List<String> _getAllowedFragmentEntriesList() {
+		if (_allowedFragmentEntriesList != null) {
+			return _allowedFragmentEntriesList;
 		}
 
 		String masterLayoutData = _getMasterLayoutData();
 
 		if (Validator.isNull(masterLayoutData)) {
-			_allowedFragmentEntries = Collections.emptyList();
+			_allowedFragmentEntriesList = Collections.emptyList();
 
-			return _allowedFragmentEntries;
+			return _allowedFragmentEntriesList;
 		}
 
 		try {
-			List<String> allowedFragmentEntries = new ArrayList<>();
+			List<String> allowedFragmentEntriesList = new ArrayList<>();
 
 			JSONObject masterLayoutDataJSONObject =
 				JSONFactoryUtil.createJSONObject(masterLayoutData);
 
-			JSONArray allowedFragmentEntriesJSONArray =
+			JSONArray allowedFragmentEntriesListJSONArray =
 				masterLayoutDataJSONObject.getJSONArray(
 					"allowedFragmentEntries");
 
-			Iterator<String> iteratorAllowedFragmentEntries =
-				allowedFragmentEntriesJSONArray.iterator();
+			Iterator<String> iteratorAllowedFragmentEntriesList =
+				allowedFragmentEntriesListJSONArray.iterator();
 
-			iteratorAllowedFragmentEntries.forEachRemaining(
-				fragmentEntryKey -> allowedFragmentEntries.add(
+			iteratorAllowedFragmentEntriesList.forEachRemaining(
+				fragmentEntryKey -> allowedFragmentEntriesList.add(
 					fragmentEntryKey));
 
-			_allowedFragmentEntries = allowedFragmentEntries;
+			_allowedFragmentEntriesList = allowedFragmentEntriesList;
 
-			return _allowedFragmentEntries;
+			return _allowedFragmentEntriesList;
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -673,9 +673,9 @@ public class ContentPageEditorDisplayContext {
 			}
 		}
 
-		_allowedFragmentEntries = Collections.emptyList();
+		_allowedFragmentEntriesList = Collections.emptyList();
 
-		return _allowedFragmentEntries;
+		return _allowedFragmentEntriesList;
 	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
@@ -1695,10 +1695,11 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private boolean _isFragmentEntryAllowed(String fragmentEntryKey) {
-		List<String> allowedFragmentEntries = _getAllowedFragmentEntries();
+		List<String> allowedFragmentEntriesList =
+			_getAllowedFragmentEntriesList();
 
-		if (ListUtil.isEmpty(allowedFragmentEntries) ||
-			allowedFragmentEntries.contains(fragmentEntryKey)) {
+		if (ListUtil.isEmpty(allowedFragmentEntriesList) ||
+			allowedFragmentEntriesList.contains(fragmentEntryKey)) {
 
 			return true;
 		}
@@ -1750,7 +1751,7 @@ public class ContentPageEditorDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
-	private List<String> _allowedFragmentEntries;
+	private List<String> _allowedFragmentEntriesList;
 	private final CommentManager _commentManager;
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;

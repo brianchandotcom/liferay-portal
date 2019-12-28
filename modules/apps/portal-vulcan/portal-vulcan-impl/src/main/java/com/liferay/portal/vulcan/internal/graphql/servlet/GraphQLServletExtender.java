@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -763,6 +766,25 @@ public class GraphQLServletExtender {
 
 				field.set(instance, httpServletResponseOptional.orElse(null));
 			}
+			else if (fieldClass.isAssignableFrom(RoleLocalService.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _roleLocalService);
+			}
+			else if (fieldClass.isAssignableFrom(
+						ResourceActionLocalService.class)) {
+
+				field.setAccessible(true);
+
+				field.set(instance, _resourceActionLocalService);
+			}
+			else if (fieldClass.isAssignableFrom(
+						ResourcePermissionLocalService.class)) {
+
+				field.setAccessible(true);
+
+				field.set(instance, _resourcePermissionLocalService);
+			}
 			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
 				field.setAccessible(true);
 
@@ -1370,6 +1392,15 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	private volatile Servlet _servlet;
 	private ServiceRegistration<ServletContextHelper>

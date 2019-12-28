@@ -194,7 +194,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 		String portletInstanceKey = portletName;
 
-		if (Validator.isNotNull(instanceId)) {
+		if (Validator.isNotNull(instanceId) && !instanceId.startsWith("0")) {
 			portletInstanceKey = PortletIdCodec.encode(
 				PortletIdCodec.decodePortletName(portletName),
 				PortletIdCodec.decodeUserId(portletName), instanceId);

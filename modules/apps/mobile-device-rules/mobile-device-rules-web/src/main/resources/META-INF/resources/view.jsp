@@ -43,22 +43,6 @@ List<MDRRuleGroup> mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords
 ruleGroupSearch.setResults(mdrRuleGroups);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "device-families"));
-					});
-			}
-		}
-	%>'
-/>
-
 <liferay-frontend:management-bar
 	disabled="<%= mdrRuleGroupsCount <= 0 %>"
 	includeCheckBox="<%= true %>"

@@ -22,22 +22,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(portletURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "wedeploy-app"));
-					});
-			}
-		}
-	%>'
-/>
-
 <div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-wedeploy-apps-were-found"

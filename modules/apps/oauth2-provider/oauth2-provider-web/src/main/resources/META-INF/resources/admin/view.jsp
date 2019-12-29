@@ -24,11 +24,6 @@ OAuth2ApplicationsManagementToolbarDisplayContext oAuth2ApplicationsManagementTo
 String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	actionDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	creationMenu="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getCreationMenu() %>"

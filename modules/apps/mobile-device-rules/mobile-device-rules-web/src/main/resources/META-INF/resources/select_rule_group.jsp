@@ -51,21 +51,6 @@ List<MDRRuleGroup> mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords
 ruleGroupSearch.setResults(mdrRuleGroups);
 %>
 
-<clay:navigation-bar
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "device-families"));
-					});
-			}
-		}
-	%>'
-/>
-
 <c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">
 	<liferay-frontend:management-bar>
 		<liferay-frontend:management-bar-buttons>

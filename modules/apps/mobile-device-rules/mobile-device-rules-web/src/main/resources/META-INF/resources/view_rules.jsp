@@ -74,22 +74,6 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(ruleGroup.getName(locale));
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "classification-rules"));
-					});
-			}
-		}
-	%>'
-/>
-
 <liferay-frontend:management-bar
 	disabled="<%= rulesCount <= 0 %>"
 >

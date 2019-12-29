@@ -17,8 +17,6 @@ package com.liferay.oauth2.provider.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
@@ -133,22 +131,6 @@ public class OAuth2ApplicationsManagementToolbarDisplayContext
 							getOrderByDropdownItems(orderColumnsMap));
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(httpServletRequest, "order-by"));
-					});
-			}
-		};
-	}
-
-	public List<NavigationItem> getNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(
-							liferayPortletResponse.createRenderURL());
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								httpServletRequest, "oauth2-applications"));
 					});
 			}
 		};

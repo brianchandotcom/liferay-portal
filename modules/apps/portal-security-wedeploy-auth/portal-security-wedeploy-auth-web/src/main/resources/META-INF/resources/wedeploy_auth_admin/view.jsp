@@ -96,6 +96,7 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 	<c:if test="<%= WeDeployAuthPermission.contains(permissionChecker, WeDeployAuthActionKeys.ADD_APP) %>">
 		<portlet:renderURL var="editWeDeployAuthAppURL">
 			<portlet:param name="mvcRenderCommandName" value="/wedeploy_auth_admin/edit_wedeploy_auth_app" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-frontend:add-menu>

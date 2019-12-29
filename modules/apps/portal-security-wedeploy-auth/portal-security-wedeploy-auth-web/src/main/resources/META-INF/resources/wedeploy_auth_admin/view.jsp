@@ -32,6 +32,10 @@ List<WeDeployAuthApp> weDeployAuthApps = WeDeployAuthAppLocalServiceUtil.getWeDe
 weDeployAuthAppsSearchContainer.setResults(weDeployAuthApps);
 %>
 
+<clay:management-toolbar
+	displayContext="<%= new WeDeployAuthAppsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, weDeployAuthAppsSearchContainer) %>"
+/>
+
 <div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
 		id="weDeployAuthApps"
@@ -87,18 +91,4 @@ weDeployAuthAppsSearchContainer.setResults(weDeployAuthApps);
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-
-	<c:if test="<%= WeDeployAuthPermission.contains(permissionChecker, WeDeployAuthActionKeys.ADD_APP) %>">
-		<portlet:renderURL var="editWeDeployAuthAppURL">
-			<portlet:param name="mvcRenderCommandName" value="/wedeploy_auth_admin/edit_wedeploy_auth_app" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "add-wedeploy-app") %>'
-				url="<%= editWeDeployAuthAppURL %>"
-			/>
-		</liferay-frontend:add-menu>
-	</c:if>
 </div>

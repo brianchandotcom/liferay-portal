@@ -23,13 +23,12 @@ String backURL = ParamUtil.getString(request, "backURL");
 long powwowServerId = ParamUtil.getLong(request, "powwowServerId");
 
 PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwowServerId);
-%>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	localizeTitle="<%= powwowServer == null %>"
-	title='<%= (powwowServer != null) ? powwowServer.getName() : "new-server" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((powwowServer != null) ? powwowServer.getName() : LanguageUtil.get(request, "new-server"));
+%>
 
 <liferay-portlet:actionURL name="updatePowwowServer" var="editURL" />
 

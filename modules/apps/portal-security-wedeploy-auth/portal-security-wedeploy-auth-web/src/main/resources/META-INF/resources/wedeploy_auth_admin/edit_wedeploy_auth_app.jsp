@@ -23,7 +23,7 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 %>
 
-<div class="container-fluid-1080 edit-wedeploy-auth">
+<div class="container-fluid-1280 edit-wedeploy-auth">
 	<portlet:actionURL name="/wedeploy_auth_admin/edit_wedeploy_auth_app" var="editWeDeployAuthAppURL" />
 
 	<aui:form action="<%= editWeDeployAuthAppURL %>" method="post" name="fm">

@@ -18,14 +18,13 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
 
 long powwowServerId = ParamUtil.getLong(request, "powwowServerId");
 
 PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwowServerId);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((powwowServer != null) ? powwowServer.getName() : LanguageUtil.get(request, "new-server"));
 %>
@@ -34,7 +33,6 @@ renderResponse.setTitle((powwowServer != null) ? powwowServer.getName() : Langua
 
 <aui:form action="<%= editURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="powwowServerId" type="hidden" value="<%= String.valueOf(powwowServerId) %>" />
 
 	<aui:model-context bean="<%= powwowServer %>" model="<%= PowwowServer.class %>" />

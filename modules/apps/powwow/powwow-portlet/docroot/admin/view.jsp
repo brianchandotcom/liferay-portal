@@ -48,33 +48,41 @@
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				href="<%= rowURL %>"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
 				href="<%= rowURL %>"
 				name="provider"
 				value="<%= PowwowServiceProviderUtil.getPowwowServiceProviderName(powwowServer.getProviderType()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-minw-150"
 				href="<%= rowURL %>"
 				name="branding-name"
 				value="<%= LanguageUtil.get(request, PowwowServiceProviderUtil.getBrandingLabel(powwowServer.getProviderType())) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-ws-nowrap"
 				href="<%= rowURL %>"
 				name="active"
 				property="active"
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
 				path="/admin/server_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator
+			displayStyle="list"
+			markupView="lexicon"
+		/>
 	</liferay-ui:search-container>
 </div>

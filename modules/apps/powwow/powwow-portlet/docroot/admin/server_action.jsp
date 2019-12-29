@@ -23,7 +23,11 @@ PowwowServer powwowServer = (PowwowServer)row.getObject();
 %>
 
 <liferay-ui:icon-menu
-	showExpanded="<%= row == null %>"
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
 >
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcPath" value="/admin/edit_server.jsp" />
@@ -32,7 +36,7 @@ PowwowServer powwowServer = (PowwowServer)row.getObject();
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		image="edit"
+		message="edit"
 		url="<%= editURL %>"
 	/>
 

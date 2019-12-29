@@ -20,28 +20,23 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
+
+SearchContainer weDeployAuthAppsSearchContainer = new SearchContainer(renderRequest, portletURL, null, "no-wedeploy-apps-were-found");
+
+int weDeployAuthAppsCount = WeDeployAuthAppLocalServiceUtil.getWeDeployAuthAppsCount();
+
+weDeployAuthAppsSearchContainer.setTotal(weDeployAuthAppsCount);
+
+List<WeDeployAuthApp> weDeployAuthApps = WeDeployAuthAppLocalServiceUtil.getWeDeployAuthApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+weDeployAuthAppsSearchContainer.setResults(weDeployAuthApps);
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-wedeploy-apps-were-found"
 		id="weDeployAuthApps"
-		iteratorURL="<%= portletURL %>"
+		searchContainer="<%= weDeployAuthAppsSearchContainer %>"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			total = WeDeployAuthAppLocalServiceUtil.getWeDeployAuthAppsCount();
-
-			searchContainer.setTotal(total);
-
-			results = WeDeployAuthAppLocalServiceUtil.getWeDeployAuthApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp"
 			keyProperty="weDeployAuthAppId"

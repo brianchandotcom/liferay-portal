@@ -24,26 +24,28 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("devices"));
+						navigationItem.setHref(renderResponse.createRenderURL());
+						navigationItem.setLabel(LanguageUtil.get(request, "devices"));
+					});
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("test"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "test");
+						navigationItem.setLabel(LanguageUtil.get(request, "test"));
+					});
 
-		<%
-		PortletURL devicesURL = renderResponse.createRenderURL();
-
-		devicesURL.setParameter("tabs1", "devices");
-		%>
-
-		<aui:nav-item href="<%= devicesURL.toString() %>" label="devices" selected='<%= tabs1.equals("devices") %>' />
-
-		<%
-		PortletURL testURL = renderResponse.createRenderURL();
-
-		testURL.setParameter("tabs1", "test");
-		%>
-
-		<aui:nav-item href="<%= testURL.toString() %>" label="test" selected='<%= tabs1.equals("test") %>' />
-	</aui:nav>
-</aui:nav-bar>
+			}
+		}
+	%>'
+/>
 
 <div class="container-fluid-1280">
 	<c:choose>

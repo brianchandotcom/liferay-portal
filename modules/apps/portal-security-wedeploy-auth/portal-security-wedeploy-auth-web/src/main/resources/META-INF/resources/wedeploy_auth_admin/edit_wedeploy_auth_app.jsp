@@ -23,27 +23,26 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 %>
 
-<div class="container-fluid-1280 edit-wedeploy-auth">
-	<portlet:actionURL name="/wedeploy_auth_admin/edit_wedeploy_auth_app" var="editWeDeployAuthAppURL" />
+<portlet:actionURL name="/wedeploy_auth_admin/edit_wedeploy_auth_app" var="editWeDeployAuthAppURL" />
 
-	<aui:form action="<%= editWeDeployAuthAppURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<liferay-frontend:edit-form
+	action="<%= editWeDeployAuthAppURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-		<div class="lfr-form-content">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset label="add-wedeploy-app">
-					<aui:input autoFocus="<%= true %>" name="name" />
+	<liferay-frontend:edit-form-body>
+		<aui:input autoFocus="<%= true %>" name="name" />
 
-					<aui:input name="redirectURI" />
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</div>
+		<aui:input name="redirectURI" />
+	</liferay-frontend:edit-form-body>
 
-		<aui:button-row>
-			<aui:button type="submit" />
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:form>
-</div>
+		<aui:button href="<%= redirect %>" type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

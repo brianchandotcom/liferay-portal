@@ -37,40 +37,42 @@ renderResponse.setTitle((powwowServer != null) ? powwowServer.getName() : Langua
 
 	<aui:model-context bean="<%= powwowServer %>" model="<%= PowwowServer.class %>" />
 
-	<aui:fieldset>
-		<aui:input name="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-		<aui:select label="provider-type" name="providerType">
+			<aui:select label="provider-type" name="providerType">
 
-			<%
-			String defaultProviderType = StringPool.BLANK;
+				<%
+				String defaultProviderType = StringPool.BLANK;
 
-			if (powwowServer != null) {
-				if (ArrayUtil.contains(PortletPropsValues.POWWOW_PROVIDER_TYPES, powwowServer.getProviderType())) {
-					defaultProviderType = powwowServer.getProviderType();
+				if (powwowServer != null) {
+					if (ArrayUtil.contains(PortletPropsValues.POWWOW_PROVIDER_TYPES, powwowServer.getProviderType())) {
+						defaultProviderType = powwowServer.getProviderType();
+					}
 				}
-			}
-			else if (PortletPropsValues.POWWOW_PROVIDER_TYPES.length != 0) {
-				defaultProviderType = PortletPropsValues.POWWOW_PROVIDER_TYPES[0];
-			}
+				else if (PortletPropsValues.POWWOW_PROVIDER_TYPES.length != 0) {
+					defaultProviderType = PortletPropsValues.POWWOW_PROVIDER_TYPES[0];
+				}
 
-			for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
-			%>
+				for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
+				%>
 
-				<aui:option selected="<%= defaultProviderType.equals(providerType) %>" value="<%= providerType %>"><%= PowwowServiceProviderUtil.getPowwowServiceProviderName(providerType) %></aui:option>
+					<aui:option selected="<%= defaultProviderType.equals(providerType) %>" value="<%= providerType %>"><%= PowwowServiceProviderUtil.getPowwowServiceProviderName(providerType) %></aui:option>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</aui:select>
+			</aui:select>
 
-		<aui:input cssClass="optional-field" label="api-url" name="url" />
+			<aui:input cssClass="optional-field" label="api-url" name="url" />
 
-		<aui:input cssClass="optional-field" label="api-key" name="apiKey" />
+			<aui:input cssClass="optional-field" label="api-key" name="apiKey" />
 
-		<aui:input cssClass="optional-field" name="secret" />
-	</aui:fieldset>
+			<aui:input cssClass="optional-field" name="secret" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button type="submit" />

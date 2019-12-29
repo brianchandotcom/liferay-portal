@@ -33,7 +33,7 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 
 <liferay-portlet:actionURL name="updatePowwowServer" var="editURL" />
 
-<aui:form action="<%= editURL %>" method="post" name="fm">
+<aui:form action="<%= editURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="powwowServerId" type="hidden" value="<%= String.valueOf(powwowServerId) %>" />

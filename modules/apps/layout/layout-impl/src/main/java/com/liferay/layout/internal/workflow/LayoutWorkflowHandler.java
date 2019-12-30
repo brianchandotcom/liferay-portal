@@ -17,6 +17,8 @@ package com.liferay.layout.internal.workflow;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,6 +32,7 @@ import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,6 +58,22 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "content-page");
+	}
+
+	@Override
+	public WorkflowDefinitionLink getWorkflowDefinitionLink(
+			long companyId, long groupId, long classPK)
+		throws PortalException {
+
+		Layout layout = _layoutLocalService.getLayout(classPK);
+
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) ||
+			layout.isHidden() || layout.isSystem()) {
+
+			return null;
+		}
+
+		return super.getWorkflowDefinitionLink(companyId, groupId, classPK);
 	}
 
 	@Override

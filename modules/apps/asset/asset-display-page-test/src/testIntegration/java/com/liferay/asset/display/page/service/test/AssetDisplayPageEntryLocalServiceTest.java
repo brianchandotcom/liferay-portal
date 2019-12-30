@@ -91,7 +91,13 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	public void testAddAssetDisplayPageEntryUpdatesLayoutPageTemplate()
 		throws PortalException {
 
-		_layoutPageTemplateEntry = _addLayoutPageTemplateEntry();
+		_layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
+				0, 0, 0, WorkflowConstants.STATUS_APPROVED,
+				new ServiceContext());
 
 		_layoutPageTemplateEntry.setModifiedDate(null);
 
@@ -287,7 +293,13 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	public void testUpdateAssetDisplayPageEntryUpdatesLayoutPageTemplate()
 		throws PortalException {
 
-		_layoutPageTemplateEntry = _addLayoutPageTemplateEntry();
+		_layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
+				0, 0, 0, WorkflowConstants.STATUS_APPROVED,
+				new ServiceContext());
 
 		_layoutPageTemplateEntry.setModifiedDate(null);
 
@@ -319,16 +331,6 @@ public class AssetDisplayPageEntryLocalServiceTest {
 
 		DateTestUtil.assertNotEquals(
 			originalModifiedDate, layoutPageTemplateEntry.getModifiedDate());
-	}
-
-	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry()
-		throws PortalException {
-
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,true, 0,
-				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 	}
 
 	@Inject

@@ -108,7 +108,7 @@ const ExperienceModal = ({
 	};
 
 	const nameInputId = portletNamespace + 'segmentsExperienceName';
-	const segmentSelectId = portletNamespace + 'segmentsExperienceSegmnet';
+	const segmentSelectId = portletNamespace + 'segmentsExperienceSegment';
 
 	const nameGroupClassName = classNames('my-2', {
 		'has-error': requiredNameError

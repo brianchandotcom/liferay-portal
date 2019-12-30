@@ -69,7 +69,7 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 					fieldValue, fieldValueName, locale))
 		).when(
 			_segmentsFieldCustomizerRegistry
-		).getSegmentFieldCustomizerOptional(
+		).getSegmentsFieldCustomizerOptional(
 			entityName, fieldName
 		);
 
@@ -94,7 +94,7 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 			Optional.empty()
 		).when(
 			_segmentsFieldCustomizerRegistry
-		).getSegmentFieldCustomizerOptional(
+		).getSegmentsFieldCustomizerOptional(
 			entityName, fieldName
 		);
 

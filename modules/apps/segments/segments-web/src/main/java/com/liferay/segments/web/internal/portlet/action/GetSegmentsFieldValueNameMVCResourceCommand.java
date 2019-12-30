@@ -77,7 +77,7 @@ public class GetSegmentsFieldValueNameMVCResourceCommand
 		String entityName, String fieldName, String fieldValue, Locale locale) {
 
 		Optional<SegmentsFieldCustomizer> segmentFieldCustomizerOptional =
-			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizerOptional(
+			_segmentsFieldCustomizerRegistry.getSegmentsFieldCustomizerOptional(
 				entityName, fieldName);
 
 		if (!segmentFieldCustomizerOptional.isPresent()) {

@@ -162,7 +162,7 @@ public class EntityModelFieldMapper {
 		}
 
 		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
-			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizerOptional(
+			_segmentsFieldCustomizerRegistry.getSegmentsFieldCustomizerOptional(
 				entityModel.getName(), entityField.getName());
 
 		if ((entityFieldType == EntityField.Type.ID) &&
@@ -220,7 +220,7 @@ public class EntityModelFieldMapper {
 				Optional<SegmentsFieldCustomizer>
 					segmentsFieldCustomizerOptional =
 						_segmentsFieldCustomizerRegistry.
-							getSegmentFieldCustomizerOptional(
+							getSegmentsFieldCustomizerOptional(
 								entityModelName, entityField.getName());
 
 				if ((entityField.getType() == EntityField.Type.ID) &&

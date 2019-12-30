@@ -42,7 +42,7 @@ public class SegmentsFieldCustomizerRegistryImpl
 	implements SegmentsFieldCustomizerRegistry {
 
 	@Override
-	public Optional<SegmentsFieldCustomizer> getSegmentFieldCustomizerOptional(
+	public Optional<SegmentsFieldCustomizer> getSegmentsFieldCustomizerOptional(
 		String entityName, String fieldName) {
 
 		List<SegmentsFieldCustomizer> segmentsFieldCustomizers =

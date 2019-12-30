@@ -178,7 +178,7 @@ public class ExportExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		}
 
 		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
-			_segmentsFieldCustomizerRegistry.getSegmentFieldCustomizerOptional(
+			_segmentsFieldCustomizerRegistry.getSegmentsFieldCustomizerOptional(
 				_entityModel.getName(), entityField.getName());
 
 		if (!segmentsFieldCustomizerOptional.isPresent()) {

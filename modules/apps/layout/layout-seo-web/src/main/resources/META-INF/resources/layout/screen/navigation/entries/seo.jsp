@@ -153,6 +153,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						<react:component
 							data="<%= data %>"
 							module="js/seo/PreviewSeo.es"
+							servletContext="<%= application %>"
 						/>
 					</div>
 				</div>

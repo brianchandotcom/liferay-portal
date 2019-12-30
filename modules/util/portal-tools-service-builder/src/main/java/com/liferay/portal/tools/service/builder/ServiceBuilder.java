@@ -6017,6 +6017,10 @@ public class ServiceBuilder {
 			derivedColumnElements.add(columnElement);
 		}
 
+		if (columnElements.isEmpty()) {
+			changeTrackingEnabled = false;
+		}
+
 		if (changeTrackingEnabled) {
 			Element columnElement = DocumentHelper.createElement("column");
 

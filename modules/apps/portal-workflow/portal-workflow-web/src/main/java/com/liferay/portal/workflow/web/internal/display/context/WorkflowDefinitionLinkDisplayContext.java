@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,6 +42,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -63,6 +63,7 @@ import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLi
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -539,12 +540,10 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 	protected WorkflowDefinitionLinkSearchEntry
 			createWorkflowDefinitionLinkSearchEntry(
-				WorkflowHandler<?> workflowHandler)
+				WorkflowHandler<?> workflowHandler, Locale locale)
 		throws PortalException {
 
-		String resource = ResourceActionsUtil.getModelResource(
-			_workflowDefinitionLinkRequestHelper.getLocale(),
-			workflowHandler.getClassName());
+		String resource = workflowHandler.getType(locale);
 
 		return new WorkflowDefinitionLinkSearchEntry(
 			workflowHandler.getClassName(), resource,
@@ -555,13 +554,18 @@ public class WorkflowDefinitionLinkDisplayContext {
 			createWorkflowDefinitionLinkSearchEntryList()
 		throws PortalException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		List<WorkflowDefinitionLinkSearchEntry>
 			workflowDefinitionLinkSearchEntries = new ArrayList<>();
 
 		for (WorkflowHandler<?> workflowHandler : getWorkflowHandlers()) {
 			WorkflowDefinitionLinkSearchEntry
 				workflowDefinitionLinkSearchEntry =
-					createWorkflowDefinitionLinkSearchEntry(workflowHandler);
+					createWorkflowDefinitionLinkSearchEntry(
+						workflowHandler, themeDisplay.getLocale());
 
 			workflowDefinitionLinkSearchEntries.add(
 				workflowDefinitionLinkSearchEntry);

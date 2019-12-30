@@ -452,7 +452,6 @@ renderResponse.setTitle(headerTitle);
 							classPK="<%= (fileEntry != null) ? fileEntry.getFileEntryId() : 0 %>"
 							classTypeId="<%= (fileEntryTypeId < 0) ? DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT : fileEntryTypeId %>"
 							groupId="<%= scopeGroupId %>"
-							showPortletLayouts="<%= true %>"
 							showViewInContextLink="<%= true %>"
 						/>
 					</aui:fieldset>

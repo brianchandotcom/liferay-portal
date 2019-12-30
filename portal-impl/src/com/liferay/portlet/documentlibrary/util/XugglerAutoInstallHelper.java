@@ -162,27 +162,27 @@ public class XugglerAutoInstallHelper {
 	}
 
 	private static String _getXugglerJarFileName() {
-		String bitmode = OSDetector.getBitMode();
+		String bitMode = OSDetector.getBitMode();
 
-		if (Validator.isNull(bitmode) ||
-			(!bitmode.equals("32") && !bitmode.equals("64"))) {
+		if (Validator.isNull(bitMode) ||
+			(!bitMode.equals("32") && !bitMode.equals("64"))) {
 
 			return null;
 		}
 
 		if (OSDetector.isApple()) {
 			return PropsUtil.get(
-				PropsKeys.XUGGLER_JAR_FILE, new Filter(bitmode + "-mac"));
+				PropsKeys.XUGGLER_JAR_FILE, new Filter(bitMode + "-mac"));
 		}
 
 		if (OSDetector.isLinux()) {
 			return PropsUtil.get(
-				PropsKeys.XUGGLER_JAR_FILE, new Filter(bitmode + "-linux"));
+				PropsKeys.XUGGLER_JAR_FILE, new Filter(bitMode + "-linux"));
 		}
 
 		if (OSDetector.isWindows()) {
 			return PropsUtil.get(
-				PropsKeys.XUGGLER_JAR_FILE, new Filter(bitmode + "-win"));
+				PropsKeys.XUGGLER_JAR_FILE, new Filter(bitMode + "-win"));
 		}
 
 		return null;

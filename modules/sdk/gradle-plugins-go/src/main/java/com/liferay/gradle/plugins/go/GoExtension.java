@@ -48,13 +48,13 @@ public class GoExtension {
 				sb.append(goVersion);
 				sb.append('.');
 
-				String bitmode = OSDetector.getBitMode();
+				String bitMode = OSDetector.getBitMode();
 
 				if (OSDetector.isApple()) {
 					sb.append("darwin-amd64.tar.gz");
 				}
 				else if (OSDetector.isWindows()) {
-					if (bitmode.equals("64")) {
+					if (bitMode.equals("64")) {
 						sb.append("windows-amd64.zip");
 					}
 					else {
@@ -62,7 +62,7 @@ public class GoExtension {
 					}
 				}
 				else {
-					if (bitmode.equals("64")) {
+					if (bitMode.equals("64")) {
 						sb.append("linux-amd64.tar.gz");
 					}
 					else {

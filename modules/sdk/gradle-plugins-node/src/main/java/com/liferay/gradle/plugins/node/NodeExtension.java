@@ -75,13 +75,13 @@ public class NodeExtension {
 
 					sb.append("/win-x");
 
-					String bitmode = OSDetector.getBitMode();
+					String bitMode = OSDetector.getBitMode();
 
-					if (bitmode.equals("32")) {
-						bitmode = "86";
+					if (bitMode.equals("32")) {
+						bitMode = "86";
 					}
 
-					sb.append(bitmode);
+					sb.append(bitMode);
 					sb.append("/node.exe");
 				}
 				else {
@@ -101,13 +101,13 @@ public class NodeExtension {
 					sb.append(os);
 					sb.append("-x");
 
-					String bitmode = OSDetector.getBitMode();
+					String bitMode = OSDetector.getBitMode();
 
-					if (bitmode.equals("32")) {
-						bitmode = "86";
+					if (bitMode.equals("32")) {
+						bitMode = "86";
 					}
 
-					sb.append(bitmode);
+					sb.append(bitMode);
 
 					if (OSDetector.isWindows()) {
 						sb.append(".zip");

@@ -1550,6 +1550,12 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
 	}
 
+	@description = "Unpublish and Republish an App"
+	@priority = "5"
+	test UnpublishAndRepublish {
+		property portal.acceptance = "false";
+	}
+
 	@description = "Validate empty list state of Apps listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfAppsListingScreen {

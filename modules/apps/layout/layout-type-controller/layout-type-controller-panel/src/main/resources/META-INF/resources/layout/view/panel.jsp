@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portal/init.jsp" %>
+<%@ include file="/layout/init.jsp" %>
 
 <c:choose>
 	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
@@ -62,13 +62,13 @@
 				</aui:col>
 
 				<aui:col cssClass="<%= panelBodyCssClass %>" width="<%= 80 %>">
-					<%@ include file="/html/portal/layout/view/panel_description.jspf" %>
+					<%@ include file="/layout/view/panel_description.jspf" %>
 				</aui:col>
 			</aui:row>
 		</aui:container>
 	</c:when>
 	<c:otherwise>
-		<%@ include file="/html/portal/layout/view/panel_description.jspf" %>
+		<%@ include file="/layout/view/panel_description.jspf" %>
 	</c:otherwise>
 </c:choose>
 

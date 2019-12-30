@@ -16,7 +16,15 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro viewPerformanceByStepAfterSearch {
+	macro selectDateRangeFilter {
+		key_dateRange = "${dateRange}";
+
+		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
+
+		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
+	}
+
+	macro viewPerformanceByStepValues {
 		var key_stepName = "${stepName}";
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
@@ -29,10 +37,12 @@ definition {
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_AVG_COMPLETION_TIME_VALUE",
 			value1 = "${avgCompletionTimeValue}");
 
-		for (var isStepNotPresent : list "${isNotPresent}") {
-			var key_stepName = "${isStepNotPresent}";
+		if ("${isNotPresent}" != "") {
+			for (var isStepNotPresent : list "${isNotPresent}") {
+				var key_stepName = "${isStepNotPresent}";
 
-			AssertElementNotPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+				AssertElementNotPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");
+			}
 		}
 	}
 

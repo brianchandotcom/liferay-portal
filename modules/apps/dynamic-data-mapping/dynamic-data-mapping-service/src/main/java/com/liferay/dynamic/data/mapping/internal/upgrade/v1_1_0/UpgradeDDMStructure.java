@@ -14,11 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0;
 
-import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
-import com.liferay.dynamic.data.mapping.expression.DDMExpression;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
-import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -32,10 +28,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -66,43 +59,11 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	protected DDMFormRule getSetVisibleDDMFormRule(
-			String ddmFormFieldName, String visibilityExpression)
-		throws DDMExpressionException {
+		String ddmFormFieldName, String visibilityExpression) {
 
-		try {
-			DDMExpression<Boolean> ddmExpression =
-				_ddmExpressionFactory.createExpression(
-					CreateExpressionRequest.Builder.newBuilder(
-						visibilityExpression
-					).build());
-
-			Map<String, VariableDependencies> variableDependencies =
-				ddmExpression.getVariableDependenciesMap();
-
-			String condition = visibilityExpression;
-
-			for (String variable : variableDependencies.keySet()) {
-				condition = StringUtil.replace(
-					condition, new String[] {variable},
-					new String[] {
-						"getValue(" + StringUtil.quote(variable) + ")"
-					},
-					true);
-			}
-
-			return new DDMFormRule(
-				condition, "setVisible('" + ddmFormFieldName + "', true)");
-		}
-		catch (DDMExpressionException ddmee) {
-			_log.error(
-				String.format(
-					"Unable to upgrade the visibility expression \"%s\" to a " +
-						"form rule",
-					visibilityExpression),
-				ddmee);
-
-			throw ddmee;
-		}
+		return new DDMFormRule(
+			visibilityExpression,
+			"setVisible('" + ddmFormFieldName + "', true)");
 	}
 
 	protected String updateDefinition(String definition)
@@ -214,9 +175,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeDDMStructure.class);
 
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMFormDeserializer _ddmFormDeserializer;

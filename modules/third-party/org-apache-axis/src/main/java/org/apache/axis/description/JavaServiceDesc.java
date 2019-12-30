@@ -40,6 +40,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -799,6 +800,18 @@ public class JavaServiceDesc implements ServiceDesc {
             List methodsList = new ArrayList();
             Method[] methods = implClass.getMethods();
             if (methods != null) {
+                Arrays.sort(methods, new Comparator<Method>() {
+                    @Override
+                    public int compare(Method m1, Method m2) {
+                        if (m1.getName().equals(m2.getName())) {
+                            return (m1.getParameterTypes().length -
+                                    m2.getParameterTypes().length);
+                        }
+
+                        return 0;
+                    }
+                });
+
                 for (int i = 0; i < methods.length; i++) {
                     String declaringClass = methods[i].getDeclaringClass().getName();
                     if (!declaringClass.startsWith("java.") &&
@@ -809,7 +822,23 @@ public class JavaServiceDesc implements ServiceDesc {
             }
             return (Method[])methodsList.toArray(new Method[]{}); 
         } else {
-            return implClass.getDeclaredMethods();
+            Method[] methods = implClass.getDeclaredMethods();
+
+            if (methods != null) {
+                Arrays.sort(methods, new Comparator<Method>() {
+                    @Override
+                    public int compare(Method m1, Method m2) {
+                        if (m1.getName().equals(m2.getName())) {
+                            return (m1.getParameterTypes().length -
+                                    m2.getParameterTypes().length);
+                        }
+
+                        return 0;
+                    }
+                });
+            }
+
+            return methods;
         }
     }
 

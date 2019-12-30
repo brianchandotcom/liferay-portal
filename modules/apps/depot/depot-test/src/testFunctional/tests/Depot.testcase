@@ -29,11 +29,7 @@ definition {
 	@description = "This ensures that a depot can be accessed in the list view."
 	@priority = "5"
 	test AccessInListView {
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -50,11 +46,7 @@ definition {
 	@description = "This ensures that a depot can be accessed in the table view."
 	@priority = "5"
 	test AccessInTableView {
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -109,9 +101,7 @@ definition {
 	@description = "This ensures that users cannot create the same name as another translated repository name."
 	@priority = "4"
 	test AddNameThatDuplicatesTranslation {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -145,9 +135,9 @@ definition {
 	@description = "This ensures that users cannot create a site with the same name as an existing depot."
 	@priority = "5"
 	test AddSiteThatDuplicatesName {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(depotName = "Site Name");
+		JSONDepot.addDepot(
+			depotDescription = "This depot will duplicate a site name",
+			depotName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -162,9 +152,7 @@ definition {
 	@description = "This ensures that a depot can be deleted."
 	@priority = "5"
 	test DeleteDepot {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -178,9 +166,7 @@ definition {
 	@description = "This ensures that a depot with a folder can be deleted."
 	@priority = "4"
 	test DeleteDepotWithFolder {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -202,9 +188,7 @@ definition {
 	@description = "This ensures that a depot with multiple files can be deleted."
 	@priority = "4"
 	test DeleteDepotWithMultipleFiles {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -226,11 +210,7 @@ definition {
 	@description = "This ensures that a depot can be deleted in the list view."
 	@priority = "5"
 	test DeleteInListView {
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -246,11 +226,7 @@ definition {
 	@description = "This ensures that a depot can be deleted in the table view."
 	@priority = "5"
 	test DeleteInTableView {
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -268,9 +244,7 @@ definition {
 	test EditDepot {
 		property portal.acceptance = "true";
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -291,15 +265,13 @@ definition {
 	@description = "This ensures that a depot can be edited in the list view."
 	@priority = "5"
 	test EditInListView {
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Depot.editDepot(
 			depotDescriptionEdit = "This is an edited description of a depot",
@@ -320,15 +292,13 @@ definition {
 	@description = "This ensures that a depot can be edited in the table view."
 	@priority = "5"
 	test EditInTableView {
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		Depot.editDepot(
 			depotDescriptionEdit = "This is an edited description of a depot",
@@ -349,13 +319,13 @@ definition {
 	@description = "This ensures that users cannot edit repository name same as another repository name."
 	@priority = "5"
 	test RenameToDuplicate {
-		for (var depotName : list "Test Depot Name,Test Depot Name 2") {
-			DepotNavigator.openDepotAdmin();
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
 
-			Depot.addDepot(
-				depotDescription = "This is the description of a depot",
-				depotName = "${depotName}");
-		}
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name 2");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -374,27 +344,21 @@ definition {
 	@description = "This ensures that a depot's description can be searched."
 	@priority = "5"
 	test SearchForDepotDescription {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "Description 1",
 			depotName = "Depot 1");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "Description 2",
 			depotName = "Depot 2");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "Description 3",
 			depotName = "Depot 3");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(depotName = "Should be not returned in search");
+		JSONDepot.addDepot(
+			depotDescription = "",
+			depotName = "Should not be returned in search");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -414,21 +378,21 @@ definition {
 	@description = "This ensures that a depot's title can be searched."
 	@priority = "5"
 	test SearchForDepotTitle {
-		DepotNavigator.openDepotAdmin();
+		JSONDepot.addDepot(
+			depotDescription = "",
+			depotName = "Depot 1");
 
-		Depot.addDepot(depotName = "Depot 1");
+		JSONDepot.addDepot(
+			depotDescription = "",
+			depotName = "Depot 2");
 
-		DepotNavigator.openDepotAdmin();
+		JSONDepot.addDepot(
+			depotDescription = "",
+			depotName = "Depot 3");
 
-		Depot.addDepot(depotName = "Depot 2");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(depotName = "Depot 3");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(depotName = "Should be not returned in search");
+		JSONDepot.addDepot(
+			depotDescription = "",
+			depotName = "Should not be returned in search");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -448,15 +412,13 @@ definition {
 	@description = "This ensures that all depots can be deleted when the user selects all."
 	@priority = "4"
 	test SelectAllAndDelete {
-		DepotNavigator.openDepotAdmin();
-
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
-			Depot.addDepot(
+			JSONDepot.addDepot(
 				depotDescription = "This is the description of a depot",
 				depotName = "${depotName}");
-
-			DepotNavigator.openDepotAdmin();
 		}
+
+		DepotNavigator.openDepotAdmin();
 
 		PortletEntry.selectAll();
 
@@ -468,15 +430,13 @@ definition {
 	@description = "This ensures that all depots can be deleted in the list view when the user selects all."
 	@priority = "4"
 	test SelectAllAndDeleteInListView {
-		DepotNavigator.openDepotAdmin();
-
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
-			Depot.addDepot(
+			JSONDepot.addDepot(
 				depotDescription = "This is the description of a depot",
 				depotName = "${depotName}");
-
-			DepotNavigator.openDepotAdmin();
 		}
+
+		DepotNavigator.openDepotAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -490,15 +450,13 @@ definition {
 	@description = "This ensures that all depots can be deleted in the table view when the user selects all."
 	@priority = "4"
 	test SelectAllAndDeleteInTableView {
-		DepotNavigator.openDepotAdmin();
-
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
-			Depot.addDepot(
+			JSONDepot.addDepot(
 				depotDescription = "This is the description of a depot",
 				depotName = "${depotName}");
-
-			DepotNavigator.openDepotAdmin();
 		}
+
+		DepotNavigator.openDepotAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

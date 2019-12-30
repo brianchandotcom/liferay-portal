@@ -38,9 +38,7 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -63,9 +61,7 @@ definition {
 	@description = "This ensures that a document with document type and metadata set can be added in a depot."
 	@priority = "5"
 	test AddDocumentTypeAndMetadata {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -117,9 +113,7 @@ definition {
 	@description = "This ensures that a folder can be deleted in a depot."
 	@priority = "5"
 	test DeleteFolder {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -139,12 +133,7 @@ definition {
 	@description = "This test makes sure that all files are deleted when user selects all in a depot."
 	@priority = "4"
 	test DeleteMultipleImages {
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -170,12 +159,7 @@ definition {
 	test EditDocument {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -210,9 +194,7 @@ definition {
 	@description = "This ensures that a folder can be edited in a depot."
 	@priority = "5"
 	test EditFolder {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -262,9 +244,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "DM_Test.lar");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -304,9 +284,7 @@ definition {
 	@description = "This ensures that a document can be moved to a folder in a depot."
 	@priority = "5"
 	test MoveDocumentToFolder {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -362,9 +340,7 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.001");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -409,9 +385,7 @@ definition {
 	@description = "This ensures that document can be restored to a depot."
 	@priority = "5"
 	test RestoreDocument {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -472,9 +446,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 

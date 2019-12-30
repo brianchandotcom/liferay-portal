@@ -10,12 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Repositories",
-			panel = "Control Panel",
-			portlet = "Repositories");
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 	}

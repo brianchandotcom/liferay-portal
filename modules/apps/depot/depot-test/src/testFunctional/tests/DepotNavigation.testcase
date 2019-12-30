@@ -27,9 +27,7 @@ definition {
 	test AccessViaShortcut {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -68,9 +66,7 @@ definition {
 	@description = "This ensures that a user can redirect to the repository via Space icon."
 	@priority = "5"
 	test AccessViaSiteNavigation {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -88,9 +84,7 @@ definition {
 	@description = "This test covers LPS-104832. It ensures that the repositories can not connect to repositories."
 	@priority = "5"
 	test ViewRestrictionWhenConnectingSites {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 

@@ -29,9 +29,7 @@ definition {
 	@description = "This ensures that the language can be set in a depot."
 	@priority = "5"
 	test Smoke {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -55,9 +53,7 @@ definition {
 	@description = "This ensures that the web content language can be set in a depot."
 	@priority = "5"
 	test ViewCustomLanguagesForWebContent {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 

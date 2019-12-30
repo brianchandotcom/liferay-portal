@@ -29,9 +29,7 @@ definition {
 	@description = "This ensures that a depot can be edited via settings."
 	@priority = "4"
 	test EditName {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -74,9 +72,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -122,9 +118,7 @@ definition {
 	@description = "This ensures that the depot language can be set via settings."
 	@priority = "4"
 	test ViewCustomLanguage {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 

@@ -45,9 +45,7 @@ definition {
 			membershipType = "Restricted",
 			siteName = "Restricted Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -73,9 +71,7 @@ definition {
 	@description = "This asserts that a deactivated site is still shown in connected sites and a deleted site is removed from connected sites."
 	@priority = "4"
 	test DeactivateAndDeleteSite {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -137,9 +133,7 @@ definition {
 	@description = "This ensures that the disconnected site can not access the the depot."
 	@priority = "5"
 	test DisconnectFromSite {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -181,9 +175,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -257,9 +249,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -314,9 +304,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -357,9 +345,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -415,9 +401,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -474,9 +458,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -555,9 +537,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -617,9 +597,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -688,9 +666,7 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -736,9 +712,7 @@ definition {
 	test Smoke {
 		property portal.acceptance = "true";
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -764,9 +738,7 @@ definition {
 	@description = "This ensures that a connected site can access the depot document."
 	@priority = "5"
 	test ViewDocumentFromAnotherSite {
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
@@ -809,9 +781,7 @@ definition {
 			groupName = "Child Site Name",
 			parentGroupName = "Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		Depot.addDepot(
+		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 

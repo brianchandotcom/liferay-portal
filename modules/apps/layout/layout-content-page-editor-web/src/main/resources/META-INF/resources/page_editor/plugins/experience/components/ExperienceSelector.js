@@ -80,6 +80,7 @@ const ExperienceSelector = ({
 }) => {
 	const {
 		classPK,
+		defaultLanguageId,
 		defaultSegmentsExperienceId,
 		editSegmentsEntryURL,
 		hasEditSegmentsEntryPermission,
@@ -157,9 +158,13 @@ const ExperienceSelector = ({
 		segmentsExperienceId
 	}) => {
 		if (segmentsExperienceId) {
+			const nameMap = JSON.stringify({
+				[defaultLanguageId]: name
+			});
+
 			return updateExperience({
 				active: true,
-				name,
+				nameMap,
 				segmentsEntryId,
 				segmentsExperienceId
 			})

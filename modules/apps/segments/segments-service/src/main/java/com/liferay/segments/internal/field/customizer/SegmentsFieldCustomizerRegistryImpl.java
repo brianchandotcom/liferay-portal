@@ -46,7 +46,7 @@ public class SegmentsFieldCustomizerRegistryImpl
 		String entityName, String fieldName) {
 
 		List<SegmentsFieldCustomizer> segmentsFieldCustomizers =
-			getSegmentFieldCustomizers(entityName);
+			getSegmentsFieldCustomizers(entityName);
 
 		Stream<SegmentsFieldCustomizer> stream =
 			segmentsFieldCustomizers.stream();
@@ -77,7 +77,7 @@ public class SegmentsFieldCustomizerRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	protected List<SegmentsFieldCustomizer> getSegmentFieldCustomizers(
+	protected List<SegmentsFieldCustomizer> getSegmentsFieldCustomizers(
 		String name) {
 
 		if (Validator.isNull(name)) {

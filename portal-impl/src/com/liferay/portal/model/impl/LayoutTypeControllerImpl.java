@@ -110,10 +110,6 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 			return _viewPage;
 		}
 
-		if (_type.equals(LayoutConstants.TYPE_PANEL)) {
-			return StrutsUtil.TEXT_HTML_DIR + "/portal/layout/view/panel.jsp";
-		}
-
 		return StrutsUtil.TEXT_HTML_DIR + "/portal/layout/view/portlet.jsp";
 	}
 

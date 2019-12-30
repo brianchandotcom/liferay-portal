@@ -1960,6 +1960,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"[$MESSAGE_SUBJECT_PREFIX$]", messageSubjectPrefix,
 			"[$MESSAGE_URL$]", messageURL, "[$MESSAGE_USER_ADDRESS$]",
 			emailAddress, "[$MESSAGE_USER_NAME$]", fullName);
+		subscriptionSender.setCreatorUserId(message.getUserId());
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(messageURL);

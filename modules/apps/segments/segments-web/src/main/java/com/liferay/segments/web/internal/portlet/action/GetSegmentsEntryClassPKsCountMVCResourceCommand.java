@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
-import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.service.SegmentsEntryService;
@@ -32,7 +31,6 @@ import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 
 import java.io.PrintWriter;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletException;
@@ -124,12 +122,10 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 
 		String type = ParamUtil.getString(resourceRequest, "type");
 
-		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
-			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(type, Criteria.Type.MODEL);
-
 		Criteria criteria = ActionUtil.getCriteria(
-			resourceRequest, segmentsCriteriaContributors);
+			resourceRequest,
+			_segmentsCriteriaContributorRegistry.
+				getSegmentsCriteriaContributors(type));
 
 		saveCriteriaInSession(resourceRequest, criteria);
 

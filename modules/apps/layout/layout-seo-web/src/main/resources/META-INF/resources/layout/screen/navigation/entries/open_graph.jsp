@@ -54,10 +54,14 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 				value="open-graph"
 			/>
 
+			<p class="text-muted">
+				<liferay-ui:message key="open-graph-description" />
+			</p>
+
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 			<div class="form-group">
-				<label class="control-label"><liferay-ui:message key="image" /></label>
+				<label class="control-label"><liferay-ui:message key="image" /> <liferay-ui:icon-help message="open-graph-image-help" /></label>
 
 				<aui:input label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" title="image" type="text" value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
 
@@ -72,7 +76,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			%>
 
 			<div id="<portlet:namespace />openGraphSettings">
-				<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /></label>
+				<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /> <liferay-ui:icon-help message="open-graph-image-alt-help" /></label>
 
 				<c:choose>
 					<c:when test="<%= selLayoutSEOEntry != null %>">
@@ -107,7 +111,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			</div>
 
 			<div class="form-group">
-				<label><liferay-ui:message key="preview" /></label>
+				<label><liferay-ui:message key="preview" /> <liferay-ui:icon-help message="The image ratio might change depending on where the URL is posted." /></label>
 
 				<div>
 

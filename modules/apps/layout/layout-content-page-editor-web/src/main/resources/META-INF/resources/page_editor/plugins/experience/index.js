@@ -42,7 +42,8 @@ function editExperienceReducer(state, payload) {
 			availableSegmentsExperiences: {
 				...nextState.availableSegmentsExperiences,
 				[experience.segmentsExperienceId]: {
-					...updatedExperience
+					...updatedExperience,
+					priority: experience.priority
 				}
 			}
 		};

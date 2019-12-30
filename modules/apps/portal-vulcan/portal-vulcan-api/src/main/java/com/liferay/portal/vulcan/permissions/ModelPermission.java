@@ -16,19 +16,25 @@ package com.liferay.portal.vulcan.permissions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Javier Gamarra
  */
+@GraphQLName("ModelPermission")
 @XmlRootElement(name = "ModelPermission")
 public class ModelPermission {
 
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	public String[] getActionIds() {
 		return _actionIds;
 	}
 
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	public String getRoleName() {
 		return _roleName;

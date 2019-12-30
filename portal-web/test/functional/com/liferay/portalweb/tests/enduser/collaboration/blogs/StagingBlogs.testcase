@@ -262,7 +262,7 @@ definition {
 		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addSmallImage(
-			navTab = "Upload Image",
+			navTab = "Blog Images",
 			uploadFileName = "Document_3.jpg");
 
 		PortletEntry.publish();
@@ -828,7 +828,7 @@ definition {
 			coverImageName = "Document_1",
 			entryContent = "Blogs Entry Content 1",
 			entryTitle = "Blogs Entry Title 1",
-			navTab = "Upload Image",
+			navTab = "Blog Images",
 			uploadFileName = "Document_1.jpg");
 
 		Button.clickPublish();
@@ -843,7 +843,7 @@ definition {
 
 		BlogsEntry.addContentWithInlineImage(
 			entryContent = "Blogs Entry Content 2",
-			navTab = "Upload Image",
+			navTab = "Blog Images",
 			uploadFileName = "Document_2.jpg");
 
 		Pause(locator1 = "3000");

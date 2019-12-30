@@ -36,7 +36,7 @@ definition {
 				coverImageName = "Document_${i}",
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title ${i}",
-				navTab = "Upload Image",
+				navTab = "Blog Images",
 				uploadFileName = "Document_${i}.jpg");
 
 			Button.clickPublish();
@@ -150,7 +150,7 @@ definition {
 			coverImageName = "Document_1",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title 1",
-			navTab = "Upload Image",
+			navTab = "Blog Images",
 			uploadFileName = "Document_1.jpg");
 
 		Button.clickPublish();

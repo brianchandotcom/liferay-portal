@@ -78,6 +78,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.upload.AttachmentContentUpdater;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -216,7 +218,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			else if (Validator.isNotNull(redirect) &&
 					 cmd.equals(Constants.ADD) && (entry != null)) {
 
-				_sendAddRedirect(actionRequest, entry.getEntryId());
+				_sendAddRedirect(
+					actionRequest, actionResponse, entry.getEntryId());
 			}
 		}
 		catch (AssetCategoryException | AssetTagException e) {
@@ -348,7 +351,11 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _sendAddRedirect(ActionRequest actionRequest, long entryId) {
+	private void _sendAddRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long entryId)
+		throws IOException {
+
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		String portletResource = _http.getParameter(
@@ -363,8 +370,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				redirect, namespace + "classPK", entryId);
 		}
 
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
+		sendRedirect(
+			actionRequest, actionResponse, _portal.escapeRedirect(redirect));
 	}
 
 	private void _sendDraftRedirect(
@@ -380,7 +387,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _sendUpdateRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -389,8 +397,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		redirect = _http.setParameter(
 			redirect, namespace + "redirectToLastFriendlyURL", false);
 
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, _portal.escapeRedirect(redirect));
+		sendRedirect(
+			actionRequest, actionResponse, _portal.escapeRedirect(redirect));
 	}
 
 	private void _subscribe(ActionRequest actionRequest) throws Exception {

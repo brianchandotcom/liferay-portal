@@ -91,7 +91,12 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	public void testAddAssetDisplayPageEntryUpdatesLayoutPageTemplate()
 		throws PortalException {
 
-		_layoutPageTemplateEntry = _getLayoutPageTemplateEntry();
+		_layoutPageTemplateEntry = _addLayoutPageTemplateEntry();
+
+		_layoutPageTemplateEntry.setModifiedDate(null);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			_layoutPageTemplateEntry);
 
 		Date originalModifiedDate = _layoutPageTemplateEntry.getModifiedDate();
 
@@ -282,7 +287,12 @@ public class AssetDisplayPageEntryLocalServiceTest {
 	public void testUpdateAssetDisplayPageEntryUpdatesLayoutPageTemplate()
 		throws PortalException {
 
-		_layoutPageTemplateEntry = _getLayoutPageTemplateEntry();
+		_layoutPageTemplateEntry = _addLayoutPageTemplateEntry();
+
+		_layoutPageTemplateEntry.setModifiedDate(null);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			_layoutPageTemplateEntry);
 
 		long classPK = RandomTestUtil.randomLong();
 
@@ -311,22 +321,14 @@ public class AssetDisplayPageEntryLocalServiceTest {
 			originalModifiedDate, layoutPageTemplateEntry.getModifiedDate());
 	}
 
-	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry()
 		throws PortalException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
-
-		layoutPageTemplateEntry.setModifiedDate(null);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
-
-		return layoutPageTemplateEntry;
 	}
 
 	@Inject

@@ -13,7 +13,9 @@ definition {
 	}
 
 	macro viewMembershipRequested {
-		LexiconList.clickEllipsis(listEntry = "${siteName}");
+		LexiconList.clickEllipsis(
+			listEntry = "${siteName}",
+			userRole = "${userRole}");
 
 		MenuItem.viewPresent(menuItem = "Membership Requested");
 

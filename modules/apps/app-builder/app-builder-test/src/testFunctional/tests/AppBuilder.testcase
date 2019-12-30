@@ -1678,6 +1678,7 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
 	}
 
+<<<<<<< HEAD
 	@description = "Update an existing deployment"
 	@priority = "5"
 	test UpdateDeployment {
@@ -1863,6 +1864,12 @@ definition {
 		App.selectTableView(tableViewName = "Table View Title");
 
 		App.saveApp();
+=======
+	@description = "Unpublish and Republish an App"
+	@priority = "5"
+	test UnpublishAndRepublish {
+		property portal.acceptance = "false";
+>>>>>>> LRQA-54492 Added testcase UnpublishAndRepublish
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

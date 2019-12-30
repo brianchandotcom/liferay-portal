@@ -29,7 +29,7 @@ public abstract class BaseDDMFormFieldValueRenderer
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		ValueAccessor valueAccessor = getValueAcessor(locale);
+		ValueAccessor valueAccessor = getValueAccessor(locale);
 
 		return valueAccessor.get(ddmFormFieldValue);
 	}
@@ -38,12 +38,19 @@ public abstract class BaseDDMFormFieldValueRenderer
 	public String render(
 		List<DDMFormFieldValue> ddmFormFieldValues, Locale locale) {
 
-		ValueAccessor valueAccessor = getValueAcessor(locale);
+		ValueAccessor valueAccessor = getValueAccessor(locale);
 
 		return ListUtil.toString(
 			ddmFormFieldValues, valueAccessor, StringPool.COMMA_AND_SPACE);
 	}
 
+	protected abstract ValueAccessor getValueAccessor(Locale locale);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getValueAccessor(Locale)}
+	 */
+	@Deprecated
 	protected abstract ValueAccessor getValueAcessor(Locale locale);
 
 }

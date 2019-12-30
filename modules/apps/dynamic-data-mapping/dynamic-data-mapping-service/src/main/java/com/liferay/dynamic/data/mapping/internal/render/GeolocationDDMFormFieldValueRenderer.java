@@ -44,7 +44,7 @@ public class GeolocationDDMFormFieldValueRenderer
 	}
 
 	@Override
-	protected ValueAccessor getValueAcessor(Locale locale) {
+	protected ValueAccessor getValueAccessor(Locale locale) {
 		return new ValueAccessor(locale) {
 
 			@Override

@@ -43,7 +43,7 @@ public class JournalArticleDDMFormFieldValueRenderer
 	}
 
 	@Override
-	protected ValueAccessor getValueAcessor(Locale locale) {
+	protected ValueAccessor getValueAccessor(Locale locale) {
 		return new ValueAccessor(locale) {
 
 			@Override

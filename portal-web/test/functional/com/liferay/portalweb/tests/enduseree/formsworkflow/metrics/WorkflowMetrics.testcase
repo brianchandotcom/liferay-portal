@@ -379,7 +379,7 @@ definition {
 
 		property portal.acceptance = "true";
 		
-		var key_testSLADefinitionDays = "1";
+		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "0001";
 		var key_testSLADefinitionHoursCheck = "00:01";
 		var key_testSLADefinitionDescription = "SLA Description";
@@ -445,7 +445,8 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		Pause(locator1 = "5000");
+		WorkflowMetrics.waitForSLAtoRun(
+			workflowAssetTitle = "Blogs Entry Title");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",

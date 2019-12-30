@@ -172,36 +172,24 @@ definition {
 
 	}
 
-	macro fillSLAFormHours {
-		var key_slaDefinitionHours = "${slaDefinitionHours}";
-		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
-		var key_slaDefinitionEnd = "${slaDefinitionEnd}";
-		var key_slaDefinitionName = "${slaDefinitionName}";
-		var key_slaDefinitionStart = "${slaDefinitionStart}";
+macro waitForSLAtoRun {
+		var count = "1";
 
-		Type(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
-			value1 = "${key_slaDefinitionName}");
+		while (AssertTextNotEquals(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE", value1 = "1 Minute Ago") && ("${count}" != "15")) {
 
-		Type(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
-			value1 = "${key_slaDefinitionDescription}");
+		echo("Waiting 10 seconds, until the SLA becomes overdue");
 
-		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+		Pause(locator1 = "10000");
 
-		AssertClick(
-			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION",
-			value1 = "${key_slaDefinitionStart}");
+		//Add a function here to refresh the page. We need to search for one.
+		Refresh();
 
-		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+		count = MathUtil.sum("${count}", "1");
+		}
 
-		AssertClick(
-			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION",
-			value1 = "${key_slaDefinitionEnd}");
-
-		Type(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
-			value1 = "${key_slaDefinitionHours}");
+		if ("${count}" == "15") {
+		echo("timeout exceeded");
+		}
 	}
 
 	macro goToCreatedSLAForm {

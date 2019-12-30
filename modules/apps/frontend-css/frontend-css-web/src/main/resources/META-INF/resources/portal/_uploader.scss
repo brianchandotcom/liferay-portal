@@ -75,12 +75,12 @@
 	}
 
 	.cancel-button {
+		margin-top: 1px;
 		position: absolute;
 		right: 5px;
+		top: 0;
 		top: 50%;
 		white-space: nowrap;
-		margin-top: 1px;
-		top: 0;
 
 		.cancel-button-text {
 			display: none;
@@ -161,8 +161,7 @@
 	float: left;
 	line-height: 0;
 	margin-right: 2px;
-	padding: 0;
-	padding-left: 5px;
+	padding: 0 0 0 5px;
 }
 
 .lfr-upload-movie {

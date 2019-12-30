@@ -147,7 +147,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	}
 
 	public Schema getSchema() {
-		Property<Schema> schemaProperty = flowSchema.schema;
+		Property<Schema> schemaProperty = flowSchemaProperties.schema;
 
 		return schemaProperty.getValue();
 	}
@@ -205,7 +205,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		mainForm.addRow(requestParametersWidget);
 
-		mainForm.addRow(flowSchema.getForm(Form.REFERENCE));
+		mainForm.addRow(flowSchemaProperties.getForm(Form.REFERENCE));
 	}
 
 	@Override
@@ -228,14 +228,17 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
 	public StringProperty endpoint = new StringProperty("endpoint");
-	public SchemaProperties flowSchema = new SchemaProperties("flowSchema");
-	public SchemaProperties mainSchema = new SchemaProperties("mainSchema");
+	public SchemaProperties flowSchemaProperties = new SchemaProperties(
+		"flowSchemaProperties");
+	public SchemaProperties mainSchemaProperties = new SchemaProperties(
+		"mainSchemaProperties");
 	public StringProperty openAPIModule = new StringProperty("openAPIModule");
 	public Property<Operation> operations = new EnumProperty<>(
 		Operation.class, "operations");
 	public RequestParameterProperties parameters =
 		new RequestParameterProperties("parameters");
-	public SchemaProperties rejectSchemaProperties = new SchemaProperties("rejectSchemaProperties");
+	public SchemaProperties rejectSchemaProperties = new SchemaProperties(
+		"rejectSchemaProperties");
 
 	private ValidationResult _afterEndpoint(OASSource oasSource) {
 		if (_isSingleOperationEndpointPath()) {
@@ -383,9 +386,9 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	}
 
 	private void _resetProperties() {
-		mainSchema.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
+		mainSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
-		flowSchema.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
+		flowSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
 		rejectSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
@@ -462,13 +465,13 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 			openAPIEntityOperationPath, operation.getHttpMethod(),
 			oasJsonObject);
 
-		flowSchema.schema.setValue(endpointSchema);
+		flowSchemaProperties.schema.setValue(endpointSchema);
 
 		if (!_displayOperations) {
 			return;
 		}
 
-		mainSchema.schema.setValue(endpointSchema);
+		mainSchemaProperties.schema.setValue(endpointSchema);
 
 		rejectSchemaProperties.schema.setValue(
 			SchemaUtils.createRejectSchema(endpointSchema));

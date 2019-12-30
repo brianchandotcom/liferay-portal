@@ -110,7 +110,7 @@ public class LiferayInputProperties extends FixedConnectorsComponentProperties {
 
 		schemaPropertiesConnectors.add(
 			new PropertyPathConnector(
-				Connector.MAIN_NAME, "resource.flowSchema"));
+				Connector.MAIN_NAME, "resource.flowSchemaProperties"));
 
 		return Collections.unmodifiableSet(schemaPropertiesConnectors);
 	}

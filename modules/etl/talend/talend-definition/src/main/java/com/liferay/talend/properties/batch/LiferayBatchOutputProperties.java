@@ -48,7 +48,8 @@ public class LiferayBatchOutputProperties
 		Form mainForm = new Form(this, Form.MAIN);
 
 		mainForm.addRow(connection.getForm(Form.REFERENCE));
-		mainForm.addRow(batchDefinitionSchema.getForm(Form.REFERENCE));
+		mainForm.addRow(
+			batchDefinitionSchemaProperties.getForm(Form.REFERENCE));
 
 		Widget batchFilePropertiesWidget = Widget.widget(
 			batchFilePropertiesComponentReferenceProperties);
@@ -63,17 +64,18 @@ public class LiferayBatchOutputProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		Property<Schema> schemaProperty = batchDefinitionSchema.schema;
+		Property<Schema> schemaProperty =
+			batchDefinitionSchemaProperties.schema;
 
 		schemaProperty.setValue(BatchSchemaConstants.SCHEMA);
 
-		Property<Schema> flowSchemaProperty = flowSchema.schema;
+		Property<Schema> flowSchemaProperty = flowSchemaProperties.schema;
 
 		flowSchemaProperty.setValue(BatchSchemaConstants.SCHEMA);
 	}
 
-	public SchemaProperties batchDefinitionSchema = new SchemaProperties(
-		"batchDefinitionSchema");
+	public SchemaProperties batchDefinitionSchemaProperties =
+		new SchemaProperties("batchDefinitionSchemaProperties");
 	public ComponentReferenceProperties<LiferayBatchFileProperties>
 		batchFilePropertiesComponentReferenceProperties =
 			new ComponentReferenceProperties<>(
@@ -81,8 +83,10 @@ public class LiferayBatchOutputProperties
 				TLiferayBatchFileDefinition.COMPONENT_NAME);
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
-	public SchemaProperties flowSchema = new SchemaProperties("flowSchema");
-	public SchemaProperties rejectSchema = new SchemaProperties("rejectSchema");
+	public SchemaProperties flowSchemaProperties = new SchemaProperties(
+		"flowSchemaProperties");
+	public SchemaProperties rejectSchemaProperties = new SchemaProperties(
+		"rejectSchemaProperties");
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(
@@ -91,15 +95,18 @@ public class LiferayBatchOutputProperties
 		if (!outputConnection) {
 			return Collections.singleton(
 				new PropertyPathConnector(
-					Connector.MAIN_NAME, "batchDefinitionSchema"));
+					Connector.MAIN_NAME + "_INPUT",
+					"batchDefinitionSchemaProperties"));
 		}
 
 		Set<PropertyPathConnector> schemaPropertiesConnectors = new HashSet<>();
 
 		schemaPropertiesConnectors.add(
-			new PropertyPathConnector(Connector.MAIN_NAME, "flowSchema"));
+			new PropertyPathConnector(
+				Connector.MAIN_NAME, "flowSchemaProperties"));
 		schemaPropertiesConnectors.add(
-			new PropertyPathConnector(Connector.REJECT_NAME, "rejectSchemaProperties"));
+			new PropertyPathConnector(
+				Connector.REJECT_NAME, "rejectSchemaProperties"));
 
 		return Collections.unmodifiableSet(schemaPropertiesConnectors);
 	}

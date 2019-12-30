@@ -33,9 +33,6 @@ import javax.json.JsonObject;
 
 import org.apache.avro.Schema;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
@@ -73,11 +70,9 @@ public class LiferayBatchFileProperties
 	}
 
 	public ValidationResult afterEntity() {
-		_logger.info("After string property {entity}");
-
 		SchemaBuilder schemaBuilder = new SchemaBuilder();
 
-		Property<Schema> entitySchemaProperty = entitySchema.schema;
+		Property<Schema> entitySchemaProperty = entitySchemaProperties.schema;
 
 		entitySchemaProperty.setValue(
 			schemaBuilder.getEntitySchema(
@@ -87,14 +82,10 @@ public class LiferayBatchFileProperties
 
 		entityVersion.setValue(oasExplorer.getVersion(_getOASJsonObject()));
 
-		_logger.info("After string property {entity}");
-
 		return null;
 	}
 
 	public ValidationResult beforeEntity() {
-		_logger.info("Before string property {entity}");
-
 		OASExplorer oasExplorer = new OASExplorer();
 
 		try {
@@ -127,7 +118,7 @@ public class LiferayBatchFileProperties
 	}
 
 	public Schema getEntitySchema() {
-		Property<Schema> schemaProperty = entitySchema.schema;
+		Property<Schema> schemaProperty = entitySchemaProperties.schema;
 
 		return schemaProperty.getValue();
 	}
@@ -153,7 +144,7 @@ public class LiferayBatchFileProperties
 
 		mainForm.addColumn(entityVersion);
 
-		mainForm.addRow(entitySchema.getForm(Form.REFERENCE));
+		mainForm.addRow(entitySchemaProperties.getForm(Form.REFERENCE));
 
 		Widget bulkFilePathWidget = widget(batchFilePath);
 
@@ -166,7 +157,7 @@ public class LiferayBatchFileProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		Property<Schema> flowSchemaProperty = flowSchema.schema;
+		Property<Schema> flowSchemaProperty = flowSchemaProperties.schema;
 
 		flowSchemaProperty.setValue(BatchSchemaConstants.SCHEMA);
 	}
@@ -176,10 +167,13 @@ public class LiferayBatchFileProperties
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
 	public StringProperty entity = new StringProperty("entity");
-	public SchemaProperties entitySchema = new SchemaProperties("entitySchema");
+	public SchemaProperties entitySchemaProperties = new SchemaProperties(
+		"entitySchemaProperties");
 	public StringProperty entityVersion = new StringProperty("entityVersion");
-	public SchemaProperties flowSchema = new SchemaProperties("flowSchema");
-	public SchemaProperties rejectSchema = new SchemaProperties("rejectSchema");
+	public SchemaProperties flowSchemaProperties = new SchemaProperties(
+		"flowSchemaProperties");
+	public SchemaProperties rejectSchemaProperties = new SchemaProperties(
+		"rejectSchemaProperties");
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(
@@ -187,15 +181,18 @@ public class LiferayBatchFileProperties
 
 		if (!outputConnection) {
 			return Collections.singleton(
-				new PropertyPathConnector(Connector.MAIN_NAME, "entitySchema"));
+				new PropertyPathConnector(
+					Connector.MAIN_NAME + "_INPUT", "entitySchemaProperties"));
 		}
 
 		Set<PropertyPathConnector> schemaPropertiesConnectors = new HashSet<>();
 
 		schemaPropertiesConnectors.add(
-			new PropertyPathConnector(Connector.MAIN_NAME, "flowSchema"));
+			new PropertyPathConnector(
+				Connector.MAIN_NAME, "flowSchemaProperties"));
 		schemaPropertiesConnectors.add(
-			new PropertyPathConnector(Connector.REJECT_NAME, "rejectSchemaProperties"));
+			new PropertyPathConnector(
+				Connector.REJECT_NAME, "rejectSchemaProperties"));
 
 		return Collections.unmodifiableSet(schemaPropertiesConnectors);
 	}
@@ -227,13 +224,10 @@ public class LiferayBatchFileProperties
 	}
 
 	private void _setEntitySchemaValue(Schema value) {
-		Property<Schema> schemaProperty = entitySchema.schema;
+		Property<Schema> schemaProperty = entitySchemaProperties.schema;
 
 		schemaProperty.setValue(value);
 	}
-
-	private static Logger _logger = LoggerFactory.getLogger(
-		LiferayBatchFileProperties.class);
 
 	private transient JsonObject _oasJsonObject;
 

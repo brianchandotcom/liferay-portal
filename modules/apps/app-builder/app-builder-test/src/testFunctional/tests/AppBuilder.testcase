@@ -1559,6 +1559,11 @@ definition {
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text Field",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

@@ -17,12 +17,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 	}
@@ -173,14 +168,7 @@ definition {
 
 		Ratings.viewRatingWithStarsReadOnly();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.deactivateStagingCP(siteName = "Site Name");
 
@@ -196,9 +184,11 @@ definition {
 			groupName = "Second Site",
 			layoutName = "Wiki Page");
 
-		Navigator.openSiteURL(siteName = "Second Site");
-
-		Portlet.addPG(portletName = "Wiki");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Second Site",
+			layoutName = "Wiki Page",
+			widgetName = "Wiki");
 
 		Navigator.openSiteURL(siteName = "Second Site");
 

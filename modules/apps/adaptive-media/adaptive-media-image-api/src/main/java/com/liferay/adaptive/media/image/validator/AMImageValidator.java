@@ -32,7 +32,9 @@ public interface AMImageValidator {
 	 * @return <code>true</code> if the file version supports image processing.
 	 * @review
 	 */
-	public boolean isProcessingSupported(FileVersion fileVersion);
+	public default boolean isProcessingSupported(FileVersion fileVersion) {
+		return isValid(fileVersion);
+	}
 
 	/**
 	 * Returns <code>true</code> if the provided file version is valid for

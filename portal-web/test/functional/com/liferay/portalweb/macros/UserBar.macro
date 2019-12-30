@@ -2,10 +2,10 @@ definition {
 
 	macro gotoDropdown {
 		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_PORTRAIT")) {
-			Click(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
+			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
 		}
 		else {
-			Click(locator1 = "UserBar#USER_AVATAR_ICON");
+			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_ICON");
 		}
 
 		AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");

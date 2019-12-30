@@ -14,9 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/portal/init.jsp" %>
+<%@ include file="/layout/init.jsp" %>
 
-<%@ include file="/html/portal/layout/view/embedded_js.jspf" %>
+<%@ include file="/layout/view/embedded_js.jspf" %>
 
 <div id="iframe">
 

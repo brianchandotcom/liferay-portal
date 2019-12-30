@@ -77,7 +77,7 @@ public class LayoutTypeControllerTracker {
 	}
 
 	private static final String[] _LAYOUT_TYPES = {
-		LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET
+		LayoutConstants.TYPE_PORTLET
 	};
 
 	private static final Map<String, LayoutTypeController>

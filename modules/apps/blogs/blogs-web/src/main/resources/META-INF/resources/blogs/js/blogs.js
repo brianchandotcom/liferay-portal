@@ -327,17 +327,15 @@ AUI.add(
 
 						instance.updateFriendlyURL(title);
 
-						urlTitleInput.setAttribute('disabled', true);
-
-						urlTitleInputLabel.addClass('disabled');
+						Liferay.Util.toggleDisabled(urlTitleInput, true);
+						Liferay.Util.toggleDisabled(urlTitleInputLabel, true);
 					} else {
 						urlTitleInput.val(
 							instance._lastCustomURL || urlTitleInput.val()
 						);
 
-						urlTitleInput.removeAttribute('disabled');
-
-						urlTitleInputLabel.removeClass('disabled');
+						Liferay.Util.toggleDisabled(urlTitleInput, false);
+						Liferay.Util.toggleDisabled(urlTitleInputLabel, false);
 					}
 				},
 
@@ -730,11 +728,16 @@ AUI.add(
 					var form = Liferay.Form.get(instance.ns('fm'));
 
 					if (!instance._shortenDescription) {
-						descriptionLabelNode.removeClass('disabled');
+						Liferay.Util.toggleDisabled(descriptionNode, false);
+						Liferay.Util.toggleDisabled(
+							descriptionLabelNode,
+							false
+						);
 
 						form.addRule(instance.ns('description'), 'required');
 					} else {
-						descriptionLabelNode.addClass('disabled');
+						Liferay.Util.toggleDisabled(descriptionNode, true);
+						Liferay.Util.toggleDisabled(descriptionLabelNode, true);
 
 						form.removeRule(instance.ns('description'), 'required');
 					}

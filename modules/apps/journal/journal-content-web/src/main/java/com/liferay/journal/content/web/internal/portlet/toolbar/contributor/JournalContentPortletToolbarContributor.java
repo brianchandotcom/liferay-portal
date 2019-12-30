@@ -179,10 +179,9 @@ public class JournalContentPortletToolbarContributor
 	}
 
 	private boolean _hasAddArticlePermission(ThemeDisplay themeDisplay) {
-		boolean hasResourcePermission =
-			JournalPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ARTICLE);
+		boolean hasResourcePermission = JournalPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.ADD_ARTICLE);
 
 		boolean hasPortletPermission = false;
 

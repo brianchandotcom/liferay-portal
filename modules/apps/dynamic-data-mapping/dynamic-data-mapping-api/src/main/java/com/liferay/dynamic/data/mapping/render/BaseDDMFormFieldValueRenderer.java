@@ -50,6 +50,8 @@ public abstract class BaseDDMFormFieldValueRenderer
 	 *             #getValueAccessor(Locale)}
 	 */
 	@Deprecated
-	protected abstract ValueAccessor getValueAcessor(Locale locale);
+	protected ValueAccessor getValueAcessor(Locale locale) {
+		return getValueAccessor(locale);
+	}
 
 }

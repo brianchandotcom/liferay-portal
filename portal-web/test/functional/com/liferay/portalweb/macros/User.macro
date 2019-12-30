@@ -8,11 +8,11 @@ definition {
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");
 
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "${userEmailAddress}");
 
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#PASSWORD",
 			value1 = "${password}");
 

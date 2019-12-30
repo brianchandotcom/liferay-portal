@@ -111,7 +111,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			</div>
 
 			<div class="form-group">
-				<label><liferay-ui:message key="preview" /> <liferay-ui:icon-help message="The image ratio might change depending on where the URL is posted." /></label>
+				<label><liferay-ui:message key="preview" /> <liferay-ui:icon-help message="preview-help" /></label>
 
 				<div>
 

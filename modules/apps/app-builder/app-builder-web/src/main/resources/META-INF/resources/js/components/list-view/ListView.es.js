@@ -33,13 +33,15 @@ export default withRouter(
 		columns,
 		emptyState,
 		endpoint,
-		history
+		history,
+		queryParams
 	}) => {
 		const [query, setQuery] = useQuery(history, {
 			keywords: '',
 			page: 1,
 			pageSize: 20,
-			sort: ''
+			sort: '',
+			...queryParams
 		});
 
 		const dispatch = action => setQuery(reducer(query, action));

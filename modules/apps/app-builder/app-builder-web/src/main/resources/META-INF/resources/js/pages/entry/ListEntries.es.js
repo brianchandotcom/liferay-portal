@@ -153,6 +153,7 @@ const ListEntries = withRouter(({history, location}) => {
 					title: Liferay.Language.get('there-are-no-entries-yet')
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`}
+				queryParams={{dataListViewId}}
 			>
 				{(item, index) => {
 					const {dataRecordValues = {}, id} = item;

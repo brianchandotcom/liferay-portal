@@ -69,7 +69,7 @@
 </tr>
 <tr>
 	<td>MODAL_INVITE_TO_COLLABORATE_TAG</td>
-	<td>//div/span[contains(@id,'item-tag')]/span[contains(.,'${key_userName}')]</td>
+	<td>//div/span[contains(@class,'label-secondary')]/span[contains(.,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>

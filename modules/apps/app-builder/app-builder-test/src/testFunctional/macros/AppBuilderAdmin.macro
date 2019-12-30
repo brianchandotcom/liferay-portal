@@ -106,6 +106,18 @@ definition {
 		App.saveApp();
 	}
 
+	macro deployApp {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Deploy");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
+			value1 = "Deployed");
+	}
+
 	macro editCustomObjectNameAtPopover {
 		Type(
 			locator1 = "AppBuilder#INPUT_OBJECT_NAME",

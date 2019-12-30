@@ -183,6 +183,18 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>DEPLOY_APP_STATUS</td>
+	<td>//span[contains(text(),'Deployed')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>UNDEPLOY_APP_BUTTON</td>
+	<td>//button[@class='btn btn-primary']</td>
+	<td></td>
+</tr>
+
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CUSTOM_PORTLET</td>

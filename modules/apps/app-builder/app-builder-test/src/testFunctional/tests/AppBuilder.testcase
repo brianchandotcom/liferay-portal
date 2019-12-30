@@ -1869,6 +1869,13 @@ definition {
 	@priority = "5"
 	test UnpublishAndRepublish {
 		property portal.acceptance = "false";
+		
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Text Field",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
@@ -1878,6 +1885,10 @@ definition {
 			deployOption = "Product Menu",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
+		
+		AppBuilderAdmin.undeployApp(itemName = "Test App");
+
+		AppBuilderAdmin.deployApp(itemName = "Test App");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

@@ -40,6 +40,7 @@ import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorThreadLocal;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -256,7 +257,7 @@ public class ReleaseManagerOSGiCommands {
 		_releaseManagerConfiguration = ConfigurableUtil.createConfigurable(
 			ReleaseManagerConfiguration.class, properties);
 
-		if (_releaseManagerConfiguration.autoUpgrade()) {
+		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
 			serviceTrackerMapListener =
 				new UpgradeInfoServiceTrackerMapListener();
 		}
@@ -274,23 +275,28 @@ public class ReleaseManagerOSGiCommands {
 					"upgrade.from.schema.version")),
 			serviceTrackerMapListener);
 
-		if (_releaseManagerConfiguration.autoUpgrade()) {
-			Set<String> upgradedBundleSymbolicNames = new HashSet<>();
+		Set<String> upgradedBundleSymbolicNames = new HashSet<>();
 
-			Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
+		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
 
-			while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
-				for (String bundleSymbolicName : bundleSymbolicNames) {
-					List<UpgradeInfo> upgradeSteps =
-						_serviceTrackerMap.getService(bundleSymbolicName);
+		while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
+			for (String bundleSymbolicName : bundleSymbolicNames) {
+				if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN &&
+					(_releaseLocalService.fetchRelease(bundleSymbolicName) !=
+						null)) {
 
-					_upgradeExecutor.execute(
-						bundleSymbolicName, upgradeSteps,
-						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+					continue;
 				}
 
-				bundleSymbolicNames = _serviceTrackerMap.keySet();
+				List<UpgradeInfo> upgradeSteps = _serviceTrackerMap.getService(
+					bundleSymbolicName);
+
+				_upgradeExecutor.execute(
+					bundleSymbolicName, upgradeSteps,
+					OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
 			}
+
+			bundleSymbolicNames = _serviceTrackerMap.keySet();
 		}
 
 		_activated = true;

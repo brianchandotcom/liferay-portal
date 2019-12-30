@@ -139,11 +139,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -173,6 +173,8 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.cxf.common.util.StringUtils;
 import org.apache.cxf.jaxrs.impl.UriInfoImpl;
@@ -1228,23 +1230,19 @@ public class GraphQLServletExtender {
 						return (Date)value;
 					}
 
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-						"yyyy-MM-dd'T'HH:mm:ss'Z'");
+					if (value instanceof StringValue) {
+						StringValue stringValue = (StringValue)value;
 
-					try {
-						if (value instanceof StringValue) {
-							StringValue stringValue = (StringValue)value;
+						Calendar calendar = DatatypeConverter.parseDateTime(
+							stringValue.getValue());
 
-							return simpleDateFormat.parse(
-								stringValue.getValue());
-						}
-
-						return simpleDateFormat.parse(value.toString());
+						return calendar.getTime();
 					}
-					catch (ParseException pe) {
-						throw new CoercingSerializeException(
-							"Unable to parse " + value, pe);
-					}
+
+					Calendar calendar = DatatypeConverter.parseDateTime(
+						value.toString());
+
+					return calendar.getTime();
 				}
 
 			}

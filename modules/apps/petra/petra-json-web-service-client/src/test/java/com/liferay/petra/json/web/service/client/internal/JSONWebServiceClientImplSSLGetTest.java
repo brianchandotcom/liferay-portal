@@ -124,7 +124,7 @@ public class JSONWebServiceClientImplSSLGetTest
 
 		KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
 
-		KeyStore keyStore = keyStoreLoader.getKeystore(
+		KeyStore keyStore = keyStoreLoader.getKeyStore(
 			"localhost.jks", "liferay");
 
 		properties.put("keyStore", keyStore);

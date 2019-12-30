@@ -27,7 +27,20 @@ import java.security.cert.CertificateException;
  */
 public class KeyStoreLoader {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getKeyStore(String, String)}
+	 */
+	@Deprecated
 	public KeyStore getKeystore(
+			String keyStoreFileName, String keyStorePassword)
+		throws CertificateException, IOException, KeyStoreException,
+			   NoSuchAlgorithmException {
+
+		return getKeyStore(keyStoreFileName, keyStorePassword);
+	}
+
+	public KeyStore getKeyStore(
 			String keyStoreFileName, String keyStorePassword)
 		throws CertificateException, IOException, KeyStoreException,
 			   NoSuchAlgorithmException {

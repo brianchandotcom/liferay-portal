@@ -77,7 +77,7 @@ public class HTTPSServerSimulator {
 
 		KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
 
-		KeyStore keyStore = keyStoreLoader.getKeystore(
+		KeyStore keyStore = keyStoreLoader.getKeyStore(
 			"localhost.jks", "liferay");
 
 		KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(

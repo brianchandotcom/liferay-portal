@@ -14,8 +14,8 @@
 
 package com.liferay.app.builder.web.internal.application.list;
 
+import com.liferay.app.builder.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.web.internal.constants.AppBuilderPanelCategoryKeys;
-import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.model.Portlet;

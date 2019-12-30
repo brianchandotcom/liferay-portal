@@ -306,7 +306,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			samlSsoRequestContext.setSAMLMessageContext(messageContext);
 
-			String authnRequestXml = samlSsoRequestContext.getAutnRequestXml();
+			String authnRequestXml = samlSsoRequestContext.getAuthnRequestXml();
 
 			if (Validator.isNotNull(authnRequestXml)) {
 				AuthnRequest authnRequest =

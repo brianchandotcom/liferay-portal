@@ -48,7 +48,7 @@ public class SamlSsoRequestContext implements Serializable {
 		_userLocalService = userLocalService;
 	}
 
-	public String getAutnRequestXml() {
+	public String getAuthnRequestXml() {
 		return _authnRequestXml;
 	}
 

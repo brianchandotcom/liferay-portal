@@ -15,10 +15,10 @@
 package com.liferay.journal.content.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.internal.configuration.JournalContentPortletInstanceConfiguration;
-import com.liferay.journal.content.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
@@ -179,7 +180,7 @@ public class JournalContentPortletToolbarContributor
 	}
 
 	private boolean _hasAddArticlePermission(ThemeDisplay themeDisplay) {
-		boolean hasResourcePermission = JournalPermission.contains(
+		boolean hasResourcePermission = _portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			ActionKeys.ADD_ARTICLE);
 
@@ -219,5 +220,10 @@ public class JournalContentPortletToolbarContributor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

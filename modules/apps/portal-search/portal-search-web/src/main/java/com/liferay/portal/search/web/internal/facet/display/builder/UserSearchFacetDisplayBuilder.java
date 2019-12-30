@@ -36,7 +36,7 @@ public class UserSearchFacetDisplayBuilder {
 	public UserSearchFacetDisplayContext build() {
 		boolean nothingSelected = isNothingSelected();
 
-		List<TermCollector> termCollectors = getTermsCollectors();
+		List<TermCollector> termCollectors = getTermCollectors();
 
 		boolean renderNothing = false;
 
@@ -165,7 +165,7 @@ public class UserSearchFacetDisplayBuilder {
 		return _paramValues.get(0);
 	}
 
-	protected List<TermCollector> getTermsCollectors() {
+	protected List<TermCollector> getTermCollectors() {
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
 		if (facetCollector != null) {

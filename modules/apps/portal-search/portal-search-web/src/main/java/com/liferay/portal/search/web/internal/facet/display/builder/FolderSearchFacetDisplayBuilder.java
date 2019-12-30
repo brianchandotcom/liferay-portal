@@ -56,7 +56,7 @@ public class FolderSearchFacetDisplayBuilder {
 			getParameterValueStrings());
 		folderSearchFacetDisplayContext.setRenderNothing(
 			isRenderNothing(
-				getTermsCollectors(), folderSearchFacetTermDisplayContexts));
+				getTermCollectors(), folderSearchFacetTermDisplayContexts));
 
 		return folderSearchFacetDisplayContext;
 	}
@@ -141,7 +141,7 @@ public class FolderSearchFacetDisplayBuilder {
 	protected List<FolderSearchFacetTermDisplayContext>
 		buildFolderSearchFacetTermDisplayContexts() {
 
-		List<TermCollector> termCollectors = getTermsCollectors();
+		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (termCollectors.isEmpty()) {
 			return getEmptyFolderSearchFacetTermDisplayContexts();
@@ -234,7 +234,7 @@ public class FolderSearchFacetDisplayBuilder {
 		return parameterValuesStream.collect(Collectors.toList());
 	}
 
-	protected List<TermCollector> getTermsCollectors() {
+	protected List<TermCollector> getTermCollectors() {
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
 		if (facetCollector == null) {

@@ -36,7 +36,7 @@ public class CustomFacetDisplayBuilder {
 	public CustomFacetDisplayContext build() {
 		boolean nothingSelected = isNothingSelected();
 
-		List<TermCollector> termCollectors = getTermsCollectors();
+		List<TermCollector> termCollectors = getTermCollectors();
 
 		boolean renderNothing = false;
 
@@ -211,7 +211,7 @@ public class CustomFacetDisplayBuilder {
 		return _parameterValues.get(0);
 	}
 
-	protected List<TermCollector> getTermsCollectors() {
+	protected List<TermCollector> getTermCollectors() {
 		if (_facet != null) {
 			FacetCollector facetCollector = _facet.getFacetCollector();
 

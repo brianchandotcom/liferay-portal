@@ -121,7 +121,7 @@ public class AssetTagsSearchFacetDisplayBuilder {
 	protected List<AssetTagsSearchFacetTermDisplayContext>
 		buildTermDisplayContexts() {
 
-		List<TermCollector> termCollectors = getTermsCollectors();
+		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (termCollectors.isEmpty()) {
 			return getEmptySearchResultTermDisplayContexts();
@@ -249,7 +249,7 @@ public class AssetTagsSearchFacetDisplayBuilder {
 		return popularity;
 	}
 
-	protected List<TermCollector> getTermsCollectors() {
+	protected List<TermCollector> getTermCollectors() {
 		FacetCollector facetCollector = _facet.getFacetCollector();
 
 		return facetCollector.getTermCollectors();
@@ -272,7 +272,7 @@ public class AssetTagsSearchFacetDisplayBuilder {
 	}
 
 	protected boolean isRenderNothing() {
-		List<TermCollector> termCollectors = getTermsCollectors();
+		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (isNothingSelected() && termCollectors.isEmpty()) {
 			return true;

@@ -1,0 +1,23 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add a Depot entry"
+	macro addDepot {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/depot.depotentry/add-depot-entry \
+			-u test@liferay.com:test \
+			-d nameMap={"en_US": "${depotName}"} \
+			-d descriptionMap={"en_US": "${depotDescription}"}
+		''';
+
+		echo("## Adding a 'Depot' with the following info using JSONWS:");
+
+		echo("## * Title: ${depotName}");
+
+		echo("## * Description: ${depotDescription}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+}

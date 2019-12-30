@@ -62,7 +62,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 			<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
 				<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
-				<aui:input helpMessage="description-seo-help" id="descriptionSEO" name="description" placeholder="description" />
+				<aui:input helpMessage="description-help" id="descriptionSEO" name="description" placeholder="description" />
 
 				<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
 

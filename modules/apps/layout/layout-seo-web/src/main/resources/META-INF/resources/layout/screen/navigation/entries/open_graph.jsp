@@ -76,7 +76,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			%>
 
 			<div id="<portlet:namespace />openGraphSettings">
-				<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /> <liferay-ui:icon-help message="open-graph-image-alt-help" /></label>
+				<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /> <liferay-ui:icon-help message="open-graph-image-alt-description-help" /></label>
 
 				<c:choose>
 					<c:when test="<%= selLayoutSEOEntry != null %>">

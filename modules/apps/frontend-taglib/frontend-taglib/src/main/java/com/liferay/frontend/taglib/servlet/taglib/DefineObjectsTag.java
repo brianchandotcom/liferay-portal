@@ -69,7 +69,7 @@ public class DefineObjectsTag extends TagSupport {
 		}
 
 		String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
-			httpServletRequest);
+			pageContext.getServletContext());
 
 		if (Validator.isNotNull(npmResolvedPackageName)) {
 			pageContext.setAttribute(

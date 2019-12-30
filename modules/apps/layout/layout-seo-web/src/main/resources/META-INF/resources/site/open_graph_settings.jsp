@@ -61,7 +61,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 			<aui:model-context bean="<%= layoutSEOSite %>" model="<%= LayoutSEOSite.class %>" />
 		</c:if>
 
-		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() || Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
+		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() || Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="text" />
 	</div>
 
 	<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageFileEntryId() %>" />

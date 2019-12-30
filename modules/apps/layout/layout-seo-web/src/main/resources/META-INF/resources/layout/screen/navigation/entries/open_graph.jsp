@@ -82,7 +82,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 					<c:when test="<%= selLayoutSEOEntry != null %>">
 						<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-						<aui:input disabled="<%= Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
+						<aui:input disabled="<%= Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="text" />
 
 						<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
@@ -95,7 +95,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 					</c:when>
 					<c:otherwise>
-						<aui:input disabled="<%= true %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="textarea" />
+						<aui:input disabled="<%= true %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="text" />
 
 						<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 

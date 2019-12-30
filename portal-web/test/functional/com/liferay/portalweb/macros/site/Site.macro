@@ -740,7 +740,9 @@ definition {
 
 			Alert.viewSuccessMessageText(successMessage = "Your request was sent. You will receive a reply by email.");
 
-			MySites.viewMembershipRequested(siteName = "${siteName}");
+			MySites.viewMembershipRequested(
+				siteName = "${siteName}",
+				userRole = "${userRole}");
 		}
 		else {
 			LexiconList.viewListEntryTitle(listEntry = "${siteName}");

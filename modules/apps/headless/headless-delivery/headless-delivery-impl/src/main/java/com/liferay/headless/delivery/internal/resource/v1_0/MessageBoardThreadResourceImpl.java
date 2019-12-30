@@ -357,7 +357,7 @@ public class MessageBoardThreadResourceImpl
 
 		if (dateModified != null) {
 			dynamicQuery.add(
-				RestrictionsFactoryUtil.gt("modifiedDate", dateCreated));
+				RestrictionsFactoryUtil.gt("modifiedDate", dateModified));
 		}
 
 		dynamicQuery.add(

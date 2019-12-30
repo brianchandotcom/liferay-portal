@@ -17,9 +17,13 @@ package com.liferay.layout.internal.workflow;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
 import java.io.Serializable;
@@ -29,6 +33,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -57,8 +62,22 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		return null;
+		long userId = GetterUtil.getLong(
+			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+
+		long classPK = GetterUtil.getLong(
+			(String)workflowContext.get(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			"serviceContext");
+
+		return _layoutLocalService.updateStatus(
+			userId, classPK, status, serviceContext);
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	private final ResourceBundleLoader _resourceBundleLoader =
 		ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(

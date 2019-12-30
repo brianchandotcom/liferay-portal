@@ -459,15 +459,17 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, editURL);
 		}
+		else {
+			String redirect = PortalUtil.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 
-		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(actionRequest, "redirect"));
-
-		if (cmd.equals(Constants.ADD) && Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(
-				WebKeys.REDIRECT,
-				getContentRedirect(
-					KBArticle.class, kbArticle.getResourcePrimKey(), redirect));
+			if (cmd.equals(Constants.ADD) && Validator.isNotNull(redirect)) {
+				actionRequest.setAttribute(
+					WebKeys.REDIRECT,
+					getContentRedirect(
+						KBArticle.class, kbArticle.getResourcePrimKey(),
+						redirect));
+			}
 		}
 	}
 

@@ -8,7 +8,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.Base${sessionTypeName}Service;
-import com.liferay.portal.kernel.service.PermissionedModelLocalService;
+
+<#if !serviceBuilder.isVersionGTE_7_3_0()>
+	import com.liferay.portal.kernel.service.PermissionedModelLocalService;
+</#if>
+
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;

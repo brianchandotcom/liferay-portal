@@ -68,16 +68,7 @@ definition {
 
 			PortletEntry.inputName(name = "${siteName}");
 
-			if ("${duplicate}" == "true") {
-				Button.clickSave();
-
-				AssertTextEquals(
-					locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-					value1 = "Please enter a unique name.");
-			}
-			else {
-				Modal.save();
-			}
+			Modal.save();
 		}
 
 		if (("${siteType}" == "Community") || ("${siteType}" == "Site Template")) {

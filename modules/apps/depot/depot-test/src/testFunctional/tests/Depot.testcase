@@ -154,9 +154,17 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addBlankCP(
-			duplicate = "true",
-			siteName = "Site Name");
+		LexiconEntry.gotoAdd();
+
+		LexiconCard.clickCard(card = "Blank Site");
+
+		PortletEntry.inputName(name = "Site Name");
+
+		Button.clickSave();
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+			value1 = "Please enter a unique name.");
 	}
 
 	@description = "This ensures that a depot can be deleted."

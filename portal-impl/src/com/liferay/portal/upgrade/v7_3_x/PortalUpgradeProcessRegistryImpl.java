@@ -77,6 +77,13 @@ public class PortalUpgradeProcessRegistryImpl
 				"UserGroup", "UserGroupGroupRole", "UserGroupRole",
 				"UserGroups_Teams", "Users_Groups", "Users_Orgs", "Users_Roles",
 				"Users_Teams", "Users_UserGroups", "VirtualHost"));
+
+		upgradeProcesses.put(
+			new Version(8, 6, 0),
+			new UpgradeCTModel(
+				"DLFileEntry", "DLFileEntryMetadata", "DLFileEntryType",
+				"DLFileEntryTypes_DLFolders", "DLFileShortcut", "DLFileVersion",
+				"DLFolder"));
 	}
 
 }

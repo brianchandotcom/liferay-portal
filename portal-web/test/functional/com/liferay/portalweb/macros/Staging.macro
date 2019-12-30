@@ -99,6 +99,8 @@ definition {
 				value1 = "Save");
 
 			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${siteName}?");
+
+			Pause(locator1 = "5000");
 		}
 		else {
 			AssertClickNoError(
@@ -107,12 +109,12 @@ definition {
 
 			AssertConfirm(value1 = "Are you sure you want to activate local staging for ${siteName}?");
 
+			Pause(locator1 = "5000");
+
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",
 				value1 = "SUCCESSFUL");
 		}
-
-		Pause(locator1 = "5000");
 
 		AssertTextNotPresent(
 			locator1 = "Message#ERROR",

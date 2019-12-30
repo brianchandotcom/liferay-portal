@@ -80,7 +80,7 @@ public class ReleaseInfo {
 	}
 
 	public static final int getParentBuildNumber() {
-		return _PARENT_BUILD_NUMBER;
+		return _BUILD_NUMBER - (_BUILD_NUMBER % 100);
 	}
 
 	public static final String getReleaseInfo() {
@@ -119,8 +119,6 @@ public class ReleaseInfo {
 	private static final String _DATE = "@release.info.date@";
 
 	private static final String _NAME = "@release.info.name@";
-
-	private static final int _PARENT_BUILD_NUMBER = _BUILD_NUMBER;
 
 	private static final String _RELEASE_INFO_PREFIX = System.getProperty(
 		"liferay.release.info.prefix", StringPool.BLANK);

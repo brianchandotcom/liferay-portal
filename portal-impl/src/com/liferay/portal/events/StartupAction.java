@@ -192,7 +192,7 @@ public class StartupAction extends SimpleAction {
 		// Upgrade
 
 		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-			DBUpgrader.upgrade(ReleaseInfo.RELEASE_7_3_0_BUILD_NUMBER);
+			DBUpgrader.upgrade(ReleaseInfo.getParentBuildNumber());
 		}
 
 		DBUpgrader.verify();

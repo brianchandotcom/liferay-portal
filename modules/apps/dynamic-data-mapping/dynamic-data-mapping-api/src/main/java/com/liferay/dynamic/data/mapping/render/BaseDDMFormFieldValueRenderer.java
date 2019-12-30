@@ -38,10 +38,9 @@ public abstract class BaseDDMFormFieldValueRenderer
 	public String render(
 		List<DDMFormFieldValue> ddmFormFieldValues, Locale locale) {
 
-		ValueAccessor valueAccessor = getValueAccessor(locale);
-
 		return ListUtil.toString(
-			ddmFormFieldValues, valueAccessor, StringPool.COMMA_AND_SPACE);
+			ddmFormFieldValues, getValueAccessor(locale),
+			StringPool.COMMA_AND_SPACE);
 	}
 
 	protected abstract ValueAccessor getValueAccessor(Locale locale);

@@ -15,10 +15,10 @@
 package com.liferay.app.builder.web.internal.deploy;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
+import com.liferay.app.builder.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
-import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.web.internal.layout.type.controller.AppPortletLayoutTypeController;
 import com.liferay.app.builder.web.internal.model.AppPortletLayoutTypeAccessPolicy;
 import com.liferay.app.builder.web.internal.portlet.AppPortlet;

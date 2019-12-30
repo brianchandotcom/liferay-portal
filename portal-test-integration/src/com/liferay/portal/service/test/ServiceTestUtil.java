@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.tools.DBUpgrader;
@@ -94,7 +95,7 @@ public class ServiceTestUtil {
 		// Upgrade
 
 		try {
-			DBUpgrader.upgrade();
+			DBUpgrader.upgrade(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
 		}
 		catch (Throwable t) {
 			_log.error(t, t);

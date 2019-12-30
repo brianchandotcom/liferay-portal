@@ -189,6 +189,14 @@ public class StartupAction extends SimpleAction {
 
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
+		// Upgrade
+
+		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			DBUpgrader.upgrade(ReleaseInfo.RELEASE_7_3_0_BUILD_NUMBER);
+		}
+
+		DBUpgrader.verify();
+
 		// Verify
 
 		if (_log.isDebugEnabled()) {

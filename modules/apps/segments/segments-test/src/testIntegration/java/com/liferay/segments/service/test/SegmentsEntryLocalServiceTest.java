@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -58,6 +59,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -115,6 +117,32 @@ public class SegmentsEntryLocalServiceTest {
 			1,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
 				_group.getGroupId(), false));
+	}
+
+	@Test
+	public void testAddSegmentsEntryClassPKs() throws PortalException {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		long[] classPKs = {
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong()
+		};
+
+		_segmentsEntryLocalService.addSegmentsEntryClassPKs(
+			segmentsEntry.getSegmentsEntryId(), classPKs,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		List<SegmentsEntryRel> segmentsEntryRels =
+			_segmentsEntryRelLocalService.getSegmentsEntryRels(
+				segmentsEntry.getSegmentsEntryId());
+
+		Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
+
+		long[] actualClassPKs = stream.mapToLong(
+			SegmentsEntryRel::getClassPK
+		).toArray();
+
+		Assert.assertTrue(ArrayUtil.containsAll(actualClassPKs, classPKs));
 	}
 
 	@Test(expected = SegmentsEntryKeyException.class)
@@ -223,6 +251,28 @@ public class SegmentsEntryLocalServiceTest {
 			0,
 			_segmentsEntryLocalService.getSegmentsEntriesCount(
 				_group.getGroupId(), false));
+	}
+
+	@Test
+	public void testDeleteSegmentsEntryClassPKs() throws PortalException {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		long[] classPKs = {
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong()
+		};
+
+		_segmentsEntryLocalService.addSegmentsEntryClassPKs(
+			segmentsEntry.getSegmentsEntryId(), classPKs,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsEntryLocalService.deleteSegmentsEntryClassPKs(
+			segmentsEntry.getSegmentsEntryId(), classPKs);
+
+		Assert.assertEquals(
+			0,
+			_segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
+				segmentsEntry.getSegmentsEntryId()));
 	}
 
 	@Test(

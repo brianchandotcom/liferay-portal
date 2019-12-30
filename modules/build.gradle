@@ -143,6 +143,38 @@ gradle.beforeProject {
 			}
 		}
 
+		if (project.path.startsWith(":apps:archived:")) {
+			if (tasks.findByName("buildService") != null) {
+				buildService {
+					enabled = false
+				}
+			}
+
+			if (tasks.findByName("checkSourceFormatting") != null) {
+				checkSourceFormatting {
+					enabled = false
+				}
+			}
+
+			if (tasks.findByName("formatSource") != null) {
+				formatSource {
+					enabled = false
+				}
+			}
+
+			if (tasks.findByName("packageRunCheckFormat") != null) {
+				packageRunCheckFormat {
+					enabled = false
+				}
+			}
+
+			if (tasks.findByName("packageRunFormat") != null) {
+				packageRunFormat {
+					enabled = false
+				}
+			}
+		}
+
 		if (project.path.startsWith(":sdk:project-templates:project-templates")) {
 			File mavenWrapperPropertiesFile = project.project(":sdk:project-templates:project-templates").file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
 

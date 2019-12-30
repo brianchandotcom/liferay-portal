@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -29,6 +30,7 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.odata.matcher.ODataMatcher;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.provider.SegmentsEntryProvider;
@@ -46,6 +48,82 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseSegmentsEntryProvider
 	implements SegmentsEntryProvider {
+
+	@Override
+	public long[] getSegmentsEntryClassPKs(
+			long segmentsEntryId, int start, int end)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+		if (segmentsEntry == null) {
+			return new long[0];
+		}
+
+		String filterString = getFilterString(
+			segmentsEntry, Criteria.Type.MODEL);
+
+		if (Validator.isNull(filterString)) {
+			List<SegmentsEntryRel> segmentsEntryRels =
+				segmentsEntryRelLocalService.getSegmentsEntryRels(
+					segmentsEntryId, start, end, null);
+
+			Stream<SegmentsEntryRel> stream = segmentsEntryRels.stream();
+
+			return stream.mapToLong(
+				SegmentsEntryRel::getClassPK
+			).toArray();
+		}
+
+		ODataRetriever oDataRetriever = serviceTrackerMap.getService(
+			segmentsEntry.getType());
+
+		if (oDataRetriever == null) {
+			return new long[0];
+		}
+
+		List<BaseModel<?>> results = oDataRetriever.getResults(
+			segmentsEntry.getCompanyId(), filterString, LocaleUtil.getDefault(),
+			start, end);
+
+		Stream<BaseModel<?>> stream = results.stream();
+
+		return stream.mapToLong(
+			baseModel -> (Long)baseModel.getPrimaryKeyObj()
+		).toArray();
+	}
+
+	@Override
+	public int getSegmentsEntryClassPKsCount(long segmentsEntryId)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry =
+			segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+		if (segmentsEntry == null) {
+			return 0;
+		}
+
+		String filterString = getFilterString(
+			segmentsEntry, Criteria.Type.MODEL);
+
+		if (Validator.isNull(filterString)) {
+			return segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
+				segmentsEntryId);
+		}
+
+		ODataRetriever oDataRetriever = serviceTrackerMap.getService(
+			segmentsEntry.getType());
+
+		if (oDataRetriever == null) {
+			return 0;
+		}
+
+		return oDataRetriever.getResultsCount(
+			segmentsEntry.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+	}
 
 	@Override
 	public long[] getSegmentsEntryIds(
@@ -110,7 +188,7 @@ public abstract class BaseSegmentsEntryProvider
 
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			segmentsCriteriaContributorRegistry.getSegmentsCriteriaContributors(
-				segmentsEntry.getType(), type);
+				segmentsEntry.getType());
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {

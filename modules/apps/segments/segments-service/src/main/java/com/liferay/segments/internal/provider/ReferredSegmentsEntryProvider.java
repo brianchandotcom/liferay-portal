@@ -53,21 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ReferredSegmentsEntryProvider
 	extends BaseSegmentsEntryProvider implements SegmentsEntryProvider {
 
-	@Override
-	public long[] getSegmentsEntryClassPKs(
-			long segmentsEntryId, int start, int end)
-		throws PortalException {
-
-		return new long[0];
-	}
-
-	@Override
-	public int getSegmentsEntryClassPKsCount(long segmentsEntryId)
-		throws PortalException {
-
-		return 0;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(

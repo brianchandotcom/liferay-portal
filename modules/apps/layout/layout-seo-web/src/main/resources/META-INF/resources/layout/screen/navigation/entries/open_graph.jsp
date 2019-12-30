@@ -170,8 +170,12 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
 <portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
 
-<liferay-frontend:component	servletContext="<%= application %>" module="js/seo/openGraph.es" context="<%=
-	HashMapBuilder.<String, Object>put(
-		"uploadOpenGraphImageURL", layoutsSEODisplayContext.getItemSelectorURL()
-	).build()
- %>" />
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"uploadOpenGraphImageURL", layoutsSEODisplayContext.getItemSelectorURL()
+		).build()
+	%>'
+	module="js/seo/openGraph.es"
+	servletContext="<%= application %>"
+/>

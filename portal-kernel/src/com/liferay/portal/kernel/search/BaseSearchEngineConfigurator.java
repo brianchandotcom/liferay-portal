@@ -264,7 +264,9 @@ public abstract class BaseSearchEngineConfigurator
 	 *             #getOperatingClassLoader()}
 	 */
 	@Deprecated
-	protected abstract ClassLoader getOperatingClassloader();
+	protected ClassLoader getOperatingClassloader() {
+		return getOperatingClassLoader();
+	}
 
 	protected abstract ClassLoader getOperatingClassLoader();
 

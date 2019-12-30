@@ -91,6 +91,18 @@ export default function Sidebar() {
 	const handleClick = panel => {
 		const open =
 			panel.sidebarPanelId === sidebarPanelId ? !sidebarOpen : true;
+
+		const sidebarButton = document.getElementById(panel.sidebarPanelId);
+
+		const sidebarButtonClassList = sidebarButton.classList;
+		
+		if (open) {
+			sidebarButtonClassList.add('btn-active');
+		}
+		else {
+			sidebarButtonClassList.remove('btn-active');
+		}
+		
 		dispatch(
 			Actions.switchSidebarPanel({
 				sidebarOpen: open,
@@ -138,6 +150,7 @@ export default function Sidebar() {
 								<ClayButtonWithIcon
 									data-tooltip-align="left"
 									displayType="unstyled"
+									id={panel.sidebarPanelId}
 									key={panel.sidebarPanelId}
 									onClick={() => handleClick(panel)}
 									onFocus={prefetch}

@@ -235,7 +235,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		Operation.class, "operations");
 	public RequestParameterProperties parameters =
 		new RequestParameterProperties("parameters");
-	public SchemaProperties rejectSchema = new SchemaProperties("rejectSchema");
+	public SchemaProperties rejectSchemaProperties = new SchemaProperties("rejectSchemaProperties");
 
 	private ValidationResult _afterEndpoint(OASSource oasSource) {
 		if (_isSingleOperationEndpointPath()) {
@@ -387,7 +387,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		flowSchema.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
-		rejectSchema.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
+		rejectSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
 		operations.setValue(null);
 
@@ -470,7 +470,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		mainSchema.schema.setValue(endpointSchema);
 
-		rejectSchema.schema.setValue(
+		rejectSchemaProperties.schema.setValue(
 			SchemaUtils.createRejectSchema(endpointSchema));
 	}
 

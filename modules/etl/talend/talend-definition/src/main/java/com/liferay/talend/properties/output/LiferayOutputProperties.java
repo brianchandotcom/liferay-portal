@@ -134,7 +134,7 @@ public class LiferayOutputProperties
 				Connector.MAIN_NAME, "resource.flowSchema"));
 		schemaPropertiesConnectors.add(
 			new PropertyPathConnector(
-				Connector.REJECT_NAME, "resource.rejectSchema"));
+				Connector.REJECT_NAME, "resource.rejectSchemaProperties"));
 
 		return Collections.unmodifiableSet(schemaPropertiesConnectors);
 	}

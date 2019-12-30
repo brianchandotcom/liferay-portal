@@ -62,7 +62,7 @@ public class LiferayWriter
 			new IndexedRecordJsonObjectConverter(
 				_dieOnError,
 				_liferayOutputProperties.resource.mainSchema.schema.getValue(),
-				_liferayOutputProperties.resource.rejectSchema.schema.
+				_liferayOutputProperties.resource.rejectSchemaProperties.schema.
 					getValue(),
 				_result);
 		_jsonObjectIndexedRecordConverter =

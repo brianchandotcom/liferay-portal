@@ -195,7 +195,7 @@ public class LiferayBatchFileProperties
 		schemaPropertiesConnectors.add(
 			new PropertyPathConnector(Connector.MAIN_NAME, "flowSchema"));
 		schemaPropertiesConnectors.add(
-			new PropertyPathConnector(Connector.REJECT_NAME, "rejectSchema"));
+			new PropertyPathConnector(Connector.REJECT_NAME, "rejectSchemaProperties"));
 
 		return Collections.unmodifiableSet(schemaPropertiesConnectors);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
+import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
@@ -24,6 +25,7 @@ import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataRecordEntityM
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
 import com.liferay.data.engine.rest.internal.storage.DataStorageTracker;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
+import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.data.engine.storage.DataStorage;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -40,9 +42,14 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -110,13 +117,13 @@ public class DataRecordResourceImpl
 
 	@Override
 	public Page<DataRecord> getDataDefinitionDataRecordsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long dataDefinitionId, Long dataListViewId, String keywords,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return getDataRecordCollectionDataRecordsPage(
-			_getDefaultDataRecordCollectionId(dataDefinitionId), keywords,
-			pagination, sorts);
+			_getDefaultDataRecordCollectionId(dataDefinitionId), dataListViewId,
+			keywords, pagination, sorts);
 	}
 
 	@Override
@@ -159,8 +166,8 @@ public class DataRecordResourceImpl
 
 	@Override
 	public Page<DataRecord> getDataRecordCollectionDataRecordsPage(
-			Long dataRecordCollectionId, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long dataRecordCollectionId, Long dataListViewId, String keywords,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -177,10 +184,13 @@ public class DataRecordResourceImpl
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
 			dataRecordCollectionId);
 
+		BooleanFilter booleanFilter = _getFixedFilters(
+			dataListViewId, ddlRecordSet);
+
 		return SearchUtil.search(
 			booleanQuery -> {
 			},
-			null, DDLRecord.class, keywords, pagination,
+			booleanFilter, DDLRecord.class, keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
@@ -366,11 +376,58 @@ public class DataRecordResourceImpl
 		return ddlRecordSet.getRecordSetId();
 	}
 
+	private BooleanFilter _getFixedFilters(
+			Long dataListViewId, DDLRecordSet ddlRecordSet)
+		throws PortalException {
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (Validator.isNotNull(dataListViewId)) {
+			DEDataListView deDataListView =
+				_deDataListViewLocalService.getDEDataListView(dataListViewId);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				deDataListView.getAppliedFilters());
+
+			String[] fieldNames = JSONUtil.toStringArray(
+				JSONFactoryUtil.createJSONArray(
+					deDataListView.getFieldNames()));
+
+			for (String fieldName : fieldNames) {
+				JSONArray jsonArray = (JSONArray)jsonObject.get(fieldName);
+
+				if (jsonArray == null) {
+					continue;
+				}
+
+				String[] filters = JSONUtil.toStringArray(jsonArray);
+
+				DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+				String indexFieldName = _getIndexFieldName(
+					ddmStructure.getStructureId(), fieldName,
+					contextAcceptLanguage.getPreferredLocale());
+
+				for (String filter : filters) {
+					booleanFilter.addTerm(indexFieldName, filter);
+				}
+			}
+		}
+
+		return booleanFilter;
+	}
+
+	private String _getIndexFieldName(
+		long ddmStructureId, String fieldName, Locale locale) {
+
+		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
+	}
+
 	private String _getSortableIndexFieldName(
 		long ddmStructureId, String fieldName, Locale locale) {
 
 		StringBundler sb = new StringBundler(
-			_ddmIndexer.encodeName(ddmStructureId, fieldName, locale));
+			_getIndexFieldName(ddmStructureId, fieldName, locale));
 
 		sb.append(StringPool.UNDERLINE);
 		sb.append("String");
@@ -453,6 +510,9 @@ public class DataRecordResourceImpl
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DEDataListViewLocalService _deDataListViewLocalService;
 
 	private ModelResourcePermission<InternalDataRecordCollection>
 		_modelResourcePermission;

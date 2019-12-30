@@ -84,7 +84,7 @@ public class BaseMessagingConfiguratorTest {
 		_baseMessagingConfigurator = new BaseMessagingConfigurator() {
 
 			@Override
-			protected ClassLoader getOperatingClassloader() {
+			protected ClassLoader getOperatingClassLoader() {
 				return testClassLoader;
 			}
 

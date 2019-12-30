@@ -841,7 +841,7 @@ public class MPIHelperUtilTest {
 					}
 
 					@Override
-					protected ClassLoader getOperatingClassloader() {
+					protected ClassLoader getOperatingClassLoader() {
 						return null;
 					}
 

@@ -32,10 +32,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Test Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
@@ -52,10 +49,7 @@ definition {
 
 		Staging.publishToLive(publicationName = "summCheck");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.viewPublicationSummary(
 			dateRestrictionOption = "From Last Publish Date",
@@ -90,10 +84,7 @@ definition {
 
 		Staging.publishToLive(publicationName = "summCheck");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.viewPublicationSummary(publicationTitle = "summCheck");
 	}
@@ -102,10 +93,7 @@ definition {
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.addArticleCP(
 			webContentContent = "Web Content Content",
@@ -113,10 +101,7 @@ definition {
 
 		WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
 		Staging.activateStagingCP(
 			recycleBinNotification = "true",

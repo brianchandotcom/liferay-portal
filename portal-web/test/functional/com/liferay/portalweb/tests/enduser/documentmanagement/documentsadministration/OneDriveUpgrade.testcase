@@ -27,6 +27,10 @@ definition {
 
 		OneDrive.goToOneDrive();
 
+		for (var dmDocumentType : list "Excel,PowerPoint,Word") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${dmDocumentType} Title After Upgrade");
+		}
+
 		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Excel");
 
 		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "PowerPoint");

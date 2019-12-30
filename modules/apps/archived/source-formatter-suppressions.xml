@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="BuilderCheck" files="modules/apps/archived/powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
+		<suppress checks="LineBreakAfterCommaCheck" files="modules/apps/archived/unit-converter-web/src/main/java/com/liferay/unit/converter/web/internal/util/UnitConverterUtil\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDirectoryNameCheck" files="modules/apps/archived/.*" />
 		<suppress checks="JavaInternalPackageCheck" files="modules/apps/archived/.*" />
 		<suppress checks="JavaPackagePathCheck" files="modules/apps/archived/.*" />
+		<suppress checks="JavaXMLSecurityCheck" files="modules/apps/archived/xsl-content-web/src/main/java/com/liferay/xsl/content/web/internal/util/XSLContentUtil\.java" />
 	</source-check>
 </suppressions>

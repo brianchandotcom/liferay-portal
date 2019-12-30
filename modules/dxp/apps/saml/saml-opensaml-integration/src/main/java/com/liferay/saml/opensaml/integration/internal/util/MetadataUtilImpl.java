@@ -42,17 +42,12 @@ import org.opensaml.core.xml.util.XMLObjectSupport;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-@Component(
-	configurationPid = "com.liferay.saml.runtime.configuration.MetadataUtilConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = MetadataUtil.class
-)
+@Component(immediate = true, service = MetadataUtil.class)
 public class MetadataUtilImpl implements MetadataUtil {
 
 	@Override

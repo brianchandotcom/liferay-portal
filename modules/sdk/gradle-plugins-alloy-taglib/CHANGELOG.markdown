@@ -23,7 +23,7 @@
 (4a3cd0bc9d)
 - [LPS-67658]: These plugins must work with Gradle 2.5+ (5b963e363d)
 
-## 2.0.0 - 2017-04-18
+## 2.0.0 - 
 
 ### Description
 - [LPS-67573]: Make most methods private in order to reduce API surface.

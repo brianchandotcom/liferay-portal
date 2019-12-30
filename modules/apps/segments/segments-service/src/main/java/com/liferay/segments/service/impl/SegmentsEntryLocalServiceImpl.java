@@ -15,6 +15,8 @@
 package com.liferay.segments.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -47,6 +49,7 @@ import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.exception.SegmentsEntryNameException;
+import com.liferay.segments.internal.background.task.SegmentsEntryRelIndexerBackgroundTaskExecutor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
@@ -136,6 +139,10 @@ public class SegmentsEntryLocalServiceImpl
 		// Resources
 
 		resourceLocalService.addModelResources(segmentsEntry, serviceContext);
+
+		// Indexer
+
+		reindexSegmentsEntryRels(segmentsEntry);
 
 		return segmentsEntry;
 	}
@@ -230,6 +237,10 @@ public class SegmentsEntryLocalServiceImpl
 
 		_segmentsEntryRoleLocalService.deleteSegmentsEntryRoles(
 			segmentsEntry.getSegmentsEntryId());
+
+		// Indexer
+
+		reindexSegmentsEntryRels(segmentsEntry);
 
 		return segmentsEntry;
 	}
@@ -417,7 +428,13 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setCriteria(criteria);
 		segmentsEntry.setSource(getSource(criteria, null));
 
-		return segmentsEntryPersistence.update(segmentsEntry);
+		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
+
+		// Indexer
+
+		reindexSegmentsEntryRels(segmentsEntry);
+
+		return segmentsEntry;
 	}
 
 	protected SearchContext buildSearchContext(
@@ -518,6 +535,26 @@ public class SegmentsEntryLocalServiceImpl
 		return source;
 	}
 
+	protected void reindexSegmentsEntryRels(SegmentsEntry segmentsEntry)
+		throws PortalException {
+
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
+			).put(
+				"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
+			).put(
+				"type", segmentsEntry.getType()
+			).build();
+
+		_backgroundTaskManager.addBackgroundTask(
+			segmentsEntry.getUserId(), segmentsEntry.getGroupId(),
+			SegmentsEntryRelIndexerBackgroundTaskExecutor.getBackgroundTaskName(
+				segmentsEntry.getSegmentsEntryId()),
+			SegmentsEntryRelIndexerBackgroundTaskExecutor.class.getName(),
+			taskContextMap, new ServiceContext());
+	}
+
 	protected void validateKey(
 			long segmentsEntryId, long groupId, String segmentsEntryKey)
 		throws PortalException {
@@ -542,6 +579,9 @@ public class SegmentsEntryLocalServiceImpl
 				"Name is null for locale " + defaultLocale.getDisplayName());
 		}
 	}
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private Portal _portal;

@@ -35,4 +35,11 @@ public interface SegmentsServiceConfiguration {
 	)
 	public boolean segmentationEnabled();
 
+	@Meta.AD(
+		deflt = "120",
+		description = "segments-preview-check-interval-description",
+		name = "segments-preview-check-interval", required = false
+	)
+	public int segmentsPreviewCheckInterval();
+
 }

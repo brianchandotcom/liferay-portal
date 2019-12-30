@@ -365,7 +365,7 @@ definition {
 
 	@priority = "5"
 	test SearchForOtherCalendars {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "Calendar#SearchForOtherCalendars";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

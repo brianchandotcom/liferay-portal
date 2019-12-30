@@ -145,6 +145,7 @@ definition {
 		Page.viewPreview(
 			description = "وصف الاختبار",
 			htmlTitle = "عنوان الاختبار - ${siteName}",
+			locale = "ar-SA",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
 	}
@@ -194,6 +195,7 @@ definition {
 		Page.viewPreview(
 			description = "中文描述",
 			htmlTitle = "中文标题 - ${siteName}",
+			locale = "zh-CN",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
 
@@ -226,6 +228,7 @@ definition {
 		Page.viewPreview(
 			description = "中文描述",
 			htmlTitle = "中文标题 - ${siteName}",
+			locale = "zh-CN",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
 	}

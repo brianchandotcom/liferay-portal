@@ -357,6 +357,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragmentEntryLinks", editorSoyContext.get("fragmentEntryLinks")
 			).put(
+				"hasLockedSegmentsExperiment",
+				editorSoyContext.get("hasLockedSegmentsExperiment")
+			).put(
 				"languageId", editorSoyContext.get("languageId")
 			).put(
 				"layoutData", editorSoyContext.get("layoutData")

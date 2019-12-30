@@ -25,6 +25,25 @@ import {
 import ExperienceToolbarSection from './components/ExperienceToolbarSection';
 
 /**
+ * Sets `lockedSegmentsExperience` in the state, depending on the Experience
+ * @param {object} state
+ * @param {string | null} state.selectedSidebarPanelId
+ * @param {object} experience
+ * @param {boolean} experience.hasLockedSegmentsExperiment
+ * @return {object} nextState
+ */
+function _setExperienceLock(state, experience) {
+	const lockedSegmentsExperience = experience.hasLockedSegmentsExperiment;
+
+	//TODO selectedSidebarPanelId
+
+	return {
+		...state,
+		lockedSegmentsExperience
+	};
+}
+
+/**
  * Stores a the layout data of a new experience in layoutDataList
  * @param {object} state
  * @param {Array<{segmentsExperienceId: string}>} state.layoutDataList
@@ -41,6 +60,31 @@ function _storeNewLayoutData(state, segmentsExperienceId, layoutData) {
 		segmentsExperienceId
 	});
 	return nextState;
+}
+
+/**
+ * Updates the fragmentEntryLinks editableValues in State
+ *
+ * @param {object} state
+ * @param {string} state.defaultSegmentsExperienceId
+ * @param {object} state.fragmentEntryLinks
+ * @param {string} fragmentEntryLinks
+ * @returns {object}
+ */
+function _updateFragmentEntryLinksEditableValues(
+	state,
+	fragmentEntryLinks = {}
+) {
+	const updatedFragmentEntryLinks = state.fragmentEntryLinks;
+
+	Object.entries(fragmentEntryLinks).forEach(([id, editableValues]) => {
+		updatedFragmentEntryLinks[id].editableValues = editableValues;
+	});
+
+	return {
+		...state,
+		fragmentEntryLinks: updatedFragmentEntryLinks
+	};
 }
 
 function editExperienceReducer(state, payload) {
@@ -71,13 +115,20 @@ function editExperienceReducer(state, payload) {
 function createExperienceReducer(state, payload) {
 	let nextState = state;
 
-	const {layoutData, segmentsExperience: newExperience} = payload;
+	const {
+		fragmentEntryLinks,
+		layoutData,
+		segmentsExperience: newExperience
+	} = payload;
 
 	nextState = {
 		...nextState,
 		availableSegmentsExperiences: {
 			...nextState.availableSegmentsExperiences,
-			[newExperience.segmentsExperienceId]: {...newExperience}
+			[newExperience.segmentsExperienceId]: {
+				...newExperience,
+				hasLockedSegmentsExperiment: true
+			}
 		},
 		segmentsExperienceId: newExperience.segmentsExperienceId
 
@@ -93,6 +144,21 @@ function createExperienceReducer(state, payload) {
 	);
 
 	// TODO update layoutData
+
+	nextState = _updateFragmentEntryLinksEditableValues(
+		nextState,
+		fragmentEntryLinks
+	);
+
+	nextState = _setExperienceLock(nextState, {
+		hasLockedSegmentsExperiment: true
+	});
+
+	//TODO _switchLayoutDataList -> {
+	// updatePageEditorLayoutData
+	//_updateFragmentEntryLinks
+	//_setUsedWidgets
+	//}
 
 	return nextState;
 }

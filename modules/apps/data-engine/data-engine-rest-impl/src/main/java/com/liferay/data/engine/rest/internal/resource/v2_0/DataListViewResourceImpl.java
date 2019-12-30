@@ -165,8 +165,8 @@ public class DataListViewResourceImpl
 			_deDataListViewLocalService.addDEDataListView(
 				ddmStructure.getGroupId(), contextCompany.getCompanyId(),
 				PrincipalThreadLocal.getUserId(),
-				MapUtil.toString(dataListView.getAppliedFilters()),
-				dataDefinitionId, Arrays.toString(dataListView.getFieldNames()),
+				_toJSON(dataListView.getAppliedFilters()), dataDefinitionId,
+				Arrays.toString(dataListView.getFieldNames()),
 				LocalizedValueUtil.toLocaleStringMap(dataListView.getName()),
 				dataListView.getSortField()));
 

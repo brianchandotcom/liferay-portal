@@ -484,7 +484,7 @@ public class AssetPublisherConfigurationAction
 		return new AssetQueryRule(contains, andOperator, name, values);
 	}
 
-	protected boolean getSubtypesFieldsFilterEnabled(
+	protected boolean getSubtypeFieldsFilterEnabled(
 		ActionRequest actionRequest, String[] classNameIds) {
 
 		String assetClassName = getAssetClassName(actionRequest, classNameIds);
@@ -721,7 +721,7 @@ public class AssetPublisherConfigurationAction
 			extensions = new String[0];
 		}
 
-		boolean subtypeFieldsFilterEnabled = getSubtypesFieldsFilterEnabled(
+		boolean subtypeFieldsFilterEnabled = getSubtypeFieldsFilterEnabled(
 			actionRequest, classNameIds);
 
 		setPreference(actionRequest, "classNameIds", classNameIds);

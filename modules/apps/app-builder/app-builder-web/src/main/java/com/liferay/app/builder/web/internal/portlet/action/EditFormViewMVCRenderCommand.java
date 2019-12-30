@@ -14,7 +14,7 @@
 
 package com.liferay.app.builder.web.internal.portlet.action;
 
-import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
+import com.liferay.app.builder.constants.AppBuilderPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;

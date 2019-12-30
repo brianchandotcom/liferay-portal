@@ -1494,7 +1494,11 @@ definition {
 			webContentText = "Exported Template",
 			webContentTitle = "Exported Article");
 
+		SelectFrame(value1 = "relative=top");
+
 		DDLRecord.addRepeatableField(fieldName = "Separator");
+
+		takeScreenshot();
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Liferay",

@@ -43,7 +43,7 @@ public class WikiVisualizationHelper {
 		WikiPage wikiPage = _wikiRequestHelper.getWikiPage();
 
 		String mvcRenderCommandName =
-			_wikiRequestHelper.getMVCrenderCommandName();
+			_wikiRequestHelper.getMVCRenderCommandName();
 
 		String frontPageName = _wikiGroupServiceConfiguration.frontPageName();
 
@@ -77,7 +77,7 @@ public class WikiVisualizationHelper {
 
 	public boolean isUndoTrashControlVisible() {
 		String mvcRenderCommandName =
-			_wikiRequestHelper.getMVCrenderCommandName();
+			_wikiRequestHelper.getMVCRenderCommandName();
 
 		if (mvcRenderCommandName.equals("/wiki/view_page_activities") ||
 			mvcRenderCommandName.equals("/wiki/view_page_attachments")) {
@@ -106,7 +106,7 @@ public class WikiVisualizationHelper {
 
 	protected boolean isNavItemSelected(String navItemMVCRenderCommandName) {
 		String mvcRenderCommandName =
-			_wikiRequestHelper.getMVCrenderCommandName();
+			_wikiRequestHelper.getMVCRenderCommandName();
 
 		return mvcRenderCommandName.equals(navItemMVCRenderCommandName);
 	}

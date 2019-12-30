@@ -48,7 +48,7 @@ public class GoExtension {
 				sb.append(goVersion);
 				sb.append('.');
 
-				String bitmode = OSDetector.getBitmode();
+				String bitmode = OSDetector.getBitMode();
 
 				if (OSDetector.isApple()) {
 					sb.append("darwin-amd64.tar.gz");

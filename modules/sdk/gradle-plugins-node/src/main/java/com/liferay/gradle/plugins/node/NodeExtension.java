@@ -75,7 +75,7 @@ public class NodeExtension {
 
 					sb.append("/win-x");
 
-					String bitmode = OSDetector.getBitmode();
+					String bitmode = OSDetector.getBitMode();
 
 					if (bitmode.equals("32")) {
 						bitmode = "86";
@@ -101,7 +101,7 @@ public class NodeExtension {
 					sb.append(os);
 					sb.append("-x");
 
-					String bitmode = OSDetector.getBitmode();
+					String bitmode = OSDetector.getBitMode();
 
 					if (bitmode.equals("32")) {
 						bitmode = "86";

@@ -90,7 +90,7 @@
 
 						String[] xugglerOptions = PropsUtil.getArray(PropsKeys.XUGGLER_JAR_OPTIONS);
 
-						String bitmode = OSDetector.getBitmode();
+						String bitmode = OSDetector.getBitMode();
 
 						String guess = StringPool.BLANK;
 

@@ -162,7 +162,7 @@ public class XugglerAutoInstallHelper {
 	}
 
 	private static String _getXugglerJarFileName() {
-		String bitmode = OSDetector.getBitmode();
+		String bitmode = OSDetector.getBitMode();
 
 		if (Validator.isNull(bitmode) ||
 			(!bitmode.equals("32") && !bitmode.equals("64"))) {

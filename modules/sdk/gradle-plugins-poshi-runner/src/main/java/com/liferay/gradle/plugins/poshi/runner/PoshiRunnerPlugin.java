@@ -215,7 +215,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	private void _addDependenciesSikuli(
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
-		String bitMode = OSDetector.getBitmode();
+		String bitMode = OSDetector.getBitMode();
 
 		if (bitMode.equals("32")) {
 			bitMode = "x86";

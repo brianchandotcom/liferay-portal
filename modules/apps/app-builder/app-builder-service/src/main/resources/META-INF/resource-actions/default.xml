@@ -5,23 +5,25 @@
 	<model-resource>
 		<model-name>com.liferay.app.builder</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet</portlet-name>
+			<portlet-name>com_liferay_app_builder_web_internal_portlet_AppBuilderHiddenPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_APP_BUILDER_APP</action-key>
+				<action-key>MANAGE</action-key>
 			</supports>
 			<guest-unsupported>
 				<action-key>ADD_APP_BUILDER_APP</action-key>
+				<action-key>MANAGE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.app.builder.model.AppBuilderApp</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet</portlet-name>
+			<portlet-name>com_liferay_app_builder_web_internal_portlet_AppBuilderHiddenPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

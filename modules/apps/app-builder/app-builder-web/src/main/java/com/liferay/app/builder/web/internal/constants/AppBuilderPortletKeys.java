@@ -19,6 +19,9 @@ package com.liferay.app.builder.web.internal.constants;
  */
 public class AppBuilderPortletKeys {
 
+	public static final String APP_BUILDER_HIDDEN =
+		"com_liferay_app_builder_web_internal_portlet_AppBuilderHiddenPortlet";
+
 	public static final String CUSTOM_OBJECTS =
 		"com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet";
 

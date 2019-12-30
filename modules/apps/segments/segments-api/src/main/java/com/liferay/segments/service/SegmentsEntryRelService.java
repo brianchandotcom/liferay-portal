@@ -53,14 +53,33 @@ public interface SegmentsEntryRelService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryRelServiceUtil} to access the segments entry rel remote service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 SegmentsEntryService#addSegmentsEntryClassPKs(
+	 long, long[], ServiceContext)}
+	 */
+	@Deprecated
 	public SegmentsEntryRel addSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 long, long[])}
+	 */
+	@Deprecated
 	public void deleteSegmentsEntryRel(long segmentsEntryRelId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 long, long[])}
+	 */
+	@Deprecated
 	public void deleteSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK)
 		throws PortalException;

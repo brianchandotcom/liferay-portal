@@ -66,6 +66,15 @@ public class SegmentsEntryRelLocalServiceUtil {
 		return getService().addSegmentsEntryRel(segmentsEntryRel);
 	}
 
+	public static void addSegmentsEntryRels(
+			long segmentsEntryId, long classNameId, long[] classPKs,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().addSegmentsEntryRels(
+			segmentsEntryId, classNameId, classPKs, serviceContext);
+	}
+
 	/**
 	 * Creates a new segments entry rel with the primary key. Does not add the segments entry rel to the database.
 	 *
@@ -130,6 +139,14 @@ public class SegmentsEntryRelLocalServiceUtil {
 
 	public static void deleteSegmentsEntryRels(long classNameId, long classPK) {
 		getService().deleteSegmentsEntryRels(classNameId, classPK);
+	}
+
+	public static void deleteSegmentsEntryRels(
+			long segmentsEntryId, long classNameId, long[] classPKs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteSegmentsEntryRels(
+			segmentsEntryId, classNameId, classPKs);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery

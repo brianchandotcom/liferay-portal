@@ -76,6 +76,15 @@ public class SegmentsEntryLocalServiceUtil {
 			type, serviceContext);
 	}
 
+	public static void addSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().addSegmentsEntryClassPKs(
+			segmentsEntryId, classPKs, serviceContext);
+	}
+
 	/**
 	 * Creates a new segments entry with the primary key. Does not add the segments entry to the database.
 	 *
@@ -137,6 +146,13 @@ public class SegmentsEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteSegmentsEntry(segmentsEntry);
+	}
+
+	public static void deleteSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteSegmentsEntryClassPKs(segmentsEntryId, classPKs);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery

@@ -76,6 +76,11 @@ public interface SegmentsEntryRelLocalService
 	public SegmentsEntryRel addSegmentsEntryRel(
 		SegmentsEntryRel segmentsEntryRel);
 
+	public void addSegmentsEntryRels(
+			long segmentsEntryId, long classNameId, long[] classPKs,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new segments entry rel with the primary key. Does not add the segments entry rel to the database.
 	 *
@@ -120,6 +125,10 @@ public interface SegmentsEntryRelLocalService
 	public void deleteSegmentsEntryRels(long segmentsEntryId);
 
 	public void deleteSegmentsEntryRels(long classNameId, long classPK);
+
+	public void deleteSegmentsEntryRels(
+			long segmentsEntryId, long classNameId, long[] classPKs)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

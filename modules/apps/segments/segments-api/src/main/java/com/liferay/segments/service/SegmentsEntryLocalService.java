@@ -94,6 +94,11 @@ public interface SegmentsEntryLocalService
 			String source, String type, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void addSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new segments entry with the primary key. Does not add the segments entry to the database.
 	 *
@@ -135,6 +140,10 @@ public interface SegmentsEntryLocalService
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsEntry deleteSegmentsEntry(SegmentsEntry segmentsEntry)
+		throws PortalException;
+
+	public void deleteSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

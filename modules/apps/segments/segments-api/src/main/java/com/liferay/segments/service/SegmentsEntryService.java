@@ -69,7 +69,16 @@ public interface SegmentsEntryService extends BaseService {
 			String source, String type, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void addSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public SegmentsEntry deleteSegmentsEntry(long segmentsEntryId)
+		throws PortalException;
+
+	public void deleteSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs)
 		throws PortalException;
 
 	/**

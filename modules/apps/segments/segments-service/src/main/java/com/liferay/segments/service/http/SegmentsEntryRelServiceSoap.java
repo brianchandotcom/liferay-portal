@@ -61,6 +61,12 @@ import java.rmi.RemoteException;
  */
 public class SegmentsEntryRelServiceSoap {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 com.liferay.segments.service.SegmentsEntryService#addSegmentsEntryClassPKs(
+	 long, long[], ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.segments.model.SegmentsEntryRelSoap
 			addSegmentsEntryRel(
 				long segmentsEntryId, long classNameId, long classPK,
@@ -82,6 +88,12 @@ public class SegmentsEntryRelServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 com.liferay.segments.service.SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 long, long[])}
+	 */
+	@Deprecated
 	public static void deleteSegmentsEntryRel(long segmentsEntryRelId)
 		throws RemoteException {
 
@@ -96,6 +108,12 @@ public class SegmentsEntryRelServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 com.liferay.segments.service.SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 long, long[])}
+	 */
+	@Deprecated
 	public static void deleteSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK)
 		throws RemoteException {

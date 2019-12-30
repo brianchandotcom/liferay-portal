@@ -62,6 +62,16 @@ public class SegmentsEntryRelLocalServiceWrapper
 			segmentsEntryRel);
 	}
 
+	@Override
+	public void addSegmentsEntryRels(
+			long segmentsEntryId, long classNameId, long[] classPKs,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_segmentsEntryRelLocalService.addSegmentsEntryRels(
+			segmentsEntryId, classNameId, classPKs, serviceContext);
+	}
+
 	/**
 	 * Creates a new segments entry rel with the primary key. Does not add the segments entry rel to the database.
 	 *
@@ -136,6 +146,15 @@ public class SegmentsEntryRelLocalServiceWrapper
 	public void deleteSegmentsEntryRels(long classNameId, long classPK) {
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
 			classNameId, classPK);
+	}
+
+	@Override
+	public void deleteSegmentsEntryRels(
+			long segmentsEntryId, long classNameId, long[] classPKs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+			segmentsEntryId, classNameId, classPKs);
 	}
 
 	@Override

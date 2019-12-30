@@ -34,10 +34,11 @@ public class SegmentsEntryRelServiceWrapper
 	}
 
 	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never modify or reference this interface directly. Always use {@link SegmentsEntryRelServiceUtil} to access the segments entry rel remote service. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsEntryRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 SegmentsEntryService#addSegmentsEntryClassPKs(
+	 long, long[], ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.segments.model.SegmentsEntryRel addSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK,
@@ -48,6 +49,12 @@ public class SegmentsEntryRelServiceWrapper
 			segmentsEntryId, classNameId, classPK, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 long, long[])}
+	 */
+	@Deprecated
 	@Override
 	public void deleteSegmentsEntryRel(long segmentsEntryRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -55,6 +62,12 @@ public class SegmentsEntryRelServiceWrapper
 		_segmentsEntryRelService.deleteSegmentsEntryRel(segmentsEntryRelId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 long, long[])}
+	 */
+	@Deprecated
 	@Override
 	public void deleteSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK)

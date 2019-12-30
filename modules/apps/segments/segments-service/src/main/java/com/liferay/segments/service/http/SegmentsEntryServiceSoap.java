@@ -125,6 +125,22 @@ public class SegmentsEntryServiceSoap {
 		}
 	}
 
+	public static void addSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			SegmentsEntryServiceUtil.addSegmentsEntryClassPKs(
+				segmentsEntryId, classPKs, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.segments.model.SegmentsEntrySoap
 			deleteSegmentsEntry(long segmentsEntryId)
 		throws RemoteException {
@@ -135,6 +151,21 @@ public class SegmentsEntryServiceSoap {
 
 			return com.liferay.segments.model.SegmentsEntrySoap.toSoapModel(
 				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs)
+		throws RemoteException {
+
+		try {
+			SegmentsEntryServiceUtil.deleteSegmentsEntryClassPKs(
+				segmentsEntryId, classPKs);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

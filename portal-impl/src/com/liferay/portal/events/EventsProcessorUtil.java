@@ -28,7 +28,6 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -158,63 +157,6 @@ public class EventsProcessorUtil {
 	}
 
 	protected EventsProcessorUtil() {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected Collection<LifecycleAction> _getLifecycleActions(String key) {
-		List<LifecycleAction> lifecycleActions = _lifecycleActions.getService(
-			key);
-
-		if (lifecycleActions == null) {
-			lifecycleActions = Collections.emptyList();
-		}
-
-		return lifecycleActions;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(String,
-	 *             String[], LifecycleEvent)}
-	 */
-	@Deprecated
-	protected void _process(
-			String key, String[] classes, LifecycleEvent lifecycleEvent)
-		throws ActionException {
-
-		process(key, classes, lifecycleEvent);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #processEvent(LifecycleAction, LifecycleEvent)}
-	 */
-	@Deprecated
-	protected void _processEvent(
-			LifecycleAction lifecycleAction, LifecycleEvent lifecycleEvent)
-		throws ActionException {
-
-		processEvent(lifecycleAction, lifecycleEvent);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #registerEvent(String, Object)}
-	 */
-	@Deprecated
-	protected void _registerEvent(String key, Object event) {
-		registerEvent(key, event);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #unregisterEvent(String, Object)}
-	 */
-	@Deprecated
-	protected void _unregisterEvent(String key, Object event) {
-		unregisterEvent(key, event);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -195,23 +195,6 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 		return httpServletRequest;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void initThreadLocals(HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		HttpSession session = httpServletRequest.getSession();
-
-		User user = (User)session.getAttribute(WebKeys.USER);
-
-		initThreadLocals(user);
-
-		PrincipalThreadLocal.setPassword(
-			PortalUtil.getUserPassword(httpServletRequest));
-	}
-
 	protected void initThreadLocals(User user) throws Exception {
 		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
@@ -359,22 +342,6 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 					filterChain);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #setCredentials(HttpServletRequest, HttpSession, User,
-	 *             String)}
-	 */
-	@Deprecated
-	protected HttpServletRequest setCredentials(
-			HttpServletRequest httpServletRequest, HttpSession session,
-			long userId, String authType)
-		throws Exception {
-
-		return setCredentials(
-			httpServletRequest, session, UserLocalServiceUtil.getUser(userId),
-			authType);
 	}
 
 	protected HttpServletRequest setCredentials(

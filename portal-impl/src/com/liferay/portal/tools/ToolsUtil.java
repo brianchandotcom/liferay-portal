@@ -278,17 +278,6 @@ public class ToolsUtil {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #stripFullyQualifiedClassNames(String, String)}
-	 */
-	@Deprecated
-	public static String stripFullyQualifiedClassNames(String content)
-		throws IOException {
-
-		return stripFullyQualifiedClassNames(content, null);
-	}
-
 	public static String stripFullyQualifiedClassNames(
 			String content, String packagePath)
 		throws IOException {

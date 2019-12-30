@@ -160,26 +160,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 		return true;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean isValidRequestURL(StringBuffer requestURL) {
-		if (requestURL == null) {
-			return false;
-		}
-
-		String url = requestURL.toString();
-
-		for (String extension : PropsValues.VIRTUAL_HOSTS_IGNORE_EXTENSIONS) {
-			if (url.endsWith(extension)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	@Override
 	protected void processFilter(
 			HttpServletRequest httpServletRequest,

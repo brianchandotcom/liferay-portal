@@ -26,38 +26,8 @@ public class PublicRenderParameterConfiguration {
 
 	public static final String MAPPING_PREFIX = "lfr-prp-mapping-";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getIgnoreKey(String)}
-	 */
-	@Deprecated
-	public static String getIgnoreKey(
-		PublicRenderParameter publicRenderParameter) {
-
-		String publicRenderParameterName =
-			PortletQNameUtil.getPublicRenderParameterName(
-				publicRenderParameter.getQName());
-
-		return IGNORE_PREFIX.concat(publicRenderParameterName);
-	}
-
 	public static String getIgnoreKey(String publicRenderParameterName) {
 		return IGNORE_PREFIX.concat(publicRenderParameterName);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getMappingKey(String)}
-	 */
-	@Deprecated
-	public static String getMappingKey(
-		PublicRenderParameter publicRenderParameter) {
-
-		String publicRenderParameterName =
-			PortletQNameUtil.getPublicRenderParameterName(
-				publicRenderParameter.getQName());
-
-		return MAPPING_PREFIX.concat(publicRenderParameterName);
 	}
 
 	public static String getMappingKey(String publicRenderParameterName) {

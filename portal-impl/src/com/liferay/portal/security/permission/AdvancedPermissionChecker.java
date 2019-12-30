@@ -730,58 +730,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return resources;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean hasGuestPermission(
-			long groupId, String name, String primKey, String actionId)
-		throws Exception {
-
-		Group group = null;
-
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.fetchGroup(groupId);
-		}
-
-		return _hasGuestPermission(group, name, primKey, actionId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean hasPermissionImpl(
-		long groupId, String name, String primKey, long[] roleIds,
-		String actionId) {
-
-		Group group = null;
-
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.fetchGroup(groupId);
-		}
-
-		return _hasPermissionImpl(group, name, primKey, roleIds, actionId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean hasUserPermissionImpl(
-			long groupId, String name, String primKey, long[] roleIds,
-			String actionId)
-		throws Exception {
-
-		Group group = null;
-
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.fetchGroup(groupId);
-		}
-
-		return _hasUserPermissionImpl(group, name, primKey, roleIds, actionId);
-	}
-
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {
 		if (!signedIn) {
 			return false;
@@ -1013,16 +961,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean isGroupAdminImpl(long groupId) throws Exception {
-		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-		return _isGroupAdminImpl(group);
 	}
 
 	protected boolean isGroupMemberImpl(long groupId) throws Exception {
@@ -1308,12 +1246,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				name, " ", primKey, " ", actionId, " takes ",
 				stopWatch.getTime(), " ms"));
 	}
-
-	/**
-	 * @deprecated As of Bunyan (6.0.x)
-	 */
-	@Deprecated
-	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 
 	private long[] _applyRoleContributors(long[] roleIds, long groupId) {
 		if (_roleContributors.length == 0) {

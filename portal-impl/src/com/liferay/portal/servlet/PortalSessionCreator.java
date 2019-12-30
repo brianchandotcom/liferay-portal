@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
 
 /**
  * @author Michael Young
@@ -35,15 +34,6 @@ public class PortalSessionCreator extends BasePortalLifecycle {
 		_httpSession = httpSession;
 
 		registerPortalLifecycle(METHOD_INIT);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #PortalSessionCreator(HttpSession)}
-	 */
-	@Deprecated
-	public PortalSessionCreator(HttpSessionEvent httpSessionEvent) {
-		this(httpSessionEvent.getSession());
 	}
 
 	@Override

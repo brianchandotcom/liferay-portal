@@ -142,16 +142,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 				ResourceBundleLoader.class, resourceBundleLoader, properties));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void destroyPortlet(Portlet portlet, Set<String> portletIds)
-		throws Exception {
-
-		_destroyPortlet(portlet, portletIds);
-	}
-
 	protected void doInvokeDeploy(HotDeployEvent hotDeployEvent)
 		throws Exception {
 

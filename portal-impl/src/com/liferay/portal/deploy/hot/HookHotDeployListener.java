@@ -330,17 +330,6 @@ public class HookHotDeployListener
 			PropertiesUtil.toMap(properties));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected boolean checkPermission(
-		String name, ClassLoader portletClassLoader, Object subject,
-		String message) {
-
-		return true;
-	}
-
 	protected boolean containsKey(Properties portalProperties, String key) {
 		if (_log.isDebugEnabled()) {
 			return true;
@@ -1754,31 +1743,6 @@ public class HookHotDeployListener
 					});
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), as of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected void initServices(
-			String servletContextName, ClassLoader portletClassLoader,
-			String serviceType, Class<?> serviceTypeClass,
-			Constructor<?> serviceImplConstructor, Object serviceProxy)
-		throws ReflectiveOperationException {
-
-		AopInvocationHandler aopInvocationHandler =
-			ProxyUtil.fetchInvocationHandler(
-				serviceProxy, AopInvocationHandler.class);
-
-		Object previousService = aopInvocationHandler.getTarget();
-
-		ServiceWrapper<?> serviceWrapper =
-			(ServiceWrapper<?>)serviceImplConstructor.newInstance(
-				previousService);
-
-		registerService(
-			servletContextName, serviceImplConstructor, ServiceWrapper.class,
-			serviceWrapper);
 	}
 
 	protected Filter initServletFilter(

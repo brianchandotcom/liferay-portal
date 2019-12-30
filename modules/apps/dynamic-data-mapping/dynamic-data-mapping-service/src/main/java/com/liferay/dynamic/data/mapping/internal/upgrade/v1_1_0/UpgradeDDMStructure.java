@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -42,11 +41,9 @@ import java.util.Map;
 public class UpgradeDDMStructure extends UpgradeProcess {
 
 	public UpgradeDDMStructure(
-		DDMExpressionFactory ddmExpressionFactory,
 		DDMFormDeserializer ddmFormDeserializer,
 		DDMFormSerializer ddmFormSerializer) {
 
-		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmFormDeserializer = ddmFormDeserializer;
 		_ddmFormSerializer = ddmFormSerializer;
 	}
@@ -166,7 +163,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 	}
 
-	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMFormDeserializer _ddmFormDeserializer;
 	private final DDMFormSerializer _ddmFormSerializer;
 

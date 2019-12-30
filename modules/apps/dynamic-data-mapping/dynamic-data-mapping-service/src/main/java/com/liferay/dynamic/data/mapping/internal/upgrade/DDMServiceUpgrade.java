@@ -22,7 +22,6 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.settings.DDMDataProviderSettingsProvider;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
@@ -145,9 +144,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 				ddmFormJSONDeserializer, ddmFormValuesDeserializer,
 				ddmFormValuesSerializer, _jsonFactory),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0.
-				UpgradeDDMStructure(
-					_ddmExpressionFactory, ddmFormJSONDeserializer,
-					ddmFormSerializer),
+				UpgradeDDMStructure(ddmFormJSONDeserializer, ddmFormSerializer),
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0.
 				UpgradeDataProviderInstance(_jsonFactory));
 
@@ -338,9 +335,6 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private DDMDataProviderTracker _ddmDataProviderTracker;
-
-	@Reference
-	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

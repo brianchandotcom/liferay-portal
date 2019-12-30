@@ -80,7 +80,7 @@ public class SegmentsEntryProviderRegistryTest {
 			_createSegmentsEntry(segmentsEntryId, source)
 		).when(
 			_segmentsEntryLocalService
-		).getSegmentsEntry(
+		).fetchSegmentsEntry(
 			segmentsEntryId
 		);
 
@@ -104,7 +104,7 @@ public class SegmentsEntryProviderRegistryTest {
 
 		Mockito.verify(
 			_segmentsEntryLocalService, Mockito.times(1)
-		).getSegmentsEntry(
+		).fetchSegmentsEntry(
 			segmentsEntryId
 		);
 
@@ -125,7 +125,7 @@ public class SegmentsEntryProviderRegistryTest {
 			_createSegmentsEntry(segmentsEntryId, source)
 		).when(
 			_segmentsEntryLocalService
-		).getSegmentsEntry(
+		).fetchSegmentsEntry(
 			segmentsEntryId
 		);
 
@@ -147,7 +147,7 @@ public class SegmentsEntryProviderRegistryTest {
 
 		Mockito.verify(
 			_segmentsEntryLocalService, Mockito.times(1)
-		).getSegmentsEntry(
+		).fetchSegmentsEntry(
 			segmentsEntryId
 		);
 

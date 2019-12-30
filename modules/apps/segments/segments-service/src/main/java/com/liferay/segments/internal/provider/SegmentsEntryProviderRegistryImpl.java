@@ -52,7 +52,15 @@ public class SegmentsEntryProviderRegistryImpl
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId);
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+		if (segmentsEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No segments entry found with id " + segmentsEntryId);
+			}
+
+			return new long[0];
+		}
 
 		SegmentsEntryProvider segmentsEntryProvider = getSegmentsEntryProvider(
 			segmentsEntry.getSource());
@@ -76,7 +84,15 @@ public class SegmentsEntryProviderRegistryImpl
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId);
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
+
+		if (segmentsEntry == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No segments entry found with id " + segmentsEntryId);
+			}
+
+			return 0;
+		}
 
 		SegmentsEntryProvider segmentsEntryProvider = getSegmentsEntryProvider(
 			segmentsEntry.getSource());

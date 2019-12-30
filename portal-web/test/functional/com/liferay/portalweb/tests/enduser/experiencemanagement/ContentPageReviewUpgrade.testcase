@@ -2,6 +2,8 @@
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql";
+	property portal.release = "true";
+	property portal.upstream = "true";
 	property testray.component.names = "Content Page Review";
 	property testray.main.component.name = "Upgrades Collaboration";
 

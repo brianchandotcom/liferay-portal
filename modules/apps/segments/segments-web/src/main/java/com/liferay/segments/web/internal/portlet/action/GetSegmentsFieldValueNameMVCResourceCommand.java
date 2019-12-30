@@ -76,16 +76,16 @@ public class GetSegmentsFieldValueNameMVCResourceCommand
 	private Optional<String> _getFieldValueName(
 		String entityName, String fieldName, String fieldValue, Locale locale) {
 
-		Optional<SegmentsFieldCustomizer> segmentFieldCustomizerOptional =
+		Optional<SegmentsFieldCustomizer> segmentsFieldCustomizerOptional =
 			_segmentsFieldCustomizerRegistry.getSegmentsFieldCustomizerOptional(
 				entityName, fieldName);
 
-		if (!segmentFieldCustomizerOptional.isPresent()) {
+		if (!segmentsFieldCustomizerOptional.isPresent()) {
 			return Optional.empty();
 		}
 
 		SegmentsFieldCustomizer segmentsFieldCustomizer =
-			segmentFieldCustomizerOptional.get();
+			segmentsFieldCustomizerOptional.get();
 
 		return Optional.ofNullable(
 			segmentsFieldCustomizer.getFieldValueName(fieldValue, locale));

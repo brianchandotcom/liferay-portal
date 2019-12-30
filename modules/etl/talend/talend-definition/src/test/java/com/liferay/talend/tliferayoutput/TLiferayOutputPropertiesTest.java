@@ -14,11 +14,16 @@
 
 package com.liferay.talend.tliferayoutput;
 
+import com.liferay.talend.BasePropertiesTestCase;
 import com.liferay.talend.properties.resource.Operation;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.talend.components.api.component.Connector;
+import org.talend.components.api.component.PropertyPathConnector;
+import org.talend.components.api.properties.ComponentProperties;
+import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
@@ -28,7 +33,45 @@ import org.talend.daikon.properties.property.Property;
 /**
  * @author Igor Beslic
  */
-public class TLiferayOutputPropertiesTest {
+public class TLiferayOutputPropertiesTest extends BasePropertiesTestCase {
+
+	@Test
+	public void testComponentConnectors() throws Exception {
+		TLiferayOutputDefinition tLiferayOutputDefinition =
+			new TLiferayOutputDefinition();
+
+		Class<? extends ComponentProperties> propertyClass =
+			tLiferayOutputDefinition.getPropertyClass();
+
+		Assert.assertEquals(
+			"Component properties implementation class",
+			TLiferayOutputProperties.class, propertyClass);
+
+		ComponentProperties componentProperties =
+			getDefaultInitializedComponentPropertiesInstance(propertyClass);
+
+		for (Connector outputConnector :
+				componentProperties.getPossibleConnectors(true)) {
+
+			PropertyPathConnector propertyPathConnector =
+				(PropertyPathConnector)outputConnector;
+
+			assertEquals(
+				componentProperties, propertyPathConnector.getPropertyPath(),
+				SchemaProperties.EMPTY_SCHEMA);
+		}
+
+		for (Connector inputConnector :
+				componentProperties.getPossibleConnectors(false)) {
+
+			PropertyPathConnector propertyPathConnector =
+				(PropertyPathConnector)inputConnector;
+
+			assertEquals(
+				componentProperties, propertyPathConnector.getPropertyPath(),
+				SchemaProperties.EMPTY_SCHEMA);
+		}
+	}
 
 	@Test
 	public void testInit() {

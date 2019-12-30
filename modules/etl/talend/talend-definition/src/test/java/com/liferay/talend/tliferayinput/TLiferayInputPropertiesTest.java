@@ -17,17 +17,63 @@ package com.liferay.talend.tliferayinput;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
+import com.liferay.talend.BasePropertiesTestCase;
+
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import org.talend.components.api.component.Connector;
+import org.talend.components.api.component.PropertyPathConnector;
+import org.talend.components.api.properties.ComponentProperties;
+import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
-public class TLiferayInputPropertiesTest {
+public class TLiferayInputPropertiesTest extends BasePropertiesTestCase {
+
+	@Test
+	public void testComponentConnectors() throws Exception {
+		TLiferayInputDefinition tLiferayOutputDefinition =
+			new TLiferayInputDefinition();
+
+		Class<? extends ComponentProperties> propertyClass =
+			tLiferayOutputDefinition.getPropertyClass();
+
+		Assert.assertEquals(
+			"Component properties implementation class",
+			TLiferayInputProperties.class, propertyClass);
+
+		ComponentProperties componentProperties =
+			getDefaultInitializedComponentPropertiesInstance(propertyClass);
+
+		Set<? extends Connector> possibleOutputConnectors =
+			componentProperties.getPossibleConnectors(true);
+
+		Assert.assertEquals(
+			"Output connectors count", 1, possibleOutputConnectors.size());
+
+		for (Connector outputConnector : possibleOutputConnectors) {
+			PropertyPathConnector propertyPathConnector =
+				(PropertyPathConnector)outputConnector;
+
+			assertEquals(
+				componentProperties, propertyPathConnector.getPropertyPath(),
+				SchemaProperties.EMPTY_SCHEMA);
+		}
+
+		Set<? extends Connector> possibleInputConnectors =
+			componentProperties.getPossibleConnectors(false);
+
+		Assert.assertEquals(
+			"No input connectors", 0, possibleInputConnectors.size());
+	}
 
 	/**
 	 * Checks initial layout

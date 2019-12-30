@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -28,6 +29,7 @@ import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfigura
 import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,6 +81,10 @@ public class UpgradeStepRegistratorTracker {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
+
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
 	private ServiceTracker
 		<UpgradeStepRegistrator, Collection<ServiceRegistration<UpgradeStep>>>
@@ -172,7 +178,10 @@ public class UpgradeStepRegistratorTracker {
 				UpgradeStepRegistratorThreadLocal.setEnabled(enabled);
 			}
 
-			if (_releaseManagerConfiguration.autoUpgrade()) {
+			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
+				(_releaseLocalService.fetchRelease(bundleSymbolicName) ==
+					null)) {
+
 				try {
 					_upgradeExecutor.execute(
 						bundleSymbolicName, upgradeInfos,

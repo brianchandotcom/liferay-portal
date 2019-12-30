@@ -67,7 +67,7 @@ public class SolrSearchEngineConfigurator extends BaseSearchEngineConfigurator {
 	}
 
 	@Override
-	protected ClassLoader getOperatingClassloader() {
+	protected ClassLoader getOperatingClassLoader() {
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();

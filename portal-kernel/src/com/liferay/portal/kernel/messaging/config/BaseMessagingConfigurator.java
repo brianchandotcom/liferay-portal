@@ -96,7 +96,7 @@ public abstract class BaseMessagingConfigurator
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			currentThread.setContextClassLoader(getOperatingClassloader());
+			currentThread.setContextClassLoader(getOperatingClassLoader());
 
 			for (Map.Entry<String, List<MessageListener>> messageListeners :
 					_messageListeners.entrySet()) {
@@ -154,7 +154,7 @@ public abstract class BaseMessagingConfigurator
 
 		String servletContextName =
 			ServletContextClassLoaderPool.getServletContextName(
-				getOperatingClassloader());
+				getOperatingClassLoader());
 
 		if (servletContextName != null) {
 			MessagingConfiguratorRegistry.unregisterMessagingConfigurator(
@@ -244,14 +244,21 @@ public abstract class BaseMessagingConfigurator
 		_messageListeners.putAll(messageListeners);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getOperatingClassLoader()}
+	 */
+	@Deprecated
 	protected abstract ClassLoader getOperatingClassloader();
+
+	protected abstract ClassLoader getOperatingClassLoader();
 
 	protected void initialize() {
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoader operatingClassLoader = getOperatingClassloader();
+		ClassLoader operatingClassLoader = getOperatingClassLoader();
 
 		if (contextClassLoader == operatingClassLoader) {
 			_portalMessagingConfigurator = true;
@@ -408,7 +415,7 @@ public abstract class BaseMessagingConfigurator
 				"destination.name", _destinationName
 			).put(
 				"message.listener.operating.class.loader",
-				getOperatingClassloader()
+				getOperatingClassLoader()
 			).build();
 
 			for (MessageListener messageListener : _messageListeners) {

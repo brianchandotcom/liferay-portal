@@ -259,7 +259,14 @@ public abstract class BaseSearchEngineConfigurator
 
 	protected abstract IndexWriter getIndexWriter();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getOperatingClassLoader()}
+	 */
+	@Deprecated
 	protected abstract ClassLoader getOperatingClassloader();
+
+	protected abstract ClassLoader getOperatingClassLoader();
 
 	protected abstract SearchEngineHelper getSearchEngineHelper();
 
@@ -404,7 +411,7 @@ public abstract class BaseSearchEngineConfigurator
 		baseSearchEngineMessageListener.setSearchEngineId(searchEngineId);
 
 		destination.register(
-			baseSearchEngineMessageListener, getOperatingClassloader());
+			baseSearchEngineMessageListener, getOperatingClassLoader());
 	}
 
 	protected void savePreviousSearchEngineListeners(

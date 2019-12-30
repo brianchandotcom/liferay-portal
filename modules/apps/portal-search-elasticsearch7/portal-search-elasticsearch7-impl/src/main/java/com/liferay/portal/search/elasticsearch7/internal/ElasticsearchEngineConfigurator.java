@@ -63,7 +63,7 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	@Override
-	protected ClassLoader getOperatingClassloader() {
+	protected ClassLoader getOperatingClassLoader() {
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();

@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -58,17 +57,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		upgradeDDMStructureVersionDefinition();
 	}
 
-	protected DDMFormRule getSetVisibleDDMFormRule(
-		String ddmFormFieldName, String visibilityExpression) {
-
-		return new DDMFormRule(
-			visibilityExpression,
-			"setVisible('" + ddmFormFieldName + "', true)");
-	}
-
-	protected String updateDefinition(String definition)
-		throws PortalException {
-
+	protected String updateDefinition(String definition) {
 		DDMFormDeserializerDeserializeRequest.Builder deserializerBuilder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				definition);
@@ -92,8 +81,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				continue;
 			}
 
-			DDMFormRule ddmFormRule = getSetVisibleDDMFormRule(
-				ddmFormField.getName(), visibilityExpression);
+			DDMFormRule ddmFormRule = new DDMFormRule(
+				visibilityExpression,
+				"setVisible('" + ddmFormField.getName() + "', true)");
 
 			ddmFormRules.add(ddmFormRule);
 

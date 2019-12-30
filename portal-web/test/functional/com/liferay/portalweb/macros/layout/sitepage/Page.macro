@@ -941,14 +941,17 @@ definition {
 
 		if (isSet(openGraph)) {
 			var url = StringUtil.upperCase("${url}");
+		}
 
-			if (isSet(locale)) {
-				var languageName = StringUtil.extractFirst("${locale}", "-");
+		if (isSet(locale)) {
+			var languageName = StringUtil.extractFirst("${locale}", "-");
 
-				var languageUpperName = StringUtil.upperCase("${languageName}");
-
-				var url = StringUtil.replace("${url}","WEB","${languageUpperName}/WEB");
+			if (isSet(openGraph)) {
+				var languageName = StringUtil.upperCase("${languageName}");
+				var portalURL = StringUtil.upperCase("${portalURL}");
 			}
+
+			var url = StringUtil.replace("${url}","${portalURL}","${portalURL}/${languageName}");
 		}
 
 		AssertTextEquals(

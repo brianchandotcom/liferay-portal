@@ -141,6 +141,26 @@ public class SegmentsEntryLocalServiceImpl
 	}
 
 	@Override
+	public void addSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = getSegmentsEntry(segmentsEntryId);
+
+		_segmentsEntryRelLocalService.addSegmentsEntryRels(
+			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
+			classPKs, serviceContext);
+
+		segmentsEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+
+		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
+
+		reindexSegmentsEntryRels(segmentsEntry);
+	}
+
+	@Override
 	public void deleteSegmentsEntries(long groupId) throws PortalException {
 		List<SegmentsEntry> segmentsEntries =
 			segmentsEntryPersistence.findByGroupId(groupId);
@@ -212,6 +232,24 @@ public class SegmentsEntryLocalServiceImpl
 			segmentsEntry.getSegmentsEntryId());
 
 		return segmentsEntry;
+	}
+
+	@Override
+	public void deleteSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs)
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = getSegmentsEntry(segmentsEntryId);
+
+		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
+			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
+			classPKs);
+
+		segmentsEntry.setModifiedDate(new Date());
+
+		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
+
+		reindexSegmentsEntryRels(segmentsEntry);
 	}
 
 	@Override
@@ -370,8 +408,9 @@ public class SegmentsEntryLocalServiceImpl
 
 		validateName(segmentsEntry.getGroupId(), nameMap);
 
+		segmentsEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		segmentsEntry.setSegmentsEntryKey(segmentsEntryKey);
-
 		segmentsEntry.setNameMap(nameMap);
 		segmentsEntry.setDescriptionMap(descriptionMap);
 		segmentsEntry.setActive(active);

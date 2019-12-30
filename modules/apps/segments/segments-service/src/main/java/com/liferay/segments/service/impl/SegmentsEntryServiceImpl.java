@@ -82,6 +82,19 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public void addSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), segmentsEntryId, ActionKeys.UPDATE);
+
+		segmentsEntryLocalService.addSegmentsEntryClassPKs(
+			segmentsEntryId, classPKs, serviceContext);
+	}
+
+	@Override
 	public SegmentsEntry deleteSegmentsEntry(long segmentsEntryId)
 		throws PortalException {
 
@@ -89,6 +102,18 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 			getPermissionChecker(), segmentsEntryId, ActionKeys.DELETE);
 
 		return segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntryId);
+	}
+
+	@Override
+	public void deleteSegmentsEntryClassPKs(
+			long segmentsEntryId, long[] classPKs)
+		throws PortalException {
+
+		_segmentsEntryResourcePermission.check(
+			getPermissionChecker(), segmentsEntryId, ActionKeys.UPDATE);
+
+		segmentsEntryLocalService.deleteSegmentsEntryClassPKs(
+			segmentsEntryId, classPKs);
 	}
 
 	@Override

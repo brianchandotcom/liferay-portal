@@ -45,6 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 public class SegmentsEntryRelServiceImpl
 	extends SegmentsEntryRelServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             com.liferay.segments.service.SegmentsEntryService#addSegmentsEntryClassPKs(
+	 *             long, long[], ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public SegmentsEntryRel addSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK,
@@ -58,6 +64,12 @@ public class SegmentsEntryRelServiceImpl
 			segmentsEntryId, classNameId, classPK, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             com.liferay.segments.service.SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 *             long, long[])}
+	 */
+	@Deprecated
 	@Override
 	public void deleteSegmentsEntryRel(long segmentsEntryRelId)
 		throws PortalException {
@@ -73,6 +85,12 @@ public class SegmentsEntryRelServiceImpl
 		segmentsEntryRelLocalService.deleteSegmentsEntryRel(segmentsEntryRel);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             com.liferay.segments.service.SegmentsEntryService#deleteSegmentsEntryClassPKs(
+	 *             long, long[])}
+	 */
+	@Deprecated
 	@Override
 	public void deleteSegmentsEntryRel(
 			long segmentsEntryId, long classNameId, long classPK)

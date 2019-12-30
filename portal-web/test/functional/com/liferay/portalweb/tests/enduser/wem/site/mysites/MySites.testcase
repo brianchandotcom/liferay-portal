@@ -208,7 +208,9 @@ definition {
 
 		NavItem.gotoAvailableSites();
 
-		MySites.viewMembershipRequested(siteName = "Site Name");
+		MySites.viewMembershipRequested(
+			siteName = "Site Name",
+			userRole = "Guest");
 
 		// Approve user's membership request with superadmin
 

@@ -902,7 +902,7 @@ public class LayoutStagedModelDataHandler
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
-		Map<String, Object[]> portletIds = getPortletids(
+		Map<String, Object[]> portletIds = getPortletIds(
 			portletDataContext, layout);
 
 		for (Map.Entry<String, Object[]> portletIdsEntry :
@@ -1184,7 +1184,7 @@ public class LayoutStagedModelDataHandler
 			url.substring(0, x) + group.getFriendlyURL() + url.substring(y));
 	}
 
-	protected Map<String, Object[]> getPortletids(
+	protected Map<String, Object[]> getPortletIds(
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 

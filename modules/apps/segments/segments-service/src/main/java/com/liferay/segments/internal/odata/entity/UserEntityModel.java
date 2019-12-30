@@ -64,6 +64,9 @@ public class UserEntityModel implements EntityModel {
 			new IdEntityField("roleIds", locale -> "roleIds", String::valueOf),
 			new IdEntityField(
 				"scopeGroupId", locale -> "scopeGroupId", String::valueOf),
+			new IdEntityField(
+				"segmentsEntryIds", locale -> "segmentsEntryIds",
+				String::valueOf),
 			new IdEntityField("teamIds", locale -> "teamIds", String::valueOf),
 			new IdEntityField(
 				"userGroupIds", locale -> "userGroupIds", String::valueOf),

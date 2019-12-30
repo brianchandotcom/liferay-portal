@@ -1,0 +1,9 @@
+!/opensocial-portlet/docroot/WEB-INF/lib
+/opensocial-portlet/docroot/WEB-INF/lib/*
+!/opensocial-portlet/docroot/WEB-INF/lib/opensocial-portlet-service.jar
+!/powwow-portlet/docroot/WEB-INF/lib
+/powwow-portlet/docroot/WEB-INF/lib/*
+!/powwow-portlet/docroot/WEB-INF/lib/powwow-portlet-service.jar
+!/tasks-portlet/docroot/WEB-INF/lib
+/tasks-portlet/docroot/WEB-INF/lib/*
+!/tasks-portlet/docroot/WEB-INF/lib/tasks-portlet-service.jar

@@ -1879,13 +1879,13 @@ definition {
 			fieldType = "Text Field",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
-		
+
 		App.add(
 			appTitle = "Test App",
 			deployOption = "Product Menu",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
-		
+
 		AppBuilderAdmin.undeployApp(itemName = "Test App");
 
 		AppBuilderAdmin.deployApp(itemName = "Test App");

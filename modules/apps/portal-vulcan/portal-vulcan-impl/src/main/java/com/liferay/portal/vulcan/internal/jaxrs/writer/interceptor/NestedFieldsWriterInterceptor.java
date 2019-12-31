@@ -410,7 +410,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			Map.Entry<String, Class<?>>[] resourceMethodArgNameTypeEntries =
 				new Map.Entry[resourceMethodParameters.length];
 
-			Parameter[] parentResourceMethodParameters = null;
+			Parameter[] parentParameters = null;
 
 			try {
 				Class<?> parentResourceClass = resourceClass.getSuperclass();
@@ -419,8 +419,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 					resourceMethod.getName(),
 					resourceMethod.getParameterTypes());
 
-				parentResourceMethodParameters =
-					parentResourceMethod.getParameters();
+				parentParameters = parentResourceMethod.getParameters();
 			}
 			catch (NoSuchMethodException nsme) {
 				if (_log.isDebugEnabled()) {
@@ -431,19 +430,14 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			for (int i = 0; i < resourceMethodParameters.length; i++) {
 				Parameter parameter = resourceMethodParameters[i];
 
-				NestedFieldId nestedFieldId = parameter.getAnnotation(
-					NestedFieldId.class);
+				NestedFieldId nestedFieldId = _getAnnotation(
+					NestedFieldId.class, parameter, parentParameters, i);
 
 				Class<?> parameterType = parameter.getType();
 
 				if (nestedFieldId == null) {
-					if (parentResourceMethodParameters == null) {
-						continue;
-					}
-
-					parameter = parentResourceMethodParameters[i];
-
-					Context context = parameter.getAnnotation(Context.class);
+					Context context = _getAnnotation(
+						Context.class, parameter, parentParameters, i);
 
 					if (context != null) {
 						resourceMethodArgNameTypeEntries[i] =
@@ -451,8 +445,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 								parameter.getName(), parameterType);
 					}
 
-					PathParam pathParam = parameter.getAnnotation(
-						PathParam.class);
+					PathParam pathParam = _getAnnotation(
+						PathParam.class, parameter, parentParameters, i);
 
 					if (pathParam != null) {
 						resourceMethodArgNameTypeEntries[i] =
@@ -460,8 +454,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 								pathParam.value(), parameterType);
 					}
 
-					QueryParam queryParam = parameter.getAnnotation(
-						QueryParam.class);
+					QueryParam queryParam = _getAnnotation(
+						QueryParam.class, parameter, parentParameters, i);
 
 					if (queryParam != null) {
 						resourceMethodArgNameTypeEntries[i] =
@@ -538,6 +532,19 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		public R apply(A a, B b, C c) throws Exception;
 
+	}
+
+	private static <A extends Annotation> A _getAnnotation(
+		Class<A> annotationClass, Parameter parameter,
+		Parameter[] parentParameters, int i) {
+
+		A annotation = parameter.getAnnotation(annotationClass);
+
+		if ((annotation == null) && (parentParameters != null)) {
+			return parentParameters[i].getAnnotation(annotationClass);
+		}
+
+		return annotation;
 	}
 
 	private Object _adaptToFieldType(Class<?> fieldType, Object value) {

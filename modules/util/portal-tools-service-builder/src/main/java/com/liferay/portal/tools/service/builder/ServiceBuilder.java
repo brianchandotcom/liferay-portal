@@ -3751,9 +3751,8 @@ public class ServiceBuilder {
 					internalColumnNames.add("ctCollectionId");
 				}
 
-				if (entityFinder.isUnique() && entity.hasCompanyId() &&
-					!dbNames.contains("companyId") &&
-					!Objects.equals("Company", entity.getName())) {
+				if (entityFinder.isUnique() && _requireCompanyIdPK(entity) &&
+					!dbNames.contains("companyId")) {
 
 					internalColumnNames.add("companyId");
 				}
@@ -4859,7 +4858,7 @@ public class ServiceBuilder {
 
 				if (!entity.hasCompoundPK() &&
 					!entity.isChangeTrackingEnabled() &&
-					(!entity.hasCompanyId() || entity.hasCompanyIdPK())) {
+					!_requireCompanyIdPK(entity)) {
 
 					sb.append(" primary key");
 				}
@@ -4889,7 +4888,7 @@ public class ServiceBuilder {
 
 			if (((i + 1) != databaseRegularEntityColumns.size()) ||
 				entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
-				(entity.hasCompanyId() && !entity.hasCompanyIdPK())) {
+				_requireCompanyIdPK(entity)) {
 
 				sb.append(",");
 			}
@@ -4898,7 +4897,7 @@ public class ServiceBuilder {
 		}
 
 		if (entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
-			(entity.hasCompanyId() && !entity.hasCompanyIdPK())) {
+			_requireCompanyIdPK(entity)) {
 
 			sb.append("\tprimary key (");
 
@@ -4918,7 +4917,7 @@ public class ServiceBuilder {
 				sb.append(", ctCollectionId");
 			}
 
-			if (entity.hasCompanyId() && !entity.hasCompanyIdPK()) {
+			if (_requireCompanyIdPK(entity)) {
 				sb.append(", companyId");
 			}
 
@@ -7398,6 +7397,16 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				entity.getUADTestIntegrationOutputPath(), "/uad/test/",
 				entity.getName(), "UADTestHelper.java"));
+	}
+
+	private boolean _requireCompanyIdPK(Entity entity) {
+		if (!entity.hasCompanyId() || entity.hasCompanyIdPK() ||
+			Objects.equals("VirtualHost", entity.getName())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _resolveEntity(Entity entity) throws Exception {

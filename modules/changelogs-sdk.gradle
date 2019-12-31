@@ -113,7 +113,7 @@ buildChangelogs {
 				}
 			}
 
-			if (commits.length() > 0 || dependencies.length() > 0 || descriptions.length() > 0) {
+			if ((commits.length() > 0) || (dependencies.length() > 0) || (descriptions.length() > 0)) {
 				text += """\
 					|
 					|

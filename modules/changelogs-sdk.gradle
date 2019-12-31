@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.Validator
+
 import groovy.time.TimeCategory
 import groovy.time.TimeDuration
 
@@ -96,7 +98,7 @@ buildChangelogs {
 				if (matcher.find()) {
 					descriptions = "\n" + matcher.group(1).trim()
 
-					if (publishDate.equals("")) {
+					if (Validator.isNull(publishDate)) {
 						String endRange = commitRange.split("\\.\\.")[1]
 
 						exec {

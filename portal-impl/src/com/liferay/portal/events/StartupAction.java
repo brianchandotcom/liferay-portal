@@ -132,7 +132,9 @@ public class StartupAction extends SimpleAction {
 
 		// Check required schema version
 
-		StartupHelperUtil.verifyRequiredSchemaVersion();
+		if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			StartupHelperUtil.verifyRequiredSchemaVersion();
+		}
 
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 

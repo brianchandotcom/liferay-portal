@@ -99,12 +99,14 @@ public class AssetDisplayPageEntryLocalServiceTest {
 				0, 0, 0, WorkflowConstants.STATUS_APPROVED,
 				new ServiceContext());
 
-		layoutPageTemplateEntry.setModifiedDate(null);
+		Date originalModifiedDate = layoutPageTemplateEntry.getModifiedDate();
+
+		originalModifiedDate.setTime(originalModifiedDate.getTime() - 1000);
+
+		layoutPageTemplateEntry.setModifiedDate(originalModifiedDate);
 
 		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry);
-
-		Date originalModifiedDate = layoutPageTemplateEntry.getModifiedDate();
 
 		long classPK = RandomTestUtil.randomLong();
 
@@ -301,11 +303,6 @@ public class AssetDisplayPageEntryLocalServiceTest {
 				0, 0, 0, WorkflowConstants.STATUS_APPROVED,
 				new ServiceContext());
 
-		layoutPageTemplateEntry.setModifiedDate(null);
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
-
 		long classPK = RandomTestUtil.randomLong();
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
@@ -319,6 +316,13 @@ public class AssetDisplayPageEntryLocalServiceTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Date originalModifiedDate = layoutPageTemplateEntry.getModifiedDate();
+
+		originalModifiedDate.setTime(originalModifiedDate.getTime() - 1000);
+
+		layoutPageTemplateEntry.setModifiedDate(originalModifiedDate);
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
 
 		_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntry.getAssetDisplayPageEntryId(),

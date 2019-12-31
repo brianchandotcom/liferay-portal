@@ -161,6 +161,76 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
 	}
 
+	@description = "This makes sure that the previously added image can be cleared at the site level."
+	@priority = "5"
+	test ClearImageAtSiteLevel {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		AssertElementPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		AssertElementPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Open Graph");
+
+		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
+
+		Button.click(button = "Save");
+
+		AssertElementNotPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		AssertElementNotPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:image"''');
+	}
+
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
 	@priority = "5"
 	test ConfigurePageSpecificImage {

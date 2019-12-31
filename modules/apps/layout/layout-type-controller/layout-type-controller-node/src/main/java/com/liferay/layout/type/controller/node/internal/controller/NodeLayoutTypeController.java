@@ -14,11 +14,11 @@
 
 package com.liferay.layout.type.controller.node.internal.controller;
 
+import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.node.internal.constants.NodeLayoutTypeControllerConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;

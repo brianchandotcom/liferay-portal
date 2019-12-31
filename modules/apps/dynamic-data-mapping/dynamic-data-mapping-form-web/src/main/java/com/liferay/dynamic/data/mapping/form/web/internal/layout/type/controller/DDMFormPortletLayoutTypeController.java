@@ -15,10 +15,10 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.layout.type.controller;
 
 import com.liferay.dynamic.data.mapping.form.web.internal.layout.type.constants.DDMFormPortletLayoutTypeConstants;
+import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;

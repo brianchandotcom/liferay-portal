@@ -12,6 +12,7 @@ dependencies {
 	compileOnly project(":apps:data-engine:data-engine-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
+	compileOnly project(":apps:layout:layout-type-controller:layout-type-controller-api")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-service-tracker-collections")

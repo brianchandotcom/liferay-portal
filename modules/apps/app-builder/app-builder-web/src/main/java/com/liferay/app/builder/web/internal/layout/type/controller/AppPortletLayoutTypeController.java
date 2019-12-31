@@ -14,10 +14,10 @@
 
 package com.liferay.app.builder.web.internal.layout.type.controller;
 
+import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;

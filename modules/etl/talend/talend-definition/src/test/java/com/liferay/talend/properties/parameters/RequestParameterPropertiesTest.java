@@ -23,6 +23,8 @@ import java.util.Objects;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.talend.daikon.properties.property.Property;
+
 /**
  * @author Igor Beslic
  */
@@ -36,6 +38,12 @@ public class RequestParameterPropertiesTest {
 		requestParameterProperties.setupProperties();
 
 		requestParameterProperties.addParameters(_testOASParameters);
+
+		Assert.assertTrue(
+			"Request parameter properties is empty",
+			requestParameterProperties.isEmpty());
+
+		_setRandomRequestParameterValues(requestParameterProperties);
 
 		Assert.assertFalse(
 			"Request parameter properties is not empty",
@@ -54,11 +62,14 @@ public class RequestParameterPropertiesTest {
 
 		requestParameterProperties.addParameters(_ignoredOASParameters);
 
-		requestParameters = requestParameterProperties.getRequestParameters();
+		Property<List<String>> parameterNameColumn =
+			requestParameterProperties.parameterNameColumn;
+
+		List<String> parameterNames = parameterNameColumn.getValue();
 
 		Assert.assertEquals(
-			"Request parameter properties size", _testOASParameters.size(),
-			requestParameters.size());
+			"Request parameter properties available parameter names size",
+			_testOASParameters.size(), parameterNames.size());
 	}
 
 	@Test
@@ -86,6 +97,8 @@ public class RequestParameterPropertiesTest {
 
 		requestParameterProperties.addParameters(_testOASParameters);
 
+		_setRandomRequestParameterValues(requestParameterProperties);
+
 		Assert.assertFalse(
 			"Request parameter properties is not empty",
 			requestParameterProperties.isEmpty());
@@ -97,6 +110,8 @@ public class RequestParameterPropertiesTest {
 			requestParameterProperties.isEmpty());
 
 		requestParameterProperties.addParameters(_testOASParameters);
+
+		_setRandomRequestParameterValues(requestParameterProperties);
 
 		List<RequestParameter> requestParameters =
 			requestParameterProperties.getRequestParameters();
@@ -126,6 +141,26 @@ public class RequestParameterPropertiesTest {
 		throw new RuntimeException(
 			"Request parameter not found in OAS parameters: " +
 				requestParameter.getName());
+	}
+
+	private void _setRandomRequestParameterValues(
+		RequestParameterProperties requestParameterProperties) {
+
+		Property<List<String>> parameterNameColumn =
+			requestParameterProperties.parameterNameColumn;
+
+		List<String> parameterNames = parameterNameColumn.getValue();
+
+		List<String> parameterValues = new ArrayList<>();
+
+		for (int i = 0; i < parameterNames.size(); i++) {
+			parameterValues.add(i, String.format("Value of %d", i));
+		}
+
+		Property<List<String>> parameterValueColumn =
+			requestParameterProperties.parameterValueColumn;
+
+		parameterValueColumn.setValue(parameterValues);
 	}
 
 	private static final List<OASParameter> _ignoredOASParameters =

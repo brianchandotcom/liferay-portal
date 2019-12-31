@@ -176,9 +176,11 @@ public class SybaseDB extends BaseDB {
 
 	protected static final String DROP_COLUMN = "drop column";
 
+	private static final int _SQL_TYPE_TIMESTAMP = 11;
+
 	private static final int[] _SQL_TYPES = {
 		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.INTEGER,
-		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.DECIMAL,
+		_SQL_TYPE_TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.DECIMAL,
 		Types.VARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};
 

@@ -95,6 +95,19 @@ buildChangelogs {
 
 				if (matcher.find()) {
 					descriptions = "\n" + matcher.group(1).trim()
+
+					if (publishDate.equals("")) {
+						String endRange = commitRange.split("\\.\\.")[1]
+
+						exec {
+							commandLine "git", "log", "-1", "--pretty=format:%H:%cd:%s", "--date=short", "${endRange}"
+							standardOutput = standardOutputByteArrayOutputStream
+							workingDir = projectDir.parentFile
+						}
+
+						publishDate = standardOutputByteArrayOutputStream.toString().split(":")[1]
+					}
+
 				}
 			}
 

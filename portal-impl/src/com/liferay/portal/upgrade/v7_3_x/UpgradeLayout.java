@@ -39,9 +39,28 @@ public class UpgradeLayout extends UpgradeProcess {
 				new AlterTableDropColumn("masterLayoutPlid"));
 		}
 
+		if (!hasColumn("Layout", "status")) {
+			alter(LayoutTable.class, new AlterTableDropColumn("status"));
+		}
+
+		if (!hasColumn("Layout", "statusByUserId")) {
+			alter(
+				LayoutTable.class, new AlterTableDropColumn("statusByUserId"));
+		}
+
+		if (!hasColumn("Layout", "statusByUserName")) {
+			alter(
+				LayoutTable.class,
+				new AlterTableDropColumn("statusByUserName"));
+		}
+
+		if (!hasColumn("Layout", "statusDate")) {
+			alter(LayoutTable.class, new AlterTableDropColumn("statusDate"));
+		}
+
 		try (PreparedStatement ps = connection.prepareStatement(
 				SQLTransformer.transform(
-					"update Layout set masterLayoutPlid = 0"))) {
+					"update Layout set masterLayoutPlid = 0, status = 0"))) {
 
 			if (ps.executeUpdate() == 0) {
 				return;

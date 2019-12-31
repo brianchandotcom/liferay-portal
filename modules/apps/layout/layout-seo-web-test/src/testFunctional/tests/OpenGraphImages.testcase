@@ -106,10 +106,29 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_2.jpg''');
 	}
 
-	@description = "This makes sure that the previously added image can be cleared."
+	@description = "This makes sure that the previously added image can be cleared at the page level."
 	@priority = "5"
-	test ClearImageTag {
+	test ClearImageAtPageLevel {
 		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Open Graph");
+
+		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		AssertElementPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -121,25 +140,25 @@ definition {
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
-			uploadFileName = "Document_1.jpg");
+			uploadFileName = "Document_2.jpg");
 
 		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
-
-		AssertElementNotPresent(
-			key_imageName = "Document_1.jpg",
-			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
 		Button.click(button = "Save");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
-		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
+		AssertElementPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		var siteID = Site.getSiteId();
 
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
-		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:image"''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
 	}
 
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."

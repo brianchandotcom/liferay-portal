@@ -178,7 +178,17 @@ recordCommits {
 
 		String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-		List<String> commits = gitLogOutput.split("\ncommit ")
+		List<String> commits = []
+
+		if (Validator.isNotNull(gitLogOutput)) {
+			String text = gitLogOutput
+
+			if (text.startsWith("commit ")) {
+				text = text.substring(7)
+			}
+
+			commits = text.split("\ncommit ")
+		}
 
 		String lastVersionCommitId = null
 		VersionNumber lastVersionNumber = null

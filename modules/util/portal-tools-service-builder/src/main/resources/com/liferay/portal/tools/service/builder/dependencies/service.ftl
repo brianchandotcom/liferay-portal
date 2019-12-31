@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.Base${sessionTypeName}Service;
 
-<#if !serviceBuilder.isVersionGTE_7_3_0()>
+<#if entity.isPermissionedModel()>
 	import com.liferay.portal.kernel.service.PermissionedModelLocalService;
 </#if>
 

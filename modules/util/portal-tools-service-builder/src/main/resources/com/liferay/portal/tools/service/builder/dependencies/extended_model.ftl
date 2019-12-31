@@ -5,7 +5,7 @@ import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.NestedSetsTreeNodeModel;
 
-<#if !serviceBuilder.isVersionGTE_7_3_0()>
+<#if entity.isPermissionedModel()>
 	import com.liferay.portal.kernel.model.PermissionedModel;
 </#if>
 

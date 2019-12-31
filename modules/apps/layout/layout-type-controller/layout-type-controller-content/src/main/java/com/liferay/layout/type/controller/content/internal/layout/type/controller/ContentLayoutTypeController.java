@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.display.page.internal.controller;
+package com.liferay.layout.type.controller.content.internal.layout.type.controller;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -20,14 +20,15 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.item.selector.InfoItemSelectorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
+import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -40,7 +41,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -48,8 +49,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
-
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -64,12 +63,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juergen Kappler
  */
 @Component(
-	immediate = true,
-	property = "layout.type=" + LayoutConstants.TYPE_ASSET_DISPLAY,
+	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_CONTENT,
 	service = LayoutTypeController.class
 )
-public class DisplayPageLayoutTypeController
-	extends BaseLayoutTypeControllerImpl {
+public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public String getType() {
@@ -124,22 +121,28 @@ public class DisplayPageLayoutTypeController
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			httpServletRequest.setAttribute(
+				ContentLayoutTypeControllerWebKeys.ITEM_SELECTOR,
+				_itemSelector);
+			httpServletRequest.setAttribute(
 				ContentPageEditorWebKeys.
 					FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
 				_fragmentCollectionContributorTracker);
-
 			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.ITEM_SELECTOR, _itemSelector);
+				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
+				_fragmentRendererTracker);
 		}
 
 		httpServletRequest.setAttribute(
 			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
 			_fragmentRendererController);
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
+			_infoDisplayContributorTracker);
 
 		String page = getViewPage();
 
 		if (layoutMode.equals(Constants.EDIT)) {
-			page = _EDIT_PAGE;
+			page = _EDIT_LAYOUT_PAGE;
 		}
 
 		RequestDispatcher requestDispatcher =
@@ -157,8 +160,11 @@ public class DisplayPageLayoutTypeController
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_fetchLayoutPageTemplateEntry(layout);
+			LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+
+			if (layoutMode.equals(Constants.EDIT)) {
+				layoutPageTemplateEntry = _fetchLayoutPageTemplateEntry(layout);
+			}
 
 			if (layoutPageTemplateEntry != null) {
 				httpServletRequest.setAttribute(
@@ -169,13 +175,14 @@ public class DisplayPageLayoutTypeController
 					ContentPageEditorWebKeys.CLASS_PK,
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 			}
+			else {
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_NAME,
+					Layout.class.getName());
 
-			httpServletRequest.setAttribute(
-				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
-				_fragmentRendererTracker);
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
-				_infoDisplayContributorTracker);
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+			}
 
 			addAttributes(httpServletRequest);
 
@@ -199,44 +206,38 @@ public class DisplayPageLayoutTypeController
 	}
 
 	@Override
+	public boolean isBrowsable() {
+		return true;
+	}
+
+	@Override
 	public boolean isFirstPageable() {
 		return true;
 	}
 
 	@Override
 	public boolean isFullPageDisplayable() {
-		return true;
-	}
-
-	@Override
-	public boolean isInstanceable() {
 		return false;
 	}
 
 	@Override
 	public boolean isParentable() {
-		return false;
+		return true;
+	}
+
+	@Override
+	public boolean isPrimaryType() {
+		return true;
 	}
 
 	@Override
 	public boolean isSitemapable() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isURLFriendliable() {
 		return true;
-	}
-
-	@Override
-	protected void addAttributes(HttpServletRequest httpServletRequest) {
-		for (InfoDisplayRequestAttributesContributor
-				infoDisplayRequestAttributesContributor :
-					_infoDisplayRequestAttributesContributors) {
-
-			infoDisplayRequestAttributesContributor.addAttributes(
-				httpServletRequest);
-		}
 	}
 
 	@Override
@@ -259,7 +260,7 @@ public class DisplayPageLayoutTypeController
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.display.page)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -292,11 +293,13 @@ public class DisplayPageLayoutTypeController
 		PermissionChecker permissionChecker, Layout layout) {
 
 		try {
-			if (LayoutPermissionUtil.contains(
+			if (_layoutPermission.contains(
 					permissionChecker, layout, ActionKeys.UPDATE) ||
-				LayoutPermissionUtil.contains(
+				_layoutPermission.contains(
 					permissionChecker, layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
+				_modelResourcePermission.contains(
+					permissionChecker, layout.getPlid(), ActionKeys.UPDATE)) {
 
 				return true;
 			}
@@ -310,16 +313,17 @@ public class DisplayPageLayoutTypeController
 		return false;
 	}
 
-	private static final String _EDIT_PAGE = "/layout/edit/display_page.jsp";
+	private static final String _EDIT_LAYOUT_PAGE =
+		"/layout/edit_layout/content.jsp";
 
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
-	private static final String _VIEW_PAGE = "/layout/view/display_page.jsp";
+	private static final String _VIEW_PAGE = "/layout/view/content.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DisplayPageLayoutTypeController.class);
+		ContentLayoutTypeController.class);
 
 	@Reference
 	private FragmentCollectionContributorTracker
@@ -333,10 +337,6 @@ public class DisplayPageLayoutTypeController
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
-	private volatile List<InfoDisplayRequestAttributesContributor>
-		_infoDisplayRequestAttributesContributors;
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;
@@ -353,6 +353,12 @@ public class DisplayPageLayoutTypeController
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
+
+	@Reference
+	private LayoutContentModelResourcePermission _modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

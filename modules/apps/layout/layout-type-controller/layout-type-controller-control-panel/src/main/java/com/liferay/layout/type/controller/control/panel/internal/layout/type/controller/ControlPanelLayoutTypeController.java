@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.full.page.application.internal.controller;
+package com.liferay.layout.type.controller.control.panel.internal.layout.type.controller;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
-import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerConstants;
-import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.taglib.servlet.PipingServletResponse;
-
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
@@ -38,20 +34,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Juergen Kappler
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
-	property = "layout.type=" + FullPageApplicationLayoutTypeControllerConstants.LAYOUT_TYPE_FULL_PAGE_APPLICATION,
+	property = "layout.type=" + LayoutConstants.TYPE_CONTROL_PANEL,
 	service = LayoutTypeController.class
 )
-public class FullPageApplicationLayoutTypeController
+public class ControlPanelLayoutTypeController
 	extends BaseLayoutTypeControllerImpl {
-
-	@Override
-	public String getType() {
-		return LayoutConstants.TYPE_PORTLET;
-	}
 
 	@Override
 	public String getURL() {
@@ -59,20 +50,15 @@ public class FullPageApplicationLayoutTypeController
 	}
 
 	@Override
-	public String includeEditContent(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Layout layout)
-		throws Exception {
+	public boolean isCheckLayoutViewPermission() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
+		if (!permissionChecker.isSignedIn()) {
+			return true;
+		}
 
-		return super.includeEditContent(
-			httpServletRequest, httpServletResponse, layout);
-	}
-
-	@Override
-	public boolean isBrowsable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -81,8 +67,8 @@ public class FullPageApplicationLayoutTypeController
 	}
 
 	@Override
-	public boolean isFullPageDisplayable() {
-		return true;
+	public boolean isInstanceable() {
+		return false;
 	}
 
 	@Override
@@ -92,7 +78,7 @@ public class FullPageApplicationLayoutTypeController
 
 	@Override
 	public boolean isSitemapable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -102,20 +88,11 @@ public class FullPageApplicationLayoutTypeController
 
 	@Override
 	protected void addAttributes(HttpServletRequest httpServletRequest) {
-		super.addAttributes(httpServletRequest);
-
-		List<Portlet> portlets = _portletLocalService.getPortlets();
-
-		if (portlets.isEmpty()) {
-			return;
-		}
-
-		portlets = ListUtil.filter(portlets, Portlet::isFullPageDisplayable);
-
 		httpServletRequest.setAttribute(
-			FullPageApplicationLayoutTypeControllerWebKeys.
-				FULL_PAGE_APPLICATION_PORTLETS,
-			portlets);
+			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
+			_panelCategoryRegistry);
 	}
 
 	@Override
@@ -139,36 +116,41 @@ public class FullPageApplicationLayoutTypeController
 
 	@Override
 	protected void removeAttributes(HttpServletRequest httpServletRequest) {
-		httpServletRequest.removeAttribute(WebKeys.SEL_LAYOUT);
-
-		super.removeAttributes(httpServletRequest);
+		httpServletRequest.removeAttribute(
+			ApplicationListWebKeys.PANEL_APP_REGISTRY);
+		httpServletRequest.removeAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 	}
 
 	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
 
-		_portletLocalService = portletLocalService;
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.full.page.application)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.control.panel)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
-	private static final String _EDIT_PAGE =
-		"/layout/edit/full_page_application.jsp";
+	private static final String _EDIT_PAGE = "/layout/edit/control_panel.jsp";
 
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
-	private static final String _VIEW_PAGE =
-		"/layout/view/full_page_application.jsp";
+	private static final String _VIEW_PAGE = "/layout/view/control_panel.jsp";
 
-	private PortletLocalService _portletLocalService;
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

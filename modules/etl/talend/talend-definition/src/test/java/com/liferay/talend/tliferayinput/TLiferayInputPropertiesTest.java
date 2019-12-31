@@ -14,23 +14,20 @@
 
 package com.liferay.talend.tliferayinput;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-
 import com.liferay.talend.BasePropertiesTestCase;
 
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.common.SchemaProperties;
+import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.presentation.Form;
-import org.talend.daikon.properties.presentation.Widget;
+import org.talend.daikon.properties.property.Property;
 
 /**
  * @author Zoltán Takács
@@ -40,11 +37,11 @@ public class TLiferayInputPropertiesTest extends BasePropertiesTestCase {
 
 	@Test
 	public void testComponentConnectors() throws Exception {
-		TLiferayInputDefinition tLiferayOutputDefinition =
+		TLiferayInputDefinition tLiferayInputDefinition =
 			new TLiferayInputDefinition();
 
 		Class<? extends ComponentProperties> propertyClass =
-			tLiferayOutputDefinition.getPropertyClass();
+			tLiferayInputDefinition.getPropertyClass();
 
 		Assert.assertEquals(
 			"Component properties implementation class",
@@ -75,63 +72,34 @@ public class TLiferayInputPropertiesTest extends BasePropertiesTestCase {
 			"No input connectors", 0, possibleInputConnectors.size());
 	}
 
-	/**
-	 * Checks initial layout
-	 *
-	 * @review
-	 */
-	@Ignore
 	@Test
-	public void testRefreshLayout() {
-		TLiferayInputProperties tLiferayInputProperties =
-			new TLiferayInputProperties("root");
+	public void testInit() throws Exception {
+		ComponentProperties componentProperties =
+			getDefaultInitializedComponentPropertiesInstance(
+				TLiferayInputProperties.class);
 
-		tLiferayInputProperties.init();
+		NamedThing connectionNamedThing = getNamedThing(
+			"connection", componentProperties.getForm(Form.ADVANCED));
 
-		tLiferayInputProperties.refreshLayout(
-			tLiferayInputProperties.getForm(Form.MAIN));
+		NamedThing itemsPerPageNamedThing = getNamedThing(
+			"itemsPerPage", (Form)connectionNamedThing);
 
-		Form form = tLiferayInputProperties.getForm(Form.MAIN);
+		Assert.assertEquals(
+			"ItemsPerPage widget display component implementation",
+			Property.class, itemsPerPageNamedThing.getClass());
 
-		Assert.assertFalse(_isHidden(form, "endpoint"));
-		Assert.assertFalse(_isHidden(form, "guessSchema"));
-		Assert.assertFalse(_isHidden(form, "schema"));
-	}
+		NamedThing resourceNamedThing = getNamedThing(
+			"resource", componentProperties.getForm(Form.MAIN));
 
-	/**
-	 * Checks forms are filled with required widgets
-	 *
-	 * @review
-	 */
-	@Ignore
-	@Test
-	public void testSetupLayout() {
-		TLiferayInputProperties tLiferayInputProperties =
-			new TLiferayInputProperties("root");
+		Assert.assertEquals(
+			"Resource widget display component implementation", Form.class,
+			resourceNamedThing.getClass());
 
-		tLiferayInputProperties.setupLayout();
+		Form resourceMainForm = (Form)resourceNamedThing;
 
-		Form form = tLiferayInputProperties.getForm(Form.MAIN);
-
-		assertThat(form, notNullValue());
-
-		Widget schemaWidget = form.getWidget("schema");
-
-		assertThat(schemaWidget, notNullValue());
-
-		Widget guessSchemaWidget = form.getWidget("guessSchema");
-
-		assertThat(guessSchemaWidget, notNullValue());
-	}
-
-	private boolean _isHidden(Form form, String name) {
-		Widget widget = form.getWidget(name);
-
-		if (widget.isHidden()) {
-			return true;
-		}
-
-		return false;
+		Assert.assertNull(
+			"Operations widget is not present in input properties",
+			resourceMainForm.getWidget("operations"));
 	}
 
 }

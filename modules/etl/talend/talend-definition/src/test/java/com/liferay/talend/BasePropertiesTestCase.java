@@ -22,6 +22,9 @@ import org.junit.Assert;
 
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.common.SchemaProperties;
+import org.talend.daikon.NamedThing;
+import org.talend.daikon.properties.presentation.Form;
+import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 
 /**
@@ -67,6 +70,12 @@ public abstract class BasePropertiesTestCase {
 		componentProperties.init();
 
 		return componentProperties;
+	}
+
+	protected NamedThing getNamedThing(String name, Form form) {
+		Widget formWidget = form.getWidget(name);
+
+		return formWidget.getContent();
 	}
 
 }

@@ -26,7 +26,6 @@ import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.presentation.Form;
-import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.EnumProperty;
 import org.talend.daikon.properties.property.Property;
 
@@ -80,21 +79,21 @@ public class TLiferayOutputPropertiesTest extends BasePropertiesTestCase {
 
 		tLiferayOutputProperties.init();
 
-		NamedThing dieOnErrorNamedThing = _getNamedThing(
+		NamedThing dieOnErrorNamedThing = getNamedThing(
 			"dieOnError", tLiferayOutputProperties.getForm(Form.ADVANCED));
 
 		Assert.assertEquals(
 			"DieOnError widget display component implementation",
 			Property.class, dieOnErrorNamedThing.getClass());
 
-		NamedThing resourceNamedThing = _getNamedThing(
+		NamedThing resourceNamedThing = getNamedThing(
 			"resource", tLiferayOutputProperties.getForm(Form.MAIN));
 
 		Assert.assertEquals(
 			"Resource widget display component implementation", Form.class,
 			resourceNamedThing.getClass());
 
-		NamedThing operationsNamedThing = _getNamedThing(
+		NamedThing operationsNamedThing = getNamedThing(
 			"operations", (Form)resourceNamedThing);
 
 		Assert.assertEquals(
@@ -108,12 +107,6 @@ public class TLiferayOutputPropertiesTest extends BasePropertiesTestCase {
 			"Field operation is required", operationProperty.isRequired());
 		Assert.assertFalse(
 			"Field operation is nullable", operationProperty.isNullable());
-	}
-
-	private NamedThing _getNamedThing(String name, Form form) {
-		Widget formWidget = form.getWidget(name);
-
-		return formWidget.getContent();
 	}
 
 }

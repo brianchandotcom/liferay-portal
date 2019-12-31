@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,6 +51,19 @@ public class LayoutColumn {
 		}
 
 		return layoutColumn;
+	}
+
+	public void addAllPortlets() throws PortalException {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)_layout.getLayoutType();
+
+		List<String> portletIds = layoutTypePortlet.getPortletIds();
+
+		for (String portletId : portletIds) {
+			if (!portletId.startsWith(PortletKeys.NESTED_PORTLETS)) {
+				_addPortlet(portletId);
+			}
+		}
 	}
 
 	public void addPortlets(String columnId) throws PortalException {

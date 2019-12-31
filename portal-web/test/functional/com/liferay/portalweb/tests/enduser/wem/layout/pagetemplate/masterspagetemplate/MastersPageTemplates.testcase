@@ -255,6 +255,40 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-102200. Can't edit master page template elements from page editor directly."
+	@priority = "5"
+	test CannotEditMasterPageTemplateViaPageEditor {
+		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Edit",
+			pageTemplateName = "Masters Template Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(
+			basicTemplate = "Masters Template Page Name",
+			pageName = "Test Content Page Name");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Button",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Asset Publisher",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+	}
+
 	@description = "This is for LPS-103687. Validate if there is a page template entry called Blank in Masters tab."
 	@priority = "5"
 	test ViewBlankPageTemplateExistInMastersTabInNewSite {

@@ -16,6 +16,6 @@ create table DepotEntryGroupRel (
 	companyId LONG not null,
 	depotEntryId LONG,
 	searchable BOOLEAN,
-	toGroupId LONG
+	toGroupId LONG,
 	primary key (depotEntryGroupRelId, companyId)
 );

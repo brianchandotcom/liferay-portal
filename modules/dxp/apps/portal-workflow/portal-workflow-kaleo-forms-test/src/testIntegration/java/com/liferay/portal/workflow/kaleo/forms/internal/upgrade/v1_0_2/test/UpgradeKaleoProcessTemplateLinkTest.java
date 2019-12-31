@@ -147,7 +147,7 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 
 		sb.append("insert into KaleoProcessLink (kaleoProcessLinkId, ");
 		sb.append("companyId, kaleoProcessId, workflowTaskName, ");
-		sb.append("DDMTemplateId) value (?, ?, ?, ?)");
+		sb.append("DDMTemplateId) value (?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 

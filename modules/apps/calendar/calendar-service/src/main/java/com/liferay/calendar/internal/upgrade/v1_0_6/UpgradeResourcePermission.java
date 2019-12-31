@@ -107,11 +107,12 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		}
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select companyId from CalendarResource");
+				"select companyId, calendarResourceId from CalendarResource");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong(1);
+				long calendarResourceId = rs.getLong(2);
 
 				Role guestRole = _roleLocalService.getRole(
 					companyId, RoleConstants.GUEST);
@@ -120,7 +121,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 					_resourcePermissionLocalService.removeResourcePermission(
 						companyId, _CALENDAR_RESOURCE_NAME,
 						ResourceConstants.SCOPE_INDIVIDUAL,
-						UpgradeResourcePermission.class.getName(),
+						String.valueOf(calendarResourceId),
 						guestRole.getRoleId(), unsupportedActionId);
 				}
 			}

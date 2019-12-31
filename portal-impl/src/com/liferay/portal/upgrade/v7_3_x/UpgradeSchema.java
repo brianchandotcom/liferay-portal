@@ -25,11 +25,11 @@ import java.sql.SQLException;
 /**
  * @author Alberto Chaparro
  */
-public class UpgradeCompanyInfo extends UpgradeProcess {
+public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQLTemplate("update-7.2.0-7.3.0-companyinfo.sql", false);
+		runSQLTemplate("update-7.2.0-7.3.0.sql", false);
 
 		_copyCompanyKey();
 

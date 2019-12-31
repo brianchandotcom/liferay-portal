@@ -108,10 +108,8 @@ public class AssetDisplayPageEntryLocalServiceTest {
 		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry);
 
-		long classPK = RandomTestUtil.randomLong();
-
 		AssetDisplayPageEntryTestUtil.addAssetDisplayPageEntry(
-			_group.getGroupId(), _classNameId, classPK,
+			_group.getGroupId(), _classNameId, RandomTestUtil.randomLong(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			AssetDisplayPageConstants.TYPE_DEFAULT);
 
@@ -303,11 +301,9 @@ public class AssetDisplayPageEntryLocalServiceTest {
 				0, 0, 0, WorkflowConstants.STATUS_APPROVED,
 				new ServiceContext());
 
-		long classPK = RandomTestUtil.randomLong();
-
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryTestUtil.addAssetDisplayPageEntry(
-				_group.getGroupId(), _classNameId, classPK,
+				_group.getGroupId(), _classNameId, RandomTestUtil.randomLong(),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				AssetDisplayPageConstants.TYPE_DEFAULT);
 

@@ -261,7 +261,8 @@ public class SynchronousDestinationTestRule
 			if (destination != null) {
 				try {
 					ReflectionTestUtil.getField(
-						destination.getClass(), "_threadPoolExecutor");
+						destination.getClass(),
+						"_noticeableThreadPoolExecutor");
 
 					asyncDestination = true;
 				}

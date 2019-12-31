@@ -45,6 +45,13 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
+		if (!_isLayoutTemplateParseable(layout)) {
+			return LayoutData.of(
+				layout,
+				layoutRow -> layoutRow.addLayoutColumns(
+					layoutColumn -> layoutColumn.addAllPortlets()));
+		}
+
 		List<UnsafeConsumer<LayoutRow, Exception>> rowUnsafeConsumers =
 			new ArrayList<>();
 

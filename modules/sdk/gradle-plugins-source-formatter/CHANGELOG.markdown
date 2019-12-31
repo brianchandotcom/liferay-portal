@@ -4302,3 +4302,21 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 ### Dependencies
 - [LPS-105290]: Update the com.liferay.source.formatter dependency to version
 1.0.948.
+
+## 2.3.477 - 2019-12-20
+
+### Dependencies
+- [LPS-106079]: Update the com.liferay.source.formatter dependency to version
+1.0.949.
+
+## 2.3.478 - 2019-12-24
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.source.formatter dependency to version
+1.0.950.
+
+## 2.3.479 - 2019-12-24
+
+### Dependencies
+- [LPS-105380]: Update the com.liferay.source.formatter dependency to version
+1.0.951.

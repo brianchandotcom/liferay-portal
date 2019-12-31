@@ -126,7 +126,7 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -148,7 +148,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -179,7 +179,7 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -191,7 +191,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -208,7 +208,7 @@ definition {
 
 		Button.click(button = "Save");
 
-		AssertElementNotPresent(
+		AssertNotVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -220,7 +220,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
-		AssertElementNotPresent(
+		AssertNotVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -251,7 +251,7 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -267,7 +267,7 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_2.jpg");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageName = "Document_2.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -280,7 +280,7 @@ definition {
 
 		Panel.expandPanel(panel = "Open Graph");
 
-		AssertElementPresent(
+		AssertVisible(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 

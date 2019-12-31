@@ -38,7 +38,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "SEO");
 
-		AssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_SERP");
+		AssertVisible(locator1 = "SitePagesEditPage#PREVIEW_SERP");
 
 		PortletEntry.inputText(
 			fieldLabel = "HTML Title",

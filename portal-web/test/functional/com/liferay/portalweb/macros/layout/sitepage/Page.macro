@@ -917,7 +917,7 @@ definition {
 
 	macro viewPreview {
 		if (isSet(key_imageName)) {
-			AssertElementPresent(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+			AssertVisible(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 		}
 
 		AssertTextEquals(

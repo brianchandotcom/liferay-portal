@@ -115,7 +115,89 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102566. The new fragments can only be add into Drop Zone in a page based on custom master and the fragments inherited from the custom master are not editable"
+	@description = "This is for LPS-102200. Can't edit master page template elements from page editor directly."
+	@priority = "5"
+	test CannotEditMasterPageTemplateViaPageEditor {
+		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Edit",
+			pageTemplateName = "Masters Template Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(
+			basicTemplate = "Masters Template Page Name",
+			pageName = "Test Content Page Name");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Button",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Asset Publisher",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+	}
+
+	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
+	@priority = "5"
+	test EditMasterPageTemplateViaPageEditorLookAndFeel {
+		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Edit",
+			pageTemplateName = "Masters Template Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		PageEditor.clickPublish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(
+			basicTemplate = "Masters Template Page Name",
+			pageName = "Test Content Page Name");
+
+		PageEditor.gotoTab(tabName = "Look and Feel");
+
+		Click(
+			key_text = "Edit Master",
+			locator1 = "Button#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Button");
+
+		PageEditor.viewFragment(fragmentName = "Asset Publisher");
+
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		ClickNoError(
+			key_text = "Publish Master",
+			locator1 = "Button#ANY");
+
+		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
+
+		WebContentDisplayPortlet.viewDefaultMessage();
+
+		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+	}
+
+	@description = "This is a test for LPS-102566. The new fragments can only be add into Drop Zone in a page based on custom master and the fragments inherited from the custom master are not editable."
 	@priority = "3"
 	test OnlyAddFragmentsInDropZoneOfPageAndFragmentsInheritedAreChangeless {
 		task ("Add a custom masters with Button fragment") {
@@ -253,88 +335,6 @@ definition {
 				key_fragmentName = "heading",
 				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
 		}
-	}
-
-	@description = "This is for LPS-102200. Can't edit master page template elements from page editor directly."
-	@priority = "5"
-	test CannotEditMasterPageTemplateViaPageEditor {
-		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
-
-		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
-
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Edit",
-			pageTemplateName = "Masters Template Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Button");
-
-		PageEditor.addWidget(portletName = "Asset Publisher");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(
-			basicTemplate = "Masters Template Page Name",
-			pageName = "Test Content Page Name");
-
-		AssertElementNotPresent(
-			key_fragmentName = "Button",
-			locator1 = "Fragment#FRAGMENT_HEADER");
-
-		AssertElementNotPresent(
-			key_fragmentName = "Asset Publisher",
-			locator1 = "Fragment#FRAGMENT_HEADER");
-	}
-
-	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
-	@priority = "5"
-	test EditMasterPageTemplateViaPageEditorLookAndFeel {
-		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
-
-		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
-
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Edit",
-			pageTemplateName = "Masters Template Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Button");
-
-		PageEditor.addWidget(portletName = "Asset Publisher");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(
-			basicTemplate = "Masters Template Page Name",
-			pageName = "Test Content Page Name");
-
-		PageEditor.gotoTab(tabName = "Look and Feel");
-
-		Click(
-			key_text = "Edit Master",
-			locator1 = "Button#ANY");
-
-		PageEditor.viewFragment(fragmentName = "Button");
-
-		PageEditor.viewFragment(fragmentName = "Asset Publisher");
-
-		PageEditor.addWidget(portletName = "Web Content Display");
-
-		ClickNoError(
-			key_text = "Publish Master",
-			locator1 = "Button#ANY");
-
-		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
-
-		WebContentDisplayPortlet.viewDefaultMessage();
-
-		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
 	}
 
 	@description = "This is for LPS-103687. Validate if there is a page template entry called Blank in Masters tab."

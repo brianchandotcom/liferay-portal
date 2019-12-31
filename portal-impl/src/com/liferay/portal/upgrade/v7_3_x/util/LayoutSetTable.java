@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_3_x.util;
 
 import java.sql.Types;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +77,7 @@ TABLE_COLUMNS_MAP.put("layoutSetPrototypeLinkEnabled", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
+		"create index IX_BC1F2123 on LayoutSet (companyId, layoutSetPrototypeUuid[$COLUMN_LENGTH:75$])",
 		"create unique index IX_48550691 on LayoutSet (groupId, privateLayout)",
 		"create index IX_72BBA8B7 on LayoutSet (layoutSetPrototypeUuid[$COLUMN_LENGTH:75$])",
 		"create index IX_1B698D9 on LayoutSet (privateLayout, logoId)"

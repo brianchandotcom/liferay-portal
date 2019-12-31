@@ -117,6 +117,10 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
+		AssertElementPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.gotoPageMenuItem(
@@ -128,6 +132,23 @@ definition {
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
 			uploadFileName = "Document_2.jpg");
+
+		AssertElementPresent(
+			key_imageName = "Document_2.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Open Graph");
+
+		AssertElementPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
 		var siteID = Site.getSiteId();
 

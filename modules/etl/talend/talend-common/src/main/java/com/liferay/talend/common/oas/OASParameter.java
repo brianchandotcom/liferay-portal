@@ -29,7 +29,7 @@ public class OASParameter {
 		new ArrayList<OASParameter>() {
 			{
 				add(new OASParameter("nestedFields", "query"));
-				add(new OASParameter("includeFieldsParameters", "query"));
+				add(new OASParameter("fields", "query"));
 			}
 		};
 

@@ -103,8 +103,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 			return validationResult;
 		}
 
-		LiferayOASSource liferayOASSource =
-			LiferayDefinition.getLiferayOASSource(this);
+		LiferayOASSource liferayOASSource = _getLiferayOASSource();
 
 		if (!liferayOASSource.isValid()) {
 			return liferayOASSource.getValidationResult();

@@ -84,31 +84,35 @@ public class RequestParameterProperties extends ComponentPropertiesImpl {
 		List<RequestParameter> requestParameters = new ArrayList<>();
 
 		for (int i = 0; i < parameterLocations.size(); i++) {
-			String name = parameterNames.get(i);
+			String parameterValue = parameterValues.get(i);
 
-			if (Objects.equals(name, "includeFieldsParameters")) {
-				requestParameters.addAll(
-					_toRequestParameters(parameterValues.get(i)));
-
+			if (StringUtil.isEmpty(parameterValue)) {
 				continue;
 			}
 
 			requestParameters.add(
 				new RequestParameter(
-					parameterLocations.get(i), name, parameterValues.get(i)));
+					parameterLocations.get(i), parameterNames.get(i),
+					parameterValue.trim()));
 		}
 
 		return requestParameters;
 	}
 
 	public boolean isEmpty() {
-		List<String> parameterNames = parameterNameColumn.getValue();
+		List<String> parameterValues = parameterValueColumn.getValue();
 
-		if (parameterNames.isEmpty()) {
+		if (parameterValues.isEmpty()) {
 			return true;
 		}
 
-		return false;
+		for (String parameterValue : parameterValues) {
+			if (!StringUtil.isEmpty(parameterValue)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public void removeAll() {
@@ -119,8 +123,6 @@ public class RequestParameterProperties extends ComponentPropertiesImpl {
 
 	@Override
 	public void setupLayout() {
-		super.setupLayout();
-
 		Form mainForm = new Form(this, Form.MAIN);
 
 		mainForm.addColumn(parameterLocationColumn);
@@ -130,8 +132,6 @@ public class RequestParameterProperties extends ComponentPropertiesImpl {
 
 	@Override
 	public void setupProperties() {
-		super.setupProperties();
-
 		parameterLocationColumn.setTaggedValue(_ADD_QUOTES, true);
 		parameterLocationColumn.setValue(new ArrayList<>());
 
@@ -148,25 +148,6 @@ public class RequestParameterProperties extends ComponentPropertiesImpl {
 		_LIST_STRING_TYPE, "parameterNameColumn");
 	public Property<List<String>> parameterValueColumn = newProperty(
 		_LIST_STRING_TYPE, "parameterValueColumn");
-
-	private List<RequestParameter> _toRequestParameters(String expression) {
-		if ((expression == null) || expression.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<RequestParameter> requestParameters = new ArrayList<>();
-
-		String[] parameterNameValues = expression.split(",");
-
-		for (String parameterNameValue : parameterNameValues) {
-			String[] nameValue = parameterNameValue.split("=");
-
-			requestParameters.add(
-				new RequestParameter("query", nameValue[0], nameValue[1]));
-		}
-
-		return requestParameters;
-	}
 
 	private static final String _ADD_QUOTES = "ADD_QUOTES";
 

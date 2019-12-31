@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.embedded.internal.controller;
+package com.liferay.layout.type.controller.url.internal.layout.type.controller;
 
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -34,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_EMBEDDED,
+	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_URL,
 	service = LayoutTypeController.class
 )
-public class EmbeddedLayoutTypeController extends BaseLayoutTypeControllerImpl {
+public class URLLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public String getURL() {
@@ -58,7 +59,7 @@ public class EmbeddedLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public boolean isFirstPageable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class EmbeddedLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public boolean isSitemapable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -97,23 +98,19 @@ public class EmbeddedLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	protected String getViewPage() {
-		return _VIEW_PAGE;
+		return StringPool.BLANK;
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.embedded)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.url)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
-	private static final String _EDIT_PAGE = "/layout/edit/embedded.jsp";
+	private static final String _EDIT_PAGE = "/layout/edit/url.jsp";
 
-	private static final String _URL =
-		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}&" +
-			"p_v_l_s_g_id=${liferay:pvlsgid}";
-
-	private static final String _VIEW_PAGE = "/layout/view/embedded.jsp";
+	private static final String _URL = "${url}";
 
 }

@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.link.to.page.internal.controller;
+package com.liferay.layout.type.controller.panel.internal.layout.type.controller;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
-import com.liferay.layout.type.controller.link.to.page.internal.constants.LinkToPageLayoutTypeControllerWebKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -34,20 +31,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
-	property = "layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT,
+	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_PANEL,
 	service = LayoutTypeController.class
 )
-public class LinkToPageLayoutTypeController
-	extends BaseLayoutTypeControllerImpl {
-
-	@Override
-	public String getType() {
-		return LayoutConstants.TYPE_LINK_TO_LAYOUT;
-	}
+public class PanelLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public String getURL() {
@@ -60,8 +50,6 @@ public class LinkToPageLayoutTypeController
 			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
 
-		httpServletRequest.setAttribute(
-			LinkToPageLayoutTypeControllerWebKeys.ITEM_SELECTOR, _itemSelector);
 		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
 		return super.includeEditContent(
@@ -70,7 +58,7 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	public boolean isFirstPageable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -80,17 +68,12 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	public boolean isSitemapable() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isURLFriendliable() {
 		return true;
-	}
-
-	@Override
-	public boolean isWorkflowEnabled() {
-		return false;
 	}
 
 	@Override
@@ -109,25 +92,23 @@ public class LinkToPageLayoutTypeController
 
 	@Override
 	protected String getViewPage() {
-		return StringPool.BLANK;
+		return _VIEW_PAGE;
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.link.to.page)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.panel)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
-	private static final String _EDIT_PAGE = "/layout/edit/link_to_layout.jsp";
+	private static final String _EDIT_PAGE = "/layout/edit/panel.jsp";
 
 	private static final String _URL =
-		"${liferay:mainPath}/portal/layout?p_v_l_s_g_id=${liferay:pvlsgid}&" +
-			"groupId=${liferay:groupId}&privateLayout=${privateLayout}&" +
-				"layoutId=${linkToLayoutId}";
+		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
+			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
-	@Reference
-	private ItemSelector _itemSelector;
+	private static final String _VIEW_PAGE = "/layout/view/panel.jsp";
 
 }

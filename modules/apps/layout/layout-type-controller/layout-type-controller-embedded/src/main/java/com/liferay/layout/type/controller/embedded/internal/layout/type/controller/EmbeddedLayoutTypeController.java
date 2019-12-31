@@ -12,31 +12,32 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.node.internal.controller;
+package com.liferay.layout.type.controller.embedded.internal.layout.type.controller;
 
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
-import com.liferay.layout.type.controller.node.internal.constants.NodeLayoutTypeControllerConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Juergen Kappler
+ * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
-	property = "layout.type=" + NodeLayoutTypeControllerConstants.LAYOUT_TYPE_NODE,
+	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_EMBEDDED,
 	service = LayoutTypeController.class
 )
-public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
+public class EmbeddedLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public String getURL() {
@@ -44,28 +45,35 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
-	public boolean isBrowsable() {
-		return false;
+	public String includeEditContent(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
+		throws Exception {
+
+		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
+
+		return super.includeEditContent(
+			httpServletRequest, httpServletResponse, layout);
 	}
 
 	@Override
 	public boolean isFirstPageable() {
-		return false;
-	}
-
-	@Override
-	public boolean isParentable() {
 		return true;
 	}
 
 	@Override
-	public boolean isSitemapable() {
+	public boolean isParentable() {
 		return false;
 	}
 
 	@Override
+	public boolean isSitemapable() {
+		return true;
+	}
+
+	@Override
 	public boolean isURLFriendliable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -93,20 +101,19 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.node)",
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.embedded)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
-	private static final String _EDIT_PAGE = "/layout/edit/node.jsp";
+	private static final String _EDIT_PAGE = "/layout/edit/embedded.jsp";
 
-	private static final String _URL = StringBundler.concat(
-		"${liferay:mainPath}/portal/layout?p_v_l_s_g_id=${liferay:pvlsgid}&",
-		"groupId=${liferay:groupId}&privateLayout=${liferay:privateLayout}&",
-		"layoutId=${liferay:layoutId}");
+	private static final String _URL =
+		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}&" +
+			"p_v_l_s_g_id=${liferay:pvlsgid}";
 
-	private static final String _VIEW_PAGE = "/layout/view/node.jsp";
+	private static final String _VIEW_PAGE = "/layout/view/embedded.jsp";
 
 }

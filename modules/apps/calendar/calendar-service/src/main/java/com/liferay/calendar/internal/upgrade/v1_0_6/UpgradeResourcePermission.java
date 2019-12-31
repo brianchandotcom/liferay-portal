@@ -14,10 +14,7 @@
 
 package com.liferay.calendar.internal.upgrade.v1_0_6;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.PermissionedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -33,7 +30,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,68 +106,21 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(2);
-
-		sb.append("select companyId, groupId, calendarResourceId, ");
-		sb.append("resourceBlockId from CalendarResource");
-
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select companyId from CalendarResource");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long companyId = rs.getLong(1);
-				final long calendarResourceId = rs.getLong(3);
-				final long resourceBlockId = rs.getLong(4);
 
 				Role guestRole = _roleLocalService.getRole(
 					companyId, RoleConstants.GUEST);
-
-				PermissionedModel permissionedModel = new PermissionedModel() {
-
-					@Override
-					public long getResourceBlockId() {
-						return resourceBlockId;
-					}
-
-					@Override
-					public void persist() {
-						if (_newResourceBlockId == -1) {
-							return;
-						}
-
-						StringBundler updateSB = new StringBundler(3);
-
-						updateSB.append("update CalendarResource set ");
-						updateSB.append("resourceBlockId = ? where ");
-						updateSB.append("calendarResourceId = ?");
-
-						try (PreparedStatement ps = connection.prepareStatement(
-								updateSB.toString())) {
-
-							ps.setLong(1, _newResourceBlockId);
-							ps.setLong(2, calendarResourceId);
-
-							ps.execute();
-						}
-						catch (SQLException sqle) {
-							throw new SystemException(sqle);
-						}
-					}
-
-					@Override
-					public void setResourceBlockId(long resourceBlockId) {
-						_newResourceBlockId = resourceBlockId;
-					}
-
-					private long _newResourceBlockId = -1;
-
-				};
 
 				for (String unsupportedActionId : unsupportedActionIds) {
 					_resourcePermissionLocalService.removeResourcePermission(
 						companyId, _CALENDAR_RESOURCE_NAME,
 						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(permissionedModel),
+						UpgradeResourcePermission.class.getName(),
 						guestRole.getRoleId(), unsupportedActionId);
 				}
 			}

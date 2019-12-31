@@ -6,6 +6,11 @@ definition {
 
 			LexiconCard.clickCard(card = "${pageTemplateName}");
 		}
+		if (isSet(basicTemplate)) {
+			Navigator.gotoNavNested(navNested = "Basic Templates");
+
+			LexiconCard.clickCard(card = "${basicTemplate}");
+		}
 		else {
 			Navigator.gotoNavNested(navNested = "Basic Templates");
 
@@ -35,6 +40,7 @@ definition {
 		}
 
 		ContentPages._selectCard(
+			basicTemplate = "${basicTemplate}",
 			collectionName = "${collectionName}",
 			masterLayoutName = "${masterLayoutName}",
 			pageTemplateName = "${pageTemplateName}");

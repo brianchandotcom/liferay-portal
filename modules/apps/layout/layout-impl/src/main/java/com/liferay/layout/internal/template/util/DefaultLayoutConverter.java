@@ -47,19 +47,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 		List<UnsafeConsumer<LayoutRow, Exception>> rowUnsafeConsumers =
 			new ArrayList<>();
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
-
-		Document document = Jsoup.parseBodyFragment(
-			layoutTemplate.getContent());
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+		Document document = _getLayoutTemplateDocument(layout);
 
 		for (Element rowElement : document.select(".portlet-layout.row")) {
 			List<UnsafeConsumer<LayoutColumn, Exception>>
@@ -102,6 +90,24 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 		return LayoutData.of(
 			layout, rowUnsafeConsumers.toArray(new UnsafeConsumer[0]));
+	}
+
+	private Document _getLayoutTemplateDocument(Layout layout) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
+
+		Document document = Jsoup.parseBodyFragment(
+			layoutTemplate.getContent());
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
 	}
 
 	private static final String _CSS_CLASS_COLUMN_PREFIX = "col-md-";

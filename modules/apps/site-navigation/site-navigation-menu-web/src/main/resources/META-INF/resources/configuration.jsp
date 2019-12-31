@@ -168,7 +168,7 @@ else {
 
 												<div class="card-col-content card-col-gutters">
 													<span class="lfr-card-title-text text-truncate" id="<portlet:namespace />rootMenuItemName">
-														<%= rootMenuItemName %>
+														<%= HtmlUtil.escape(rootMenuItemName) %>
 													</span>
 												</div>
 											</div>

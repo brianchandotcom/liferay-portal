@@ -499,7 +499,7 @@ create index IX_BB65040C on Users_UserGroups (companyId);
 create index IX_66FF2503 on Users_UserGroups (userGroupId);
 
 create index IX_EECA5FDA on VirtualHost (companyId, layoutSetId, defaultVirtualHost);
-create unique index IX_F6902EC8 on VirtualHost (hostname[$COLUMN_LENGTH:200$], companyId);
+create unique index IX_431A3960 on VirtualHost (hostname[$COLUMN_LENGTH:200$]);
 
 create unique index IX_C7CEFB22 on WebDAVProps (classNameId, classPK, companyId);
 

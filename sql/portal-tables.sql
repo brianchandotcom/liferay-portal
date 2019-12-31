@@ -238,9 +238,10 @@ create table Company (
 
 create table CompanyInfo (
 	mvccVersion LONG default 0 not null,
-	companyInfoId LONG not null primary key,
-	companyId LONG,
-	key_ TEXT null
+	companyInfoId LONG not null,
+	companyId LONG not null,
+	key_ TEXT null,
+	primary key (companyInfoId, companyId)
 );
 
 create table Contact_ (
@@ -1501,13 +1502,12 @@ create table UserTrackerPath (
 
 create table VirtualHost (
 	mvccVersion LONG default 0 not null,
-	virtualHostId LONG not null,
+	virtualHostId LONG not null primary key,
 	companyId LONG not null,
 	layoutSetId LONG,
 	hostname VARCHAR(200) null,
 	defaultVirtualHost BOOLEAN,
-	languageId VARCHAR(75) null,
-	primary key (virtualHostId, companyId)
+	languageId VARCHAR(75) null
 );
 
 create table WebDAVProps (

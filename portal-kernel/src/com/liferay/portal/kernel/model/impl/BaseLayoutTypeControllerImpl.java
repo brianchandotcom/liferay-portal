@@ -34,7 +34,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Athanasius (7.3.x), 
+ *             com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl}
  */
+@Deprecated
 public abstract class BaseLayoutTypeControllerImpl
 	implements LayoutTypeController {
 

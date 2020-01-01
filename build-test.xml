@@ -5887,6 +5887,24 @@ go</echo>
 		</if>
 	</target>
 
+	<target name="deploy-fragments-zip">
+		<get-testcase-property property.name="fragments.zip" />
+
+		<if>
+			<isset property="fragments.zip" />
+			<then>
+				<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
+
+				<echo>Copying ${liferay.dependency.dir}/${fragments.zip} to ${liferay.home}/deploy.</echo>
+
+				<copy
+					file="${liferay.dependency.dir}/${fragments.zip}"
+					todir="${liferay.home}/deploy"
+				/>
+			</then>
+		</if>
+	</target>
+
 	<target name="deploy-latest-marketplace-apps">
 		<get-testcase-property property.name="deploy.latest.marketplace.app.disabled" />
 

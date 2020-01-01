@@ -1,0 +1,12 @@
+definition {
+
+	@description = "Deploy the fragments zip into Liferay Portal"
+	macro deployZipOnLiferayPortal {
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-fragments-zip -Dfragments.zip=${fragmentsZip}");
+
+		Pause(locator1 = "10000");
+	}
+
+}

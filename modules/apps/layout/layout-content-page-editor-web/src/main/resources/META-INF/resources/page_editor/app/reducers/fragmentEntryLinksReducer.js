@@ -15,180 +15,141 @@
 import {TYPES} from '../actions/index';
 
 export default function fragmentEntryLinksReducer(state, action) {
-	let nextState = state;
-
 	switch (action.type) {
 		case TYPES.ADD_FRAGMENT_ENTRY_LINK:
-			nextState = {
-				...nextState,
-				fragmentEntryLinks: {
-					...nextState.fragmentEntryLinks,
-					[action.fragmentEntryLink.fragmentEntryLinkId]:
-						action.fragmentEntryLink
+			return {
+				...state,
+				[action.fragmentEntryLink.fragmentEntryLinkId]:
+					action.fragmentEntryLink
+			};
+
+		case TYPES.ADD_FRAGMENT_ENTRY_LINK_COMMENT: {
+			const fragmentEntryLink = state[action.fragmentEntryLinkId];
+
+			const {comments = []} = fragmentEntryLink;
+
+			let nextComments;
+
+			if (action.parentCommentId) {
+				nextComments = comments.map(comment =>
+					comment.commentId === action.parentCommentId
+						? {
+								...comment,
+								children: [
+									...(comment.children || []),
+									action.fragmentEntryLinkComment
+								]
+						  }
+						: comment
+				);
+			} else {
+				nextComments = [...comments, action.fragmentEntryLinkComment];
+			}
+
+			return {
+				...state,
+				[action.fragmentEntryLinkId]: {
+					...fragmentEntryLink,
+					comments: nextComments
 				}
 			};
-			break;
-		case TYPES.ADD_FRAGMENT_ENTRY_LINK_COMMENT:
-			{
-				const fragmentEntryLink =
-					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
+		}
 
-				const {comments = []} = fragmentEntryLink;
+		case TYPES.DELETE_FRAGMENT_ENTRY_LINK_COMMENT: {
+			const fragmentEntryLink = state[action.fragmentEntryLinkId];
 
-				let nextComments;
+			const {comments = []} = fragmentEntryLink;
 
-				if (action.parentCommentId) {
-					nextComments = comments.map(comment =>
-						comment.commentId === action.parentCommentId
-							? {
-									...comment,
-									children: [
-										...(comment.children || []),
-										action.fragmentEntryLinkComment
-									]
-							  }
-							: comment
-					);
-				} else {
-					nextComments = [
-						...comments,
-						action.fragmentEntryLinkComment
-					];
-				}
+			let nextComments;
 
-				nextState = {
-					...nextState,
-					fragmentEntryLinks: {
-						...nextState.fragmentEntryLinks,
-						[action.fragmentEntryLinkId]: {
-							...fragmentEntryLink,
-							comments: nextComments
-						}
-					}
-				};
+			if (action.parentCommentId) {
+				nextComments = comments.map(comment =>
+					comment.commentId === action.parentCommentId
+						? {
+								...comment,
+								children: comment.children.filter(
+									childComment =>
+										childComment.commentId !==
+										action.commentId
+								)
+						  }
+						: comment
+				);
+			} else {
+				nextComments = comments.filter(
+					comment => comment.commentId !== action.commentId
+				);
 			}
-			break;
-		case TYPES.DELETE_FRAGMENT_ENTRY_LINK_COMMENT:
-			{
-				const fragmentEntryLink =
-					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
 
-				const {comments = []} = fragmentEntryLink;
-
-				let nextComments;
-
-				if (action.parentCommentId) {
-					nextComments = comments.map(comment =>
-						comment.commentId === action.parentCommentId
-							? {
-									...comment,
-									children: comment.children.filter(
-										childComment =>
-											childComment.commentId !==
-											action.commentId
-									)
-							  }
-							: comment
-					);
-				} else {
-					nextComments = comments.filter(
-						comment => comment.commentId !== action.commentId
-					);
+			return {
+				...state,
+				[action.fragmentEntryLinkId]: {
+					...fragmentEntryLink,
+					comments: nextComments
 				}
+			};
+		}
 
-				nextState = {
-					...nextState,
-					fragmentEntryLinks: {
-						...nextState.fragmentEntryLinks,
-						[action.fragmentEntryLinkId]: {
-							...fragmentEntryLink,
-							comments: nextComments
-						}
-					}
-				};
+		case TYPES.EDIT_FRAGMENT_ENTRY_LINK_COMMENT: {
+			const fragmentEntryLink = state[action.fragmentEntryLinkId];
+
+			const {comments = []} = fragmentEntryLink;
+
+			let nextComments;
+
+			if (action.parentCommentId) {
+				nextComments = comments.map(comment =>
+					comment.commentId === action.parentCommentId
+						? {
+								...comment,
+								children: comment.children.map(childComment =>
+									childComment.commentId ===
+									action.fragmentEntryLinkComment.commentId
+										? action.fragmentEntryLinkComment
+										: childComment
+								)
+						  }
+						: comment
+				);
+			} else {
+				nextComments = comments.map(comment =>
+					comment.commentId ===
+					action.fragmentEntryLinkComment.commentId
+						? {...comment, ...action.fragmentEntryLinkComment}
+						: comment
+				);
 			}
-			break;
-		case TYPES.EDIT_FRAGMENT_ENTRY_LINK_COMMENT:
-			{
-				const fragmentEntryLink =
-					nextState.fragmentEntryLinks[action.fragmentEntryLinkId];
 
-				const {comments = []} = fragmentEntryLink;
-
-				let nextComments;
-
-				if (action.parentCommentId) {
-					nextComments = comments.map(comment =>
-						comment.commentId === action.parentCommentId
-							? {
-									...comment,
-									children: comment.children.map(
-										childComment =>
-											childComment.commentId ===
-											action.fragmentEntryLinkComment
-												.commentId
-												? action.fragmentEntryLinkComment
-												: childComment
-									)
-							  }
-							: comment
-					);
-				} else {
-					nextComments = comments.map(comment =>
-						comment.commentId ===
-						action.fragmentEntryLinkComment.commentId
-							? {...comment, ...action.fragmentEntryLinkComment}
-							: comment
-					);
+			return {
+				...state,
+				[action.fragmentEntryLinkId]: {
+					...fragmentEntryLink,
+					comments: nextComments
 				}
+			};
+		}
 
-				nextState = {
-					...nextState,
-					fragmentEntryLinks: {
-						...nextState.fragmentEntryLinks,
-						[action.fragmentEntryLinkId]: {
-							...fragmentEntryLink,
-							comments: nextComments
-						}
-					}
-				};
-			}
-			break;
 		case TYPES.UPDATE_EDITABLE_VALUES:
-			{
-				nextState = {
-					...nextState,
-					fragmentEntryLinks: {
-						...nextState.fragmentEntryLinks,
-						[action.fragmentEntryLinkId]: {
-							...nextState.fragmentEntryLinks[
-								action.fragmentEntryLinkId
-							],
-							editableValues: action.editableValues
-						}
-					}
-				};
-			}
-			break;
+			return {
+				...state,
+				[action.fragmentEntryLinkId]: {
+					...state.fragmentEntryLinks[action.fragmentEntryLinkId],
+					editableValues: action.editableValues
+				}
+			};
+
 		case TYPES.UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
-			{
-				nextState = {
-					...nextState,
-					fragmentEntryLinks: {
-						...nextState.fragmentEntryLinks,
-						[action.fragmentEntryLinkId]: {
-							...nextState.fragmentEntryLinks[
-								action.fragmentEntryLinkId
-							],
-							content: action.content
-						}
-					}
-				};
-			}
-			break;
+			return {
+				...state,
+				[action.fragmentEntryLinkId]: {
+					...state.fragmentEntryLinks[action.fragmentEntryLinkId],
+					content: action.content
+				}
+			};
+
 		default:
 			break;
 	}
 
-	return nextState;
+	return state;
 }

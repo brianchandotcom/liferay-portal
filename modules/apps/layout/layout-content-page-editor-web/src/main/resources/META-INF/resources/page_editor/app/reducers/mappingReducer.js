@@ -14,38 +14,22 @@
 
 import {TYPES} from '../actions/index';
 
-function addMappedInfoItem(items, action) {
-	const {className, classNameId, classPK, title} = action;
-
-	return [
-		...items,
-		{
-			className,
-			classNameId,
-			classPK,
-			title
-		}
-	];
-}
-
 export default function mappingReducer(state, action) {
-	let nextState = state;
-
 	switch (action.type) {
 		case TYPES.ADD_MAPPED_INFO_ITEM:
-			nextState = {
+			return [
 				...state,
-				mappedInfoItems: addMappedInfoItem(
-					state.mappedInfoItems,
-					action
-				)
-			};
-
-			break;
+				{
+					className: action.className,
+					classNameId: action.classNameId,
+					classPK: action.classPK,
+					title: action.title
+				}
+			];
 
 		default:
 			break;
 	}
 
-	return nextState;
+	return state;
 }

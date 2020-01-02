@@ -24,6 +24,17 @@ import sidebarReducer from './sidebarReducer';
 
 export const DispatchContext = React.createContext(() => {});
 
+function combineReducers(reducersObject) {
+	return (state, action) =>
+		Object.entries(reducersObject).reduce(
+			(nextState, [namespace, reducer]) => ({
+				...nextState,
+				[namespace]: reducer(nextState[namespace], action)
+			}),
+			state
+		);
+}
+
 /**
  * Runs the base reducer plus any dynamically loaded reducers that have
  * been registered from plugins.
@@ -31,12 +42,14 @@ export const DispatchContext = React.createContext(() => {});
 export function reducer(state, action) {
 	return [
 		baseReducer,
-		fragmentEntryLinksReducer,
-		languageReducer,
-		layoutDataReducer,
-		mappingReducer,
-		resolvedCommentsReducer,
 		sidebarReducer,
+		combineReducers({
+			fragmentEntryLinks: fragmentEntryLinksReducer,
+			languageId: languageReducer,
+			layoutData: layoutDataReducer,
+			mappedInfoItems: mappingReducer,
+			showResolvedComments: resolvedCommentsReducer
+		}),
 		...Object.values(state.reducers)
 	].reduce((nextState, nextReducer) => {
 		return nextReducer(nextState, action);

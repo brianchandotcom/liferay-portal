@@ -12,13 +12,11 @@
  * details.
  */
 
-import {UNLOAD_REDUCER as type} from './types';
-
-const ACTION = {type};
+import {UNLOAD_REDUCER} from './types';
 
 export default function unloadReducer(key) {
 	return {
-		...ACTION,
-		key
+		key,
+		type: UNLOAD_REDUCER
 	};
 }

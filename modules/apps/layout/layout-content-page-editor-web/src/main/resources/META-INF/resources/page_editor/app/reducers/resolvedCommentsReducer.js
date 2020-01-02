@@ -12,39 +12,16 @@
  * details.
  */
 
-import {TYPES} from '../actions/index';
+import * as TYPES from '../actions/types';
 
 export default function resolvedCommentsReducer(state, action) {
-	let nextState = state;
-
 	switch (action.type) {
-		case TYPES.EDIT_FRAGMENT_ENTRY_LINK_COMMENT:
-		case TYPES.DELETE_FRAGMENT_ENTRY_LINK_COMMENT:
-			{
-				const hasResolvedComments = Object.values(
-					nextState.fragmentEntryLinks
-				).some(fragmentEntryLink =>
-					fragmentEntryLink.comments.some(comment => comment.resolved)
-				);
-
-				if (!hasResolvedComments) {
-					nextState = {
-						...nextState,
-						showResolvedComments: false
-					};
-				}
-			}
-			break;
 		case TYPES.TOGGLE_SHOW_RESOLVED_COMMENTS:
-			nextState = {
-				...nextState,
-				showResolvedComments: action.showResolvedComments
-			};
-			break;
+			return action.showResolvedComments;
 
 		default:
 			break;
 	}
 
-	return nextState;
+	return state;
 }

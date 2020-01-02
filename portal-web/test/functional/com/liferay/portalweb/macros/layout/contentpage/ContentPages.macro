@@ -49,6 +49,12 @@ definition {
 				vocabularyName = "${vocabularyName}");
 		}
 
+		if (isSet(categoryNameList)) {
+			AssetCategorization.addMultipleCategories(
+				categoryNameList = "${categoryNameList}",
+				vocabularyName = "${vocabularyName}");
+		}
+
 		Button.clickAdd();
 
 		SelectFrame.selectFrameTop();

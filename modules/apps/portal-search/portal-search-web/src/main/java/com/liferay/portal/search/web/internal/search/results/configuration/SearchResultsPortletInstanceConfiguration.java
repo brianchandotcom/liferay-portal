@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Kevin Tan
  */
-@ExtendedObjectClassDefinition(category = "search")
+@ExtendedObjectClassDefinition(
+	category = "search",
+	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
+)
 @Meta.OCD(
 	id = "com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsPortletInstanceConfiguration",
 	localization = "content/Language",

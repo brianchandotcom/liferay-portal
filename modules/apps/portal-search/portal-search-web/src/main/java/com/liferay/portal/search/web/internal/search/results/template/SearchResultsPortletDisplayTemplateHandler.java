@@ -25,7 +25,9 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 import com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsWebTemplateConfiguration;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletDisplayContext;
+import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -40,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Kevin Tan
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.web.internal.configuration.SearchResultsWebTemplateConfiguration",
+	configurationPid = "com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsWebTemplateConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = "javax.portlet.name=" + SearchResultsPortletKeys.SEARCH_RESULTS,
 	service = TemplateHandler.class
@@ -89,9 +91,25 @@ public class SearchResultsPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"search-result-display-context",
+			"search-results-display-context",
 			SearchResultsPortletDisplayContext.class,
 			"searchResultsPortletDisplayContext");
+		templateVariableGroup.addCollectionVariable(
+			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
+			"document", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
+		templateVariableGroup.addVariable(
+			"document-entry", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
+		templateVariableGroup.addVariable(
+			"creation-date-entry", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getCreationDateString()");
+		templateVariableGroup.addVariable(
+			"creator-username-entry", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getCreatorUserName()");
+		templateVariableGroup.addVariable(
+			"content-entry", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY, "getContent()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

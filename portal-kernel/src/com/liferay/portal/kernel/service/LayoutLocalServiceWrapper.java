@@ -1573,26 +1573,6 @@ public class LayoutLocalServiceWrapper
 	}
 
 	/**
-	 * Updates the layout replacing its master layout plid.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param layoutId the layout ID of the layout
-	 * @param masterLayoutPlid the primary key of the master layout
-	 * @return the updated layout
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public Layout updateLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			long masterLayoutPlid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutLocalService.updateLayout(
-			groupId, privateLayout, layoutId, masterLayoutPlid);
-	}
-
-	/**
 	 * Updates the layout replacing its entity class name ID and primary key.
 	 *
 	 * @param groupId the primary key of the group
@@ -1778,6 +1758,26 @@ public class LayoutLocalServiceWrapper
 
 		return _layoutLocalService.updateLookAndFeel(
 			groupId, privateLayout, layoutId, themeId, colorSchemeId, css);
+	}
+
+	/**
+	 * Updates the layout replacing its master layout plid.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param masterLayoutPlid the primary key of the master layout
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout updateMasterLayoutPlid(
+			long groupId, boolean privateLayout, long layoutId,
+			long masterLayoutPlid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.updateMasterLayoutPlid(
+			groupId, privateLayout, layoutId, masterLayoutPlid);
 	}
 
 	/**

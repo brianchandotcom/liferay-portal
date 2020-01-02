@@ -1230,21 +1230,6 @@ public interface LayoutLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the layout replacing its master layout plid.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param layoutId the layout ID of the layout
-	 * @param masterLayoutPlid the primary key of the master layout
-	 * @return the updated layout
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public Layout updateLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			long masterLayoutPlid)
-		throws PortalException;
-
-	/**
 	 * Updates the layout replacing its entity class name ID and primary key.
 	 *
 	 * @param groupId the primary key of the group
@@ -1392,6 +1377,21 @@ public interface LayoutLocalService
 	public Layout updateLookAndFeel(
 			long groupId, boolean privateLayout, long layoutId, String themeId,
 			String colorSchemeId, String css)
+		throws PortalException;
+
+	/**
+	 * Updates the layout replacing its master layout plid.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param masterLayoutPlid the primary key of the master layout
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public Layout updateMasterLayoutPlid(
+			long groupId, boolean privateLayout, long layoutId,
+			long masterLayoutPlid)
 		throws PortalException;
 
 	/**

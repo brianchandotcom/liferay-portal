@@ -68,7 +68,7 @@
 		</check>
 		<check name="CSSImportsCheck" />
 		<check name="CSSPropertiesOrderCheck" />
-		<check name="CSSWhitespaceCheck">
+		<check name="WhitespaceCheck">
 			<property name="enabled" value="false" />
 		</check>
 	</source-processor>

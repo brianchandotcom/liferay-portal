@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.oauth.OAuthException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Digester;
@@ -75,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Beslic
  */
 @Component(immediate = true, service = OAuth.class)
-public class V10aOAuth implements OAuth {
+public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 	@Override
 	public String addParameters(String url, String... parameters)
@@ -278,6 +280,11 @@ public class V10aOAuth implements OAuth {
 	}
 
 	@Override
+	public String getOSGiServiceIdentifier() {
+		return V10aOAuth.class.getName();
+	}
+
+	@Override
 	public void handleException(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Exception exception,
@@ -350,17 +357,26 @@ public class V10aOAuth implements OAuth {
 	}
 
 	@SuppressWarnings("unused")
-	private static void _put(String key, byte[] bytes) {
+	private static void _put(
+		String osgiServiceIdentifier, String key, byte[] bytes) {
+
 		OAuthAccessor oAuthAccessor = deserialize(bytes);
 
-		_portalCache.put(key, oAuthAccessor);
+		V10aOAuth v10aOAuth =
+			(V10aOAuth)IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+				osgiServiceIdentifier);
+
+		PortalCache portalCache = v10aOAuth._portalCache;
+
+		portalCache.put(key, oAuthAccessor);
 	}
 
 	private void _notifyCluster(String key, OAuthAccessor oAuthAccessor)
 		throws Exception {
 
 		MethodHandler putMethodHandler = new MethodHandler(
-			_putMethodKey, key, serialize(oAuthAccessor));
+			_putMethodKey, getOSGiServiceIdentifier(), key,
+			serialize(oAuthAccessor));
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			putMethodHandler, true);
@@ -391,7 +407,7 @@ public class V10aOAuth implements OAuth {
 	private static final Log _log = LogFactoryUtil.getLog(V10aOAuth.class);
 
 	private static final MethodKey _putMethodKey = new MethodKey(
-		V10aOAuth.class, "_put", String.class, byte[].class);
+		V10aOAuth.class, "_put", String.class, String.class, byte[].class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

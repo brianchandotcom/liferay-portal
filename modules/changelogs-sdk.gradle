@@ -68,7 +68,7 @@ buildChangelogs {
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				matcher = gitLogLine =~ /([a-f0-9]+):(.+):([A-Z]+-\d+)(.*)/
+				matcher = gitLogLine =~ /([a-f0-9]+):(.+):[^A-Z]*([A-Z]+-\d+)(.*)/
 
 				if (matcher.find()) {
 					publishDate = matcher.group(2)

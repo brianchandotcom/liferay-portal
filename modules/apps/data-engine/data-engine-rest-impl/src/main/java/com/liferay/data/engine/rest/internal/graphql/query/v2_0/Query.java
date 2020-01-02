@@ -379,11 +379,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataLayoutDataModelPermissions(dataLayoutId: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataModelPermissions(roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public DataModelPermissionPage dataLayoutDataModelPermissions(
-			@GraphQLName("dataLayoutId") Long dataLayoutId,
+	public DataModelPermissionPage dataModelPermissions(
 			@GraphQLName("roleNames") String roleNames)
 		throws Exception {
 
@@ -391,9 +390,8 @@ public class Query {
 			_dataModelPermissionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataModelPermissionResource -> new DataModelPermissionPage(
-				dataModelPermissionResource.
-					getDataLayoutDataModelPermissionsPage(
-						dataLayoutId, roleNames)));
+				dataModelPermissionResource.getDataModelPermissionsPage(
+					roleNames)));
 	}
 
 	/**
@@ -802,33 +800,6 @@ public class Query {
 		}
 
 		private DataRecordCollection _dataRecordCollection;
-
-	}
-
-	@GraphQLTypeExtension(DataLayout.class)
-	public class GetDataLayoutDataModelPermissionsPageTypeExtension {
-
-		public GetDataLayoutDataModelPermissionsPageTypeExtension(
-			DataLayout dataLayout) {
-
-			_dataLayout = dataLayout;
-		}
-
-		@GraphQLField
-		public DataModelPermissionPage dataModelPermissions(
-				@GraphQLName("roleNames") String roleNames)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_dataModelPermissionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				dataModelPermissionResource -> new DataModelPermissionPage(
-					dataModelPermissionResource.
-						getDataLayoutDataModelPermissionsPage(
-							_dataLayout.getId(), roleNames)));
-		}
-
-		private DataLayout _dataLayout;
 
 	}
 

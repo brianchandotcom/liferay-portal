@@ -58,22 +58,20 @@ public interface DataModelPermissionResource {
 				DataModelPermission[] dataModelPermissions)
 		throws Exception;
 
-	public Page<DataModelPermission> getDataLayoutDataModelPermissionsPage(
-			Long dataLayoutId, String roleNames)
+	public Page<DataModelPermission> getDataModelPermissionsPage(
+			String roleNames)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getDataLayoutDataModelPermissionsPageHttpResponse(
-				Long dataLayoutId, String roleNames)
+	public HttpInvoker.HttpResponse getDataModelPermissionsPageHttpResponse(
+			String roleNames)
 		throws Exception;
 
-	public void putDataLayoutDataModelPermission(
-			Long dataLayoutId, DataModelPermission[] dataModelPermissions)
+	public void putDataModelPermission(
+			DataModelPermission[] dataModelPermissions)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			putDataLayoutDataModelPermissionHttpResponse(
-				Long dataLayoutId, DataModelPermission[] dataModelPermissions)
+	public HttpInvoker.HttpResponse putDataModelPermissionHttpResponse(
+			DataModelPermission[] dataModelPermissions)
 		throws Exception;
 
 	public Page<DataModelPermission>
@@ -291,13 +289,12 @@ public interface DataModelPermissionResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<DataModelPermission> getDataLayoutDataModelPermissionsPage(
-				Long dataLayoutId, String roleNames)
+		public Page<DataModelPermission> getDataModelPermissionsPage(
+				String roleNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDataLayoutDataModelPermissionsPageHttpResponse(
-					dataLayoutId, roleNames);
+				getDataModelPermissionsPageHttpResponse(roleNames);
 
 			String content = httpResponse.getContent();
 
@@ -310,9 +307,8 @@ public interface DataModelPermissionResource {
 			return Page.of(content, DataModelPermissionSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse
-				getDataLayoutDataModelPermissionsPageHttpResponse(
-					Long dataLayoutId, String roleNames)
+		public HttpInvoker.HttpResponse getDataModelPermissionsPageHttpResponse(
+				String roleNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -343,8 +339,7 @@ public interface DataModelPermissionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-layouts/{dataLayoutId}/data-model-permissions",
-				dataLayoutId);
+						"/o/data-engine/v2.0/data-model-permissions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -352,13 +347,12 @@ public interface DataModelPermissionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putDataLayoutDataModelPermission(
-				Long dataLayoutId, DataModelPermission[] dataModelPermissions)
+		public void putDataModelPermission(
+				DataModelPermission[] dataModelPermissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putDataLayoutDataModelPermissionHttpResponse(
-					dataLayoutId, dataModelPermissions);
+				putDataModelPermissionHttpResponse(dataModelPermissions);
 
 			String content = httpResponse.getContent();
 
@@ -369,10 +363,8 @@ public interface DataModelPermissionResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		public HttpInvoker.HttpResponse
-				putDataLayoutDataModelPermissionHttpResponse(
-					Long dataLayoutId,
-					DataModelPermission[] dataModelPermissions)
+		public HttpInvoker.HttpResponse putDataModelPermissionHttpResponse(
+				DataModelPermission[] dataModelPermissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -409,8 +401,7 @@ public interface DataModelPermissionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-layouts/{dataLayoutId}/data-model-permissions",
-				dataLayoutId);
+						"/o/data-engine/v2.0/data-model-permissions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -106,22 +106,17 @@ public abstract class BaseDataModelPermissionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}/data-model-permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-model-permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "dataLayoutId"),
-			@Parameter(in = ParameterIn.QUERY, name = "roleNames")
-		}
+		value = {@Parameter(in = ParameterIn.QUERY, name = "roleNames")}
 	)
-	@Path("/data-layouts/{dataLayoutId}/data-model-permissions")
+	@Path("/data-model-permissions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataModelPermission")})
-	public Page<DataModelPermission> getDataLayoutDataModelPermissionsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
-				dataLayoutId,
+	public Page<DataModelPermission> getDataModelPermissionsPage(
 			@NotNull @Parameter(hidden = true) @QueryParam("roleNames") String
 				roleNames)
 		throws Exception {
@@ -132,20 +127,15 @@ public abstract class BaseDataModelPermissionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}/data-model-permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-model-permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@PUT
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
-	)
-	@Path("/data-layouts/{dataLayoutId}/data-model-permissions")
+	@Path("/data-model-permissions")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataModelPermission")})
-	public void putDataLayoutDataModelPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
-				dataLayoutId,
+	public void putDataModelPermission(
 			DataModelPermission[] dataModelPermissions)
 		throws Exception {
 	}

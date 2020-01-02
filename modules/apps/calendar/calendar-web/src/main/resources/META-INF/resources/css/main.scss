@@ -12,10 +12,6 @@
 	}
 }
 
-.open .scheduler-base-views button {
-	font-size: 14px;
-}
-
 .calendar-booking-reminders .calendar-portlet-reminder-section {
 	.reminder-duration {
 		margin-bottom: 7px;
@@ -433,10 +429,7 @@
 }
 
 .scheduler-base-controls {
-	&,
-	.scheduler-base-views {
-		width: 50%;
-	}
+	width: 50%;
 
 	.btn-group {
 		button {
@@ -458,15 +451,27 @@
 }
 
 .scheduler-base-hd .scheduler-base-views {
-	button {
-		border-right: 1px;
-		margin-left: 0 !important;
-	}
+	align-items: start;
 
-	button:last-of-type {
-		border-bottom-right-radius: 4px !important;
-		border-right: solid 1px #cdced9;
-		border-top-right-radius: 4px !important;
+	button {
+		border-color: #cdced9;
+		border-right: 1px;
+		color: #6b6c7e;
+		margin-left: 0 !important;
+
+		&:hover,
+		&:focus,
+		&:hover,
+		&.active {
+			background-color: #f1f2f5;
+			color: inherit;
+		}
+
+		&.btn:last-of-type {
+			border-bottom-right-radius: 4px;
+			border-right: solid 1px #cdced9;
+			border-top-right-radius: 4px;
+		}
 	}
 }
 
@@ -987,9 +992,7 @@
 
 @media (max-width: 1279px) and (min-width: 767px) {
 	.scheduler-base-views {
-		flex: 0 0 100%;
 		margin-bottom: 20px;
 		margin-top: 20px;
-		max-width: 100%;
 	}
 }

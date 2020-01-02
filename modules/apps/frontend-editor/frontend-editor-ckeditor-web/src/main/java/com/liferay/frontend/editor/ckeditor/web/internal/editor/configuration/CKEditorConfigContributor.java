@@ -100,6 +100,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		).put(
 			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
 		).put(
+			"title", false
+		).put(
 			"toolbar_editInPlace",
 			getToolbarEditInPlaceJSONArray(inputEditorTaglibAttributes)
 		).put(

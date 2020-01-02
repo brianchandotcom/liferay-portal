@@ -59,9 +59,6 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 					line = matcher.replaceAll("$1\t$3");
 				}
 
-				line = StringUtil.replace(
-					line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
-
 				if (line.startsWith(" \t")) {
 					line = line.replaceFirst(" \t", "\t");
 				}

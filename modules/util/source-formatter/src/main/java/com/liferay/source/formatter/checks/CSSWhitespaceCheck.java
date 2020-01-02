@@ -14,9 +14,6 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.IOException;
 
 /**
@@ -29,10 +26,7 @@ public class CSSWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = super.doProcess(fileName, absolutePath, content);
-
-		return StringUtil.replace(
-			content, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+		return super.doProcess(fileName, absolutePath, content);
 	}
 
 }

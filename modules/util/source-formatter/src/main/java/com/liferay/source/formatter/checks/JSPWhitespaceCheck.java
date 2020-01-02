@@ -228,18 +228,6 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 						trimmedLine, CharPool.TAB, StringPool.SPACE);
 				}
 
-				while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
-					   !trimmedLine.contains(
-						   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&
-					   !fileName.endsWith(".vm")) {
-
-					line = StringUtil.replaceLast(
-						line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
-
-					trimmedLine = StringUtil.replaceLast(
-						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE);
-				}
-
 				line = formatSelfClosingTags(line);
 
 				sb.append(line);

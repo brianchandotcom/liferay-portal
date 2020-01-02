@@ -202,23 +202,6 @@ public class WhitespaceCheck extends BaseFileCheck {
 				linePart, "for \\([^:]*:([^:\"'\\s])");
 		}
 
-		if (!linePart.startsWith("##")) {
-			for (int x = 0;;) {
-				x = linePart.indexOf(StringPool.DOUBLE_SPACE, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				if (ToolsUtil.isInsideQuotes(linePart, x)) {
-					continue;
-				}
-
-				linePart = StringUtil.replaceFirst(
-					linePart, StringPool.DOUBLE_SPACE, StringPool.SPACE, x);
-			}
-		}
-
 		if (!javaSource) {
 			line = StringUtil.replace(line, originalLinePart, linePart);
 

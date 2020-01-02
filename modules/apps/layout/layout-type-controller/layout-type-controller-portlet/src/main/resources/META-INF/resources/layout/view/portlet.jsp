@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portal/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 if (themeDisplay.isStatePopUp() || themeDisplay.isWidget() || layoutTypePortlet.hasStateMax()) {

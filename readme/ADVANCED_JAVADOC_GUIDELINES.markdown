@@ -394,7 +394,7 @@ Bad example:
 /**
  * Returns the name of the role.
  *
- * @param roleId the primary key of the role **whose name to get**
+ * @param  roleId the primary key of the role **whose name to get**
  * @return the name of the role
  */
 String getRoleName(long roleId)
@@ -406,7 +406,7 @@ Good example:
 /**
  * Returns the name of the role.
  *
- * @param roleId the primary key of the role
+ * @param  roleId the primary key of the role
  * @return the name of the role
  */
 String getRoleName(long roleId)
@@ -416,9 +416,11 @@ Sometimes, a parameter description may require more than one phrase. Any
 additional content following the initial parameter phrase description must be
 written in complete sentences, followed by a period. For example:
 
-```
-@param  trusted whether to bypass permission checks. In third-party
-        repositories, this parameter may be ignored.
+```java
+/**
+ * @param trusted whether to bypass permission checks. In third-party
+ *        repositories, this parameter may be ignored.
+ */
 ```
 
 To show possession, use an apostrophe rather that ending a sentence with a
@@ -427,11 +429,11 @@ write "the primary key of the user", not "the user's primary key". Example:
 
 ```java
 /**
- * @param  creatorUserId the primary key of the user's creator
- * @param  companyId the primary key of the user's company
- * @param  name the user's name
+ * @param creatorUserId the primary key of the user's creator
+ * @param companyId the primary key of the user's company
+ * @param name the user's name
 ...
- * @param  groupIds the primary keys of the user's groups
+ * @param groupIds the primary keys of the user's groups
  */
 public User addUser(long creatorUserId, long companyId, name, ... , long[] groupIds, ...)
 ```

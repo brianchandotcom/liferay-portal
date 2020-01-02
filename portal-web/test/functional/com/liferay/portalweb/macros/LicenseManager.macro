@@ -1,0 +1,32 @@
+definition {
+
+	macro viewDefaultCP {
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "License Manager");
+
+		AssertElementPresent(locator1 = "LicenseManager#LICENSE_IFRAME");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "LicenseManager#LICENSE_IFRAME");
+
+		AssertElementPresent(locator1 = "LicenseManager#LICENSE_FORM");
+
+		for (var tableText : list "${tableTexts}") {
+			AssertTextEquals(
+				key_tableText = "${tableText}",
+				locator1 = "LicenseManager#LICENSE_TABLE_TEXT",
+				value1 = "${tableText}");
+		}
+
+		AssertTextEquals(
+			locator1 = "LicenseManager#LICENSE_FORM_H3",
+			value1 = "Register Your Application");
+
+		AssertElementPresent(locator1 = "LicenseManager#LICENSE_ORDER_ID_INPUT");
+
+		AssertElementPresent(locator1 = "LicenseManager#LICENSE_QUERY");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
+}

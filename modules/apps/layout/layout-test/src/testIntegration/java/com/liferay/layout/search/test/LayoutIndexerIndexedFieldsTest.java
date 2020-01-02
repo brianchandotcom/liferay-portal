@@ -169,6 +169,8 @@ public class LayoutIndexerIndexedFieldsTest {
 		).put(
 			Field.STAGING_GROUP, "false"
 		).put(
+			Field.STATUS, String.valueOf(layout.getStatus())
+		).put(
 			Field.TYPE, layout.getType()
 		).put(
 			Field.USER_ID, String.valueOf(layout.getUserId())

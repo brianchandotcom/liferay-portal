@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_DUPLICATE</td>
+	<td>//*[@data-qa-id='headerTitle'][2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_PLUS_SIGN</td>
 	<td>//header[div/span[.='${key_portletName}']]//*[@data-qa-id='addButton']//a/span</td>
 	<td></td>

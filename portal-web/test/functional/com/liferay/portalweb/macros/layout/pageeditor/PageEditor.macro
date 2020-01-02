@@ -791,7 +791,8 @@ definition {
 		if (isSet(depotName)) {
 			ItemSelector.selectRepositoryImage(
 				depotName = "${depotName}",
-				imageFileName = "${imageFileName}");
+				imageFileName = "${imageFileName}",
+				navTab = "Documents and Media");
 		}
 
 		else {

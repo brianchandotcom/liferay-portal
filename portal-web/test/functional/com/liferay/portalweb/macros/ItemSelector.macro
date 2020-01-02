@@ -32,6 +32,27 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro changeWorkspaces {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		if (isSet(navTab)) {
+			AssertClick(
+				key_navTab = "${navTab}",
+				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+				value1 = "${navTab}");
+		}
+
+		AssertClick(
+			key_breadcrumbName = "Workspaces",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+			value1 = "Workspaces");
+
+		AssertClick(
+			key_groupTab = "${workspacesType}",
+			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+			value1 = "${workspacesType}");
+	}
+
 	macro gotoItemSelectorViaAlloyEditor {
 		AlloyEditor.clickContentField();
 
@@ -182,26 +203,17 @@ definition {
 	}
 
 	macro selectRepositoryImage {
-		var key_navTab = "Documents and Media";
 		var key_imageFileName = "${imageFileName}";
 
-		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
-
-		AssertClick(
-			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "Documents and Media");
-
-		AssertClick(
-			key_breadcrumbName = "Workspaces",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "Workspaces");
-
-		AssertClick(
-			key_groupTab = "Repository",
-			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-			value1 = "Repository");
+		ItemSelector.changeWorkspaces(
+			navTab = "${navTab}",
+			workspacesType = "Repository");
 
 		LexiconCard.clickCard(card = "${depotName}");
+
+		if (isSet(folderName)) {
+			LexiconCard.clickCard(card = "${folderName}");
+		}
 
 		Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 	}

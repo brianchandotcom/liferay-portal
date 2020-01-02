@@ -487,38 +487,57 @@
 		},
 
 		focusFormField(el) {
-			var doc = $(document);
+			let interacting = false;
 
-			var interacting = false;
+			el = Util.getElement(el);
 
-			el = Util.getDOM(el);
-
-			el = $(el);
-
-			doc.on('click.focusFormField', () => {
+			const handler = () => {
 				interacting = true;
 
-				doc.off('click.focusFormField');
-			});
+				document.body.removeEventListener('click', handler);
+			};
+
+			document.body.addEventListener('click', handler);
 
 			if (!interacting && Util.inBrowserView(el)) {
-				var form = el.closest('form');
+				const getDisabledParents = function(el) {
+					let result = [];
 
-				var focusable =
-					!el.is(':disabled') &&
-					!el.is(':hidden') &&
-					!el.parents(':disabled').length;
+					if (el.parentElement) {
+						if (el.parentElement.getAttribute('disabled')) {
+							result = [el.parentElement];
+						}
 
-				if (!form.length || focusable) {
+						result = [
+							...result,
+							...getDisabledParents(el.parentElement)
+						];
+					}
+
+					return result;
+				};
+
+				const disabledParents = getDisabledParents(el);
+
+				const focusable =
+					!el.getAttribute('disabled') &&
+					el.offsetWidth > 0 &&
+					el.offsetHeight > 0 &&
+					!disabledParents.length;
+
+				const form = el.closest('form');
+
+				if (!form || focusable) {
 					el.focus();
-				} else {
-					var portletName = form.data('fm-namespace');
+				} else if (form) {
+					const portletName = form.getAttribute('data-fm-namespace');
 
-					var formReadyEventName = portletName + 'formReady';
+					const formReadyEventName = portletName + 'formReady';
 
-					var formReadyHandler = function(event) {
-						var elFormName = form.attr('name');
-						var formName = event.formName;
+					const formReadyHandler = event => {
+						const elFormName = form.getAttribute('name');
+
+						const formName = event.formName;
 
 						if (elFormName === formName) {
 							el.focus();

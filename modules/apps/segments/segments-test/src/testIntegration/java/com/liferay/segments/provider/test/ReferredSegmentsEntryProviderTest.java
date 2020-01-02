@@ -92,11 +92,11 @@ public class ReferredSegmentsEntryProviderTest {
 
 		Thread.sleep(2000);
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 				segmentsEntry3.getSegmentsEntryId());
 
-		Assert.assertEquals(0, segmentsEntryClassPksCount);
+		Assert.assertEquals(0, segmentsEntryClassPKsCount);
 	}
 
 	@Test
@@ -127,11 +127,11 @@ public class ReferredSegmentsEntryProviderTest {
 
 		Thread.sleep(2000);
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 				segmentsEntry3.getSegmentsEntryId());
 
-		Assert.assertEquals(2, segmentsEntryClassPksCount);
+		Assert.assertEquals(2, segmentsEntryClassPKsCount);
 
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
@@ -176,11 +176,11 @@ public class ReferredSegmentsEntryProviderTest {
 
 		Thread.sleep(2000);
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 				segmentsEntry3.getSegmentsEntryId());
 
-		Assert.assertEquals(1, segmentsEntryClassPksCount);
+		Assert.assertEquals(1, segmentsEntryClassPKsCount);
 
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
@@ -224,11 +224,11 @@ public class ReferredSegmentsEntryProviderTest {
 
 		Thread.sleep(2000);
 
-		int segmentsEntryClassPksCount =
+		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 				segmentsEntry3.getSegmentsEntryId());
 
-		Assert.assertEquals(2, segmentsEntryClassPksCount);
+		Assert.assertEquals(2, segmentsEntryClassPKsCount);
 
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(

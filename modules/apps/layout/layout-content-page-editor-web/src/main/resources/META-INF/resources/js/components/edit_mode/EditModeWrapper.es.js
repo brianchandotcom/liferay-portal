@@ -220,6 +220,26 @@ class EditModeWrapper extends Component {
 
 			if (
 				this.pageType === PAGE_TYPES.conversion &&
+				this.layoutConversionWarningMessages.length &&
+				!this._conversionWarningStripe
+			) {
+				this._conversionWarningStripe = new ClayAlertBase({
+					closeable: false,
+					message: this.layoutConversionWarningMessages.join('<br>'),
+					spritemap: this.spritemap,
+					style: 'warning',
+					title: '',
+					type: 'stripe'
+				});
+
+				this._conversionWarningStripe.attachElement(
+					wrapper,
+					wrapper.firstElementChild
+				);
+			}
+
+			if (
+				this.pageType === PAGE_TYPES.conversion &&
 				!this._warningStripe
 			) {
 				this._warningStripe = new ClayAlertBase({

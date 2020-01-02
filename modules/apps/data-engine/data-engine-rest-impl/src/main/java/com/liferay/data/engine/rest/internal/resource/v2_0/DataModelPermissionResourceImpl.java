@@ -17,6 +17,9 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
+import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
+import com.liferay.data.engine.rest.internal.constants.DataEngineConstants;
+import com.liferay.data.engine.rest.internal.constants.DataRecordCollectionConstants;
 import com.liferay.data.engine.rest.internal.resource.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataModelPermissionResource;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -39,7 +42,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -50,6 +52,8 @@ import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Jeyvison Nascimento
@@ -138,6 +142,37 @@ public class DataModelPermissionResourceImpl
 					_resourceActionLocalService.getResourceActions(
 						InternalDataRecordCollection.class.getName()),
 					InternalDataRecordCollection.class.getName(), role)));
+	}
+
+	@Override
+	public Page<DataModelPermission> getDataModelPermissionsPage(
+		String roleNames) throws Exception {
+
+		DataEnginePermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, _groupLocalService,
+			contextCompany.getGroupId());
+
+		return _getDataModelPermissionPage(contextCompany.getCompanyId(),
+			contextCompany.getGroupId(), DataEngineConstants.RESOURCE_NAME,
+			roleNames);
+
+	}
+
+	@Override
+	public void putDataModelPermission(
+			DataModelPermission[] dataModelPermissions)
+		throws Exception {
+
+		long siteGroupId =  PortalUtil.getSiteGroupId(contextCompany.getGroupId());
+
+		_resourcePermissionLocalService.updateResourcePermissions(
+			contextCompany.getCompanyId(), siteGroupId,
+			DataEngineConstants.RESOURCE_NAME,
+			String.valueOf(siteGroupId),
+			_getModelPermissions(
+				contextCompany.getCompanyId(), dataModelPermissions,
+				siteGroupId,
+				DataEngineConstants.RESOURCE_NAME));
 	}
 
 	@Override

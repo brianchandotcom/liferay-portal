@@ -262,6 +262,7 @@ const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
 	'activeItemId',
 	'activeItemType',
 	'fragmentEntryLinks',
+	'layoutConversionWarningMessages',
 	'pageType',
 	'selectedSidebarPanelId',
 	'sidebarPanels',

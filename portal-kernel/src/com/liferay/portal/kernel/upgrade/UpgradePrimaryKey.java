@@ -100,17 +100,6 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 		String normalizedTableName = dbInspector.normalizeName(
 			tableName, databaseMetaData);
 
-		try (ResultSet rs = databaseMetaData.getColumns(
-				dbInspector.getCatalog(), dbInspector.getSchema(),
-				normalizedTableName,
-				dbInspector.normalizeName(
-					_newPKColumnDefinition, databaseMetaData))) {
-
-			if (rs.next()) {
-				return;
-			}
-		}
-
 		List<String> primaryKeyColumnNames = new ArrayList<>();
 
 		try (ResultSet rs = databaseMetaData.getPrimaryKeys(

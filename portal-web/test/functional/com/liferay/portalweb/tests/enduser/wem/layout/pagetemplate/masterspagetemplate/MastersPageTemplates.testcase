@@ -137,7 +137,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(
-			basicTemplate = "Masters Template Page Name",
+			masterLayoutName = "Masters Template Page Name",
 			pageName = "Test Content Page Name");
 
 		AssertElementNotPresent(
@@ -171,7 +171,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(
-			basicTemplate = "Masters Template Page Name",
+			masterLayoutName = "Masters Template Page Name",
 			pageName = "Test Content Page Name");
 
 		PageEditor.gotoTab(tabName = "Look and Feel");

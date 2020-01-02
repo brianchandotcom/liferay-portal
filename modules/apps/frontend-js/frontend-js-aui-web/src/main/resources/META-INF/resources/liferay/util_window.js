@@ -510,6 +510,15 @@ AUI.add(
 
 				instance._setWindowDefaultSizeIfNeeded(modal);
 
+				// LPS-106470 resize modal mask
+
+				var mask = modal._getMaskNode();
+
+				if (mask.getStyle('position') === 'absolute') {
+					mask.setStyle('width', '100%');
+					mask.setStyle('height', '100%');
+				}
+
 				modal.align();
 
 				return modal;

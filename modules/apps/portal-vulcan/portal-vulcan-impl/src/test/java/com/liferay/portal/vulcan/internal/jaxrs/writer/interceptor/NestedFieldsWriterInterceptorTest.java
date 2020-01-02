@@ -353,6 +353,46 @@ public class NestedFieldsWriterInterceptorTest {
 	}
 
 	@Test
+	public void testGetNestedFieldsWithoutOverridingMethod()
+		throws IOException {
+
+		Product product = _toProduct(1L, "externalCode");
+
+		Mockito.when(
+			_writerInterceptorContext.getEntity()
+		).thenReturn(
+			product
+		);
+
+		Mockito.doReturn(
+			new NestedFieldsHttpServletRequestWrapperTest.
+				MockHttpServletRequest("externalCode")
+		).when(
+			_nestedFieldServiceTrackerCustomizer
+		).getHttpServletRequest(
+			Mockito.any(Message.class)
+		);
+
+		MultivaluedHashMap<String, String> queryParameters =
+			new MultivaluedHashMap<String, String>() {
+				{
+					putSingle("externalCode.AcceptLanguage", "es_ES");
+				}
+			};
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			new NestedFieldsContext(
+				Collections.singletonList("externalCode"), new MessageImpl(),
+				_getPathParameters(), "v1.0", queryParameters));
+
+		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
+
+		String externalCode = product.getExternalCode();
+
+		Assert.assertEquals("codigoExterno", externalCode);
+	}
+
+	@Test
 	public void testGetNestedFieldsWithPagination() throws Exception {
 		Product product = _toProduct(1L, null);
 
@@ -917,6 +957,17 @@ public class NestedFieldsWriterInterceptorTest {
 
 			return Arrays.asList(
 				_toCategory(1L), _toCategory(2L), _toCategory(3L));
+		}
+
+		@NestedField("externalCode")
+		protected String getExternalCodeByQueryParam(
+			@QueryParam("AcceptLanguage") String acceptLanguage) {
+
+			if (!Objects.equals(acceptLanguage, "es_ES")) {
+				return "";
+			}
+
+			return "codigoExterno";
 		}
 
 	}

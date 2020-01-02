@@ -12,14 +12,12 @@
  * details.
  */
 
-import {LOAD_REDUCER as type} from './types';
-
-const ACTION = {type};
+import {LOAD_REDUCER} from './types';
 
 export default function loadReducer(reducer, key) {
 	return {
-		...ACTION,
 		key,
-		reducer
+		reducer,
+		type: LOAD_REDUCER
 	};
 }

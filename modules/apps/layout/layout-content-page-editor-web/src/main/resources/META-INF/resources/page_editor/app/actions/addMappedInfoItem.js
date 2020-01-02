@@ -12,9 +12,7 @@
  * details.
  */
 
-import {ADD_MAPPED_INFO_ITEM as type} from './types';
-
-const ACTION = {type};
+import {ADD_MAPPED_INFO_ITEM} from './types';
 
 /**
  * @param {object} options
@@ -31,10 +29,10 @@ export default function addMappedInfoItem({
 	title
 }) {
 	return {
-		...ACTION,
 		className,
 		classNameId,
 		classPK,
-		title
+		title,
+		type: ADD_MAPPED_INFO_ITEM
 	};
 }

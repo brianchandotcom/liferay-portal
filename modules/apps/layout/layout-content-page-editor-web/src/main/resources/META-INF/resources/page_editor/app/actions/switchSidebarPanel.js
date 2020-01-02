@@ -12,12 +12,12 @@
  * details.
  */
 
-import {SWITCH_SIDEBAR_PANEL as type} from './types';
+import {SWITCH_SIDEBAR_PANEL} from './types';
 
 export default function switchSidebarPanel({sidebarOpen, sidebarPanelId}) {
 	return {
 		sidebarOpen,
 		sidebarPanelId,
-		type
+		type: SWITCH_SIDEBAR_PANEL
 	};
 }

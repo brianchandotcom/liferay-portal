@@ -12,9 +12,7 @@
  * details.
  */
 
-import {UPDATE_LANGUAGE_ID as type} from './types';
-
-const ACTION = {type};
+import {UPDATE_LANGUAGE_ID} from './types';
 
 /**
  * @param {string} languageId
@@ -22,7 +20,7 @@ const ACTION = {type};
  */
 export default function updateLanguageId({languageId}) {
 	return {
-		...ACTION,
-		languageId
+		languageId,
+		type: UPDATE_LANGUAGE_ID
 	};
 }

@@ -12,9 +12,7 @@
  * details.
  */
 
-import {UPDATE_ITEM_CONFIG as type} from './types';
-
-const ACTION = {type};
+import {UPDATE_ITEM_CONFIG} from './types';
 
 /**
  * @param {object} options
@@ -25,9 +23,9 @@ const ACTION = {type};
  */
 export default function updateItem({config = {}, itemId, itemType}) {
 	return {
-		...ACTION,
 		config,
 		itemId,
-		itemType
+		itemType,
+		type: UPDATE_ITEM_CONFIG
 	};
 }

@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentFieldSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -90,6 +91,28 @@ public class ContentField {
 	}
 
 	protected String label;
+
+	public Map<String, String> getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(Map<String, String> label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	public void setLabel_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> label_i18n;
 
 	public String getName() {
 		return name;
@@ -171,6 +194,28 @@ public class ContentField {
 	}
 
 	protected Value value;
+
+	public Map<String, Object> getValue_i18n() {
+		return value_i18n;
+	}
+
+	public void setValue_i18n(Map<String, Object> value_i18n) {
+		this.value_i18n = value_i18n;
+	}
+
+	public void setValue_i18n(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			value_i18nUnsafeSupplier) {
+
+		try {
+			value_i18n = value_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> value_i18n;
 
 	@Override
 	public boolean equals(Object object) {

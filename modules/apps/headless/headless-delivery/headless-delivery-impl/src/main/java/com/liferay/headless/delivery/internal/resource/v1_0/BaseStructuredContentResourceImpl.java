@@ -137,7 +137,7 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/structured-contents' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/structured-contents' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "description_i18n": ___, "friendlyUrlPath": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "title_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -253,7 +253,7 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/structured-contents' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/structured-contents' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "description_i18n": ___, "friendlyUrlPath": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "title_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -332,7 +332,7 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "description_i18n": ___, "friendlyUrlPath": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "title_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -387,9 +387,19 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getDescription());
 		}
 
+		if (structuredContent.getDescription_i18n() != null) {
+			existingStructuredContent.setDescription_i18n(
+				structuredContent.getDescription_i18n());
+		}
+
 		if (structuredContent.getFriendlyUrlPath() != null) {
 			existingStructuredContent.setFriendlyUrlPath(
 				structuredContent.getFriendlyUrlPath());
+		}
+
+		if (structuredContent.getFriendlyUrlPath_i18n() != null) {
+			existingStructuredContent.setFriendlyUrlPath_i18n(
+				structuredContent.getFriendlyUrlPath_i18n());
 		}
 
 		if (structuredContent.getKey() != null) {
@@ -424,6 +434,11 @@ public abstract class BaseStructuredContentResourceImpl
 			existingStructuredContent.setTitle(structuredContent.getTitle());
 		}
 
+		if (structuredContent.getTitle_i18n() != null) {
+			existingStructuredContent.setTitle_i18n(
+				structuredContent.getTitle_i18n());
+		}
+
 		if (structuredContent.getUuid() != null) {
 			existingStructuredContent.setUuid(structuredContent.getUuid());
 		}
@@ -442,7 +457,7 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}' -d $'{"contentFields": ___, "contentStructureId": ___, "customFields": ___, "datePublished": ___, "description": ___, "description_i18n": ___, "friendlyUrlPath": ___, "friendlyUrlPath_i18n": ___, "keywords": ___, "taxonomyCategoryIds": ___, "title": ___, "title_i18n": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

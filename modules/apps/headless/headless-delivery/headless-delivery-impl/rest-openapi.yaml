@@ -326,6 +326,10 @@ components:
                         The field's label.
                     readOnly: true
                     type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 name:
                     description:
                         The field's internal name. This is valid for comparisons and unique in the structured content.
@@ -394,6 +398,10 @@ components:
                                         The resource's title.
                                     type: string
                             type: object
+                    type: object
+                value_i18n:
+                    additionalProperties:
+                        type: object
                     type: object
         ContentSetElement:
             description:
@@ -1577,10 +1585,18 @@ components:
                     description:
                         The structured content's description.
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 friendlyUrlPath:
                     description:
                         A relative URL to the structured content's rendered content.
                     type: string
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 id:
                     description:
                         The structured content's ID.
@@ -1624,6 +1640,10 @@ components:
                                 description:
                                     The name of the template used to render the content.
                                 type: string
+                            templateName_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
                         type: object
                     readOnly: true
                     type: array
@@ -1666,6 +1686,10 @@ components:
                     description:
                         The structured content's main title.
                     type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 uuid:
                     description:
                         A valid external identifier to reference this structured content.

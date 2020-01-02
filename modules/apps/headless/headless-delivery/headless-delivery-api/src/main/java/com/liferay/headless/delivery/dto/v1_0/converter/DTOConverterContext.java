@@ -41,4 +41,8 @@ public interface DTOConverterContext {
 		return 0;
 	}
 
+	public default boolean isAcceptAllLanguages() {
+		return true;
+	}
+
 }

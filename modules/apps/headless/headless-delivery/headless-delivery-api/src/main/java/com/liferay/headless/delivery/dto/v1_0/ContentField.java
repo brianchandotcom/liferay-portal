@@ -134,6 +134,36 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@Schema
+	@Valid
+	public Map<String, String> getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(Map<String, String> label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	@JsonIgnore
+	public void setLabel_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> label_i18n;
+
 	@Schema(
 		description = "The field's internal name. This is valid for comparisons and unique in the structured content."
 	)
@@ -257,6 +287,36 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Value value;
 
+	@Schema
+	@Valid
+	public Map<String, Object> getValue_i18n() {
+		return value_i18n;
+	}
+
+	public void setValue_i18n(Map<String, Object> value_i18n) {
+		this.value_i18n = value_i18n;
+	}
+
+	@JsonIgnore
+	public void setValue_i18n(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			value_i18nUnsafeSupplier) {
+
+		try {
+			value_i18n = value_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> value_i18n;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -326,6 +386,16 @@ public class ContentField {
 			sb.append("\"");
 		}
 
+		if (label_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append(_toJSON(label_i18n));
+		}
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -378,6 +448,16 @@ public class ContentField {
 			sb.append("\"value\": ");
 
 			sb.append(String.valueOf(value));
+		}
+
+		if (value_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value_i18n\": ");
+
+			sb.append(_toJSON(value_i18n));
 		}
 
 		sb.append("}");

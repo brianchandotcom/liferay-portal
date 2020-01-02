@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -104,6 +106,36 @@ public class RenderedContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String templateName;
 
+	@Schema
+	@Valid
+	public Map<String, String> getTemplateName_i18n() {
+		return templateName_i18n;
+	}
+
+	public void setTemplateName_i18n(Map<String, String> templateName_i18n) {
+		this.templateName_i18n = templateName_i18n;
+	}
+
+	@JsonIgnore
+	public void setTemplateName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			templateName_i18nUnsafeSupplier) {
+
+		try {
+			templateName_i18n = templateName_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> templateName_i18n;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -157,6 +189,16 @@ public class RenderedContent {
 			sb.append(_escape(templateName));
 
 			sb.append("\"");
+		}
+
+		if (templateName_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"templateName_i18n\": ");
+
+			sb.append(_toJSON(templateName_i18n));
 		}
 
 		sb.append("}");

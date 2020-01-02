@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.RenderedContentSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -69,6 +70,28 @@ public class RenderedContent {
 	}
 
 	protected String templateName;
+
+	public Map<String, String> getTemplateName_i18n() {
+		return templateName_i18n;
+	}
+
+	public void setTemplateName_i18n(Map<String, String> templateName_i18n) {
+		this.templateName_i18n = templateName_i18n;
+	}
+
+	public void setTemplateName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			templateName_i18nUnsafeSupplier) {
+
+		try {
+			templateName_i18n = templateName_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> templateName_i18n;
 
 	@Override
 	public boolean equals(Object object) {

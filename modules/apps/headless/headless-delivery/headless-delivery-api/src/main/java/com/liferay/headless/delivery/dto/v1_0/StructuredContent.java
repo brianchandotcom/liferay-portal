@@ -389,6 +389,36 @@ public class StructuredContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String description;
 
+	@Schema
+	@Valid
+	public Map<String, String> getDescription_i18n() {
+		return description_i18n;
+	}
+
+	public void setDescription_i18n(Map<String, String> description_i18n) {
+		this.description_i18n = description_i18n;
+	}
+
+	@JsonIgnore
+	public void setDescription_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			description_i18nUnsafeSupplier) {
+
+		try {
+			description_i18n = description_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> description_i18n;
+
 	@Schema(
 		description = "A relative URL to the structured content's rendered content."
 	)
@@ -420,6 +450,38 @@ public class StructuredContent {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
+
+	@Schema
+	@Valid
+	public Map<String, String> getFriendlyUrlPath_i18n() {
+		return friendlyUrlPath_i18n;
+	}
+
+	public void setFriendlyUrlPath_i18n(
+		Map<String, String> friendlyUrlPath_i18n) {
+
+		this.friendlyUrlPath_i18n = friendlyUrlPath_i18n;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPath_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			friendlyUrlPath_i18nUnsafeSupplier) {
+
+		try {
+			friendlyUrlPath_i18n = friendlyUrlPath_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> friendlyUrlPath_i18n;
 
 	@Schema(description = "The structured content's ID.")
 	public Long getId() {
@@ -760,6 +822,36 @@ public class StructuredContent {
 	@NotEmpty
 	protected String title;
 
+	@Schema
+	@Valid
+	public Map<String, String> getTitle_i18n() {
+		return title_i18n;
+	}
+
+	public void setTitle_i18n(Map<String, String> title_i18n) {
+		this.title_i18n = title_i18n;
+	}
+
+	@JsonIgnore
+	public void setTitle_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			title_i18nUnsafeSupplier) {
+
+		try {
+			title_i18n = title_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> title_i18n;
+
 	@Schema(
 		description = "A valid external identifier to reference this structured content."
 	)
@@ -1012,6 +1104,16 @@ public class StructuredContent {
 			sb.append("\"");
 		}
 
+		if (description_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(description_i18n));
+		}
+
 		if (friendlyUrlPath != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1024,6 +1126,16 @@ public class StructuredContent {
 			sb.append(_escape(friendlyUrlPath));
 
 			sb.append("\"");
+		}
+
+		if (friendlyUrlPath_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath_i18n\": ");
+
+			sb.append(_toJSON(friendlyUrlPath_i18n));
 		}
 
 		if (id != null) {
@@ -1196,6 +1308,16 @@ public class StructuredContent {
 			sb.append(_escape(title));
 
 			sb.append("\"");
+		}
+
+		if (title_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title_i18n\": ");
+
+			sb.append(_toJSON(title_i18n));
 		}
 
 		if (uuid != null) {

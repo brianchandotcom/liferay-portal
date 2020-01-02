@@ -13,7 +13,7 @@
  */
 
 import deleteFragmentEntryLinkComment from '../actions/deleteFragmentEntryLinkComment';
-import FragmentCommentService from '../services/FragmentCommentService';
+import FragmentService from '../services/FragmentService';
 
 export default function deleteFragmentComment({
 	commentId,
@@ -22,7 +22,7 @@ export default function deleteFragmentComment({
 	parentCommentId
 }) {
 	return dispatch => {
-		return FragmentCommentService.deleteFragmentEntryLinkComment({
+		return FragmentService.deleteComment({
 			commentId,
 			config
 		}).then(() => {

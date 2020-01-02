@@ -13,7 +13,7 @@
  */
 
 import updateLayoutData from '../actions/updateLayoutData';
-import ItemService from '../services/ItemService';
+import LayoutService from '../services/LayoutService';
 
 export default function moveItem({
 	config,
@@ -25,7 +25,7 @@ export default function moveItem({
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 
-		ItemService.moveItem({
+		LayoutService.moveItem({
 			config,
 			itemId,
 			parentItemId,

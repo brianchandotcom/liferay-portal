@@ -13,7 +13,7 @@
  */
 
 import updateLayoutData from '../actions/updateLayoutData';
-import ItemService from '../services/ItemService';
+import LayoutService from '../services/LayoutService';
 
 export default function addItem({
 	config,
@@ -26,7 +26,7 @@ export default function addItem({
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 
-		ItemService.addItem({
+		LayoutService.addItem({
 			config,
 			itemConfig,
 			itemType,

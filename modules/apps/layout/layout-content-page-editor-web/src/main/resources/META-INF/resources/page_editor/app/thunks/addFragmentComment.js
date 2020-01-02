@@ -13,7 +13,7 @@
  */
 
 import addFragmentEntryLinkComment from '../actions/addFragmentEntryLinkComment';
-import FragmentCommentService from '../services/FragmentCommentService';
+import FragmentService from '../services/FragmentService';
 
 export default function addFragmentComment({
 	body,
@@ -22,7 +22,7 @@ export default function addFragmentComment({
 	parentCommentId
 }) {
 	return dispatch => {
-		return FragmentCommentService.addFragmentEntryLinkComment({
+		return FragmentService.addComment({
 			body,
 			config,
 			fragmentEntryLinkId,

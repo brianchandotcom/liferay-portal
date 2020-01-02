@@ -23,7 +23,7 @@ import React, {useEffect, useState, useContext} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
 import {DispatchContext} from '../../../app/reducers/index';
-import FragmentCommentService from '../../../app/services/FragmentCommentService';
+import FragmentService from '../../../app/services/FragmentService';
 import {StoreContext} from '../../../app/store/index';
 import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
 import InlineConfirm from '../../../common/components/InlineConfirm';
@@ -75,7 +75,7 @@ export default function FragmentComment({
 	const handleResolveButtonClick = () => {
 		setChangingResolved(true);
 
-		FragmentCommentService.editFragmentEntryLinkComment({
+		FragmentService.editComment({
 			body,
 			commentId,
 			config,

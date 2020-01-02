@@ -13,7 +13,7 @@
  */
 
 import editFragmentEntryLinkComment from '../actions/editFragmentEntryLinkComment';
-import FragmentCommentService from '../services/FragmentCommentService';
+import FragmentService from '../services/FragmentService';
 
 export default function editFragmentComment({
 	body,
@@ -24,7 +24,7 @@ export default function editFragmentComment({
 	resolved = false
 }) {
 	return dispatch => {
-		return FragmentCommentService.editFragmentEntryLinkComment({
+		return FragmentService.editComment({
 			body,
 			commentId,
 			config,

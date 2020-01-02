@@ -15,12 +15,41 @@
 import serviceFetch from './serviceFetch';
 
 /**
+ * @typedef FragmentComment
+ * @property {object} author
+ * @property {string} body
+ * @property {number} commentId
+ * @property {string} dateDescription
+ * @property {boolean} edited
+ * @property {string} modifiedDescription
+ * @property {boolean} resolved
+ */
+
+/**
  * @typedef FragmentEntryLink
  * @property {string} content
  * @property {string} fragmentEntryLinkId
  */
 
 export default {
+	/**
+	 * Adds a new Fragment to the current layout
+	 * @param {object} options
+	 * @param {string} options.body Body of the comment
+	 * @param {object} options.config AppConfig
+	 * @param {string} options.fragmentEntryLinkId Id of the Fragment
+	 * @return {Promise<FragmentComment>} Created FragmentComment
+	 */
+	addComment({body, config, fragmentEntryLinkId, parentCommentId = 0}) {
+		const {addFragmentEntryLinkCommentURL} = config;
+
+		return serviceFetch(config, addFragmentEntryLinkCommentURL, {
+			body,
+			fragmentEntryLinkId,
+			parentCommentId
+		});
+	},
+
 	/**
 	 * Adds a new Fragment to the current layout
 	 * @param {object} options
@@ -52,6 +81,21 @@ export default {
 	},
 
 	/**
+	 * Deletes a fragment comment
+	 * @param {object} options
+	 * @param {string} options.commentId Id of the comment
+	 * @param {object} options.config AppConfig
+	 * @return {Promise<void>}
+	 */
+	deleteComment({commentId, config}) {
+		const {deleteFragmentEntryLinkCommentURL} = config;
+
+		return serviceFetch(config, deleteFragmentEntryLinkCommentURL, {
+			commentId
+		});
+	},
+
+	/**
 	 * Duplicates a fragmentEntryLink
 	 * @param {object} options
 	 * @param {object} options.config Application config
@@ -71,6 +115,25 @@ export default {
 			fragmentEntryLinkId,
 			itemId,
 			segmentsExperienceId
+		});
+	},
+
+	/**
+	 * Edits a fragment comment
+	 * @param {object} options
+	 * @param {string} options.body Body of the comment
+	 * @param {string} options.commentId Id of the comment
+	 * @param {object} options.config AppConfig
+	 * @param {boolean} options.resolved Whether the comment should be marked as resolved or not
+	 * @return {Promise<FragmentComment>} Created FragmentComment
+	 */
+	editComment({body, commentId, config, resolved}) {
+		const {editFragmentEntryLinkCommentURL} = config;
+
+		return serviceFetch(config, editFragmentEntryLinkCommentURL, {
+			body,
+			commentId,
+			resolved
 		});
 	},
 

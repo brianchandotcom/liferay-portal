@@ -13,13 +13,13 @@
  */
 
 import updateLayoutData from '../actions/updateLayoutData';
-import ItemService from '../services/ItemService';
+import LayoutService from '../services/LayoutService';
 
 export default function deleteItem({config, itemId, store}) {
 	return dispatch => {
 		const {segmentsExperienceId} = store;
 
-		return ItemService.deleteItem({
+		return LayoutService.deleteItem({
 			config,
 			itemId,
 			segmentsExperienceId

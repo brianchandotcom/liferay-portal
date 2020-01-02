@@ -1409,7 +1409,7 @@ import org.osgi.service.component.annotations.Reference;
 
 	<#assign
 		lazyBlobExists = entity.hasLazyBlobEntityColumn() && stringUtil.equals(sessionTypeName, "Local") && entity.hasPersistence()
-		localizedEntityExists = stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity??  && entity.hasPersistence()
+		localizedEntityExists = stringUtil.equals(sessionTypeName, "Local") && entity.localizedEntity?? && entity.versionEntity?? && entity.hasPersistence()
 	/>
 
 	<#if lazyBlobExists>

@@ -79,7 +79,7 @@
 
 			{foreach $radio in $options}
 				{call ClayRadio.render data="$radio"}
-					{param checked: $radioValue == $radio.value ? true : false  /}
+					{param checked: $radioValue == $radio.value ? true : false /}
 					{param disabled: $disabled /}
 					{param events: [
 						'change': $_handleValueChanged

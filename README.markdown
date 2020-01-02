@@ -192,4 +192,4 @@ SPDX-License-Identifier: LGPL-2.1-or-later
 
 *Liferay Portal Community Edition* is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License along with *Liferay Portal Community Edition*.  If not, see [<https://www.gnu.org/licenses/>](https://www.gnu.org/licenses/)
+You should have received a copy of the GNU Lesser General Public License along with *Liferay Portal Community Edition*. If not, see [<https://www.gnu.org/licenses/>](https://www.gnu.org/licenses/)

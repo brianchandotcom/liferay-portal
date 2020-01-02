@@ -73,7 +73,7 @@
 
 		<column name="companyId" type="long" />
 
-		<!-- Other fields  -->
+		<!-- Other fields -->
 
 		<column name="entryId" type="long" />
 		<column name="classNameId" type="long" />

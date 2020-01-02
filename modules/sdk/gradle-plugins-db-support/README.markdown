@@ -55,7 +55,7 @@ plugin is applied:
 
 Property Name | Default Value
 ------------- | -------------
-[`servletContextName`](#servletcontextname) | <p>**If the `base` plugin is applied:**  The bundle symbolic name of the project inferred via the [`OsgiHelper`](https://github.com/gradle/gradle/blob/master/subprojects/osgi/src/main/java/org/gradle/api/internal/plugins/osgi/OsgiHelper.java) class.</p><p>**Otherwise:** `null`</p>
+[`servletContextName`](#servletcontextname) | <p>**If the `base` plugin is applied:** The bundle symbolic name of the project inferred via the [`OsgiHelper`](https://github.com/gradle/gradle/blob/master/subprojects/osgi/src/main/java/org/gradle/api/internal/plugins/osgi/OsgiHelper.java) class.</p><p>**Otherwise:** `null`</p>
 [`serviceXmlFile`](#servicexmlfile) | `"${project.projectDir}/service.xml"`
 
 ### CleanServiceBuilderTask

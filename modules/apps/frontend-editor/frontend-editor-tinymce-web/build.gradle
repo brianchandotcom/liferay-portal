@@ -25,7 +25,7 @@ buildTinyMCE {
 
 	from new File(editorSrcDir, "_diffs")
 
-	from  {
+	from {
 		zipTree(configurations.tinyMCE.singleFile)
 	} {
 		eachFile new StripPathSegmentsAction(5)

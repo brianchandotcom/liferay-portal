@@ -110,7 +110,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	function handleDestroyPortlet() {
 		Liferay.destroyComponent('<%= renderResponse.getNamespace() %>pagesTree');
 		Liferay.destroyComponent(
-			'<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER  %>'
+			'<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER %>'
 		);
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

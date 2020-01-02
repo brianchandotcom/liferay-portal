@@ -201,7 +201,7 @@ recordCommits {
 				}
 
 				if (lastVersionNumber != null) {
-					recordCommitIDs.put(lastVersionNumber, commitId + ".."  + lastVersionCommitId)
+					recordCommitIDs.put(lastVersionNumber, commitId + ".." + lastVersionCommitId)
 				}
 
 				lastVersionCommitId = commitId

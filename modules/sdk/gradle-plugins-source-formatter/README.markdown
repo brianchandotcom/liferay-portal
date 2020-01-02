@@ -91,7 +91,7 @@ Property Name | Default Value
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `autoFix` | `boolean` | `false` | Whether to automatically fix source formatting errors. It sets the `source.auto.fix` argument.
-`baseDir` | `File` |  | The Source Formatter base directory. It sets the `source.base.dir` argument. *(Read-only)*
+`baseDir` | `File` | | The Source Formatter base directory. It sets the `source.base.dir` argument. *(Read-only)*
 `baseDirName` | `String` | `"./"` | The name of the Source Formatter base directory, relative to the project directory.
 `fileExtensions` | `List<String>` | `[]` | The file extensions to format. If empty, all file extensions will be formatted. It sets the `source.file.extensions` argument.
 `files` | `List<File>` | | The list of files to format. It sets the `source.files` argument. *(Read-only)*

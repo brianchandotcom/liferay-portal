@@ -4338,7 +4338,7 @@ log.sanitizer.enabled=false</echo>
 			<test-set-up>
 				<setup-test-environment />
 
-				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout--verbose  > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
+				<echo>tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/build/system.packages.extra.mf --gzip --to-stdout--verbose > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
 
 				<execute>
 					<![CDATA[

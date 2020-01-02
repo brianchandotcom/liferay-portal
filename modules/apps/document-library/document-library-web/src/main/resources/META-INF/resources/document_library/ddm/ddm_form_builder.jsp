@@ -232,7 +232,7 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 		readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
 		srcNode: '#<portlet:namespace />formBuilderContent',
 		translationManager: {
-			<c:if test="<%=  Validator.isNotNull(dlEditFileEntryTypeDisplayContext.getAvailableLocalesString()) %>">
+			<c:if test="<%= Validator.isNotNull(dlEditFileEntryTypeDisplayContext.getAvailableLocalesString()) %>">
 				availableLocales: <%= dlEditFileEntryTypeDisplayContext.getAvailableLocalesString() %>,
 			</c:if>
 

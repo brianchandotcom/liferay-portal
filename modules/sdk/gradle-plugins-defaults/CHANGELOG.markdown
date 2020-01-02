@@ -4911,7 +4911,7 @@ version 1.3.9.
 ## 5.5.101 - 2018-10-24
 
 ### Changed
-- [LPS-86669]:  Ignore `jsCompile` project dependencies for the
+- [LPS-86669]: Ignore `jsCompile` project dependencies for the
 `printDependentArtifact` and `writeArtifactPublishCommands` tasks.
 
 ## 5.5.102 - 2018-10-25

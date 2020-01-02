@@ -10117,7 +10117,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 										<![CDATA[
 											#!/bin/bash
 
-											mysql --host=${database.host} --password=${database.password} --user=${database.username}  < /tmp/create.sql
+											mysql --host=${database.host} --password=${database.password} --user=${database.username} < /tmp/create.sql
 										]]>
 									</echo>
 								</then>

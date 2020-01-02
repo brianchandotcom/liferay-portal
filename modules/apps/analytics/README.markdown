@@ -31,11 +31,11 @@ event. Keys of that map should also follow the
 
 #### Application ID: `Blog`
 
-| Object    | Action        | Event Id           | Event Properties                 |
+| Object | Action | Event Id | Event Properties |
 | --------- | ------------- | ------------------ | -------------------------------- |
-| `Blog`    | Clicked       | `blogClicked`      | `entryId`, `href`, `text`, `src` |
-| `Blog`    | Depth Reached | `blogDepthReached` | `entryId`, `depth`               |
-| `Blog`    | Viewed        | `blogViewed`       | `entryId`, `title`               |
+| `Blog` | Clicked | `blogClicked` | `entryId`, `href`, `text`, `src` |
+| `Blog` | Depth Reached | `blogDepthReached` | `entryId`, `depth` |
+| `Blog` | Viewed | `blogViewed` | `entryId`, `title` |
 
 ### Blog Event Properties
 
@@ -68,10 +68,10 @@ analytics reports.
 
 #### Application ID: `Document`
 
-| Object     | Action     | Event Id             | Event Properties                           |
-| ---------  | ---------  | -------------------  | ------------------------------------------ |
+| Object | Action | Event Id | Event Properties |
+| --------- | --------- | ------------------- | ------------------------------------------ |
 | `Document` | Downloaded | `documentDownloaded` | `fileEntryId`, `fileEntryVersion`, `title` |
-| `Document` | Previewed  | `documentPreviewed`  | `fileEntryId`, `fileEntryVersion`          |
+| `Document` | Previewed | `documentPreviewed` | `fileEntryId`, `fileEntryVersion` |
 
 ### Document Event Properties
 
@@ -92,12 +92,12 @@ analytics reports.
 
 #### Application ID: `Form`
 
-| Object    | Action    | Event Id        | Event Properties                       |
+| Object | Action | Event Id | Event Properties |
 | --------- | --------- | --------------- | -------------------------------------- |
-| `Field`   | Blurred   | `fieldBlurred`  | `fieldName`, `formId`, `focusDuration` |
-| `Field`   | Focused   | `fieldFocused`  | `fieldName`, `formId`                  |
-| `Form`    | Submitted | `formSubmitted` | `formId`                               |
-| `Form`    | Viewed    | `formViewed`    | `formId`, `title`                      |
+| `Field` | Blurred | `fieldBlurred` | `fieldName`, `formId`, `focusDuration` |
+| `Field` | Focused | `fieldFocused` | `fieldName`, `formId` |
+| `Form` | Submitted | `formSubmitted` | `formId` |
+| `Form` | Viewed | `formViewed` | `formId`, `title` |
 
 ### Form Event Properties
 
@@ -122,11 +122,11 @@ analytics reports.
 
 #### Application ID: `Page`
 
-| Object  | Action        | Event Id           | Event Properties |
+| Object | Action | Event Id | Event Properties |
 | ------- | ------------- | ------------------ | ---------------- |
-| `Page`  | Depth Reached | `pageDepthReached` | `depth`          |
-| `Page`  | Loaded        | `pageLoaded`       | `pageLoadTime`   |
-| `Page`  | Unloaded      | `pageUnloaded`     | `viewDuration`   |
+| `Page` | Depth Reached | `pageDepthReached` | `depth` |
+| `Page` | Loaded | `pageLoaded` | `pageLoadTime` |
+| `Page` | Unloaded | `pageUnloaded` | `viewDuration` |
 
 ### Page Event Properties
 
@@ -326,8 +326,8 @@ to annotate the asset markup with some
 
 #### Supported data attributes
 
-| Attribute                    | Data    | Description                              |
+| Attribute | Data | Description |
 | ---------------------------- | ------- | ---------------------------------------- |
-| `data-analytics-asset-id`    | `id`    | A unique identifier for the asset.       |
-| `data-analytics-asset-title` | `title` | A descriptive title for the asset.       |
-| `data-analytics-asset-type`  | `type`  | The asset type (File, Blog, Form, etc.). |
+| `data-analytics-asset-id` | `id` | A unique identifier for the asset. |
+| `data-analytics-asset-title` | `title` | A descriptive title for the asset. |
+| `data-analytics-asset-type` | `type` | The asset type (File, Blog, Form, etc.). |

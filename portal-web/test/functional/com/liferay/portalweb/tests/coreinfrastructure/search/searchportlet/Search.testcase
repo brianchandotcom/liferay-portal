@@ -1065,8 +1065,7 @@ definition {
 	@priority = "4"
 	test SearchDifferentScopesViaSearchWidget {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-		property portal.acceptance = "false";
-		property portal.suite.search.engine = "disable";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

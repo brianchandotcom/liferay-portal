@@ -123,7 +123,7 @@ public class UpdateLanguageAction implements Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (isFriendlyURLResolver(layoutURL)) {
+		if (isFriendlyURLResolver(layoutURL) || layout.isTypeControlPanel()) {
 			redirect = layoutURL + friendlyURLSeparatorPart;
 		}
 		else if (layoutURL.equals(StringPool.SLASH) ||
@@ -147,11 +147,6 @@ public class UpdateLanguageAction implements Action {
 			if (Validator.isNotNull(friendlyURLSeparatorPart)) {
 				redirect += friendlyURLSeparatorPart;
 			}
-		}
-		else if (layout.isTypeControlPanel() && themeDisplay.isI18n()) {
-			String i18nPath = themeDisplay.getI18nPath();
-
-			redirect = redirect.substring(i18nPath.length());
 		}
 		else {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {

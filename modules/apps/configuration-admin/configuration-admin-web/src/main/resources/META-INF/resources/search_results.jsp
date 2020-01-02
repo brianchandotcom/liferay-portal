@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = renderRequest.getParameter("redirect");
+String redirect = PortalUtil.escapeRedirect(renderRequest.getParameter("redirect"));
 
 ConfigurationEntryIterator configurationEntryIterator = (ConfigurationEntryIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_ITERATOR);
 ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER);

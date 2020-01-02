@@ -74,8 +74,7 @@ export default function FloatingToolbar({
 		}
 
 		setFloatingToolbarRef(popoverRef);
-		/* eslint-disable-next-line react-hooks/exhaustive-deps */
-	}, [show]);
+	}, [setFloatingToolbarRef, show]);
 
 	return (
 		show &&

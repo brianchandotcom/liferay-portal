@@ -453,6 +453,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		@Override
 		public Layout call() throws Exception {
+			_sites.copyCustomeFields(_sourceLayout, _targetLayout);
 			_sites.copyLookAndFeel(_targetLayout, _sourceLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
 			_sites.copyPortletPermissions(_targetLayout, _sourceLayout);

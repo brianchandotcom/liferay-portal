@@ -55,6 +55,52 @@ definition {
 		YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
 	}
 
+	@description = "Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
+	@priority = "4"
+	test DeletedContentInContentDisplayFragmentIsNotVisible {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Page Name");
+
+		PageEditor.addContentDisplay(fragmentName = "Content");
+
+		PageEditor.editContentDisplay(
+			webcontent = "true",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		Button.clickPublish();
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert the fragment is not visible in the site page") {
+			AssertElementNotPresent(
+				key_pageName = "Test Page Name",
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
+		}
+
+		ContentPages.clickPencil();
+
+		task ("Assert there is a message in page editor informing the page author that the content is no longer available") {
+			AssertVisible(
+				key_content = "The selected content is no longer available. Please select another.",
+				key_fragmentClass = "entry",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
+		}
+	}
+
 	@description = "This case ensures that a user can map a blogs content field to a fragment via the content display."
 	@priority = "5"
 	test MapBlogContentViaContentDisplay {

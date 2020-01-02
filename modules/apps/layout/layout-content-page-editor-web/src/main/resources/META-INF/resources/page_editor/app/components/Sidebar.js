@@ -92,17 +92,6 @@ export default function Sidebar() {
 		const open =
 			panel.sidebarPanelId === sidebarPanelId ? !sidebarOpen : true;
 
-		const sidebarButton = document.getElementById(panel.sidebarPanelId);
-
-		const sidebarButtonClassList = sidebarButton.classList;
-		
-		if (open) {
-			sidebarButtonClassList.add('btn-active');
-		}
-		else {
-			sidebarButtonClassList.remove('btn-active');
-		}
-		
 		dispatch(
 			Actions.switchSidebarPanel({
 				sidebarOpen: open,
@@ -138,6 +127,9 @@ export default function Sidebar() {
 					{panels.reduce((elements, group, groupIndex) => {
 						const buttons = group.map(panelId => {
 							const panel = sidebarPanels[panelId];
+
+							const active =
+								sidebarOpen && sidebarPanelId === panelId;
 							const {icon, label, pluginEntryPoint} = panel;
 
 							const prefetch = () =>
@@ -148,6 +140,8 @@ export default function Sidebar() {
 
 							return (
 								<ClayButtonWithIcon
+									aria-pressed={active}
+									className={classNames({active})}
 									data-tooltip-align="left"
 									displayType="unstyled"
 									id={panel.sidebarPanelId}

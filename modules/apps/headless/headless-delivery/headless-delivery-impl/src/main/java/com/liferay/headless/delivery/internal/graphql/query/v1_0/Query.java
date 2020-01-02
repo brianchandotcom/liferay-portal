@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
@@ -48,6 +49,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResourc
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
@@ -196,6 +198,14 @@ public class Query {
 
 		_messageBoardThreadResourceComponentServiceObjects =
 			messageBoardThreadResourceComponentServiceObjects;
+	}
+
+	public static void setNavigationMenuResourceComponentServiceObjects(
+		ComponentServiceObjects<NavigationMenuResource>
+			navigationMenuResourceComponentServiceObjects) {
+
+		_navigationMenuResourceComponentServiceObjects =
+			navigationMenuResourceComponentServiceObjects;
 	}
 
 	public static void setStructuredContentResourceComponentServiceObjects(
@@ -1402,6 +1412,43 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						messageBoardThreadResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {navigationMenu(navigationMenuId: ___){creator, dateCreated, dateModified, id, name, navigationMenuItems, siteId}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "")
+	public NavigationMenu navigationMenu(
+			@GraphQLName("navigationMenuId") Long navigationMenuId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource -> navigationMenuResource.getNavigationMenu(
+				navigationMenuId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {navigationMenus(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "")
+	public NavigationMenuPage navigationMenus(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_navigationMenuResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			navigationMenuResource -> new NavigationMenuPage(
+				navigationMenuResource.getSiteNavigationMenusPage(
+					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -3215,6 +3262,34 @@ public class Query {
 
 	}
 
+	@GraphQLName("NavigationMenuPage")
+	public class NavigationMenuPage {
+
+		public NavigationMenuPage(Page navigationMenuPage) {
+			items = navigationMenuPage.getItems();
+			lastPage = navigationMenuPage.getLastPage();
+			page = navigationMenuPage.getPage();
+			pageSize = navigationMenuPage.getPageSize();
+			totalCount = navigationMenuPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<NavigationMenu> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("StructuredContentPage")
 	public class StructuredContentPage {
 
@@ -3565,6 +3640,20 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			NavigationMenuResource navigationMenuResource)
+		throws Exception {
+
+		navigationMenuResource.setContextAcceptLanguage(_acceptLanguage);
+		navigationMenuResource.setContextCompany(_company);
+		navigationMenuResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		navigationMenuResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		navigationMenuResource.setContextUriInfo(_uriInfo);
+		navigationMenuResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(
 			StructuredContentResource structuredContentResource)
 		throws Exception {
 
@@ -3657,6 +3746,8 @@ public class Query {
 		_messageBoardSectionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<MessageBoardThreadResource>
 		_messageBoardThreadResourceComponentServiceObjects;
+	private static ComponentServiceObjects<NavigationMenuResource>
+		_navigationMenuResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>
 		_structuredContentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentFolderResource>

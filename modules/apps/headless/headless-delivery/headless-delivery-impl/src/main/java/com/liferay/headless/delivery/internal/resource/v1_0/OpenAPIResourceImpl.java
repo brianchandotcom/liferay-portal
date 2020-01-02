@@ -92,6 +92,8 @@ public class OpenAPIResourceImpl {
 
 			add(MessageBoardThreadResourceImpl.class);
 
+			add(NavigationMenuResourceImpl.class);
+
 			add(StructuredContentResourceImpl.class);
 
 			add(StructuredContentFolderResourceImpl.class);

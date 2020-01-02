@@ -14,7 +14,20 @@
  */
 --%>
 
-<%@ include file="/html/portal/layout/view/portlet_js.jspf" %>
+<c:if test="<%= (layout != null) && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
+	<aui:script>
+		Liferay.provide(
+			Liferay.Portlet,
+			'refreshLayout',
+			function(portletBound) {
+				if (!portletBound.isStatic) {
+					Liferay.Layout.refresh(portletBound);
+				}
+			},
+			['liferay-layout']
+		);
+	</aui:script>
+</c:if>
 
 <aui:script position="inline">
 	<c:choose>

@@ -18,13 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -79,7 +80,7 @@ public class AssetSearcherClassNameIdsTest {
 		UserTestUtil.setUser(user);
 
 		addBlogsEntry();
-		addBookmarksEntry();
+		addFileEntry();
 		addJournalArticle();
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
@@ -96,11 +97,11 @@ public class AssetSearcherClassNameIdsTest {
 		UserTestUtil.setUser(user);
 
 		addBlogsEntry();
-		addBookmarksEntry();
+		addFileEntry();
 		addJournalArticle();
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			"com.liferay.bookmarks.model.BookmarksEntry",
+			"com.liferay.document.library.kernel.model.DLFileEntry",
 			"com.liferay.journal.model.JournalArticle");
 
 		Hits hits = search(assetEntryQuery, getSearchContext());
@@ -115,7 +116,7 @@ public class AssetSearcherClassNameIdsTest {
 		UserTestUtil.setUser(user);
 
 		addBlogsEntry();
-		addBookmarksEntry();
+		addFileEntry();
 		addJournalArticle();
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
@@ -132,12 +133,13 @@ public class AssetSearcherClassNameIdsTest {
 			RandomTestUtil.randomString(), getServiceContext());
 	}
 
-	protected BookmarksEntry addBookmarksEntry() throws Exception {
-		return _bookmarksEntryLocalService.addEntry(
+	protected FileEntry addFileEntry() throws Exception {
+		return _dlAppLocalService.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), "http://www.liferay.com",
-			RandomTestUtil.randomString(), getServiceContext());
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM, new byte[0],
+			getServiceContext());
 	}
 
 	protected JournalArticle addJournalArticle() throws Exception {
@@ -198,7 +200,7 @@ public class AssetSearcherClassNameIdsTest {
 	private static BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject
-	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private static DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private static JournalArticleLocalService _journalArticleLocalService;

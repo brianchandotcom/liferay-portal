@@ -94,21 +94,25 @@ public class UpdateLanguageAction implements Action {
 		String redirect = PortalUtil.escapeRedirect(
 			ParamUtil.getString(httpServletRequest, "redirect"));
 
-		String layoutURL = StringPool.BLANK;
+		String layoutURL = redirect;
+
+		String friendlyURLSeparatorPart = StringPool.BLANK;
 		String queryString = StringPool.BLANK;
 
-		int pos = redirect.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+		int posQuestion = redirect.indexOf(StringPool.QUESTION);
 
-		if (pos == -1) {
-			pos = redirect.indexOf(StringPool.QUESTION);
+		if (posQuestion != -1) {
+			queryString = redirect.substring(posQuestion);
+			layoutURL = redirect.substring(0, posQuestion);
 		}
 
-		if (pos != -1) {
-			layoutURL = redirect.substring(0, pos);
-			queryString = redirect.substring(pos);
-		}
-		else {
-			layoutURL = redirect;
+		int posFriendlyURLSeparator = layoutURL.indexOf(
+			Portal.FRIENDLY_URL_SEPARATOR);
+
+		if (posFriendlyURLSeparator != -1) {
+			friendlyURLSeparatorPart = layoutURL.substring(
+				posFriendlyURLSeparator);
+			layoutURL = layoutURL.substring(0, posFriendlyURLSeparator);
 		}
 
 		if (themeDisplay.isI18n()) {

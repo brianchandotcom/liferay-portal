@@ -5,7 +5,14 @@ definition {
 			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
 		}
 		else {
-			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_ICON");
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "internetexplorer") {
+				Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_ICON_IE");
+			}
+			else {
+				Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_ICON");
+			}
 		}
 
 		AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");

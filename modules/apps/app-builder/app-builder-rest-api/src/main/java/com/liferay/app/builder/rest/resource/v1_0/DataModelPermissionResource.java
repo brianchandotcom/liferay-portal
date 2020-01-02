@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.resource.v2_0;
+package com.liferay.app.builder.rest.resource.v1_0;
 
-import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
+import com.liferay.app.builder.rest.dto.v1_0.DataModelPermission;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -30,30 +30,14 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/data-engine/v2.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/app-builder/v1.0
  *
- * @author Jeyvison Nascimento
+ * @author Gabriel Albuquerque
  * @generated
  */
 @Generated("")
 @ProviderType
 public interface DataModelPermissionResource {
-
-	public Page<DataModelPermission> getDataDefinitionDataModelPermissionsPage(
-			Long dataDefinitionId, String roleNames)
-		throws Exception;
-
-	public void putDataDefinitionDataModelPermission(
-			Long dataDefinitionId, DataModelPermission[] dataModelPermissions)
-		throws Exception;
-
-	public Page<DataModelPermission> getDataLayoutDataModelPermissionsPage(
-			Long dataLayoutId, String roleNames)
-		throws Exception;
-
-	public void putDataLayoutDataModelPermission(
-			Long dataLayoutId, DataModelPermission[] dataModelPermissions)
-		throws Exception;
 
 	public Page<DataModelPermission> getDataModelPermissionsPage(
 			String roleNames)
@@ -61,20 +45,6 @@ public interface DataModelPermissionResource {
 
 	public void putDataModelPermission(
 			DataModelPermission[] dataModelPermissions)
-		throws Exception;
-
-	public Page<DataModelPermission>
-			getDataRecordCollectionDataModelPermissionsPage(
-				Long dataRecordCollectionId, String roleNames)
-		throws Exception;
-
-	public void putDataRecordCollectionDataModelPermission(
-			Long dataRecordCollectionId,
-			DataModelPermission[] dataModelPermissions)
-		throws Exception;
-
-	public String getDataRecordCollectionDataModelPermissionByCurrentUser(
-			Long dataRecordCollectionId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

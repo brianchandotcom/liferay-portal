@@ -272,6 +272,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateDataModelPermission(
+			@GraphQLName("dataModelPermissions") DataModelPermission[]
+				dataModelPermissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataModelPermissionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataModelPermissionResource ->
+				dataModelPermissionResource.putDataModelPermission(
+					dataModelPermissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean updateDataRecordCollectionDataModelPermission(
 			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
 			@GraphQLName("dataModelPermissions") DataModelPermission[]

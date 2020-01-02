@@ -25,7 +25,7 @@ ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRet
 ConfigurationScopeDisplayContext configurationScopeDisplayContext = ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
 if (redirect == null) {
-	redirect = renderResponse.createRenderURL();
+	redirect = String.valueOf(renderResponse.createRenderURL());
 }
 
 PortletURL searchURL = renderResponse.createRenderURL();

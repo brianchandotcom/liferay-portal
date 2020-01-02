@@ -56,14 +56,16 @@ public class BlogsPortletFilter implements RenderFilter {
 			FilterChain filterChain)
 		throws IOException, PortletException {
 
-		filterChain.doFilter(renderRequest, renderResponse);
-
 		String mvcRenderCommandName = ParamUtil.getString(
 			renderRequest, "mvcRenderCommandName");
 
 		if (!mvcRenderCommandName.equals("/blogs/view_entry")) {
+			filterChain.doFilter(renderRequest, renderResponse);
+
 			return;
 		}
+
+		filterChain.doFilter(renderRequest, renderResponse);
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(renderResponse);

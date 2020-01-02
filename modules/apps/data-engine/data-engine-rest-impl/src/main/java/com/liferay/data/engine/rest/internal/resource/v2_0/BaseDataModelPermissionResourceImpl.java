@@ -18,10 +18,8 @@ import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataModelPermissionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -32,7 +30,6 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -102,6 +99,43 @@ public abstract class BaseDataModelPermissionResourceImpl
 	public void putDataDefinitionDataModelPermission(
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
+			DataModelPermission[] dataModelPermissions)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-model-permissions'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "roleNames")}
+	)
+	@Path("/data-model-permissions")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataModelPermission")})
+	public Page<DataModelPermission> getDataModelPermissionsPage(
+			@NotNull @Parameter(hidden = true) @QueryParam("roleNames") String
+				roleNames)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-model-permissions'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@PUT
+	@Path("/data-model-permissions")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataModelPermission")})
+	public void putDataModelPermission(
 			DataModelPermission[] dataModelPermissions)
 		throws Exception {
 	}
@@ -216,30 +250,6 @@ public abstract class BaseDataModelPermissionResourceImpl
 		com.liferay.portal.kernel.model.User contextUser) {
 
 		this.contextUser = contextUser;
-	}
-
-	protected Map<String, String> addAction(
-		String actionName, GroupedModel groupedModel, String methodName) {
-
-		return ActionUtil.addAction(
-			actionName, getClass(), groupedModel, methodName, contextUriInfo);
-	}
-
-	protected Map<String, String> addAction(
-		String actionName, Long id, String methodName, String permissionName,
-		Long siteId) {
-
-		return ActionUtil.addAction(
-			actionName, getClass(), id, methodName, permissionName, siteId,
-			contextUriInfo);
-	}
-
-	protected Map<String, String> addAction(
-		String actionName, String methodName, String permissionName,
-		Long siteId) {
-
-		return addAction(
-			actionName, siteId, methodName, permissionName, siteId);
 	}
 
 	protected void preparePatch(

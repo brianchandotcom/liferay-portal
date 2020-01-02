@@ -114,42 +114,6 @@ definition {
 			truncatedURL = "true");
 	}
 
-	@description = "This test ensures that a user can preview SEO tags with Arabic."
-	@priority = "4"
-	test ViewArabicTranslation {
-		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Page");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
-
-		Navigator.gotoNavTab(navTab = "SEO");
-
-		PortletEntry.changeLocale(
-			fieldName = "HTML Title",
-			locale = "ar-SA");
-
-		PortletEntry.inputText(
-			fieldLabel = "HTML Title",
-			text = "عنوان الاختبار");
-
-		PortletEntry.inputTextArea(
-			fieldId = "GroupPagesPortlet_description",
-			text = "وصف الاختبار");
-
-		Page.viewPreview(
-			description = "وصف الاختبار",
-			htmlTitle = "عنوان الاختبار - ${siteName}",
-			locale = "ar-SA",
-			pageName = "Test Page",
-			portalURL = "${portalURL}");
-	}
-
 	@description = "This test ensures that a SERP preview is refreshed when switching translations."
 	@priority = "4"
 	test ViewPreviewWhenSwitchingTranslations {
@@ -231,6 +195,91 @@ definition {
 			locale = "zh-CN",
 			pageName = "Test Page",
 			portalURL = "${portalURL}");
+	}
+
+	@description = "This test ensures that a user can preview SEO tags with different languages."
+	@priority = "5"
+	test ViewTranslatedLanguages {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site Name");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		PortletEntry.changeLocale(
+			fieldName = "HTML Title",
+			locale = "ar-SA");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "عنوان الاختبار");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "وصف الاختبار");
+
+		Page.viewPreview(
+			description = "وصف الاختبار",
+			htmlTitle = "عنوان الاختبار - Test Site Name - ${siteName}",
+			locale = "ar-SA",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		Button.clickSave();
+
+		PortletEntry.changeLocale(
+			fieldName = "HTML Title",
+			locale = "ca-ES");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Título de la Prueba");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "Descripción de la Prueba");
+
+		Page.viewPreview(
+			description = "Descripción de la Prueba",
+			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
+			locale = "ca-ES",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		Button.clickSave();
+
+		PortletEntry.changeLocale(
+			fieldName = "HTML Title",
+			locale = "ar-SA");
+
+		Page.viewPreview(
+			description = "وصف الاختبار",
+			htmlTitle = "عنوان الاختبار - Test Site Name - ${siteName}",
+			locale = "ar-SA",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		OpenGraph.changeLocale(
+			fieldName = "titleBoundingBox",
+			locale = "ca-ES");
+
+		Page.viewPreview(
+			description = "Descripción de la Prueba",
+			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
+			locale = "ca-ES",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 	}
 
 }

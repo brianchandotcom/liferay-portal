@@ -376,7 +376,7 @@ definition {
 
 	@description = "This test ensures that OG can use the translated language that SEO has saved."
 	@priority = "5"
-	test ViewTranslatedLanguage {
+	test ViewTranslatedLanguages {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -412,7 +412,57 @@ definition {
 			fieldId = "GroupPagesPortlet_description",
 			text = "Descripción de la Prueba");
 
+		Page.viewPreview(
+			description = "Descripción de la Prueba",
+			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
+			locale = "ca-ES",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
 		Button.clickSave();
+
+		OpenGraph.changeLocale(
+			fieldName = "titleBoundingBox",
+			locale = "ja-JP");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "テストhtmlタイトル");
+
+		PortletEntry.inputTextArea(
+			fieldId = "GroupPagesPortlet_description",
+			text = "テスト記述");
+
+		Page.viewPreview(
+			description = "テスト記述",
+			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
+			locale = "ja-JP",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		Button.clickSave();
+
+		OpenGraph.changeLocale(
+			fieldName = "titleBoundingBox",
+			locale = "ca-ES");
+
+		Page.viewPreview(
+			description = "Descripción de la Prueba",
+			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
+			locale = "ca-ES",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		OpenGraph.changeLocale(
+			fieldName = "titleBoundingBox",
+			locale = "ja-JP");
+
+		Page.viewPreview(
+			description = "テスト記述",
+			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
+			locale = "ja-JP",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
@@ -424,6 +474,18 @@ definition {
 			description = "Descripción de la Prueba",
 			htmlTitle = "Título de la Prueba - Test Site Name - ${siteName}",
 			locale = "ca-ES",
+			openGraph = "true",
+			portalURL = "${portalURL}",
+			siteNameURL = "test-site-name");
+
+		OpenGraph.changeLocale(
+			fieldName = "openGraphTitleBoundingBox",
+			locale = "ja-JP");
+
+		Page.viewPreview(
+			description = "テスト記述",
+			htmlTitle = "テストhtmlタイトル - Test Site Name - ${siteName}",
+			locale = "ja-JP",
 			openGraph = "true",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");

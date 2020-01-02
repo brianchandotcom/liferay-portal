@@ -51,4 +51,19 @@ definition {
 		AppManager.viewNoAppCP(appName = "Independent Modules");
 	}
 
+	@description = "This is a use case for LPS-99031."
+	@priority = "5"
+	test ViewLicenseManager {
+		ProductMenu.gotoPortlet(
+			category = "Apps",
+			panel = "Control Panel",
+			portlet = "License Manager");
+
+		Pause(locator1 = "3000");
+
+		LicenseManager.viewDefaultCP(tableTexts = "Server Info,Host Name,IP Addresses,Licenses Registered,Owner,Start Date");
+
+		AssertElementNotPresent(locator1 = "Portlet#HEADER_DUPLICATE");
+	}
+
 }

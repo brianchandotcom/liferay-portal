@@ -17,8 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -62,26 +60,6 @@ public class LayoutTypeControllerTracker {
 		return types.toArray(new String[0]);
 	}
 
-	private static void _registerDefaults(Registry registry) {
-		Set<Map.Entry<String, LayoutTypeController>> entries =
-			_defaultLayoutTypeControllers.entrySet();
-
-		for (Map.Entry<String, LayoutTypeController> entry : entries) {
-			Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-				"layout.type", entry.getKey()
-			).build();
-
-			registry.registerService(
-				LayoutTypeController.class, entry.getValue(), properties);
-		}
-	}
-
-	private static final String[] _LAYOUT_TYPES = {
-		LayoutConstants.TYPE_PORTLET
-	};
-
-	private static final Map<String, LayoutTypeController>
-		_defaultLayoutTypeControllers = new ConcurrentHashMap<>();
 	private static final ConcurrentMap<String, LayoutTypeController>
 		_layoutTypeControllers = new ConcurrentHashMap<>();
 	private static final ServiceTracker
@@ -125,29 +103,13 @@ public class LayoutTypeControllerTracker {
 
 			String type = (String)serviceReference.getProperty("layout.type");
 
-			LayoutTypeController defaultLayoutTypeController =
-				_defaultLayoutTypeControllers.get(type);
-
-			if (defaultLayoutTypeController == null) {
-				_layoutTypeControllers.remove(type);
-			}
-			else {
-				_layoutTypeControllers.replace(
-					type, layoutTypeController, defaultLayoutTypeController);
-			}
+			_layoutTypeControllers.remove(type);
 		}
 
 	}
 
 	static {
-		for (String type : _LAYOUT_TYPES) {
-			_defaultLayoutTypeControllers.put(
-				type, new LayoutTypeControllerImpl(type));
-		}
-
 		Registry registry = RegistryUtil.getRegistry();
-
-		_registerDefaults(registry);
 
 		Filter filter = registry.getFilter(
 			"(&(layout.type=*)(objectClass=" +

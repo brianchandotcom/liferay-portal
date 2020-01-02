@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -103,14 +101,7 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	public String getViewPath(String portletId) {
-
-		// Manually check the p_p_id. See LEP-1724.
-
-		if (Validator.isNull(portletId)) {
-			return _viewPage;
-		}
-
-		return StrutsUtil.TEXT_HTML_DIR + "/portal/layout/view/portlet.jsp";
+		return _viewPage;
 	}
 
 	@Override
@@ -204,15 +195,6 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	@Override
 	public boolean isParentable() {
 		return _parentable;
-	}
-
-	@Override
-	public boolean isPrimaryType() {
-		if (_type.equals(LayoutConstants.TYPE_PORTLET)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

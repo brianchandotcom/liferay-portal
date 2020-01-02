@@ -3,7 +3,7 @@ definition {
 	macro clickPublishMaster {
 		Button.clickNoError(button = "Publish Master");
 
-		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates and pages using it. Are you sure you want to proceed?");
+		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
 	}
 
 }

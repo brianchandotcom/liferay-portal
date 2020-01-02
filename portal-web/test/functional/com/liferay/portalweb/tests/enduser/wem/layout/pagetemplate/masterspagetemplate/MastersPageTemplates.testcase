@@ -186,11 +186,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
-		ClickNoError(
-			key_text = "Publish Master",
-			locator1 = "Button#ANY");
-
-		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
+		MastersPageTemplates.clickPublishMaster();
 
 		WebContentDisplayPortlet.viewDefaultMessage();
 

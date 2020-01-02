@@ -85,7 +85,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 	<input id="<portlet:namespace />portletCategory<%= portletCategoryIndex %>CategoryPath" type="hidden" value="<%= StringUtil.replace(newCategoryPath, ':', '-') %>" />
 
 	<div class="lfr-content-category panel-page-category">
-		<a class="collapse-icon collapse-icon-middle collapsed list-group-heading panel-header panel-header-link" data-toggle="collapse" href="#<%= panelId %>">
+		<a class="collapse-icon collapse-icon-middle collapsed list-group-heading panel-header panel-header-link" data-toggle="liferay-collapse" href="#<%= panelId %>">
 			<%= title %>
 
 			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

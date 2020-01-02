@@ -240,7 +240,7 @@ class Sidebar extends Component {
 								aria-expanded="false"
 								aria-label="Toggle Navigation"
 								class="collapsed navbar-toggler navbar-toggler-link"
-								data-toggle="collapse"
+								data-toggle="liferay-collapse"
 								href="#sidebarLightCollapse00"
 								role="button"
 							>
@@ -928,7 +928,7 @@ class Sidebar extends Component {
 							aria-expanded="true"
 							class="collapse-icon panel-header panel-header-link"
 							data-parent="#accordion03"
-							data-toggle="collapse"
+							data-toggle="liferay-collapse"
 							href={`#ddm-field-types-${key}-body`}
 							id={`ddm-field-types-${key}-header`}
 							role="tab"

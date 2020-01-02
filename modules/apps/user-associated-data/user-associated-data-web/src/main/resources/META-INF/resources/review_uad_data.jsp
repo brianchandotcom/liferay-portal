@@ -41,7 +41,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<div class="row">
 		<div class="col-lg-3">
 			<div class="panel panel-secondary">
-				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />scopePanelBody" data-toggle="collapse">
+				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />scopePanelBody" data-toggle="liferay-collapse">
 					<span class="panel-title">
 						<%= StringUtil.toUpperCase(LanguageUtil.get(request, "scope"), locale) %>
 					</span>
@@ -75,7 +75,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			</div>
 
 			<div class="panel panel-secondary">
-				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />applicationPanelBody" data-toggle="collapse">
+				<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />applicationPanelBody" data-toggle="liferay-collapse">
 					<span class="panel-title">
 
 						<%
@@ -119,7 +119,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			<c:if test="<%= !Objects.equals(viewUADEntitiesDisplay.getApplicationKey(), UADConstants.ALL_APPLICATIONS) %>">
 				<div class="panel-group">
 					<div class="panel panel-secondary">
-						<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="collapse">
+						<div class="collapse-icon collapse-icon-middle panel-header" data-target="#<portlet:namespace />entitiesTypePanelBody" data-toggle="liferay-collapse">
 							<span class="panel-title">
 
 								<%

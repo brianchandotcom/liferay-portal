@@ -66,7 +66,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 			<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 				<div class="<%= navCssClass %>">
 					<nav class="<%= menubarCssClass %>">
-						<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="collapse" href="#<%= id %>" role="button">
+						<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="liferay-collapse" href="#<%= id %>" role="button">
 							<%= selectedScreenNavigationEntry.getLabel(locale) %>
 
 							<aui:icon image="caret-bottom" markupView="lexicon" />

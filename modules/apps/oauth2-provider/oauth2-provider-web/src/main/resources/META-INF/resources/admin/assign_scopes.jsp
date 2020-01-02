@@ -359,7 +359,9 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 				return this.one('input:checked');
 			})
 			.each(function() {
-				var panelHeaderElement = this.one('*[data-toggle="collapse"]');
+				var panelHeaderElement = this.one(
+					'*[data-toggle="liferay-collapse"]'
+				);
 
 				panelHeaderElement.attr('aria-expanded', 'true');
 				panelHeaderElement.removeClass('collapsed');

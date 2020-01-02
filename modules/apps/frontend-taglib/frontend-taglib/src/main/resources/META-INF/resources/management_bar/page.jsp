@@ -29,7 +29,7 @@
 				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(filters) %>">
-					<a class="collapsed management-bar-toggle management-bar-toggle-link" data-toggle="collapse" href="#<%= namespace %>managementBarCollapse">
+					<a class="collapsed management-bar-toggle management-bar-toggle-link" data-toggle="liferay-collapse" href="#<%= namespace %>managementBarCollapse">
 						<span class="management-bar-item-title"><liferay-ui:message key="filter-order" /></span>
 
 						<aui:icon image="caret-double-l" markupView="lexicon" />

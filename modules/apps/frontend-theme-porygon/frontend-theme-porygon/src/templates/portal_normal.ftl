@@ -32,7 +32,7 @@
 						</div>
 
 						<#if has_navigation>
-							<button aria-controls="navigation" aria-expanded="false" class="btn-monospaced ml-auto navbar-toggler" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+							<button aria-controls="navigation" aria-expanded="false" class="btn-monospaced ml-auto navbar-toggler" data-target="#navigationCollapse" data-toggle="liferay-collapse" type="button">
 								<span class="navbar-toggler-icon"></span>
 							</button>
 

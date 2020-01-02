@@ -19,7 +19,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Membership Requested");
 
-		MenuItem.viewPresent(menuItem = "Membership Requested");
+		MenuItem.viewVisible(menuItem = "Membership Requested");
 	}
 
 	macro viewNoOptions {

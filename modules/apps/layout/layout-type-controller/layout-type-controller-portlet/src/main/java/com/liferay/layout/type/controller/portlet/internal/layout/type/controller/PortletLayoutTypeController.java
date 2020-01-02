@@ -14,11 +14,15 @@
 
 package com.liferay.layout.type.controller.portlet.internal.layout.type.controller;
 
-import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -53,6 +57,23 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
 		return super.includeEditContent(
+			httpServletRequest, httpServletResponse, layout);
+	}
+
+	@Override
+	public boolean includeLayoutContent(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
+		throws Exception {
+
+		httpServletRequest.setAttribute(
+			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
+			_fragmentRendererController);
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
+			_infoDisplayContributorTracker);
+
+		return super.includeLayoutContent(
 			httpServletRequest, httpServletResponse, layout);
 	}
 
@@ -114,5 +135,11 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			"p_v_l_s_g_id=${liferay:pvlsgid}";
 
 	private static final String _VIEW_PAGE = "/layout/view/portlet.jsp";
+
+	@Reference
+	private FragmentRendererController _fragmentRendererController;
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 }

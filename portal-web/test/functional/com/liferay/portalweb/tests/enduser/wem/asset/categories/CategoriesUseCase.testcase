@@ -1229,6 +1229,43 @@ definition {
 		Vocabulary.viewSearchResultsCP(nullResult = "true");
 	}
 
+	@Description ="This is for LPS-101409. Validate selecting multiple categories when creating page with blank template."
+	@priority ="4"
+	test SelectMultipleRequiredCategoriesWithBlankPageTemplate {
+		property testray.component.names = "Categories";
+
+		task ("Add a vocabulary with required for page") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Vocabulary.addWithAssociatedAssetTypeCP(
+				assetType = "Page",
+				required = "true",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		for (var index : list "1,2,3") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name ${index}",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(
+			categoryNameList = "Category Name 1,Category Name 2,Category Name 3",
+			pageName = "Test Content Page Name",
+			vocabularyName = "Vocabulary Name");
+
+		Alert.viewSuccessMessage();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		AssertVisible(
+			key_itemName = "Test Content Page Name",
+			locator1 = "SitePages#LIST_GROUP_ITEM");
+	}
+
 	@Description ="This is for LPS-101409. Validate if select a required category when entering the page name not based on a page template."
 	@priority ="5"
 	test SelectRequiredCategoryWhenEnterPageNameWithBlankPageTemplate {

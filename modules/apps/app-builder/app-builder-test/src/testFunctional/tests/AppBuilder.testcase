@@ -1632,6 +1632,24 @@ definition {
 
 		AppBuilderAdmin.undeployApp(itemName = "Test App B");
 
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		AppBuilderAdmin.validateUndeployedApp();
+		
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
 		AppBuilderAdmin.deployApp(itemName = "Test App B");
 
 		AppBuilderAdmin.undeployApp(itemName = "Test App C");

@@ -279,9 +279,13 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 export default function PageEditor() {
 	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
-	const {fragmentEntryLinks, layoutData, segmentsExperienceId} = useContext(
-		StoreContext
-	);
+	const {
+		fragmentEntryLinks,
+		layoutData,
+		segmentsExperienceId,
+		sidebarOpen,
+		sidebarPanelId
+	} = useContext(StoreContext);
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
@@ -300,13 +304,17 @@ export default function PageEditor() {
 	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 
 	return (
-		<>
+		<div
+			className={classNames('page-editor', 'page-editor--with-sidebar', {
+				'page-editor--with-sidebar-open': sidebarPanelId && sidebarOpen
+			})}
+		>
 			<DragPreview fragmentEntryLinks={fragmentEntryLinks} />
 			<LayoutDataItem
 				fragmentEntryLinks={fragmentEntryLinks}
 				item={mainItem}
 				layoutData={layoutData}
 			/>
-		</>
+		</div>
 	);
 }

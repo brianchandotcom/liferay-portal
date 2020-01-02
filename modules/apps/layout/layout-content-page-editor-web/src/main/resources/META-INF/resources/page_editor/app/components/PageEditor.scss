@@ -1,8 +1,19 @@
 @import 'atlas-variables';
 
-@import 'variables';
+@import './variables';
 
 .page-editor {
+	transition: padding-right ease $defaultTransitionDuration;
+	will-change: padding-right;
+
+	&--with-sidebar {
+		padding-right: $sidebarButtonWidth;
+	}
+
+	&--with-sidebar-open {
+		padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+	}
+
 	&__container,
 	&__container-outline,
 	&__fragment,

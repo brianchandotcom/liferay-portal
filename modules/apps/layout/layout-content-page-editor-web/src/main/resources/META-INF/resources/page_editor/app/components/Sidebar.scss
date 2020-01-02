@@ -1,7 +1,6 @@
 @import './variables';
 
-$sidebarButtonHeight: 40px;
-$sidebarButtonWidth: 40px;
+$sidebarButtonHeight: $sidebarButtonWidth;
 
 //
 // z-indexes for childern of page-editor-sidebar (which is a stacking context).

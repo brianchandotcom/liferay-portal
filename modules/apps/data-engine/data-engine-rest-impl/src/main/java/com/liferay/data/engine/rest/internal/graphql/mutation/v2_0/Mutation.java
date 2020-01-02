@@ -255,8 +255,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updateDataLayoutDataModelPermission(
-			@GraphQLName("dataLayoutId") Long dataLayoutId,
+	public boolean updateDataModelPermission(
 			@GraphQLName("dataModelPermissions") DataModelPermission[]
 				dataModelPermissions)
 		throws Exception {
@@ -265,8 +264,8 @@ public class Mutation {
 			_dataModelPermissionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataModelPermissionResource ->
-				dataModelPermissionResource.putDataLayoutDataModelPermission(
-					dataLayoutId, dataModelPermissions));
+				dataModelPermissionResource.putDataModelPermission(
+					dataModelPermissions));
 
 		return true;
 	}

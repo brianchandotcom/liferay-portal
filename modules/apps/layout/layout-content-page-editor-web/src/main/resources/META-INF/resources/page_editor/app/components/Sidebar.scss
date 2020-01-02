@@ -28,6 +28,7 @@ $zIndexContent: 0;
 		button {
 			color: $sidebarButtonColor;
 
+			&.active,
 			&:active,
 			&:focus,
 			&:hover {

@@ -131,12 +131,12 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				description = journalArticle.getDescription(
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getLocalizedMap(
-					_getQueryParam(dtoConverterContext, "description_i18n"),
+					dtoConverterContext.isAcceptAllLanguages(),
 					journalArticle.getDescriptionMap());
 				friendlyUrlPath = journalArticle.getUrlTitle(
 					dtoConverterContext.getLocale());
 				friendlyUrlPath_i18n = LocalizedMapUtil.getLocalizedMap(
-					_getQueryParam(dtoConverterContext, "friendlyUrlPath_i18n"),
+					dtoConverterContext.isAcceptAllLanguages(),
 					journalArticle.getFriendlyURLMap());
 				id = journalArticle.getResourcePrimKey();
 				key = journalArticle.getArticleId();
@@ -154,9 +154,8 @@ public class StructuredContentDTOConverter implements DTOConverter {
 					journalArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				renderedContents = _toRenderedContents(
-					_getQueryParam(dtoConverterContext, "templateName_i18n"),
-					ddmStructure, journalArticle,
-					dtoConverterContext.getLocale(),
+					dtoConverterContext.isAcceptAllLanguages(), ddmStructure,
+					journalArticle, dtoConverterContext.getLocale(),
 					dtoConverterContext.getUriInfoOptional());
 				siteId = journalArticle.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
@@ -178,28 +177,11 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				title = journalArticle.getTitle(
 					dtoConverterContext.getLocale());
 				title_i18n = LocalizedMapUtil.getLocalizedMap(
-					_getQueryParam(dtoConverterContext, "title_i18n"),
+					dtoConverterContext.isAcceptAllLanguages(),
 					journalArticle.getTitleMap());
 				uuid = journalArticle.getUuid();
 			}
 		};
-	}
-
-	private boolean _getQueryParam(
-		DTOConverterContext dtoConverterContext, String parameter) {
-
-		Optional<UriInfo> uriInfoOptional =
-			dtoConverterContext.getUriInfoOptional();
-
-		return uriInfoOptional.map(
-			UriInfo::getQueryParameters
-		).map(
-			map -> map.getFirst("nestedFields")
-		).map(
-			nestedFields -> nestedFields.contains(parameter)
-		).orElse(
-			false
-		);
 	}
 
 	private Value _getValue(
@@ -356,7 +338,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				label = localizedValue.getString(
 					dtoConverterContext.getLocale());
 				label_i18n = LocalizedMapUtil.getLocalizedMap(
-					_getQueryParam(dtoConverterContext, "label_i18n"),
+					dtoConverterContext.isAcceptAllLanguages(),
 					localizedValue.getValues());
 				name = ddmFormField.getName();
 				nestedContentFields = TransformUtil.transformToArray(
@@ -374,9 +356,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 
 				setValue_i18n(
 					() -> {
-						if (!_getQueryParam(
-								dtoConverterContext, "value_i18n")) {
-
+						if (!dtoConverterContext.isAcceptAllLanguages()) {
 							return null;
 						}
 

@@ -865,6 +865,9 @@ public class StructuredContentResourceImpl
 
 		return _structuredContentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
+				GetterUtil.getBoolean(
+					contextHttpServletRequest.getHeader(
+						"X-Accept-All-Languages")),
 				contextAcceptLanguage.getPreferredLocale(),
 				journalArticle.getResourcePrimKey(), contextUriInfo,
 				contextUser));

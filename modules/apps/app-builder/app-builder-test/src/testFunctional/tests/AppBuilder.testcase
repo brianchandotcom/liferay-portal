@@ -1613,7 +1613,30 @@ definition {
 		
 		AppBuilderAdmin.undeployApp(itemName = "Test App A");
 
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateUndeployedApp();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
 		AppBuilderAdmin.deployApp(itemName = "Test App A");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App B");
+
+		AppBuilderAdmin.deployApp(itemName = "Test App B");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App C");
+
+		AppBuilderAdmin.deployApp(itemName = "Test App C");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

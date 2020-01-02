@@ -1,0 +1,61 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Layout Page Templates";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This case ensures that a user can select content via content display in content page template editor."
+	@priority = "4"
+	test SelectWebContentViaContentDisplay {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.addContentDisplay(fragmentName = "Content");
+
+		PageEditor.editContentDisplay(
+			webcontent = "true",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		PageEditor.clickPublish();
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		task ("Assert correct content is visible") {
+			AssertTextEquals.assertPartialTextAceEditor(
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+				value1 = "WC WebContent Content");
+		}
+	}
+
+}

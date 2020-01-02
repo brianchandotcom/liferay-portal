@@ -224,7 +224,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/guest");
 
-		task ("Assert preferred locale persists by asserting Widget name.") {
+		task ("Assert default locale returned by asserting Widget name.") {
 			AssertElementPresent(
 				key_portletName = "Hello World",
 				locator1 = "Portlet#TITLE");

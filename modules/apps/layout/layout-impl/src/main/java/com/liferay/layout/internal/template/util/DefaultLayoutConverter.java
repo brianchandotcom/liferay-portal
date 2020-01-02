@@ -18,14 +18,21 @@ import com.liferay.layout.util.template.LayoutColumn;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutData;
 import com.liferay.layout.util.template.LayoutRow;
+import com.liferay.layout.util.template.LayoutTypeSettingsInspectorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -100,6 +107,53 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 		return LayoutData.of(
 			layout, rowUnsafeConsumers.toArray(new UnsafeConsumer[0]));
+	}
+
+	private String[] _getConversionWarningMessages(
+		Layout layout, Locale locale) {
+
+		List<String> conversionWarningMessages = new ArrayList<>();
+
+		List<String> conversionWarningKeys = new ArrayList<>();
+
+		if (LayoutTypeSettingsInspectorUtil.hasNestedPortletsPortlet(
+				layout.getTypeSettingsProperties())) {
+
+			conversionWarningKeys.add(
+				"the-page-uses-nested-applications-widgets.-they-have-been-" +
+					"placed-in-a-single-column-and-may-require-manual-" +
+						"reorganization");
+		}
+
+		if (LayoutTypeSettingsInspectorUtil.isCustomizableLayout(
+				layout.getTypeSettingsProperties())) {
+
+			conversionWarningKeys.add(
+				"the-page-has-customizable-columns.-this-capability-will-be-" +
+					"lost-if-the-conversion-takes-place");
+		}
+
+		if (!_isLayoutTemplateParseable(layout)) {
+			conversionWarningKeys.add(
+				"the-page-uses-a-non-standard-page-layout.-all-widgets-have-" +
+					"been-placed-in-a-single-column-and-will-require-manual-" +
+						"reorganization");
+		}
+
+		if (!conversionWarningKeys.isEmpty()) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, getClass());
+
+			Stream<String> stream = conversionWarningKeys.stream();
+
+			conversionWarningMessages = stream.map(
+				key -> LanguageUtil.get(resourceBundle, key)
+			).collect(
+				Collectors.toList()
+			);
+		}
+
+		return conversionWarningMessages.toArray(new String[0]);
 	}
 
 	private Document _getLayoutTemplateDocument(Layout layout) {

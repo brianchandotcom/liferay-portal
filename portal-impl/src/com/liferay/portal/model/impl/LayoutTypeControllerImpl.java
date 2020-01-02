@@ -40,8 +40,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class LayoutTypeControllerImpl implements LayoutTypeController {
 
 	public LayoutTypeControllerImpl(String type) {

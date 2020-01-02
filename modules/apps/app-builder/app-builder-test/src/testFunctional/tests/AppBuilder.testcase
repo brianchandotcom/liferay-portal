@@ -1881,14 +1881,48 @@ definition {
 			tableViewName = "Table View Title");
 
 		App.add(
-			appTitle = "Test App",
+			appTitle = "Test App A",
 			deployOption = "Product Menu",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
+		
+		App.add(
+			appTitle = "Test App B",
+			deployOption = "Widget",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
 
-		AppBuilderAdmin.undeployApp(itemName = "Test App");
+		App.add(
+			appTitle = "Test App C",
+			deployOption = "Standalone",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
 
-		AppBuilderAdmin.deployApp(itemName = "Test App");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Test App B");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+		
+		AppBuilderAdmin.undeployApp(itemName = "Test App A");
+
+		AppBuilderAdmin.deployApp(itemName = "Test App A");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

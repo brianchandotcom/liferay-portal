@@ -62,7 +62,8 @@ definition {
 
 		ItemSelector.selectRepositoryImage(
 			depotName = "Test Depot Name",
-			imageFileName = "Document_2.jpg");
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 
@@ -175,7 +176,8 @@ definition {
 
 		ItemSelector.selectRepositoryImage(
 			depotName = "Test Depot Name",
-			imageFileName = "Document_2.jpg");
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media");
 
 		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
 

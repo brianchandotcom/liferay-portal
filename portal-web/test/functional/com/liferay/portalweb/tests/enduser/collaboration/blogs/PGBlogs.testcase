@@ -55,6 +55,8 @@ definition {
 
 	@priority = "5"
 	test AddBlogsEntry {
+		property testray.component.names = "WYSIWYG";
+
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -769,6 +771,8 @@ definition {
 	@description = "This is a usecase for LPS-75241"
 	@priority = "5"
 	test EmbedVideo {
+		property testray.component.names = "WYSIWYG";
+
 		Blogs.addEntry(
 			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
 			entryContent = "video",
@@ -847,6 +851,8 @@ definition {
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
 	@priority = "5"
 	test RemoveSmallImage {
+		property testray.component.names = "WYSIWYG";
+
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(

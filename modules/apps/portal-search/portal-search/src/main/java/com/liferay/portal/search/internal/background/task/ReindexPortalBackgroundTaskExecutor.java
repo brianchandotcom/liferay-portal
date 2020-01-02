@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskCon
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.search.internal.SearchEngineInitializer;
 
+import org.osgi.framework.BundleContext;
+
 /**
  * @author Andrew Betts
  */
@@ -29,14 +31,17 @@ public class ReindexPortalBackgroundTaskExecutor
 	extends ReindexBackgroundTaskExecutor {
 
 	public ReindexPortalBackgroundTaskExecutor(
+		BundleContext bundleContext,
 		PortalExecutorManager portalExecutorManager) {
 
+		_bundleContext = bundleContext;
 		_portalExecutorManager = portalExecutorManager;
 	}
 
 	@Override
 	public BackgroundTaskExecutor clone() {
-		return new ReindexPortalBackgroundTaskExecutor(_portalExecutorManager);
+		return new ReindexPortalBackgroundTaskExecutor(
+			_bundleContext, _portalExecutorManager);
 	}
 
 	@Override
@@ -51,7 +56,7 @@ public class ReindexPortalBackgroundTaskExecutor
 			try {
 				SearchEngineInitializer searchEngineInitializer =
 					new SearchEngineInitializer(
-						companyId, _portalExecutorManager);
+						_bundleContext, companyId, _portalExecutorManager);
 
 				searchEngineInitializer.reindex();
 			}
@@ -69,6 +74,7 @@ public class ReindexPortalBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexPortalBackgroundTaskExecutor.class);
 
+	private final BundleContext _bundleContext;
 	private final PortalExecutorManager _portalExecutorManager;
 
 }

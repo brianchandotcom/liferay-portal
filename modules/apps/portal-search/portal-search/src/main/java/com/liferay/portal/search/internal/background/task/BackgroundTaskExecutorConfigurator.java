@@ -38,7 +38,8 @@ public class BackgroundTaskExecutorConfigurator {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		BackgroundTaskExecutor reindexPortalBackgroundTaskExecutor =
-			new ReindexPortalBackgroundTaskExecutor(_portalExecutorManager);
+			new ReindexPortalBackgroundTaskExecutor(
+				bundleContext, _portalExecutorManager);
 
 		registerBackgroundTaskExecutor(
 			bundleContext, reindexPortalBackgroundTaskExecutor);

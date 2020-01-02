@@ -1449,6 +1449,68 @@ components:
             required:
                 - headline
             type: object
+        NavigationMenu:
+            description:
+                ""
+            properties:
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                navigationMenuItems:
+                    items:
+                        $ref: "#/components/schemas/NavigationMenuItem"
+                    type: array
+                siteId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+        NavigationMenuItem:
+            description:
+                ""
+            properties:
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                link:
+                    type: string
+                name:
+                    type: string
+                navigationMenuItems:
+                    items:
+                        $ref: "#/components/schemas/NavigationMenuItem"
+                    type: array
+                type:
+                    type: string
+                url:
+                    type: string
         Rating:
             description:
                 Represents a rating/score received by any kind of asset. Properties follow the
@@ -5063,6 +5125,28 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardThread"]
+    "/navigation-menus/{navigationMenuId}":
+        get:
+            description:
+                ""
+            operationId: getNavigationMenu
+            parameters:
+                - in: path
+                  name: navigationMenuId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+            tags: ["NavigationMenu"]
     "/sites/{siteId}/blog-posting-images":
         get:
             description:
@@ -5971,6 +6055,40 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardThread"]
+    "/sites/{siteId}/navigation-menus":
+        get:
+            description:
+                ""
+            operationId: getSiteNavigationMenusPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/NavigationMenu"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/NavigationMenu"
+                                type: array
+            tags: ["NavigationMenu"]
     "/sites/{siteId}/structured-content-folders":
         get:
             description:

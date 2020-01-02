@@ -44,9 +44,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -171,9 +169,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			return;
 		}
 
-		String dataSourceType = _getDataSourceType(ddmFormField);
-
-		if (!Objects.equals(dataSourceType, "manual")) {
+		if (!Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
 			return;
 		}
 
@@ -386,30 +382,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		validateDDMFormFieldPropertyValue(
 			ddmFormField.getName(), propertyName, propertyValue,
 			ddmFormAvailableLocales, ddmFormDefaultLocale);
-	}
-
-	private String _getDataSourceType(DDMFormField ddmFormField) {
-		String dataSourceType = StringPool.BLANK;
-		Object propertyDataSourceType = ddmFormField.getProperty(
-			"dataSourceType");
-
-		if (propertyDataSourceType instanceof JSONArray) {
-			JSONArray jsonArray = (JSONArray)propertyDataSourceType;
-
-			if (jsonArray.length() > 0) {
-				dataSourceType = GetterUtil.getString(
-					jsonArray.get(0), "manual");
-			}
-			else {
-				dataSourceType = "manual";
-			}
-		}
-		else {
-			dataSourceType = GetterUtil.getString(
-				propertyDataSourceType, "manual");
-		}
-
-		return dataSourceType;
 	}
 
 	private static final String[] _DDM_FORM_FIELD_INDEX_TYPES = {

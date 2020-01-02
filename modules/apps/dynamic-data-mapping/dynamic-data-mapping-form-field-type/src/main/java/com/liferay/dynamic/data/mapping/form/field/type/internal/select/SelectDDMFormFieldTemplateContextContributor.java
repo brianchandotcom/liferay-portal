@@ -63,9 +63,7 @@ public class SelectDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
-			"dataSourceType",
-			GetterUtil.getString(
-				ddmFormField.getProperty("dataSourceType"), "manual")
+			"dataSourceType", ddmFormField.getDataSourceType()
 		).put(
 			"multiple", getMultiple(ddmFormField, ddmFormFieldRenderingContext)
 		).build();
@@ -147,26 +145,29 @@ public class SelectDDMFormFieldTemplateContextContributor
 		List<Object> options = new ArrayList<>();
 
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-			Map<String, String> optionMap = HashMapBuilder.put(
-				"label",
-				() -> {
-					LocalizedValue optionLabel =
-						ddmFormFieldOptions.getOptionLabels(optionValue);
+			if (optionValue != null) {
+				Map<String, String> optionMap = HashMapBuilder.put(
+					"label",
+					() -> {
+						LocalizedValue optionLabel =
+							ddmFormFieldOptions.getOptionLabels(optionValue);
 
-					String optionLabelString = optionLabel.getString(locale);
+						String optionLabelString = optionLabel.getString(
+							locale);
 
-					if (ddmFormFieldRenderingContext.isViewMode()) {
-						optionLabelString = HtmlUtil.extractText(
-							optionLabelString);
+						if (ddmFormFieldRenderingContext.isViewMode()) {
+							optionLabelString = HtmlUtil.extractText(
+								optionLabelString);
+						}
+
+						return optionLabelString;
 					}
+				).put(
+					"value", optionValue
+				).build();
 
-					return optionLabelString;
-				}
-			).put(
-				"value", optionValue
-			).build();
-
-			options.add(optionMap);
+				options.add(optionMap);
+			}
 		}
 
 		return options;

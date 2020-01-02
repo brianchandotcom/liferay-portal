@@ -56,8 +56,7 @@ public class DDMFormFieldOptionsFactoryImpl
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		String dataSourceType = GetterUtil.getString(
-			ddmFormField.getProperty("dataSourceType"), "manual");
+		String dataSourceType = ddmFormField.getDataSourceType();
 
 		if (Objects.equals(dataSourceType, "data-provider")) {
 			return createDDMFormFieldOptionsFromDataProvider(

@@ -15,9 +15,10 @@
 package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -130,6 +131,36 @@ public class DDMFormField implements Serializable {
 		}
 
 		return false;
+	}
+
+	public String getDataSourceType() {
+		String dataSourceType = "manual";
+		Object propertyDataSourceType = _properties.get("dataSourceType");
+
+		if (propertyDataSourceType instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)propertyDataSourceType;
+
+			if (jsonArray.length() > 0) {
+				dataSourceType = GetterUtil.getString(
+					jsonArray.get(0), "manual");
+			}
+		}
+		else if (propertyDataSourceType instanceof String) {
+			try {
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+					(String)propertyDataSourceType);
+
+				if (jsonArray.length() > 0) {
+					dataSourceType = GetterUtil.getString(
+						jsonArray.get(0), "manual");
+				}
+			}
+			catch (JSONException jsone) {
+				return (String)propertyDataSourceType;
+			}
+		}
+
+		return dataSourceType;
 	}
 
 	public String getDataType() {
@@ -379,29 +410,6 @@ public class DDMFormField implements Serializable {
 
 	public void setVisibilityExpression(String visibilityExpression) {
 		_properties.put("visibilityExpression", visibilityExpression);
-	}
-
-	protected String getDataSourceType() {
-		Object dataSourceType = _properties.get("dataSourceType");
-
-		if (dataSourceType instanceof JSONArray) {
-			JSONArray jsonArray = (JSONArray)dataSourceType;
-
-			return jsonArray.getString(0);
-		}
-		else if (dataSourceType instanceof String) {
-			try {
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-					(String)dataSourceType);
-
-				return jsonArray.getString(0);
-			}
-			catch (Exception e) {
-				return (String)dataSourceType;
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private DDMForm _ddmForm;

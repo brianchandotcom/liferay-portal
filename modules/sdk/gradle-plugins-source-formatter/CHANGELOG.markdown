@@ -1672,10 +1672,11 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-76018]: Update the com.liferay.source.formatter dependency to version
 1.0.517.
 
-## 2.3.47 - 2017-12-12
+## 2.3.47 - 2017-12-13
 
 ### Dependencies
-- []: Update the com.liferay.source.formatter dependency to version 1.0.518.
+- [LPS-74544]: Update the com.liferay.source.formatter dependency to version
+1.0.518.
 
 ## 2.3.48 - 2017-12-13
 
@@ -3355,10 +3356,11 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-89637]: Update the com.liferay.source.formatter dependency to version
 1.0.790.
 
-## 2.3.320 - 2019-02-20
+## 2.3.320 - 2019-02-22
 
 ### Dependencies
-- []: Update the com.liferay.source.formatter dependency to version 1.0.791.
+- [LPS-74544]: Update the com.liferay.source.formatter dependency to version
+1.0.791.
 
 ## 2.3.321 - 2019-02-28
 

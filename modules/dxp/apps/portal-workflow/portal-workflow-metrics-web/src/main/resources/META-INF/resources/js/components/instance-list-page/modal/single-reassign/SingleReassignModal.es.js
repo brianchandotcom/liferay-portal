@@ -77,7 +77,7 @@ const SingleReassignModal = () => {
 	});
 
 	const {data, fetchData} = useFetch({
-		headless: true,
+		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
 		url: `/workflow-instances/${taskItem.id}/workflow-tasks`
 	});
@@ -94,8 +94,8 @@ const SingleReassignModal = () => {
 	);
 
 	const {postData} = usePost({
+		admin: true,
 		body: {assigneeId: newAssigneeId},
-		headless: true,
 		url: `/workflow-tasks/${itemId}/assign-to-user`
 	});
 

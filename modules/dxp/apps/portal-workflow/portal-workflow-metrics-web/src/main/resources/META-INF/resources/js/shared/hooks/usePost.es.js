@@ -13,19 +13,19 @@ import {useContext, useCallback, useState} from 'react';
 
 import {AppContext} from '../../components/AppContext.es';
 
-const usePost = ({body = {}, headless = false, url}) => {
-	const {client, clientHeadless} = useContext(AppContext);
+const usePost = ({admin = false, body = {}, url}) => {
+	const {getClient} = useContext(AppContext);
 	const [data, setData] = useState({});
 
+	const client = getClient(admin);
 	const queryBodyStr = JSON.stringify(body);
-	const requestClient = headless ? clientHeadless : client;
 	const postData = useCallback(
 		() =>
-			requestClient.post(url, body).then(({data}) => {
+			client.post(url, body).then(({data}) => {
 				setData(data);
 			}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[queryBodyStr, url, headless]
+		[admin, queryBodyStr, url]
 	);
 
 	return {

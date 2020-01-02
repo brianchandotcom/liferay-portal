@@ -614,6 +614,10 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 					LocalizedValue optionLabel =
 						formFieldOptions.getOptionLabels(formFieldValue);
 
+					if (optionLabel == null) {
+						return formFieldValue;
+					}
+
 					return optionLabel.getString(_renderRequest.getLocale());
 				}
 

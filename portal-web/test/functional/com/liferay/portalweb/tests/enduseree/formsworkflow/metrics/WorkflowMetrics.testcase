@@ -69,9 +69,9 @@ definition {
 			slaDefinitionDays = "${key_testSLADefinitionDays}",
 			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
 			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}",
 			slaDefinitionName = "${key_testSLADefinitionName}",
-			slaDefinitionStart = "${key_testSLADefinitionStart}",
-			slaDefinitionHours = "${key_testSLADefinitionHours}");
+			slaDefinitionStart = "${key_testSLADefinitionStart}");
 
 		Button.clickSave();
 
@@ -378,7 +378,7 @@ definition {
 	test VerifyFilterTopStepPerformance {
 
 		property portal.acceptance = "true";
-		
+
 		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "0001";
 		var key_testSLADefinitionHoursCheck = "00:01";
@@ -395,9 +395,9 @@ definition {
 			slaDefinitionDays = "${key_testSLADefinitionDays}",
 			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
 			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}",
 			slaDefinitionName = "${key_testSLADefinitionName}",
-			slaDefinitionStart = "${key_testSLADefinitionStart}",
-			slaDefinitionHours = "${key_testSLADefinitionHours}");
+			slaDefinitionStart = "${key_testSLADefinitionStart}");
 
 		Button.clickSave();
 

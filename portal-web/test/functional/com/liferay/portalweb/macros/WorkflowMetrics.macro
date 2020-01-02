@@ -166,31 +166,10 @@ definition {
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
 			value1 = "${key_slaDefinitionDays}");
-		
+
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
 			value1 = "${key_slaDefinitionHours}");
-
-	}
-	macro waitForSLAtoRun {
-		var count = "0";
-
-		while (IsElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE_NONE") && ("${count}" != "12")) {
-
-			echo("Waiting 5 seconds, until the SLA becomes overdue");
-
-			Pause(locator1 = "5000");
-
-		// //Add a function here to refresh the page. We need to search for one.
-			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-			count = MathUtil.sum("${count}", "1");
-		}
-
-		if ("${count}" == "15") {
-			echo("timeout exceeded");
-		}	
-
 	}
 
 	macro goToCreatedSLAForm {

@@ -40,6 +40,17 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
+	@Override
+	protected String formatDoubleSpace(String line) {
+		String trimmedLine = StringUtil.trim(line);
+
+		if (trimmedLine.startsWith("*")) {
+			return line;
+		}
+
+		return super.formatDoubleSpace(line);
+	}
+
 	private String _formatWhitespace(
 			String fileName, String absolutePath, String content)
 		throws IOException {

@@ -392,7 +392,7 @@
 	<source-processor name="MarkdownSourceProcessor">
 		<check name="MarkdownFileExtensionCheck" />
 		<check name="MarkdownStylingCheck" />
-		<check name="WhitespaceCheck">
+		<check name="MarkdownWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 			<property name="allowTrailingDoubleSpace" value="true" />
 		</check>
@@ -427,6 +427,7 @@
 		<check name="PropertiesSourceFormatterFileCheck" />
 		<check name="PropertiesStylingCheck" />
 		<check name="PropertiesWhitespaceCheck">
+			<property name="allowDoubleSpace" value="true" />
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 

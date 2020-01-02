@@ -53,6 +53,28 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return content;
 	}
 
+	protected String formatDoubleSpace(String line) {
+		String trimmedLine = StringUtil.trim(line);
+
+		int x = -1;
+
+		while (true) {
+			x = trimmedLine.indexOf(StringPool.DOUBLE_SPACE, x + 1);
+
+			if (x == -1) {
+				return line;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(trimmedLine, x)) {
+				return StringUtil.replace(
+					line, trimmedLine,
+					StringUtil.replaceFirst(
+						trimmedLine, StringPool.DOUBLE_SPACE, StringPool.SPACE,
+						x));
+			}
+		}
+	}
+
 	protected String formatIncorrectSyntax(String line, String regex) {
 		Pattern pattern = Pattern.compile(regex);
 
@@ -314,9 +336,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 	protected String trimLine(
 		String fileName, String absolutePath, String line) {
 
-		String trimmedLine = StringUtil.trim(line);
+		String trimmedTrailingLine = StringUtil.trimTrailing(line);
 
-		if (trimmedLine.length() == 0) {
+		if (trimmedTrailingLine.length() == 0) {
 			return StringPool.BLANK;
 		}
 
@@ -325,7 +347,11 @@ public class WhitespaceCheck extends BaseFileCheck {
 				_ALLOW_TRAILING_DOUBLE_SPACE_KEY, absolutePath) ||
 			 !line.endsWith(StringPool.DOUBLE_SPACE))) {
 
-			line = StringUtil.trimTrailing(line);
+			line = trimmedTrailingLine;
+		}
+
+		if (!isAttributeValue(_ALLOW_DOUBLE_SPACE_KEY, absolutePath)) {
+			line = formatDoubleSpace(line);
 		}
 
 		if (isAllowLeadingSpaces(fileName, absolutePath) ||
@@ -378,6 +404,8 @@ public class WhitespaceCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String _ALLOW_DOUBLE_SPACE_KEY = "allowDoubleSpace";
 
 	private static final String _ALLOW_LEADING_SPACES_KEY =
 		"allowLeadingSpaces";

@@ -54,6 +54,26 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
+	@Override
+	protected String formatDoubleSpace(String line) {
+		String trimmedLine = StringUtil.trim(line);
+
+		if (trimmedLine.startsWith("#")) {
+			return line;
+		}
+
+		Matcher matcher = _javaSourceInsideJSPLinePattern.matcher(line);
+
+		while (matcher.find()) {
+			String group = matcher.group();
+
+			line = StringUtil.replace(
+				line, group, super.formatDoubleSpace(group));
+		}
+
+		return super.formatDoubleSpace(line);
+	}
+
 	private String _formatDirectivesWhitespace(String content) {
 		Matcher matcher = _directiveLinePattern.matcher(content);
 

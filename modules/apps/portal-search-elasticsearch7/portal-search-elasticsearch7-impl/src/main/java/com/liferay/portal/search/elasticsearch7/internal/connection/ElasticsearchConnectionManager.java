@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.elasticsearch.client.RestHighLevelClient;
 
@@ -274,7 +275,7 @@ public class ElasticsearchConnectionManager
 	private final Map<Long, Long> _companyIds = new HashMap<>();
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<String, ElasticsearchConnection>
-		_elasticsearchConnections = new HashMap<>();
+		_elasticsearchConnections = new ConcurrentHashMap<>();
 	private OperationMode _operationMode;
 	private ServiceTracker
 		<ElasticsearchConnectionConfigurationWrapper,

@@ -1541,6 +1541,8 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 
 	<macrodef name="prepare-custom-properties">
 		<attribute name="custom.properties" />
+		<attribute default="portal-impl/src/portal-ext.properties" name="properties.file" />
+
 		<sequential>
 			<for delimiter="${line.separator}" list="@{custom.properties}" param="property">
 				<sequential>
@@ -1572,60 +1574,13 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 					/>
 
 					<replaceregexp
-						file="portal-impl/src/portal-ext.properties"
+						file="@{properties.file}"
 						flags="g"
 						match="${propertyName}=.*"
 						replace=""
 					/>
 
-					<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-@{property}</echo>
-				</sequential>
-			</for>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-custom-system-properties">
-		<attribute name="custom.system.properties" />
-		<sequential>
-			<for delimiter="${line.separator}" list="@{custom.system.properties}" param="property">
-				<sequential>
-					<propertyregex
-						global="true"
-						input="@{property}"
-						override="true"
-						property="propertyName"
-						regexp="=.*"
-						replace=""
-					/>
-
-					<propertyregex
-						global="true"
-						input="${propertyName}"
-						override="true"
-						property="propertyName"
-						regexp="\["
-						replace="\\\\["
-					/>
-
-					<propertyregex
-						global="true"
-						input="${propertyName}"
-						override="true"
-						property="propertyName"
-						regexp="\]"
-						replace="\\\\]"
-					/>
-
-					<replaceregexp
-						file="${app.server.classes.portal.dir}/system-ext.properties"
-						flags="g"
-						match="${propertyName}=.*"
-						replace=""
-					/>
-
-					<echo append="true" file="${app.server.classes.portal.dir}/system-ext.properties">
+					<echo append="true" file="@{properties.file}">
 
 @{property}</echo>
 				</sequential>
@@ -9490,7 +9445,10 @@ log.sanitizer.enabled=false</echo>
 		<if>
 			<isset property="custom.system.properties" />
 			<then>
-				<prepare-custom-system-properties custom.system.properties="${custom.system.properties}" />
+				<prepare-custom-properties
+					custom.properties="${custom.system.properties}"
+					properties.file="${app.server.classes.portal.dir}/system-ext.properties"
+				/>
 			</then>
 		</if>
 	</target>

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -146,17 +147,23 @@ public class DDMFormField implements Serializable {
 			}
 		}
 		else if (propertyDataSourceType instanceof String) {
-			try {
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-					(String)propertyDataSourceType);
+			dataSourceType = (String)propertyDataSourceType;
 
-				if (jsonArray.length() > 0) {
-					dataSourceType = GetterUtil.getString(
-						jsonArray.get(0), "manual");
+			if (dataSourceType.startsWith(StringPool.OPEN_BRACKET) &&
+				dataSourceType.endsWith(StringPool.CLOSE_BRACKET)) {
+
+				try {
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+						(String)propertyDataSourceType);
+
+					if (jsonArray.length() > 0) {
+						dataSourceType = GetterUtil.getString(
+							jsonArray.get(0), "manual");
+					}
 				}
-			}
-			catch (JSONException jsone) {
-				return (String)propertyDataSourceType;
+				catch (JSONException jsone) {
+					return dataSourceType;
+				}
 			}
 		}
 

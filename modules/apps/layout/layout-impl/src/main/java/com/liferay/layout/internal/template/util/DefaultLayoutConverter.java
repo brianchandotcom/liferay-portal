@@ -30,6 +30,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -108,6 +109,45 @@ public class DefaultLayoutConverter implements LayoutConverter {
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private boolean _isLayoutTemplateParseable(Layout layout) {
+		Document document = _getLayoutTemplateDocument(layout);
+
+		Elements rowElements = document.select(".portlet-layout.row");
+
+		if (rowElements.isEmpty()) {
+			return false;
+		}
+
+		for (Element rowElement : rowElements) {
+			Elements columnElements = rowElement.getElementsByClass(
+				"portlet-column");
+
+			if (columnElements.isEmpty()) {
+				return false;
+			}
+
+			for (Element columnElement : columnElements) {
+				int columnSize = 0;
+
+				for (String className : columnElement.classNames()) {
+					if (className.startsWith(_CSS_CLASS_COLUMN_PREFIX)) {
+						columnSize = GetterUtil.getInteger(
+							className.substring(
+								_CSS_CLASS_COLUMN_PREFIX.length()));
+
+						break;
+					}
+				}
+
+				if (columnSize == 0) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	private static final String _CSS_CLASS_COLUMN_PREFIX = "col-md-";

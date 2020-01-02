@@ -402,7 +402,7 @@
 		},
 
 		disableElements(el) {
-			var currentElement = $(el)[0];
+			const currentElement = Util.getElement(el);
 
 			if (currentElement) {
 				var children = currentElement.getElementsByTagName('*');
@@ -426,8 +426,6 @@
 					item.disabled = true;
 					item.href = 'javascript:;';
 					item.onsubmit = emptyFnFalse;
-
-					$(item).off();
 				}
 			}
 		},

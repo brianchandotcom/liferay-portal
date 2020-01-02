@@ -33,7 +33,6 @@ buildChangelogs {
 		String text = "# " + GUtil.loadProperties(new File("sdk/${projectName}/bnd.bnd"))["Bundle-Name"] + " Change Log"
 
 		String commitRange = ""
-		String publishDate = ""
 		String version = ""
 
 		File changelogCommitsFile = file("sdk/" + projectName + "/CHANGELOG.commits")
@@ -63,6 +62,7 @@ buildChangelogs {
 			String commits = ""
 			String dependencies = ""
 			String descriptions = ""
+			String publishDate = ""
 			String ticket = ""
 
 			gitLogOutput.eachLine {

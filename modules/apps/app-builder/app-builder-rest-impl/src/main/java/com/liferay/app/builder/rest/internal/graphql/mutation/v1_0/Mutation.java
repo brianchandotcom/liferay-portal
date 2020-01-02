@@ -15,7 +15,9 @@
 package com.liferay.app.builder.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
+import com.liferay.app.builder.rest.dto.v1_0.DataModelPermission;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
+import com.liferay.app.builder.rest.resource.v1_0.DataModelPermissionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -45,6 +47,14 @@ public class Mutation {
 
 		_appResourceComponentServiceObjects =
 			appResourceComponentServiceObjects;
+	}
+
+	public static void setDataModelPermissionResourceComponentServiceObjects(
+		ComponentServiceObjects<DataModelPermissionResource>
+			dataModelPermissionResourceComponentServiceObjects) {
+
+		_dataModelPermissionResourceComponentServiceObjects =
+			dataModelPermissionResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -92,6 +102,22 @@ public class Mutation {
 			_appResourceComponentServiceObjects, this::_populateResourceContext,
 			appResource -> appResource.postDataDefinitionApp(
 				dataDefinitionId, app));
+	}
+
+	@GraphQLField
+	public boolean updateDataModelPermission(
+			@GraphQLName("dataModelPermissions") DataModelPermission[]
+				dataModelPermissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataModelPermissionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataModelPermissionResource ->
+				dataModelPermissionResource.putDataModelPermission(
+					dataModelPermissions));
+
+		return true;
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -143,8 +169,24 @@ public class Mutation {
 		appResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(
+			DataModelPermissionResource dataModelPermissionResource)
+		throws Exception {
+
+		dataModelPermissionResource.setContextAcceptLanguage(_acceptLanguage);
+		dataModelPermissionResource.setContextCompany(_company);
+		dataModelPermissionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		dataModelPermissionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		dataModelPermissionResource.setContextUriInfo(_uriInfo);
+		dataModelPermissionResource.setContextUser(_user);
+	}
+
 	private static ComponentServiceObjects<AppResource>
 		_appResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DataModelPermissionResource>
+		_dataModelPermissionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

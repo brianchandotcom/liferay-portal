@@ -216,8 +216,7 @@ definition {
 
 	@priority = "5"
 	test AddBlogWithFormatting {
-		property testray.component.names = "WYSIWYG";
-		property testray.component.names = "Training";
+		property testray.component.names = "Training,WYSIWYG";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

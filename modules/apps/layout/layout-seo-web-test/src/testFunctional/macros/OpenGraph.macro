@@ -54,6 +54,13 @@ definition {
 			Click(locator1 = "Button#ADD");
 
 			SelectFrameTop(value1 = "relative=top");
+
+			if (isSet(altDescription)) {
+				Type(
+					key_text = "openGraphImageAlt",
+					locator1 = "TextArea#ANY",
+					value1 = "${altDescription}");
+			}
 		}
 
 		if (!(isSet(dontSave))) {

@@ -17,13 +17,15 @@ package com.liferay.product.navigation.control.menu.web.internal.util;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,6 +51,13 @@ public class ProductNavigationControlMenuUtil {
 			return false;
 		}
 
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+
+			return false;
+		}
+
 		if (StagingUtil.isIncomplete(layout)) {
 			return false;
 		}
@@ -60,10 +69,6 @@ public class ProductNavigationControlMenuUtil {
 			layoutTypePortlet.getLayoutTypeController();
 
 		if (layoutTypeController.isFullPageDisplayable()) {
-			return false;
-		}
-
-		if (!(layoutTypeController instanceof LayoutTypeControllerImpl)) {
 			return false;
 		}
 

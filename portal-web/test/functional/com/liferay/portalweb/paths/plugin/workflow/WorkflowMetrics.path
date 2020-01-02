@@ -29,6 +29,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE</td>
+	<td>xpath=(//div[@class='header'][span[contains(text(),'Overdue')]]/following-sibling::div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE_NONE</td>
+	<td>xpath=(//div[@class='header'][span[contains(text(),'Overdue')]]/following-sibling::div[contains(text(), '0')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
 	<td>//div[@class='header'][span[contains(text(),'Total Pending')]]</td>
 	<td></td>
@@ -177,6 +187,11 @@
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_EMPTY_STATE</td>
 	<td>//span[contains(text(),'Performance by Assignee')]/ancestor::div[contains(@data-testid, 'panelHeader')]/following-sibling::div//p[contains(.,'There is no data at the moment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_NO_OVERDUE_STATE</td>
+	<td>//p[contains(.,'There are no assigned items overdue at the moment.')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -34,10 +34,11 @@ definition {
 
 	macro assertChartTotalValuePerformanceByStep {
 		var key_SLABreachedValue = "${slaBreachedValue}";
+		var key_rowName = "${rowName}";
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_SLA_BREACHED_VALUE",
-			rowName = "Review",
+			rowName = "${key_rowName}",
 			value1 = "${key_SLABreachedValue}");
 	}
 
@@ -171,25 +172,25 @@ definition {
 			value1 = "${key_slaDefinitionHours}");
 
 	}
+	macro waitForSLAtoRun {
+		var count = "0";
 
-macro waitForSLAtoRun {
-		var count = "1";
+		while (IsElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE_NONE") && ("${count}" != "12")) {
 
-		while (AssertTextNotEquals(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE", value1 = "1 Minute Ago") && ("${count}" != "15")) {
+			echo("Waiting 5 seconds, until the SLA becomes overdue");
 
-		echo("Waiting 10 seconds, until the SLA becomes overdue");
+			Pause(locator1 = "5000");
 
-		Pause(locator1 = "10000");
+		// //Add a function here to refresh the page. We need to search for one.
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		//Add a function here to refresh the page. We need to search for one.
-		Refresh();
-
-		count = MathUtil.sum("${count}", "1");
+			count = MathUtil.sum("${count}", "1");
 		}
 
 		if ("${count}" == "15") {
-		echo("timeout exceeded");
-		}
+			echo("timeout exceeded");
+		}	
+
 	}
 
 	macro goToCreatedSLAForm {

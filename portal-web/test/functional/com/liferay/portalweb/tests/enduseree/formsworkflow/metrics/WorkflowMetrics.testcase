@@ -445,8 +445,11 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		WorkflowMetrics.waitForSLAtoRun(
-			workflowAssetTitle = "Blogs Entry Title");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForSLAtoRun();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
@@ -464,14 +467,18 @@ definition {
 
 		WorkflowMetrics.assertDefaultChartRangesAndUnits();
 
-		WorkflowMetrics.assertChartTotalValuePerformanceByStep(slaBreachedValue = "1 (100%)");
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			rowName = "Review",
+			slaBreachedValue = "1 (100%)");
 
 		WorkflowMetrics.selectDateRangePerformanceByStep(
 			completionVelocityDateRange = "Custom Range",
 			endDateRange = "11/11/2018",
 			startDateRange = "09/22/2018");
 
-		WorkflowMetrics.assertChartTotalValuePerformanceByStep(slaBreachedValue = "0 (0%)");
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			rowName = "Review",
+			slaBreachedValue = "0 (0%)");
 	}
 
 	@description = "LRQA-53634 - LPS-99441: [Performance] View performance for all assignees"

@@ -35,6 +35,8 @@ public class DDMFormFieldType {
 
 	public static final String GEOLOCATION = "ddm-geolocation";
 
+	public static final String GRID = "grid";
+
 	public static final String IMAGE = "ddm-image";
 
 	public static final String INTEGER = "ddm-integer";

@@ -67,6 +67,10 @@ public class GridDDMFormFieldValueValidator
 				"Rows and columns must contain at least one alternative each");
 		}
 
+		if (value == null) {
+			return;
+		}
+
 		DDMForm ddmForm = ddmFormField.getDDMForm();
 
 		validateSelectedValue(

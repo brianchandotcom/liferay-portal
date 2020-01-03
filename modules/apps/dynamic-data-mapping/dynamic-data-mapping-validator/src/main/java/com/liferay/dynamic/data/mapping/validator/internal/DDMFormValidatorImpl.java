@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.validator.internal;
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -70,7 +72,10 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	@Override
-	public void validate(DDMForm ddmForm) throws DDMFormValidationException {
+	public void validate(DDMForm ddmForm)
+		throws DDMFormFieldValueValidationException,
+			   DDMFormValidationException {
+
 		validateDDMFormLocales(ddmForm);
 
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
@@ -123,6 +128,16 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		if (!availableLocales.contains(defaultLocale)) {
 			throw new MustSetDefaultLocaleAsAvailableLocale(defaultLocale);
+		}
+	}
+
+	protected void validateDDMFormFieldGrid(DDMFormField ddmFormField)
+		throws DDMFormFieldValueValidationException {
+
+		String fieldType = ddmFormField.getType();
+
+		if (fieldType.equals(DDMFormFieldType.GRID)) {
+			_ddmFormFieldValueValidator.validate(ddmFormField, null);
 		}
 	}
 
@@ -221,7 +236,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	protected void validateDDMFormFields(
 			List<DDMFormField> ddmFormFields, Set<String> ddmFormFieldNames,
 			Set<Locale> ddmFormAvailableLocales, Locale ddmFormDefaultLocale)
-		throws DDMFormValidationException {
+		throws DDMFormFieldValueValidationException,
+			   DDMFormValidationException {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);
@@ -232,6 +248,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 			validateDDMFormFieldOptions(
 				ddmFormField, ddmFormAvailableLocales, ddmFormDefaultLocale);
+
+			validateDDMFormFieldGrid(ddmFormField);
 
 			validateOptionalDDMFormFieldLocalizedProperty(
 				ddmFormField, "label", ddmFormAvailableLocales,
@@ -422,5 +440,8 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		"([^\\p{Punct}|\\p{Space}$]|[-_])+");
 
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference(target = "(ddm.form.field.type.name=grid)")
+	private DDMFormFieldValueValidator _ddmFormFieldValueValidator;
 
 }

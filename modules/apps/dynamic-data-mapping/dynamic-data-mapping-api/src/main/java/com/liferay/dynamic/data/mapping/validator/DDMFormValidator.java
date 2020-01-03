@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 
 /**
@@ -21,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
  */
 public interface DDMFormValidator {
 
-	public void validate(DDMForm ddmForm) throws DDMFormValidationException;
+	public void validate(DDMForm ddmForm)
+		throws DDMFormFieldValueValidationException, DDMFormValidationException;
 
 }

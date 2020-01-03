@@ -263,6 +263,10 @@ public final class DLValidatorImpl implements DLValidator {
 			DLConfiguration.class, properties);
 	}
 
+	protected void setDLConfiguration(DLConfiguration dlConfiguration) {
+		_dlConfiguration = dlConfiguration;
+	}
+
 	private String _replaceDLCharLastBlacklist(String title) {
 		String previousTitle = null;
 

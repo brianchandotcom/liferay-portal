@@ -1620,9 +1620,7 @@ definition {
 			pageName = "Site Page",
 			siteName = "Site Name");
 
-		// Workaround for LRQA-54636
-
-		/* ClassicSearch.gotoOptions(portletOption = "Configuration");
+		ClassicSearch.gotoOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -1641,20 +1639,19 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
-			siteName = "Site Name"); */
+			siteName = "Site Name");
 
 		ClassicSearch.search(searchTerm = "WC Title");
 
-		/* ClassicSearch.viewSearchResultPG(
+		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "WC Title 1",
-			searchAssetType = "Web Content Article"); */
+			searchAssetType = "Web Content Article");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 
-		// AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
-
+		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
 	}
 
 	macro viewDocument {

@@ -68,9 +68,9 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 
 		SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext =
 			new SiteNavigationAdminDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse),
-				_portal.getHttpServletRequest(renderRequest),
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService, _siteNavigationMenuService);
 

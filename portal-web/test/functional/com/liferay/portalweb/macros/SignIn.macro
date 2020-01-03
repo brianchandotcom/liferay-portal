@@ -108,6 +108,8 @@ definition {
 
 		Button.clickSave();
 
+		Pause(locator1 = "3000");
+
 		Alert.viewSuccessMessage();
 
 		Navigator.openURL();

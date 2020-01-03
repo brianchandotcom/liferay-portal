@@ -161,53 +161,6 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteID}/0/Document_1.jpg''');
 	}
 
-	@description = "This ensures that the OG image alt description configuration at page level overrides its configuration at the site level."
-	@priority = "4"
-	test ConfigurePageSpecificAltDescription {
-		var portalURL = PropsUtil.get("portal.url");
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
-
-		Panel.expandPanel(panel = "Open Graph");
-
-		OpenGraph.configureOpenGraph(
-			altDescription = "This is image alternative description",
-			customImage = "true",
-			uploadFileName = "Document_1.jpg");
-
-		User.logoutPG();
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
-
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="This is image alternative description"''');
-
-		User.firstLoginPG();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Configure",
-			pageName = "Test Page Name");
-
-		Navigator.gotoNavTab(navTab = "Open Graph");
-
-		OpenGraph.configureOpenGraph(
-			altDescription = "This is new image alternative description",
-			customImage = "true",
-			uploadFileName = "Document_2.jpg");
-
-		User.logoutPG();
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
-
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="This is new image alternative description"''');
-	}
-
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
 	@priority = "5"
 	test ClearImageAtSiteLevel {
@@ -276,6 +229,53 @@ definition {
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''property="og:image"''');
+	}
+
+	@description = "This ensures that the OG image alt description configuration at page level overrides its configuration at the site level."
+	@priority = "4"
+	test ConfigurePageSpecificAltDescription {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Settings");
+
+		Panel.expandPanel(panel = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			altDescription = "This is image alternative description",
+			customImage = "true",
+			uploadFileName = "Document_1.jpg");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="This is image alternative description"''');
+
+		User.firstLoginPG();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		OpenGraph.configureOpenGraph(
+			altDescription = "This is new image alternative description",
+			customImage = "true",
+			uploadFileName = "Document_2.jpg");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''property="og:image:alt" content="This is new image alternative description"''');
 	}
 
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."

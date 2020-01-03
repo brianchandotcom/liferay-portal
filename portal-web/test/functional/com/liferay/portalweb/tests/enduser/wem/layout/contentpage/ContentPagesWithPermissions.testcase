@@ -16,6 +16,12 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		}
+
 		task ("Add a content page") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -336,6 +342,187 @@ definition {
 
 			Click(locator1 = "Button#BACK");
 		}
+	}
+
+	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
+	@priority = "5"
+	test EditInlineContentWithdUpdatePageContentPermission {
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text");
+
+		PageEditor.clickPublish();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		User.openUsersAdmin();
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.editFragmentText(
+			fragmentName = "rich-text",
+			id = "rich-text",
+			text = "New editable fragment text");
+
+		PageEditor.clickPublish();
+
+		AssertVisible(
+			key_content = "New editable fragment text",
+			key_fragmentClass = "rich-text",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+	}
+
+	@description = "This is a test for LPS-105109. Content author having permissions to update page content can introduce new inline content after clicking edit icon in content page."
+	@priority = "5"
+	test MapInlineContentWithdUpdatePageContentPermission {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title");
+
+		PortletEntry.publish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Rich Text",
+			id = "rich-text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "Webcontent Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Content");
+
+		SelectFrame(value1 = "relative=top");
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.clickPublish();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		User.openUsersAdmin();
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.clickPencil();
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "rich-text",
+			id = "rich-text");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		SelectFrame(value1 = "relative=top");
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.clickPublish();
+
+		AssertVisible(
+			key_content = "Webcontent Title",
+			key_fragmentClass = "rich-text",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
 	}
 
 }

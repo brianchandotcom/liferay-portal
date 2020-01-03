@@ -402,9 +402,11 @@ definition {
 			MetalComponent.waitForLayout();
 		}
 
-		Click(
-			key_itemName = "${privacy}",
-			locator1 = "SitePages#LIST_GROUP_ITEM");
+		if (IsElementNotPresent(locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH", key_breadcrumbName = "${privacy}")) {
+			Click(
+				key_itemName = "${privacy}",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+		}
 	}
 
 }

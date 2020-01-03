@@ -9,11 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
 	}
 
 	tearDown {
@@ -25,7 +20,7 @@ definition {
 		else {
 			JSONUser.tearDownNonAdminUsers();
 
-			Organization.tearDownCP(orgName = "Staging Organization Name");
+			JSONOrganization.deleteOrganizationByName(organizationName = "Staging Organization Name");
 
 			Role.tearDownCP();
 		}

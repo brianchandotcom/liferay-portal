@@ -249,10 +249,15 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Site Name");
 
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Site Name",
-			title = "Web Content Title");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 

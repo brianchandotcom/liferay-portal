@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL()));
 
+redirect = PortalUtil.escapeRedirect(redirect);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 

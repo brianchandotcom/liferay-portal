@@ -15,13 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPopover from '@clayui/popover';
 import {Align} from 'metal-position';
-import React, {
-	useCallback,
-	useLayoutEffect,
-	useRef,
-	useState,
-	useEffect
-} from 'react';
+import React, {useLayoutEffect, useRef, useState, useEffect} from 'react';
 import {createPortal} from 'react-dom';
 
 import ConfigurationPanel from './ConfigurationPanel';
@@ -64,17 +58,13 @@ export default function FloatingToolbar({
 		}
 	}, [show, itemRef, popoverRef]);
 
-	const setFloatingToolbarRef = useCallback(ref => floatingToolbar(ref), [
-		floatingToolbar
-	]);
-
 	useEffect(() => {
 		if (!show) {
 			setActiveConfigurationPanel(false);
 		}
 
-		setFloatingToolbarRef(popoverRef);
-	}, [setFloatingToolbarRef, show]);
+		floatingToolbar(popoverRef);
+	}, [floatingToolbar, show]);
 
 	return (
 		show &&

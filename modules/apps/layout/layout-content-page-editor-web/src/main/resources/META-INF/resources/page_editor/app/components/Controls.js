@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext, useReducer, useRef} from 'react';
+import React, {useCallback, useContext, useReducer, useRef} from 'react';
 
 const INITIAL_STATE = {
 	activeItemId: null,
@@ -67,52 +67,72 @@ const ControlsProvider = ({children}) => {
 
 const useActiveItemId = () => {
 	const [state] = useContext(ControlsContext);
+
 	return state.activeItemId;
 };
 
 const useHoverItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
-	return itemId =>
-		dispatch({
-			itemId,
-			type: HOVER_ITEM
-		});
+	return useCallback(
+		itemId =>
+			dispatch({
+				itemId,
+				type: HOVER_ITEM
+			}),
+		[dispatch]
+	);
 };
 
 const useIsActive = () => {
 	const [state] = useContext(ControlsContext);
-	return itemId => state.activeItemId === itemId;
+
+	return useCallback(itemId => state.activeItemId === itemId, [
+		state.activeItemId
+	]);
 };
 
 const useIsHovered = () => {
 	const [state] = useContext(ControlsContext);
-	return itemId => state.hoveredItemId === itemId;
+
+	return useCallback(itemId => state.hoveredItemId === itemId, [
+		state.hoveredItemId
+	]);
 };
 
 const useIsSelected = () => {
 	const [state] = useContext(ControlsContext);
-	return itemId => state.selectedItemsIds.includes(itemId);
+
+	return useCallback(itemId => state.selectedItemsIds.includes(itemId), [
+		state.selectedItemsIds
+	]);
 };
 
 const useSelectItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
-	return (itemId, {multiSelect = false} = {multiSelect: false}) =>
-		dispatch({
-			itemId,
-			multiSelect,
-			type: SELECT_ITEM
-		});
+	return useCallback(
+		(itemId, {multiSelect = false} = {multiSelect: false}) =>
+			dispatch({
+				itemId,
+				multiSelect,
+				type: SELECT_ITEM
+			}),
+		[dispatch]
+	);
 };
 
 const useFloatingToolbar = () => {
 	const [, dispatch] = useContext(ControlsContext);
-	return floatingToolbarRef =>
-		dispatch({
-			floatingToolbarRef,
-			type: FLOATING_TOOLBAR_REFERENCE
-		});
+
+	return useCallback(
+		floatingToolbarRef =>
+			dispatch({
+				floatingToolbarRef,
+				type: FLOATING_TOOLBAR_REFERENCE
+			}),
+		[dispatch]
+	);
 };
 
 const useCurrentFloatingToolbar = () => {

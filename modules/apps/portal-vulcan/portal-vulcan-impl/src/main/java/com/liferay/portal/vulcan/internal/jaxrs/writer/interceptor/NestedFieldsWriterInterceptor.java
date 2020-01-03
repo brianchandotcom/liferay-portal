@@ -484,37 +484,35 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				nestedFieldsHttpServletRequestWrapper.getRequest());
 		}
 
-		private void _setResourceContexts(Message message, Object resource)
-			throws Exception {
-
-			Class<?> resourceClass = resource.getClass();
-
-			_setResourceFields(
-				resourceClass.getDeclaredFields(), message, resource);
-
-			Class<?> superclass = resourceClass.getSuperclass();
-
-			_setResourceFields(
-				superclass.getDeclaredFields(), message, resource);
-		}
-
-		private void _setResourceFields(
+		private void _setContextFields(
 				Field[] fields, Message message, Object resource)
 			throws IllegalAccessException {
 
 			for (Field field : fields) {
-				Annotation[] annotations = field.getAnnotations();
+				String name = field.getName();
 
-				if (annotations.length == 0) {
-					continue;
-				}
+				if (name.startsWith("context") ||
+					(field.getAnnotation(Context.class) != null)) {
 
-				if (annotations[0] instanceof Context) {
 					field.setAccessible(true);
 
 					field.set(resource, _getContext(field.getType(), message));
 				}
 			}
+		}
+
+		private void _setResourceContexts(Message message, Object resource)
+			throws Exception {
+
+			Class<?> resourceClass = resource.getClass();
+
+			_setContextFields(
+				resourceClass.getDeclaredFields(), message, resource);
+
+			Class<?> superclass = resourceClass.getSuperclass();
+
+			_setContextFields(
+				superclass.getDeclaredFields(), message, resource);
 		}
 
 		private static final ObjectMapper _objectMapper = new ObjectMapper();

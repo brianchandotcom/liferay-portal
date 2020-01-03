@@ -158,7 +158,8 @@ xpack.security.sessionTimeout: 600000</echo>
 
 	<macrodef name="configure-portal-elasticsearch-osgi-properties">
 		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"</echo>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"
+remoteClusterConnectionId="remote"</echo>
 		</sequential>
 	</macrodef>
 
@@ -177,9 +178,11 @@ xpack.security.sessionTimeout: 600000</echo>
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}authenticationEnabled="true"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-remote.config">${line.separator}active="true"
+authenticationEnabled="true"
+connectionId="remote"
 httpSSLEnabled="true"
-networkHostAddresses="https://localhost:9200"
+networkHostAddresses=["https://localhost:9200"]
 password="${osgi.config.elastic.user.password}"
 truststorePassword="liferay"
 truststorePath="${elasticsearch.dir}-1/config/certs/localhost.p12"
@@ -562,39 +565,39 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<if>
 				<and>
 					<not>
-						<available file="${app.server.parent.dir}/${elasticsearch.tar.name.linux}" />
+						<available file="${app.server.parent.dir}/${elasticsearch.tar.name.mac}" />
 					</not>
-					<os family="unix" />
+					<os family="mac" />
 				</and>
 				<then>
 					<mirrors-get
-						dest="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
+						dest="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
 						skipChecksum="true"
-						src="${elasticsearch.tar.url.linux}"
+						src="${elasticsearch.tar.url.mac}"
 					/>
 					<untar
 						compression="gzip"
 						dest="${app.server.parent.dir}"
-						src="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
+						src="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
 					/>
 				</then>
 				<elseif>
 					<and>
 						<not>
-							<available file="${app.server.parent.dir}/${elasticsearch.tar.name.mac}" />
+							<available file="${app.server.parent.dir}/${elasticsearch.tar.name.linux}" />
 						</not>
-						<os family="mac" />
+						<os family="unix" />
 					</and>
 					<then>
 						<mirrors-get
-							dest="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
+							dest="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
 							skipChecksum="true"
-							src="${elasticsearch.tar.url.mac}"
+							src="${elasticsearch.tar.url.linux}"
 						/>
 						<untar
 							compression="gzip"
 							dest="${app.server.parent.dir}"
-							src="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
+							src="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
 						/>
 					</then>
 				</elseif>

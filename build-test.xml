@@ -1776,6 +1776,12 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-elasticsearch-connection-config">
+		<sequential>
+			<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default.config" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-gecko-driver">
 		<sequential>
 			<stop-gecko-driver />
@@ -11898,6 +11904,19 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<equals arg1="${blacklist.saml.algorithms}" arg2="true" />
 			<then>
 				<prepare-saml-algorithm-blacklists />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="elastic.xpack.enabled" />
+		<get-testcase-property property.name="remote.elasticsearch.enabled" />
+
+		<if>
+			<and>
+				<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
+			</and>
+			<then>
+				<prepare-elasticsearch-connection-config />
 			</then>
 		</if>
 

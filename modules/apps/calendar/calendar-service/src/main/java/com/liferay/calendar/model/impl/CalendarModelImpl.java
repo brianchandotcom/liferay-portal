@@ -117,7 +117,7 @@ public class CalendarModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Calendar (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null)";
+		"create table Calendar (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null,primary key (calendarId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Calendar";
 

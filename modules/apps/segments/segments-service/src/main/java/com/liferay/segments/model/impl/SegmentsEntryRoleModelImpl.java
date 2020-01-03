@@ -89,7 +89,7 @@ public class SegmentsEntryRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsEntryRole (mvccVersion LONG default 0 not null,segmentsEntryRoleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,roleId LONG)";
+		"create table SegmentsEntryRole (mvccVersion LONG default 0 not null,segmentsEntryRoleId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,roleId LONG,primary key (segmentsEntryRoleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntryRole";
 

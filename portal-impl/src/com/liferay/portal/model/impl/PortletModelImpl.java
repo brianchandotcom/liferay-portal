@@ -86,7 +86,7 @@ public class PortletModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Portlet (mvccVersion LONG default 0 not null,id_ LONG not null primary key,companyId LONG,portletId VARCHAR(200) null,roles STRING null,active_ BOOLEAN)";
+		"create table Portlet (mvccVersion LONG default 0 not null,id_ LONG not null,companyId LONG not null,portletId VARCHAR(200) null,roles STRING null,active_ BOOLEAN,primary key (id_, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Portlet";
 

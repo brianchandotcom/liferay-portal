@@ -106,7 +106,7 @@ public class OrgLaborModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OrgLabor (mvccVersion LONG default 0 not null,orgLaborId LONG not null primary key,companyId LONG,organizationId LONG,typeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER)";
+		"create table OrgLabor (mvccVersion LONG default 0 not null,orgLaborId LONG not null,companyId LONG not null,organizationId LONG,typeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER,primary key (orgLaborId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table OrgLabor";
 

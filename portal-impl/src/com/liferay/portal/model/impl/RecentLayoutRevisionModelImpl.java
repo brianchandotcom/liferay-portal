@@ -88,7 +88,7 @@ public class RecentLayoutRevisionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RecentLayoutRevision (mvccVersion LONG default 0 not null,recentLayoutRevisionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutRevisionId LONG,layoutSetBranchId LONG,plid LONG)";
+		"create table RecentLayoutRevision (mvccVersion LONG default 0 not null,recentLayoutRevisionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,layoutRevisionId LONG,layoutSetBranchId LONG,plid LONG,primary key (recentLayoutRevisionId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table RecentLayoutRevision";

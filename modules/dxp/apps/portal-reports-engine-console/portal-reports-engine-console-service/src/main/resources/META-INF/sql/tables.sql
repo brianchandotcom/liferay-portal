@@ -1,8 +1,8 @@
 create table Reports_Definition (
 	uuid_ VARCHAR(75) null,
-	definitionId LONG not null primary key,
+	definitionId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -12,13 +12,14 @@ create table Reports_Definition (
 	sourceId LONG,
 	reportName VARCHAR(75) null,
 	reportParameters TEXT null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (definitionId, companyId)
 );
 
 create table Reports_Entry (
-	entryId LONG not null primary key,
+	entryId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -36,14 +37,15 @@ create table Reports_Entry (
 	pageURL STRING null,
 	reportParameters TEXT null,
 	errorMessage STRING null,
-	status VARCHAR(75) null
+	status VARCHAR(75) null,
+	primary key (entryId, companyId)
 );
 
 create table Reports_Source (
 	uuid_ VARCHAR(75) null,
-	sourceId LONG not null primary key,
+	sourceId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -53,5 +55,6 @@ create table Reports_Source (
 	driverClassName VARCHAR(75) null,
 	driverUrl STRING null,
 	driverUserName VARCHAR(75) null,
-	driverPassword VARCHAR(75) null
+	driverPassword VARCHAR(75) null,
+	primary key (sourceId, companyId)
 );

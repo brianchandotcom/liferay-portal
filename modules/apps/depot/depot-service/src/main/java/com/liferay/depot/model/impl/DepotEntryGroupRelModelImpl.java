@@ -86,7 +86,7 @@ public class DepotEntryGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,depotEntryGroupRelId LONG not null primary key,companyId LONG,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG)";
+		"create table DepotEntryGroupRel (mvccVersion LONG default 0 not null,depotEntryGroupRelId LONG not null,companyId LONG not null,depotEntryId LONG,searchable BOOLEAN,toGroupId LONG,primary key (depotEntryGroupRelId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 

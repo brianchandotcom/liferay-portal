@@ -99,7 +99,7 @@ public class RatingsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE)";
+		"create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE,primary key (entryId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsEntry";
 

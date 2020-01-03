@@ -1,9 +1,9 @@
 create table WMSLADefinition (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	wmSLADefinitionId LONG not null primary key,
+	wmSLADefinitionId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -22,15 +22,16 @@ create table WMSLADefinition (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (wmSLADefinitionId, companyId)
 );
 
 create table WMSLADefinitionVersion (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	wmSLADefinitionVersionId LONG not null primary key,
+	wmSLADefinitionVersionId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -50,5 +51,6 @@ create table WMSLADefinitionVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (wmSLADefinitionVersionId, companyId)
 );

@@ -1,9 +1,9 @@
 create table BlogsEntry (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	entryId LONG not null primary key,
+	entryId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -28,18 +28,20 @@ create table BlogsEntry (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (entryId, companyId)
 );
 
 create table BlogsStatsUser (
 	mvccVersion LONG default 0 not null,
-	statsUserId LONG not null primary key,
+	statsUserId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	entryCount INTEGER,
 	lastPostDate DATE null,
 	ratingsTotalEntries INTEGER,
 	ratingsTotalScore DOUBLE,
-	ratingsAverageScore DOUBLE
+	ratingsAverageScore DOUBLE,
+	primary key (statsUserId, companyId)
 );

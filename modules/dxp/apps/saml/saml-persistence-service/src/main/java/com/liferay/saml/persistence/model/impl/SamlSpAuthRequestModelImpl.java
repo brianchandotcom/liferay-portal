@@ -81,7 +81,7 @@ public class SamlSpAuthRequestModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlSpAuthRequest (samlSpAuthnRequestId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlSpAuthRequestKey VARCHAR(75) null)";
+		"create table SamlSpAuthRequest (samlSpAuthnRequestId LONG not null,companyId LONG not null,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlSpAuthRequestKey VARCHAR(75) null,primary key (samlSpAuthnRequestId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpAuthRequest";
 

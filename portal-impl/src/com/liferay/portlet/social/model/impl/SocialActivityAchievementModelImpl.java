@@ -87,7 +87,7 @@ public class SocialActivityAchievementModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivityAchievement (activityAchievementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN)";
+		"create table SocialActivityAchievement (activityAchievementId LONG not null,groupId LONG,companyId LONG not null,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN,primary key (activityAchievementId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityAchievement";

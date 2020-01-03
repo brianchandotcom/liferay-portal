@@ -110,7 +110,7 @@ public class SiteNavigationMenuItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SiteNavigationMenuItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,name VARCHAR(255) null,type_ VARCHAR(75) null,typeSettings TEXT null,order_ INTEGER,lastPublishDate DATE null)";
+		"create table SiteNavigationMenuItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteNavigationMenuItemId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,name VARCHAR(255) null,type_ VARCHAR(75) null,typeSettings TEXT null,order_ INTEGER,lastPublishDate DATE null,primary key (siteNavigationMenuItemId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SiteNavigationMenuItem";

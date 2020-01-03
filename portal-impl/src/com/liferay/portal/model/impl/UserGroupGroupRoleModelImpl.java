@@ -84,7 +84,7 @@ public class UserGroupGroupRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserGroupGroupRole (mvccVersion LONG default 0 not null,userGroupId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (userGroupId, groupId, roleId))";
+		"create table UserGroupGroupRole (mvccVersion LONG default 0 not null,userGroupId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG not null,primary key (userGroupId, groupId, roleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroupGroupRole";
 

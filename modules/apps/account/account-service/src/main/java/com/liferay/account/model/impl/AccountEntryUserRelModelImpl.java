@@ -88,7 +88,7 @@ public class AccountEntryUserRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntryUserRel (mvccVersion LONG default 0 not null,accountEntryUserRelId LONG not null primary key,companyId LONG,accountEntryId LONG,accountUserId LONG)";
+		"create table AccountEntryUserRel (mvccVersion LONG default 0 not null,accountEntryUserRelId LONG not null,companyId LONG not null,accountEntryId LONG,accountUserId LONG,primary key (accountEntryUserRelId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AccountEntryUserRel";

@@ -84,7 +84,7 @@ public class AccountRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountRole (mvccVersion LONG default 0 not null,accountRoleId LONG not null primary key,companyId LONG,accountEntryId LONG,roleId LONG)";
+		"create table AccountRole (mvccVersion LONG default 0 not null,accountRoleId LONG not null,companyId LONG not null,accountEntryId LONG,roleId LONG,primary key (accountRoleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountRole";
 

@@ -1,7 +1,7 @@
 create table AccountEntry (
 	mvccVersion LONG default 0 not null,
-	accountEntryId LONG not null primary key,
-	companyId LONG,
+	accountEntryId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -11,21 +11,24 @@ create table AccountEntry (
 	description STRING null,
 	domains STRING null,
 	logoId LONG,
-	status INTEGER
+	status INTEGER,
+	primary key (accountEntryId, companyId)
 );
 
 create table AccountEntryUserRel (
 	mvccVersion LONG default 0 not null,
-	accountEntryUserRelId LONG not null primary key,
-	companyId LONG,
+	accountEntryUserRelId LONG not null,
+	companyId LONG not null,
 	accountEntryId LONG,
-	accountUserId LONG
+	accountUserId LONG,
+	primary key (accountEntryUserRelId, companyId)
 );
 
 create table AccountRole (
 	mvccVersion LONG default 0 not null,
-	accountRoleId LONG not null primary key,
-	companyId LONG,
+	accountRoleId LONG not null,
+	companyId LONG not null,
 	accountEntryId LONG,
-	roleId LONG
+	roleId LONG,
+	primary key (accountRoleId, companyId)
 );

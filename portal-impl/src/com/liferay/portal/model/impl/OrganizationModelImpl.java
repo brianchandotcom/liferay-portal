@@ -112,7 +112,7 @@ public class OrganizationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Organization_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId LONG,comments STRING null,logoId LONG)";
+		"create table Organization_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,organizationId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId LONG,comments STRING null,logoId LONG,primary key (organizationId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 
@@ -222,7 +222,7 @@ public class OrganizationModelImpl
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ORGS_SQL_CREATE =
-		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId))";
+		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,primary key (groupId, organizationId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ORGS =
 		GetterUtil.getBoolean(
@@ -238,7 +238,7 @@ public class OrganizationModelImpl
 	};
 
 	public static final String MAPPING_TABLE_USERS_ORGS_SQL_CREATE =
-		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,primary key (organizationId, userId))";
+		"create table Users_Orgs (companyId LONG not null,organizationId LONG not null,userId LONG not null,primary key (organizationId, userId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ORGS =
 		GetterUtil.getBoolean(

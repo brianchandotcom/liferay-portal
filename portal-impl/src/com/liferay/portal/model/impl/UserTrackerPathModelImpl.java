@@ -82,7 +82,7 @@ public class UserTrackerPathModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserTrackerPath (mvccVersion LONG default 0 not null,userTrackerPathId LONG not null primary key,companyId LONG,userTrackerId LONG,path_ STRING null,pathDate DATE null)";
+		"create table UserTrackerPath (mvccVersion LONG default 0 not null,userTrackerPathId LONG not null,companyId LONG not null,userTrackerId LONG,path_ STRING null,pathDate DATE null,primary key (userTrackerPathId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table UserTrackerPath";
 

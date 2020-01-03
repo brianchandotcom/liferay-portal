@@ -93,7 +93,7 @@ public class AnnouncementsDeliveryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnnouncementsDelivery (mvccVersion LONG default 0 not null,deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
+		"create table AnnouncementsDelivery (mvccVersion LONG default 0 not null,deliveryId LONG not null,companyId LONG not null,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN,primary key (deliveryId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AnnouncementsDelivery";

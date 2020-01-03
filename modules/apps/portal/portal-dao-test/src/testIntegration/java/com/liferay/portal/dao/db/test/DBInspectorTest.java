@@ -58,7 +58,7 @@ public class DBInspectorTest {
 		_db.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME, " (id LONG not null primary ",
-				"key, notNullColumn VARCHAR(75) not null, nullColumn ",
+				"key, notNullColumn VARCHAR(75) not null, NullColumn ",
 				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
 				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
 				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
@@ -188,14 +188,14 @@ public class DBInspectorTest {
 	public void testHasNullColumnTypeNotNull() throws Exception {
 		Assert.assertFalse(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "nullColumn", "VARCHAR(75) not null"));
+				_TABLE_NAME, "NullColumn", "VARCHAR(75) not null"));
 	}
 
 	@Test
 	public void testHasNullColumnTypeNull() throws Exception {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				_TABLE_NAME, "nullColumn", "VARCHAR(75) null"));
+				_TABLE_NAME, "NullColumn", "VARCHAR(75) null"));
 	}
 
 	@Test

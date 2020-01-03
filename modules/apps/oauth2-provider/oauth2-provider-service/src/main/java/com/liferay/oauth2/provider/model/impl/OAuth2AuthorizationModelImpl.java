@@ -128,13 +128,15 @@ public class OAuth2AuthorizationModelImpl
 
 	public static final long ACCESSTOKENCONTENTHASH_COLUMN_BITMASK = 1L;
 
-	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long REFRESHTOKENCONTENTHASH_COLUMN_BITMASK = 4L;
+	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 4L;
 
-	public static final long USERID_COLUMN_BITMASK = 8L;
+	public static final long REFRESHTOKENCONTENTHASH_COLUMN_BITMASK = 8L;
 
-	public static final long OAUTH2AUTHORIZATIONID_COLUMN_BITMASK = 16L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
+
+	public static final long OAUTH2AUTHORIZATIONID_COLUMN_BITMASK = 32L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -482,7 +484,19 @@ public class OAuth2AuthorizationModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -853,6 +867,11 @@ public class OAuth2AuthorizationModelImpl
 	public void resetOriginalValues() {
 		OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl = this;
 
+		oAuth2AuthorizationModelImpl._originalCompanyId =
+			oAuth2AuthorizationModelImpl._companyId;
+
+		oAuth2AuthorizationModelImpl._setOriginalCompanyId = false;
+
 		oAuth2AuthorizationModelImpl._originalUserId =
 			oAuth2AuthorizationModelImpl._userId;
 
@@ -1080,6 +1099,8 @@ public class OAuth2AuthorizationModelImpl
 
 	private long _oAuth2AuthorizationId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

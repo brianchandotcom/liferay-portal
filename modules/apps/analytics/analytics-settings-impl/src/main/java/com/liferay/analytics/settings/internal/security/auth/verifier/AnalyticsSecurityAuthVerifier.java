@@ -192,8 +192,9 @@ public class AnalyticsSecurityAuthVerifier implements AuthVerifier {
 		sortedParameters.put(
 			"Liferay-Analytics-Cloud-Security-Timestamp", timestamp);
 
-		StringBundler sb = new StringBundler((2 * sortedParameters.size()) + 2);
+		StringBundler sb = new StringBundler((2 * sortedParameters.size()) + 3);
 
+		sb.append(httpServletRequest.getContextPath());
 		sb.append(httpServletRequest.getServletPath());
 		sb.append(httpServletRequest.getPathInfo());
 

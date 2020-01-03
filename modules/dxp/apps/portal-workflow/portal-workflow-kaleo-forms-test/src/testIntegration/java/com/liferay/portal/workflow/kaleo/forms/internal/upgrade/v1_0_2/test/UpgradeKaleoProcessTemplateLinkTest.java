@@ -146,8 +146,8 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("insert into KaleoProcessLink (kaleoProcessLinkId, ");
-		sb.append("kaleoProcessId, workflowTaskName, DDMTemplateId) values ");
-		sb.append("(?, ?, ?, ?)");
+		sb.append("companyId, kaleoProcessId, workflowTaskName, ");
+		sb.append("DDMTemplateId) values (?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 
@@ -155,9 +155,10 @@ public class UpgradeKaleoProcessTemplateLinkTest {
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, kaleoProcessLinkId);
-			ps.setLong(2, _kaleoProcessId);
-			ps.setString(3, StringUtil.randomString());
-			ps.setLong(4, RandomTestUtil.randomLong());
+			ps.setLong(2, _group.getCompanyId());
+			ps.setLong(3, _kaleoProcessId);
+			ps.setString(4, StringUtil.randomString());
+			ps.setLong(5, RandomTestUtil.randomLong());
 
 			ps.executeUpdate();
 		}

@@ -1,0 +1,106 @@
+.search-engine-page-container {
+	max-width: 800px;
+
+	.connection-info-item {
+		margin-bottom: 16px;
+
+		.connection-cluster-name {
+			font-size: 14px;
+		}
+
+		.connection-info-data-container {
+			display: flex;
+			margin-bottom: 24px;
+
+			.data-item {
+				.key {
+					color: #a7a9bc;
+					font-size: 10px;
+					font-weight: 600;
+					text-transform: uppercase;
+				}
+
+				.value {
+					font-weight: 600;
+				}
+
+				+ .data-item {
+					margin-left: 24px;
+				}
+			}
+		}
+
+		.connection-health-indicator {
+			align-items: center;
+			color: #a7a9bc;
+			display: flex;
+			line-height: 1;
+
+			.connection-health-indicator-text {
+				color: #6b6c7e;
+				font-size: 10px;
+				font-weight: 600;
+				text-transform: uppercase;
+			}
+
+			&.green {
+				color: #5aca75;
+
+				.connection-health-indicator-text {
+					color: #287d3c;
+				}
+			}
+
+			&.red {
+				color: #da1414;
+
+				.connection-health-indicator-text {
+					color: #da1414;
+				}
+			}
+
+			&.yellow {
+				color: #ff8f39;
+
+				.connection-health-indicator-text {
+					color: #b95000;
+				}
+			}
+		}
+
+		.connection-id {
+			align-items: center;
+			display: flex;
+			margin: 0;
+
+			.label:first-of-type {
+				margin-left: 8px;
+			}
+		}
+
+		.connection-info-item-header {
+			align-items: flex-start;
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 16px;
+		}
+
+		.connection-info-node-list .panel-body {
+			padding: 0;
+		}
+
+		&.connection-info-item-header {
+			margin-bottom: 24px;
+		}
+	}
+
+	.search-engine-page-title {
+		align-items: center;
+		display: flex;
+		margin-bottom: 16px;
+
+		.badge {
+			margin-left: 8px;
+		}
+	}
+}

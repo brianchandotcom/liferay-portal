@@ -26,6 +26,16 @@ public interface DTOConverter<E, D> {
 		return null;
 	}
 
-	public D toDTO(DTOConverterContext dtoConverterContext) throws Exception;
+	public default D toDTO(DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		E object = getObject(String.valueOf(dtoConverterContext.getId()));
+
+		return toDTO(object);
+	}
+
+	public default D toDTO(E object) throws Exception {
+		return null;
+	}
 
 }

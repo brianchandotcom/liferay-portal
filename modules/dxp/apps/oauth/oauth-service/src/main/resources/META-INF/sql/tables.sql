@@ -1,6 +1,6 @@
 create table OAuth_OAuthApplication (
-	oAuthApplicationId LONG not null primary key,
-	companyId LONG,
+	oAuthApplicationId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -13,17 +13,19 @@ create table OAuth_OAuthApplication (
 	logoId LONG,
 	shareableAccessToken BOOLEAN,
 	callbackURI STRING null,
-	websiteURL STRING null
+	websiteURL STRING null,
+	primary key (oAuthApplicationId, companyId)
 );
 
 create table OAuth_OAuthUser (
-	oAuthUserId LONG not null primary key,
-	companyId LONG,
+	oAuthUserId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	oAuthApplicationId LONG,
 	accessToken VARCHAR(75) null,
-	accessSecret VARCHAR(75) null
+	accessSecret VARCHAR(75) null,
+	primary key (oAuthUserId, companyId)
 );

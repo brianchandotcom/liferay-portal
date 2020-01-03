@@ -83,7 +83,7 @@ public class BrowserTrackerModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BrowserTracker (mvccVersion LONG default 0 not null,browserTrackerId LONG not null primary key,companyId LONG,userId LONG,browserKey LONG)";
+		"create table BrowserTracker (mvccVersion LONG default 0 not null,browserTrackerId LONG not null,companyId LONG not null,userId LONG,browserKey LONG,primary key (browserTrackerId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table BrowserTracker";
 

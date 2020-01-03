@@ -1,8 +1,8 @@
 create table BackgroundTask (
 	mvccVersion LONG default 0 not null,
-	backgroundTaskId LONG not null primary key,
+	backgroundTaskId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -14,5 +14,6 @@ create table BackgroundTask (
 	completed BOOLEAN,
 	completionDate DATE null,
 	status INTEGER,
-	statusMessage TEXT null
+	statusMessage TEXT null,
+	primary key (backgroundTaskId, companyId)
 );

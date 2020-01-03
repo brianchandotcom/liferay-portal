@@ -84,7 +84,7 @@ public class JournalArticleResourceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticleResource (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,resourcePrimKey LONG not null,groupId LONG,companyId LONG,articleId VARCHAR(75) null,primary key (resourcePrimKey, ctCollectionId))";
+		"create table JournalArticleResource (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,resourcePrimKey LONG not null,groupId LONG,companyId LONG not null,articleId VARCHAR(75) null,primary key (resourcePrimKey, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalArticleResource";

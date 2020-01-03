@@ -88,7 +88,7 @@ public class AttachmentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Mail_Attachment (attachmentId LONG not null primary key,companyId LONG,userId LONG,accountId LONG,folderId LONG,messageId LONG,contentPath VARCHAR(75) null,fileName VARCHAR(75) null,size_ LONG)";
+		"create table Mail_Attachment (attachmentId LONG not null,companyId LONG not null,userId LONG,accountId LONG,folderId LONG,messageId LONG,contentPath VARCHAR(75) null,fileName VARCHAR(75) null,size_ LONG,primary key (attachmentId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Mail_Attachment";
 

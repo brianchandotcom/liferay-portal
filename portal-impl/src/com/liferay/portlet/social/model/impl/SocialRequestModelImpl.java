@@ -102,7 +102,7 @@ public class SocialRequestModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialRequest (uuid_ VARCHAR(75) null,requestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,status INTEGER)";
+		"create table SocialRequest (uuid_ VARCHAR(75) null,requestId LONG not null,groupId LONG,companyId LONG not null,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,status INTEGER,primary key (requestId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SocialRequest";
 

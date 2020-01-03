@@ -97,7 +97,7 @@ public class MBDiscussionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null)";
+		"create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null,primary key (discussionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
 

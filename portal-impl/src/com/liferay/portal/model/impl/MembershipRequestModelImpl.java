@@ -99,7 +99,7 @@ public class MembershipRequestModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MembershipRequest (mvccVersion LONG default 0 not null,membershipRequestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,comments STRING null,replyComments STRING null,replyDate DATE null,replierUserId LONG,statusId LONG)";
+		"create table MembershipRequest (mvccVersion LONG default 0 not null,membershipRequestId LONG not null,groupId LONG,companyId LONG not null,userId LONG,createDate DATE null,comments STRING null,replyComments STRING null,replyDate DATE null,replierUserId LONG,statusId LONG,primary key (membershipRequestId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MembershipRequest";
 

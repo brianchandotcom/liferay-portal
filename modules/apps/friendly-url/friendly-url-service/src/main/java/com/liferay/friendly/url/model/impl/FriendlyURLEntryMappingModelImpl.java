@@ -84,7 +84,7 @@ public class FriendlyURLEntryMappingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FriendlyURLEntryMapping (mvccVersion LONG default 0 not null,friendlyURLEntryMappingId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,friendlyURLEntryId LONG)";
+		"create table FriendlyURLEntryMapping (mvccVersion LONG default 0 not null,friendlyURLEntryMappingId LONG not null,companyId LONG not null,classNameId LONG,classPK LONG,friendlyURLEntryId LONG,primary key (friendlyURLEntryMappingId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FriendlyURLEntryMapping";

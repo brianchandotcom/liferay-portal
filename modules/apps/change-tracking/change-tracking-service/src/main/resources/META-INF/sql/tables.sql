@@ -1,7 +1,7 @@
 create table CTCollection (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG not null primary key,
-	companyId LONG,
+	ctCollectionId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -9,13 +9,14 @@ create table CTCollection (
 	description VARCHAR(200) null,
 	status INTEGER,
 	statusByUserId LONG,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (ctCollectionId, companyId)
 );
 
 create table CTEntry (
 	mvccVersion LONG default 0 not null,
-	ctEntryId LONG not null primary key,
-	companyId LONG,
+	ctEntryId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -23,7 +24,8 @@ create table CTEntry (
 	modelClassNameId LONG,
 	modelClassPK LONG,
 	modelMvccVersion LONG,
-	changeType INTEGER
+	changeType INTEGER,
+	primary key (ctEntryId, companyId)
 );
 
 create table CTMessage (
@@ -35,19 +37,21 @@ create table CTMessage (
 
 create table CTPreferences (
 	mvccVersion LONG default 0 not null,
-	ctPreferencesId LONG not null primary key,
-	companyId LONG,
+	ctPreferencesId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	ctCollectionId LONG,
-	confirmationEnabled BOOLEAN
+	confirmationEnabled BOOLEAN,
+	primary key (ctPreferencesId, companyId)
 );
 
 create table CTProcess (
 	mvccVersion LONG default 0 not null,
-	ctProcessId LONG not null primary key,
-	companyId LONG,
+	ctProcessId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	createDate DATE null,
 	ctCollectionId LONG,
-	backgroundTaskId LONG
+	backgroundTaskId LONG,
+	primary key (ctProcessId, companyId)
 );

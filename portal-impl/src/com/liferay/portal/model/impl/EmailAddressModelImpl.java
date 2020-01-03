@@ -105,7 +105,7 @@ public class EmailAddressModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table EmailAddress (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,typeId LONG,primary_ BOOLEAN)";
+		"create table EmailAddress (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,emailAddressId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(254) null,typeId LONG,primary_ BOOLEAN,primary key (emailAddressId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 

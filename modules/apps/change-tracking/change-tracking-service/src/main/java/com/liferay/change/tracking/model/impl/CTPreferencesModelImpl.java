@@ -83,7 +83,7 @@ public class CTPreferencesModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTPreferences (mvccVersion LONG default 0 not null,ctPreferencesId LONG not null primary key,companyId LONG,userId LONG,ctCollectionId LONG,confirmationEnabled BOOLEAN)";
+		"create table CTPreferences (mvccVersion LONG default 0 not null,ctPreferencesId LONG not null,companyId LONG not null,userId LONG,ctCollectionId LONG,confirmationEnabled BOOLEAN,primary key (ctPreferencesId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CTPreferences";
 

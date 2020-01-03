@@ -105,7 +105,7 @@ public class MessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Mail_Message (messageId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountId LONG,folderId LONG,sender STRING null,to_ TEXT null,cc TEXT null,bcc TEXT null,sentDate DATE null,subject STRING null,preview VARCHAR(75) null,body TEXT null,flags VARCHAR(75) null,size_ LONG,remoteMessageId LONG,contentType VARCHAR(75) null)";
+		"create table Mail_Message (messageId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountId LONG,folderId LONG,sender STRING null,to_ TEXT null,cc TEXT null,bcc TEXT null,sentDate DATE null,subject STRING null,preview VARCHAR(75) null,body TEXT null,flags VARCHAR(75) null,size_ LONG,remoteMessageId LONG,contentType VARCHAR(75) null,primary key (messageId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Mail_Message";
 

@@ -101,7 +101,7 @@ public class DispatchLogModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchLog (mvccVersion LONG default 0 not null,dispatchLogId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dispatchTriggerId LONG,endDate DATE null,error VARCHAR(75) null,output_ VARCHAR(75) null,startDate DATE null,status INTEGER)";
+		"create table DispatchLog (mvccVersion LONG default 0 not null,dispatchLogId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dispatchTriggerId LONG,endDate DATE null,error VARCHAR(75) null,output_ VARCHAR(75) null,startDate DATE null,status INTEGER,primary key (dispatchLogId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchLog";
 

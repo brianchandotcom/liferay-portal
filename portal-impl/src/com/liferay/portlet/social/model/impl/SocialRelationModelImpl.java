@@ -83,7 +83,7 @@ public class SocialRelationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
+		"create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null,companyId LONG not null,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER,primary key (relationId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
 

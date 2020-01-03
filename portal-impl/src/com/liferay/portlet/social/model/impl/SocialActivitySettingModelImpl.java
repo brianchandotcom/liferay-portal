@@ -91,7 +91,7 @@ public class SocialActivitySettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivitySetting (activitySettingId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null)";
+		"create table SocialActivitySetting (activitySettingId LONG not null,groupId LONG,companyId LONG not null,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null,primary key (activitySettingId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivitySetting";

@@ -85,7 +85,7 @@ public class ExpandoColumnModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoColumn (columnId LONG not null primary key,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null)";
+		"create table ExpandoColumn (columnId LONG not null,companyId LONG not null,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null,primary key (columnId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoColumn";
 

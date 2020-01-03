@@ -32,15 +32,13 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.HttpURLConnection;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,7 +62,8 @@ public class GCloudVisionImageAssetAutoTagProvider
 
 			if (!gCloudVisionAssetAutoTagProviderCompanyConfiguration.
 					enabled() ||
-				_isTemporary(fileEntry) || !_isSupportedFormat(fileEntry)) {
+				_isTemporary(fileEntry) ||
+				!_isSupportedMimeType(fileEntry.getMimeType())) {
 
 				return Collections.emptyList();
 			}
@@ -105,9 +104,8 @@ public class GCloudVisionImageAssetAutoTagProvider
 			fileEntry.getCompanyId());
 	}
 
-	private boolean _isSupportedFormat(FileEntry fileEntry) {
-		return _supportedFormats.contains(
-			StringUtil.toUpperCase(fileEntry.getExtension()));
+	private boolean _isSupportedMimeType(String mimeType) {
+		return _supportedMimeTypes.contains(mimeType);
 	}
 
 	private boolean _isTemporary(FileEntry fileEntry) {
@@ -145,9 +143,10 @@ public class GCloudVisionImageAssetAutoTagProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		GCloudVisionImageAssetAutoTagProvider.class);
 
-	private static final Set<String> _supportedFormats = new HashSet<>(
-		Arrays.asList(
-			"BMP", "GIF", "ICO", "JPEG", "JPG", "PNG", "RAW", "WEBP"));
+	private static final List<String> _supportedMimeTypes = Arrays.asList(
+		ContentTypes.IMAGE_BMP, ContentTypes.IMAGE_GIF, "image/x-icon",
+		ContentTypes.IMAGE_JPEG, ContentTypes.IMAGE_PNG, "image/tiff",
+		"image/webp");
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

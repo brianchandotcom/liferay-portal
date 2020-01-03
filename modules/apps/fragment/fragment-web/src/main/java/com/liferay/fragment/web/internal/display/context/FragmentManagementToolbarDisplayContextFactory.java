@@ -50,8 +50,8 @@ public class FragmentManagementToolbarDisplayContextFactory {
 				type, FragmentTypeConstants.INHERITED_FRAGMENT_TYPE)) {
 
 			return new InheritedFragmentManagementToolbarDisplayContext(
-				liferayPortletRequest, liferayPortletResponse,
-				httpServletRequest, fragmentDisplayContext);
+				httpServletRequest, liferayPortletRequest,
+				liferayPortletResponse, fragmentDisplayContext);
 		}
 
 		return null;

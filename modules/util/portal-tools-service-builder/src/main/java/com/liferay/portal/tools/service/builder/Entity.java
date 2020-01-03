@@ -214,6 +214,30 @@ public class Entity implements Comparable<Entity> {
 		}
 
 		_containerModel = containerModel;
+
+		boolean hasCompanyId = false;
+
+		if (_entityColumns != null) {
+			hasCompanyId = hasEntityColumn("companyId");
+		}
+
+		_hasCompanyId = hasCompanyId;
+
+		boolean hasCompanyIdPK = false;
+
+		if (pkEntityColumns != null) {
+			for (EntityColumn pkEntityColumn : pkEntityColumns) {
+				String pkColumnName = pkEntityColumn.getDBName();
+
+				if (pkColumnName.contains("companyId")) {
+					hasCompanyIdPK = true;
+
+					break;
+				}
+			}
+		}
+
+		_hasCompanyIdPK = hasCompanyIdPK;
 	}
 
 	public void addReferenceEntity(Entity referenceEntity) {
@@ -803,6 +827,14 @@ public class Entity implements Comparable<Entity> {
 		return false;
 	}
 
+	public boolean hasCompanyId() {
+		return _hasCompanyId;
+	}
+
+	public boolean hasCompanyIdPK() {
+		return _hasCompanyIdPK;
+	}
+
 	public boolean hasCompoundPK() {
 		if (_pkEntityColumns.size() > 1) {
 			return true;
@@ -1289,6 +1321,8 @@ public class Entity implements Comparable<Entity> {
 	private final boolean _externalReferenceCode;
 	private final String _finderClassName;
 	private final List<EntityColumn> _finderEntityColumns;
+	private final boolean _hasCompanyId;
+	private final boolean _hasCompanyIdPK;
 	private final String _humanName;
 	private final boolean _jsonEnabled;
 	private Entity _localizedEntity;

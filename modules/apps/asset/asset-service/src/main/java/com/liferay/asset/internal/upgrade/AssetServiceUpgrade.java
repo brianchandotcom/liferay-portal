@@ -17,8 +17,8 @@ package com.liferay.asset.internal.upgrade;
 import com.liferay.asset.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.asset.internal.upgrade.v2_0_1.UpgradeAssetEntryUsage;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
@@ -54,7 +54,7 @@ public class AssetServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.1", "2.1.0",
-			new UpgradePrimaryKeyCompanyId("AssetEntryUsage"));
+			new UpgradeCompanyIdPrimaryKey("AssetEntryUsage"));
 	}
 
 	/**

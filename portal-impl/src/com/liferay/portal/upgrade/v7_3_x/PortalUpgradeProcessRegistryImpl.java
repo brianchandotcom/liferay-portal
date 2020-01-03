@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -56,7 +56,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 1, 0),
-			new UpgradePrimaryKeyCompanyId(
+			new UpgradeCompanyIdPrimaryKey(
 				"Account_", "Address", "AnnouncementsDelivery",
 				"AnnouncementsEntry", "AnnouncementsFlag", "AssetCategory",
 				"AssetEntries_AssetCategories", "AssetEntries_AssetTags",

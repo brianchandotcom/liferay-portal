@@ -22,8 +22,8 @@ import com.liferay.polls.internal.upgrade.v2_0_0.util.PollsQuestionTable;
 import com.liferay.polls.internal.upgrade.v2_0_0.util.PollsVoteTable;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,7 +71,7 @@ public class PollsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.1.0", "2.2.0",
-			new UpgradePrimaryKeyCompanyId(
+			new UpgradeCompanyIdPrimaryKey(
 				"PollsChoice", "PollsQuestion", "PollsVote"));
 	}
 

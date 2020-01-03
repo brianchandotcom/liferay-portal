@@ -24,9 +24,9 @@ import java.util.List;
 /**
  * @author Alberto Chaparro
  */
-public class UpgradePrimaryKeyCompanyId extends BaseUpgradeCompanyId {
+public class UpgradeCompanyIdPrimaryKey extends BaseUpgradeCompanyId {
 
-	public UpgradePrimaryKeyCompanyId(String... tableNames) {
+	public UpgradeCompanyIdPrimaryKey(String... tableNames) {
 		_tableNames = tableNames;
 	}
 

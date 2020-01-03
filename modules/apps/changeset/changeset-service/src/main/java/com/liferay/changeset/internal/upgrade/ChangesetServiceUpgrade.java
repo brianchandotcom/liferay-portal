@@ -17,7 +17,7 @@ package com.liferay.changeset.internal.upgrade;
 import com.liferay.changeset.internal.upgrade.v2_0_0.util.ChangesetCollectionTable;
 import com.liferay.changeset.internal.upgrade.v2_0_0.util.ChangesetEntryTable;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,7 +39,7 @@ public class ChangesetServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new UpgradePrimaryKeyCompanyId(
+			new UpgradeCompanyIdPrimaryKey(
 				"ChangesetCollection", "ChangesetEntry"));
 	}
 

@@ -15,7 +15,7 @@
 package com.liferay.push.notifications.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.push.notifications.internal.upgrade.v1_0_6.UpgradeCompanyId;
 
@@ -35,7 +35,7 @@ public class PushNotificationsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.6", "1.1.0",
-			new UpgradePrimaryKeyCompanyId("PushNotificationsDevice"));
+			new UpgradeCompanyIdPrimaryKey("PushNotificationsDevice"));
 	}
 
 }

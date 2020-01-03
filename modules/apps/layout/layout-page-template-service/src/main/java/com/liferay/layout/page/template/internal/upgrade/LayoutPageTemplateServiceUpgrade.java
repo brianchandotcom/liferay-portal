@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
@@ -110,7 +110,7 @@ public class LayoutPageTemplateServiceUpgrade
 
 		registry.register(
 			"3.1.1", "3.2.0",
-			new UpgradePrimaryKeyCompanyId(
+			new UpgradeCompanyIdPrimaryKey(
 				"LayoutPageTemplateCollection", "LayoutPageTemplateEntry",
 				"LayoutPageTemplateStructure",
 				"LayoutPageTemplateStructureRel"));

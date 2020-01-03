@@ -17,7 +17,7 @@ package com.liferay.sync.internal.upgrade;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.sync.internal.upgrade.v2_0_0.UpgradeCompanyId;
 
@@ -54,7 +54,7 @@ public class SyncServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new UpgradePrimaryKeyCompanyId(
+			new UpgradeCompanyIdPrimaryKey(
 				"SyncDLFileVersionDiff", "SyncDLObject", "SyncDevice"));
 	}
 

@@ -15,8 +15,8 @@
 package com.liferay.segments.internal.upgrade;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.segments.internal.upgrade.v2_0_0.UpgradeSchema;
 import com.liferay.segments.internal.upgrade.v2_0_0.UpgradeSegmentsExperience;
@@ -59,7 +59,7 @@ public class SegmentsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.2.0", "2.3.0",
-			new UpgradePrimaryKeyCompanyId(
+			new UpgradeCompanyIdPrimaryKey(
 				"SegmentsEntry", "SegmentsEntryRel", "SegmentsEntryRole",
 				"SegmentsExperience", "SegmentsExperiment",
 				"SegmentsExperimentRel"));

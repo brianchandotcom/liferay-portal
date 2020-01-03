@@ -16,7 +16,7 @@ package com.liferay.microblogs.internal.upgrade;
 
 import com.liferay.microblogs.internal.upgrade.v1_0_1.UpgradeUserNotificationEvent;
 import com.liferay.microblogs.internal.upgrade.v1_0_2.UpgradeSocial;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,7 +45,7 @@ public class MicroblogsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.2", "1.1.0",
-			new UpgradePrimaryKeyCompanyId("MicroblogsEntry"));
+			new UpgradeCompanyIdPrimaryKey("MicroblogsEntry"));
 	}
 
 }

@@ -16,7 +16,7 @@ package com.liferay.subscription.internal.upgrade;
 
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.subscription.internal.upgrade.v2_0_0.util.SubscriptionTable;
@@ -40,7 +40,7 @@ public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 				new Class<?>[] {SubscriptionTable.class}));
 
 		registry.register(
-			"2.0.0", "2.1.0", new UpgradePrimaryKeyCompanyId("Subscription"));
+			"2.0.0", "2.1.0", new UpgradeCompanyIdPrimaryKey("Subscription"));
 	}
 
 	@Reference(unbind = "-")

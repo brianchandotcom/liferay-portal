@@ -16,8 +16,8 @@ package com.liferay.document.library.content.internal.upgrade;
 
 import com.liferay.document.library.content.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,7 +45,7 @@ public class DLContentServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("1.1.0", "1.2.0", new UpgradeCTModel("DLContent"));
 
 		registry.register(
-			"1.2.0", "1.3.0", new UpgradePrimaryKeyCompanyId("DLContent"));
+			"1.2.0", "1.3.0", new UpgradeCompanyIdPrimaryKey("DLContent"));
 	}
 
 }

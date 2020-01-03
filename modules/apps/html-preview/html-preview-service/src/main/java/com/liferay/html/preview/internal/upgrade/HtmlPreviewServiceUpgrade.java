@@ -16,7 +16,7 @@ package com.liferay.html.preview.internal.upgrade;
 
 import com.liferay.html.preview.internal.upgrade.v2_0_0.util.HtmlPreviewEntryTable;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,7 +36,7 @@ public class HtmlPreviewServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new UpgradePrimaryKeyCompanyId("HtmlPreviewEntry"));
+			new UpgradeCompanyIdPrimaryKey("HtmlPreviewEntry"));
 	}
 
 }

@@ -20,7 +20,7 @@ import com.liferay.contacts.internal.upgrade.v3_0_0.util.EntryTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,7 +51,7 @@ public class ContactsServiceUpgrade implements UpgradeStepRegistrator {
 				new Class<?>[] {EntryTable.class}));
 
 		registry.register(
-			"3.0.0", "3.1.0", new UpgradePrimaryKeyCompanyId("Contacts_Entry"));
+			"3.0.0", "3.1.0", new UpgradeCompanyIdPrimaryKey("Contacts_Entry"));
 	}
 
 	@Reference

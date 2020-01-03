@@ -114,7 +114,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 							"alter table ", _tableName, " add companyId LONG"));
 				}
 				else {
-					if (_log.isInfoEnabled()) {
+					if (_log.isDebugEnabled()) {
 						_log.info(
 							"Skipping the creation of companyId column for " +
 								"table " + _tableName);
@@ -144,7 +144,7 @@ public abstract class BaseUpgradeCompanyId extends UpgradeProcess {
 					UpgradePrimaryKey upgradePrimaryKey = new UpgradePrimaryKey(
 						_COMPANYID_NOTNULL_DEFINITION, _tableName);
 
-					upgradePrimaryKey.doUpgrade();
+					upgradePrimaryKey.upgrade();
 				}
 			}
 

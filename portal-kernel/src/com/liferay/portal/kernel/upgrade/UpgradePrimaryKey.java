@@ -139,11 +139,11 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 
 			if (dbType == DBType.SQLSERVER) {
 				try (PreparedStatement ps = connection.prepareStatement(
-					StringBundler.concat(
-						"select name from sys.key_constraints where type ",
-						"= 'PK' and OBJECT_NAME(parent_object_id) = '",
-						normalizedTableName, "'"));
-					 ResultSet rs = ps.executeQuery()) {
+						StringBundler.concat(
+							"select name from sys.key_constraints where type ",
+							"= 'PK' and OBJECT_NAME(parent_object_id) = '",
+							normalizedTableName, "'"));
+					ResultSet rs = ps.executeQuery()) {
 
 					if (rs.next()) {
 						primaryKeyConstraintName = rs.getString("name");
@@ -152,8 +152,8 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 			}
 			else {
 				try (PreparedStatement ps = connection.prepareStatement(
-					"sp_helpconstraint " + normalizedTableName);
-					 ResultSet rs = ps.executeQuery()) {
+						"sp_helpconstraint " + normalizedTableName);
+					ResultSet rs = ps.executeQuery()) {
 
 					while (rs.next()) {
 						String definition = rs.getString("definition");
@@ -170,7 +170,7 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 			if (primaryKeyConstraintName == null) {
 				throw new UpgradeException(
 					"No primary key constraint found for " +
-					normalizedTableName);
+						normalizedTableName);
 			}
 
 			runSQL(

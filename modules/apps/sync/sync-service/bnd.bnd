@@ -5,7 +5,7 @@ Import-Package:\
 	!junit.framework,\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 -dsannotations-options: inherit
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore

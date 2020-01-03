@@ -20,6 +20,7 @@ import com.liferay.mobile.device.rules.internal.upgrade.v2_0_0.util.MDRRuleGroup
 import com.liferay.mobile.device.rules.internal.upgrade.v2_0_0.util.MDRRuleTable;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -58,6 +59,12 @@ public class MDRServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new UpgradeCompanyIdPrimaryKey(
+				"MDRAction", "MDRRule", "MDRRuleGroup",
+				"MDRRuleGroupInstance"));
 	}
 
 }

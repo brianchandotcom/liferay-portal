@@ -24,6 +24,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -158,6 +159,11 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 			"3.1.0", "4.0.0",
 			new UpgradeViewCount(
 				"KBArticle", KBArticle.class, "kbArticleId", "viewCount"));
+
+		registry.register(
+			"4.0.0", "4.1.0",
+			new UpgradeCompanyIdPrimaryKey(
+				"KBArticle", "KBComment", "KBFolder", "KBTemplate"));
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

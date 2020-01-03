@@ -32,19 +32,12 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.service.ContactService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.PortalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -457,39 +450,12 @@ public class AnalyticsConfigurationModelListener
 	private static final String[] _SAP_ENTRY_OBJECT = {
 		AnalyticsSecurityConstants.SERVICE_ACCESS_POLICY_NAME,
 		StringBundler.concat(
-			"com.liferay.portal.security.audit.storage.service.",
-			"AuditEventService#getAuditEvents\n",
-			ContactService.class.getName(), "#getContact\n",
-			CompanyService.class.getName(), "#updatePreferences\n",
-			GroupService.class.getName(), "#getGroup\n",
-			GroupService.class.getName(), "#getGroups\n",
-			GroupService.class.getName(), "#getGroupsCount\n",
-			GroupService.class.getName(), "#getGtGroups\n",
-			OrganizationService.class.getName(), "#fetchOrganization\n",
-			OrganizationService.class.getName(), "#getGtOrganizations\n",
-			OrganizationService.class.getName(), "#getOrganization\n",
-			OrganizationService.class.getName(), "#getOrganizations\n",
-			OrganizationService.class.getName(), "#getOrganizationsCount\n",
-			OrganizationService.class.getName(), "#getUserOrganizations\n",
-			PortalService.class.getName(), "#getBuildNumber\n",
-			UserService.class.getName(), "#getCompanyUsers\n",
-			UserService.class.getName(), "#getCompanyUsersCount\n",
-			UserService.class.getName(), "#getCurrentUser\n",
-			UserService.class.getName(), "#getGtCompanyUsers\n",
-			UserService.class.getName(), "#getGtOrganizationUsers\n",
-			UserService.class.getName(), "#getGtUserGroupUsers\n",
-			UserService.class.getName(), "#getOrganizationUsers\n",
-			UserService.class.getName(), "#getOrganizationUsersCount\n",
-			UserService.class.getName(),
-			"#getOrganizationsAndUserGroupsUsersCount\n",
-			UserService.class.getName(), "#getUserById\n",
-			UserService.class.getName(), "#getUserGroupUsers\n",
-			UserGroupService.class.getName(), "#fetchUserGroup\n",
-			UserGroupService.class.getName(), "#getGtUserGroups\n",
-			UserGroupService.class.getName(), "#getUserGroup\n",
-			UserGroupService.class.getName(), "#getUserGroups\n",
-			UserGroupService.class.getName(), "#getUserGroupsCount\n",
-			UserGroupService.class.getName(), "#getUserUserGroups")
+			"com.liferay.segments.asah.rest.internal.resource.v1_0.",
+			"ExperimentResourceImpl#DeleteExperiment\n",
+			"com.liferay.segments.asah.rest.internal.resource.v1_0.",
+			"ExperimentRunResourceImpl#postExperimentRun\n",
+			"com.liferay.segments.asah.rest.internal.resource.v1_0.",
+			"StatusResourceImpl#postExperimentStatus")
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

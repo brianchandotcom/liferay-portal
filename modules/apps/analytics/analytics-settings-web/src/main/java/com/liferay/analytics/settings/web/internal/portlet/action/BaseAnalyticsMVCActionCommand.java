@@ -101,6 +101,10 @@ public abstract class BaseAnalyticsMVCActionCommand
 		SettingsDescriptor settingsDescriptor =
 			settingsFactory.getSettingsDescriptor(pid);
 
+		if (settingsDescriptor == null) {
+			return configurationProperties;
+		}
+
 		Set<String> multiValuedKeys = settingsDescriptor.getMultiValuedKeys();
 
 		for (String multiValuedKey : multiValuedKeys) {

@@ -3737,16 +3737,16 @@ public class ServiceBuilder {
 					continue;
 				}
 
-				List<EntityColumn> entityColumns =
+				List<EntityColumn> entityFinderColumns =
 					entityFinder.getEntityColumns();
 
-				if (entityColumns.equals(entity.getPKEntityColumns())) {
+				if (entityFinderColumns.equals(entity.getPKEntityColumns())) {
 					continue;
 				}
 
 				List<String> dbNames = new ArrayList<>();
 
-				for (EntityColumn entityColumn : entityColumns) {
+				for (EntityColumn entityColumn : entityFinderColumns) {
 					dbNames.add(entityColumn.getDBName());
 				}
 
@@ -3754,30 +3754,27 @@ public class ServiceBuilder {
 					continue;
 				}
 
+				List<String> internalColumnNames = new ArrayList<>();
+
 				if (entity.isChangeTrackingEnabled() &&
 					!dbNames.contains("ctCollectionId")) {
 
-					if (indexMetadatas != null) {
-						Iterator<IndexMetadata> iterator =
-							indexMetadatas.iterator();
-
-						while (iterator.hasNext()) {
-							IndexMetadata indexMetadata = iterator.next();
-
-							if (indexMetadata.isUnique() &&
-								dbNames.equals(
-									Arrays.asList(
-										indexMetadata.getColumnNames()))) {
-
-								iterator.remove();
-
-								break;
-							}
-						}
-					}
-
-					dbNames.add("ctCollectionId");
+					internalColumnNames.add("ctCollectionId");
 				}
+
+				if (entityFinder.isUnique() && entity.hasCompanyId() &&
+					!dbNames.contains("companyId")) {
+
+					internalColumnNames.add("companyId");
+				}
+
+				if ((indexMetadatas != null) && (internalColumnNames != null)) {
+					_removeRedundantUniqueIndex(
+						indexMetadatas, dbNames,
+						internalColumnNames.toArray(new String[0]));
+				}
+
+				dbNames = ListUtil.concat(dbNames, internalColumnNames);
 
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
@@ -4870,7 +4867,8 @@ public class ServiceBuilder {
 				sb.append(" not null");
 
 				if (!entity.hasCompoundPK() &&
-					!entity.isChangeTrackingEnabled()) {
+					!entity.isChangeTrackingEnabled() &&
+					(!entity.hasCompanyId() || entity.hasCompanyIdPK())) {
 
 					sb.append(" primary key");
 				}
@@ -4896,7 +4894,8 @@ public class ServiceBuilder {
 			}
 
 			if (((i + 1) != databaseRegularEntityColumns.size()) ||
-				entity.hasCompoundPK() || entity.isChangeTrackingEnabled()) {
+				entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
+				(entity.hasCompanyId() && !entity.hasCompanyIdPK())) {
 
 				sb.append(",");
 			}
@@ -4904,7 +4903,9 @@ public class ServiceBuilder {
 			sb.append("\n");
 		}
 
-		if (entity.hasCompoundPK() || entity.isChangeTrackingEnabled()) {
+		if (entity.hasCompoundPK() || entity.isChangeTrackingEnabled() ||
+			(entity.hasCompanyId() && !entity.hasCompanyIdPK())) {
+
 			sb.append("\tprimary key (");
 
 			List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
@@ -4921,6 +4922,10 @@ public class ServiceBuilder {
 
 			if (entity.isChangeTrackingEnabled()) {
 				sb.append(", ctCollectionId");
+			}
+
+			if (entity.hasCompanyId() && !entity.hasCompanyIdPK()) {
+				sb.append(", companyId");
 			}
 
 			sb.append(")\n");
@@ -6561,7 +6566,7 @@ public class ServiceBuilder {
 		newLocalizedColumnElement.addAttribute("primary", "true");
 		newLocalizedColumnElement.addAttribute("type", "long");
 
-		if (entity.hasEntityColumn("companyId")) {
+		if (entity.hasCompanyId()) {
 			newLocalizedColumnElement = newLocalizedEntityElement.addElement(
 				"column");
 
@@ -7189,6 +7194,49 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				outputPath, "/service/persistence/", entity.getName(),
 				"Util.java"));
+	}
+
+	private void _removeRedundantUniqueIndex(
+		List<IndexMetadata> indexMetadatas,
+		List<String> entityFinderColumnNames, String[] internalColumns) {
+
+		Iterator<IndexMetadata> iterator = indexMetadatas.iterator();
+
+		while (iterator.hasNext()) {
+			IndexMetadata indexMetadata = iterator.next();
+
+			if (!indexMetadata.isUnique()) {
+				continue;
+			}
+
+			String[] indexColumnNames = indexMetadata.getColumnNames();
+
+			if (indexColumnNames.length < entityFinderColumnNames.size()) {
+				continue;
+			}
+
+			String[] originalIndexColumnNames = ArrayUtil.subset(
+				indexColumnNames, 0, entityFinderColumnNames.size());
+
+			if (!entityFinderColumnNames.equals(
+					Arrays.asList(originalIndexColumnNames))) {
+
+				continue;
+			}
+
+			String[] internalIndexColumnNames = ArrayUtil.subset(
+				indexColumnNames, entityFinderColumnNames.size(),
+				indexColumnNames.length);
+
+			if ((internalIndexColumnNames.length == 0) ||
+				ArrayUtil.containsAll(
+					internalColumns, internalIndexColumnNames)) {
+
+				iterator.remove();
+
+				break;
+			}
+		}
 	}
 
 	private void _removeService(

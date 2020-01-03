@@ -403,28 +403,6 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		WorkflowMetrics.goToCreatedSLAForm(workflowSLAName = "${key_testSLADefinitionName}");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
-			value1 = "${key_testSLADefinitionName}");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
-			value1 = "${key_testSLADefinitionDescription}");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
-			value1 = "${key_testSLADefinitionStart}");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
-			value1 = "${key_testSLADefinitionEnd}");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
-			value1 = "${key_testSLADefinitionHoursCheck}");
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
@@ -447,7 +425,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoRun();
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -464,6 +442,8 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.waitForCompletedSLAtoBecomeOverdue(timesToRun = "12");
 
 		WorkflowMetrics.assertDefaultChartRangesAndUnits();
 

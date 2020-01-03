@@ -64,9 +64,7 @@ export default function FloatingToolbar({
 		}
 	}, [show, itemRef, popoverRef]);
 
-	const setFloatingToolbarRef = useCallback(ref => floatingToolbar(ref), [
-		floatingToolbar
-	]);
+	const setFloatingToolbarRef = useCallback(ref => floatingToolbar(ref), []);
 
 	useEffect(() => {
 		if (!show) {

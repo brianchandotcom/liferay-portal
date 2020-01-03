@@ -349,6 +349,7 @@ public class StructuredContentDTOConverter
 						journalArticleService, layoutLocalService),
 					ContentField.class);
 				repeatable = ddmFormField.isRepeatable();
+
 				value = _toValue(
 					ddmFormField, ddmFormFieldValue.getValue(), dlAppService,
 					dlURLHelper, journalArticleService, layoutLocalService,

@@ -62,12 +62,11 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 	protected void doGet(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
+		throws IOException {
 
 		Map<String, DDMExpressionFunctionFactory>
-			ddmExpressionFunctionFactories = null;
-
-		ddmExpressionFunctionFactories = getDDMExpressionFunctionFactories();
+			ddmExpressionFunctionFactories =
+				getDDMExpressionFunctionFactories();
 
 		JSONArray jsonArray = toJSONArray(
 			ddmExpressionFunctionFactories.entrySet(),

@@ -474,6 +474,8 @@ definition {
 			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
 		}
 
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 		FragmentsAdmin.viewEntryPresent(entry = "Button (Copy)");

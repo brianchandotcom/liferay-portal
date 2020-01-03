@@ -55,9 +55,11 @@ public class DefaultLayoutConverter implements LayoutConverter {
 		List<UnsafeConsumer<LayoutRow, Exception>> rowUnsafeConsumers =
 			new ArrayList<>();
 
-		Document document = _getLayoutTemplateDocument(layout);
+		Document layoutTemplateDocument = _getLayoutTemplateDocument(layout);
 
-		for (Element rowElement : document.select(".portlet-layout.row")) {
+		for (Element rowElement :
+				layoutTemplateDocument.select(".portlet-layout.row")) {
+
 			List<UnsafeConsumer<LayoutColumn, Exception>>
 				columnUnsafeConsumers = new ArrayList<>();
 
@@ -119,9 +121,10 @@ public class DefaultLayoutConverter implements LayoutConverter {
 	}
 
 	private boolean _isLayoutTemplateParseable(Layout layout) {
-		Document document = _getLayoutTemplateDocument(layout);
+		Document layoutTemplateDocument = _getLayoutTemplateDocument(layout);
 
-		Elements rowElements = document.select(".portlet-layout.row");
+		Elements rowElements = layoutTemplateDocument.select(
+			".portlet-layout.row");
 
 		if (rowElements.isEmpty()) {
 			return false;

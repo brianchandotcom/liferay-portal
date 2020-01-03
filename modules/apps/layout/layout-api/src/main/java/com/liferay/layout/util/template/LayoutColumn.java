@@ -57,9 +57,7 @@ public class LayoutColumn {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)_layout.getLayoutType();
 
-		List<String> portletIds = layoutTypePortlet.getPortletIds();
-
-		for (String portletId : portletIds) {
+		for (String portletId : layoutTypePortlet.getPortletIds()) {
 			if (!portletId.startsWith(PortletKeys.NESTED_PORTLETS)) {
 				_addPortlet(portletId);
 			}

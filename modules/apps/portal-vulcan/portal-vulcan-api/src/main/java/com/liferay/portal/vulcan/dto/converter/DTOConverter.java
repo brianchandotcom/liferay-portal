@@ -12,37 +12,30 @@
  * details.
  */
 
-package com.liferay.headless.delivery.dto.v1_0.converter;
-
-import com.liferay.portal.kernel.model.User;
-
-import java.util.Locale;
-import java.util.Optional;
-
-import javax.ws.rs.core.UriInfo;
+package com.liferay.portal.vulcan.dto.converter;
 
 /**
  * @author Rubén Pulido
  * @author Víctor Galán
  */
-public interface DTOConverterContext {
+public interface DTOConverter<E, D> {
 
-	public Locale getLocale();
+	public String getContentType();
 
-	public long getResourcePrimKey();
-
-	public Optional<UriInfo> getUriInfoOptional();
-
-	public default User getUser() {
+	public default E getObject(String externalReferenceCode) throws Exception {
 		return null;
 	}
 
-	public default long getUserId() {
-		return 0;
+	public default D toDTO(DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		E object = getObject(String.valueOf(dtoConverterContext.getId()));
+
+		return toDTO(object);
 	}
 
-	public default boolean isAcceptAllLanguages() {
-		return true;
+	public default D toDTO(E object) throws Exception {
+		return null;
 	}
 
 }

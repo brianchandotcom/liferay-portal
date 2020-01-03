@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.headless.delivery.dto.v1_0.converter;
+package com.liferay.portal.vulcan.dto.converter;
 
 /**
  * @author Rubén Pulido
  * @author Víctor Galán
  */
-public interface DTOConverter {
+public interface DTOConverterRegistry {
 
-	public String getContentType();
-
-	public Object toDTO(DTOConverterContext dtoConverterContext)
-		throws Exception;
+	public DTOConverter getDTOConverter(String assetEntryClassName);
 
 }

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrgLaborService;
@@ -146,7 +147,7 @@ public class OrganizationResourceImpl
 				_getRegionId(organization, countryId), countryId,
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 				organization.getComment(), false, _getAddresses(organization),
-				Collections.emptyList(), Collections.emptyList(),
+				_getEmailAddresses(organization), Collections.emptyList(),
 				Collections.emptyList(), Collections.emptyList(),
 				new ServiceContext()));
 	}
@@ -215,6 +216,23 @@ public class OrganizationResourceImpl
 			Organization::getId
 		).orElse(
 			(long)OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID
+		);
+	}
+
+	private List<com.liferay.portal.kernel.model.EmailAddress>
+		_getEmailAddresses(Organization organization) {
+
+		return Optional.ofNullable(
+			organization.getOrganizationContactInformation()
+		).map(
+			OrganizationContactInformation::getEmailAddresses
+		).map(
+			emailAddresses -> ListUtil.filter(
+				TransformUtil.transformToList(
+					emailAddresses, this::_toEmailAddressModel),
+				Objects::nonNull)
+		).orElse(
+			Collections.emptyList()
 		);
 	}
 
@@ -368,6 +386,30 @@ public class OrganizationResourceImpl
 		).orElse(
 			(long)0
 		);
+	}
+
+	private com.liferay.portal.kernel.model.EmailAddress _toEmailAddressModel(
+		EmailAddress emailAddress) {
+
+		String address = emailAddress.getEmailAddress();
+
+		if (Validator.isNull(address)) {
+			return null;
+		}
+
+		com.liferay.portal.kernel.model.EmailAddress emailAddressModel =
+			_emailAddressLocalService.createEmailAddress(
+				GetterUtil.getLong(emailAddress.getId()));
+
+		emailAddressModel.setAddress(address);
+		emailAddressModel.setTypeId(
+			_toListTypeId(
+				"email-address", emailAddress.getType(),
+				ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS));
+		emailAddressModel.setPrimary(
+			GetterUtil.getBoolean(emailAddress.getPrimary()));
+
+		return emailAddressModel;
 	}
 
 	private long _toListTypeId(String defaultName, String name, String type) {
@@ -534,6 +576,9 @@ public class OrganizationResourceImpl
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private EmailAddressLocalService _emailAddressLocalService;
 
 	@Reference
 	private EmailAddressService _emailAddressService;

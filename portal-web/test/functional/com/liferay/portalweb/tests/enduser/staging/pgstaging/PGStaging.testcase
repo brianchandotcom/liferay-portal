@@ -28,7 +28,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ActivateDeactivateRemoteStaging {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

@@ -413,7 +413,7 @@ definition {
 
 	@priority = "5"
 	test StagingDemoLocalLive4 {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -884,7 +884,7 @@ definition {
 
 	@priority = "5"
 	test StagingPublishPage {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(

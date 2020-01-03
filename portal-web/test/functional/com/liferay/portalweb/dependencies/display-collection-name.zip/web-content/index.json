@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "Web Content Title",
+					"name": "itemSelectorName",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType" : "com.liferay.journal.model.JournalArticle"
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,9 @@
+<div class="fragment_wc">
+  [#if configuration.itemSelectorName.content??]
+    ${itemSelectorNameObject.getTitle()}
+    ${itemSelectorNameObject.getDescription()}
+    ${itemSelectorNameObject.getContent()}
+  [#else]
+    <div class="portlet-msg-info">The selected content will be shown here.</div>
+  [/#if]
+</div>

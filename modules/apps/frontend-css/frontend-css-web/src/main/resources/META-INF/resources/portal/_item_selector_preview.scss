@@ -54,6 +54,10 @@ $infoPanelSidebarDDColor: $secondary-l1;
 		img {
 			max-height: 100%;
 			max-width: 100%;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
 		}
 
 		.icon-arrow {

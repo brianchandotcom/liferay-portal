@@ -28,12 +28,14 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -325,6 +327,25 @@ public class AnalyticsConfigurationModelListener
 
 			_addAnalyticsMessages(users);
 		}
+
+		count = _contactLocalService.getCompanyContactsCount(companyId);
+
+		pages = count / _DEFAULT_DELTA;
+
+		for (int i = 0; i <= pages; i++) {
+			int start = i * _DEFAULT_DELTA;
+
+			int end = start + _DEFAULT_DELTA;
+
+			if (end > count) {
+				end = count;
+			}
+
+			List<Contact> contacts = _contactLocalService.getCompanyContacts(
+				companyId, start, end);
+
+			_addAnalyticsMessages(contacts);
+		}
 	}
 
 	private void _syncGroups(
@@ -493,6 +514,9 @@ public class AnalyticsConfigurationModelListener
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ContactLocalService _contactLocalService;
 
 	@Reference
 	private EntityModelListenerRegistry _entityModelListenerRegistry;

@@ -36,7 +36,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,12 +61,11 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 	protected void doGet(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
+		throws IOException {
 
 		Map<String, DDMExpressionFunctionFactory>
-			ddmExpressionFunctionFactories = null;
-
-		ddmExpressionFunctionFactories = getDDMExpressionFunctionFactories();
+			ddmExpressionFunctionFactories =
+				getDDMExpressionFunctionFactories();
 
 		JSONArray jsonArray = toJSONArray(
 			ddmExpressionFunctionFactories.entrySet(),

@@ -23,16 +23,9 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
-			ProductMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			JSONUser.tearDownNonAdminUsers();
 
-			User.deactivateCP(userFirstName = "userfn");
-
-			User.deleteCP();
-
-			Organization.tearDownCP(orgName = "Staging Organization Name");
+			JSONOrganization.deleteOrganizationByName(organizationName = "Staging Organization Name");
 		}
 	}
 
@@ -42,19 +35,13 @@ definition {
 		property test.name.skip.portal.instance = "StagingUsecaseWithOrganizatiton#StagingOrganizations";
 		property testray.component.names = "Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		Organization.addCP(
 			orgName = "Staging Organization Name",
 			orgType = "Organization");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -69,50 +56,25 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Staging Organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.assignRegularRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Staging Organization Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userName = "userfn userln",
-			userScreenName = "usersn");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "staging-organization-name");
 
 		Staging.activateStagingCP(
 			pageVersioningEnabled = "true",

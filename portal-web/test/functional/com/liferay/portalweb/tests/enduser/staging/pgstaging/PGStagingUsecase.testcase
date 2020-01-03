@@ -28,10 +28,7 @@ definition {
 
 	@priority = "3"
 	test BlogsOrganizationWorkflowStaging {
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
@@ -41,10 +38,7 @@ definition {
 			roleTitle = "Organization User",
 			roleType = "Organization");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.definePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX",
@@ -54,30 +48,11 @@ definition {
 			roleTitle = "Organization User",
 			roleType = "Organization");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Staging Organization Name",
-			orgType = "Organization");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addSiteCP(orgName = "Staging Organization Name");
+		JSONOrganization.addOrganization(
+			organizationName = "Staging Organization Name",
+			organizationSite = "true");
 
 		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Staging Test Page");
 
@@ -87,29 +62,16 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Staging Organization Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userName = "userfn userln",
-			userScreenName = "usersn");
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Staging Organization Name",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUser(
 			userEmailAddress = "usereacr@liferay.com",
@@ -118,43 +80,21 @@ definition {
 			userName = "userfncr userlncr",
 			userScreenName = "usersncr");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "usereacr@liferay.com",
 			userScreenName = "usersncr");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Staging Organization Name",
+			userEmailAddress = "usereacr@liferay.com");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Staging Organization Name",
-			userFirstName = "userfncr",
-			userLastName = "userlncr",
-			userName = "userfncr userlncr",
-			userScreenName = "usersncr");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.assignOrgRoleCP(
-			orgName = "Staging Organization Name",
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Staging Organization Name",
 			roleTitle = "Organization Content Reviewer",
-			userFirstName = "userfncr",
-			userLastName = "userlncr",
-			userScreenName = "usersncr");
+			userEmailAddress = "usereacr@liferay.com");
 
 		JSONUser.addUser(
 			userEmailAddress = "usereaoa@liferay.com",
@@ -162,60 +102,27 @@ definition {
 			userLastName = "userlnoa",
 			userScreenName = "usersnoa");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			password = "password",
 			userEmailAddress = "usereaoa@liferay.com",
 			userScreenName = "usersnoa");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Staging Organization Name",
+			userEmailAddress = "usereaoa@liferay.com");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.addMemberCP(
-			orgName = "Staging Organization Name",
-			userFirstName = "userfnoa",
-			userLastName = "userlnoa",
-			userScreenName = "usersnoa");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.assignOrgRoleCP(
-			orgName = "Staging Organization Name",
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Staging Organization Name",
 			roleTitle = "Organization Administrator",
-			userFirstName = "userfnoa",
-			userLastName = "userlnoa",
-			userScreenName = "usersnoa");
+			userEmailAddress = "usereaoa@liferay.com");
 
-		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
+		Staging.openStagingAdmin(siteURLKey = "staging-organization-name");
 
 		Staging.activateStagingCP(siteName = "Staging Organization Name");
 
-		Navigator.openSiteURL(siteName = "Staging Organization Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
+		Workflow.openWorkflowAdmin(siteURLKey = "staging-organization-name-staging");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -225,9 +132,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name");
+		Navigator.openStagingSiteURL(siteName = "Staging Organization Name");
 
 		Portlet.addPG(
 			pageName = "Staging Test Page",
@@ -245,9 +150,7 @@ definition {
 			password = "test",
 			userEmailAddress = "usereaoa@liferay.com");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name");
+		Navigator.openStagingSiteURL(siteName = "Staging Organization Name");
 
 		Staging.gotoPublishToLive();
 
@@ -265,9 +168,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name");
+		Navigator.openStagingSiteURL(siteName = "Staging Organization Name");
 
 		BlogsEntry.addWithWorkflowPG(
 			entryContent = "Blogs Entry Content",
@@ -309,9 +210,7 @@ definition {
 			password = "test",
 			userEmailAddress = "usereaoa@liferay.com");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Staging Organization Name");
+		Navigator.openStagingSiteURL(siteName = "Staging Organization Name");
 
 		Staging.gotoPublishToLive();
 
@@ -329,10 +228,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Role.removePermissionCP(
 			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",

@@ -30,7 +30,7 @@
 	%>
 
 	<clay:management-toolbar
-		displayContext="<%= new GroupManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, groupDisplayContext) %>"
+		displayContext="<%= new GroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupDisplayContext) %>"
 	/>
 
 	<aui:form action="<%= editSyncedSitesURL %>" method="post" name="fm">

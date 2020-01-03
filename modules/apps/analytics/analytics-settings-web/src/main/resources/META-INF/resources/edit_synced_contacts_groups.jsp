@@ -61,7 +61,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	%>
 
 	<clay:management-toolbar
-		displayContext="<%= new UserGroupManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, userGroupDisplayContext) %>"
+		displayContext="<%= new UserGroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userGroupDisplayContext) %>"
 	/>
 
 	<aui:form action="<%= editSyncedContactsURL %>" method="post" name="fm">

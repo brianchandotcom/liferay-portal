@@ -4435,17 +4435,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<echo file="${docker.stop.script}">
 				<![CDATA[
-					docker_kill_list=$(docker ps -a -q --filter="name=${database.host}")
-
-					if [[ "${docker_kill_list}" != "" ]]
-					then
-						docker kill ${docker_kill_list}
-					fi
-
-					docker_rm_list=$(docker ps -q -f "status=exited")
+					docker_rm_list=$(docker ps -a -q --filter="name=${env.HOSTNAME}_")
 
 					if [[ "${docker_rm_list}" != "" ]]
 					then
+						docker kill ${docker_rm_list}
+
 						docker rm ${docker_rm_list}
 					fi
 				]]>

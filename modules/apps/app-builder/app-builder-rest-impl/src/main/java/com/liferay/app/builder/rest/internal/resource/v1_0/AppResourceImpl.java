@@ -224,7 +224,8 @@ public class AppResourceImpl
 		throws Exception {
 
 		_validate(
-			app.getDataLayoutId(), app.getDataListViewId(), app.getStatus());
+			app.getDataLayoutId(), app.getDataListViewId(), app.getName(),
+			app.getStatus());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
@@ -259,7 +260,8 @@ public class AppResourceImpl
 	@Override
 	public App putApp(Long appId, App app) throws Exception {
 		_validate(
-			app.getDataLayoutId(), app.getDataListViewId(), app.getStatus());
+			app.getDataLayoutId(), app.getDataListViewId(), app.getName(),
+			app.getStatus());
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			app.getDataDefinitionId());
@@ -418,7 +420,8 @@ public class AppResourceImpl
 	}
 
 	private void _validate(
-			Long dataLayoutId, Long dataListViewId, String status)
+			Long dataLayoutId, Long dataListViewId, Map<String, Object> name,
+			String status)
 		throws Exception {
 
 		if ((dataLayoutId == null) && (dataListViewId == null)) {
@@ -445,6 +448,20 @@ public class AppResourceImpl
 			if (deDataListView == null) {
 				throw new NoSuchDataListViewException(
 					"Data list view " + dataListViewId + " does not exist");
+			}
+		}
+
+		if (name != null) {
+			int nameMaxLength = 30;
+
+			for (Object value : name.values()) {
+				String nameLocale = (String)value;
+
+				if (nameLocale.length() > nameMaxLength) {
+					throw new InvalidAppException(
+						"The app name has more than " + nameMaxLength +
+							" characters");
+				}
 			}
 		}
 

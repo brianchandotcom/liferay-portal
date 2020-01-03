@@ -17,6 +17,7 @@ import '../FieldBase/FieldBase.es';
 import './TextRegister.soy.js';
 
 import 'clay-autocomplete';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
 import {debounce, cancelDebounce} from 'frontend-js-web';
 import Component from 'metal-component';
 import dom from 'metal-dom';
@@ -142,7 +143,15 @@ class Text extends Component {
 	}
 
 	_handleFieldChanged(event) {
-		const {value} = event.target;
+		const {target} = event;
+		let {value} = target;
+		const {fieldName} = this;
+
+		if (fieldName === 'name') {
+			value = normalizeFieldName(value);
+
+			target.value = value;
+		}
 
 		this.setState(
 			{

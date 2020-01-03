@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
@@ -204,15 +203,6 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	@Override
 	public boolean isParentable() {
 		return _parentable;
-	}
-
-	@Override
-	public boolean isPrimaryType() {
-		if (_type.equals(LayoutConstants.TYPE_PORTLET)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

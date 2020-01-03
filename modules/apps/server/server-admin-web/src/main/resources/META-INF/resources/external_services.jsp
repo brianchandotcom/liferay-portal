@@ -90,19 +90,19 @@
 
 						String[] xugglerOptions = PropsUtil.getArray(PropsKeys.XUGGLER_JAR_OPTIONS);
 
-						String bitmode = OSDetector.getBitmode();
+						String bitMode = OSDetector.getBitMode();
 
 						String guess = StringPool.BLANK;
 
-						if (Validator.isNotNull(bitmode) && (bitmode.equals("32") || bitmode.equals("64"))) {
+						if (Validator.isNotNull(bitMode) && (bitMode.equals("32") || bitMode.equals("64"))) {
 							if (OSDetector.isApple()) {
-								guess = bitmode + "-mac";
+								guess = bitMode + "-mac";
 							}
 							else if (OSDetector.isLinux()) {
-								guess = bitmode + "-linux";
+								guess = bitMode + "-linux";
 							}
 							else if (OSDetector.isWindows()) {
-								guess = bitmode + "-win";
+								guess = bitMode + "-win";
 							}
 
 							if (Validator.isNotNull(guess)) {

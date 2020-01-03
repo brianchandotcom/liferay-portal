@@ -376,8 +376,7 @@ definition {
 
 	@description = "LRQA-53639 - Automate LPS-100675"
 	test VerifyFilterTopStepPerformance {
-
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "0001";

@@ -518,7 +518,6 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_TASKCOUNT");
-
 	}
 
 	macro waitForCompletedSLAtoBecomeOverdue {
@@ -554,7 +553,7 @@ definition {
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		}
-		
+
 		if ("${count}" == "${timesToRun}") {
 			echo("timeout exceeded");
 		}

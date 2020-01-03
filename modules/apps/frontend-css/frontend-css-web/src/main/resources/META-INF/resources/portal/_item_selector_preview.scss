@@ -52,9 +52,9 @@ $infoPanelSidebarDDColor: $secondary-l1;
 		}
 
 		img {
+			left: 50%;
 			max-height: 100%;
 			max-width: 100%;
-			left: 50%;
 			position: absolute;
 			top: 50%;
 			transform: translate(-50%, -50%);

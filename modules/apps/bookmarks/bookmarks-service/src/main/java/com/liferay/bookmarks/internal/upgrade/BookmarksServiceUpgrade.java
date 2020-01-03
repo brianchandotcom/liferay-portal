@@ -21,6 +21,7 @@ import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksEntryResour
 import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksFolderResourceBlock;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -62,6 +63,11 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 			"2.1.0", "3.0.0",
 			new UpgradeViewCount(
 				"BookmarksEntry", BookmarksEntry.class, "entryId", "visits"));
+
+		registry.register(
+			"3.0.0", "3.1.0",
+			new UpgradeCompanyIdPrimaryKey(
+				"BookmarksEntry", "BookmarksFolder"));
 	}
 
 	@Reference

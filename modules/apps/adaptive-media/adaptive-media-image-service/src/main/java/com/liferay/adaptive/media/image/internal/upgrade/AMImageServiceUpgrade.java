@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.image.internal.upgrade;
 
 import com.liferay.adaptive.media.image.internal.upgrade.v2_0_0.util.AMImageEntryTable;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,6 +33,9 @@ public class AMImageServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {AMImageEntryTable.class}));
+
+		registry.register(
+			"2.0.0", "2.1.0", new UpgradeCompanyIdPrimaryKey("AMImageEntry"));
 	}
 
 }

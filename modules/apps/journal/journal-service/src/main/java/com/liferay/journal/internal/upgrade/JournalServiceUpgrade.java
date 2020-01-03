@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -241,6 +242,13 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCTModel(
 				"JournalArticleLocalization", "JournalArticleResource",
 				"JournalArticle", "JournalFolder"));
+
+		registry.register(
+			"3.2.0", "3.3.0",
+			new UpgradeCompanyIdPrimaryKey(
+				"JournalArticle", "JournalArticleLocalization",
+				"JournalArticleResource", "JournalContentSearch", "JournalFeed",
+				"JournalFolder"));
 	}
 
 	protected void deleteTempImages() throws Exception {

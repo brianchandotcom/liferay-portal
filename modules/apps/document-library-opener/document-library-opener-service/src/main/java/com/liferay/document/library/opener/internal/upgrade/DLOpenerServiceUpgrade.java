@@ -15,6 +15,7 @@
 package com.liferay.document.library.opener.internal.upgrade;
 
 import com.liferay.document.library.opener.internal.upgrade.v1_1_0.UpgradeDLOpenerFileEntryReference;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,6 +30,10 @@ public class DLOpenerServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0", new UpgradeDLOpenerFileEntryReference());
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new UpgradeCompanyIdPrimaryKey("DLOpenerFileEntryReference"));
 	}
 
 }

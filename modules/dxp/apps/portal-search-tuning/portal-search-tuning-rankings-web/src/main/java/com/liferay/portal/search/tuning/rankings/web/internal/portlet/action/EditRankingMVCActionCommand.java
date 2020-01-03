@@ -255,7 +255,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		String[] deleteResultsRankingUids = _getResultRankingsUids(
+		String[] deleteResultsRankingUids = _getResultsRankingUids(
 			actionRequest, editRankingMVCActionRequest);
 
 		for (String deleteResultsRankingUid : deleteResultsRankingUids) {
@@ -503,7 +503,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		List<Ranking> rankings = new ArrayList<>();
 
-		String[] resultRankingsUids = _getResultRankingsUids(
+		String[] resultRankingsUids = _getResultsRankingUids(
 			actionRequest, editRankingMVCActionRequest);
 
 		for (String resultRankingsUid : resultRankingsUids) {
@@ -520,24 +520,24 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		return rankings;
 	}
 
-	private String[] _getResultRankingsUids(
+	private String[] _getResultsRankingUids(
 		ActionRequest actionRequest,
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		String[] resultRankingsUids = null;
+		String[] resultsRankingUids = null;
 
-		String resultRankingsUid =
+		String resultsRankingUid =
 			editRankingMVCActionRequest.getResultsRankingUid();
 
-		if (Validator.isNotNull(resultRankingsUid)) {
-			resultRankingsUids = new String[] {resultRankingsUid};
+		if (Validator.isNotNull(resultsRankingUid)) {
+			resultsRankingUids = new String[] {resultsRankingUid};
 		}
 		else {
-			resultRankingsUids = ParamUtil.getStringValues(
+			resultsRankingUids = ParamUtil.getStringValues(
 				actionRequest, "rowIds");
 		}
 
-		return resultRankingsUids;
+		return resultsRankingUids;
 	}
 
 	private void _guardDuplicateQueryStrings(

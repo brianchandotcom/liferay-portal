@@ -72,11 +72,6 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
-	public boolean isPrimaryType() {
-		return true;
-	}
-
-	@Override
 	public boolean isSitemapable() {
 		return true;
 	}

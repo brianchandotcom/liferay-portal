@@ -138,7 +138,7 @@ public class DDMFormField implements Serializable {
 		Object propertyDataSourceType = _properties.get("dataSourceType");
 
 		if (propertyDataSourceType == null) {
-			return GetterUtil.getString(propertyDataSourceType, "manual");
+			return "manual";
 		}
 
 		String dataSourceType = StringPool.BLANK;
@@ -146,10 +146,7 @@ public class DDMFormField implements Serializable {
 		if (propertyDataSourceType instanceof JSONArray) {
 			JSONArray jsonArray = (JSONArray)propertyDataSourceType;
 
-			if (jsonArray.length() > 0) {
-				dataSourceType = GetterUtil.getString(
-					jsonArray.get(0), "manual");
-			}
+			dataSourceType = GetterUtil.getString(jsonArray.get(0), "manual");
 		}
 		else if (propertyDataSourceType instanceof String) {
 			dataSourceType = (String)propertyDataSourceType;
@@ -161,10 +158,8 @@ public class DDMFormField implements Serializable {
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 						dataSourceType);
 
-					if (jsonArray.length() > 0) {
-						dataSourceType = GetterUtil.getString(
-							jsonArray.get(0), "manual");
-					}
+					dataSourceType = GetterUtil.getString(
+						jsonArray.get(0), "manual");
 				}
 				catch (JSONException jsone) {
 					return dataSourceType;

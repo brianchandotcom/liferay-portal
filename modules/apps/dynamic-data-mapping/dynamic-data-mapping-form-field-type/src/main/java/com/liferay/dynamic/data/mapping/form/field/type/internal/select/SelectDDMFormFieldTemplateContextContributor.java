@@ -145,29 +145,30 @@ public class SelectDDMFormFieldTemplateContextContributor
 		List<Object> options = new ArrayList<>();
 
 		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
-			if (optionValue != null) {
-				Map<String, String> optionMap = HashMapBuilder.put(
-					"label",
-					() -> {
-						LocalizedValue optionLabel =
-							ddmFormFieldOptions.getOptionLabels(optionValue);
-
-						String optionLabelString = optionLabel.getString(
-							locale);
-
-						if (ddmFormFieldRenderingContext.isViewMode()) {
-							optionLabelString = HtmlUtil.extractText(
-								optionLabelString);
-						}
-
-						return optionLabelString;
-					}
-				).put(
-					"value", optionValue
-				).build();
-
-				options.add(optionMap);
+			if (optionValue == null) {
+				continue;
 			}
+
+			Map<String, String> optionMap = HashMapBuilder.put(
+				"label",
+				() -> {
+					LocalizedValue optionLabel =
+						ddmFormFieldOptions.getOptionLabels(optionValue);
+
+					String optionLabelString = optionLabel.getString(locale);
+
+					if (ddmFormFieldRenderingContext.isViewMode()) {
+						optionLabelString = HtmlUtil.extractText(
+							optionLabelString);
+					}
+
+					return optionLabelString;
+				}
+			).put(
+				"value", optionValue
+			).build();
+
+			options.add(optionMap);
 		}
 
 		return options;

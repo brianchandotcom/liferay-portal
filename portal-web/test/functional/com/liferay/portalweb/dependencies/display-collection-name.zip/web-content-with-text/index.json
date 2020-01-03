@@ -1,17 +1,17 @@
 {
-    "fieldSets": [
+	"fieldSets": [
+		{
+			"fields": [
 				{
-				"fields": [
-					{
 					"label": "Web Content With Text",
 					"name": "itemSelectorName",
 					"type": "itemSelector",
 					"typeOptions": {
-						"itemType" : "com.liferay.journal.model.JournalArticle",
-						"itemSubtype": "STRUCTURE-TEXT"
-			     	}
+						"itemSubtype": "STRUCTURE-TEXT",
+						"itemType" : "com.liferay.journal.model.JournalArticle"
+					}
 				}
-		   	]
-     	}
+			]
+		}
 	]
 }

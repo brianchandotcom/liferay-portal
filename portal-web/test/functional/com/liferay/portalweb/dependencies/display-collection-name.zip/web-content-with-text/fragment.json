@@ -1,8 +1,8 @@
 {
-	"configurationPath":"index.json",
-	"cssPath":"index.css",
-	"htmlPath":"index.html",
-	"jsPath":"index.js",
-	"name":"Web Content With Text",
-	"type":"component"
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Web Content With Text",
+	"type": "component"
 }

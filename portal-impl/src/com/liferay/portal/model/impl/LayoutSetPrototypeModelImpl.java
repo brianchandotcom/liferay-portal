@@ -109,7 +109,7 @@ public class LayoutSetPrototypeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSetPrototype (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSetPrototypeId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name TEXT null,description TEXT null,settings_ STRING null,active_ BOOLEAN)";
+		"create table LayoutSetPrototype (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSetPrototypeId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name TEXT null,description TEXT null,settings_ STRING null,active_ BOOLEAN,primary key (layoutSetPrototypeId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetPrototype";
 

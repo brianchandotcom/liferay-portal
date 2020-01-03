@@ -80,7 +80,7 @@ public class KaleoProcessLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoProcessLink (kaleoProcessLinkId LONG not null primary key,companyId LONG,kaleoProcessId LONG,workflowTaskName VARCHAR(75) null,DDMTemplateId LONG)";
+		"create table KaleoProcessLink (kaleoProcessLinkId LONG not null,companyId LONG not null,kaleoProcessId LONG,workflowTaskName VARCHAR(75) null,DDMTemplateId LONG,primary key (kaleoProcessLinkId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoProcessLink";
 

@@ -95,7 +95,7 @@ public class MemberRequestModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table IM_MemberRequest (memberRequestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,key_ VARCHAR(75) null,receiverUserId LONG,invitedRoleId LONG,invitedTeamId LONG,status INTEGER)";
+		"create table IM_MemberRequest (memberRequestId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,key_ VARCHAR(75) null,receiverUserId LONG,invitedRoleId LONG,invitedTeamId LONG,status INTEGER,primary key (memberRequestId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table IM_MemberRequest";
 

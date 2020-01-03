@@ -111,7 +111,7 @@ public class KaleoTimerInstanceTokenModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTimerInstanceToken (mvccVersion LONG default 0 not null,kaleoTimerInstanceTokenId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTimerId LONG,kaleoTimerName VARCHAR(200) null,blocking BOOLEAN,completionUserId LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null)";
+		"create table KaleoTimerInstanceToken (mvccVersion LONG default 0 not null,kaleoTimerInstanceTokenId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTimerId LONG,kaleoTimerName VARCHAR(200) null,blocking BOOLEAN,completionUserId LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null,primary key (kaleoTimerInstanceTokenId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoTimerInstanceToken";

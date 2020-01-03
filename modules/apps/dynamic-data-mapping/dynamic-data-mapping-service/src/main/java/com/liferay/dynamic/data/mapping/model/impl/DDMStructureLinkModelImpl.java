@@ -84,7 +84,7 @@ public class DDMStructureLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,structureLinkId LONG not null,companyId LONG,classNameId LONG,classPK LONG,structureId LONG,primary key (structureLinkId, ctCollectionId))";
+		"create table DDMStructureLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,structureLinkId LONG not null,companyId LONG not null,classNameId LONG,classPK LONG,structureId LONG,primary key (structureLinkId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLink";
 

@@ -1,8 +1,8 @@
 create table KaleoProcess (
 	uuid_ VARCHAR(75) null,
-	kaleoProcessId LONG not null primary key,
+	kaleoProcessId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -10,13 +10,15 @@ create table KaleoProcess (
 	DDLRecordSetId LONG,
 	DDMTemplateId LONG,
 	workflowDefinitionName VARCHAR(75) null,
-	workflowDefinitionVersion INTEGER
+	workflowDefinitionVersion INTEGER,
+	primary key (kaleoProcessId, companyId)
 );
 
 create table KaleoProcessLink (
-	kaleoProcessLinkId LONG not null primary key,
-	companyId LONG,
+	kaleoProcessLinkId LONG not null,
+	companyId LONG not null,
 	kaleoProcessId LONG,
 	workflowTaskName VARCHAR(75) null,
-	DDMTemplateId LONG
+	DDMTemplateId LONG,
+	primary key (kaleoProcessLinkId, companyId)
 );

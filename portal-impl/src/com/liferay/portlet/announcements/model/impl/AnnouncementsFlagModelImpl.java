@@ -93,7 +93,7 @@ public class AnnouncementsFlagModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnnouncementsFlag (mvccVersion LONG default 0 not null,flagId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
+		"create table AnnouncementsFlag (mvccVersion LONG default 0 not null,flagId LONG not null,companyId LONG not null,userId LONG,createDate DATE null,entryId LONG,value INTEGER,primary key (flagId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsFlag";
 

@@ -101,7 +101,7 @@ public class TrashEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TrashEntry (mvccVersion LONG default 0 not null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER)";
+		"create table TrashEntry (mvccVersion LONG default 0 not null,entryId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER,primary key (entryId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 

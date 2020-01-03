@@ -117,7 +117,7 @@ public class AssetCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategory (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,treePath STRING null,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null,primary key (categoryId, ctCollectionId))";
+		"create table AssetCategory (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,treePath STRING null,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null,primary key (categoryId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetCategory";
 
@@ -231,7 +231,7 @@ public class AssetCategoryModelImpl
 
 	public static final String
 		MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_SQL_CREATE =
-			"create table AssetEntries_AssetCategories (companyId LONG not null,categoryId LONG not null,entryId LONG not null,primary key (categoryId, entryId))";
+			"create table AssetEntries_AssetCategories (companyId LONG not null,categoryId LONG not null,entryId LONG not null,primary key (categoryId, entryId, companyId))";
 
 	public static final boolean
 		FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETCATEGORIES =

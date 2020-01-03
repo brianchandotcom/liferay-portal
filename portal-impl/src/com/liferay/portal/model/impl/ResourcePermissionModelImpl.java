@@ -96,7 +96,7 @@ public class ResourcePermissionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ResourcePermission (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,resourcePermissionId LONG not null,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,primKeyId LONG,roleId LONG,ownerId LONG,actionIds LONG,viewActionId BOOLEAN,primary key (resourcePermissionId, ctCollectionId))";
+		"create table ResourcePermission (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,resourcePermissionId LONG not null,companyId LONG not null,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,primKeyId LONG,roleId LONG,ownerId LONG,actionIds LONG,viewActionId BOOLEAN,primary key (resourcePermissionId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ResourcePermission";
 

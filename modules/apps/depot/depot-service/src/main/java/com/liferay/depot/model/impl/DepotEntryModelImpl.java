@@ -95,7 +95,7 @@ public class DepotEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
+		"create table DepotEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryId LONG not null,groupId LONG,companyId LONG not null,userId LONG,createDate DATE null,modifiedDate DATE null,primary key (depotEntryId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntry";
 

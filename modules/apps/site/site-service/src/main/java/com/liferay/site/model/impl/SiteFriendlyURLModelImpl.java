@@ -96,7 +96,7 @@ public class SiteFriendlyURLModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SiteFriendlyURL (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteFriendlyURLId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,friendlyURL VARCHAR(75) null,languageId VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table SiteFriendlyURL (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteFriendlyURLId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,friendlyURL VARCHAR(75) null,languageId VARCHAR(75) null,lastPublishDate DATE null,primary key (siteFriendlyURLId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SiteFriendlyURL";
 

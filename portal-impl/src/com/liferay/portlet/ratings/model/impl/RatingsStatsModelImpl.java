@@ -89,7 +89,7 @@ public class RatingsStatsModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RatingsStats (statsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
+		"create table RatingsStats (statsId LONG not null,companyId LONG not null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE,primary key (statsId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 

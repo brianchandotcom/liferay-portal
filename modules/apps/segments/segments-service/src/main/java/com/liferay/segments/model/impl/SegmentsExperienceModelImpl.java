@@ -117,7 +117,7 @@ public class SegmentsExperienceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperience (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,segmentsExperienceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceKey VARCHAR(75) null,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table SegmentsExperience (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,segmentsExperienceId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceKey VARCHAR(75) null,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN,lastPublishDate DATE null,primary key (segmentsExperienceId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperience";
 

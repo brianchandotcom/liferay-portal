@@ -121,7 +121,7 @@ public class DDMTemplateVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplateVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,templateVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (templateVersionId, ctCollectionId))";
+		"create table DDMTemplateVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,templateVersionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (templateVersionId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateVersion";
 

@@ -1,9 +1,9 @@
 create table DDLRecord (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	recordId LONG not null primary key,
+	recordId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	versionUserId LONG,
@@ -15,15 +15,16 @@ create table DDLRecord (
 	recordSetVersion VARCHAR(75) null,
 	version VARCHAR(75) null,
 	displayIndex INTEGER,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (recordId, companyId)
 );
 
 create table DDLRecordSet (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	recordSetId LONG not null primary key,
+	recordSetId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	versionUserId LONG,
@@ -38,14 +39,15 @@ create table DDLRecordSet (
 	minDisplayRows INTEGER,
 	scope INTEGER,
 	settings_ TEXT null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (recordSetId, companyId)
 );
 
 create table DDLRecordSetVersion (
 	mvccVersion LONG default 0 not null,
-	recordSetVersionId LONG not null primary key,
+	recordSetVersionId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -58,14 +60,15 @@ create table DDLRecordSetVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (recordSetVersionId, companyId)
 );
 
 create table DDLRecordVersion (
 	mvccVersion LONG default 0 not null,
-	recordVersionId LONG not null primary key,
+	recordVersionId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -78,5 +81,6 @@ create table DDLRecordVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (recordVersionId, companyId)
 );

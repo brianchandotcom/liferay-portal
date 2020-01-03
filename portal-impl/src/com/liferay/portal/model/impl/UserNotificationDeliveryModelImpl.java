@@ -93,7 +93,7 @@ public class UserNotificationDeliveryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserNotificationDelivery (mvccVersion LONG default 0 not null,userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN)";
+		"create table UserNotificationDelivery (mvccVersion LONG default 0 not null,userNotificationDeliveryId LONG not null,companyId LONG not null,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN,primary key (userNotificationDeliveryId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table UserNotificationDelivery";

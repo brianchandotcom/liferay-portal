@@ -80,7 +80,7 @@ public class DLSyncEventModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLSyncEvent (syncEventId LONG not null primary key,companyId LONG,modifiedTime LONG,event VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG)";
+		"create table DLSyncEvent (syncEventId LONG not null,companyId LONG not null,modifiedTime LONG,event VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG,primary key (syncEventId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLSyncEvent";
 

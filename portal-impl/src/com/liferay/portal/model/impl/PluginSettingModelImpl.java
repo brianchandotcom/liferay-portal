@@ -88,7 +88,7 @@ public class PluginSettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PluginSetting (mvccVersion LONG default 0 not null,pluginSettingId LONG not null primary key,companyId LONG,pluginId VARCHAR(75) null,pluginType VARCHAR(75) null,roles STRING null,active_ BOOLEAN)";
+		"create table PluginSetting (mvccVersion LONG default 0 not null,pluginSettingId LONG not null,companyId LONG not null,pluginId VARCHAR(75) null,pluginType VARCHAR(75) null,roles STRING null,active_ BOOLEAN,primary key (pluginSettingId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table PluginSetting";
 

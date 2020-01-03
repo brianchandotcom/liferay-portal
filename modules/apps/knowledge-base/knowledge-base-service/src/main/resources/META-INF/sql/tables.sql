@@ -1,10 +1,10 @@
 create table KBArticle (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	kbArticleId LONG not null primary key,
+	kbArticleId LONG not null,
 	resourcePrimKey LONG,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -27,15 +27,16 @@ create table KBArticle (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (kbArticleId, companyId)
 );
 
 create table KBComment (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	kbCommentId LONG not null primary key,
+	kbCommentId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -45,15 +46,16 @@ create table KBComment (
 	content STRING null,
 	userRating INTEGER,
 	lastPublishDate DATE null,
-	status INTEGER
+	status INTEGER,
+	primary key (kbCommentId, companyId)
 );
 
 create table KBFolder (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	kbFolderId LONG not null primary key,
+	kbFolderId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -62,20 +64,22 @@ create table KBFolder (
 	name VARCHAR(75) null,
 	urlTitle VARCHAR(75) null,
 	description STRING null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (kbFolderId, companyId)
 );
 
 create table KBTemplate (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	kbTemplateId LONG not null primary key,
+	kbTemplateId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	title STRING null,
 	content TEXT null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (kbTemplateId, companyId)
 );

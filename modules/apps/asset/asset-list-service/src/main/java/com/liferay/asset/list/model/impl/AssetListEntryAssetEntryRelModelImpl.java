@@ -101,7 +101,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntryAssetEntryRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,segmentsEntryId LONG,position INTEGER,lastPublishDate DATE null)";
+		"create table AssetListEntryAssetEntryRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,segmentsEntryId LONG,position INTEGER,lastPublishDate DATE null,primary key (assetListEntryAssetEntryRelId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntryAssetEntryRel";

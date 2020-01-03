@@ -116,7 +116,7 @@ public class CalendarResourceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CalendarResource (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarResourceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,code_ VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table CalendarResource (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarResourceId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,code_ VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN,lastPublishDate DATE null,primary key (calendarResourceId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CalendarResource";
 

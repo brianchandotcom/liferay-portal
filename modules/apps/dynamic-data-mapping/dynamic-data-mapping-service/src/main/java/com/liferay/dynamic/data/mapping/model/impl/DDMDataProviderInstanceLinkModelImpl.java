@@ -81,7 +81,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMDataProviderInstanceLink (mvccVersion LONG default 0 not null,dataProviderInstanceLinkId LONG not null primary key,companyId LONG,dataProviderInstanceId LONG,structureId LONG)";
+		"create table DDMDataProviderInstanceLink (mvccVersion LONG default 0 not null,dataProviderInstanceLinkId LONG not null,companyId LONG not null,dataProviderInstanceId LONG,structureId LONG,primary key (dataProviderInstanceLinkId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstanceLink";

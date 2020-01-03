@@ -100,7 +100,7 @@ public class MicroblogsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MicroblogsEntry (microblogsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER)";
+		"create table MicroblogsEntry (microblogsEntryId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER,primary key (microblogsEntryId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MicroblogsEntry";
 

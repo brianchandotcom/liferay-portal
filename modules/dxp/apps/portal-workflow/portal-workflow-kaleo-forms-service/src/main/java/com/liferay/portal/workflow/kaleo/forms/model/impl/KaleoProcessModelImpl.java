@@ -102,7 +102,7 @@ public class KaleoProcessModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoProcess (uuid_ VARCHAR(75) null,kaleoProcessId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDLRecordSetId LONG,DDMTemplateId LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER)";
+		"create table KaleoProcess (uuid_ VARCHAR(75) null,kaleoProcessId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDLRecordSetId LONG,DDMTemplateId LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER,primary key (kaleoProcessId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoProcess";
 

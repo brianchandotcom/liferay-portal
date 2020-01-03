@@ -110,7 +110,7 @@ public class DLFileEntryTypeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntryType (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null)";
+		"create table DLFileEntryType (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null,primary key (fileEntryTypeId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryType";
 
@@ -215,7 +215,7 @@ public class DLFileEntryTypeModelImpl
 
 	public static final String
 		MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_SQL_CREATE =
-			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId))";
+			"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId, companyId))";
 
 	public static final boolean
 		FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = GetterUtil.getBoolean(

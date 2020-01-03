@@ -1,6 +1,6 @@
 create table SPIDefinition (
-	spiDefinitionId LONG not null primary key,
-	companyId LONG,
+	spiDefinitionId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -14,5 +14,6 @@ create table SPIDefinition (
 	servletContextNames STRING null,
 	typeSettings TEXT null,
 	status INTEGER,
-	statusMessage STRING null
+	statusMessage STRING null,
+	primary key (spiDefinitionId, companyId)
 );

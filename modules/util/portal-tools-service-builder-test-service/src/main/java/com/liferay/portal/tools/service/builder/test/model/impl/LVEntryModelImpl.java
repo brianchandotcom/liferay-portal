@@ -91,7 +91,7 @@ public class LVEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null primary key,companyId LONG,groupId LONG,uniqueGroupKey VARCHAR(75) null)";
+		"create table LVEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,headId LONG,head BOOLEAN,defaultLanguageId VARCHAR(75) null,lvEntryId LONG not null,companyId LONG not null,groupId LONG,uniqueGroupKey VARCHAR(75) null,primary key (lvEntryId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LVEntry";
 
@@ -149,7 +149,7 @@ public class LVEntryModelImpl
 
 	public static final String
 		MAPPING_TABLE_BIGDECIMALENTRIES_LVENTRIES_SQL_CREATE =
-			"create table BigDecimalEntries_LVEntries (companyId LONG not null,bigDecimalEntryId LONG not null,lvEntryId LONG not null,primary key (bigDecimalEntryId, lvEntryId))";
+			"create table BigDecimalEntries_LVEntries (companyId LONG not null,bigDecimalEntryId LONG not null,lvEntryId LONG not null,primary key (bigDecimalEntryId, lvEntryId, companyId))";
 
 	public static final boolean
 		FINDER_CACHE_ENABLED_BIGDECIMALENTRIES_LVENTRIES =

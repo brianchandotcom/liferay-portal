@@ -83,7 +83,7 @@ public class SamlSpMessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlSpMessage (samlSpMessageId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlIdpResponseKey VARCHAR(75) null,expirationDate DATE null)";
+		"create table SamlSpMessage (samlSpMessageId LONG not null,companyId LONG not null,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,samlIdpResponseKey VARCHAR(75) null,expirationDate DATE null,primary key (samlSpMessageId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpMessage";
 

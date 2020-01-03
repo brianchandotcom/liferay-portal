@@ -116,7 +116,7 @@ public class DDMFormInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFormInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureId LONG,version VARCHAR(75) null,name STRING null,description STRING null,settings_ TEXT null,lastPublishDate DATE null)";
+		"create table DDMFormInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureId LONG,version VARCHAR(75) null,name STRING null,description STRING null,settings_ TEXT null,lastPublishDate DATE null,primary key (formInstanceId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMFormInstance";
 

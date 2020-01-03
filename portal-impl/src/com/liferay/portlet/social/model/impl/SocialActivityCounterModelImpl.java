@@ -95,7 +95,7 @@ public class SocialActivityCounterModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN)";
+		"create table SocialActivityCounter (activityCounterId LONG not null,groupId LONG,companyId LONG not null,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN,primary key (activityCounterId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityCounter";

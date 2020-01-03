@@ -85,7 +85,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuth2ApplicationScopeAliases (oA2AScopeAliasesId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG)";
+		"create table OAuth2ApplicationScopeAliases (oA2AScopeAliasesId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,primary key (oA2AScopeAliasesId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OAuth2ApplicationScopeAliases";

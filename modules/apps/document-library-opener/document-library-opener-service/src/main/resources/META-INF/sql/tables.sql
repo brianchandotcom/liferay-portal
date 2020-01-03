@@ -1,7 +1,7 @@
 create table DLOpenerFileEntryReference (
-	dlOpenerFileEntryReferenceId LONG not null primary key,
+	dlOpenerFileEntryReferenceId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -9,5 +9,6 @@ create table DLOpenerFileEntryReference (
 	referenceKey VARCHAR(75) null,
 	referenceType VARCHAR(75) null,
 	fileEntryId LONG,
-	type_ INTEGER
+	type_ INTEGER,
+	primary key (dlOpenerFileEntryReferenceId, companyId)
 );

@@ -92,7 +92,7 @@ public class SocialActivityLimitModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table SocialActivityLimit (activityLimitId LONG not null,groupId LONG,companyId LONG not null,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null,primary key (activityLimitId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityLimit";

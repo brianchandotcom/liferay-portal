@@ -106,7 +106,7 @@ public class MDRRuleGroupInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MDRRuleGroupInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,ruleGroupInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupId LONG,priority INTEGER,lastPublishDate DATE null)";
+		"create table MDRRuleGroupInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,ruleGroupInstanceId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupId LONG,priority INTEGER,lastPublishDate DATE null,primary key (ruleGroupInstanceId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table MDRRuleGroupInstance";

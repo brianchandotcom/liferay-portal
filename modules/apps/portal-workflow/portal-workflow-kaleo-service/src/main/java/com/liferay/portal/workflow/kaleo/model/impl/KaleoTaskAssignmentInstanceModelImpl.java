@@ -107,7 +107,7 @@ public class KaleoTaskAssignmentInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTaskAssignmentInstance (mvccVersion LONG default 0 not null,kaleoTaskAssignmentInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,completed BOOLEAN,completionDate DATE null)";
+		"create table KaleoTaskAssignmentInstance (mvccVersion LONG default 0 not null,kaleoTaskAssignmentInstanceId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskInstanceTokenId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,completed BOOLEAN,completionDate DATE null,primary key (kaleoTaskAssignmentInstanceId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoTaskAssignmentInstance";

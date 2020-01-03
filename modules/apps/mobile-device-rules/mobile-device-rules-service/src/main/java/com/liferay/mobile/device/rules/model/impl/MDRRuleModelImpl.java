@@ -114,7 +114,7 @@ public class MDRRuleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MDRRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,ruleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ruleGroupId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
+		"create table MDRRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,ruleId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ruleGroupId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null,primary key (ruleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MDRRule";
 

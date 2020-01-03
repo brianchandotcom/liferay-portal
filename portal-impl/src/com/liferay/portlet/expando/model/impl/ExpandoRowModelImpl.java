@@ -78,7 +78,7 @@ public class ExpandoRowModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoRow (rowId_ LONG not null primary key,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG)";
+		"create table ExpandoRow (rowId_ LONG not null,companyId LONG not null,modifiedDate DATE null,tableId LONG,classPK LONG,primary key (rowId_, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoRow";
 

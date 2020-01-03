@@ -96,7 +96,7 @@ public class UserNotificationEventModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserNotificationEvent (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(200) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,actionRequired BOOLEAN,archived BOOLEAN)";
+		"create table UserNotificationEvent (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null,companyId LONG not null,userId LONG,type_ VARCHAR(200) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,actionRequired BOOLEAN,archived BOOLEAN,primary key (userNotificationEventId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table UserNotificationEvent";

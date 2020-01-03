@@ -100,7 +100,7 @@ public class LayoutSetModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+		"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null,groupId LONG,companyId LONG not null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,primary key (layoutSetId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 

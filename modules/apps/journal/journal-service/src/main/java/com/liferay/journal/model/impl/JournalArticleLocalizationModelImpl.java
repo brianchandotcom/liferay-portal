@@ -85,7 +85,7 @@ public class JournalArticleLocalizationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticleLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,articleLocalizationId LONG not null,companyId LONG,articlePK LONG,title VARCHAR(400) null,description STRING null,languageId VARCHAR(75) null,primary key (articleLocalizationId, ctCollectionId))";
+		"create table JournalArticleLocalization (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,articleLocalizationId LONG not null,companyId LONG not null,articlePK LONG,title VARCHAR(400) null,description STRING null,languageId VARCHAR(75) null,primary key (articleLocalizationId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalArticleLocalization";

@@ -88,7 +88,7 @@ public class ExpandoValueModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoValue (valueId LONG not null primary key,companyId LONG,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
+		"create table ExpandoValue (valueId LONG not null,companyId LONG not null,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null,primary key (valueId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoValue";
 

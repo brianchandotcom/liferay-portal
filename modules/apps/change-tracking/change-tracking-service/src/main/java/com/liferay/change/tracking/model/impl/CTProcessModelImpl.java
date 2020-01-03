@@ -87,7 +87,7 @@ public class CTProcessModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTProcess (mvccVersion LONG default 0 not null,ctProcessId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,ctCollectionId LONG,backgroundTaskId LONG)";
+		"create table CTProcess (mvccVersion LONG default 0 not null,ctProcessId LONG not null,companyId LONG not null,userId LONG,createDate DATE null,ctCollectionId LONG,backgroundTaskId LONG,primary key (ctProcessId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CTProcess";
 

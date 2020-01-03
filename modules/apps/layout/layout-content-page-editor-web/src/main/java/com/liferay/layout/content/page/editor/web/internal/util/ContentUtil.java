@@ -110,29 +110,37 @@ public class ContentUtil {
 			LayoutClassedModelUsageLocalServiceUtil.
 				getLayoutClassedModelUsagesByPlid(plid);
 
-		try {
-			Set<Long> layoutClassedModelUsageIds = new HashSet<>();
+		Set<Long> layoutClassedModelUsageIds = new HashSet<>();
 
-			for (LayoutClassedModelUsage layoutClassedModelUsage :
-					layoutClassedModelUsages) {
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
 
-				if (layoutClassedModelUsageIds.contains(
-						layoutClassedModelUsage.
-							getLayoutClassedModelUsageId())) {
+			if (layoutClassedModelUsageIds.contains(
+					layoutClassedModelUsage.getLayoutClassedModelUsageId())) {
 
-					continue;
-				}
+				continue;
+			}
 
+			try {
 				mappedContentsJSONArray.put(
 					_getPageContentJSONObject(
 						layoutClassedModelUsage, httpServletRequest));
-
-				layoutClassedModelUsageIds.add(
-					layoutClassedModelUsage.getLayoutClassedModelUsageId());
 			}
-		}
-		catch (Exception e) {
-			_log.error("An error occurred while getting mapped contents", e);
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"An error occurred while getting mapped content ",
+							"with ClassPK: ",
+							layoutClassedModelUsage.getClassPK(),
+							" and ClassNameId: ",
+							layoutClassedModelUsage.getClassNameId()),
+						e);
+				}
+			}
+
+			layoutClassedModelUsageIds.add(
+				layoutClassedModelUsage.getLayoutClassedModelUsageId());
 		}
 
 		return mappedContentsJSONArray;

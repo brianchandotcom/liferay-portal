@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
+import com.liferay.portal.kernel.upgrade.UpgradePrimaryKeyCompanyId;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -52,6 +54,39 @@ public class PortalUpgradeProcessRegistryImpl
 				"ResourcePermission"));
 
 		upgradeProcesses.put(new Version(8, 0, 0), new UpgradeSchema());
+
+		upgradeProcesses.put(
+			new Version(8, 1, 0),
+			new UpgradeCompanyIdPrimaryKey(
+				"Account_", "Address", "AnnouncementsDelivery",
+				"AnnouncementsEntry", "AnnouncementsFlag", "AssetCategory",
+				"AssetEntries_AssetCategories", "AssetEntries_AssetTags",
+				"AssetEntry", "AssetLink", "AssetTag", "AssetVocabulary",
+				"BrowserTracker", "CompanyInfo", "Contact_", "DLFileEntry",
+				"DLFileEntryMetadata", "DLFileEntryType",
+				"DLFileEntryTypes_DLFolders", "DLFileShortcut", "DLFileVersion",
+				"DLFolder", "EmailAddress", "ExpandoColumn", "ExpandoRow",
+				"ExpandoTable", "ExpandoValue", "ExportImportConfiguration",
+				"Group_", "Groups_Orgs", "Groups_Roles", "Groups_UserGroups",
+				"Image", "Layout", "LayoutBranch", "LayoutFriendlyURL",
+				"LayoutPrototype", "LayoutRevision", "LayoutSet",
+				"LayoutSetBranch", "LayoutSetPrototype", "MembershipRequest",
+				"Organization_", "OrgGroupRole", "OrgLabor", "PasswordPolicy",
+				"PasswordPolicyRel", "PasswordTracker", "Phone",
+				"PluginSetting", "Portlet", "PortletItem", "PortletPreferences",
+				"RatingsEntry", "RatingsStats", "RecentLayoutBranch",
+				"RecentLayoutRevision", "RecentLayoutSetBranch", "Repository",
+				"RepositoryEntry", "ResourcePermission", "Role_",
+				"SocialActivity", "SocialActivityAchievement",
+				"SocialActivityCounter", "SocialActivityLimit",
+				"SocialActivitySet", "SocialActivitySetting", "SocialRelation",
+				"SocialRequest", "SystemEvent", "Team", "Ticket",
+				"UserNotificationDelivery", "User_", "UserGroup",
+				"UserGroupGroupRole", "UserGroupRole", "UserGroups_Teams",
+				"UserIdMapper", "UserNotificationEvent", "Users_Groups",
+				"Users_Orgs", "Users_Roles", "Users_Teams", "Users_UserGroups",
+				"UserTracker", "UserTrackerPath", "WebDAVProps", "Website",
+				"WorkflowDefinitionLink", "WorkflowInstanceLink"));
 	}
 
 }

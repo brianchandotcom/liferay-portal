@@ -32,19 +32,12 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.service.ContactService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.PortalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -455,7 +448,14 @@ public class AnalyticsConfigurationModelListener
 	private static final int _DEFAULT_DELTA = 500;
 
 	private static final String[] _SAP_ENTRY_OBJECT = {
-		AnalyticsSecurityConstants.SERVICE_ACCESS_POLICY_NAME, ""
+		AnalyticsSecurityConstants.SERVICE_ACCESS_POLICY_NAME,
+		StringBundler.concat(
+			"com.liferay.segments.asah.rest.internal.resource.v1_0.",
+			"ExperimentResourceImpl#DeleteExperiment\n",
+			"com.liferay.segments.asah.rest.internal.resource.v1_0.",
+			"ExperimentRunResourceImpl#postExperimentRun\n",
+			"com.liferay.segments.asah.rest.internal.resource.v1_0.",
+			"StatusResourceImpl#postExperimentStatus")
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

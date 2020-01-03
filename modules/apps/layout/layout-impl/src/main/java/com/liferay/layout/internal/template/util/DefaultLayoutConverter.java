@@ -30,6 +30,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,24 +45,21 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
+		if (!_isLayoutTemplateParseable(layout)) {
+			return LayoutData.of(
+				layout,
+				layoutRow -> layoutRow.addLayoutColumns(
+					layoutColumn -> layoutColumn.addAllPortlets()));
+		}
+
 		List<UnsafeConsumer<LayoutRow, Exception>> rowUnsafeConsumers =
 			new ArrayList<>();
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
+		Document layoutTemplateDocument = _getLayoutTemplateDocument(layout);
 
-		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
+		for (Element rowElement :
+				layoutTemplateDocument.select(".portlet-layout.row")) {
 
-		Document document = Jsoup.parseBodyFragment(
-			layoutTemplate.getContent());
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		for (Element rowElement : document.select(".portlet-layout.row")) {
 			List<UnsafeConsumer<LayoutColumn, Exception>>
 				columnUnsafeConsumers = new ArrayList<>();
 
@@ -102,6 +100,64 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 		return LayoutData.of(
 			layout, rowUnsafeConsumers.toArray(new UnsafeConsumer[0]));
+	}
+
+	private Document _getLayoutTemplateDocument(Layout layout) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
+
+		Document document = Jsoup.parseBodyFragment(
+			layoutTemplate.getContent());
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
+	}
+
+	private boolean _isLayoutTemplateParseable(Layout layout) {
+		Document layoutTemplateDocument = _getLayoutTemplateDocument(layout);
+
+		Elements rowElements = layoutTemplateDocument.select(
+			".portlet-layout.row");
+
+		if (rowElements.isEmpty()) {
+			return false;
+		}
+
+		for (Element rowElement : rowElements) {
+			Elements columnElements = rowElement.getElementsByClass(
+				"portlet-column");
+
+			if (columnElements.isEmpty()) {
+				return false;
+			}
+
+			for (Element columnElement : columnElements) {
+				int columnSize = 0;
+
+				for (String className : columnElement.classNames()) {
+					if (className.startsWith(_CSS_CLASS_COLUMN_PREFIX)) {
+						columnSize = GetterUtil.getInteger(
+							className.substring(
+								_CSS_CLASS_COLUMN_PREFIX.length()));
+
+						break;
+					}
+				}
+
+				if (columnSize == 0) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	private static final String _CSS_CLASS_COLUMN_PREFIX = "col-md-";

@@ -18,6 +18,7 @@ import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.Inject;
@@ -28,8 +29,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.mockito.Mockito;
 
 /**
  * @author Adolfo Pérez
@@ -71,15 +70,19 @@ public class AMImageValidatorTest {
 	}
 
 	private FileVersion _getFileVersion(String mimeType) {
-		FileVersion fileVersion = Mockito.mock(FileVersion.class);
+		return new FileVersionWrapper(null) {
 
-		Mockito.when(
-			fileVersion.getMimeType()
-		).thenReturn(
-			mimeType
-		);
+			@Override
+			public String getMimeType() {
+				return mimeType;
+			}
 
-		return fileVersion;
+			@Override
+			public long getSize() {
+				return 1;
+			}
+
+		};
 	}
 
 	@Inject

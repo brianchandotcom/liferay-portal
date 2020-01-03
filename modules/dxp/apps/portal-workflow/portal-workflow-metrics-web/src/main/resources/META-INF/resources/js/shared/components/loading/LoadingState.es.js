@@ -17,11 +17,22 @@ import React from 'react';
  */
 export default class LoadingState extends React.Component {
 	render() {
-		const {className = 'border-1 pb-6 pt-6 sheet'} = this.props;
+		const {
+			className = 'border-1 pb-6 pt-6 sheet',
+			message,
+			messageClassName = ''
+		} = this.props;
 
 		return (
 			<div className={className} data-testid="loadingState">
 				<span aria-hidden="true" className="loading-animation" />
+				{message && (
+					<span
+						className={`text-center text-truncate ${messageClassName}`}
+					>
+						{message}
+					</span>
+				)}
 			</div>
 		);
 	}

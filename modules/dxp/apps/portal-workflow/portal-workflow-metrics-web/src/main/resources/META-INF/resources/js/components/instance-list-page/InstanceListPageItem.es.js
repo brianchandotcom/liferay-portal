@@ -9,93 +9,64 @@
  * distribution rights of the Software.
  */
 
+import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import React, {useContext, useCallback} from 'react';
+import React, {useContext, useState, useCallback, useEffect} from 'react';
 
-import Icon from '../../shared/components/Icon.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import moment from '../../shared/util/moment.es';
 import {ModalContext} from './modal/ModalContext.es';
 import {InstanceListContext} from './store/InstanceListPageStore.es';
 
-const getStatusIcon = status => {
-	if (status === 'OnTime') {
-		return {
-			bgColor: 'bg-success-light',
-			iconColor: 'text-success',
-			iconName: 'check-circle'
-		};
-	}
+const Item = taskItem => {
+	const {selectedItems = [], setInstanceId, setSelectedItems} = useContext(
+		InstanceListContext
+	);
+	const [checked, setChecked] = useState(false);
 
-	if (status === 'Overdue') {
-		return {
-			bgColor: 'bg-danger-light',
-			iconColor: 'text-danger',
-			iconName: 'exclamation-circle'
-		};
-	}
+	useEffect(() => {
+		setChecked(selectedItems.find(item => item.id === id) !== undefined);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedItems]);
 
-	if (status === 'Untracked') {
-		return {
-			bgColor: 'bg-info-light',
-			iconColor: 'text-info',
-			iconName: 'hr'
-		};
-	}
-
-	return null;
-};
-
-const Item = ({
-	assetTitle,
-	assetType,
-	assigneeUsers,
-	creatorUser,
-	dateCreated,
-	id,
-	slaStatus,
-	status,
-	taskNames = []
-}) => {
-	const completed = status === 'Completed';
-	const {setInstanceId} = useContext(InstanceListContext);
-	const statusIcon = getStatusIcon(slaStatus);
-
-	const taskItem = {
+	const {
 		assetTitle,
 		assetType,
 		assigneeUsers,
 		creatorUser,
 		dateCreated,
 		id,
-		slaStatus,
 		status,
-		taskNames
-	};
+		taskNames = []
+	} = taskItem;
 
-	const updateInstanceId = () => setInstanceId(id);
-
+	const completed = status === 'Completed';
 	const formattedAssignees = !completed
 		? assigneeUsers && assigneeUsers.length
 			? assigneeUsers.map(assigneeUser => assigneeUser.name).join(', ')
 			: Liferay.Language.get('unassigned')
 		: Liferay.Language.get('not-available');
 
+	const handleCheck = ({target}) => {
+		setChecked(target.checked);
+
+		if (target.checked) {
+			setSelectedItems([...selectedItems, taskItem]);
+		} else {
+			setSelectedItems(selectedItems.filter(item => item.id !== id));
+		}
+	};
+
+	const updateInstanceId = () => setInstanceId(id);
+
 	return (
 		<ClayTable.Row data-testid="instanceRow">
 			<ClayTable.Cell>
-				{statusIcon && (
-					<span
-						className={`sticker sticker-sm ${statusIcon.bgColor}`}
-					>
-						<span className="inline-item">
-							<Icon
-								elementClasses={statusIcon.iconColor}
-								iconName={statusIcon.iconName}
-							/>
-						</span>
-					</span>
-				)}
+				<ClayCheckbox
+					checked={checked}
+					data-testid="instanceCheckbox"
+					onChange={handleCheck}
+				/>
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>
@@ -112,7 +83,7 @@ const Item = ({
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="assetInfoCell">
-				{`${assetType}: ${assetTitle}`}{' '}
+				{`${assetType}: ${assetTitle} `}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell data-testid="taskNamesCell">
@@ -143,12 +114,12 @@ const Item = ({
 };
 
 const QuickActionMenu = ({taskItem}) => {
-	const {setSingleModal, singleModal} = useContext(ModalContext);
+	const {setSingleModal} = useContext(ModalContext);
 	const handleClickReassigneeTask = useCallback(
 		() => {
 			setSingleModal({
 				selectedItem: taskItem,
-				visible: !singleModal.visible
+				visible: true
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps

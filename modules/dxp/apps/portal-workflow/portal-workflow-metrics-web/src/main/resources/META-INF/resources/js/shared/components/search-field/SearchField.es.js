@@ -72,13 +72,6 @@ const SearchField = props => {
 
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
-							className="navbar-breakpoint-d-none"
-							displayType="unstyled"
-							spritemap={spritemap}
-							symbol="times"
-						/>
-
-						<ClayButtonWithIcon
 							displayType="unstyled"
 							spritemap={spritemap}
 							symbol="search"

@@ -29,6 +29,8 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 	const [loading] = useState([]);
 	const [searching, setSearching] = useState();
 	const [totalCount, setTotalCount] = useState();
+	const [selectAll, setSelectAll] = useState(false);
+	const [selectedItems, setSelectedItems] = useState([]);
 
 	const {client} = useContext(AppContext);
 	const {getSelectedAssignees} = useContext(AssigneeContext);
@@ -105,7 +107,11 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 		items,
 		loading,
 		searching,
+		selectAll,
+		selectedItems,
 		setInstanceId,
+		setSelectAll,
+		setSelectedItems,
 		totalCount
 	};
 };

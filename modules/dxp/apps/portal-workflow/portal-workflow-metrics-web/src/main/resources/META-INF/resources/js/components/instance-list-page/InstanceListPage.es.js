@@ -19,10 +19,11 @@ import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import Request from '../../shared/components/request/Request.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
-import {Filters} from './InstanceListPageFilters.es';
+import {Header} from './InstanceListPageHeader.es';
 import {ItemDetail} from './InstanceListPageItemDetail.es';
 import {Table} from './InstanceListPageTable.es';
 import {ModalContext} from './modal/ModalContext.es';
+import {BulkReassignModal} from './modal/bulk-reassign/BulkReassignModal.es';
 import {SingleReassignModal} from './modal/single-reassign/SingleReassignModal.es';
 import {InstanceFiltersProvider} from './store/InstanceListPageFiltersStore.es';
 import {
@@ -44,11 +45,22 @@ const InstanceListPage = ({page, pageSize, processId, query}) => {
 		visible: false
 	});
 
+	const [bulkModal, setBulkModal] = useState({
+		reassignedTasks: [],
+		reassigning: false,
+		selectedAssignee: null,
+		selectedTasks: [],
+		useSameAssignee: false,
+		visible: false
+	});
+
+	const modalState = {bulkModal, setBulkModal, setSingleModal, singleModal};
+
 	useProcessTitle(processId, Liferay.Language.get('all-items'));
 
 	return (
 		<Request>
-			<ModalContext.Provider value={{setSingleModal, singleModal}}>
+			<ModalContext.Provider value={modalState}>
 				<InstanceFiltersProvider
 					assigneeKeys={assigneeUserIds}
 					processId={processId}
@@ -63,10 +75,7 @@ const InstanceListPage = ({page, pageSize, processId, query}) => {
 						processId={processId}
 						query={query}
 					>
-						<InstanceListPage.Header
-							processId={processId}
-							query={query}
-						/>
+						<InstanceListPage.Header />
 
 						<InstanceListPage.Body
 							page={page}
@@ -146,24 +155,16 @@ const Body = ({page, pageSize, processId, singleModal}) => {
 					</PromisesResolver.Rejected>
 				</PromisesResolver>
 			</div>
-			<InstanceListPage.SingleReassignModal />
+			<InstanceListPage.SingleReassignModal></InstanceListPage.SingleReassignModal>
+			<InstanceListPage.BulkReassignModal></InstanceListPage.BulkReassignModal>
 			<ItemDetail processId={processId} />
 		</>
 	);
 };
 
-const Header = () => {
-	const {totalCount} = useContext(InstanceListContext);
-
-	return (
-		<Request.Success>
-			<Filters totalCount={totalCount} />
-		</Request.Success>
-	);
-};
-
-Body.Table = Table;
 InstanceListPage.Body = Body;
+InstanceListPage.Body.Table = Table;
+InstanceListPage.BulkReassignModal = BulkReassignModal;
 InstanceListPage.Header = Header;
 InstanceListPage.SingleReassignModal = SingleReassignModal;
 

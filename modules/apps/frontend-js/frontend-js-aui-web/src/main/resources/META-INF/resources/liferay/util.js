@@ -536,19 +536,18 @@
 		},
 
 		forcePost(link) {
-			link = Util.getDOM(link);
+			const currentElement = Util.getElement(link);
 
-			link = $(link);
+			if (currentElement) {
+				const url = currentElement.getAttribute('href');
 
-			if (link.length) {
-				var url = link.attr('href');
+				const newWindow =
+					currentElement.getAttribute('target') == '_blank';
 
-				var newWindow = link.attr('target') == '_blank';
-
-				var hrefFm = $(document.hrefFm);
+				const hrefFm = document.hrefFm;
 
 				if (newWindow) {
-					hrefFm.attr('target', '_blank');
+					hrefFm.setAttribute('target', '_blank');
 				}
 
 				submitForm(hrefFm, url, !newWindow);

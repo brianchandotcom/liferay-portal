@@ -1434,7 +1434,7 @@ import org.osgi.service.component.annotations.Reference;
 
 				@Override
 				@Transactional(readOnly = true)
-				public InputStream open${entityColumn.methodName}InputStream(long ${entity.PKVarName}) {
+				public InputStream open${entityColumn.methodName}InputStream(<#if entity.hasCompoundPK()>Serializable<#else>long</#if> ${entity.PKVarName}) {
 					try {
 						${entity.name}${entityColumn.methodName}BlobModel
 							${entity.name}${entityColumn.methodName}BlobModel = get${entityColumn.methodName}BlobModel(

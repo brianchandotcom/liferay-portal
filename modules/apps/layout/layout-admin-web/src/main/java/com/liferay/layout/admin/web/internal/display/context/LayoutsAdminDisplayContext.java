@@ -1165,17 +1165,17 @@ public class LayoutsAdminDisplayContext {
 		return layoutFullURL;
 	}
 
-	public String getVirtualHostName() {
-		String virtualHostName = StringPool.BLANK;
+	public String getVirtualHostname() {
+		String virtualHostname = StringPool.BLANK;
 
 		try {
 			LayoutSet layoutSet = getSelLayoutSet();
 
-			virtualHostName = PortalUtil.getVirtualHostname(layoutSet);
+			virtualHostname = PortalUtil.getVirtualHostname(layoutSet);
 
 			Group scopeGroup = _themeDisplay.getScopeGroup();
 
-			if (Validator.isNull(virtualHostName) &&
+			if (Validator.isNull(virtualHostname) &&
 				scopeGroup.isStagingGroup()) {
 
 				Group liveGroup = scopeGroup.getLiveGroup();
@@ -1186,7 +1186,7 @@ public class LayoutsAdminDisplayContext {
 					liveGroupLayoutSet = liveGroup.getPrivateLayoutSet();
 				}
 
-				virtualHostName = PortalUtil.getVirtualHostname(
+				virtualHostname = PortalUtil.getVirtualHostname(
 					liveGroupLayoutSet);
 			}
 		}
@@ -1196,7 +1196,7 @@ public class LayoutsAdminDisplayContext {
 			}
 		}
 
-		return virtualHostName;
+		return virtualHostname;
 	}
 
 	public boolean hasLayouts() {

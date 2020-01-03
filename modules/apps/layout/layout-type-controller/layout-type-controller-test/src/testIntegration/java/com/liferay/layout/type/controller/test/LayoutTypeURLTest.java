@@ -65,12 +65,12 @@ public class LayoutTypeURLTest {
 
 		_publicLayout = LayoutTestUtil.addLayout(_group);
 
-		setUpVirtualHostName();
+		setUpVirtualHostname();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_company.setVirtualHostname(_originalVirtualHostName);
+		_company.setVirtualHostname(_originalVirtualHostname);
 	}
 
 	@Test
@@ -101,8 +101,8 @@ public class LayoutTypeURLTest {
 				layoutURLType.getRegularURL(mockHttpServletRequest), true));
 	}
 
-	protected void setUpVirtualHostName() {
-		_originalVirtualHostName = _company.getVirtualHostname();
+	protected void setUpVirtualHostname() {
+		_originalVirtualHostname = _company.getVirtualHostname();
 
 		_company.setVirtualHostname(_VIRTUAL_HOSTNAME);
 	}
@@ -133,7 +133,7 @@ public class LayoutTypeURLTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private String _originalVirtualHostName;
+	private String _originalVirtualHostname;
 	private Layout _publicLayout;
 
 }

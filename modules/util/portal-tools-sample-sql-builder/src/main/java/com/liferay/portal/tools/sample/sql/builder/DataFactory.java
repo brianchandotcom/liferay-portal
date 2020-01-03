@@ -1125,7 +1125,7 @@ public class DataFactory {
 		_maxWikiPageCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.wiki.page.count"));
 
-		_virtualHostName = properties.getProperty(
+		_virtualHostname = properties.getProperty(
 			"sample.sql.virtual.hostname");
 
 		File outputDir = new File(
@@ -3276,7 +3276,7 @@ public class DataFactory {
 
 		virtualHostModel.setVirtualHostId(_counter.get());
 		virtualHostModel.setCompanyId(_companyId);
-		virtualHostModel.setHostname(_virtualHostName);
+		virtualHostModel.setHostname(_virtualHostname);
 
 		return virtualHostModel;
 	}
@@ -4557,6 +4557,6 @@ public class DataFactory {
 	private final long _userPersonalSiteGroupId;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
-	private String _virtualHostName;
+	private String _virtualHostname;
 
 }

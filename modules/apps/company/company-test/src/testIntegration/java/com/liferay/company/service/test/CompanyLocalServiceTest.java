@@ -704,8 +704,8 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateInvalidVirtualHostNames() throws Exception {
-		testUpdateVirtualHostNames(
+	public void testUpdateInvalidVirtualHostnames() throws Exception {
+		testUpdateVirtualHostnames(
 			new String[] {StringPool.BLANK, "localhost", ".abc"}, true);
 	}
 
@@ -728,8 +728,8 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateValidVirtualHostNames() throws Exception {
-		testUpdateVirtualHostNames(new String[] {"abc.com"}, false);
+	public void testUpdateValidVirtualHostnames() throws Exception {
+		testUpdateVirtualHostnames(new String[] {"abc.com"}, false);
 	}
 
 	protected Company addCompany() throws Exception {
@@ -851,16 +851,16 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	protected void testUpdateVirtualHostNames(
-			String[] virtualHostNames, boolean expectFailure)
+	protected void testUpdateVirtualHostnames(
+			String[] virtualHostnames, boolean expectFailure)
 		throws Exception {
 
 		Company company = addCompany();
 
-		for (String virtualHostName : virtualHostNames) {
+		for (String virtualHostname : virtualHostnames) {
 			try {
 				CompanyLocalServiceUtil.updateCompany(
-					company.getCompanyId(), virtualHostName, company.getMx(),
+					company.getCompanyId(), virtualHostname, company.getMx(),
 					company.getMaxUsers(), company.isActive());
 
 				Assert.assertFalse(expectFailure);

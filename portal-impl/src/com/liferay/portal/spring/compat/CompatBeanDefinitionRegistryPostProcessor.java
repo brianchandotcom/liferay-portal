@@ -39,14 +39,14 @@ public class CompatBeanDefinitionRegistryPostProcessor
 		throws BeansException {
 
 		for (Class<?> clazz : _COMPAT_CLASSES) {
-			BeanDefinitionBuilder builder =
+			BeanDefinitionBuilder beanDefinitionBuilder =
 				BeanDefinitionBuilder.genericBeanDefinition(ProxyFactory.class);
 
-			builder.setFactoryMethod("newDummyInstance");
-			builder.addConstructorArgValue(clazz);
+			beanDefinitionBuilder.setFactoryMethod("newDummyInstance");
+			beanDefinitionBuilder.addConstructorArgValue(clazz);
 
 			beanDefinitionRegistry.registerBeanDefinition(
-				clazz.getName(), builder.getBeanDefinition());
+				clazz.getName(), beanDefinitionBuilder.getBeanDefinition());
 		}
 	}
 

@@ -34,6 +34,7 @@ const AssigneeInput = ({reassignedTasks, setReassignedTasks, taskId}) => {
 			const selectedTaskIndex = tasks.findIndex(
 				task => task.id === taskId
 			);
+
 			if (selectedTaskIndex === -1) {
 				tasks.push({assigneeId: newAssignee.id, id: taskId});
 
@@ -211,4 +212,5 @@ const Table = ({
 
 Table.AssigneeInput = AssigneeInput;
 Table.Item = Item;
+
 export {Table};

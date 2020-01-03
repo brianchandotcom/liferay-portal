@@ -151,7 +151,7 @@ const Body = ({page, pageSize, processId, query, showModal}) => {
 					</PromisesResolver.Rejected>
 				</PromisesResolver>
 			</div>
-			<InstanceListPage.SingleReassignModal></InstanceListPage.SingleReassignModal>
+			<InstanceListPage.SingleReassignModal />
 			<InstanceListPageItemDetail processId={processId} />
 		</>
 	);
@@ -167,9 +167,9 @@ const Header = () => {
 	);
 };
 
-InstanceListPage.SingleReassignModal = SingleReassignModal;
-InstanceListPage.Body = Body;
 Body.Table = Table;
+InstanceListPage.Body = Body;
 InstanceListPage.Header = Header;
+InstanceListPage.SingleReassignModal = SingleReassignModal;
 
 export default InstanceListPage;

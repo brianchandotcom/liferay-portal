@@ -171,4 +171,5 @@ const QuickActionMenu = ({taskItem}) => {
 };
 
 Item.QuickActionMenu = QuickActionMenu;
+
 export {Item};

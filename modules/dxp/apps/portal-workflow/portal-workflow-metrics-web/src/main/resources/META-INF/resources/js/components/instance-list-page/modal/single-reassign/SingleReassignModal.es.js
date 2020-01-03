@@ -51,22 +51,17 @@ const LoadingView = () => {
 };
 
 const SingleReassignModal = () => {
-	const [visible, setVisible] = useState(false);
-	const {setShowModal, showModal} = useContext(SingleReassignModalContext);
+	const [errorToast, setErrorToast] = useState(() => false);
+	const [promises, setPromises] = useState([]);
 	const [reassignedTasks, setReassignedTasks] = useState(() => ({
 		tasks: []
 	}));
-	const [errorToast, setErrorToast] = useState(() => false);
-	const [promises, setPromises] = useState([]);
 	const [retry, setRetry] = useState(() => false);
 	const [sendingPost, setSendingPost] = useState(false);
 	const [successToast, setSuccessToast] = useState(() => []);
-	const taskItem = useMemo(
-		() => (showModal.selectedItem ? showModal.selectedItem : {}),
-		[showModal]
-	);
+	const {setShowModal, showModal} = useContext(SingleReassignModalContext);
+	const [visible, setVisible] = useState(false);
 
-	const modalObjString = JSON.stringify(showModal);
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setShowModal(() => ({selectedItem: undefined, visible: false}));
@@ -76,13 +71,17 @@ const SingleReassignModal = () => {
 		}
 	});
 
+	const taskItem = useMemo(
+		() => (showModal.selectedItem ? showModal.selectedItem : {}),
+		[showModal]
+	);
+
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
 		url: `/workflow-instances/${taskItem.id}/workflow-tasks`
 	});
 
-	const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 	const itemId = data.items && data.items[0] ? data.items[0].id : undefined;
 
 	const newAssigneeId = useMemo(
@@ -126,6 +125,8 @@ const SingleReassignModal = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [postData]);
 
+	const modalObjString = JSON.stringify(showModal);
+
 	useEffect(() => {
 		setVisible(() => showModal.visible);
 		if (showModal.visible || retry) {
@@ -134,6 +135,8 @@ const SingleReassignModal = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [modalObjString, retry]);
+
+	const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
 	return (
 		<>

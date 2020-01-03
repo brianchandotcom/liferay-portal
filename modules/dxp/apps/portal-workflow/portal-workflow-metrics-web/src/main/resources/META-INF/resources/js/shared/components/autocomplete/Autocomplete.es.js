@@ -26,9 +26,9 @@ const Autocomplete = ({
 	placeholder = '',
 	promises
 }) => {
+	const [dropDownItems, setDropDownItems] = useState([]);
 	const [dropDownVisible, setDropDownVisible] = useState(() => false);
 	const [value, setValue] = useState(() => '');
-	const [dropDownItems, setDropDownItems] = useState([]);
 	const handleChange = useCallback(value => {
 		setValue(() => value);
 		setDropDownVisible(() => value.length > 0);
@@ -98,4 +98,5 @@ const formatRegExp = value => {
 };
 
 Autocomplete.DropDown = DropDown;
+
 export {Autocomplete};

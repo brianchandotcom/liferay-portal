@@ -63,6 +63,8 @@ const ItemSelectorPreview = ({
 			updateCurrentItem
 		);
 
+		Liferay.component('ItemSelectorPreview', {ready: true});
+
 		return () => {
 			document.documentElement.removeEventListener(
 				'keydown',
@@ -70,6 +72,7 @@ const ItemSelectorPreview = ({
 			);
 
 			Liferay.detach(updateCurrentItemHandler);
+			Liferay.component('ItemSelectorPreview', null);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [itemList]);

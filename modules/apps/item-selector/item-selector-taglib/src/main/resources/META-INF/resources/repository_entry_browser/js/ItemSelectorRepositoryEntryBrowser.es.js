@@ -160,9 +160,11 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						itemFileValue = JSON.stringify(imageValue);
 					}
 
-					Liferay.fire('updateCurrentItem', {
-						url: itemFileUrl,
-						value: itemFileValue
+					Liferay.componentReady('ItemSelectorPreview').then(() => {
+						Liferay.fire('updateCurrentItem', {
+							url: itemFileUrl,
+							value: itemFileValue
+						});
 					});
 				}),
 				itemSelectorUploader.after(

@@ -444,8 +444,6 @@ definition {
 
 		WorkflowMetrics.waitForCompletedSLAtoBecomeOverdue(timesToRun = "12");
 
-		WorkflowMetrics.assertDefaultChartRangesAndUnits();
-
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
 			rowName = "Review",
 			slaBreachedValue = "1 (100%)");

@@ -95,7 +95,7 @@ public class PortletItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PortletItem (mvccVersion LONG default 0 not null,portletItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(200) null,classNameId LONG)";
+		"create table PortletItem (mvccVersion LONG default 0 not null,portletItemId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(200) null,classNameId LONG,primary key (portletItemId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table PortletItem";
 

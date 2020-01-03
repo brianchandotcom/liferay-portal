@@ -1,7 +1,7 @@
 create table Marketplace_App (
 	uuid_ VARCHAR(75) null,
-	appId LONG not null primary key,
-	companyId LONG,
+	appId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -12,15 +12,17 @@ create table Marketplace_App (
 	category VARCHAR(75) null,
 	iconURL STRING null,
 	version VARCHAR(75) null,
-	required BOOLEAN
+	required BOOLEAN,
+	primary key (appId, companyId)
 );
 
 create table Marketplace_Module (
 	uuid_ VARCHAR(75) null,
-	moduleId LONG not null primary key,
-	companyId LONG,
+	moduleId LONG not null,
+	companyId LONG not null,
 	appId LONG,
 	bundleSymbolicName VARCHAR(500) null,
 	bundleVersion VARCHAR(75) null,
-	contextName VARCHAR(75) null
+	contextName VARCHAR(75) null,
+	primary key (moduleId, companyId)
 );

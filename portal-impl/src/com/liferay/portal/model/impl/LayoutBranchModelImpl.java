@@ -97,7 +97,7 @@ public class LayoutBranchModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutBranch (mvccVersion LONG default 0 not null,layoutBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN)";
+		"create table LayoutBranch (mvccVersion LONG default 0 not null,layoutBranchId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,layoutSetBranchId LONG,plid LONG,name VARCHAR(75) null,description STRING null,master BOOLEAN,primary key (layoutBranchId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutBranch";
 

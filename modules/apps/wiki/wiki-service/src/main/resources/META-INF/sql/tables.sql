@@ -1,9 +1,9 @@
 create table WikiNode (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	nodeId LONG not null primary key,
+	nodeId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -15,16 +15,17 @@ create table WikiNode (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (nodeId, companyId)
 );
 
 create table WikiPage (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	pageId LONG not null primary key,
+	pageId LONG not null,
 	resourcePrimKey LONG,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -43,15 +44,17 @@ create table WikiPage (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (pageId, companyId)
 );
 
 create table WikiPageResource (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	resourcePrimKey LONG not null primary key,
+	resourcePrimKey LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	nodeId LONG,
-	title VARCHAR(255) null
+	title VARCHAR(255) null,
+	primary key (resourcePrimKey, companyId)
 );

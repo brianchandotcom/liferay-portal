@@ -87,7 +87,7 @@ public class RecentLayoutSetBranchModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RecentLayoutSetBranch (mvccVersion LONG default 0 not null,recentLayoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,layoutSetBranchId LONG,layoutSetId LONG)";
+		"create table RecentLayoutSetBranch (mvccVersion LONG default 0 not null,recentLayoutSetBranchId LONG not null,groupId LONG,companyId LONG not null,userId LONG,layoutSetBranchId LONG,layoutSetId LONG,primary key (recentLayoutSetBranchId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table RecentLayoutSetBranch";

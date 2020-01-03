@@ -84,7 +84,7 @@ public class OAuth2ScopeGrantModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuth2ScopeGrant (oAuth2ScopeGrantId LONG not null primary key,companyId LONG,oA2AScopeAliasesId LONG,applicationName VARCHAR(255) null,bundleSymbolicName VARCHAR(255) null,scope VARCHAR(240) null,scopeAliases TEXT null)";
+		"create table OAuth2ScopeGrant (oAuth2ScopeGrantId LONG not null,companyId LONG not null,oA2AScopeAliasesId LONG,applicationName VARCHAR(255) null,bundleSymbolicName VARCHAR(255) null,scope VARCHAR(240) null,scopeAliases TEXT null,primary key (oAuth2ScopeGrantId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuth2ScopeGrant";
 
@@ -133,7 +133,7 @@ public class OAuth2ScopeGrantModelImpl
 
 	public static final String
 		MAPPING_TABLE_OA2AUTHS_OA2SCOPEGRANTS_SQL_CREATE =
-			"create table OA2Auths_OA2ScopeGrants (companyId LONG not null,oAuth2AuthorizationId LONG not null,oAuth2ScopeGrantId LONG not null,primary key (oAuth2AuthorizationId, oAuth2ScopeGrantId))";
+			"create table OA2Auths_OA2ScopeGrants (companyId LONG not null,oAuth2AuthorizationId LONG not null,oAuth2ScopeGrantId LONG not null,primary key (oAuth2AuthorizationId, oAuth2ScopeGrantId, companyId))";
 
 	public OAuth2ScopeGrantModelImpl() {
 	}

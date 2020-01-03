@@ -103,7 +103,7 @@ public class SocialActivityModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivity (activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,parentClassNameId LONG,parentClassPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG)";
+		"create table SocialActivity (activityId LONG not null,groupId LONG,companyId LONG not null,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,parentClassNameId LONG,parentClassPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,primary key (activityId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SocialActivity";
 

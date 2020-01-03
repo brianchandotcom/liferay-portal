@@ -97,7 +97,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG,lastPublishDate DATE null)";
+		"create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG,lastPublishDate DATE null,primary key (banId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBBan";
 

@@ -79,7 +79,7 @@ public class BigDecimalEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BigDecimalEntry (bigDecimalEntryId LONG not null primary key,companyId LONG,bigDecimalValue DECIMAL(30, 16) null)";
+		"create table BigDecimalEntry (bigDecimalEntryId LONG not null,companyId LONG not null,bigDecimalValue DECIMAL(30, 16) null,primary key (bigDecimalEntryId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table BigDecimalEntry";
 
@@ -126,7 +126,7 @@ public class BigDecimalEntryModelImpl
 
 	public static final String
 		MAPPING_TABLE_BIGDECIMALENTRIES_LVENTRIES_SQL_CREATE =
-			"create table BigDecimalEntries_LVEntries (companyId LONG not null,bigDecimalEntryId LONG not null,lvEntryId LONG not null,primary key (bigDecimalEntryId, lvEntryId))";
+			"create table BigDecimalEntries_LVEntries (companyId LONG not null,bigDecimalEntryId LONG not null,lvEntryId LONG not null,primary key (bigDecimalEntryId, lvEntryId, companyId))";
 
 	public static final boolean
 		FINDER_CACHE_ENABLED_BIGDECIMALENTRIES_LVENTRIES =

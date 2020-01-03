@@ -84,7 +84,7 @@ public class DDMTemplateLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplateLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,templateLinkId LONG not null,companyId LONG,classNameId LONG,classPK LONG,templateId LONG,primary key (templateLinkId, ctCollectionId))";
+		"create table DDMTemplateLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,templateLinkId LONG not null,companyId LONG not null,classNameId LONG,classPK LONG,templateId LONG,primary key (templateLinkId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateLink";
 

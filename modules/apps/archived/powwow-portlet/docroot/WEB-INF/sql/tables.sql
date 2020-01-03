@@ -1,7 +1,7 @@
 create table PowwowMeeting (
-	powwowMeetingId LONG not null primary key,
+	powwowMeetingId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -13,13 +13,14 @@ create table PowwowMeeting (
 	providerTypeMetadata STRING null,
 	languageId VARCHAR(75) null,
 	calendarBookingId LONG,
-	status INTEGER
+	status INTEGER,
+	primary key (powwowMeetingId, companyId)
 );
 
 create table PowwowParticipant (
-	powwowParticipantId LONG not null primary key,
+	powwowParticipantId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -29,12 +30,13 @@ create table PowwowParticipant (
 	participantUserId LONG,
 	emailAddress VARCHAR(75) null,
 	type_ INTEGER,
-	status INTEGER
+	status INTEGER,
+	primary key (powwowParticipantId, companyId)
 );
 
 create table PowwowServer (
-	powwowServerId LONG not null primary key,
-	companyId LONG,
+	powwowServerId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -44,5 +46,6 @@ create table PowwowServer (
 	url STRING null,
 	apiKey VARCHAR(75) null,
 	secret VARCHAR(75) null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	primary key (powwowServerId, companyId)
 );

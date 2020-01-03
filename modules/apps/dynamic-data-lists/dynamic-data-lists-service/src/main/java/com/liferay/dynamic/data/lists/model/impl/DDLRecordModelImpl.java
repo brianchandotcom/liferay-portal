@@ -109,7 +109,7 @@ public class DDLRecordModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDLRecord (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,recordId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStorageId LONG,recordSetId LONG,recordSetVersion VARCHAR(75) null,version VARCHAR(75) null,displayIndex INTEGER,lastPublishDate DATE null)";
+		"create table DDLRecord (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,recordId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,DDMStorageId LONG,recordSetId LONG,recordSetVersion VARCHAR(75) null,version VARCHAR(75) null,displayIndex INTEGER,lastPublishDate DATE null,primary key (recordId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDLRecord";
 

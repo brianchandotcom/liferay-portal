@@ -1,8 +1,8 @@
 create table SiteFriendlyURL (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	siteFriendlyURLId LONG not null primary key,
-	companyId LONG,
+	siteFriendlyURLId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -10,5 +10,6 @@ create table SiteFriendlyURL (
 	groupId LONG,
 	friendlyURL VARCHAR(75) null,
 	languageId VARCHAR(75) null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (siteFriendlyURLId, companyId)
 );

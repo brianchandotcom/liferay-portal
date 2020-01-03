@@ -91,7 +91,7 @@ public class SharepointOAuth2TokenEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SharepointOAuth2TokenEntry (sharepointOAuth2TokenEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,accessToken TEXT null,configurationPid VARCHAR(75) null,expirationDate DATE null,refreshToken TEXT null)";
+		"create table SharepointOAuth2TokenEntry (sharepointOAuth2TokenEntryId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,accessToken TEXT null,configurationPid VARCHAR(75) null,expirationDate DATE null,refreshToken TEXT null,primary key (sharepointOAuth2TokenEntryId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SharepointOAuth2TokenEntry";

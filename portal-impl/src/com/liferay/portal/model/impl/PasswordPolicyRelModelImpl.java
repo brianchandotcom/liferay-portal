@@ -83,7 +83,7 @@ public class PasswordPolicyRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PasswordPolicyRel (mvccVersion LONG default 0 not null,passwordPolicyRelId LONG not null primary key,companyId LONG,passwordPolicyId LONG,classNameId LONG,classPK LONG)";
+		"create table PasswordPolicyRel (mvccVersion LONG default 0 not null,passwordPolicyRelId LONG not null,companyId LONG not null,passwordPolicyId LONG,classNameId LONG,classPK LONG,primary key (passwordPolicyRelId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicyRel";
 

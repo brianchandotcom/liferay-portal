@@ -2,13 +2,14 @@ create table BigDecimalEntries_LVEntries (
 	companyId LONG not null,
 	bigDecimalEntryId LONG not null,
 	lvEntryId LONG not null,
-	primary key (bigDecimalEntryId, lvEntryId)
+	primary key (bigDecimalEntryId, lvEntryId, companyId)
 );
 
 create table BigDecimalEntry (
-	bigDecimalEntryId LONG not null primary key,
-	companyId LONG,
-	bigDecimalValue DECIMAL(30, 16) null
+	bigDecimalEntryId LONG not null,
+	companyId LONG not null,
+	bigDecimalValue DECIMAL(30, 16) null,
+	primary key (bigDecimalEntryId, companyId)
 );
 
 create table EagerBlobEntity (
@@ -31,44 +32,48 @@ create table LVEntry (
 	headId LONG,
 	head BOOLEAN,
 	defaultLanguageId VARCHAR(75) null,
-	lvEntryId LONG not null primary key,
-	companyId LONG,
+	lvEntryId LONG not null,
+	companyId LONG not null,
 	groupId LONG,
-	uniqueGroupKey VARCHAR(75) null
+	uniqueGroupKey VARCHAR(75) null,
+	primary key (lvEntryId, companyId)
 );
 
 create table LVEntryLocalization (
 	mvccVersion LONG default 0 not null,
 	headId LONG,
 	head BOOLEAN,
-	lvEntryLocalizationId LONG not null primary key,
-	companyId LONG,
+	lvEntryLocalizationId LONG not null,
+	companyId LONG not null,
 	lvEntryId LONG,
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
-	content VARCHAR(75) null
+	content VARCHAR(75) null,
+	primary key (lvEntryLocalizationId, companyId)
 );
 
 create table LVEntryLocalizationVersion (
-	lvEntryLocalizationVersionId LONG not null primary key,
+	lvEntryLocalizationVersionId LONG not null,
 	version INTEGER,
 	lvEntryLocalizationId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	lvEntryId LONG,
 	languageId VARCHAR(75) null,
 	title VARCHAR(75) null,
-	content VARCHAR(75) null
+	content VARCHAR(75) null,
+	primary key (lvEntryLocalizationVersionId, companyId)
 );
 
 create table LVEntryVersion (
-	lvEntryVersionId LONG not null primary key,
+	lvEntryVersionId LONG not null,
 	version INTEGER,
 	uuid_ VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	lvEntryId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	groupId LONG,
-	uniqueGroupKey VARCHAR(75) null
+	uniqueGroupKey VARCHAR(75) null,
+	primary key (lvEntryVersionId, companyId)
 );
 
 create table LazyBlobEntity (

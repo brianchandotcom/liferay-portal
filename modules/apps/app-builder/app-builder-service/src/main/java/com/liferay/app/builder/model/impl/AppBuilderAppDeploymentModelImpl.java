@@ -81,7 +81,7 @@ public class AppBuilderAppDeploymentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null primary key,companyId LONG,appBuilderAppId LONG,settings_ TEXT null,type_ VARCHAR(75) null)";
+		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null,companyId LONG not null,appBuilderAppId LONG,settings_ TEXT null,type_ VARCHAR(75) null,primary key (appBuilderAppDeploymentId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AppBuilderAppDeployment";

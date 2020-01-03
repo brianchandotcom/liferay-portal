@@ -116,7 +116,7 @@ public class MDRActionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MDRAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,actionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null)";
+		"create table MDRAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,actionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupInstanceId LONG,name STRING null,description STRING null,type_ VARCHAR(255) null,typeSettings TEXT null,lastPublishDate DATE null,primary key (actionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MDRAction";
 

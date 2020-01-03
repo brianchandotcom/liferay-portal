@@ -109,7 +109,7 @@ public class CalendarNotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CalendarNotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null)";
+		"create table CalendarNotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null,primary key (calendarNotificationTemplateId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CalendarNotificationTemplate";

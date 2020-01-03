@@ -120,7 +120,7 @@ public class DDMStructureVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,structureVersionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (structureVersionId, ctCollectionId))";
+		"create table DDMStructureVersion (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,structureVersionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (structureVersionId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMStructureVersion";

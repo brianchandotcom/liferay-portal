@@ -86,7 +86,7 @@ public class SyncDLFileVersionDiffModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SyncDLFileVersionDiff (syncDLFileVersionDiffId LONG not null primary key,companyId LONG,fileEntryId LONG,sourceFileVersionId LONG,targetFileVersionId LONG,dataFileEntryId LONG,size_ LONG,expirationDate DATE null)";
+		"create table SyncDLFileVersionDiff (syncDLFileVersionDiffId LONG not null,companyId LONG not null,fileEntryId LONG,sourceFileVersionId LONG,targetFileVersionId LONG,dataFileEntryId LONG,size_ LONG,expirationDate DATE null,primary key (syncDLFileVersionDiffId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SyncDLFileVersionDiff";

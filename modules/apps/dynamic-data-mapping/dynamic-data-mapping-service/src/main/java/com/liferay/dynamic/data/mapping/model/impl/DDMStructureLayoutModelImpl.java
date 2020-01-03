@@ -114,7 +114,7 @@ public class DDMStructureLayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureLayout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,structureLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,structureLayoutKey VARCHAR(75) null,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null)";
+		"create table DDMStructureLayout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,structureLayoutId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,structureLayoutKey VARCHAR(75) null,structureVersionId LONG,name TEXT null,description TEXT null,definition TEXT null,primary key (structureLayoutId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLayout";
 

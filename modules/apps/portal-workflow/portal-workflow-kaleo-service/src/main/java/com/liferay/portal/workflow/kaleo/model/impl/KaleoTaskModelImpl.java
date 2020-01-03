@@ -94,7 +94,7 @@ public class KaleoTaskModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTask (mvccVersion LONG default 0 not null,kaleoTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null)";
+		"create table KaleoTask (mvccVersion LONG default 0 not null,kaleoTaskId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null,primary key (kaleoTaskId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTask";
 

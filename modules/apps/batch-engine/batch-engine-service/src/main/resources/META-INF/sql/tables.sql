@@ -1,8 +1,8 @@
 create table BatchEngineExportTask (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	batchEngineExportTaskId LONG not null primary key,
-	companyId LONG,
+	batchEngineExportTaskId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -16,14 +16,15 @@ create table BatchEngineExportTask (
 	executeStatus VARCHAR(75) null,
 	parameters TEXT null,
 	startTime DATE null,
-	version VARCHAR(75) null
+	version VARCHAR(75) null,
+	primary key (batchEngineExportTaskId, companyId)
 );
 
 create table BatchEngineImportTask (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	batchEngineImportTaskId LONG not null primary key,
-	companyId LONG,
+	batchEngineImportTaskId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -39,5 +40,6 @@ create table BatchEngineImportTask (
 	operation VARCHAR(75) null,
 	parameters TEXT null,
 	startTime DATE null,
-	version VARCHAR(75) null
+	version VARCHAR(75) null,
+	primary key (batchEngineImportTaskId, companyId)
 );

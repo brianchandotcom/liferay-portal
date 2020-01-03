@@ -85,7 +85,7 @@ public class JournalContentSearchModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalContentSearch (mvccVersion LONG default 0 not null,contentSearchId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null)";
+		"create table JournalContentSearch (mvccVersion LONG default 0 not null,contentSearchId LONG not null,groupId LONG,companyId LONG not null,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null,primary key (contentSearchId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalContentSearch";

@@ -112,7 +112,7 @@ public class DefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Reports_Definition (uuid_ VARCHAR(75) null,definitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,sourceId LONG,reportName VARCHAR(75) null,reportParameters TEXT null,lastPublishDate DATE null)";
+		"create table Reports_Definition (uuid_ VARCHAR(75) null,definitionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,sourceId LONG,reportName VARCHAR(75) null,reportParameters TEXT null,lastPublishDate DATE null,primary key (definitionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Reports_Definition";
 

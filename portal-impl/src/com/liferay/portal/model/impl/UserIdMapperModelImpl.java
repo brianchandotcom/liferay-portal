@@ -86,7 +86,7 @@ public class UserIdMapperModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserIdMapper (mvccVersion LONG default 0 not null,userIdMapperId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,description VARCHAR(75) null,externalUserId VARCHAR(75) null)";
+		"create table UserIdMapper (mvccVersion LONG default 0 not null,userIdMapperId LONG not null,companyId LONG not null,userId LONG,type_ VARCHAR(75) null,description VARCHAR(75) null,externalUserId VARCHAR(75) null,primary key (userIdMapperId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table UserIdMapper";
 

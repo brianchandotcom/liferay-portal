@@ -1,17 +1,18 @@
 create table SyncDLFileVersionDiff (
-	syncDLFileVersionDiffId LONG not null primary key,
-	companyId LONG,
+	syncDLFileVersionDiffId LONG not null,
+	companyId LONG not null,
 	fileEntryId LONG,
 	sourceFileVersionId LONG,
 	targetFileVersionId LONG,
 	dataFileEntryId LONG,
 	size_ LONG,
-	expirationDate DATE null
+	expirationDate DATE null,
+	primary key (syncDLFileVersionDiffId, companyId)
 );
 
 create table SyncDLObject (
-	syncDLObjectId LONG not null primary key,
-	companyId LONG,
+	syncDLObjectId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createTime LONG,
@@ -37,13 +38,14 @@ create table SyncDLObject (
 	lockUserName VARCHAR(75) null,
 	type_ VARCHAR(75) null,
 	typePK LONG,
-	typeUuid VARCHAR(75) null
+	typeUuid VARCHAR(75) null,
+	primary key (syncDLObjectId, companyId)
 );
 
 create table SyncDevice (
 	uuid_ VARCHAR(75) null,
-	syncDeviceId LONG not null primary key,
-	companyId LONG,
+	syncDeviceId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -52,5 +54,6 @@ create table SyncDevice (
 	buildNumber LONG,
 	featureSet INTEGER,
 	hostname VARCHAR(75) null,
-	status INTEGER
+	status INTEGER,
+	primary key (syncDeviceId, companyId)
 );

@@ -92,7 +92,7 @@ public class BlogsStatsUserModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BlogsStatsUser (mvccVersion LONG default 0 not null,statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,entryCount INTEGER,lastPostDate DATE null,ratingsTotalEntries INTEGER,ratingsTotalScore DOUBLE,ratingsAverageScore DOUBLE)";
+		"create table BlogsStatsUser (mvccVersion LONG default 0 not null,statsUserId LONG not null,groupId LONG,companyId LONG not null,userId LONG,entryCount INTEGER,lastPostDate DATE null,ratingsTotalEntries INTEGER,ratingsTotalScore DOUBLE,ratingsAverageScore DOUBLE,primary key (statsUserId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table BlogsStatsUser";
 

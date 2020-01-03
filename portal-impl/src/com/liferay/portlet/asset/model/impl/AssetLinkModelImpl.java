@@ -93,7 +93,7 @@ public class AssetLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,linkId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER,primary key (linkId, ctCollectionId))";
+		"create table AssetLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,linkId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER,primary key (linkId, ctCollectionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetLink";
 

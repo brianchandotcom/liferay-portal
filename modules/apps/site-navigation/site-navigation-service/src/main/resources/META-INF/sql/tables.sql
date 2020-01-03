@@ -1,9 +1,9 @@
 create table SiteNavigationMenu (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	siteNavigationMenuId LONG not null primary key,
+	siteNavigationMenuId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -11,15 +11,16 @@ create table SiteNavigationMenu (
 	name VARCHAR(75) null,
 	type_ INTEGER,
 	auto_ BOOLEAN,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (siteNavigationMenuId, companyId)
 );
 
 create table SiteNavigationMenuItem (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	siteNavigationMenuItemId LONG not null primary key,
+	siteNavigationMenuItemId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -30,5 +31,6 @@ create table SiteNavigationMenuItem (
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null,
 	order_ INTEGER,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	primary key (siteNavigationMenuItemId, companyId)
 );

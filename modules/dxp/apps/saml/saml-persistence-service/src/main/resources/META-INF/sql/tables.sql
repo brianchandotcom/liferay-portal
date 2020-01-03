@@ -1,6 +1,6 @@
 create table SamlIdpSpConnection (
-	samlIdpSpConnectionId LONG not null primary key,
-	companyId LONG,
+	samlIdpSpConnectionId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -17,12 +17,13 @@ create table SamlIdpSpConnection (
 	metadataUpdatedDate DATE null,
 	name VARCHAR(75) null,
 	nameIdAttribute VARCHAR(1024) null,
-	nameIdFormat VARCHAR(1024) null
+	nameIdFormat VARCHAR(1024) null,
+	primary key (samlIdpSpConnectionId, companyId)
 );
 
 create table SamlIdpSpSession (
-	samlIdpSpSessionId LONG not null primary key,
-	companyId LONG,
+	samlIdpSpSessionId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -30,30 +31,33 @@ create table SamlIdpSpSession (
 	samlIdpSsoSessionId LONG,
 	samlSpEntityId VARCHAR(1024) null,
 	nameIdFormat VARCHAR(1024) null,
-	nameIdValue VARCHAR(1024) null
+	nameIdValue VARCHAR(1024) null,
+	primary key (samlIdpSpSessionId, companyId)
 );
 
 create table SamlIdpSsoSession (
-	samlIdpSsoSessionId LONG not null primary key,
-	companyId LONG,
+	samlIdpSsoSessionId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	samlIdpSsoSessionKey VARCHAR(75) null
+	samlIdpSsoSessionKey VARCHAR(75) null,
+	primary key (samlIdpSsoSessionId, companyId)
 );
 
 create table SamlSpAuthRequest (
-	samlSpAuthnRequestId LONG not null primary key,
-	companyId LONG,
+	samlSpAuthnRequestId LONG not null,
+	companyId LONG not null,
 	createDate DATE null,
 	samlIdpEntityId VARCHAR(1024) null,
-	samlSpAuthRequestKey VARCHAR(75) null
+	samlSpAuthRequestKey VARCHAR(75) null,
+	primary key (samlSpAuthnRequestId, companyId)
 );
 
 create table SamlSpIdpConnection (
-	samlSpIdpConnectionId LONG not null primary key,
-	companyId LONG,
+	samlSpIdpConnectionId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -70,21 +74,23 @@ create table SamlSpIdpConnection (
 	name VARCHAR(75) null,
 	nameIdFormat VARCHAR(1024) null,
 	signAuthnRequest BOOLEAN,
-	userAttributeMappings STRING null
+	userAttributeMappings STRING null,
+	primary key (samlSpIdpConnectionId, companyId)
 );
 
 create table SamlSpMessage (
-	samlSpMessageId LONG not null primary key,
-	companyId LONG,
+	samlSpMessageId LONG not null,
+	companyId LONG not null,
 	createDate DATE null,
 	samlIdpEntityId VARCHAR(1024) null,
 	samlIdpResponseKey VARCHAR(75) null,
-	expirationDate DATE null
+	expirationDate DATE null,
+	primary key (samlSpMessageId, companyId)
 );
 
 create table SamlSpSession (
-	samlSpSessionId LONG not null primary key,
-	companyId LONG,
+	samlSpSessionId LONG not null,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -98,5 +104,6 @@ create table SamlSpSession (
 	nameIdSPNameQualifier VARCHAR(1024) null,
 	nameIdValue VARCHAR(1024) null,
 	sessionIndex VARCHAR(75) null,
-	terminated_ BOOLEAN
+	terminated_ BOOLEAN,
+	primary key (samlSpSessionId, companyId)
 );

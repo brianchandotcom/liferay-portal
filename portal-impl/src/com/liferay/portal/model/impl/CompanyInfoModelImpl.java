@@ -78,7 +78,7 @@ public class CompanyInfoModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CompanyInfo (mvccVersion LONG default 0 not null,companyInfoId LONG not null primary key,companyId LONG,key_ TEXT null)";
+		"create table CompanyInfo (mvccVersion LONG default 0 not null,companyInfoId LONG not null,companyId LONG not null,key_ TEXT null,primary key (companyInfoId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CompanyInfo";
 

@@ -1,8 +1,8 @@
 create table SharingEntry (
 	uuid_ VARCHAR(75) null,
-	sharingEntryId LONG not null primary key,
+	sharingEntryId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -12,5 +12,6 @@ create table SharingEntry (
 	classPK LONG,
 	shareable BOOLEAN,
 	actionIds LONG,
-	expirationDate DATE null
+	expirationDate DATE null,
+	primary key (sharingEntryId, companyId)
 );

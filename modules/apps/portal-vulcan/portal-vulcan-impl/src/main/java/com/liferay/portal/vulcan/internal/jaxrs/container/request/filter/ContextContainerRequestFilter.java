@@ -75,9 +75,9 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 		Class<?> clazz = instance.getClass();
 
-		Class<?> superclass = clazz.getSuperclass();
+		Class<?> superClass = clazz.getSuperclass();
 
-		for (Field field : superclass.getDeclaredFields()) {
+		for (Field field : superClass.getDeclaredFields()) {
 			if (Modifier.isFinal(field.getModifiers()) ||
 				Modifier.isStatic(field.getModifiers())) {
 

@@ -302,9 +302,9 @@ public class BatchEngineTaskItemResourceDelegate implements Closeable {
 
 		Class<?> resourceClass = resource.getClass();
 
-		Class<?> resourceSuperclass = resourceClass.getSuperclass();
+		Class<?> resourceSuperClass = resourceClass.getSuperclass();
 
-		Field field = resourceSuperclass.getDeclaredField(fieldName);
+		Field field = resourceSuperClass.getDeclaredField(fieldName);
 
 		field.setAccessible(true);
 

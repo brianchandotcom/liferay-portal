@@ -492,10 +492,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			_setResourceFields(
 				resourceClass.getDeclaredFields(), message, resource);
 
-			Class<?> superclass = resourceClass.getSuperclass();
+			Class<?> superClass = resourceClass.getSuperclass();
 
 			_setResourceFields(
-				superclass.getDeclaredFields(), message, resource);
+				superClass.getDeclaredFields(), message, resource);
 		}
 
 		private void _setResourceFields(
@@ -574,10 +574,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		List<Field> fields = new ArrayList<>(
 			Arrays.asList(entityClass.getDeclaredFields()));
 
-		Class<?> superclass = entityClass.getSuperclass();
+		Class<?> superClass = entityClass.getSuperclass();
 
-		if (superclass != null) {
-			Collections.addAll(fields, superclass.getDeclaredFields());
+		if (superClass != null) {
+			Collections.addAll(fields, superClass.getDeclaredFields());
 		}
 
 		for (Field field : fields) {

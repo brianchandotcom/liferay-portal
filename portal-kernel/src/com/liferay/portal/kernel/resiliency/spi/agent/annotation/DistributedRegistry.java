@@ -189,10 +189,10 @@ public class DistributedRegistry {
 				}
 			}
 
-			Class<?> superclass = currentClass.getSuperclass();
+			Class<?> superClass = currentClass.getSuperclass();
 
-			if ((superclass != null) && (superclass != Object.class)) {
-				queue.offer(superclass);
+			if ((superClass != null) && (superClass != Object.class)) {
+				queue.offer(superClass);
 			}
 
 			Class<?>[] interfaceClasses = currentClass.getInterfaces();

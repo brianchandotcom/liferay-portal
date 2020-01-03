@@ -131,12 +131,12 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 					return new ModelMutators(null, null);
 				}
 
-				Class<?> superclass = modelClass.getSuperclass();
+				Class<?> superClass = modelClass.getSuperclass();
 
-				while (BaseModelImpl.class != superclass) {
-					modelClass = superclass;
+				while (BaseModelImpl.class != superClass) {
+					modelClass = superClass;
 
-					superclass = modelClass.getSuperclass();
+					superClass = modelClass.getSuperclass();
 				}
 
 				Map<String, Function<Object, Object>> attributeGetterFunctions =

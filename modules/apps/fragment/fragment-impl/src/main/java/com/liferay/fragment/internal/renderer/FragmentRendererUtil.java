@@ -58,10 +58,10 @@ public class FragmentRendererUtil {
 			}
 		}
 
-		Class<?> superclass = clazz.getSuperclass();
+		Class<?> superClass = clazz.getSuperclass();
 
-		if (superclass != null) {
-			return getInfoItemRenderers(superclass, infoItemRendererTracker);
+		if (superClass != null) {
+			return getInfoItemRenderers(superClass, infoItemRendererTracker);
 		}
 
 		return null;

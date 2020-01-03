@@ -78,16 +78,16 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 			return genericInterface;
 		}
 
-		Class<?> superclass = clazz.getSuperclass();
+		Class<?> superClass = clazz.getSuperclass();
 
-		while (superclass != null) {
-			genericInterface = _getGenericInterface(superclass, interfaceClass);
+		while (superClass != null) {
+			genericInterface = _getGenericInterface(superClass, interfaceClass);
 
 			if (genericInterface != null) {
 				return genericInterface;
 			}
 
-			superclass = superclass.getSuperclass();
+			superClass = superClass.getSuperclass();
 		}
 
 		return null;

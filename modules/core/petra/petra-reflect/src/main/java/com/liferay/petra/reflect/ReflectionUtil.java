@@ -97,10 +97,10 @@ public class ReflectionUtil {
 
 		Set<Class<?>> interfaceClasses = new LinkedHashSet<>();
 
-		Class<?> superclass = object.getClass();
+		Class<?> superClass = object.getClass();
 
-		while (superclass != null) {
-			for (Class<?> interfaceClass : superclass.getInterfaces()) {
+		while (superClass != null) {
+			for (Class<?> interfaceClass : superClass.getInterfaces()) {
 				try {
 					if (classLoader == null) {
 						interfaceClasses.add(interfaceClass);
@@ -115,7 +115,7 @@ public class ReflectionUtil {
 				}
 			}
 
-			superclass = superclass.getSuperclass();
+			superClass = superClass.getSuperclass();
 		}
 
 		return interfaceClasses.toArray(new Class<?>[0]);

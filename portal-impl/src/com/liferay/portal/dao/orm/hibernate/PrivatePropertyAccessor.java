@@ -32,10 +32,10 @@ public class PrivatePropertyAccessor extends DirectPropertyAccessor {
 	public Getter getGetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		Class<?> superclass = null;
+		Class<?> superClass = null;
 
-		while ((superclass = clazz.getSuperclass()) != BaseModelImpl.class) {
-			clazz = superclass;
+		while ((superClass = clazz.getSuperclass()) != BaseModelImpl.class) {
+			clazz = superClass;
 		}
 
 		propertyName = StringPool.UNDERLINE.concat(propertyName);
@@ -47,10 +47,10 @@ public class PrivatePropertyAccessor extends DirectPropertyAccessor {
 	public Setter getSetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		Class<?> superclass = null;
+		Class<?> superClass = null;
 
-		while ((superclass = clazz.getSuperclass()) != BaseModelImpl.class) {
-			clazz = superclass;
+		while ((superClass = clazz.getSuperclass()) != BaseModelImpl.class) {
+			clazz = superClass;
 		}
 
 		propertyName = StringPool.UNDERLINE.concat(propertyName);

@@ -114,7 +114,7 @@ AUI.add(
 					var redirect = instance.one('#redirect', form);
 
 					if (redirect) {
-						redirect.val(instance.get('redirectURL'));
+						redirect.val(instance.get('redirectUrl'));
 					}
 
 					instance._addInputsFromData(data);

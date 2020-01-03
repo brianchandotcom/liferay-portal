@@ -11,6 +11,18 @@ definition {
 		}
 	}
 
+	macro allItemPageFilterUncheck {
+		var key_allItemsFilterName = "${allItemsFilterName}";
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		for (var assigneeName : list "${assigneeName}") {
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
+		}
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
+	}
+
 	macro assertChartIsPresent {
 		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART");
 
@@ -409,6 +421,53 @@ definition {
 		for (var key_workflowFilterValue : list "${isFilterOptionPresent}") {
 			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
 		}
+	}
+
+	macro viewItemFilterByOnAllItemsPage {
+		var key_allItemsFilterName = "${allItemsFilterName}";
+		var key_assigneeName = "${assigneeName}";
+		var key_taskName = "${taskName}";
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		if (isSet(filterValueName)) {
+			for (var assigneeName : list "${filterValueName}") {
+				Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
+			}
+
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
+		}
+		else {
+			for (var assigneeName : list "${assigneeName}") {
+				Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
+			}
+
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
+		}
+
+		for (var isInstancePresent : list "${isPresent}") {
+			var key_instanceInfo = "${isInstancePresent}";
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_TASK");
+		}
+
+		for (var isAssigneeNotPresent : list "${isNotPresent}") {
+			var key_assigneeName = "${isAssigneeNotPresent}";
+
+			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
+		}
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		for (var assigneeName : list "${assigneeName}") {
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
+		}
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
 	}
 
 	macro viewPerformanceByAssignee {

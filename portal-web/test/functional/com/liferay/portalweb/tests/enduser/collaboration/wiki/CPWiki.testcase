@@ -127,6 +127,50 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
+	@description = "This test covers LPS-89884. It ensures that a DL image can be added to a wiki page via URL."
+	@priority = "5"
+	test AddPageWithDMImageViaURL {
+		property test.name.skip.portal.instance = "CPWiki#AddPageWithDMImageViaURL";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Wiki");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		LexiconEntry.gotoAdd();
+
+		WikiEntry.addPageTitle(wikiPageTitle = "New Wiki Page Title");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+		ItemSelector.addFromURL(
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
+			navTab = "URL");
+
+		AssertElementPresent(
+			key_contentImageName = "Document_2.jpg",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
+
+		PortletEntry.publish();
+
+		WikiNavigator.gotoCP(wikiPageTitle = "New Wiki Page Title");
+
+		AssertElementPresent(
+			key_contentImageName = "Document_2.jpg",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
+	}
+
 	@priority = "5"
 	test CKEditorSmoke {
 		property test.name.skip.portal.instance = "CPWiki#CKEditorSmoke";

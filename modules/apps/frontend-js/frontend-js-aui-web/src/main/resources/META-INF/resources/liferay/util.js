@@ -645,7 +645,11 @@
 		getLexiconIcon(icon, cssClass) {
 			var instance = this;
 
-			return $(instance.getLexiconIconTpl(icon, cssClass))[0];
+			const tempElement = document.createElement('div');
+
+			tempElement.innerHTML = instance.getLexiconIconTpl(icon, cssClass);
+
+			return tempElement.firstChild;
 		},
 
 		getLexiconIconTpl(icon, cssClass) {

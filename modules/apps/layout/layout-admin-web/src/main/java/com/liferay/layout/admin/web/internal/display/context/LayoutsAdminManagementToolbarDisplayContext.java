@@ -63,25 +63,6 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #LayoutsAdminManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, LayoutsAdminDisplayContext)}
-	 */
-	@Deprecated
-	public LayoutsAdminManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			LayoutsAdminDisplayContext layoutsAdminDisplayContext)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			layoutsAdminDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

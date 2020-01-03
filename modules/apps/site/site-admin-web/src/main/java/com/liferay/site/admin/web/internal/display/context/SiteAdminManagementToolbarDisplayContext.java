@@ -57,25 +57,6 @@ public class SiteAdminManagementToolbarDisplayContext
 		_siteAdminDisplayContext = siteAdminDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SiteAdminManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse,
-	 *             SiteAdminDisplayContext)}
-	 */
-	@Deprecated
-	public SiteAdminManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			SiteAdminDisplayContext siteAdminDisplayContext)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			siteAdminDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

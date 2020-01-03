@@ -57,25 +57,6 @@ public class JournalHistoryManagementToolbarDisplayContext
 		_article = article;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalHistoryManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, JournalArticle,
-	 *             JournalHistoryDisplayContext)}
-	 */
-	@Deprecated
-	public JournalHistoryManagementToolbarDisplayContext(
-		JournalArticle article, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		JournalHistoryDisplayContext journalHistoryDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			article, journalHistoryDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

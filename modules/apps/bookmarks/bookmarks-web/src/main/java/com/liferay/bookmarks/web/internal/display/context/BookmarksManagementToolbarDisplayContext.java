@@ -86,28 +86,6 @@ public class BookmarksManagementToolbarDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #BookmarksManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse,
-	 *             BookmarksGroupServiceOverriddenConfiguration,
-	 *             PortalPreferences, TrashHelper)}
-	 */
-	@Deprecated
-	public BookmarksManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		BookmarksGroupServiceOverriddenConfiguration
-			bookmarksGroupServiceOverriddenConfiguration,
-		PortalPreferences portalPreferences, TrashHelper trashHelper) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			bookmarksGroupServiceOverriddenConfiguration, portalPreferences,
-			trashHelper);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

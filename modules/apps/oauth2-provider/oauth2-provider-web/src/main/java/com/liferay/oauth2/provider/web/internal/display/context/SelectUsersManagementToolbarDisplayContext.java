@@ -40,24 +40,6 @@ public class SelectUsersManagementToolbarDisplayContext
 			selectUsersDisplayContext.getUserSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SelectUsersManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SelectUsersDisplayContext)}
-	 */
-	@Deprecated
-	public SelectUsersManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SelectUsersDisplayContext selectUsersDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			selectUsersDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

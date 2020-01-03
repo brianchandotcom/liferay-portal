@@ -53,23 +53,6 @@ public class NotificationsManagementToolbarDisplayContext {
 		_currentURLObj = currentURLObj;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #NotificationsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, PortletURL)}
-	 */
-	@Deprecated
-	public NotificationsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			currentURLObj);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

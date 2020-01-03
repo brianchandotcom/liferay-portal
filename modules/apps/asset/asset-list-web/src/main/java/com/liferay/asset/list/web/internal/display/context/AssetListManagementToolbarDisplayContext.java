@@ -56,24 +56,6 @@ public class AssetListManagementToolbarDisplayContext
 			assetListDisplayContext.getAssetListEntriesSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #AssetListManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse,
-	 *             AssetListDisplayContext)}
-	 */
-	@Deprecated
-	public AssetListManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		AssetListDisplayContext assetListDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			assetListDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

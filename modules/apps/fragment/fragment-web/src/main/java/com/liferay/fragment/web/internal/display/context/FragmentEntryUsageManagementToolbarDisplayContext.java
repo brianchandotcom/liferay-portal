@@ -47,24 +47,6 @@ public class FragmentEntryUsageManagementToolbarDisplayContext
 			searchContainer);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #FragmentEntryUsageManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SearchContainer)}
-	 */
-	@Deprecated
-	public FragmentEntryUsageManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SearchContainer searchContainer) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

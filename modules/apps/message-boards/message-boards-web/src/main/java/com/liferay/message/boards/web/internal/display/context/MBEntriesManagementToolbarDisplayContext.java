@@ -81,24 +81,6 @@ public class MBEntriesManagementToolbarDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #MBEntriesManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse, PortletURL,
-	 *             TrashHelper)}
-	 */
-	@Deprecated
-	public MBEntriesManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PortletURL currentURLObj,
-		TrashHelper trashHelper) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			currentURLObj, trashHelper);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

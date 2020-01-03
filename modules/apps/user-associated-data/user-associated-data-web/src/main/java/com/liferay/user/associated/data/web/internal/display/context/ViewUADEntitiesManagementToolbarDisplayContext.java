@@ -58,24 +58,6 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 		_viewUADEntitiesDisplay = viewUADEntitiesDisplay;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #ViewUADEntitiesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, ViewUADEntitiesDisplay)}
-	 */
-	@Deprecated
-	public ViewUADEntitiesManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		ViewUADEntitiesDisplay viewUADEntitiesDisplay) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			viewUADEntitiesDisplay);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

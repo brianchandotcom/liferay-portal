@@ -39,26 +39,6 @@ public class ViewMembershipRequestsManagementToolbarDisplayContext
 				getSiteMembershipSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #ViewMembershipRequestsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             ViewMembershipRequestsDisplayContext)}
-	 */
-	@Deprecated
-	public ViewMembershipRequestsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		ViewMembershipRequestsDisplayContext
-			viewMembershipRequestsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			viewMembershipRequestsDisplayContext);
-	}
-
 	@Override
 	public String getComponentId() {
 		return "siteAdminWebManagementToolbar";

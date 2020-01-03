@@ -38,24 +38,6 @@ public class AssetListEntryUsagesManagementToolbarDisplayContext
 			searchContainer);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #AssetListEntryUsagesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SearchContainer)}
-	 */
-	@Deprecated
-	public AssetListEntryUsagesManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SearchContainer searchContainer) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer);
-	}
-
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"modified-date"};

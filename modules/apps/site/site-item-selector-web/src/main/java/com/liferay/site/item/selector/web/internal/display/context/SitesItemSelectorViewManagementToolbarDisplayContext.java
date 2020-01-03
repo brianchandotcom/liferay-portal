@@ -46,26 +46,6 @@ public class SitesItemSelectorViewManagementToolbarDisplayContext
 			sitesItemSelectorViewDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SitesItemSelectorViewManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SitesItemSelectorViewDisplayContext)}
-	 */
-	@Deprecated
-	public SitesItemSelectorViewManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			SitesItemSelectorViewDisplayContext
-				sitesItemSelectorViewDisplayContext)
-		throws Exception {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			sitesItemSelectorViewDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

@@ -89,25 +89,6 @@ public class KBAdminManagementToolbarDisplayContext {
 		_createSearchContainer();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #KBAdminManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse, RenderRequest,
-	 *             RenderResponse, PortletConfig)}
-	 */
-	@Deprecated
-	public KBAdminManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-			RenderResponse renderResponse, PortletConfig portletConfig)
-		throws PortalException, PortletException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			renderRequest, renderResponse, portletConfig);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

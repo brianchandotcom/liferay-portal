@@ -37,24 +37,6 @@ public class LayoutPortletsManagementToolbarDisplayContext
 			layoutPortletsDisplayContext.getSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #LayoutPortletsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, LayoutPortletsDisplayContext)}
-	 */
-	@Deprecated
-	public LayoutPortletsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		LayoutPortletsDisplayContext layoutPortletsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			layoutPortletsDisplayContext);
-	}
-
 	@Override
 	public String getComponentId() {
 		return "layoutPortletsManagementToolbar";

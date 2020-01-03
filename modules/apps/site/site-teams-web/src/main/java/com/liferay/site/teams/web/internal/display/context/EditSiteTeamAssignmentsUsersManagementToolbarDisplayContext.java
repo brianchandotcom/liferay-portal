@@ -54,26 +54,6 @@ public class EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext
 			editSiteTeamAssignmentsUsersDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             EditSiteTeamAssignmentsUsersDisplayContext)}
-	 */
-	@Deprecated
-	public EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		EditSiteTeamAssignmentsUsersDisplayContext
-			editSiteTeamAssignmentsUsersDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			editSiteTeamAssignmentsUsersDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

@@ -57,24 +57,6 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 		_siteNavigationAdminDisplayContext = siteNavigationAdminDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SiteNavigationAdminManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SiteNavigationAdminDisplayContext)}
-	 */
-	@Deprecated
-	public SiteNavigationAdminManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			siteNavigationAdminDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

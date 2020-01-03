@@ -41,24 +41,6 @@ public class SelectFragmentCollectionManagementToolbarDisplayContext
 			searchContainer);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SelectFragmentCollectionManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SearchContainer)}
-	 */
-	@Deprecated
-	public SelectFragmentCollectionManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SearchContainer searchContainer) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

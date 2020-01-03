@@ -42,25 +42,6 @@ public class SiteRolesManagementToolbarDisplayContext
 			siteRolesDisplayContext.getRoleSearchSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SiteRolesManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse,
-	 *             SiteRolesDisplayContext)}
-	 */
-	@Deprecated
-	public SiteRolesManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			SiteRolesDisplayContext siteRolesDisplayContext)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			siteRolesDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

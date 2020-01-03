@@ -40,24 +40,6 @@ public class SelectTeamManagementToolbarDisplayContext
 			selectTeamDisplayContext.getTeamSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SelectTeamManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SelectTeamDisplayContext)}
-	 */
-	@Deprecated
-	public SelectTeamManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SelectTeamDisplayContext selectTeamDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			selectTeamDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

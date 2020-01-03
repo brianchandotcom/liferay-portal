@@ -57,21 +57,6 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #MBBannedUsersManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse)}
-	 */
-	@Deprecated
-	public MBBannedUsersManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
-
-		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

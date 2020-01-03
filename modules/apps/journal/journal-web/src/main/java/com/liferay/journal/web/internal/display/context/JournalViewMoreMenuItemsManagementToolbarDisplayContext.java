@@ -43,27 +43,6 @@ public class JournalViewMoreMenuItemsManagementToolbarDisplayContext
 				getDDMStructuresSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalViewMoreMenuItemsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             JournalViewMoreMenuItemsDisplayContext)}
-	 */
-	@Deprecated
-	public JournalViewMoreMenuItemsManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			JournalViewMoreMenuItemsDisplayContext
-				journalViewMoreMenuItemsDisplayContext)
-		throws Exception {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalViewMoreMenuItemsDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

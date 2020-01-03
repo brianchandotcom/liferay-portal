@@ -45,27 +45,6 @@ public class JournalSelectDDMStructureManagementToolbarDisplayContext
 			journalSelectDDMStructureDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalSelectDDMStructureManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             JournalSelectDDMStructureDisplayContext)}
-	 */
-	@Deprecated
-	public JournalSelectDDMStructureManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			JournalSelectDDMStructureDisplayContext
-				journalSelectDDMStructureDisplayContext)
-		throws Exception {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalSelectDDMStructureDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

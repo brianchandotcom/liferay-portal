@@ -73,24 +73,6 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		_createSearchContainer();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #KBTemplatesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, String)}
-	 */
-	@Deprecated
-	public KBTemplatesManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest, String templatePath)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			templatePath);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

@@ -57,24 +57,6 @@ public class ExportTemplatesToolbarDisplayContext
 			liveGroupId, company, iteratorURL);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #ExportTemplatesToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse, long, Company,
-	 *             PortletURL)}
-	 */
-	@Deprecated
-	public ExportTemplatesToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, long liveGroupId,
-		Company company, PortletURL iteratorURL) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			liveGroupId, company, iteratorURL);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getRenderURL();

@@ -44,27 +44,6 @@ public class AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext
 				getAssetDisplayPageSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             AssetDisplayPagesItemSelectorViewDisplayContext)}
-	 */
-	@Deprecated
-	public AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			AssetDisplayPagesItemSelectorViewDisplayContext
-				assetDisplayPagesItemSelectorViewDisplayContext)
-		throws PortletException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			assetDisplayPagesItemSelectorViewDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

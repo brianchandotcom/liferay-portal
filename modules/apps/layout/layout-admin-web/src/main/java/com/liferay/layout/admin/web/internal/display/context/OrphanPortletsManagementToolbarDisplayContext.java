@@ -42,24 +42,6 @@ public class OrphanPortletsManagementToolbarDisplayContext
 			orphanPortletsDisplayContext.getOrphanPortletsSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #OrphanPortletsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, OrphanPortletsDisplayContext)}
-	 */
-	@Deprecated
-	public OrphanPortletsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		OrphanPortletsDisplayContext orphanPortletsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			orphanPortletsDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

@@ -45,21 +45,6 @@ public class AppManagerSearchResultsManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #AppManagerSearchResultsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse)}
-	 */
-	@Deprecated
-	public AppManagerSearchResultsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
-
-		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
-	}
-
 	public String getKeywords() {
 		return ParamUtil.getString(request, "keywords");
 	}

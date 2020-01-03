@@ -38,24 +38,6 @@ public class UADApplicationsSummaryManagementToolbarDisplayContext
 			searchContainer);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #UADApplicationsSummaryManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SearchContainer)}
-	 */
-	@Deprecated
-	public UADApplicationsSummaryManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SearchContainer searchContainer) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer);
-	}
-
 	@Override
 	public Boolean isSelectable() {
 		return false;

@@ -70,27 +70,6 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #FragmentCollectionResourcesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             FragmentCollectionResourcesDisplayContext)}
-	 */
-	@Deprecated
-	public FragmentCollectionResourcesManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			FragmentCollectionResourcesDisplayContext
-				fragmentCollectionResourcesDisplayContext)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			fragmentCollectionResourcesDisplayContext);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

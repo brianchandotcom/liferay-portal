@@ -42,25 +42,6 @@ public class UserRolesManagementToolbarDisplayContext
 			userRolesDisplayContext.getRoleSearchSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #UserRolesManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse,
-	 *             UserRolesDisplayContext)}
-	 */
-	@Deprecated
-	public UserRolesManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			UserRolesDisplayContext userRolesDisplayContext)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			userRolesDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

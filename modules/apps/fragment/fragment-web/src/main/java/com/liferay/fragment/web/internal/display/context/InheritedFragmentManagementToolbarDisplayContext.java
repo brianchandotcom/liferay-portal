@@ -54,24 +54,6 @@ public class InheritedFragmentManagementToolbarDisplayContext
 			fragmentDisplayContext);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #InheritedFragmentManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, FragmentDisplayContext)}
-	 */
-	@Deprecated
-	public InheritedFragmentManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		FragmentDisplayContext fragmentDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			fragmentDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

@@ -65,24 +65,6 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #KBSuggestionListManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SearchContainer)}
-	 */
-	@Deprecated
-	public KBSuggestionListManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SearchContainer searchContainer) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

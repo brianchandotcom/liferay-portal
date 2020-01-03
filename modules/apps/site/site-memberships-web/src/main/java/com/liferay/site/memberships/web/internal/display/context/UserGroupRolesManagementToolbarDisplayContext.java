@@ -42,25 +42,6 @@ public class UserGroupRolesManagementToolbarDisplayContext
 			userGroupRolesDisplayContext.getRoleSearchSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #UserGroupRolesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, UserGroupRolesDisplayContext)}
-	 */
-	@Deprecated
-	public UserGroupRolesManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			UserGroupRolesDisplayContext userGroupRolesDisplayContext)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			userGroupRolesDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

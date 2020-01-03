@@ -60,26 +60,6 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 			journalDDMStructuresDisplayContext.getDDMStructureSearch());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalDDMStructuresManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, JournalDDMStructuresDisplayContext)}
-	 */
-	@Deprecated
-	public JournalDDMStructuresManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			JournalDDMStructuresDisplayContext
-				journalDDMStructuresDisplayContext)
-		throws Exception {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalDDMStructuresDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

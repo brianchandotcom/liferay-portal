@@ -53,21 +53,6 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 		_searchContainer = _createSearchContainer(liferayPortletRequest);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #ViewAppsManagerManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse)}
-	 */
-	@Deprecated
-	public ViewAppsManagerManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
-
-		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
-	}
-
 	public String getClearResultsURL() {
 		PortletURL removeLabelURL = getPortletURL();
 

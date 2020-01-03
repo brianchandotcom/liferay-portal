@@ -63,23 +63,6 @@ public class BlogImagesManagementToolbarDisplayContext {
 			liferayPortletRequest);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #BlogImagesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, PortletURL)}
-	 */
-	@Deprecated
-	public BlogImagesManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			currentURLObj);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{

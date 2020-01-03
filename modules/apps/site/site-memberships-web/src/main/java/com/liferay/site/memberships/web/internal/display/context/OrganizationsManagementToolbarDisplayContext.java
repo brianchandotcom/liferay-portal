@@ -53,24 +53,6 @@ public class OrganizationsManagementToolbarDisplayContext
 		_organizationsDisplayContext = organizationsDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #OrganizationsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, OrganizationsDisplayContext)}
-	 */
-	@Deprecated
-	public OrganizationsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		OrganizationsDisplayContext organizationsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			organizationsDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

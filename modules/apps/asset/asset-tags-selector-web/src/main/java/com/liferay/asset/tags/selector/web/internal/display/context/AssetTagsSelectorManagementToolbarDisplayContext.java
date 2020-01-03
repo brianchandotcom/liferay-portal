@@ -40,24 +40,6 @@ public class AssetTagsSelectorManagementToolbarDisplayContext
 			assetTagsSelectorDisplayContext.getTagsSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #AssetTagsSelectorManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, AssetTagsSelectorDisplayContext)}
-	 */
-	@Deprecated
-	public AssetTagsSelectorManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		AssetTagsSelectorDisplayContext assetTagsSelectorDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			assetTagsSelectorDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

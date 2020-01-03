@@ -40,24 +40,6 @@ public class FragmentCollectionsManagementToolbarDisplayContext
 			fragmentCollectionsDisplayContext.getSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #FragmentCollectionsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, FragmentCollectionsDisplayContext)}
-	 */
-	@Deprecated
-	public FragmentCollectionsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			fragmentCollectionsDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

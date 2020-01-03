@@ -59,24 +59,6 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 		_layoutPrototypeDisplayContext = layoutPrototypeDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #LayoutPrototypeManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, LayoutPrototypeDisplayContext)}
-	 */
-	@Deprecated
-	public LayoutPrototypeManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		LayoutPrototypeDisplayContext layoutPrototypeDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			layoutPrototypeDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

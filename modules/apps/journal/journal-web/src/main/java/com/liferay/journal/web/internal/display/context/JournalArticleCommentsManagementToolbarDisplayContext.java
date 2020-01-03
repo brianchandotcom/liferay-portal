@@ -43,26 +43,6 @@ public class JournalArticleCommentsManagementToolbarDisplayContext
 			journalDisplayContext, trashHelper);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalArticleCommentsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, JournalDisplayContext, TrashHelper)}
-	 */
-	@Deprecated
-	public JournalArticleCommentsManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			JournalDisplayContext journalDisplayContext,
-			TrashHelper trashHelper)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalDisplayContext, trashHelper);
-	}
-
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return null;

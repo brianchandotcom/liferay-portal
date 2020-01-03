@@ -55,21 +55,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #ItemSelectorRepositoryEntryManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse)}
-	 */
-	@Deprecated
-	public ItemSelectorRepositoryEntryManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
-
-		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
-	}
-
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{

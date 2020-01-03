@@ -44,26 +44,6 @@ public class PortletConfigurationTemplatesManagementToolbarDisplayContext
 				getArchivedSettingsSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #PortletConfigurationTemplatesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             PortletConfigurationTemplatesDisplayContext)}
-	 */
-	@Deprecated
-	public PortletConfigurationTemplatesManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		PortletConfigurationTemplatesDisplayContext
-			portletConfigurationTemplatesDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			portletConfigurationTemplatesDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

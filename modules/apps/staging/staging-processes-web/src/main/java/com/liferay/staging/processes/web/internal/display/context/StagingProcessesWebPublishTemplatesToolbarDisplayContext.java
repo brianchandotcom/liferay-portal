@@ -66,24 +66,6 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 			companyId, groupId, iteratorURL, stagingGroup.isStagedRemotely());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #StagingProcessesWebPublishTemplatesToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, PageContext, PortletURL)}
-	 */
-	@Deprecated
-	public StagingProcessesWebPublishTemplatesToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PageContext pageContext,
-		PortletURL iteratorURL) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			pageContext, iteratorURL);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getRenderURL();

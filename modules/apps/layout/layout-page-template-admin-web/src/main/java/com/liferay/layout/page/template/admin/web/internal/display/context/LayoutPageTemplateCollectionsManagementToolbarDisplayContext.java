@@ -43,26 +43,6 @@ public class LayoutPageTemplateCollectionsManagementToolbarDisplayContext
 			layoutPageTemplateCollectionsDisplayContext.getSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #LayoutPageTemplateCollectionsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             LayoutPageTemplateCollectionsDisplayContext)}
-	 */
-	@Deprecated
-	public LayoutPageTemplateCollectionsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		LayoutPageTemplateCollectionsDisplayContext
-			layoutPageTemplateCollectionsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			layoutPageTemplateCollectionsDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

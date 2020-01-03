@@ -46,24 +46,6 @@ public abstract class FragmentManagementToolbarDisplayContext
 		this.fragmentDisplayContext = fragmentDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #FragmentManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse,
-	 *             SearchContainer, FragmentDisplayContext)}
-	 */
-	@Deprecated
-	public FragmentManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, SearchContainer searchContainer,
-		FragmentDisplayContext fragmentDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			searchContainer, fragmentDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

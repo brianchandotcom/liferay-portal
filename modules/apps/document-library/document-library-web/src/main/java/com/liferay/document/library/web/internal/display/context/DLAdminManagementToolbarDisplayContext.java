@@ -109,24 +109,6 @@ public class DLAdminManagementToolbarDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #DLAdminManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse,
-	 *             DLAdminDisplayContext)}
-	 */
-	@Deprecated
-	public DLAdminManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		DLAdminDisplayContext dlAdminDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			dlAdminDisplayContext);
-	}
-
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		if (!_dlPortletInstanceSettingsHelper.isShowActions()) {
 			return null;

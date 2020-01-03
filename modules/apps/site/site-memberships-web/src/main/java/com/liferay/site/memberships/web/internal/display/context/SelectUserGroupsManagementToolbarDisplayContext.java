@@ -40,24 +40,6 @@ public class SelectUserGroupsManagementToolbarDisplayContext
 			selectUserGroupsDisplayContext.getUserGroupSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SelectUserGroupsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SelectUserGroupsDisplayContext)}
-	 */
-	@Deprecated
-	public SelectUserGroupsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SelectUserGroupsDisplayContext selectUserGroupsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			selectUserGroupsDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

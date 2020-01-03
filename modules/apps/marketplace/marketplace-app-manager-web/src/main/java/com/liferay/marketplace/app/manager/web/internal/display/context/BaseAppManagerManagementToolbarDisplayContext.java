@@ -54,21 +54,6 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #BaseAppManagerManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse)}
-	 */
-	@Deprecated
-	public BaseAppManagerManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
-
-		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
-	}
-
 	public String getCategory() {
 		if (Validator.isNull(_category)) {
 			_category = ParamUtil.getString(

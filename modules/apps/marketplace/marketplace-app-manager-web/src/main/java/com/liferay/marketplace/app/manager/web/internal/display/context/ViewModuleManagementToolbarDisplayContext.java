@@ -55,21 +55,6 @@ public class ViewModuleManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #ViewModuleManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse)}
-	 */
-	@Deprecated
-	public ViewModuleManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest) {
-
-		this(httpServletRequest, liferayPortletRequest, liferayPortletResponse);
-	}
-
 	public String getApp() {
 		return ParamUtil.getString(request, "app");
 	}

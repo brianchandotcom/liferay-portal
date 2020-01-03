@@ -60,27 +60,6 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 			WebKeys.THEME_DISPLAY);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalArticleItemSelectorViewManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             JournalArticleItemSelectorViewDisplayContext)}
-	 */
-	@Deprecated
-	public JournalArticleItemSelectorViewManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			JournalArticleItemSelectorViewDisplayContext
-				journalArticleItemSelectorViewDisplayContext)
-		throws Exception {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalArticleItemSelectorViewDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

@@ -41,25 +41,6 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 			selectSiteRolesDisplayContext.getRoleSearchSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SelectSiteRolesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SelectSiteRolesDisplayContext)}
-	 */
-	@Deprecated
-	public SelectSiteRolesManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			SelectSiteRolesDisplayContext selectSiteRolesDisplayContext)
-		throws Exception {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			selectSiteRolesDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

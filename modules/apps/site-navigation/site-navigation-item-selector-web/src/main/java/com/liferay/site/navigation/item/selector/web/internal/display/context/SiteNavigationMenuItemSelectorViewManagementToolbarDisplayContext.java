@@ -42,26 +42,6 @@ public class SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext
 				getSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse,
-	 *             SiteNavigationMenuItemSelectorViewDisplayContext)}
-	 */
-	@Deprecated
-	public SiteNavigationMenuItemSelectorViewManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SiteNavigationMenuItemSelectorViewDisplayContext
-			siteNavigationMenuItemSelectorViewDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			siteNavigationMenuItemSelectorViewDisplayContext);
-	}
-
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();

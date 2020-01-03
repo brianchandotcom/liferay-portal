@@ -57,25 +57,6 @@ public class AssetVocabulariesManagementToolbarDisplayContext
 		_assetCategoriesDisplayContext = assetCategoriesDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #AssetVocabulariesManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, AssetCategoriesDisplayContext)}
-	 */
-	@Deprecated
-	public AssetVocabulariesManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			assetCategoriesDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

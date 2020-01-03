@@ -59,24 +59,6 @@ public class UserGroupsManagementToolbarDisplayContext
 		_userGroupsDisplayContext = userGroupsDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #UserGroupsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, UserGroupsDisplayContext)}
-	 */
-	@Deprecated
-	public UserGroupsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		UserGroupsDisplayContext userGroupsDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			userGroupsDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

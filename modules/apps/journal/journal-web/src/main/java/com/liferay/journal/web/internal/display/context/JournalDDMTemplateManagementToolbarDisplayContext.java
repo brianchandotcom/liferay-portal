@@ -66,25 +66,6 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 		_journalDDMTemplateDisplayContext = journalDDMTemplateDisplayContext;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalDDMTemplateManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, JournalDDMTemplateDisplayContext)}
-	 */
-	@Deprecated
-	public JournalDDMTemplateManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			JournalDDMTemplateDisplayContext journalDDMTemplateDisplayContext)
-		throws Exception {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalDDMTemplateDisplayContext);
-	}
-
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {

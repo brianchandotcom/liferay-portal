@@ -50,22 +50,6 @@ public class AMManagementToolbarDisplayContext {
 		_currentURLObj = currentURLObj;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #AMManagementToolbarDisplayContext(HttpServletRequest,
-	 *             LiferayPortletRequest, LiferayPortletResponse, PortletURL)}
-	 */
-	@Deprecated
-	public AMManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest, PortletURL currentURLObj) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			currentURLObj);
-	}
-
 	public CreationMenu getCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 

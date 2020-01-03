@@ -44,26 +44,6 @@ public class JournalArticleVersionsManagementToolbarDisplayContext
 			journalDisplayContext, trashHelper);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #JournalArticleVersionsManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, JournalDisplayContext, TrashHelper)}
-	 */
-	@Deprecated
-	public JournalArticleVersionsManagementToolbarDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
-			JournalDisplayContext journalDisplayContext,
-			TrashHelper trashHelper)
-		throws PortalException {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalDisplayContext, trashHelper);
-	}
-
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {

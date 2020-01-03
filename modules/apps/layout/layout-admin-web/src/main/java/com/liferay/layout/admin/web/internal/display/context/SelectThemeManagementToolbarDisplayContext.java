@@ -37,24 +37,6 @@ public class SelectThemeManagementToolbarDisplayContext
 			selectThemeDisplayContext.getThemesSearchContainer());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #SelectThemeManagementToolbarDisplayContext(
-	 *             HttpServletRequest, LiferayPortletRequest,
-	 *             LiferayPortletResponse, SelectThemeDisplayContext)}
-	 */
-	@Deprecated
-	public SelectThemeManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		HttpServletRequest httpServletRequest,
-		SelectThemeDisplayContext selectThemeDisplayContext) {
-
-		this(
-			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			selectThemeDisplayContext);
-	}
-
 	@Override
 	public String getComponentId() {
 		return "siteAdminWebManagementToolbar";

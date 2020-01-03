@@ -1,31 +1,3 @@
-.portlet-admin {
-	.progress-percentage {
-		color: #272833;
-		display: block;
-		position: absolute;
-		width: 100%;
-	}
-
-	.reindex-progress {
-		margin-bottom: 0;
-		position: relative;
-		width: 100px;
-	}
-
-	.search-admin-tabs {
-		margin-top: 20px;
-	}
-
-	.system-action-group {
-		margin-bottom: 0;
-
-		li {
-			padding-left: 15px;
-			padding-right: 15px;
-		}
-	}
-}
-
 .portlet-search-admin {
 	@import 'field_mappings';
 	@import 'index_actions';

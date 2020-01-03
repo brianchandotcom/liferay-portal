@@ -33,9 +33,9 @@ public class FragmentManagementToolbarDisplayContextFactory {
 
 	public FragmentManagementToolbarDisplayContext
 		getFragmentManagementToolbarDisplayContext(
+			HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest httpServletRequest,
 			FragmentDisplayContext fragmentDisplayContext) {
 
 		String type = fragmentDisplayContext.getFragmentType();

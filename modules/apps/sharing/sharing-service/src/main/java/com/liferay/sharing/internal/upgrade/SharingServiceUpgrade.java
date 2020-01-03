@@ -12,42 +12,23 @@
  * details.
  */
 
-package com.liferay.reading.time.internal.upgrade;
+package com.liferay.sharing.internal.upgrade;
 
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeCompanyIdPrimaryKey;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.reading.time.internal.upgrade.v2_0_0.util.ReadingTimeEntryTable;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author José Ángel Jiménez
+ * @author Alberto Chaparro
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class ReadingTimeServiceUpgrade implements UpgradeStepRegistrator {
+public class SharingServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.SQLSERVER) {
-			registry.register(
-				"1.0.0", "2.0.0",
-				new BaseUpgradeSQLServerDatetime(
-					new Class<?>[] {ReadingTimeEntryTable.class}));
-		}
-		else {
-			registry.register("1.0.0", "2.0.0", new DummyUpgradeStep());
-		}
-
 		registry.register(
-			"2.0.0", "2.1.0",
-			new UpgradeCompanyIdPrimaryKey("ReadingTimeEntry"));
+			"1.0.0", "1.1.0", new UpgradeCompanyIdPrimaryKey("SharingEntry"));
 	}
 
 }

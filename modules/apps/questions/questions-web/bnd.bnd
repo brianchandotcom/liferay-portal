@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Questions Web
+Bundle-SymbolicName: com.liferay.questions.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /questions-web

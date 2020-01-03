@@ -154,4 +154,50 @@ definition {
 			value1 = "Classic Theme");
 	}
 
+	@priority = "5"
+	test RemoveModuleFromBlacklist {
+		property test.name.skip.portal.instance = "BundleBlacklist#RemoveModuleFromBlacklist";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Module Container",
+			configurationName = "Bundle Blacklist",
+			configurationScope = "System Scope");
+
+		BundleBlacklist.blacklistModuleAndComponentConfiguration(
+			label = "Blacklist Bundle Symbolic Names",
+			symbolicName = "com.liferay.gogo.shell.web");
+
+		BundleBlacklist.viewProductMenuBlacklistedModule(
+			category = "Configuration",
+			consoleText = "STOPPED com.liferay.gogo.shell.web",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Module Container",
+			configurationName = "Bundle Blacklist",
+			configurationScope = "System Scope");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
+
+		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+	}
+
 }

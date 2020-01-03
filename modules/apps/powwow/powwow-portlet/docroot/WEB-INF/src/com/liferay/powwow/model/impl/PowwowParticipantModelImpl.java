@@ -101,7 +101,7 @@ public class PowwowParticipantModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PowwowParticipant (powwowParticipantId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,powwowMeetingId LONG,name VARCHAR(75) null,participantUserId LONG,emailAddress VARCHAR(75) null,type_ INTEGER,status INTEGER)";
+		"create table PowwowParticipant (powwowParticipantId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,powwowMeetingId LONG,name VARCHAR(75) null,participantUserId LONG,emailAddress VARCHAR(75) null,type_ INTEGER,status INTEGER,primary key (powwowParticipantId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table PowwowParticipant";
 

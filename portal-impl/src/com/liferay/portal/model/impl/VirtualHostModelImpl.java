@@ -83,7 +83,7 @@ public class VirtualHostModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table VirtualHost (mvccVersion LONG default 0 not null,virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(200) null,defaultVirtualHost BOOLEAN,languageId VARCHAR(75) null)";
+		"create table VirtualHost (mvccVersion LONG default 0 not null,virtualHostId LONG not null primary key,companyId LONG not null,layoutSetId LONG,hostname VARCHAR(200) null,defaultVirtualHost BOOLEAN,languageId VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 

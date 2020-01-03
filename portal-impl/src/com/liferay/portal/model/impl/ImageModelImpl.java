@@ -89,7 +89,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Image (mvccVersion LONG default 0 not null,imageId LONG not null primary key,companyId LONG,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+		"create table Image (mvccVersion LONG default 0 not null,imageId LONG not null,companyId LONG not null,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER,primary key (imageId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Image";
 

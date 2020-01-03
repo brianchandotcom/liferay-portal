@@ -94,7 +94,7 @@ public class GadgetModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OpenSocial_Gadget (uuid_ VARCHAR(75) null,gadgetId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,url STRING null,portletCategoryNames STRING null,lastPublishDate DATE null)";
+		"create table OpenSocial_Gadget (uuid_ VARCHAR(75) null,gadgetId LONG not null,companyId LONG not null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,url STRING null,portletCategoryNames STRING null,lastPublishDate DATE null,primary key (gadgetId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table OpenSocial_Gadget";
 

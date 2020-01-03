@@ -83,7 +83,7 @@ public class ModuleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null primary key,companyId LONG,appId LONG,bundleSymbolicName VARCHAR(500) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null)";
+		"create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null,companyId LONG not null,appId LONG,bundleSymbolicName VARCHAR(500) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null,primary key (moduleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_Module";
 

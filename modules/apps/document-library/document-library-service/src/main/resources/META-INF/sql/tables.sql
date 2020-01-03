@@ -1,8 +1,9 @@
 create table DLFileVersionPreview (
-	dlFileVersionPreviewId LONG not null primary key,
+	dlFileVersionPreviewId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	fileEntryId LONG,
 	fileVersionId LONG,
-	previewStatus INTEGER
+	previewStatus INTEGER,
+	primary key (dlFileVersionPreviewId, companyId)
 );

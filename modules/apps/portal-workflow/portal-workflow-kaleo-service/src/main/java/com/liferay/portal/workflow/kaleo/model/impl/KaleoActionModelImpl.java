@@ -105,7 +105,7 @@ public class KaleoActionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoAction (mvccVersion LONG default 0 not null,kaleoActionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER)";
+		"create table KaleoAction (mvccVersion LONG default 0 not null,kaleoActionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionVersionId LONG,kaleoNodeName VARCHAR(200) null,name VARCHAR(200) null,description STRING null,executionType VARCHAR(20) null,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,priority INTEGER,primary key (kaleoActionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoAction";
 

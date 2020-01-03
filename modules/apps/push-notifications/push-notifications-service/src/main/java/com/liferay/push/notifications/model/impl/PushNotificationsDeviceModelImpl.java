@@ -92,7 +92,7 @@ public class PushNotificationsDeviceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PushNotificationsDevice (pushNotificationsDeviceId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,platform VARCHAR(75) null,token STRING null)";
+		"create table PushNotificationsDevice (pushNotificationsDeviceId LONG not null,companyId LONG not null,userId LONG,createDate DATE null,platform VARCHAR(75) null,token STRING null,primary key (pushNotificationsDeviceId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table PushNotificationsDevice";

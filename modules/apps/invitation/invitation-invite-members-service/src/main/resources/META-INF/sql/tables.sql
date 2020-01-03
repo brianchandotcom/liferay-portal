@@ -1,7 +1,7 @@
 create table IM_MemberRequest (
-	memberRequestId LONG not null primary key,
+	memberRequestId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -10,5 +10,6 @@ create table IM_MemberRequest (
 	receiverUserId LONG,
 	invitedRoleId LONG,
 	invitedTeamId LONG,
-	status INTEGER
+	status INTEGER,
+	primary key (memberRequestId, companyId)
 );

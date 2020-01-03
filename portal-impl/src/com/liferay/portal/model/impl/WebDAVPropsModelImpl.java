@@ -87,7 +87,7 @@ public class WebDAVPropsModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WebDAVProps (mvccVersion LONG default 0 not null,webDavPropsId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,props TEXT null)";
+		"create table WebDAVProps (mvccVersion LONG default 0 not null,webDavPropsId LONG not null,companyId LONG not null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,props TEXT null,primary key (webDavPropsId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table WebDAVProps";
 

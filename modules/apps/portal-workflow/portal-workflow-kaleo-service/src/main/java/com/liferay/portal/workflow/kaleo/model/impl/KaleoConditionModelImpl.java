@@ -96,7 +96,7 @@ public class KaleoConditionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoCondition (mvccVersion LONG default 0 not null,kaleoConditionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null)";
+		"create table KaleoCondition (mvccVersion LONG default 0 not null,kaleoConditionId LONG not null,groupId LONG,companyId LONG not null,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,script TEXT null,scriptLanguage VARCHAR(75) null,scriptRequiredContexts STRING null,primary key (kaleoConditionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoCondition";
 

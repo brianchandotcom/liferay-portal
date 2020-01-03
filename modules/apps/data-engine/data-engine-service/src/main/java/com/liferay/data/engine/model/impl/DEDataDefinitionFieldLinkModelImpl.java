@@ -87,7 +87,7 @@ public class DEDataDefinitionFieldLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DEDataDefinitionFieldLink (uuid_ VARCHAR(75) null,deDataDefinitionFieldLinkId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,ddmStructureId LONG,fieldName VARCHAR(75) null)";
+		"create table DEDataDefinitionFieldLink (uuid_ VARCHAR(75) null,deDataDefinitionFieldLinkId LONG not null,groupId LONG,companyId LONG not null,classNameId LONG,classPK LONG,ddmStructureId LONG,fieldName VARCHAR(75) null,primary key (deDataDefinitionFieldLinkId, companyId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DEDataDefinitionFieldLink";

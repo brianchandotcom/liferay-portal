@@ -1,7 +1,7 @@
 create table TMS_TasksEntry (
-	tasksEntryId LONG not null primary key,
+	tasksEntryId LONG not null,
 	groupId LONG,
-	companyId LONG,
+	companyId LONG not null,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -12,5 +12,6 @@ create table TMS_TasksEntry (
 	resolverUserId LONG,
 	dueDate DATE null,
 	finishDate DATE null,
-	status INTEGER
+	status INTEGER,
+	primary key (tasksEntryId, companyId)
 );

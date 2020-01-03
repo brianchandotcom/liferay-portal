@@ -86,7 +86,7 @@ public class DDMStorageLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStorageLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,storageLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG,structureVersionId LONG)";
+		"create table DDMStorageLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,storageLinkId LONG not null,companyId LONG not null,classNameId LONG,classPK LONG,structureId LONG,structureVersionId LONG,primary key (storageLinkId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStorageLink";
 

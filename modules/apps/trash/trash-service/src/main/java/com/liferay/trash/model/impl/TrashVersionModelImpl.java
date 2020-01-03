@@ -85,7 +85,7 @@ public class TrashVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TrashVersion (mvccVersion LONG default 0 not null,versionId LONG not null primary key,companyId LONG,entryId LONG,classNameId LONG,classPK LONG,typeSettings TEXT null,status INTEGER)";
+		"create table TrashVersion (mvccVersion LONG default 0 not null,versionId LONG not null,companyId LONG not null,entryId LONG,classNameId LONG,classPK LONG,typeSettings TEXT null,status INTEGER,primary key (versionId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table TrashVersion";
 

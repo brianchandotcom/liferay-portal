@@ -112,7 +112,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Role_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null)";
+		"create table Role_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,roleId LONG not null,companyId LONG not null,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description STRING null,type_ INTEGER,subtype VARCHAR(75) null,primary key (roleId, companyId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 
@@ -215,7 +215,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	};
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE =
-		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId))";
+		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,primary key (groupId, roleId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES =
 		GetterUtil.getBoolean(
@@ -231,7 +231,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	};
 
 	public static final String MAPPING_TABLE_USERS_ROLES_SQL_CREATE =
-		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (roleId, userId))";
+		"create table Users_Roles (companyId LONG not null,roleId LONG not null,userId LONG not null,primary key (roleId, userId, companyId))";
 
 	public static final boolean FINDER_CACHE_ENABLED_USERS_ROLES =
 		GetterUtil.getBoolean(

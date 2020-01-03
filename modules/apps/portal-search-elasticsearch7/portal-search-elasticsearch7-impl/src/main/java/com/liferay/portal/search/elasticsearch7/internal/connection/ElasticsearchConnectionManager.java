@@ -14,14 +14,12 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.CrossClusterReplicationConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConnectionConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
 
@@ -33,16 +31,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.elasticsearch.client.RestHighLevelClient;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -151,6 +147,26 @@ public class ElasticsearchConnectionManager
 		_operationMode = operationMode;
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(operation.mode=REMOTE)",
+		unbind = "unsetElasticsearchConnection"
+	)
+	public void setRemoteElasticsearchConnection(
+		ElasticsearchConnection elasticsearchConnection) {
+
+		ElasticsearchConnection oldElasticsearchConnection =
+			_elasticsearchConnections.put(
+				elasticsearchConnection.getConnectionId(),
+				elasticsearchConnection);
+
+		if (oldElasticsearchConnection != null) {
+			oldElasticsearchConnection.close();
+		}
+	}
+
 	public synchronized void unregisterCompanyId(long companyId) {
 		_companyIds.remove(companyId);
 	}
@@ -161,19 +177,13 @@ public class ElasticsearchConnectionManager
 		elasticsearchConnection.close();
 
 		_elasticsearchConnections.remove(
-			EmbeddedElasticsearchConnection.CONNECTION_ID);
+			elasticsearchConnection.getConnectionId());
 	}
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_bundleContext = bundleContext;
+	protected void activate(Map<String, Object> properties) {
 		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, ElasticsearchConnectionConfigurationWrapper.class,
-			new ElasticsearchConnectionConfigurationWrapperServiceTrackerCustomizer());
 
 		setOperationMode(
 			translate(_elasticsearchConfiguration.operationMode()));
@@ -210,8 +220,6 @@ public class ElasticsearchConnectionManager
 
 			elasticsearchConnection.close();
 		}
-
-		_serviceTracker.close();
 	}
 
 	protected ElasticsearchConnection getElasticsearchConnection(
@@ -271,89 +279,10 @@ public class ElasticsearchConnectionManager
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchConnectionManager.class);
 
-	private BundleContext _bundleContext;
 	private final Map<Long, Long> _companyIds = new HashMap<>();
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<String, ElasticsearchConnection>
 		_elasticsearchConnections = new ConcurrentHashMap<>();
 	private OperationMode _operationMode;
-	private ServiceTracker
-		<ElasticsearchConnectionConfigurationWrapper,
-		 ElasticsearchConnectionConfigurationWrapper> _serviceTracker;
-
-	private class
-		ElasticsearchConnectionConfigurationWrapperServiceTrackerCustomizer
-			implements ServiceTrackerCustomizer
-				<ElasticsearchConnectionConfigurationWrapper,
-				 ElasticsearchConnectionConfigurationWrapper> {
-
-		@Override
-		public ElasticsearchConnectionConfigurationWrapper addingService(
-			ServiceReference<ElasticsearchConnectionConfigurationWrapper>
-				serviceReference) {
-
-			ElasticsearchConnectionConfigurationWrapper
-				elasticsearchConnectionConfigurationWrapper =
-					_bundleContext.getService(serviceReference);
-
-			_putElasticsearchConnection(
-				elasticsearchConnectionConfigurationWrapper);
-
-			return elasticsearchConnectionConfigurationWrapper;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ElasticsearchConnectionConfigurationWrapper>
-				serviceReference,
-			ElasticsearchConnectionConfigurationWrapper
-				elasticsearchConnectionConfigurationWrapper) {
-
-			_putElasticsearchConnection(
-				elasticsearchConnectionConfigurationWrapper);
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ElasticsearchConnectionConfigurationWrapper>
-				serviceReference,
-			ElasticsearchConnectionConfigurationWrapper
-				elasticsearchConnectionConfigurationWrapper) {
-
-			_elasticsearchConnections.remove(
-				elasticsearchConnectionConfigurationWrapper.getConnectionId());
-		}
-
-		private void _putElasticsearchConnection(
-			ElasticsearchConnectionConfigurationWrapper
-				elasticsearchConnectionConfigurationWrapper) {
-
-			String connectionId =
-				elasticsearchConnectionConfigurationWrapper.getConnectionId();
-
-			ElasticsearchConnection elasticsearchConnection =
-				_elasticsearchConnections.get(connectionId);
-
-			if (elasticsearchConnection != null) {
-				elasticsearchConnection.close();
-			}
-
-			RemoteElasticsearchConnection remoteElasticsearchConnection =
-				new RemoteElasticsearchConnection();
-
-			remoteElasticsearchConnection.setConnectionId(connectionId);
-			remoteElasticsearchConnection.
-				setElasticsearchConnectionConfigurationWrapper(
-					elasticsearchConnectionConfigurationWrapper);
-
-			if (elasticsearchConnectionConfigurationWrapper.isActive()) {
-				remoteElasticsearchConnection.connect();
-			}
-
-			_elasticsearchConnections.put(
-				connectionId, remoteElasticsearchConnection);
-		}
-
-	}
 
 }

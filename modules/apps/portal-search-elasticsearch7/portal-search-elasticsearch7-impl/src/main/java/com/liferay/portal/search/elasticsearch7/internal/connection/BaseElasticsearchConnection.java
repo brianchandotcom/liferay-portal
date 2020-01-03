@@ -46,11 +46,6 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	@Override
-	public String getConnectionId() {
-		return _connectionId;
-	}
-
-	@Override
 	public RestHighLevelClient getRestHighLevelClient() {
 		return _restHighLevelClient;
 	}
@@ -63,13 +58,8 @@ public abstract class BaseElasticsearchConnection
 		return false;
 	}
 
-	public void setConnectionId(String connectionId) {
-		_connectionId = connectionId;
-	}
-
 	protected abstract RestHighLevelClient createRestHighLevelClient();
 
-	private String _connectionId;
 	private RestHighLevelClient _restHighLevelClient;
 
 }

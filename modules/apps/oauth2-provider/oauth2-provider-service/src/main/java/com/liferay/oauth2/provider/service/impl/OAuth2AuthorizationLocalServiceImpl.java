@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Collection;
@@ -109,6 +110,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 		List<OAuth2Authorization> oAuth2Authorizations =
 			oAuth2AuthorizationPersistence.findByAccessTokenContentHash(
+				CompanyThreadLocal.getCompanyId(),
 				accessTokenContent.hashCode());
 
 		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
@@ -128,6 +130,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 		List<OAuth2Authorization> oAuth2Authorizations =
 			oAuth2AuthorizationPersistence.findByRefreshTokenContentHash(
+				CompanyThreadLocal.getCompanyId(),
 				refreshTokenContent.hashCode());
 
 		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {

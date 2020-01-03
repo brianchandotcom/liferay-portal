@@ -1132,13 +1132,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param  type the layout's new type (optionally {@link
 	 *         LayoutConstants#TYPE_PORTLET})
 	 * @param  hidden whether the layout is hidden
-	 * @param  masterLayoutPlid the primary key of the master layout
 	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
 	 *         To see how the URL is normalized when accessed see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
 	 * @param  hasIconImage if the layout has a custom icon image
 	 * @param  iconBytes the byte array of the layout's new icon image
+	 * @param  masterLayoutPlid the primary key of the master layout
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date and expando bridge attributes for the layout.
 	 * @return the updated layout
@@ -1151,8 +1151,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> localeTitlesMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
-			long masterLayoutPlid, Map<Locale, String> friendlyURLMap,
-			boolean hasIconImage, byte[] iconBytes,
+			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
+			byte[] iconBytes, long masterLayoutPlid,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1165,7 +1165,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Layout updatedLayout = layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, masterLayoutPlid, friendlyURLMap, hasIconImage, iconBytes,
+			hidden, friendlyURLMap, hasIconImage, iconBytes, masterLayoutPlid,
 			serviceContext);
 
 		if (!(layout.getLayoutType() instanceof LayoutTypePortlet)) {
@@ -1206,7 +1206,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #updateLayout(
 	 *             long, boolean, long, long, Map, Map, Map, Map, Map, String,
-	 *             boolean, long, Map, boolean, byte[], ServiceContext)}
+	 *             boolean, Map, boolean, byte[], long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -1223,7 +1223,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			hidden, 0, friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+			hidden, friendlyURLMap, hasIconImage, iconBytes, 0, serviceContext);
 	}
 
 	/**

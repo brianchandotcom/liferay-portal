@@ -72,6 +72,10 @@ public class MirrorsGetTask extends Task {
 		_ignoreErrors = ignoreErrors;
 	}
 
+	public void setRetries(int retries) {
+		_retries = retries;
+	}
+
 	public void setSkipChecksum(boolean skipChecksum) {
 		_skipChecksum = skipChecksum;
 	}
@@ -213,7 +217,7 @@ public class MirrorsGetTask extends Task {
 				sourceURL = new URL(sb.toString());
 
 				try {
-					downloadFile(sourceURL, localCacheFile);
+					downloadFile(sourceURL, localCacheFile, _retries);
 				}
 				catch (IOException ioe) {
 					sb = new StringBuilder();
@@ -257,62 +261,35 @@ public class MirrorsGetTask extends Task {
 	protected void downloadFile(URL sourceURL, File targetFile)
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
+		downloadFile(sourceURL, targetFile, 0);
+	}
 
-		sb.append("Downloading ");
-		sb.append(sourceURL.toExternalForm());
-		sb.append(" to ");
-		sb.append(targetFile.getPath());
-		sb.append(".");
+	protected void downloadFile(URL sourceURL, File targetFile, int retries)
+		throws IOException {
 
-		System.out.println(sb.toString());
+		if (retries > 0) {
+			for (int i = 0; i < retries; i++) {
+				try {
+					_downloadFile(sourceURL, targetFile);
 
-		long time = System.currentTimeMillis();
+					return;
+				}
+				catch (IOException ioe) {
+					System.out.println(
+						"Unable to connect to " + sourceURL +
+							", will retry in 30 seconds.");
 
-		int size = 0;
-
-		try {
-			size = toFile(sourceURL, targetFile);
-		}
-		catch (IOException ioe) {
-			targetFile.delete();
-
-			if (!_ignoreErrors) {
-				throw ioe;
+					try {
+						Thread.sleep(30000);
+					}
+					catch (InterruptedException ie) {
+						ie.printStackTrace();
+					}
+				}
 			}
-
-			ioe.printStackTrace();
 		}
 
-		if (_verbose) {
-			sb = new StringBuilder();
-
-			sb.append("Downloaded ");
-			sb.append(sourceURL.toExternalForm());
-			sb.append(". ");
-			sb.append(size);
-			sb.append(" bytes in ");
-			sb.append(System.currentTimeMillis() - time);
-			sb.append(" milliseconds.");
-
-			System.out.println(sb.toString());
-		}
-
-		if (!isValidMD5(
-				targetFile, new URL(sourceURL.toExternalForm() + ".md5"))) {
-
-			targetFile.delete();
-
-			throw new IOException(
-				targetFile.getAbsolutePath() + " failed checksum.");
-		}
-
-		if (isZipFileName(targetFile.getName()) && !isValidZip(targetFile)) {
-			targetFile.delete();
-
-			throw new IOException(
-				targetFile.getAbsolutePath() + " is an invalid zip file.");
-		}
+		_downloadFile(sourceURL, targetFile);
 	}
 
 	protected String getMirrorsHostname() {
@@ -539,6 +516,67 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
+	private void _downloadFile(URL sourceURL, File targetFile)
+		throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Downloading ");
+		sb.append(sourceURL.toExternalForm());
+		sb.append(" to ");
+		sb.append(targetFile.getPath());
+		sb.append(".");
+
+		System.out.println(sb.toString());
+
+		long time = System.currentTimeMillis();
+
+		int size = 0;
+
+		try {
+			size = toFile(sourceURL, targetFile);
+		}
+		catch (IOException ioe) {
+			targetFile.delete();
+
+			if (!_ignoreErrors) {
+				throw ioe;
+			}
+
+			ioe.printStackTrace();
+		}
+
+		if (_verbose) {
+			sb = new StringBuilder();
+
+			sb.append("Downloaded ");
+			sb.append(sourceURL.toExternalForm());
+			sb.append(". ");
+			sb.append(size);
+			sb.append(" bytes in ");
+			sb.append(System.currentTimeMillis() - time);
+			sb.append(" milliseconds.");
+
+			System.out.println(sb.toString());
+		}
+
+		if (!isValidMD5(
+				targetFile, new URL(sourceURL.toExternalForm() + ".md5"))) {
+
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " failed checksum.");
+		}
+
+		if (isZipFileName(targetFile.getName()) && !isValidZip(targetFile)) {
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is an invalid zip file.");
+		}
+	}
+
 	private static final Pattern _mirrorsHostNamePattern = Pattern.compile(
 		"^mirrors\\.[^\\.]+\\.liferay.com/");
 	private static final Pattern _srcPattern = Pattern.compile(
@@ -550,6 +588,7 @@ public class MirrorsGetTask extends Task {
 	private boolean _ignoreErrors;
 	private String _mirrorsHostname;
 	private String _path;
+	private int _retries = 1;
 	private boolean _skipChecksum;
 	private String _src;
 	private boolean _tryLocalNetwork = true;

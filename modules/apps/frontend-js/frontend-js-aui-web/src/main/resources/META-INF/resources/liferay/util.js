@@ -617,6 +617,16 @@
 			return el;
 		},
 
+		getElement(el) {
+			const currentElement = Util.getDOM(el);
+
+			return typeof currentElement === 'string'
+				? document.querySelector(currentElement)
+				: currentElement.length
+				? currentElement[0]
+				: currentElement;
+		},
+
 		getGeolocation(success, fallback, options) {
 			if (success && navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(

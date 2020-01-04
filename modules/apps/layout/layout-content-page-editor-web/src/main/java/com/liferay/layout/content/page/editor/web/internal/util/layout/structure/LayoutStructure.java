@@ -82,17 +82,9 @@ public class LayoutStructure {
 			itemConfigJSONObject, itemId, LayoutDataItemTypeConstants.TYPE_ROW,
 			parentItemId, position);
 
-		addLayoutStructureItem(
-			JSONUtil.put("size", "4"), String.valueOf(UUID.randomUUID()),
-			LayoutDataItemTypeConstants.TYPE_COLUMN, itemId, 0);
-
-		addLayoutStructureItem(
-			JSONUtil.put("size", "4"), String.valueOf(UUID.randomUUID()),
-			LayoutDataItemTypeConstants.TYPE_COLUMN, itemId, 1);
-
-		addLayoutStructureItem(
-			JSONUtil.put("size", "4"), String.valueOf(UUID.randomUUID()),
-			LayoutDataItemTypeConstants.TYPE_COLUMN, itemId, 2);
+		_addColumnLayoutStructureItem(itemId, 0, 4);
+		_addColumnLayoutStructureItem(itemId, 1, 4);
+		_addColumnLayoutStructureItem(itemId, 2, 4);
 	}
 
 	public void deleteLayoutStructureItem(String itemId) {
@@ -177,6 +169,14 @@ public class LayoutStructure {
 			itemId);
 
 		layoutStructureItem.updateItemConfigJSONObject(itemConfigJSONObject);
+	}
+
+	private void _addColumnLayoutStructureItem(
+		String parentItemId, int position, int size) {
+
+		addLayoutStructureItem(
+			JSONUtil.put("size", size), String.valueOf(UUID.randomUUID()),
+			LayoutDataItemTypeConstants.TYPE_COLUMN, parentItemId, position);
 	}
 
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;

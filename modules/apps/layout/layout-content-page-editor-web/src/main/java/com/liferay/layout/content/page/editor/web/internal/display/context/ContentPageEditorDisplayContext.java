@@ -319,6 +319,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
+				"updateItemConfigURL",
+				getFragmentEntryActionURL(
+					"/content_layout/update_item_config_react")
+			).put(
 				"updateLayoutPageTemplateDataURL",
 				editorSoyContext.get("updateLayoutPageTemplateDataURL")
 			).put(

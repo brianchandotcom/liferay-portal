@@ -91,14 +91,16 @@ public class WorkflowTaskAssignableUsersResourceImpl
 	private WorkflowTaskAssignableUser _createWorkflowTaskAssignableUser(
 		Collection<User> users, Long workflowTaskId) {
 
-		return new WorkflowTaskAssignableUser() {
-			{
-				assignableUsers = transformToArray(
-					users, user -> AssigneeUtil.toAssignee(_portal, user),
-					Assignee.class);
-				taskId = workflowTaskId;
-			}
-		};
+		WorkflowTaskAssignableUser workflowTaskAssignableUser =
+			new WorkflowTaskAssignableUser();
+
+		workflowTaskAssignableUser.setAssignableUsers(
+			transformToArray(
+				users, user -> AssigneeUtil.toAssignee(_portal, user),
+				Assignee.class));
+		workflowTaskAssignableUser.setWorkflowTaskId(workflowTaskId);
+
+		return workflowTaskAssignableUser;
 	}
 
 	private static final Long _COMMON_POOLED_ACTORS_TASK_ID = 0L;

@@ -74,6 +74,27 @@ public class LayoutStructure {
 			position, layoutStructureItem.getItemId());
 	}
 
+	public void addRowLayoutStructureItem(
+		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
+		int position) {
+
+		addLayoutStructureItem(
+			itemConfigJSONObject, itemId, LayoutDataItemTypeConstants.TYPE_ROW,
+			parentItemId, position);
+
+		addLayoutStructureItem(
+			JSONUtil.put("size", "4"), String.valueOf(UUID.randomUUID()),
+			LayoutDataItemTypeConstants.TYPE_COLUMN, itemId, 0);
+
+		addLayoutStructureItem(
+			JSONUtil.put("size", "4"), String.valueOf(UUID.randomUUID()),
+			LayoutDataItemTypeConstants.TYPE_COLUMN, itemId, 1);
+
+		addLayoutStructureItem(
+			JSONUtil.put("size", "4"), String.valueOf(UUID.randomUUID()),
+			LayoutDataItemTypeConstants.TYPE_COLUMN, itemId, 2);
+	}
+
 	public void deleteLayoutStructureItem(String itemId) {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);

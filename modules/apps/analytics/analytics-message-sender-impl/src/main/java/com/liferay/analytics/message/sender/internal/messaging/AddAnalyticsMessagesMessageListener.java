@@ -36,13 +36,13 @@ import org.osgi.service.component.annotations.Component;
 public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		List<? extends BaseModel> baseModels =
-			(List<? extends BaseModel>)message.getPayload();
+	protected void doReceive(Message message) {
 		EntityModelListener entityModelListener =
 			(EntityModelListener)message.get("entityModelListener");
 
-		for (BaseModel baseModel : baseModels) {
+		for (BaseModel baseModel :
+				(List<? extends BaseModel>)message.getPayload()) {
+
 			entityModelListener.addAnalyticsMessage(
 				false, "update", entityModelListener.getAttributeNames(),
 				baseModel);

@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = {})
+@Component(immediate = true)
 public class AnalyticsMessagingConfigurator {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		DestinationConfiguration destinationConfiguration =

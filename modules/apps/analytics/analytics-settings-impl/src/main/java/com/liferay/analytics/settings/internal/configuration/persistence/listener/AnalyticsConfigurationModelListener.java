@@ -164,16 +164,16 @@ public class AnalyticsConfigurationModelListener
 
 		Message message = new Message();
 
+		message.setDestinationName(
+			AnalyticsMessageDestinationNames.ADD_ANALYTICS_MESSAGES_PROCESSOR);
+		message.setPayload(baseModels);
+
 		BaseModel baseModel = baseModels.get(0);
 
 		message.put(
 			"entityModelListener",
 			_entityModelListenerRegistry.getEntityModelListener(
 				baseModel.getModelClassName()));
-
-		message.setDestinationName(
-			AnalyticsMessageDestinationNames.ADD_ANALYTICS_MESSAGES_PROCESSOR);
-		message.setPayload(baseModels);
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {

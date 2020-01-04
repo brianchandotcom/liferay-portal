@@ -93,7 +93,7 @@ public class LockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
-				expectedLog = "integrity constraint violation: unique constraint or index violation: IX_228562AD",
+				expectedLog = "integrity constraint violation: unique constraint or index violation: IX_9A30235B",
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
@@ -288,7 +288,7 @@ public class LockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
-				expectedLog = "integrity constraint violation: unique constraint or index violation: IX_228562AD",
+				expectedLog = "integrity constraint violation: unique constraint or index violation: IX_9A30235B",
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
@@ -461,7 +461,7 @@ public class LockLocalServiceTest {
 				if ((cause instanceof BatchUpdateException) &&
 					message.contains(
 						"Attempt to insert duplicate key row in object " +
-							"'Lock_' with unique index 'IX_228562AD'\n")) {
+							"'Lock_' with unique index 'IX_9A30235B'\n")) {
 
 					return true;
 				}

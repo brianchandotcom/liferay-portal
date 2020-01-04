@@ -100,7 +100,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 </div>
 
 <c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
-	<div id="<portlet:namespace />sidebar">
+	<div>
 
 		<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent" var="editSiteNavigationMenuItemParentURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

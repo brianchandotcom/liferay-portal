@@ -12,16 +12,14 @@
  * details.
  */
 
-import ClayCard from '@clayui/card';
-import {ClayInput} from '@clayui/form';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted} from 'frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import {globalEval} from 'metal-dom';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import SiteNavigationMenuEditor from './SiteNavigationMenuEditor.es';
-import ClayIcon from '@clayui/icon';
+import {useIsMounted} from 'frontend-js-react-web';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {useEffect, useState} from 'react';
+import SiteNavigationMenuEditor from './SiteNavigationMenuEditor.es';
 
 function ContextualSidebar({
 	editSiteNavigationMenuItemURL,
@@ -58,8 +56,10 @@ function ContextualSidebar({
 				})
 					.then(response => response.text())
 					.then(responseContent => {
-						setBody(responseContent);
-						setLoading(false);
+						if (isMounted()) {
+							setBody(responseContent);
+							setLoading(false);
+						}
 					});
 			}
 		);
@@ -67,8 +67,13 @@ function ContextualSidebar({
 		return () => handle.removeListener();
 	}, []);
 
-	return visible ? (
-		<div id={`${namespace}sidebar`}>
+	return (
+		<div
+			className={`contextual-sidebar ${
+				visible ? 'contextual-sidebar-visible' : ''
+			} sidebar sidebar-light`}
+			id={`${namespace}sidebar`}
+		>
 			<div className="sidebar-header">
 				<div className="autofit-row sidebar-section">
 					<div className="autofit-col autofit-col-expand">
@@ -79,7 +84,11 @@ function ContextualSidebar({
 						</h4>
 					</div>
 					<div className="autofit-col">
-						<ClayButton monospaced onClick={() => setVisible(false)}>
+						<ClayButton
+							monospaced
+							onClick={() => setVisible(false)}
+							displayType="unstyled"
+						>
 							<ClayIcon symbol="times" />
 						</ClayButton>
 					</div>
@@ -87,10 +96,14 @@ function ContextualSidebar({
 			</div>
 
 			<div className="sidebar-body">
-				{loading ? <ClayLoadingIndicator /> : <SidebarBody body={body}/>}}
+				{loading ? (
+					<ClayLoadingIndicator />
+				) : (
+					<SidebarBody body={body} />
+				)}
 			</div>
 		</div>
-	) : null;
+	);
 }
 
 class SidebarBody extends React.Component {
@@ -111,7 +124,12 @@ class SidebarBody extends React.Component {
 	}
 
 	render() {
-		return <div dangerouslySetInnerHTML={{__html: this.props.body}} ref={this._ref} />;
+		return (
+			<div
+				dangerouslySetInnerHTML={{__html: this.props.body}}
+				ref={this._ref}
+			/>
+		);
 	}
 }
 

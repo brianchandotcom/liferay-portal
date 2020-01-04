@@ -177,9 +177,9 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 				previousState = workflowLog.getPreviousState();
 				role = _toRole(workflowLog.getRoleId());
 				state = workflowLog.getState();
-				taskId = workflowLog.getWorkflowTaskId();
 				type = _toWorkflowLogType(
 					KaleoLogUtil.convert(workflowLog.getType()));
+				workflowTaskId = workflowLog.getWorkflowTaskId();
 			}
 		};
 	}

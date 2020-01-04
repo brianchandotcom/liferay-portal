@@ -295,18 +295,18 @@ components:
                         The workflow's current state.
                     readOnly: true
                     type: string
-                taskId:
-                    description:
-                        The task asociated with this workflow log.
-                    format: int64
-                    readOnly: true
-                    type: integer
                 type:
                     description:
                         The workflow log's type.
                     enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
                     readOnly: true
                     type: string
+                workflowTaskId:
+                    description:
+                        The task asociated with this workflow log.
+                    format: int64
+                    readOnly: true
+                    type: integer
             type: object
         WorkflowTask:
             description:
@@ -365,10 +365,6 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
-                instanceId:
-                    format: int64
-                    readOnly: true
-                    type: integer
                 name:
                     description:
                         The task's name.
@@ -380,6 +376,10 @@ components:
                     description:
                         The object/asset that the task's workflow is managing.
                     readOnly: true
+                workflowInstanceId:
+                    format: int64
+                    readOnly: true
+                    type: integer
             type: object
         WorkflowTaskAssignToMe:
             description:
@@ -440,7 +440,7 @@ components:
                     format: date-time
                     type: string
                     writeOnly: true
-                taskId:
+                workflowTaskId:
                     format: int64
                     type: integer
             type: object
@@ -453,7 +453,7 @@ components:
                                 items:
                                     $ref: "#/components/schemas/Assignee"
                                 type: array
-                            taskId:
+                            workflowTaskId:
                                 format: int64
                                 type: integer
                         type: object

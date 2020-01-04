@@ -142,7 +142,7 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal" sandbox="<%= true %>">
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal as openSimpleInputModal" sandbox="<%= true %>">
 	var renameSiteNavigationMenuClickHandler = dom.delegate(
 		document.body,
 		'click',
@@ -180,5 +180,5 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 
 <liferay-frontend:component
 	componentId="<%= siteNavigationAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
+	module="js/ManagementToolbarDefaultEventHandle"
 />

@@ -23,7 +23,7 @@ import {
 	insertAtPosition,
 	isOver,
 	shouldBeNested
-} from './SiteNavigationMenuDOMHandler.es';
+} from './SiteNavigationMenuDOMHandler';
 import {
 	getChildren,
 	getFromContentElement,
@@ -38,7 +38,7 @@ import {
 	setDragging,
 	setSelected,
 	unselectAll
-} from './SiteNavigationMenuItemDOMHandler.es';
+} from './SiteNavigationMenuItemDOMHandler';
 
 /**
  * List of keys used for moving elements with the keyboard.

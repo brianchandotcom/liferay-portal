@@ -19,7 +19,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useState} from 'react';
-import SiteNavigationMenuEditor from './SiteNavigationMenuEditor.es';
+import SiteNavigationMenuEditor from './SiteNavigationMenuEditor';
 
 function ContextualSidebar({
 	editSiteNavigationMenuItemURL,

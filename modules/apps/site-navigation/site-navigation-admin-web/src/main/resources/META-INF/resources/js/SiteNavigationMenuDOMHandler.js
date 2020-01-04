@@ -22,7 +22,7 @@ import {
 	MENU_CONTAINER_CLASSNAME,
 	MENU_ITEM_CLASSNAME,
 	MENU_ITEM_DRAGGING_CLASSNAME
-} from './SiteNavigationMenuItemDOMHandler.es';
+} from './SiteNavigationMenuItemDOMHandler';
 
 /**
  * Constant indicating how much a menuItem element should be moved

@@ -120,7 +120,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 		<react:component
 			data="<%= data %>"
-			module="js/ContextualSidebar.es"
+			module="js/ContextualSidebar"
 		/>
 	</div>
 </c:if>
@@ -131,9 +131,9 @@ StringBundler sb = new StringBundler(6);
 sb.append("metal-dom/src/dom as dom, metal-dom/src/globalEval as globalEval, ");
 sb.append("frontend-js-web/liferay/util/form/object_to_form_data.es as objectToFormDataModule, ");
 sb.append(npmResolvedPackageName);
-sb.append("/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, ");
+sb.append("/js/SiteNavigationMenuEditor as siteNavigationMenuEditorModule, ");
 sb.append(npmResolvedPackageName);
-sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMHandlerModule");
+sb.append("/js/SiteNavigationMenuItemDOMHandler as siteNavigationMenuItemDOMHandlerModule");
 %>
 
 <aui:script require="<%= sb.toString() %>">

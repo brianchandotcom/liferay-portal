@@ -106,4 +106,112 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-105625. A system administrator can deploy a zip file of fragments in the deploy folder that are available system wide for future and existing site instances"
+	@priority = "5"
+	test ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureSite {
+		property test.name.skip.portal.instance = "FragmentsDeploy#ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureSite";
+
+		task ("Deploy fragments zip are available in System wide") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
+		}
+
+		task ("Assert there is no error in console") {
+			AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.repository.InvalidRepositoryIdException");
+		}
+
+		task ("Assert new fragment exists in exist sites") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Liferay");
+
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Test Site Name");
+
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+		}
+
+		task ("Assert new fragments exist in future site") {
+			JSONGroup.addGroup(groupName = "Test Future Site");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-future-site");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Test Future Site");
+
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+		}
+	}
+
+	@description = "This is a test for LPS-105625. A system administrator can deploy a zip file of fragments in the deploy folder that are available system wide for future and existing virtual instances"
+	@priority = "3"
+	test ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureVirtualInstance {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "FragmentsDeploy#ViewFragmentsDeployedToSystemWideAreAvailableForExistAndFutureVirtualInstance";
+
+		task ("Deploy fragments zip are available in System wide") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
+		}
+
+		task ("Assert there is no error in console") {
+			AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.repository.InvalidRepositoryIdException");
+		}
+
+		task ("Assert new fragment exists in exist virtual instance") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Liferay");
+
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+		}
+
+		task ("Assert new fragment exists in future virtual instance") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			PortalInstances.viewCP(virtualHost = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "guest");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "www.able.com");
+
+			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+		}
+	}
+
 }

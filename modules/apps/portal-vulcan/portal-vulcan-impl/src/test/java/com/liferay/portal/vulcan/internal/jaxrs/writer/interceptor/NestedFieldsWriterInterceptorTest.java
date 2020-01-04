@@ -353,6 +353,37 @@ public class NestedFieldsWriterInterceptorTest {
 	}
 
 	@Test
+	public void testGetNestedFieldsWithoutContextAnnotation() throws Exception {
+		Product product = _toProduct(1L, null);
+
+		Mockito.when(
+			_writerInterceptorContext.getEntity()
+		).thenReturn(
+			product
+		);
+
+		Mockito.doReturn(
+			new NestedFieldsHttpServletRequestWrapperTest.
+				MockHttpServletRequest("skus")
+		).when(
+			_nestedFieldServiceTrackerCustomizer
+		).getHttpServletRequest(
+			Mockito.any(Message.class)
+		);
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			new NestedFieldsContext(
+				Arrays.asList("productOptions", "skus"), new MessageImpl(),
+				_getPathParameters(), "v1.0", new MultivaluedHashMap<>()));
+
+		Assert.assertNull(_productResource_v1_0_Impl.contextThemeDisplay);
+
+		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
+
+		Assert.assertNotNull(_productResource_v1_0_Impl.contextThemeDisplay);
+	}
+
+	@Test
 	public void testGetNestedFieldsWithoutOverridingMethod()
 		throws IOException {
 
@@ -943,6 +974,8 @@ public class NestedFieldsWriterInterceptorTest {
 
 			return Page.of(skus);
 		}
+
+		public ThemeDisplay contextThemeDisplay;
 
 		@Context
 		public ThemeDisplay themeDisplay;

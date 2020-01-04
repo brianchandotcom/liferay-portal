@@ -278,7 +278,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 						_workflowTaskManager.assignWorkflowTaskToUser(
 							contextCompany.getCompanyId(),
 							contextUser.getUserId(),
-							workflowTaskAssignToUser.getTaskId(),
+							workflowTaskAssignToUser.getWorkflowTaskId(),
 							workflowTaskAssignToUser.getAssigneeId(),
 							workflowTaskAssignToUser.getComment(),
 							workflowTaskAssignToUser.getDueDate(), null);
@@ -432,10 +432,10 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 					workflowTask.getWorkflowDefinitionVersion());
 				description = workflowTask.getDescription();
 				id = workflowTask.getWorkflowTaskId();
-				instanceId = workflowTask.getWorkflowInstanceId();
 				name = workflowTask.getName();
 				objectReviewed = ObjectReviewedUtil.toObjectReviewed(
 					workflowTask.getOptionalAttributes());
+				workflowInstanceId = workflowTask.getWorkflowInstanceId();
 			}
 		};
 	}

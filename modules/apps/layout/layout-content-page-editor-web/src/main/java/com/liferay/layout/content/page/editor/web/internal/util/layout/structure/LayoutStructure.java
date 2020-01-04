@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -41,8 +42,8 @@ public class LayoutStructure {
 
 		addLayoutStructureItem(
 			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
-			String.valueOf(UUID.randomUUID()), "fragment", parentItemId,
-			position);
+			String.valueOf(UUID.randomUUID()),
+			LayoutDataItemTypeConstants.TYPE_FRAGMENT, parentItemId, position);
 	}
 
 	public void addLayoutStructureItem(

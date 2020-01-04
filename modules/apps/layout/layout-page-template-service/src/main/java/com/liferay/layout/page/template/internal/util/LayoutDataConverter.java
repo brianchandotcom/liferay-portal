@@ -15,7 +15,7 @@
 package com.liferay.layout.page.template.internal.util;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.layout.page.template.internal.constants.LayoutDataItemTypesConstants;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -112,7 +112,7 @@ public class LayoutDataConverter {
 							JSONFactoryUtil.createJSONArray(),
 							fragmentConfigJSONObject, fragmentUUID.toString(),
 							columnUUID.toString(),
-							LayoutDataItemTypesConstants.ITEM_TYPE_FRAGMENT);
+							LayoutDataItemTypeConstants.TYPE_FRAGMENT);
 
 						itemsJSONObject.put(
 							fragmentUUID.toString(), fragmentJSONObject);
@@ -124,7 +124,7 @@ public class LayoutDataConverter {
 					JSONObject columnJSONObject = _getItemJSONObject(
 						columnChildrenJSONArray, columnConfigJSONObject,
 						columnUUID.toString(), rowUUID.toString(),
-						LayoutDataItemTypesConstants.ITEM_TYPE_COLUMN);
+						LayoutDataItemTypeConstants.TYPE_COLUMN);
 
 					itemsJSONObject.put(
 						columnUUID.toString(), columnJSONObject);
@@ -143,7 +143,7 @@ public class LayoutDataConverter {
 				JSONObject rowJSONObject = _getItemJSONObject(
 					rowChildrenJSONArray, rowConfigJSONObject,
 					rowUUID.toString(), containerUUID.toString(),
-					LayoutDataItemTypesConstants.ITEM_TYPE_ROW);
+					LayoutDataItemTypeConstants.TYPE_ROW);
 
 				itemsJSONObject.put(rowUUID.toString(), rowJSONObject);
 
@@ -168,7 +168,7 @@ public class LayoutDataConverter {
 				JSONObject containerJSONObject = _getItemJSONObject(
 					JSONUtil.put(rowUUID.toString()), containerConfigJSONObject,
 					containerUUID.toString(), mainUUID.toString(),
-					LayoutDataItemTypesConstants.ITEM_TYPE_CONTAINER);
+					LayoutDataItemTypeConstants.TYPE_CONTAINER);
 
 				itemsJSONObject.put(
 					containerUUID.toString(), containerJSONObject);
@@ -190,7 +190,7 @@ public class LayoutDataConverter {
 				JSONObject fragmentJSONObject = _getItemJSONObject(
 					JSONFactoryUtil.createJSONArray(), fragmentConfigJSONObject,
 					fragmentUUID.toString(), mainUUID.toString(),
-					LayoutDataItemTypesConstants.ITEM_TYPE_FRAGMENT);
+					LayoutDataItemTypeConstants.TYPE_FRAGMENT);
 
 				itemsJSONObject.put(
 					fragmentUUID.toString(), fragmentJSONObject);
@@ -200,7 +200,7 @@ public class LayoutDataConverter {
 		JSONObject mainJSONObject = _getItemJSONObject(
 			mainChildrenJSONArray, JSONFactoryUtil.createJSONObject(),
 			mainUUID.toString(), StringPool.BLANK,
-			LayoutDataItemTypesConstants.ITEM_TYPE_ROOT);
+			LayoutDataItemTypeConstants.TYPE_ROOT);
 
 		itemsJSONObject.put(mainUUID.toString(), mainJSONObject);
 

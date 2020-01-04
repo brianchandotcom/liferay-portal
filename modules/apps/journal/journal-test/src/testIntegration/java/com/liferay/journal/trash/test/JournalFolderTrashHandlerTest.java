@@ -18,9 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.service.JournalFolderServiceUtil;
-import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.service.JournalFolderService;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -127,7 +128,7 @@ public class JournalFolderTrashHandlerTest
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		JournalFolderServiceUtil.moveFolderFromTrash(
+		journalFolderService.moveFolderFromTrash(
 			(Long)classedModel.getPrimaryKeyObj(),
 			(Long)parentBaseModel.getPrimaryKeyObj(), serviceContext);
 
@@ -136,7 +137,7 @@ public class JournalFolderTrashHandlerTest
 
 	@Override
 	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
-		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
+		journalFolderService.moveFolderToTrash(primaryKey);
 	}
 
 	@Override
@@ -163,6 +164,9 @@ public class JournalFolderTrashHandlerTest
 		_trashHelper = _serviceTracker.getService();
 
 		super.setUp();
+
+		_journalFolderFixture = new JournalFolderFixture(
+			journalFolderLocalService);
 	}
 
 	@Override
@@ -170,13 +174,12 @@ public class JournalFolderTrashHandlerTest
 			long primaryKey, ServiceContext serviceContext)
 		throws Exception {
 
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-			primaryKey);
+		JournalFolder folder = journalFolderLocalService.getFolder(primaryKey);
 
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_SAVE_DRAFT) {
 
-			folder = JournalFolderLocalServiceUtil.updateStatus(
+			folder = journalFolderLocalService.updateStatus(
 				TestPropsValues.getUserId(), folder,
 				WorkflowConstants.STATUS_DRAFT);
 		}
@@ -196,7 +199,7 @@ public class JournalFolderTrashHandlerTest
 		name += RandomTestUtil.randomString(
 			_FOLDER_NAME_MAX_LENGTH - name.length());
 
-		return JournalTestUtil.addFolder(
+		return _journalFolderFixture.addFolder(
 			parentFolder.getGroupId(), parentFolder.getFolderId(), name);
 	}
 
@@ -205,7 +208,7 @@ public class JournalFolderTrashHandlerTest
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return JournalTestUtil.addFolder(
+		return _journalFolderFixture.addFolder(
 			serviceContext.getScopeGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			getSearchKeywords());
@@ -218,12 +221,12 @@ public class JournalFolderTrashHandlerTest
 
 		JournalFolder folder = (JournalFolder)parentBaseModel;
 
-		JournalFolderServiceUtil.deleteFolder(folder.getFolderId(), false);
+		journalFolderService.deleteFolder(folder.getFolderId(), false);
 	}
 
 	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
-		return JournalFolderLocalServiceUtil.getFolder(primaryKey);
+		return journalFolderLocalService.getFolder(primaryKey);
 	}
 
 	@Override
@@ -237,7 +240,7 @@ public class JournalFolderTrashHandlerTest
 
 		JournalFolder parentDLFolder = (JournalFolder)parentBaseModel;
 
-		return JournalFolderLocalServiceUtil.getFoldersCount(
+		return journalFolderLocalService.getFoldersCount(
 			parentDLFolder.getGroupId(), parentDLFolder.getFolderId());
 	}
 
@@ -246,7 +249,7 @@ public class JournalFolderTrashHandlerTest
 			Group group, long parentBaseModelId, ServiceContext serviceContext)
 		throws Exception {
 
-		return JournalTestUtil.addFolder(
+		return _journalFolderFixture.addFolder(
 			group.getGroupId(), parentBaseModelId,
 			RandomTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH));
 	}
@@ -272,8 +275,14 @@ public class JournalFolderTrashHandlerTest
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		JournalFolderServiceUtil.moveFolderToTrash(primaryKey);
+		journalFolderService.moveFolderToTrash(primaryKey);
 	}
+
+	@Inject
+	protected JournalFolderLocalService journalFolderLocalService;
+
+	@Inject
+	protected JournalFolderService journalFolderService;
 
 	private static final String _FOLDER_NAME = RandomTestUtil.randomString(100);
 
@@ -281,6 +290,7 @@ public class JournalFolderTrashHandlerTest
 
 	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
 
+	private JournalFolderFixture _journalFolderFixture;
 	private TrashHelper _trashHelper;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();

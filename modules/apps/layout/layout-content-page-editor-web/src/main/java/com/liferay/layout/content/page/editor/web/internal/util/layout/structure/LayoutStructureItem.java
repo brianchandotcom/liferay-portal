@@ -93,6 +93,16 @@ public class LayoutStructureItem {
 		);
 	}
 
+	public void updateItemConfigJSONObject(JSONObject itemConfigJSONObject) {
+		for (String key : itemConfigJSONObject.keySet()) {
+			if (_itemConfigJSONObject.has(key)) {
+				_itemConfigJSONObject.remove(key);
+			}
+
+			_itemConfigJSONObject.put(key, itemConfigJSONObject.get(key));
+		}
+	}
+
 	private final List<String> _childrenItemIds;
 	private final JSONObject _itemConfigJSONObject;
 	private final String _itemId;

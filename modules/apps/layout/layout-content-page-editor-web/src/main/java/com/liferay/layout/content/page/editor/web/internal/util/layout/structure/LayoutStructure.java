@@ -148,6 +148,15 @@ public class LayoutStructure {
 		);
 	}
 
+	public void updateItemConfig(
+		JSONObject itemConfigJSONObject, String itemId) {
+
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
+
+		layoutStructureItem.updateItemConfigJSONObject(itemConfigJSONObject);
+	}
+
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
 	private final String _mainItemId;
 

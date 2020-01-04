@@ -12054,24 +12054,47 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 					<try>
 						<ant antfile="build-test-analytics-cloud.xml" target="start-analytics-cloud" />
 
+						<property location="${analytics.cloud.faro.dir}/test_analytics_cloud.sh" name="analytics.cloud.test.sh" />
+
 						<property location="${basedir.unix}/portal-web/${selenium.executable.dir.name}" name="selenium.executable.dir.path" />
 
-						<gradle-execute dir="${analytics.cloud.faro.dir}" task="testIntegration">
-							<arg value="-Danalytics.cloud.url=http://${analytics.cloud.faro.container.name}:8080" />
-							<arg value="-Dchrome.driver.version=${selenium.chrome.driver.version}" />
-							<arg value="-Dportal.url=http://${env.HOSTNAME}:8080" />
-							<arg value="-Dselenium.chrome.driver.executable=${selenium.chrome.driver.executable}" />
-							<arg value="-Dselenium.executable.dir.name=${selenium.executable.dir.path}" />
-							<arg value="-Dwebdriver.chrome.driver=${selenium.executable.dir.path}/${selenium.chrome.driver.executable}" />
-							<arg value="cleanNPM" />
-							<arg value="npmInstall" />
-						</gradle-execute>
+						<propertycopy from="browser.chrome.bin.file[${browser.chrome.version}]" name="browser.chrome.bin.file" override="true" />
+
+						<prepare-chrome-driver />
+
+						<echo file="${analytics.cloud.test.sh}">
+							#!/bin/bash
+
+							./gradlew cleanNPM npmInstall
+
+							./gradlew \
+								-Danalytics.cloud.url=http://${analytics.cloud.faro.container.name}:8080 \
+								-Dbrowser.chrome.bin.args=${browser.chrome.bin.args} \
+								-Dbrowser.chrome.bin.file=${browser.chrome.bin.file} \
+								-Dbrowser.type=chrome \
+								-Dcucumber.options='${analytics.cloud.cucumber.options}' \
+								-Dchrome.driver.version=${selenium.chrome.driver.version} \
+								-Dportal.url=http://${env.HOSTNAME}:8080 \
+								-Dselenium.chrome.driver.executable=${selenium.chrome.driver.executable} \
+								-Dselenium.executable.dir.name=${selenium.executable.dir.path}/ \
+								-Dwebdriver.chrome.driver=${selenium.executable.dir.path}/${selenium.chrome.driver.executable} \
+								\
+								testIntegration
+						</echo>
+
+						<exec dir="${analytics.cloud.faro.dir}" executable="/bin/bash" failonerror="true">
+							<arg value="${analytics.cloud.test.sh}" />
+						</exec>
+
+						<delete file="${analytics.cloud.test.sh}" />
 					</try>
 					<catch>
 						<fail message="${analytics.cloud.error}" />
 					</catch>
 					<finally>
 						<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
+
+						<stop-chrome-driver />
 					</finally>
 				</trycatch>
 			</then>

@@ -12,26 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.verify.test;
+package com.liferay.portal.upgrade.v7_0_6.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.upgrade.v7_0_6.UpgradeResourceActions;
-import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -43,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Michael Bowerman
  */
 @RunWith(Arquillian.class)
-public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
+public class UpgradeResourceActionsTest {
 
 	@ClassRule
 	@Rule
@@ -52,10 +49,10 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Before
-	@Override
-	@Transactional
 	public void setUp() throws Exception {
-		super.setUp();
+		if (_connection == null) {
+			_connection = DataAccess.getConnection();
+		}
 
 		_createResourceAction(_NAME_1, _ACTION_ID_1, 2);
 		_createResourceAction(_NAME_1, _ACTION_ID_2, 2);
@@ -64,17 +61,30 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 		_createResourceAction(_NAME_2, _ACTION_ID_2, 4);
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		try (PreparedStatement ps = _connection.prepareStatement(
+				"delete from ResourceAction where name in (?, ?)")) {
+
+			ps.setString(1, _NAME_1);
+			ps.setString(2, _NAME_2);
+
+			ps.executeUpdate();
+		}
+	}
+
 	@Test
 	public void testDeleteDuplicateBitwiseValuesOnResource() throws Throwable {
-		_resourceActionLocalService.checkResourceActions();
-
 		_assertResourceAction(_NAME_1, _ACTION_ID_1, false);
 		_assertResourceAction(_NAME_1, _ACTION_ID_2, false);
 		_assertResourceAction(_NAME_1, _ACTION_ID_3, false);
 		_assertResourceAction(_NAME_2, _ACTION_ID_1, false);
 		_assertResourceAction(_NAME_2, _ACTION_ID_2, false);
 
-		doVerify();
+		UpgradeResourceActions upgradeResourceActions =
+			new UpgradeResourceActions();
+
+		upgradeResourceActions.upgrade();
 
 		_assertResourceAction(_NAME_1, _ACTION_ID_1, false);
 		_assertResourceAction(_NAME_1, _ACTION_ID_2, true);
@@ -83,40 +93,46 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 		_assertResourceAction(_NAME_2, _ACTION_ID_2, false);
 	}
 
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new UpgradeResourceActions();
-	}
-
 	private void _assertResourceAction(
-		String name, String actionId, boolean expectsNull) {
+			String name, String actionId, boolean expectsNull)
+		throws Exception {
 
-		ResourceAction resourceAction =
-			_resourceActionLocalService.fetchResourceAction(name, actionId);
+		try (PreparedStatement ps = _connection.prepareStatement(
+				"select resourceActionId from ResourceAction where name = ? " +
+					"and actionid = ?")) {
 
-		if (expectsNull) {
-			Assert.assertNull(resourceAction);
-		}
-		else {
-			Assert.assertNotNull(resourceAction);
+			ps.setString(1, name);
+			ps.setString(2, actionId);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (expectsNull) {
+				Assert.assertFalse(rs.next());
+			}
+			else {
+				Assert.assertTrue(rs.next());
+			}
 		}
 	}
 
 	private void _createResourceAction(
-		final String name, final String actionId, final long bitwiseValue) {
+			final String name, final String actionId, final long bitwiseValue)
+		throws Exception {
 
-		long resourceActionId = _counterLocalService.increment(
-			ResourceAction.class.getName());
+		try (PreparedStatement ps = _connection.prepareStatement(
+				"insert into ResourceAction (resourceActionId, name, " +
+					"actionId, bitwiseValue) values (?, ?, ?, ?)")) {
 
-		ResourceAction resourceAction = _resourceActionPersistence.create(
-			resourceActionId);
+			ps.setLong(
+				1,
+				_counterLocalService.increment(ResourceAction.class.getName()));
 
-		resourceAction.setName(name);
-		resourceAction.setActionId(actionId);
-		resourceAction.setBitwiseValue(bitwiseValue);
+			ps.setString(2, name);
+			ps.setString(3, actionId);
+			ps.setLong(4, bitwiseValue);
 
-		_resourceActions.add(
-			_resourceActionLocalService.updateResourceAction(resourceAction));
+			ps.executeUpdate();
+		}
 	}
 
 	private static final String _ACTION_ID_1 = "action1";
@@ -129,16 +145,9 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 
 	private static final String _NAME_2 = "portlet2";
 
+	private static Connection _connection;
+
 	@Inject
 	private CounterLocalService _counterLocalService;
-
-	@Inject
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Inject
-	private ResourceActionPersistence _resourceActionPersistence;
-
-	@DeleteAfterTestRun
-	private final List<ResourceAction> _resourceActions = new ArrayList<>();
 
 }

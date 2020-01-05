@@ -17,7 +17,6 @@ package com.liferay.portal.upgrade.v7_0_6;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -65,8 +64,14 @@ public class UpgradeResourceActions extends UpgradeProcess {
 							_log.info(sb.toString());
 						}
 
-						ResourceActionLocalServiceUtil.deleteResourceAction(
-							rs2.getLong("resourceActionId"));
+						try (PreparedStatement ps3 =
+								connection.prepareStatement(
+									"delete from ResourceAction where " +
+										"resourceActionId = " +
+											rs2.getLong("resourceActionId"))) {
+
+							ps3.execute();
+						}
 					}
 				}
 			}

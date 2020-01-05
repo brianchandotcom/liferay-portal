@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -173,6 +175,69 @@ public class LayoutStructure {
 		layoutStructureItem.updateItemConfigJSONObject(itemConfigJSONObject);
 	}
 
+	public List<LayoutStructureItem> updateRowColumnsLayoutStructureItem(
+		String itemId, int numberOfColumns) {
+
+		if (numberOfColumns > _MAX_COLUMNS) {
+			return Collections.emptyList();
+		}
+
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
+
+		List<String> childrenItemIds = new ArrayList<>(
+			layoutStructureItem.getChildrenItemIds());
+
+		int childrenItemIdsSize = childrenItemIds.size();
+
+		if (childrenItemIdsSize == numberOfColumns) {
+			return Collections.emptyList();
+		}
+
+		if (childrenItemIdsSize < numberOfColumns) {
+			for (int i = 0; i < childrenItemIdsSize; i++) {
+				String childrenItemId = childrenItemIds.get(i);
+
+				LayoutStructureItem childLayoutStructureItem =
+					_layoutStructureItems.get(childrenItemId);
+
+				childLayoutStructureItem.updateItemConfigJSONObject(
+					JSONUtil.put("size", _COLUMN_SIZES[numberOfColumns][i]));
+			}
+
+			for (int i = childrenItemIdsSize; i < numberOfColumns; i++) {
+				_addColumnLayoutStructureItem(
+					itemId, i, _COLUMN_SIZES[numberOfColumns][i]);
+			}
+
+			return Collections.emptyList();
+		}
+
+		for (int i = 0; i < numberOfColumns; i++) {
+			String childrenItemId = childrenItemIds.get(i);
+
+			LayoutStructureItem childLayoutStructureItem =
+				_layoutStructureItems.get(childrenItemId);
+
+			childLayoutStructureItem.updateItemConfigJSONObject(
+				JSONUtil.put("size", _COLUMN_SIZES[numberOfColumns][i]));
+		}
+
+		List<LayoutStructureItem> deletedLayoutStructureItems =
+			new ArrayList<>();
+
+		for (int i = numberOfColumns; i < childrenItemIdsSize; i++) {
+			String childrenItemId = childrenItemIds.get(i);
+
+			LayoutStructureItem deletedLayoutStructureItem =
+				deleteLayoutStructureItem(childrenItemId);
+
+			deletedLayoutStructureItems.add(deletedLayoutStructureItem);
+		}
+
+		return deletedLayoutStructureItems;
+	}
+
 	private void _addColumnLayoutStructureItem(
 		String parentItemId, int position, int size) {
 
@@ -180,6 +245,15 @@ public class LayoutStructure {
 			JSONUtil.put("size", size), String.valueOf(UUID.randomUUID()),
 			LayoutDataItemTypeConstants.TYPE_COLUMN, parentItemId, position);
 	}
+
+	private static final int[][] _COLUMN_SIZES = {
+		{12}, {6, 6}, {4, 4, 4}, {3, 3, 3, 3}, {2, 2, 4, 2, 2},
+		{2, 2, 2, 2, 2, 2}, {1, 1, 1, 6, 1, 1, 1}, {1, 1, 1, 3, 3, 1, 1, 1},
+		{1, 1, 1, 1, 4, 1, 1, 1, 1}, {1, 1, 1, 1, 2, 2, 1, 1, 1, 1},
+		{1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	};
+
+	private static final int _MAX_COLUMNS = 12;
 
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
 	private final String _mainItemId;

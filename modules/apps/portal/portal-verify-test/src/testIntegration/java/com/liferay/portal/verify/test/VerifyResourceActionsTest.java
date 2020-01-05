@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.portal.upgrade.v7_0_6.UpgradeResourceActions;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.VerifyResourceActions;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new VerifyResourceActions();
+		return new UpgradeResourceActions();
 	}
 
 	private void _assertResourceAction(

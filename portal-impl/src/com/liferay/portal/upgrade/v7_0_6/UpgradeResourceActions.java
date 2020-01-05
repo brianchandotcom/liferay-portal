@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portal.upgrade.v7_0_6;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.PreparedStatement;
@@ -25,10 +26,8 @@ import java.sql.ResultSet;
 
 /**
  * @author     Michael Bowerman
- * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Deprecated
-public class VerifyResourceActions extends VerifyProcess {
+public class UpgradeResourceActions extends UpgradeProcess {
 
 	protected void deleteDuplicateBitwiseValuesOnResource() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -75,11 +74,11 @@ public class VerifyResourceActions extends VerifyProcess {
 	}
 
 	@Override
-	protected void doVerify() throws Exception {
+	protected void doUpgrade() throws Exception {
 		deleteDuplicateBitwiseValuesOnResource();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VerifyResourceActions.class);
+		UpgradeResourceActions.class);
 
 }

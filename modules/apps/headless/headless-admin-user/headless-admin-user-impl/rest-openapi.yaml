@@ -94,23 +94,19 @@ components:
                 emailAddress:
                     description:
                         The email address.
-                    readOnly: true
                     type: string
                 id:
                     description:
                         The email address's ID.
                     format: int64
-                    readOnly: true
                     type: integer
                 primary:
                     description:
                         A flag that indicates whether this is the main email address of the user/organization.
-                    readOnly: true
                     type: boolean
                 type:
                     description:
                         The email address's type.
-                    readOnly: true
                     type: string
             type: object
         Organization:
@@ -196,7 +192,6 @@ components:
                                 The organization's email addresses, with one optionally marked as primary.
                             items:
                                 $ref: "#/components/schemas/EmailAddress"
-                            readOnly: true
                             type: array
                         postalAddresses:
                             description:

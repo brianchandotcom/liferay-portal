@@ -49,7 +49,7 @@ public class ElasticsearchConnectionManagerTest {
 			"operationMode", OperationMode.EMBEDDED.name()
 		).build();
 
-		_elasticsearchConnectionManager.activate(null, properties);
+		_elasticsearchConnectionManager.activate(properties);
 
 		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
 		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection);
@@ -61,7 +61,7 @@ public class ElasticsearchConnectionManagerTest {
 			"operationMode", OperationMode.EMBEDDED.name()
 		).build();
 
-		_elasticsearchConnectionManager.activate(null, properties);
+		_elasticsearchConnectionManager.activate(properties);
 
 		verifyConnectNeverClose(_embeddedElasticsearchConnection);
 		verifyNeverCloseNeverConnect(_remoteElasticsearchConnection);
@@ -104,7 +104,7 @@ public class ElasticsearchConnectionManagerTest {
 			"operationMode", OperationMode.EMBEDDED.name()
 		).build();
 
-		_elasticsearchConnectionManager.activate(null, properties);
+		_elasticsearchConnectionManager.activate(properties);
 
 		resetMockConnections();
 

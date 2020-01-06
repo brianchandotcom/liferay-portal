@@ -397,19 +397,20 @@ public class OrganizationResourceImpl
 			return null;
 		}
 
-		com.liferay.portal.kernel.model.EmailAddress emailAddressModel =
-			_emailAddressLocalService.createEmailAddress(
-				GetterUtil.getLong(emailAddress.getId()));
+		com.liferay.portal.kernel.model.EmailAddress
+			serviceBuilderEmailAddress =
+				_emailAddressLocalService.createEmailAddress(
+					GetterUtil.getLong(emailAddress.getId()));
 
-		emailAddressModel.setAddress(address);
-		emailAddressModel.setTypeId(
+		serviceBuilderEmailAddress.setAddress(address);
+		serviceBuilderEmailAddress.setTypeId(
 			_toListTypeId(
 				"email-address", emailAddress.getType(),
 				ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS));
-		emailAddressModel.setPrimary(
+		serviceBuilderEmailAddress.setPrimary(
 			GetterUtil.getBoolean(emailAddress.getPrimary()));
 
-		return emailAddressModel;
+		return serviceBuilderEmailAddress;
 	}
 
 	private long _toListTypeId(String defaultName, String name, String type) {

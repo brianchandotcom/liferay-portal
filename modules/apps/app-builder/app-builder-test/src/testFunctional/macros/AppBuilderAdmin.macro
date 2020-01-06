@@ -196,6 +196,10 @@ definition {
 		MenuItem.clickNoError(menuItem = "Undeploy");
 
 		Click(locator1 = "AppBuilder#UNDEPLOY_APP_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#UNDEPLOY_APP_STATUS",
+			value1 = "UNDEPLOYED");
 	}
 
 	macro validateCustomObjectNameOnHeader {

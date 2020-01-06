@@ -135,6 +135,12 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>UNDEPLOY_APP_STATUS</td>
+	<td>//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CUSTOM_PORTLET</td>

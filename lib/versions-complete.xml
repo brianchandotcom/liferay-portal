@@ -53,6 +53,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.analytics.message.sender.impl.jar!httpclient.jar</file-name>
+				<version>4.5.3</version>
+				<project-name>HttpComponents Apache HttpClient</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.analytics.message.sender.impl.jar!httpcore.jar</file-name>
+				<version>4.4.6</version>
+				<project-name>HttpComponents Apache HttpCore</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.analytics.settings.web.jar!httpclient.jar</file-name>
 				<version>4.5.3</version>
 				<project-name>HttpComponents Apache HttpClient</project-name>
@@ -4323,6 +4347,17 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.web.proxy.web.jar!concurrent.jar</file-name>
+				<version>1.3.4</version>
+				<project-name>Dough Lea's util.concurrent package</project-name>
+				<licenses>
+					<license>
+						<license-name>Public domain, Sun Microsoystems</license-name>
+						<license-url>&gt;http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.web.proxy.web.jar!org.portletbridge.core.jar</file-name>
 				<version>1.1.2</version>
 				<project-name>org.portletbridge</project-name>
@@ -5541,7 +5576,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/axis.jar</file-name>
-				<version>1.4.LIFERAY-PATCHED-5</version>
+				<version>1.4.LIFERAY-PATCHED-6</version>
 				<project-name>Axis</project-name>
 				<project-url>http://ws.apache.org/axis</project-url>
 				<licenses>

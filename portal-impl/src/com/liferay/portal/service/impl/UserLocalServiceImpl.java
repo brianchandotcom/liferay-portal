@@ -4959,10 +4959,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Group group = groupLocalService.getUserGroup(
 			user.getCompanyId(), userId);
 
-		String friendlyURL = FriendlyURLNormalizerUtil.normalize(
-			StringPool.SLASH + screenName);
-
-		groupLocalService.updateFriendlyURL(group.getGroupId(), friendlyURL);
+		groupLocalService.updateFriendlyURL(
+			group.getGroupId(), StringPool.SLASH + screenName);
 
 		return user;
 	}
@@ -5250,11 +5248,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Group group = groupLocalService.getUserGroup(
 				user.getCompanyId(), userId);
 
-			String friendlyURL = FriendlyURLNormalizerUtil.normalize(
-				StringPool.SLASH + screenName);
-
 			groupLocalService.updateFriendlyURL(
-				group.getGroupId(), friendlyURL);
+				group.getGroupId(), StringPool.SLASH + screenName);
 		}
 
 		// Groups and organizations

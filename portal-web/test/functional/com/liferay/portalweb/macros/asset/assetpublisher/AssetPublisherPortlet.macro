@@ -38,6 +38,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
+		Navigator.gotoNavTab(navTab = "My Sites");
+
 		SiteSelector.viewSite(site = "${siteName}");
 	}
 
@@ -68,6 +70,8 @@ definition {
 			SelectFrame(value1 = "relative=top");
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
+
+			Navigator.gotoNavTab(navTab = "My Sites");
 
 			SiteSelector.selectSite(site = "${otherSite}");
 		}

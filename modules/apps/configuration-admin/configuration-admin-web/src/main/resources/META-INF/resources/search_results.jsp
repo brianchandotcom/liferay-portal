@@ -24,7 +24,7 @@ ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRet
 
 ConfigurationScopeDisplayContext configurationScopeDisplayContext = ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
-if (redirect == null) {
+if (Validator.isNull(redirect)) {
 	redirect = String.valueOf(renderResponse.createRenderURL());
 }
 

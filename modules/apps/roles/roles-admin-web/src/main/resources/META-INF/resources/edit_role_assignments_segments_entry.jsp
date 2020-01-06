@@ -60,34 +60,49 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 			value="<%= segmentsEntry.getCreateDate() %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-expand-smallest table-cell-minw-150"
-			name="members"
-			value="<%= String.valueOf(SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
-		/>
+		<c:choose>
+			<c:when test='<%= Objects.equals(ParamUtil.getString(request, "tabs3"), "current") %>'>
+				<portlet:renderURL var="viewMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcPath" value="/view_segments_entry_users.jsp" />
+					<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
+				</portlet:renderURL>
 
-		<c:if test='<%= Objects.equals(ParamUtil.getString(request, "tabs3"), "current") %>'>
-			<liferay-ui:search-container-column-text>
-				<liferay-ui:icon-menu
-					direction="left-side"
-					icon="<%= StringPool.BLANK %>"
-					markupView="lexicon"
-					message="<%= StringPool.BLANK %>"
-					showWhenSingleIcon="<%= true %>"
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
+					name="members"
 				>
-					<portlet:renderURL var="viewMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcPath" value="/view_segments_entry_users.jsp" />
-						<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
-					</portlet:renderURL>
-
 					<liferay-ui:icon
-						message="view-members"
+						label="<%= true %>"
+						message="<%= String.valueOf(SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
 						onClick='<%= renderResponse.getNamespace() + "openViewMembersDialog(event);" %>'
 						url="<%= viewMembersURL %>"
 					/>
-				</liferay-ui:icon-menu>
-			</liferay-ui:search-container-column-text>
-		</c:if>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text>
+					<liferay-ui:icon-menu
+						direction="left-side"
+						icon="<%= StringPool.BLANK %>"
+						markupView="lexicon"
+						message="<%= StringPool.BLANK %>"
+						showWhenSingleIcon="<%= true %>"
+					>
+						<liferay-ui:icon
+							message="view-members"
+							onClick='<%= renderResponse.getNamespace() + "openViewMembersDialog(event);" %>'
+							url="<%= viewMembersURL %>"
+						/>
+					</liferay-ui:icon-menu>
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-minw-150"
+					name="members"
+					value="<%= String.valueOf(SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
+				/>
+			</c:otherwise>
+		</c:choose>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator

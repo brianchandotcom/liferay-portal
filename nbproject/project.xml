@@ -147,12 +147,6 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>portal-test-integration\src</label>
-					<type>java</type>
-					<location>portal-test-integration/src</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
 					<label>portal-web\test\functional</label>
 					<type>java</type>
 					<location>portal-web/test/functional</location>
@@ -376,7 +370,6 @@
 				<package-root>portal-kernel/src</package-root>
 				<package-root>portal-kernel/test/unit</package-root>
 				<package-root>portal-test/src</package-root>
-				<package-root>portal-test-integration/src</package-root>
 				<package-root>portal-web/test/functional</package-root>
 				<package-root>support-tomcat/src</package-root>
 				<package-root>util-bridges/src</package-root>

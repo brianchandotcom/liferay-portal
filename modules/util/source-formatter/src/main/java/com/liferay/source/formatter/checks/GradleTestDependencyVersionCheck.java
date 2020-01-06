@@ -87,7 +87,6 @@ public class GradleTestDependencyVersionCheck extends BaseFileCheck {
 			if (dependencyName.equals("com.liferay.portal.impl") ||
 				dependencyName.equals("com.liferay.portal.kernel") ||
 				dependencyName.equals("com.liferay.portal.test") ||
-				dependencyName.equals("com.liferay.portal.test.integration") ||
 				dependencyName.equals("com.liferay.util.bridges") ||
 				dependencyName.equals("com.liferay.util.java") ||
 				dependencyName.equals("com.liferay.util.taglib")) {

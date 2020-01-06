@@ -1965,8 +1965,6 @@ rerun your task.
 
 			<record-artifact-version artifact.name="portal-test" file="${gradle.properties.file}" />
 
-			<record-artifact-version artifact.name="portal-test-integration" file="${gradle.properties.file}" />
-
 			<record-artifact-version artifact.name="util-bridges" file="${gradle.properties.file}" />
 
 			<record-artifact-version artifact.name="util-java" file="${gradle.properties.file}" />

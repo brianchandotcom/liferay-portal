@@ -191,9 +191,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		includes = new String[] {
 			"**/com/liferay/portal/kernel/service/ServiceContext*.java",
 			"**/model/BaseModel.java", "**/model/impl/BaseModelImpl.java",
-			"**/portal-test/**/portal/service/**/*.java",
-			"**/portal-test-integration/**/portal/service/**/*.java",
-			"**/service/*.java", "**/service/configuration/**/*.java",
+			"**/portal-test/**/portal/service/**/*.java", "**/service/*.java",
+			"**/service/configuration/**/*.java",
 			"**/service/http/*HttpTest.java", "**/service/http/*SoapTest.java",
 			"**/service/http/TunnelUtil.java", "**/service/impl/*.java",
 			"**/service/jms/*.java", "**/service/permission/*.java",

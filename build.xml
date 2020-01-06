@@ -189,7 +189,6 @@ message.
 
 			<ant dir="portal-impl" inheritAll="false" target="clean" />
 			<ant dir="portal-test" inheritAll="false" target="clean" />
-			<ant dir="portal-test-integration" inheritAll="false" target="clean" />
 
 			<ant dir="sql" inheritAll="false" target="clean" />
 
@@ -285,8 +284,6 @@ message.
 		<ant dir="portal-impl" inheritAll="false" target="compile" />
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
-			<ant dir="portal-test-integration" inheritAll="false" target="compile" />
-
 			<sequential>
 				<ant dir="sql" inheritAll="false" target="build-db" />
 				<ant dir="sql" inheritAll="false" target="rebuild-hypersonic" />
@@ -342,7 +339,6 @@ message.
 
 		<ant dir="portal-impl" inheritAll="false" target="deploy" />
 		<ant dir="portal-test" inheritAll="false" target="deploy" />
-		<ant dir="portal-test-integration" inheritAll="false" target="deploy" />
 
 		<ant dir="portal-web" inheritAll="false" target="deploy" />
 
@@ -730,7 +726,6 @@ message.
 		<ant dir="portal-impl" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />
-		<ant dir="portal-test-integration" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-web" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="support-tomcat" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-bridges" inheritAll="false" target="install-portal-snapshot" />
@@ -749,7 +744,6 @@ message.
 
 		<ant dir="portal-impl" inheritAll="false" target="jar" />
 		<ant dir="portal-test" inheritAll="false" target="jar" />
-		<ant dir="portal-test-integration" inheritAll="false" target="jar" />
 
 		<ant dir="portal-web" inheritAll="false" target="war" />
 
@@ -772,11 +766,6 @@ message.
 		<antcall target="javadoc-portal-cmd">
 			<param name="generated.description" value="" />
 			<param name="module.dir" value="portal-test" />
-		</antcall>
-
-		<antcall target="javadoc-portal-cmd">
-			<param name="generated.description" value="" />
-			<param name="module.dir" value="portal-test-integration" />
 		</antcall>
 
 		<antcall target="javadoc-cmd">
@@ -969,7 +958,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="portal-impl" inheritAll="false" target="publish-portal-release" />
 		<ant dir="portal-kernel" inheritAll="false" target="publish-portal-release" />
 		<ant dir="portal-test" inheritAll="false" target="publish-portal-release" />
-		<ant dir="portal-test-integration" inheritAll="false" target="publish-portal-release" />
 		<ant dir="portal-web" inheritAll="false" target="publish-portal-release" />
 		<ant dir="support-tomcat" inheritAll="false" target="publish-portal-release" />
 		<ant dir="util-bridges" inheritAll="false" target="publish-portal-release" />
@@ -982,7 +970,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="portal-impl" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-kernel" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-test" inheritAll="false" target="restore-latest-artifact-version" />
-		<ant dir="portal-test-integration" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-web" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="support-tomcat" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-bridges" inheritAll="false" target="restore-latest-artifact-version" />

@@ -79,11 +79,6 @@
 /portal-kernel/test-coverage
 /portal-kernel/test-results
 /portal-kernel/woven-classes
-/portal-test-integration/*.ipr
-/portal-test-integration/*.iws
-/portal-test-integration/classes
-/portal-test-integration/portal-test-integration*.asc
-/portal-test-integration/portal-test-integration*.jar
 /portal-test/*.ipr
 /portal-test/*.iws
 /portal-test/build

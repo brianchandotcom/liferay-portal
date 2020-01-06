@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new FragmentCollectionsDisplayContext(renderRequest, renderResponse, request);
+FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new FragmentCollectionsDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:management-toolbar

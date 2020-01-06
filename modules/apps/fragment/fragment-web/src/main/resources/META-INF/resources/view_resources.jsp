@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(renderRequest, renderResponse, request, fragmentDisplayContext);
+FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayContext = new FragmentCollectionResourcesDisplayContext(request, renderRequest, renderResponse, fragmentDisplayContext);
 
 FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionResourcesManagementToolbarDisplayContext = new FragmentCollectionResourcesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionResourcesDisplayContext);
 %>

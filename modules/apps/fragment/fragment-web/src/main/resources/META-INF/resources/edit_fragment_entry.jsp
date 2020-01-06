@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditFragmentEntryDisplayContext editFragmentEntryDisplayContext = new EditFragmentEntryDisplayContext(renderResponse, request);
+EditFragmentEntryDisplayContext editFragmentEntryDisplayContext = new EditFragmentEntryDisplayContext(request, renderResponse);
 %>
 
 <soy:component-renderer

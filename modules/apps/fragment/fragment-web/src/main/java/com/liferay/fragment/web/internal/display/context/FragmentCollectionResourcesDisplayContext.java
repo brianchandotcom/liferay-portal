@@ -39,13 +39,13 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentCollectionResourcesDisplayContext {
 
 	public FragmentCollectionResourcesDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse,
 		FragmentDisplayContext fragmentDisplayContext) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_httpServletRequest = httpServletRequest;
 		_fragmentDisplayContext = fragmentDisplayContext;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(

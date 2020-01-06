@@ -89,7 +89,7 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
-FragmentDisplayContext fragmentDisplayContext = new FragmentDisplayContext(renderRequest, renderResponse, request);
+FragmentDisplayContext fragmentDisplayContext = new FragmentDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

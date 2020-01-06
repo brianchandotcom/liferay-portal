@@ -68,15 +68,15 @@ buildChangelogs {
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				matcher = gitLogLine =~ /([a-f0-9]+):(.+):[^A-Z]*([A-Z]+-\d+)(.*)/
+				matcher = gitLogLine =~ /([a-f0-9]+):.+:[^A-Z]*([A-Z]+-\d+)(.*)/
 
 				if (matcher.find()) {
-					ticket = matcher.group(3)
+					ticket = matcher.group(2)
 
-					if (matcher.group(4) ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
+					if (matcher.group(3) ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
 						commits = commits + """\
 							|
-							|- [${ticket}]: ${matcher.group(4).trim()} (${matcher.group(1).substring(0, 10)})""".stripMargin()
+							|- [${ticket}]: ${matcher.group(3).trim()} (${matcher.group(1).substring(0, 10)})""".stripMargin()
 					}
 				}
 

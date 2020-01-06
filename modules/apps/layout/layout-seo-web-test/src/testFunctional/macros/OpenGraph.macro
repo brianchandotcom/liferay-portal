@@ -123,7 +123,7 @@ definition {
 		}
 
 		task ("Assert image configuration") {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_fieldLabel = "Image",
 				locator1 = "FormFields#LABEL",
 				value1 = "Image");

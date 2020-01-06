@@ -42,7 +42,7 @@ public class DDMFormEvaluatorRuleHelper {
 	public void checkFieldAffectedByAction(DDMFormRule ddmFormRule) {
 		Collection<DDMFormField> fieldNameSet = _ddmFormFieldsMap.values();
 
-		Stream<DDMFormField> stream = fieldNameSet.parallelStream();
+		Stream<DDMFormField> stream = fieldNameSet.stream();
 
 		stream.forEach(field -> checkFieldAffectedByAction(ddmFormRule, field));
 	}
@@ -113,7 +113,7 @@ public class DDMFormEvaluatorRuleHelper {
 
 		List<String> actions = ddmFormRule.getActions();
 
-		Stream<String> stream = actions.parallelStream();
+		Stream<String> stream = actions.stream();
 
 		return stream.anyMatch(
 			action -> Objects.equals(setBooleanPropertyAction, action));

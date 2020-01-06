@@ -9,8 +9,18 @@
 </thead>
 <tbody>
 <tr>
+	<td>CLIENT_VERSION</td>
+	<td>//div[contains(.,'${clientVersion}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ENGINE_INFORMATION</td>
 	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]//strong[${position}][contains(.,'${searchInformation}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ENGINE_VENDOR</td>
+	<td>//div[contains(.,'${engineVendor}')]</td>
 	<td></td>
 </tr>
 </tbody>

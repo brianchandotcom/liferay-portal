@@ -71,7 +71,6 @@ buildChangelogs {
 				matcher = gitLogLine =~ /([a-f0-9]+):(.+):[^A-Z]*([A-Z]+-\d+)(.*)/
 
 				if (matcher.find()) {
-					publishDate = matcher.group(2)
 					ticket = matcher.group(3)
 
 					if (matcher.group(4) ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
@@ -98,21 +97,20 @@ buildChangelogs {
 
 				if (matcher.find()) {
 					descriptions = "\n" + matcher.group(1).trim()
-
-					if (Validator.isNull(publishDate)) {
-						String endRange = commitRange.split("\\.\\.")[1]
-
-						exec {
-							commandLine "git", "log", "-1", "--pretty=format:%H:%cd:%s", "--date=short", "${endRange}"
-							standardOutput = standardOutputByteArrayOutputStream
-							workingDir = projectDir.parentFile
-						}
-
-						publishDate = standardOutputByteArrayOutputStream.toString().split(":")[1]
-					}
-
 				}
 			}
+
+			String endRange = commitRange.split("\\.\\.")[1]
+
+			standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
+
+			exec {
+				commandLine "git", "log", "-1", "--pretty=format:%H:%cd:%s", "--date=short", "${endRange}"
+				standardOutput = standardOutputByteArrayOutputStream
+				workingDir = projectDir.parentFile
+			}
+
+			publishDate = standardOutputByteArrayOutputStream.toString().split(":")[1]
 
 			if ((commits.length() > 0) || (dependencies.length() > 0) || (descriptions.length() > 0)) {
 				text += """\

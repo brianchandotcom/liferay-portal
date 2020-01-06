@@ -198,9 +198,6 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
 			"com.liferay.portal.test", "3.0.0");
 		GradleUtil.addDependency(
-			project, TEST_MODULES_CONFIGURATION_NAME, "com.liferay.portal",
-			"com.liferay.portal.test.integration", "3.0.0");
-		GradleUtil.addDependency(
 			project, TEST_MODULES_CONFIGURATION_NAME, "org.apache.aries.jmx",
 			"org.apache.aries.jmx.core", "1.1.7");
 	}

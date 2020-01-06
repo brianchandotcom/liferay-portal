@@ -312,6 +312,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	@Override
 	@SuppressWarnings("serial")
 	public void apply(final Project project) {
+		String portalVersion = PortalTools.getPortalVersion(project);
+
 		final File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 
@@ -379,7 +381,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			Configuration portalTestSnapshotConfiguration =
 				_addConfigurationPortalTestSnapshot(project);
 
-			_addDependenciesPortalTest(project);
+			_addDependenciesPortalTest(project, portalVersion);
 			_addDependenciesPortalTestSnapshot(project);
 			_addDependenciesTestCompile(project);
 
@@ -646,13 +648,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _addDependenciesPortalTest(Project project) {
+	private void _addDependenciesPortalTest(
+		Project project, String portalVersion) {
+
 		GradleUtil.addDependency(
 			project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
 			"com.liferay.portal.test", "default");
-		GradleUtil.addDependency(
-			project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
-			"com.liferay.portal.test.integration", "default");
+
+		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion) ||
+			PortalTools.PORTAL_VERSION_7_2_X.equals(portalVersion)) {
+
+			GradleUtil.addDependency(
+				project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
+				"com.liferay.portal.test.integration", "default");
+		}
 	}
 
 	private void _addDependenciesPortalTestSnapshot(Project project) {

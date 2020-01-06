@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Locale;
@@ -63,7 +62,7 @@ public class CalendarResourceServiceTest {
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 	}
 
 	@Test

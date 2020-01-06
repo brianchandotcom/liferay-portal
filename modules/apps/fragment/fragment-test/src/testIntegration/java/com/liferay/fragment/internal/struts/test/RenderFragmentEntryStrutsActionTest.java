@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.sharepoint.methods.Method;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -78,7 +77,7 @@ public class RenderFragmentEntryStrutsActionTest {
 	public void testRenderFragment() throws Exception {
 		_user = UserTestUtil.addOmniAdminUser();
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
@@ -134,7 +133,7 @@ public class RenderFragmentEntryStrutsActionTest {
 	public void testRenderFragmentWithoutPermissions() throws Exception {
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.GUEST);
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(

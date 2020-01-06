@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -84,7 +83,7 @@ public class SharingEntryServiceTest {
 		_toUser = UserTestUtil.addUser();
 		_user = UserTestUtil.addUser();
 
-		ServiceTestUtil.setUser(_fromUser);
+		UserTestUtil.setUser(_fromUser);
 
 		Bundle bundle = FrameworkUtil.getBundle(SharingEntryServiceTest.class);
 
@@ -576,7 +575,7 @@ public class SharingEntryServiceTest {
 			Collections.singletonList(SharingEntryAction.VIEW), null,
 			serviceContext);
 
-		ServiceTestUtil.setUser(_toUser);
+		UserTestUtil.setUser(_toUser);
 
 		_sharingEntryService.deleteSharingEntry(
 			sharingEntry.getSharingEntryId(), serviceContext);
@@ -727,7 +726,7 @@ public class SharingEntryServiceTest {
 			true, Collections.singletonList(SharingEntryAction.VIEW), null,
 			serviceContext);
 
-		ServiceTestUtil.setUser(_toUser);
+		UserTestUtil.setUser(_toUser);
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),
@@ -753,7 +752,7 @@ public class SharingEntryServiceTest {
 			true, Collections.singletonList(SharingEntryAction.VIEW), null,
 			serviceContext);
 
-		ServiceTestUtil.setUser(_toUser);
+		UserTestUtil.setUser(_toUser);
 
 		_sharingEntryService.updateSharingEntry(
 			sharingEntry.getSharingEntryId(),

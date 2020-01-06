@@ -772,15 +772,8 @@ definition {
 		MockMock.viewMail(
 			asset = "MB Category Name",
 			content = "MB Category Name",
-			recipient = "Test Test",
-			sender = "Test Test",
-			subject = "MB Category Name");
-
-		MockMock.viewMail(
-			asset = "MB Category Name",
-			content = "MB Category Name",
 			recipient = "userfn userln",
-			sender = "Test Test",
+			sender = "Joe Bloggs",
 			subject = "MB Category Name");
 	}
 

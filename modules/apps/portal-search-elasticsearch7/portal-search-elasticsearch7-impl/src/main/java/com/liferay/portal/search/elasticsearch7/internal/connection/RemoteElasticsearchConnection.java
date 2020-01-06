@@ -44,7 +44,6 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -55,6 +54,13 @@ import org.osgi.service.component.annotations.Deactivate;
 	service = ElasticsearchConnection.class
 )
 public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
+
+	@Override
+	public void connect() {
+		if (_elasticsearchConnectionConfiguration.active()) {
+			super.connect();
+		}
+	}
 
 	@Override
 	public String getConnectionId() {
@@ -71,10 +77,6 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		_elasticsearchConnectionConfiguration =
 			ConfigurableUtil.createConfigurable(
 				ElasticsearchConnectionConfiguration.class, properties);
-
-		if (_elasticsearchConnectionConfiguration.active()) {
-			connect();
-		}
 	}
 
 	protected void configureSecurity(RestClientBuilder restClientBuilder) {
@@ -152,11 +154,6 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		close();
 	}
 
 	private volatile ElasticsearchConnectionConfiguration

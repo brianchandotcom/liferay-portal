@@ -1,23 +1,34 @@
 definition {
 
 	macro assertEngineVendorAndVersions {
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-			position = "1",
-			searchInformation = "${engineVendor}",
-			value1 = "${engineVendor}");
+		if (IsElementNotPresent(locator1 = "//div[contains(@class,'alert alert-info')]//strong[2]")) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
+				value1 = "${engineVendor}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-			position = "2",
-			searchInformation = "${clientVersion}",
-			value1 = "${clientVersion}");
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#CLIENT_VERSION",
+				value1 = "${clientVersion}");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
+				position = "1",
+				searchInformation = "${engineVendor}",
+				value1 = "${engineVendor}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-			position = "3",
-			searchInformation = "${serverVersion}",
-			value1 = "${serverVersion}");
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
+				position = "2",
+				searchInformation = "${clientVersion}",
+				value1 = "${clientVersion}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
+				position = "3",
+				searchInformation = "${serverVersion}",
+				value1 = "${serverVersion}");
+		}
 	}
 
 	macro executeSearchActions {

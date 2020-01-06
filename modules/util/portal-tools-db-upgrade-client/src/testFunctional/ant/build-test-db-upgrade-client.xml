@@ -383,9 +383,10 @@
 	<target name="check-upgrade-client-upgrade-core-only">
 		<rebuild-upgrade-database />
 
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config">autoUpgrade="false"</echo>
-
 		<get-database-upgrade-client-paths />
+
+		<echo append="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties">
+upgrade.database.auto.run=false</echo>
 
 		<parallel failonany="true">
 			<java
@@ -431,7 +432,9 @@
 			</sequential>
 		</parallel>
 
-		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config" />
+		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
+
+		<prepare-database-upgrade-configuration />
 
 		<clean-database-upgrade-client />
 	</target>

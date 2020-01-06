@@ -28,7 +28,20 @@ import javax.mail.internet.InternetAddress;
  */
 public class PowwowSubscriptionSender extends SubscriptionSender {
 
-	public String getEmailNotificationBody(Locale locale) {
+	public MailMessage getMailMessageForPreview(Locale locale)
+		throws Exception {
+
+		MailMessage mailMessage = new MailMessage(
+			new InternetAddress(), new InternetAddress(),
+			_getEmailNotificationSubject(locale),
+			_getEmailNotificationBody(locale), true);
+
+		processMailMessage(mailMessage, locale);
+
+		return mailMessage;
+	}
+
+	private String _getEmailNotificationBody(Locale locale) {
 		String processedBody = null;
 
 		if (localizedBodyMap != null) {
@@ -50,7 +63,7 @@ public class PowwowSubscriptionSender extends SubscriptionSender {
 		return processedBody;
 	}
 
-	public String getEmailNotificationSubject(Locale locale) {
+	private String _getEmailNotificationSubject(Locale locale) {
 		String processedSubject = null;
 
 		if (localizedSubjectMap != null) {
@@ -70,19 +83,6 @@ public class PowwowSubscriptionSender extends SubscriptionSender {
 		}
 
 		return processedSubject;
-	}
-
-	public MailMessage getMailMessageForPreview(Locale locale)
-		throws Exception {
-
-		MailMessage mailMessage = new MailMessage(
-			new InternetAddress(), new InternetAddress(),
-			getEmailNotificationSubject(locale),
-			getEmailNotificationBody(locale), true);
-
-		processMailMessage(mailMessage, locale);
-
-		return mailMessage;
 	}
 
 }

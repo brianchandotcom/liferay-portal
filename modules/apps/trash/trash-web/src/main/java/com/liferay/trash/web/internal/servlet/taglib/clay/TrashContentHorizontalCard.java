@@ -42,15 +42,16 @@ public class TrashContentHorizontalCard implements HorizontalCard {
 
 	public TrashContentHorizontalCard(
 		TrashedModel trashedModel, TrashRenderer trashRenderer,
-		RenderRequest renderRequest,
-		LiferayPortletResponse liferayPortletResponse, String viewContentURL) {
+		LiferayPortletResponse liferayPortletResponse,
+		RenderRequest renderRequest, String viewContentURL) {
 
 		_trashedModel = trashedModel;
 		_trashRenderer = trashRenderer;
-		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			renderRequest);
 		_liferayPortletResponse = liferayPortletResponse;
 		_viewContentURL = viewContentURL;
+
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			renderRequest);
 	}
 
 	@Override

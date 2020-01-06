@@ -103,12 +103,12 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 									<c:choose>
 										<c:when test="<%= !curTrashHandler.isContainerModel() %>">
 											<clay:vertical-card
-												verticalCard="<%= new TrashContentVerticalCard(curTrashedModel, curTrashRenderer, renderRequest, liferayPortletResponse, rowURL.toString()) %>"
+												verticalCard="<%= new TrashContentVerticalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
 											/>
 										</c:when>
 										<c:otherwise>
 											<clay:horizontal-card
-												horizontalCard="<%= new TrashContentHorizontalCard(curTrashedModel, curTrashRenderer, renderRequest, liferayPortletResponse, rowURL.toString()) %>"
+												horizontalCard="<%= new TrashContentHorizontalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
 											/>
 										</c:otherwise>
 									</c:choose>

@@ -76,6 +76,20 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 	}
 
 	@Test
+	public void testShouldAddUser() throws Exception {
+
+		// LPS-105583
+
+		User user1 = UserTestUtil.addUser("abc-");
+
+		_users.add(user1);
+
+		User user2 = UserTestUtil.addUser("abc");
+
+		_users.add(user2);
+	}
+
+	@Test
 	public void testShouldNormalizeTheFriendlyURL() throws Exception {
 		User user1 = UserTestUtil.addUser("contains-hyphens");
 

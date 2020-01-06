@@ -122,6 +122,12 @@ public class EditSyncedContactsMVCActionCommand
 
 		StatusLine statusLine = httpResponse.getStatusLine();
 
+		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
+			disconnectDataSource(themeDisplay.getCompanyId(), httpResponse);
+
+			return;
+		}
+
 		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
 			throw new PortalException("Invalid token");
 		}

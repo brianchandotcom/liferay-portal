@@ -1224,6 +1224,40 @@ definition {
 		AppBuilderAdmin.deleteEntry(itemName = "Text Field - Table View Title");
 	}
 
+	@description = "Delete a publishing"
+	@priority = "5"
+	test DeletePublishing {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text Field",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App",
+			deployOption = "Product Menu",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App 2",
+			deployOption = "Product Menu",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App");
+
+		AppBuilderAdmin.deleteApp(itemName = "Test App 2");
+
+		AppBuilderAdmin.deleteApp(itemName = "Test App");
+	}
+
 	@description = "Choose between the existing Form Views of an object when deploying an app"
 	@priority = "5"
 	test DeployAnAppChoosingBetweenTheExistingFormViews {

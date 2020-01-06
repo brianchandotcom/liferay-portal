@@ -74,7 +74,7 @@ definition {
 
 		var key_imageName = "Document_1.png";
 
-		AssertNotVisible(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		AssertElementNotPresent(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
 		Button.click(button = "Save");
 
@@ -89,7 +89,7 @@ definition {
 
 		var key_imageName = "Document_1.png";
 
-		AssertNotVisible(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
+		AssertElementNotPresent(locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 	}
 
 	@description = "This ensures that the OG preview is inherited from the SEO."

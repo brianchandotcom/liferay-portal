@@ -208,7 +208,7 @@ definition {
 
 		Button.click(button = "Save");
 
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
@@ -220,7 +220,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 

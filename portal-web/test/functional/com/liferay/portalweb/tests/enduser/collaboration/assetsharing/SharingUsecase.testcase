@@ -261,10 +261,6 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
 		var key_contentTitle = "Document_1.jpeg";
 
 		AssertTextEquals(
@@ -291,10 +287,6 @@ definition {
 			value1 = "Blogs");
 
 		SelectFrame(value1 = "relative=top");
-
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
 
 		var key_contentTitle = "Blogs Entry Title";
 

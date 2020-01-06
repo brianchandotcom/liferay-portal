@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 
 import java.util.Dictionary;
 import java.util.ResourceBundle;
@@ -52,8 +51,6 @@ public class ElasticsearchConnectionConfigurationModelListener
 			_validateUniqueConnectionId(pid, connectionId);
 
 			_validateNetworkHostAddresses(properties);
-
-			_removeOriginalConnectionId(pid, connectionId);
 		}
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
@@ -66,39 +63,10 @@ public class ElasticsearchConnectionConfigurationModelListener
 	@Reference
 	protected ConfigurationAdmin configurationAdmin;
 
-	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
-
 	private ResourceBundle _getResourceBundle() {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
 			getClass());
-	}
-
-	private void _removeOriginalConnectionId(String pid, String connectionId)
-		throws Exception {
-
-		String filterString = String.format("(service.pid=%s)", pid);
-
-		Configuration[] configurations = configurationAdmin.listConfigurations(
-			filterString);
-
-		if (configurations == null) {
-			return;
-		}
-
-		Configuration configuration = configurations[0];
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		String originalConnectionId = (String)properties.get("connectionId");
-
-		if (connectionId.equals(originalConnectionId)) {
-			return;
-		}
-
-		elasticsearchConnectionManager.removeElasticsearchConnection(
-			originalConnectionId);
 	}
 
 	private void _validateNetworkHostAddresses(

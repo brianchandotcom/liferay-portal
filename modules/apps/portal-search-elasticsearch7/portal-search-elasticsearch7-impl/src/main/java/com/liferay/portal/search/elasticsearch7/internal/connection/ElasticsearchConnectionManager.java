@@ -119,17 +119,6 @@ public class ElasticsearchConnectionManager
 		_companyIds.put(companyId, companyId);
 	}
 
-	public void removeElasticsearchConnection(String connectionId) {
-		ElasticsearchConnection elasticsearchConnection =
-			_elasticsearchConnections.get(connectionId);
-
-		if (elasticsearchConnection != null) {
-			elasticsearchConnection.close();
-
-			_elasticsearchConnections.remove(connectionId);
-		}
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
 		target = "(operation.mode=EMBEDDED)",

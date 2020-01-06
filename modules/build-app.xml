@@ -988,6 +988,10 @@
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
 
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="restart-required=${Liferay-Releng-Restart-Required}" />
+
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="title=${title}" />
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />

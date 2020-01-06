@@ -18,6 +18,9 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -32,6 +35,8 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.nio.charset.Charset;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Set;
@@ -39,6 +44,10 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.MutableRenderParameters;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,6 +65,28 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
 			throw new PrincipalException();
+		}
+	}
+
+	protected void disconnectDataSource(
+			long companyId, HttpResponse httpResponse)
+		throws Exception {
+
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			EntityUtils.toString(httpEntity, Charset.defaultCharset()));
+
+		String message = responseJSONObject.getString("message");
+
+		if (message.equals("INVALID_TOKEN")) {
+			removeCompanyPreferences(companyId);
+			removeConfigurationProperties(
+				companyId,
+				getConfigurationProperties(getConfigurationPid(), companyId));
+		}
+		else {
+			throw new PortalException("Invalid token");
 		}
 	}
 

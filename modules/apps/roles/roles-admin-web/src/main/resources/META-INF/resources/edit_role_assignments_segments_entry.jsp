@@ -39,6 +39,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_ro
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand-smallest table-cell-minw-150"
 			name="active"
+			translate="<%= true %>"
 			value='<%= segmentsEntry.getActive() ? "yes" : "no" %>'
 		/>
 

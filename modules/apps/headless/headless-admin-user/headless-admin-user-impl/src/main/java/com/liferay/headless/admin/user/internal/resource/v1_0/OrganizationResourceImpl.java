@@ -211,7 +211,9 @@ public class OrganizationResourceImpl
 			Location::getAddressCountry
 		).map(
 			this::_toCountryId
-		).get();
+		).orElse(
+			0L
+		);
 	}
 
 	private long _getDefaultParentOrganizationId(Organization organization) {

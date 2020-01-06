@@ -20,4 +20,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&amp;_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=master-layouts");
 	}
 
+	macro viewMastersPresent {
+		LexiconCard.viewCardPresent(card = "${masterLayoutName}");
+	}
+
 }

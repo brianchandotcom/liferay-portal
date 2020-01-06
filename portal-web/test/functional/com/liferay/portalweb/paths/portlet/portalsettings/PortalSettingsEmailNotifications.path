@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_LINK_FIELD</td>
-	<td>//iframe[contains(@title,'adminEmailUserAddedResetPasswordBody')]</td>
+	<td>//div[contains(@id,'adminEmailUserAddedResetPasswordBody')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD</td>
-	<td>//iframe[contains(@title,'adminEmailUserAddedNoPasswordBody')]</td>
+	<td>//div[contains(@id,'adminEmailUserAddedNoPasswordBody')]</td>
 	<td></td>
 </tr>
 <tr>

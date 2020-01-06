@@ -1,12 +1,12 @@
 # Liferay Gradle Plugins Alloy Taglib Change Log
 
-## 1.0.1 - 2015-09-08
+## 1.0.1 - 2015-11-08
 
 ### Dependencies
 - [LPS-60272]: Update the com.liferay.gradle.util dependency to version 1.0.23.
 - [LPS-58467]: Update the com.liferay.gradle.util dependency to version 1.0.19.
 
-## 1.0.3 - 2016-02-08
+## 1.0.3 - 2016-06-16
 
 ### Commits
 - [LPS-63943]: This is done automatically now (f1e42382d9)
@@ -16,7 +16,7 @@
 - [LPS-65749]: Update the com.liferay.gradle.util dependency to version 1.0.26.
 - [LPS-65086]: Update the com.liferay.gradle.util dependency to version 1.0.25.
 
-## 1.0.4 - 2016-08-22
+## 1.0.4 - 2017-04-18
 
 ### Commits
 - [LPS-67658]: Need "compileOnly" to keep dependencies out of "compile"
@@ -28,7 +28,7 @@
 ### Description
 - [LPS-67573]: Make most methods private in order to reduce API surface.
 
-## 2.0.1 - 2017-04-25
+## 2.0.1 - 2018-11-16
 
 ### Commits
 - [LPS-87192]: Set the Eclipse task property gradleVersion (040b2abdee)

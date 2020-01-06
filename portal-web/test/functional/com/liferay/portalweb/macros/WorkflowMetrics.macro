@@ -32,6 +32,16 @@ definition {
 			value1 = "${velocityValueTotal}");
 	}
 
+	macro assertChartTotalValuePerformanceByStep {
+		var key_SLABreachedValue = "${slaBreachedValue}";
+		var key_rowName = "${rowName}";
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_SLA_BREACHED_VALUE",
+			rowName = "${key_rowName}",
+			value1 = "${key_SLABreachedValue}");
+	}
+
 	macro assertDefaultChartRangesAndUnits {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
@@ -127,6 +137,7 @@ definition {
 
 	macro fillSLAForm {
 		var key_slaDefinitionDays = "${slaDefinitionDays}";
+		var key_slaDefinitionHours = "${slaDefinitionHours}";
 		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
 		var key_slaDefinitionEnd = "${slaDefinitionEnd}";
 		var key_slaDefinitionName = "${slaDefinitionName}";
@@ -155,6 +166,10 @@ definition {
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
 			value1 = "${key_slaDefinitionDays}");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_HOURS",
+			value1 = "${key_slaDefinitionHours}");
 	}
 
 	macro goToCreatedSLAForm {
@@ -212,6 +227,26 @@ definition {
 		var key_startDateRange = "${startDateRange}";
 
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+
+		Type(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_FROM",
+			value1 = "${startDateRange}");
+
+		Type(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_TO",
+			value1 = "${endDateRange}");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
+	}
+
+	macro selectDateRangePerformanceByStep {
+		var key_completionVelocityDateRange = "${selectVelocityDateRange}";
+		var key_endDateRange = "${endDateRange}";
+		var key_startDateRange = "${startDateRange}";
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_RANGE_DROPDOWN");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
 
@@ -483,6 +518,45 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_TASKCOUNT");
+	}
+
+	macro waitForCompletedSLAtoBecomeOverdue {
+		var count = "0";
+
+		while (IsElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE_NONE") && ("${count}" != "${timesToRun}")) {
+
+			echo("Waiting 5 seconds, until the Completed SLA shows up as overdue");
+
+			Pause(locator1 = "5000");
+
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+			Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+			count = MathUtil.sum("${count}", "1");
+		}
+
+		if ("${count}" == "${timesToRun}") {
+			echo("timeout exceeded");
+		}
+	}
+
+	macro waitForSLAtoBecomeOverdue {
+		var count = "0";
+
+		while (IsElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE_NONE") && ("${count}" != "${timesToRun}")) {
+
+			echo("Waiting 5 seconds, until the SLA becomes overdue");
+
+			Pause(locator1 = "5000");
+
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		}
+
+		if ("${count}" == "${timesToRun}") {
+			echo("timeout exceeded");
+		}
 	}
 
 }

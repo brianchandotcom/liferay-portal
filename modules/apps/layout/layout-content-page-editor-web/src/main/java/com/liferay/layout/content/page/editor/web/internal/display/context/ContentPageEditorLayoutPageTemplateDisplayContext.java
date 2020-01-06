@@ -98,7 +98,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			String statusLabel = WorkflowConstants.getStatusLabel(
 				layoutPageTemplateEntry.getStatus());
 
-			soyContext.put("status", LanguageUtil.get(request, statusLabel));
+			soyContext.put(
+				"status", LanguageUtil.get(httpServletRequest, statusLabel));
 		}
 
 		_editorSoyContext = soyContext;

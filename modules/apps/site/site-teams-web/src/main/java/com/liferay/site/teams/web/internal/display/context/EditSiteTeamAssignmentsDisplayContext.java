@@ -41,7 +41,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
-		request = httpServletRequest;
+		this.httpServletRequest = httpServletRequest;
 	}
 
 	public PortletURL getEditTeamAssignmentsURL() {
@@ -64,7 +64,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 						navigationItem.setHref(
 							getEditTeamAssignmentsURL(), "tabs1", "users");
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "users"));
+							LanguageUtil.get(httpServletRequest, "users"));
 					});
 
 				add(
@@ -75,7 +75,8 @@ public class EditSiteTeamAssignmentsDisplayContext {
 							getEditTeamAssignmentsURL(), "tabs1",
 							"user-groups");
 						navigationItem.setLabel(
-							LanguageUtil.get(request, "user-groups"));
+							LanguageUtil.get(
+								httpServletRequest, "user-groups"));
 					});
 			}
 		};
@@ -86,7 +87,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(request, "tabs1", "users");
+		_tabs1 = ParamUtil.getString(httpServletRequest, "tabs1", "users");
 
 		return _tabs1;
 	}
@@ -106,7 +107,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 			return _teamId;
 		}
 
-		_teamId = ParamUtil.getLong(request, "teamId");
+		_teamId = ParamUtil.getLong(httpServletRequest, "teamId");
 
 		return _teamId;
 	}
@@ -123,9 +124,9 @@ public class EditSiteTeamAssignmentsDisplayContext {
 		return _teamName;
 	}
 
+	protected final HttpServletRequest httpServletRequest;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
-	protected final HttpServletRequest request;
 
 	private String _tabs1;
 	private Team _team;

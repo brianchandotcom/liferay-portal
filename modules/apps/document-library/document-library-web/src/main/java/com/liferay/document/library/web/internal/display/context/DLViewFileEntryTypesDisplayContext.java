@@ -44,7 +44,7 @@ public class DLViewFileEntryTypesDisplayContext {
 
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
-		request = httpServletRequest;
+		this.httpServletRequest = httpServletRequest;
 	}
 
 	public String getClearResultsURL() {
@@ -52,8 +52,9 @@ public class DLViewFileEntryTypesDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (DLPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -67,7 +68,7 @@ public class DLViewFileEntryTypesDisplayContext {
 				"mvcRenderCommandName",
 				"/document_library/edit_file_entry_type");
 			creationURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(request));
+				"redirect", PortalUtil.getCurrentURL(httpServletRequest));
 
 			creationMenu.addPrimaryDropdownItem(
 				dropdownItem -> dropdownItem.setHref(creationURL.toString()));
@@ -87,14 +88,16 @@ public class DLViewFileEntryTypesDisplayContext {
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer searchContainer = new SearchContainer(
-			renderRequest, new DisplayTerms(request), new DisplayTerms(request),
+			renderRequest, new DisplayTerms(httpServletRequest),
+			new DisplayTerms(httpServletRequest),
 			SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
 			getPortletURL(), null,
-			LanguageUtil.get(request, "there-are-no-results"));
+			LanguageUtil.get(httpServletRequest, "there-are-no-results"));
 
 		DisplayTerms searchTerms = searchContainer.getSearchTerms();
 
@@ -137,9 +140,9 @@ public class DLViewFileEntryTypesDisplayContext {
 		return portletURL;
 	}
 
+	protected final HttpServletRequest httpServletRequest;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
-	protected final HttpServletRequest request;
 	protected SearchContainer searchContainer;
 
 }

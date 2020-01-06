@@ -44,7 +44,7 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		request = httpServletRequest;
+		this.httpServletRequest = httpServletRequest;
 		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
 		this.portletURL = portletURL;
@@ -56,7 +56,8 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+		_displayStyle = ParamUtil.getString(
+			httpServletRequest, "displayStyle", "icon");
 
 		return _displayStyle;
 	}
@@ -68,8 +69,9 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 
 	@Override
 	public String getGroupName(Group group) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return group.getDescriptiveName(themeDisplay.getLocale());
 	}
@@ -81,13 +83,13 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 
 	@Override
 	public PortletRequest getPortletRequest() {
-		return (PortletRequest)request.getAttribute(
+		return (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
 	@Override
 	public PortletResponse getPortletResponse() {
-		return (PortletResponse)request.getAttribute(
+		return (PortletResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 	}
 
@@ -113,8 +115,8 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 		return false;
 	}
 
+	protected final HttpServletRequest httpServletRequest;
 	protected final PortletURL portletURL;
-	protected final HttpServletRequest request;
 
 	private String _displayStyle;
 	private final GroupItemSelectorCriterion _groupItemSelectorCriterion;

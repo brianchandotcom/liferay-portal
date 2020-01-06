@@ -51,8 +51,9 @@ public class LayoutScopesItemSelectorViewDisplayContext
 
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long groupId = getGroupId();
 
@@ -115,7 +116,8 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			return _privateLayout;
 		}
 
-		_privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+		_privateLayout = ParamUtil.getBoolean(
+			httpServletRequest, "privateLayout");
 
 		return _privateLayout;
 	}

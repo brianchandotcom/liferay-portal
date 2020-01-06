@@ -40,10 +40,11 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
 
-		request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			request);
+			httpServletRequest);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -53,14 +54,14 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		workflowInstanceRequestHelper = new WorkflowInstanceRequestHelper(
-			request);
+			httpServletRequest);
 	}
 
 	protected final Format dateFormatDateTime;
+	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
-	protected final HttpServletRequest request;
 	protected final WorkflowInstanceRequestHelper workflowInstanceRequestHelper;
 
 }

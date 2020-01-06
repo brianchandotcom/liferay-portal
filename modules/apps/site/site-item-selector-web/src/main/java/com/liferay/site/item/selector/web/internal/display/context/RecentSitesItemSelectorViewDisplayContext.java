@@ -61,7 +61,7 @@ public class RecentSitesItemSelectorViewDisplayContext
 			sb.append(groupName);
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(LanguageUtil.get(request, "staging"));
+			sb.append(LanguageUtil.get(httpServletRequest, "staging"));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			groupName = sb.toString();
@@ -78,7 +78,8 @@ public class RecentSitesItemSelectorViewDisplayContext
 		groupSearch.setEmptyResultsMessage(
 			"you-have-not-visited-any-sites-recently");
 
-		List<Group> results = _recentGroupManager.getRecentGroups(request);
+		List<Group> results = _recentGroupManager.getRecentGroups(
+			httpServletRequest);
 
 		groupSearch.setTotal(results.size());
 

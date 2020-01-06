@@ -226,7 +226,8 @@ public class WorkflowInstanceViewDisplayContext
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(request, "navigation", "all");
+		_navigation = ParamUtil.getString(
+			httpServletRequest, "navigation", "all");
 
 		return _navigation;
 	}
@@ -236,7 +237,7 @@ public class WorkflowInstanceViewDisplayContext
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(request, "orderByCol");
+		_orderByCol = ParamUtil.getString(httpServletRequest, "orderByCol");
 
 		if (Validator.isNull(_orderByCol)) {
 			_orderByCol = portalPreferences.getValue(
@@ -244,7 +245,8 @@ public class WorkflowInstanceViewDisplayContext
 				"last-activity-date");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
@@ -261,7 +263,7 @@ public class WorkflowInstanceViewDisplayContext
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(request, "orderByType");
+		_orderByType = ParamUtil.getString(httpServletRequest, "orderByType");
 
 		if (Validator.isNull(_orderByType)) {
 			_orderByType = portalPreferences.getValue(
@@ -269,7 +271,8 @@ public class WorkflowInstanceViewDisplayContext
 				"asc");
 		}
 		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
+			boolean saveOrderBy = ParamUtil.getBoolean(
+				httpServletRequest, "saveOrderBy");
 
 			if (saveOrderBy) {
 				portalPreferences.setValue(
@@ -546,7 +549,8 @@ public class WorkflowInstanceViewDisplayContext
 			dropdownItem.setHref(
 				getViewPortletURL(), "navigation", navigation, "mvcPath",
 				"/view.jsp");
-			dropdownItem.setLabel(LanguageUtil.get(request, navigation));
+			dropdownItem.setLabel(
+				LanguageUtil.get(httpServletRequest, navigation));
 		};
 	}
 
@@ -556,7 +560,8 @@ public class WorkflowInstanceViewDisplayContext
 		return dropdownItem -> {
 			dropdownItem.setActive(Objects.equals(getOrderByCol(), orderByCol));
 			dropdownItem.setHref(getViewPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(LanguageUtil.get(request, orderByCol));
+			dropdownItem.setLabel(
+				LanguageUtil.get(httpServletRequest, orderByCol));
 		};
 	}
 

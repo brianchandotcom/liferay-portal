@@ -46,7 +46,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		request = httpServletRequest;
+		this.httpServletRequest = httpServletRequest;
 		_assetPublisherHelper = assetPublisherHelper;
 		_groupItemSelectorCriterion = groupItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -59,7 +59,8 @@ public abstract class BaseItemSelectorViewDisplayContext
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+		_displayStyle = ParamUtil.getString(
+			httpServletRequest, "displayStyle", "icon");
 
 		return _displayStyle;
 	}
@@ -69,7 +70,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 			return _groupId;
 		}
 
-		_groupId = ParamUtil.getLong(request, "groupId");
+		_groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 		return _groupId;
 	}
@@ -86,13 +87,13 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	@Override
 	public PortletRequest getPortletRequest() {
-		return (PortletRequest)request.getAttribute(
+		return (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
 	@Override
 	public PortletResponse getPortletResponse() {
-		return (PortletResponse)request.getAttribute(
+		return (PortletResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 	}
 
@@ -102,11 +103,12 @@ public abstract class BaseItemSelectorViewDisplayContext
 			this.portletURL,
 			PortalUtil.getLiferayPortletResponse(getPortletResponse()));
 
-		long plid = ParamUtil.getLong(request, "plid");
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			httpServletRequest, "privateLayout");
 		String portletResource = ParamUtil.getString(
-			request, "portletResource");
+			httpServletRequest, "portletResource");
 
 		portletURL.setParameter("plid", String.valueOf(plid));
 		portletURL.setParameter("groupId", String.valueOf(groupId));
@@ -118,13 +120,14 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	@Override
 	public long[] getSelectedGroupIds() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String portletResource = ParamUtil.getString(
-			request, "portletResource");
+			httpServletRequest, "portletResource");
 
-		long plid = ParamUtil.getLong(request, "plid");
+		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
@@ -145,8 +148,8 @@ public abstract class BaseItemSelectorViewDisplayContext
 		return true;
 	}
 
+	protected final HttpServletRequest httpServletRequest;
 	protected final PortletURL portletURL;
-	protected final HttpServletRequest request;
 
 	private final AssetPublisherHelper _assetPublisherHelper;
 	private String _displayStyle;

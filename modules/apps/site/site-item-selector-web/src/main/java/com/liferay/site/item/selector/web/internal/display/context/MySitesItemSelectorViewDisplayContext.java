@@ -81,10 +81,11 @@ public class MySitesItemSelectorViewDisplayContext
 			PortletURL portletURL = getPortletURL();
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, LanguageUtil.get(request, "all"),
+				httpServletRequest, LanguageUtil.get(httpServletRequest, "all"),
 				portletURL.toString());
 
-			SitesUtil.addPortletBreadcrumbEntries(group, request, portletURL);
+			SitesUtil.addPortletBreadcrumbEntries(
+				group, httpServletRequest, portletURL);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -95,7 +96,8 @@ public class MySitesItemSelectorViewDisplayContext
 
 	protected Group getGroup() {
 		long groupId = ParamUtil.getLong(
-			request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			httpServletRequest, "groupId",
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		if (groupId > 0) {
 			return GroupLocalServiceUtil.fetchGroup(groupId);

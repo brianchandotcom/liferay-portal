@@ -123,7 +123,7 @@ public class ContentPageLayoutEditorDisplayContext
 	@Override
 	public boolean isSingleSegmentsExperienceMode() {
 		long segmentsExperienceId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(request),
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
 			"segmentsExperienceId", -1);
 
 		if (segmentsExperienceId == -1) {
@@ -142,7 +142,7 @@ public class ContentPageLayoutEditorDisplayContext
 		_segmentsExperienceId = SegmentsExperienceConstants.ID_DEFAULT;
 
 		long selectedSegmentsExperienceId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(request),
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
 			"segmentsExperienceId", -1);
 
 		if ((selectedSegmentsExperienceId != -1) &&
@@ -295,7 +295,7 @@ public class ContentPageLayoutEditorDisplayContext
 		}
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			request, SegmentsEntry.class.getName(),
+			httpServletRequest, SegmentsEntry.class.getName(),
 			PortletProvider.Action.EDIT);
 
 		if (portletURL == null) {
@@ -358,7 +358,8 @@ public class ContentPageLayoutEditorDisplayContext
 		}
 
 		_segmentsEntryId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(request), "segmentsEntryId");
+			PortalUtil.getOriginalServletRequest(httpServletRequest),
+			"segmentsEntryId");
 
 		return _segmentsEntryId;
 	}

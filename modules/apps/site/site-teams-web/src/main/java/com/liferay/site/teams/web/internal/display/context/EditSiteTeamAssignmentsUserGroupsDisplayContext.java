@@ -56,7 +56,8 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			httpServletRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -91,7 +92,7 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(request, "keywords");
+		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -101,7 +102,8 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+		_orderByCol = ParamUtil.getString(
+			httpServletRequest, "orderByCol", "name");
 
 		return _orderByCol;
 	}
@@ -111,7 +113,8 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			httpServletRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -121,8 +124,9 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			return _userGroupSearchContainer;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SearchContainer userGroupSearchContainer = new UserGroupSearch(
 			renderRequest, getEditTeamAssignmentsURL());

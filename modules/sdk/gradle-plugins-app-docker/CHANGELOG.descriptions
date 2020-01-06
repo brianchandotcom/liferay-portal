@@ -8,4 +8,5 @@
 
 1.0.3:description
 
-- [LPS-75327]: Automatically convert `.sh` files to Unix-style line endings when building the app's Docker image.
+- [LPS-75327]: Automatically convert `.sh` files to Unix-style line endings when
+building the app's Docker image.

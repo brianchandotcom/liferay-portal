@@ -127,8 +127,6 @@ definition {
 
 		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
 
-		IFrame.selectModalFrame();
-
 		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title");
 
 		Button.clickPublish();

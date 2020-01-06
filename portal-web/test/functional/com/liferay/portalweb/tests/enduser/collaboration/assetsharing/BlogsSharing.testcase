@@ -211,8 +211,6 @@ definition {
 
 		NotificationsPortlet.configureNotificationPG(menuItem = "Edit");
 
-		IFrame.selectModalFrame();
-
 		BlogsEntry.editEntryContent(
 			entryContent = "Blogs Entry Content",
 			entryContentEdit = "Blogs Entry Content Edit",

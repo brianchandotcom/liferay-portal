@@ -290,7 +290,7 @@ public class DDMFormEvaluatorHelper {
 
 		Set<Map.Entry<K, V>> set = map.entrySet();
 
-		Stream<Map.Entry<K, V>> stream = set.parallelStream();
+		Stream<Map.Entry<K, V>> stream = set.stream();
 
 		stream.forEach(entryConsumer);
 	}

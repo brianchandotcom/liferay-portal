@@ -16,7 +16,6 @@ package com.liferay.taglib.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -34,7 +33,6 @@ import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.security.DoAsURLTag;
 import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.taglib.servlet.PageContextWrapper;
-import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
@@ -425,15 +423,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		languageTag.setName(name);
 
 		languageTag.runTag();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void layoutIcon(Layout layout) throws Exception {
-		LayoutIconTag.doTag(layout, _pageContext);
 	}
 
 	@Override

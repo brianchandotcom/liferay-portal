@@ -215,9 +215,7 @@ class Sidebar extends Component {
 
 	refreshDragAndDrop() {
 		this._dragAndDrop.setState({
-			targets: Liferay.Browser.isIe()
-				? this._dragAndDrop.setterTargetsFn_('.ddm-target')
-				: '.ddm-target'
+			targets: '.ddm-target'
 		});
 	}
 

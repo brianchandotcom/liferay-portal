@@ -173,7 +173,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		KeyStoreCredentialResolver keyStoreCredentialResolver =
 			new KeyStoreCredentialResolver();
 
-		keyStoreCredentialResolver.setKeyStoreManager(keyStoreManager);
+		keyStoreCredentialResolver.setKeyStoreManager(
+			fileSystemKeyStoreManagerImpl);
 
 		SamlProviderConfigurationHelper peerSamlProviderConfigurationHelper =
 			Mockito.mock(SamlProviderConfigurationHelper.class);
@@ -484,7 +485,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected void setupMetadata() throws Exception {
 		metadataManagerImpl = new MetadataManagerImpl();
 
-		keyStoreManager = new FileSystemKeyStoreManagerImpl();
+		fileSystemKeyStoreManagerImpl = new FileSystemKeyStoreManagerImpl();
 
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
 			"saml.keystore.path",
@@ -493,12 +494,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		).build();
 
 		ReflectionTestUtil.invoke(
-			keyStoreManager, "activate", new Class<?>[] {Map.class},
-			properties);
+			fileSystemKeyStoreManagerImpl, "activate",
+			new Class<?>[] {Map.class}, properties);
 
 		credentialResolver = new KeyStoreCredentialResolver();
 
-		credentialResolver.setKeyStoreManager(keyStoreManager);
+		credentialResolver.setKeyStoreManager(fileSystemKeyStoreManagerImpl);
 
 		credentialResolver.setSamlProviderConfigurationHelper(
 			samlProviderConfigurationHelper);
@@ -675,12 +676,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected static final String UNKNOWN_ENTITY_ID = "testunknown";
 
 	protected KeyStoreCredentialResolver credentialResolver;
+	protected FileSystemKeyStoreManagerImpl fileSystemKeyStoreManagerImpl;
 	protected GroupLocalService groupLocalService;
 	protected HttpClient httpClient;
 	protected IdentifierGenerationStrategyFactory
 		identifierGenerationStrategyFactory;
 	protected List<String> identifiers = new ArrayList<>();
-	protected FileSystemKeyStoreManagerImpl keyStoreManager;
 	protected LocalEntityManager localEntityManager;
 	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;

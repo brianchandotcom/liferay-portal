@@ -19,6 +19,10 @@ definition {
 			AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
 		}
 
+		while (("${allLinksChecked}" == "no") && (maxIterations = "200")) {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
 		while ((!("${videoGenerationTimeCounter}" == "${videoGenerationTimeMaxWaitTime}")) && (IsElementPresent(locator1 = "Message#INFO"))) {
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}

@@ -112,6 +112,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 			while (rs.next()) {
 				long calendarResourceId = rs.getLong(1);
+
 				long companyId = rs.getLong(2);
 
 				Role guestRole = _roleLocalService.getRole(

@@ -452,12 +452,6 @@ public class LayoutCTTest {
 			Assert.assertEquals(
 				CTConstants.CT_CHANGE_TYPE_DELETION, rs.getLong("changeType"));
 
-			Assert.assertTrue(rs.next());
-
-			Assert.assertEquals(
-				CTConstants.CT_CHANGE_TYPE_MODIFICATION,
-				rs.getLong("changeType"));
-
 			Assert.assertFalse(rs.next());
 		}
 

@@ -249,10 +249,6 @@ public class CTServicePublisher<T extends CTModel<T>> {
 							rowCount));
 				}
 			}
-
-			_updateModelMvccVersion(
-				connection, tableName, primaryKeyName, _modificationCTEntries,
-				_sourceCTCollectionId);
 		}
 
 		if (_additionCTEntries != null) {
@@ -281,6 +277,9 @@ public class CTServicePublisher<T extends CTModel<T>> {
 				if (name.equals("ctCollectionId")) {
 					sb.append(_targetCTCollectionId);
 					sb.append(" as ");
+				}
+				else if (name.equals("mvccVersion")) {
+					sb.append("(t1.mvccVersion + 1) ");
 				}
 				else if (ignoredColumnNames.contains(name)) {
 					sb.append("t2.");
@@ -321,6 +320,10 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 				preparedStatement.executeUpdate();
 			}
+
+			_updateModelMvccVersion(
+				connection, tableName, primaryKeyName, _modificationCTEntries,
+				_targetCTCollectionId);
 		}
 
 		if (_additionCTEntries != null) {
@@ -412,7 +415,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			Map<Serializable, CTEntry> ctEntries, long ctCollectionId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(2 * ctEntries.size() + 8);
 
 		sb.append("select ");
 		sb.append(primaryKeyName);
@@ -441,12 +444,10 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 				CTEntry ctEntry = ctEntries.get(pk);
 
-				if (mvccVersion != ctEntry.getModelMvccVersion()) {
-					ctEntry.setModifiedDate(ctEntry.getModifiedDate());
-					ctEntry.setModelMvccVersion(mvccVersion);
+				ctEntry.setModifiedDate(ctEntry.getModifiedDate());
+				ctEntry.setModelMvccVersion(mvccVersion);
 
-					_ctEntryLocalService.updateCTEntry(ctEntry);
-				}
+				_ctEntryLocalService.updateCTEntry(ctEntry);
 			}
 		}
 	}

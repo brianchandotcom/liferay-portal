@@ -33,11 +33,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:page-iterat
 String target = (String)request.getAttribute("liferay-ui:page-iterator:target");
 int total = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:total"));
 String type = (String)request.getAttribute("liferay-ui:page-iterator:type");
-String url = (String)request.getAttribute("liferay-ui:page-iterator:url");
-String urlAnchor = (String)request.getAttribute("liferay-ui:page-iterator:urlAnchor");
+String url = StringPool.BLANK;
+String urlAnchor = StringPool.BLANK;
 int pages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:pages"));
 
-if ((portletURL != null) && Validator.isNull(url) && Validator.isNull(urlAnchor)) {
+if (portletURL != null) {
 	String[] urlArray = PortalUtil.stripURLAnchor(portletURL.toString(), StringPool.POUND);
 
 	url = urlArray[0];

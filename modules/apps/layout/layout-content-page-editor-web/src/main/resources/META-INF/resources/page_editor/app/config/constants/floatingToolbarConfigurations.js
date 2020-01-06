@@ -15,6 +15,7 @@
 import {BackgroundColorConfigurationPanel} from '../../../app/components/BackgroundColorConfigurationPanel';
 import {FragmentConfigurationPanel} from '../../../app/components/FragmentConfigurationPanel';
 import {LayoutBackgroundImageConfigurationPanel} from '../../../app/components/LayoutBackgroundImageConfigurationPanel';
+import {MapConfigurationPanel} from '../../../app/components/MapConfigurationPanel';
 import {SpacingConfigurationPanel} from '../../../app/components/SpacingConfigurationPanel';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from './layoutDataFloatingToolbarButtons';
 
@@ -22,6 +23,7 @@ const {
 	backgroundColor,
 	fragmentConfiguration,
 	layoutBackgroundImage,
+	map,
 	spacing
 } = LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS;
 
@@ -29,5 +31,6 @@ export const FLOATING_TOOLBAR_CONFIGURATIONS = {
 	[backgroundColor.panelId]: BackgroundColorConfigurationPanel,
 	[fragmentConfiguration.panelId]: FragmentConfigurationPanel,
 	[layoutBackgroundImage.panelId]: LayoutBackgroundImageConfigurationPanel,
+	[map.panelId]: MapConfigurationPanel,
 	[spacing.panelId]: SpacingConfigurationPanel
 };

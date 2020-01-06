@@ -334,6 +334,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPEN_GRAPH_IMAGE_ALT_DESCRIPTION</td>
+	<td>//div[input[contains(@id,'openGraphImageAlt')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED</td>
 	<td>//input[contains(@id,'${key_text}') and contains(@class,'disabled')]</td>
 	<td></td>

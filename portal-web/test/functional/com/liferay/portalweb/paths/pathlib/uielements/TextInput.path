@@ -335,7 +335,7 @@
 </tr>
 <tr>
 	<td>OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED</td>
-	<td>//textarea[contains(@name,'${key_text}') and @disabled]</td>
+	<td>//input[contains(@id,'${key_text}') and contains(@class,'disabled')]</td>
 	<td></td>
 </tr>
 <tr>

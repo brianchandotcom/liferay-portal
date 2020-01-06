@@ -17,11 +17,23 @@ package com.liferay.analytics.message.sender.internal;
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyService;
 
+import java.nio.charset.Charset;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,11 +67,51 @@ public class AnalyticsMessageSenderClientImpl
 				analyticsConfiguration.
 					liferayAnalyticsFaroBackendSecuritySignature());
 
-			return closeableHttpClient.execute(httpPost);
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost);
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() != HttpStatus.SC_FORBIDDEN) {
+				return closeableHttpResponse;
+			}
+
+			HttpEntity httpEntity = closeableHttpResponse.getEntity();
+
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+				EntityUtils.toString(httpEntity, Charset.defaultCharset()));
+
+			String message = responseJSONObject.getString("message");
+
+			if (message.equals("INVALID_TOKEN")) {
+				_disconnectDataSource(companyId);
+			}
+
+			return closeableHttpResponse;
 		}
+	}
+
+	private void _disconnectDataSource(long companyId) throws PortalException {
+		_companyService.removePreferences(
+			companyId,
+			new String[] {
+				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
+				"liferayAnalyticsFaroBackendSecuritySignature",
+				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",
+				"liferayAnalyticsURL"
+			});
+
+		_configurationProvider.deleteCompanyConfiguration(
+			AnalyticsConfiguration.class, companyId);
 	}
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+
+	@Reference
+	private CompanyService _companyService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

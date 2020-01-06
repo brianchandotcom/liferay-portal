@@ -883,7 +883,10 @@ definition {
 
 			Portlet.expandTree();
 
-			Portlet.selectTreeNode(nodeName = "${pageName}");
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = "${pageName}",
+				locator1 = "Treeview#NODE",
+				value1 = "${pageName}");
 		}
 		else {
 			Navigator.gotoNavItem(navItem = "${pageType}");

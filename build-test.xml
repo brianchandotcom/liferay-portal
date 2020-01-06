@@ -2389,8 +2389,6 @@ tell application "Safari" to quit
 
 							<ant dir="portal-test" inheritAll="false" target="deploy" />
 
-							<ant dir="portal-test-integration" inheritAll="false" target="deploy" />
-
 							<ant dir="util-java" inheritAll="false" target="deploy" />
 
 							<ant dir="portal-impl" inheritAll="false" target="deploy" />
@@ -2398,7 +2396,6 @@ tell application "Safari" to quit
 							<ant dir="portal-impl" inheritAll="false" target="install-portal-snapshot" />
 							<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 							<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />
-							<ant dir="portal-test-integration" inheritAll="false" target="install-portal-snapshot" />
 							<ant dir="util-java" inheritAll="false" target="install-portal-snapshot" />
 
 							<gradle-execute dir="${project.dir}/modules/core" task="deploy">

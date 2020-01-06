@@ -1685,7 +1685,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<delete>
 								<fileset
 									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
+									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar"
 								/>
 							</delete>
 
@@ -1908,7 +1908,7 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000</echo>
 							<delete>
 								<fileset
 									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
+									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar"
 								/>
 							</delete>
 
@@ -2191,7 +2191,7 @@ log.sanitizer.enabled=false</echo>
 							<delete>
 								<fileset
 									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
+									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar"
 								/>
 							</delete>
 
@@ -2491,8 +2491,6 @@ log.sanitizer.enabled=false</echo>
 
 							<ant dir="portal-impl" inheritAll="false" target="compile" />
 
-							<ant dir="portal-test-integration" inheritAll="false" target="jar" />
-
 							<copy
 								file="${project.dir}/portal-test/portal-test.jar"
 								overwrite="true"
@@ -2503,18 +2501,6 @@ log.sanitizer.enabled=false</echo>
 								file="${project.dir}/portal-test/portal-test.jar"
 								overwrite="true"
 								tofile="${liferay.home}/osgi/test/com.liferay.portal.test.jar"
-							/>
-
-							<copy
-								file="${project.dir}/portal-test-integration/portal-test-integration.jar"
-								overwrite="true"
-								tofile="${liferay.home}/osgi/modules/com.liferay.portal.test.integration.jar"
-							/>
-
-							<copy
-								file="${project.dir}/portal-test-integration/portal-test-integration.jar"
-								overwrite="true"
-								tofile="${liferay.home}/osgi/test/com.liferay.portal.test.integration.jar"
 							/>
 
 							<gradle-execute dir="modules/apps/static/required-dependencies/required-dependencies" task="deployReqTestLibs" />
@@ -2530,7 +2516,6 @@ log.sanitizer.enabled=false</echo>
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.arquillian.extension.junit.bridge.connector.jar" artifact.name="com.liferay.arquillian.extension.junit.bridge.connector" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.portal.test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
-							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.portal.test.integration.jar" artifact.name="com.liferay.portal.test.integration" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />

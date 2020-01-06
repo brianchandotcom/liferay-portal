@@ -639,7 +639,6 @@ public class LibraryReferenceTest {
 	private static final Set<String> _ideExcludeJars = new HashSet<>();
 	private static final List<String> _intelliJFileNames = Arrays.asList(
 		"portal-impl/portal-impl.iml", "portal-kernel/portal-kernel.iml",
-		"portal-test-integration/portal-test-integration.iml",
 		"portal-test/portal-test.iml", "portal-web/portal-web.iml",
 		"util-bridges/util-bridges.iml", "util-java/util-java.iml",
 		"util-slf4j/util-slf4j.iml", "util-taglib/util-taglib.iml");

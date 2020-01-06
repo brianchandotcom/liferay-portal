@@ -763,7 +763,7 @@ prepareMajorIncrement {
 
 		File portalRootDir = projectDir.parentFile
 
-		String[] dirNames = ["portal-impl", "portal-kernel", "portal-test", "portal-test-integration", "portal-web", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"]
+		String[] dirNames = ["portal-impl", "portal-kernel", "portal-test", "portal-web", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"]
 
 		dirNames.each {
 			incrementMajorVersionClosure new File(portalRootDir, it)

@@ -328,7 +328,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTypeName} Title After Upgrade");

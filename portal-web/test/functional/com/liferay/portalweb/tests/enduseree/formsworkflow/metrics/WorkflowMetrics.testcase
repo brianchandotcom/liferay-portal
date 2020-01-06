@@ -55,6 +55,7 @@ definition {
 		property portal.acceptance = "true";
 
 		var key_testSLADefinitionDays = "1";
+		var key_testSLADefinitionHours = "0000";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -68,6 +69,7 @@ definition {
 			slaDefinitionDays = "${key_testSLADefinitionDays}",
 			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
 			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}",
 			slaDefinitionName = "${key_testSLADefinitionName}",
 			slaDefinitionStart = "${key_testSLADefinitionStart}");
 
@@ -370,6 +372,90 @@ definition {
 		WorkflowMetrics.assertChartTotalValue(
 			velocityUnitTotal = "inst / week",
 			velocityValueTotal = "0");
+	}
+
+	@description = "LRQA-53639 - Automate LPS-100675"
+	test VerifyFilterTopStepPerformance {
+		property portal.acceptance = "false";
+
+		var key_testSLADefinitionDays = "0";
+		var key_testSLADefinitionHours = "0001";
+		var key_testSLADefinitionHoursCheck = "00:01";
+		var key_testSLADefinitionDescription = "SLA Description";
+		var key_testSLADefinitionEnd = "Process Ends: Approved";
+		var key_testSLADefinitionName = "SLA Name";
+		var key_testSLADefinitionStart = "Process Begins";
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "${key_testSLADefinitionDays}",
+			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
+			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}",
+			slaDefinitionName = "${key_testSLADefinitionName}",
+			slaDefinitionStart = "${key_testSLADefinitionStart}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.waitForCompletedSLAtoBecomeOverdue(timesToRun = "12");
+
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			rowName = "Review",
+			slaBreachedValue = "1 (100%)");
+
+		WorkflowMetrics.selectDateRangePerformanceByStep(
+			completionVelocityDateRange = "Custom Range",
+			endDateRange = "11/11/2018",
+			startDateRange = "09/22/2018");
+
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			rowName = "Review",
+			slaBreachedValue = "0 (0%)");
 	}
 
 	@description = "LRQA-53634 - LPS-99441: [Performance] View performance for all assignees"

@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins Source Formatter Change Log
 
-## 1.0.2 - 2015-07-02
+## 1.0.2 - 2015-07-27
 
 ### Commits
 - [LPS-51801]: Use Gradle API to grab dependencies from the local Gradle
@@ -13,7 +13,7 @@ installation (48f775db44)
 - [LPS-51081]: Update the com.liferay.gradle.util dependency to version 1.0.12.
 - [LPS-51081]: Update the com.liferay.gradle.util dependency to version 1.0.11.
 
-## 1.0.3 - 2015-07-28
+## 1.0.3 - 2015-09-02
 
 ### Dependencies
 - [LPS-51081]: Update the com.liferay.gradle.util dependency to version 1.0.18.
@@ -27,7 +27,7 @@ installation (48f775db44)
 - [LPS-58330]: The portal tool dependencies are only used to embed single *Args
 classes, so they should be considered "provided" (da7c77ffbc)
 
-## 1.0.8 - 2015-09-08
+## 1.0.8 - 2015-11-16
 
 ### Dependencies
 - [LPS-58467]: Update the com.liferay.gradle.util dependency to version 1.0.19.
@@ -37,7 +37,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 ### Dependencies
 - [LPS-62412]: Update the com.liferay.gradle.util dependency to version 1.0.23.
 
-## 1.0.10 - 2016-02-08
+## 1.0.10 - 2016-05-16
 
 ### Commits
 - [LPS-63943]: This is done automatically now (f1e42382d9)
@@ -134,7 +134,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-62493]: Update the com.liferay.source.formatter dependency to version
 1.0.171.
 
-## 1.0.11 - 2016-05-17
+## 1.0.11 - 2016-06-14
 
 ### Dependencies
 - [LPS-66324]: Update the com.liferay.source.formatter dependency to version
@@ -181,7 +181,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-55111]: Automatically sync the README version before publishing
 (b232ea3d05)
 
-## 1.0.14 - 2016-06-28
+## 1.0.14 - 2016-07-05
 
 ### Dependencies
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
@@ -197,7 +197,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
 1.0.231.
 
-## 1.0.15 - 2016-07-06
+## 1.0.15 - 2016-07-07
 
 ### Dependencies
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
@@ -205,7 +205,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
 1.0.237.
 
-## 1.0.16 - 2016-07-08
+## 1.0.16 - 2016-07-11
 
 ### Dependencies
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
@@ -213,7 +213,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
 1.0.239.
 
-## 1.0.17 - 2016-07-13
+## 1.0.17 - 2016-07-20
 
 ### Dependencies
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
@@ -225,7 +225,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-67042]: Update the com.liferay.source.formatter dependency to version
 1.0.241.
 
-## 1.0.18 - 2016-07-22
+## 1.0.18 - 2016-07-27
 
 ### Dependencies
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
@@ -237,7 +237,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
 1.0.245.
 
-## 1.0.20 - 2016-08-01
+## 1.0.20 - 2016-08-16
 
 ### Commits
 - [LPS-67544]: Fix Gradle scripts (1a4df141fb)
@@ -264,7 +264,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-67352]: Update the com.liferay.source.formatter dependency to version
 1.0.249.
 
-## 1.0.21 - 2016-08-17
+## 1.0.21 - 2016-09-06
 
 ### Commits
 - [LPS-67658]: Need "compileOnly" to keep dependencies out of "compile"
@@ -301,7 +301,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-67352]: Update the com.liferay.source.formatter dependency to version
 1.0.259.
 
-## 1.0.22 - 2016-09-07
+## 1.0.22 - 2016-09-26
 
 ### Dependencies
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
@@ -357,7 +357,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-68504]: Update the com.liferay.source.formatter dependency to version
 1.0.290.
 
-## 1.0.27 - 2016-10-06
+## 1.0.27 - 2016-10-07
 
 ### Dependencies
 - [LPS-67352]: Update the com.liferay.source.formatter dependency to version
@@ -553,7 +553,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-66853]: Update the com.liferay.source.formatter dependency to version
 1.0.325.
 
-## 1.0.60 - 2016-12-18
+## 1.0.60 - 2016-12-19
 
 ### Commits
 - [LPS-69730]: Recommit (a4ace881cf)
@@ -603,7 +603,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-67352]: Update the com.liferay.source.formatter dependency to version
 1.0.336.
 
-## 1.0.71 - 2017-01-03
+## 1.0.71 - 2017-01-06
 
 ### Dependencies
 - [LPS-69706]: Update the com.liferay.source.formatter dependency to version
@@ -911,7 +911,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-71164]: Update the com.liferay.source.formatter dependency to version
 1.0.389.
 
-## 1.0.123 - 2017-05-02
+## 1.0.123 - 2017-05-03
 
 ### Dependencies
 - [LPS-72326]: Update the com.liferay.source.formatter dependency to version
@@ -1001,7 +1001,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-72705]: Update the com.liferay.source.formatter dependency to version
 1.0.404.
 
-## 2.0.15 - 2017-06-08
+## 2.0.15 - 2017-06-13
 
 ### Dependencies
 - [LPS-72705]: Update the com.liferay.source.formatter dependency to version
@@ -1738,7 +1738,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-74544]: Update the com.liferay.source.formatter dependency to version
 1.0.528.
 
-## 2.3.58 - 2018-01-03
+## 2.3.58 - 2018-01-04
 
 ### Commits
 - [LPS-76644]: Enable Gradle plugins publishing (8bfdfd53d7)
@@ -1846,7 +1846,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-77630]: Update the com.liferay.source.formatter dependency to version
 1.0.545.
 
-## 2.3.75 - 2018-01-31
+## 2.3.75 - 2018-02-05
 
 ### Dependencies
 - [LPS-77795]: Update the com.liferay.source.formatter dependency to version
@@ -1989,7 +1989,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-78767]: Update the com.liferay.source.formatter dependency to version
 1.0.569.
 
-## 2.3.98 - 2018-03-13
+## 2.3.98 - 2018-03-16
 
 ### Commits
 - [LPS-77425]: Partial revert of d25f48516a9ad080bcbd50e228979853d3f2dda5
@@ -2147,7 +2147,7 @@ classes, so they should be considered "provided" (da7c77ffbc)
 - [LPS-74544]: Update the com.liferay.source.formatter dependency to version
 1.0.594.
 
-## 2.3.123 - 2018-04-05
+## 2.3.123 - 2018-04-06
 
 ### Commits
 - [LPS-75049]: Auto SF (6267268ae7)
@@ -2787,7 +2787,7 @@ republish (78ca71d645)
 - [LPS-74544]: Update the com.liferay.source.formatter dependency to version
 1.0.699.
 
-## 2.3.227 - 2018-08-02
+## 2.3.227 - 2018-08-05
 
 ### Commits
 - [LPS-74544]: just published to test out
@@ -2883,7 +2883,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
 1.0.715.
 
-## 2.3.242 - 2018-08-28
+## 2.3.242 - 2018-08-29
 
 ### Dependencies
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
@@ -2987,7 +2987,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-74544]: Update the com.liferay.source.formatter dependency to version
 1.0.733.
 
-## 2.3.261 - 2018-09-17
+## 2.3.261 - 2018-09-18
 
 ### Commits
 - [LPS-74544]: Add gradleTest (7fd329ea62)
@@ -3041,7 +3041,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
 1.0.741.
 
-## 2.3.269 - 2018-09-30
+## 2.3.269 - 2018-10-03
 
 ### Dependencies
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
@@ -3124,7 +3124,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-86556]: Update the com.liferay.source.formatter dependency to version
 1.0.755.
 
-## 2.3.282 - 2018-11-09
+## 2.3.282 - 2018-11-13
 
 ### Commits
 - [LPS-87192]: Set the Eclipse task property gradleVersion (040b2abdee)
@@ -3233,7 +3233,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
 1.0.770.
 
-## 2.3.300 - 2019-01-07
+## 2.3.300 - 2019-01-08
 
 ### Commits
 - [LPS-85609]: Simplify gradleTest (a8b0feff31)
@@ -3697,7 +3697,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
 1.0.847.
 
-## 2.3.377 - 2019-05-14
+## 2.3.377 - 2019-05-15
 
 ### Dependencies
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
@@ -3775,7 +3775,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
 1.0.860.
 
-## 2.3.390 - 2019-05-30
+## 2.3.390 - 2019-06-01
 
 ### Dependencies
 - [LPS-96206]: Update the com.liferay.source.formatter dependency to version
@@ -3855,7 +3855,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
 1.0.874.
 
-## 2.3.403 - 2019-06-21
+## 2.3.403 - 2019-06-23
 
 ### Dependencies
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version
@@ -4042,7 +4042,7 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 - [LPS-99657]: Update the com.liferay.source.formatter dependency to version
 1.0.905.
 
-## 2.3.434 - 2019-08-22
+## 2.3.434 - 2019-08-27
 
 ### Dependencies
 - [LPS-84119]: Update the com.liferay.source.formatter dependency to version

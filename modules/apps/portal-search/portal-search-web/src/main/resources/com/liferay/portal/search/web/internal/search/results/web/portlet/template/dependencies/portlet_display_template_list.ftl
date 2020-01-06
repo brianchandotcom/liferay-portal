@@ -169,10 +169,10 @@
 	A.one('#search-results-display-list').delegate(
 	'click',
 	function(event) {
-	var currentTarget = event.currentTarget;
+		var currentTarget = event.currentTarget;
 
-	currentTarget.siblings('.search-results-list').toggleClass('hide');
-	},
-	'.expand-details'
+		currentTarget.siblings('.search-results-list').toggleClass('hide');
+		},
+		'.expand-details'
 	);
 </@liferay_aui.script>

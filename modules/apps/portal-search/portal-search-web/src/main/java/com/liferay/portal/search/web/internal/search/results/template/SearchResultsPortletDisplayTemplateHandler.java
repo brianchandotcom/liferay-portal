@@ -99,16 +99,17 @@ public class SearchResultsPortletDisplayTemplateHandler
 			"document", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
 		templateVariableGroup.addVariable(
-			"document-entry", SearchResultSummaryDisplayContext.class,
+			"document-title", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
 		templateVariableGroup.addVariable(
-			"creation-date-entry", SearchResultSummaryDisplayContext.class,
+			"document-creation-date", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreationDateString()");
 		templateVariableGroup.addVariable(
-			"creator-username-entry", SearchResultSummaryDisplayContext.class,
+			"document-creator-username",
+			SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreatorUserName()");
 		templateVariableGroup.addVariable(
-			"content-entry", SearchResultSummaryDisplayContext.class,
+			"document-content", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getContent()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =

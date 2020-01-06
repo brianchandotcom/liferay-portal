@@ -148,8 +148,8 @@ public class SearchResultsPortletDisplayContext implements Serializable {
 		_totalHits = totalHits;
 	}
 
-	public void translateSearchResultSummaryDisplayContexts(
-		List<Document> documents) {
+	public List<SearchResultSummaryDisplayContext>
+		translateSearchResultSummaryDisplayContexts(List<Document> documents) {
 
 		List<SearchResultSummaryDisplayContext>
 			searchResultSummaryDisplayContexts = new ArrayList<>();
@@ -160,8 +160,7 @@ public class SearchResultsPortletDisplayContext implements Serializable {
 					getSearchResultSummaryDisplayContext(doc)));
 		}
 
-		_searchResultSummaryDisplayContexts =
-			searchResultSummaryDisplayContexts;
+		return searchResultSummaryDisplayContexts;
 	}
 
 	private long _displayStyleGroupId;

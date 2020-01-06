@@ -181,7 +181,9 @@ public class SearchResultsPortlet extends MVCPortlet {
 			searchResponse.getTotalHits());
 
 		searchResultsPortletDisplayContext.
-			translateSearchResultSummaryDisplayContexts(documents);
+			setSearchResultSummaryDisplayContexts(
+				searchResultsPortletDisplayContext.
+					translateSearchResultSummaryDisplayContexts(documents));
 
 		return searchResultsPortletDisplayContext;
 	}

@@ -38,9 +38,6 @@ for (int i = 0; i < categoryKeys.length; i++) {
 %>
 
 <c:choose>
-	<c:when test="<%= deprecatedCategorySections.length > 0 %>">
-		<%@ include file="/html/taglib/ui/form_navigator/lexicon/deprecated_sections.jspf" %>
-	</c:when>
 	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
 			names="<%= StringUtil.merge(filterCategoryLabels) %>"

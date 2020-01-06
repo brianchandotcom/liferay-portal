@@ -229,7 +229,7 @@ public class OrganizationResourceImpl
 		).map(
 			emailAddresses -> ListUtil.filter(
 				TransformUtil.transformToList(
-					emailAddresses, this::_toEmailAddressModel),
+					emailAddresses, this::_toServiceBuilderEmailAddress),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -388,7 +388,7 @@ public class OrganizationResourceImpl
 		);
 	}
 
-	private com.liferay.portal.kernel.model.EmailAddress _toEmailAddressModel(
+	private com.liferay.portal.kernel.model.EmailAddress _toServiceBuilderEmailAddress(
 		EmailAddress emailAddress) {
 
 		String address = emailAddress.getEmailAddress();

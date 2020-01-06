@@ -118,6 +118,6 @@ public class EqualsPoshiElement extends PoshiElement {
 	private static final String _ELEMENT_NAME = "equals";
 
 	private static final Pattern _conditionPattern = Pattern.compile(
-		"^\"[\\s\\S]*\"[\\s]*==[\\s]*\"[\\s\\S]*\"$");
+		"^[\\(]*\"[\\s\\S]*\"[\\s]*==[\\s]*\"[\\s\\S]*\"[\\)]*$");
 
 }

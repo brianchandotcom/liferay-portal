@@ -1612,7 +1612,24 @@ definition {
 		AppBuilderAdmin.openItem(itemName = "my custom object");
 
 		AppBuilderAdmin.switchTab(tabName = "Apps");
-		
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		Navigator.closeWindow();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
 		AppBuilderAdmin.undeployApp(itemName = "Test App A");
 
 		AppBuilderAdmin.gotoCustomAppCP(
@@ -1694,7 +1711,23 @@ definition {
 
 		AppBuilderAdmin.undeployApp(itemName = "Test App C");
 
+		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAlone404();
+
+		Navigator.closeWindow();
+
 		AppBuilderAdmin.deployApp(itemName = "Test App C");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		Navigator.closeWindow();
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

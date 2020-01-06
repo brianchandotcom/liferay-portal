@@ -257,8 +257,16 @@ definition {
 
 	macro validateProductMenuApp {
 		AssertTextEquals(
-			locator1 = "AppBuilder#STANDALONE_DEPLOYED",
+			locator1 = "AppBuilder#PRODUCT_MENU_DEPLOYED",
 			value1 = "${appName}");
+	}
+
+	macro validateStandAloneApp {
+		AssertElementPresent(locator1 = "AppBuilder#STANDALONE_DEPLOYED");
+	}
+
+	macro validateStandAlone404 {
+		AssertElementNotPresent(locator1 = "AppBuilder#STANDALONE_DEPLOYED");
 	}
 
 	macro validateRequiredValidNameMessage {

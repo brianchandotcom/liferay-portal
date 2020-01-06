@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -109,18 +110,27 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		Class<?> clazz = getClass();
 
-		_defaultDDMStructureHelper.addDDMStructures(
-			defaultUserId, group.getGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			clazz.getClassLoader(),
-			"com/liferay/journal/internal/upgrade/v1_0_0/dependencies" +
-				"/basic-web-content-structure.xml",
-			new ServiceContext());
-
-		addDefaultResourcePermissions(group.getGroupId());
+		Locale oldLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			UpgradeProcessUtil.getDefaultLanguageId(companyId));
+
+		LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
+
+		try {
+			_defaultDDMStructureHelper.addDDMStructures(
+				defaultUserId, group.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				clazz.getClassLoader(),
+				"com/liferay/journal/internal/upgrade/v1_0_0/dependencies" +
+				"/basic-web-content-structure.xml",
+				new ServiceContext());
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(oldLocale);
+		}
+
+		addDefaultResourcePermissions(group.getGroupId());
 
 		List<Element> structureElements = getDDMStructures(defaultLocale);
 

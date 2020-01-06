@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
@@ -34,11 +33,9 @@ public class LPS42924Check extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
+		String absolutePath = getAbsolutePath();
 
-		String fileName = fileContents.getFileName();
-
-		if (!fileName.endsWith("ServiceImpl.java")) {
+		if (!absolutePath.endsWith("ServiceImpl.java")) {
 			return;
 		}
 

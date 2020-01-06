@@ -32,7 +32,6 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -723,13 +722,10 @@ public class ChainingCheck extends BaseCheck {
 			}
 		}
 
-		FileContents fileContents = getFileContents();
+		String absolutePath = getAbsolutePath();
 
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		if (fileName.contains("/test/") ||
-			fileName.contains("/testIntegration/")) {
+		if (absolutePath.contains("/test/") ||
+			absolutePath.contains("/testIntegration/")) {
 
 			List<String> allowedMockitoMethodNames = getAttributeValues(
 				_ALLOWED_MOCKITO_METHOD_NAMES_KEY);
@@ -745,7 +741,7 @@ public class ChainingCheck extends BaseCheck {
 			TokenTypes.DOT);
 
 		if (dotDetailAST == null) {
-			String className = JavaSourceUtil.getClassName(fileName);
+			String className = JavaSourceUtil.getClassName(absolutePath);
 
 			List<String> allowedClassNames = getAttributeValues(
 				_ALLOWED_CLASS_NAMES_KEY);

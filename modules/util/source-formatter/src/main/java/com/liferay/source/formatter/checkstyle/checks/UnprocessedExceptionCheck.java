@@ -14,10 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
@@ -52,18 +50,17 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
+		String absolutePath = getAbsolutePath();
 
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		if (fileName.contains("/test/") ||
-			fileName.contains("/testIntegration/")) {
+		if (absolutePath.contains("/test/") ||
+			absolutePath.contains("/testIntegration/")) {
 
 			return;
 		}
 
 		if (detailAST.getType() == TokenTypes.LITERAL_CATCH) {
+			FileContents fileContents = getFileContents();
+
 			FileText fileText = fileContents.getText();
 
 			_checkUnprocessedException(

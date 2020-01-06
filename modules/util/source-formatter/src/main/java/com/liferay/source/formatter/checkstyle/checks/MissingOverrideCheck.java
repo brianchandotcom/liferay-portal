@@ -27,7 +27,6 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -60,15 +59,12 @@ public class MissingOverrideCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
-
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), '\\', '/');
+		String absolutePath = getAbsolutePath();
 
 		JavaProjectBuilder javaProjectBuilder = null;
 
 		try {
-			javaProjectBuilder = _getJavaProjectBuilder(fileName);
+			javaProjectBuilder = _getJavaProjectBuilder(absolutePath);
 		}
 		catch (Exception e) {
 			return;
@@ -79,7 +75,7 @@ public class MissingOverrideCheck extends BaseCheck {
 		}
 
 		JavaClass javaClass = javaProjectBuilder.getClassByName(
-			_getPackageName(detailAST) + "." + _getClassName(fileName));
+			_getPackageName(detailAST) + "." + _getClassName(absolutePath));
 
 		List<Tuple> ancestorJavaClassTuples = _addAncestorJavaClassTuples(
 			javaClass, javaProjectBuilder, new ArrayList<Tuple>());
@@ -138,20 +134,18 @@ public class MissingOverrideCheck extends BaseCheck {
 		return ancestorJavaClassTuples;
 	}
 
-	private String _getClassName(String fileName) {
-		int pos = fileName.lastIndexOf('/');
+	private String _getClassName(String absolutePath) {
+		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
 
-		return fileName.substring(pos + 1, fileName.length() - 5);
+		return absolutePath.substring(pos + 1, absolutePath.length() - 5);
 	}
 
-	private JavaProjectBuilder _getJavaProjectBuilder(String fileName)
+	private JavaProjectBuilder _getJavaProjectBuilder(String absolutePath)
 		throws IOException {
 
 		if (_javaProjectBuilder != null) {
 			return _javaProjectBuilder;
 		}
-
-		String absolutePath = SourceUtil.getAbsolutePath(fileName);
 
 		while (true) {
 			int x = absolutePath.lastIndexOf("/");

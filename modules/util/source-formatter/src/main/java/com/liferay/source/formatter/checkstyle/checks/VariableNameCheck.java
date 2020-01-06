@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
@@ -126,12 +124,9 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
-		FileContents fileContents = getFileContents();
+		String absolutePath = getAbsolutePath();
 
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		if (fileName.endsWith("ExceptionMapper.java")) {
+		if (absolutePath.endsWith("ExceptionMapper.java")) {
 			String expectedName = _getExpectedVariableName(typeName);
 
 			if (!name.equals(expectedName)) {

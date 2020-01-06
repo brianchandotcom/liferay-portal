@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -105,11 +104,9 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				lastBranchingStatementDetailAST.getLineNo());
 		}
 
-		FileContents fileContents = getFileContents();
+		String absolutePath = getAbsolutePath();
 
-		String fileName = fileContents.getFileName();
-
-		if (fileName.endsWith("Test.java")) {
+		if (absolutePath.endsWith("Test.java")) {
 			return;
 		}
 

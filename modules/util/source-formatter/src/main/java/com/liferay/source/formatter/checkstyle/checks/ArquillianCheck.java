@@ -14,12 +14,9 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
@@ -38,12 +35,9 @@ public class ArquillianCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
+		String absolutePath = getAbsolutePath();
 
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		int pos = fileName.indexOf("/testIntegration/");
+		int pos = absolutePath.indexOf("/testIntegration/");
 
 		if (pos == -1) {
 			return;
@@ -59,8 +53,8 @@ public class ArquillianCheck extends BaseCheck {
 		}
 
 		File xmlFile = new File(
-			fileName.substring(0, pos) +
-				"/testIntegration/resources/arquillian.xml");
+			absolutePath.substring(0, pos) +
+				"/testIntegration/resources/arquilllian.xml");
 
 		if (!xmlFile.exists()) {
 			log(detailAST, _MSG_INVALID_IMPORT);

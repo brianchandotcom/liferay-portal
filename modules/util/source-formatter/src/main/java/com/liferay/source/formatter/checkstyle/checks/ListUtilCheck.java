@@ -17,12 +17,10 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -118,12 +116,7 @@ public class ListUtilCheck extends BaseCheck {
 			}
 		}
 
-		FileContents fileContents = getFileContents();
-
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		String absolutePath = SourceUtil.getAbsolutePath(fileName);
+		String absolutePath = getAbsolutePath();
 
 		if (absolutePath.contains("/modules/")) {
 			String buildGradleContent = _getBuildGradleContent(absolutePath);

@@ -33,7 +33,6 @@ import com.liferay.source.formatter.parser.JavaVariable;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
@@ -79,12 +78,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			return;
 		}
 
-		FileContents fileContents = getFileContents();
-
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		String absolutePath = SourceUtil.getAbsolutePath(fileName);
+		String absolutePath = getAbsolutePath();
 
 		int x = absolutePath.lastIndexOf("/");
 
@@ -979,12 +973,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			return _rootDirName;
 		}
 
-		FileContents fileContents = getFileContents();
-
-		String fileName = StringUtil.replace(
-			fileContents.getFileName(), CharPool.BACK_SLASH, CharPool.SLASH);
-
-		String absolutePath = SourceUtil.getAbsolutePath(fileName);
+		String absolutePath = getAbsolutePath();
 
 		while (true) {
 			int x = absolutePath.lastIndexOf("/");

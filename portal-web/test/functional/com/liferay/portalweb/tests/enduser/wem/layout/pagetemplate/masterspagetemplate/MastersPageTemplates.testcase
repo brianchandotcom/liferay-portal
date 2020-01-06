@@ -62,26 +62,28 @@ definition {
 	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
 	@priority = "5"
 	test CanDuplicateMastersPageTemplate {
-		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
+		MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Masters Template Page Name");
+
+		PageEditor.clickPublish();
 
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 			item = "Make a Copy",
-			pageTemplateName = "Masters Template Page Name");
+			masterLayoutName = "Masters Template Page Name");
 
-		PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Masters Template Page Name (Copy)");
+		MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Masters Template Page Name (Copy)");
 	}
 
 	@description = "This is for LPS-103687. Validate if the Blank page template can not be deleted."
 	@priority = "5"
 	test CannotDeleteBlankPageTemplate {
 		task ("Assert the Blank page template exist") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavTab(navTab = "Masters");
 
-			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Blank");
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}
 
 		task ("Assert the Blank page template without ellipsis icon button") {
@@ -101,11 +103,11 @@ definition {
 	@priority = "5"
 	test CannotEditBlankPageTemplate {
 		task ("Assert the Blank page template exist") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavTab(navTab = "Masters");
 
-			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Blank");
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}
 
 		task ("Assert the Blank page template without ellipsis icon button") {
@@ -118,13 +120,15 @@ definition {
 	@description = "This is for LPS-102200. Can't edit master page template elements from page editor directly."
 	@priority = "5"
 	test CannotEditMasterPageTemplateViaPageEditor {
-		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
+		MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Masters Template Page Name");
+
+		PageEditor.clickPublish();
 
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 			item = "Edit",
-			pageTemplateName = "Masters Template Page Name");
+			masterLayoutName = "Masters Template Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -152,13 +156,15 @@ definition {
 	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
 	@priority = "5"
 	test EditMasterPageTemplateViaPageEditorLookAndFeel {
-		PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addMastersPageTemplate(pageTemplateName = "Masters Template Page Name");
+		MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Masters Template Page Name");
+
+		PageEditor.clickPublish();
 
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 			item = "Edit",
-			pageTemplateName = "Masters Template Page Name");
+			masterLayoutName = "Masters Template Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -337,11 +343,11 @@ definition {
 	@priority = "5"
 	test ViewBlankPageTemplateExistInMastersTabInNewSite {
 		task ("Assert the Blank page template exist in the Masters tab") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavTab(navTab = "Masters");
 
-			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Blank");
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}
 	}
 

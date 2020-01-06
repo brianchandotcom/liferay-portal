@@ -30,7 +30,6 @@ String formName = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 String htmlBottom = (String)request.getAttribute("liferay-ui:form-navigator:htmlBottom");
 String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop");
 String id = (String)request.getAttribute("liferay-ui:form-navigator:id");
-String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
 
 if (Validator.isNull(backURL)) {

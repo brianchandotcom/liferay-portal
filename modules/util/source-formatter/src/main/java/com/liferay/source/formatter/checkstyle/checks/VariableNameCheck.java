@@ -71,16 +71,13 @@ public class VariableNameCheck extends BaseCheck {
 		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
 			String typeName = firstChildDetailAST.getText();
 
-			if (isAttributeValue(_CHECK_TYPE_NAME_KEY)) {
-				_checkExceptionVariableName(detailAST, name, typeName);
+			_checkExceptionVariableName(detailAST, name, typeName);
 
-				_checkInstanceVariableName(detailAST, name, typeName);
+			_checkInstanceVariableName(detailAST, name, typeName);
 
-				_checkTypeName(
-					detailAST, name, typeName, "DetailAST",
-					"HttpServletRequest", "HttpServletResponse",
-					"ServletRequest", "ServletResponse");
-			}
+			_checkTypeName(
+				detailAST, name, typeName, "DetailAST", "HttpServletRequest",
+				"HttpServletResponse", "ServletRequest", "ServletResponse");
 
 			_checkTypo(detailAST, name, typeName);
 		}
@@ -551,8 +548,6 @@ public class VariableNameCheck extends BaseCheck {
 
 	private static final String _ALLOWED_VARIABLE_NAMES_KEY =
 		"allowedVariableNames";
-
-	private static final String _CHECK_TYPE_NAME_KEY = "checkTypeName";
 
 	private static final String _MSG_INCORRECT_ENDING_VARIABLE =
 		"variable.incorrect.ending";

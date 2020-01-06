@@ -811,23 +811,6 @@ public class SubscriptionSender implements Serializable {
 		_notifyHooks(Hook.Event.MAIL_MESSAGE_CREATED, mailMessage);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String replaceContent(
-			String content, Locale locale, boolean escape)
-		throws Exception {
-
-		MailTemplateContext mailTemplateContext = _getBasicMailTemplateContext(
-			locale);
-
-		MailTemplate mailTemplate = MailTemplateFactoryUtil.createMailTemplate(
-			content, escape);
-
-		return mailTemplate.renderAsString(locale, mailTemplateContext);
-	}
-
 	protected void sendEmail(InternetAddress to, Locale locale)
 		throws Exception {
 

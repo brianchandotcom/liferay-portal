@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.service.test.ServiceTestUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -132,7 +131,7 @@ public class CalendarFixture {
 	}
 
 	public void setUp() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 	}

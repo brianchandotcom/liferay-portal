@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
@@ -90,7 +90,7 @@ public class DDMFormStagingTestUtil {
 		addStagingAttribute(
 			serviceContext, PortletDataHandlerKeys.PORTLET_SETUP_ALL, false);
 
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		StagingLocalServiceUtil.enableRemoteStaging(
 			TestPropsValues.getUserId(), remoteStagingGroup, false, false,

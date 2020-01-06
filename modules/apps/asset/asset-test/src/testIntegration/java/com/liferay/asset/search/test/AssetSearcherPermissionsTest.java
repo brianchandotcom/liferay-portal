@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.util.AssetSearcher;
@@ -114,7 +114,7 @@ public class AssetSearcherPermissionsTest {
 	}
 
 	protected void setGuestUser() throws Exception {
-		ServiceTestUtil.setUser(
+		UserTestUtil.setUser(
 			_userLocalService.getDefaultUser(_group.getCompanyId()));
 	}
 

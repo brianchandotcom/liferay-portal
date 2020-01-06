@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -87,7 +86,7 @@ public class SiteNavigationMenuServiceTest {
 		_groupUser = UserTestUtil.addGroupUser(
 			_group, RoleConstants.POWER_USER);
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -98,7 +97,7 @@ public class SiteNavigationMenuServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -113,7 +112,7 @@ public class SiteNavigationMenuServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _groupUser.getUserId());
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(), serviceContext);
@@ -129,7 +128,7 @@ public class SiteNavigationMenuServiceTest {
 			"com.liferay.site.navigation",
 			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -146,7 +145,7 @@ public class SiteNavigationMenuServiceTest {
 			"com.liferay.site.navigation",
 			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.addSiteNavigationMenu(
 			_group.getGroupId(), RandomTestUtil.randomString(), serviceContext);
@@ -160,7 +159,7 @@ public class SiteNavigationMenuServiceTest {
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, _user.getUserId());
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.deleteSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId());
@@ -176,7 +175,7 @@ public class SiteNavigationMenuServiceTest {
 			"com.liferay.site.navigation.model.SiteNavigationMenu",
 			ActionKeys.DELETE);
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.deleteSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId());
@@ -192,7 +191,7 @@ public class SiteNavigationMenuServiceTest {
 			"com.liferay.site.navigation.model.SiteNavigationMenu",
 			ActionKeys.VIEW);
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.fetchSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId());
@@ -495,7 +494,7 @@ public class SiteNavigationMenuServiceTest {
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, _user.getUserId());
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -515,7 +514,7 @@ public class SiteNavigationMenuServiceTest {
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, _user.getUserId());
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -542,7 +541,7 @@ public class SiteNavigationMenuServiceTest {
 			"com.liferay.site.navigation.model.SiteNavigationMenu",
 			ActionKeys.UPDATE);
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
@@ -566,7 +565,7 @@ public class SiteNavigationMenuServiceTest {
 			"com.liferay.site.navigation.model.SiteNavigationMenu",
 			ActionKeys.UPDATE);
 
-		ServiceTestUtil.setUser(_groupUser);
+		UserTestUtil.setUser(_groupUser);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),

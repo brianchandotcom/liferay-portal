@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -87,7 +86,7 @@ public class FragmentEntryLinkServicePermissionTest {
 	public void testAddFragmentEntryLink() throws Exception {
 		_addSiteMemberUpdatePermission();
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
@@ -105,7 +104,7 @@ public class FragmentEntryLinkServicePermissionTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
@@ -124,7 +123,7 @@ public class FragmentEntryLinkServicePermissionTest {
 
 		_addSiteMemberUpdatePermission();
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.deleteFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId());
@@ -139,7 +138,7 @@ public class FragmentEntryLinkServicePermissionTest {
 				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
 				_layout.getPlid());
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.deleteFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId());
@@ -154,7 +153,7 @@ public class FragmentEntryLinkServicePermissionTest {
 
 		_addSiteMemberUpdatePermission();
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(),
@@ -172,7 +171,7 @@ public class FragmentEntryLinkServicePermissionTest {
 
 		_addSiteMemberUpdatePermission();
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		long[] fragmentEntryIds = {
 			_fragmentEntry.getFragmentEntryId(),
@@ -199,7 +198,7 @@ public class FragmentEntryLinkServicePermissionTest {
 			fragmentEntry, PortalUtil.getClassNameId(Layout.class),
 			_layout.getPlid());
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		long[] fragmentEntryIds = {
 			_fragmentEntry.getFragmentEntryId(),
@@ -224,7 +223,7 @@ public class FragmentEntryLinkServicePermissionTest {
 				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
 				_layout.getPlid());
 
-		ServiceTestUtil.setUser(_user);
+		UserTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(),

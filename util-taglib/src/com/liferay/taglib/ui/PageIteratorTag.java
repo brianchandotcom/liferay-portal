@@ -14,10 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -150,25 +147,6 @@ public class PageIteratorTag extends IncludeTag {
 		_type = type;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #setPortletURL(PortletURL)}
-	 */
-	@Deprecated
-	public void setUrl(String url) {
-		String[] urlArray = PortalUtil.stripURLAnchor(url, StringPool.POUND);
-
-		_url = urlArray[0];
-		_urlAnchor = urlArray[1];
-
-		if (_url.indexOf(CharPool.QUESTION) == -1) {
-			_url += "?";
-		}
-		else if (!_url.endsWith("&")) {
-			_url += "&";
-		}
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -189,8 +167,6 @@ public class PageIteratorTag extends IncludeTag {
 		_target = "_self";
 		_total = 0;
 		_type = "regular";
-		_url = null;
-		_urlAnchor = null;
 	}
 
 	@Override
@@ -250,9 +226,6 @@ public class PageIteratorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-ui:page-iterator:total", String.valueOf(_total));
 		httpServletRequest.setAttribute("liferay-ui:page-iterator:type", _type);
-		httpServletRequest.setAttribute("liferay-ui:page-iterator:url", _url);
-		httpServletRequest.setAttribute(
-			"liferay-ui:page-iterator:urlAnchor", _urlAnchor);
 	}
 
 	private int _cur;
@@ -272,7 +245,5 @@ public class PageIteratorTag extends IncludeTag {
 	private String _target = "_self";
 	private int _total;
 	private String _type = "regular";
-	private String _url;
-	private String _urlAnchor;
 
 }

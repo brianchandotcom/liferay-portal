@@ -40,19 +40,19 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetTagsSelectorDisplayContext {
 
 	public AssetTagsSelectorDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		this(renderRequest, renderResponse, httpServletRequest, true);
+		this(httpServletRequest, renderRequest, renderResponse, true);
 	}
 
 	public AssetTagsSelectorDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest, boolean rowChecker) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse, boolean rowChecker) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_httpServletRequest = httpServletRequest;
 		_rowChecker = rowChecker;
 	}
 

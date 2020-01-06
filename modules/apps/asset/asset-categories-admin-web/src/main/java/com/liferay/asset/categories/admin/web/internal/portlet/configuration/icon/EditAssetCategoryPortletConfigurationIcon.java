@@ -98,7 +98,7 @@ public class EditAssetCategoryPortletConfigurationIcon
 	public boolean isShow(PortletRequest portletRequest) {
 		AssetCategoriesDisplayContext assetCategoriesDisplayContext =
 			new AssetCategoriesDisplayContext(
-				null, null, _portal.getHttpServletRequest(portletRequest));
+				_portal.getHttpServletRequest(portletRequest), null, null);
 
 		AssetCategory category = assetCategoriesDisplayContext.getCategory();
 

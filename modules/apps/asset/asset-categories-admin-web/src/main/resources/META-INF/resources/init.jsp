@@ -86,7 +86,7 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
-AssetCategoriesDisplayContext assetCategoriesDisplayContext = new AssetCategoriesDisplayContext(renderRequest, renderResponse, request);
+AssetCategoriesDisplayContext assetCategoriesDisplayContext = new AssetCategoriesDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

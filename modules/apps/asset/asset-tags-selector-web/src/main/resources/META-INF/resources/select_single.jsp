@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(renderRequest, renderResponse, request, false);
+assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(request, renderRequest, renderResponse, false);
 %>
 
 <clay:management-toolbar

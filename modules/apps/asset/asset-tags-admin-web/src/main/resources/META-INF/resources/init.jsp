@@ -53,7 +53,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <portlet:defineObjects />
 
 <%
-AssetTagsDisplayContext assetTagsDisplayContext = new AssetTagsDisplayContext(renderRequest, renderResponse, request);
+AssetTagsDisplayContext assetTagsDisplayContext = new AssetTagsDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

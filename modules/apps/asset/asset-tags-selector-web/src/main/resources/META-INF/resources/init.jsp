@@ -38,7 +38,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <portlet:defineObjects />
 
 <%
-AssetTagsSelectorDisplayContext assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(renderRequest, renderResponse, request);
+AssetTagsSelectorDisplayContext assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

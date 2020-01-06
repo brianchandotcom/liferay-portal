@@ -81,13 +81,12 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetCategoriesDisplayContext {
 
 	public AssetCategoriesDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
-
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 
 		_assetCategoriesAdminWebConfiguration =
 			(AssetCategoriesAdminWebConfiguration)

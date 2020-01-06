@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -33,8 +32,6 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
-
-import java.lang.reflect.Method;
 
 import java.util.Map;
 
@@ -74,8 +71,6 @@ public class VelocityManager extends BaseTemplateManager {
 			httpServletResponse, contextObjects);
 
 		contextObjects.put(themeName, velocityTaglib);
-
-		contextObjects.put("velocityTaglib_layoutIcon", _layoutIconMethod);
 
 		// Legacy support
 
@@ -310,19 +305,8 @@ public class VelocityManager extends BaseTemplateManager {
 		return sb.toString();
 	}
 
-	private static final Method _layoutIconMethod;
 	private static volatile VelocityEngineConfiguration
 		_velocityEngineConfiguration;
-
-	static {
-		try {
-			_layoutIconMethod = VelocityTaglib.class.getMethod(
-				"layoutIcon", new Class<?>[] {Layout.class});
-		}
-		catch (NoSuchMethodException nsme) {
-			throw new ExceptionInInitializerError(nsme);
-		}
-	}
 
 	@Reference
 	private SingleVMPool _singleVMPool;

@@ -388,31 +388,6 @@ public class OrganizationResourceImpl
 		);
 	}
 
-	private com.liferay.portal.kernel.model.EmailAddress _toServiceBuilderEmailAddress(
-		EmailAddress emailAddress) {
-
-		String address = emailAddress.getEmailAddress();
-
-		if (Validator.isNull(address)) {
-			return null;
-		}
-
-		com.liferay.portal.kernel.model.EmailAddress
-			serviceBuilderEmailAddress =
-				_emailAddressLocalService.createEmailAddress(
-					GetterUtil.getLong(emailAddress.getId()));
-
-		serviceBuilderEmailAddress.setAddress(address);
-		serviceBuilderEmailAddress.setTypeId(
-			_toListTypeId(
-				"email-address", emailAddress.getType(),
-				ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS));
-		serviceBuilderEmailAddress.setPrimary(
-			GetterUtil.getBoolean(emailAddress.getPrimary()));
-
-		return serviceBuilderEmailAddress;
-	}
-
 	private long _toListTypeId(String defaultName, String name, String type) {
 		ListType listType = _listTypeLocalService.getListType(name, type);
 
@@ -561,6 +536,31 @@ public class OrganizationResourceImpl
 				serviceType = listType.getName();
 			}
 		};
+	}
+
+	private com.liferay.portal.kernel.model.EmailAddress
+		_toServiceBuilderEmailAddress(EmailAddress emailAddress) {
+
+		String address = emailAddress.getEmailAddress();
+
+		if (Validator.isNull(address)) {
+			return null;
+		}
+
+		com.liferay.portal.kernel.model.EmailAddress
+			serviceBuilderEmailAddress =
+				_emailAddressLocalService.createEmailAddress(
+					GetterUtil.getLong(emailAddress.getId()));
+
+		serviceBuilderEmailAddress.setAddress(address);
+		serviceBuilderEmailAddress.setTypeId(
+			_toListTypeId(
+				"email-address", emailAddress.getType(),
+				ListTypeConstants.ORGANIZATION_EMAIL_ADDRESS));
+		serviceBuilderEmailAddress.setPrimary(
+			GetterUtil.getBoolean(emailAddress.getPrimary()));
+
+		return serviceBuilderEmailAddress;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

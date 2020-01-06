@@ -154,23 +154,24 @@ public class EditWorkspaceConnectionMVCActionCommand
 			Dictionary<String, Object> configurationProperties)
 		throws Exception {
 
-		_disconnectDataSource(actionRequest);
-		removeCompanyPreferences(actionRequest);
-		removeConfigurationProperties(actionRequest, configurationProperties);
-	}
-
-	private void _disconnectDataSource(ActionRequest actionRequest)
-		throws Exception {
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		_disconnectDataSource(themeDisplay.getCompanyId());
+		removeCompanyPreferences(themeDisplay.getCompanyId());
+		removeConfigurationProperties(
+			themeDisplay.getCompanyId(), configurationProperties);
+	}
+
+	private void _disconnectDataSource(long companyId)
+		throws Exception {
+
 		HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
-			null, themeDisplay.getCompanyId(),
+			null, companyId,
 			String.format(
 				"api/1.0/data-sources/%s/disconnect",
 				AnalyticsSettingsUtil.getAsahFaroBackendDataSourceId(
-					themeDisplay.getCompanyId())));
+					companyId)));
 
 		StatusLine statusLine = httpResponse.getStatusLine();
 

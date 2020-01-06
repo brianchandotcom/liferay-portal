@@ -147,9 +147,9 @@ definition {
 
 	@description = "LRQA-53628 Automate LPS-98517 [Dashboard] Filter items list by assignee name"
 	@priority = "5"
-	test FilterItemsListByAssigneeName {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "WorkflowMetrics#FilterItemsListByAssigneeName";
+	test FilterAllItemsListByAssigneeName {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsListByAssigneeName";
 
 		WorkflowMetrics.createUsersAndAssignInstances();
 
@@ -213,7 +213,7 @@ definition {
 			isPresent = "Blogs Entry Title 7",
 			taskName = "Review");
 
-		WorkflowMetrics.allItemPageFilterUncheck(
+		WorkflowMetrics.allItemPageFilterCheck(
 			allItemsFilterName = "Process Status",
 			assigneeName = "Pending");
 

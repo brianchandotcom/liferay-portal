@@ -11,7 +11,7 @@ definition {
 		}
 	}
 
-	macro allItemPageFilterUncheck {
+	macro allItemPageFilterCheck {
 		var key_allItemsFilterName = "${allItemsFilterName}";
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
@@ -21,6 +21,28 @@ definition {
 		}
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
+	}
+
+	macro assertAllItemsValues {
+
+		var key_assigneeName = "${assigneeName}";
+		var key_taskName = "${taskName}";
+
+		for (var isInstancePresent : list "${isPresent}") {
+			var key_instanceInfo = "${isInstancePresent}";
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_TASK");
+		}
+
+		for (var isAssigneeNotPresent : list "${isNotPresent}") {
+			var key_assigneeName = "${isAssigneeNotPresent}";
+
+			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
+		}
 	}
 
 	macro assertChartIsPresent {
@@ -428,46 +450,35 @@ definition {
 		var key_assigneeName = "${assigneeName}";
 		var key_taskName = "${taskName}";
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+		if (isSet(filterValueName)) {
+			WorkflowMetrics.allItemPageFilterCheck(
+				allItemsFilterName = "${key_allItemsFilterName}",
+				assigneeName = "${filterValueName}");
+		}
+
+		else {
+			WorkflowMetrics.allItemPageFilterCheck(
+				allItemsFilterName = "${key_allItemsFilterName}",
+				assigneeName = "${key_assigneeName}");
+		}
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "${key_assigneeName}",
+			isNotPresent = "${isNotPresent}",
+			isPresent = "${isPresent}",
+			taskName = "${key_taskName}");
 
 		if (isSet(filterValueName)) {
-			for (var assigneeName : list "${filterValueName}") {
-				Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
-			}
-
-			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
+			WorkflowMetrics.allItemPageFilterCheck(
+				allItemsFilterName = "${key_allItemsFilterName}",
+				assigneeName = "${filterValueName}");
 		}
+
 		else {
-			for (var assigneeName : list "${assigneeName}") {
-				Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
-			}
-
-			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
+			WorkflowMetrics.allItemPageFilterCheck(
+				allItemsFilterName = "${key_allItemsFilterName}",
+				assigneeName = "${key_assigneeName}");
 		}
-
-		for (var isInstancePresent : list "${isPresent}") {
-			var key_instanceInfo = "${isInstancePresent}";
-
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
-
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
-
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_TASK");
-		}
-
-		for (var isAssigneeNotPresent : list "${isNotPresent}") {
-			var key_assigneeName = "${isAssigneeNotPresent}";
-
-			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
-		}
-
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
-
-		for (var assigneeName : list "${assigneeName}") {
-			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
-		}
-
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
 	}
 
 	macro viewPerformanceByAssignee {
@@ -500,21 +511,11 @@ definition {
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME");
 		}
 
-		for (var isInstancePresent : list "${isPresent}") {
-			var key_instanceInfo = "${isInstancePresent}";
-
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
-
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_INSTANCE");
-
-			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_TASK");
-		}
-
-		for (var isAssigneeNotPresent : list "${isNotPresent}") {
-			var key_assigneeName = "${isAssigneeNotPresent}";
-
-			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
-		}
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "${key_assigneeName}",
+			isNotPresent = "${isNotPresent}",
+			isPresent = "${isPresent}",
+			taskName = "${key_taskName}");
 	}
 
 	macro viewWorkloadByAssigneeCard {

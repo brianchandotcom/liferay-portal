@@ -77,7 +77,7 @@ public class OrganizationContactInformation {
 	@GraphQLField(
 		description = "The organization's email addresses, with one optionally marked as primary."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected EmailAddress[] emailAddresses;
 
 	@Schema(

@@ -281,6 +281,14 @@ definition {
 			value1 = "${appName}");
 	}
 
+	macro validateStandAloneApp {
+		AssertElementPresent(locator1 = "AppBuilder#STANDALONE_DEPLOYED");
+	}
+
+	macro validateStandAlone404 {
+		AssertElementNotPresent(locator1 = "AppBuilder#STANDALONE_DEPLOYED");
+	}
+
 	macro validateRequiredValidNameMessage {
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",

@@ -197,13 +197,13 @@
 
 <tr>
 	<td>PRODUCT_MENU_DEPLOYED</td>
-<td>//h1[@class='taglib-empty-result-message-title']</td>
+<td>//span[@class='control-menu-level-1-heading text-truncate']</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>STANDALONE_DEPLOYED</td>
-<td>//span[@class='control-menu-level-1-heading text-truncate']</td>
+<td>//h1[contains(@class,'app-builder-standalone-name')]</td>
 	<td></td>
 </tr>
 

@@ -98,12 +98,12 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER</td>
-	<td>//iframe[contains(@title,'adminEmailPasswordChangedBody')]/ancestor::div/preceding-sibling::span[contains(.,'Body')]</td>
+	<td>//div[contains(@id,'adminEmailPasswordChangedBody')]/ancestor::div/preceding-sibling::span[contains(.,'Body')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD</td>
-	<td>//iframe[contains(@title,'adminEmailPasswordChangedBody')]</td>
+	<td>//div[contains(@id,'adminEmailPasswordChangedBody')]</td>
 	<td></td>
 </tr>
 </tbody>

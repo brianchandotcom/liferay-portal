@@ -157,15 +157,17 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_disconnectDataSource(themeDisplay.getCompanyId());
-		removeCompanyPreferences(themeDisplay.getCompanyId());
-		removeConfigurationProperties(
-			themeDisplay.getCompanyId(), configurationProperties);
+		boolean disconnected = _disconnectDataSource(
+			themeDisplay.getCompanyId());
+
+		if (!disconnected) {
+			removeCompanyPreferences(themeDisplay.getCompanyId());
+			removeConfigurationProperties(
+				themeDisplay.getCompanyId(), configurationProperties);
+		}
 	}
 
-	private void _disconnectDataSource(long companyId)
-		throws Exception {
-
+	private boolean _disconnectDataSource(long companyId) throws Exception {
 		HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
 			null, companyId,
 			String.format(
@@ -178,12 +180,14 @@ public class EditWorkspaceConnectionMVCActionCommand
 		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
 			disconnectDataSource(companyId, httpResponse);
 
-			return;
+			return true;
 		}
 
 		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
 			throw new PortalException("Failed to disconnected data source");
 		}
+
+		return false;
 	}
 
 	private void _updateCompanyPreferences(

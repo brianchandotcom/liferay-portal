@@ -78,6 +78,10 @@ public class ModulesPropertiesUtil {
 			return "com.liferay.portal.kernel";
 		}
 
+		if (absolutePath.endsWith("/portal-test-integration/bnd.bnd")) {
+			return "com.liferay.portal.test.integration";
+		}
+
 		if (absolutePath.endsWith("/portal-test/bnd.bnd")) {
 			return "com.liferay.portal.test";
 		}

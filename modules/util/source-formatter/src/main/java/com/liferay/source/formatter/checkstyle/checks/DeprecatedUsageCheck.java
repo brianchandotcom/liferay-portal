@@ -739,7 +739,8 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 			File file = _getFile(
 				fullyQualifiedName, "portal-impl/src/", "portal-test/src/",
-				"portal-impl/test/integration/", "portal-impl/test/unit/");
+				"portal-test-integration/src/", "portal-impl/test/integration/",
+				"portal-impl/test/unit/");
 
 			if (file != null) {
 				return file;

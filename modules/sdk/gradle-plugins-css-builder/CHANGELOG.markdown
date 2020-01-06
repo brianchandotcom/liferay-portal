@@ -178,7 +178,9 @@ classes, so they should be considered "provided" (da7c77ffbc)
 
 ### Description
 - [LPS-76475]: Replace the `BuildCSSTask`'s `docrootDir`, `portalCommonDir`,
-`portalCommonFile`, and `portalCommonPath` properties with `baseDir`, `importDir`, `importFile`, and `importPath`. The previous properties are still available, but they are deprecated.
+`portalCommonFile`, and `portalCommonPath` properties with `baseDir`,
+`importDir`, `importFile`, and `importPath`. The previous properties are still
+available, but they are deprecated.
 - [LPS-76475]: Fix invocation of the [Liferay CSS Builder] if the
 `BuildCSSTask`'s `dirNames` property contains more than one value.
 

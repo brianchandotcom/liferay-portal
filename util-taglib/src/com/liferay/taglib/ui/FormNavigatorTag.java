@@ -83,14 +83,6 @@ public class FormNavigatorTag extends IncludeTag {
 		_categoryNames = categoryNames;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setCategorySections(String[][] categorySections) {
-		_categorySections = categorySections;
-	}
-
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
@@ -137,7 +129,6 @@ public class FormNavigatorTag extends IncludeTag {
 
 		_backURL = null;
 		_categoryNames = null;
-		_categorySections = null;
 		_displayStyle = "form";
 		_formModelBean = null;
 		_formName = "fm";
@@ -173,10 +164,6 @@ public class FormNavigatorTag extends IncludeTag {
 	}
 
 	protected String[][] getCategorySectionKeys() {
-		if (_categorySections != null) {
-			return _categorySections;
-		}
-
 		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
@@ -198,10 +185,6 @@ public class FormNavigatorTag extends IncludeTag {
 	}
 
 	protected String[][] getCategorySectionLabels() {
-		if (_categorySections != null) {
-			return _categorySections;
-		}
-
 		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
@@ -221,21 +204,6 @@ public class FormNavigatorTag extends IncludeTag {
 		}
 
 		return categorySectionLabels;
-	}
-
-	protected String[] getDeprecatedCategorySections() {
-		if (_categorySections == null) {
-			return new String[0];
-		}
-
-		String[] deprecatedCategorySections = new String[0];
-
-		for (String[] categorySection : _categorySections) {
-			deprecatedCategorySections = ArrayUtil.append(
-				deprecatedCategorySections, categorySection);
-		}
-
-		return deprecatedCategorySections;
 	}
 
 	@Override
@@ -263,9 +231,6 @@ public class FormNavigatorTag extends IncludeTag {
 			"liferay-ui:form-navigator:categorySectionLabels",
 			getCategorySectionLabels());
 		httpServletRequest.setAttribute(
-			"liferay-ui:form-navigator:deprecatedCategorySections",
-			getDeprecatedCategorySections());
-		httpServletRequest.setAttribute(
 			"liferay-ui:form-navigator:displayStyle", _displayStyle);
 		httpServletRequest.setAttribute(
 			"liferay-ui:form-navigator:formModelBean", _formModelBean);
@@ -285,7 +250,6 @@ public class FormNavigatorTag extends IncludeTag {
 
 	private String _backURL;
 	private String[] _categoryNames;
-	private String[][] _categorySections;
 	private String _displayStyle = "form";
 	private Object _formModelBean;
 	private String _formName = "fm";

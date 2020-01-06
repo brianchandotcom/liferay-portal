@@ -6862,6 +6862,11 @@ public class AssetEntryPersistenceImpl
 	}
 
 	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
 	public Map<String, Integer> getTableColumnsMap() {
 		return AssetEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -6879,6 +6884,8 @@ public class AssetEntryPersistenceImpl
 	private static final Map<CTColumnResolutionType, Set<String>>
 		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
 			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
 	private static final List<String[]> _uniqueIndexColumnNames =
 		new ArrayList<String[]>();
 
@@ -6927,6 +6934,9 @@ public class AssetEntryPersistenceImpl
 			CTColumnResolutionType.PK, Collections.singleton("entryId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_mappingTableNames.add("AssetEntries_AssetCategories");
+		_mappingTableNames.add("AssetEntries_AssetTags");
 
 		_uniqueIndexColumnNames.add(new String[] {"classNameId", "classPK"});
 	}

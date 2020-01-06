@@ -473,8 +473,7 @@ definition {
 			locale = "ca-ES");
 
 		Type(
-			key_text = "openGraphImageAlt",
-			locator1 = "TextArea#ANY",
+			locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION",
 			value1 = "Esta es una descripción de imagen alternativa");
 
 		Button.click(button = "Save");

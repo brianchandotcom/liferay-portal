@@ -29,6 +29,8 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.junit.After;
 import org.junit.Before;
@@ -50,18 +52,19 @@ public abstract class BaseUpgradePrimaryKeyTestCase {
 	public List<String> getPrimaryKeyColumnNames() throws SQLException {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-		List<String> primaryKeyColumnNames = new ArrayList<>();
+		SortedMap<Short, String> sortedPrimaryKeyColumnName = new TreeMap<>();
 
 		try (ResultSet rs = databaseMetaData.getPrimaryKeys(
 				dbInspector.getCatalog(), dbInspector.getSchema(),
 				dbInspector.normalizeName(getTableName(), databaseMetaData))) {
 
 			while (rs.next()) {
-				primaryKeyColumnNames.add(rs.getString("COLUMN_NAME"));
+				sortedPrimaryKeyColumnName.put(
+					rs.getShort("KEY_SEQ"), rs.getString("COLUMN_NAME"));
 			}
 		}
 
-		return primaryKeyColumnNames;
+		return new ArrayList(sortedPrimaryKeyColumnName.values());
 	}
 
 	@Before

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
@@ -125,6 +126,27 @@ public abstract class BaseAnalyticsMVCActionCommand
 		return configurationProperties;
 	}
 
+	protected void removeCompanyPreferences(long companyId) throws Exception {
+		companyService.removePreferences(
+			companyId,
+			new String[] {
+				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
+				"liferayAnalyticsFaroBackendSecuritySignature",
+				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",
+				"liferayAnalyticsURL"
+			});
+	}
+
+	protected void removeConfigurationProperties(
+			long companyId, Dictionary<String, Object> configurationProperties)
+		throws Exception {
+
+		configurationProperties.remove("token");
+
+		configurationProvider.deleteCompanyConfiguration(
+			AnalyticsConfiguration.class, companyId);
+	}
+
 	protected void saveCompanyConfiguration(
 			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -148,6 +170,9 @@ public abstract class BaseAnalyticsMVCActionCommand
 			ActionRequest actionRequest,
 			Dictionary<String, Object> configurationProperties)
 		throws Exception;
+
+	@Reference
+	protected CompanyService companyService;
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;

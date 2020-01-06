@@ -14,7 +14,6 @@
 
 package com.liferay.analytics.settings.web.internal.portlet.action;
 
-import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Constants;
@@ -157,8 +155,8 @@ public class EditWorkspaceConnectionMVCActionCommand
 		throws Exception {
 
 		_disconnectDataSource(actionRequest);
-		_removeCompanyPreferences(actionRequest);
-		_removeConfigurationProperties(actionRequest, configurationProperties);
+		removeCompanyPreferences(actionRequest);
+		removeConfigurationProperties(actionRequest, configurationProperties);
 	}
 
 	private void _disconnectDataSource(ActionRequest actionRequest)
@@ -188,36 +186,6 @@ public class EditWorkspaceConnectionMVCActionCommand
 		}
 	}
 
-	private void _removeCompanyPreferences(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_companyService.removePreferences(
-			themeDisplay.getCompanyId(),
-			new String[] {
-				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
-				"liferayAnalyticsFaroBackendSecuritySignature",
-				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",
-				"liferayAnalyticsURL"
-			});
-	}
-
-	private void _removeConfigurationProperties(
-			ActionRequest actionRequest,
-			Dictionary<String, Object> configurationProperties)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		configurationProperties.remove("token");
-
-		configurationProvider.deleteCompanyConfiguration(
-			AnalyticsConfiguration.class, themeDisplay.getCompanyId());
-	}
-
 	private void _updateCompanyPreferences(
 			ActionRequest actionRequest, String dataSourceConnectionJSON)
 		throws Exception {
@@ -238,7 +206,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 			unicodeProperties.setProperty(key, jsonObject.getString(key));
 		}
 
-		_companyService.updatePreferences(
+		companyService.updatePreferences(
 			themeDisplay.getCompanyId(), unicodeProperties);
 	}
 
@@ -267,9 +235,6 @@ public class EditWorkspaceConnectionMVCActionCommand
 			configurationProperties.put(key, jsonObject.getString(key));
 		}
 	}
-
-	@Reference
-	private CompanyService _companyService;
 
 	@Reference
 	private Portal _portal;

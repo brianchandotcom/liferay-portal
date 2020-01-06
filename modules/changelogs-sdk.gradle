@@ -149,7 +149,7 @@ buildChangelogs {
 
 		File changelogMarkdownFile = file("sdk/" + projectName + "/CHANGELOG.markdown")
 
-		changelogMarkdownFile.text = text.replaceAll(/(?=.{80,})(.{1,80})(?:[ \t])/, "\$1\n")
+		changelogMarkdownFile.text = text.replaceAll(/(?=.{81,})(.{1,81})(?:[ \t])/, "\$1\n")
 
 		logger.lifecycle "Updated '{}'", changelogMarkdownFile
 	}

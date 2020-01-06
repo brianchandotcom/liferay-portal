@@ -235,28 +235,22 @@ components:
                                         closes:
                                             description:
                                                 The organization's closing time (in `HH:MM` format).
-                                            readOnly: true
                                             type: string
                                         dayOfWeek:
                                             description:
                                                 The day of the week.
-                                            readOnly: true
                                             type: string
                                         opens:
                                             description:
                                                 The organization's opening time (in `HH:MM` format).
-                                            readOnly: true
                                             type: string
                                     type: object
-                                readOnly: true
                                 type: array
                             serviceType:
                                 description:
                                     The type of service the organization provides.
-                                readOnly: true
                                 type: string
                         type: object
-                    readOnly: true
                     type: array
             type: object
         OrganizationBrief:

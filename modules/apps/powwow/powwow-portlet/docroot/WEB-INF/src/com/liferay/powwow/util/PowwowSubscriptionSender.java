@@ -14,18 +14,21 @@
 
 package com.liferay.powwow.util;
 
+import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
+import javax.mail.internet.InternetAddress;
+
 /**
  * @author Evan Thibodeau
  */
 public class PowwowSubscriptionSender extends SubscriptionSender {
 
-	public String getEmailNotificationBody(Locale locale) throws Exception {
+	public String getEmailNotificationBody(Locale locale) {
 		String processedBody = null;
 
 		if (localizedBodyMap != null) {
@@ -44,10 +47,10 @@ public class PowwowSubscriptionSender extends SubscriptionSender {
 			processedBody = body;
 		}
 
-		return replaceContent(processedBody, locale, true);
+		return processedBody;
 	}
 
-	public String getEmailNotificationSubject(Locale locale) throws Exception {
+	public String getEmailNotificationSubject(Locale locale) {
 		String processedSubject = null;
 
 		if (localizedSubjectMap != null) {
@@ -66,7 +69,20 @@ public class PowwowSubscriptionSender extends SubscriptionSender {
 			processedSubject = subject;
 		}
 
-		return replaceContent(processedSubject, locale, false);
+		return processedSubject;
+	}
+
+	public MailMessage getMailMessageForPreview(Locale locale)
+		throws Exception {
+
+		MailMessage mailMessage = new MailMessage(
+			new InternetAddress(), new InternetAddress(),
+			getEmailNotificationSubject(locale),
+			getEmailNotificationBody(locale), true);
+
+		processMailMessage(mailMessage, locale);
+
+		return mailMessage;
 	}
 
 }

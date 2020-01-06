@@ -20,6 +20,7 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
+import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -536,14 +537,14 @@ public class MeetingsPortlet extends MVCPortlet {
 
 			powwowSubscriptionSender.initialize();
 
+			MailMessage mailMessage =
+				powwowSubscriptionSender.getMailMessageForPreview(
+					serviceContext.getLocale());
+
 			jsonObject.put(
-				"emailBody",
-				powwowSubscriptionSender.getEmailNotificationBody(
-					serviceContext.getLocale())
+				"emailBody", mailMessage.getBody()
 			).put(
-				"emailSubject",
-				powwowSubscriptionSender.getEmailNotificationSubject(
-					serviceContext.getLocale())
+				"emailSubject", mailMessage.getSubject()
 			).put(
 				"success", Boolean.TRUE
 			);

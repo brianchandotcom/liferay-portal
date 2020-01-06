@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
@@ -126,8 +125,6 @@ public interface VelocityTaglib {
 			String formName, String formAction, String name,
 			String[] languageIds, String displayStyle)
 		throws Exception;
-
-	public void layoutIcon(Layout layout) throws Exception;
 
 	public void metaTags() throws Exception;
 

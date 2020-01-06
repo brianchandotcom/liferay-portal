@@ -36,8 +36,14 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		var searchClientVersion = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[2]");
-		var searchEngineVendor = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[1]");
+		if (IsElementPresent(locator1 = "//div[contains(@class,'alert alert-info')]//strong[2]")) {
+			var searchClientVersion = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[2]");
+			var searchEngineVendor = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[1]");
+		}
+		else {
+			var searchClientVersion = selenium.getText("//div[contains(@class,'value')]//preceding-sibling::div[contains(.,'Client Version')]");
+			var searchEngineVendor = selenium.getText("//div[contains(@class,'value')]//preceding-sibling::div[contains(.,'Search Engine Vendor')]");
+		}
 
 		if (contains("${searchEngineVendor}", "Elasticsearch")) {
 			if (contains("${searchClientVersion}", "7.") && contains("${searchEngineVendor}", "Embedded")) {

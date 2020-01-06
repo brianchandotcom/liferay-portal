@@ -31,6 +31,8 @@ public interface CTPersistence<T extends CTModel<T>>
 	public Set<String> getCTColumnNames(
 		CTColumnResolutionType ctColumnResolutionType);
 
+	public List<String> getMappingTableNames();
+
 	public Map<String, Integer> getTableColumnsMap();
 
 	public String getTableName();

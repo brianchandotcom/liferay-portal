@@ -37,7 +37,7 @@ definition {
 			}
 		}
 
-		Panel.expandPanel(panel = "Index Actions");
+		Navigator.gotoNavItem(navItem = "Index Actions");
 
 		AssertClick.assertTextClickAt(
 			key_actionsDescription = "${actionsDescription}",

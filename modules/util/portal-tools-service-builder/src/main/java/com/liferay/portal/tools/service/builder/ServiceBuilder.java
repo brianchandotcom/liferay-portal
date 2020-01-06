@@ -1703,6 +1703,7 @@ public class ServiceBuilder {
 			methodName.equals("getCTColumnNames") ||
 			methodName.equals("getCTPersistence") ||
 			methodName.equals("getClass") ||
+			methodName.equals("getMappingTableNames") ||
 			methodName.equals("getModelClass") ||
 			methodName.equals("getService") ||
 			methodName.equals("getTableColumnsMap") ||

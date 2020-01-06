@@ -54,12 +54,15 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.OrgLaborLocalService;
 import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -75,7 +78,10 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -146,7 +152,7 @@ public class OrganizationResourceImpl
 				_getRegionId(organization, countryId), countryId,
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 				organization.getComment(), false, _getAddresses(organization),
-				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList(), _getOrgLabors(organization),
 				Collections.emptyList(), Collections.emptyList(),
 				new ServiceContext()));
 	}
@@ -259,6 +265,18 @@ public class OrganizationResourceImpl
 				_organizationService.getOrganization(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
+	}
+
+	private List<OrgLabor> _getOrgLabors(Organization organization) {
+		return Optional.ofNullable(
+			organization.getServices()
+		).map(
+			services -> ListUtil.filter(
+				TransformUtil.transformToList(services, this::_toOrgLabor),
+				Objects::nonNull)
+		).orElse(
+			Collections.emptyList()
+		);
 	}
 
 	private long _getRegionId(Organization organization, long countryId) {
@@ -377,7 +395,11 @@ public class OrganizationResourceImpl
 			listType = _listTypeLocalService.getListType(defaultName, type);
 		}
 
-		return listType.getListTypeId();
+		if (listType != null) {
+			return listType.getListTypeId();
+		}
+
+		return 0;
 	}
 
 	private Organization _toOrganization(
@@ -487,6 +509,85 @@ public class OrganizationResourceImpl
 		};
 	}
 
+	private OrgLabor _toOrgLabor(Service service) {
+		long typeId = _toListTypeId(
+			"administrative", service.getServiceType(),
+			ListTypeConstants.ORGANIZATION_SERVICE);
+
+		if (typeId == -1) {
+			return null;
+		}
+
+		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(0);
+
+		orgLabor.setTypeId(typeId);
+
+		HoursAvailable[] hoursAvailableArray = service.getHoursAvailable();
+
+		if (ArrayUtil.isEmpty(hoursAvailableArray)) {
+			return null;
+		}
+
+		orgLabor.setSunOpen(-1);
+		orgLabor.setSunClose(-1);
+		orgLabor.setMonOpen(-1);
+		orgLabor.setMonClose(-1);
+		orgLabor.setTueOpen(-1);
+		orgLabor.setTueClose(-1);
+		orgLabor.setWedOpen(-1);
+		orgLabor.setWedClose(-1);
+		orgLabor.setThuOpen(-1);
+		orgLabor.setThuClose(-1);
+		orgLabor.setFriOpen(-1);
+		orgLabor.setFriClose(-1);
+		orgLabor.setSatOpen(-1);
+		orgLabor.setSatClose(-1);
+
+		for (HoursAvailable hoursAvailable : hoursAvailableArray) {
+			String dayOfWeek = hoursAvailable.getDayOfWeek();
+
+			if (Validator.isNull(dayOfWeek)) {
+				continue;
+			}
+
+			dayOfWeek = StringUtil.toLowerCase(dayOfWeek);
+
+			int opens = _toTime(hoursAvailable.getOpens());
+			int closes = _toTime(hoursAvailable.getCloses());
+
+			if (dayOfWeek.startsWith("sun")) {
+				orgLabor.setSunOpen(opens);
+				orgLabor.setSunClose(closes);
+			}
+			else if (dayOfWeek.startsWith("mon")) {
+				orgLabor.setMonOpen(opens);
+				orgLabor.setMonClose(closes);
+			}
+			else if (dayOfWeek.startsWith("tue")) {
+				orgLabor.setTueOpen(opens);
+				orgLabor.setTueClose(closes);
+			}
+			else if (dayOfWeek.startsWith("wed")) {
+				orgLabor.setWedOpen(opens);
+				orgLabor.setWedClose(closes);
+			}
+			else if (dayOfWeek.startsWith("thu")) {
+				orgLabor.setThuOpen(opens);
+				orgLabor.setThuClose(closes);
+			}
+			else if (dayOfWeek.startsWith("fri")) {
+				orgLabor.setFriOpen(opens);
+				orgLabor.setFriClose(closes);
+			}
+			else if (dayOfWeek.startsWith("sat")) {
+				orgLabor.setSatOpen(opens);
+				orgLabor.setSatClose(closes);
+			}
+		}
+
+		return orgLabor;
+	}
+
 	private Service _toService(OrgLabor orgLabor) throws Exception {
 		ListType listType = orgLabor.getType();
 
@@ -520,6 +621,30 @@ public class OrganizationResourceImpl
 		};
 	}
 
+	private int _toTime(String timeString) {
+		if (Validator.isNotNull(timeString)) {
+			try {
+				Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+				SimpleDateFormat parseDateFormat = new SimpleDateFormat(
+					"HH:mm");
+
+				calendar.setTime(parseDateFormat.parse(timeString));
+
+				return Integer.parseInt(
+					calendar.get(Calendar.HOUR_OF_DAY) +
+						calendar.get(Calendar.MINUTE) + "");
+			}
+			catch (NumberFormatException | ParseException e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
+			}
+		}
+
+		return -1;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationResourceImpl.class);
 
@@ -543,6 +668,9 @@ public class OrganizationResourceImpl
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private OrgLaborLocalService _orgLaborLocalService;
 
 	@Reference
 	private OrgLaborService _orgLaborService;

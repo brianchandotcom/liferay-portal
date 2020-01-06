@@ -283,6 +283,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragments", editorSoyContext.get("elements")
 			).put(
+				"getAssetMappingFieldsURL",
+				editorSoyContext.get("getAssetMappingFieldsURL")
+			).put(
 				"getAvailableTemplatesURL",
 				editorSoyContext.get("getAvailableTemplatesURL")
 			).put(

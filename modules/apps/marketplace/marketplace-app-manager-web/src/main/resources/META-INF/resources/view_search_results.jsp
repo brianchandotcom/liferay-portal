@@ -17,9 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL()));
+String redirect = PortalUtil.escapeRedirect(ParamUtil.getString(request, "redirect"));
 
-redirect = PortalUtil.escapeRedirect(redirect);
+if (Validator.isNull(redirect)) {
+	redirect = String.valueOf(renderResponse.createRenderURL());
+}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

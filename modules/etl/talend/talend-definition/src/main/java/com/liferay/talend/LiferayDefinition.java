@@ -44,7 +44,7 @@ public abstract class LiferayDefinition extends AbstractComponentDefinition {
 		ComponentProperties componentProperties) {
 
 		try (SandboxedInstance sandboxedInstance = _getSandboxedInstance(
-				SOURCE_CLASS_NAME, false)) {
+				SOURCE_OR_SINK_CLASS_NAME, false)) {
 
 			OASSource oasSource = (OASSource)sandboxedInstance.getInstance();
 

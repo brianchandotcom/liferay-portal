@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutPrototypeDisplayContext layoutPrototypeDisplayContext = new LayoutPrototypeDisplayContext(renderRequest, renderResponse, request);
+LayoutPrototypeDisplayContext layoutPrototypeDisplayContext = new LayoutPrototypeDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar

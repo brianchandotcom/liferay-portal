@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(renderRequest, renderResponse, request);
+DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar

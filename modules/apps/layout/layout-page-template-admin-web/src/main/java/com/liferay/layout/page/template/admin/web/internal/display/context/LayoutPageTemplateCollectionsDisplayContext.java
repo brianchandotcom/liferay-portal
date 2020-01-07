@@ -38,12 +38,12 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutPageTemplateCollectionsDisplayContext {
 
 	public LayoutPageTemplateCollectionsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_httpServletRequest = httpServletRequest;
 	}
 
 	public String getEventName() {

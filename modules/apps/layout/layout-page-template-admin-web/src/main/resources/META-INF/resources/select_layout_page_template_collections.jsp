@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutPageTemplateCollectionsDisplayContext layoutPageTemplateCollectionsDisplayContext = new LayoutPageTemplateCollectionsDisplayContext(renderRequest, renderResponse, request);
+LayoutPageTemplateCollectionsDisplayContext layoutPageTemplateCollectionsDisplayContext = new LayoutPageTemplateCollectionsDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:management-toolbar

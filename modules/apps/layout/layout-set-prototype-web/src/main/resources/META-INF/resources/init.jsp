@@ -68,7 +68,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-LayoutSetPrototypeDisplayContext layoutSetPrototypeDisplayContext = new LayoutSetPrototypeDisplayContext(renderRequest, renderResponse, request);
+LayoutSetPrototypeDisplayContext layoutSetPrototypeDisplayContext = new LayoutSetPrototypeDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

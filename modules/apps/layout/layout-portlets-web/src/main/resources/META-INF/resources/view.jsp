@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutPortletsDisplayContext layoutPortletsDisplayContext = new LayoutPortletsDisplayContext(renderRequest, renderResponse, request);
+LayoutPortletsDisplayContext layoutPortletsDisplayContext = new LayoutPortletsDisplayContext(request, renderRequest, renderResponse);
 
 LayoutPortletsManagementToolbarDisplayContext layoutPortletsManagementToolbarDisplayContext = new LayoutPortletsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutPortletsDisplayContext);
 %>

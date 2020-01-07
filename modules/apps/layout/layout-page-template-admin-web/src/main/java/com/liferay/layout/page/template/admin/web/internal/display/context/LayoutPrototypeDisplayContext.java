@@ -40,12 +40,12 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutPrototypeDisplayContext {
 
 	public LayoutPrototypeDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_httpServletRequest = httpServletRequest;
 	}
 
 	public Boolean getActive() {

@@ -211,7 +211,7 @@ AUI.add(
 			wrapperNodeName,
 			wrapperNodeAttrs
 		) {
-			if (!AObject.isEmpty(dataAssignments)) {
+			if (dataAssignments) {
 				var assignmentType = AArray(dataAssignments.assignmentType)[0];
 
 				var xmlAssignments = XMLUtil.createObj(
@@ -435,12 +435,17 @@ AUI.add(
 							recipients[index].receptionType;
 					}
 
-					appendXMLAssignments(
-						buffer,
-						recipients[index],
-						'recipients',
-						recipientsAttrs
-					);
+					if (
+						isObject(recipients[index]) &&
+						!AObject.isEmpty(recipients[index])
+					) {
+						appendXMLAssignments(
+							buffer,
+							recipients[index],
+							'recipients',
+							recipientsAttrs
+						);
+					}
 
 					if (executionType) {
 						buffer.push(

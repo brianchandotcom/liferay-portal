@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -102,7 +105,20 @@ public class AnalyticsSettingsUtil {
 				"OSB-Asah-Faro-Backend-Security-Signature",
 				getAsahFaroBackendSecuritySignature(companyId));
 
-			return closeableHttpClient.execute(httpEntityEnclosingRequestBase);
+			HttpResponse httpResponse = closeableHttpClient.execute(
+				httpEntityEnclosingRequestBase);
+
+			HttpEntity httpEntity = httpResponse.getEntity();
+
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			httpEntity.writeTo(byteArrayOutputStream);
+
+			httpResponse.setEntity(
+				new ByteArrayEntity(byteArrayOutputStream.toByteArray()));
+
+			return httpResponse;
 		}
 	}
 

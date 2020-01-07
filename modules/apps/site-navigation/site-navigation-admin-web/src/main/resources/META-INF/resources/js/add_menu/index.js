@@ -15,15 +15,15 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {useIsMounted} from 'frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 
 function AddMenu({dropdownItems, portletId}) {
 	const [active, setActive] = useState(false);
 
 	const handleItemClick = useCallback(event => {
-		Liferay.Util.openInDialog(event.nativeEvent, {
+		event.currentTarget = event.target;
+
+		Liferay.Util.openInDialog(event.nativeEvent || event, {
 			dialog: {
 				destroyOnHide: true
 			},
@@ -32,9 +32,25 @@ function AddMenu({dropdownItems, portletId}) {
 			},
 			id: `_${portletId}_addMenuItem`,
 			title: event.target.title || event.target.innerText,
-			uri: event.target.dataset.href
+			uri: event.data.item.href || event.target.dataset.href
 		});
 	}, []);
+
+	if (!Liferay.component(adaptiveMediaProgressComponentId)) {
+		class AddMenuDefaultEventHandler {
+			handleItemClicked(event) {
+				handleItemClick(event);
+			}
+		}
+
+		Liferay.component(
+			`_${portletId}_AddMenuDefaultEventHandler`,
+			new AddMenuDefaultEventHandler(),
+			{
+				destroyOnNavigate: true
+			}
+		);
+	}
 
 	return (
 		<ClayDropDown

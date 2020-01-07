@@ -1,0 +1,9 @@
+.portlet-search-results {
+	@import 'display_card';
+	@import 'display_compact';
+	@import 'display_list';
+
+	.search-total-label {
+		margin: 16px 0;
+	}
+}

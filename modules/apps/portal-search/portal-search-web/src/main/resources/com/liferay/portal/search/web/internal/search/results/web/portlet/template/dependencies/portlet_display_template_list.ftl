@@ -10,16 +10,12 @@
 							</#if>
 
 							<#if entry.isThumbnailVisible()>
-								<img alt="blog cover image" class="img-rounded search-result-thumbnail-img" src="${entry.getThumbnailURLString()}" />
+								<img alt="${languageUtil.get(locale, "thumbnail")}" class="img-rounded search-result-thumbnail-img" src="${entry.getThumbnailURLString()}" />
 							</#if>
 
 							<#if entry.isIconVisible()>
 								<span class="search-asset-type-sticker sticker sticker-rounded sticker-secondary sticker-static">
-									<svg class="lexicon-icon">
-										<use xlink:href="${entry.getPathThemeImages()}/lexicon/icons.svg#${entry.getIconId()}" />
-
-										<title>${entry.getIconId()}</title>
-									</svg>
+									<@clay.icon symbol="${entry.getIconId()}" />
 								</span>
 							</#if>
 						</div>
@@ -50,6 +46,7 @@
 										<#if entry.isCreatorVisible()>
 											<span class="subtext-item">
 												&#183;
+
 												<@liferay.language key="written-by" />
 
 												<strong>${htmlUtil.escape(entry.getCreatorUserName())}</strong>
@@ -59,6 +56,7 @@
 										<#if entry.isCreationDateVisible()>
 											<span class="subtext-item">
 												<@liferay.language key="on-date" />
+
 												${entry.getCreationDateString()}
 											</span>
 										</#if>
@@ -82,6 +80,7 @@
 												</#if>
 
 												<span class="badge">${fieldDisplayContext.getName()}</span>
+
 												<span>${fieldDisplayContext.getValuesToString()}</span>
 
 												<#assign separate = true />
@@ -120,7 +119,7 @@
 											<table class="table">
 												<thead>
 													<tr>
-														<th style="text-align:right; ">
+														<th class="key-column">
 															<@liferay.language key="key" />
 														</th>
 														<th>
@@ -132,10 +131,10 @@
 												<tbody>
 													<#list entry.getDocumentFormFieldDisplayContexts() as fieldDisplayContext>
 														<tr>
-															<td style="padding-bottom:0; padding-top:0; text-align:right; word-break:break-all;" width="15%">
+															<td class="key-column table-details-content">
 																<strong>${htmlUtil.escape(fieldDisplayContext.getName())}</strong>
 															</td>
-															<td style="padding-bottom:0; padding-top:0;">
+															<td class="table-details-content">
 																<code>
 																	${fieldDisplayContext.getValuesToString()}
 																</code>
@@ -167,11 +166,11 @@
 
 <@liferay_aui.script use="aui-base">
 	A.one('#search-results-display-list').delegate(
-	'click',
-	function(event) {
-		var currentTarget = event.currentTarget;
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
 
-		currentTarget.siblings('.search-results-list').toggleClass('hide');
+			currentTarget.siblings('.search-results-list').toggleClass('hide');
 		},
 		'.expand-details'
 	);

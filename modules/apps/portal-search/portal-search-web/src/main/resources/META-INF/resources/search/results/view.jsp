@@ -55,33 +55,6 @@ List<SearchResultSummaryDisplayContext> searchResultSummaryDisplayContexts = sea
 SearchContainer<Document> searchContainer1 = searchResultsPortletDisplayContext.getSearchContainer();
 %>
 
-<style>
-	.taglib-asset-tags-summary a.badge, .taglib-asset-tags-summary a.badge:hover {
-		color: #65B6F0;
-	}
-
-	.search-total-label {
-		margin-top: 35px;
-	}
-
-	.search-asset-type-sticker {
-		color: #869CAD;
-	}
-
-	.search-document-content {
-		font-weight: 400;
-	}
-
-	.search-result-thumbnail-img {
-		height: 44px;
-		width: 44px;
-	}
-
-	.tabular-list-group .list-group-item-content h6.search-document-tags {
-		margin-top: 13px;
-	}
-</style>
-
 <p class="search-total-label text-default">
 	<liferay-ui:message arguments='<%= new String[] {String.valueOf(searchContainer1.getTotal()), "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"} %>' key="x-results-for-x" />
 </p>

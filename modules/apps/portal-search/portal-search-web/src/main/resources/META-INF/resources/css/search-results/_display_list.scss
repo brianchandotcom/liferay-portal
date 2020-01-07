@@ -19,4 +19,18 @@
 			}
 		}
 	}
+
+	.table-details {
+		td,
+		th {
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+
+		.key-column {
+			text-align: right;
+			width: 15%;
+			word-break: break-all;
+		}
+	}
 }

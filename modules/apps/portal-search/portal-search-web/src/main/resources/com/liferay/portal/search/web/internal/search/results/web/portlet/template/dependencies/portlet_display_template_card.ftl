@@ -6,7 +6,7 @@
 					<div class="card card-type-asset file-card">
 						<div class="aspect-ratio card-item-first">
 							<#if entry.isThumbnailVisible()>
-								<img alt="${entry.getHighlightedTitle()}" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid" src="${entry.getThumbnailURLString()}" />
+								<img alt="${entry.getTitle()}" class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid" src="${entry.getThumbnailURLString()}" />
 							<#else>
 								<div class="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid card-type-asset-icon">
 									<@clay.icon symbol="${(entry.isIconVisible())?then(entry.getIconId(),'web-content')}" />

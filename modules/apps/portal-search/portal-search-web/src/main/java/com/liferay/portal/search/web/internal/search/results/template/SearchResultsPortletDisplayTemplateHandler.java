@@ -105,7 +105,7 @@ public class SearchResultsPortletDisplayTemplateHandler
 			"document-creation-date", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreationDateString()");
 		templateVariableGroup.addVariable(
-			"document-creator-username",
+			"document-creator-user-name",
 			SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getCreatorUserName()");
 		templateVariableGroup.addVariable(

@@ -61,6 +61,10 @@ public class AnalyticsMessageSenderClientImpl
 				_analyticsConfigurationTracker.getAnalyticsConfiguration(
 					companyId);
 
+			if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
+				return null;
+			}
+
 			HttpPost httpPost = new HttpPost(
 				analyticsConfiguration.liferayAnalyticsEndpointURL() +
 					"/dxp-entities");

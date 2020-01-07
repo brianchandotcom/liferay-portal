@@ -168,6 +168,10 @@ public class EditWorkspaceConnectionMVCActionCommand
 	}
 
 	private boolean _disconnectDataSource(long companyId) throws Exception {
+		if (!AnalyticsSettingsUtil.isAnalyticsEnabled(companyId)) {
+			return false;
+		}
+
 		HttpResponse httpResponse = AnalyticsSettingsUtil.doPost(
 			null, companyId,
 			String.format(

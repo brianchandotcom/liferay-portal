@@ -63,6 +63,11 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 		return validationResult;
 	}
 
+	@Override
+	protected String getLiferayConnectionPropertiesPath() {
+		return "resource." + super.getLiferayConnectionPropertiesPath();
+	}
+
 	private LiferayOutputProperties _liferayOutputProperties;
 
 }

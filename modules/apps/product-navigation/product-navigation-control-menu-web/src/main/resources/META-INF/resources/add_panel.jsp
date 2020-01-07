@@ -89,11 +89,15 @@
 
 						<c:if test="<%= hasAddApplicationsPermission && hasAddContentPermission %>">
 							<aui:script>
-								$('#<portlet:namespace />Accordion').on('show.bs.collapse', function(event) {
-									Liferay.Util.Session.set(
-										'com.liferay.product.navigation.control.menu.web_addPanelTab',
-										event.target.getAttribute('data-value')
-									);
+								Liferay.on('liferay.collapse.show', function(event) {
+									var panelId = event.panel.getAttribute('id');
+
+									if (panelId === '#<portlet:namespace />Accordion') {
+										Liferay.Util.Session.set(
+											'com.liferay.product.navigation.control.menu.web_addPanelTab',
+											event.target.getAttribute('data-value')
+										);
+									}
 								});
 							</aui:script>
 						</c:if>

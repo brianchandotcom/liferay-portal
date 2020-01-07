@@ -54,6 +54,10 @@ class CollapseProvider {
 	}
 
 	hide = ({panel, trigger}) => {
+		if (panel && !trigger) {
+			trigger = this._getTrigger(panel);
+		}
+
 		if (!panel) {
 			panel = this._getPanel(trigger);
 		}
@@ -96,6 +100,10 @@ class CollapseProvider {
 	};
 
 	show = ({panel, trigger}) => {
+		if (panel && !trigger) {
+			trigger = this._getTrigger(panel);
+		}
+
 		if (!panel) {
 			panel = this._getPanel(trigger);
 		}
@@ -164,6 +172,10 @@ class CollapseProvider {
 
 	_getPanel(trigger) {
 		return document.querySelector(trigger.getAttribute('href'));
+	}
+
+	_getTrigger(panel) {
+		return document.querySelector(`[href="${panel.getAttribute('id')}"]`);
 	}
 
 	_onTriggerClick = event => {

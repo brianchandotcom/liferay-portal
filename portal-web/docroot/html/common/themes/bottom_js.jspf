@@ -159,10 +159,15 @@ if (layout != null) {
 
 		if (navBlock) {
 			if (A.UA.touchMobile) {
-				AUI.$(Liferay.Data.NAV_SELECTOR_MOBILE).one(
-					'shown.bs.collapse',
-					function() {
-						Liferay.fire('initNavigation');
+				var panel = document.querySelector(Liferay.Data.NAV_SELECTOR_MOBILE);
+
+				Liferay.on('liferay.collapse.shown',
+					function(event) {
+						var panelId = event.panel.geAttribute('id');
+
+						if (panelId === panel.geAttribute('id')) {
+							Liferay.fire('initNavigation');
+						}
 					}
 				);
 			}

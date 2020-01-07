@@ -115,7 +115,9 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 		<aui:script sandbox="<%= true %>">
 			var focusField;
 
-			var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
+			var sectionContent = document.querySelector(
+				'#<%= _getSectionId(errorSection) %>Content'
+			);
 
 			<%
 			String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
@@ -123,25 +125,29 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(focusField) %>">
-					focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
+					focusField = sectionContent.querySelector(
+						'#<portlet:namespace /><%= focusField %>'
+					);
 				</c:when>
 				<c:otherwise>
-					focusField = sectionContent.find('input:not([type="hidden"]).field').first();
+					focusField = sectionContent.querySelector('input:not([type="hidden"]).field');
 				</c:otherwise>
 			</c:choose>
 
 			Liferay.once('<portlet:namespace />formReady', function(event) {
-				var hasFocusField = focusField.length;
+				if (!sectionContent.classList.contains('show')) {
+					if (focusField) {
+						Liferay.on('liferay.collapse.shown', function(event) {
+							var panelId = event.panel.getAttribute('id');
 
-				if (!sectionContent.hasClass('in')) {
-					if (hasFocusField) {
-						sectionContent.one('shown.bs.collapse', function() {
-							Liferay.Util.focusFormField(focusField);
+							if (panelId === sectionContent.getAttribute('id')) {
+								Liferay.Util.focusFormField(focusField);
+							}
 						});
 					}
 
-					sectionContent.collapse('show');
-				} else if (hasFocusField) {
+					Liferay.CollapseProvider.show(sectionContent);
+				} else if (focusField) {
 					Liferay.Util.focusFormField(focusField);
 				}
 			});

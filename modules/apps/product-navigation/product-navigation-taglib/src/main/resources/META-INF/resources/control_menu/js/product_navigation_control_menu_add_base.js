@@ -15,8 +15,6 @@
 AUI.add(
 	'liferay-product-navigation-control-menu-add-base',
 	A => {
-		var $ = AUI.$;
-
 		var DDM = A.DD.DDM;
 		var Lang = A.Lang;
 
@@ -33,11 +31,9 @@ AUI.add(
 
 		var DATA_PORTLET_ID = 'data-portlet-id';
 
-		var EVENT_SHOWN_BS_COLLAPSE = 'shown.bs.collapse';
+		var EVENT_SHOWN_COLLAPSE = 'liferay.collapse.shown';
 
 		var PROXY_NODE_ITEM = Layout.PROXY_NODE_ITEM;
-
-		var STR_DOT = '.';
 
 		var STR_EMPTY = '';
 
@@ -80,22 +76,27 @@ AUI.add(
 				_bindUIDABase() {
 					var instance = this;
 
-					var panelBody = $(Util.getDOM(instance._panelBody));
+					var panelBody = Util.getDOM(instance._panelBody);
 
-					var listGroupPanel = panelBody.find('.list-group-panel');
-
-					var eventType =
-						EVENT_SHOWN_BS_COLLAPSE + STR_DOT + instance._guid;
-
-					instance._jqueryEventHandles.push(
-						panelBody.on(
-							eventType,
-							$.proxy(instance._focusOnItem, instance)
-						),
-						listGroupPanel.on(eventType, event => {
-							event.stopPropagation();
-						})
+					var listGroupPanel = panelBody.querySelectorAll(
+						'.list-group-panel'
 					);
+
+					var eventType = EVENT_SHOWN_COLLAPSE;
+
+					Liferay.on(eventType, event => {
+						var panelId = event.panel.getAttribute('id');
+
+						if (panelId === panelBody.getAttribute('id')) {
+							instance._focusOnItem.call(instance);
+						}
+
+						listGroupPanel.forEach(element => {
+							if (panelId === element.getAttribute('id')) {
+								event.stopPropagation();
+							}
+						});
+					});
 				},
 
 				_disablePortletEntry(portletId) {
@@ -255,12 +256,6 @@ AUI.add(
 					var instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
-
-					A.Array.invoke(
-						instance._jqueryEventHandles,
-						'off',
-						STR_DOT + instance._guid
-					);
 				},
 
 				initializer() {
@@ -278,7 +273,6 @@ AUI.add(
 					instance._guid = A.stamp(instance);
 
 					instance._eventHandles = [];
-					instance._jqueryEventHandles = [];
 
 					instance._bindUIDABase();
 				}

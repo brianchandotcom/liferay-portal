@@ -29,20 +29,26 @@
 
 	<c:if test="<%= persistState %>">
 		<aui:script position="auto">
-			var collapse = $('#<%= id %>');
+			Liferay.on('liferay.collapse.hidden', function(event) {
+				var panelId = event.panel.getAttribute('id');
 
-			collapse.on('hidden.bs.collapse', function(event) {
-				Liferay.Util.Session.set(
-					'<%= PanelCategory.class.getName() %><%= id %>',
-					'closed'
-				);
+				if (panelId === '<%= id %>') {
+					Liferay.Util.Session.set(
+						'<%= PanelCategory.class.getName() %><%= id %>',
+						'closed'
+					);
+				}
 			});
 
-			collapse.on('shown.bs.collapse', function(event) {
-				Liferay.Util.Session.set(
-					'<%= PanelCategory.class.getName() %><%= id %>',
-					'open'
-				);
+			Liferay.on('liferay.collapse.shown', function(event) {
+				var panelId = event.panel.getAttribute('id');
+
+				if (panelId === '<%= id %>') {
+					Liferay.Util.Session.set(
+						'<%= PanelCategory.class.getName() %><%= id %>',
+						'open'
+					);
+				}
 			});
 		</aui:script>
 	</c:if>

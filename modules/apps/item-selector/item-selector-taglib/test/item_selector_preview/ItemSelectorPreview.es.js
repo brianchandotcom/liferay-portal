@@ -62,6 +62,7 @@ describe('ItemSelectorPreview', () => {
 	beforeAll(() => {
 		Liferay.SideNavigation = jest.fn();
 		Liferay.SideNavigation.initialize = jest.fn();
+		Liferay.component = jest.fn();
 	});
 
 	afterEach(cleanup);

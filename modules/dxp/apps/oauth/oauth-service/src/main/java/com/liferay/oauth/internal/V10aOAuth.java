@@ -344,7 +344,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		if (_log.isDebugEnabled()) {
 			_portalCache.registerPortalCacheListener(
-				new V10aOAuthDebugCacheListener<>());
+				new V10aOAuthDebugCacheListener());
 		}
 	}
 
@@ -430,8 +430,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 	@Reference
 	private SingleVMPool _singleVMPool;
 
-	private static class V10aOAuthDebugCacheListener<K extends Serializable, V>
-		implements PortalCacheListener<K, V> {
+	private static class V10aOAuthDebugCacheListener
+		implements PortalCacheListener<Serializable, Object> {
 
 		@Override
 		public void dispose() {
@@ -439,7 +439,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		@Override
 		public void notifyEntryEvicted(
-				PortalCache<K, V> portalCache, K key, V value, int timeToLive)
+				PortalCache<Serializable, Object> portalCache, Serializable key,
+				Object value, int timeToLive)
 			throws PortalCacheException {
 
 			logDebug("Entry evicted", key, value);
@@ -447,7 +448,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		@Override
 		public void notifyEntryExpired(
-				PortalCache<K, V> portalCache, K key, V value, int timeToLive)
+				PortalCache<Serializable, Object> portalCache, Serializable key,
+				Object value, int timeToLive)
 			throws PortalCacheException {
 
 			logDebug("Entry expired", key, value);
@@ -455,7 +457,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		@Override
 		public void notifyEntryPut(
-				PortalCache<K, V> portalCache, K key, V value, int timeToLive)
+				PortalCache<Serializable, Object> portalCache, Serializable key,
+				Object value, int timeToLive)
 			throws PortalCacheException {
 
 			logDebug("Entry put", key, value);
@@ -463,7 +466,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		@Override
 		public void notifyEntryRemoved(
-				PortalCache<K, V> portalCache, K key, V value, int timeToLive)
+				PortalCache<Serializable, Object> portalCache, Serializable key,
+				Object value, int timeToLive)
 			throws PortalCacheException {
 
 			logDebug("Entry removed", key, value);
@@ -471,14 +475,16 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 
 		@Override
 		public void notifyEntryUpdated(
-				PortalCache<K, V> portalCache, K key, V value, int timeToLive)
+				PortalCache<Serializable, Object> portalCache, Serializable key,
+				Object value, int timeToLive)
 			throws PortalCacheException {
 
 			logDebug("Entry updated", key, value);
 		}
 
 		@Override
-		public void notifyRemoveAll(PortalCache<K, V> portalCache)
+		public void notifyRemoveAll(
+				PortalCache<Serializable, Object> portalCache)
 			throws PortalCacheException {
 
 			if (_log.isDebugEnabled()) {
@@ -486,7 +492,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 			}
 		}
 
-		protected void logDebug(String method, K key, V value) {
+		protected void logDebug(String method, Serializable key, Object value) {
 			if (!_log.isDebugEnabled()) {
 				return;
 			}

@@ -123,7 +123,7 @@ public class UpgradeJournal extends UpgradeProcess {
 				PortalUtil.getClassNameId(JournalArticle.class),
 				clazz.getClassLoader(),
 				"com/liferay/journal/internal/upgrade/v1_0_0/dependencies" +
-				"/basic-web-content-structure.xml",
+					"/basic-web-content-structure.xml",
 				new ServiceContext());
 		}
 		finally {

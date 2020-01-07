@@ -140,7 +140,7 @@ request.setAttribute("view_user.jsp-user", user2);
 				</aui:col>
 			</aui:row>
 
-			<div class="field-group lfr-detail-info" data-sectionId="details" data-title="<%= LanguageUtil.get(request, "details") %>">
+			<div class="field-group lfr-detail-info" data-title="<%= LanguageUtil.get(request, "details") %>">
 
 				<%
 				PortletURL editDetailsURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
@@ -291,7 +291,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 									<c:choose>
 										<c:when test="<%= !assetTags.isEmpty() %>">
-											<div class="field-group user-tags-wrapper" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
+											<div class="field-group user-tags-wrapper" data-title="<%= LanguageUtil.get(request, "tags") %>">
 
 												<%
 												PortletURL editCategorizationURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
@@ -353,67 +353,4 @@ request.setAttribute("view_user.jsp-user", user2);
 			</c:if>
 		</c:if>
 	</div>
-</c:if>
-
-<c:if test="<%= themeDisplay.getUserId() == user2.getUserId() %>">
-	<aui:script use="aui-base,liferay-util-window">
-			var contactsProfile = A.one('#<portlet:namespace />contactsProfile');
-
-			contactsProfile.delegate(
-				'click',
-				function(event) {
-					var node = event.target;
-
-					var tagName = node.get('tagName');
-
-					if (!tagName || tagName.toLowerCase() != 'a') {
-						<portlet:namespace />openDialog(event);
-					}
-				},
-				'.field-group, .action-field'
-			);
-
-			var <portlet:namespace />openDialog = function(event) {
-				var node = event.currentTarget;
-
-				var uri =
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/user/edit_user_dialogs.jsp" /></portlet:renderURL>';
-
-				if (node.getAttribute('data-sectionId')) {
-					uri =
-						Liferay.Util.addParams(
-							'<portlet:namespace />curSectionId=' +
-								node.getAttribute('data-sectionId'),
-							uri
-						) || uri;
-				}
-
-				if (node.getAttribute('data-extension')) {
-					uri =
-						Liferay.Util.addParams(
-							'<portlet:namespace />extension=' +
-								node.getAttribute('data-extension'),
-							uri
-						) || uri;
-				}
-
-				var dialog = Liferay.Util.Window.getWindow({
-					dialog: {
-						align: {
-							node: null,
-							points: ['tc', 'tc']
-						},
-						constrain2view: true,
-						cssClass: 'profile-dialog',
-						destroyOnClose: true,
-						modal: true,
-						resizable: false,
-						width: 800
-					},
-					id: '<portlet:namespace />Dialog',
-					title: node.getAttribute('data-title'),
-					uri: uri
-				});
-			};
-	</aui:script>
 </c:if>

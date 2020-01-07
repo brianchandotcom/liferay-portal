@@ -18,14 +18,14 @@ export class MockRouter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {client, clientHeadless, page = 1, query, sort} = this.props;
+		const {client, getClient, page = 1, query, sort} = this.props;
 
 		this.contextState = {
 			client,
-			clientHeadless,
 			companyId: 1,
 			defaultDelta: 20,
 			deltas: [5, 10, 20, 30, 50, 75],
+			getClient,
 			maxPages: 3,
 			namespace: 'workflow_',
 			page,

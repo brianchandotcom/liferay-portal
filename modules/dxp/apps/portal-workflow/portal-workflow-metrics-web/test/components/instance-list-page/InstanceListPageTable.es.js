@@ -13,7 +13,7 @@ import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {Table} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageTable.es';
-import {SingleReassignModalContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/single-reassign/SingleReassignModal.es';
+import {ModalContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalContext.es';
 import {InstanceListContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/store/InstanceListPageStore.es';
 
 const instances = [
@@ -42,11 +42,11 @@ describe('The instance list table should', () => {
 	test('Be rendered with two items', () => {
 		const {getAllByTestId} = render(
 			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<SingleReassignModalContext.Provider
-					value={{setShowModal: () => {}, showModal: false}}
+				<ModalContext.Provider
+					value={{setSingleModal: () => {}, singleModal: false}}
 				>
 					<Table items={instances} />
-				</SingleReassignModalContext.Provider>
+				</ModalContext.Provider>
 			</InstanceListContext.Provider>
 		);
 

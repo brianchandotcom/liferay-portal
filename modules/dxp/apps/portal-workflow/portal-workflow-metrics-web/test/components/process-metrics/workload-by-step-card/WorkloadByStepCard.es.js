@@ -31,7 +31,7 @@ test('Should component receive props', () => {
 	};
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router client={fetch(data)} getClient={jest.fn(() => fetch(data))}>
 			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
 		</Router>
 	);
@@ -49,7 +49,10 @@ test('Should component receive props', () => {
 
 test('Should component set error state after request fails', () => {
 	const component = mount(
-		<Router client={fetchFailure()}>
+		<Router
+			client={fetchFailure()}
+			getClient={jest.fn(() => fetchFailure())}
+		>
 			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
 		</Router>
 	);
@@ -69,7 +72,7 @@ test('Should component set error state after request fails', () => {
 
 test('Should component shows empty state when items is undefined', () => {
 	const component = mount(
-		<Router client={fetch({})}>
+		<Router client={fetch({})} getClient={jest.fn(() => fetch({}))}>
 			<WorkloadByStepCard />
 		</Router>
 	);
@@ -85,7 +88,7 @@ test('Should component shows empty state when items is undefined', () => {
 
 test('Should not reload component while loading state is true', () => {
 	const component = mount(
-		<Router client={fetch(null)}>
+		<Router client={fetch(null)} getClient={jest.fn(() => fetch(null))}>
 			<WorkloadByStepCard
 				page={1}
 				pageSize={10}
@@ -118,7 +121,7 @@ test('Should render component', () => {
 	};
 
 	const component = mount(
-		<Router client={fetch(data)}>
+		<Router client={fetch(data)} getClient={jest.fn(() => fetch(data))}>
 			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
 		</Router>
 	);
@@ -137,7 +140,7 @@ test('Should render component with empty data', () => {
 	};
 
 	const component = renderer.create(
-		<Router client={fetch(data)}>
+		<Router client={fetch(data)} getClient={jest.fn(() => fetch(data))}>
 			<WorkloadByStepCard processId={35315} />
 		</Router>
 	);
@@ -149,7 +152,10 @@ test('Should render component with empty data', () => {
 
 test('Should render component with error state', () => {
 	const component = renderer.create(
-		<Router client={fetchFailure()}>
+		<Router
+			client={fetchFailure()}
+			getClient={jest.fn(() => fetchFailure())}
+		>
 			<WorkloadByStepCard processId={35315} />
 		</Router>
 	);

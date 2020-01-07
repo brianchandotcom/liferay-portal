@@ -36,7 +36,9 @@ const clientMock = {
 };
 
 const MockContext = ({children}) => (
-	<MockRouter client={clientMock}>{children}</MockRouter>
+	<MockRouter client={clientMock} getClient={jest.fn(() => clientMock)}>
+		{children}
+	</MockRouter>
 );
 
 describe('The workload by assignee page body should', () => {

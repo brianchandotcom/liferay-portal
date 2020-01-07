@@ -35,7 +35,12 @@ describe('The pending items card component should', () => {
 		};
 
 		const wrapper = ({children}) => (
-			<MockRouter client={clientMock}>{children}</MockRouter>
+			<MockRouter
+				client={clientMock}
+				getClient={jest.fn(() => clientMock)}
+			>
+				{children}
+			</MockRouter>
 		);
 
 		const renderResult = render(

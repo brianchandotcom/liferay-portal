@@ -443,7 +443,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 				Object value, int timeToLive)
 			throws PortalCacheException {
 
-			logDebug("Entry evicted", key, value);
+			_logDebug("Entry evicted", key, value);
 		}
 
 		@Override
@@ -452,7 +452,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 				Object value, int timeToLive)
 			throws PortalCacheException {
 
-			logDebug("Entry expired", key, value);
+			_logDebug("Entry expired", key, value);
 		}
 
 		@Override
@@ -461,7 +461,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 				Object value, int timeToLive)
 			throws PortalCacheException {
 
-			logDebug("Entry put", key, value);
+			_logDebug("Entry put", key, value);
 		}
 
 		@Override
@@ -470,7 +470,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 				Object value, int timeToLive)
 			throws PortalCacheException {
 
-			logDebug("Entry removed", key, value);
+			_logDebug("Entry removed", key, value);
 		}
 
 		@Override
@@ -479,7 +479,7 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 				Object value, int timeToLive)
 			throws PortalCacheException {
 
-			logDebug("Entry updated", key, value);
+			_logDebug("Entry updated", key, value);
 		}
 
 		@Override
@@ -492,7 +492,10 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 			}
 		}
 
-		protected void logDebug(String method, Serializable key, Object value) {
+		private V10aOAuthDebugCacheListener() {
+		}
+
+		private void _logDebug(String method, Serializable key, Object value) {
 			if (!_log.isDebugEnabled()) {
 				return;
 			}

@@ -51,58 +51,6 @@ describe('The instance list item should', () => {
 		expect(taskNamesCell.innerHTML).toBe('Review, Update');
 	});
 
-	test('Be rendered with check icon when the slaStatus is "OnTime"', () => {
-		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
-					<Table.Item {...instance} slaStatus="OnTime" />
-				</ModalContext.Provider>
-			</InstanceListContext.Provider>
-		);
-
-		const instanceStatusIcon = getByTestId('icon');
-
-		expect([...instanceStatusIcon.classList]).toContain(
-			'lexicon-icon-check-circle'
-		);
-	});
-
-	test('Be rendered with exclamation icon when the slaStatus is "Overdue"', () => {
-		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
-					<Table.Item {...instance} slaStatus="Overdue" />
-				</ModalContext.Provider>
-			</InstanceListContext.Provider>
-		);
-
-		const instanceStatusIcon = getByTestId('icon');
-
-		expect([...instanceStatusIcon.classList]).toContain(
-			'lexicon-icon-exclamation-circle'
-		);
-	});
-
-	test('Be rendered with hr icon when the slaStatus is "Untracked"', () => {
-		const {getByTestId} = render(
-			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
-				>
-					<Table.Item {...instance} slaStatus="Untracked" />
-				</ModalContext.Provider>
-			</InstanceListContext.Provider>
-		);
-
-		const instanceStatusIcon = getByTestId('icon');
-
-		expect([...instanceStatusIcon.classList]).toContain('lexicon-icon-hr');
-	});
-
 	test('Call setInstanceId with "1" as instance id param', () => {
 		const contextMock = {setInstanceId: jest.fn()};
 		instance.status = 'Completed';
@@ -152,5 +100,49 @@ describe('The InstanceListPageItem quick action menu should', () => {
 
 		fireEvent.click(reassignTaskButton);
 		expect(setSingleModal).toHaveBeenCalledTimes(1);
+	});
+});
+
+describe('The InstanceListPageItem instance checkbox component should', () => {
+	afterEach(cleanup);
+
+	const instance = {
+		assetTitle: 'New Post',
+		assetType: 'Blog',
+		dateCreated: new Date('2019-01-01'),
+		id: 1
+	};
+
+	let selectedItems = [];
+	const setSelectedItems = jest.fn(value => {
+		selectedItems = value;
+	});
+
+	test('Set checkbox value by clicking it', () => {
+		const {getByTestId} = render(
+			<InstanceListContext.Provider
+				value={{
+					selectedItems,
+					setInstanceId: jest.fn(),
+					setSelectedItems
+				}}
+			>
+				<ModalContext.Provider
+					value={{setSingleModal: () => {}, singleModal: false}}
+				>
+					<Table.Item {...instance} />
+				</ModalContext.Provider>
+			</InstanceListContext.Provider>
+		);
+
+		const instanceCheckbox = getByTestId('instanceCheckbox');
+
+		expect(instanceCheckbox.checked).toEqual(false);
+
+		fireEvent.click(instanceCheckbox);
+		expect(instanceCheckbox.checked).toEqual(true);
+
+		fireEvent.click(instanceCheckbox);
+		expect(instanceCheckbox.checked).toEqual(false);
 	});
 });

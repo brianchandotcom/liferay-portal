@@ -1056,6 +1056,10 @@ public class PoshiRunnerValidation {
 
 		Class<?> clazz = null;
 
+		if (className.matches("[\\w]*")) {
+			className = "com.liferay.poshi.runner.util." + className;
+		}
+
 		try {
 			clazz = Class.forName(className);
 		}

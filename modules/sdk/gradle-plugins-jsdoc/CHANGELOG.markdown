@@ -2,25 +2,34 @@
 
 ## 1.0.1 - 2018-01-02
 
-### Changed
-- [LPS-74904]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-74904]: Update the com.liferay.gradle.plugins.node dependency to version
 4.0.1.
 
 ## 1.0.2 - 2018-01-17
 
-### Changed
-- [LPS-76644]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Commits
+- [LRDOCS-4111]: Add Gradle test (1660ac9090)
+- [LPS-76644]: Enable Gradle plugin publishing (2c44959163)
+
+### Dependencies
+- [LPS-76644]: Update the com.liferay.gradle.plugins.node dependency to version
 4.0.2.
 
 ## 1.0.3 - 2018-02-08
 
-### Changed
-- [LPS-69802]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-69802]: Update the com.liferay.gradle.plugins.node dependency to version
 4.1.0.
+
+## 1.0.4 - 2018-02-08
+
+### Commits
+- [LPS-77840]: Fix Gradle plugins publishing (476af030e7)
 
 ## 2.0.0 - 2018-02-08
 
-### Added
+### Description
 - [LPS-77840]: Add the new plugin `com.liferay.app.jsdoc` to generate the
 JavaScript documentation as a single, combined HTML document for an application
 that spans different subprojects, each one representing a different component of
@@ -28,130 +37,283 @@ the same application.
 
 ## 2.0.1 - 2018-02-13
 
-### Changed
-- [LPS-77996]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-77996]: Update the com.liferay.gradle.plugins.node dependency to version
 4.2.0.
 
 ## 2.0.2 - 2018-03-15
 
-### Changed
-- [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Commits
+- [LPS-77425]: Partial revert of d25f48516a9ad080bcbd50e228979853d3f2dda5
+(60d3a950d6)
+- [LPS-77425]: Increment all major versions (d25f48516a)
+
+### Dependencies
+- [LPS-78741]: Update the com.liferay.gradle.plugins.node dependency to version
 4.3.0.
+- [LPS-77425]: Update the com.liferay.gradle.plugins.node dependency to version
+4.2.0.
 
 ## 2.0.3 - 2018-03-22
 
-### Changed
-- [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-78741]: Update the com.liferay.gradle.plugins.node dependency to version
 4.3.1.
 
 ## 2.0.4 - 2018-03-30
 
-### Changed
-- [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-78741]: Update the com.liferay.gradle.plugins.node dependency to version
 4.3.2.
 
 ## 2.0.5 - 2018-04-05
 
-### Changed
-- [LPS-78741]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-78741]: Update the com.liferay.gradle.plugins.node dependency to version
 4.3.3.
 
 ## 2.0.6 - 2018-05-07
 
-### Changed
-- [LPS-75530]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-75530]: Update the com.liferay.gradle.plugins.node dependency to version
 4.3.4.
 
 ## 2.0.7 - 2018-06-08
 
-### Changed
-- [LPS-82130]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-82310]: Update the com.liferay.gradle.plugins.node dependency to version
 4.3.5.
 
 ## 2.0.8 - 2018-06-22
 
-### Changed
-- [LPS-82568]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-82568]: Update the com.liferay.gradle.plugins.node dependency to version
 4.4.0.
 
 ## 2.0.9 - 2018-10-03
 
-### Changed
-- [LPS-85959]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Commits
+- [LPS-71117]: Test plugins with Gradle up to 3.5.1 (c3e12d1cf3)
+
+### Dependencies
+- [LPS-85959]: Update the com.liferay.gradle.plugins.node dependency to version
 4.4.1.
 
 ## 2.0.10 - 2018-10-09
 
-### Changed
-- [LPS-85959]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-85959]: Update the com.liferay.gradle.plugins.node dependency to version
 4.4.2.
 
 ## 2.0.11 - 2018-10-22
 
-### Changed
-- [LPS-86576]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-86576]: Update the com.liferay.gradle.plugins.node dependency to version
 4.4.3.
 
 ## 2.0.12 - 2018-11-16
 
-### Changed
-- [LPS-87465]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Commits
+- [LPS-87192]: Set the Eclipse task property gradleVersion (040b2abdee)
+- [LPS-87192]: Add variable gradleVersion (no logic changes) (2f7c0b2fe4)
+- [LPS-85609]: Fix for CI (test only 4.10.2) (4eed005731)
+- [LPS-85609]: Test plugins up to Gradle 4.10.2 (60905bc960)
+- [LPS-86589]: Test Gradle plugins from Gradle 2.14.1 to 3.5.1 (6df521a506)
+
+### Dependencies
+- [LPS-87465]: Update the com.liferay.gradle.plugins.node dependency to version
 4.5.0.
+- [LPS-87466]: Update the com.liferay.gradle.plugins.node dependency to version
+4.4.4.
 
 ## 2.0.13 - 2019-01-07
 
-### Changed
-- [LPS-87479]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Commits
+- [LPS-85609]: Simplify gradleTest (a8b0feff31)
+- [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
+
+### Dependencies
+- [LPS-87479]: Update the com.liferay.gradle.plugins.node dependency to version
 4.6.0.
+- [LPS-87466]: Update the com.liferay.gradle.plugins.node dependency to version
+4.5.1.
 
 ## 2.0.14 - 2019-01-09
 
-### Changed
-- [LPS-88909]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-88909]: Update the com.liferay.gradle.plugins.node dependency to version
 4.6.1.
 
 ## 2.0.15 - 2019-01-09
 
-### Changed
-- [LPS-87479]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-87479]: Update the com.liferay.gradle.plugins.node dependency to version
 4.6.2.
 
 ## 2.0.16 - 2019-01-14
 
-### Changed
-- [LPS-89126]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-89126]: Update the com.liferay.gradle.plugins.node dependency to version
 4.6.3.
 
 ## 2.0.17 - 2019-01-16
 
-### Changed
-- [LPS-88909]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-88909]: Update the com.liferay.gradle.plugins.node dependency to version
 4.6.4.
-
-## 2.0.18 - 2019-01-16
-
-*No changes.*
 
 ## 2.0.19 - 2019-01-24
 
-### Changed
-- [LPS-89369]: Update the [Liferay Gradle Plugins Node] dependency to version
+### Dependencies
+- [LPS-89436]: Update the com.liferay.gradle.plugins.node dependency to version
 4.6.5.
 
-[Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
-[LPS-69802]: https://issues.liferay.com/browse/LPS-69802
-[LPS-74904]: https://issues.liferay.com/browse/LPS-74904
-[LPS-75530]: https://issues.liferay.com/browse/LPS-75530
-[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
-[LPS-77840]: https://issues.liferay.com/browse/LPS-77840
-[LPS-77996]: https://issues.liferay.com/browse/LPS-77996
-[LPS-78741]: https://issues.liferay.com/browse/LPS-78741
-[LPS-82130]: https://issues.liferay.com/browse/LPS-82130
-[LPS-82568]: https://issues.liferay.com/browse/LPS-82568
-[LPS-85959]: https://issues.liferay.com/browse/LPS-85959
-[LPS-86576]: https://issues.liferay.com/browse/LPS-86576
-[LPS-87465]: https://issues.liferay.com/browse/LPS-87465
-[LPS-87479]: https://issues.liferay.com/browse/LPS-87479
-[LPS-88909]: https://issues.liferay.com/browse/LPS-88909
-[LPS-89126]: https://issues.liferay.com/browse/LPS-89126
-[LPS-89369]: https://issues.liferay.com/browse/LPS-89369
+## 2.0.20 - 2019-02-04
+
+### Dependencies
+- [LPS-89916]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.6.
+
+## 2.0.21 - 2019-02-20
+
+### Dependencies
+- [LPS-90945]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.7.
+
+## 2.0.22 - 2019-03-20
+
+### Dependencies
+- [LPS-91967]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.8.
+
+## 2.0.23 - 2019-04-03
+
+### Dependencies
+- [LPS-93258]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.9.
+
+## 2.0.24 - 2019-04-10
+
+### Dependencies
+- [LRDOCS-6412]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.10.
+
+## 2.0.25 - 2019-04-11
+
+### Dependencies
+- [LPS-91967]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.11.
+
+## 2.0.26 - 2019-04-25
+
+### Dependencies
+- [LPS-77425]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.12.
+
+## 2.0.27 - 2019-05-01
+
+### Dependencies
+- [LPS-91967]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.13.
+
+## 2.0.28 - 2019-05-06
+
+### Dependencies
+- [LPS-91967]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.14.
+
+## 2.0.29 - 2019-05-06
+
+### Dependencies
+- [LPS-94947]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.15.
+
+## 2.0.30 - 2019-05-24
+
+### Dependencies
+- [LPS-88909]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.16.
+
+## 2.0.32 - 2019-06-10
+
+### Dependencies
+- [LPS-93220]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.17.
+
+## 2.0.33 - 2019-06-21
+
+### Dependencies
+- [LPS-96247]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.18.
+
+## 2.0.35 - 2019-08-13
+
+### Dependencies
+- [LPS-99740]: Update the com.liferay.gradle.plugins.node dependency to version
+4.6.19.
+
+## 2.0.36 - 2019-08-14
+
+### Dependencies
+- [LPS-99774]: Update the com.liferay.gradle.plugins.node dependency to version
+4.7.0.
+
+## 2.0.37 - 2019-08-19
+
+### Dependencies
+- [LPS-99977]: Update the com.liferay.gradle.plugins.node dependency to version
+4.7.1.
+
+## 2.0.38 - 2019-08-21
+
+### Dependencies
+- [LPS-100168]: Update the com.liferay.gradle.plugins.node dependency to version
+4.8.0.
+
+## 2.0.39 - 2019-08-24
+
+### Dependencies
+- [LPS-100168]: Update the com.liferay.gradle.plugins.node dependency to version
+4.9.0.
+
+## 2.0.40 - 2019-08-28
+
+### Dependencies
+- [LPS-100163]: Update the com.liferay.gradle.plugins.node dependency to version
+5.0.0.
+
+## 2.0.41 - 2019-09-16
+
+### Dependencies
+- [LRQA-52072]: Update the com.liferay.gradle.plugins.node dependency to version
+5.1.0.
+
+## 2.0.42 - 2019-09-18
+
+### Dependencies
+- [LPS-101470]: Update the com.liferay.gradle.plugins.node dependency to version
+5.1.1.
+
+## 2.0.43 - 2019-09-19
+
+### Dependencies
+- [LPS-101470]: Update the com.liferay.gradle.plugins.node dependency to version
+5.1.2.
+
+## 2.0.44 - 2019-10-16
+
+### Dependencies
+- [LPS-102367]: Update the com.liferay.gradle.plugins.node dependency to version
+6.0.0.
+
+## 2.0.45 - 2019-10-21
+
+### Dependencies
+- [LPS-102367]: Update the com.liferay.gradle.plugins.node dependency to version
+6.0.1.
+
+## 2.0.46 - 2019-10-23
+
+### Dependencies
+- [LPS-103580]: Update the com.liferay.gradle.plugins.node dependency to version
+7.0.0.

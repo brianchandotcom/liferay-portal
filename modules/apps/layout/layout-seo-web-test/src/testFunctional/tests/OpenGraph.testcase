@@ -254,6 +254,7 @@ definition {
 	@description = "This ensures that OG tags will appear when Open Graph is enabled."
 	@priority = "5"
 	test Smoke {
+		property portal.acceptance = "true";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");

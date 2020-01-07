@@ -109,6 +109,7 @@ definition {
 	@description = "This makes sure that the previously added image can be cleared at the page level."
 	@priority = "5"
 	test ClearImageAtPageLevel {
+		property portal.acceptance = "true";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -423,6 +424,7 @@ definition {
 	@description = "This ensures that the HTTPS users can customize OG image tags and generate special tags."
 	@priority = "5"
 	test ViewImageWithMetaTags {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenGraphImages#ViewImageWithMetaTags";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");

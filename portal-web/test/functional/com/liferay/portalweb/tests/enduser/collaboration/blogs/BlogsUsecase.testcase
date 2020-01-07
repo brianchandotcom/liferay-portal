@@ -1281,6 +1281,10 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
+
+		ScrollWebElementIntoView(locator1 = "Button#SUBSCRIBE");
+
+		SikuliAssertElementPresent(locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE_PREVIEW");
 	}
 
 	// This is not an acceptance test and is temporarily quarantined.

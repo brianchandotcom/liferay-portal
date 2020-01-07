@@ -428,7 +428,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		sb.append(" in (");
 
 		for (Serializable serializable : ctEntries.keySet()) {
-			sb.append((long)serializable);
+			sb.append(serializable);
 			sb.append(", ");
 		}
 

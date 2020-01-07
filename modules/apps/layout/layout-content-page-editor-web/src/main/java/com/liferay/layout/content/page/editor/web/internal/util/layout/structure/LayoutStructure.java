@@ -89,9 +89,22 @@ public class LayoutStructure {
 		_addColumnLayoutStructureItem(itemId, 2, 4);
 	}
 
-	public LayoutStructureItem deleteLayoutStructureItem(String itemId) {
+	public List<LayoutStructureItem> deleteLayoutStructureItem(String itemId) {
+		List<LayoutStructureItem> deletedLayoutStructureItems =
+			new ArrayList<>();
+
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
+
+		List<String> childrenItemIds = new ArrayList<>(
+			layoutStructureItem.getChildrenItemIds());
+
+		for (String childrenItemId : childrenItemIds) {
+			deletedLayoutStructureItems.addAll(
+				deleteLayoutStructureItem(childrenItemId));
+		}
+
+		deletedLayoutStructureItems.add(layoutStructureItem);
 
 		LayoutStructureItem parentLayoutStructureItem =
 			_layoutStructureItems.get(layoutStructureItem.getParentItemId());
@@ -100,7 +113,7 @@ public class LayoutStructure {
 
 		_layoutStructureItems.remove(itemId);
 
-		return layoutStructureItem;
+		return deletedLayoutStructureItems;
 	}
 
 	public void duplicateLayoutStructureItem(
@@ -229,10 +242,8 @@ public class LayoutStructure {
 		for (int i = numberOfColumns; i < childrenItemIdsSize; i++) {
 			String childrenItemId = childrenItemIds.get(i);
 
-			LayoutStructureItem deletedLayoutStructureItem =
-				deleteLayoutStructureItem(childrenItemId);
-
-			deletedLayoutStructureItems.add(deletedLayoutStructureItem);
+			deletedLayoutStructureItems.addAll(
+				deleteLayoutStructureItem(childrenItemId));
 		}
 
 		return deletedLayoutStructureItems;

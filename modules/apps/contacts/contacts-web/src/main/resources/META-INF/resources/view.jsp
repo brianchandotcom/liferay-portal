@@ -23,8 +23,6 @@ String name = ParamUtil.getString(request, "name");
 
 boolean userPublicPage = false;
 
-Group group = themeDisplay.getScopeGroup();
-
 if (group.isUser() && layout.isPublicLayout()) {
 	userPublicPage = true;
 }

@@ -326,6 +326,10 @@ public class ContentPageEditorDisplayContext {
 				"updateLayoutPageTemplateDataURL",
 				editorSoyContext.get("updateLayoutPageTemplateDataURL")
 			).put(
+				"updateRowColumnsURL",
+				getFragmentEntryActionURL(
+					"/content_layout/update_row_columns_react")
+			).put(
 				"widgets", editorSoyContext.get("widgets")
 			).build()
 		).put(

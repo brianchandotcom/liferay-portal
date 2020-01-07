@@ -1577,7 +1577,7 @@ definition {
 
 		App.add(
 			appTitle = "Test App",
-			deployOption = "Product Menu",
+			deployOption = "Widget",
 			formViewName = "Form View Title One",
 			tableViewName = "Table View Title One");
 
@@ -1586,12 +1586,36 @@ definition {
 		AppBuilderAdmin.editAppName(appTitle = "Changed Name");
 
 		AppBuilderAdmin.clickApp(appName = "Changed Name");
+		
+		App.toggleUndeploy(deployOption = "Widget");
 
-		App.toggleDeploy(
-				deployOptionOne = "Product Menu",
-				deployOptionTwo = "Widget");
+		App.toggleDeploy(deployOption = "Standalone");
 
-		App.validateDeployedAs(title = "Widget");
+		App.saveApp();
+
+		App.validateDeployedAs(title = "Standalone");
+
+		AppBuilderAdmin.clickApp(appName = "Changed Name");
+
+		App.toggleUndeploy(deployOption = "Standalone");
+
+		App.toggleDeploy(deployOption = "Product Menu");
+
+		App.saveApp();
+
+		App.validateDeployedAs(title = "Product Menu");
+
+		AppBuilderAdmin.clickApp(appName = "Changed Name");
+
+		App.toggleUndeploy(deployOption = "Product Menu");
+
+		App.toggleDeploy(deployOption = "Widget");
+
+		App.toggleDeploy(deployOption = "Standalone");
+
+		App.saveApp();
+
+		App.validateDeployedAs(title = "Widget and Standalone");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

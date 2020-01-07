@@ -18,6 +18,10 @@ definition {
 		Button.click(button = "Deploy");
 	}
 
+	macro saveApp {
+		Button.click(button = "Save");
+	}
+
 	macro selectFormView {
 		Click(
 			key_itemName = "${formViewName}",
@@ -35,19 +39,19 @@ definition {
 	}
 
 	macro toggleDeploy {
+		Check.checkToggleSwitch(
+			key_deployOption = "${deployOption}",
+			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+	}
+
+	macro toggleUndeploy {
 		Button.clickNext();
 
 		Button.clickNext();
 
 		Uncheck.uncheckToggleSwitch(
-			key_deployOption = "${deployOptionOne}",
-			locator1 = "AppBuilder#DEPLOY_APP_UNTOGGLE");
-
-		Check.checkToggleSwitch(
-			key_deployOption = "${deployOptionTwo}",
+			key_deployOption = "${deployOption}",
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
-		
-		Button.click(button = "Save");
 	}
 
 	macro validateDeployedAs {

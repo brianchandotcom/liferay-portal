@@ -204,7 +204,6 @@ components:
                                 The organization's phones numbers, with one optionally marked as primary.
                             items:
                                 $ref: "#/components/schemas/Phone"
-                            readOnly: true
                             type: array
                         webUrls:
                             description:
@@ -277,28 +276,23 @@ components:
                 extension:
                     description:
                         The phone number's extension.
-                    readOnly: true
                     type: string
                 id:
                     description:
                         The phone number's ID.
                     format: int64
-                    readOnly: true
                     type: integer
                 phoneNumber:
                     description:
                         The phone number without its extension.
-                    readOnly: true
                     type: string
                 phoneType:
                     description:
                         The phone number's type.
-                    readOnly: true
                     type: string
                 primary:
                     description:
                         A flag that identifies whether this is the main phone number of the user/organization.
-                    readOnly: true
                     type: boolean
             type: object
         PostalAddress:

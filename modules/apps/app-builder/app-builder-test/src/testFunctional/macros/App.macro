@@ -34,4 +34,26 @@ definition {
 		Button.clickNext();
 	}
 
+	macro toggleDeploy {
+		Button.clickNext();
+
+		Button.clickNext();
+
+		Uncheck.uncheckToggleSwitch(
+			key_deployOption = "${deployOptionOne}",
+			locator1 = "AppBuilder#DEPLOY_APP_UNTOGGLE");
+
+		Check.checkToggleSwitch(
+			key_deployOption = "${deployOptionTwo}",
+			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+		
+		Button.click(button = "Save");
+	}
+
+	macro validateDeployedAs {
+		AssertTextEquals(
+			locator1 = "AppBuilder#DEPLOYED_AS",
+			value1 = "${title}");
+	}
+
 }

@@ -1584,6 +1584,14 @@ definition {
 		AppBuilderAdmin.clickApp(appName = "Test App");
 
 		AppBuilderAdmin.editAppName(appTitle = "Changed Name");
+
+		AppBuilderAdmin.clickApp(appName = "Changed Name");
+
+		App.toggleDeploy(
+				deployOptionOne = "Product Menu",
+				deployOptionTwo = "Widget");
+
+		App.validateDeployedAs(title = "Widget");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

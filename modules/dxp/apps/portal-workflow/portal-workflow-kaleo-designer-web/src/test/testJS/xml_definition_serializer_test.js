@@ -105,7 +105,7 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', () => {
 			done();
 		});
 
-		it('test should not serialize <assignment> attribute if it has no value.', done => {
+		it('test should serialize <assignment> even when assignment object is empty.', done => {
 			var jsonDefinition = {
 				nodes: [
 					{
@@ -123,7 +123,7 @@ describe('Liferay.KaleoDesignerXMLDefinitionSerializer', () => {
 			);
 
 			assert(
-				definition.indexOf('<assignments') < 0,
+				definition.indexOf('<assignments') >= 0,
 				'<assignments/> element not serialized from empty object.'
 			);
 

@@ -20,6 +20,7 @@ definition {
 	@description = "This ensures that Depot is disabled by the configuration file."
 	@priority = "5"
 	test DisableDepot {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DepotConfiguration#DisableDepot";
 
 		ProductMenuHelper.expandPanel(panel = "Control Panel");

@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_INLINE_IMAGE_PREVIEW</td>
+	<td>so/screenshots/blogs/content_inline_image_preview.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_HTML_BOLD</td>
 	<td>//div[contains(@class,'widget-mode-detail-text')]/b</td>
 	<td></td>

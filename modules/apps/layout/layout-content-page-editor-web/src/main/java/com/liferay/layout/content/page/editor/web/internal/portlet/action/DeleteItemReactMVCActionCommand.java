@@ -14,15 +14,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructure;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,17 +27,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
@@ -123,51 +115,6 @@ public class DeleteItemReactMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private void _deleteFragmentEntryLink(
-			long companyId, long fragmentEntryLinkId, long plid)
-		throws PortalException {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkService.deleteFragmentEntryLink(
-				fragmentEntryLinkId);
-
-		if (fragmentEntryLink.getFragmentEntryId() == 0) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-
-			String portletId = jsonObject.getString(
-				"portletId", StringPool.BLANK);
-
-			if (Validator.isNotNull(portletId)) {
-				String instanceId = jsonObject.getString(
-					"instanceId", StringPool.BLANK);
-
-				_portletLocalService.deletePortlet(
-					companyId, PortletIdCodec.encode(portletId, instanceId),
-					plid);
-
-				_layoutClassedModelUsageLocalService.
-					deleteLayoutClassedModelUsages(
-						PortletIdCodec.encode(portletId, instanceId),
-						_portal.getClassNameId(Portlet.class), plid);
-			}
-		}
-
-		List<String> portletIds =
-			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
-
-		for (String portletId : portletIds) {
-			_portletLocalService.deletePortlet(companyId, portletId, plid);
-
-			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
-				portletId, _portal.getClassNameId(Portlet.class), plid);
-		}
-
-		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
-			String.valueOf(fragmentEntryLinkId),
-			_portal.getClassNameId(FragmentEntryLink.class), plid);
-	}
-
 	private void _deleteLayoutStructureItem(
 			long companyId, String itemId, LayoutStructure layoutStructure,
 			long plid)
@@ -183,7 +130,8 @@ public class DeleteItemReactMVCActionCommand
 			"fragmentEntryLinkId");
 
 		if (fragmentEntryLinkId > 0) {
-			_deleteFragmentEntryLink(companyId, fragmentEntryLinkId, plid);
+			FragmentEntryLinkUtil.deleteFragmentEntryLink(
+				companyId, fragmentEntryLinkId, plid, _portletRegistry);
 		}
 
 		List<String> childrenItemIds = new ArrayList<>(
@@ -199,19 +147,6 @@ public class DeleteItemReactMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteItemReactMVCActionCommand.class);
-
-	@Reference
-	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Reference
-	private LayoutClassedModelUsageLocalService
-		_layoutClassedModelUsageLocalService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

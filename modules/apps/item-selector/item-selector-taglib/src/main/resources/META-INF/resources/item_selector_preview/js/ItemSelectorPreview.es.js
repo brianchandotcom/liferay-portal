@@ -76,7 +76,7 @@ const ItemSelectorPreview = ({
 				width: '320px'
 			});
 		}
-	}, [infoButtonRef, itemList]);
+	}, [infoButtonRef]);
 
 	const close = useCallback(() => {
 		ReactDOM.unmountComponentAtNode(container);

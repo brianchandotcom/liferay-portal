@@ -34,7 +34,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ivica Cardic
  * @author Raymond Augé
  * @author Igor Beslic
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class OAuthUtil {
 
 	public static String addParameters(String url, String... parameters)

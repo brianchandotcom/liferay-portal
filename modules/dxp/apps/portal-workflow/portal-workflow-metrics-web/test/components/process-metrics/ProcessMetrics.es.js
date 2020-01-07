@@ -41,7 +41,11 @@ beforeAll(() => {
 
 test('Should render component with completed tab activated', () => {
 	const component = mount(
-		<Router client={fetchFailure()} initialPath="/metrics/35315">
+		<Router
+			client={fetchFailure()}
+			getClient={jest.fn(() => fetchFailure())}
+			initialPath="/metrics/35315"
+		>
 			<ProcessMetrics history={mockHistory} processId={35315} />
 		</Router>
 	);
@@ -59,7 +63,11 @@ test('Should render component with default tab activated', () => {
 	};
 
 	const component = mount(
-		<Router client={fetch({data})} initialPath="/metrics/35315">
+		<Router
+			client={fetch({data})}
+			getClient={jest.fn(() => fetch({data}))}
+			initialPath="/metrics/35315"
+		>
 			<ProcessMetrics history={mockHistory} processId={35315} />
 		</Router>
 	);
@@ -79,7 +87,10 @@ test('Should render component with failure state', () => {
 
 test('Should render dashboard route children', () => {
 	const component = mount(
-		<Router client={fetch({data: {}})}>
+		<Router
+			client={fetch({data: {}})}
+			getClient={jest.fn(() => fetch({data: {}}))}
+		>
 			{withParams(PendingItemsCard, WorkloadByStepCard)({
 				location: {
 					search: ''
@@ -98,7 +109,11 @@ test('Should render dashboard route children', () => {
 
 test('Should render with blocked SLA', () => {
 	const component = mount(
-		<Router client={fetchFailure()} initialPath="/metrics/35315/completed">
+		<Router
+			client={fetchFailure()}
+			getClient={jest.fn(() => fetchFailure())}
+			initialPath="/metrics/35315/completed"
+		>
 			<ProcessMetrics history={mockHistory} processId="123" />
 		</Router>
 	);

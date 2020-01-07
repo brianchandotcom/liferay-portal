@@ -41,7 +41,10 @@ describe('The workload by assignee card should', () => {
 		};
 
 		const renderResult = render(
-			<MockRouter client={clientMock}>
+			<MockRouter
+				client={clientMock}
+				getClient={jest.fn(() => clientMock)}
+			>
 				<WorkloadByAssigneeCard routeParams={{processId: 12345}} />
 			</MockRouter>
 		);

@@ -13,7 +13,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {Table} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageTable.es';
-import {SingleReassignModalContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/single-reassign/SingleReassignModal.es';
+import {ModalContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalContext.es';
 import {InstanceListContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/store/InstanceListPageStore.es';
 
 const instance = {
@@ -34,11 +34,11 @@ describe('The instance list item should', () => {
 	test('Be rendered with "User 1", "Jan 01, 2019, 12:00 AM", and "Review, Update" columns', () => {
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<SingleReassignModalContext.Provider
-					value={{setShowModal: () => {}, showModal: false}}
+				<ModalContext.Provider
+					value={{setSingleModal: () => {}, singleModal: false}}
 				>
 					<Table.Item {...instance} />
-				</SingleReassignModalContext.Provider>
+				</ModalContext.Provider>
 			</InstanceListContext.Provider>
 		);
 
@@ -54,11 +54,11 @@ describe('The instance list item should', () => {
 	test('Be rendered with check icon when the slaStatus is "OnTime"', () => {
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<SingleReassignModalContext.Provider
-					value={{setShowModal: () => {}, showModal: false}}
+				<ModalContext.Provider
+					value={{setSingleModal: () => {}, singleModal: false}}
 				>
 					<Table.Item {...instance} slaStatus="OnTime" />
-				</SingleReassignModalContext.Provider>
+				</ModalContext.Provider>
 			</InstanceListContext.Provider>
 		);
 
@@ -72,11 +72,11 @@ describe('The instance list item should', () => {
 	test('Be rendered with exclamation icon when the slaStatus is "Overdue"', () => {
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<SingleReassignModalContext.Provider
-					value={{setShowModal: () => {}, showModal: false}}
+				<ModalContext.Provider
+					value={{setSingleModal: () => {}, singleModal: false}}
 				>
 					<Table.Item {...instance} slaStatus="Overdue" />
-				</SingleReassignModalContext.Provider>
+				</ModalContext.Provider>
 			</InstanceListContext.Provider>
 		);
 
@@ -90,11 +90,11 @@ describe('The instance list item should', () => {
 	test('Be rendered with hr icon when the slaStatus is "Untracked"', () => {
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<SingleReassignModalContext.Provider
-					value={{setShowModal: () => {}, showModal: false}}
+				<ModalContext.Provider
+					value={{setSingleModal: () => {}, singleModal: false}}
 				>
 					<Table.Item {...instance} slaStatus="Untracked" />
-				</SingleReassignModalContext.Provider>
+				</ModalContext.Provider>
 			</InstanceListContext.Provider>
 		);
 
@@ -109,11 +109,11 @@ describe('The instance list item should', () => {
 
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={contextMock}>
-				<SingleReassignModalContext.Provider
-					value={{setShowModal: () => {}, showModal: false}}
+				<ModalContext.Provider
+					value={{setSingleModal: () => {}, singleModal: false}}
 				>
 					<Table.Item {...instance} />
-				</SingleReassignModalContext.Provider>
+				</ModalContext.Provider>
 			</InstanceListContext.Provider>
 		);
 
@@ -135,22 +135,22 @@ describe('The InstanceListPageItem quick action menu should', () => {
 		id: 1
 	};
 
-	const setShowModal = jest.fn();
+	const setSingleModal = jest.fn();
 
 	test('set modal visualization by clicking the reassign task button', () => {
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={{setInstanceId: jest.fn()}}>
-				<SingleReassignModalContext.Provider
-					value={{setShowModal, showModal: false}}
+				<ModalContext.Provider
+					value={{setSingleModal, singleModal: false}}
 				>
 					<Table.Item {...instance} />
-				</SingleReassignModalContext.Provider>
+				</ModalContext.Provider>
 			</InstanceListContext.Provider>
 		);
 
 		const reassignTaskButton = getByTestId('dropDownItem');
 
 		fireEvent.click(reassignTaskButton);
-		expect(setShowModal).toHaveBeenCalledTimes(1);
+		expect(setSingleModal).toHaveBeenCalledTimes(1);
 	});
 });

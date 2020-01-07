@@ -87,7 +87,11 @@ describe('The completion velocity card component should', () => {
 		};
 
 		const renderResult = render(
-			<MockRouter client={clientMock} query={query}>
+			<MockRouter
+				client={clientMock}
+				getClient={jest.fn(() => clientMock)}
+				query={query}
+			>
 				<CompletionVelocityCard routeParams={{processId}} />
 			</MockRouter>
 		);

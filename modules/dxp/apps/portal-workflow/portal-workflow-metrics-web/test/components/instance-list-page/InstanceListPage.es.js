@@ -36,7 +36,10 @@ describe('The instance list card should', () => {
 
 	beforeEach(() => {
 		renderResult = render(
-			<MockRouter client={clientMock}>
+			<MockRouter
+				client={clientMock}
+				getClient={jest.fn(() => clientMock)}
+			>
 				<InstanceListPage />
 			</MockRouter>
 		);

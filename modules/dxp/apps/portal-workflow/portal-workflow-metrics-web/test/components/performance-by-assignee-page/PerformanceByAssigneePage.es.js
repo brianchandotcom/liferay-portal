@@ -42,7 +42,9 @@ const clientMock = {
 };
 
 const wrapper = ({children}) => (
-	<MockRouter client={clientMock}>{children}</MockRouter>
+	<MockRouter client={clientMock} getClient={jest.fn(() => clientMock)}>
+		{children}
+	</MockRouter>
 );
 
 describe('The PerformanceByAssigneePage component having data should', () => {

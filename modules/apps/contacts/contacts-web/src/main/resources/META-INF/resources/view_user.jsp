@@ -141,9 +141,15 @@ request.setAttribute("view_user.jsp-user", user2);
 			</aui:row>
 
 			<div class="field-group lfr-detail-info" data-sectionId="details" data-title="<%= LanguageUtil.get(request, "details") %>">
+
+				<%
+				PortletURL editDetailsURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+				%>
+
 				<liferay-ui:icon
 					icon="pencil"
 					markupView="lexicon"
+					url="<%= editDetailsURL.toString() %>"
 				/>
 
 				<c:if test="<%= showIcon %>">
@@ -225,8 +231,6 @@ request.setAttribute("view_user.jsp-user", user2);
 
 									groupParams.put("site", Boolean.TRUE);
 
-									Group group = themeDisplay.getScopeGroup();
-
 									if (group.isUser()) {
 										groupParams.put("usersGroups", Long.valueOf(group.getClassPK()));
 									}
@@ -288,9 +292,15 @@ request.setAttribute("view_user.jsp-user", user2);
 									<c:choose>
 										<c:when test="<%= !assetTags.isEmpty() %>">
 											<div class="field-group user-tags-wrapper" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
+
+												<%
+												PortletURL editCategorizationURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+												%>
+
 												<liferay-ui:icon
 													icon="pencil"
 													markupView="lexicon"
+													url="<%= editCategorizationURL.toString() %>"
 												/>
 
 												<ul class="user-tags">
@@ -321,11 +331,6 @@ request.setAttribute("view_user.jsp-user", user2);
 											</div>
 										</c:when>
 										<c:otherwise>
-
-											<%
-											Group group = themeDisplay.getScopeGroup();
-											%>
-
 											<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), group.getDescriptiveName(locale))) %>" key="x-does-not-have-any-tags" translateArguments="<%= false %>" />
 										</c:otherwise>
 									</c:choose>

@@ -20,107 +20,180 @@
 	<div class="field-actions-toolbar">
 		<ul class="settings-actions">
 			<c:if test="<%= Validator.isNull(user2.getComments()) %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="comments" data-title="<%= LanguageUtil.get(request, "introduction") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="introduction" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editCommentsURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+				%>
+
+				<a href="<%= editCommentsURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="comments" data-title="<%= LanguageUtil.get(request, "introduction") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="plus"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="introduction" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 
 			<c:if test="<%= assetTags.isEmpty() %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="tags" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editCategorizationURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+				%>
+
+				<a href="<%= editCategorizationURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="categorization" data-title="<%= LanguageUtil.get(request, "tags") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="plus"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="tags" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 
 			<c:if test="<%= phones.isEmpty() %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="phoneNumbers" data-title="<%= LanguageUtil.get(request, "phone-numbers") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="phones" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editPhonesURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+
+				editPhonesURL.setParameter("screenNavigationCategoryKey", "contact");
+				editPhonesURL.setParameter("screenNavigationEntryKey", "contact-information");
+				%>
+
+				<a href="<%= editPhonesURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="phoneNumbers" data-title="<%= LanguageUtil.get(request, "phone-numbers") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="plus"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="phones" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 
 			<c:if test="<%= emailAddresses.isEmpty() %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="additionalEmailAddresses" data-title="<%= LanguageUtil.get(request, "additional-email-addresses") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="email-address" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editAdditionalEmailAddressesURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+
+				editAdditionalEmailAddressesURL.setParameter("screenNavigationCategoryKey", "contact");
+				editAdditionalEmailAddressesURL.setParameter("screenNavigationEntryKey", "contact-information");
+				%>
+
+				<a href="<%= editAdditionalEmailAddressesURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="additionalEmailAddresses" data-title="<%= LanguageUtil.get(request, "additional-email-addresses") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="plus"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="email-address" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 
 			<c:if test="<%= addresses.isEmpty() %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="addresses" data-title="<%= LanguageUtil.get(request, "addresses") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="addresses" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editAddressesURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+
+				editAddressesURL.setParameter("screenNavigationCategoryKey", "contact");
+				%>
+
+				<a href="<%= editAddressesURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="addresses" data-title="<%= LanguageUtil.get(request, "addresses") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="plus"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="addresses" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 
 			<c:if test="<%= websites.isEmpty() %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="websites" data-title="<%= LanguageUtil.get(request, "websites") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="websites" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editWebsitesURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+
+				editWebsitesURL.setParameter("screenNavigationCategoryKey", "contact");
+				editWebsitesURL.setParameter("screenNavigationEntryKey", "contact-information");
+				%>
+
+				<a href="<%= editWebsitesURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="websites" data-title="<%= LanguageUtil.get(request, "websites") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="plus"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="websites" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 
 			<c:if test="<%= Validator.isNull(facebook) && Validator.isNull(twitter) %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="socialNetwork" data-title="<%= LanguageUtil.get(request, "social-network") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="social-network" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editSocialNetworkURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+
+				editSocialNetworkURL.setParameter("screenNavigationCategoryKey", "contact");
+				editSocialNetworkURL.setParameter("screenNavigationEntryKey", "contact-information");
+				%>
+
+				<a href="<%= editSocialNetworkURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="socialNetwork" data-title="<%= LanguageUtil.get(request, "social-network") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="plus"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="social-network" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 
 			<c:if test="<%= Validator.isNull(contact2.getSmsSn()) %>">
-				<li class="action-field component lfr-token settings-field" data-sectionId="sms" data-title="<%= LanguageUtil.get(request, "sms") %>">
-					<div class="settings-field-content">
-						<liferay-ui:icon
-							icon="plus"
-							markupView="lexicon"
-						/>
 
-						<span class="settings-label"><liferay-ui:message key="sms" /></span>
-					</div>
-				</li>
+				<%
+				PortletURL editSmsURL = PortletURLFactoryUtil.create(request, PortletKeys.MY_ACCOUNT, embeddedPersonalApplicationLayout, PortletRequest.RENDER_PHASE);
+
+				editSmsURL.setParameter("screenNavigationCategoryKey", "contact");
+				editSmsURL.setParameter("screenNavigationEntryKey", "contact-information");
+				%>
+
+				<a href="<%= editSmsURL.toString() %>">
+					<li class="action-field component lfr-token settings-field" data-sectionId="sms" data-title="<%= LanguageUtil.get(request, "sms") %>">
+						<div class="settings-field-content">
+							<liferay-ui:icon
+								icon="pencil"
+								markupView="lexicon"
+							/>
+
+							<span class="settings-label"><liferay-ui:message key="sms" /></span>
+						</div>
+					</li>
+				</a>
 			</c:if>
 		</ul>
 	</div>

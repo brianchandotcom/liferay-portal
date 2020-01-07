@@ -582,12 +582,12 @@ public class StructuredContentResourceImpl
 			return _ddmStructureService.getStructure(
 				structuredContent.getContentStructureId());
 		}
-		catch (PrincipalException.MustHavePermission mhp) {
+		catch (PrincipalException.MustHavePermission pe) {
 			throw new ForbiddenException(
 				"You do not have permission to create a structured content " +
 					"using the content structure ID " +
 						structuredContent.getContentStructureId(),
-				mhp);
+				pe);
 		}
 	}
 

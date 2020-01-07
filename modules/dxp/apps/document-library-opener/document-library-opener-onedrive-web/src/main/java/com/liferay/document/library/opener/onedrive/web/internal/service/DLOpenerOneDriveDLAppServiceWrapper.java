@@ -82,8 +82,8 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 			try {
 				_dlOpenerOneDriveManager.deleteFile(_getUserId(), fileEntry);
 			}
-			catch (GraphServicePortalException.ItemNotFound inf) {
-				_log.error("The OneDrive file does not exist", inf);
+			catch (GraphServicePortalException.ItemNotFound gspe) {
+				_log.error("The OneDrive file does not exist", gspe);
 			}
 
 			if ((dlOpenerFileEntryReference.getType() ==

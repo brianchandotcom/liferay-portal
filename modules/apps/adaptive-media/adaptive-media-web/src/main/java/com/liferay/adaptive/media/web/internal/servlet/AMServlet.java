@@ -113,7 +113,7 @@ public class AMServlet extends HttpServlet {
 					adaptiveMedia.getInputStream(), contentLength, contentType);
 			}
 		}
-		catch (AMException.AMNotFound amnf) {
+		catch (AMException.AMNotFound ame) {
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_NOT_FOUND,
 				httpServletRequest.getRequestURI());

@@ -179,8 +179,8 @@ public class AccountEntryUserRelLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (UserEmailAddressException.MustValidate ueaemv) {
-			String message = ueaemv.getMessage();
+		catch (UserEmailAddressException.MustValidate ueae) {
+			String message = ueae.getMessage();
 
 			Assert.assertTrue(
 				message.contains(

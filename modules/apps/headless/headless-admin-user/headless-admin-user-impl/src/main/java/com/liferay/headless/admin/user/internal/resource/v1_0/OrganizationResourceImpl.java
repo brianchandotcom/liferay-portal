@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -155,7 +157,7 @@ public class OrganizationResourceImpl
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 				organization.getComment(), false, _getAddresses(organization),
 				_getEmailAddresses(organization), _getOrgLabors(organization),
-				_getPhones(organization), Collections.emptyList(),
+				_getPhones(organization), _getWebsites(organization),
 				new ServiceContext()));
 	}
 
@@ -351,6 +353,20 @@ public class OrganizationResourceImpl
 		}
 
 		return 0;
+	}
+
+	private List<Website> _getWebsites(Organization organization) {
+		return Optional.ofNullable(
+			organization.getOrganizationContactInformation()
+		).map(
+			OrganizationContactInformation::getWebUrls
+		).map(
+			webUrls -> ListUtil.filter(
+				TransformUtil.transformToList(webUrls, this::_toWebsite),
+				Objects::nonNull)
+		).orElse(
+			Collections.emptyList()
+		);
 	}
 
 	private Address _toAddress(PostalAddress postalAddress) {
@@ -734,6 +750,26 @@ public class OrganizationResourceImpl
 			calendar.get(Calendar.MINUTE);
 	}
 
+	private Website _toWebsite(WebUrl webUrl) {
+		String url = webUrl.getUrl();
+
+		if (Validator.isNull(url)) {
+			return null;
+		}
+
+		Website website = _websiteLocalService.createWebsite(
+			GetterUtil.getLong(webUrl.getId()));
+
+		website.setUrl(url);
+		website.setTypeId(
+			_toListTypeId(
+				"public", webUrl.getUrlType(),
+				ListTypeConstants.ORGANIZATION_WEBSITE));
+		website.setPrimary(GetterUtil.getBoolean(webUrl.getPrimary()));
+
+		return website;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationResourceImpl.class);
 
@@ -778,6 +814,9 @@ public class OrganizationResourceImpl
 
 	@Reference
 	private RegionService _regionService;
+
+	@Reference
+	private WebsiteLocalService _websiteLocalService;
 
 	@Reference
 	private WebsiteService _websiteService;

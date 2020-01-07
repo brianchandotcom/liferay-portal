@@ -84,17 +84,18 @@ public class UpgradeCompanyIdPrimaryKeyTest
 	private void _validateCompanyIdPrimaryKey() throws Exception {
 		List<String> primaryKeyColumnNames = getPrimaryKeyColumnNames();
 
+		String normalizedCompanyId = dbInspector.normalizeName("companyId");
+
 		Assert.assertTrue(
 			"CompanyId must be part of the primary key",
-			primaryKeyColumnNames.contains(
-				dbInspector.normalizeName("companyId")));
+			primaryKeyColumnNames.contains(normalizedCompanyId));
 
 		String lastPrimaryKeyColumn = primaryKeyColumnNames.get(
 			primaryKeyColumnNames.size() - 1);
 
 		Assert.assertTrue(
 			"CompanyId must be always the last column in the primary key",
-			lastPrimaryKeyColumn.equals("companyId"));
+			lastPrimaryKeyColumn.equals(normalizedCompanyId));
 	}
 
 }

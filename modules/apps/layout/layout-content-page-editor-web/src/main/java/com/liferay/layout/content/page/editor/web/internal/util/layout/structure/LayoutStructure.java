@@ -87,7 +87,7 @@ public class LayoutStructure {
 		_addColumnLayoutStructureItem(itemId, 2, 4);
 	}
 
-	public void deleteLayoutStructureItem(String itemId) {
+	public LayoutStructureItem deleteLayoutStructureItem(String itemId) {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
@@ -97,6 +97,8 @@ public class LayoutStructure {
 		parentLayoutStructureItem.deleteChildrenItem(itemId);
 
 		_layoutStructureItems.remove(itemId);
+
+		return layoutStructureItem;
 	}
 
 	public void duplicateLayoutStructureItem(

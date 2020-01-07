@@ -1123,7 +1123,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/bcmail.jar</file-name>
-				<version>1.61</version>
+				<version>1.61.LIFERAY-PATCHED-1</version>
 				<project-name>Bouncy Castle</project-name>
 				<project-url>http://www.bouncycastle.org</project-url>
 				<licenses>
@@ -1135,7 +1135,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/bcprov.jar</file-name>
-				<version>1.61</version>
+				<version>1.61.LIFERAY-PATCHED-1</version>
 				<project-name>Bouncy Castle</project-name>
 				<project-url>http://www.bouncycastle.org</project-url>
 				<licenses>

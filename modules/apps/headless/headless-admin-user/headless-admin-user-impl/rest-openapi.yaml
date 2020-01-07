@@ -210,7 +210,6 @@ components:
                                 The organization's web URLs, with one optionally marked as primary.
                             items:
                                 $ref: "#/components/schemas/WebUrl"
-                            readOnly: true
                             type: array
                     type: object
                 parentOrganization:
@@ -748,17 +747,14 @@ components:
                     description:
                         The URL's ID.
                     format: int64
-                    readOnly: true
                     type: integer
                 url:
                     description:
                         The absolute URL.
-                    readOnly: true
                     type: string
                 urlType:
                     description:
                         The URL's type.
-                    readOnly: true
                     type: string
             type: object
 info:

@@ -65,6 +65,8 @@ definition {
 
 	macro clickPencil {
 		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		Pause(locator1 = "3000");
 	}
 
 }

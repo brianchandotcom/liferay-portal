@@ -295,7 +295,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						</div>
 
 						<div class="entry-description form-group">
-							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" onChange='<%= renderResponse.getNamespace() + "OnChangeCustomDescription(this.value);" %>' type="text" value="<%= description %>">
+							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" onChange='<%= renderResponse.getNamespace() + "setCustomDescription(this.value);" %>' type="text" value="<%= description %>">
 								<aui:validator name="required" />
 							</aui:input>
 						</div>
@@ -459,14 +459,6 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 </portlet:actionURL>
 
 <aui:script>
-	function <portlet:namespace />OnChangeCustomDescription(value) {
-		var blogs = Liferay.component('<portlet:namespace />Blogs');
-
-		if (blogs) {
-			blogs.setCustomDescription(value);
-		}
-	}
-
 	function <portlet:namespace />OnChangeEditor(html) {
 		var blogs = Liferay.component('<portlet:namespace />Blogs');
 
@@ -480,6 +472,14 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 		if (blogs) {
 			blogs.updateFriendlyURL(title);
+		}
+	}
+
+	function <portlet:namespace />setCustomDescription(text) {
+		var blogs = Liferay.component('<portlet:namespace />Blogs');
+
+		if (blogs) {
+			blogs.setCustomDescription(text);
 		}
 	}
 

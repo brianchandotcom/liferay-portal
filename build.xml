@@ -929,13 +929,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 		<antcall target="propertiesdoc-cmd">
 			<param name="properties.dest.dir" value="${properties.dest.dir}" />
-			<param name="properties.file" value="portal-impl/src/portal_ja.properties" />
-			<param name="properties.title" value="Portal Properties (JA)" />
-			<param name="properties.toc" value="true" />
-		</antcall>
-
-		<antcall target="propertiesdoc-cmd">
-			<param name="properties.dest.dir" value="${properties.dest.dir}" />
 			<param name="properties.file" value="portal-impl/src/system.properties" />
 			<param name="properties.title" value="System Properties" />
 			<param name="properties.toc" value="true" />

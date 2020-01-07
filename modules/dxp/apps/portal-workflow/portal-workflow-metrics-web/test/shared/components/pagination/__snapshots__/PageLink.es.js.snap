@@ -22,7 +22,6 @@ exports[`Should change page 1`] = `
     value={
       Object {
         "client": undefined,
-        "clientHeadless": undefined,
         "companyId": 1,
         "defaultDelta": 20,
         "deltas": Array [
@@ -33,6 +32,7 @@ exports[`Should change page 1`] = `
           50,
           75,
         ],
+        "getClient": undefined,
         "maxPages": 3,
         "namespace": "workflow_",
         "page": 1,
@@ -108,7 +108,6 @@ exports[`Should test change page when disabled 1`] = `
     value={
       Object {
         "client": undefined,
-        "clientHeadless": undefined,
         "companyId": 1,
         "defaultDelta": 20,
         "deltas": Array [
@@ -119,6 +118,7 @@ exports[`Should test change page when disabled 1`] = `
           50,
           75,
         ],
+        "getClient": undefined,
         "maxPages": 3,
         "namespace": "workflow_",
         "page": 1,

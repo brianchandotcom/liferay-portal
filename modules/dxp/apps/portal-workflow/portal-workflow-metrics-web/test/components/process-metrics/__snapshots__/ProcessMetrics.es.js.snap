@@ -10,6 +10,7 @@ exports[`Should render component with completed tab activated 1`] = `
       "put": [Function],
     }
   }
+  getClient={[MockFunction]}
   initialPath="/metrics/35315"
 >
   <MemoryRouter
@@ -892,6 +893,7 @@ exports[`Should render component with default tab activated 1`] = `
       "put": [Function],
     }
   }
+  getClient={[MockFunction]}
   initialPath="/metrics/35315"
 >
   <MemoryRouter
@@ -2656,6 +2658,26 @@ exports[`Should render dashboard route children 1`] = `
       "put": [Function],
     }
   }
+  getClient={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          false,
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": Object {
+            "delete": [Function],
+            "get": [Function],
+            "post": [Function],
+            "put": [Function],
+          },
+        },
+      ],
+    }
+  }
 >
   <MemoryRouter
     initialEntries={
@@ -2960,6 +2982,7 @@ exports[`Should render with blocked SLA 1`] = `
       "put": [Function],
     }
   }
+  getClient={[MockFunction]}
   initialPath="/metrics/35315/completed"
 >
   <MemoryRouter

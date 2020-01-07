@@ -10,6 +10,7 @@ exports[`Should component receive props 1`] = `
       "put": [Function],
     }
   }
+  getClient={[MockFunction]}
 >
   <MemoryRouter
     initialEntries={
@@ -182,6 +183,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
       "put": [Function],
     }
   }
+  getClient={[MockFunction]}
 >
   <MemoryRouter
     initialEntries={
@@ -350,6 +352,7 @@ exports[`Should render component 1`] = `
       "put": [Function],
     }
   }
+  getClient={[MockFunction]}
 >
   <MemoryRouter
     initialEntries={

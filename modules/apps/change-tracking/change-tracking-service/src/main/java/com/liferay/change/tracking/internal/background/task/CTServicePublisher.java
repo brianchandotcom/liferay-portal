@@ -415,7 +415,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			Map<Serializable, CTEntry> ctEntries, long ctCollectionId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(2 * ctEntries.size() + 8);
+		StringBundler sb = new StringBundler(2 * ctEntries.size() + 9);
 
 		sb.append("select ");
 		sb.append(primaryKeyName);

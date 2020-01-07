@@ -34,6 +34,7 @@
 					disabled=entry.isDisabled()
 					label=entry.getLongDisplayName()
 					lang=entry.getW3cLanguageId()
+					localizeLabel=false
 					selected=entry.isSelected()
 					value=entry.getLanguageId()
 				/>

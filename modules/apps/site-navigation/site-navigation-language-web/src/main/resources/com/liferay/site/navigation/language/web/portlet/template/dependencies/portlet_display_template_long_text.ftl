@@ -13,6 +13,7 @@
 				href=entry.getURL()
 				label=entry.getLongDisplayName()
 				lang=entry.getW3cLanguageId()
+				localizeLabel=false
 			/>
 		</#if>
 	</#list>

@@ -113,6 +113,44 @@ definition {
 		ItemSelector.viewWikiAttachment(imageFileName = "Document_1.jpg");
 	}
 
+	@description = "This test covers LPS-106280. It ensures that the wiki Email content can be edited."
+	@priority = "3"
+	test ConfigureEmailContent {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Wiki");
+
+		WikiNode.configureEmailCP(
+			bodyContent = "[$TO_NAME$], [$PAGE_CONTENT$] This is an edited wiki email. [$FROM_NAME$]",
+			pageAddedEmail = "true");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Wiki");
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		AssertClick(
+			locator1 = "Configuration#NAVIGATION_PAGE_ADDED_EMAIL",
+			value1 = "Page Added Email");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CKEditor#BODY",
+			value1 = "[$TO_NAME$], [$PAGE_CONTENT$] This is an edited wiki email. [$FROM_NAME$]");
+	}
+
 	@priority = "4"
 	test ConfigurePortletDisplaySettings {
 		Navigator.gotoPage(pageName = "Wiki Test Page");

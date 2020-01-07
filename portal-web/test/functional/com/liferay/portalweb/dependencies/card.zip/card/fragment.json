@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Card",
+	"thumbnailPath": "thumbnail.png",
+	"type": "component"
+}

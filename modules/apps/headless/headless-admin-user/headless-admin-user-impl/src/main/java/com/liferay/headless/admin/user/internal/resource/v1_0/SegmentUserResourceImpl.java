@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
+import com.liferay.segments.service.SegmentsEntryLocalService;
+
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,6 +44,14 @@ public class SegmentUserResourceImpl extends BaseSegmentUserResourceImpl {
 	public Page<SegmentUser> getSegmentUserAccountsPage(
 			Long segmentId, Pagination pagination)
 		throws Exception {
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentId);
+
+		if (segmentsEntry == null) {
+			throw new NotFoundException(
+				"Segment with ID " + segmentId + " not found");
+		}
 
 		long[] segmentsEntryClassPKs =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
@@ -67,6 +79,9 @@ public class SegmentUserResourceImpl extends BaseSegmentUserResourceImpl {
 			}
 		};
 	}
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;

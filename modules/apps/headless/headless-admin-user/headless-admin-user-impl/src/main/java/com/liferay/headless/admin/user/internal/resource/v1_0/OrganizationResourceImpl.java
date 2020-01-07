@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -77,13 +76,14 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -672,12 +672,11 @@ public class OrganizationResourceImpl
 			return -1;
 		}
 
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+		Date date;
+		DateFormat inputDateFormat = new SimpleDateFormat("HH:mm");
 
 		try {
-			calendar.setTime(simpleDateFormat.parse(timeString));
+			date = inputDateFormat.parse(timeString);
 		}
 		catch (ParseException pe) {
 			if (_log.isWarnEnabled()) {
@@ -687,8 +686,9 @@ public class OrganizationResourceImpl
 			return -1;
 		}
 
-		return calendar.get(Calendar.HOUR_OF_DAY) +
-			calendar.get(Calendar.MINUTE);
+		DateFormat outputDateFormat = new SimpleDateFormat("HHmm");
+
+		return GetterUtil.getInteger(outputDateFormat.format(date));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

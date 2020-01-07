@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Group group = themeDisplay.getScopeGroup();
-%>
-
 <c:choose>
 	<c:when test="<%= group.isUser() %>">
 

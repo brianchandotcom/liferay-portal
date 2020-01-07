@@ -189,7 +189,7 @@ public class SegmentsEntryRelIndexerBackgroundTaskExecutor
 	}
 
 	private static final String _BACKGROUND_TASK_NAME_PREFIX =
-		"DDMStructureIndexerBackgroundTaskExecutor-";
+		"SegmentsEntryRelIndexerBackgroundTaskExecutor-";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryRelIndexerBackgroundTaskExecutor.class);

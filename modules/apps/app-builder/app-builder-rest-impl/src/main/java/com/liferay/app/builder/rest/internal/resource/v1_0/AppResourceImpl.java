@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -545,10 +544,10 @@ public class AppResourceImpl
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
-	private ModelResourcePermission<AppBuilderApp> _modelResourcePermission;
-
 	@Reference
 	private DEDataListViewLocalService _deDataListViewLocalService;
+
+	private ModelResourcePermission<AppBuilderApp> _modelResourcePermission;
 
 	@Reference
 	private Portal _portal;

@@ -181,6 +181,9 @@ public class SelectUsersDisplayContext {
 			userParams.put(
 				"usersGroups", Long.valueOf(group.getParentGroupId()));
 		}
+		else {
+			userParams.put("usersGroups", getGroupId());
+		}
 
 		int usersCount = UserLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),

@@ -29,8 +29,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,12 +50,18 @@ public class UpgradeResourceActionsTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		DataAccess.cleanUp(_connection);
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		if (_connection == null) {
-			_connection = DataAccess.getConnection();
-		}
-
 		_createResourceAction(_NAME_1, _ACTION_ID_1, 2);
 		_createResourceAction(_NAME_1, _ACTION_ID_2, 2);
 		_createResourceAction(_NAME_1, _ACTION_ID_3, 2);

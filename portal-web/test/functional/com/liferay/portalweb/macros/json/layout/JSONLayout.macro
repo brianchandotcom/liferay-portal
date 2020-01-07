@@ -197,6 +197,17 @@ definition {
 			serviceContext = "${serviceContext}");
 	}
 
+	@summary = "Get page scope id from an existing site via groupName"
+	macro getPageScopeIdByGroupName {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		JSONLayoutAPI._getDefaultPlidByGroupId(
+			groupId = "${groupId}",
+			privateLayout = "false");
+	}
+
 	macro updateLayoutTemplateOfPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
 

@@ -1300,18 +1300,25 @@
 			});
 		},
 
+		/*
+		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+		 */
 		toggleSearchContainerButton(
 			buttonId,
 			searchContainerId,
 			form,
 			ignoreFieldName
 		) {
-			$(searchContainerId).on(EVENT_CLICK, 'input[type=checkbox]', () => {
-				Util.toggleDisabled(
-					buttonId,
-					!Util.listCheckedExcept(form, ignoreFieldName)
-				);
-			});
+			A.one(searchContainerId).delegate(
+				EVENT_CLICK,
+				() => {
+					Util.toggleDisabled(
+						buttonId,
+						!Util.listCheckedExcept(form, ignoreFieldName)
+					);
+				},
+				'input[type=checkbox]'
+			);
 		},
 
 		toggleSelectBox(selectBoxId, value, toggleBoxId) {

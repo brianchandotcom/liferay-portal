@@ -748,6 +748,10 @@ components:
                         The URL's ID.
                     format: int64
                     type: integer
+                primary:
+                    description:
+                        A flag that identifies whether this is the main web address of the user/organization.
+                    type: boolean
                 url:
                     description:
                         The absolute URL.

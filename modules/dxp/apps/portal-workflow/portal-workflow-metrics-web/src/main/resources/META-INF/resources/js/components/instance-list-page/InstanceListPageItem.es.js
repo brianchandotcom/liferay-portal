@@ -12,10 +12,10 @@
 import ClayTable from '@clayui/table';
 import React, {useContext, useCallback} from 'react';
 
-import {SingleReassignModalContext} from '../../components/instance-list-page/modal/single-reassign/SingleReassignModal.es';
 import Icon from '../../shared/components/Icon.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import moment from '../../shared/util/moment.es';
+import {ModalContext} from './modal/ModalContext.es';
 import {InstanceListContext} from './store/InstanceListPageStore.es';
 
 const getStatusIcon = status => {
@@ -143,12 +143,12 @@ const Item = ({
 };
 
 const QuickActionMenu = ({taskItem}) => {
-	const {setShowModal, showModal} = useContext(SingleReassignModalContext);
+	const {setSingleModal, singleModal} = useContext(ModalContext);
 	const handleClickReassigneeTask = useCallback(
 		() => {
-			setShowModal({
+			setSingleModal({
 				selectedItem: taskItem,
-				visible: !showModal.visible
+				visible: !singleModal.visible
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps

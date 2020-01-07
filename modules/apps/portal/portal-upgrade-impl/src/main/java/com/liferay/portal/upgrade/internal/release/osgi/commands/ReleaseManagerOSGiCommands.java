@@ -244,14 +244,6 @@ public class ReleaseManagerOSGiCommands {
 	protected void activate(final BundleContext bundleContext) {
 		DB db = DBManagerUtil.getDB();
 
-		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
-			serviceTrackerMapListener = null;
-
-		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-			serviceTrackerMapListener =
-				new UpgradeInfoServiceTrackerMapListener();
-		}
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, UpgradeStep.class,
 			StringBundler.concat(
@@ -263,7 +255,7 @@ public class ReleaseManagerOSGiCommands {
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<UpgradeStep>(
 					"upgrade.from.schema.version")),
-			serviceTrackerMapListener);
+			new UpgradeInfoServiceTrackerMapListener());
 
 		Set<String> upgradedBundleSymbolicNames = new HashSet<>();
 
@@ -491,7 +483,10 @@ public class ReleaseManagerOSGiCommands {
 			final String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled()) {
+			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled() &&
+				(PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
+				 (_releaseLocalService.fetchRelease(key) == null))) {
+
 				_upgradeExecutor.execute(key, upgradeInfos, null);
 			}
 		}

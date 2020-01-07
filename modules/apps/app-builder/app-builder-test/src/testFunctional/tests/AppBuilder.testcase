@@ -1562,26 +1562,28 @@ definition {
 		
 		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Text Field",
-			formViewName = "Form View Title",
-			tableViewName = "Table View Title");
+			formViewName = "Form View Title One",
+			tableViewName = "Table View Title One");
 
 		FormViewBuilder.switchToFormViewTab();
 
 		FormViewBuilder.addFormView(
 			fieldType = "Text Field",
-			formViewName = "Form View Title 2");
+			formViewName = "Form View Title Two");
 
 		TableViewBuilder.addBasicTableView(
 			fieldType = "Text Field",
-			tableViewName = "Table View Title 2");
+			tableViewName = "Table View Title Two");
 
 		App.add(
 			appTitle = "Test App",
 			deployOption = "Product Menu",
-			formViewName = "Form View Title",
-			tableViewName = "Table View Title");
+			formViewName = "Form View Title One",
+			tableViewName = "Table View Title One");
 
 		AppBuilderAdmin.clickApp(appName = "Test App");
+
+		AppBuilderAdmin.editAppName(appTitle = "Changed Name");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

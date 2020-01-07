@@ -82,6 +82,16 @@ definition {
 			value1 = "${key_itemName}");
 	}
 
+	macro editAppName {
+		AppBuilderAdmin.setName(title = "${appTitle}");
+
+		Button.clickNext();
+
+		Button.clickNext();
+
+		Button.click(button = "Save");
+	}
+
 	macro editCustomObjectNameAtPopover {
 		Type(
 			locator1 = "AppBuilder#INPUT_OBJECT_NAME",

@@ -31,6 +31,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
+page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
+page import="com.liferay.portal.kernel.model.LayoutSet" %><%@
+page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
@@ -50,4 +54,9 @@ page import="java.util.Objects" %>
 
 <%
 ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
+long guestGroupId = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.GUEST).getGroupId();
+LayoutSet guestLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(guestGroupId, false);
+
+String guestFriendlyURL = PortalUtil.getGroupFriendlyURL(guestLayoutSet, themeDisplay);
 %>

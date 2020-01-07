@@ -47,6 +47,27 @@ const ItemSelectorPreview = ({
 	useEffect(() => {
 		document.documentElement.addEventListener('keydown', handleOnKeyDown);
 
+		const updateCurrentItemHandler = Liferay.on(
+			'updateCurrentItem',
+			updateCurrentItem
+		);
+
+		Liferay.component('ItemSelectorPreview', ItemSelectorPreview);
+
+		return () => {
+			document.documentElement.removeEventListener(
+				'keydown',
+				handleOnKeyDown
+			);
+
+			Liferay.detach(updateCurrentItemHandler);
+			Liferay.component('ItemSelectorPreview', null);
+		};
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
 		const sidenavToggle = infoButtonRef.current;
 
 		if (sidenavToggle) {
@@ -58,22 +79,6 @@ const ItemSelectorPreview = ({
 			});
 		}
 
-		const updateCurrentItemHandler = Liferay.on(
-			'updateCurrentItem',
-			updateCurrentItem
-		);
-
-		Liferay.component('ItemSelectorPreview', {ready: true});
-
-		return () => {
-			document.documentElement.removeEventListener(
-				'keydown',
-				handleOnKeyDown
-			);
-
-			Liferay.detach(updateCurrentItemHandler);
-			Liferay.component('ItemSelectorPreview', null);
-		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [itemList]);
 

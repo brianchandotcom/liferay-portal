@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext("email-address", renderResponse, request);
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext("email-address", request, renderResponse);
 
 editContactInformationDisplayContext.setPortletDisplay(portletDisplay, portletName);
 

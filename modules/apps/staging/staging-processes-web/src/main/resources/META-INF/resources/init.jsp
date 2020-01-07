@@ -114,9 +114,9 @@ Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
 
-PublishTemplatesDisplayContext publishTemplatesDisplayContext = new PublishTemplatesDisplayContext(renderResponse, request);
+PublishTemplatesDisplayContext publishTemplatesDisplayContext = new PublishTemplatesDisplayContext(request, renderResponse);
 
-StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(renderResponse, request);
+StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(request, renderResponse);
 
 StagingProcessesWebToolbarDisplayContext stagingProcessesWebToolbarDisplayContext = new StagingProcessesWebToolbarDisplayContext(request, pageContext, liferayPortletResponse);
 %>

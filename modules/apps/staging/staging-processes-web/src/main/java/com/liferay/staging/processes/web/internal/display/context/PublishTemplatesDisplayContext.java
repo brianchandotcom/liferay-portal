@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 public class PublishTemplatesDisplayContext {
 
 	public PublishTemplatesDisplayContext(
-		RenderResponse renderResponse, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
+		_renderResponse = renderResponse;
 	}
 
 	public List<NavigationItem> getNavigationItems() {

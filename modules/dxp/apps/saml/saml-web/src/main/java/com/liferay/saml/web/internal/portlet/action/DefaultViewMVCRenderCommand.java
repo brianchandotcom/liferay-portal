@@ -76,11 +76,11 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 		}
 		else if (tabs1.equals("identity-provider-connections")) {
 			renderViewIdentityProviderConnections(
-				renderRequest, renderResponse, httpServletRequest);
+				httpServletRequest, renderRequest, renderResponse);
 		}
 		else if (tabs1.equals("service-provider-connections")) {
 			renderViewServiceProviderConnections(
-				renderRequest, renderResponse, httpServletRequest);
+				httpServletRequest, renderRequest, renderResponse);
 		}
 
 		return "/admin/view.jsp";
@@ -112,8 +112,8 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected void renderViewIdentityProviderConnections(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -142,8 +142,8 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected void renderViewServiceProviderConnections(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

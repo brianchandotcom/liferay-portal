@@ -31,10 +31,10 @@ import javax.servlet.http.HttpServletRequest;
 public class StagingProcessesWebDisplayContext {
 
 	public StagingProcessesWebDisplayContext(
-		RenderResponse renderResponse, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
-		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
+		_renderResponse = renderResponse;
 	}
 
 	public List<NavigationItem> getNavigationItems() {

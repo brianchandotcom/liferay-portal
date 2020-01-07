@@ -99,6 +99,33 @@ definition {
 			locator1 = "Fragment#FRAGMENT_LAYOUT_BACKGROUND_IMAGE");
 	}
 
+	@description = "This test covers LPS-105188. It ensures that a user can change selected page for Navigation Menu item based on page after creation."
+	@priority = "4"
+	test ChangeSelectedPageNavigationMenu {
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		for (var i : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name ${i}");
+		}
+
+		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name");
+
+		NavigationMenusAdmin.addItem(
+			item = "Page",
+			pageNames = "Test Page Name 1");
+
+		NavigationMenusAdmin.editItem(
+			item = "Page",
+			itemName = "Test Page Name 1",
+			pageNames = "Test Page Name 2");
+
+		NavigationMenusAdmin.viewItem(itemName = "Test Page Name 2");
+	}
+
 	@description = "This ensures that the background image of a fragment can be added."
 	@priority = "5"
 	test FragmentSmoke {

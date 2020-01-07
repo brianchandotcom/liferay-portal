@@ -90,6 +90,8 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
 		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
+			_analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
+
 			return;
 		}
 

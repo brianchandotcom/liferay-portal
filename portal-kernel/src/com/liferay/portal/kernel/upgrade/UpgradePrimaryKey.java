@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,28 +54,31 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		_databaseMetaData = connection.getMetaData();
 
-		DBInspector dbInspector = new DBInspector(connection);
+		_dbInspector = new DBInspector(connection);
 
 		for (String tableName : _tableNames) {
 			try (LoggingTimer loggingTimer = new LoggingTimer(
 					UpgradePrimaryKey.class, tableName)) {
 
-				_upgradePrimaryKey(databaseMetaData, dbInspector, tableName);
+				_upgradePrimaryKey(tableName);
 			}
 		}
 	}
 
 	protected String getAlterPrimaryKeySQL(
-		String tableName, List<String> primaryKeyColumnNames) {
+			String tableName, List<String> primaryKeyColumnNames)
+		throws SQLException {
 
 		boolean addCompanyId = false;
 
 		String alterSQL = "alter table " + tableName + " add primary key (";
 
 		for (String primaryKeyColumnName : primaryKeyColumnNames) {
-			if (primaryKeyColumnName.equals("companyId")) {
+			if (primaryKeyColumnName.equals(
+					_dbInspector.normalizeName("companyId"))) {
+
 				addCompanyId = true;
 
 				continue;
@@ -92,18 +96,14 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 		return alterSQL += ")";
 	}
 
-	private void _upgradePrimaryKey(
-			DatabaseMetaData databaseMetaData, DBInspector dbInspector,
-			String tableName)
-		throws Exception {
-
-		String normalizedTableName = dbInspector.normalizeName(
-			tableName, databaseMetaData);
+	private void _upgradePrimaryKey(String tableName) throws Exception {
+		String normalizedTableName = _dbInspector.normalizeName(
+			tableName, _databaseMetaData);
 
 		List<String> primaryKeyColumnNames = new ArrayList<>();
 
-		try (ResultSet rs = databaseMetaData.getPrimaryKeys(
-				dbInspector.getCatalog(), dbInspector.getSchema(),
+		try (ResultSet rs = _databaseMetaData.getPrimaryKeys(
+				_dbInspector.getCatalog(), _dbInspector.getSchema(),
 				normalizedTableName)) {
 
 			while (rs.next()) {
@@ -117,8 +117,8 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 		}
 
 		if (primaryKeyColumnNames.contains(
-				dbInspector.normalizeName(
-					_newPKColumnName, databaseMetaData))) {
+				_dbInspector.normalizeName(
+					_newPKColumnName, _databaseMetaData))) {
 
 			return;
 		}
@@ -188,6 +188,8 @@ public class UpgradePrimaryKey extends UpgradeProcess {
 			getAlterPrimaryKeySQL(normalizedTableName, primaryKeyColumnNames));
 	}
 
+	private DatabaseMetaData _databaseMetaData;
+	private DBInspector _dbInspector;
 	private final String _newPKColumnDefinition;
 	private final String _newPKColumnName;
 	private final String[] _tableNames;

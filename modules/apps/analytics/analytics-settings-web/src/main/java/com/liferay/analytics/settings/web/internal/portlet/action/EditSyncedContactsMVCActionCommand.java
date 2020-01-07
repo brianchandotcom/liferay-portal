@@ -81,7 +81,7 @@ public class EditSyncedContactsMVCActionCommand
 					"syncedOrganizationIds", syncedOrganizationIds);
 
 				syncedUserGroupIds = GetterUtil.getStringValues(
-					configurationProperties.get("syncedGroupIds"));
+					configurationProperties.get("syncedUserGroupIds"));
 			}
 		}
 

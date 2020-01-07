@@ -3737,19 +3737,19 @@ public class ServiceBuilder {
 					continue;
 				}
 
-				List<EntityColumn> entityFinderColumns =
+				List<EntityColumn> finderEntityColumns =
 					entityFinder.getEntityColumns();
 
-				if (entityFinderColumns.isEmpty() ||
-					entityFinderColumns.equals(entity.getPKEntityColumns())) {
+				if (finderEntityColumns.isEmpty() ||
+					finderEntityColumns.equals(entity.getPKEntityColumns())) {
 
 					continue;
 				}
 
 				List<String> dbNames = new ArrayList<>(
-					entityFinderColumns.size() + 2);
+					finderEntityColumns.size() + 2);
 
-				for (EntityColumn entityColumn : entityFinderColumns) {
+				for (EntityColumn entityColumn : finderEntityColumns) {
 					dbNames.add(entityColumn.getDBName());
 				}
 
@@ -7204,7 +7204,7 @@ public class ServiceBuilder {
 
 	private void _removeRedundantUniqueIndex(
 		List<IndexMetadata> indexMetadatas,
-		List<String> entityFinderColumnNames, List<String> internalColumns) {
+		List<String> finderEntityColumnNames, List<String> internalColumns) {
 
 		Iterator<IndexMetadata> iterator = indexMetadatas.iterator();
 
@@ -7218,23 +7218,23 @@ public class ServiceBuilder {
 
 			String[] indexColumnNames = indexMetadata.getColumnNames();
 
-			if ((indexColumnNames.length < entityFinderColumnNames.size()) ||
+			if ((indexColumnNames.length < finderEntityColumnNames.size()) ||
 				(indexColumnNames.length >
-					(entityFinderColumnNames.size() +
+					(finderEntityColumnNames.size() +
 						internalColumns.size()))) {
 
 				continue;
 			}
 
-			for (int i = 0; i < entityFinderColumnNames.size(); i++) {
+			for (int i = 0; i < finderEntityColumnNames.size(); i++) {
 				String indexColumnName = indexColumnNames[i];
 
-				if (!indexColumnName.equals(entityFinderColumnNames.get(i))) {
+				if (!indexColumnName.equals(finderEntityColumnNames.get(i))) {
 					continue iterate;
 				}
 			}
 
-			for (int i = entityFinderColumnNames.size();
+			for (int i = finderEntityColumnNames.size();
 				 i < indexColumnNames.length; i++) {
 
 				if (!internalColumns.contains(indexColumnNames[i])) {

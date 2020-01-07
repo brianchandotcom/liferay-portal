@@ -557,9 +557,20 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
+		String name = packageJSONObject.getString("name");
+
+		if (Validator.isNull(name)) {
+			return;
+		}
+
+		String version = packageJSONObject.getString("version");
+
+		if (Validator.isNull(version)) {
+			return;
+		}
+
 		FlatJSPackage flatJSPackage = new FlatJSPackage(
-			flatJSBundle, packageJSONObject.getString("name"),
-			packageJSONObject.getString("version"), mainModuleName, root);
+			flatJSBundle, name, version, mainModuleName, root);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Adding NPM package: " + flatJSPackage);

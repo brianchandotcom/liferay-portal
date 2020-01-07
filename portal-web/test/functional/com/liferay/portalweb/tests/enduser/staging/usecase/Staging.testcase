@@ -139,6 +139,53 @@ definition {
 			siteName = "Site Name");
 	}
 
+	@description = "This is a use case for LPS-83147."
+	@priority = "5"
+	test ActivateStagingWithPageScopedWebContent {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Web Content Display");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
+
+		WebContentDisplayPortlet.configureScopePG(scopeSelection = "Staging Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
+
+		WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Staging Test Page");
+
+		var pageScopeId = JSONLayout.getPageScopeIdByGroupName(groupName = "Site Name");
+
+		echo("Page Scope ID is: ${pageScopeId}");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "${pageScopeId}");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		AssertConsoleTextNotPresent(value1 = "DataIntegrityViolationException");
+
+		AssertConsoleTextNotPresent(value1 = "SystemException");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "${pageScopeId}");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+	}
+
 	@description = "This is a use case for LPS-94325."
 	@priority = "3"
 	test ActivateStagingWithWCDOnFragment {

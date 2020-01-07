@@ -408,7 +408,9 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackSmokeTest";
 
-		JSONWebcontent.addWebContent(
+		// Workaround for LPS-104802
+
+		/* JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
 			title = "WC Title");
@@ -417,7 +419,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article");
+			searchAssetType = "Web Content Article"); */
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

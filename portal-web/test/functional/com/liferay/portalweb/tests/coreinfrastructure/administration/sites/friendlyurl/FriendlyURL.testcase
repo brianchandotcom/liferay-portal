@@ -24,6 +24,45 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test EditFriendlyURL {
+		JSONLayout.addPublicLayout(
+			friendlyURL = "/home",
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/home");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/home");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Type(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "/test");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/home");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+	}
+
 	@priority = "5"
 	test ViewCanonicalURLWithLocalizedFriendlyURL {
 		property portal.acceptance = "true";

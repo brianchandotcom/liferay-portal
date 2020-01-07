@@ -17,11 +17,14 @@ package com.liferay.analytics.message.sender.internal;
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.security.permission.PermissionCheckerUtil;
 
 import java.nio.charset.Charset;
 
@@ -92,6 +95,11 @@ public class AnalyticsMessageSenderClientImpl
 	}
 
 	private void _disconnectDataSource(long companyId) throws PortalException {
+		PermissionCheckerUtil.setThreadValues(
+			_userLocalService.fetchUserByScreenName(
+				companyId,
+				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN));
+
 		_companyService.removePreferences(
 			companyId,
 			new String[] {
@@ -113,5 +121,8 @@ public class AnalyticsMessageSenderClientImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -46,6 +46,12 @@ definition {
 		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
 	}
 
+	macro clickApp{
+	Click(
+		key_itemName = "${appName}",
+		locator1 = "AppBuilder#APP_NAME");
+	}
+
 	macro continueNewCustomObject {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}

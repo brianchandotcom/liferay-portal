@@ -130,6 +130,12 @@
 
 <!--APP_CREATION_SCREEN-->
 <tr>
+	<td>APP_NAME</td>
+	<td>//a[contains(text(),'${key_itemName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>DEPLOY_APP_TOGGLE</td>
 	<td>//div[contains(@class,'autofit-row ')][descendant::h3[contains(.,'${key_deployOption}')]]//input[contains(@class,'toggle-switch-check')]</td>
 	<td></td>

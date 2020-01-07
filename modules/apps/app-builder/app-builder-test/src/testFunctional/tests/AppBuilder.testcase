@@ -1580,6 +1580,8 @@ definition {
 			deployOption = "Product Menu",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
+
+		AppBuilderAdmin.clickApp(appName = "Test App");
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

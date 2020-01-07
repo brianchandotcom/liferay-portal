@@ -21,6 +21,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -39,6 +41,7 @@ import java.nio.charset.Charset;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -81,9 +84,9 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 		if (message.equals("INVALID_TOKEN")) {
 			removeCompanyPreferences(companyId);
-			removeConfigurationProperties(
-				companyId,
-				getConfigurationProperties(getConfigurationPid(), companyId));
+
+			configurationProvider.deleteCompanyConfiguration(
+				AnalyticsConfiguration.class, companyId);
 		}
 		else {
 			throw new PortalException("Invalid token");
@@ -188,6 +191,29 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 		updateConfigurationProperties(actionRequest, configurationProperties);
 
+		try {
+			AnalyticsConfiguration analyticsConfiguration =
+				configurationProvider.getCompanyConfiguration(
+					AnalyticsConfiguration.class, themeDisplay.getCompanyId());
+
+			if (Objects.equals(
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					"") &&
+				Objects.equals(
+					analyticsConfiguration.liferayAnalyticsEndpointURL(), "") &&
+				Objects.equals(analyticsConfiguration.token(), "")) {
+
+				return;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Analytics configuration is deleted");
+			}
+
+			return;
+		}
+
 		String token = (String)configurationProperties.get("token");
 
 		if ((token != null) && !token.isEmpty()) {
@@ -210,5 +236,8 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 	@Reference
 	protected SettingsFactory settingsFactory;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseAnalyticsMVCActionCommand.class);
 
 }

@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class OAuthConfigurationValues {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String OAUTH_CLASS_NAME = GetterUtil.getString(
 		OAuthConfigurationUtil.get("oauth.class.name"));
 

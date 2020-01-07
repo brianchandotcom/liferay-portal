@@ -350,15 +350,7 @@ public class ChangeListsDisplayContext {
 			"ctCollectionId", String.valueOf(ctCollectionId));
 		publishURL.setParameter("name", name);
 
-		return StringBundler.concat(
-			"confirm('",
-			HtmlUtil.escapeJS(
-				LanguageUtil.format(
-					_httpServletRequest,
-					"are-you-sure-you-want-to-publish-x-change-list", name,
-					false)),
-			"') && Liferay.Util.navigate('",
-			HtmlUtil.escapeJS(publishURL.toString()), "')");
+		return publishURL.toString();
 	}
 
 	public SearchContainer<CTCollection> getSearchContainer() {

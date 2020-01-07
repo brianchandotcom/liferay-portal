@@ -42,6 +42,29 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Get the default plid from a site by using groupId"
+	macro _getDefaultPlidByGroupId {
+		Variables.assertDefined(parameterList = "${groupId},${privateLayout}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-default-plid \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+
+		var defaultPlid = JSONCurlUtil.post("${curl}");
+		var defaultPlid = StringUtil.extractDigits("${defaultPlid}");
+
+		if ("${defaultPlid}" == "[]") {
+			fail("FAIL. Cannot find defaultPlid.");
+		}
+
+		return "${defaultPlid}";
+	}
+
 	@summary = "Get the layoutId from a layout by using groupId and layoutName"
 	macro _getLayoutIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");

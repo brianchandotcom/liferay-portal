@@ -27,6 +27,8 @@ definition {
 	@description = "This makes sure that an image can be uploaded via URL."
 	@priority = "5"
 	test AddBlogsImageViaURL {
+		property portal.acceptance = "true";
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoAddEntry();
@@ -129,6 +131,8 @@ definition {
 	@description = "This ensures that the background image of a fragment can be added."
 	@priority = "5"
 	test FragmentSmoke {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");

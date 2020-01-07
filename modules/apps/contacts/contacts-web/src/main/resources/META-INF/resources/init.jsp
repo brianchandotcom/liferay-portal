@@ -50,6 +50,7 @@ page import="com.liferay.portal.kernel.model.Contact" %><%@
 page import="com.liferay.portal.kernel.model.EmailAddress" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
+page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.Phone" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserConstants" %><%@
@@ -82,6 +83,7 @@ page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.comparator.UserLastNameComparator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil" %><%@
 page import="com.liferay.social.kernel.model.SocialRelationConstants" %><%@
 page import="com.liferay.social.kernel.model.SocialRequestConstants" %><%@
 page import="com.liferay.social.kernel.service.SocialActivityLocalServiceUtil" %><%@
@@ -136,4 +138,10 @@ boolean showSocialNetwork = PrefsParamUtil.getBoolean(portletPreferences, reques
 boolean showTags = PrefsParamUtil.getBoolean(portletPreferences, request, "showTags", false);
 boolean showUsersInformation = PrefsParamUtil.getBoolean(portletPreferences, request, "showUsersInformation", true);
 boolean showWebsites = PrefsParamUtil.getBoolean(portletPreferences, request, "showWebsites", true);
+
+Group group = themeDisplay.getScopeGroup();
+
+Layout currentLayout = themeDisplay.getLayout();
+
+Layout embeddedPersonalApplicationLayout = PersonalApplicationURLUtil.getOrAddEmbeddedPersonalApplicationLayout(themeDisplay.getDefaultUser(), group, currentLayout.isPrivateLayout());
 %>

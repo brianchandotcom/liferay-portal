@@ -2,27 +2,297 @@
 
 ## 1.0.1 - 2019-01-22
 
-### Added
-- [LPS-89415]: Added `model` FreeMarker Java template.
+### Commits
+- [LPS-89415]: Update Gradle tags (15c28ce1bd)
 
-### Changed
-- [LPS-89415]: Update the [Liferay Portal Tools REST Builder] dependency to
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.1.
+
+### Description
+- [LPS-89415]: Added `model` FreeMarker Java template.
 
 ## 1.0.2 - 2019-01-24
 
-### Changed
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.2.
+
+### Description
 - [LPS-89415]: Renamed `model` FreeMarker Java template to `dto` and changed the
 `buildRest` task to `buildREST`.
-- [LPS-89415]: Update the [Liferay Portal Tools REST Builder] dependency to
-version 1.0.2.
+
+## 1.0.3 - 2019-01-24
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.3.
+
+## 1.0.4 - 2019-01-25
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.4.
+
+## 1.0.5 - 2019-01-27
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.5.
+
+## 1.0.6 - 2019-01-31
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.6.
+
+## 1.0.7 - 2019-02-07
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.8.
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.7.
+
+## 1.0.8 - 2019-02-07
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.9.
+
+## 1.0.9 - 2019-02-09
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.10.
+
+## 1.0.10 - 2019-02-27
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.11.
+
+## 1.0.11 - 2019-03-01
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.12.
+
+## 1.0.12 - 2019-03-11
+
+### Dependencies
+- [LPS-91378]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.13.
+
+## 1.0.13 - 2019-03-12
+
+### Dependencies
+- [LPS-91803]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.14.
+
+## 1.0.14 - 2019-03-12
+
+### Dependencies
+- [LPS-85855]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.15.
+
+## 1.0.15 - 2019-03-12
+
+### Dependencies
+- [LPS-84119]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.16.
+
+## 1.0.16 - 2019-04-01
+
+### Dependencies
+- [LPS-93124]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.17.
+
+## 1.0.17 - 2019-04-07
+
+### Dependencies
+- [LPS-91222]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.18.
+
+## 1.0.18 - 2019-04-17
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.19.
+
+## 1.0.19 - 2019-04-29
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.20.
+
+## 1.0.20 - 2019-05-03
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.21.
+
+## 1.0.21 - 2019-05-17
+
+### Dependencies
+- [LPS-95723]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.22.
+
+## 1.0.22 - 2019-09-05
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.24.
+- [LPS-96247]: Update the com.liferay.gradle.util dependency to version 1.0.34.
+
+## 1.0.23 - 2019-09-16
+
+### Dependencies
+- [LPS-100427]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.25.
+
+## 1.0.24 - 2019-09-23
+
+### Dependencies
+- [LPS-101605]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.26.
+
+## 1.0.25 - 2019-09-27
+
+### Dependencies
+- [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.27.
+
+## 1.0.26 - 2019-09-29
+
+### Dependencies
+- [LPS-102452]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.28.
+
+## 1.0.27 - 2019-10-09
+
+### Dependencies
+- [LPS-98387]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.29.
+
+## 1.0.28 - 2019-10-21
+
+### Dependencies
+- [LPS-98640]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.30.
+
+## 1.0.29 - 2019-10-28
+
+### Dependencies
+- [LPS-103743]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.31.
+
+## 1.0.30 - 2019-10-29
+
+### Dependencies
+- [LPS-103252]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.32.
+
+## 1.0.31 - 2019-11-01
+
+### Dependencies
+- [LPS-103809]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.34.
+- [LPS-103809]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.33.
+
+## 1.0.33 - 2019-11-01
+
+### Commits
+- [LPS-103809]: preop next (ab0fb88be6)
+
+### Dependencies
+- [LPS-103809]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.35.
+
+## 1.0.34 - 2019-11-04
+
+### Dependencies
+- [LPS-102721]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.36.
+
+## 1.0.36 - 2019-11-11
+
+### Dependencies
+- [LPS-104217]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.37.
+
+## 1.0.37 - 2019-11-20
+
+### Dependencies
+- [COMMERCE-1067]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.38.
+
+## 1.0.38 - 2019-11-26
+
+### Dependencies
+- [LPS-102388]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.39.
+
+## 1.0.39 - 2019-12-03
+
+### Commits
+- [LPS-100515]: Update plugins Gradle version (448efac158)
+
+### Dependencies
+- [LPS-105193]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.40.
+
+## 1.0.40 - 2019-12-04
+
+### Dependencies
+- [LPS-105304]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.41.
 
 ## 1.0.41 - 2019-12-09
 
-### Changed
-- [LPS-105237]: Update the [Liferay Portal Tools REST Builder] dependency to
+### Dependencies
+- [LPS-105237]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.42.
 
-[Liferay Portal Tools REST Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-rest-builder
-[LPS-89415]: https://issues.liferay.com/browse/LPS-89415
-[LPS-105237]: https://issues.liferay.com/browse/LPS-105237
+## 1.0.42 - 2019-12-09
+
+### Dependencies
+- [LPS-105237]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.43.
+
+## 1.0.44 - 2019-12-12
+
+### Dependencies
+- [LPS-105237]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.44.
+
+## 1.0.45 - 2019-12-16
+
+### Dependencies
+- [LPS-105719]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.45.
+
+## 1.0.46 - 2019-12-18
+
+### Dependencies
+- [LPS-105982]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.46.
+
+## 1.0.47 - 2019-12-19
+
+### Dependencies
+- [LPS-106128]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.47.
+
+## 1.0.48 - 2019-12-24
+
+### Dependencies
+- [LPS-102577]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.48.
+
+## 1.0.49 - 2019-12-24
+
+### Dependencies
+- [LPS-105228]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.49.

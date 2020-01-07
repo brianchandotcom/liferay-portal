@@ -17,6 +17,8 @@ package com.liferay.document.library.internal.util;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.util.FileImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,26 +45,30 @@ public class DLValidatorImplTest {
 		dlValidatorImpl.setDLConfiguration(dlConfiguration);
 
 		_dlValidator = dlValidatorImpl;
+
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(FileImpl.getInstance());
 	}
 
 	@Test(expected = FileExtensionException.class)
 	public void testInvalidExtension() throws Exception {
-		_dlValidator.validateFileExtension("gıf");
+		_dlValidator.validateFileExtension("test.gıf");
 	}
 
 	@Test
 	public void testValidLowerCaseExtension() throws Exception {
-		_dlValidator.validateFileExtension("gif");
+		_dlValidator.validateFileExtension("test.gif");
 	}
 
 	@Test
 	public void testValidMixedCaseExtension() throws Exception {
-		_dlValidator.validateFileExtension("GiF");
+		_dlValidator.validateFileExtension("test.GiF");
 	}
 
 	@Test
 	public void testValidUpperCaseExtension() throws Exception {
-		_dlValidator.validateFileExtension("GIF");
+		_dlValidator.validateFileExtension("test.GIF");
 	}
 
 	private DLValidator _dlValidator;

@@ -30,4 +30,7 @@ public class AccountScreenNavigationEntryConstants {
 	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY =
 		"edit.account.entry.form";
 
+	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_USER =
+		"edit.account.user.form";
+
 }

@@ -121,14 +121,6 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 		return templateResources;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public List<TemplateResource> getAllTemplateResources() {
-		return new ArrayList<>(_templateResources);
-	}
-
 	public SoyTemplateResource getSoyTemplateResource() {
 		SoyTemplateResource soyTemplateResource = _soyTemplateResource;
 

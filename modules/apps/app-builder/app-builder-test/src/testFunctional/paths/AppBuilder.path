@@ -136,6 +136,12 @@
 </tr>
 
 <tr>
+	<td>UNDEPLOY_APP_BUTTON</td>
+	<td>//button[@class='btn btn-primary']</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>UNDEPLOY_APP_STATUS</td>
 	<td>//span[@class='label-item label-item-expand']</td>
 	<td></td>

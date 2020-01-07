@@ -16,7 +16,7 @@ import React, {useState, useEffect, useMemo, useContext} from 'react';
 
 import {Autocomplete} from '../../../../shared/components/autocomplete/Autocomplete.es';
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
-import {SingleReassignModalContext} from './SingleReassignModal.es';
+import {ModalContext} from '../ModalContext.es';
 
 const AssigneeInput = ({reassignedTasks, setReassignedTasks, taskId}) => {
 	const [newAssignee, setNewAssignee] = useState(() => ({}));
@@ -72,12 +72,12 @@ const Item = ({
 	setReassignedTasks,
 	taskNames
 }) => {
-	const {showModal} = useContext(SingleReassignModalContext);
+	const {singleModal} = useContext(ModalContext);
 
 	return (
 		<ClayTable.Row {...item} key={index}>
 			<ClayTable.Cell style={{fontWeight: 'bold'}}>
-				{showModal.selectedItem && showModal.selectedItem.id}
+				{singleModal.selectedItem && singleModal.selectedItem.id}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>{`${assetType}: ${assetTitle}`} </ClayTable.Cell>

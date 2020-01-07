@@ -12,14 +12,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {
-	createContext,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState
-} from 'react';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
 
 import EmptyState from '../../../../shared/components/list/EmptyState.es';
 import RetryButton from '../../../../shared/components/list/RetryButton.es';
@@ -27,9 +20,8 @@ import LoadingState from '../../../../shared/components/loading/LoadingState.es'
 import PromisesResolver from '../../../../shared/components/request/PromisesResolver.es';
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
 import {usePost} from '../../../../shared/hooks/usePost.es';
+import {ModalContext} from '../ModalContext.es';
 import {Table} from './SingleReassignModalTable.es';
-
-const SingleReassignModalContext = createContext();
 
 const ErrorView = ({onClick}) => {
 	return (
@@ -52,28 +44,25 @@ const LoadingView = () => {
 
 const SingleReassignModal = () => {
 	const [errorToast, setErrorToast] = useState(() => false);
-	const [promises, setPromises] = useState([]);
 	const [reassignedTasks, setReassignedTasks] = useState(() => ({
 		tasks: []
 	}));
-	const [retry, setRetry] = useState(() => false);
+	const [retry, setRetry] = useState(0);
 	const [sendingPost, setSendingPost] = useState(false);
 	const [successToast, setSuccessToast] = useState(() => []);
-	const {setShowModal, showModal} = useContext(SingleReassignModalContext);
-	const [visible, setVisible] = useState(false);
+	const {setSingleModal, singleModal} = useContext(ModalContext);
+	const onClose = () => {
+		setSingleModal(() => ({selectedItem: undefined, visible: false}));
+		setReassignedTasks(() => ({
+			tasks: []
+		}));
+	};
 
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			setShowModal(() => ({selectedItem: undefined, visible: false}));
-			setReassignedTasks(() => ({
-				tasks: []
-			}));
-		}
-	});
+	const {observer} = useModal({onClose});
 
 	const taskItem = useMemo(
-		() => (showModal.selectedItem ? showModal.selectedItem : {}),
-		[showModal]
+		() => (singleModal.selectedItem ? singleModal.selectedItem : {}),
+		[singleModal]
 	);
 
 	const {data, fetchData} = useFetch({
@@ -82,7 +71,10 @@ const SingleReassignModal = () => {
 		url: `/workflow-instances/${taskItem.id}/workflow-tasks`
 	});
 
-	const itemId = data.items && data.items[0] ? data.items[0].id : undefined;
+	const itemId = useMemo(
+		() => (data.items && data.items[0] ? data.items[0].id : undefined),
+		[data]
+	);
 
 	const newAssigneeId = useMemo(
 		() =>
@@ -101,10 +93,11 @@ const SingleReassignModal = () => {
 	const reassignButtonHandler = useCallback(() => {
 		if (
 			newAssigneeId !== undefined &&
-			(showModal.selectedItem.assigneeUsers.length === 0 ||
-				showModal.selectedItem.assigneeUsers[0].id != newAssigneeId)
+			(singleModal.selectedItem.assigneeUsers.length === 0 ||
+				singleModal.selectedItem.assigneeUsers[0].id !== newAssigneeId)
 		) {
 			setSendingPost(() => true);
+			setErrorToast(() => false);
 			postData()
 				.then(() => {
 					onClose();
@@ -125,25 +118,28 @@ const SingleReassignModal = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [postData]);
 
-	const modalObjString = JSON.stringify(showModal);
-
-	useEffect(() => {
-		setVisible(() => showModal.visible);
-		if (showModal.visible || retry) {
-			setPromises(() => [fetchData()]);
-			setRetry(() => false);
+	const promises = useMemo(() => {
+		setErrorToast(() => false);
+		if (singleModal.visible) {
+			return [
+				fetchData().catch(err => {
+					setErrorToast(() => true);
+					return Promise.reject(err);
+				})
+			];
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [modalObjString, retry]);
+	}, [fetchData, retry]);
 
 	const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
 	return (
 		<>
-			<ClayAlert.ToastContainer>
+			<ClayAlert.ToastContainer data-testid="alertContainer">
 				{successToast.map(value => (
 					<ClayAlert
 						autoClose={5000}
+						data-testid="alertSuccess"
 						displayType={'success'}
 						key={value}
 						onClose={() => {
@@ -160,7 +156,7 @@ const SingleReassignModal = () => {
 			</ClayAlert.ToastContainer>
 
 			<PromisesResolver promises={promises}>
-				{visible && (
+				{singleModal.visible && (
 					<ClayModal
 						data-testid="reassignModal"
 						observer={observer}
@@ -171,6 +167,19 @@ const SingleReassignModal = () => {
 							{Liferay.Language.get('select-new-assignee')}
 						</ClayModal.Header>
 
+						{errorToast && (
+							<ClayAlert
+								data-testid="alertError"
+								displayType="danger"
+								spritemap={spritemap}
+								title={Liferay.Language.get('error')}
+							>
+								{Liferay.Language.get(
+									'your-connection-was-unexpectedly-lost'
+								)}
+							</ClayAlert>
+						)}
+
 						<ClayModal.Body>
 							<PromisesResolver.Pending>
 								<SingleReassignModal.LoadingView />
@@ -179,22 +188,10 @@ const SingleReassignModal = () => {
 							<PromisesResolver.Rejected>
 								<SingleReassignModal.ErrorView
 									onClick={() => {
-										setRetry(() => true);
+										setRetry(retry => ++retry);
 									}}
 								/>
 							</PromisesResolver.Rejected>
-
-							{errorToast && (
-								<ClayAlert
-									displayType="danger"
-									spritemap={spritemap}
-									title={Liferay.Language.get('error')}
-								>
-									{Liferay.Language.get(
-										'your-connection-was-unexpectedly-lost'
-									)}
-								</ClayAlert>
-							)}
 
 							<PromisesResolver.Resolved>
 								<SingleReassignModal.Table
@@ -210,6 +207,7 @@ const SingleReassignModal = () => {
 							first={
 								<ClayButton
 									data-testid="cancelButton"
+									disabled={sendingPost}
 									displayType="secondary"
 									onClick={onClose}
 								>
@@ -219,8 +217,8 @@ const SingleReassignModal = () => {
 							last={
 								<ClayButton
 									data-testid="reassignButton"
-									disabled={sendingPost}
-									onClick={() => reassignButtonHandler()}
+									disabled={sendingPost || !newAssigneeId}
+									onClick={reassignButtonHandler}
 								>
 									{Liferay.Language.get('reassign')}
 								</ClayButton>
@@ -263,5 +261,4 @@ SingleReassignModal.Footer = Footer;
 SingleReassignModal.LoadingView = LoadingView;
 SingleReassignModal.Table = Table;
 
-export {SingleReassignModalContext};
 export {SingleReassignModal};

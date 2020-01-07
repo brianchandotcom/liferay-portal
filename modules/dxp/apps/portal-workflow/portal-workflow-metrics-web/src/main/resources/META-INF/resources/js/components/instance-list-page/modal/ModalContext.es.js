@@ -9,18 +9,8 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import {createContext} from 'react';
 
-const RetryButton = props => {
-	return (
-		<button
-			className="btn btn-link btn-sm"
-			data-testid="retryButton"
-			{...props}
-		>
-			{Liferay.Language.get('retry')}
-		</button>
-	);
-};
+const ModalContext = createContext();
 
-export default RetryButton;
+export {ModalContext};

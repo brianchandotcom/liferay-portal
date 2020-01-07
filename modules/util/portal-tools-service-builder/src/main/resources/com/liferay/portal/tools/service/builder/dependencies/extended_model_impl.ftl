@@ -11,7 +11,7 @@ package ${packagePath}.model.impl;
  */
 public class ${entity.name}Impl extends ${entity.name}BaseImpl {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a ${entity.humanName} model instance should use the {@link ${apiPackagePath}.model.${entity.name}} interface instead.

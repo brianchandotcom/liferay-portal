@@ -46,7 +46,7 @@ import org.osgi.util.tracker.ServiceTracker;
 </#if>
 public class ${entity.name}${sessionTypeName}ServiceUtil {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>${packagePath}.service.impl.${entity.name}${sessionTypeName}ServiceImpl</code> and rerun ServiceBuilder to regenerate this class.

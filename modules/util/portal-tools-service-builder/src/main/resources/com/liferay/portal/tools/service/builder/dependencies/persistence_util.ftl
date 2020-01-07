@@ -41,7 +41,7 @@ import org.osgi.util.tracker.ServiceTracker;
 </#if>
 public class ${entity.name}Util {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

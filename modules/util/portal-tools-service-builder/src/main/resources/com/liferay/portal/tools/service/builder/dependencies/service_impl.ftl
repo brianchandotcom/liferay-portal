@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Component;
 </#if>
 public class ${entity.name}${sessionTypeName}ServiceImpl extends ${entity.name}${sessionTypeName}ServiceBaseImpl {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 <#if stringUtil.equals(sessionTypeName, "Local")>

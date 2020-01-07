@@ -128,7 +128,7 @@ public interface ${entity.name}${sessionTypeName}Service
 
 	{
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 <#if stringUtil.equals(sessionTypeName, "Local")>

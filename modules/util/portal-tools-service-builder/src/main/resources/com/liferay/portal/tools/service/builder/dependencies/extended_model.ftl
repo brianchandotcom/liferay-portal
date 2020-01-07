@@ -56,7 +56,7 @@ public interface ${entity.name} extends
 
 	{
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>${packagePath}.model.impl.${entity.name}Impl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

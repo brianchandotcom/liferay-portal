@@ -125,7 +125,7 @@ import java.util.function.Function;
 </#if>
 public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> implements ${entity.name}Model {
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ${entity.humanName} model instance should use the <code>${apiPackagePath}.model.${entity.name}</code> interface instead.

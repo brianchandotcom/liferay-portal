@@ -65,7 +65,7 @@ import java.util.Map;
 public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames()} {
 	<#assign overrideColumnNames = entity.getOverrideColumnNames() />
 
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a ${entity.humanName} model instance should use the {@link ${entity.name}} interface instead.

@@ -37,6 +37,10 @@ buildChangelogs {
 
 		File changelogCommitsFile = file("sdk/" + projectName + "/CHANGELOG.commits")
 
+		if (!changelogCommitsFile.exists()) {
+			return
+		}
+
 		File changelogDescriptionsFile = file("sdk/" + projectName + "/CHANGELOG.descriptions")
 
 		changelogCommitsFile.getText("UTF-8").split("\n").reverse().each {
@@ -245,6 +249,10 @@ recordCommits {
 				lastVersionCommitId = commitId
 				lastVersionNumber = publishedVersionNumber
 			}
+		}
+
+		if (recordCommitIDs.size() <= 0) {
+			return
 		}
 
 		File changelogCommitsFile = file("sdk/" + projectName + "/CHANGELOG.commits")

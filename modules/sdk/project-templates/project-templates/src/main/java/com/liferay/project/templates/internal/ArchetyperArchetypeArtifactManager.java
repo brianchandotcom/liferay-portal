@@ -25,8 +25,6 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.nio.file.Path;
-
 import java.util.List;
 
 import org.apache.maven.archetype.common.DefaultArchetypeArtifactManager;
@@ -66,12 +64,22 @@ public class ArchetyperArchetypeArtifactManager
 		for (File archetypesFile : _archetypesFiles) {
 			try {
 				if (archetypesFile.isDirectory()) {
-					Path archetypePath = FileUtil.getFile(
-						archetypesFile.toPath(),
-						artifactId + "-" + version + ".jar");
+					for (File archetypePotentialFile :
+							archetypesFile.listFiles()) {
 
-					if (archetypePath != null) {
-						archetypeFile = archetypePath.toFile();
+						String bundleVersion = FileUtil.getManifestProperty(
+							archetypePotentialFile, "Bundle-Version");
+
+						String bsn = FileUtil.getManifestProperty(
+							archetypePotentialFile, "Bundle-SymbolicName");
+
+						if (bundleVersion.equals(version) &&
+							bsn.equals(artifactId)) {
+
+							archetypeFile = archetypePotentialFile;
+
+							break;
+						}
 					}
 				}
 

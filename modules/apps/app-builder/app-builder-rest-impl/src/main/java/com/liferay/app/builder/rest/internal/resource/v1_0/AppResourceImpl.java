@@ -451,16 +451,13 @@ public class AppResourceImpl
 			}
 		}
 
-		if (name != null) {
-			int nameMaxLength = 30;
-
+		if (MapUtil.isNotEmpty(name)) {
 			for (Object value : name.values()) {
-				String nameLocale = (String)value;
+				String localizedName = (String)value;
 
-				if (nameLocale.length() > nameMaxLength) {
+				if (localizedName.length() > 30) {
 					throw new InvalidAppException(
-						"The app name has more than " + nameMaxLength +
-							" characters");
+						"The app name has more than 30 characters");
 				}
 			}
 		}

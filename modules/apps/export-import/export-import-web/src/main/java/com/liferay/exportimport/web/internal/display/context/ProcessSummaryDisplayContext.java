@@ -46,31 +46,6 @@ public class ProcessSummaryDisplayContext {
 	public ProcessSummaryDisplayContext() {
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public List<String> getPageNames(JSONArray layoutsJSONArray) {
-		List<String> pageNames = new ArrayList<>();
-
-		for (int i = 0; i < layoutsJSONArray.length(); ++i) {
-			JSONObject layoutJSONObject = layoutsJSONArray.getJSONObject(i);
-
-			String pageName = layoutJSONObject.getString("name");
-
-			pageNames.add(pageName);
-
-			if (layoutJSONObject.getBoolean("hasChildren")) {
-				List<String> childPageNames = _getChildPageNames(
-					pageName, layoutJSONObject.getJSONObject("children"));
-
-				pageNames.addAll(childPageNames);
-			}
-		}
-
-		return pageNames;
-	}
-
 	public List<String> getPageNames(
 		long groupId, boolean privateLayout, long[] selectedLayoutIds,
 		String languageId) {

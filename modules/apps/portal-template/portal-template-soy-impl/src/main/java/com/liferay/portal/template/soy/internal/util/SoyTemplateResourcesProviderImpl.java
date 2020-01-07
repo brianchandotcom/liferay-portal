@@ -41,12 +41,7 @@ public class SoyTemplateResourcesProviderImpl
 	@Deprecated
 	@Override
 	public List<TemplateResource> getAllTemplateResources() {
-		if (_soyManager == null) {
-			return Collections.<TemplateResource>emptyList();
-		}
-
-		return Collections.unmodifiableList(
-			_soyManager.getAllTemplateResources());
+		return Collections.<TemplateResource>emptyList();
 	}
 
 	@Override

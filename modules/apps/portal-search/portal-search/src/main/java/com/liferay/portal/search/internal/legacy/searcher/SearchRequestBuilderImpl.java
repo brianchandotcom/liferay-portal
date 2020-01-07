@@ -361,9 +361,6 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 	@Deprecated
 	@Override
 	public SearchRequestBuilder rescoreQuery(Query query) {
-		withSearchRequestImpl(
-			searchRequestImpl -> searchRequestImpl.setRescoreQuery(query));
-
 		return this;
 	}
 

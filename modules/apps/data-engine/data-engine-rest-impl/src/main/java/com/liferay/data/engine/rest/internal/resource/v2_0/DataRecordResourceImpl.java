@@ -382,35 +382,36 @@ public class DataRecordResourceImpl
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
-		if (Validator.isNotNull(dataListViewId)) {
-			DEDataListView deDataListView =
-				_deDataListViewLocalService.getDEDataListView(dataListViewId);
+		if (Validator.isNull(dataListViewId)) {
+			return booleanFilter;
+		}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				deDataListView.getAppliedFilters());
+		DEDataListView deDataListView =
+			_deDataListViewLocalService.getDEDataListView(dataListViewId);
 
-			String[] fieldNames = JSONUtil.toStringArray(
-				JSONFactoryUtil.createJSONArray(
-					deDataListView.getFieldNames()));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			deDataListView.getAppliedFilters());
 
-			for (String fieldName : fieldNames) {
-				JSONArray jsonArray = (JSONArray)jsonObject.get(fieldName);
+		String[] fieldNames = JSONUtil.toStringArray(
+			JSONFactoryUtil.createJSONArray(deDataListView.getFieldNames()));
 
-				if (jsonArray == null) {
-					continue;
-				}
+		for (String fieldName : fieldNames) {
+			JSONArray jsonArray = (JSONArray)jsonObject.get(fieldName);
 
-				String[] filters = JSONUtil.toStringArray(jsonArray);
+			if (jsonArray == null) {
+				continue;
+			}
 
-				DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-				String indexFieldName = _getIndexFieldName(
-					ddmStructure.getStructureId(), fieldName,
-					contextAcceptLanguage.getPreferredLocale());
+			String indexFieldName = _getIndexFieldName(
+				ddmStructure.getStructureId(), fieldName,
+				contextAcceptLanguage.getPreferredLocale());
 
-				for (String filter : filters) {
-					booleanFilter.addTerm(indexFieldName, filter);
-				}
+			String[] filters = JSONUtil.toStringArray(jsonArray);
+
+			for (String filter : filters) {
+				booleanFilter.addTerm(indexFieldName, filter);
 			}
 		}
 

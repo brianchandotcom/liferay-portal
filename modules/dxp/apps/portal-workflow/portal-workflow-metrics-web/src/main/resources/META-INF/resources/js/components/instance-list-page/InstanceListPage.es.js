@@ -22,17 +22,15 @@ import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
 import InstanceListPageFilters from './InstanceListPageFilters.es';
 import InstanceListPageItemDetail from './InstanceListPageItemDetail.es';
 import {Table} from './InstanceListPageTable.es';
-import {
-	SingleReassignModalContext,
-	SingleReassignModal
-} from './modal/single-reassign/SingleReassignModal.es';
+import {ModalContext} from './modal/ModalContext.es';
+import {SingleReassignModal} from './modal/single-reassign/SingleReassignModal.es';
 import {InstanceFiltersProvider} from './store/InstanceListPageFiltersStore.es';
 import {
 	InstanceListProvider,
 	InstanceListContext
 } from './store/InstanceListPageStore.es';
 
-export function InstanceListPage({page, pageSize, processId, query}) {
+const InstanceListPage = ({page, pageSize, processId, query}) => {
 	const {
 		assigneeUserIds = [],
 		slaStatuses = [],
@@ -41,7 +39,7 @@ export function InstanceListPage({page, pageSize, processId, query}) {
 		timeRange = []
 	} = getFiltersParam(query);
 
-	const [showModal, setShowModal] = useState({
+	const [singleModal, setSingleModal] = useState({
 		selectedItem: undefined,
 		visible: false
 	});
@@ -50,9 +48,7 @@ export function InstanceListPage({page, pageSize, processId, query}) {
 
 	return (
 		<Request>
-			<SingleReassignModalContext.Provider
-				value={{setShowModal, showModal}}
-			>
+			<ModalContext.Provider value={{setSingleModal, singleModal}}>
 				<InstanceFiltersProvider
 					assigneeKeys={assigneeUserIds}
 					processId={processId}
@@ -77,16 +73,16 @@ export function InstanceListPage({page, pageSize, processId, query}) {
 							pageSize={pageSize}
 							processId={processId}
 							query={query}
-							showModal={showModal}
+							singleModal={singleModal}
 						/>
 					</InstanceListProvider>
 				</InstanceFiltersProvider>
-			</SingleReassignModalContext.Provider>
+			</ModalContext.Provider>
 		</Request>
 	);
-}
+};
 
-const Body = ({page, pageSize, processId, query, showModal}) => {
+const Body = ({page, pageSize, processId, query, singleModal}) => {
 	const {fetchInstances, items, searching, totalCount} = useContext(
 		InstanceListContext
 	);
@@ -101,13 +97,13 @@ const Body = ({page, pageSize, processId, query, showModal}) => {
 	);
 
 	const promises = useMemo(() => {
-		if (!showModal.visible) {
+		if (!singleModal.visible) {
 			return [fetchInstances()];
 		}
 
 		return [];
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page, pageSize, processId, query, showModal.visible]);
+	}, [page, pageSize, processId, query, singleModal.visible]);
 
 	return (
 		<>

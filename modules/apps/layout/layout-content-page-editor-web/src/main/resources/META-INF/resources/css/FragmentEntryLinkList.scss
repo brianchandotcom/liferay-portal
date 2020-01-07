@@ -56,6 +56,11 @@
 			z-index: 1;
 		}
 
+		&:not(.col-md-12):before {
+			left: $fragmentsEditorSpacing * 1.5;
+			width: calc(100% - #{$fragmentsEditorSpacing * 3});
+		}
+
 		.fragments-editor--with-update-permissions &:before {
 			box-shadow: inset 0 0 0 $topperBorderWidth
 				$fragmentEntryLinkColumnBorderColor;

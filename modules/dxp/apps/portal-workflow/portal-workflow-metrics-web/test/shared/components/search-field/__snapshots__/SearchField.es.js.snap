@@ -110,38 +110,6 @@ exports[`Should change search value 1`] = `
                             className="input-group-inset-item input-group-inset-item-after"
                           >
                             <ForwardRef
-                              className="navbar-breakpoint-d-none"
-                              displayType="unstyled"
-                              spritemap="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg"
-                              symbol="times"
-                            >
-                              <ForwardRef
-                                className="navbar-breakpoint-d-none"
-                                displayType="unstyled"
-                                monospaced={true}
-                              >
-                                <button
-                                  className="navbar-breakpoint-d-none btn btn-monospaced btn-unstyled"
-                                  type="button"
-                                >
-                                  <ForwardRef
-                                    spritemap="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg"
-                                    symbol="times"
-                                  >
-                                    <svg
-                                      className="lexicon-icon lexicon-icon-times"
-                                      key="times"
-                                      role="presentation"
-                                    >
-                                      <use
-                                        xlinkHref="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                                      />
-                                    </svg>
-                                  </ForwardRef>
-                                </button>
-                              </ForwardRef>
-                            </ForwardRef>
-                            <ForwardRef
                               displayType="unstyled"
                               spritemap="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg"
                               symbol="search"
@@ -219,19 +187,6 @@ exports[`Should render component 1`] = `
           <span
             className="input-group-inset-item input-group-inset-item-after"
           >
-            <button
-              className="navbar-breakpoint-d-none btn btn-monospaced btn-unstyled"
-              type="button"
-            >
-              <svg
-                className="lexicon-icon lexicon-icon-times"
-                role="presentation"
-              >
-                <use
-                  xlinkHref="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times"
-                />
-              </svg>
-            </button>
             <button
               className="btn btn-monospaced btn-unstyled"
               type="submit"

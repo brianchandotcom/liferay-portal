@@ -1315,26 +1315,32 @@
 		},
 
 		toggleSelectBox(selectBoxId, value, toggleBoxId) {
-			var selectBox = $('#' + selectBoxId);
-			var toggleBox = $('#' + toggleBoxId);
+			var selectBox = document.getElementById(selectBoxId);
+			var toggleBox = document.getElementById(toggleBoxId);
 
-			var dynamicValue = this.isFunction(value);
+			if (selectBox && toggleBox) {
+				var dynamicValue = this.isFunction(value);
 
-			var toggle = function() {
-				var currentValue = selectBox.val();
+				var toggle = function() {
+					var currentValue = selectBox.value;
 
-				var visible = value == currentValue;
+					var visible = value == currentValue;
 
-				if (dynamicValue) {
-					visible = value(currentValue, value);
-				}
+					if (dynamicValue) {
+						visible = value(currentValue, value);
+					}
 
-				toggleBox.toggleClass('hide', !visible);
-			};
+					if (visible) {
+						toggleBox.classList.remove('hide');
+					} else {
+						toggleBox.classList.add('hide');
+					}
+				};
 
-			toggle();
+				toggle();
 
-			selectBox.on('change', toggle);
+				selectBox.addEventListener('change', toggle);
+			}
 		}
 	};
 

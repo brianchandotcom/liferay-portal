@@ -68,9 +68,9 @@ const renderPreviewComponent = props =>
 
 describe('ItemSelectorPreview', () => {
 	beforeAll(() => {
+		Liferay.component = jest.fn();
 		Liferay.SideNavigation = jest.fn();
 		Liferay.SideNavigation.initialize = jest.fn();
-		Liferay.component = jest.fn();
 	});
 
 	afterEach(cleanup);
@@ -100,13 +100,18 @@ describe('ItemSelectorPreview', () => {
 	});
 
 	it('renders a specific item', () => {
-		const {getByText} = renderPreviewComponent({...previewProps, currentIndex: 1});
+		const {getByText} = renderPreviewComponent({
+			...previewProps,
+			currentIndex: 1
+		});
 
 		expect(getByText(item2Title));
 	});
 
 	it('shows the next item when requested', () => {
-		const {container, getByText} = renderPreviewComponent({...previewProps});
+		const {container, getByText} = renderPreviewComponent({
+			...previewProps
+		});
 
 		expect(getByText(item1Title));
 
@@ -118,7 +123,10 @@ describe('ItemSelectorPreview', () => {
 	});
 
 	it('returns to the first item when requested the next item for the last one', () => {
-		const {container, getByText} = renderPreviewComponent({...previewProps, currentIndex: 1});
+		const {container, getByText} = renderPreviewComponent({
+			...previewProps,
+			currentIndex: 1
+		});
 
 		const rigthArrowButton = container.querySelectorAll('.icon-arrow')[1];
 
@@ -127,11 +135,15 @@ describe('ItemSelectorPreview', () => {
 	});
 
 	it('shows the previous item when pressed the left key event', () => {
-		const {container, getByText} = renderPreviewComponent({...previewProps});
+		const {getByText} = renderPreviewComponent({
+			...previewProps
+		});
 
-		const rigthArrowButton = container.querySelectorAll('.icon-arrow')[0];
-
-		fireEvent.keyDown(document.documentElement, { key: 'ArrowLeft', keyCode: 37, which: 37 })
+		fireEvent.keyDown(document.documentElement, {
+			key: 'ArrowLeft',
+			keyCode: 37,
+			which: 37
+		});
 
 		expect(getByText(item2Title));
 	});

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -120,29 +119,23 @@ public class DeleteItemReactMVCActionCommand
 			long plid)
 		throws PortalException {
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
+		List<LayoutStructureItem> deleteLayoutStructureItems =
+			layoutStructure.deleteLayoutStructureItem(itemId);
 
-		JSONObject itemConfigJSONObject =
-			layoutStructureItem.getItemConfigJSONObject();
+		for (LayoutStructureItem layoutStructureItem :
+				deleteLayoutStructureItems) {
 
-		long fragmentEntryLinkId = itemConfigJSONObject.getLong(
-			"fragmentEntryLinkId");
+			JSONObject itemConfigJSONObject =
+				layoutStructureItem.getItemConfigJSONObject();
 
-		if (fragmentEntryLinkId > 0) {
-			FragmentEntryLinkUtil.deleteFragmentEntryLink(
-				companyId, fragmentEntryLinkId, plid, _portletRegistry);
+			long fragmentEntryLinkId = itemConfigJSONObject.getLong(
+				"fragmentEntryLinkId");
+
+			if (fragmentEntryLinkId > 0) {
+				FragmentEntryLinkUtil.deleteFragmentEntryLink(
+					companyId, fragmentEntryLinkId, plid, _portletRegistry);
+			}
 		}
-
-		List<String> childrenItemIds = new ArrayList<>(
-			layoutStructureItem.getChildrenItemIds());
-
-		for (String childrenItemId : childrenItemIds) {
-			_deleteLayoutStructureItem(
-				companyId, childrenItemId, layoutStructure, plid);
-		}
-
-		layoutStructure.deleteLayoutStructureItem(itemId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

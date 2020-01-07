@@ -85,13 +85,11 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 					if (ctEntry != null) {
 						if (conflictInfo.isResolved()) {
 							resolvedConflicts.add(
-								new ObjectValuePair<>(
-									conflictInfo, ctEntry));
+								new ObjectValuePair<>(conflictInfo, ctEntry));
 						}
 						else {
 							unresolvedConflicts.add(
-								new ObjectValuePair<>(
-									conflictInfo, ctEntry));
+								new ObjectValuePair<>(conflictInfo, ctEntry));
 						}
 					}
 				}

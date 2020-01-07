@@ -67,8 +67,40 @@ public class WebUrl {
 	}
 
 	@GraphQLField(description = "The URL's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
+
+	@Schema(
+		description = "A flag that identifies whether this is the main web address of the user/organization."
+	)
+	public Boolean getPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(Boolean primary) {
+		this.primary = primary;
+	}
+
+	@JsonIgnore
+	public void setPrimary(
+		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
+
+		try {
+			primary = primaryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A flag that identifies whether this is the main web address of the user/organization."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean primary;
 
 	@Schema(description = "The absolute URL.")
 	public String getUrl() {
@@ -93,7 +125,7 @@ public class WebUrl {
 	}
 
 	@GraphQLField(description = "The absolute URL.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
 	@Schema(description = "The URL's type.")
@@ -121,7 +153,7 @@ public class WebUrl {
 	}
 
 	@GraphQLField(description = "The URL's type.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String urlType;
 
 	@Override
@@ -159,6 +191,16 @@ public class WebUrl {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (primary != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"primary\": ");
+
+			sb.append(primary);
 		}
 
 		if (url != null) {

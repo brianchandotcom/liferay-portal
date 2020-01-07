@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -275,15 +274,8 @@ public final class DLValidatorImpl implements DLValidator {
 
 		String tail = s.substring(s.length() - end.length());
 
-		if (Objects.equals(
-				StringUtil.toLowerCase(tail), StringUtil.toLowerCase(end)) &&
-			Objects.equals(
-				StringUtil.toUpperCase(tail), StringUtil.toUpperCase(end))) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(
+			StringUtil.toLowerCase(tail), StringUtil.toLowerCase(end));
 	}
 
 	private String _replaceDLCharLastBlacklist(String title) {

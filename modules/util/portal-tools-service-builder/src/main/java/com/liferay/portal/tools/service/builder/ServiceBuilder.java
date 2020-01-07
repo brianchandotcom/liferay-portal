@@ -4729,7 +4729,10 @@ public class ServiceBuilder {
 			}
 		}
 
-		sb.append(", companyId)\n");
+		if (isVersionGTE_7_3_0()) {
+			sb.append(", companyId)\n");
+		}
+
 		sb.append(");");
 
 		return sb.toString();
@@ -4878,7 +4881,7 @@ public class ServiceBuilder {
 
 				sb.append(" null");
 			}
-			else if (dbName.equals("companyId")) {
+			else if (isVersionGTE_7_3_0() && dbName.equals("companyId")) {
 				sb.append(" not null");
 			}
 
@@ -7416,7 +7419,7 @@ public class ServiceBuilder {
 			return false;
 		}
 
-		return true;
+		return isVersionGTE_7_3_0();
 	}
 
 	private void _resolveEntity(Entity entity) throws Exception {

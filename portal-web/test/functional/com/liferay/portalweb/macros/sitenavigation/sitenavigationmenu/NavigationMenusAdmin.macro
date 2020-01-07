@@ -143,7 +143,31 @@ definition {
 		NavigationMenusAdmin.openItemSidebar(itemName = "${itemName}");
 
 		if ("${item}" == "Page") {
-			NavigationMenusAdmin._editItemPage(name = "${name}");
+			if (isSet(pageNames)) {
+				Click(locator1 = "Button#CHOOSE");
+
+				Pause(locator1 = "1000");
+
+				IFrame.selectConfigurationFrame();
+
+				Portlet.expandTree();
+
+				for (var pageName : list "${pageNames}") {
+					Portlet.selectTreeNode(nodeName = "${pageName}");
+				}
+
+				SelectFrameTop();
+
+				AssertClick(
+					locator1 = "Button#ADD",
+					value1 = "Add");
+
+				IFrame.selectTopFrame();
+
+			}
+			else {
+				NavigationMenusAdmin._editItemPage(name = "${name}");
+			}
 		}
 		else if ("${item}" == "Submenu") {
 			NavigationMenusAdmin._editItemSubmenu(submenuName = "${submenuName}");

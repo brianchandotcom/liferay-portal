@@ -154,7 +154,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		UrlValidator urlValidator = new UrlValidator();
 
 		if (!urlValidator.isValid(url)) {
-			throw new WebsiteURLException();
+			throw new WebsiteURLException(url);
 		}
 
 		if (websiteId > 0) {

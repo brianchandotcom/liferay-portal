@@ -18,12 +18,14 @@ import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 
 import java.nio.charset.Charset;
@@ -94,24 +96,48 @@ public class AnalyticsMessageSenderClientImpl
 		}
 	}
 
-	private void _disconnectDataSource(long companyId) throws PortalException {
+	private void _disconnectDataSource(long companyId) {
 		PermissionCheckerUtil.setThreadValues(
 			_userLocalService.fetchUserByScreenName(
 				companyId,
 				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN));
 
-		_companyService.removePreferences(
-			companyId,
-			new String[] {
-				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
-				"liferayAnalyticsFaroBackendSecuritySignature",
-				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",
-				"liferayAnalyticsURL"
-			});
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
-		_configurationProvider.deleteCompanyConfiguration(
-			AnalyticsConfiguration.class, companyId);
+		unicodeProperties.setProperty("liferayAnalyticsDataSourceId", "");
+		unicodeProperties.setProperty("liferayAnalyticsEndpointURL", "");
+		unicodeProperties.setProperty(
+			"liferayAnalyticsFaroBackendSecuritySignature", "");
+		unicodeProperties.setProperty("liferayAnalyticsFaroBackendURL", "");
+		unicodeProperties.setProperty("liferayAnalyticsGroupIds", "");
+		unicodeProperties.setProperty("liferayAnalyticsURL", "");
+
+		try {
+			_companyService.updatePreferences(companyId, unicodeProperties);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove analytics preferences for company " +
+						companyId);
+			}
+		}
+
+		try {
+			_configurationProvider.deleteCompanyConfiguration(
+				AnalyticsConfiguration.class, companyId);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove analytics configuration for company " +
+						companyId);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsMessageSenderClientImpl.class);
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;

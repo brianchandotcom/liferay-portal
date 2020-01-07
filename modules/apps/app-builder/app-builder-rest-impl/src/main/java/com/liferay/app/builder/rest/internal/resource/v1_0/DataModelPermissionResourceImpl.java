@@ -101,7 +101,8 @@ public class DataModelPermissionResourceImpl
 
 		for (DataModelPermission dataModelPermission : dataModelPermissions) {
 			if (!ArrayUtil.contains(
-					dataModelPermission.getActionIds(), ActionKeys.MANAGE, true)) {
+					dataModelPermission.getActionIds(), ActionKeys.MANAGE,
+					true)) {
 
 				continue;
 			}
@@ -154,7 +155,7 @@ public class DataModelPermissionResourceImpl
 				{
 					actionIds = new String[] {
 						"ADD_DATA_DEFINITION", "ADD_DATA_RECORD_COLLECTION",
-						"ADD_DATA_LAYOUT"
+						ActionKeys.PERMISSIONS
 					};
 					roleName = dataModelPermissionRoleName;
 				}

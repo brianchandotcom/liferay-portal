@@ -14,7 +14,7 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import Carousel from './Carousel.es';
@@ -63,9 +63,7 @@ const ItemSelectorPreview = ({
 			Liferay.detach(updateCurrentItemHandler);
 			Liferay.component('ItemSelectorPreview', null);
 		};
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [handleOnKeyDown, updateCurrentItem]);
 
 	useEffect(() => {
 		const sidenavToggle = infoButtonRef.current;
@@ -78,13 +76,11 @@ const ItemSelectorPreview = ({
 				width: '320px'
 			});
 		}
+	}, [infoButtonRef, itemList]);
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [itemList]);
-
-	const close = () => {
+	const close = useCallback(() => {
 		ReactDOM.unmountComponentAtNode(container);
-	};
+	}, [container]);
 
 	const handleClickDone = () => {
 		handleSelectedItem(currentItem);
@@ -130,7 +126,7 @@ const ItemSelectorPreview = ({
 		);
 	};
 
-	const handleClickNext = () => {
+	const handleClickNext = useCallback(() => {
 		if (itemList.length > 1) {
 			setCurrentItemIndex(index => {
 				const lastIndex = itemList.length - 1;
@@ -138,9 +134,9 @@ const ItemSelectorPreview = ({
 				return shouldResetIndex ? 0 : index + 1;
 			});
 		}
-	};
+	}, [itemList.length]);
 
-	const handleClickPrevious = () => {
+	const handleClickPrevious = useCallback(() => {
 		if (itemList.length > 1) {
 			setCurrentItemIndex(index => {
 				const lastIndex = itemList.length - 1;
@@ -148,27 +144,30 @@ const ItemSelectorPreview = ({
 				return shouldResetIndex ? lastIndex : index - 1;
 			});
 		}
-	};
+	}, [itemList.length]);
 
-	const handleOnKeyDown = e => {
-		if (!isMounted()) return;
+	const handleOnKeyDown = useCallback(
+		e => {
+			if (!isMounted()) return;
 
-		switch (e.which || e.keyCode) {
-			case KEY_CODE.LEFT:
-				handleClickPrevious();
-				break;
-			case KEY_CODE.RIGTH:
-				handleClickNext();
-				break;
-			case KEY_CODE.ESC:
-				e.preventDefault();
-				e.stopPropagation();
-				close();
-				break;
-			default:
-				break;
-		}
-	};
+			switch (e.which || e.keyCode) {
+				case KEY_CODE.LEFT:
+					handleClickPrevious();
+					break;
+				case KEY_CODE.RIGTH:
+					handleClickNext();
+					break;
+				case KEY_CODE.ESC:
+					e.preventDefault();
+					e.stopPropagation();
+					close();
+					break;
+				default:
+					break;
+			}
+		},
+		[close, handleClickNext, handleClickPrevious, isMounted]
+	);
 
 	const handleSaveEdit = e => {
 		const itemData = e.data.file;
@@ -204,15 +203,18 @@ const ItemSelectorPreview = ({
 		setCurrentItemIndex(updatedItemList.length - 1);
 	};
 
-	const updateCurrentItem = ({url, value}) => {
-		if (isMounted()) {
-			const newItemList = [...itemList];
+	const updateCurrentItem = useCallback(
+		({url, value}) => {
+			if (isMounted()) {
+				const newItemList = [...itemList];
 
-			newItemList[currentItemIndex] = {...currentItem, url, value};
+				newItemList[currentItemIndex] = {...currentItem, url, value};
 
-			setItemList(newItemList);
-		}
-	};
+				setItemList(newItemList);
+			}
+		},
+		[currentItem, currentItemIndex, isMounted, itemList]
+	);
 
 	const currentItem = itemList[currentItemIndex];
 

@@ -295,7 +295,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						</div>
 
 						<div class="entry-description form-group">
-							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" type="text" value="<%= description %>">
+							<aui:input disabled="<%= !customAbstract %>" label="description" name="description" onChange='<%= renderResponse.getNamespace() + "OnChangeCustomDescription(this.value);" %>' type="text" value="<%= description %>">
 								<aui:validator name="required" />
 							</aui:input>
 						</div>
@@ -459,6 +459,14 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 </portlet:actionURL>
 
 <aui:script>
+	function <portlet:namespace />OnChangeCustomDescription(value) {
+		var blogs = Liferay.component('<portlet:namespace />Blogs');
+
+		if (blogs) {
+			blogs.setCustomDescription(value);
+		}
+	}
+
 	function <portlet:namespace />OnChangeEditor(html) {
 		var blogs = Liferay.component('<portlet:namespace />Blogs');
 

@@ -703,6 +703,12 @@ AUI.add(
 					);
 				},
 
+				setCustomDescription(text) {
+					var instance = this;
+
+					instance._customDescription = text;
+				},
+
 				setDescription(text) {
 					var instance = this;
 

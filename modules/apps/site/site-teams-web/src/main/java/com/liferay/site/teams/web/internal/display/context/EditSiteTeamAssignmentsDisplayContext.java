@@ -36,12 +36,12 @@ import javax.servlet.http.HttpServletRequest;
 public class EditSiteTeamAssignmentsDisplayContext {
 
 	public EditSiteTeamAssignmentsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		this.httpServletRequest = httpServletRequest;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
-		this.httpServletRequest = httpServletRequest;
 	}
 
 	public PortletURL getEditTeamAssignmentsURL() {

@@ -27,10 +27,10 @@ public class DLSelectRestrictedFileEntryTypesDisplayContext
 	extends DLViewFileEntryTypesDisplayContext {
 
 	public DLSelectRestrictedFileEntryTypesDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		super(renderRequest, renderResponse, httpServletRequest);
+		super(httpServletRequest, renderRequest, renderResponse);
 	}
 
 	public String getFormActionURL() {

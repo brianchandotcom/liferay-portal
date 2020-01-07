@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditSiteTeamAssignmentsDisplayContext editSiteTeamAssignmentsDisplayContext = new EditSiteTeamAssignmentsDisplayContext(renderRequest, renderResponse, request);
+EditSiteTeamAssignmentsDisplayContext editSiteTeamAssignmentsDisplayContext = new EditSiteTeamAssignmentsDisplayContext(request, renderRequest, renderResponse);
 
 String redirect = ParamUtil.getString(request, "redirect");
 

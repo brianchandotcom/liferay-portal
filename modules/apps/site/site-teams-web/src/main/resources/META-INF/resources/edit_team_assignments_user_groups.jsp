@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroupsDisplayContext = new EditSiteTeamAssignmentsUserGroupsDisplayContext(renderRequest, renderResponse, request);
+EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroupsDisplayContext = new EditSiteTeamAssignmentsUserGroupsDisplayContext(request, renderRequest, renderResponse);
 
 EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext editSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext = new EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, editSiteTeamAssignmentsUserGroupsDisplayContext);
 %>

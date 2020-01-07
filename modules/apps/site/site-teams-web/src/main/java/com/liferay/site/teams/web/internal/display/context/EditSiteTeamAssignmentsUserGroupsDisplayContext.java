@@ -45,10 +45,10 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 	extends EditSiteTeamAssignmentsDisplayContext {
 
 	public EditSiteTeamAssignmentsUserGroupsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		super(renderRequest, renderResponse, httpServletRequest);
+		super(httpServletRequest, renderRequest, renderResponse);
 	}
 
 	public String getDisplayStyle() {

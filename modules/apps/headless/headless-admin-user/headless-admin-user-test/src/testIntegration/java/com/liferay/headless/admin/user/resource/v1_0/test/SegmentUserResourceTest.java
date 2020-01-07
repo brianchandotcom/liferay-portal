@@ -31,8 +31,9 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import javax.ws.rs.NotFoundException;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -55,58 +56,13 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 		Assert.assertEquals(0, page.getTotalCount());
 	}
 
-	@Override
-	@Test
-	public void testGetSegmentUserAccountsPage() throws Exception {
-		Page<SegmentUser> page = segmentUserResource.getSegmentUserAccountsPage(
-			testGetSegmentUserAccountsPage_getSegmentId(), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		Long segmentId = testGetSegmentUserAccountsPage_getSegmentId();
-
-		Long irrelevantSegmentId =
-			testGetSegmentUserAccountsPage_getIrrelevantSegmentId();
-
-		if (irrelevantSegmentId != null) {
-			SegmentUser irrelevantSegmentUser =
-				testGetSegmentUserAccountsPage_addSegmentUser(
-					irrelevantSegmentId, randomIrrelevantSegmentUser());
-
-			page = segmentUserResource.getSegmentUserAccountsPage(
-				irrelevantSegmentId, null);
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantSegmentUser),
-				(List<SegmentUser>)page.getItems());
-			assertValid(page);
-		}
-
-		testGetSegmentUserAccountsPage_addSegmentUser(
-			segmentId, randomSegmentUser());
-		testGetSegmentUserAccountsPage_addSegmentUser(
-			segmentId, randomSegmentUser());
-
-		page = segmentUserResource.getSegmentUserAccountsPage(segmentId, null);
-
-		Assert.assertEquals(3, page.getTotalCount());
-
-		assertValid(page);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
+	@Ignore
+	@Test(expected = NotFoundException.class)
 	public void testGetSegmentUserAccountsPageWithNonexistingSegmentId()
 		throws Exception {
 
 		segmentUserResource.getSegmentUserAccountsPage(
 			RandomTestUtil.randomLong(), null);
-	}
-
-	@Ignore
-	@Test
-	public void testGetSegmentUserAccountsPageWithPagination() {
 	}
 
 	@Override
@@ -167,7 +123,9 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 		};
 	}
 
-	private String _filterString = "(contains(emailAddress, 'liferay'))";
+	private String _filterString =
+		"(contains(emailAddress, 'liferay') and (not (emailAddress eq " +
+			"'test@liferay.com')))";
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

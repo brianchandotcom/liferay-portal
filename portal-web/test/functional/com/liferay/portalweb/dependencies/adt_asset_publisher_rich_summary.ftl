@@ -195,6 +195,7 @@
 		displayStyle="${socialBookmarksDisplayStyle}"
 		target="_blank"
 		title=entry.getTitle(locale)
+		types="${socialBookmarksTypes}"
 		url=viewURL
 	/>
 </#macro>

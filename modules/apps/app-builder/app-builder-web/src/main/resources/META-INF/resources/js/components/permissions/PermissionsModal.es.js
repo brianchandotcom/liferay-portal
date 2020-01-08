@@ -27,7 +27,7 @@ export default ({
 	endpoint,
 	isOpen,
 	onClose,
-	onSave = Promise.resolve(),
+	onSave = () => Promise.resolve(),
 	rolesFilter = () => true,
 	title
 }) => {

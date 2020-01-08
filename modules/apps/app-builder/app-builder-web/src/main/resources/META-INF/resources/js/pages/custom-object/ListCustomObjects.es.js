@@ -326,12 +326,12 @@ export default ({history}) => {
 			<PermissionsModal
 				actions={[
 					{
-						key: 'VIEW_DATA_RECORD',
+						key: 'MANAGE',
 						sortable: false,
 						value: Liferay.Language.get('manage')
 					}
 				]}
-				endpoint="o/app-builder/v1.0/data-model-permissions"
+				endpoint="/o/app-builder/v1.0/data-model-permissions"
 				isOpen={isPermissionsModalOpen}
 				onClose={() => openPermissionsModal(false)}
 				rolesFilter={rolesFilter}

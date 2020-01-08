@@ -72,6 +72,7 @@ if (layoutPageTemplateEntry == null) {
 					elementClasses="btn-secondary"
 					id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
 					label='<%= LanguageUtil.get(request, "edit-master") %>'
+					size="sm"
 					style="<%= false %>"
 				/>
 			</c:if>
@@ -81,6 +82,7 @@ if (layoutPageTemplateEntry == null) {
 					elementClasses="btn-secondary"
 					id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
 					label='<%= LanguageUtil.get(request, "change-master") %>'
+					size="sm"
 					style="<%= false %>"
 				/>
 			</c:if>

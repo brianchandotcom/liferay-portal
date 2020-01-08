@@ -65,9 +65,11 @@ export default ({answer}) => {
 				<div className="autofit-col autofit-col-expand">
 					<div className="autofit-section">
 						{showAsAnswer && (
-							<p>
+							<p className="question-accepted-message">
 								<ClayIcon symbol="check-circle-full" />{' '}
-								{Liferay.Language.get('chosen-answer')}
+								<strong>
+									{Liferay.Language.get('chosen-answer')}
+								</strong>
 							</p>
 						)}
 						<p>{answer.articleBody}</p>

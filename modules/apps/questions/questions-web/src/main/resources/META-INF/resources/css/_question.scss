@@ -29,6 +29,10 @@
 	box-sizing: border-box;
 }
 
+.question-author-badge {
+	border: 1px solid $secondary-l3;
+}
+
 .question-icon-rotate-180 {
 	transform: rotate(-180deg);
 }

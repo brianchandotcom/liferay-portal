@@ -17,8 +17,10 @@ import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import Answer from '../../components/Answer.es';
+import CreatorRow from '../../components/CreatorRow.es';
 import KeywordList from '../../components/KeywordList.es';
 import Rating from '../../components/Rating.es';
+import Subscription from '../../components/Subscription.es';
 import {createAnswer, getThread} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {dateToBriefInternationalHuman} from '../../utils/utils.es';
@@ -71,46 +73,64 @@ export default ({
 
 					<div className="autofit-col autofit-col-expand">
 						<div className="autofit-section">
-							<h1 className="question-headline">
-								{question.headline}
-							</h1>
-							<p>
-								<small>
-									{Liferay.Language.get('asked')}{' '}
-									{dateToBriefInternationalHuman(
-										question.dateCreated
-									)}
-									{' - '}
-									{Liferay.Language.get('active')}{' '}
-									{dateToBriefInternationalHuman(
-										question.dateModified
-									)}
-									{' - '}
-									{lang.sub(
-										Liferay.Language.get('viewed-x-times'),
-										[question.viewCount]
-									)}
-								</small>
-							</p>
+							<div className="autofit-row">
+								<div className="autofit-col-expand autofit-column">
+									<h1 className="question-headline">
+										{question.headline}
+									</h1>
+									<p>
+										<small>
+											{Liferay.Language.get('asked')}{' '}
+											{dateToBriefInternationalHuman(
+												question.dateCreated
+											)}
+											{' - '}
+											{Liferay.Language.get(
+												'active'
+											)}{' '}
+											{dateToBriefInternationalHuman(
+												question.dateModified
+											)}
+											{' - '}
+											{lang.sub(
+												Liferay.Language.get(
+													'viewed-x-times'
+												),
+												[question.viewCount]
+											)}
+										</small>
+									</p>
+								</div>
+								<div>
+									<Subscription
+										onSubscription={subscribed =>
+											setQuestion({
+												...question,
+												subscribed
+											})
+										}
+										question={question}
+									/>
+								</div>
+							</div>
 							<div>
 								<p>{question.articleBody}</p>
 							</div>
 
 							<KeywordList keywords={question.keywords} />
-
-							<hr />
 						</div>
 
-						{/*<Subscription*/}
-						{/*	onSubscription={subscribed =>*/}
-						{/*		setQuestion({...question, subscribed})*/}
-						{/*	}*/}
-						{/*	question={question}*/}
-						{/*/>*/}
-						{/*<UserRow*/}
-						{/*	answer={false}*/}
-						{/*	creator={question.creator}*/}
-						{/*/>*/}
+						<div
+							className="autofit-row"
+							style={{alignItems: 'center'}}
+						>
+							<div className="autofit-col-expand autofit-column">
+								<hr />
+							</div>
+							<div className="autofit-column">
+								<CreatorRow question={question} />
+							</div>
+						</div>
 
 						<h3 className="subtitle">
 							{answers.length} {Liferay.Language.get('answers')}

@@ -459,12 +459,12 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		if ("${emailVerificationURL}" == "true") {
-			Type.typeEditor(
+			Type.typeCKEditor(
 				locator1 = "CKEditor#BODY_FIELD",
 				value1 = "[$EMAIL_VERIFICATION_URL$]");
 		}
 		else {
-			Type.typeEditor(
+			Type.typeCKEditor(
 				locator1 = "CKEditor#BODY_FIELD",
 				value1 = "[$EMAIL_VERIFICATION_CODE$]");
 		}

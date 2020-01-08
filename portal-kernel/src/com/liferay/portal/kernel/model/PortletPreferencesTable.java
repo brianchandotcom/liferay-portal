@@ -43,28 +43,28 @@ public class PortletPreferencesTable extends Table<PortletPreferencesTable> {
 	private PortletPreferencesTable() {
 		super("PortletPreferences", PortletPreferencesTable::new);
 
-		mvccVersion = Column.create(
+		mvccVersion = new Column<>(
 			this, "mvccVersion", Long.class, Types.BIGINT);
 
-		ctCollectionId = Column.create(
+		ctCollectionId = new Column<>(
 			this, "ctCollectionId", Long.class, Types.BIGINT);
 
-		portletPreferencesId = Column.create(
+		portletPreferencesId = new Column<>(
 			this, "portletPreferencesId", Long.class, Types.BIGINT);
 
-		companyId = Column.create(this, "companyId", Long.class, Types.BIGINT);
+		companyId = new Column<>(this, "companyId", Long.class, Types.BIGINT);
 
-		ownerId = Column.create(this, "ownerId", Long.class, Types.BIGINT);
+		ownerId = new Column<>(this, "ownerId", Long.class, Types.BIGINT);
 
-		ownerType = Column.create(
+		ownerType = new Column<>(
 			this, "ownerType", Integer.class, Types.INTEGER);
 
-		plid = Column.create(this, "plid", Long.class, Types.BIGINT);
+		plid = new Column<>(this, "plid", Long.class, Types.BIGINT);
 
-		portletId = Column.create(
+		portletId = new Column<>(
 			this, "portletId", String.class, Types.VARCHAR);
 
-		preferences = Column.create(
+		preferences = new Column<>(
 			this, "preferences", String.class, Types.CLOB);
 
 		setColumns(

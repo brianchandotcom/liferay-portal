@@ -1165,6 +1165,32 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="install-lpkg-patch">
+		<attribute name="patch.file.zip.url" />
+
+		<sequential>
+			<local name="patch.file.name" />
+
+			<propertyregex
+				input="@{patch.file.zip.url}"
+				property="patch.file.name"
+				regexp="http:\/\/.*\/(Liferay[^\/]*\.lpkg)"
+				select="\1"
+			/>
+
+			<beanshell>
+				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+				project.setProperty("patch.file.name", JenkinsResultsParserUtil.decode(project.getProperty("patch.file.name")));
+			</beanshell>
+
+			<mirrors-get
+				dest="${liferay.home}/deploy/${patch.file.name}"
+				src="@{patch.file.zip.url}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="install-patch">
 		<attribute name="patch.file.zip.url" />
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
@@ -6958,9 +6984,17 @@ go</echo>
 			</or>
 		</condition>
 
-		<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
+		<if>
+			<matches pattern="http:\/\/.*\/(Liferay[^\/]*\.lpkg)" string="${patch.file.zip.url}" />
+			<then>
+				<install-lpkg-patch patch.file.zip.url="${patch.file.zip.url}" />
+			</then>
+			<else>
+				<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
 
-		<validate-installed-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
+				<validate-installed-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
+			</else>
+		</if>
 	</target>
 
 	<target name="install-patches">
@@ -6978,18 +7012,26 @@ go</echo>
 		</condition>
 
 		<if>
-			<or>
-				<contains string="${patch.file.zip.url}" substring="hotfix" />
-				<contains string="${patch.file.zip.url}" substring="security" />
-			</or>
+			<matches pattern="http:\/\/.*\/(Liferay[^\/]*\.lpkg)" string="${patch.file.zip.url}" />
 			<then>
-				<install-patch-dependencies patch.file.zip.url="${patch.file.zip.url}" />
+				<install-lpkg-patch patch.file.zip.url="${patch.file.zip.url}" />
 			</then>
+			<else>
+				<if>
+					<or>
+						<contains string="${patch.file.zip.url}" substring="hotfix" />
+						<contains string="${patch.file.zip.url}" substring="security" />
+					</or>
+					<then>
+						<install-patch-dependencies patch.file.zip.url="${patch.file.zip.url}" />
+					</then>
+				</if>
+
+				<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
+
+				<validate-installed-patches patching.tool.dir="${patching.tool.dir}" />
+			</else>
 		</if>
-
-		<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
-
-		<validate-installed-patches patching.tool.dir="${patching.tool.dir}" />
 	</target>
 
 	<target name="kill-spi">

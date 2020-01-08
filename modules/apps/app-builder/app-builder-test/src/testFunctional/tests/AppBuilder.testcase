@@ -1616,6 +1616,14 @@ definition {
 		App.saveApp();
 
 		App.validateDeployedAs(title = "Widget and Standalone");
+		
+		AppBuilderAdmin.clickApp(appName = "Changed Name");
+
+		App.selectFormView(formViewName = "Form View Title Two");
+
+		App.selectTableView(tableViewName = "Table View Title Two");
+
+		App.saveApp();
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

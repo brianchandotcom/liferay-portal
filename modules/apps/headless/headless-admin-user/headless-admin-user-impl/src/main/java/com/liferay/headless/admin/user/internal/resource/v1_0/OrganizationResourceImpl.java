@@ -189,6 +189,44 @@ public class OrganizationResourceImpl
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
+	@Override
+	protected void preparePatch(
+		Organization organization, Organization existingOrganization) {
+
+		OrganizationContactInformation organizationContactInformation =
+			organization.getOrganizationContactInformation();
+
+		if (organizationContactInformation != null) {
+			OrganizationContactInformation
+				existingOrganizationContactInformation =
+					existingOrganization.getOrganizationContactInformation();
+
+			if (organizationContactInformation.getEmailAddresses() != null) {
+				existingOrganizationContactInformation.setEmailAddresses(
+					organizationContactInformation.getEmailAddresses());
+			}
+
+			if (organizationContactInformation.getPostalAddresses() != null) {
+				existingOrganizationContactInformation.setPostalAddresses(
+					organizationContactInformation.getPostalAddresses());
+			}
+
+			if (organizationContactInformation.getTelephones() != null) {
+				existingOrganizationContactInformation.setTelephones(
+					organizationContactInformation.getTelephones());
+			}
+
+			if (organizationContactInformation.getWebUrls() != null) {
+				existingOrganizationContactInformation.setWebUrls(
+					organizationContactInformation.getWebUrls());
+			}
+		}
+
+		if (organization.getServices() != null) {
+			existingOrganization.setServices(organization.getServices());
+		}
+	}
+
 	private HoursAvailable _createHoursAvailable(
 		int closeHour, String day, int openHour) {
 

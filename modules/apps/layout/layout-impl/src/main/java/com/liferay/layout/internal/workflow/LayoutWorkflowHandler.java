@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.workflow;
 
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -22,14 +23,17 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -92,15 +96,48 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
+		Layout layout = _layoutLocalService.getLayout(classPK);
+
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			Layout draftLayout = _layoutLocalService.fetchLayout(
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+			try {
+				layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+			}
+			catch (Exception e) {
+				throw new PortalException(e);
+			}
+
+			UnicodeProperties typeSettingsProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			typeSettingsProperties.setProperty("published", "true");
+
+			_layoutLocalService.updateLayout(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(), typeSettingsProperties.toString());
+
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), new Date());
+		}
 
 		return _layoutLocalService.updateStatus(
 			userId, classPK, status, serviceContext);
 	}
 
 	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private final ResourceBundleLoader _resourceBundleLoader =
 		ResourceBundleLoaderUtil.getResourceBundleLoaderByBundleSymbolicName(

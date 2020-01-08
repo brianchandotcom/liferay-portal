@@ -1601,6 +1601,12 @@ public interface LayoutLocalService
 	public Layout updatePriority(long plid, int priority)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public Layout updateStatus(
+			long userId, Layout layout, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public Layout updateType(long plid, String type) throws PortalException;
 
 	@Override

@@ -235,6 +235,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP</td>
+	<td>//li[3]//button[contains(@class, 'btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_CARD_NAME</td>
 	<td>//div[contains(@class,'workload-by-assignee-card')]//td[contains(@class,'assignee-name')]//span[contains(text(),'${key_assigneeName}')]</td>
 	<td></td>
@@ -250,13 +255,43 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_FILTER_CLEAR_ALL</td>
+	<td>//a[@class='component-link tbar-link']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_NAME</td>
 	<td>//td[contains(@class,'table-title')]//span[contains(text(),'${key_assigneeName}')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE</td>
+	<td>//span[contains(text(),'${key_assigneeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PAGE_TASKCOUNT</td>
 	<td>//td[contains(@class,'table-title')]//span[contains(text(),'${key_assigneeName}')]/../../following-sibling::td[contains(@data-testid,'taskCount')]//a[contains(text(),'${key_taskCount}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_ON_TIME</td>
+	<td>xpath=(//span[contains(text(),'${assigneeName}')]/ancestor::td[contains(@class,'table-title')]/following-sibling::td//a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_OVERDUE</td>
+	<td>xpath=(//span[contains(text(),'${assigneeName}')]/ancestor::td[contains(@class,'table-title')]/following-sibling::td//a)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_TOTAL_PENDING</td>
+	<td>xpath=(//span[contains(text(),'${assigneeName}')]/ancestor::td[contains(@class,'table-title')]/following-sibling::td//a)[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME</td>
+	<td>//input[@placeholder='Search for Assignee Name']</td>
 	<td></td>
 </tr>
 </tbody>

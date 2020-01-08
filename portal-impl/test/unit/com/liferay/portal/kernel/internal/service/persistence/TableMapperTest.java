@@ -101,8 +101,6 @@ public class TableMapperTest {
 		ToolDependencies.wireBasic();
 
 		DBManagerUtil.setDB(DBType.HYPERSONIC, null);
-
-		ToolDependencies.wireCaches();
 	}
 
 	@Before
@@ -122,21 +120,11 @@ public class TableMapperTest {
 
 		sqlUpdateFactoryUtil.setSqlUpdateFactory(new MockSqlUpdateFactory());
 
-		Class<?> clazz = TableMapperTest.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		_dataSource = (DataSource)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {DataSource.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws Throwable {
-
-					throw new UnsupportedOperationException();
-				}
-
+			TableMapperTest.class.getClassLoader(),
+			new Class<?>[] {DataSource.class},
+			(proxy, method, args) -> {
+				throw new UnsupportedOperationException();
 			});
 
 		_leftBasePersistence = new MockBasePersistence<>(Left.class);

@@ -45,36 +45,16 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.PropsImpl;
 
-import java.io.InputStream;
-import java.io.Reader;
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.NClob;
-import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
-import java.sql.Ref;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.RowId;
 import java.sql.SQLException;
 
-import java.sql.SQLWarning;
-import java.sql.SQLXML;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,24 +76,13 @@ public class CTTableMapperTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
-
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.clear();
-
-				assertClasses.add(CTTableMapper.class);
-			}
-
-		};
+		CodeCoverageAssertor.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {
 		ToolDependencies.wireBasic();
 
 		DBManagerUtil.setDB(DBType.HYPERSONIC, null);
-
-		ToolDependencies.wireCaches();
 	}
 
 	@Before
@@ -133,21 +102,11 @@ public class CTTableMapperTest {
 
 		sqlUpdateFactoryUtil.setSqlUpdateFactory(new MockSqlUpdateFactory());
 
-		Class<?> clazz = CTTableMapperTest.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		_dataSource = (DataSource)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {DataSource.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws Throwable {
-
-					throw new UnsupportedOperationException();
-				}
-
+			CTTableMapperTest.class.getClassLoader(),
+			new Class<?>[] {DataSource.class},
+			(proxy, method, args) -> {
+				throw new UnsupportedOperationException();
 			});
 
 		_leftBasePersistence = new MockBasePersistence<>(Left.class);
@@ -1047,7 +1006,7 @@ public class CTTableMapperTest {
 				new long[] {leftPrimaryKey1, leftPrimaryKey2},
 				rightPrimaryKey1));
 
-		try (SafeClosable safeClosable1 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			Assert.assertArrayEquals(
@@ -1140,7 +1099,7 @@ public class CTTableMapperTest {
 
 		long ctCollectionId = 5;
 
-		try (SafeClosable safeClosable1 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			lefts = _ctTableMapper.getLeftBaseModels(
@@ -1154,7 +1113,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
 
-		try (SafeClosable safeClosable2 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			lefts = _ctTableMapper.getLeftBaseModels(
@@ -1176,7 +1135,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
 
-		try (SafeClosable safeClosable3 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			lefts = _ctTableMapper.getLeftBaseModels(
@@ -1198,7 +1157,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
 
-		try (SafeClosable safeClosable4 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			lefts = _ctTableMapper.getLeftBaseModels(
@@ -1235,7 +1194,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey3, rightPrimaryKey, ctCollectionId, true);
 
-		try (SafeClosable safeClosable5 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			lefts = _ctTableMapper.getLeftBaseModels(
@@ -1252,7 +1211,7 @@ public class CTTableMapperTest {
 
 		_leftBasePersistence.setNoSuchModelException(true);
 
-		try (SafeClosable safeClosable6 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			_ctTableMapper.getLeftBaseModels(
@@ -1316,7 +1275,7 @@ public class CTTableMapperTest {
 
 		long ctCollectionId = 5;
 
-		try (SafeClosable safeClosable1 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			leftPrimaryKeys = _ctTableMapper.getLeftPrimaryKeys(
@@ -1333,7 +1292,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
 
-		try (SafeClosable safeClosable2 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			leftPrimaryKeys = _ctTableMapper.getLeftPrimaryKeys(
@@ -1353,7 +1312,7 @@ public class CTTableMapperTest {
 		mockGetLeftPrimaryKeysByRightPrimaryKeyMappingSqlQuery.setDatabaseError(
 			true);
 
-		try (SafeClosable safeClosable3 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			_ctTableMapper.getLeftPrimaryKeys(rightPrimaryKey);
@@ -1412,7 +1371,7 @@ public class CTTableMapperTest {
 
 		long ctCollectionId = 5;
 
-		try (SafeClosable safeClosable1 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			rights = _ctTableMapper.getRightBaseModels(
@@ -1426,7 +1385,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
-		try (SafeClosable safeClosable2 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			rights = _ctTableMapper.getRightBaseModels(
@@ -1449,7 +1408,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
-		try (SafeClosable safeClosable3 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			rights = _ctTableMapper.getRightBaseModels(
@@ -1471,7 +1430,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
-		try (SafeClosable safeClosable4 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			rights = _ctTableMapper.getRightBaseModels(
@@ -1509,7 +1468,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
-		try (SafeClosable safeClosable5 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			rights = _ctTableMapper.getRightBaseModels(
@@ -1526,7 +1485,7 @@ public class CTTableMapperTest {
 
 		_rightBasePersistence.setNoSuchModelException(true);
 
-		try (SafeClosable safeClosable6 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			_ctTableMapper.getRightBaseModels(
@@ -1590,7 +1549,7 @@ public class CTTableMapperTest {
 
 		long ctCollectionId = 5;
 
-		try (SafeClosable safeClosable1 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			rightPrimaryKeys = _ctTableMapper.getRightPrimaryKeys(
@@ -1607,7 +1566,7 @@ public class CTTableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
 
-		try (SafeClosable safeClosable2 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			rightPrimaryKeys = _ctTableMapper.getRightPrimaryKeys(
@@ -1627,7 +1586,7 @@ public class CTTableMapperTest {
 		mockGetRightPrimaryKeysByLeftPrimaryKeyMappingSqlQuery.setDatabaseError(
 			true);
 
-		try (SafeClosable safeClosable3 =
+		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
 
 			_ctTableMapper.getRightPrimaryKeys(leftPrimaryKey);
@@ -1802,9 +1761,7 @@ public class CTTableMapperTest {
 
 	private class MockAddCTTableMappingSqlUpdate implements SqlUpdate {
 
-		public MockAddCTTableMappingSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
+		public MockAddCTTableMappingSqlUpdate(DataSource dataSource) {
 			Assert.assertSame(_dataSource, dataSource);
 		}
 
@@ -1909,10 +1866,8 @@ public class CTTableMapperTest {
 
 			Class<T> modelClass = getModelClass();
 
-			ClassLoader classLoader = modelClass.getClassLoader();
-
 			return (T)ProxyUtil.newProxyInstance(
-				classLoader, new Class<?>[] {modelClass},
+				modelClass.getClassLoader(), new Class<?>[] {modelClass},
 				new GetPrimaryKeyObjInvocationHandler(primaryKey));
 		}
 
@@ -1934,7 +1889,21 @@ public class CTTableMapperTest {
 		public List execute(Object... params) throws SQLException {
 			Assert.assertEquals(1, params.length);
 
-			PreparedStatement preparedStatement = new MockPreparedStatement();
+			PreparedStatement preparedStatement =
+				(PreparedStatement)ProxyUtil.newProxyInstance(
+					CTTableMapperTest.class.getClassLoader(),
+					new Class<?>[] {PreparedStatement.class},
+					(proxy, method, args) -> {
+						Assert.assertEquals(
+							PreparedStatement.class.getMethod(
+								"setBoolean", int.class, boolean.class),
+							method);
+
+						Assert.assertEquals(1, args[0]);
+						Assert.assertEquals(args[1], true);
+
+						return null;
+					});
 
 			ParamSetter paramSetter = _paramSetters[0];
 
@@ -2074,18 +2043,10 @@ public class CTTableMapperTest {
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
 
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
 		@Override
 		public int update(Object... params) {
 			Assert.assertEquals(1, params.length);
 			Assert.assertSame(Long.class, params[0].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
 
 			Long leftPrimaryKey = (Long)params[0];
 
@@ -2110,8 +2071,6 @@ public class CTTableMapperTest {
 			return removeKeys.size();
 		}
 
-		private boolean _databaseError;
-
 	}
 
 	private class MockDeleteRightPrimaryKeyTableMappingsSqlUpdate
@@ -2125,18 +2084,10 @@ public class CTTableMapperTest {
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
 
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
 		@Override
 		public int update(Object... params) {
 			Assert.assertEquals(1, params.length);
 			Assert.assertSame(Long.class, params[0].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
 
 			Long rightPrimaryKey = (Long)params[0];
 
@@ -2161,8 +2112,6 @@ public class CTTableMapperTest {
 			return removeKeys.size();
 		}
 
-		private boolean _databaseError;
-
 	}
 
 	private class MockDeleteTableMappingSqlUpdate implements SqlUpdate {
@@ -2176,19 +2125,11 @@ public class CTTableMapperTest {
 				paramSetters);
 		}
 
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
 		@Override
 		public int update(Object... params) {
 			Assert.assertEquals(2, params.length);
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
 
 			Long leftPrimaryKey = (Long)params[0];
 			Long rightPrimaryKey = (Long)params[1];
@@ -2203,8 +2144,6 @@ public class CTTableMapperTest {
 
 			return 0;
 		}
-
-		private boolean _databaseError;
 
 	}
 
@@ -2356,10 +2295,6 @@ public class CTTableMapperTest {
 			Assert.assertEquals(1, params.length);
 			Assert.assertSame(Long.class, params[0].getClass());
 
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
-
 			Long rightPrimaryKey = (Long)params[0];
 
 			List<Long> leftPrimaryKeysList = new ArrayList<>();
@@ -2378,12 +2313,6 @@ public class CTTableMapperTest {
 
 			return leftPrimaryKeysList;
 		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
-		private boolean _databaseError;
 
 	}
 
@@ -2405,10 +2334,6 @@ public class CTTableMapperTest {
 			Assert.assertEquals(1, params.length);
 			Assert.assertSame(Long.class, params[0].getClass());
 
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
-
 			Long leftPrimaryKey = (Long)params[0];
 
 			List<Long> rightPrimaryKeysList = new ArrayList<>();
@@ -2427,12 +2352,6 @@ public class CTTableMapperTest {
 
 			return rightPrimaryKeysList;
 		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
-		private boolean _databaseError;
 
 	}
 
@@ -2523,558 +2442,6 @@ public class CTTableMapperTest {
 
 	}
 
-	private class MockPreparedStatement implements PreparedStatement {
-
-		@Override
-		public ResultSet executeQuery() throws SQLException {
-			return null;
-		}
-
-		@Override
-		public int executeUpdate() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public void setNull(int parameterIndex, int sqlType)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setBoolean(int parameterIndex, boolean x)
-			throws SQLException {
-
-			Assert.assertEquals(parameterIndex, 1);
-			Assert.assertEquals(x, true);
-		}
-
-		@Override
-		public void setByte(int parameterIndex, byte x) throws SQLException {
-
-		}
-
-		@Override
-		public void setShort(int parameterIndex, short x) throws SQLException {
-
-		}
-
-		@Override
-		public void setInt(int parameterIndex, int x) throws SQLException {
-
-		}
-
-		@Override
-		public void setLong(int parameterIndex, long x) throws SQLException {
-
-		}
-
-		@Override
-		public void setFloat(int parameterIndex, float x) throws SQLException {
-
-		}
-
-		@Override
-		public void setDouble(int parameterIndex, double x)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setBigDecimal(int parameterIndex, BigDecimal x)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setString(int parameterIndex, String x)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setBytes(int parameterIndex, byte[] x) throws SQLException {
-
-		}
-
-		@Override
-		public void setDate(int parameterIndex, Date x) throws SQLException {
-
-		}
-
-		@Override
-		public void setTime(int parameterIndex, Time x) throws SQLException {
-
-		}
-
-		@Override
-		public void setTimestamp(int parameterIndex, Timestamp x)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setAsciiStream(
-			int parameterIndex, InputStream x, int length) throws SQLException {
-
-		}
-
-		@Override
-		public void setUnicodeStream(
-			int parameterIndex, InputStream x, int length) throws SQLException {
-
-		}
-
-		@Override
-		public void setBinaryStream(
-			int parameterIndex, InputStream x, int length) throws SQLException {
-
-		}
-
-		@Override
-		public void clearParameters() throws SQLException {
-
-		}
-
-		@Override
-		public void setObject(int parameterIndex, Object x, int targetSqlType)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setObject(int parameterIndex, Object x)
-			throws SQLException {
-
-		}
-
-		@Override
-		public boolean execute() throws SQLException {
-			return false;
-		}
-
-		@Override
-		public void addBatch() throws SQLException {
-
-		}
-
-		@Override
-		public void setCharacterStream(
-			int parameterIndex, Reader reader, int length) throws SQLException {
-
-		}
-
-		@Override
-		public void setRef(int parameterIndex, Ref x) throws SQLException {
-
-		}
-
-		@Override
-		public void setBlob(int parameterIndex, Blob x) throws SQLException {
-
-		}
-
-		@Override
-		public void setClob(int parameterIndex, Clob x) throws SQLException {
-
-		}
-
-		@Override
-		public void setArray(int parameterIndex, Array x) throws SQLException {
-
-		}
-
-		@Override
-		public ResultSetMetaData getMetaData() throws SQLException {
-			return null;
-		}
-
-		@Override
-		public void setDate(int parameterIndex, Date x, Calendar cal)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setTime(int parameterIndex, Time x, Calendar cal)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setTimestamp(
-			int parameterIndex, Timestamp x, Calendar cal) throws SQLException {
-
-		}
-
-		@Override
-		public void setNull(int parameterIndex, int sqlType, String typeName)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setURL(int parameterIndex, URL x) throws SQLException {
-
-		}
-
-		@Override
-		public ParameterMetaData getParameterMetaData() throws SQLException {
-			return null;
-		}
-
-		@Override
-		public void setRowId(int parameterIndex, RowId x) throws SQLException {
-
-		}
-
-		@Override
-		public void setNString(int parameterIndex, String value)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setNCharacterStream(
-			int parameterIndex, Reader value, long length) throws SQLException {
-
-		}
-
-		@Override
-		public void setNClob(int parameterIndex, NClob value)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setClob(int parameterIndex, Reader reader, long length)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setBlob(
-			int parameterIndex, InputStream inputStream, long length)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setNClob(int parameterIndex, Reader reader, long length)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setSQLXML(int parameterIndex, SQLXML xmlObject)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setObject(
-				int parameterIndex, Object x, int targetSqlType, int scaleOrLength)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setAsciiStream(
-				int parameterIndex, InputStream x, long length)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setBinaryStream(
-				int parameterIndex, InputStream x, long length)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setCharacterStream(
-				int parameterIndex, Reader reader, long length)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setAsciiStream(int parameterIndex, InputStream x)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setBinaryStream(int parameterIndex, InputStream x)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setCharacterStream(int parameterIndex, Reader reader)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setNCharacterStream(int parameterIndex, Reader value)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setClob(int parameterIndex, Reader reader)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setBlob(int parameterIndex, InputStream inputStream)
-			throws SQLException {
-
-		}
-
-		@Override
-		public void setNClob(int parameterIndex, Reader reader)
-			throws SQLException {
-
-		}
-
-		@Override
-		public ResultSet executeQuery(String sql) throws SQLException {
-			return null;
-		}
-
-		@Override
-		public int executeUpdate(String sql) throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public void close() throws SQLException {
-
-		}
-
-		@Override
-		public int getMaxFieldSize() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public void setMaxFieldSize(int max) throws SQLException {
-
-		}
-
-		@Override
-		public int getMaxRows() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public void setMaxRows(int max) throws SQLException {
-
-		}
-
-		@Override
-		public void setEscapeProcessing(boolean enable) throws SQLException {
-
-		}
-
-		@Override
-		public int getQueryTimeout() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public void setQueryTimeout(int seconds) throws SQLException {
-
-		}
-
-		@Override
-		public void cancel() throws SQLException {
-
-		}
-
-		@Override
-		public SQLWarning getWarnings() throws SQLException {
-			return null;
-		}
-
-		@Override
-		public void clearWarnings() throws SQLException {
-
-		}
-
-		@Override
-		public void setCursorName(String name) throws SQLException {
-
-		}
-
-		@Override
-		public boolean execute(String sql) throws SQLException {
-			return false;
-		}
-
-		@Override
-		public ResultSet getResultSet() throws SQLException {
-			return null;
-		}
-
-		@Override
-		public int getUpdateCount() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public boolean getMoreResults() throws SQLException {
-			return false;
-		}
-
-		@Override
-		public void setFetchDirection(int direction) throws SQLException {
-
-		}
-
-		@Override
-		public int getFetchDirection() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public void setFetchSize(int rows) throws SQLException {
-
-		}
-
-		@Override
-		public int getFetchSize() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public int getResultSetConcurrency() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public int getResultSetType() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public void addBatch(String sql) throws SQLException {
-
-		}
-
-		@Override
-		public void clearBatch() throws SQLException {
-
-		}
-
-		@Override
-		public int[] executeBatch() throws SQLException {
-			return new int[0];
-		}
-
-		@Override
-		public Connection getConnection() throws SQLException {
-			return null;
-		}
-
-		@Override
-		public boolean getMoreResults(int current) throws SQLException {
-			return false;
-		}
-
-		@Override
-		public ResultSet getGeneratedKeys() throws SQLException {
-			return null;
-		}
-
-		@Override
-		public int executeUpdate(String sql, int autoGeneratedKeys)
-			throws SQLException {
-
-			return 0;
-		}
-
-		@Override
-		public int executeUpdate(String sql, int[] columnIndexes)
-			throws SQLException {
-
-			return 0;
-		}
-
-		@Override
-		public int executeUpdate(String sql, String[] columnNames)
-			throws SQLException {
-
-			return 0;
-		}
-
-		@Override
-		public boolean execute(String sql, int autoGeneratedKeys)
-			throws SQLException {
-
-			return false;
-		}
-
-		@Override
-		public boolean execute(String sql, int[] columnIndexes)
-			throws SQLException {
-
-			return false;
-		}
-
-		@Override
-		public boolean execute(String sql, String[] columnNames)
-			throws SQLException {
-
-			return false;
-		}
-
-		@Override
-		public int getResultSetHoldability() throws SQLException {
-			return 0;
-		}
-
-		@Override
-		public boolean isClosed() throws SQLException {
-			return false;
-		}
-
-		@Override
-		public void setPoolable(boolean poolable) throws SQLException {
-
-		}
-
-		@Override
-		public boolean isPoolable() throws SQLException {
-			return false;
-		}
-
-		@Override
-		public void closeOnCompletion() throws SQLException {
-
-		}
-
-		@Override
-		public boolean isCloseOnCompletion() throws SQLException {
-			return false;
-		}
-
-		@Override
-		public <T> T unwrap(Class<T> iface) throws SQLException {
-			return null;
-		}
-
-		@Override
-		public boolean isWrapperFor(Class<?> iface) throws SQLException {
-			return false;
-		}
-
-	}
-
 	private class MockSqlUpdateFactory implements SqlUpdateFactory {
 
 		@Override
@@ -3088,8 +2455,7 @@ public class CTTableMapperTest {
 						", ctCollectionId, changeType) VALUES (?, ?, ?, ?, ",
 						"?)"))) {
 
-				return new MockAddCTTableMappingSqlUpdate(
-					dataSource, paramSetters);
+				return new MockAddCTTableMappingSqlUpdate(dataSource);
 			}
 
 			if (sql.equals(
@@ -3136,8 +2502,7 @@ public class CTTableMapperTest {
 						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
 						" = ? AND ctCollectionId = ?"))) {
 
-				return new MockUpdateCTTableMappingSqlUpdate(
-					dataSource, paramSetters);
+				return new MockUpdateCTTableMappingSqlUpdate(dataSource);
 			}
 
 			throw new UnsupportedOperationException(sql);
@@ -3147,9 +2512,7 @@ public class CTTableMapperTest {
 
 	private class MockUpdateCTTableMappingSqlUpdate implements SqlUpdate {
 
-		public MockUpdateCTTableMappingSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
+		public MockUpdateCTTableMappingSqlUpdate(DataSource dataSource) {
 			Assert.assertSame(_dataSource, dataSource);
 		}
 

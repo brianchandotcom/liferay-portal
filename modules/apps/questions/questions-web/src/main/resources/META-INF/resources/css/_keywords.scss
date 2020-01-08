@@ -1,5 +1,15 @@
-@import 'atlas-variables';
+.question-keywords {
 
-.question-keywords:hover {
-	background: $light-l1;
+	& .template-card .card-body {
+		text-align: left;
+		padding: 1rem;
+	}
+
+	& span.card-body {
+		display: none;
+	}
+
+	& .aspect-ratio .card-body {
+		display: block;
+	}
 }

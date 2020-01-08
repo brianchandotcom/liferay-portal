@@ -1,3 +1,9 @@
+@import 'atlas-variables';
+
 .question-keywords {
 	margin: 1rem;
+
+	&:hover {
+		background: $light-l1;
+	}
 }

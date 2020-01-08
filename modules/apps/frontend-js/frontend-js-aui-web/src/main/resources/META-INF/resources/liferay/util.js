@@ -957,19 +957,18 @@
 		openInDialog(event, config) {
 			event.preventDefault();
 
-			var currentTarget = Util.getDOM(event.currentTarget);
+			var currentTarget = Util.getElement(event.currentTarget);
 
-			currentTarget = $(currentTarget);
-
-			config = A.mix(A.merge({}, currentTarget.data()), config);
+			config = A.mix(A.merge({}, currentTarget.dataset), config);
 
 			if (!config.uri) {
 				config.uri =
-					currentTarget.data('href') || currentTarget.attr('href');
+					currentTarget.dataset.href ||
+					currentTarget.getAttribute('href');
 			}
 
 			if (!config.title) {
-				config.title = currentTarget.attr('title');
+				config.title = currentTarget.getAttribute('title');
 			}
 
 			Liferay.Util.openWindow(config);

@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -494,6 +495,9 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"pageType", String.valueOf(_getPageType())
 		).put(
+			"pending",
+			_publishedLayout.getStatus() == WorkflowConstants.STATUS_PENDING
+		).put(
 			"portletNamespace", getPortletNamespace()
 		).put(
 			"publishURL", getPublishURL()
@@ -513,6 +517,11 @@ public class ContentPageEditorDisplayContext {
 				"/content_layout/update_layout_page_template_data")
 		).put(
 			"widgets", _getWidgetsSoyContexts()
+		).put(
+			"workflowEnabled",
+			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				_publishedLayout.getCompanyId(), _publishedLayout.getGroupId(),
+				Layout.class.getName())
 		);
 
 		_editorSoyContext = soyContext;
@@ -558,10 +567,17 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"pageType", String.valueOf(_getPageType())
 		).put(
+			"pending", layout.getStatus() == WorkflowConstants.STATUS_PENDING
+		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		).put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+		).put(
+			"workflowEnabled",
+			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+				layout.getCompanyId(), layout.getGroupId(),
+				Layout.class.getName())
 		);
 
 		return soyContext;

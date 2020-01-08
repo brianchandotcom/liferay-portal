@@ -601,6 +601,14 @@ const INITIAL_STATE = {
 	pageType: Config.oneOf(Object.values(PAGE_TYPES)),
 
 	/**
+	 * When true, it indicates that page is in pending status.
+	 * @default false
+	 * @review
+	 * @type {boolean}
+	 */
+	pending: Config.bool().value(false),
+
+	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default ''
 	 * @review
@@ -825,7 +833,15 @@ const INITIAL_STATE = {
 			),
 			title: Config.string().required()
 		})
-	).value([])
+	).value([]),
+
+	/**
+	 * When true, it indicates that workflow is enabled for the page.
+	 * @default false
+	 * @review
+	 * @type {boolean}
+	 */
+	workflowEnabled: Config.bool().value(false)
 };
 
 /**

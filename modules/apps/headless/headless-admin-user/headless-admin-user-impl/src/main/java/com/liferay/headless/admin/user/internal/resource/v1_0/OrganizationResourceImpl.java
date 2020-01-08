@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -62,7 +63,7 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.RegionService;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -160,6 +161,32 @@ public class OrganizationResourceImpl
 				_getEmailAddresses(organization), _getOrgLabors(organization),
 				_getPhones(organization), _getWebsites(organization),
 				new ServiceContext()));
+	}
+
+	@Override
+	public Organization putOrganization(
+			Long organizationId, Organization organization)
+		throws Exception {
+
+		long countryId = _getCountryId(organization);
+
+		com.liferay.portal.kernel.model.Organization
+			serviceBuilderOrganization = _organizationService.getOrganization(
+				organizationId);
+
+		Group group = serviceBuilderOrganization.getGroup();
+
+		return _toOrganization(
+			_organizationService.updateOrganization(
+				organizationId, _getDefaultParentOrganizationId(organization),
+				organization.getName(), serviceBuilderOrganization.getType(),
+				_getRegionId(organization, countryId), countryId,
+				serviceBuilderOrganization.getStatusId(),
+				organization.getComment(), false, null, group.isSite(),
+				_getAddresses(organization), _getEmailAddresses(organization),
+				_getOrgLabors(organization), _getPhones(organization),
+				_getWebsites(organization),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	private HoursAvailable _createHoursAvailable(

@@ -1,4 +1,7 @@
 definition {
+	macro backButton {
+		Click(locator1 = "DetailsView#BACK_BUTTON");
+	}
 
 	macro backToTableView {
 		Click(locator1 = "DetailsView#BACK_TO_TABLE_VIEW");

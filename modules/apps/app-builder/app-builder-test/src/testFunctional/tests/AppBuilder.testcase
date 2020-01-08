@@ -464,6 +464,22 @@ definition {
 			title = "Numeric Field - Table View Title");
 	}
 
+	@description = "Create, Remove, Update and Delete entries of an application deployed as Product Menu"
+	@priority = "5"
+	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
+		property portal.acceptance = "false";
+
+
+		var myFormViewName = "My Registration form";
+		var myTableViewName = "My display table";
+		var myAppName = "My Registration app";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+	}
+	
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {

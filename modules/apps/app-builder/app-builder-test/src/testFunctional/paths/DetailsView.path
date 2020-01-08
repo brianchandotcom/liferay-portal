@@ -11,6 +11,13 @@
 
 <!--DETAILS_VIEW-->
 <tr>
+	<td>BACK_BUTTON</td>
+	<td>//span[@class='icon-monospaced']//*[@class='lexicon-icon lexicon-icon-angle-left']
+</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>PREVIOUS_ENTRY</td>
 	<td>//button//*[contains(@class,'lexicon-icon-angle-left')]</td>
 	<td></td>

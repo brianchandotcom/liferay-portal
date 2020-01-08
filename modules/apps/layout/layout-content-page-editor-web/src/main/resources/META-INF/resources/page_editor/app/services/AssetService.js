@@ -16,6 +16,38 @@ import serviceFetch from './serviceFetch';
 
 export default {
 	/**
+	 * Get available asset mapping fields
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.classNameId Asset's className
+	 * @param {string} options.classPK Asset's classPK
+	 */
+	getAvailableAssetMappingFields({classNameId, classPK, config}) {
+		const {getAssetMappingFieldsURL} = config;
+
+		return serviceFetch(config, getAssetMappingFieldsURL, {
+			classNameId,
+			classPK
+		});
+	},
+
+	/**
+	 * Get available mapping fields
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.classNameId Asset's className
+	 * @param {string} options.classTypeId Asset's classTypeId
+	 */
+	getAvailableMappingFields({classNameId, classTypeId, config}) {
+		const {mappingFieldsURL} = config;
+
+		return serviceFetch(config, mappingFieldsURL, {
+			classNameId,
+			classTypeId
+		});
+	},
+
+	/**
 	 * Get available templates for an asset
 	 * @param {object} options
 	 * @param {object} options.config Application config

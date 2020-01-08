@@ -999,9 +999,21 @@
 			removeEntityButton,
 			namespace
 		) {
-			$('#' + namespace + entityIdString).val(0);
+			const elementByEntityId = document.getElementById(
+				`${namespace}${entityIdString}`
+			);
 
-			$('#' + namespace + entityNameString).val('');
+			if (elementByEntityId) {
+				elementByEntityId.value = 0;
+			}
+
+			const elementByEntityName = document.getElementById(
+				`${namespace}${entityNameString}`
+			);
+
+			if (elementByEntityName) {
+				elementByEntityName.value = '';
+			}
 
 			Liferay.Util.toggleDisabled(removeEntityButton, true);
 

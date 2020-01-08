@@ -129,46 +129,6 @@ definition {
 		Navigator.gotoPage(pageName = "Calendar Test Page");
 
 		CalendarEvent.view(eventTitle = "Calendar Event Title");
-
-		Navigator.gotoPage(pageName = "Calendar Test Page");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Bookmarks Test Page");
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		Portlet.addPG(
-			pageName = "Bookmarks Test Page",
-			portletName = "Bookmarks");
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		BookmarksFolder.addPG(
-			folderDescription = "Test Folder Description",
-			folderName = "Test Folder");
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		BookmarksFolder.gotoPG(folderName = "Test Folder");
-
-		Bookmark.addPG(
-			bookmarkDescription = "Test Folder Entry 1 Description",
-			bookmarkName = "Test Folder Entry 1",
-			bookmarkURL = "https://www.liferay.com");
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
-
-		BookmarksFolder.gotoPG(folderName = "Test Folder");
-
-		Bookmark.viewBookmark(
-			bookmarkName = "Test Folder Entry 1",
-			bookmarkURL = "https://www.liferay.com");
-
-		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 	}
 
 }

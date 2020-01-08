@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 import com.liferay.portal.kernel.dao.model.dsl.joins.JoinStep;
 
 import java.util.Objects;
@@ -29,23 +29,23 @@ public class From
 	extends BaseASTNode
 	implements GroupByStep, JoinStep, LimitStep, OrderByStep, Query, WhereStep {
 
-	public From(FromStep fromStep, TableClause tableClause) {
+	public From(FromStep fromStep, Table<?> table) {
 		super(fromStep);
 
-		_tableClause = Objects.requireNonNull(tableClause);
+		_table = Objects.requireNonNull(table);
 	}
 
 	@Override
 	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
 		sb.append("from ");
 
-		_tableClause.toSQL(sb, astNodeListener);
+		_table.toSQL(sb, astNodeListener);
 	}
 
-	public TableClause getTableClause() {
-		return _tableClause;
+	public Table<?> getTable() {
+		return _table;
 	}
 
-	private final TableClause _tableClause;
+	private final Table<?> _table;
 
 }

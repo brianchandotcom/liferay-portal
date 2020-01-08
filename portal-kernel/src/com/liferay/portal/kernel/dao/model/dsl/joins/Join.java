@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.dao.model.dsl.joins;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 import com.liferay.portal.kernel.dao.model.dsl.query.OrderByStep;
 import com.liferay.portal.kernel.dao.model.dsl.query.Query;
@@ -32,13 +32,13 @@ public class Join
 	extends BaseASTNode implements JoinStep, OrderByStep, Query, WhereStep {
 
 	public Join(
-		JoinStep joinStep, JoinType joinType, TableClause tableClause,
+		JoinStep joinStep, JoinType joinType, Table<?> table,
 		Predicate onPredicate) {
 
 		super(joinStep);
 
 		_joinType = Objects.requireNonNull(joinType);
-		_tableClause = Objects.requireNonNull(tableClause);
+		_table = Objects.requireNonNull(table);
 		_onPredicate = Objects.requireNonNull(onPredicate);
 	}
 
@@ -48,7 +48,7 @@ public class Join
 
 		sb.append(" join ");
 
-		_tableClause.toSQL(sb, astNodeListener);
+		_table.toSQL(sb, astNodeListener);
 
 		sb.append(" on ");
 
@@ -63,12 +63,12 @@ public class Join
 		return _onPredicate;
 	}
 
-	public TableClause getTableClause() {
-		return _tableClause;
+	public Table getTable() {
+		return _table;
 	}
 
 	private final JoinType _joinType;
 	private final Predicate _onPredicate;
-	private final TableClause _tableClause;
+	private final Table<?> _table;
 
 }

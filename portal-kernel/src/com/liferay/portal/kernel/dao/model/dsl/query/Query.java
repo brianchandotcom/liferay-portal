@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
+import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.set.Union;
 
@@ -25,8 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Query extends ASTNode {
 
-	public default NamedQuery as(String name) {
-		return new NamedQuery(this, name);
+	public default Table<?> as(String name) {
+		return new QueryTable(name, this);
 	}
 
 	public default Union union(Query query) {

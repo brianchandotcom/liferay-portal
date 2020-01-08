@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.joins;
 
+import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -26,16 +26,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface JoinStep extends ASTNode {
 
-	public default Join innerJoinON(
-		TableClause tableClause, Predicate predicate) {
-
-		return new Join(this, JoinType.INNER, tableClause, predicate);
+	public default Join innerJoinON(Table<?> table, Predicate predicate) {
+		return new Join(this, JoinType.INNER, table, predicate);
 	}
 
-	public default Join leftJoinOn(
-		TableClause tableClause, Predicate predicate) {
-
-		return new Join(this, JoinType.LEFT, tableClause, predicate);
+	public default Join leftJoinOn(Table<?> table, Predicate predicate) {
+		return new Join(this, JoinType.LEFT, table, predicate);
 	}
 
 }

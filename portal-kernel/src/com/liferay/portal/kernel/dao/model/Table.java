@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.dao.model;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -29,8 +28,7 @@ import java.util.function.Supplier;
 /**
  * @author Preston Crary
  */
-public abstract class Table<T extends Table>
-	extends BaseASTNode implements TableClause {
+public abstract class Table<T extends Table> extends BaseASTNode {
 
 	public Table(String tableName, Supplier<T> tableSupplier) {
 		_tableName = Objects.requireNonNull(tableName);
@@ -78,7 +76,6 @@ public abstract class Table<T extends Table>
 		return _columnMap.values();
 	}
 
-	@Override
 	public String getName() {
 		if (_alias == null) {
 			return _tableName;

@@ -133,7 +133,7 @@ export default function fragmentEntryLinksReducer(state, action) {
 			return {
 				...state,
 				[action.fragmentEntryLinkId]: {
-					...state.fragmentEntryLinks[action.fragmentEntryLinkId],
+					...state[action.fragmentEntryLinkId],
 					editableValues: action.editableValues
 				}
 			};
@@ -142,7 +142,7 @@ export default function fragmentEntryLinksReducer(state, action) {
 			return {
 				...state,
 				[action.fragmentEntryLinkId]: {
-					...state.fragmentEntryLinks[action.fragmentEntryLinkId],
+					...state[action.fragmentEntryLinkId],
 					content: action.content
 				}
 			};

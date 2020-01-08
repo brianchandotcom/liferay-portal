@@ -23,13 +23,23 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {ConfigContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import serviceFetch from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
 import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import AppContext from '../../../../../../src/main/resources/META-INF/resources/page_editor/core/AppContext';
+import {
+	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
+	CREATE_SEGMENTS_EXPERIENCE
+} from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
 import ExperienceToolbarSection from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/components/ExperienceToolbarSection';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {UPDATE_SEGMENTS_EXPERIENCE_PRIORITY} from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
+const MOCK_CREATE_URL = 'create-experience-test-url';
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => {})
+);
 
 function renderExperienceToolbarSection(
 	mockState = {},
@@ -87,6 +97,7 @@ const mockState = {
 };
 
 const mockConfig = {
+	addSegmentsExperienceURL: MOCK_CREATE_URL,
 	availableSegmentsEntries: {
 		'test-segment-id-00': {
 			name: 'A segment 0',
@@ -99,11 +110,15 @@ const mockConfig = {
 	},
 	classPK: 'test-classPK',
 	defaultSegmentsExperienceId: '0',
+	hasEditSegmentsEntryPermission: true,
 	hasUpdatePermissions: true
 };
 
 describe('ExperienceToolbarSection', () => {
-	afterEach(cleanup);
+	afterEach(() => {
+		cleanup();
+		serviceFetch.mockReset();
+	});
 
 	it('shows a list of Experiences ordered by priority', async () => {
 		const {
@@ -329,6 +344,68 @@ describe('ExperienceToolbarSection', () => {
 					}
 				},
 				type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
+			})
+		);
+	});
+
+	it('calls the backend to create a new Experience', async () => {
+		serviceFetch.mockImplementation((config, url, body) =>
+			Promise.resolve({
+				active: true,
+				name: body.name,
+				priority: '1000',
+				segmentsEntryId: body.segmentsEntryId,
+				segmentsExperienceId: 'a-new-test-experience-id'
+			})
+		);
+		const mockDispatch = jest.fn(() => {});
+
+		const {
+			getAllByRole,
+			getByLabelText,
+			getByRole,
+			getByText
+		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
+
+		const dropDownButton = getByLabelText('experience');
+
+		userEvent.click(dropDownButton);
+
+		await waitForElement(() => getByRole('list'));
+
+		const experienceItems = getAllByRole('listitem');
+
+		expect(experienceItems.length).toBe(3);
+
+		const newExperienceButton = getByText('new-experience');
+
+		userEvent.click(newExperienceButton);
+
+		await wait(() => getByLabelText('name'));
+
+		const nameInput = getByLabelText('name');
+		const audienceInput = getByLabelText('audience');
+
+		userEvent.type(nameInput, 'New Experience #1');
+
+		userEvent.selectOptions(audienceInput, 'A segment #1');
+
+		userEvent.click(getByText('save'));
+
+		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
+
+		expect(serviceFetch).toHaveBeenCalledWith(
+			expect.objectContaining({}),
+			expect.stringContaining(MOCK_CREATE_URL),
+			expect.objectContaining({
+				name: 'New Experience #1',
+				segmentsEntryId: 'test-segment-id-00'
+			})
+		);
+
+		expect(mockDispatch).toHaveBeenCalledWith(
+			expect.objectContaining({
+				type: CREATE_SEGMENTS_EXPERIENCE
 			})
 		);
 	});

@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.Column;
 import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.query.adaptor.OrderByComparatorAdaptor;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -34,7 +35,28 @@ public interface OrderByStep extends ASTNode {
 	public default OrderBy orderBy(
 		Table<?> table, OrderByComparator<?> orderByComparator) {
 
-		return new OrderByComparatorAdaptor(this, table, orderByComparator);
+		String[] orderByFields = orderByComparator.getOrderByFields();
+
+		OrderByExpression[] orderByExpressions =
+			new OrderByExpression[orderByFields.length];
+
+		for (int i = 0; i < orderByFields.length; i++) {
+			String field = orderByFields[i];
+
+			Column<?, ?> column = table.getColumn(field);
+
+			if (column == null) {
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"No column \"", field, "\" for table ",
+						table.getTableName()));
+			}
+
+			orderByExpressions[i] = new OrderByExpression(
+				column, orderByComparator.isAscending(field));
+		}
+
+		return new OrderBy(this, orderByExpressions);
 	}
 
 }

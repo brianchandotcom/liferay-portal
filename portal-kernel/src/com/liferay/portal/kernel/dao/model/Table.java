@@ -73,7 +73,7 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 	}
 
 	public Collection<Column<T, ?>> getColumns() {
-		return _columnMap.values();
+		return Collections.unmodifiableCollection(_columnMap.values());
 	}
 
 	public String getName() {
@@ -93,7 +93,6 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 		return _tableName.hashCode();
 	}
 
-	@SuppressWarnings("unchecked")
 	protected <C> Column<T, C> aliasColumn(Column<T, C> column, String alias) {
 		T table = _tableSupplier.get();
 
@@ -101,16 +100,23 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 
 		castTable._alias = _alias;
 
-		Map<String, Column<T, ?>> columnMap = new HashMap<>(
-			castTable._columnMap);
-
 		column = new Column<>(
 			table, column.getColumnName(), column.getColumnType(),
 			column.getSQLType());
 
-		columnMap.put(alias, column);
+		castTable._columnMap.put(alias, column);
 
-		castTable._columnMap = Collections.unmodifiableMap(columnMap);
+		return column;
+	}
+
+	protected <C> Column<T, C> createColumn(
+		String columnName, Class<C> columnType, int sqlType) {
+
+		@SuppressWarnings("unchecked")
+		Column<T, C> column = new Column<>(
+			(T)this, columnName, columnType, sqlType);
+
+		_columnMap.put(columnName, column);
 
 		return column;
 	}
@@ -125,19 +131,8 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 		}
 	}
 
-	@SafeVarargs
-	protected final void setColumns(Column<T, ?>... columns) {
-		Map<String, Column<T, ?>> columnMap = new HashMap<>();
-
-		for (Column<T, ?> column : columns) {
-			columnMap.put(column.getColumnName(), column);
-		}
-
-		_columnMap = Collections.unmodifiableMap(columnMap);
-	}
-
 	private String _alias;
-	private Map<String, Column<T, ?>> _columnMap;
+	private final Map<String, Column<T, ?>> _columnMap = new HashMap<>();
 	private final String _tableName;
 	private final Supplier<T> _tableSupplier;
 

@@ -36,35 +36,13 @@ public class ${entity.name}Table extends Table<${entity.name}Table> {
 			<#assign entityColumnType = entityColumn.genericizedType />
 		</#if>
 
-		public final Column<${entity.name}Table, ${entityColumnType}> ${entityColumn.name};
+		<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
+
+		public final Column<${entity.name}Table, ${entityColumnType}> ${entityColumn.name} = createColumn("${entityColumn.DBName}", ${entityColumnType}.class, Types.${sqlType});
 	</#list>
 
 	private ${entity.name}Table() {
 		super("${entity.table}", ${entity.name}Table::new);
-
-		<#list entity.databaseRegularEntityColumns as entityColumn>
-			<#if entityColumn.isPrimitiveType()>
-				<#assign entityColumnType = serviceBuilder.getPrimitiveObj(entityColumn.type) />
-			<#elseif stringUtil.equals(entityColumn.type, "Map")>
-				<#assign entityColumnType = "String" />
-			<#else>
-				<#assign entityColumnType = entityColumn.genericizedType />
-			</#if>
-
-			<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
-
-			${entityColumn.name} = new Column<>(this, "${entityColumn.DBName}", ${entityColumnType}.class, Types.${sqlType});
-		</#list>
-
-		setColumns(
-			<#list entity.databaseRegularEntityColumns as entityColumn>
-				${entityColumn.name}
-
-				<#if entityColumn_has_next>
-					,
-				</#if>
-			</#list>
-			);
 	}
 
 }

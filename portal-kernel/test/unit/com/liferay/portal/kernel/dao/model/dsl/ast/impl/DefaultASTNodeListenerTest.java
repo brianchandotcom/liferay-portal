@@ -657,19 +657,15 @@ public class DefaultASTNodeListenerTest {
 
 		public static final MainExampleTable TABLE = new MainExampleTable();
 
-		public final Column<MainExampleTable, Integer> flag;
-		public final Column<MainExampleTable, Long> mainExampleId;
-		public final Column<MainExampleTable, String> name;
+		public final Column<MainExampleTable, Integer> flag = createColumn(
+			"flag", Integer.class, Types.INTEGER);
+		public final Column<MainExampleTable, Long> mainExampleId =
+			createColumn("mainExampleId", Long.class, Types.BIGINT);
+		public final Column<MainExampleTable, String> name = createColumn(
+			"name", String.class, Types.VARCHAR);
 
 		private MainExampleTable() {
 			super("MainExample", MainExampleTable::new);
-
-			mainExampleId = new Column<>(
-				this, "mainExampleId", Long.class, Types.BIGINT);
-			name = new Column<>(this, "name", String.class, Types.VARCHAR);
-			flag = new Column<>(this, "flag", Integer.class, Types.INTEGER);
-
-			setColumns(mainExampleId, name, flag);
 		}
 
 	}
@@ -680,22 +676,15 @@ public class DefaultASTNodeListenerTest {
 		public static final ReferenceExampleTable TABLE =
 			new ReferenceExampleTable();
 
-		public final Column<ReferenceExampleTable, Long> mainExampleId;
-		public final Column<ReferenceExampleTable, String> name;
-		public final Column<ReferenceExampleTable, Long> referenceExampleId;
+		public final Column<ReferenceExampleTable, Long> mainExampleId =
+			createColumn("mainExampleId", Long.class, Types.BIGINT);
+		public final Column<ReferenceExampleTable, String> name = createColumn(
+			"name", String.class, Types.VARCHAR);
+		public final Column<ReferenceExampleTable, Long> referenceExampleId =
+			createColumn("referenceExampleId", Long.class, Types.BIGINT);
 
 		private ReferenceExampleTable() {
 			super("ReferenceExample", ReferenceExampleTable::new);
-
-			mainExampleId = new Column<>(
-				this, "mainExampleId", Long.class, Types.BIGINT);
-
-			referenceExampleId = new Column<>(
-				this, "referenceExampleId", Long.class, Types.BIGINT);
-
-			name = new Column<>(this, "name", String.class, Types.VARCHAR);
-
-			setColumns(referenceExampleId, mainExampleId, name);
 		}
 
 	}

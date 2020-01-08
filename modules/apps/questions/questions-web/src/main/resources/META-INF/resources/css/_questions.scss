@@ -1,0 +1,31 @@
+@import 'variables';
+
+.question-accepted-badge {
+	background: $success-background;
+
+	& svg {
+		color: $success;
+	}
+
+	& small {
+		color: $success;
+	}
+}
+
+.question-badge {
+	padding: 0.5rem;
+
+	& small {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+}
+
+.question-row {
+	padding-bottom: 1rem;
+	padding-top: 1rem;
+
+	&:hover {
+		background: $question-background;
+	}
+}

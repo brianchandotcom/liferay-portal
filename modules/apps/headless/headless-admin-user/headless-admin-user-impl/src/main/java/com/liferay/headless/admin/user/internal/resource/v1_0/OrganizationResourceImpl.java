@@ -79,7 +79,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -202,8 +201,7 @@ public class OrganizationResourceImpl
 			OrganizationContactInformation::getPostalAddresses
 		).map(
 			postalAddresses -> ListUtil.filter(
-				TransformUtil.transformToList(
-					postalAddresses, this::_toAddress),
+				transformToList(postalAddresses, this::_toAddress),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -241,7 +239,7 @@ public class OrganizationResourceImpl
 			OrganizationContactInformation::getEmailAddresses
 		).map(
 			emailAddresses -> ListUtil.filter(
-				TransformUtil.transformToList(
+				transformToList(
 					emailAddresses, this::_toServiceBuilderEmailAddress),
 				Objects::nonNull)
 		).orElse(
@@ -297,8 +295,7 @@ public class OrganizationResourceImpl
 			organization.getServices()
 		).map(
 			services -> ListUtil.filter(
-				TransformUtil.transformToList(services, this::_toOrgLabor),
-				Objects::nonNull)
+				transformToList(services, this::_toOrgLabor), Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
 		);
@@ -313,8 +310,7 @@ public class OrganizationResourceImpl
 			OrganizationContactInformation::getTelephones
 		).map(
 			telephones -> ListUtil.filter(
-				TransformUtil.transformToList(
-					telephones, this::_toServiceBuilderPhone),
+				transformToList(telephones, this::_toServiceBuilderPhone),
 				Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
@@ -364,8 +360,7 @@ public class OrganizationResourceImpl
 			OrganizationContactInformation::getWebUrls
 		).map(
 			webUrls -> ListUtil.filter(
-				TransformUtil.transformToList(webUrls, this::_toWebsite),
-				Objects::nonNull)
+				transformToList(webUrls, this::_toWebsite), Objects::nonNull)
 		).orElse(
 			Collections.emptyList()
 		);

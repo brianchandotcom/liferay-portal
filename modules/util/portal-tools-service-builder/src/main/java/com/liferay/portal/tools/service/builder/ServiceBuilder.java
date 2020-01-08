@@ -4714,11 +4714,8 @@ public class ServiceBuilder {
 			}
 		}
 
-		Entity leftEntity = entities[1];
-		Entity rightEntity = entities[2];
-
-		if (leftEntity.isChangeTrackingEnabled() &&
-			rightEntity.isChangeTrackingEnabled()) {
+		if (entities[1].isChangeTrackingEnabled() &&
+			entities[2].isChangeTrackingEnabled()) {
 
 			sb.append("\tctCollectionId LONG default 0 not null,\n");
 			sb.append("\tchangeType BOOLEAN,\n");
@@ -4740,6 +4737,12 @@ public class ServiceBuilder {
 
 				sb.append(entityColumn.getDBName());
 			}
+		}
+
+		if (entities[1].isChangeTrackingEnabled() &&
+			entities[2].isChangeTrackingEnabled()) {
+
+			sb.append(", ctCollectionId");
 		}
 
 		sb.append(")\n");

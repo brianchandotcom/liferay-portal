@@ -1554,12 +1554,12 @@ definition {
 	@priority = "5"
 	test UpdateDeployment {
 		property portal.acceptance = "false";
-		
+
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
-		
+
 		AppBuilderAdmin.createFormViewAndTableView(
 			fieldType = "Text Field",
 			formViewName = "Form View Title One",
@@ -1598,7 +1598,7 @@ definition {
 		AppBuilderAdmin.editAppName(appTitle = "Changed Name");
 
 		AppBuilderAdmin.clickApp(appName = "Changed Name");
-		
+
 		App.toggleUndeploy(deployOption = "Widget");
 
 		App.toggleDeploy(deployOption = "Standalone");
@@ -1644,7 +1644,7 @@ definition {
 		App.selectTableView(tableViewName = "Table View Title Two");
 
 		App.saveApp();
-		
+
 		AppBuilderAdmin.clickApp(appName = "Test App C");
 
 		App.selectFormView(formViewName = "Form View Title Two");

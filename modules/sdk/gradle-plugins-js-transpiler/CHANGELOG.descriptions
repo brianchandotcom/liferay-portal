@@ -1,8 +1,9 @@
 2.4.3:description
 
 - [LPS-77250]: Update the default value of the `soyDependencies` for
-`TranspileJSTask` instances from `"${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy"`
-to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
+`TranspileJSTask` instances from
+`"${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy"` to
+`"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 
 2.4.0:description
 

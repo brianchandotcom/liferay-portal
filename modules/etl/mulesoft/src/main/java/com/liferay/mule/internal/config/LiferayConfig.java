@@ -16,7 +16,8 @@ package com.liferay.mule.internal.config;
 
 import com.liferay.mule.internal.connection.BasicCachedConnectionProvider;
 import com.liferay.mule.internal.connection.OAuth2CachedConnectionProvider;
-import com.liferay.mule.internal.operation.LiferayOperations;
+import com.liferay.mule.internal.operation.LiferayBatchOperations;
+import com.liferay.mule.internal.operation.LiferayCRUDOperations;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +37,7 @@ import org.mule.runtime.extension.api.annotation.param.display.Summary;
 @ConnectionProviders(
 	{BasicCachedConnectionProvider.class, OAuth2CachedConnectionProvider.class}
 )
-@Operations(LiferayOperations.class)
+@Operations({LiferayBatchOperations.class, LiferayCRUDOperations.class})
 public class LiferayConfig {
 
 	@DisplayName("Connection Timeout")

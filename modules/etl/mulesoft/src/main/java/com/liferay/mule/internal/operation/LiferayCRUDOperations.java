@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * @author Matija Petanjek
  */
 @Throws(LiferayResponseErrorProvider.class)
-public class LiferayOperations {
+public class LiferayCRUDOperations {
 
 	@DisplayName("Delete Record")
 	@MediaType(MediaType.APPLICATION_JSON)
@@ -225,7 +225,7 @@ public class LiferayOperations {
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(
-		LiferayOperations.class);
+		LiferayCRUDOperations.class);
 
 	private final LiferayResponseValidator liferayResponseValidator =
 		new LiferayResponseValidator();

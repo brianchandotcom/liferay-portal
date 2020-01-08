@@ -50,16 +50,8 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 
 	@Activate
 	protected void activate() {
-		_bootstrapLoaderEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED));
-		_bootstrapLoaderProperties = props.getProperties(
-			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES +
-				StringPool.PERIOD,
-			true);
 		clusterEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		_defaultBootstrapLoaderPropertiesString = getPortalPropertiesString(
-			PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT);
 		_defaultReplicatorPropertiesString = getPortalPropertiesString(
 			PropsKeys.EHCACHE_REPLICATOR_PROPERTIES_DEFAULT);
 		_replicatorProperties = props.getProperties(
@@ -137,12 +129,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 			ObjectValuePair<Properties, Properties> propertiesPair =
 				entry.getValue();
 
-			if (_bootstrapLoaderEnabled && (propertiesPair.getKey() != null)) {
-				portalCacheConfiguration.
-					setPortalCacheBootstrapLoaderProperties(
-						propertiesPair.getKey());
-			}
-
 			if (propertiesPair.getValue() != null) {
 				Set<Properties> portalCacheListenerPropertiesSet =
 					portalCacheConfiguration.
@@ -181,20 +167,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 
 		String cacheName = cacheConfiguration.getName();
 
-		if (_bootstrapLoaderEnabled) {
-			String bootstrapLoaderPropertiesString =
-				(String)_bootstrapLoaderProperties.remove(cacheName);
-
-			if (Validator.isNull(bootstrapLoaderPropertiesString)) {
-				bootstrapLoaderPropertiesString =
-					_defaultBootstrapLoaderPropertiesString;
-			}
-
-			portalCacheConfiguration.setPortalCacheBootstrapLoaderProperties(
-				parseProperties(
-					bootstrapLoaderPropertiesString, StringPool.COMMA));
-		}
-
 		String replicatorPropertiesString =
 			(String)_replicatorProperties.remove(cacheName);
 
@@ -228,21 +200,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		Map<String, ObjectValuePair<Properties, Properties>>
 			mergedPropertiesMap = new HashMap<>();
 
-		if (_bootstrapLoaderEnabled) {
-			for (String portalCacheName :
-					_bootstrapLoaderProperties.stringPropertyNames()) {
-
-				mergedPropertiesMap.put(
-					portalCacheName,
-					new ObjectValuePair(
-						parseProperties(
-							_bootstrapLoaderProperties.getProperty(
-								portalCacheName),
-							StringPool.COMMA),
-						null));
-			}
-		}
-
 		for (String portalCacheName :
 				_replicatorProperties.stringPropertyNames()) {
 
@@ -268,9 +225,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		return mergedPropertiesMap;
 	}
 
-	private boolean _bootstrapLoaderEnabled;
-	private Properties _bootstrapLoaderProperties;
-	private String _defaultBootstrapLoaderPropertiesString;
 	private String _defaultReplicatorPropertiesString;
 	private Properties _replicatorProperties;
 

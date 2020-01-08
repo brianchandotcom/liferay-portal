@@ -1081,16 +1081,6 @@ public interface PropsKeys {
 	public static final String EHCACHE_BLOCKING_CACHE_ALLOWED =
 		"ehcache.blocking.cache.allowed";
 
-	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED =
-		"ehcache.bootstrap.cache.loader.enabled";
-
-	public static final String EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES =
-		"ehcache.bootstrap.cache.loader.properties";
-
-	public static final String
-		EHCACHE_BOOTSTRAP_CACHE_LOADER_PROPERTIES_DEFAULT =
-			"ehcache.bootstrap.cache.loader.properties.default";
-
 	public static final String EHCACHE_MULTI_VM_CONFIG_LOCATION =
 		"ehcache.multi.vm.config.location";
 

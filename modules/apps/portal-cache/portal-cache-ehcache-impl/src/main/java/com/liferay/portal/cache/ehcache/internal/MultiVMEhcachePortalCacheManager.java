@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.PortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.ehcache.internal.configurator.MultiVMEhcachePortalCacheManagerConfigurator;
@@ -74,14 +73,6 @@ public class MultiVMEhcachePortalCacheManager
 
 		baseEhcachePortalCacheManagerConfigurator =
 			multiVMEhcachePortalCacheManagerConfigurator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortalCacheBootstrapLoaderFactory(
-		PortalCacheBootstrapLoaderFactory portalCacheBootstrapLoaderFactory) {
-
-		this.portalCacheBootstrapLoaderFactory =
-			portalCacheBootstrapLoaderFactory;
 	}
 
 	@Reference(unbind = "-")

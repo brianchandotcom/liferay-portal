@@ -127,22 +127,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 
 			portalCache = previousPortalCache;
 		}
-		else if (portalCacheConfiguration != null) {
-			Properties portalCacheBootstrapLoaderProperties =
-				portalCacheConfiguration.
-					getPortalCacheBootstrapLoaderProperties();
-
-			if (portalCacheBootstrapLoaderProperties != null) {
-				PortalCacheBootstrapLoader portalCacheBootstrapLoader =
-					portalCacheBootstrapLoaderFactory.create(
-						portalCacheBootstrapLoaderProperties);
-
-				if (portalCacheBootstrapLoader != null) {
-					portalCacheBootstrapLoader.loadPortalCache(
-						getPortalCacheManagerName(), portalCacheName);
-				}
-			}
-		}
 
 		return portalCache;
 	}
@@ -324,8 +308,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
-	protected PortalCacheBootstrapLoaderFactory
-		portalCacheBootstrapLoaderFactory;
 	protected PortalCacheListenerFactory portalCacheListenerFactory;
 	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
 		portalCacheManagerListenerFactory;

@@ -31,8 +31,7 @@ public class PortalCacheConfiguration {
 
 	public PortalCacheConfiguration(
 		String portalCacheName,
-		Set<Properties> portalCacheListenerPropertiesSet,
-		Properties portalCacheBootstrapLoaderProperties) {
+		Set<Properties> portalCacheListenerPropertiesSet) {
 
 		if (portalCacheName == null) {
 			throw new NullPointerException("Portal cache name is null");
@@ -47,13 +46,6 @@ public class PortalCacheConfiguration {
 			_portalCacheListenerPropertiesSet = new HashSet<>(
 				portalCacheListenerPropertiesSet);
 		}
-
-		_portalCacheBootstrapLoaderProperties =
-			portalCacheBootstrapLoaderProperties;
-	}
-
-	public Properties getPortalCacheBootstrapLoaderProperties() {
-		return _portalCacheBootstrapLoaderProperties;
 	}
 
 	public Set<Properties> getPortalCacheListenerPropertiesSet() {
@@ -68,18 +60,9 @@ public class PortalCacheConfiguration {
 		String portalCacheName) {
 
 		return new PortalCacheConfiguration(
-			portalCacheName, _portalCacheListenerPropertiesSet,
-			_portalCacheBootstrapLoaderProperties);
+			portalCacheName, _portalCacheListenerPropertiesSet);
 	}
 
-	public void setPortalCacheBootstrapLoaderProperties(
-		Properties portalCacheBootstrapLoaderProperties) {
-
-		_portalCacheBootstrapLoaderProperties =
-			portalCacheBootstrapLoaderProperties;
-	}
-
-	private Properties _portalCacheBootstrapLoaderProperties;
 	private final Set<Properties> _portalCacheListenerPropertiesSet;
 	private final String _portalCacheName;
 

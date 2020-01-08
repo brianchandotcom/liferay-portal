@@ -130,7 +130,7 @@ public class TestPortalCacheManager<K extends Serializable, V>
 		return new PortalCacheManagerConfiguration(
 			null,
 			new PortalCacheConfiguration(
-				PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT, null, null),
+				PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT, null),
 			null);
 	}
 

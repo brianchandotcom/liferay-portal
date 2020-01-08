@@ -14,12 +14,9 @@
 
 package com.liferay.portal.cache.multiple.internal.portal.profile;
 
-import com.liferay.portal.cache.PortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.PortalCacheReplicatorFactory;
 import com.liferay.portal.cache.multiple.internal.ClusterLinkPortalCacheReplicatorFactory;
 import com.liferay.portal.cache.multiple.internal.PortalCacheManagerUtil;
-import com.liferay.portal.cache.multiple.internal.bootstrap.ClusterLinkBootstrapLoaderHelperUtil;
-import com.liferay.portal.cache.multiple.internal.bootstrap.ClusterLinkPortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.multiple.internal.cluster.link.ClusterLinkPortalCacheClusterChannelFactory;
 import com.liferay.portal.cache.multiple.internal.cluster.link.PortalCacheClusterLink;
 import com.liferay.portal.cache.multiple.internal.cluster.link.messaging.ClusterLinkMessagingConfigurator;
@@ -64,12 +61,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			BundleContext bundleContext = componentContext.getBundleContext();
 
 			bundleContext.registerService(
-				PortalCacheBootstrapLoaderFactory.class,
-				ProxyFactory.newDummyInstance(
-					PortalCacheBootstrapLoaderFactory.class),
-				new HashMapDictionary<>());
-
-			bundleContext.registerService(
 				PortalCacheReplicatorFactory.class,
 				ProxyFactory.newDummyInstance(
 					PortalCacheReplicatorFactory.class),
@@ -78,9 +69,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 		init(
 			componentContext, supportedPortalProfileNames,
-			ClusterLinkBootstrapLoaderHelperUtil.class.getName(),
 			ClusterLinkMessagingConfigurator.class.getName(),
-			ClusterLinkPortalCacheBootstrapLoaderFactory.class.getName(),
 			ClusterLinkPortalCacheClusterChannelFactory.class.getName(),
 			ClusterLinkPortalCacheClusterListener.class.getName(),
 			ClusterLinkPortalCacheReplicatorFactory.class.getName(),

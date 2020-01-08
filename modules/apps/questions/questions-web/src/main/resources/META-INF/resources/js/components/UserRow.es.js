@@ -14,29 +14,13 @@
 
 import React from 'react';
 
-import UserIcon from './UserIcon.es';
-
-export default ({answer, creator}) => (
-	<div className="autofit-padded autofit-row">
-		<div className="autofit-col">
-			<UserIcon
-				fullName={creator.name}
-				portraitURL={creator.image}
-				size="sm"
-				userId={String(creator.id)}
-			/>
-		</div>
-		<div className="text-right">
-			<p className="mb-0">
-				<small>
-					{answer
-						? Liferay.Language.get('answered-by')
-						: Liferay.Language.get('asked-by')}
-				</small>
-			</p>
-			<p>
-				<strong>{creator.name}</strong>
-			</p>
-		</div>
+export default ({creator}) => (
+	<div className="text-right">
+		<p className="mb-0">
+			<small>{Liferay.Language.get('answered-by')}</small>
+		</p>
+		<p>
+			<strong>{creator.name}</strong>
+		</p>
 	</div>
 );

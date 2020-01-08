@@ -80,7 +80,7 @@ export default ({answer}) => {
 					</div>
 				</div>
 				<div className="autofit-col">
-					<UserRow answer={true} creator={answer.creator} />
+					<UserRow creator={answer.creator} />
 				</div>
 			</div>
 			<Comments

@@ -12,8 +12,10 @@
  * details.
  */
 
-import {debounce, cancelDebounce} from 'frontend-js-web';
+import {cancelDebounce, debounce} from 'frontend-js-web';
 import {useRef} from 'react';
+
+import lang from './lang.es';
 
 export function dateToInternationalHuman(
 	ISOString,
@@ -46,6 +48,42 @@ export function dateToBriefInternationalHuman(
 	});
 
 	return intl.format(date);
+}
+
+export function timeDifference(previous, current = new Date()) {
+	const msPerMinute = 60 * 1000;
+	const msPerHour = msPerMinute * 60;
+	const msPerDay = msPerHour * 24;
+	const msPerMonth = msPerDay * 30;
+	const msPerYear = msPerDay * 365;
+
+	const elapsed = current - new Date(previous);
+
+	if (elapsed < msPerMinute) {
+		return lang.sub(Liferay.Language.get('asked-x-seconds-ago-by'), [
+			Math.round(elapsed / 1000)
+		]);
+	} else if (elapsed < msPerHour) {
+		return lang.sub(Liferay.Language.get('asked-x-minutes-ago-by'), [
+			Math.round(elapsed / msPerMinute)
+		]);
+	} else if (elapsed < msPerDay) {
+		return lang.sub(Liferay.Language.get('asked-x-hours-ago-by'), [
+			Math.round(elapsed / msPerHour)
+		]);
+	} else if (elapsed < msPerMonth) {
+		return lang.sub(Liferay.Language.get('asked-x-days-ago-by'), [
+			Math.round(elapsed / msPerDay)
+		]);
+	} else if (elapsed < msPerYear) {
+		return lang.sub(Liferay.Language.get('asked-x-months-ago-by'), [
+			Math.round(elapsed / msPerMonth)
+		]);
+	} else {
+		return lang.sub(Liferay.Language.get('asked-x-years-ago-by'), [
+			Math.round(elapsed / msPerYear)
+		]);
+	}
 }
 
 export function useDebounceCallback(callback, milliseconds) {

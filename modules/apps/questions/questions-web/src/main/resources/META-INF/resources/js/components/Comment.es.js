@@ -13,31 +13,29 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useState} from 'react';
+import ClayButton from '@clayui/button';
+import React from 'react';
 
 import {deleteMessage} from '../utils/client.es';
 
 export default ({comment, commentChange}) => {
-	const [showDelete, setShowDelete] = useState(false);
-
 	const deleteComment = () => {
 		deleteMessage(comment);
 		commentChange(comment);
 	};
 
 	return (
-		<div
-			className="question-comment"
-			onMouseLeave={() => setShowDelete(false)}
-			onMouseOver={() => setShowDelete(true)}
-		>
-			<ClayIcon className="question-icon-rotate-180" symbol="reply" />{' '}
-			{comment.articleBody} - <strong>{comment.creator.name}</strong>
-			{showDelete && (
-				<span onClick={deleteComment}>
-					{' ' + Liferay.Language.get('delete')}
-				</span>
-			)}
+		<div className="question-comment autofit-row autofit-padded">
+			<div className="autofit-col question-reply-icon-row">
+				<ClayIcon className="question-reply-icon" symbol="reply"/>
+			</div>
+			<div className="autofit-col autofit-col-expand">
+				<hr style={{marginLeft: 0, marginRight: 0}}/>
+				<p>
+					{comment.articleBody} - <strong>{comment.creator.name}</strong>
+				</p>
+				<ClayButton onClick={deleteComment} displayType="unstyled">{Liferay.Language.get('delete')}</ClayButton>
+			</div>
 		</div>
 	);
 };

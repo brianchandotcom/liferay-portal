@@ -14,8 +14,7 @@
 }
 
 .question-comment {
-	margin-left: 2.5rem;
-	padding: 1rem;
+	padding-left: 3rem;
 }
 
 .question-accepted-message {
@@ -33,6 +32,11 @@
 	border: 1px solid $secondary-l3;
 }
 
-.question-icon-rotate-180 {
+.question-reply-icon-row {
+	margin-top: 0.5rem;
+}
+
+.question-reply-icon {
 	transform: rotate(-180deg);
+	color: $secondary-l2
 }

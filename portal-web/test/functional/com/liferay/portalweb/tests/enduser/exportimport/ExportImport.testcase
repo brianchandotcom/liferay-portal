@@ -457,6 +457,8 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Title");
 
+		Refresh();
+
 		LAR.exportPortlet(
 			exportIndividualDeletions = "true",
 			larFileName = "ExportWebContentDeletion.lar");

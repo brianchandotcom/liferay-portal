@@ -41,6 +41,8 @@ definition {
 
 		LAR.exportPortlet(larFileName = "DMExport");
 
+		Refresh();
+
 		LAR.deleteCurrentAndPreviousProcess(
 			deleteFromPortlet = "true",
 			larFileName = "DMExport");

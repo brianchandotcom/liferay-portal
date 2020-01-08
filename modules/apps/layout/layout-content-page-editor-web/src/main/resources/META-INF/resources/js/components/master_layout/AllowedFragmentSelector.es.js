@@ -59,7 +59,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	return (
 		<>
 			<ClayInput
-				className="mb-3"
+				className="mb-4"
 				onChange={event => setFilter(event.target.value)}
 				placeholder={`${Liferay.Language.get('search')}...`}
 				sizing="sm"

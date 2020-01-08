@@ -98,7 +98,7 @@ class FragmentsEditorToolbar extends Component {
 
 	_checkPublishButtonState() {
 		requestAnimationFrame(() => {
-			this._publishButtonEnabled = this._online;
+			this._publishButtonEnabled = this._online && !this.pending;
 		});
 	}
 
@@ -248,11 +248,13 @@ const ConnectedFragmentsEditorToolbar = getConnectedComponent(
 		'masterUsed',
 		'portletNamespace',
 		'pageType',
+		'pending',
 		'publishURL',
 		'redirectURL',
 		'savingChanges',
 		'selectedSidebarPanelId',
-		'spritemap'
+		'spritemap',
+		'workflowEnabled'
 	]
 );
 

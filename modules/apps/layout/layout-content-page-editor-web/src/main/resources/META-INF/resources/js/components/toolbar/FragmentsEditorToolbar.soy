@@ -31,6 +31,7 @@
 	{@param? singleSegmentsExperienceMode: bool}
 	{@param? spritemap: string}
 	{@param? store: ?}
+	{@param? workflowEnabled: bool}
 
 	{let $toolbarClasses kind="text"}
 		fragments-editor-toolbar
@@ -149,6 +150,8 @@
 								{msg desc=""}save-variant{/msg}
 							{elseif $masterUsed}
 								{msg desc=""}publish-master{/msg}
+							{elseif $workflowEnabled}
+								{msg desc=""}submit-for-publication{/msg}
 							{else}
 								{msg desc=""}publish{/msg}
 							{/if}

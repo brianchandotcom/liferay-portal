@@ -1278,17 +1278,25 @@
 			});
 		},
 
-		toggleDisabled(button, state) {
-			button = Util.getDOM(button);
+		toggleDisabled(buttons, state) {
+			let buttonNodes = [];
 
-			button = $(button);
+			if (typeof buttons === 'string') {
+				buttonNodes = document.querySelectorAll(buttons);
+			} else if (buttons._node) {
+				buttonNodes.push(buttons.getDOM());
+			} else if (buttons._nodes) {
+				buttonNodes = buttons.getDOM();
+			}
 
-			button.each((index, item) => {
-				item = $(item);
+			buttonNodes.forEach(buttonNode => {
+				buttonNode.disabled = state;
 
-				item.prop('disabled', state);
-
-				item.toggleClass('disabled', state);
+				if (state) {
+					buttonNode.classList.add('disabled');
+				} else {
+					buttonNode.classList.remove('disabled');
+				}
 			});
 		},
 

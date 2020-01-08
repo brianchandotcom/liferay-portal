@@ -1,3 +1,7 @@
+<div class="search-total-label">
+	${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+</div>
+
 <div class="display-compact">
 	<ul>
 		<#if entries?has_content>

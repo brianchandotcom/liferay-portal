@@ -46,24 +46,21 @@ if (searchResultsPortletDisplayContext.isRenderNothing()) {
 
 SearchResultsPortletInstanceConfiguration searchResultsPortletInstanceConfiguration = searchResultsPortletDisplayContext.getSearchResultsPortletInstanceConfiguration();
 
-Map<String, Object> contextObjects = new HashMap<String, Object>();
-
-contextObjects.put("searchResultsPortletDisplayContext", searchResultsPortletDisplayContext);
-
 List<SearchResultSummaryDisplayContext> searchResultSummaryDisplayContexts = searchResultsPortletDisplayContext.getSearchResultSummaryDisplayContexts();
 
-SearchContainer<Document> searchContainer1 = searchResultsPortletDisplayContext.getSearchContainer();
-%>
+SearchContainer<Document> searchContainer = searchResultsPortletDisplayContext.getSearchContainer();
 
-<p class="search-total-label text-default">
-	<liferay-ui:message arguments='<%= new String[] {String.valueOf(searchContainer1.getTotal()), "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"} %>' key="x-results-for-x" />
-</p>
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("namespace", renderResponse.getNamespace());
+contextObjects.put("searchContainer", searchContainer);
+contextObjects.put("searchResultsPortletDisplayContext", searchResultsPortletDisplayContext);
+%>
 
 <c:choose>
 	<c:when test="<%= searchResultSummaryDisplayContexts.isEmpty() %>">
 		<div class="sheet taglib-empty-result-message">
-			<div class="taglib-empty-result-message-header">
-			</div>
+			<div class="taglib-empty-result-message-header"></div>
 
 			<div class="sheet-text text-center">
 				<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false) %>
@@ -83,7 +80,7 @@ SearchContainer<Document> searchContainer1 = searchResultsPortletDisplayContext.
 			<liferay-ui:search-paginator
 				id='<%= renderResponse.getNamespace() + "searchContainerTag" %>'
 				markupView="lexicon"
-				searchContainer="<%= searchContainer1 %>"
+				searchContainer="<%= searchContainer %>"
 			/>
 		</aui:form>
 	</c:otherwise>

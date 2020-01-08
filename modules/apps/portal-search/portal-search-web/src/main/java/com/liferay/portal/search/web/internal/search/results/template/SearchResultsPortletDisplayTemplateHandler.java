@@ -15,6 +15,7 @@
 package com.liferay.portal.search.web.internal.search.results.template;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -90,6 +91,8 @@ public class SearchResultsPortletDisplayTemplateHandler
 
 		templateVariableGroup.empty();
 
+		templateVariableGroup.addVariable(
+			"search-container", SearchContainer.class, "searchContainer");
 		templateVariableGroup.addVariable(
 			"search-results-display-context",
 			SearchResultsPortletDisplayContext.class,

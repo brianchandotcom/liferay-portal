@@ -30,46 +30,27 @@ public class PortletPreferencesTable extends Table<PortletPreferencesTable> {
 	public static final PortletPreferencesTable INSTANCE =
 		new PortletPreferencesTable();
 
-	public final Column<PortletPreferencesTable, Long> mvccVersion;
-	public final Column<PortletPreferencesTable, Long> ctCollectionId;
-	public final Column<PortletPreferencesTable, Long> portletPreferencesId;
-	public final Column<PortletPreferencesTable, Long> companyId;
-	public final Column<PortletPreferencesTable, Long> ownerId;
-	public final Column<PortletPreferencesTable, Integer> ownerType;
-	public final Column<PortletPreferencesTable, Long> plid;
-	public final Column<PortletPreferencesTable, String> portletId;
-	public final Column<PortletPreferencesTable, String> preferences;
+	public final Column<PortletPreferencesTable, Long> mvccVersion =
+		createColumn("mvccVersion", Long.class, Types.BIGINT);
+	public final Column<PortletPreferencesTable, Long> ctCollectionId =
+		createColumn("ctCollectionId", Long.class, Types.BIGINT);
+	public final Column<PortletPreferencesTable, Long> portletPreferencesId =
+		createColumn("portletPreferencesId", Long.class, Types.BIGINT);
+	public final Column<PortletPreferencesTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT);
+	public final Column<PortletPreferencesTable, Long> ownerId = createColumn(
+		"ownerId", Long.class, Types.BIGINT);
+	public final Column<PortletPreferencesTable, Integer> ownerType =
+		createColumn("ownerType", Integer.class, Types.INTEGER);
+	public final Column<PortletPreferencesTable, Long> plid = createColumn(
+		"plid", Long.class, Types.BIGINT);
+	public final Column<PortletPreferencesTable, String> portletId =
+		createColumn("portletId", String.class, Types.VARCHAR);
+	public final Column<PortletPreferencesTable, String> preferences =
+		createColumn("preferences", String.class, Types.CLOB);
 
 	private PortletPreferencesTable() {
 		super("PortletPreferences", PortletPreferencesTable::new);
-
-		mvccVersion = new Column<>(
-			this, "mvccVersion", Long.class, Types.BIGINT);
-
-		ctCollectionId = new Column<>(
-			this, "ctCollectionId", Long.class, Types.BIGINT);
-
-		portletPreferencesId = new Column<>(
-			this, "portletPreferencesId", Long.class, Types.BIGINT);
-
-		companyId = new Column<>(this, "companyId", Long.class, Types.BIGINT);
-
-		ownerId = new Column<>(this, "ownerId", Long.class, Types.BIGINT);
-
-		ownerType = new Column<>(
-			this, "ownerType", Integer.class, Types.INTEGER);
-
-		plid = new Column<>(this, "plid", Long.class, Types.BIGINT);
-
-		portletId = new Column<>(
-			this, "portletId", String.class, Types.VARCHAR);
-
-		preferences = new Column<>(
-			this, "preferences", String.class, Types.CLOB);
-
-		setColumns(
-			mvccVersion, ctCollectionId, portletPreferencesId, companyId,
-			ownerId, ownerType, plid, portletId, preferences);
 	}
 
 }

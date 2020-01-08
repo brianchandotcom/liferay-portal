@@ -23,7 +23,7 @@ const AssigneeInput = ({reassignedTasks, setReassignedTasks, taskId}) => {
 
 	const {data, fetchData} = useFetch({
 		admin: true,
-		params: {page: 1, pageSize: 10000},
+		params: {page: -1, pageSize: -1},
 		url: `/workflow-tasks/${taskId}/assignable-users`
 	});
 

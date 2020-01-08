@@ -25,7 +25,7 @@ import {ProcessStepContext} from '../process-metrics/filter/store/ProcessStepSto
 import {SLAStatusContext} from '../process-metrics/filter/store/SLAStatusStore.es';
 import {TimeRangeContext} from '../process-metrics/filter/store/TimeRangeStore.es';
 
-const InstanceListPageFilters = ({totalCount}) => {
+const Filters = ({totalCount}) => {
 	const {assignees} = useContext(AssigneeContext);
 	const {isCompletedStatusSelected, processStatuses} = useContext(
 		ProcessStatusContext
@@ -109,4 +109,4 @@ const InstanceListPageFilters = ({totalCount}) => {
 	);
 };
 
-export default InstanceListPageFilters;
+export {Filters};

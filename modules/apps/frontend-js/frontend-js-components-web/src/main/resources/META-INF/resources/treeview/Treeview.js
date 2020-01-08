@@ -45,7 +45,7 @@ function addLinks(nodes, parentId = null) {
 
 /**
  * Updates the selection status of the node based on its children.
- * Having all the children selected will mark the item as selected;
+ * Having all the children selected will mark the item as selected.
  */
 function computeParentSelection(nodeId, selectedNodeIds, nodes) {
 	const node = nodes[nodeId];
@@ -97,7 +97,7 @@ function filterNodes(nodes, filterQuery) {
 }
 
 /**
- * Recursively get all the children of a parent, including the children of the children and so on
+ * Recursively get all the children of a parent.
  */
 function getChildrenIds(node, childrenIds = []) {
 	node.children.forEach(children => {

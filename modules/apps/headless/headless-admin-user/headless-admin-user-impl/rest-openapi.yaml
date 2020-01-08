@@ -100,7 +100,7 @@ components:
                         The email address's ID.
                     format: int64
                     type: integer
-				# @review
+                # @review
                 primary:
                     description:
                         A flag that indicates whether this is the main email address of the user/organization.

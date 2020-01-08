@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .question-headline {
 	margin-bottom: 0;
 }
@@ -14,4 +16,19 @@
 .question-comment {
 	margin-left: 2.5rem;
 	padding: 0.5rem;
+}
+
+.question-accepted-message {
+	color: $success;
+}
+
+.question-accepted-answer {
+	background: $success-l2;
+	border: 1px solid $success-l1;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.question-icon-rotate-180 {
+	transform: rotate(-180deg);
 }

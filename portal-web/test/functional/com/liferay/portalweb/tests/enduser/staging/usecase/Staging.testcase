@@ -2433,14 +2433,11 @@ definition {
 			dmDocumentTitle = "DM Document Type Title",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page",
-			widgetName = "Asset Publisher");
-
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureAssetTypePG(
 			assetSubtype = "DM Document Type Name",

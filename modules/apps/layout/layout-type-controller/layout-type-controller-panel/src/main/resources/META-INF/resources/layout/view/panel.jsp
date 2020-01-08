@@ -52,7 +52,7 @@
 							request.setAttribute(WebKeys.PORTLET_CATEGORY, curPortletCategory);
 							%>
 
-							<liferay-util:include page="/html/portal/layout/view/view_category.jsp" />
+							<liferay-util:include page="/layout/view/view_category.jsp" servletContext="<%= application %>" />
 						</c:if>
 
 					<%

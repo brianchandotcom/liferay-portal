@@ -20,6 +20,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -66,6 +67,35 @@ public class DeleteItemReactMVCActionCommand
 		return super.processAction(actionRequest, actionResponse);
 	}
 
+	protected JSONObject deleteItemJSONObject(
+			long companyId, long groupId, String itemId, long plid,
+			long segmentsExperienceId)
+		throws PortalException {
+
+		return LayoutStructureUtil.updateLayoutPageTemplateData(
+			groupId, segmentsExperienceId, plid,
+			layoutStructure -> {
+				List<LayoutStructureItem> deleteLayoutStructureItems =
+					layoutStructure.deleteLayoutStructureItem(itemId);
+
+				for (LayoutStructureItem layoutStructureItem :
+						deleteLayoutStructureItems) {
+
+					JSONObject itemConfigJSONObject =
+						layoutStructureItem.getItemConfigJSONObject();
+
+					long fragmentEntryLinkId = itemConfigJSONObject.getLong(
+						"fragmentEntryLinkId");
+
+					if (fragmentEntryLinkId > 0) {
+						FragmentEntryLinkUtil.deleteFragmentEntryLink(
+							companyId, fragmentEntryLinkId, plid,
+							_portletRegistry);
+					}
+				}
+			});
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -82,30 +112,9 @@ public class DeleteItemReactMVCActionCommand
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			jsonObject = LayoutStructureUtil.updateLayoutPageTemplateData(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId,
-				themeDisplay.getPlid(),
-				layoutStructure -> {
-					List<LayoutStructureItem> deleteLayoutStructureItems =
-						layoutStructure.deleteLayoutStructureItem(itemId);
-
-					for (LayoutStructureItem layoutStructureItem :
-							deleteLayoutStructureItems) {
-
-						JSONObject itemConfigJSONObject =
-							layoutStructureItem.getItemConfigJSONObject();
-
-						long fragmentEntryLinkId = itemConfigJSONObject.getLong(
-							"fragmentEntryLinkId");
-
-						if (fragmentEntryLinkId > 0) {
-							FragmentEntryLinkUtil.deleteFragmentEntryLink(
-								themeDisplay.getCompanyId(),
-								fragmentEntryLinkId, themeDisplay.getPlid(),
-								_portletRegistry);
-						}
-					}
-				});
+			jsonObject = deleteItemJSONObject(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				itemId, themeDisplay.getPlid(), segmentsExperienceId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -16,9 +16,12 @@ package com.liferay.portal.search.elasticsearch7.internal.configuration.persiste
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
 
@@ -46,7 +49,8 @@ public class ElasticsearchConnectionConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			String connectionId = (String)properties.get("connectionId");
+			String connectionId = StringUtil.unquote(
+				(String)properties.get("connectionId"));
 
 			_validateUniqueConnectionId(pid, connectionId);
 
@@ -62,6 +66,17 @@ public class ElasticsearchConnectionConfigurationModelListener
 
 	@Reference
 	protected ConfigurationAdmin configurationAdmin;
+
+	private String _getCauseMessage(String key, Object... arguments) {
+		try {
+			ResourceBundle resourceBundle = _getResourceBundle();
+
+			return ResourceBundleUtil.getString(resourceBundle, key, arguments);
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
 
 	private ResourceBundle _getResourceBundle() {
 		return ResourceBundleUtil.getBundle(
@@ -82,25 +97,21 @@ public class ElasticsearchConnectionConfigurationModelListener
 			}
 		}
 
-		ResourceBundle resourceBundle = _getResourceBundle();
+		_log.error("Unable to validate the Network Host Addresses");
 
-		String message = ResourceBundleUtil.getString(
-			resourceBundle, "please-set-at-least-one-network-host-address");
-
-		throw new Exception(message);
+		throw new Exception(
+			_getCauseMessage("please-set-at-least-one-network-host-address"));
 	}
 
 	private void _validateUniqueConnectionId(String pid, String connectionId)
 		throws Exception {
 
 		if (connectionId.equals("embedded")) {
-			ResourceBundle resourceBundle = _getResourceBundle();
+			_log.error("The ID you entered is reserved: " + connectionId);
 
-			String message = ResourceBundleUtil.getString(
-				resourceBundle, "the-id-you-entered-is-reserved-x",
-				connectionId);
-
-			throw new Exception(message);
+			throw new Exception(
+				_getCauseMessage(
+					"the-id-you-entered-is-reserved-x", connectionId));
 		}
 
 		String filterString = String.format(
@@ -120,13 +131,15 @@ public class ElasticsearchConnectionConfigurationModelListener
 			return;
 		}
 
-		ResourceBundle resourceBundle = _getResourceBundle();
+		_log.error(
+			"There is already a connection with the ID: " + connectionId);
 
-		String message = ResourceBundleUtil.getString(
-			resourceBundle, "there-is-already-a-connection-with-the-id-x",
-			connectionId);
-
-		throw new Exception(message);
+		throw new Exception(
+			_getCauseMessage(
+				"there-is-already-a-connection-with-the-id-x", connectionId));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ElasticsearchConnectionConfigurationModelListener.class);
 
 }

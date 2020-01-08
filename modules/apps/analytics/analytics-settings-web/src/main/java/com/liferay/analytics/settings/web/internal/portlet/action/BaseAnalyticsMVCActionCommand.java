@@ -19,8 +19,6 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -35,22 +33,19 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.nio.charset.Charset;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.MutableRenderParameters;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.StatusLine;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -75,14 +70,11 @@ public abstract class BaseAnalyticsMVCActionCommand
 			long companyId, HttpResponse httpResponse)
 		throws Exception {
 
-		HttpEntity httpEntity = httpResponse.getEntity();
+		StatusLine statusLine = httpResponse.getStatusLine();
 
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			EntityUtils.toString(httpEntity, Charset.defaultCharset()));
+		String reasonPhrase = statusLine.getReasonPhrase();
 
-		String message = responseJSONObject.getString("message");
-
-		if (message.equals("INVALID_TOKEN")) {
+		if (reasonPhrase.equals("INVALID_TOKEN")) {
 			removeCompanyPreferences(companyId);
 
 			configurationProvider.deleteCompanyConfiguration(
@@ -196,19 +188,18 @@ public abstract class BaseAnalyticsMVCActionCommand
 				configurationProvider.getCompanyConfiguration(
 					AnalyticsConfiguration.class, themeDisplay.getCompanyId());
 
-			if (Objects.equals(
-					analyticsConfiguration.liferayAnalyticsDataSourceId(),
-					"") &&
-				Objects.equals(
-					analyticsConfiguration.liferayAnalyticsEndpointURL(), "") &&
-				Objects.equals(analyticsConfiguration.token(), "")) {
+			if (Validator.isBlank(
+					analyticsConfiguration.liferayAnalyticsDataSourceId()) &&
+				Validator.isBlank(
+					analyticsConfiguration.liferayAnalyticsEndpointURL()) &&
+				Validator.isBlank(analyticsConfiguration.token())) {
 
 				return;
 			}
 		}
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Analytics configuration is deleted");
+				_log.info("Analytics configuration not found");
 			}
 
 			return;

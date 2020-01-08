@@ -344,6 +344,21 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setMasterLayoutPlid(masterLayoutPlid);
 		layout.setPublishDate(serviceContext.getModifiedDate(now));
 
+		if (workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				layout.getCompanyId(), layout.getGroupId(),
+				Layout.class.getName()) &&
+			Objects.equals(type, LayoutConstants.TYPE_CONTENT) && !system) {
+
+			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+		else {
+			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
+
+		layout.setStatusByUserId(userId);
+		layout.setStatusByUserName(user.getFullName());
+		layout.setStatusDate(serviceContext.getCreateDate(now));
+
 		boolean layoutUpdateable = ParamUtil.getBoolean(
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
 

@@ -35,7 +35,7 @@ export default ({comment, commentChange}) => {
 			{comment.articleBody} - <strong>{comment.creator.name}</strong>
 			{showDelete && (
 				<span onClick={deleteComment}>
-					{Liferay.Language.get('delete')}
+					{' ' + Liferay.Language.get('delete')}
 				</span>
 			)}
 		</div>

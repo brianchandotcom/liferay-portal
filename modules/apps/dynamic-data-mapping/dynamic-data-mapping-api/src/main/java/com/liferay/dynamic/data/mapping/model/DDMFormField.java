@@ -138,7 +138,7 @@ public class DDMFormField implements Serializable {
 		Object propertyDataSourceType = _properties.get("dataSourceType");
 
 		if (propertyDataSourceType == null) {
-			return "manual";
+			return _DATA_SOURCE_TYPE_MANUAL;
 		}
 
 		String dataSourceType = StringPool.BLANK;
@@ -146,7 +146,8 @@ public class DDMFormField implements Serializable {
 		if (propertyDataSourceType instanceof JSONArray) {
 			JSONArray jsonArray = (JSONArray)propertyDataSourceType;
 
-			dataSourceType = GetterUtil.getString(jsonArray.get(0), "manual");
+			return GetterUtil.getString(
+				jsonArray.get(0), _DATA_SOURCE_TYPE_MANUAL);
 		}
 		else if (propertyDataSourceType instanceof String) {
 			dataSourceType = (String)propertyDataSourceType;
@@ -158,8 +159,8 @@ public class DDMFormField implements Serializable {
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 						dataSourceType);
 
-					dataSourceType = GetterUtil.getString(
-						jsonArray.get(0), "manual");
+					return GetterUtil.getString(
+						jsonArray.get(0), _DATA_SOURCE_TYPE_MANUAL);
 				}
 				catch (JSONException jsone) {
 					return dataSourceType;
@@ -186,7 +187,7 @@ public class DDMFormField implements Serializable {
 
 		if ((ddmFormFieldOptions != null) &&
 			Validator.isNotNull(dataSourceType) &&
-			!dataSourceType.equals("manual")) {
+			!dataSourceType.equals(_DATA_SOURCE_TYPE_MANUAL)) {
 
 			Locale defaultLocale = ddmFormFieldOptions.getDefaultLocale();
 
@@ -418,6 +419,8 @@ public class DDMFormField implements Serializable {
 	public void setVisibilityExpression(String visibilityExpression) {
 		_properties.put("visibilityExpression", visibilityExpression);
 	}
+
+	private static final String _DATA_SOURCE_TYPE_MANUAL = "manual";
 
 	private DDMForm _ddmForm;
 	private final List<DDMFormFieldRule> _ddmFormFieldRules;

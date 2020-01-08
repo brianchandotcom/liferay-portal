@@ -160,7 +160,7 @@ public class OrganizationResourceImpl
 				organization.getComment(), false, _getAddresses(organization),
 				_getEmailAddresses(organization), _getOrgLabors(organization),
 				_getPhones(organization), _getWebsites(organization),
-				new ServiceContext()));
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override

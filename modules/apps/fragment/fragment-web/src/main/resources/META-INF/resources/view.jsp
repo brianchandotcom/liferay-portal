@@ -19,6 +19,7 @@
 <%
 List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request.getAttribute(FragmentWebKeys.FRAGMENT_COLLECTIONS);
 Map<String, List<FragmentCollection>> inheritedFragmentCollections = (Map<String, List<FragmentCollection>>)request.getAttribute(FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS);
+List<FragmentCollection> systemFragmentCollections = (List<FragmentCollection>)request.getAttribute(FragmentWebKeys.SYSTEM_FRAGMENT_COLLECTIONS);
 
 List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDisplayContext.getFragmentCollectionContributors(locale);
 %>
@@ -66,7 +67,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 								</div>
 
 								<ul class="mb-2 nav nav-stacked">
-									<c:if test="<%= ListUtil.isNotEmpty(fragmentCollectionContributors) %>">
+									<c:if test="<%= ListUtil.isNotEmpty(fragmentCollectionContributors) || ListUtil.isNotEmpty(systemFragmentCollections) %>">
 										<span class="text-truncate">
 											<liferay-ui:message key="default" />
 										</span>
@@ -92,6 +93,34 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 														iconCssClass="text-muted"
 														markupView="lexicon"
 													/>
+												</a>
+											</li>
+
+										<%
+										}
+
+										for (FragmentCollection fragmentCollection : systemFragmentCollections) {
+										%>
+
+											<li class="nav-item">
+
+												<%
+												PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
+
+												fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
+												fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
+												%>
+
+												<a class="nav-link text-truncate <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
+
+													<c:if test="<%= fragmentDisplayContext.isLocked(fragmentCollection) %>">
+														<liferay-ui:icon
+															icon="lock"
+															iconCssClass="text-muted"
+															markupView="lexicon"
+														/>
+													</c:if>
 												</a>
 											</li>
 

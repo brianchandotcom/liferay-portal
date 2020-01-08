@@ -27,6 +27,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -111,7 +112,7 @@ public class FragmentPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS,
 			_fragmentCollectionService.getFragmentCollections(
-				themeDisplay.getScopeGroupId(), true));
+				themeDisplay.getScopeGroupId()));
 		renderRequest.setAttribute(
 			FragmentPortletConfiguration.class.getName(),
 			fragmentPortletConfiguration);
@@ -135,6 +136,11 @@ public class FragmentPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		renderRequest.setAttribute(
+			FragmentWebKeys.SYSTEM_FRAGMENT_COLLECTIONS,
+			_fragmentCollectionService.getFragmentCollections(
+				CompanyConstants.SYSTEM));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

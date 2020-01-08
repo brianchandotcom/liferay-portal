@@ -39,4 +39,7 @@ public class FragmentWebKeys {
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
+	public static final String SYSTEM_FRAGMENT_COLLECTIONS =
+		"SYSTEM_FRAGMENT_COLLECTIONS";
+
 }

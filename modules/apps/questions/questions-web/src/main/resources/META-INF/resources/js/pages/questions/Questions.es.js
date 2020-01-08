@@ -125,7 +125,7 @@ export default () => {
 									</span>
 								</div>
 							</div>
-							<div className="autofit-col">
+							<div>
 								<KeywordsList keywords={question.keywords} />
 							</div>
 						</div>

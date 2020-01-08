@@ -638,7 +638,7 @@
 
 			return typeof currentElement === 'string'
 				? document.querySelector(currentElement)
-				: currentElement.length
+				: currentElement.jquery
 				? currentElement[0]
 				: currentElement;
 		},
@@ -1021,44 +1021,47 @@
 		},
 
 		reorder(box, down) {
-			box = Util.getDOM(box);
+			box = Util.getElement(box);
 
-			box = $(box);
+			if (box) {
+				if (box.getAttribute('selectedIndex') == -1) {
+					box.setAttribute('selectedIndex', 0);
+				} else {
+					const selectedItems = Array.from(
+						box.querySelectorAll('option:checked')
+					);
 
-			if (box.prop('selectedIndex') == -1) {
-				box.prop('selectedIndex', 0);
-			} else {
-				var selectedItems = box.find('option:selected');
+					const items = Array.from(box.querySelectorAll('option'));
 
-				if (down) {
-					selectedItems
-						.get()
-						.reverse()
-						.forEach(item => {
-							item = $(item);
+					if (down) {
+						selectedItems.reverse().forEach(item => {
+							const itemIndex = items.indexOf(item);
 
-							var itemIndex = item.prop('index');
-
-							var lastIndex = box.find('option').length - 1;
+							const lastIndex = items.length - 1;
 
 							if (itemIndex === lastIndex) {
-								box.prepend(item);
+								box.insertBefore(item, box.firstChild);
 							} else {
-								item.insertAfter(item.next());
+								const nextItem =
+									item.nextElementSibling.nextElementSibling;
+
+								box.insertBefore(item, nextItem);
 							}
 						});
-				} else {
-					selectedItems.get().forEach(item => {
-						item = $(item);
+					} else {
+						selectedItems.forEach(item => {
+							const itemIndex = items.indexOf(item);
 
-						var itemIndex = item.prop('index');
-
-						if (itemIndex === 0) {
-							box.append(item);
-						} else {
-							item.insertBefore(item.prev());
-						}
-					});
+							if (itemIndex === 0) {
+								box.appendChild(item);
+							} else {
+								box.insertBefore(
+									item,
+									item.previousElementSibling
+								);
+							}
+						});
+					}
 				}
 			}
 		},

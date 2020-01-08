@@ -63,7 +63,7 @@ public class Join
 		return _onPredicate;
 	}
 
-	public Table getTable() {
+	public Table<?> getTable() {
 		return _table;
 	}
 

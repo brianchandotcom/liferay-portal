@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class Column<T extends Table, C>
+public class Column<T extends Table<T>, C>
 	extends BaseASTNode implements Expression<C> {
 
 	public Column(
@@ -39,7 +39,6 @@ public class Column<T extends Table, C>
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Alias<C> as(String name) {
 		if (_columnName.equals(name)) {
 			return new Alias<>(this, name);

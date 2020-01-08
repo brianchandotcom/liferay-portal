@@ -29,10 +29,13 @@ import java.util.Objects;
 public class Column<T extends Table, C>
 	extends BaseASTNode implements Expression<C> {
 
-	public static <T extends Table, C> Column<T, C> create(
+	public Column(
 		T table, String columnName, Class<C> columnType, int sqlType) {
 
-		return new Column<>(table, columnName, columnType, sqlType);
+		_table = Objects.requireNonNull(table);
+		_columnName = Objects.requireNonNull(columnName);
+		_columnType = Objects.requireNonNull(columnType);
+		_sqlType = sqlType;
 	}
 
 	@Override
@@ -95,15 +98,6 @@ public class Column<T extends Table, C>
 
 		sb.append(".");
 		sb.append(_columnName);
-	}
-
-	private Column(
-		T table, String columnName, Class<C> columnType, int sqlType) {
-
-		_table = Objects.requireNonNull(table);
-		_columnName = Objects.requireNonNull(columnName);
-		_columnType = Objects.requireNonNull(columnType);
-		_sqlType = sqlType;
 	}
 
 	private final String _columnName;

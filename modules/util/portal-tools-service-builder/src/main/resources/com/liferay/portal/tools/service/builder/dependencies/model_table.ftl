@@ -53,7 +53,7 @@ public class ${entity.name}Table extends Table<${entity.name}Table> {
 
 			<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
 
-			${entityColumn.name} = Column.create(this, "${entityColumn.DBName}", ${entityColumnType}.class, Types.${sqlType});
+			${entityColumn.name} = new Column<>(this, "${entityColumn.DBName}", ${entityColumnType}.class, Types.${sqlType});
 		</#list>
 
 		setColumns(

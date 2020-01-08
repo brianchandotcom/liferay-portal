@@ -15,6 +15,10 @@
 package com.liferay.change.tracking.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -483,6 +487,57 @@ public class LayoutCTTest {
 
 			Assert.assertFalse(rs.next());
 		}
+	}
+
+	@Test
+	public void testPublishLayoutWithAssetTag() throws Exception {
+		String tagName1 = "layoutcttesttag1";
+		String tagName2 = "layoutcttesttag2";
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		_layoutLocalService.updateAsset(
+			layout.getUserId(), layout, null, new String[] {tagName1});
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			Layout.class.getName(), layout.getPlid());
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			_layoutLocalService.updateAsset(
+				layout.getUserId(), layout, null, new String[] {tagName2});
+
+			List<AssetTag> assetTags = _assetTagLocalService.getEntryTags(
+				assetEntry.getEntryId());
+
+			Assert.assertEquals(assetTags.toString(), 1, assetTags.size());
+
+			AssetTag assetTag = assetTags.get(0);
+
+			Assert.assertEquals(tagName2, assetTag.getName());
+		}
+
+		List<AssetTag> assetTags = _assetTagLocalService.getEntryTags(
+			assetEntry.getEntryId());
+
+		Assert.assertEquals(assetTags.toString(), 1, assetTags.size());
+
+		AssetTag assetTag = assetTags.get(0);
+
+		Assert.assertEquals(tagName1, assetTag.getName());
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		assetTags = _assetTagLocalService.getEntryTags(assetEntry.getEntryId());
+
+		Assert.assertEquals(assetTags.toString(), 1, assetTags.size());
+
+		assetTag = assetTags.get(0);
+
+		Assert.assertEquals(tagName2, assetTag.getName());
 	}
 
 	@ExpectedLogs(
@@ -1058,6 +1113,12 @@ public class LayoutCTTest {
 	}
 
 	@Inject
+	private static AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private static AssetTagLocalService _assetTagLocalService;
+
+	@Inject
 	private static ClassNameLocalService _classNameLocalService;
 
 	@Inject
@@ -1069,6 +1130,9 @@ public class LayoutCTTest {
 	@Inject
 	private static CTEntryLocalService _ctEntryLocalService;
 
+	@Inject
+	private static CTProcessLocalService _ctProcessLocalService;
+
 	private static long _layoutClassNameId;
 
 	@Inject
@@ -1076,9 +1140,6 @@ public class LayoutCTTest {
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
-
-	@Inject
-	private CTProcessLocalService _ctProcessLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

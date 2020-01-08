@@ -15,6 +15,10 @@
 package com.liferay.change.tracking.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -298,6 +302,13 @@ public class CTCollectionLocalServiceTest {
 
 		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
 
+		String tagName1 = "layoutcttesttag1";
+		String tagName2 = "layoutcttesttag2";
+
+		_layoutLocalService.updateAsset(
+			modifiedLayout.getUserId(), modifiedLayout, null,
+			new String[] {tagName1});
+
 		String originalFriendlyURL = modifiedLayout.getFriendlyURL();
 
 		String newFriendlyURL = "/testModifyLayout";
@@ -313,10 +324,26 @@ public class CTCollectionLocalServiceTest {
 			modifiedLayout.setFriendlyURL(newFriendlyURL);
 
 			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
+
+			_layoutLocalService.updateAsset(
+				modifiedLayout.getUserId(), modifiedLayout, null,
+				new String[] {tagName2});
 		}
 
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			Layout.class.getName(), modifiedLayout.getPlid());
+
+		List<AssetTag> assetTags = _assetTagLocalService.getEntryTags(
+			assetEntry.getEntryId());
+
+		Assert.assertEquals(assetTags.toString(), 1, assetTags.size());
+
+		AssetTag assetTag = assetTags.get(0);
+
+		Assert.assertEquals(tagName2, assetTag.getName());
 
 		Assert.assertEquals(
 			addedLayout,
@@ -350,6 +377,15 @@ public class CTCollectionLocalServiceTest {
 
 			Assert.assertEquals(
 				originalFriendlyURL, modifiedLayout.getFriendlyURL());
+
+			assetTags = _assetTagLocalService.getEntryTags(
+				assetEntry.getEntryId());
+
+			Assert.assertEquals(assetTags.toString(), 1, assetTags.size());
+
+			assetTag = assetTags.get(0);
+
+			Assert.assertEquals(tagName1, assetTag.getName());
 		}
 
 		_ctProcessLocalService.addCTProcess(
@@ -368,6 +404,12 @@ public class CTCollectionLocalServiceTest {
 		Assert.assertEquals(
 			originalFriendlyURL, modifiedLayout.getFriendlyURL());
 	}
+
+	@Inject
+	private static AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private static AssetTagLocalService _assetTagLocalService;
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;

@@ -15,29 +15,18 @@
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
-import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
-
-import java.util.Objects;
 
 /**
- * @author Preston Crary
+ * @author Shuyang Zhou
  */
-public class NamedQuery extends BaseASTNode implements TableClause {
+public class QueryTable extends Table<QueryTable> {
 
-	public NamedQuery(Query query, String name) {
-		_query = Objects.requireNonNull(query);
-		_name = Objects.requireNonNull(name);
-	}
+	public QueryTable(String tableName, Query query) {
+		super(tableName, () -> new QueryTable(tableName, query));
 
-	@Override
-	public String getName() {
-		return _name;
-	}
-
-	public Query getQuery() {
-		return _query;
+		_query = query;
 	}
 
 	@Override
@@ -48,10 +37,9 @@ public class NamedQuery extends BaseASTNode implements TableClause {
 
 		sb.append(") ");
 
-		sb.append(_name);
+		sb.append(getTableName());
 	}
 
-	private final String _name;
 	private final Query _query;
 
 }

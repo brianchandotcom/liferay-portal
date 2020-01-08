@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
+import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FromStep extends ASTNode {
 
-	public default From from(TableClause tableClause) {
-		return new From(this, tableClause);
+	public default From from(Table<?> table) {
+		return new From(this, table);
 	}
 
 }

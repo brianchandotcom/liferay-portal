@@ -799,31 +799,36 @@
 		},
 
 		inBrowserView(node, win, nodeRegion) {
-			var viewable = false;
+			let viewable = false;
 
-			node = $(node);
+			node = Util.getElement(node);
 
-			if (node.length) {
+			if (node) {
 				if (!nodeRegion) {
-					nodeRegion = node.offset();
+					nodeRegion = node.getBoundingClientRect();
 
-					nodeRegion.bottom = nodeRegion.top + node.outerHeight();
-					nodeRegion.right = nodeRegion.left + node.outerWidth();
+					nodeRegion = {
+						left: nodeRegion.left + window.scrollX,
+						top: nodeRegion.top + window.scrollY
+					};
+
+					nodeRegion.bottom = nodeRegion.top + node.offsetHeight;
+					nodeRegion.right = nodeRegion.left + node.offsetWidth;
 				}
 
 				if (!win) {
 					win = window;
 				}
 
-				win = $(win);
+				win = Util.getElement(win);
 
-				var winRegion = {};
+				const winRegion = {};
 
-				winRegion.left = win.scrollLeft();
-				winRegion.right = winRegion.left + win.width();
+				winRegion.left = win.scrollX;
+				winRegion.right = winRegion.left + win.innerWidth;
 
-				winRegion.top = win.scrollTop();
-				winRegion.bottom = winRegion.top + win.height();
+				winRegion.top = win.scrollY;
+				winRegion.bottom = winRegion.top + win.innerHeight;
 
 				viewable =
 					nodeRegion.bottom <= winRegion.bottom &&
@@ -832,10 +837,15 @@
 					nodeRegion.top >= winRegion.top;
 
 				if (viewable) {
-					var frameEl = $(win.prop('frameElement'));
+					const frameEl = win.frameElement;
 
-					if (frameEl.length) {
-						var frameOffset = frameEl.offset();
+					if (frameEl) {
+						let frameOffset = frameEl.getBoundingClientRect();
+
+						frameOffset = {
+							left: frameOffset.left + window.scrollX,
+							top: frameOffset.top + window.scrollY
+						};
 
 						var xOffset = frameOffset.left - winRegion.left;
 
@@ -849,7 +859,7 @@
 
 						viewable = Util.inBrowserView(
 							node,
-							win.prop('parent'),
+							win.parent,
 							nodeRegion
 						);
 					}

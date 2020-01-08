@@ -156,7 +156,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
-			byte[] iconBytes, ServiceContext serviceContext)
+			byte[] iconBytes, long masterLayoutPlid,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout
@@ -194,8 +195,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			return layoutLocalService.updateLayout(
 				groupId, privateLayout, layoutId, parentLayoutId, nameMap,
 				titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
-				friendlyURLMap, hasIconImage, iconBytes,
-				layout.getMasterLayoutPlid(), serviceContext);
+				friendlyURLMap, hasIconImage, iconBytes, masterLayoutPlid,
+				serviceContext);
 		}
 
 		layoutLocalService.updateAsset(
@@ -738,12 +739,16 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					friendlyURLMap = (Map<Locale, String>)arguments[11];
 				}
 
+				long masterLayoutPlid = 0;
+
 				ServiceContext serviceContext = null;
 
 				if (arguments.length == 15) {
 					serviceContext = (ServiceContext)arguments[14];
 				}
 				else {
+					masterLayoutPlid = (Long)arguments[14];
+
 					serviceContext = (ServiceContext)arguments[15];
 				}
 
@@ -757,7 +762,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					(Map<Locale, String>)arguments[8], (String)arguments[9],
 					(Boolean)arguments[10], friendlyURLMap,
 					(Boolean)arguments[12], (byte[])arguments[13],
-					serviceContext);
+					masterLayoutPlid, serviceContext);
 			}
 			else {
 				try {

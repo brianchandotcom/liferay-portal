@@ -104,7 +104,7 @@ public abstract class Table<T extends Table> extends BaseASTNode {
 		Map<String, Column<T, ?>> columnMap = new HashMap<>(
 			castTable._columnMap);
 
-		column = Column.create(
+		column = new Column<>(
 			table, column.getColumnName(), column.getColumnType(),
 			column.getSQLType());
 

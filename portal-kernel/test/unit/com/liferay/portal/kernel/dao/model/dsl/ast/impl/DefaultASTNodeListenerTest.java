@@ -664,10 +664,10 @@ public class DefaultASTNodeListenerTest {
 		private MainExampleTable() {
 			super("MainExample", MainExampleTable::new);
 
-			mainExampleId = Column.create(
+			mainExampleId = new Column<>(
 				this, "mainExampleId", Long.class, Types.BIGINT);
-			name = Column.create(this, "name", String.class, Types.VARCHAR);
-			flag = Column.create(this, "flag", Integer.class, Types.INTEGER);
+			name = new Column<>(this, "name", String.class, Types.VARCHAR);
+			flag = new Column<>(this, "flag", Integer.class, Types.INTEGER);
 
 			setColumns(mainExampleId, name, flag);
 		}
@@ -687,13 +687,13 @@ public class DefaultASTNodeListenerTest {
 		private ReferenceExampleTable() {
 			super("ReferenceExample", ReferenceExampleTable::new);
 
-			mainExampleId = Column.create(
+			mainExampleId = new Column<>(
 				this, "mainExampleId", Long.class, Types.BIGINT);
 
-			referenceExampleId = Column.create(
+			referenceExampleId = new Column<>(
 				this, "referenceExampleId", Long.class, Types.BIGINT);
 
-			name = Column.create(this, "name", String.class, Types.VARCHAR);
+			name = new Column<>(this, "name", String.class, Types.VARCHAR);
 
 			setColumns(referenceExampleId, mainExampleId, name);
 		}

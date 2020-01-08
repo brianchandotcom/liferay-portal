@@ -20,6 +20,7 @@ import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.internal.CTServiceCopier;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
+import com.liferay.change.tracking.internal.CTTableMapperHelper;
 import com.liferay.change.tracking.internal.conflict.CTConflictChecker;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.model.CTCollection;
@@ -164,6 +165,17 @@ public class CTCollectionLocalServiceImpl
 	@Override
 	public CTCollection deleteCTCollection(CTCollection ctCollection) {
 		_ctServiceRegistry.onBeforeRemove(ctCollection.getCtCollectionId());
+
+		try {
+			for (CTTableMapperHelper ctTableMapperHelper :
+					_ctServiceRegistry.getCTTableMapperHelpers()) {
+
+				ctTableMapperHelper.delete(ctCollection.getCtCollectionId());
+			}
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 
 		List<CTEntry> ctEntries = ctEntryPersistence.findByCTCollectionId(
 			ctCollection.getCtCollectionId());
@@ -332,6 +344,14 @@ public class CTCollectionLocalServiceImpl
 		try {
 			for (CTServiceCopier ctServiceCopier : ctServiceCopiers.values()) {
 				ctServiceCopier.copy();
+			}
+
+			for (CTTableMapperHelper ctTableMapperHelper :
+					_ctServiceRegistry.getCTTableMapperHelpers()) {
+
+				ctTableMapperHelper.undo(
+					undoCTCollection.getCtCollectionId(),
+					newCTCollection.getCtCollectionId());
 			}
 		}
 		catch (Exception exception) {

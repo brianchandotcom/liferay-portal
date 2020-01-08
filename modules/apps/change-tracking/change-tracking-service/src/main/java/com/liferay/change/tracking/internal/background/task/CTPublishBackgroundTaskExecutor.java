@@ -16,6 +16,7 @@ package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
+import com.liferay.change.tracking.internal.CTTableMapperHelper;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -121,6 +123,12 @@ public class CTPublishBackgroundTaskExecutor
 			ctServicePublisher.publish();
 		}
 
+		for (CTTableMapperHelper ctTableMapperHelper :
+				_ctServiceRegistry.getCTTableMapperHelpers()) {
+
+			ctTableMapperHelper.publish(ctCollectionId, _portalCacheManager);
+		}
+
 		_ctServiceRegistry.onAfterPublish(ctCollectionId);
 
 		Date modifiedDate = new Date();
@@ -169,5 +177,8 @@ public class CTPublishBackgroundTaskExecutor
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;
+
+	@Reference
+	private PortalCacheManager<?, ?> _portalCacheManager;
 
 }

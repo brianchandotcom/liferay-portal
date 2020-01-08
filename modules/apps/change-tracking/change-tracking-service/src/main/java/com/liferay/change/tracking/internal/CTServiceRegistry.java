@@ -22,10 +22,19 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -41,6 +50,53 @@ public class CTServiceRegistry {
 
 	public CTService<?> getCTService(long classNameId) {
 		return _serviceTrackerMap.getService(classNameId);
+	}
+
+	public Collection<CTTableMapperHelper> getCTTableMapperHelpers() {
+		Map<String, CTTableMapperHelper> ctMappingTableHelpers =
+			new HashMap<>();
+
+		for (CTService<?> ctService : _serviceTrackerMap.values()) {
+			CTPersistence<?> ctPersistence = ctService.getCTPersistence();
+
+			List<String> mappingTableNames =
+				ctPersistence.getMappingTableNames();
+
+			if (mappingTableNames.isEmpty()) {
+				continue;
+			}
+
+			Set<String> primaryKeyNames = ctPersistence.getCTColumnNames(
+				CTColumnResolutionType.PK);
+
+			if (primaryKeyNames.size() != 1) {
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"{tableName=", ctPersistence.getTableName(),
+						", primaryKeyNames=", primaryKeyNames, "}"));
+			}
+
+			Iterator<String> iterator = primaryKeyNames.iterator();
+
+			String primaryKeyName = iterator.next();
+
+			for (String mappingTableName : mappingTableNames) {
+				ctMappingTableHelpers.compute(
+					mappingTableName,
+					(key, ctTableMapperHelper) -> {
+						if (ctTableMapperHelper == null) {
+							return new CTTableMapperHelper(
+								ctService, mappingTableName, primaryKeyName);
+						}
+
+						ctTableMapperHelper.setRightColumnName(primaryKeyName);
+
+						return ctTableMapperHelper;
+					});
+			}
+		}
+
+		return ctMappingTableHelpers.values();
 	}
 
 	public void onAfterCopy(

@@ -23,15 +23,6 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewMyAccount {
-		Navigator.openURL();
-
-		Navigator.gotoAccountSettings();
-
-		MyAccount.view();
-	}
-
-	@priority = "4"
 	test ViewMyAccountUser {
 		ProductMenu.gotoPortlet(
 			category = "Users",

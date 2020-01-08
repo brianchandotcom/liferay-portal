@@ -66,7 +66,7 @@ if (layoutPageTemplateEntry == null) {
 			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %></span>
 		</p>
 
-		<div class="master-layout-buttons">
+		<div class="button-holder">
 			<c:if test="<%= masterLayoutPageTemplateEntry != null %>">
 				<clay:button
 					elementClasses="btn-secondary"

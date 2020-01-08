@@ -41,25 +41,23 @@ import org.osgi.service.component.annotations.Reference;
 public class DispatchTriggerSchedulerEntryTrackerImpl
 	implements DispatchTriggerSchedulerEntryTracker {
 
-	public static final String JOB_NAME_PREFIX_X =
-		"COMMERCE_DATA_INTEGRATION_PROCESS_%s";
+	public static final String GROUP_NAME_PREFIX_X =
+		"DISPATCH_TRIGGER_GROUP_%s";
 
 	@Override
 	public void addScheduledTask(
-			long commerceDataIntegrationProcessId, String cronExpression,
-			Date startDate, Date endDate)
+			long dispatchTriggerId, String cronExpression, Date startDate,
+			Date endDate)
 		throws SchedulerException {
 
-		deleteScheduledTask(commerceDataIntegrationProcessId);
+		deleteScheduledTask(dispatchTriggerId);
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			String.valueOf(commerceDataIntegrationProcessId),
-			_getGroupName(commerceDataIntegrationProcessId), startDate, endDate,
-			cronExpression);
+			String.valueOf(dispatchTriggerId), _getGroupName(dispatchTriggerId),
+			startDate, endDate, cronExpression);
 
 		JSONObject payLoad = JSONUtil.put(
-			"commerceDataIntegrationProcessId",
-			commerceDataIntegrationProcessId);
+			"dispatchTriggerId", dispatchTriggerId);
 
 		_schedulerEngineHelper.schedule(
 			trigger, StorageType.PERSISTED, null,
@@ -68,29 +66,26 @@ public class DispatchTriggerSchedulerEntryTrackerImpl
 	}
 
 	@Override
-	public void deleteScheduledTask(long commerceDataIntegrationProcessId)
+	public void deleteScheduledTask(long dispatchTriggerId)
 		throws SchedulerException {
 
-		SchedulerResponse scheduledJob = getScheduledJob(
-			commerceDataIntegrationProcessId);
+		SchedulerResponse scheduledJob = getScheduledJob(dispatchTriggerId);
 
 		if (scheduledJob != null) {
 			_schedulerEngineHelper.delete(
-				String.valueOf(commerceDataIntegrationProcessId),
-				_getGroupName(commerceDataIntegrationProcessId),
-				StorageType.PERSISTED);
+				String.valueOf(dispatchTriggerId),
+				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
 		}
 	}
 
 	@Override
-	public Date getNextFireTime(long commerceDataIntegrationProcessId) {
+	public Date getNextFireTime(long dispatchTriggerId) {
 		Date nextFireTime = null;
 
 		try {
 			nextFireTime = _schedulerEngineHelper.getNextFireTime(
-				String.valueOf(commerceDataIntegrationProcessId),
-				_getGroupName(commerceDataIntegrationProcessId),
-				StorageType.PERSISTED);
+				String.valueOf(dispatchTriggerId),
+				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
 		}
 		catch (SchedulerException se) {
 			_log.error(se, se);
@@ -100,14 +95,13 @@ public class DispatchTriggerSchedulerEntryTrackerImpl
 	}
 
 	@Override
-	public Date getPreviousFireTime(long commerceDataIntegrationProcessId) {
+	public Date getPreviousFireTime(long dispatchTriggerId) {
 		Date nextFireTime = null;
 
 		try {
 			nextFireTime = _schedulerEngineHelper.getPreviousFireTime(
-				String.valueOf(commerceDataIntegrationProcessId),
-				_getGroupName(commerceDataIntegrationProcessId),
-				StorageType.PERSISTED);
+				String.valueOf(dispatchTriggerId),
+				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
 		}
 		catch (SchedulerException se) {
 			_log.error(se, se);
@@ -117,19 +111,16 @@ public class DispatchTriggerSchedulerEntryTrackerImpl
 	}
 
 	@Override
-	public SchedulerResponse getScheduledJob(
-			long commerceDataIntegrationProcessId)
+	public SchedulerResponse getScheduledJob(long dispatchTriggerId)
 		throws SchedulerException {
 
 		return _schedulerEngineHelper.getScheduledJob(
-			String.valueOf(commerceDataIntegrationProcessId),
-			_getGroupName(commerceDataIntegrationProcessId),
+			String.valueOf(dispatchTriggerId), _getGroupName(dispatchTriggerId),
 			StorageType.PERSISTED);
 	}
 
-	private String _getGroupName(long commerceDataIntegrationProcessId) {
-		return String.format(
-			JOB_NAME_PREFIX_X, commerceDataIntegrationProcessId);
+	private String _getGroupName(long dispatchTriggerId) {
+		return String.format(GROUP_NAME_PREFIX_X, dispatchTriggerId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

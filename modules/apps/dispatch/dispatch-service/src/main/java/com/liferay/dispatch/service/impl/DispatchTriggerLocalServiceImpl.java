@@ -55,8 +55,6 @@ public class DispatchTriggerLocalServiceImpl
 			UnicodeProperties typeSettingsProperties, boolean system)
 		throws PortalException {
 
-		// Commerce data integration process
-
 		User user = userLocalService.getUser(userId);
 
 		validate(user.getCompanyId(), 0, name);
@@ -75,8 +73,6 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setSystem(system);
 
 		dispatchTriggerPersistence.update(dispatchTrigger);
-
-		// Resources
 
 		resourceLocalService.addResources(
 			company.getCompanyId(), 0, user.getUserId(),
@@ -111,16 +107,14 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
-	public DispatchTrigger deleteDispatchTrigger(
-			long commerceDataIntegrationProcessId)
+	public DispatchTrigger deleteDispatchTrigger(long dispatchTriggerId)
 		throws PortalException {
 
-		DispatchTrigger commerceDataIntegrationProcess =
-			dispatchTriggerPersistence.findByPrimaryKey(
-				commerceDataIntegrationProcessId);
+		DispatchTrigger dispatchTrigger =
+			dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
 
 		return dispatchTriggerLocalService.deleteDispatchTrigger(
-			commerceDataIntegrationProcess);
+			dispatchTrigger);
 	}
 
 	@Override
@@ -129,12 +123,10 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
-	public DispatchTrigger getDispatchTrigger(
-			long commerceDataIntegrationProcessId)
+	public DispatchTrigger getDispatchTrigger(long dispatchTriggerId)
 		throws PortalException {
 
-		return dispatchTriggerPersistence.findByPrimaryKey(
-			commerceDataIntegrationProcessId);
+		return dispatchTriggerPersistence.findByPrimaryKey(dispatchTriggerId);
 	}
 
 	@Override

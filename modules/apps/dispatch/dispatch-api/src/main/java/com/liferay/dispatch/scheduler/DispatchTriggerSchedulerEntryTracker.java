@@ -25,19 +25,18 @@ import java.util.Date;
 public interface DispatchTriggerSchedulerEntryTracker {
 
 	public void addScheduledTask(
-			long commerceDataIntegrationProcessId, String cronExpression,
-			Date startDate, Date endDate)
+			long dispatchTriggerId, String cronExpression, Date startDate,
+			Date endDate)
 		throws SchedulerException;
 
-	public void deleteScheduledTask(long commerceDataIntegrationProcessId)
+	public void deleteScheduledTask(long dispatchTriggerId)
 		throws SchedulerException;
 
-	public Date getNextFireTime(long commerceDataIntegrationProcessId);
+	public Date getNextFireTime(long dispatchTriggerId);
 
-	public Date getPreviousFireTime(long commerceDataIntegrationProcessId);
+	public Date getPreviousFireTime(long dispatchTriggerId);
 
-	public SchedulerResponse getScheduledJob(
-			long commerceDataIntegrationProcessId)
+	public SchedulerResponse getScheduledJob(long dispatchTriggerId)
 		throws SchedulerException;
 
 }

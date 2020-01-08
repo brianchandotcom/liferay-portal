@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.WhereClause;
+import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,8 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WhereStep extends ASTNode {
 
-	public default Where where(WhereClause whereClause) {
-		return new Where(this, whereClause);
+	public default Where where(Predicate predicate) {
+		return new Where(this, predicate);
 	}
 
 }

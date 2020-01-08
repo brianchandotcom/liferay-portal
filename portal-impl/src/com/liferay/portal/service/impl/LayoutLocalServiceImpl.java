@@ -83,6 +83,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutComparator;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
@@ -3191,6 +3192,36 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
 		return updatePriority(layout, priority);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Layout updateStatus(
+			long userId, long plid, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Layout
+
+		Layout layout = layoutLocalService.getLayout(plid);
+
+		User user = userLocalService.getUser(userId);
+
+		Date now = new Date();
+
+		layout.setStatus(status);
+		layout.setStatusByUserId(user.getUserId());
+		layout.setStatusByUserName(user.getFullName());
+		layout.setStatusDate(serviceContext.getModifiedDate(now));
+
+		// Asset
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			assetEntryLocalService.updateEntry(
+				Layout.class.getName(), layout.getPlid(),
+				layout.getStatusDate(), null, true, false);
+		}
+
+		return layoutPersistence.update(layout);
 	}
 
 	@Override

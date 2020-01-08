@@ -201,7 +201,7 @@ available, but they are deprecated.
 ## 2.2.2 - 2018-08-15
 
 ### Commits
-- [LPS-84473]:  (6659d6f32b)
+- [LPS-84473]: (6659d6f32b)
 
 ### Dependencies
 - [LPS-84473]: Update the com.liferay.css.builder dependency to version 2.1.2.

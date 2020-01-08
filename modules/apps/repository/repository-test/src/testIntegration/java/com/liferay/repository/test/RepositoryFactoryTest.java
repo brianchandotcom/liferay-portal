@@ -16,6 +16,7 @@ package com.liferay.repository.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import org.junit.Before;
 import org.junit.ClassRule;

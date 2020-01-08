@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -90,7 +91,6 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import java.io.File;
 import java.io.Serializable;

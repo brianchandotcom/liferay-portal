@@ -64,7 +64,8 @@ definition {
 
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
-			portletOption = "${optionName}");
+			portletOption = "${optionName}",
+			siteTemplate = "${siteTemplate}");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}

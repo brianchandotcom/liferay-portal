@@ -84,6 +84,8 @@ buildChangelogs {
 					}
 				}
 
+				commits = commits.replace("  ", " ")
+
 				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
 
 				if (matcher.find()) {

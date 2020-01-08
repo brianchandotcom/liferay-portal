@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -32,8 +35,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+
+import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -105,24 +113,40 @@ public class PublishLayoutMVCActionCommand
 			}
 		}
 
-		layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				layout.getCompanyId(), layout.getGroupId(),
+				Layout.class.getName())) {
 
-		layout.setType(draftLayout.getType());
+			Map<String, Serializable> workflowContext = new HashMap<>();
 
-		layout = _layoutLocalService.updateLayout(layout);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
 
-		UnicodeProperties typeSettingsProperties =
-			draftLayout.getTypeSettingsProperties();
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				layout.getCompanyId(), layout.getGroupId(), layout.getUserId(),
+				Layout.class.getName(), layout.getPlid(), layout,
+				serviceContext, workflowContext);
+		}
+		else {
+			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 
-		typeSettingsProperties.setProperty("published", "true");
+			layout.setType(draftLayout.getType());
 
-		_layoutLocalService.updateLayout(
-			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(), typeSettingsProperties.toString());
+			layout = _layoutLocalService.updateLayout(layout);
 
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			new Date());
+			UnicodeProperties typeSettingsProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			typeSettingsProperties.setProperty("published", "true");
+
+			_layoutLocalService.updateLayout(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(), typeSettingsProperties.toString());
+
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), new Date());
+		}
 
 		String portletId = _portal.getPortletId(actionRequest);
 
@@ -147,5 +171,9 @@ public class PublishLayoutMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -1576,12 +1576,24 @@ definition {
 			tableViewName = "Table View Title Two");
 
 		App.add(
-			appTitle = "Test App",
+			appTitle = "Test App A",
 			deployOption = "Widget",
 			formViewName = "Form View Title One",
 			tableViewName = "Table View Title One");
 
-		AppBuilderAdmin.clickApp(appName = "Test App");
+		App.add(
+			appTitle = "Test App B",
+			deployOption = "Standalone",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App C",
+			deployOption = "Product Menu",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		AppBuilderAdmin.clickApp(appName = "Test App A");
 
 		AppBuilderAdmin.editAppName(appTitle = "Changed Name");
 
@@ -1616,12 +1628,28 @@ definition {
 		App.saveApp();
 
 		App.validateDeployedAs(title = "Widget and Standalone");
-		
-		AppBuilderAdmin.clickApp(appName = "Changed Name");
+
+		AppBuilderAdmin.clickApp(appName = "Test App B");
 
 		App.selectFormView(formViewName = "Form View Title Two");
 
+		App.selectTableView(tableViewName = "Table View Title");
+
+		App.saveApp();
+
+		AppBuilderAdmin.clickApp(appName = "Test App C");
+
+		App.selectFormView(formViewName = "Form View Title");
+
 		App.selectTableView(tableViewName = "Table View Title Two");
+
+		App.saveApp();
+		
+		AppBuilderAdmin.clickApp(appName = "Test App C");
+
+		App.selectFormView(formViewName = "Form View Title Two");
+
+		App.selectTableView(tableViewName = "Table View Title");
 
 		App.saveApp();
 	}

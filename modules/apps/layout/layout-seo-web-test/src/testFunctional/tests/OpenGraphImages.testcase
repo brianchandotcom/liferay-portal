@@ -408,8 +408,7 @@ definition {
 			uploadFileName = "Document_1.jpg");
 
 		Type(
-			key_text = "openGraphImageAlt",
-			locator1 = "TextArea#ANY",
+			locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION",
 			value1 = "This is new image alternative description");
 
 		Button.click(button = "Save");

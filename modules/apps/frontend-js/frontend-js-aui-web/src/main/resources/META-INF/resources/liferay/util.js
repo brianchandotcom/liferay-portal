@@ -923,13 +923,11 @@
 		},
 
 		listSelect(select, delimeter) {
-			select = Util.getDOM(select);
+			select = Util.getElement(select);
 
-			return $(select)
-				.find('option')
-				.toArray()
+			return Array.from(select.querySelectorAll('option'))
 				.reduce((prev, item) => {
-					var val = $(item).val();
+					const val = item.value;
 
 					if (val) {
 						prev.push(val);

@@ -12,7 +12,7 @@
 import {cleanup, render, waitForElement} from '@testing-library/react';
 import React from 'react';
 
-import InstanceListPageItemDetail from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageItemDetail.es';
+import {ItemDetail} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageItemDetail.es';
 import {InstanceListContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/store/InstanceListPageStore.es';
 import {MockRouter} from '../../mock/MockRouter.es';
 
@@ -49,7 +49,7 @@ describe('The instance item detail should', () => {
 				])}
 			>
 				<InstanceListContext.Provider value={{instanceId: null}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -73,7 +73,7 @@ describe('The instance item detail should', () => {
 				})}
 			>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -92,7 +92,7 @@ describe('The instance item detail should', () => {
 		const {getAllByTestId} = render(
 			<MockRouter client={getClientMock('Overdue', 'Pending')}>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -109,7 +109,7 @@ describe('The instance item detail should', () => {
 		const {getAllByTestId} = render(
 			<MockRouter client={getClientMock('Overdue', 'Pending')}>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -125,7 +125,7 @@ describe('The instance item detail should', () => {
 		const {getAllByTestId} = render(
 			<MockRouter client={getClientMock('Untracked', 'Paused')}>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -149,7 +149,7 @@ describe('The instance item detail should', () => {
 				})}
 			>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -173,7 +173,7 @@ describe('The instance item detail should', () => {
 				})}
 			>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -218,7 +218,7 @@ describe('The instance item detail should', () => {
 		const {getAllByTestId} = render(
 			<MockRouter client={getClientMock('OnTime', 'Pending', {})}>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -268,7 +268,7 @@ describe('The instance item detail should', () => {
 		const {getAllByTestId} = render(
 			<MockRouter client={getClientMock('OnTime', 'Stopped', {})}>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);
@@ -318,7 +318,7 @@ describe('The instance item detail should', () => {
 		const {getAllByTestId} = render(
 			<MockRouter client={getClientMock('Overdue', 'Stopped', {})}>
 				<InstanceListContext.Provider value={{instanceId: 12345}}>
-					<InstanceListPageItemDetail processId="12345" />
+					<ItemDetail processId="12345" />
 				</InstanceListContext.Provider>
 			</MockRouter>
 		);

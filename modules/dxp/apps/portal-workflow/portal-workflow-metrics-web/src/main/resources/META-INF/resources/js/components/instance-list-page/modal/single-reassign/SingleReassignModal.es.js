@@ -60,7 +60,7 @@ const SingleReassignModal = () => {
 
 	const {observer} = useModal({onClose});
 
-	const taskItem = useMemo(
+	const instanceItem = useMemo(
 		() => (singleModal.selectedItem ? singleModal.selectedItem : {}),
 		[singleModal]
 	);
@@ -68,10 +68,10 @@ const SingleReassignModal = () => {
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
-		url: `/workflow-instances/${taskItem.id}/workflow-tasks`
+		url: `/workflow-instances/${instanceItem.id}/workflow-tasks`
 	});
 
-	const itemId = useMemo(
+	const taskId = useMemo(
 		() => (data.items && data.items[0] ? data.items[0].id : undefined),
 		[data]
 	);
@@ -87,7 +87,7 @@ const SingleReassignModal = () => {
 	const {postData} = usePost({
 		admin: true,
 		body: {assigneeId: newAssigneeId},
-		url: `/workflow-tasks/${itemId}/assign-to-user`
+		url: `/workflow-tasks/${taskId}/assign-to-user`
 	});
 
 	const reassignButtonHandler = useCallback(() => {
@@ -198,7 +198,7 @@ const SingleReassignModal = () => {
 									data={data}
 									reassignedTasks={reassignedTasks}
 									setReassignedTasks={setReassignedTasks}
-									{...taskItem}
+									{...instanceItem}
 								></SingleReassignModal.Table>
 							</PromisesResolver.Resolved>
 						</ClayModal.Body>

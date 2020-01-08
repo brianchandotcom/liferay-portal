@@ -17,7 +17,7 @@ import moment from '../../shared/util/moment.es';
 import {AppContext} from '../AppContext.es';
 import {InstanceListContext} from './store/InstanceListPageStore.es';
 
-function InstanceListPageItemDetail({processId}) {
+function ItemDetail({processId}) {
 	const {client} = useContext(AppContext);
 	const [instance, setInstance] = useState({});
 	const {instanceId} = useContext(InstanceListContext);
@@ -108,9 +108,9 @@ function InstanceListPageItemDetail({processId}) {
 						</button>
 					</div>
 					<div className="modal-body">
-						<InstanceListPageItemDetail.SectionTitle>
+						<ItemDetail.SectionTitle>
 							{Liferay.Language.get('due-date-by-sla')}
-						</InstanceListPageItemDetail.SectionTitle>
+						</ItemDetail.SectionTitle>
 
 						{slaResults.length === 0 && (
 							<p>
@@ -123,51 +123,45 @@ function InstanceListPageItemDetail({processId}) {
 						)}
 
 						{!!slaOpen.length && (
-							<InstanceListPageItemDetail.SectionSubTitle>
+							<ItemDetail.SectionSubTitle>
 								{`${Liferay.Language.get(
 									'open'
 								).toUpperCase()} (${slaOpen.length})`}
-							</InstanceListPageItemDetail.SectionSubTitle>
+							</ItemDetail.SectionSubTitle>
 						)}
 
 						{slaOpen.map(item => (
-							<InstanceListPageItemDetail.Item
-								key={item.id}
-								{...item}
-							/>
+							<ItemDetail.Item key={item.id} {...item} />
 						))}
 
 						{!!slaResolved.length && (
-							<InstanceListPageItemDetail.SectionSubTitle>
+							<ItemDetail.SectionSubTitle>
 								{`${Liferay.Language.get(
 									'resolved'
 								).toUpperCase()} (${slaResolved.length})`}
-							</InstanceListPageItemDetail.SectionSubTitle>
+							</ItemDetail.SectionSubTitle>
 						)}
 
 						{slaResolved.map(item => (
-							<InstanceListPageItemDetail.Item
-								key={item.id}
-								{...item}
-							/>
+							<ItemDetail.Item key={item.id} {...item} />
 						))}
 
-						<InstanceListPageItemDetail.SectionTitle className="mt-5">
+						<ItemDetail.SectionTitle className="mt-5">
 							{Liferay.Language.get('process-details')}
-						</InstanceListPageItemDetail.SectionTitle>
+						</ItemDetail.SectionTitle>
 
-						<InstanceListPageItemDetail.SectionAttribute
+						<ItemDetail.SectionAttribute
 							description={Liferay.Language.get('process-status')}
 							detail={status}
 						/>
 
-						<InstanceListPageItemDetail.SectionAttribute
+						<ItemDetail.SectionAttribute
 							description={Liferay.Language.get('created-by')}
 							detail={creatorUser ? creatorUser.name : ''}
 						/>
 
 						{!!dateCreated && (
-							<InstanceListPageItemDetail.SectionAttribute
+							<ItemDetail.SectionAttribute
 								description={Liferay.Language.get(
 									'creation-date'
 								)}
@@ -179,18 +173,18 @@ function InstanceListPageItemDetail({processId}) {
 							/>
 						)}
 
-						<InstanceListPageItemDetail.SectionAttribute
+						<ItemDetail.SectionAttribute
 							description={Liferay.Language.get('asset-type')}
 							detail={assetType}
 						/>
 
-						<InstanceListPageItemDetail.SectionAttribute
+						<ItemDetail.SectionAttribute
 							description={Liferay.Language.get('asset-title')}
 							detail={assetTitle}
 						/>
 
 						{!completed && (
-							<InstanceListPageItemDetail.SectionAttribute
+							<ItemDetail.SectionAttribute
 								description={Liferay.Language.get(
 									'current-step'
 								)}
@@ -199,7 +193,7 @@ function InstanceListPageItemDetail({processId}) {
 						)}
 
 						{completed && !!dateCompletion && (
-							<InstanceListPageItemDetail.SectionAttribute
+							<ItemDetail.SectionAttribute
 								description={Liferay.Language.get('end-date')}
 								detail={moment
 									.utc(dateCompletion)
@@ -210,7 +204,7 @@ function InstanceListPageItemDetail({processId}) {
 						)}
 
 						{!completed && (
-							<InstanceListPageItemDetail.SectionAttribute
+							<ItemDetail.SectionAttribute
 								description={Liferay.Language.get(
 									'current-assignee'
 								)}
@@ -242,13 +236,7 @@ function InstanceListPageItemDetail({processId}) {
 	);
 }
 
-InstanceListPageItemDetail.Item = ({
-	dateOverdue,
-	name,
-	onTime,
-	remainingTime,
-	status
-}) => {
+ItemDetail.Item = ({dateOverdue, name, onTime, remainingTime, status}) => {
 	let bgColor = 'danger';
 	let iconClassName = 'text-danger';
 	let iconName = 'exclamation-circle';
@@ -307,13 +295,13 @@ InstanceListPageItemDetail.Item = ({
 	);
 };
 
-InstanceListPageItemDetail.SectionTitle = ({children, className = ''}) => {
+ItemDetail.SectionTitle = ({children, className = ''}) => {
 	const classNames = `${className} font-weight-medium mb-4`;
 
 	return <h4 className={classNames}>{children}</h4>;
 };
 
-InstanceListPageItemDetail.SectionSubTitle = ({children}) => {
+ItemDetail.SectionSubTitle = ({children}) => {
 	return (
 		<h5 className="font-weight-medium mb-4 mt-4 text-secondary">
 			{children}
@@ -321,7 +309,7 @@ InstanceListPageItemDetail.SectionSubTitle = ({children}) => {
 	);
 };
 
-InstanceListPageItemDetail.SectionAttribute = ({description, detail}) => {
+ItemDetail.SectionAttribute = ({description, detail}) => {
 	return (
 		<p className="row">
 			<span className="col-2 font-weight-medium small text-secondary">
@@ -335,4 +323,4 @@ InstanceListPageItemDetail.SectionAttribute = ({description, detail}) => {
 	);
 };
 
-export default InstanceListPageItemDetail;
+export {ItemDetail};

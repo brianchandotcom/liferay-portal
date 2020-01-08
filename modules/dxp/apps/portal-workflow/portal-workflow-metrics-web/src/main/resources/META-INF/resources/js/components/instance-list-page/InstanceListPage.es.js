@@ -19,8 +19,8 @@ import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import PromisesResolver from '../../shared/components/request/PromisesResolver.es';
 import Request from '../../shared/components/request/Request.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
-import InstanceListPageFilters from './InstanceListPageFilters.es';
-import InstanceListPageItemDetail from './InstanceListPageItemDetail.es';
+import {Filters} from './InstanceListPageFilters.es';
+import {ItemDetail} from './InstanceListPageItemDetail.es';
 import {Table} from './InstanceListPageTable.es';
 import {ModalContext} from './modal/ModalContext.es';
 import {SingleReassignModal} from './modal/single-reassign/SingleReassignModal.es';
@@ -148,7 +148,7 @@ const Body = ({page, pageSize, processId, query, singleModal}) => {
 				</PromisesResolver>
 			</div>
 			<InstanceListPage.SingleReassignModal />
-			<InstanceListPageItemDetail processId={processId} />
+			<ItemDetail processId={processId} />
 		</>
 	);
 };
@@ -158,7 +158,7 @@ const Header = () => {
 
 	return (
 		<Request.Success>
-			<InstanceListPageFilters totalCount={totalCount} />
+			<Filters totalCount={totalCount} />
 		</Request.Success>
 	);
 };

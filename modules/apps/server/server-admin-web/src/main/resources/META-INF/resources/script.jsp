@@ -32,6 +32,15 @@ if (SessionMessages.contains(renderRequest, "script")) {
 String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput");
 %>
 
+<liferay-ui:error exception="<%= ScriptingException.class %>">
+
+	<%
+	ScriptingException se = (ScriptingException)errorException;
+	%>
+
+	<pre><%= se.getMessage() %></pre>
+</liferay-ui:error>
+
 <aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
 		<aui:select name="language">

@@ -101,15 +101,18 @@ public abstract class Table<T extends Table> extends BaseASTNode {
 
 		castTable._alias = _alias;
 
-		Map<String, Column<T, ?>> columnMap = new HashMap<>(_columnMap);
+		Map<String, Column<T, ?>> columnMap = new HashMap<>(
+			castTable._columnMap);
+
+		column = Column.create(
+			table, column.getColumnName(), column.getColumnType(),
+			column.getSQLType());
 
 		columnMap.put(alias, column);
 
 		castTable._columnMap = Collections.unmodifiableMap(columnMap);
 
-		return Column.create(
-			table, column.getColumnName(), column.getColumnType(),
-			column.getSQLType());
+		return column;
 	}
 
 	@Override

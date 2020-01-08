@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1539,6 +1540,53 @@ public abstract class LayoutLocalServiceBaseImpl
 		this.userGroupFinder = userGroupFinder;
 	}
 
+	/**
+	 * Returns the workflow definition link local service.
+	 *
+	 * @return the workflow definition link local service
+	 */
+	public com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService
+		getWorkflowDefinitionLinkLocalService() {
+
+		return workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Sets the workflow definition link local service.
+	 *
+	 * @param workflowDefinitionLinkLocalService the workflow definition link local service
+	 */
+	public void setWorkflowDefinitionLinkLocalService(
+		com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService
+			workflowDefinitionLinkLocalService) {
+
+		this.workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
+	}
+
+	/**
+	 * Returns the workflow definition link persistence.
+	 *
+	 * @return the workflow definition link persistence
+	 */
+	public WorkflowDefinitionLinkPersistence
+		getWorkflowDefinitionLinkPersistence() {
+
+		return workflowDefinitionLinkPersistence;
+	}
+
+	/**
+	 * Sets the workflow definition link persistence.
+	 *
+	 * @param workflowDefinitionLinkPersistence the workflow definition link persistence
+	 */
+	public void setWorkflowDefinitionLinkPersistence(
+		WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence) {
+
+		this.workflowDefinitionLinkPersistence =
+			workflowDefinitionLinkPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.Layout", layoutLocalService);
@@ -1801,6 +1849,17 @@ public abstract class LayoutLocalServiceBaseImpl
 
 	@BeanReference(type = UserGroupFinder.class)
 	protected UserGroupFinder userGroupFinder;
+
+	@BeanReference(
+		type = com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService.class
+	)
+	protected
+		com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService
+			workflowDefinitionLinkLocalService;
+
+	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)
+	protected WorkflowDefinitionLinkPersistence
+		workflowDefinitionLinkPersistence;
 
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

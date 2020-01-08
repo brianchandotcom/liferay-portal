@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.dao.model.dsl.expressions;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
 import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
 import com.liferay.portal.kernel.dao.model.dsl.clause.PredicateClause;
-import com.liferay.portal.kernel.dao.model.dsl.clause.WhereClause;
 import com.liferay.portal.kernel.dao.model.dsl.operands.Operand;
 
 import java.util.Objects;
@@ -25,7 +24,7 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class Predicate implements Expression<Boolean>, WhereClause {
+public class Predicate implements Expression<Boolean> {
 
 	public Predicate(
 		Expression<?> leftExpression, Operand operand,

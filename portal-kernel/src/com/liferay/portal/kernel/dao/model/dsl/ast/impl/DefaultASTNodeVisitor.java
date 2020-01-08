@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
 import com.liferay.portal.kernel.dao.model.dsl.clause.PredicateClause;
 import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
-import com.liferay.portal.kernel.dao.model.dsl.clause.WhereClause;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.CaseWhenThen;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.ElseEnd;
@@ -408,9 +407,9 @@ public class DefaultASTNodeVisitor implements ASTNodeVisitor {
 	public void visit(Where where) {
 		_sb.append("where ");
 
-		WhereClause whereClause = where.getWhereClause();
+		Predicate predicate = where.getPredicate();
 
-		whereClause.accept(this);
+		predicate.accept(this);
 	}
 
 	@Override

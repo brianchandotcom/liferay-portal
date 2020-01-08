@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.dao.model.dsl.query;
 
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.clause.WhereClause;
+import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 
 import java.util.Objects;
 
@@ -26,14 +26,14 @@ import java.util.Objects;
 public class Where
 	extends BaseASTNode implements GroupByStep, LimitStep, OrderByStep, Query {
 
-	public Where(WhereStep whereStep, WhereClause whereClause) {
+	public Where(WhereStep whereStep, Predicate predicate) {
 		super(whereStep);
 
-		_whereClause = Objects.requireNonNull(whereClause);
+		_predicate = Objects.requireNonNull(predicate);
 	}
 
-	public WhereClause getWhereClause() {
-		return _whereClause;
+	public Predicate getPredicate() {
+		return _predicate;
 	}
 
 	@Override
@@ -41,6 +41,6 @@ public class Where
 		astNodeVisitor.visit(this);
 	}
 
-	private final WhereClause _whereClause;
+	private final Predicate _predicate;
 
 }

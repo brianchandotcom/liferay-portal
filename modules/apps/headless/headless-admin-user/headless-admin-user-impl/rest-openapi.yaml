@@ -1025,6 +1025,38 @@ paths:
                     description:
                         ""
             tags: ["Organization"]
+        patch:
+            description:
+                Updates the organization with the information sent in the request body. Fields not present in the
+                request body are left unchanged.
+            operationId: patchOrganization
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Organization"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Organization"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                    description:
+                        "Organization successfully updated"
+            tags: ["Organization"]
     "/organizations/{organizationId}/email-addresses":
         get:
             description:

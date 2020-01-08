@@ -46,6 +46,10 @@ definition {
 		}
 	}
 
+	macro backButton {
+		Click(locator1 = "DetailsView#BACK_BUTTON");
+	}
+
 	@description = "Add a Custom Object with valid name"
 	@priority = "5"
 	test AddCustomObjectWithValidName {
@@ -469,7 +473,6 @@ definition {
 	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
 		property portal.acceptance = "false";
 
-
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
 		var myAppName = "My Registration app";
@@ -478,7 +481,7 @@ definition {
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
-		
+
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
 		FormViewBuilder.setFieldRequired();
@@ -550,7 +553,6 @@ definition {
 			panel = "Control Panel",
 			portlet = "${myAppName}");
 
-		
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
@@ -717,11 +719,6 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Select 1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "05/02/1999");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Multiple 1");
-	}
-
-
-	macro backButton {
-		Click(locator1 = "DetailsView#BACK_BUTTON");
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"

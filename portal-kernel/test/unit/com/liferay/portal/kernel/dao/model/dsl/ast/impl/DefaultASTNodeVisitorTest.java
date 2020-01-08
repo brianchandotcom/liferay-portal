@@ -190,6 +190,9 @@ public class DefaultASTNodeVisitorTest {
 
 	@Test
 	public void testDerivedTable() {
+		ReferenceExampleTable referenceExampleTable =
+			ReferenceExampleTable.TABLE.as("referenceExample");
+
 		Statement statement = DSLStatementUtil.select(
 		).from(
 			MainExampleTable.TABLE
@@ -203,9 +206,9 @@ public class DefaultASTNodeVisitorTest {
 				ReferenceExampleTable.TABLE.mainExampleId,
 				ReferenceExampleTable.TABLE.name
 			).as(
-				"referenceExample"
+				referenceExampleTable.getName()
 			),
-			ReferenceExampleTable.TABLE.mainExampleId.eq(
+			referenceExampleTable.mainExampleId.eq(
 				MainExampleTable.TABLE.mainExampleId)
 		).orderBy(
 			ReferenceExampleTable.TABLE.name.ascending()
@@ -217,7 +220,7 @@ public class DefaultASTNodeVisitorTest {
 				"ReferenceExample.mainExampleId, ReferenceExample.name from ",
 				"ReferenceExample group by ReferenceExample.mainExampleId, ",
 				"ReferenceExample.name) referenceExample on ",
-				"ReferenceExample.mainExampleId = MainExample.mainExampleId ",
+				"referenceExample.mainExampleId = MainExample.mainExampleId ",
 				"order by ReferenceExample.name asc"),
 			statement.toString());
 	}

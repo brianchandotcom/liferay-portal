@@ -16,7 +16,6 @@ package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
 import com.liferay.headless.admin.workflow.dto.v1_0.Assignee;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.AssigneeUtil;
-import com.liferay.headless.admin.workflow.internal.resource.v1_0.util.ResourceUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.AssigneeResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -51,8 +50,8 @@ public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 		return Page.of(
 			transform(
 				ListUtil.subList(
-					users, ResourceUtil.getStartPosition(pagination),
-					ResourceUtil.getEndPosition(pagination)),
+					users, pagination.getStartPosition(),
+					pagination.getEndPosition()),
 				user -> AssigneeUtil.toAssignee(_portal, user)),
 			pagination, users.size());
 	}

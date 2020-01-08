@@ -21,7 +21,7 @@ import addMappedInfoItem from '../actions/addMappedInfoItem';
 import {COMPATIBLE_TYPES} from '../config/constants/compatibleTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
-import FieldsService from '../services/FieldsService';
+import AssetService from '../services/AssetService';
 import {openInfoItemSelector} from './openInfoItemSelector';
 
 const MAPPING_SOURCE_TYPE_IDS = {
@@ -44,7 +44,7 @@ function loadPossibleFields({config, itemSelected}, selectedSourceTypeId) {
 			classTypeId: 'classTypeId'
 		};
 
-		promise = FieldsService.getAvailableMappingFields({
+		promise = AssetService.getAvailableMappingFields({
 			...data,
 			config
 		});
@@ -53,7 +53,7 @@ function loadPossibleFields({config, itemSelected}, selectedSourceTypeId) {
 		itemSelected.classNameId &&
 		itemSelected.classPK
 	) {
-		promise = FieldsService.getAvailableAssetMappingFields({
+		promise = AssetService.getAvailableAssetMappingFields({
 			classNameId: itemSelected.classNameId,
 			classPK: itemSelected.classPK,
 			config

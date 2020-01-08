@@ -77,7 +77,8 @@ public class AutoUpgradeProcessTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_upgradeDatabaseAutoRunField.set(null, _UPGRADE_DATABASE_AUTO_RUN);
+		_upgradeDatabaseAutoRunField.set(
+			null, _PREVIOUS_UPGRADE_DATABASE_AUTO_RUN);
 
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
@@ -127,11 +128,11 @@ public class AutoUpgradeProcessTest {
 		return _releaseLocalService.fetchRelease(_SERVLET_CONTEXT_NAME);
 	}
 
+	private static final boolean _PREVIOUS_UPGRADE_DATABASE_AUTO_RUN =
+		PropsValues.UPGRADE_DATABASE_AUTO_RUN;
+
 	private static final String _SERVLET_CONTEXT_NAME =
 		"com.liferay.portal.upgrade.test";
-
-	private static final boolean _UPGRADE_DATABASE_AUTO_RUN =
-		PropsValues.UPGRADE_DATABASE_AUTO_RUN;
 
 	private static Field _modifiersField;
 

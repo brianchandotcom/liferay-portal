@@ -2043,6 +2043,15 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public Layout updateStatus(
+			long userId, long plid, int status, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.updateStatus(
+			userId, plid, status, serviceContext);
+	}
+
+	@Override
 	public Layout updateType(long plid, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

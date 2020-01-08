@@ -1977,6 +1977,13 @@ public class LayoutLocalServiceUtil {
 		return getService().updatePriority(plid, priority);
 	}
 
+	public static com.liferay.portal.kernel.model.Layout updateStatus(
+			long userId, long plid, int status, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStatus(userId, plid, status, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.model.Layout updateType(
 			long plid, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {

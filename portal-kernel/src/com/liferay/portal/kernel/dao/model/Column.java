@@ -32,9 +32,7 @@ public class Column<T extends Table, C>
 	public static <T extends Table, C> Column<T, C> create(
 		T table, String columnName, Class<C> columnType, int sqlType) {
 
-		return new Column<>(
-			Objects.requireNonNull(table), Objects.requireNonNull(columnName),
-			Objects.requireNonNull(columnType), sqlType);
+		return new Column<>(table, columnName, columnType, sqlType);
 	}
 
 	@Override
@@ -98,9 +96,9 @@ public class Column<T extends Table, C>
 	private Column(
 		T table, String columnName, Class<C> columnType, int sqlType) {
 
-		_table = table;
-		_columnName = columnName;
-		_columnType = columnType;
+		_table = Objects.requireNonNull(table);
+		_columnName = Objects.requireNonNull(columnName);
+		_columnType = Objects.requireNonNull(columnType);
 		_sqlType = sqlType;
 	}
 

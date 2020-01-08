@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.model.Column;
 import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.DSLFunctionUtil;
 import com.liferay.portal.kernel.dao.model.dsl.DSLStatementUtil;
-import com.liferay.portal.kernel.dao.model.dsl.Statement;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Scalar;
@@ -84,7 +83,7 @@ public class DefaultASTNodeVisitorTest {
 			"number"
 		);
 
-		Statement statement = DSLStatementUtil.select(
+		Query query = DSLStatementUtil.select(
 			numberAlias
 		).from(
 			MainExampleTable.TABLE
@@ -95,7 +94,7 @@ public class DefaultASTNodeVisitorTest {
 		DefaultASTNodeVisitor defaultASTNodeVisitor =
 			new DefaultASTNodeVisitor();
 
-		statement.accept(defaultASTNodeVisitor);
+		query.accept(defaultASTNodeVisitor);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -193,7 +192,7 @@ public class DefaultASTNodeVisitorTest {
 		ReferenceExampleTable referenceExampleTable =
 			ReferenceExampleTable.TABLE.as("referenceExample");
 
-		Statement statement = DSLStatementUtil.select(
+		Query query = DSLStatementUtil.select(
 		).from(
 			MainExampleTable.TABLE
 		).leftJoinOn(
@@ -222,7 +221,7 @@ public class DefaultASTNodeVisitorTest {
 				"ReferenceExample.name) referenceExample on ",
 				"referenceExample.mainExampleId = MainExample.mainExampleId ",
 				"order by ReferenceExample.name asc"),
-			statement.toString());
+			query.toString());
 	}
 
 	@Test
@@ -278,7 +277,7 @@ public class DefaultASTNodeVisitorTest {
 
 	@Test
 	public void testGroupBy() {
-		Statement statement = DSLStatementUtil.select(
+		Query query = DSLStatementUtil.select(
 			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -291,12 +290,12 @@ public class DefaultASTNodeVisitorTest {
 		Assert.assertEquals(
 			"select MainExample.mainExampleId, MainExample.name from " +
 				"MainExample group by MainExample.name ",
-			statement.toString());
+			query.toString());
 	}
 
 	@Test
 	public void testJoinCount() {
-		Statement statement = DSLStatementUtil.countDistinct(
+		Query query = DSLStatementUtil.countDistinct(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -314,12 +313,12 @@ public class DefaultASTNodeVisitorTest {
 				"inner join ReferenceExample on ",
 				"ReferenceExample.mainExampleId = MainExample.mainExampleId ",
 				"where MainExample.name != ?"),
-			statement.toString());
+			query.toString());
 	}
 
 	@Test
 	public void testLeftJoin() {
-		Statement statement = DSLStatementUtil.select(
+		Query query = DSLStatementUtil.select(
 			MainExampleTable.TABLE.mainExampleId
 		).from(
 			MainExampleTable.TABLE
@@ -341,7 +340,7 @@ public class DefaultASTNodeVisitorTest {
 				"MainExample.mainExampleId where ",
 				"ReferenceExample.mainExampleId is NULL order by ",
 				"MainExample.flag desc, MainExample.name asc"),
-			statement.toString());
+			query.toString());
 	}
 
 	@Test
@@ -351,7 +350,7 @@ public class DefaultASTNodeVisitorTest {
 				MainExampleTable.TABLE.getTableName(),
 				MainExampleTable.TABLE.name.getColumnName(), true);
 
-		Statement statement = DSLStatementUtil.select(
+		Query query = DSLStatementUtil.select(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -362,12 +361,12 @@ public class DefaultASTNodeVisitorTest {
 		Assert.assertEquals(
 			"select MainExample.name from MainExample order by " +
 				"MainExample.name asc",
-			statement.toString());
+			query.toString());
 	}
 
 	@Test
 	public void testPredicateParentheses() {
-		Statement statement = DSLStatementUtil.count(
+		Query query = DSLStatementUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		).where(
@@ -385,7 +384,7 @@ public class DefaultASTNodeVisitorTest {
 		DefaultASTNodeVisitor defaultASTNodeVisitor =
 			new DefaultASTNodeVisitor();
 
-		statement.accept(defaultASTNodeVisitor);
+		query.accept(defaultASTNodeVisitor);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -400,9 +399,9 @@ public class DefaultASTNodeVisitorTest {
 
 	@Test
 	public void testSelect1() {
-		Statement statement = DSLStatementUtil.select(new Scalar<>(1));
+		Query query = DSLStatementUtil.select(new Scalar<>(1));
 
-		Assert.assertEquals("select 1", statement.toString());
+		Assert.assertEquals("select 1", query.toString());
 	}
 
 	@Test
@@ -415,15 +414,14 @@ public class DefaultASTNodeVisitorTest {
 			mainTable
 		);
 
-		Statement statement = from.where(
-			mainTable.flag.in(new Integer[] {1, 2}));
+		Query query = from.where(mainTable.flag.in(new Integer[] {1, 2}));
 
 		Assert.assertEquals(
 			"select distinct mainTable.name from MainExample mainTable where " +
 				"mainTable.flag in (1, 2)",
-			statement.toString());
+			query.toString());
 
-		statement = from.where(
+		query = from.where(
 			mainTable.mainExampleId.in(new Long[] {1L, 2L, null})
 		).orderBy(
 			mainTable.name.ascending()
@@ -434,11 +432,11 @@ public class DefaultASTNodeVisitorTest {
 				"select distinct mainTable.name from MainExample mainTable ",
 				"where mainTable.mainExampleId in (1, 2, null) order by ",
 				"mainTable.name asc"),
-			statement.toString());
+			query.toString());
 
 		String[] strings = {"1", "2", "3"};
 
-		statement = from.where(
+		query = from.where(
 			DSLFunctionUtil.castText(
 				mainTable.mainExampleId
 			).in(
@@ -451,7 +449,7 @@ public class DefaultASTNodeVisitorTest {
 		DefaultASTNodeVisitor defaultASTNodeVisitor =
 			new DefaultASTNodeVisitor();
 
-		statement.accept(defaultASTNodeVisitor);
+		query.accept(defaultASTNodeVisitor);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -469,7 +467,7 @@ public class DefaultASTNodeVisitorTest {
 		MainExampleTable tempMainExample = MainExampleTable.TABLE.as(
 			"tempMainExample");
 
-		Statement statement = DSLStatementUtil.select(
+		Query query = DSLStatementUtil.select(
 			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -487,19 +485,18 @@ public class DefaultASTNodeVisitorTest {
 				"MainExample left join MainExample tempMainExample on ",
 				"MainExample.mainExampleId < tempMainExample.mainExampleId ",
 				"where tempMainExample.mainExampleId is NULL"),
-			statement.toString());
+			query.toString());
 	}
 
 	@Test
 	public void testSimpleCount() {
-		Statement statement = DSLStatementUtil.count(
+		Query query = DSLStatementUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		);
 
 		Assert.assertEquals(
-			"select count(*) COUNT_VALUE from MainExample",
-			statement.toString());
+			"select count(*) COUNT_VALUE from MainExample", query.toString());
 	}
 
 	@Test
@@ -601,7 +598,7 @@ public class DefaultASTNodeVisitorTest {
 
 	@Test
 	public void testSubqueryCount() {
-		Statement statement = DSLStatementUtil.count(
+		Query query = DSLStatementUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		).where(
@@ -621,7 +618,7 @@ public class DefaultASTNodeVisitorTest {
 				"MainExample.mainExampleId in (select ",
 				"ReferenceExample.mainExampleId from ReferenceExample where ",
 				"ReferenceExample.name = ?)"),
-			statement.toString());
+			query.toString());
 	}
 
 	@Test

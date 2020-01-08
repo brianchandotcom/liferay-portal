@@ -53,11 +53,6 @@ export default withRouter(({history}) => {
 							{Liferay.Language.get(
 								'be-specific-and-imagine-you-are-asking-a-question-to-another-developer'
 							)}
-							<span className="d-block">
-								{Liferay.Language.get(
-									'what-is-your-programming-question-be-specific'
-								)}
-							</span>
 						</ClayForm.FeedbackItem>
 					</ClayForm.FeedbackGroup>
 				</ClayForm.Group>

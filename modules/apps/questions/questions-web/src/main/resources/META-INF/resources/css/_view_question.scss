@@ -1,8 +1,8 @@
-@import 'variables';
+@import 'atlas-variables';
 
 .question-accepted-answer {
-	background: $success-background;
-	border: 1px solid $success-border;
+	background: $success-l2;
+	border: 1px solid $success-l1;
 	border-radius: 4px;
 	box-sizing: border-box;
 }

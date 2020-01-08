@@ -1,7 +1,7 @@
-@import 'variables';
+@import 'atlas-variables';
 
 .question-accepted-badge {
-	background: $success-background;
+	background: $success-l2;
 
 	& svg {
 		color: $success;
@@ -26,6 +26,6 @@
 	padding-top: 1rem;
 
 	&:hover {
-		background: $question-background;
+		background: $light-l1;
 	}
 }

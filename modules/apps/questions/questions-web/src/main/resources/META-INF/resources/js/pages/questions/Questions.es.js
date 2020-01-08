@@ -20,7 +20,7 @@ import {Link} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import KeywordsList from '../../components/KeywordList.es';
 import QuestionBadge from '../../components/QuestionsBadge.es';
-import UserAvatar from '../../components/UserAvatar.es';
+import UserIcon from '../../components/UserIcon.es';
 import {getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
@@ -106,7 +106,12 @@ export default () => {
 						<div className="autofit-padded autofit-row autofit-row-center">
 							<div className="autofit-col autofit-col-expand">
 								<div>
-									<UserAvatar user={question.creator} />
+									<UserIcon
+										fullName={question.creator.name}
+										portraitURL={question.creator.image}
+										size="sm"
+										userId={String(question.creator.id)}
+									/>
 									<span>
 										<strong>
 											{' ' + question.creator.name}

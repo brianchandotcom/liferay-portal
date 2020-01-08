@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.service.persistence.OrganizationUtil;
 import com.liferay.portal.kernel.service.persistence.UserUtil;
@@ -973,14 +975,30 @@ public class OrganizationFinderImpl
 				List<Organization> organizationsTree =
 					(List<Organization>)value;
 
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
 				if (!organizationsTree.isEmpty()) {
 					for (Organization organization : organizationsTree) {
 						StringBundler sb = new StringBundler(4);
 
-						sb.append(StringPool.PERCENT);
-						sb.append(StringPool.SLASH);
-						sb.append(organization.getOrganizationId());
-						sb.append(StringPool.SLASH);
+						if ((permissionChecker != null) &&
+							(permissionChecker.isOrganizationAdmin(
+								organization.getOrganizationId()) ||
+							 permissionChecker.isOrganizationOwner(
+								 organization.getOrganizationId()))) {
+
+							sb.append(StringPool.SLASH);
+							sb.append(organization.getOrganizationId());
+							sb.append(StringPool.SLASH);
+							sb.append(StringPool.PERCENT);
+						}
+						else {
+							sb.append(StringPool.PERCENT);
+							sb.append(StringPool.SLASH);
+							sb.append(organization.getOrganizationId());
+							sb.append(StringPool.SLASH);
+						}
 
 						qPos.add(sb.toString());
 					}

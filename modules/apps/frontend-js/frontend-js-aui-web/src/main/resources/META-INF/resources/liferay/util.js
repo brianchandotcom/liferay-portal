@@ -42,8 +42,6 @@
 		src: 'hideLink'
 	};
 
-	var STR_CHECKED = 'checked';
-
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
 	var TPL_LEXICON_ICON =
@@ -1251,31 +1249,36 @@
 			displayWhenUnchecked,
 			toggleChildCheckboxes
 		) {
-			var checkBox = $('#' + checkBoxId);
-			var toggleBox = $('#' + toggleBoxId);
+			const checkBox = document.getElementById(checkBoxId);
+			const toggleBox = document.getElementById(toggleBoxId);
 
-			var checked = checkBox.prop(STR_CHECKED);
+			if (checkBox && toggleBox) {
+				let checked = checkBox.checked;
 
-			if (displayWhenUnchecked) {
-				checked = !checked;
-			}
-
-			toggleBox.toggleClass('hide', !checked);
-
-			checkBox.on(EVENT_CLICK, () => {
-				toggleBox.toggleClass('hide');
-
-				if (toggleChildCheckboxes) {
-					var childCheckboxes = toggleBox.find(
-						'input[type=checkbox]'
-					);
-
-					childCheckboxes.prop(
-						STR_CHECKED,
-						checkBox.prop(STR_CHECKED)
-					);
+				if (displayWhenUnchecked) {
+					checked = !checked;
 				}
-			});
+
+				if (checked) {
+					toggleBox.classList.remove('hide');
+				} else {
+					toggleBox.classList.add('hide');
+				}
+
+				checkBox.addEventListener(EVENT_CLICK, () => {
+					toggleBox.classList.toggle('hide');
+
+					if (toggleChildCheckboxes) {
+						const childCheckboxes = toggleBox.querySelectorAll(
+							'input[type=checkbox]'
+						);
+
+						childCheckboxes.forEach(childCheckbox => {
+							childCheckbox.checked = checkBox.checked;
+						});
+					}
+				});
+			}
 		},
 
 		toggleDisabled(buttons, state) {

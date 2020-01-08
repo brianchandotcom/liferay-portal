@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 /**
  * @author Preston Crary
  */
-public abstract class Table<T extends Table> extends BaseASTNode {
+public abstract class Table<T extends Table<T>> extends BaseASTNode {
 
 	public Table(String tableName, Supplier<T> tableSupplier) {
 		_tableName = Objects.requireNonNull(tableName);
@@ -38,7 +38,7 @@ public abstract class Table<T extends Table> extends BaseASTNode {
 	public T as(String alias) {
 		T table = _tableSupplier.get();
 
-		Table<?> castTable = (Table<?>)table;
+		Table<T> castTable = table;
 
 		castTable._alias = alias;
 
@@ -97,7 +97,7 @@ public abstract class Table<T extends Table> extends BaseASTNode {
 	protected <C> Column<T, C> aliasColumn(Column<T, C> column, String alias) {
 		T table = _tableSupplier.get();
 
-		Table<T> castTable = (Table<T>)table;
+		Table<T> castTable = table;
 
 		castTable._alias = _alias;
 

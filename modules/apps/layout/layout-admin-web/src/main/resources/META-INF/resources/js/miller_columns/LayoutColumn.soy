@@ -15,6 +15,7 @@
 		dropdownItems: list<?>,
 		hasChild: bool,
 		parentable: bool,
+		pending: bool,
 		plid: string,
 		title: string,
 		url: string
@@ -94,6 +95,7 @@
 		hasChild: bool,
 		parentable: bool,
 		plid: string,
+		pending: bool,
 		title: string,
 		url: string
 	]}
@@ -194,7 +196,12 @@
 					<h6 class="layout-column-item-subtitle list-group-subtitle small text-truncate">
 						{$layoutColumnItem.description}
 
-						{if $layoutColumnItem.draft}
+						{if $layoutColumnItem.pending}
+							&nbsp;
+							<span class="label label-info">
+								<span class="label-item label-item-expand">{msg desc=""}pending{/msg}</span>
+							</span>
+						{elseif $layoutColumnItem.draft}
 							&nbsp;
 							<span class="label label-secondary">
 								<span class="label-item label-item-expand">{msg desc=""}draft{/msg}</span>

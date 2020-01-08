@@ -109,6 +109,7 @@ LayoutColumn.STATE = {
 			active: Config.bool().required(),
 			description: Config.string().required(),
 			hasChild: Config.bool().required(),
+			pending: Config.bool().value(false),
 			plid: Config.string().required(),
 			title: Config.string().required(),
 			url: Config.string().required()

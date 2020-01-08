@@ -688,6 +688,9 @@ public class LayoutsAdminDisplayContext {
 			layoutJSONObject.put(
 				"parentable", layoutType.isParentable()
 			).put(
+				"pending",
+				layout.getStatus() == WorkflowConstants.STATUS_PENDING
+			).put(
 				"plid", layout.getPlid()
 			);
 
@@ -1158,8 +1161,18 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getViewLayoutURL(Layout layout) throws PortalException {
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, _themeDisplay);
+		String layoutFullURL = null;
+
+		if (layout.getStatus() == WorkflowConstants.STATUS_PENDING) {
+			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+
+			layoutFullURL = PortalUtil.getLayoutFullURL(
+				draftLayout, _themeDisplay);
+		}
+		else {
+			layoutFullURL = PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+		}
 
 		try {
 			layoutFullURL = HttpUtil.setParameter(

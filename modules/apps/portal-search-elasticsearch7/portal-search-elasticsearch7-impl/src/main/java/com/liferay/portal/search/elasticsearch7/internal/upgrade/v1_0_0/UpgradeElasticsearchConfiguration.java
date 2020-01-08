@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch7.internal.upgrade.v1_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
@@ -41,10 +40,10 @@ public class UpgradeElasticsearchConfiguration extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeElasticsearchConfiguration();
+		upgradeElasticsearchConfigurations();
 	}
 
-	protected void upgradeElasticsearchConfiguration() throws Exception {
+	protected void upgradeElasticsearchConfigurations() throws Exception {
 		Configuration elasticsearchConfiguration = _getConfiguration(
 			ElasticsearchConfiguration.class.getName());
 
@@ -55,76 +54,41 @@ public class UpgradeElasticsearchConfiguration extends UpgradeProcess {
 		Dictionary<String, Object> elasticsearchConfigurationProperties =
 			elasticsearchConfiguration.getProperties();
 
-		Configuration elasticsearchConnectionConfiguration = _getConfiguration(
-			ElasticsearchConnectionConfiguration.class.getName() + ".*");
+		String operationMode = GetterUtil.getString(
+			elasticsearchConfigurationProperties.get("operationMode"));
 
-		Dictionary<String, Object>
-			elasticsearchConnectionConfigurationProperties =
-				elasticsearchConnectionConfiguration.getProperties();
+		if (!operationMode.equals("REMOTE")) {
+			Configuration elasticsearchConnectionConfiguration =
+				_getDefaultConfiguration(
+					ElasticsearchConnectionConfiguration.class.getName());
 
-		elasticsearchConnectionConfigurationProperties.put("active", true);
+			if (elasticsearchConnectionConfiguration == null) {
+				return;
+			}
 
-		elasticsearchConnectionConfigurationProperties.put(
-			"authenticationEnabled",
-			GetterUtil.getBoolean(
-				elasticsearchConfigurationProperties.get(
-					"authenticationEnabled")));
+			Dictionary<String, Object>
+				elasticsearchConnectionConfigurationProperties =
+					elasticsearchConnectionConfiguration.getProperties();
 
-		elasticsearchConnectionConfigurationProperties.put(
-			"httpSSLEnabled",
-			GetterUtil.getBoolean(
-				elasticsearchConfigurationProperties.get("httpSSLEnabled")));
+			elasticsearchConnectionConfigurationProperties.put("active", false);
 
-		String[] networkHostAddresses = GetterUtil.getStringValues(
-			elasticsearchConfigurationProperties.get("networkHostAddresses"));
+			elasticsearchConnectionConfiguration.update(
+				elasticsearchConnectionConfigurationProperties);
 
-		if (ArrayUtil.isNotEmpty(networkHostAddresses)) {
-			elasticsearchConnectionConfigurationProperties.put(
-				"networkHostAddresses", networkHostAddresses);
+			return;
 		}
 
-		String password = GetterUtil.getString(
-			elasticsearchConfigurationProperties.get("password"));
+		String remoteClusterConnectionId = GetterUtil.getString(
+			elasticsearchConfigurationProperties.get(
+				"remoteClusterConnectionId"));
 
-		if (!Validator.isBlank(password)) {
-			elasticsearchConnectionConfigurationProperties.put(
-				"password", password);
+		if (Validator.isBlank(remoteClusterConnectionId)) {
+			elasticsearchConfigurationProperties.put(
+				"remoteClusterConnectionId", "remote");
+
+			elasticsearchConfiguration.update(
+				elasticsearchConfigurationProperties);
 		}
-
-		String truststorePassword = GetterUtil.getString(
-			elasticsearchConfigurationProperties.get("truststorePassword"));
-
-		if (!Validator.isBlank(truststorePassword)) {
-			elasticsearchConnectionConfigurationProperties.put(
-				"truststorePassword", truststorePassword);
-		}
-
-		String truststorePath = GetterUtil.getString(
-			elasticsearchConfigurationProperties.get("truststorePath"));
-
-		if (!Validator.isBlank(truststorePath)) {
-			elasticsearchConnectionConfigurationProperties.put(
-				"truststorePath", truststorePath);
-		}
-
-		String truststoreType = GetterUtil.getString(
-			elasticsearchConfigurationProperties.get("truststoreType"));
-
-		if (!Validator.isBlank(truststoreType)) {
-			elasticsearchConnectionConfigurationProperties.put(
-				"truststoreType", truststoreType);
-		}
-
-		String username = GetterUtil.getString(
-			elasticsearchConfigurationProperties.get("username"));
-
-		if (!Validator.isBlank(username)) {
-			elasticsearchConnectionConfigurationProperties.put(
-				"username", username);
-		}
-
-		elasticsearchConnectionConfiguration.update(
-			elasticsearchConnectionConfigurationProperties);
 	}
 
 	private Configuration _getConfiguration(String className) throws Exception {
@@ -136,6 +100,30 @@ public class UpgradeElasticsearchConfiguration extends UpgradeProcess {
 
 		if (configurations != null) {
 			return configurations[0];
+		}
+
+		return null;
+	}
+
+	private Configuration _getDefaultConfiguration(String className)
+		throws Exception {
+
+		String filterString = StringBundler.concat(
+			"(", Constants.SERVICE_PID, "=", className, ".*)");
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
+
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			String fileName = GetterUtil.getString(
+				properties.get("felix.fileinstall.filename"));
+
+			if (fileName.endsWith("-default.config")) {
+				return configuration;
+			}
 		}
 
 		return null;

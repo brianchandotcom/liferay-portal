@@ -46,23 +46,23 @@
 						<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
 
 						<execute dir="${liferay.faces.bridge.impl.dir}/demo">
-							mvn clean package -P liferay,mojarra,tomcat
+							mvn clean package -P liferay,liferay73,mojarra,tomcat
 						</execute>
 
 						<execute dir="${liferay.faces.bridge.impl.dir}/issue">
-							mvn clean package -P liferay,mojarra,tomcat
+							mvn clean package -P liferay,liferay73,mojarra,tomcat
 						</execute>
 
 						<execute dir="${liferay.faces.bridge.impl.dir}/tck">
-							mvn clean package -P liferay,mojarra,tomcat
+							mvn clean package -P liferay,liferay73,mojarra,tomcat
 						</execute>
 
 						<execute dir="${liferay.faces.portal.dir}/demo">
-							mvn clean package -P liferay,mojarra,tomcat,validateCaptchaForTest
+							mvn clean package -P liferay,liferay73,mojarra,tomcat,validateCaptchaForTest
 						</execute>
 
 						<execute dir="${liferay.faces.portal.dir}/test/test-setup-hook">
-							mvn clean package -P liferay,mojarra,tomcat
+							mvn clean package -P liferay,liferay73,mojarra,tomcat
 						</execute>
 
 						<copy

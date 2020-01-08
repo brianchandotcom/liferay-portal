@@ -1271,33 +1271,49 @@
 		},
 
 		toggleRadio(radioId, showBoxIds, hideBoxIds) {
-			var radioButton = $('#' + radioId);
+			const radioButton = document.getElementById(radioId);
 
-			var showBoxes;
+			if (radioButton) {
+				let showBoxes;
 
-			if (showBoxIds) {
-				if (Array.isArray(showBoxIds)) {
-					showBoxIds = showBoxIds.join(',#');
-				}
-
-				showBoxes = $('#' + showBoxIds);
-
-				showBoxes.toggleClass('hide', !radioButton.prop(STR_CHECKED));
-			}
-
-			radioButton.on('change', () => {
-				if (showBoxes) {
-					showBoxes.removeClass('hide');
-				}
-
-				if (hideBoxIds) {
-					if (Array.isArray(hideBoxIds)) {
-						hideBoxIds = hideBoxIds.join(',#');
+				if (showBoxIds) {
+					if (Array.isArray(showBoxIds)) {
+						showBoxIds = showBoxIds.join(',#');
 					}
 
-					$('#' + hideBoxIds).addClass('hide');
+					showBoxes = document.querySelectorAll('#' + showBoxIds);
+
+					showBoxes.forEach(showBox => {
+						if (radioButton.checked) {
+							showBox.classList.remove('hide');
+						} else {
+							showBox.classList.add('hide');
+						}
+					});
 				}
-			});
+
+				radioButton.addEventListener('change', () => {
+					if (showBoxes) {
+						showBoxes.forEach(showBox => {
+							showBox.classList.remove('hide');
+						});
+					}
+
+					if (hideBoxIds) {
+						if (Array.isArray(hideBoxIds)) {
+							hideBoxIds = hideBoxIds.join(',#');
+						}
+
+						const hideBoxes = document.querySelectorAll(
+							'#' + hideBoxIds
+						);
+
+						hideBoxes.forEach(hideBox => {
+							hideBox.classList.add('hide');
+						});
+					}
+				});
+			}
 		},
 
 		/*

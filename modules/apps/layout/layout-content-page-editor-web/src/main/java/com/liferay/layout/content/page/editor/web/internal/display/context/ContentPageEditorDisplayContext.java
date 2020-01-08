@@ -330,6 +330,14 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/update_row_columns_react")
 			).put(
+				"updateSegmentsExperiencePriorityURL",
+				getFragmentEntryActionURL(
+					"/content_layout/update_segments_experience_priority")
+			).put(
+				"updateSegmentsExperienceURL",
+				getFragmentEntryActionURL(
+					"/content_layout/update_segments_experience")
+			).put(
 				"widgets", editorSoyContext.get("widgets")
 			).build()
 		).put(

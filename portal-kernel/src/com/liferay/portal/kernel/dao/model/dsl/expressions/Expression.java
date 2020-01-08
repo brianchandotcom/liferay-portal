@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.portal.kernel.dao.model.dsl.clause.PredicateClause;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.operands.Operand;
 import com.liferay.portal.kernel.dao.model.dsl.query.OrderByExpression;
 import com.liferay.portal.kernel.dao.model.dsl.query.Query;
@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Preston Crary
  */
 @ProviderType
-public interface Expression<T> extends PredicateClause {
+public interface Expression<T> extends ASTNode {
 
 	public default Alias<T> as(String name) {
 		return new Alias<>(this, name);
@@ -68,7 +68,13 @@ public interface Expression<T> extends PredicateClause {
 	}
 
 	public default Predicate in(Query query) {
-		return new Predicate(this, Operand.IN, query);
+		return new Predicate(
+			this, Operand.IN,
+			(sb, astNodeListener) -> {
+				sb.append("(");
+				query.toSQL(sb, astNodeListener);
+				sb.append(")");
+			});
 	}
 
 	public default Predicate in(T[] values) {

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.clause.PredicateClause;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.set.Union;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Preston Crary
  */
 @ProviderType
-public interface Query extends PredicateClause {
+public interface Query extends ASTNode {
 
 	public default NamedQuery as(String name) {
 		return new NamedQuery(this, name);

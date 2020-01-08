@@ -32,6 +32,21 @@ export function dateToInternationalHuman(
 	return intl.format(date);
 }
 
+export function dateToBriefInternationalHuman(
+	ISOString,
+	localeKey = navigator.language
+) {
+	const date = new Date(ISOString);
+
+	const intl = new Intl.DateTimeFormat(localeKey, {
+		day: '2-digit',
+		month: '2-digit',
+		year: '2-digit'
+	});
+
+	return intl.format(date);
+}
+
 export function useDebounceCallback(callback, milliseconds) {
 	const callbackRef = useRef(debounce(callback, milliseconds));
 

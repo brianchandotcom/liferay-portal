@@ -41,6 +41,53 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 <aui:input name="masterLayoutPlid" type="hidden" />
 
+<%
+LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
+
+if (layoutPageTemplateEntry == null) {
+	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getClassPK());
+}
+%>
+
+<c:if test="<%= (layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) %>">
+
+	<%
+	LayoutPageTemplateEntry masterLayoutPageTemplateEntry = null;
+
+	if (selLayout.getMasterLayoutPlid() > 0) {
+		masterLayoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getMasterLayoutPlid());
+	}
+	%>
+
+	<div class="sheet-section">
+		<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
+
+		<p>
+			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %></span>
+		</p>
+
+		<div class="master-layout-buttons">
+			<c:if test="<%= masterLayoutPageTemplateEntry != null %>">
+				<clay:button
+					elementClasses="btn-secondary"
+					id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
+					label='<%= LanguageUtil.get(request, "edit-master") %>'
+					style="<%= false %>"
+				/>
+			</c:if>
+
+			<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) %>">
+				<clay:button
+					elementClasses="btn-secondary"
+					id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
+					label='<%= LanguageUtil.get(request, "change-master") %>'
+					style="<%= false %>"
+				/>
+			</c:if>
+		</div>
+	</div>
+</c:if>
+
 <c:if test="<%= selLayout.getMasterLayoutPlid() <= 0 %>">
 	<liferay-util:buffer
 		var="rootNodeNameLink"
@@ -85,53 +132,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 		<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
 			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
-		</div>
-	</div>
-</c:if>
-
-<%
-LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
-
-if (layoutPageTemplateEntry == null) {
-	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getClassPK());
-}
-%>
-
-<c:if test="<%= (layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) %>">
-
-	<%
-	LayoutPageTemplateEntry masterLayoutPageTemplateEntry = null;
-
-	if (selLayout.getMasterLayoutPlid() > 0) {
-		masterLayoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getMasterLayoutPlid());
-	}
-	%>
-
-	<div class="sheet-section">
-		<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
-
-		<p>
-			<b><liferay-ui:message key="master-name" />:</b> <span id="<portlet:namespace />masterLayoutName"><%= (masterLayoutPageTemplateEntry != null) ? masterLayoutPageTemplateEntry.getName() : LanguageUtil.get(request, "blank") %></span>
-		</p>
-
-		<div class="master-layout-buttons">
-			<c:if test="<%= masterLayoutPageTemplateEntry != null %>">
-				<clay:button
-					elementClasses="btn-secondary"
-					id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
-					label='<%= LanguageUtil.get(request, "edit-master") %>'
-					style="<%= false %>"
-				/>
-			</c:if>
-
-			<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) %>">
-				<clay:button
-					elementClasses="btn-secondary"
-					id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
-					label='<%= LanguageUtil.get(request, "change-master") %>'
-					style="<%= false %>"
-				/>
-			</c:if>
 		</div>
 	</div>
 </c:if>

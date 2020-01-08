@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.Statement;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
 import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
@@ -24,7 +23,7 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class Select implements FromStep, Statement {
+public class Select implements FromStep, Query {
 
 	public Select(boolean distinct, Expression<?>[] expressions) {
 		_distinct = distinct;

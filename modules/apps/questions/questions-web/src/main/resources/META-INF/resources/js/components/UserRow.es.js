@@ -14,12 +14,17 @@
 
 import React from 'react';
 
-import UserAvatar from './UserAvatar.es';
+import UserIcon from './UserIcon.es';
 
 export default ({answer, creator}) => (
 	<div className="autofit-padded autofit-row">
 		<div className="autofit-col">
-			<UserAvatar user={creator} />
+			<UserIcon
+				fullName={creator.name}
+				portraitURL={creator.image}
+				size="sm"
+				userId={String(creator.id)}
+			/>
 		</div>
 		<div className="text-right">
 			<p className="mb-0">

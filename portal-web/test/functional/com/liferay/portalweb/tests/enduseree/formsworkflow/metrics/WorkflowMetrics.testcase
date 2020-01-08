@@ -100,6 +100,97 @@ definition {
 			value1 = "${key_testSLADefinitionDays}");
 	}
 
+	@description = "LRQA-53633 Automate LPS-103368: [Dashboard] Apply searches in the workload distribution for all assignees"
+	@priority = "5"
+	test ApplySearchesForAllAssignees {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ApplySearchesForAllAssignees";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.createUsersAndAssignInstances();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(
+			key_assigneesNumber = "3",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "1user user1",
+			isNotPresent = "2user user2,3user user3",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "2");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "2Role");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "2user user2",
+			isNotPresent = "1user user1,3user user3",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "1");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "2Role");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "3Role");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "3user user3",
+			isNotPresent = "1user user1,2user user2",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "1");
+
+		WorkflowMetrics.clearAllFilter();
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
+
+		WorkflowMetrics.searchForAssigneeName(assigneeName = "1user");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "1user user1",
+			isNotPresent = "2user user2,3user user3",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "2");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Update");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.searchForAssigneeName(assigneeName = "something else");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.clearAllFilter();
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "1user user1",
+			isNotPresent = "somethingelse",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "2");
+	}
+
 	@description = "Verify if the default filter values are correct and if the chart is displayed (LPS-98001)"
 	@priority = "5"
 	test DefaultWorkflowMetricsFilterValues {

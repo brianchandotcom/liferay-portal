@@ -38,6 +38,10 @@ public class Column<T extends Table, C>
 	@Override
 	@SuppressWarnings("unchecked")
 	public Alias<C> as(String name) {
+		if (_columnName.equals(name)) {
+			return new Alias<>(this, name);
+		}
+
 		return new Alias<>(_table.aliasColumn(this, name), name);
 	}
 

@@ -183,7 +183,11 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "${pageScopeId}");
 
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+		var key_webContentTitle = "WC WebContent Title";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
+			value1 = "WC WebContent Title");
 	}
 
 	@description = "This is a use case for LPS-94325."

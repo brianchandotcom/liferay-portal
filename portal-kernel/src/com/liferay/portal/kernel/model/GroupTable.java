@@ -29,94 +29,53 @@ public class GroupTable extends Table<GroupTable> {
 
 	public static final GroupTable INSTANCE = new GroupTable();
 
-	public final Column<GroupTable, Long> mvccVersion;
-	public final Column<GroupTable, String> uuid;
-	public final Column<GroupTable, Long> groupId;
-	public final Column<GroupTable, Long> companyId;
-	public final Column<GroupTable, Long> creatorUserId;
-	public final Column<GroupTable, Long> classNameId;
-	public final Column<GroupTable, Long> classPK;
-	public final Column<GroupTable, Long> parentGroupId;
-	public final Column<GroupTable, Long> liveGroupId;
-	public final Column<GroupTable, String> treePath;
-	public final Column<GroupTable, String> groupKey;
-	public final Column<GroupTable, String> name;
-	public final Column<GroupTable, String> description;
-	public final Column<GroupTable, Integer> type;
-	public final Column<GroupTable, String> typeSettings;
-	public final Column<GroupTable, Boolean> manualMembership;
-	public final Column<GroupTable, Integer> membershipRestriction;
-	public final Column<GroupTable, String> friendlyURL;
-	public final Column<GroupTable, Boolean> site;
-	public final Column<GroupTable, Integer> remoteStagingGroupCount;
-	public final Column<GroupTable, Boolean> inheritContent;
-	public final Column<GroupTable, Boolean> active;
+	public final Column<GroupTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT);
+	public final Column<GroupTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR);
+	public final Column<GroupTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT);
+	public final Column<GroupTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT);
+	public final Column<GroupTable, Long> creatorUserId = createColumn(
+		"creatorUserId", Long.class, Types.BIGINT);
+	public final Column<GroupTable, Long> classNameId = createColumn(
+		"classNameId", Long.class, Types.BIGINT);
+	public final Column<GroupTable, Long> classPK = createColumn(
+		"classPK", Long.class, Types.BIGINT);
+	public final Column<GroupTable, Long> parentGroupId = createColumn(
+		"parentGroupId", Long.class, Types.BIGINT);
+	public final Column<GroupTable, Long> liveGroupId = createColumn(
+		"liveGroupId", Long.class, Types.BIGINT);
+	public final Column<GroupTable, String> treePath = createColumn(
+		"treePath", String.class, Types.VARCHAR);
+	public final Column<GroupTable, String> groupKey = createColumn(
+		"groupKey", String.class, Types.VARCHAR);
+	public final Column<GroupTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR);
+	public final Column<GroupTable, String> description = createColumn(
+		"description", String.class, Types.VARCHAR);
+	public final Column<GroupTable, Integer> type = createColumn(
+		"type_", Integer.class, Types.INTEGER);
+	public final Column<GroupTable, String> typeSettings = createColumn(
+		"typeSettings", String.class, Types.CLOB);
+	public final Column<GroupTable, Boolean> manualMembership = createColumn(
+		"manualMembership", Boolean.class, Types.BOOLEAN);
+	public final Column<GroupTable, Integer> membershipRestriction =
+		createColumn("membershipRestriction", Integer.class, Types.INTEGER);
+	public final Column<GroupTable, String> friendlyURL = createColumn(
+		"friendlyURL", String.class, Types.VARCHAR);
+	public final Column<GroupTable, Boolean> site = createColumn(
+		"site", Boolean.class, Types.BOOLEAN);
+	public final Column<GroupTable, Integer> remoteStagingGroupCount =
+		createColumn("remoteStagingGroupCount", Integer.class, Types.INTEGER);
+	public final Column<GroupTable, Boolean> inheritContent = createColumn(
+		"inheritContent", Boolean.class, Types.BOOLEAN);
+	public final Column<GroupTable, Boolean> active = createColumn(
+		"active_", Boolean.class, Types.BOOLEAN);
 
 	private GroupTable() {
 		super("Group_", GroupTable::new);
-
-		mvccVersion = new Column<>(
-			this, "mvccVersion", Long.class, Types.BIGINT);
-
-		uuid = new Column<>(this, "uuid_", String.class, Types.VARCHAR);
-
-		groupId = new Column<>(this, "groupId", Long.class, Types.BIGINT);
-
-		companyId = new Column<>(this, "companyId", Long.class, Types.BIGINT);
-
-		creatorUserId = new Column<>(
-			this, "creatorUserId", Long.class, Types.BIGINT);
-
-		classNameId = new Column<>(
-			this, "classNameId", Long.class, Types.BIGINT);
-
-		classPK = new Column<>(this, "classPK", Long.class, Types.BIGINT);
-
-		parentGroupId = new Column<>(
-			this, "parentGroupId", Long.class, Types.BIGINT);
-
-		liveGroupId = new Column<>(
-			this, "liveGroupId", Long.class, Types.BIGINT);
-
-		treePath = new Column<>(this, "treePath", String.class, Types.VARCHAR);
-
-		groupKey = new Column<>(this, "groupKey", String.class, Types.VARCHAR);
-
-		name = new Column<>(this, "name", String.class, Types.VARCHAR);
-
-		description = new Column<>(
-			this, "description", String.class, Types.VARCHAR);
-
-		type = new Column<>(this, "type_", Integer.class, Types.INTEGER);
-
-		typeSettings = new Column<>(
-			this, "typeSettings", String.class, Types.CLOB);
-
-		manualMembership = new Column<>(
-			this, "manualMembership", Boolean.class, Types.BOOLEAN);
-
-		membershipRestriction = new Column<>(
-			this, "membershipRestriction", Integer.class, Types.INTEGER);
-
-		friendlyURL = new Column<>(
-			this, "friendlyURL", String.class, Types.VARCHAR);
-
-		site = new Column<>(this, "site", Boolean.class, Types.BOOLEAN);
-
-		remoteStagingGroupCount = new Column<>(
-			this, "remoteStagingGroupCount", Integer.class, Types.INTEGER);
-
-		inheritContent = new Column<>(
-			this, "inheritContent", Boolean.class, Types.BOOLEAN);
-
-		active = new Column<>(this, "active_", Boolean.class, Types.BOOLEAN);
-
-		setColumns(
-			mvccVersion, uuid, groupId, companyId, creatorUserId, classNameId,
-			classPK, parentGroupId, liveGroupId, treePath, groupKey, name,
-			description, type, typeSettings, manualMembership,
-			membershipRestriction, friendlyURL, site, remoteStagingGroupCount,
-			inheritContent, active);
 	}
 
 }

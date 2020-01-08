@@ -842,7 +842,9 @@ definition {
 			siteName = "${siteName}",
 			siteTemplateName = "Site Template Name");
 
-		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
+		PermissionsInline.gotoConfigurationPG(
+			portletName = "Web Content Display",
+			siteTemplate = "true");
 
 		Role.viewPermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",

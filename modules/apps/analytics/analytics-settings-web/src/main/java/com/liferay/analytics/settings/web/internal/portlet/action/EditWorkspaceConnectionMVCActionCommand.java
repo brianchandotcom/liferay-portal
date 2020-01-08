@@ -157,10 +157,7 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean disconnected = _disconnectDataSource(
-			themeDisplay.getCompanyId());
-
-		if (!disconnected) {
+		if (!_disconnectDataSource(themeDisplay.getCompanyId())) {
 			removeCompanyPreferences(themeDisplay.getCompanyId());
 			removeConfigurationProperties(
 				themeDisplay.getCompanyId(), configurationProperties);

@@ -241,11 +241,11 @@ definition {
 
 		Staging.assignStagingAdminToSite(siteName = "Community Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "community-site-name-staging");
+		Navigator.openStagingSiteURL(siteName = "Community Site Name");
 
 		Staging.editSitePageVariationPG(sitePagesVariationName = "Main Variation");
 
-		SitePages.openPagesAdmin(siteURLKey = "community-site-name-staging");
+		Navigator.openStagingSiteURL(siteName = "Community Site Name");
 
 		Staging.viewEditedSitePagesVariationPG(sitePagesVariationName = "Main Variation Edit");
 
@@ -257,11 +257,11 @@ definition {
 			copySitePagesVariationName = "Main Variation Edit",
 			sitePagesVariationName = "Christmas Variation");
 
-		SitePages.openPagesAdmin(siteURLKey = "community-site-name-staging");
+		Navigator.openStagingSiteURL(siteName = "Community Site Name");
 
 		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Christmas Variation");
 
-		SitePages.openPagesAdmin(siteURLKey = "community-site-name-staging");
+		Navigator.openStagingSiteURL(siteName = "Community Site Name");
 
 		Page.view(
 			pageName = "Home",
@@ -279,7 +279,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Test Page Name");
 
-		Staging.openStagingAdmin(siteURLKey = "community-site-name");
+		Navigator.openStagingSiteURL(siteName = "Community Site Name");
 
 		Staging.changeSitePageVariationPG(
 			sitePagesVariationMenulistName = "Main Variation Edit",

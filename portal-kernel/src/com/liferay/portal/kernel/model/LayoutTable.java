@@ -68,103 +68,116 @@ public class LayoutTable extends Table<LayoutTable> {
 	public final Column<LayoutTable, String> sourcePrototypeLayoutUuid;
 	public final Column<LayoutTable, Date> publishDate;
 	public final Column<LayoutTable, Date> lastPublishDate;
+	public final Column<LayoutTable, Integer> status;
+	public final Column<LayoutTable, Long> statusByUserId;
+	public final Column<LayoutTable, String> statusByUserName;
+	public final Column<LayoutTable, Date> statusDate;
 
 	private LayoutTable() {
 		super("Layout", LayoutTable::new);
 
-		mvccVersion = Column.create(
+		mvccVersion = new Column<>(
 			this, "mvccVersion", Long.class, Types.BIGINT);
 
-		ctCollectionId = Column.create(
+		ctCollectionId = new Column<>(
 			this, "ctCollectionId", Long.class, Types.BIGINT);
 
-		uuid = Column.create(this, "uuid_", String.class, Types.VARCHAR);
+		uuid = new Column<>(this, "uuid_", String.class, Types.VARCHAR);
 
-		plid = Column.create(this, "plid", Long.class, Types.BIGINT);
+		plid = new Column<>(this, "plid", Long.class, Types.BIGINT);
 
-		groupId = Column.create(this, "groupId", Long.class, Types.BIGINT);
+		groupId = new Column<>(this, "groupId", Long.class, Types.BIGINT);
 
-		companyId = Column.create(this, "companyId", Long.class, Types.BIGINT);
+		companyId = new Column<>(this, "companyId", Long.class, Types.BIGINT);
 
-		userId = Column.create(this, "userId", Long.class, Types.BIGINT);
+		userId = new Column<>(this, "userId", Long.class, Types.BIGINT);
 
-		userName = Column.create(this, "userName", String.class, Types.VARCHAR);
+		userName = new Column<>(this, "userName", String.class, Types.VARCHAR);
 
-		createDate = Column.create(
+		createDate = new Column<>(
 			this, "createDate", Date.class, Types.TIMESTAMP);
 
-		modifiedDate = Column.create(
+		modifiedDate = new Column<>(
 			this, "modifiedDate", Date.class, Types.TIMESTAMP);
 
-		parentPlid = Column.create(
-			this, "parentPlid", Long.class, Types.BIGINT);
+		parentPlid = new Column<>(this, "parentPlid", Long.class, Types.BIGINT);
 
-		privateLayout = Column.create(
+		privateLayout = new Column<>(
 			this, "privateLayout", Boolean.class, Types.BOOLEAN);
 
-		layoutId = Column.create(this, "layoutId", Long.class, Types.BIGINT);
+		layoutId = new Column<>(this, "layoutId", Long.class, Types.BIGINT);
 
-		parentLayoutId = Column.create(
+		parentLayoutId = new Column<>(
 			this, "parentLayoutId", Long.class, Types.BIGINT);
 
-		classNameId = Column.create(
+		classNameId = new Column<>(
 			this, "classNameId", Long.class, Types.BIGINT);
 
-		classPK = Column.create(this, "classPK", Long.class, Types.BIGINT);
+		classPK = new Column<>(this, "classPK", Long.class, Types.BIGINT);
 
-		name = Column.create(this, "name", String.class, Types.VARCHAR);
+		name = new Column<>(this, "name", String.class, Types.VARCHAR);
 
-		title = Column.create(this, "title", String.class, Types.VARCHAR);
+		title = new Column<>(this, "title", String.class, Types.VARCHAR);
 
-		description = Column.create(
+		description = new Column<>(
 			this, "description", String.class, Types.VARCHAR);
 
-		keywords = Column.create(this, "keywords", String.class, Types.VARCHAR);
+		keywords = new Column<>(this, "keywords", String.class, Types.VARCHAR);
 
-		robots = Column.create(this, "robots", String.class, Types.VARCHAR);
+		robots = new Column<>(this, "robots", String.class, Types.VARCHAR);
 
-		type = Column.create(this, "type_", String.class, Types.VARCHAR);
+		type = new Column<>(this, "type_", String.class, Types.VARCHAR);
 
-		typeSettings = Column.create(
+		typeSettings = new Column<>(
 			this, "typeSettings", String.class, Types.CLOB);
 
-		hidden = Column.create(this, "hidden_", Boolean.class, Types.BOOLEAN);
+		hidden = new Column<>(this, "hidden_", Boolean.class, Types.BOOLEAN);
 
-		system = Column.create(this, "system_", Boolean.class, Types.BOOLEAN);
+		system = new Column<>(this, "system_", Boolean.class, Types.BOOLEAN);
 
-		friendlyURL = Column.create(
+		friendlyURL = new Column<>(
 			this, "friendlyURL", String.class, Types.VARCHAR);
 
-		iconImageId = Column.create(
+		iconImageId = new Column<>(
 			this, "iconImageId", Long.class, Types.BIGINT);
 
-		themeId = Column.create(this, "themeId", String.class, Types.VARCHAR);
+		themeId = new Column<>(this, "themeId", String.class, Types.VARCHAR);
 
-		colorSchemeId = Column.create(
+		colorSchemeId = new Column<>(
 			this, "colorSchemeId", String.class, Types.VARCHAR);
 
-		css = Column.create(this, "css", String.class, Types.CLOB);
+		css = new Column<>(this, "css", String.class, Types.CLOB);
 
-		priority = Column.create(
-			this, "priority", Integer.class, Types.INTEGER);
+		priority = new Column<>(this, "priority", Integer.class, Types.INTEGER);
 
-		masterLayoutPlid = Column.create(
+		masterLayoutPlid = new Column<>(
 			this, "masterLayoutPlid", Long.class, Types.BIGINT);
 
-		layoutPrototypeUuid = Column.create(
+		layoutPrototypeUuid = new Column<>(
 			this, "layoutPrototypeUuid", String.class, Types.VARCHAR);
 
-		layoutPrototypeLinkEnabled = Column.create(
+		layoutPrototypeLinkEnabled = new Column<>(
 			this, "layoutPrototypeLinkEnabled", Boolean.class, Types.BOOLEAN);
 
-		sourcePrototypeLayoutUuid = Column.create(
+		sourcePrototypeLayoutUuid = new Column<>(
 			this, "sourcePrototypeLayoutUuid", String.class, Types.VARCHAR);
 
-		publishDate = Column.create(
+		publishDate = new Column<>(
 			this, "publishDate", Date.class, Types.TIMESTAMP);
 
-		lastPublishDate = Column.create(
+		lastPublishDate = new Column<>(
 			this, "lastPublishDate", Date.class, Types.TIMESTAMP);
+
+		status = new Column<>(this, "status", Integer.class, Types.INTEGER);
+
+		statusByUserId = new Column<>(
+			this, "statusByUserId", Long.class, Types.BIGINT);
+
+		statusByUserName = new Column<>(
+			this, "statusByUserName", String.class, Types.VARCHAR);
+
+		statusDate = new Column<>(
+			this, "statusDate", Date.class, Types.TIMESTAMP);
 
 		setColumns(
 			mvccVersion, ctCollectionId, uuid, plid, groupId, companyId, userId,
@@ -173,7 +186,8 @@ public class LayoutTable extends Table<LayoutTable> {
 			description, keywords, robots, type, typeSettings, hidden, system,
 			friendlyURL, iconImageId, themeId, colorSchemeId, css, priority,
 			masterLayoutPlid, layoutPrototypeUuid, layoutPrototypeLinkEnabled,
-			sourcePrototypeLayoutUuid, publishDate, lastPublishDate);
+			sourcePrototypeLayoutUuid, publishDate, lastPublishDate, status,
+			statusByUserId, statusByUserName, statusDate);
 	}
 
 }

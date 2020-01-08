@@ -55,61 +55,61 @@ public class GroupTable extends Table<GroupTable> {
 	private GroupTable() {
 		super("Group_", GroupTable::new);
 
-		mvccVersion = Column.create(
+		mvccVersion = new Column<>(
 			this, "mvccVersion", Long.class, Types.BIGINT);
 
-		uuid = Column.create(this, "uuid_", String.class, Types.VARCHAR);
+		uuid = new Column<>(this, "uuid_", String.class, Types.VARCHAR);
 
-		groupId = Column.create(this, "groupId", Long.class, Types.BIGINT);
+		groupId = new Column<>(this, "groupId", Long.class, Types.BIGINT);
 
-		companyId = Column.create(this, "companyId", Long.class, Types.BIGINT);
+		companyId = new Column<>(this, "companyId", Long.class, Types.BIGINT);
 
-		creatorUserId = Column.create(
+		creatorUserId = new Column<>(
 			this, "creatorUserId", Long.class, Types.BIGINT);
 
-		classNameId = Column.create(
+		classNameId = new Column<>(
 			this, "classNameId", Long.class, Types.BIGINT);
 
-		classPK = Column.create(this, "classPK", Long.class, Types.BIGINT);
+		classPK = new Column<>(this, "classPK", Long.class, Types.BIGINT);
 
-		parentGroupId = Column.create(
+		parentGroupId = new Column<>(
 			this, "parentGroupId", Long.class, Types.BIGINT);
 
-		liveGroupId = Column.create(
+		liveGroupId = new Column<>(
 			this, "liveGroupId", Long.class, Types.BIGINT);
 
-		treePath = Column.create(this, "treePath", String.class, Types.VARCHAR);
+		treePath = new Column<>(this, "treePath", String.class, Types.VARCHAR);
 
-		groupKey = Column.create(this, "groupKey", String.class, Types.VARCHAR);
+		groupKey = new Column<>(this, "groupKey", String.class, Types.VARCHAR);
 
-		name = Column.create(this, "name", String.class, Types.VARCHAR);
+		name = new Column<>(this, "name", String.class, Types.VARCHAR);
 
-		description = Column.create(
+		description = new Column<>(
 			this, "description", String.class, Types.VARCHAR);
 
-		type = Column.create(this, "type_", Integer.class, Types.INTEGER);
+		type = new Column<>(this, "type_", Integer.class, Types.INTEGER);
 
-		typeSettings = Column.create(
+		typeSettings = new Column<>(
 			this, "typeSettings", String.class, Types.CLOB);
 
-		manualMembership = Column.create(
+		manualMembership = new Column<>(
 			this, "manualMembership", Boolean.class, Types.BOOLEAN);
 
-		membershipRestriction = Column.create(
+		membershipRestriction = new Column<>(
 			this, "membershipRestriction", Integer.class, Types.INTEGER);
 
-		friendlyURL = Column.create(
+		friendlyURL = new Column<>(
 			this, "friendlyURL", String.class, Types.VARCHAR);
 
-		site = Column.create(this, "site", Boolean.class, Types.BOOLEAN);
+		site = new Column<>(this, "site", Boolean.class, Types.BOOLEAN);
 
-		remoteStagingGroupCount = Column.create(
+		remoteStagingGroupCount = new Column<>(
 			this, "remoteStagingGroupCount", Integer.class, Types.INTEGER);
 
-		inheritContent = Column.create(
+		inheritContent = new Column<>(
 			this, "inheritContent", Boolean.class, Types.BOOLEAN);
 
-		active = Column.create(this, "active_", Boolean.class, Types.BOOLEAN);
+		active = new Column<>(this, "active_", Boolean.class, Types.BOOLEAN);
 
 		setColumns(
 			mvccVersion, uuid, groupId, companyId, creatorUserId, classNameId,

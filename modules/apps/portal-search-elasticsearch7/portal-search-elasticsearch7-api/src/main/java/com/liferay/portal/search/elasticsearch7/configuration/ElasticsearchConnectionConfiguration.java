@@ -44,7 +44,7 @@ public interface ElasticsearchConnectionConfiguration {
 	public String[] networkHostAddresses();
 
 	@Meta.AD(
-		deflt = "true", description = "active-help", name = "active",
+		deflt = "false", description = "active-help", name = "active",
 		required = false
 	)
 	public boolean active();

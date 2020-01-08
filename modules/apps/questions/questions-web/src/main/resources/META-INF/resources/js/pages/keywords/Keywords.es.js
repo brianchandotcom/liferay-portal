@@ -18,6 +18,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import {getKeywords} from '../../utils/client.es';
+import lang from '../../utils/lang.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default () => {
@@ -32,32 +33,43 @@ export default () => {
 
 	return (
 		<>
-			<div className="autofit-padded autofit-row">
-				{keywords.items &&
-					keywords.items.map(keyword => (
-						<ClayCard
-							className="autofit-column question-keywords"
-							key={keyword.id}
-						>
-							<ClayCard.Body>
-								<ClayCard.Description displayType="title">
-									#{keyword.name}
-								</ClayCard.Description>
-								<ClayCard.Description displayType="text">
-									<span className="d-block">
-										{Liferay.Language.get('uses')}:{' '}
-										{keyword.keywordUsageCount}
-									</span>
-									<span className="d-block">
-										{Liferay.Language.get('last-updated')}:{' '}
-										{dateToInternationalHuman(
-											keyword.dateCreated
-										)}
-									</span>
-								</ClayCard.Description>
-							</ClayCard.Body>
-						</ClayCard>
-					))}
+			<div className="container">
+				<div className="row">
+					{keywords.items &&
+						keywords.items.map(keyword => (
+							<div className="col-md-3" key={keyword.id}>
+								<ClayCard className="question-keywords">
+									<ClayCard.Body>
+										<ClayCard.Description displayType="title">
+											#{keyword.name}
+										</ClayCard.Description>
+										<ClayCard.Description displayType="text">
+											<span className="d-block">
+												{lang.sub(
+													Liferay.Language.get(
+														'used-x-times'
+													),
+													[keyword.keywordUsageCount]
+												)}
+											</span>
+											<span className="d-block">
+												{lang.sub(
+													Liferay.Language.get(
+														'latest-usage'
+													),
+													[
+														dateToInternationalHuman(
+															keyword.dateCreated
+														)
+													]
+												)}
+											</span>
+										</ClayCard.Description>
+									</ClayCard.Body>
+								</ClayCard>
+							</div>
+						))}
+				</div>
 			</div>
 			{keywords.lastPage > 1 && (
 				<ClayPaginationWithBasicItems

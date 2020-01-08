@@ -112,7 +112,8 @@ public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		LayoutConverterConfiguration layoutConverterConfiguration) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -123,9 +124,7 @@ public class LayoutsAdminDisplayContext {
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			_httpServletRequest);
 
-		_layoutConverterConfiguration =
-			(LayoutConverterConfiguration)_liferayPortletRequest.getAttribute(
-				LayoutConverterConfiguration.class.getName());
+		_layoutConverterConfiguration = layoutConverterConfiguration;
 		_layoutCopyHelper =
 			(LayoutCopyHelper)_liferayPortletRequest.getAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);

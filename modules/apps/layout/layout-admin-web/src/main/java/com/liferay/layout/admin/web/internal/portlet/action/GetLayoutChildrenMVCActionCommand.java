@@ -69,14 +69,11 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
-		actionRequest.setAttribute(
-			LayoutConverterConfiguration.class.getName(),
-			_layoutConverterConfiguration);
-
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
 				_portal.getLiferayPortletRequest(actionRequest),
-				_portal.getLiferayPortletResponse(actionResponse));
+				_portal.getLiferayPortletResponse(actionResponse),
+				_layoutConverterConfiguration);
 
 		JSONArray jsonArray = layoutsAdminDisplayContext.getLayoutsJSONArray(
 			layout.getLayoutId(), layout.isPrivateLayout());

@@ -50,7 +50,8 @@ public class JavaSignatureParametersCheck extends BaseJavaTermCheck {
 			_checkParameterOrder(
 				fileName, parameters, javaTerm.getLineNumber(),
 				"HttpServletRequest", "HttpServletResponse",
-				"LiferayPortletRequest", "LiferayPortletResponse");
+				"LiferayPortletRequest", "LiferayPortletResponse",
+				"RenderRequest", "RenderResponse");
 			_checkParameterOrder(
 				fileName, parameters, javaTerm.getLineNumber(),
 				"PortletRequest", "PortletResponse");

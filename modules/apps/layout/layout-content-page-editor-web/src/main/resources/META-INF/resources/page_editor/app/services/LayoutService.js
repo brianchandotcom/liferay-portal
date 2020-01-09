@@ -119,5 +119,24 @@ export default {
 			data: JSON.stringify(layoutData),
 			segmentsExperienceId
 		});
+	},
+
+	/**
+	 * Updates the number of columns of a row
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.itemId id of the item to be updated
+	 * @param {number} options.numberOfColumns New number of columns
+	 * @param {string} options.segmentsExperienceId Segments experience id
+	 * @return {Promise<void>}
+	 */
+	updateRowColumns({config, itemId, numberOfColumns, segmentsExperienceId}) {
+		const {updateRowColumnsURL} = config;
+
+		return serviceFetch(config, updateRowColumnsURL, {
+			itemId,
+			numberOfColumns,
+			segmentsExperienceId
+		});
 	}
 };

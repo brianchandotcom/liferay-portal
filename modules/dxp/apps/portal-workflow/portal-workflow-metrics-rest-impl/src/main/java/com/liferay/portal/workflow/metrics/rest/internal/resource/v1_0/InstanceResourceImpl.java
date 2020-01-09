@@ -51,6 +51,8 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.script.Scripts;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -303,6 +305,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		BucketSortPipelineAggregation bucketSortPipelineAggregation =
 			_aggregations.bucketSort("bucketSort");
+
+		FieldSort keyFieldSort = _sorts.field("_key");
+
+		keyFieldSort.setSortOrder(SortOrder.ASC);
+
+		bucketSortPipelineAggregation.addSortFields(keyFieldSort);
 
 		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
 		bucketSortPipelineAggregation.setSize(pagination.getPageSize());

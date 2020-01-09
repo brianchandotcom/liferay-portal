@@ -14,7 +14,7 @@
 
 package com.liferay.app.builder.rest.resource.v1_0;
 
-import com.liferay.app.builder.rest.dto.v1_0.DataModelPermission;
+import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -37,14 +37,12 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface DataModelPermissionResource {
+public interface AppModelPermissionResource {
 
-	public Page<DataModelPermission> getDataModelPermissionsPage(
-			String roleNames)
+	public Page<AppModelPermission> getAppModelPermissionsPage(String roleNames)
 		throws Exception;
 
-	public void putDataModelPermission(
-			DataModelPermission[] dataModelPermissions)
+	public void putAppModelPermission(AppModelPermission[] appModelPermissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

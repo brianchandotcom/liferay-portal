@@ -18,7 +18,7 @@ import React, {useContext, useState} from 'react';
 import addMappedInfoItem from '../actions/addMappedInfoItem';
 import updateItemConfig from '../actions/updateItemConfig';
 import {DispatchContext} from '../reducers/index';
-import {AssetSelectionPanel} from './AssetSelectionPanel';
+import InfoItemSelectionPanel from './InfoItemSelectionPanel';
 import {ManualSelectionPanel} from './ManualSelectionPanel';
 
 const IMAGE_SOURCE = {
@@ -94,7 +94,7 @@ export const LayoutBackgroundImageConfigurationPanel = ({item}) => {
 					}
 				/>
 			) : (
-				<AssetSelectionPanel
+				<InfoItemSelectionPanel
 					backgroundImageTitle={backgroundImageTitle}
 					onItemSelectorChanged={handleBackgroundImageItemChanged}
 				/>

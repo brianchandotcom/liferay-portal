@@ -3323,12 +3323,16 @@ public class Query {
 	public class NavigationMenuPage {
 
 		public NavigationMenuPage(Page navigationMenuPage) {
+			actions = navigationMenuPage.getActions();
 			items = navigationMenuPage.getItems();
 			lastPage = navigationMenuPage.getLastPage();
 			page = navigationMenuPage.getPage();
 			pageSize = navigationMenuPage.getPageSize();
 			totalCount = navigationMenuPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
 
 		@GraphQLField
 		protected java.util.Collection<NavigationMenu> items;

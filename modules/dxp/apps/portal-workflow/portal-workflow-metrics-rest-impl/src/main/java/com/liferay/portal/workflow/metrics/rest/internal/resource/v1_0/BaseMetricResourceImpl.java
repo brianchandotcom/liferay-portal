@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.util.PermissionsUtil;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
@@ -119,7 +119,7 @@ public abstract class BaseMetricResourceImpl implements MetricResource {
 	protected Map<String, String> addAction(
 		String actionName, GroupedModel groupedModel, String methodName) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), groupedModel, methodName, contextUriInfo);
 	}
 
@@ -127,7 +127,7 @@ public abstract class BaseMetricResourceImpl implements MetricResource {
 		String actionName, Long id, String methodName, String permissionName,
 		Long siteId) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), id, methodName, permissionName, siteId,
 			contextUriInfo);
 	}

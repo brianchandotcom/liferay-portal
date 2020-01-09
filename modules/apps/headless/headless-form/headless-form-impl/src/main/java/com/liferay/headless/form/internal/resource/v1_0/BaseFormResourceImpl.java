@@ -24,7 +24,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.PermissionsUtil;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -179,7 +179,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	protected Map<String, String> addAction(
 		String actionName, GroupedModel groupedModel, String methodName) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), groupedModel, methodName, contextUriInfo);
 	}
 
@@ -187,7 +187,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		String actionName, Long id, String methodName, String permissionName,
 		Long siteId) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), id, methodName, permissionName, siteId,
 			contextUriInfo);
 	}

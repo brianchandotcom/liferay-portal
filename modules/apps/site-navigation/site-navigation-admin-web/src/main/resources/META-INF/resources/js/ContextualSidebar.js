@@ -180,11 +180,11 @@ function ContextualSidebar({
 			<div className="sidebar-header">
 				<div className="autofit-row sidebar-section">
 					<div className="autofit-col autofit-col-expand">
-						<h4 className="component-title">
+						<p className="component-title">
 							<span className="text-truncate-inline">
 								<span className="text-truncate">{title}</span>
 							</span>
-						</h4>
+						</p>
 					</div>
 					<div className="autofit-col">
 						<ClayButton

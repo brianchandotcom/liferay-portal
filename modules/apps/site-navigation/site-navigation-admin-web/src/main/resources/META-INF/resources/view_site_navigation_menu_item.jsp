@@ -48,17 +48,17 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 					</div>
 
 					<div class="autofit-col autofit-col-expand autofit-col-gutters">
-						<h4 class="list-group-title">
+						<p class="list-group-title">
 							<span class="text-truncate">
 								<a href="javascript:;">
 									<%= HtmlUtil.escape(title) %>
 								</a>
 							</span>
-						</h4>
+						</p>
 
-						<h6 class="list-group-subtitle text-truncate">
+						<p class="h6 list-group-subtitle text-truncate">
 							<%= HtmlUtil.escape(siteNavigationMenuItemType.getSubtitle(siteNavigationMenuItem, locale)) %>
-						</h6>
+						</p>
 					</div>
 				</div>
 

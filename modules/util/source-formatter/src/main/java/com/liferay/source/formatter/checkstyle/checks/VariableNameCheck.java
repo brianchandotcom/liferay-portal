@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
@@ -70,13 +69,8 @@ public class VariableNameCheck extends BaseCheck {
 			String typeName = firstChildDetailAST.getText();
 
 			_checkExceptionVariableName(detailAST, name, typeName);
-
 			_checkInstanceVariableName(detailAST, name, typeName);
-
-			_checkTypeName(
-				detailAST, name, typeName, "DetailAST", "HttpServletRequest",
-				"HttpServletResponse", "ServletRequest", "ServletResponse");
-
+			_checkTypeName(detailAST, name, typeName);
 			_checkTypo(detailAST, name, typeName);
 		}
 
@@ -274,11 +268,13 @@ public class VariableNameCheck extends BaseCheck {
 	}
 
 	private void _checkTypeName(
-		DetailAST detailAST, String variableName, String typeName,
-		String... typeNames) {
+		DetailAST detailAST, String variableName, String typeName) {
+
+		List<String> enforceTypeNames = getAttributeValues(
+			_ENFORCE_TYPE_NAMES_KEY);
 
 		if ((typeName.endsWith("Impl") ||
-			 ArrayUtil.contains(typeNames, typeName)) &&
+			 enforceTypeNames.contains(typeName)) &&
 			!variableName.matches("(?i).*" + typeName + "[0-9]*")) {
 
 			log(
@@ -543,6 +539,8 @@ public class VariableNameCheck extends BaseCheck {
 
 	private static final String _ALLOWED_VARIABLE_NAMES_KEY =
 		"allowedVariableNames";
+
+	private static final String _ENFORCE_TYPE_NAMES_KEY = "enforceTypeNames";
 
 	private static final String _MSG_INCORRECT_ENDING_VARIABLE =
 		"variable.incorrect.ending";

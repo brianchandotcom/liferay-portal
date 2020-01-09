@@ -14,6 +14,8 @@
 
 package com.liferay.analytics.settings.configuration;
 
+import java.util.Dictionary;
+
 /**
  * @author Rachael Koestartyo
  */
@@ -22,6 +24,9 @@ public interface AnalyticsConfigurationTracker {
 	public AnalyticsConfiguration getAnalyticsConfiguration(long companyId);
 
 	public AnalyticsConfiguration getAnalyticsConfiguration(String pid);
+
+	public Dictionary<String, Object> getAnalyticsConfigurationProperties(
+		long companyId);
 
 	public long getCompanyId(String pid);
 

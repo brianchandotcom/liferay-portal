@@ -22,13 +22,19 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Dictionary;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 import org.osgi.framework.Constants;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
@@ -62,6 +68,34 @@ public class AnalyticsConfigurationTrackerImpl
 		}
 
 		return getAnalyticsConfiguration(companyId);
+	}
+
+	@Override
+	public Dictionary<String, Object> getAnalyticsConfigurationProperties(
+		long companyId) {
+
+		Set<Map.Entry<String, Long>> entries = _pidCompanyIdMapping.entrySet();
+
+		Stream<Map.Entry<String, Long>> stream = entries.stream();
+
+		String pid = stream.filter(
+			entry -> Objects.equals(entry.getValue(), companyId)
+		).map(
+			Map.Entry::getKey
+		).findFirst(
+		).orElse(
+			null
+		);
+
+		try {
+			Configuration configuration = _configurationAdmin.getConfiguration(
+				pid, "?");
+
+			return configuration.getProperties();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -109,6 +143,10 @@ public class AnalyticsConfigurationTrackerImpl
 
 	private final Map<Long, AnalyticsConfiguration> _analyticsConfigurations =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
 	private final Map<String, Long> _pidCompanyIdMapping =
 		new ConcurrentHashMap<>();
 	private volatile AnalyticsConfiguration _systemAnalyticsConfiguration;

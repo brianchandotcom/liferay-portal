@@ -43,6 +43,8 @@ public class AccountScreenNavigationEntryConstants {
 
 	public static final String ENTRY_KEY_INFORMATION = "information";
 
+	public static final String ENTRY_KEY_PASSWORD = "password";
+
 	public static final String ENTRY_KEY_USERS = "users";
 
 	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY =

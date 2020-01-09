@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -130,15 +130,15 @@ public class AppModelPermissionResourceImpl
 
 	private void _checkPortletPermissions() throws PortalException {
 		if (_portletResourcePermission.contains(
-				GuestOrUserUtil.getPermissionChecker(),
+				PermissionThreadLocal.getPermissionChecker(),
 				contextCompany.getGroupId(), ActionKeys.MANAGE)) {
 
 			return;
 		}
 
 		_portletResourcePermission.check(
-			GuestOrUserUtil.getPermissionChecker(), contextCompany.getGroupId(),
-			ActionKeys.PERMISSIONS);
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getGroupId(), ActionKeys.PERMISSIONS);
 	}
 
 	private com.liferay.data.engine.rest.client.dto.v2_0.DataModelPermission[]

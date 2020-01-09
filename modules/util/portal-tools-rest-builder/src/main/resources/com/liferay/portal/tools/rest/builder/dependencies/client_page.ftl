@@ -115,6 +115,7 @@ public class Page<T> {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					PageJSONParser pageJSONParser = new PageJSONParser(_toDTOFunction);
+
 					page.setActions(pageJSONParser.parseToMap((String)jsonParserFieldValue));
 				}
 			}

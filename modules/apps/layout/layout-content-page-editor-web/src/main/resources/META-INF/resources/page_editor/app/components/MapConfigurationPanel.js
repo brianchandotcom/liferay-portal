@@ -17,12 +17,12 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useContext, useState, useEffect} from 'react';
 
+import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 import addMappedInfoItem from '../actions/addMappedInfoItem';
 import {COMPATIBLE_TYPES} from '../config/constants/compatibleTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import AssetService from '../services/AssetService';
-import {openInfoItemSelector} from './openInfoItemSelector';
 
 const MAPPING_SOURCE_TYPE_IDS = {
 	content: 'content',

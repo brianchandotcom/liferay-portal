@@ -135,11 +135,11 @@ public class StagingUtil {
 	}
 
 	public static JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e,
+		Locale locale, Exception exception,
 		ExportImportConfiguration exportImportConfiguration) {
 
 		return _staging.getExceptionMessagesJSONObject(
-			locale, e, exportImportConfiguration);
+			locale, exception, exportImportConfiguration);
 	}
 
 	public static Group getLiveGroup(Group group) {

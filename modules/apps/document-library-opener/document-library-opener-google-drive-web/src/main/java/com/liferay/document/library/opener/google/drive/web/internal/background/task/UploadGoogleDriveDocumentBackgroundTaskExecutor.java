@@ -125,7 +125,9 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 	}
 
 	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
+	public String handleException(
+		BackgroundTask backgroundTask, Exception exception) {
+
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 

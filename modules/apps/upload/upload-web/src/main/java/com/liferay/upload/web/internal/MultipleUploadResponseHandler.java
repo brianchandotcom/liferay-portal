@@ -58,17 +58,17 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 
 	@Override
 	public JSONObject onFailure(
-			PortletRequest portletRequest, PortalException pe)
+			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (pe instanceof AntivirusScannerException ||
-			pe instanceof DuplicateFileEntryException ||
-			pe instanceof FileExtensionException ||
-			pe instanceof FileNameException ||
-			pe instanceof FileSizeException ||
-			pe instanceof UploadRequestSizeException) {
+		if (portalException instanceof AntivirusScannerException ||
+			portalException instanceof DuplicateFileEntryException ||
+			portalException instanceof FileExtensionException ||
+			portalException instanceof FileNameException ||
+			portalException instanceof FileSizeException ||
+			portalException instanceof UploadRequestSizeException) {
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
@@ -77,8 +77,9 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (pe instanceof AntivirusScannerException) {
-				AntivirusScannerException ase = (AntivirusScannerException)pe;
+			if (portalException instanceof AntivirusScannerException) {
+				AntivirusScannerException ase =
+					(AntivirusScannerException)portalException;
 
 				errorMessage = themeDisplay.translate(ase.getMessageKey());
 
@@ -86,24 +87,24 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
 			}
 
-			if (pe instanceof DuplicateFileEntryException) {
+			if (portalException instanceof DuplicateFileEntryException) {
 				errorMessage = themeDisplay.translate(
 					"please-enter-a-unique-document-name");
 				errorType =
 					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 			}
-			else if (pe instanceof FileExtensionException) {
+			else if (portalException instanceof FileExtensionException) {
 				errorMessage = themeDisplay.translate(
 					"please-enter-a-file-with-a-valid-extension-x",
 					_getAllowedFileExtensions());
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}
-			else if (pe instanceof FileNameException) {
+			else if (portalException instanceof FileNameException) {
 				errorMessage = themeDisplay.translate(
 					"please-enter-a-file-with-a-valid-file-name");
 			}
-			else if (pe instanceof FileSizeException) {
+			else if (portalException instanceof FileSizeException) {
 				errorMessage = themeDisplay.translate(
 					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
 						"than-x",
@@ -111,7 +112,7 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 						_dlValidator.getMaxAllowableSize(),
 						themeDisplay.getLocale()));
 			}
-			else if (pe instanceof UploadRequestSizeException) {
+			else if (portalException instanceof UploadRequestSizeException) {
 				errorType =
 					ServletResponseConstants.SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
 			}

@@ -45,7 +45,7 @@ public class GroupExceptionRequestHandler {
 
 	public void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException pe)
+			PortalException portalException)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -53,19 +53,21 @@ public class GroupExceptionRequestHandler {
 
 		String errorMessage = null;
 
-		if (pe instanceof DuplicateGroupException) {
+		if (portalException instanceof DuplicateGroupException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(), "please-enter-a-unique-name");
 		}
-		else if (pe instanceof GroupInheritContentException) {
+		else if (portalException instanceof GroupInheritContentException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"this-site-cannot-inherit-content-from-its-parent-site");
 		}
-		else if (pe instanceof GroupKeyException) {
+		else if (portalException instanceof GroupKeyException) {
 			errorMessage = _handleGroupKeyException(actionRequest);
 		}
-		else if (pe instanceof GroupParentException.MustNotBeOwnParent) {
+		else if (portalException instanceof
+					GroupParentException.MustNotBeOwnParent) {
+
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"this-site-cannot-inherit-content-from-its-parent-site");

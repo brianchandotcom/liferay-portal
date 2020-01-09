@@ -27,7 +27,7 @@ import javax.portlet.PortletRequest;
 public interface UploadResponseHandler {
 
 	public JSONObject onFailure(
-			PortletRequest portletRequest, PortalException pe)
+			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException;
 
 	public JSONObject onSuccess(

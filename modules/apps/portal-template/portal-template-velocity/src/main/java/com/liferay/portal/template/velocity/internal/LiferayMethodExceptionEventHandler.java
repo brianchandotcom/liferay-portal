@@ -36,7 +36,7 @@ public class LiferayMethodExceptionEventHandler
 	@Override
 	public Object methodException(
 			@SuppressWarnings("rawtypes") Class clazz, String method,
-			Exception e)
+			Exception exception)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(9);
@@ -46,12 +46,12 @@ public class LiferayMethodExceptionEventHandler
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 		sb.append("exception=");
-		sb.append(e);
+		sb.append(exception);
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append(getKeyValuePair(clazz));
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
-		_log.error(sb.toString(), e);
+		_log.error(sb.toString(), exception);
 
 		return null;
 	}

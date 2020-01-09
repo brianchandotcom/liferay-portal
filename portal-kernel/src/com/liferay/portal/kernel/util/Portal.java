@@ -1200,22 +1200,23 @@ public interface Portal {
 	public String resetPortletParameters(String url, String portletId);
 
 	public void sendError(
-			Exception e, ActionRequest actionRequest,
+			Exception exception, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws IOException;
 
 	public void sendError(
-			Exception e, HttpServletRequest httpServletRequest,
+			Exception exception, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException;
 
 	public void sendError(
-			int status, Exception e, ActionRequest actionRequest,
+			int status, Exception exception, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws IOException;
 
 	public void sendError(
-			int status, Exception e, HttpServletRequest httpServletRequest,
+			int status, Exception exception,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException;
 

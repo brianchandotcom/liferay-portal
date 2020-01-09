@@ -34,9 +34,9 @@ public class RecordCompletionHandler<A> implements CompletionHandler<A> {
 	}
 
 	@Override
-	public void failed(A attachment, IOException ioe) {
+	public void failed(A attachment, IOException ioException) {
 		_attachment = attachment;
-		_ioe = ioe;
+		_ioe = ioException;
 
 		_failedCountDownLatch.countDown();
 	}

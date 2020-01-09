@@ -68,7 +68,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-						Path dirPath, IOException ioe)
+						Path dirPath, IOException ioException)
 					throws IOException {
 
 					Files.delete(dirPath);

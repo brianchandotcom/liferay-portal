@@ -264,36 +264,37 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 	 */
 	protected void handleUploadException(
 			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse, String cmd, Exception e)
+			ActionResponse actionResponse, String cmd, Exception exception)
 		throws Exception {
 
-		if (e instanceof AssetCategoryException ||
-			e instanceof AssetTagException) {
+		if (exception instanceof AssetCategoryException ||
+			exception instanceof AssetTagException) {
 
-			SessionErrors.add(actionRequest, e.getClass(), e);
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
-		else if (e instanceof AntivirusScannerException ||
-				 e instanceof DuplicateFileEntryException ||
-				 e instanceof DuplicateFolderNameException ||
-				 e instanceof FileExtensionException ||
-				 e instanceof FileMimeTypeException ||
-				 e instanceof FileNameException ||
-				 e instanceof FileSizeException ||
-				 e instanceof LiferayFileItemException ||
-				 e instanceof NoSuchFolderException ||
-				 e instanceof SourceFileNameException ||
-				 e instanceof StorageFieldRequiredException ||
-				 e instanceof UploadRequestSizeException) {
+		else if (exception instanceof AntivirusScannerException ||
+				 exception instanceof DuplicateFileEntryException ||
+				 exception instanceof DuplicateFolderNameException ||
+				 exception instanceof FileExtensionException ||
+				 exception instanceof FileMimeTypeException ||
+				 exception instanceof FileNameException ||
+				 exception instanceof FileSizeException ||
+				 exception instanceof LiferayFileItemException ||
+				 exception instanceof NoSuchFolderException ||
+				 exception instanceof SourceFileNameException ||
+				 exception instanceof StorageFieldRequiredException ||
+				 exception instanceof UploadRequestSizeException) {
 
 			if (!cmd.equals(Constants.ADD_DYNAMIC) &&
 				!cmd.equals(Constants.ADD_MULTIPLE) &&
 				!cmd.equals(Constants.ADD_TEMP)) {
 
-				if (e instanceof AntivirusScannerException) {
-					SessionErrors.add(actionRequest, e.getClass(), e);
+				if (exception instanceof AntivirusScannerException) {
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass());
+					SessionErrors.add(actionRequest, exception.getClass());
 				}
 
 				return;
@@ -302,12 +303,12 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				hideDefaultErrorMessage(actionRequest);
 			}
 
-			if (e instanceof AntivirusScannerException ||
-				e instanceof DuplicateFileEntryException ||
-				e instanceof FileExtensionException ||
-				e instanceof FileNameException ||
-				e instanceof FileSizeException ||
-				e instanceof UploadRequestSizeException) {
+			if (exception instanceof AntivirusScannerException ||
+				exception instanceof DuplicateFileEntryException ||
+				exception instanceof FileExtensionException ||
+				exception instanceof FileNameException ||
+				exception instanceof FileSizeException ||
+				exception instanceof UploadRequestSizeException) {
 
 				HttpServletResponse httpServletResponse =
 					_portal.getHttpServletResponse(actionResponse);
@@ -322,9 +323,9 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				if (e instanceof AntivirusScannerException) {
+				if (exception instanceof AntivirusScannerException) {
 					AntivirusScannerException ase =
-						(AntivirusScannerException)e;
+						(AntivirusScannerException)exception;
 
 					errorMessage = themeDisplay.translate(ase.getMessageKey());
 
@@ -332,13 +333,13 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 						ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
 				}
 
-				if (e instanceof DuplicateFileEntryException) {
+				if (exception instanceof DuplicateFileEntryException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-unique-document-name");
 					errorType =
 						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 				}
-				else if (e instanceof FileExtensionException) {
+				else if (exception instanceof FileExtensionException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-extension-x",
 						StringUtil.merge(
@@ -347,12 +348,12 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					errorType =
 						ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 				}
-				else if (e instanceof FileNameException) {
+				else if (exception instanceof FileNameException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-name");
 					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 				}
-				else if (e instanceof FileSizeException) {
+				else if (exception instanceof FileSizeException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-" +
 							"larger-than-x",
@@ -372,39 +373,40 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse, jsonObject);
 			}
 
-			if (e instanceof AntivirusScannerException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
+			if (exception instanceof AntivirusScannerException) {
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 		}
-		else if (e instanceof DuplicateLockException ||
-				 e instanceof InvalidFileVersionException ||
-				 e instanceof NoSuchFileEntryException ||
-				 e instanceof PrincipalException) {
+		else if (exception instanceof DuplicateLockException ||
+				 exception instanceof InvalidFileVersionException ||
+				 exception instanceof NoSuchFileEntryException ||
+				 exception instanceof PrincipalException) {
 
-			if (e instanceof DuplicateLockException) {
-				DuplicateLockException dle = (DuplicateLockException)e;
+			if (exception instanceof DuplicateLockException) {
+				DuplicateLockException dle = (DuplicateLockException)exception;
 
 				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
 			}
 			else {
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/html/porltet/document_library/error.jsp");
 		}
 		else {
-			Throwable cause = e.getCause();
+			Throwable cause = exception.getCause();
 
 			if (cause instanceof DuplicateFileEntryException) {
 				SessionErrors.add(
 					actionRequest, DuplicateFileEntryException.class);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

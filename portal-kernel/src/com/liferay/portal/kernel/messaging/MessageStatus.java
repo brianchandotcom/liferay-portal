@@ -48,9 +48,9 @@ public class MessageStatus implements Serializable {
 		return false;
 	}
 
-	public void setException(Exception e) {
-		_exceptionMessage = e.getMessage();
-		_exceptionStackTrace = StackTraceUtil.getStackTrace(e);
+	public void setException(Exception exception) {
+		_exceptionMessage = exception.getMessage();
+		_exceptionStackTrace = StackTraceUtil.getStackTrace(exception);
 	}
 
 	public void setPayload(Object payload) {

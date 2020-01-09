@@ -59,8 +59,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletResponseUtil {
 
-	public static boolean isClientAbortException(IOException ioe) {
-		Class<?> clazz = ioe.getClass();
+	public static boolean isClientAbortException(IOException ioException) {
+		Class<?> clazz = ioException.getClass();
 
 		String className = clazz.getName();
 
@@ -548,16 +548,18 @@ public class ServletResponseUtil {
 		}
 	}
 
-	private static void _checkSocketException(IOException ioe)
+	private static void _checkSocketException(IOException ioException)
 		throws IOException {
 
-		if ((ioe instanceof SocketException) || isClientAbortException(ioe)) {
+		if ((ioException instanceof SocketException) ||
+			isClientAbortException(ioException)) {
+
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 		else {
-			throw ioe;
+			throw ioException;
 		}
 	}
 

@@ -89,7 +89,8 @@ public class StubHolder<T> {
 				RegistrationReference registrationReference)
 			throws Exception;
 
-		public T onCreationFailure(String stubId, T originalT, Exception e);
+		public T onCreationFailure(
+			String stubId, T originalT, Exception exception);
 
 		public T onInvalidation(String stubId, T originalT, T stub);
 

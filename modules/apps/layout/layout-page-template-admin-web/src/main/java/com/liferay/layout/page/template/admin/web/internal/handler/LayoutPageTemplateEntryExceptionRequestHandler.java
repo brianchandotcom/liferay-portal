@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutPageTemplateEntryExceptionRequestHandler {
 
 	public JSONObject createErrorJSONObject(
-		ActionRequest actionRequest, PortalException pe) {
+		ActionRequest actionRequest, PortalException portalException) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -54,34 +54,34 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (pe instanceof
+		if (portalException instanceof
 				LayoutPageTemplateEntryNameException.MustNotBeDuplicate) {
 
 			errorMessage = LanguageUtil.get(
 				resourceBundle,
 				"a-page-template-entry-with-that-name-already-exists");
 		}
-		else if (pe instanceof
+		else if (portalException instanceof
 					LayoutPageTemplateEntryNameException.MustNotBeNull) {
 
 			errorMessage = LanguageUtil.get(
 				resourceBundle, "name-must-not-be-empty");
 		}
-		else if (pe instanceof
+		else if (portalException instanceof
 					LayoutPageTemplateEntryNameException.
 						MustNotContainInvalidCharacters) {
 
 			LayoutPageTemplateEntryNameException.MustNotContainInvalidCharacters
 				lptene =
 					(LayoutPageTemplateEntryNameException.
-						MustNotContainInvalidCharacters)pe;
+						MustNotContainInvalidCharacters)portalException;
 
 			errorMessage = LanguageUtil.format(
 				resourceBundle,
 				"name-cannot-contain-the-following-invalid-character-x",
 				lptene.character);
 		}
-		else if (pe instanceof
+		else if (portalException instanceof
 					LayoutPageTemplateEntryNameException.
 						MustNotExceedMaximumSize) {
 
@@ -99,10 +99,11 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 
 	public void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException pe)
+			PortalException portalException)
 		throws Exception {
 
-		JSONObject errorJSONObject = createErrorJSONObject(actionRequest, pe);
+		JSONObject errorJSONObject = createErrorJSONObject(
+			actionRequest, portalException);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, errorJSONObject);

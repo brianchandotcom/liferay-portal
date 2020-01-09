@@ -60,11 +60,11 @@ public class FileHelperUtil {
 
 						@Override
 						public FileVisitResult postVisitDirectory(
-								Path dir, IOException ioe)
+								Path dir, IOException ioException)
 							throws IOException {
 
-							if ((ioe != null) && !quiet) {
-								throw ioe;
+							if ((ioException != null) && !quiet) {
+								throw ioException;
 							}
 
 							Files.delete(dir);
@@ -85,14 +85,16 @@ public class FileHelperUtil {
 
 						@Override
 						public FileVisitResult visitFileFailed(
-								Path file, IOException ioe)
+								Path file, IOException ioException)
 							throws IOException {
 
-							if (quiet || (ioe instanceof NoSuchFileException)) {
+							if (quiet ||
+								(ioException instanceof NoSuchFileException)) {
+
 								return FileVisitResult.CONTINUE;
 							}
 
-							throw ioe;
+							throw ioException;
 						}
 
 					});
@@ -130,7 +132,7 @@ public class FileHelperUtil {
 
 					@Override
 					public FileVisitResult postVisitDirectory(
-							Path dir, IOException ioe)
+							Path dir, IOException ioException)
 						throws IOException {
 
 						Files.setLastModifiedTime(

@@ -49,7 +49,7 @@ public class LayoutExceptionRequestHandler {
 
 	public void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException pe)
+			PortalException portalException)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -57,8 +57,9 @@ public class LayoutExceptionRequestHandler {
 
 		String errorMessage = null;
 
-		if (pe instanceof AssetCategoryException) {
-			AssetCategoryException ace = (AssetCategoryException)pe;
+		if (portalException instanceof AssetCategoryException) {
+			AssetCategoryException ace =
+				(AssetCategoryException)portalException;
 
 			AssetVocabulary assetVocabulary = ace.getVocabulary();
 
@@ -84,8 +85,8 @@ public class LayoutExceptionRequestHandler {
 					assetVocabularyTitle);
 			}
 		}
-		else if (pe instanceof LayoutNameException) {
-			LayoutNameException lne = (LayoutNameException)pe;
+		else if (portalException instanceof LayoutNameException) {
+			LayoutNameException lne = (LayoutNameException)portalException;
 
 			if (lne.getType() == LayoutNameException.TOO_LONG) {
 				errorMessage = LanguageUtil.format(
@@ -100,8 +101,8 @@ public class LayoutExceptionRequestHandler {
 					"please-enter-a-valid-name-for-the-page");
 			}
 		}
-		else if (pe instanceof LayoutTypeException) {
-			LayoutTypeException lte = (LayoutTypeException)pe;
+		else if (portalException instanceof LayoutTypeException) {
+			LayoutTypeException lte = (LayoutTypeException)portalException;
 
 			if ((lte.getType() == LayoutTypeException.FIRST_LAYOUT) ||
 				(lte.getType() == LayoutTypeException.NOT_INSTANCEABLE)) {

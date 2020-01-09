@@ -301,15 +301,15 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 		return _sessionFactory.openSession();
 	}
 
-	protected SystemException processException(Exception e) {
-		if (!(e instanceof ORMException)) {
-			_log.error("Caught unexpected exception", e);
+	protected SystemException processException(Exception exception) {
+		if (!(exception instanceof ORMException)) {
+			_log.error("Caught unexpected exception", exception);
 		}
 		else if (_log.isDebugEnabled()) {
-			_log.debug(e, e);
+			_log.debug(exception, exception);
 		}
 
-		return new SystemException(e);
+		return new SystemException(exception);
 	}
 
 	protected void setDataSource(DataSource dataSource) {

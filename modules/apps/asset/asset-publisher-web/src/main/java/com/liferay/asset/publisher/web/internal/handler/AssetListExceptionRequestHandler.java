@@ -37,7 +37,7 @@ public class AssetListExceptionRequestHandler {
 
 	public void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException pe)
+			PortalException portalException)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -45,10 +45,12 @@ public class AssetListExceptionRequestHandler {
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (pe instanceof AssetListEntryTitleException) {
+		if (portalException instanceof AssetListEntryTitleException) {
 			errorMessage = "please-enter-a-valid-title";
 		}
-		else if (pe instanceof DuplicateAssetListEntryTitleException) {
+		else if (portalException instanceof
+					DuplicateAssetListEntryTitleException) {
+
 			errorMessage = "a-content-set-with-that-title-already-exists";
 		}
 

@@ -456,9 +456,9 @@ public class SourceFormatter {
 	}
 
 	private static CheckstyleException _getNestedCheckstyleException(
-		Exception e) {
+		Exception exception) {
 
-		Throwable cause = e;
+		Throwable cause = exception;
 
 		while (true) {
 			if (cause == null) {

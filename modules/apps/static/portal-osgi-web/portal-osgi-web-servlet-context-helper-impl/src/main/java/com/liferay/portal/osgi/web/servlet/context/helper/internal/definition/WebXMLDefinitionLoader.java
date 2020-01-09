@@ -449,8 +449,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	}
 
 	@Override
-	public void error(SAXParseException e) {
-		_log.error(_bundle + ": " + e.getMessage(), e);
+	public void error(SAXParseException saxParseException) {
+		_log.error(
+			_bundle + ": " + saxParseException.getMessage(), saxParseException);
 	}
 
 	public WebXMLDefinition loadWebXML() throws Exception {

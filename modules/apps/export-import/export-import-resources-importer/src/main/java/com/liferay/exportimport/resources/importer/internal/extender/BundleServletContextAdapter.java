@@ -293,7 +293,7 @@ public class BundleServletContextAdapter
 	}
 
 	@Override
-	public void log(Exception e, String s) {
+	public void log(Exception exception, String s) {
 		throw new UnsupportedOperationException();
 	}
 

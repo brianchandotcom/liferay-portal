@@ -656,9 +656,9 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		new GroupByRequestFactoryImpl();
 
 	private boolean _shouldIgnoreSearchEngineGlitchAndRetry(
-		RuntimeException re) {
+		RuntimeException runtimeException) {
 
-		Throwable t1 = re.getCause();
+		Throwable t1 = runtimeException.getCause();
 
 		Throwable t2 = t1.getCause();
 

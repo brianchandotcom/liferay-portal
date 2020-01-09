@@ -160,10 +160,10 @@ public class PageContextWrapper extends PageContext {
 	}
 
 	@Override
-	public void handlePageException(Exception e)
+	public void handlePageException(Exception exception)
 		throws IOException, ServletException {
 
-		_pageContext.handlePageException(e);
+		_pageContext.handlePageException(exception);
 	}
 
 	@Override

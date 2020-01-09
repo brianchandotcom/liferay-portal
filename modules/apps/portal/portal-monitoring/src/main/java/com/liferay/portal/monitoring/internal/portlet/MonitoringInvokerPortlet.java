@@ -319,21 +319,22 @@ public class MonitoringInvokerPortlet
 	}
 
 	private void _processException(
-			boolean monitorPortletRequest, DataSample dataSample, Exception e)
+			boolean monitorPortletRequest, DataSample dataSample,
+			Exception exception)
 		throws IOException, PortletException {
 
 		if (monitorPortletRequest && (dataSample != null)) {
 			dataSample.capture(RequestStatus.ERROR);
 		}
 
-		if (e instanceof IOException) {
-			throw (IOException)e;
+		if (exception instanceof IOException) {
+			throw (IOException)exception;
 		}
-		else if (e instanceof PortletException) {
-			throw (PortletException)e;
+		else if (exception instanceof PortletException) {
+			throw (PortletException)exception;
 		}
 		else {
-			throw new PortletException("Unable to process portlet", e);
+			throw new PortletException("Unable to process portlet", exception);
 		}
 	}
 

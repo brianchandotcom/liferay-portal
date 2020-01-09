@@ -45,9 +45,11 @@ public abstract class BaseExportImportBackgroundTaskExecutor
 	}
 
 	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
+	public String handleException(
+		BackgroundTask backgroundTask, Exception exception) {
+
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			getLocale(backgroundTask), e,
+			getLocale(backgroundTask), exception,
 			getExportImportConfiguration(backgroundTask));
 
 		return jsonObject.toString();

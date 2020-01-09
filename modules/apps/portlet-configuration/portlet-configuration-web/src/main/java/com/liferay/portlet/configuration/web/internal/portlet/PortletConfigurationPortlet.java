@@ -1062,10 +1062,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	private void _handleException(
 			RenderRequest renderRequest, RenderResponse renderResponse,
-			Exception e)
+			Exception exception)
 		throws IOException, PortletException {
 
-		SessionErrors.add(renderRequest, e.getClass());
+		SessionErrors.add(renderRequest, exception.getClass());
 
 		include("/error.jsp", renderRequest, renderResponse);
 	}

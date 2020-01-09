@@ -855,7 +855,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-						Path dirPath, IOException ioe)
+						Path dirPath, IOException ioException)
 					throws IOException {
 
 					String name = dirPath.toString();

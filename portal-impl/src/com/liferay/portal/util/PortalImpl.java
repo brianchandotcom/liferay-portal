@@ -6473,25 +6473,25 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void sendError(
-			Exception e, ActionRequest actionRequest,
+			Exception exception, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws IOException {
 
-		sendError(0, e, actionRequest, actionResponse);
+		sendError(0, exception, actionRequest, actionResponse);
 	}
 
 	@Override
 	public void sendError(
-			Exception e, HttpServletRequest httpServletRequest,
+			Exception exception, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		sendError(0, e, httpServletRequest, httpServletResponse);
+		sendError(0, exception, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
 	public void sendError(
-			int status, Exception e, ActionRequest actionRequest,
+			int status, Exception exception, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws IOException {
 
@@ -6502,7 +6502,7 @@ public class PortalImpl implements Portal {
 		sb.append(status);
 		sb.append("&exception=");
 
-		Class<?> clazz = e.getClass();
+		Class<?> clazz = exception.getClass();
 
 		sb.append(clazz.getName());
 
@@ -6514,7 +6514,8 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void sendError(
-			int status, Exception e, HttpServletRequest httpServletRequest,
+			int status, Exception exception,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
@@ -6525,32 +6526,32 @@ public class PortalImpl implements Portal {
 			_log.debug(
 				StringBundler.concat(
 					"Current URL ", currentURL, " generates exception: ",
-					e.getMessage()));
+					exception.getMessage()));
 		}
 
-		if (e instanceof NoSuchImageException) {
+		if (exception instanceof NoSuchImageException) {
 			if (_logWebServerServlet.isWarnEnabled()) {
-				_logWebServerServlet.warn(e, e);
+				_logWebServerServlet.warn(exception, exception);
 			}
 		}
-		else if (e instanceof PortalException) {
+		else if (exception instanceof PortalException) {
 			if (_log.isDebugEnabled()) {
-				if (e instanceof NoSuchLayoutException ||
-					e instanceof PrincipalException) {
+				if (exception instanceof NoSuchLayoutException ||
+					exception instanceof PrincipalException) {
 
-					String msg = e.getMessage();
+					String msg = exception.getMessage();
 
 					if (Validator.isNotNull(msg)) {
 						_log.debug(msg);
 					}
 				}
 				else {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}
 		else if (_log.isWarnEnabled()) {
-			_log.warn(e, e);
+			_log.warn(exception, exception);
 		}
 
 		if (httpServletResponse.isCommitted()) {
@@ -6558,11 +6559,11 @@ public class PortalImpl implements Portal {
 		}
 
 		if (status == 0) {
-			if (e instanceof PrincipalException) {
+			if (exception instanceof PrincipalException) {
 				status = HttpServletResponse.SC_FORBIDDEN;
 			}
 			else {
-				Class<?> clazz = e.getClass();
+				Class<?> clazz = exception.getClass();
 
 				String name = clazz.getName();
 
@@ -6580,13 +6581,13 @@ public class PortalImpl implements Portal {
 
 		String redirect = null;
 
-		if ((e instanceof NoSuchGroupException) &&
+		if ((exception instanceof NoSuchGroupException) &&
 			Validator.isNotNull(
 				PropsValues.SITES_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
 			redirect = PropsValues.SITES_FRIENDLY_URL_PAGE_NOT_FOUND;
 		}
-		else if ((e instanceof NoSuchLayoutException) &&
+		else if ((exception instanceof NoSuchLayoutException) &&
 				 Validator.isNotNull(
 					 PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
@@ -6626,7 +6627,7 @@ public class PortalImpl implements Portal {
 
 			httpServletResponse.setStatus(status);
 
-			SessionErrors.add(session, e.getClass(), e);
+			SessionErrors.add(session, exception.getClass(), exception);
 
 			ServletContext servletContext = session.getServletContext();
 
@@ -6638,10 +6639,10 @@ public class PortalImpl implements Portal {
 					httpServletRequest, httpServletResponse);
 			}
 		}
-		else if (e != null) {
+		else if (exception != null) {
 			httpServletResponse.sendError(
 				status,
-				"A " + e.getClass() +
+				"A " + exception.getClass() +
 					" error occurred while processing your request");
 		}
 		else {

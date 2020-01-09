@@ -59,8 +59,8 @@ public class BulkDocumentItemResponse {
 		_aborted = aborted;
 	}
 
-	public void setCause(Exception cause) {
-		_cause = cause;
+	public void setCause(Exception exception) {
+		_cause = exception;
 	}
 
 	public void setFailureMessage(String failureMessage) {

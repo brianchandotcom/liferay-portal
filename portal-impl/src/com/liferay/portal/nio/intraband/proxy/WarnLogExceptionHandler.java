@@ -27,9 +27,9 @@ public class WarnLogExceptionHandler implements ExceptionHandler {
 		new WarnLogExceptionHandler();
 
 	@Override
-	public void onException(Exception e) {
+	public void onException(Exception exception) {
 		if (_log.isWarnEnabled()) {
-			_log.warn(e, e);
+			_log.warn(exception, exception);
 		}
 	}
 

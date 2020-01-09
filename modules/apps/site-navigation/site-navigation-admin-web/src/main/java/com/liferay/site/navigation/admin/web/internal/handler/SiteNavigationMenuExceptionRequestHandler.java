@@ -39,7 +39,7 @@ public class SiteNavigationMenuExceptionRequestHandler {
 
 	public void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException pe)
+			PortalException portalException)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -47,10 +47,10 @@ public class SiteNavigationMenuExceptionRequestHandler {
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (pe instanceof DuplicateSiteNavigationMenuException) {
+		if (portalException instanceof DuplicateSiteNavigationMenuException) {
 			errorMessage = "please-enter-a-unique-name";
 		}
-		else if (pe instanceof SiteNavigationMenuNameException) {
+		else if (portalException instanceof SiteNavigationMenuNameException) {
 			errorMessage = "please-enter-a-valid-name";
 		}
 

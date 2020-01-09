@@ -215,7 +215,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 
 	public Session openSession() throws ORMException;
 
-	public SystemException processException(Exception e);
+	public SystemException processException(Exception exception);
 
 	/**
 	 * Registers a new listener for this model.

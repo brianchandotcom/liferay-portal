@@ -45,16 +45,16 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 	@Override
 	protected String[] doHandleException(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Exception e)
+			HttpServletResponse httpServletResponse, Exception exception)
 		throws AutoLoginException {
 
 		if (_log.isWarnEnabled()) {
-			_log.warn(e, e);
+			_log.warn(exception, exception);
 		}
 
 		removeCookies(httpServletRequest, httpServletResponse);
 
-		throw new AutoLoginException(e);
+		throw new AutoLoginException(exception);
 	}
 
 	@Override

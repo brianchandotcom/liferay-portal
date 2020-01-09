@@ -84,30 +84,32 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 		replaceConfiguration(properties);
 	}
 
-	protected ErrorDisplayContext buildErrorDisplayContext(Exception e) {
+	protected ErrorDisplayContext buildErrorDisplayContext(
+		Exception exception) {
+
 		ErrorDisplayContext errorDisplayContext = new ErrorDisplayContext();
 
-		errorDisplayContext.setException(e);
+		errorDisplayContext.setException(exception);
 
 		boolean error = true;
 
-		if (e instanceof ConnectException) {
+		if (exception instanceof ConnectException) {
 			errorDisplayContext.setConnectExceptionAddress(
 				_xPackMonitoringConfiguration.kibanaURL());
 		}
-		else if (e instanceof PrincipalException.MustBeAuthenticated) {
+		else if (exception instanceof PrincipalException.MustBeAuthenticated) {
 			error = false;
 		}
-		else if (e instanceof PrincipalException.MustHavePermission) {
+		else if (exception instanceof PrincipalException.MustHavePermission) {
 			error = false;
 		}
 
 		if (error) {
-			_log.error(e, e);
+			_log.error(exception, exception);
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -189,13 +191,13 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 	}
 
 	protected void sendError(
-			Exception e, HttpServletRequest httpServletRequest,
+			Exception exception, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
 		httpServletRequest.setAttribute(
 			XPackMonitoringProxyServletWebKeys.ERROR_DISPLAY_CONTEXT,
-			buildErrorDisplayContext(e));
+			buildErrorDisplayContext(exception));
 
 		RequestDispatcher requestDispatcher =
 			httpServletRequest.getRequestDispatcher(

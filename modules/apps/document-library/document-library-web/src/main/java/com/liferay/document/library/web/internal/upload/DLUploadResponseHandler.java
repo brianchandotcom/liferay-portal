@@ -40,10 +40,11 @@ public class DLUploadResponseHandler implements UploadResponseHandler {
 
 	@Override
 	public JSONObject onFailure(
-			PortletRequest portletRequest, PortalException pe)
+			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException {
 
-		return _itemSelectorUploadResponseHandler.onFailure(portletRequest, pe);
+		return _itemSelectorUploadResponseHandler.onFailure(
+			portletRequest, portalException);
 	}
 
 	@Override

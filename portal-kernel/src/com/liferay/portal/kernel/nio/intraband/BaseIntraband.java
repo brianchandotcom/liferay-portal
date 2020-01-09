@@ -549,11 +549,11 @@ public abstract class BaseIntraband implements Intraband {
 		}
 
 		@Override
-		public void failed(Object attachment, IOException ioe) {
+		public void failed(Object attachment, IOException ioException) {
 
 			// Must set before count down to ensure memory visibility
 
-			_ioe = ioe;
+			_ioe = ioException;
 
 			_countDownLatch.countDown();
 		}

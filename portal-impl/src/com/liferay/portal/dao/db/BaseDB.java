@@ -1000,7 +1000,7 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String[] getTemplate();
 
-	protected void handleSQLException(String sql, SQLException sqle)
+	protected void handleSQLException(String sql, SQLException sqlException)
 		throws SQLException {
 
 		if (_log.isDebugEnabled()) {
@@ -1009,18 +1009,18 @@ public abstract class BaseDB implements DB {
 			sb.append("SQL: ");
 			sb.append(sql);
 			sb.append("\nSQL state: ");
-			sb.append(sqle.getSQLState());
+			sb.append(sqlException.getSQLState());
 			sb.append("\nVendor: ");
 			sb.append(getDBType());
 			sb.append("\nVendor error code: ");
-			sb.append(sqle.getErrorCode());
+			sb.append(sqlException.getErrorCode());
 			sb.append("\nVendor error message: ");
-			sb.append(sqle.getMessage());
+			sb.append(sqlException.getMessage());
 
 			_log.debug(sb.toString());
 		}
 
-		throw sqle;
+		throw sqlException;
 	}
 
 	protected String readFile(String fileName) throws IOException {

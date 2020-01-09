@@ -29,11 +29,13 @@ public abstract class BaseSPIBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
 	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		String errorMessage = super.handleException(backgroundTask, e);
+	public String handleException(
+		BackgroundTask backgroundTask, Exception exception) {
+
+		String errorMessage = super.handleException(backgroundTask, exception);
 
 		if (_log.isWarnEnabled()) {
-			_log.warn(errorMessage, e);
+			_log.warn(errorMessage, exception);
 		}
 
 		long spiDefinitionId = MapUtil.getLong(
@@ -46,7 +48,7 @@ public abstract class BaseSPIBackgroundTaskExecutor
 		}
 		catch (Exception ex) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update status", e);
+				_log.warn("Unable to update status", exception);
 			}
 		}
 

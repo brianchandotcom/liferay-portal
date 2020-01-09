@@ -39,20 +39,20 @@ public class PageAttachmentWikiUploadResponseHandler
 
 	@Override
 	public JSONObject onFailure(
-			PortletRequest portletRequest, PortalException pe)
+			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException {
 
 		JSONObject jsonObject = _itemSelectorUploadResponseHandler.onFailure(
-			portletRequest, pe);
+			portletRequest, portalException);
 
 		JSONObject errorJSONObject = null;
 
-		if (pe instanceof WikiAttachmentMimeTypeException) {
+		if (portalException instanceof WikiAttachmentMimeTypeException) {
 			errorJSONObject = JSONUtil.put(
 				"errorType",
 				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION);
 		}
-		else if (pe instanceof WikiAttachmentSizeException) {
+		else if (portalException instanceof WikiAttachmentSizeException) {
 			errorJSONObject = JSONUtil.put(
 				"errorType", ServletResponseConstants.SC_FILE_SIZE_EXCEPTION);
 		}

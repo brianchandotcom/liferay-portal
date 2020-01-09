@@ -110,13 +110,14 @@ public class ContentUtil {
 			LayoutClassedModelUsageLocalServiceUtil.
 				getLayoutClassedModelUsagesByPlid(plid);
 
-		Set<Long> layoutClassedModelUsageIds = new HashSet<>();
+		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
 
 		for (LayoutClassedModelUsage layoutClassedModelUsage :
 				layoutClassedModelUsages) {
 
-			if (layoutClassedModelUsageIds.contains(
-					layoutClassedModelUsage.getLayoutClassedModelUsageId())) {
+			if (uniqueLayoutClassedModelUsageKeys.contains(
+					_generateUniqueLayoutClassedModelUsageKey(
+						layoutClassedModelUsage))) {
 
 				continue;
 			}
@@ -139,11 +140,19 @@ public class ContentUtil {
 				}
 			}
 
-			layoutClassedModelUsageIds.add(
-				layoutClassedModelUsage.getLayoutClassedModelUsageId());
+			uniqueLayoutClassedModelUsageKeys.add(
+				_generateUniqueLayoutClassedModelUsageKey(
+					layoutClassedModelUsage));
 		}
 
 		return mappedContentsJSONArray;
+	}
+
+	private static String _generateUniqueLayoutClassedModelUsageKey(
+		LayoutClassedModelUsage layoutClassedModelUsage) {
+
+		return layoutClassedModelUsage.getClassNameId() + StringPool.DASH +
+			layoutClassedModelUsage.getClassPK();
 	}
 
 	private static JSONObject _getActionsJSONObject(

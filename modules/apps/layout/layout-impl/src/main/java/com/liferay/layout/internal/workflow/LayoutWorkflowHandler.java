@@ -77,6 +77,11 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 	}
 
 	@Override
+	public boolean isVisible() {
+		return false;
+	}
+
+	@Override
 	public Layout updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {

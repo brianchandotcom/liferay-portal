@@ -18,6 +18,7 @@ import React, {useContext, useEffect, useState, useRef} from 'react';
 
 import {ConfigContext} from '../config/index';
 import * as Processors from '../processors/index';
+import selectEditableValueConfig from '../selectors/selectEditableValueConfig';
 import selectEditableValueContent from '../selectors/selectEditableValueContent';
 import {StoreContext} from '../store/index';
 import {useSelectItem} from './Controls';
@@ -26,14 +27,15 @@ import {showFloatingToolbar} from './showFloatingToolbar';
 
 const resolveEditableValue = (state, config, fragmentEntryLinkId, editableId) =>
 	new Promise(resolve => {
-		resolve(
+		resolve([
 			selectEditableValueContent(
 				state,
 				config,
 				fragmentEntryLinkId,
 				editableId
-			)
-		);
+			),
+			selectEditableValueConfig(state, fragmentEntryLinkId, editableId)
+		]);
 	});
 
 function FragmentContent({fragmentEntryLink}, ref) {
@@ -67,13 +69,13 @@ function FragmentContent({fragmentEntryLink}, ref) {
 					config,
 					fragmentEntryLinkId,
 					editable.getAttribute('id')
-				).then(value => {
+				).then(([value, config]) => {
 					if (element) {
 						const processor =
 							Processors[editable.getAttribute('type')] ||
 							Processors.fallback;
 
-						processor.render(editable, value);
+						processor.render(editable, value, config);
 					}
 				});
 			}
@@ -137,7 +139,12 @@ function FragmentContent({fragmentEntryLink}, ref) {
 function initProcessor(element, editableType, config) {
 	const processor = Processors[editableType] || Processors.fallback;
 
-	processor.createEditor(element, () => {}, () => {}, config);
+	processor.createEditor(
+		element,
+		value => processor.render(element, value, {}),
+		() => {},
+		config
+	);
 }
 
 function destroyProcessor(element, editableType) {

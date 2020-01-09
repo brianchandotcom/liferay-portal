@@ -84,6 +84,25 @@ export default {
 	},
 
 	/**
+	 * Updates a config into an item
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {object} options.itemConfig Updated item config
+	 * @param {string} options.itemId id of the item to be updated
+	 * @param {string} options.segmentsExperienceId Segments experience id
+	 * @return {Promise<void>}
+	 */
+	updateItemConfig({config, itemConfig, itemId, segmentsExperienceId}) {
+		const {updateItemConfigURL} = config;
+
+		return serviceFetch(config, updateItemConfigURL, {
+			itemConfig: JSON.stringify(itemConfig),
+			itemId,
+			segmentsExperienceId
+		});
+	},
+
+	/**
 	 * Updates layout's layoutData
 	 * @param {object} options
 	 * @param {object} options.config Application config

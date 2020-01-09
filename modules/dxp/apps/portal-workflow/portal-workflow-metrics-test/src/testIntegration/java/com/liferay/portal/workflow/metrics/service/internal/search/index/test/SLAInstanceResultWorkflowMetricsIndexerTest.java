@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -102,8 +101,6 @@ public class SLAInstanceResultWorkflowMetricsIndexerTest
 				kaleoInstance.getKaleoInstanceId(), "processId",
 				kaleoDefinition.getKaleoDefinitionId());
 		}
-
-		_workflowMetricsSLAProcessMessageListener.receive(new Message());
 
 		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
 				_workflowMetricsSLADefinitions) {

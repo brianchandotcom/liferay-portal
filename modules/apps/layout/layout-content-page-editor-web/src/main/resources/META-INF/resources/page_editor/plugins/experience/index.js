@@ -100,6 +100,51 @@ function updateExperiencePriorityReducer(state, {subtarget, target}) {
 	};
 }
 
+function renderExperiencesSection() {
+	const {Component} = this;
+
+	const selectId = `${this.toolbarId}_${this.toolbarPluginId}`;
+
+	return (
+		<Component>
+			<ExperienceToolbarSection selectId={selectId} />
+		</Component>
+	);
+}
+
+function experiencesActivate() {
+	const reducer = (state, action) => {
+		let nextState = state;
+
+		switch (action.type) {
+			case CREATE_SEGMENTS_EXPERIENCE:
+				nextState = createExperienceReducer(nextState, action.payload);
+				break;
+			case DELETE_SEGMENTS_EXPERIENCE:
+				nextState = deleteExperienceReducer(nextState, action.payload);
+				break;
+			case EDIT_SEGMENTS_EXPERIENCE:
+				nextState = editExperienceReducer(nextState, action.payload);
+				break;
+			case SELECT_SEGMENTS_EXPERIENCE:
+				nextState = selectExperienceReducer(nextState, action.payload);
+				break;
+			case UPDATE_SEGMENTS_EXPERIENCE_PRIORITY:
+				nextState = updateExperiencePriorityReducer(
+					nextState,
+					action.payload
+				);
+				break;
+			default:
+				break;
+		}
+
+		return nextState;
+	};
+
+	this.dispatch(this.Actions.loadReducer(reducer, Experience.name));
+}
+
 /**
  * Entry-point for "Experience" (toolbar drop-down) functionality.
  */
@@ -111,66 +156,14 @@ export default class Experience {
 
 		this.toolbarId = app.config.toolbarId;
 		this.toolbarPluginId = toolbarPlugin.toolbarPluginId;
-	}
 
-	activate() {
-		const reducer = (state, action) => {
-			let nextState = state;
-
-			switch (action.type) {
-				case CREATE_SEGMENTS_EXPERIENCE:
-					nextState = createExperienceReducer(
-						nextState,
-						action.payload
-					);
-					break;
-				case DELETE_SEGMENTS_EXPERIENCE:
-					nextState = deleteExperienceReducer(
-						nextState,
-						action.payload
-					);
-					break;
-				case EDIT_SEGMENTS_EXPERIENCE:
-					nextState = editExperienceReducer(
-						nextState,
-						action.payload
-					);
-					break;
-				case SELECT_SEGMENTS_EXPERIENCE:
-					nextState = selectExperienceReducer(
-						nextState,
-						action.payload
-					);
-					break;
-				case UPDATE_SEGMENTS_EXPERIENCE_PRIORITY:
-					nextState = updateExperiencePriorityReducer(
-						nextState,
-						action.payload
-					);
-					break;
-				default:
-					break;
-			}
-
-			return nextState;
-		};
-
-		this.dispatch(this.Actions.loadReducer(reducer, Experience.name));
+		if (app.store.availableSegmentsExperiences !== null) {
+			this.activate = experiencesActivate.bind(this);
+			this.renderToolbarSection = renderExperiencesSection.bind(this);
+		}
 	}
 
 	deactivate() {
 		this.dispatch(this.Actions.unloadReducer(Experience.name));
-	}
-
-	renderToolbarSection() {
-		const {Component} = this;
-
-		const selectId = `${this.toolbarId}_${this.toolbarPluginId}`;
-
-		return (
-			<Component>
-				<ExperienceToolbarSection selectId={selectId} />
-			</Component>
-		);
 	}
 }

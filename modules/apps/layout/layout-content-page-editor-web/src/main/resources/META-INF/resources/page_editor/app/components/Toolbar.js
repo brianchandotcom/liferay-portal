@@ -37,7 +37,8 @@ function ToolbarBody() {
 	const load = useLoad();
 	const store = useContext(StoreContext);
 
-	const {portletNamespace} = useContext(ConfigContext);
+	const {portletNamespace} = config;
+	const {segmentsExperienceId} = store;
 
 	const {draft, singleSegmentsExperienceMode} = store;
 
@@ -146,7 +147,7 @@ function ToolbarBody() {
 						dispatch={dispatch}
 						fragmentEntryLinks={store.fragmentEntryLinks}
 						languageId={store.languageId}
-						segmentsExperienceId={store.segmentsExperienceId}
+						segmentsExperienceId={segmentsExperienceId}
 					/>
 				</li>
 			</ul>

@@ -17,6 +17,8 @@ package com.liferay.app.builder.rest.internal.resource.v1_0;
 import com.liferay.app.builder.constants.AppBuilderConstants;
 import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
 import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataModelPermission;
+import com.liferay.data.engine.rest.client.resource.v2_0.DataModelPermissionResource;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -97,9 +99,9 @@ public class AppModelPermissionResourceImpl
 				contextCompany.getCompanyId(), appModelPermissions, siteGroupId,
 				AppBuilderConstants.RESOURCE_NAME));
 
-		for (AppModelPermission AppModelPermission : appModelPermissions) {
+		for (AppModelPermission appModelPermission : appModelPermissions) {
 			if (!ArrayUtil.contains(
-					AppModelPermission.getActionIds(), ActionKeys.MANAGE,
+					appModelPermission.getActionIds(), ActionKeys.MANAGE,
 					true)) {
 
 				continue;
@@ -108,23 +110,20 @@ public class AppModelPermissionResourceImpl
 			String sessionId = CookieKeys.getCookie(
 				contextHttpServletRequest, CookieKeys.JSESSIONID);
 
-			com.liferay.data.engine.rest.client.resource.v2_0.
-				DataModelPermissionResource dataModelPermissionResource =
-					com.liferay.data.engine.rest.client.resource.v2_0.
-						DataModelPermissionResource.builder(
-						).endpoint(
-							_portal.getHost(contextHttpServletRequest),
-							contextHttpServletRequest.getServerPort(),
-							contextHttpServletRequest.getScheme()
-						).header(
-							"Cookie", "JSESSIONID=" + sessionId
-						).parameter(
-							"p_auth",
-							AuthTokenUtil.getToken(contextHttpServletRequest)
-						).build();
+			DataModelPermissionResource dataModelPermissionResource =
+				DataModelPermissionResource.builder(
+				).endpoint(
+					_portal.getHost(contextHttpServletRequest),
+					contextHttpServletRequest.getServerPort(),
+					contextHttpServletRequest.getScheme()
+				).header(
+					"Cookie", "JSESSIONID=" + sessionId
+				).parameter(
+					"p_auth", AuthTokenUtil.getToken(contextHttpServletRequest)
+				).build();
 
 			dataModelPermissionResource.putDataModelPermission(
-				_getDataModelPermissions(AppModelPermission.getRoleName()));
+				_getDataModelPermissions(appModelPermission.getRoleName()));
 		}
 	}
 
@@ -141,15 +140,11 @@ public class AppModelPermissionResourceImpl
 			contextCompany.getGroupId(), ActionKeys.PERMISSIONS);
 	}
 
-	private com.liferay.data.engine.rest.client.dto.v2_0.DataModelPermission[]
-		_getDataModelPermissions(String dataModelPermissionRoleName) {
+	private DataModelPermission[] _getDataModelPermissions(
+		String dataModelPermissionRoleName) {
 
-		return
-			new com.liferay.data.engine.rest.client.dto.v2_0.DataModelPermission
-				[] {
-			new com.liferay.data.engine.rest.client.dto.v2_0.
-				DataModelPermission() {
-
+		return new DataModelPermission[] {
+			new DataModelPermission() {
 				{
 					actionIds = new String[] {
 						"ADD_DATA_DEFINITION", "ADD_DATA_RECORD_COLLECTION",
@@ -169,8 +164,8 @@ public class AppModelPermissionResourceImpl
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			new String[0], new String[0], resourceName);
 
-		for (AppModelPermission AppModelPermission : appModelPermissions) {
-			String[] actionIds = AppModelPermission.getActionIds();
+		for (AppModelPermission appModelPermission : appModelPermissions) {
+			String[] actionIds = appModelPermission.getActionIds();
 
 			if (actionIds.length == 0) {
 				List<ResourceAction> resourceActions =
@@ -178,7 +173,7 @@ public class AppModelPermissionResourceImpl
 						resourceName);
 
 				Role role = _roleLocalService.getRole(
-					companyId, AppModelPermission.getRoleName());
+					companyId, appModelPermission.getRoleName());
 
 				for (ResourceAction resourceAction : resourceActions) {
 					_resourcePermissionLocalService.removeResourcePermission(
@@ -192,8 +187,8 @@ public class AppModelPermissionResourceImpl
 			}
 
 			modelPermissions.addRolePermissions(
-				AppModelPermission.getRoleName(),
-				AppModelPermission.getActionIds());
+				appModelPermission.getRoleName(),
+				appModelPermission.getActionIds());
 		}
 
 		return modelPermissions;

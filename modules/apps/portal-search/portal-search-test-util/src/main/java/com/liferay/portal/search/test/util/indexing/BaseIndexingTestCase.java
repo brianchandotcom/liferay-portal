@@ -472,8 +472,8 @@ public abstract class BaseIndexingTestCase {
 
 	}
 
-	private void _handle(SearchException se) {
-		Throwable t = se.getCause();
+	private void _handle(SearchException searchException) {
+		Throwable t = searchException.getCause();
 
 		if (t instanceof RuntimeException) {
 			throw (RuntimeException)t;

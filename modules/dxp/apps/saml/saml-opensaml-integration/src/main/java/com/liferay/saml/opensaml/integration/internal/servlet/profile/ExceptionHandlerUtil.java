@@ -23,15 +23,17 @@ import com.liferay.saml.runtime.SamlException;
  */
 public class ExceptionHandlerUtil {
 
-	public static void handleException(Exception e) throws PortalException {
-		if (e instanceof PortalException) {
-			throw (PortalException)e;
+	public static void handleException(Exception exception)
+		throws PortalException {
+
+		if (exception instanceof PortalException) {
+			throw (PortalException)exception;
 		}
-		else if (e instanceof SystemException) {
-			throw (SystemException)e;
+		else if (exception instanceof SystemException) {
+			throw (SystemException)exception;
 		}
 		else {
-			throw new SamlException(e);
+			throw new SamlException(exception);
 		}
 	}
 

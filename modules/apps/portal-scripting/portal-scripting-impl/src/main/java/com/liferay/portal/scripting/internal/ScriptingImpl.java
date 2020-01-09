@@ -112,10 +112,10 @@ public class ScriptingImpl implements Scripting {
 		return _scriptingExecutors.keySet();
 	}
 
-	protected String getErrorMessage(String script, Exception e) {
+	protected String getErrorMessage(String script, Exception exception) {
 		StringBundler sb = new StringBundler();
 
-		sb.append(e.getMessage());
+		sb.append(exception.getMessage());
 		sb.append(StringPool.NEW_LINE);
 
 		try {
@@ -139,7 +139,7 @@ public class ScriptingImpl implements Scripting {
 		catch (IOException ioe) {
 			sb.setIndex(0);
 
-			sb.append(e.getMessage());
+			sb.append(exception.getMessage());
 			sb.append(StringPool.NEW_LINE);
 			sb.append(script);
 		}

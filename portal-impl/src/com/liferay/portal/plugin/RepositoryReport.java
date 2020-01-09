@@ -31,15 +31,17 @@ public class RepositoryReport implements Serializable {
 
 	public static final String SUCCESS = "success";
 
-	public void addError(String repositoryURL, PluginPackageException ppe) {
+	public void addError(
+		String repositoryURL, PluginPackageException pluginPackageException) {
+
 		StringBundler sb = new StringBundler(2);
 
-		if (Validator.isNotNull(ppe.getMessage())) {
-			sb.append(ppe.getMessage());
+		if (Validator.isNotNull(pluginPackageException.getMessage())) {
+			sb.append(pluginPackageException.getMessage());
 		}
 
-		if (ppe.getCause() != null) {
-			Throwable cause = ppe.getCause();
+		if (pluginPackageException.getCause() != null) {
+			Throwable cause = pluginPackageException.getCause();
 
 			if (Validator.isNotNull(cause.getMessage())) {
 				sb.append(cause.getMessage());
@@ -47,7 +49,7 @@ public class RepositoryReport implements Serializable {
 		}
 
 		if (sb.index() == 0) {
-			sb.append(ppe.toString());
+			sb.append(pluginPackageException.toString());
 		}
 
 		_reportMap.put(repositoryURL, sb.toString());

@@ -26,21 +26,22 @@ import org.apache.axis.AxisFault;
  */
 public class RemoteExceptionUtil {
 
-	public static void handleRemoteException(RemoteException re)
+	public static void handleRemoteException(RemoteException remoteException)
 		throws SharepointException {
 
-		if (re instanceof AxisFault) {
-			AxisFault axisFault = (AxisFault)re;
+		if (remoteException instanceof AxisFault) {
+			AxisFault axisFault = (AxisFault)remoteException;
 
 			String faultString = axisFault.getFaultString();
 
 			if (faultString.startsWith("(401)Unauthorized")) {
-				throw new AuthenticationRepositoryException(re);
+				throw new AuthenticationRepositoryException(remoteException);
 			}
 		}
 
 		throw new SharepointException(
-			"Unable to communicate with the Sharepoint server", re);
+			"Unable to communicate with the Sharepoint server",
+			remoteException);
 	}
 
 }

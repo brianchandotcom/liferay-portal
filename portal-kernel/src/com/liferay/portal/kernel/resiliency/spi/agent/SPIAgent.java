@@ -46,7 +46,7 @@ public interface SPIAgent {
 
 	public void transferResponse(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Exception e)
+			HttpServletResponse httpServletResponse, Exception exception)
 		throws IOException;
 
 	public enum Lifecycle {

@@ -138,7 +138,7 @@ public class PollerProcessorUtil {
 				@Override
 				public PollerProcessor onCreationFailure(
 					String portletId, PollerProcessor pollerProcessor,
-					Exception e) {
+					Exception exception) {
 
 					return pollerProcessor;
 				}

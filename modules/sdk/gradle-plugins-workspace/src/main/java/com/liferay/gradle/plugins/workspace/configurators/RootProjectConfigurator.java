@@ -321,7 +321,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
-				public void doCall(Exception e) {
+				public void doCall(Exception exception) {
 					Logger logger = project.getLogger();
 
 					if (logger.isWarnEnabled()) {
@@ -1088,7 +1088,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
-				public void doCall(Exception e) {
+				public void doCall(Exception exception) {
 					Logger logger = project.getLogger();
 
 					if (logger.isWarnEnabled()) {
@@ -1149,7 +1149,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
-				public void doCall(Exception e) {
+				public void doCall(Exception exception) {
 					Logger logger = project.getLogger();
 
 					if (logger.isWarnEnabled()) {

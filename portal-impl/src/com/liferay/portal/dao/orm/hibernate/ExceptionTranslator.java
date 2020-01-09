@@ -31,18 +31,18 @@ import org.hibernate.StaleObjectStateException;
  */
 public class ExceptionTranslator {
 
-	public static ORMException translate(Exception e) {
-		if (e instanceof org.hibernate.ObjectNotFoundException) {
-			return new ObjectNotFoundException(e);
+	public static ORMException translate(Exception exception) {
+		if (exception instanceof org.hibernate.ObjectNotFoundException) {
+			return new ObjectNotFoundException(exception);
 		}
 
-		return new ORMException(e);
+		return new ORMException(exception);
 	}
 
 	public static ORMException translate(
-		Exception e, Session session, Object object) {
+		Exception exception, Session session, Object object) {
 
-		if (e instanceof StaleObjectStateException) {
+		if (exception instanceof StaleObjectStateException) {
 			BaseModel<?> baseModel = (BaseModel<?>)object;
 
 			Object currentObject = session.get(
@@ -68,14 +68,14 @@ public class ExceptionTranslator {
 						jsonSerializer.serialize(object),
 						" is stale in comparison to ",
 						jsonSerializer.serialize(currentObject)),
-					e);
+					exception);
 			}
 			finally {
 				PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			}
 		}
 
-		return new ORMException(e);
+		return new ORMException(exception);
 	}
 
 }

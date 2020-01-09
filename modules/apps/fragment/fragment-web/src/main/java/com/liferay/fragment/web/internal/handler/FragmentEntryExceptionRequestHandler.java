@@ -38,7 +38,7 @@ public class FragmentEntryExceptionRequestHandler {
 
 	public void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException pe)
+			PortalException portalException)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -46,7 +46,7 @@ public class FragmentEntryExceptionRequestHandler {
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (pe instanceof FragmentEntryNameException) {
+		if (portalException instanceof FragmentEntryNameException) {
 			errorMessage = "please-enter-a-valid-name";
 		}
 

@@ -109,7 +109,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-					Path filePath, IOException exc) {
+					Path filePath, IOException ioException) {
 
 					if (_module == null) {
 						return FileVisitResult.CONTINUE;

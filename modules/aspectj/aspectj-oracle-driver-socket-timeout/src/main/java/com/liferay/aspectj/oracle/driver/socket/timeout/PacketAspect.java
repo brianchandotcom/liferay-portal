@@ -33,7 +33,7 @@ public class PacketAspect {
 				"args(interruptedIOException) && this(packet)"
 	)
 	public void addSuppressedInterruptedIOException(
-			Object packet, Exception interruptedIOException)
+			Object packet, Exception exception)
 		throws Exception {
 
 		Class<?> clazz = packet.getClass();
@@ -47,7 +47,7 @@ public class PacketAspect {
 
 		Exception exception = constructor.newInstance(504);
 
-		exception.addSuppressed(interruptedIOException);
+		exception.addSuppressed(exception);
 
 		throw exception;
 	}

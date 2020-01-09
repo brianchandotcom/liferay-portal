@@ -40,21 +40,21 @@ public class XSLErrorListener implements ErrorListener {
 	}
 
 	@Override
-	public void error(TransformerException exception)
+	public void error(TransformerException transformerException)
 		throws TransformerException {
 
-		setLocation(exception);
+		setLocation(transformerException);
 
-		throw exception;
+		throw transformerException;
 	}
 
 	@Override
-	public void fatalError(TransformerException exception)
+	public void fatalError(TransformerException transformerException)
 		throws TransformerException {
 
-		setLocation(exception);
+		setLocation(transformerException);
 
-		throw exception;
+		throw transformerException;
 	}
 
 	public int getColumnNumber() {
@@ -143,12 +143,12 @@ public class XSLErrorListener implements ErrorListener {
 	}
 
 	@Override
-	public void warning(TransformerException exception)
+	public void warning(TransformerException transformerException)
 		throws TransformerException {
 
-		setLocation(exception);
+		setLocation(transformerException);
 
-		throw exception;
+		throw transformerException;
 	}
 
 	private int _columnNumber;

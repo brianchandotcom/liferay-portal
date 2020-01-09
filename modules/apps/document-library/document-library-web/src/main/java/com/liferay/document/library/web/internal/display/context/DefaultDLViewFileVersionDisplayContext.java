@@ -422,7 +422,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	private void _handleError(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Exception e)
+			HttpServletResponse httpServletResponse, Exception exception)
 		throws IOException, ServletException {
 
 		JSPRenderer jspRenderer = new JSPRenderer(
@@ -431,9 +431,9 @@ public class DefaultDLViewFileVersionDisplayContext
 		jspRenderer.setAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
 
-		if (e != null) {
+		if (exception != null) {
 			jspRenderer.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_PREVIEW_EXCEPTION, e);
+				DLWebKeys.DOCUMENT_LIBRARY_PREVIEW_EXCEPTION, exception);
 		}
 
 		jspRenderer.render(httpServletRequest, httpServletResponse);

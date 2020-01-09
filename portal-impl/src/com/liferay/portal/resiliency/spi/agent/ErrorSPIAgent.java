@@ -96,7 +96,7 @@ public class ErrorSPIAgent implements SPIAgent {
 	@Override
 	public void transferResponse(
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, Exception e) {
+		HttpServletResponse httpServletResponse, Exception exception) {
 	}
 
 }

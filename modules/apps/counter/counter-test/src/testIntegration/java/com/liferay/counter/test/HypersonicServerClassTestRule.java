@@ -188,11 +188,11 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-						Path dirPath, IOException ioe)
+						Path dirPath, IOException ioException)
 					throws IOException {
 
-					if (ioe != null) {
-						throw ioe;
+					if (ioException != null) {
+						throw ioException;
 					}
 
 					Files.delete(dirPath);

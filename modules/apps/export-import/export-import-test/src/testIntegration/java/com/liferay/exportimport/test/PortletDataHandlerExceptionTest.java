@@ -724,15 +724,15 @@ public class PortletDataHandlerExceptionTest {
 		}
 	}
 
-	private void _validateException(Exception e, String message) {
+	private void _validateException(Exception exception, String message) {
 
 		// Ensure that thrown exceptions are an instance of PortletDataException
 
 		Assert.assertTrue(
 			"Exception thrown always have to be type of PortletDataException",
-			e instanceof PortletDataException);
+			exception instanceof PortletDataException);
 
-		PortletDataException pde = (PortletDataException)e;
+		PortletDataException pde = (PortletDataException)exception;
 
 		String portletId = pde.getPortletId();
 		int type = pde.getType();

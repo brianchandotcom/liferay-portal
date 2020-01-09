@@ -93,16 +93,16 @@ public class ArgumentsUtil {
 	}
 
 	public static void processMainException(
-			Map<String, String> arguments, Exception e)
+			Map<String, String> arguments, Exception exception)
 		throws Exception {
 
 		String throwMainException = arguments.get("tools.throw.main.exception");
 
 		if (GetterUtil.getBoolean(throwMainException, true)) {
-			throw e;
+			throw exception;
 		}
 
-		_log.error(e, e);
+		_log.error(exception, exception);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ArgumentsUtil.class);

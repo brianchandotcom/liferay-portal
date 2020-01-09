@@ -327,12 +327,12 @@ public class AcceptorServletTest {
 		@Override
 		public void transferResponse(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Exception e) {
+			HttpServletResponse httpServletResponse, Exception exception) {
 
 			Assert.assertSame(_preparedRequest, httpServletRequest);
 			Assert.assertSame(_preparedResponse, httpServletResponse);
 
-			_exception = e;
+			_exception = exception;
 		}
 
 		private Exception _exception;

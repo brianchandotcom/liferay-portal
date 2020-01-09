@@ -39,8 +39,10 @@ public class KBArticleImportException extends PortalException {
 
 	public static class MustHaveACategory extends KBArticleImportException {
 
-		public MustHaveACategory(AssetCategoryException cause) {
-			super(cause);
+		public MustHaveACategory(
+			AssetCategoryException assetCategoryException) {
+
+			super(assetCategoryException);
 		}
 
 	}

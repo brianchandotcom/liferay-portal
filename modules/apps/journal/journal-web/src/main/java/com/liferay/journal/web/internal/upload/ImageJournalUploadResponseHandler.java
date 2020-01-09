@@ -39,13 +39,13 @@ public class ImageJournalUploadResponseHandler
 
 	@Override
 	public JSONObject onFailure(
-			PortletRequest portletRequest, PortalException pe)
+			PortletRequest portletRequest, PortalException portalException)
 		throws PortalException {
 
 		JSONObject jsonObject = _defaultUploadResponseHandler.onFailure(
-			portletRequest, pe);
+			portletRequest, portalException);
 
-		if (pe instanceof ImageTypeException) {
+		if (portalException instanceof ImageTypeException) {
 			JSONObject errorJSONObject = JSONUtil.put(
 				"errorType",
 				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION

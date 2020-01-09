@@ -220,20 +220,22 @@ public class EditLayoutAction extends JSONAction {
 	}
 
 	protected String getLayoutTypeExceptionMessage(
-		ThemeDisplay themeDisplay, LayoutTypeException lte, String cmd) {
+		ThemeDisplay themeDisplay, LayoutTypeException layoutTypeException,
+		String cmd) {
 
 		if (Validator.isNotNull(cmd)) {
 			if (cmd.equals("delete") &&
-				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
+				(layoutTypeException.getType() ==
+					LayoutTypeException.FIRST_LAYOUT)) {
 
 				return themeDisplay.translate(
 					"you-cannot-delete-this-page-because-the-next-page-is-of-" +
 						"type-x-and-so-cannot-be-the-first-page",
-					"layout.types." + lte.getLayoutType());
+					"layout.types." + layoutTypeException.getLayoutType());
 			}
 
 			if (cmd.equals("delete") &&
-				(lte.getType() ==
+				(layoutTypeException.getType() ==
 					LayoutTypeException.FIRST_LAYOUT_PERMISSION)) {
 
 				return themeDisplay.translate(
@@ -243,30 +245,34 @@ public class EditLayoutAction extends JSONAction {
 			}
 
 			if ((cmd.equals("display_order") || cmd.equals("priority")) &&
-				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
+				(layoutTypeException.getType() ==
+					LayoutTypeException.FIRST_LAYOUT)) {
 
 				return themeDisplay.translate(
 					"you-cannot-move-this-page-because-the-resulting-order-" +
 						"would-place-a-page-of-type-x-as-the-first-page",
-					"layout.types." + lte.getLayoutType());
+					"layout.types." + layoutTypeException.getLayoutType());
 			}
 
 			if (cmd.equals("parent_layout_id") &&
-				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
+				(layoutTypeException.getType() ==
+					LayoutTypeException.FIRST_LAYOUT)) {
 
 				return themeDisplay.translate(
 					"you-cannot-move-this-page-because-the-resulting-order-" +
 						"would-place-a-page-of-type-x-as-the-first-page",
-					"layout.types." + lte.getLayoutType());
+					"layout.types." + layoutTypeException.getLayoutType());
 			}
 		}
 
-		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT) {
+		if (layoutTypeException.getType() == LayoutTypeException.FIRST_LAYOUT) {
 			return themeDisplay.translate(
 				"the-first-page-cannot-be-of-type-x",
-				"layout.types." + lte.getLayoutType());
+				"layout.types." + layoutTypeException.getLayoutType());
 		}
-		else if (lte.getType() == LayoutTypeException.NOT_PARENTABLE) {
+		else if (layoutTypeException.getType() ==
+					LayoutTypeException.NOT_PARENTABLE) {
+
 			return themeDisplay.translate(
 				"a-page-cannot-become-a-child-of-a-page-that-is-not-" +
 					"parentable");

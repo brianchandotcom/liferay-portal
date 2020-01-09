@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.nio.intraband.proxy;
  */
 public interface ExceptionHandler {
 
-	public void onException(Exception e);
+	public void onException(Exception exception);
 
 }

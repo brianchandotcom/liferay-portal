@@ -692,7 +692,7 @@ public class InvokerPortletImpl
 	}
 
 	protected void processException(
-		Exception e, PortletRequest portletRequest,
+		Exception exception, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
 		if (portletResponse instanceof StateAwareResponseImpl) {
@@ -705,14 +705,14 @@ public class InvokerPortletImpl
 			stateAwareResponseImpl.reset();
 		}
 
-		if (e instanceof RuntimeException) {
+		if (exception instanceof RuntimeException) {
 
 			// PLT.5.4.7, TCK xxv
 
-			e = new PortletException(e);
+			exception = new PortletException(exception);
 		}
 
-		if (e instanceof UnavailableException) {
+		if (exception instanceof UnavailableException) {
 
 			// PLT.5.4.7, TCK xxiv
 
@@ -721,19 +721,19 @@ public class InvokerPortletImpl
 			PortletLocalServiceUtil.deletePortlet(_portletModel);
 		}
 
-		if (e instanceof PortletException) {
+		if (exception instanceof PortletException) {
 			if ((portletResponse instanceof StateAwareResponseImpl) &&
-				!(e instanceof UnavailableException)) {
+				!(exception instanceof UnavailableException)) {
 
 				return;
 			}
 
 			if (!(portletRequest instanceof RenderRequest)) {
-				portletRequest.setAttribute(_errorKey, e);
+				portletRequest.setAttribute(_errorKey, exception);
 			}
 		}
 		else {
-			ReflectionUtil.throwException(e);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

@@ -446,8 +446,10 @@ public class LockLocalServiceTest {
 			_requiredSuccessCount = requiredSuccessCount;
 		}
 
-		private boolean _isExpectedException(RuntimeException re) {
-			Throwable cause = re.getCause();
+		private boolean _isExpectedException(
+			RuntimeException runtimeException) {
+
+			Throwable cause = runtimeException.getCause();
 
 			DB db = DBManagerUtil.getDB();
 

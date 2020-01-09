@@ -597,7 +597,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e,
+		Locale locale, Exception exception,
 		ExportImportConfiguration exportImportConfiguration) {
 
 		String errorMessage = StringPool.BLANK;
@@ -608,9 +608,9 @@ public class StagingImpl implements Staging {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		Throwable cause = e.getCause();
+		Throwable cause = exception.getCause();
 
-		if (e.getCause() instanceof ConnectException) {
+		if (exception.getCause() instanceof ConnectException) {
 			Map settingsMap = exportImportConfiguration.getSettingsMap();
 
 			String remoteAddress = MapUtil.getString(
@@ -628,14 +628,14 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof DuplicateFileEntryException) {
+		else if (exception instanceof DuplicateFileEntryException) {
 			errorMessage = LanguageUtil.get(
 				locale, "please-enter-a-unique-document-name");
 			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 		}
-		else if (e instanceof ExportImportContentProcessorException) {
+		else if (exception instanceof ExportImportContentProcessorException) {
 			ExportImportContentProcessorException eicpe =
-				(ExportImportContentProcessorException)e;
+				(ExportImportContentProcessorException)exception;
 
 			if (eicpe.getType() ==
 					ExportImportContentProcessorException.ARTICLE_NOT_FOUND) {
@@ -657,9 +657,9 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof ExportImportContentValidationException) {
+		else if (exception instanceof ExportImportContentValidationException) {
 			ExportImportContentValidationException eicve =
-				(ExportImportContentValidationException)e;
+				(ExportImportContentValidationException)exception;
 
 			if (eicve.getType() ==
 					ExportImportContentValidationException.ARTICLE_NOT_FOUND) {
@@ -797,9 +797,9 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof ExportImportDocumentException) {
+		else if (exception instanceof ExportImportDocumentException) {
 			ExportImportDocumentException eide =
-				(ExportImportDocumentException)e;
+				(ExportImportDocumentException)exception;
 
 			if (eide.getType() ==
 					ExportImportDocumentException.PORTLET_DATA_IMPORT) {
@@ -826,14 +826,14 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if ((e instanceof ExportImportIOException) ||
+		else if ((exception instanceof ExportImportIOException) ||
 				 ((cause instanceof SystemException) &&
 				  (cause.getCause() instanceof ExportImportIOException))) {
 
 			ExportImportIOException eiioe = null;
 
-			if (e instanceof ExportImportIOException) {
-				eiioe = (ExportImportIOException)e;
+			if (exception instanceof ExportImportIOException) {
+				eiioe = (ExportImportIOException)exception;
 			}
 			else {
 				eiioe = (ExportImportIOException)cause.getCause();
@@ -981,10 +981,11 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof ExportImportRuntimeException) {
-			_log.error(e, e);
+		else if (exception instanceof ExportImportRuntimeException) {
+			_log.error(exception, exception);
 
-			ExportImportRuntimeException eire = (ExportImportRuntimeException)e;
+			ExportImportRuntimeException eire =
+				(ExportImportRuntimeException)exception;
 
 			if (Validator.isNull(eire.getMessage())) {
 				errorMessage = LanguageUtil.format(
@@ -999,20 +1000,20 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof FileExtensionException) {
+		else if (exception instanceof FileExtensionException) {
 			errorMessage = LanguageUtil.format(
 				locale,
 				"document-names-must-end-with-one-of-the-following-extensions",
 				".lar", false);
 			errorType = ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 		}
-		else if (e instanceof FileNameException) {
+		else if (exception instanceof FileNameException) {
 			errorMessage = LanguageUtil.get(
 				locale, "please-enter-a-file-with-a-valid-file-name");
 			errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 		}
-		else if (e instanceof FileSizeException ||
-				 e instanceof LARFileSizeException) {
+		else if (exception instanceof FileSizeException ||
+				 exception instanceof LARFileSizeException) {
 
 			if ((exportImportConfiguration != null) &&
 				((exportImportConfiguration.getType() ==
@@ -1046,8 +1047,8 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
-		else if (e instanceof LARTypeException) {
-			LARTypeException lte = (LARTypeException)e;
+		else if (exception instanceof LARTypeException) {
+			LARTypeException lte = (LARTypeException)exception;
 
 			if (lte.getType() == LARTypeException.TYPE_COMPANY_GROUP) {
 				errorMessage = LanguageUtil.format(
@@ -1083,8 +1084,8 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof LARFileException) {
-			LARFileException lfe = (LARFileException)e;
+		else if (exception instanceof LARFileException) {
+			LARFileException lfe = (LARFileException)exception;
 
 			if (lfe.getType() == LARFileException.TYPE_INVALID_MANIFEST) {
 				errorMessage = LanguageUtil.format(
@@ -1101,13 +1102,13 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if ((e instanceof LayoutImportException) ||
+		else if ((exception instanceof LayoutImportException) ||
 				 (cause instanceof LayoutImportException)) {
 
 			LayoutImportException lie = null;
 
-			if (e instanceof LayoutImportException) {
-				lie = (LayoutImportException)e;
+			if (exception instanceof LayoutImportException) {
+				lie = (LayoutImportException)exception;
 			}
 			else {
 				lie = (LayoutImportException)cause;
@@ -1148,13 +1149,13 @@ public class StagingImpl implements Staging {
 					lie.getArguments());
 			}
 			else {
-				errorMessage = e.getLocalizedMessage();
+				errorMessage = exception.getLocalizedMessage();
 			}
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof LayoutPrototypeException) {
-			LayoutPrototypeException lpe = (LayoutPrototypeException)e;
+		else if (exception instanceof LayoutPrototypeException) {
+			LayoutPrototypeException lpe = (LayoutPrototypeException)exception;
 
 			StringBundler sb = new StringBundler(4);
 
@@ -1195,8 +1196,8 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof LocaleException) {
-			LocaleException le = (LocaleException)e;
+		else if (exception instanceof LocaleException) {
+			LocaleException le = (LocaleException)exception;
 
 			errorMessage = LanguageUtil.format(
 				locale,
@@ -1214,8 +1215,9 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof MissingReferenceException) {
-			MissingReferenceException mre = (MissingReferenceException)e;
+		else if (exception instanceof MissingReferenceException) {
+			MissingReferenceException mre =
+				(MissingReferenceException)exception;
 
 			if ((exportImportConfiguration != null) &&
 				((exportImportConfiguration.getType() ==
@@ -1253,8 +1255,8 @@ public class StagingImpl implements Staging {
 			warningMessagesJSONArray = getWarningMessagesJSONArray(
 				locale, missingReferences.getWeakMissingReferences());
 		}
-		else if (e instanceof PortletDataException) {
-			PortletDataException pde = (PortletDataException)e;
+		else if (exception instanceof PortletDataException) {
+			PortletDataException pde = (PortletDataException)exception;
 
 			String referrerClassName = pde.getStagedModelClassName();
 			String referrerDisplayName = pde.getStagedModelDisplayName();
@@ -1512,17 +1514,17 @@ public class StagingImpl implements Staging {
 					"the-following-error-occurred-while-processing-the-x-x-x",
 					new String[] {
 						modelResource, referrerDisplayName,
-						e.getLocalizedMessage()
+						exception.getLocalizedMessage()
 					});
 			}
 			else {
-				errorMessage = e.getLocalizedMessage();
+				errorMessage = exception.getLocalizedMessage();
 			}
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof PortletIdException) {
-			PortletIdException pie = (PortletIdException)e;
+		else if (exception instanceof PortletIdException) {
+			PortletIdException pie = (PortletIdException)exception;
 
 			Portlet portlet = _portletLocalService.getPortletById(
 				pie.getMessage());
@@ -1533,7 +1535,7 @@ public class StagingImpl implements Staging {
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
-		else if (e instanceof UploadRequestSizeException) {
+		else if (exception instanceof UploadRequestSizeException) {
 			errorMessage = LanguageUtil.format(
 				resourceBundle,
 				"upload-request-reached-the-maximum-permitted-size-of-x-bytes",
@@ -1542,7 +1544,7 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else {
-			errorMessage = e.getLocalizedMessage();
+			errorMessage = exception.getLocalizedMessage();
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 

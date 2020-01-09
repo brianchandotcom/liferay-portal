@@ -71,8 +71,8 @@ public class IntrabandRPCUtil {
 		}
 
 		@Override
-		public void failed(Object attachment, IOException ioe) {
-			_defaultNoticeableFuture.setException(ioe);
+		public void failed(Object attachment, IOException ioException) {
+			_defaultNoticeableFuture.setException(ioException);
 		}
 
 		@Override

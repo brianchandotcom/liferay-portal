@@ -29,10 +29,11 @@ import org.junit.runner.notification.RunNotifier;
 public interface RunNotifierCommand extends Serializable {
 
 	public static RunNotifierCommand assumptionFailed(
-		Description description, AssumptionViolatedException ave) {
+		Description description,
+		AssumptionViolatedException assumptionViolatedException) {
 
 		return runNotifier -> runNotifier.fireTestAssumptionFailed(
-			new Failure(description, ave));
+			new Failure(description, assumptionViolatedException));
 	}
 
 	public static RunNotifierCommand testFailure(

@@ -145,7 +145,8 @@ public class FragmentRendererControllerImpl
 
 	private String _getFragmentEntryConfigurationExceptionMessage(
 		HttpServletRequest httpServletRequest,
-		FragmentEntryConfigurationException fece) {
+		FragmentEntryConfigurationException
+			fragmentEntryConfigurationException) {
 
 		StringBundler divSB = new StringBundler(3);
 
@@ -165,7 +166,8 @@ public class FragmentRendererControllerImpl
 				resourceBundle, "fragment-configuration-is-invalid"));
 		detailedErrorMessageSB.append(StringPool.NEW_LINE);
 		detailedErrorMessageSB.append(StringPool.NEW_LINE);
-		detailedErrorMessageSB.append(fece.getLocalizedMessage());
+		detailedErrorMessageSB.append(
+			fragmentEntryConfigurationException.getLocalizedMessage());
 
 		String detailedErrorMessage = detailedErrorMessageSB.toString();
 
@@ -177,7 +179,7 @@ public class FragmentRendererControllerImpl
 	}
 
 	private String _getFragmentEntryContentExceptionMessage(
-		Exception e, HttpServletRequest httpServletRequest) {
+		Exception exception, HttpServletRequest httpServletRequest) {
 
 		StringBundler sb = new StringBundler(3);
 
@@ -185,7 +187,7 @@ public class FragmentRendererControllerImpl
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		Throwable throwable = e.getCause();
+		Throwable throwable = exception.getCause();
 
 		if (throwable instanceof FragmentEntryContentException) {
 			FragmentEntryContentException fece =

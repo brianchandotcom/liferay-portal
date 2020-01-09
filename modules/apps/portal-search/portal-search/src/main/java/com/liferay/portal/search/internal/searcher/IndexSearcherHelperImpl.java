@@ -91,16 +91,16 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		}
 	}
 
-	protected static RuntimeException uncheck(SearchException se) {
-		if (se.getCause() instanceof RuntimeException) {
-			return (RuntimeException)se.getCause();
+	protected static RuntimeException uncheck(SearchException searchException) {
+		if (searchException.getCause() instanceof RuntimeException) {
+			return (RuntimeException)searchException.getCause();
 		}
 
-		if (se.getCause() != null) {
-			return new RuntimeException(se.getCause());
+		if (searchException.getCause() != null) {
+			return new RuntimeException(searchException.getCause());
 		}
 
-		return new RuntimeException(se);
+		return new RuntimeException(searchException);
 	}
 
 	@Reference

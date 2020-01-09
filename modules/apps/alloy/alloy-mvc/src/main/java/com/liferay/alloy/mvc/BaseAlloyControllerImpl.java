@@ -755,12 +755,12 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return attributesMap;
 	}
 
-	protected String getStackTrace(Exception e) {
+	protected String getStackTrace(Exception exception) {
 		StringWriter stringWriter = new StringWriter();
 
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 
-		e.printStackTrace(printWriter);
+		exception.printStackTrace(printWriter);
 
 		return stringWriter.toString();
 	}
@@ -1154,10 +1154,11 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	}
 
 	protected void renderError(
-			int status, Exception e, String pattern, Object... arguments)
+			int status, Exception exception, String pattern,
+			Object... arguments)
 		throws Exception {
 
-		Throwable rootCause = getRootCause(e);
+		Throwable rootCause = getRootCause(exception);
 
 		if (isRespondingTo()) {
 			responseContent = buildResponseContent(

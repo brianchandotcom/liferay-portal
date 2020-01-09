@@ -94,7 +94,7 @@ public interface Staging {
 		Locale locale, Map<String, MissingReference> missingReferences);
 
 	public JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e,
+		Locale locale, Exception exception,
 		ExportImportConfiguration exportImportConfiguration);
 
 	public Group getLiveGroup(Group group);

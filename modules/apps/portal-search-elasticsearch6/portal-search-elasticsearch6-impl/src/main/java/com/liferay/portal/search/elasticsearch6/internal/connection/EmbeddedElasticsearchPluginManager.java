@@ -118,8 +118,8 @@ public class EmbeddedElasticsearchPluginManager {
 		return _pluginZipFileNames.get(pluginName);
 	}
 
-	protected boolean handle(IOException ioe) {
-		String message = ioe.getMessage();
+	protected boolean handle(IOException ioException) {
+		String message = ioException.getMessage();
 
 		if (message == null) {
 			return false;
@@ -132,7 +132,7 @@ public class EmbeddedElasticsearchPluginManager {
 				_log.debug(
 					"Skipping plugin " + _pluginName +
 						" because it is already installed",
-					ioe);
+					ioException);
 			}
 
 			return true;

@@ -36,7 +36,8 @@ public interface BackgroundTaskExecutor {
 
 	public int getIsolationLevel();
 
-	public String handleException(BackgroundTask backgroundTask, Exception e);
+	public String handleException(
+		BackgroundTask backgroundTask, Exception exception);
 
 	public boolean isSerial();
 

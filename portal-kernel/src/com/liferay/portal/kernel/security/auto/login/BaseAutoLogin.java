@@ -55,14 +55,14 @@ public abstract class BaseAutoLogin implements AutoLogin {
 
 	protected String[] doHandleException(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Exception e)
+			HttpServletResponse httpServletResponse, Exception exception)
 		throws AutoLoginException {
 
 		if (httpServletRequest.getAttribute(AUTO_LOGIN_REDIRECT) == null) {
-			throw new AutoLoginException(e);
+			throw new AutoLoginException(exception);
 		}
 
-		_log.error(e, e);
+		_log.error(exception, exception);
 
 		return null;
 	}

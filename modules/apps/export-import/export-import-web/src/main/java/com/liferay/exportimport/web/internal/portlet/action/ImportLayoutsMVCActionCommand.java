@@ -268,7 +268,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void handleUploadException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			String folderName, Exception e)
+			String folderName, Exception exception)
 		throws Exception {
 
 		HttpServletResponse httpServletResponse =
@@ -283,7 +283,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
 		JSONObject jsonObject = _staging.getExceptionMessagesJSONObject(
-			themeDisplay.getLocale(), e, (ExportImportConfiguration)null);
+			themeDisplay.getLocale(), exception,
+			(ExportImportConfiguration)null);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

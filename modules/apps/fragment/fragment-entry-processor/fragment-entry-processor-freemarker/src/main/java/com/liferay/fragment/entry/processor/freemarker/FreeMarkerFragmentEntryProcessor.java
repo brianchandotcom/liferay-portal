@@ -220,14 +220,14 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 	}
 
-	private String _getMessage(TemplateException te) {
+	private String _getMessage(TemplateException templateException) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
 		String message = LanguageUtil.get(
 			resourceBundle, "freemarker-syntax-is-invalid");
 
-		Throwable causeThrowable = te.getCause();
+		Throwable causeThrowable = templateException.getCause();
 
 		String causeThrowableMessage = causeThrowable.getLocalizedMessage();
 

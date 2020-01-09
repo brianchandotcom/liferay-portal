@@ -402,10 +402,10 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 	protected ActionResult processActionException(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Portlet portlet,
-		PrincipalException pe) {
+		PrincipalException principalException) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(pe, pe);
+			_log.debug(principalException, principalException);
 		}
 
 		if (_log.isWarnEnabled()) {
@@ -416,7 +416,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 					"User %s is not allowed to access URL %s and portlet %s: " +
 						"%s",
 					PortalUtil.getUserId(httpServletRequest), url,
-					portlet.getPortletId(), pe.getMessage()));
+					portlet.getPortletId(), principalException.getMessage()));
 		}
 
 		httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -456,10 +456,10 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 	protected void processServeResourceException(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Portlet portlet,
-		PrincipalException pe) {
+		PrincipalException principalException) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(pe, pe);
+			_log.debug(principalException, principalException);
 		}
 
 		httpServletResponse.setHeader(
@@ -475,7 +475,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 				String.format(
 					"User %s is not allowed to serve resource for %s on %s: %s",
 					PortalUtil.getUserId(httpServletRequest), url,
-					portlet.getPortletId(), pe.getMessage()));
+					portlet.getPortletId(), principalException.getMessage()));
 		}
 	}
 

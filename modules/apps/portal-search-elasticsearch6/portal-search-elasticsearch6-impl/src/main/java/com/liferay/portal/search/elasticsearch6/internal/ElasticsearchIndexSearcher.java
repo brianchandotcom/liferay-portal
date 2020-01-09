@@ -355,8 +355,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		return searchRequestBuilder.build();
 	}
 
-	protected boolean handle(Exception e) {
-		Throwable throwable = e.getCause();
+	protected boolean handle(Exception exception) {
+		Throwable throwable = exception.getCause();
 
 		if (throwable == null) {
 			return false;
@@ -371,7 +371,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		if (message.contains(
 				"Fielddata is disabled on text fields by default.")) {
 
-			_log.error("Unable to aggregate facet on a nonkeyword field", e);
+			_log.error(
+				"Unable to aggregate facet on a nonkeyword field", exception);
 
 			return true;
 		}

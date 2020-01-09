@@ -784,15 +784,15 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	private PortletDataException _handleException(
-		Exception e, int type, String portletId) {
+		Exception exception, int type, String portletId) {
 
 		PortletDataException pde = null;
 
-		if (e instanceof PortletDataException) {
-			pde = (PortletDataException)e;
+		if (exception instanceof PortletDataException) {
+			pde = (PortletDataException)exception;
 		}
 		else {
-			pde = new PortletDataException(e.getMessage(), e);
+			pde = new PortletDataException(exception.getMessage(), exception);
 		}
 
 		if (Validator.isNull(pde.getPortletId())) {

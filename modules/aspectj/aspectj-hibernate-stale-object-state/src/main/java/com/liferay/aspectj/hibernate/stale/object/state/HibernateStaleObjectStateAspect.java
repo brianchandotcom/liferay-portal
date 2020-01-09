@@ -48,9 +48,11 @@ public class HibernateStaleObjectStateAspect {
 		value = "execution(void org.hibernate.event.def.DefaultMergeEventListener.onMerge(org.hibernate.event.MergeEvent)) && args(mergeEvent)"
 	)
 	public void suppressMergeFailureCause(
-		MergeEvent mergeEvent, StaleObjectStateException sose) {
+		MergeEvent mergeEvent,
+		StaleObjectStateException staleObjectStateException) {
 
-		_suppressFailureCause(mergeEvent.getOriginal(), sose);
+		_suppressFailureCause(
+			mergeEvent.getOriginal(), staleObjectStateException);
 	}
 
 	@AfterThrowing(
@@ -58,9 +60,11 @@ public class HibernateStaleObjectStateAspect {
 		value = "execution(void org.hibernate.event.SaveOrUpdateEventListener.onSaveOrUpdate(org.hibernate.event.SaveOrUpdateEvent)) && args(saveOrUpdateEvent)"
 	)
 	public void suppressUpdateFailureCause(
-		SaveOrUpdateEvent saveOrUpdateEvent, ObjectDeletedException ode) {
+		SaveOrUpdateEvent saveOrUpdateEvent,
+		ObjectDeletedException objectDeletedException) {
 
-		_suppressFailureCause(saveOrUpdateEvent.getObject(), ode);
+		_suppressFailureCause(
+			saveOrUpdateEvent.getObject(), objectDeletedException);
 	}
 
 	@AfterReturning(
@@ -88,12 +92,15 @@ public class HibernateStaleObjectStateAspect {
 		_trackEvent("SaveOrUpdate", saveOrUpdateEvent.getObject());
 	}
 
-	private void _suppressFailureCause(Object object, HibernateException he) {
+	private void _suppressFailureCause(
+		Object object, HibernateException hibernateException) {
+
 		if (!(object instanceof MVCCModel)) {
 			return;
 		}
 
-		he.addSuppressed(_events.get(new EventKey((BaseModel<?>)object)));
+		hibernateException.addSuppressed(
+			_events.get(new EventKey((BaseModel<?>)object)));
 	}
 
 	private void _trackEvent(String eventType, Object object) {

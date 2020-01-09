@@ -193,25 +193,33 @@ public class ProjectTemplatesUtil {
 						archetypesDirPath, "*.project.templates.*")) {
 
 				for (Path path : directoryStream) {
-					String fileName = String.valueOf(path.getFileName());
+					try {
+						String bundleSymbolicName =
+							FileUtil.getManifestProperty(
+								path.toFile(), "Bundle-SymbolicName");
 
-					String templateName = getTemplateName(fileName);
+						String templateName = getTemplateName(
+							bundleSymbolicName);
 
-					if (templateName.equals(template)) {
-						File templateFile = path.toFile();
+						if (templateName.equals(template)) {
+							File templateFile = path.toFile();
 
-						if (templateVersion != null) {
-							String bundleVersion = FileUtil.getManifestProperty(
-								templateFile, "Bundle-Version");
+							if (templateVersion != null) {
+								String bundleVersion =
+									FileUtil.getManifestProperty(
+										templateFile, "Bundle-Version");
 
-							if (templateVersion.equals(bundleVersion)) {
-								return templateFile;
+								if (templateVersion.equals(bundleVersion)) {
+									return templateFile;
+								}
+
+								continue;
 							}
 
-							continue;
+							return templateFile;
 						}
-
-						return templateFile;
+					}
+					catch (IOException ioe) {
 					}
 				}
 			}
@@ -231,8 +239,14 @@ public class ProjectTemplatesUtil {
 			name.indexOf(projectTemplatesString) +
 				projectTemplatesString.length();
 
+		int dashIndex = name.indexOf("-");
+
+		if (dashIndex < 0) {
+			dashIndex = name.length();
+		}
+
 		String templateName = name.substring(
-			projectTemplatesEndIndex, name.lastIndexOf('-'));
+			projectTemplatesEndIndex, dashIndex);
 
 		templateName = templateName.replace('.', '-');
 

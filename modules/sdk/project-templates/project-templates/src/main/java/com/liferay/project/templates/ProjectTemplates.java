@@ -30,6 +30,7 @@ import com.liferay.project.templates.internal.ProjectGenerator;
 import java.beans.Statement;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Method;
@@ -65,6 +66,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public class ProjectTemplates {
 
@@ -82,24 +84,33 @@ public class ProjectTemplates {
 			if (templatesFile.isDirectory()) {
 				try (DirectoryStream<Path> directoryStream =
 						Files.newDirectoryStream(
-							templatesFile.toPath(), "*.project.templates.*")) {
+							templatesFile.toPath(), "*.jar")) {
 
 					Iterator<Path> iterator = directoryStream.iterator();
 
 					while (iterator.hasNext()) {
 						Path path = iterator.next();
 
-						String fileName = String.valueOf(path.getFileName());
-
-						String template = ProjectTemplatesUtil.getTemplateName(
-							fileName);
-
-						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-							String bundleDescription =
+						try {
+							String bundleSymbolicName =
 								FileUtil.getManifestProperty(
-									path.toFile(), "Bundle-Description");
+									path.toFile(), "Bundle-SymbolicName");
 
-							templates.put(template, bundleDescription);
+							String templateName =
+								ProjectTemplatesUtil.getTemplateName(
+									bundleSymbolicName);
+
+							if (!templateName.startsWith(
+									WorkspaceUtil.WORKSPACE)) {
+
+								String bundleDescription =
+									FileUtil.getManifestProperty(
+										path.toFile(), "Bundle-Description");
+
+								templates.put(templateName, bundleDescription);
+							}
+						}
+						catch (IOException ioe) {
 						}
 					}
 				}

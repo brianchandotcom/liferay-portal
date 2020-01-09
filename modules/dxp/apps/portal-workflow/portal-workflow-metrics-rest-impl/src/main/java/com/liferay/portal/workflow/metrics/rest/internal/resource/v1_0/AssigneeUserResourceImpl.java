@@ -212,10 +212,6 @@ public class AssigneeUserResourceImpl
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", 0));
 
 		if (completed) {
-			booleanQuery.addMustNotQueryClauses(
-				_queries.term(
-					"status", WorkflowMetricsSLAStatus.RUNNING.name()));
-
 			if ((dateEnd != null) && (dateStart != null)) {
 				booleanQuery.addMustQueryClauses(
 					_queries.rangeTerm(

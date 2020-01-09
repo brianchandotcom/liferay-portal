@@ -39,6 +39,7 @@ export const BackgroundColorConfigurationPanel = ({item}) => {
 			<ColorPalette
 				clearButton
 				label={Liferay.Language.get('background-color')}
+				onClear={() => handleSelectValueChanged('')}
 				onColorSelect={handleSelectValueChanged}
 			></ColorPalette>
 		</ClayForm.Group>

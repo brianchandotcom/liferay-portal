@@ -21,6 +21,7 @@ import {ConfigContext} from '../../app/config/index';
 export default function ColorPalette({
 	clearButton,
 	label,
+	onClear,
 	onColorSelect,
 	selectedColor
 }) {
@@ -57,7 +58,7 @@ export default function ColorPalette({
 			</div>
 
 			{clearButton && (
-				<ClayButton displayType="secondary" small>
+				<ClayButton displayType="secondary" onClick={onClear} small>
 					{Liferay.Language.get('clear')}
 				</ClayButton>
 			)}

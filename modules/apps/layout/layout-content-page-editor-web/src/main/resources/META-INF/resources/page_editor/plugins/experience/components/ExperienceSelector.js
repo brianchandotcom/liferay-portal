@@ -24,8 +24,8 @@ import AppContext from '../../../core/AppContext';
 import {APIContext} from '../API';
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
-	EDIT_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
+	UPDATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../actions';
 import {
@@ -174,7 +174,7 @@ const ExperienceSelector = ({
 							segmentsEntryId,
 							segmentsExperienceId
 						},
-						type: EDIT_SEGMENTS_EXPERIENCE
+						type: UPDATE_SEGMENTS_EXPERIENCE
 					});
 
 					setEditingExperience({});

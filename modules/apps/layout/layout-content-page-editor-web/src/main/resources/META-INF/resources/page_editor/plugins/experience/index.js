@@ -18,8 +18,8 @@ import {Component} from '../../core/AppContext';
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
-	EDIT_SEGMENTS_EXPERIENCE,
 	SELECT_SEGMENTS_EXPERIENCE,
+	UPDATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from './actions';
 import ExperienceToolbarSection from './components/ExperienceToolbarSection';
@@ -124,7 +124,7 @@ function experiencesActivate() {
 			case DELETE_SEGMENTS_EXPERIENCE:
 				nextState = deleteExperienceReducer(nextState, action.payload);
 				break;
-			case EDIT_SEGMENTS_EXPERIENCE:
+			case UPDATE_SEGMENTS_EXPERIENCE:
 				nextState = editExperienceReducer(nextState, action.payload);
 				break;
 			case SELECT_SEGMENTS_EXPERIENCE:

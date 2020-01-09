@@ -39,10 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DataModelPermission")
+@GraphQLName("AppModelPermission")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DataModelPermission")
-public class DataModelPermission {
+@XmlRootElement(name = "AppModelPermission")
+public class AppModelPermission {
 
 	@Schema
 	public String[] getActionIds() {
@@ -106,13 +106,13 @@ public class DataModelPermission {
 			return true;
 		}
 
-		if (!(object instanceof DataModelPermission)) {
+		if (!(object instanceof AppModelPermission)) {
 			return false;
 		}
 
-		DataModelPermission dataModelPermission = (DataModelPermission)object;
+		AppModelPermission appModelPermission = (AppModelPermission)object;
 
-		return Objects.equals(toString(), dataModelPermission.toString());
+		return Objects.equals(toString(), appModelPermission.toString());
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class DataModelPermission {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.app.builder.rest.dto.v1_0.DataModelPermission",
+		defaultValue = "com.liferay.app.builder.rest.dto.v1_0.AppModelPermission",
 		name = "x-class-name"
 	)
 	public String xClassName;

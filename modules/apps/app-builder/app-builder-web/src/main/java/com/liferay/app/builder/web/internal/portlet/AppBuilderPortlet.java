@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + AppBuilderPortletKeys.APP_BUILDER_HIDDEN,
+		"javax.portlet.name=" + AppBuilderPortletKeys.APP_BUILDER,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class
 )
-public class AppBuilderHiddenPortlet extends MVCPortlet {
+public class AppBuilderPortlet extends MVCPortlet {
 }

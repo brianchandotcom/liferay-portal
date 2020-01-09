@@ -223,7 +223,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 				setLink(
 					() -> {
-						if (layout != null) {
+						if (layout == null) {
 							return null;
 						}
 
@@ -231,7 +231,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					});
 				setName(
 					() -> {
-						if (layout != null) {
+						if (layout == null) {
 							return null;
 						}
 

@@ -30,9 +30,7 @@ export default function duplicateFragment({
 			itemId,
 			segmentsExperienceId
 		}).then(({fragmentEntryLink, layoutData}) => {
-			// TODO: This is a temporary "hack"
-			//       until the backend is consitent
-			//       between both "metal+soy" and "react" versions
+			// TODO: LPS-106738
 			fragmentEntryLink.content = {
 				value: {
 					content: fragmentEntryLink.content

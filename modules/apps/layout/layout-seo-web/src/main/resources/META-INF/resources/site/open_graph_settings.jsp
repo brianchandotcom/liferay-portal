@@ -89,90 +89,12 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 
 <portlet:actionURL name="/site/upload_open_graph_image" var="uploadOpenGraphImageURL" />
 
-<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-	var openGraphImageButton = document.getElementById(
-		'<portlet:namespace />openGraphImageButton'
-	);
-
-	var itemSelectorDialog = new ItemSelectorDialog.default({
-		buttonAddLabel: '<liferay-ui:message key="done" />',
-		eventName: '<portlet:namespace />openGraphImageSelectedItem',
-		singleSelect: true,
-		title: '<liferay-ui:message key="open-graph-image" />',
-		url: '<%= openGraphSettingsDisplayContext.getItemSelectorURL() %>'
-	});
-
-	var openGraphImageFileEntryId = document.getElementById(
-		'<portlet:namespace />openGraphImageFileEntryId'
-	);
-	var openGraphImageTitle = document.getElementById(
-		'<portlet:namespace />openGraphImageTitle'
-	);
-	var openGraphPreviewImage = document.getElementById(
-		'<portlet:namespace />openGraphPreviewImage'
-	);
-
-	var openGraphImageAltField = document.getElementById(
-		'<portlet:namespace />openGraphImageAlt'
-	);
-	var openGraphImageAltFieldDefaultLocale = document.getElementById(
-		'<portlet:namespace />openGraphImageAlt_<%= themeDisplay.getLanguageId() %>'
-	);
-
-	itemSelectorDialog.on('selectedItemChange', function(event) {
-		var selectedItem = event.selectedItem;
-
-		if (selectedItem) {
-			var itemValue = JSON.parse(selectedItem.value);
-
-			openGraphImageFileEntryId.value = itemValue.fileEntryId;
-			openGraphImageTitle.value = itemValue.title;
-			openGraphPreviewImage.src = itemValue.url;
-
-			Liferay.Util.toggleDisabled(openGraphImageAltField, false);
-			Liferay.Util.toggleDisabled(openGraphImageAltFieldDefaultLocale, false);
-
-			openGraphPreviewImage.classList.remove('hide');
-		}
-	});
-
-	openGraphImageButton.addEventListener('click', function(event) {
-		event.preventDefault();
-		itemSelectorDialog.open();
-	});
-
-	var openGraphClearImageButton = document.getElementById(
-		'<portlet:namespace />openGraphClearImageButton'
-	);
-
-	openGraphClearImageButton.addEventListener('click', function() {
-		openGraphImageFileEntryId.value = '';
-		openGraphImageTitle.value = '';
-		openGraphPreviewImage.src = '';
-
-		Liferay.Util.toggleDisabled(openGraphImageAltField, true);
-		Liferay.Util.toggleDisabled(openGraphImageAltFieldDefaultLocale, true);
-
-		openGraphPreviewImage.classList.add('hide');
-	});
-
-	var openGraphEnabledCheck = document.getElementById(
-		'<portlet:namespace />openGraphEnabled'
-	);
-	var openGraphSettings = document.getElementById(
-		'<portlet:namespace />openGraphSettings'
-	);
-
-	openGraphEnabledCheck.addEventListener('click', function(event) {
-		var disabled = !event.target.checked;
-
-		Liferay.Util.toggleDisabled(openGraphImageTitle, disabled);
-		Liferay.Util.toggleDisabled(openGraphImageButton, disabled);
-		Liferay.Util.toggleDisabled(openGraphClearImageButton, disabled);
-
-		Liferay.Util.toggleDisabled(openGraphImageAltField, disabled);
-		Liferay.Util.toggleDisabled(openGraphImageAltFieldDefaultLocale, disabled);
-
-		openGraphSettings.classList.toggle('disabled');
-	});
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"uploadOpenGraphImageURL", openGraphSettingsDisplayContext.getItemSelectorURL()
+		).build()
+	%>'
+	module="js/seo/openGraphSettings.es"
+	servletContext="<%= application %>"
+/>

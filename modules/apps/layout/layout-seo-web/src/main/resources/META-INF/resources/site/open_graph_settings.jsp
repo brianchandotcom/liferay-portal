@@ -51,8 +51,6 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 			<aui:button name="openGraphClearImageButton" value="clear" />
 		</aui:button-row>
 
-		<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /></label>
-
 		<%
 		LayoutSEOSite layoutSEOSite = openGraphSettingsDisplayContext.getLayoutSEOSite();
 		%>
@@ -61,7 +59,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 			<aui:model-context bean="<%= layoutSEOSite %>" model="<%= LayoutSEOSite.class %>" />
 		</c:if>
 
-		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() || Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="text" />
+		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() || Validator.isNull(openGraphSettingsDisplayContext.getOpenGraphImageURL()) %>" helpMessage="open-graph-image-alt-description-help" label="open-graph-image-alt-description" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="text" />
 	</div>
 
 	<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageFileEntryId() %>" />

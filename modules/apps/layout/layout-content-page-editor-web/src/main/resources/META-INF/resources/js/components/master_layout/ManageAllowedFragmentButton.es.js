@@ -45,7 +45,11 @@ const ManageAllowedFragmentButton = () => {
 				/>
 			)}
 
-			<ClayButton displayType="secondary" onClick={handleOpenModalClick}>
+			<ClayButton
+				displayType="secondary"
+				onClick={handleOpenModalClick}
+				small
+			>
 				{Liferay.Language.get('manage-allowed-fragments')}
 			</ClayButton>
 		</>

@@ -15,6 +15,7 @@
 package com.liferay.layout.internal.template.util;
 
 import com.liferay.layout.util.template.LayoutColumn;
+import com.liferay.layout.util.template.LayoutConversionResult;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutData;
 import com.liferay.layout.util.template.LayoutRow;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
@@ -52,11 +54,24 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 	@Override
 	public LayoutData convert(Layout layout) {
+		LayoutConversionResult layoutConversionResult = convert(
+			layout, LocaleUtil.getSiteDefault());
+
+		return layoutConversionResult.getLayoutData();
+	}
+
+	@Override
+	public LayoutConversionResult convert(Layout layout, Locale locale) {
+		String[] conversionWarningMessages = _getConversionWarningMessages(
+			layout, locale);
+
 		if (!_isLayoutTemplateParseable(layout)) {
-			return LayoutData.of(
-				layout,
-				layoutRow -> layoutRow.addLayoutColumns(
-					layoutColumn -> layoutColumn.addAllPortlets()));
+			return LayoutConversionResult.of(
+				LayoutData.of(
+					layout,
+					layoutRow -> layoutRow.addLayoutColumns(
+						layoutColumn -> layoutColumn.addAllPortlets())),
+				conversionWarningMessages);
 		}
 
 		List<UnsafeConsumer<LayoutRow, Exception>> rowUnsafeConsumers =
@@ -105,8 +120,10 @@ public class DefaultLayoutConverter implements LayoutConverter {
 			rowUnsafeConsumers.add(rowUnsafeConsumer);
 		}
 
-		return LayoutData.of(
-			layout, rowUnsafeConsumers.toArray(new UnsafeConsumer[0]));
+		return LayoutConversionResult.of(
+			LayoutData.of(
+				layout, rowUnsafeConsumers.toArray(new UnsafeConsumer[0])),
+			conversionWarningMessages);
 	}
 
 	private String[] _getConversionWarningMessages(

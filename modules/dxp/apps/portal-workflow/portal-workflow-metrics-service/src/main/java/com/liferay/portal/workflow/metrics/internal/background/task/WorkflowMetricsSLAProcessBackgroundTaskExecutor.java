@@ -120,7 +120,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			startNodeId, workflowMetricsSLADefinitionVersion);
 
 		_processRunningInstances(
-			startNodeId, workflowMetricsSLADefinitionVersion);
+			0, startNodeId, workflowMetricsSLADefinitionVersion);
 
 		_processCompletedInstances(
 			startNodeId, workflowMetricsSLADefinitionVersion);
@@ -170,6 +170,25 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			instancesBooleanQuery, slaInstanceResultsBooleanQuery);
 	}
 
+	private BucketSortPipelineAggregation _createBucketSortPipelineAggregation(
+		int from) {
+
+		BucketSortPipelineAggregation bucketSortPipelineAggregation =
+			_aggregations.bucketSort("bucketSort");
+
+		FieldSort keyFieldSort = _sorts.field("_key");
+
+		keyFieldSort.setSortOrder(SortOrder.ASC);
+
+		bucketSortPipelineAggregation.addSortFields(keyFieldSort);
+
+		bucketSortPipelineAggregation.setFrom(from);
+		bucketSortPipelineAggregation.setGapPolicy(GapPolicy.SKIP);
+		bucketSortPipelineAggregation.setSize(10000);
+
+		return bucketSortPipelineAggregation;
+	}
+
 	private BooleanQuery _createInstancesBooleanQuery(
 		long companyId, boolean completed, Date createDate, long processId) {
 
@@ -177,11 +196,13 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
 
-		if (completed && (createDate != null)) {
-			booleanQuery.addMustQueryClauses(
-				_queries.rangeTerm(
-					"completionDate", false, false, _formatDate(createDate),
-					null));
+		if (createDate != null) {
+			RangeTermQuery rangeTermQuery = _queries.rangeTerm(
+				"completionDate", true, true);
+
+			rangeTermQuery.setLowerBound(_formatDate(createDate));
+
+			booleanQuery.addMustQueryClauses(rangeTermQuery);
 		}
 
 		return booleanQuery.addMustQueryClauses(
@@ -267,6 +288,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
+
 		long companyId, long processId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -505,33 +527,103 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private void _processRunningInstances(
-		long startNodeId,
+		int from, long startNodeId,
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion) {
 
-		Map<Long, LocalDateTime> createLocalDateTimes =
-			_getCreateLocalDateTimes(
-				workflowMetricsSLADefinitionVersion.getCompanyId(),
-				workflowMetricsSLADefinitionVersion.getProcessId());
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		Set<Map.Entry<Long, LocalDateTime>> entrySet =
-			createLocalDateTimes.entrySet();
+		TermsAggregation termsAggregation = _aggregations.terms(
+			"instanceId", "instanceId");
 
-		Stream<Map.Entry<Long, LocalDateTime>> stream =
-			entrySet.parallelStream();
+		termsAggregation.addChildrenAggregations(
+			_aggregations.topHits("topHits"));
 
-		stream.map(
-			entry -> _workflowMetricsSLAProcessor.process(
-				workflowMetricsSLADefinitionVersion.getCompanyId(),
-				entry.getValue(), entry.getKey(), LocalDateTime.now(),
-				startNodeId, workflowMetricsSLADefinitionVersion)
+		termsAggregation.addPipelineAggregation(
+			_createBucketSortPipelineAggregation(from));
+
+		termsAggregation.setSize(10000);
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames("workflow-metrics-instances");
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		searchSearchRequest.setQuery(
+			booleanQuery.addFilterQueryClauses(
+				_createInstancesBooleanQuery(
+					workflowMetricsSLADefinitionVersion.getCompanyId(), false,
+					null, workflowMetricsSLADefinitionVersion.getProcessId())));
+
+		SearchSearchResponse searchSearchResponse =
+			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+
+		long count = searchSearchResponse.getCount();
+
+		if (count > 10000) {
+			_processRunningInstances(
+				from + 10000, startNodeId, workflowMetricsSLADefinitionVersion);
+		}
+
+		List<Document> slaInstanceResultDocuments = new ArrayList<>();
+		List<Document> slaTaskResultDocuments = new ArrayList<>();
+
+		Stream.of(
+			searchSearchResponse.getAggregationResultsMap()
+		).map(
+			aggregationResultsMap ->
+				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
+		).map(
+			BucketAggregationResult::getBuckets
+		).flatMap(
+			Collection::stream
+		).map(
+			bucket ->
+				(TopHitsAggregationResult)bucket.getChildAggregationResult(
+					"topHits")
+		).map(
+			TopHitsAggregationResult::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::parallelStream
+		).map(
+			SearchHit::getSourcesMap
+		).map(
+			sourcesMap -> _workflowMetricsSLAProcessor.process(
+				workflowMetricsSLADefinitionVersion.getCompanyId(), null,
+				LocalDateTime.parse(
+					(String)sourcesMap.get("createDate"),
+					DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN)),
+				GetterUtil.getLong(sourcesMap.get("instanceId")),
+				LocalDateTime.now(), startNodeId,
+				workflowMetricsSLADefinitionVersion)
 		).filter(
 			Optional::isPresent
 		).map(
 			Optional::get
 		).forEach(
-			this::_indexWorkflowMetricsSLAInstanceResult
+			workflowMetricsSLAInstanceResult -> {
+				slaInstanceResultDocuments.add(
+					_slaInstanceResultWorkflowMetricsIndexer.createDocument(
+						workflowMetricsSLAInstanceResult));
+
+				for (WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult :
+						workflowMetricsSLAInstanceResult.
+							getWorkflowMetricsSLATaskResults()) {
+
+					slaTaskResultDocuments.add(
+						_slaTaskResultWorkflowMetricsIndexer.createDocument(
+							workflowMetricsSLATaskResult));
+				}
+			}
 		);
+
+		_slaInstanceResultWorkflowMetricsIndexer.addDocuments(
+			slaInstanceResultDocuments);
+		_slaTaskResultWorkflowMetricsIndexer.addDocuments(
+			slaTaskResultDocuments);
 	}
 
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
@@ -561,6 +653,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
+
+	@Reference
+	private Sorts _sorts;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

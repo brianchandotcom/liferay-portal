@@ -87,9 +87,7 @@ function FragmentContent({fragmentEntryLink}, ref) {
 	}, [state, config, defaultContent, fragmentEntryLinkId, isMounted]);
 
 	const onDoubleClick = event => {
-		const target = event.target;
-
-		const editable = target.closest('lfr-editable');
+		const editable = event.target.closest('lfr-editable');
 
 		if (editable) {
 			const editableId = `${fragmentEntryLinkId}-${editable.getAttribute(
@@ -105,17 +103,8 @@ function FragmentContent({fragmentEntryLink}, ref) {
 
 			activeEditable.current = editable;
 
-			initProcessor(
-				editable,
-				editable.getAttribute('id'),
-				editable.getAttribute('type'),
-				fragmentEntryLinkId,
-				state,
-				config
-			);
-
+			initProcessor(editable, editable.getAttribute('type'), config);
 			selectItem(editableId);
-
 			setHasEditableActive(true);
 		} else {
 			if (activeEditable.current) {
@@ -145,29 +134,16 @@ function FragmentContent({fragmentEntryLink}, ref) {
 	);
 }
 
-function initProcessor(
-	element,
-	editableId,
-	editableType,
-	fragmentEntryLinkId,
-	store,
-	config
-) {
+function initProcessor(element, editableType, config) {
 	const processor = Processors[editableType] || Processors.fallback;
 
-	processor.enableEditor(
-		element,
-		editableId,
-		fragmentEntryLinkId,
-		store,
-		config
-	);
+	processor.createEditor(element, () => {}, () => {}, config);
 }
 
 function destroyProcessor(element, editableType) {
 	const processor = Processors[editableType] || Processors.fallback;
 
-	processor.disableEditor(element);
+	processor.destroyEditor(element);
 }
 
 export default React.forwardRef(FragmentContent);

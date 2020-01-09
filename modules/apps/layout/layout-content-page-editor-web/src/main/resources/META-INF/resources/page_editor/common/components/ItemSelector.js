@@ -15,44 +15,13 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ItemSelectorDialog} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
+import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 
-export default function ItemSelector({
-	itemSelectorURL,
-	label,
-	onItemSelect,
-	selectedItem
-}) {
-	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
-
-	const openInfoItemSelector = () => {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: `${portletNamespace}selectInfoItem`,
-			singleSelect: true,
-			title: Liferay.Language.get('select'),
-			url: itemSelectorURL || infoItemSelectorURL
-		});
-
-		itemSelectorDialog.on('selectedItemChange', event => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem && selectedItem.value) {
-				const infoItem = JSON.parse(selectedItem.value);
-
-				onItemSelect({
-					className: infoItem.className,
-					classNameId: infoItem.classNameId,
-					classPK: infoItem.classPK,
-					title: infoItem.title
-				});
-			}
-		});
-
-		itemSelectorDialog.open();
-	};
+export default function ItemSelector({label, onItemSelect, selectedItem}) {
+	const config = useContext(ConfigContext);
 
 	return (
 		<>
@@ -71,7 +40,9 @@ export default function ItemSelector({
 				<ClayButton.Group>
 					<ClayButton
 						displayType="secondary"
-						onClick={openInfoItemSelector}
+						onClick={() =>
+							openInfoItemSelector(onItemSelect, config)
+						}
 						small
 					>
 						<ClayIcon symbol="plus" />

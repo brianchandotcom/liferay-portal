@@ -39,7 +39,9 @@ function AddMenu({dropdownItems, portletId}) {
 		[portletId]
 	);
 
-	if (!Liferay.component(adaptiveMediaProgressComponentId)) {
+	const addMenuDefaultEventHandlerId = `_${portletId}_AddMenuDefaultEventHandler`;
+
+	if (!Liferay.component(addMenuDefaultEventHandlerId)) {
 		class AddMenuDefaultEventHandler {
 			handleItemClicked(event) {
 				handleItemClick(event);
@@ -47,7 +49,7 @@ function AddMenu({dropdownItems, portletId}) {
 		}
 
 		Liferay.component(
-			`_${portletId}_AddMenuDefaultEventHandler`,
+			addMenuDefaultEventHandlerId,
 			new AddMenuDefaultEventHandler(),
 			{
 				destroyOnNavigate: true

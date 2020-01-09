@@ -90,12 +90,6 @@ public class Page<T> {
 		_totalCount = totalCount;
 	}
 
-	private Map<String, Map> _actions;
-	private Collection<T> _items;
-	private long _page;
-	private long _pageSize;
-	private long _totalCount;
-
 	public static class PageJSONParser<T> extends BaseJSONParser<Page> {
 
 		public PageJSONParser() {
@@ -161,5 +155,11 @@ public class Page<T> {
 		private final Function<String, T> _toDTOFunction;
 
 	}
+
+	private Map<String, Map> _actions;
+	private Collection<T> _items;
+	private long _page;
+	private long _pageSize;
+	private long _totalCount;
 
 }

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jeyvison Nascimento
  */
 @Component(immediate = true, service = {})
-public class CustomObjectsPortletResourcePermissionRegistrar {
+public class AppBuilderPortletResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

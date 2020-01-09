@@ -457,7 +457,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureBasePlugin(project, portalRootDir);
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
-		_configureConfigurations(project, liferayExtension);
+		_configureConfigurations(project, liferayExtension, publishing);
 		_configureDependencyChecker(project);
 		_configureDeployDir(
 			project, liferayExtension, deployToAppServerLibs, deployToTools);
@@ -2390,7 +2390,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurations(
-		Project project, LiferayExtension liferayExtension) {
+		Project project, LiferayExtension liferayExtension,
+		boolean publishing) {
 
 		_configureConfigurationDefault(project);
 		_configureConfigurationJspC(project, liferayExtension);
@@ -2410,10 +2411,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
 
-			_configureDependenciesGroupPortal(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
-			_configureDependenciesGroupPortal(
-				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+			if (publishing) {
+				_configureDependenciesGroupPortal(
+					project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+				_configureDependenciesGroupPortal(
+					project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+			}
 		}
 
 		_configureDependenciesTransitive(
@@ -2531,10 +2534,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					String name = externalModuleDependency.getName();
 
-					String compatVersion = GradleUtil.getProperty(
-						project, "compat." + name + ".version", (String)null);
+					String newVersion = GradleUtil.getProperty(
+						project, name + ".version", (String)null);
 
-					if (Validator.isNull(compatVersion)) {
+					if (Validator.isNull(newVersion)) {
 						return;
 					}
 
@@ -2554,7 +2557,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					sb.append(':');
 					sb.append(name);
 					sb.append(':');
-					sb.append(compatVersion);
+
+					int x = newVersion.lastIndexOf("-SNAPSHOT");
+
+					if (x != -1) {
+						sb.append("(," + newVersion.substring(0, x) + ")");
+					}
+					else {
+						sb.append("(," + newVersion + ")");
+					}
 
 					String newNotation = sb.toString();
 

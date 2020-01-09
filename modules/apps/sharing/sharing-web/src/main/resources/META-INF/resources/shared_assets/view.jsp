@@ -107,17 +107,14 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 	</liferay-ui:search-container>
 </div>
 
-<portlet:renderURL var="selectAssetTypeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/shared_assets/select_asset_type" />
-	<portlet:param name="className" value="<%= sharedAssetsViewDisplayContext.getClassName() %>" />
-</portlet:renderURL>
-
 <%
 PortletURL viewAssetTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 
 viewAssetTypeURL.setParameter("className", (String)null);
 
 Map<String, Object> context = new HashMap<>();
+
+PortletURL selectAssetTypeURL = sharedAssetsViewDisplayContext.getSelectAssetTypeURL();
 
 context.put("selectAssetTypeURL", selectAssetTypeURL.toString());
 context.put("viewAssetTypeURL", viewAssetTypeURL.toString());

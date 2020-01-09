@@ -50,7 +50,7 @@ class SharedAssets extends PortletBase {
 					let uri = viewAssetTypeURL;
 
 					uri = Liferay.Util.addParams(
-						namespace + 'className=' + selectedItem,
+						namespace + 'className=' + selectedItem.value,
 						uri
 					);
 

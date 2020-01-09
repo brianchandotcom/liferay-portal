@@ -16,6 +16,7 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -38,6 +39,15 @@ public class UserGroupModelListener extends BaseEntityModelListener<UserGroup> {
 	@Override
 	public List<String> getAttributeNames() {
 		return _attributeNames;
+	}
+
+	@Override
+	public void onAfterRemove(UserGroup userGroup)
+		throws ModelListenerException {
+
+		updateConfigurationProperties(
+			userGroup.getCompanyId(), "syncedUserGroupIds",
+			String.valueOf(userGroup.getUserGroupId()), null);
 	}
 
 	@Override

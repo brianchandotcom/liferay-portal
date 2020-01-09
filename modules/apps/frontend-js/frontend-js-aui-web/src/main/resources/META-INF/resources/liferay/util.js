@@ -1184,23 +1184,27 @@
 			}
 		},
 
-		showCapsLock(event, span) {
-			var keyCode = event.keyCode ? event.keyCode : event.which;
+		showCapsLock(event, spanId) {
+			const span = document.getElementById(spanId);
 
-			var shiftKeyCode = keyCode === 16;
+			if (span) {
+				var keyCode = event.keyCode ? event.keyCode : event.which;
 
-			var shiftKey = event.shiftKey ? event.shiftKey : shiftKeyCode;
+				var shiftKeyCode = keyCode === 16;
 
-			var display = 'none';
+				var shiftKey = event.shiftKey ? event.shiftKey : shiftKeyCode;
 
-			if (
-				(keyCode >= 65 && keyCode <= 90 && !shiftKey) ||
-				(keyCode >= 97 && keyCode <= 122 && shiftKey)
-			) {
-				display = '';
+				var display = 'none';
+
+				if (
+					(keyCode >= 65 && keyCode <= 90 && !shiftKey) ||
+					(keyCode >= 97 && keyCode <= 122 && shiftKey)
+				) {
+					display = '';
+				}
+
+				span.style.display = display;
 			}
-
-			$('#' + span).css('display', display);
 		},
 
 		sortByAscending(a, b) {

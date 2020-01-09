@@ -13,3 +13,4 @@
  */
 
 export {default as fallback} from './FallbackProcessor';
+export {default as image} from './ImageProcessor';

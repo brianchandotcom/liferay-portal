@@ -133,14 +133,6 @@ public class TargetPlatformExtension {
 			});
 	}
 
-	/**
-	 * @deprecated
-	 *
-	 * Now that this plugin uses native Gradle 5 BOM support,
-	 * we automatically add to all configurations, so calling
-	 * this method has no effect.
-	 */
-	@Deprecated
 	public TargetPlatformExtension applyToConfiguration(
 		Iterable<?> configurationNames) {
 
@@ -155,14 +147,6 @@ public class TargetPlatformExtension {
 		return this;
 	}
 
-	/**
-	 * @deprecated
-	 *
-	 * Now that this plugin uses native Gradle 5 BOM support,
-	 * we automatically add to all configurations, so calling
-	 * this method has no effect.
-	 */
-	@Deprecated
 	public TargetPlatformExtension applyToConfiguration(
 		Object... configurationNames) {
 

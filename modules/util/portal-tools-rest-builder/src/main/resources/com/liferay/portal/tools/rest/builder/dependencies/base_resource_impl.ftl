@@ -135,28 +135,16 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 		this.contextUser = contextUser;
 	}
 
-	protected Map<String, String> addAction(
-		String actionName, GroupedModel groupedModel, String methodName) {
-
-		return PermissionsUtil.addAction(
-			actionName, getClass(), groupedModel, methodName, contextUriInfo);
+	protected Map<String, String> addAction(String actionName, GroupedModel groupedModel, String methodName) {
+		return PermissionsUtil.addAction(actionName, getClass(), groupedModel, methodName, contextUriInfo);
 	}
 
-	protected Map<String, String> addAction(
-		String actionName, Long id, String methodName, String permissionName,
-		Long siteId) {
-
-		return PermissionsUtil.addAction(
-			actionName, getClass(), id, methodName, permissionName, siteId,
-			contextUriInfo);
+	protected Map<String, String> addAction(String actionName, Long id, String methodName, String permissionName, Long siteId) {
+		return PermissionsUtil.addAction(actionName, getClass(), id, methodName, permissionName, siteId, contextUriInfo);
 	}
 
-	protected Map<String, String> addAction(
-		String actionName, String methodName, String permissionName,
-		Long siteId) {
-
-		return addAction(
-			actionName, siteId, methodName, permissionName, siteId);
+	protected Map<String, String> addAction(String actionName, String methodName, String permissionName, Long siteId) {
+		return addAction(actionName, siteId, methodName, permissionName, siteId);
 	}
 
 	protected void preparePatch(${schemaName} ${schemaVarName}, ${schemaName} existing${schemaVarName?cap_first}) {

@@ -27,8 +27,9 @@ import serviceFetch from '../../../../../../src/main/resources/META-INF/resource
 import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import AppContext from '../../../../../../src/main/resources/META-INF/resources/page_editor/core/AppContext';
 import {
-	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
-	CREATE_SEGMENTS_EXPERIENCE
+	CREATE_SEGMENTS_EXPERIENCE,
+	EDIT_SEGMENTS_EXPERIENCE,
+	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
 import ExperienceToolbarSection from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/components/ExperienceToolbarSection';
 

@@ -18,19 +18,14 @@ import serviceFetch from '../../app/services/serviceFetch';
 
 export const APIContext = React.createContext({});
 
-// TODO grab urls from displayContext
-const EDIT_SEGMENTS_EXPERIENCE_URL =
-	'/segments.segmentsexperience/update-segments-experience';
-
-const UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL =
-	'/segments.segmentsexperience/update-segments-experience-priority';
-
 export default function API({
 	addSegmentsExperienceURL,
 	classNameId,
 	classPK,
 	portletNamespace,
-	removeSegmentsExperienceURL: _removeSegmentsExperienceURL
+	removeSegmentsExperienceURL: _removeSegmentsExperienceURL,
+	updateSegmentsExperiencePriorityURL,
+	updateSegmentsExperienceURL
 }) {
 	function createExperience({name, segmentsEntryId}) {
 		const body = {
@@ -55,32 +50,36 @@ export default function API({
 	}
 
 	function updateExperiencePriority({newPriority, segmentsExperienceId}) {
-		return new Promise((resolve, reject) => {
-			Liferay.Service(UPDATE_SEGMENTS_EXPERIENCE_PRIORITY_URL, {
-				newPriority,
-				segmentsExperienceId
-			})
-				.then(resolve)
-				.catch(reject);
-		});
+		const body = {
+			newPriority,
+			segmentsExperienceId
+		};
+
+		return serviceFetch(
+			{portletNamespace},
+			updateSegmentsExperiencePriorityURL,
+			body
+		);
 	}
 
 	function updateExperience({
 		active,
-		nameMap,
+		name,
 		segmentsEntryId,
 		segmentsExperienceId
 	}) {
-		return new Promise((resolve, reject) => {
-			Liferay.Service(EDIT_SEGMENTS_EXPERIENCE_URL, {
-				active,
-				nameMap,
-				segmentsEntryId,
-				segmentsExperienceId
-			})
-				.then(resolve)
-				.catch(reject);
-		});
+		const body = {
+			active,
+			name,
+			segmentsEntryId,
+			segmentsExperienceId
+		};
+
+		return serviceFetch(
+			{portletNamespace},
+			updateSegmentsExperienceURL,
+			body
+		);
 	}
 
 	return {

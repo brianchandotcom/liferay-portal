@@ -31,7 +31,9 @@ export default function ExperienceToolbarSection({selectId}) {
 		classPK,
 		defaultSegmentsEntryId,
 		editSegmentsEntryURL,
-		portletNamespace
+		portletNamespace,
+		updateSegmentsExperiencePriorityURL,
+		updateSegmentsExperienceURL
 	} = useContext(ConfigContext);
 
 	const experiences = useMemo(
@@ -60,12 +62,19 @@ export default function ExperienceToolbarSection({selectId}) {
 			addSegmentsExperienceURL,
 			classNameId,
 			classPK,
-			editSegmentsExperiencePriorityURL: '/',
-			editSegmentsExperienceURL: '/',
 			portletNamespace,
-			removeSegmentsExperienceURL: '/'
+			removeSegmentsExperienceURL: '/',
+			updateSegmentsExperiencePriorityURL,
+			updateSegmentsExperienceURL
 		});
-	}, [addSegmentsExperienceURL, classNameId, classPK, portletNamespace]);
+	}, [
+		addSegmentsExperienceURL,
+		classNameId,
+		classPK,
+		portletNamespace,
+		updateSegmentsExperiencePriorityURL,
+		updateSegmentsExperienceURL
+	]);
 
 	const selectedExperience =
 		availableSegmentsExperiences[segmentsExperienceId];

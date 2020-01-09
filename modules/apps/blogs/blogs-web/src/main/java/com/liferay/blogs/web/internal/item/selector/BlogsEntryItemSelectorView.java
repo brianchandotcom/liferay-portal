@@ -15,26 +15,43 @@
 package com.liferay.blogs.web.internal.item.selector;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
-import com.liferay.blogs.web.internal.display.context.BlogEntriesItemSelectorDisplayContext;
+import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
+import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -66,10 +83,6 @@ public class BlogsEntryItemSelectorView
 		return InfoItemItemSelectorCriterion.class;
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
@@ -92,23 +105,11 @@ public class BlogsEntryItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		BlogEntriesItemSelectorDisplayContext
-			blogEntriesItemSelectorDisplayContext =
-				new BlogEntriesItemSelectorDisplayContext(
-					this, (HttpServletRequest)servletRequest,
-					itemSelectedEventName, portletURL);
-
-		servletRequest.setAttribute(
-			BlogsWebKeys.BLOGS_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			blogEntriesItemSelectorDisplayContext);
-
-		ServletContext servletContext = getServletContext();
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(
-				"/blogs/item/selector/select_entries.jsp");
-
-		requestDispatcher.include(servletRequest, servletResponse);
+		_itemSelectorViewDescriptorRenderer.renderHTML(
+			servletRequest, servletResponse, infoItemItemSelectorCriterion,
+			portletURL, itemSelectedEventName, search,
+			new BlogsItemSelectorViewDescriptor(
+				(HttpServletRequest)servletRequest, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -116,9 +117,175 @@ public class BlogsEntryItemSelectorView
 			new InfoItemItemSelectorReturnType());
 
 	@Reference
+	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
+		_itemSelectorViewDescriptorRenderer;
+
+	@Reference
 	private Language _language;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.blogs.web)")
-	private ServletContext _servletContext;
+	@Reference
+	private Portal _portal;
+
+	private class BlogsEntryItemDescriptor
+		implements ItemSelectorViewDescriptor.ItemDescriptor {
+
+		public BlogsEntryItemDescriptor(
+			BlogsEntry blogsEntry, HttpServletRequest httpServletRequest) {
+
+			_blogsEntry = blogsEntry;
+			_httpServletRequest = httpServletRequest;
+
+			_resourceBundle = ResourceBundleUtil.getBundle(
+				httpServletRequest.getLocale(), getClass());
+		}
+
+		@Override
+		public String getIcon() {
+			return "blogs";
+		}
+
+		@Override
+		public String getImageURL() {
+			try {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				String coverImageURL = _blogsEntry.getCoverImageURL(
+					themeDisplay);
+
+				if (Validator.isNull(coverImageURL)) {
+					return _blogsEntry.getSmallImageURL(themeDisplay);
+				}
+
+				return coverImageURL;
+			}
+			catch (PortalException pe) {
+				return ReflectionUtil.throwException(pe);
+			}
+		}
+
+		@Override
+		public String getPayload() {
+			return JSONUtil.put(
+				"className", BlogsEntry.class.getName()
+			).put(
+				"classNameId",
+				_portal.getClassNameId(BlogsEntry.class.getName())
+			).put(
+				"classPK", _blogsEntry.getEntryId()
+			).put(
+				"title",
+				BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry)
+			).toString();
+		}
+
+		@Override
+		public String getSubtitle() {
+			Date modifiedDate = _blogsEntry.getModifiedDate();
+
+			String modifiedDateDescription = LanguageUtil.getTimeDescription(
+				_httpServletRequest,
+				System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+			return _language.format(
+				_httpServletRequest.getLocale(), "x-ago-by-x",
+				new Object[] {
+					modifiedDateDescription,
+					HtmlUtil.escape(_blogsEntry.getUserName())
+				});
+		}
+
+		@Override
+		public String getTitle() {
+			return BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry);
+		}
+
+		private final BlogsEntry _blogsEntry;
+		private HttpServletRequest _httpServletRequest;
+		private final ResourceBundle _resourceBundle;
+
+	}
+
+	private class BlogsItemSelectorViewDescriptor
+		implements ItemSelectorViewDescriptor<BlogsEntry> {
+
+		public BlogsItemSelectorViewDescriptor(
+			HttpServletRequest httpServletRequest, PortletURL portletURL) {
+
+			_httpServletRequest = httpServletRequest;
+			_portletURL = portletURL;
+		}
+
+		@Override
+		public ItemSelectorViewDescriptor.ItemDescriptor getItemDescriptor(
+			BlogsEntry blogsEntry) {
+
+			return new BlogsEntryItemDescriptor(
+				blogsEntry, _httpServletRequest);
+		}
+
+		@Override
+		public String[] getOrderByKeys() {
+			return new String[] {"title", "display-date"};
+		}
+
+		@Override
+		public ItemSelectorReturnType getReturnType() {
+			return new InfoItemItemSelectorReturnType();
+		}
+
+		@Override
+		public SearchContainer getSearchContainer() {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			SearchContainer<BlogsEntry> entriesSearchContainer =
+				new SearchContainer<>(
+					(PortletRequest)_httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST),
+					_portletURL, null, "no-entries-were-found");
+
+			String orderByCol = ParamUtil.getString(
+				_httpServletRequest, "orderByCol", "title");
+
+			entriesSearchContainer.setOrderByCol(orderByCol);
+
+			String orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
+
+			entriesSearchContainer.setOrderByType(orderByType);
+
+			entriesSearchContainer.setOrderByComparator(
+				BlogsUtil.getOrderByComparator(
+					entriesSearchContainer.getOrderByCol(),
+					entriesSearchContainer.getOrderByType()));
+
+			entriesSearchContainer.setTotal(
+				_blogsEntryService.getGroupEntriesCount(
+					themeDisplay.getScopeGroupId(),
+					WorkflowConstants.STATUS_APPROVED));
+
+			List<BlogsEntry> entriesResults =
+				_blogsEntryService.getGroupEntries(
+					themeDisplay.getScopeGroupId(),
+					WorkflowConstants.STATUS_APPROVED,
+					entriesSearchContainer.getStart(),
+					entriesSearchContainer.getEnd(),
+					entriesSearchContainer.getOrderByComparator());
+
+			entriesSearchContainer.setResults(entriesResults);
+
+			return entriesSearchContainer;
+		}
+
+		private HttpServletRequest _httpServletRequest;
+		private final PortletURL _portletURL;
+
+	}
 
 }

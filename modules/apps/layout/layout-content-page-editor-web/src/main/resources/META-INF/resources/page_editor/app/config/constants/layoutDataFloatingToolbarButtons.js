@@ -63,14 +63,6 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
-	layoutBackgroundImage: {
-		icon: 'picture',
-		id: 'layout_background_image',
-		panelId: 'layout_background_image',
-		title: Liferay.Language.get('layout-background-image'),
-		type: 'panel'
-	},
-
 	link: {
 		icon: 'link',
 		id: 'link',

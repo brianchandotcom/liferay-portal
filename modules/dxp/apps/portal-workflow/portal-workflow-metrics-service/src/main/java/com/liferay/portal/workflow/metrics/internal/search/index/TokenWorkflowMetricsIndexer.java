@@ -29,10 +29,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
-import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.time.Duration;
 
@@ -62,7 +58,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId()));
 
 		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
-			_kaleoTaskAssignmentInstanceLocalService.
+			kaleoTaskAssignmentInstanceLocalService.
 				fetchFirstKaleoTaskAssignmentInstance(
 					kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
 					User.class.getName(), null);
@@ -100,7 +96,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		}
 
 		KaleoInstance kaleoInstance =
-			_kaleoInstanceLocalService.fetchKaleoInstance(
+			kaleoInstanceLocalService.fetchKaleoInstance(
 				kaleoTaskInstanceToken.getKaleoInstanceId());
 
 		if (kaleoInstance != null) {
@@ -190,7 +186,7 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	@Override
 	protected void reindex(long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			_kaleoTaskInstanceTokenLocalService.getActionableDynamicQuery();
+			kaleoTaskInstanceTokenLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -207,20 +203,6 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference
-	private KaleoInstanceLocalService _kaleoInstanceLocalService;
-
-	@Reference
-	private KaleoTaskAssignmentInstanceLocalService
-		_kaleoTaskAssignmentInstanceLocalService;
-
-	@Reference
-	private KaleoTaskInstanceTokenLocalService
-		_kaleoTaskInstanceTokenLocalService;
-
-	@Reference
-	private SLAInstanceResultWorkflowMetricsIndexer
-		_slaInstanceResultWorkflowMetricsIndexer;
 
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer

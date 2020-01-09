@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.Document;
@@ -35,6 +36,11 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 
 import java.io.Serializable;
@@ -186,11 +192,31 @@ public abstract class BaseWorkflowMetricsIndexer {
 	}
 
 	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
 	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
 
 	@Reference
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
+
+	@Reference
+	protected KaleoInstanceLocalService kaleoInstanceLocalService;
+
+	@Reference
+	protected KaleoNodeLocalService kaleoNodeLocalService;
+
+	@Reference
+	protected KaleoTaskAssignmentInstanceLocalService
+		kaleoTaskAssignmentInstanceLocalService;
+
+	@Reference
+	protected KaleoTaskInstanceTokenLocalService
+		kaleoTaskInstanceTokenLocalService;
+
+	@Reference
+	protected KaleoTaskLocalService kaleoTaskLocalService;
 
 	@Reference
 	protected Queries queries;

@@ -198,32 +198,36 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
-		List<String> childrenItemIds = new ArrayList<>(
-			layoutStructureItem.getChildrenItemIds());
+		JSONObject itemConfigJSONObject =
+			layoutStructureItem.getItemConfigJSONObject();
 
-		int childrenItemIdsSize = childrenItemIds.size();
+		int oldNumberOfColumns = itemConfigJSONObject.getInt("numberOfColumns");
 
-		if (childrenItemIdsSize == numberOfColumns) {
+		if (oldNumberOfColumns == numberOfColumns) {
 			return Collections.emptyList();
 		}
 
 		layoutStructureItem.updateItemConfigJSONObject(
 			JSONUtil.put("numberOfColumns", numberOfColumns));
 
-		if (childrenItemIdsSize < numberOfColumns) {
-			for (int i = 0; i < childrenItemIdsSize; i++) {
+		List<String> childrenItemIds = new ArrayList<>(
+			layoutStructureItem.getChildrenItemIds());
+
+		if (oldNumberOfColumns < numberOfColumns) {
+			for (int i = 0; i < oldNumberOfColumns; i++) {
 				String childrenItemId = childrenItemIds.get(i);
 
 				LayoutStructureItem childLayoutStructureItem =
 					_layoutStructureItems.get(childrenItemId);
 
 				childLayoutStructureItem.updateItemConfigJSONObject(
-					JSONUtil.put("size", _COLUMN_SIZES[numberOfColumns][i]));
+					JSONUtil.put(
+						"size", _COLUMN_SIZES[numberOfColumns - 1][i]));
 			}
 
-			for (int i = childrenItemIdsSize; i < numberOfColumns; i++) {
+			for (int i = oldNumberOfColumns; i < numberOfColumns; i++) {
 				_addColumnLayoutStructureItem(
-					itemId, i, _COLUMN_SIZES[numberOfColumns][i]);
+					itemId, i, _COLUMN_SIZES[numberOfColumns - 1][i]);
 			}
 
 			return Collections.emptyList();
@@ -236,13 +240,13 @@ public class LayoutStructure {
 				_layoutStructureItems.get(childrenItemId);
 
 			childLayoutStructureItem.updateItemConfigJSONObject(
-				JSONUtil.put("size", _COLUMN_SIZES[numberOfColumns][i]));
+				JSONUtil.put("size", _COLUMN_SIZES[numberOfColumns - 1][i]));
 		}
 
 		List<LayoutStructureItem> deletedLayoutStructureItems =
 			new ArrayList<>();
 
-		for (int i = numberOfColumns; i < childrenItemIdsSize; i++) {
+		for (int i = numberOfColumns; i < oldNumberOfColumns; i++) {
 			String childrenItemId = childrenItemIds.get(i);
 
 			deletedLayoutStructureItems.addAll(

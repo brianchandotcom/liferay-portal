@@ -67,9 +67,13 @@ public interface BulkLayoutConverter {
 
 	public Layout generatePreviewLayout(long plid) throws Exception;
 
-	public LayoutConversionResult generatePreviewLayout(
+	public default LayoutConversionResult generatePreviewLayout(
 			long plid, Locale locale)
-		throws Exception;
+		throws Exception {
+
+		return LayoutConversionResult.of(
+			null, new String[0], generatePreviewLayout(plid));
+	}
 
 	/**
 	 * Returns the plids of the convertible layouts in the group

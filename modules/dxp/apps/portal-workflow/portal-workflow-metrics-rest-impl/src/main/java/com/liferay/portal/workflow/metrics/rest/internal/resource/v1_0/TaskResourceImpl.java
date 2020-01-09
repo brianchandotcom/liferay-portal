@@ -250,9 +250,7 @@ public class TaskResourceImpl
 		else {
 			booleanQuery.addMustNotQueryClauses(
 				_queries.term(
-					"status", WorkflowMetricsSLAStatus.COMPLETED.name()),
-				_queries.term(
-					"status", WorkflowMetricsSLAStatus.EXPIRED.name()));
+					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
 		TermsQuery termsQuery = _queries.terms("taskName");

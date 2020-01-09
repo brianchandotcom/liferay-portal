@@ -325,9 +325,6 @@ public class ProcessResourceImpl
 					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkflowMetricsSLAStatus.EXPIRED.name()));
-
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("deleted", Boolean.FALSE),

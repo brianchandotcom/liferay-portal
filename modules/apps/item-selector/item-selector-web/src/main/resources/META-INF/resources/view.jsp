@@ -38,11 +38,13 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 		</div>
 	</c:when>
 	<c:otherwise>
-		<clay:navigation-bar
-			elementClasses="border-bottom"
-			inverted="<%= false %>"
-			navigationItems="<%= navigationItems %>"
-		/>
+		<c:if test="<%= navigationItems.size() > 1 %>">
+			<clay:navigation-bar
+				elementClasses="border-bottom"
+				inverted="<%= false %>"
+				navigationItems="<%= navigationItems %>"
+			/>
+		</c:if>
 
 		<%
 		boolean showGroupSelector = ParamUtil.getBoolean(request, "showGroupSelector");

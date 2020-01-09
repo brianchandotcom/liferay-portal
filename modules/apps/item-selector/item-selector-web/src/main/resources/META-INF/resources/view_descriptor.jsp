@@ -25,21 +25,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 %>
 
 <clay:management-toolbar
-	displayContext="<%=
-		new SearchContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer) {
-
-			@Override
-			public String[] getOrderByKeys() {
-				return itemSelectorViewDescriptor.getOrderByKeys();
-			}
-
-			@Override
-			public Boolean isSelectable() {
-				return false;
-			}
-
-		}
-	%>"
+	displayContext="<%= new ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext(itemSelectorViewDescriptor, request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
 />
 
 <div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />entriesContainer">
@@ -70,37 +56,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard='<%= new BaseVerticalCard(null, renderRequest, null) {
-						@Override
-						public String getAspectRatioCssClasses() {
-							return "aspect-ratio-item-center-middle aspect-ratio-item-vertical-fluid";
-						}
-
-						@Override
-						public String getElementClasses() {
-							return "card-interactive card-interactive-secondary";
-						}
-
-						@Override
-						public String getIcon() {
-							return itemDescriptor.getIcon();
-						}
-
-						@Override
-						public String getImageSrc() {
-							return itemDescriptor.getThumbnailURL();
-						}
-
-						@Override
-						public String getSubtitle() {
-							return itemDescriptor.getSubtitle();
-						}
-
-						@Override
-						public String getTitle() {
-							return itemDescriptor.getTitle();
-						}
-					} %>'
+					verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

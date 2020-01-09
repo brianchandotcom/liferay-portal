@@ -26,13 +26,13 @@ taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigat
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.item.selector.ItemSelectorViewDescriptor" %><%@
 page import="com.liferay.item.selector.ItemSelectorViewRenderer" %><%@
 page import="com.liferay.item.selector.web.internal.display.context.ItemSelectorViewDescriptorRendererDisplayContext" %><%@
+page import="com.liferay.item.selector.web.internal.display.context.ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext" %><%@
 page import="com.liferay.item.selector.web.internal.portlet.LocalizedItemSelectorRendering" %><%@
+page import="com.liferay.item.selector.web.internal.servlet.taglib.clay.ItemDescriptorVerticalCard" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

@@ -37,7 +37,7 @@ public interface JSJQueryConfiguration {
 	 * @return <code>true</code> if JQuery is enabled.
 	 * @review
 	 */
-	@Meta.AD(deflt = "true", name = "enable-jquery", required = false)
+	@Meta.AD(deflt = "false", name = "enable-jquery", required = false)
 	public boolean enableJQuery();
 
 }

@@ -12,7 +12,10 @@
 import React from 'react';
 
 import {formatDuration} from '../../../shared/util/duration.es';
-import {getFormattedPercentage} from '../../../shared/util/util.es';
+import {
+	getFormattedPercentage,
+	isValidNumber
+} from '../../../shared/util/util.es';
 
 const Item = ({
 	breachedInstanceCount,
@@ -31,7 +34,10 @@ const Item = ({
 			<td data-testid="stepName">{name}</td>
 
 			<td className="text-right" data-testid="slaBreached">
-				{breachedInstanceCount} ({formattedPercentage})
+				{isValidNumber(breachedInstanceCount)
+					? breachedInstanceCount
+					: 0}{' '}
+				({formattedPercentage})
 			</td>
 
 			<td className="text-right" data-testid="avgCompletionTime">

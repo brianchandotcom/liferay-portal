@@ -76,13 +76,11 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			%>
 
 			<div id="<portlet:namespace />openGraphSettings">
-				<label class="control-label"><liferay-ui:message key="open-graph-image-alt-description" /> <liferay-ui:icon-help message="open-graph-image-alt-description-help" /></label>
-
 				<c:choose>
 					<c:when test="<%= selLayoutSEOEntry != null %>">
 						<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-						<aui:input disabled="<%= Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="text" />
+						<aui:input disabled="<%= Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) %>" helpMessage="open-graph-image-alt-description-help" label="open-graph-image-alt-description" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" />
 
 						<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 
@@ -95,7 +93,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 					</c:when>
 					<c:otherwise>
-						<aui:input disabled="<%= true %>" id="openGraphImageAlt" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" type="text" />
+						<aui:input disabled="<%= true %>" helpMessage="open-graph-image-alt-description-help" label="open-graph-image-alt-description" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" />
 
 						<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />
 

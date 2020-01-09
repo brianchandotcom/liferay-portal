@@ -23,6 +23,7 @@ import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.rest.constant.v1_0.DeploymentAction;
 import com.liferay.app.builder.rest.dto.v1_0.App;
 import com.liferay.app.builder.rest.dto.v1_0.AppDeployment;
+import com.liferay.app.builder.rest.internal.constants.AppBuilderActionKeys;
 import com.liferay.app.builder.rest.internal.jaxrs.exception.InvalidAppException;
 import com.liferay.app.builder.rest.internal.jaxrs.exception.NoSuchDataListViewException;
 import com.liferay.app.builder.rest.internal.odata.entity.v1_0.AppBuilderAppEntityModel;
@@ -47,9 +48,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -363,27 +364,27 @@ public class AppResourceImpl
 		throws PortalException {
 
 		if (_portletResourcePermission.contains(
-				GuestOrUserUtil.getPermissionChecker(),
+				PermissionThreadLocal.getPermissionChecker(),
 				contextCompany.getGroupId(), ActionKeys.MANAGE)) {
 
 			return;
 		}
 
 		_modelResourcePermission.check(
-			GuestOrUserUtil.getPermissionChecker(), appId, actionId);
+			PermissionThreadLocal.getPermissionChecker(), appId, actionId);
 	}
 
 	private void _checkPortletPermissions() throws PortalException {
 		if (_portletResourcePermission.contains(
-				GuestOrUserUtil.getPermissionChecker(),
+				PermissionThreadLocal.getPermissionChecker(),
 				contextCompany.getGroupId(), ActionKeys.MANAGE)) {
 
 			return;
 		}
 
 		_portletResourcePermission.check(
-			GuestOrUserUtil.getPermissionChecker(), contextCompany.getGroupId(),
-			"ADD_APP_BUILDER_APP");
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getGroupId(), AppBuilderActionKeys.ADD_APP);
 	}
 
 	@Reference(

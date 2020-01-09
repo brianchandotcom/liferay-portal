@@ -20,6 +20,7 @@ import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegme
 import {StoreContext} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import {ContainerBackgroundColorConfiguration} from './ContainerBackgroundColorConfiguration';
+import {ContainerBackgroundImageConfiguration} from './ContainerBackgroundImageConfiguration';
 import {ContainerPaddingConfiguration} from './ContainerPaddingConfiguration';
 import {ContainerTypeConfiguration} from './ContainerTypeConfiguration';
 
@@ -54,6 +55,10 @@ export const ContainerConfigurationPanel = ({item}) => {
 			/>
 			<ContainerBackgroundColorConfiguration
 				backgroundColor={item.config.backgroundColorCssClass}
+				onValueChange={handleConfigurationValueChanged}
+			/>
+			<ContainerBackgroundImageConfiguration
+				backgroundImageTitle={item.config.backgroundImageTitle}
 				onValueChange={handleConfigurationValueChanged}
 			/>
 		</>

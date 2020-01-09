@@ -100,28 +100,22 @@ function switchLayoutData(state, {currentExperienceId, targetExperienceId}) {
 			layoutDataItem.segmentsExperienceId === targetExperienceId
 	);
 
-	try {
-		nextState = {
-			...nextState,
-			layoutData: layoutDataItem.layoutData,
-			layoutDataList: layoutDataList.map(layoutDataItem => {
-				if (
-					currentExperienceId === layoutDataItem.segmentsExperienceId
-				) {
-					return {
-						...layoutDataItem,
-						layoutData: prevLayoutData
-					};
-				}
+	nextState = {
+		...nextState,
+		layoutData: layoutDataItem.layoutData,
+		layoutDataList: layoutDataList.map(layoutDataItem => {
+			if (currentExperienceId === layoutDataItem.segmentsExperienceId) {
+				return {
+					...layoutDataItem,
+					layoutData: prevLayoutData
+				};
+			}
 
-				return layoutDataItem;
-			})
-		};
+			return layoutDataItem;
+		})
+	};
 
-		return nextState;
-	} catch (e) {
-		return nextState;
-	}
+	return nextState;
 }
 
 /**

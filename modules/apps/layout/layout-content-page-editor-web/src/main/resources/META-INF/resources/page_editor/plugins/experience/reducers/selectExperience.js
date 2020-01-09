@@ -19,8 +19,6 @@ function selectExperienceReducer(state, payload) {
 
 	const newExperience = payload;
 
-	// TODO updatePageEditorLayoutData call
-
 	nextState = switchLayoutData(nextState, {
 		currentExperienceId: nextState.segmentsExperienceId,
 		targetExperienceId: newExperience.segmentsExperienceId

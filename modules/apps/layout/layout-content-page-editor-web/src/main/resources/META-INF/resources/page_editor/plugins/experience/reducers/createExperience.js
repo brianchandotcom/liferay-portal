@@ -46,9 +46,6 @@ function createExperienceReducer(state, payload) {
 		hasLockedSegmentsExperiment: newExperience.hasLockedSegmentsExperiment
 	});
 
-	// TODO _switchLayoutDataList -> {
-	// TODO updatePageEditorLayoutData
-	// TODO _updateFragmentEntryLinks
 	// TODO _setUsedWidgets
 
 	return nextState;

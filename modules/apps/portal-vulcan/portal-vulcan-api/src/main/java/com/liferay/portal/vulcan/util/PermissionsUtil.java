@@ -106,9 +106,9 @@ public class PermissionsUtil {
 				continue;
 			}
 
-			Class<?> superclass = clazz.getSuperclass();
+			Class<?> superClass = clazz.getSuperclass();
 
-			Method superMethod = superclass.getMethod(
+			Method superMethod = superClass.getMethod(
 				method.getName(), method.getParameterTypes());
 
 			for (Annotation annotation : superMethod.getAnnotations()) {

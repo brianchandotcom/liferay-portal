@@ -36,6 +36,8 @@ import ExperienceToolbarSection from '../../../../../../src/main/resources/META-
 import '@testing-library/jest-dom/extend-expect';
 
 const MOCK_CREATE_URL = 'create-experience-test-url';
+const MOCK_UPDATE_PRIORITY_URL = 'update-experience-priority-test-url';
+const MOCK_UPDATE_URL = 'update-experience-test-url';
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
@@ -112,7 +114,9 @@ const mockConfig = {
 	classPK: 'test-classPK',
 	defaultSegmentsExperienceId: '0',
 	hasEditSegmentsEntryPermission: true,
-	hasUpdatePermissions: true
+	hasUpdatePermissions: true,
+	updateSegmentsExperiencePriorityURL: MOCK_UPDATE_PRIORITY_URL,
+	updateSegmentsExperienceURL: MOCK_UPDATE_URL
 };
 
 describe('ExperienceToolbarSection', () => {
@@ -198,7 +202,12 @@ describe('ExperienceToolbarSection', () => {
 	});
 
 	it('calls the backend to increase priority', async () => {
-		window.Liferay.Service = jest.fn(() => Promise.resolve());
+		serviceFetch.mockImplementation((config, url, body) =>
+			Promise.resolve({
+				priority: body.newPriority,
+				segmentsExperienceId: 'test-experience-id-02'
+			})
+		);
 
 		const mockDispatch = jest.fn(() => {});
 
@@ -244,12 +253,11 @@ describe('ExperienceToolbarSection', () => {
 
 		userEvent.click(bottomExperiencePriorityButton);
 
-		await wait(() =>
-			expect(window.Liferay.Service).toHaveBeenCalledTimes(1)
-		);
+		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
 
-		expect(window.Liferay.Service).toHaveBeenCalledWith(
-			expect.stringContaining(''),
+		expect(serviceFetch).toHaveBeenCalledWith(
+			expect.objectContaining({}),
+			expect.stringContaining(MOCK_UPDATE_PRIORITY_URL),
 			expect.objectContaining({
 				newPriority: 3,
 				segmentsExperienceId: 'test-experience-id-02'
@@ -258,23 +266,18 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
-				payload: {
-					subtarget: {
-						priority: 1,
-						segmentsExperienceId: 'test-experience-id-01'
-					},
-					target: {
-						priority: 3,
-						segmentsExperienceId: 'test-experience-id-02'
-					}
-				},
 				type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 			})
 		);
 	});
 
 	it('calls the backend to decrease priority', async () => {
-		window.Liferay.Service = jest.fn(() => Promise.resolve());
+		serviceFetch.mockImplementation((config, url, body) =>
+			Promise.resolve({
+				priority: body.newPriority,
+				segmentsExperienceId: 'test-experience-id-01'
+			})
+		);
 
 		const mockDispatch = jest.fn(() => {});
 
@@ -320,12 +323,11 @@ describe('ExperienceToolbarSection', () => {
 
 		userEvent.click(topExperiencePriorityButton);
 
-		await wait(() =>
-			expect(window.Liferay.Service).toHaveBeenCalledTimes(1)
-		);
+		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
 
-		expect(window.Liferay.Service).toHaveBeenCalledWith(
-			expect.stringContaining(''),
+		expect(serviceFetch).toHaveBeenCalledWith(
+			expect.objectContaining({}),
+			expect.stringContaining(MOCK_UPDATE_PRIORITY_URL),
 			expect.objectContaining({
 				newPriority: 1,
 				segmentsExperienceId: 'test-experience-id-01'
@@ -334,22 +336,12 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
-				payload: {
-					subtarget: {
-						priority: 3,
-						segmentsExperienceId: 'test-experience-id-02'
-					},
-					target: {
-						priority: 1,
-						segmentsExperienceId: 'test-experience-id-01'
-					}
-				},
 				type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 			})
 		);
 	});
 
-	it('calls the backend to create a new Experience', async () => {
+	it('calls the backend to create a new experience', async () => {
 		serviceFetch.mockImplementation((config, url, body) =>
 			Promise.resolve({
 				active: true,
@@ -359,6 +351,7 @@ describe('ExperienceToolbarSection', () => {
 				segmentsExperienceId: 'a-new-test-experience-id'
 			})
 		);
+
 		const mockDispatch = jest.fn(() => {});
 
 		const {
@@ -407,6 +400,81 @@ describe('ExperienceToolbarSection', () => {
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
 				type: CREATE_SEGMENTS_EXPERIENCE
+			})
+		);
+	});
+
+	it('calls the backend to update the experience', async () => {
+		serviceFetch.mockImplementation((config, url, body) =>
+			Promise.resolve({
+				name: body.name,
+				segmentsEntryId: body.segmentsEntryId
+			})
+		);
+
+		const mockDispatch = jest.fn(() => {});
+
+		const {
+			getAllByRole,
+			getByLabelText,
+			getByRole,
+			getByText
+		} = renderExperienceToolbarSection(mockState, mockConfig, mockDispatch);
+
+		const dropDownButton = getByLabelText('experience');
+
+		userEvent.click(dropDownButton);
+
+		await waitForElement(() => getByRole('list'));
+
+		const experienceItems = getAllByRole('listitem');
+
+		expect(experienceItems.length).toBe(3);
+
+		expect(
+			within(experienceItems[0]).getByText('Experience #1')
+		).toBeInTheDocument();
+
+		const editExperienceButton = within(experienceItems[0]).getByTitle(
+			'edit-experience'
+		);
+
+		expect(editExperienceButton.disabled).toBe(false);
+
+		userEvent.click(editExperienceButton);
+
+		await waitForElement(() => getByLabelText('name'));
+
+		const nameInput = getByLabelText('name');
+		const segmentSelect = getByLabelText('audience');
+
+		expect(nameInput.value).toBe('Experience #1');
+		expect(segmentSelect.value).toBe('test-segment-id-00');
+
+		userEvent.type(nameInput, 'New Experience #1');
+		userEvent.selectOptions(segmentSelect, 'A segment 0');
+
+		expect(nameInput.value).toBe('New Experience #1');
+		expect(segmentSelect.value).toBe('test-segment-id-00');
+
+		userEvent.click(getByText('save'));
+
+		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
+
+		expect(serviceFetch).toHaveBeenCalledWith(
+			expect.objectContaining({}),
+			expect.stringContaining(MOCK_UPDATE_URL),
+			expect.objectContaining({
+				active: true,
+				name: 'New Experience #1',
+				segmentsEntryId: 'test-segment-id-00',
+				segmentsExperienceId: 'test-experience-id-01'
+			})
+		);
+
+		expect(mockDispatch).toHaveBeenCalledWith(
+			expect.objectContaining({
+				type: EDIT_SEGMENTS_EXPERIENCE
 			})
 		);
 	});

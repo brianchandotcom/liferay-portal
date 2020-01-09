@@ -14,14 +14,20 @@
 
 package com.liferay.portal.search.web.internal.custom.facet.display.context;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -175,11 +181,14 @@ public class CustomFacetDisplayContextTest {
 	}
 
 	protected CustomFacetDisplayContext createDisplayContext(
-		String customDisplayCaption, String fieldToAggregate,
-		String parameterValue) {
+			String customDisplayCaption, String fieldToAggregate,
+			String parameterValue)
+		throws ConfigurationException {
+
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		CustomFacetDisplayBuilder customFacetDisplayBuilder =
-			new CustomFacetDisplayBuilder();
+			new CustomFacetDisplayBuilder(httpServletRequest);
 
 		customFacetDisplayBuilder.setFacet(_facet);
 		customFacetDisplayBuilder.setParameterName("custom");
@@ -212,6 +221,33 @@ public class CustomFacetDisplayContextTest {
 		).getTerm();
 
 		return termCollector;
+	}
+
+	protected HttpServletRequest getHttpServletRequest() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.doReturn(
+			getThemeDisplay()
+		).when(
+			httpServletRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+
+		return httpServletRequest;
+	}
+
+	protected ThemeDisplay getThemeDisplay() {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.doReturn(
+			Mockito.mock(PortletDisplay.class)
+		).when(
+			themeDisplay
+		).getPortletDisplay();
+
+		return themeDisplay;
 	}
 
 	protected void setUpOneTermCollector(String fieldName, int count) {

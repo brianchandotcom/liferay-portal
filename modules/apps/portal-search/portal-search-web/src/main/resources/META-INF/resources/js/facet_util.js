@@ -20,6 +20,18 @@ AUI.add(
 		const FACET_TERM_SELECTED_CLASS = 'facet-term-selected';
 
 		/**
+		 * Gets the ID by checking the `data-term-id` attribute and then `id` if
+		 * `data-term-id` is not defined.
+		 *
+		 * The default layout continues to use `data-term-id` in case the
+		 * original ID format `${namespace}_term_${index}` is expected, but
+		 * newer layouts (ADT) sometimes only use `id`.
+		 */
+		function _getTermId(term) {
+			return term.getAttribute('data-term-id') || term.id;
+		}
+
+		/**
 		 * Converts a NodeList to an array of nodes. This allows array
 		 * methods to be performed.
 		 * @param {NodeList} nodeList
@@ -51,9 +63,7 @@ AUI.add(
 					return;
 				}
 
-				const currentSelectedTermId = event.currentTarget.getAttribute(
-					'data-term-id'
-				);
+				const currentSelectedTermId = _getTermId(event.currentTarget);
 
 				const facetTerms = document.querySelectorAll(
 					`#${form.id} .${FACET_TERM_CLASS}`
@@ -66,8 +76,7 @@ AUI.add(
 						}
 
 						const isCurrentTarget =
-							term.getAttribute('data-term-id') ===
-							currentSelectedTermId;
+							_getTermId(term) === currentSelectedTermId;
 
 						const isSelected = Array.prototype.includes.call(
 							term.classList,
@@ -76,7 +85,7 @@ AUI.add(
 
 						return isCurrentTarget ? !isSelected : isSelected;
 					})
-					.map(term => term.getAttribute('data-term-id'));
+					.map(term => _getTermId(term));
 
 				FacetUtil.selectTerms(form, selectedTerms);
 			},

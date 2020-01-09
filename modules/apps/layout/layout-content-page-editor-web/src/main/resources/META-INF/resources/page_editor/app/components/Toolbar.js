@@ -115,7 +115,7 @@ function ToolbarBody() {
 	};
 
 	return (
-		<div className="container-fluid container-fluid-max-xl page-editor-toolbar">
+		<div className="container-fluid container-fluid-max-xl">
 			<ul className="navbar-nav">
 				{toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {

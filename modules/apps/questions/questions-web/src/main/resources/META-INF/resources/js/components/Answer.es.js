@@ -12,18 +12,46 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
+import {AppContext} from '../AppContext.es';
+import {
+	deleteMessage,
+	markAsAnswerMessageBoardMessage
+} from '../utils/client.es';
 import Comments from './Comments.es';
 import Rating from './Rating.es';
 import UserRow from './UserRow.es';
 
-export default ({answer}) => {
+export default ({answer, answerChange, creatorId, deleteAnswer}) => {
+	const context = useContext(AppContext);
+
 	const [comments, setComments] = useState(answer.messageBoardMessages.items);
 	const [showAsAnswer, setShowAsAnswer] = useState(answer.showAsAnswer);
 	const [showNewComment, setShowNewComment] = useState(false);
+
+	const _canAccept = () =>
+		context.userId === creatorId || context.isOmniAdmin;
+	const _canEdit = () =>
+		context.userId === answer.creator.id || context.isOmniAdmin;
+
+	const _deleteAnswer = () =>
+		deleteMessage(answer).then(() => deleteAnswer(answer));
+
+	const _commentsChange = useCallback(comments => {
+		setComments([...comments]);
+	}, []);
+
+	const _answerChange = () =>
+		markAsAnswerMessageBoardMessage(answer.id, !showAsAnswer).then(() => {
+			setShowAsAnswer(!showAsAnswer);
+			if (answerChange) {
+				answerChange(answer.id);
+			}
+		});
 
 	const _ratingChange = useCallback(
 		ratingValue => {
@@ -31,10 +59,6 @@ export default ({answer}) => {
 		},
 		[answer]
 	);
-
-	const _commentsChange = useCallback(comments => {
-		setComments([...comments]);
-	}, []);
 
 	useEffect(() => {
 		setShowAsAnswer(answer.showAsAnswer);
@@ -74,9 +98,34 @@ export default ({answer}) => {
 						)}
 						<p>{answer.articleBody}</p>
 
-						<small onClick={() => setShowNewComment(true)}>
-							{Liferay.Language.get('reply')}
-						</small>
+						<ClayButton.Group spaced={true}>
+							<ClayButton
+								displayType="unstyled"
+								onClick={() => setShowNewComment(true)}
+							>
+								{Liferay.Language.get('reply')}
+							</ClayButton>
+							{_canEdit() && (
+								<ClayButton
+									displayType="unstyled"
+									onClick={_deleteAnswer}
+								>
+									{Liferay.Language.get('delete')}
+								</ClayButton>
+							)}
+							{_canAccept() && (
+								<ClayButton
+									displayType="unstyled"
+									onClick={_answerChange}
+								>
+									{Liferay.Language.get(
+										showAsAnswer
+											? 'unmark as answer'
+											: 'mark as answer'
+									)}
+								</ClayButton>
+							)}
+						</ClayButton.Group>
 					</div>
 				</div>
 				<div className="autofit-col">

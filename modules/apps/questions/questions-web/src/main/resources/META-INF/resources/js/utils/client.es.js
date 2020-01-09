@@ -20,14 +20,6 @@ const HEADERS = {
 	'Content-Type': 'text/plain; charset=utf-8'
 };
 
-export function isAdvancedUser({roleBriefs}) {
-	if (!roleBriefs) {
-		return false;
-	}
-	const roles = roleBriefs.map(role => role.name);
-	return roles.includes('PowerUser') || roles.includes('Administrator');
-}
-
 function escape(x) {
 	return (
 		x !== undefined &&

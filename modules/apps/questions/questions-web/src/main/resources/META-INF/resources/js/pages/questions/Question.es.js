@@ -21,7 +21,11 @@ import CreatorRow from '../../components/CreatorRow.es';
 import KeywordList from '../../components/KeywordList.es';
 import Rating from '../../components/Rating.es';
 import Subscription from '../../components/Subscription.es';
-import {createAnswer, getThread} from '../../utils/client.es';
+import {
+	createAnswer,
+	getThread,
+	markAsAnswerMessageBoardMessage
+} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {dateToBriefInternationalHuman} from '../../utils/utils.es';
 
@@ -35,6 +39,10 @@ export default ({
 	const [page, setPage] = useState(1);
 	const [question, setQuestion] = useState();
 
+	useEffect(() => {
+		loadThread();
+	}, [loadThread]);
+
 	const loadThread = useCallback(
 		() =>
 			getThread(questionId, page).then(data => {
@@ -44,16 +52,42 @@ export default ({
 		[page, questionId]
 	);
 
-	useEffect(() => {
-		loadThread();
-	}, [loadThread]);
-
 	const postAnswer = () => {
 		createAnswer(articleBody, question.id).then(() => {
 			setArticleBody('');
 			return loadThread();
 		});
 	};
+
+	const deleteAnswer = useCallback(
+		answer => {
+			setAnswers([
+				...answers.filter(otherAnswer => answer.id !== otherAnswer.id)
+			]);
+		},
+		[answers]
+	);
+
+	const answerChange = useCallback(
+		answerId => {
+			const answer = answers.find(
+				answer => answer.showAsAnswer && answer.id !== answerId
+			);
+
+			if (answer !== null) {
+				markAsAnswerMessageBoardMessage(answer.id, false).then(() => {
+					setAnswers([
+						...answers.map(otherAnswer => {
+							otherAnswer.showAsAnswer =
+								otherAnswer.id === answerId;
+							return otherAnswer;
+						})
+					]);
+				});
+			}
+		},
+		[answers]
+	);
 
 	return (
 		<section>
@@ -137,7 +171,13 @@ export default ({
 						</h3>
 
 						{answers.map(answer => (
-							<Answer answer={answer} key={answer.id} />
+							<Answer
+								answer={answer}
+								answerChange={answerChange}
+								creatorId={question.creator.id}
+								deleteAnswer={deleteAnswer}
+								key={answer.id}
+							/>
 						))}
 
 						{!!answers.totalCount &&

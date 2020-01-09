@@ -19,6 +19,7 @@ import {DispatchContext} from '../reducers/index';
 import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
 import {StoreContext} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
+import {ContainerBackgroundColorConfiguration} from './ContainerBackgroundColorConfiguration';
 import {ContainerPaddingConfiguration} from './ContainerPaddingConfiguration';
 import {ContainerTypeConfiguration} from './ContainerTypeConfiguration';
 
@@ -50,6 +51,10 @@ export const ContainerConfigurationPanel = ({item}) => {
 				onValueChange={handleConfigurationValueChanged}
 				paddingHorizontal={item.config.paddingHorizontal}
 				paddingVertical={item.config.paddingVertical}
+			/>
+			<ContainerBackgroundColorConfiguration
+				backgroundColor={item.config.backgroundColorCssClass}
+				onValueChange={handleConfigurationValueChanged}
 			/>
 		</>
 	);

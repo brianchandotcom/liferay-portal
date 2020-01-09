@@ -12,7 +12,6 @@
  * details.
  */
 
-import {BackgroundColorConfigurationPanel} from '../../../app/components/BackgroundColorConfigurationPanel';
 import {ContainerConfigurationPanel} from '../../../app/components/ContainerConfigurationPanel';
 import {FragmentConfigurationPanel} from '../../../app/components/FragmentConfigurationPanel';
 import {LayoutBackgroundImageConfigurationPanel} from '../../../app/components/LayoutBackgroundImageConfigurationPanel';
@@ -21,7 +20,6 @@ import {RowConfigurationPanel} from '../../../app/components/RowConfigurationPan
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from './layoutDataFloatingToolbarButtons';
 
 const {
-	backgroundColor,
 	containerConfiguration,
 	fragmentConfiguration,
 	layoutBackgroundImage,
@@ -30,7 +28,6 @@ const {
 } = LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS;
 
 export const FLOATING_TOOLBAR_CONFIGURATIONS = {
-	[backgroundColor.panelId]: BackgroundColorConfigurationPanel,
 	[containerConfiguration.panelId]: ContainerConfigurationPanel,
 	[fragmentConfiguration.panelId]: FragmentConfigurationPanel,
 	[layoutBackgroundImage.panelId]: LayoutBackgroundImageConfigurationPanel,

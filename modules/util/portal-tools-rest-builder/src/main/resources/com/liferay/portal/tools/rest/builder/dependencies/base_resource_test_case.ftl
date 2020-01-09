@@ -229,6 +229,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#else>
 								null
 							</#if>
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "object") && stringUtil.endsWith(javaMethodSignature.methodName, "Batch")>
+							JSONUtil.put("id", ${schemaVarName}.getId())
 						<#else>
 							null
 						</#if>

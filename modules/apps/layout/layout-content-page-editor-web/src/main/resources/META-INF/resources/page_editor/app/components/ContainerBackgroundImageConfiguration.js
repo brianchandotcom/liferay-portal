@@ -16,11 +16,7 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useState} from 'react';
 
 import addMappedInfoItem from '../actions/addMappedInfoItem';
-import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
-import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
-import {StoreContext} from '../store/index';
-import updateItemConfig from '../thunks/updateItemConfig';
 import InfoItemSelectionPanel from './InfoItemSelectionPanel';
 import {ManualSelectionPanel} from './ManualSelectionPanel';
 
@@ -29,19 +25,11 @@ const IMAGE_SOURCE = {
 	manualSelection: 'manual_selection'
 };
 
-/**
- * Renders Layout Background Image Configuration Panel.
- */
-export const LayoutBackgroundImageConfigurationPanel = ({item}) => {
-	const config = useContext(ConfigContext);
+export const ContainerBackgroundImageConfiguration = ({
+	backgroundImageTitle,
+	onValueChange
+}) => {
 	const dispatch = useContext(DispatchContext);
-	const segmentsExperienceId = selectPrefixedSegmentsExperienceId(
-		useContext(StoreContext)
-	);
-	const {
-		config: {backgroundImageTitle},
-		itemId
-	} = item;
 
 	const [imageSource, setImageSource] = useState(
 		IMAGE_SOURCE.manualSelection
@@ -49,19 +37,6 @@ export const LayoutBackgroundImageConfigurationPanel = ({item}) => {
 
 	const handleBackgroundImageItemChanged = image =>
 		dispatch(addMappedInfoItem(image));
-
-	const handleBackgroundImageConfig = ({imageTitle, imageURL}) =>
-		dispatch(
-			updateItemConfig({
-				config,
-				itemConfig: {
-					backgroundImage: imageURL,
-					backgroundImageTitle: imageTitle
-				},
-				itemId,
-				segmentsExperienceId
-			})
-		);
 
 	return (
 		<div className="floating-toolbar-layout-background-image-panel">
@@ -90,15 +65,15 @@ export const LayoutBackgroundImageConfigurationPanel = ({item}) => {
 				<ManualSelectionPanel
 					backgroundImageTitle={backgroundImageTitle}
 					onClearButtonPressed={() =>
-						handleBackgroundImageConfig({
-							imageTitle: undefined,
-							imageURL: undefined
+						onValueChange({
+							backgroundImage: '',
+							backgroundImageTitle: ''
 						})
 					}
 					onImageSelected={image =>
-						handleBackgroundImageConfig({
-							imageTitle: image.title,
-							imageURL: image.url
+						onValueChange({
+							backgroundImage: image.url,
+							backgroundImageTitle: image.title
 						})
 					}
 				/>

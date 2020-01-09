@@ -14,8 +14,8 @@
 
 package com.liferay.app.builder.rest.internal.resource.v1_0;
 
-import com.liferay.app.builder.rest.dto.v1_0.DataModelPermission;
-import com.liferay.app.builder.rest.resource.v1_0.DataModelPermissionResource;
+import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
+import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -51,23 +51,23 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseDataModelPermissionResourceImpl
-	implements DataModelPermissionResource {
+public abstract class BaseAppModelPermissionResourceImpl
+	implements AppModelPermissionResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/app-builder/v1.0/data-model-permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/app-builder/v1.0/app-model-permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "roleNames")}
 	)
-	@Path("/data-model-permissions")
+	@Path("/app-model-permissions")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataModelPermission")})
-	public Page<DataModelPermission> getDataModelPermissionsPage(
+	@Tags(value = {@Tag(name = "AppModelPermission")})
+	public Page<AppModelPermission> getAppModelPermissionsPage(
 			@NotNull @Parameter(hidden = true) @QueryParam("roleNames") String
 				roleNames)
 		throws Exception {
@@ -78,16 +78,15 @@ public abstract class BaseDataModelPermissionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/data-model-permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/app-model-permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@PUT
-	@Path("/data-model-permissions")
+	@Path("/app-model-permissions")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataModelPermission")})
-	public void putDataModelPermission(
-			DataModelPermission[] dataModelPermissions)
+	@Tags(value = {@Tag(name = "AppModelPermission")})
+	public void putAppModelPermission(AppModelPermission[] appModelPermissions)
 		throws Exception {
 	}
 
@@ -124,8 +123,8 @@ public abstract class BaseDataModelPermissionResourceImpl
 	}
 
 	protected void preparePatch(
-		DataModelPermission dataModelPermission,
-		DataModelPermission existingDataModelPermission) {
+		AppModelPermission appModelPermission,
+		AppModelPermission existingAppModelPermission) {
 	}
 
 	protected <T, R> List<R> transform(

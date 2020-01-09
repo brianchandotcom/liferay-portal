@@ -32,7 +32,7 @@ import javax.ws.rs.core.UriInfo;
 /**
  * @author Javier Gamarra
  */
-public class PermissionsUtil {
+public class ActionUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, GroupedModel groupedModel,

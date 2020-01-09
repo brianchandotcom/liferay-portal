@@ -127,9 +127,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 					filteredDDMFormFieldParameterNames,
 					ddmFormFieldParameterPrefix);
 
-			if (!ddmFormField.isTransient() &&
-				!containsDefaultDDMFormFieldParameterName) {
-
+			if (!containsDefaultDDMFormFieldParameterName) {
 				String defaultDDMFormFieldParameterName =
 					createDefaultDDMFormFieldParameterName(
 						ddmFormField, parentDDMFormFieldParameterName);

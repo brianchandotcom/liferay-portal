@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted, useTimeout} from 'frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import {globalEval} from 'metal-dom';
 import React, {useEffect, useState, useCallback, useRef} from 'react';
@@ -31,18 +31,27 @@ function ContextualSidebar({
 	siteNavigationMenuId,
 	siteNavigationMenuName
 }) {
-	const siteNavigationMenuEditorRef = useRef();
-
 	const [body, setBody] = useState('');
+	const [changed, setChanged] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [title, setTitle] = useState('');
 	const [visible, setVisible] = useState(false);
 	const isMounted = useIsMounted();
+	const delay = useTimeout();
+	const siteNavigationMenuEditorRef = useRef();
 
 	const namespace = Liferay.Util.getPortletNamespace(portletId);
 
 	const openSidebar = useCallback(
 		(title, url, requestBody) => {
+			if (changed) {
+				const confirm = confirmUnsavedChanges();
+
+				if (confirm) {
+					return;
+				}
+			}
+
 			setLoading(true);
 			setTitle(title);
 			setVisible(true);
@@ -55,11 +64,12 @@ function ContextualSidebar({
 				.then(responseContent => {
 					if (isMounted()) {
 						setBody(responseContent);
+						setChanged(false);
 						setLoading(false);
 					}
 				});
 		},
-		[isMounted, namespace]
+		[isMounted, namespace, changed]
 	);
 
 	useEffect(() => {
@@ -85,6 +95,7 @@ function ContextualSidebar({
 		return () => {
 			handle.removeListener();
 			siteNavigationMenuEditorRef.current.dispose();
+			siteNavigationMenuEditorRef.current = null;
 		};
 	}, [
 		editSiteNavigationMenuItemParentURL,
@@ -127,6 +138,38 @@ function ContextualSidebar({
 		visible
 	]);
 
+	const confirmUnsavedChanges = () => {
+		const form = document.querySelector(`.sidebar-body form`);
+
+		const error = form ? form.querySelector('[role="alert"]') : null;
+
+		let confirmChanged;
+
+		if (!error) {
+			confirmChanged = confirm(
+				Liferay.Language.get(
+					'you-have-unsaved-changes.-do-you-want-to-save-them'
+				)
+			);
+
+			if (confirmChanged) {
+				if (form) {
+					form.submit();
+				}
+			}
+		}
+
+		return confirmChanged;
+	};
+
+	const closeSidebar = useCallback(() => {
+		setChanged(false);
+
+		delay(() => {
+			setVisible(false);
+		}, 0);
+	}, [delay]);
+
 	return (
 		<div
 			className={`contextual-sidebar ${
@@ -147,7 +190,12 @@ function ContextualSidebar({
 						<ClayButton
 							displayType="unstyled"
 							monospaced
-							onClick={() => setVisible(false)}
+							onClick={() => {
+								if (changed) {
+									confirmUnsavedChanges();
+								}
+								closeSidebar();
+							}}
 						>
 							<ClayIcon symbol="times" />
 						</ClayButton>
@@ -159,7 +207,10 @@ function ContextualSidebar({
 				{loading ? (
 					<ClayLoadingIndicator />
 				) : (
-					<SidebarBody body={body} />
+					<SidebarBody
+						body={body}
+						onChange={() => setChanged(true)}
+					/>
 				)}
 			</div>
 		</div>
@@ -170,17 +221,35 @@ class SidebarBody extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this._handleOnChange = this._handleOnChange.bind(this);
 		this._ref = React.createRef();
 	}
 
 	componentDidMount() {
 		if (this._ref.current) {
 			globalEval.runScriptsInElement(this._ref.current);
+
+			this._ref.current.addEventListener('change', this._handleOnChange);
+		}
+	}
+
+	componentWillUnmount() {
+		if (this._ref.current) {
+			this._ref.current.removeEventListener(
+				'change',
+				this._handleOnChange
+			);
 		}
 	}
 
 	shouldComponentUpdate() {
 		return false;
+	}
+
+	_handleOnChange() {
+		if (this.props.onChange) {
+			this.props.onChange();
+		}
 	}
 
 	render() {

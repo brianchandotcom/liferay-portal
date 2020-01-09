@@ -621,6 +621,43 @@ definition {
 
 	@description = "This is a test for LPS-102887. A user can edit content in a web content display widget through content panel"
 	@priority = "4"
+	test EditWecContentInAPViaContentPanel {
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content",
+			contentPage = "true");
+
+		Refresh();
+
+		WebContent.editViaContentPanel(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		WebContent.viewPGViaAP(
+			webContentContent = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title Edit");
+	}
+
+	@description = "This is a test for LPS-102887. A user can edit content in a web content display widget through content panel"
+	@priority = "4"
 	test EditWecContentInWCDViaContentPanel {
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",

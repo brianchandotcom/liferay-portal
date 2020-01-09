@@ -19,6 +19,7 @@ import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -177,7 +178,8 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 			unicodeProperties.setProperty(
-				preferencePropertyName, StringUtil.merge(ids, ","));
+				preferencePropertyName,
+				StringUtil.merge(ids, StringPool.COMMA));
 
 			try {
 				companyService.updatePreferences(companyId, unicodeProperties);

@@ -23,6 +23,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -72,28 +74,40 @@ public class DeleteItemReactMVCActionCommand
 			long segmentsExperienceId)
 		throws PortalException {
 
-		return LayoutStructureUtil.updateLayoutPageTemplateData(
-			groupId, segmentsExperienceId, plid,
-			layoutStructure -> {
-				List<LayoutStructureItem> deleteLayoutStructureItems =
-					layoutStructure.deleteLayoutStructureItem(itemId);
+		List<Long> deletedFragmentEntryLinkIds = new ArrayList<>();
 
-				for (LayoutStructureItem layoutStructureItem :
-						deleteLayoutStructureItems) {
+		JSONObject layoutDataJSONObject =
+			LayoutStructureUtil.updateLayoutPageTemplateData(
+				groupId, segmentsExperienceId, plid,
+				layoutStructure -> {
+					List<LayoutStructureItem> deleteLayoutStructureItems =
+						layoutStructure.deleteLayoutStructureItem(itemId);
 
-					JSONObject itemConfigJSONObject =
-						layoutStructureItem.getItemConfigJSONObject();
+					for (LayoutStructureItem layoutStructureItem :
+							deleteLayoutStructureItems) {
 
-					long fragmentEntryLinkId = itemConfigJSONObject.getLong(
-						"fragmentEntryLinkId");
+						JSONObject itemConfigJSONObject =
+							layoutStructureItem.getItemConfigJSONObject();
 
-					if (fragmentEntryLinkId > 0) {
-						FragmentEntryLinkUtil.deleteFragmentEntryLink(
-							companyId, fragmentEntryLinkId, plid,
-							_portletRegistry);
+						long fragmentEntryLinkId = itemConfigJSONObject.getLong(
+							"fragmentEntryLinkId");
+
+						if (fragmentEntryLinkId > 0) {
+							FragmentEntryLinkUtil.deleteFragmentEntryLink(
+								companyId, fragmentEntryLinkId, plid,
+								_portletRegistry);
+
+							deletedFragmentEntryLinkIds.add(
+								fragmentEntryLinkId);
+						}
 					}
-				}
-			});
+				});
+
+		return JSONUtil.put(
+			"deletedFragmentEntryLinkIds", deletedFragmentEntryLinkIds.toArray()
+		).put(
+			"layoutData", layoutDataJSONObject
+		);
 	}
 
 	@Override

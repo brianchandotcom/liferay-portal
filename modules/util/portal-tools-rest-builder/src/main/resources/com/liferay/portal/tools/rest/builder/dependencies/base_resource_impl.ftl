@@ -15,8 +15,8 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
-import com.liferay.portal.vulcan.util.PermissionsUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -136,11 +136,11 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	}
 
 	protected Map<String, String> addAction(String actionName, GroupedModel groupedModel, String methodName) {
-		return PermissionsUtil.addAction(actionName, getClass(), groupedModel, methodName, contextUriInfo);
+		return ActionUtil.addAction(actionName, getClass(), groupedModel, methodName, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(String actionName, Long id, String methodName, String permissionName, Long siteId) {
-		return PermissionsUtil.addAction(actionName, getClass(), id, methodName, permissionName, siteId, contextUriInfo);
+		return ActionUtil.addAction(actionName, getClass(), id, methodName, permissionName, siteId, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(String actionName, String methodName, String permissionName, Long siteId) {

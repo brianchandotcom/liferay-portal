@@ -18,6 +18,7 @@ import {Align} from 'metal-position';
 import React, {useLayoutEffect, useRef, useState, useEffect} from 'react';
 import {createPortal} from 'react-dom';
 
+import useWindowWidth from '../../core/hooks/useWindowWidth';
 import ConfigurationPanel from './ConfigurationPanel';
 import {useFloatingToolbar, useIsActive} from './Controls';
 
@@ -47,6 +48,8 @@ export default function FloatingToolbar({
 		null
 	);
 
+	const windowWidth = useWindowWidth();
+
 	useLayoutEffect(() => {
 		if (show && itemRef.current && popoverRef.current) {
 			Align.align(
@@ -56,7 +59,7 @@ export default function FloatingToolbar({
 				false
 			);
 		}
-	}, [show, itemRef, popoverRef]);
+	}, [show, itemRef, popoverRef, windowWidth]);
 
 	useEffect(() => {
 		if (!show) {

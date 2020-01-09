@@ -11,17 +11,17 @@
 <!--ASSET_TYPE_FACET-->
 <tr>
 	<td>ASSET_TYPE_FACET_ANY_ASSET</td>
-	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(@class,'default')]/a[contains(.,'Any Asset')]</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(@class,'default')]/a[contains(.,'Any Asset')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TYPE_FACET_FREQUENCY</td>
-	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a/span</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TYPE_FACET_ASSET</td>
-	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,17 +32,17 @@
 <!--USER_FACET-->
 <tr>
 	<td>USER_FACET_ANY_USER</td>
-	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Any User')]/a</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Any User')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_FACET_FREQUENCY</td>
-	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a/span</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_FACET_USER_NAME</td>
-	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a</td>
+	<td>//div[contains(@class,'search-facet')]//ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -64,12 +64,12 @@
 <!--ASSET_ENTRY_TABLE-->
 <tr>
 	<td>ASSET_ENTRY_TABLE_TITLE</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//a</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TITLE_SPECIFIC</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[contains(.,'${key_searchAssetType}')]/..//a</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')][.//span[@class='subtext-item' and contains(.,'${key_searchAssetType}')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,22 +79,22 @@
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[1]</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE_SPECIFIC</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[contains(.,'${key_searchAssetType}')]</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(.,'${key_searchAssetType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY</td>
-	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6)[2]</td>
+	<td>xpath=(//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')])span[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
-	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[contains(.,'${key_searchAssetType}')]/../h6[2]</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(.,'${searchAssetSummary}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>RESULTS_PORTLET_SEARCH_QUERY</td>
-	<td>//p[contains(@class,'search-total-label')]</td>
+	<td>//div[contains(@class,'search-total-label')]</td>
 	<td></td>
 </tr>
 <tr>

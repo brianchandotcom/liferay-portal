@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -52,8 +53,8 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAInstanceResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
+import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
@@ -65,13 +66,11 @@ import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -126,14 +125,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			workflowMetricsSLADefinition.getProcessId(),
 			workflowMetricsSLADefinition.getProcessVersion());
 
-		_processMissingInstances(
-			startNodeId, workflowMetricsSLADefinitionVersion);
-
 		_processRunningInstances(
 			0, startNodeId, workflowMetricsSLADefinitionVersion);
 
 		_processCompletedInstances(
-			startNodeId, workflowMetricsSLADefinitionVersion);
+			0, startNodeId, workflowMetricsSLADefinitionVersion);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -263,130 +259,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		}
 	}
 
-	private LocalDateTime _getCompletionLocalDateTime(
-		long companyId, long instanceId, long processId) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-		searchSearchRequest.setQuery(
-			_createInstancesBooleanQuery(
-				companyId, true, null, instanceId, processId));
-		searchSearchRequest.setSize(1);
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document -> LocalDateTime.parse(
-				document.getString("completionDate"),
-				DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN))
-		).findFirst(
-		).orElseGet(
-			null
-		);
-	}
-
-	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
-
-		long companyId, long processId) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-		searchSearchRequest.setQuery(
-			_createInstancesBooleanQuery(companyId, false, null, processId));
-		searchSearchRequest.setSize(10000);
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getDocument
-		).collect(
-			Collectors.toMap(
-				document -> document.getLong("instanceId"),
-				document -> LocalDateTime.parse(
-					document.getString("createDate"),
-					DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN)))
-		);
-	}
-
-	private Map<Long, LocalDateTime> _getMissingCreateLocalDateTimes(
-		long companyId, Date createDate, long processId,
-		long workflowMetricsSLADefinitionId) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		TermsAggregation termsAggregation = _aggregations.terms(
-			"instanceId", "instanceId");
-
-		termsAggregation.addChildAggregation(_aggregations.topHits("topHits"));
-		termsAggregation.setSize(10000);
-
-		searchSearchRequest.addAggregation(termsAggregation);
-
-		searchSearchRequest.setIndexNames(
-			"workflow-metrics-instances",
-			"workflow-metrics-sla-instance-results");
-
-		searchSearchRequest.setQuery(
-			_createBooleanQuery(
-				companyId, createDate, processId,
-				workflowMetricsSLADefinitionId));
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getAggregationResultsMap
-		).map(
-			aggregationResultsMap ->
-				(TermsAggregationResult)aggregationResultsMap.get("instanceId")
-		).map(
-			BucketAggregationResult::getBuckets
-		).flatMap(
-			Collection::stream
-		).filter(
-			bucket -> bucket.getDocCount() == 1
-		).map(
-			bucket ->
-				(TopHitsAggregationResult)bucket.getChildAggregationResult(
-					"topHits")
-		).map(
-			TopHitsAggregationResult::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getSourcesMap
-		).filter(
-			sourcesMap -> GetterUtil.getString(
-				sourcesMap.get("uid")
-			).startsWith(
-				"WorkflowMetricsInstance"
-			)
-		).collect(
-			Collectors.toMap(
-				sourcesMap -> GetterUtil.getLong(sourcesMap.get("instanceId")),
-				sourcesMap -> LocalDateTime.parse(
-					GetterUtil.getString(sourcesMap.get("createDate")),
-					DateTimeFormatter.ofPattern(_INDEX_DATE_FORMAT_PATTERN)))
-		);
-	}
-
 	private long _getStartNodeId(
 		long companyId, long processId, String version) {
 
@@ -419,18 +291,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		).orElseGet(
 			() -> 0L
 		);
-	}
-
-	private void _indexWorkflowMetricsSLAInstanceResult(
-		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
-
-		_slaInstanceResultWorkflowMetricsIndexer.addDocument(
-			_slaInstanceResultWorkflowMetricsIndexer.createDocument(
-				workflowMetricsSLAInstanceResult));
-
-		_slaTaskResultWorkflowMetricsIndexer.addDocuments(
-			workflowMetricsSLAInstanceResult.
-				getWorkflowMetricsSLATaskResults());
 	}
 
 	private void _processCompletedInstances(
@@ -557,7 +417,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		_slaTaskResultWorkflowMetricsIndexer.addDocuments(
 			slaTaskResultDocuments);
 	}
-
 
 	private void _processRunningInstances(
 		int from, long startNodeId,

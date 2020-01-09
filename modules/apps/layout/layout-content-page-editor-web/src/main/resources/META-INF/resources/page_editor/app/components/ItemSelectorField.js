@@ -18,7 +18,7 @@ import React, {useContext, useState, useEffect} from 'react';
 
 import ItemSelector from '../../common/components/ItemSelector';
 import {ConfigContext} from '../config/index';
-import AssetService from '../services/AssetService';
+import InfoItemService from '../services/InfoItemService';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => {
 	const {typeOptions = {}} = field;
@@ -58,7 +58,7 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 
 	useEffect(() => {
 		if (isMounted()) {
-			AssetService.getAvailableTemplates({
+			InfoItemService.getAvailableTemplates({
 				className: item.className,
 				classPK: item.classPK,
 				config

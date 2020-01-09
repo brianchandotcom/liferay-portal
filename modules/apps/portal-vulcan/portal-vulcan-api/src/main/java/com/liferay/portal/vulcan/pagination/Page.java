@@ -43,10 +43,10 @@ public class Page<T> {
 	}
 
 	public static <T> Page<T> of(
-		Collection<T> items, Pagination pagination, long totalCount,
-		Map<String, Map> actions) {
+		Map<String, Map> actions, Collection<T> items, Pagination pagination,
+		long totalCount) {
 
-		return new Page<>(items, pagination, totalCount, actions);
+		return new Page<>(actions, items, pagination, totalCount);
 	}
 
 	@JsonProperty("actions")
@@ -100,23 +100,22 @@ public class Page<T> {
 
 	private Page(Collection<T> items) {
 		_items = items;
-		_page = 1;
-
-		_pageSize = items.size();
-
-		_totalCount = _pageSize;
 
 		_actions = new HashMap<>();
+		_page = 1;
+		_pageSize = items.size();
+		_totalCount = items.size();
 	}
 
 	private Page(Collection<T> items, Pagination pagination, long totalCount) {
-		this(items, pagination, totalCount, new HashMap<>());
+		this(new HashMap<>(), items, pagination, totalCount);
 	}
 
 	private Page(
-		Collection<T> items, Pagination pagination, long totalCount,
-		Map<String, Map> actions) {
+		Map<String, Map> actions, Collection<T> items, Pagination pagination,
+		long totalCount) {
 
+		_actions = actions;
 		_items = items;
 
 		if (pagination == null) {
@@ -129,7 +128,6 @@ public class Page<T> {
 		}
 
 		_totalCount = totalCount;
-		_actions = actions;
 	}
 
 	private Map<String, Map> _actions;

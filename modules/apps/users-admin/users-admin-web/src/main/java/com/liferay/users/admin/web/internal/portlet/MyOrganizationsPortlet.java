@@ -78,15 +78,15 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 						renderRequest,
 						"parentOrganizationSearchContainerPrimaryKeys");
 
-					if (parentOrganizationId == 0) {
-						PortalPermissionUtil.check(
-							PermissionThreadLocal.getPermissionChecker(),
-							ActionKeys.ADD_ORGANIZATION);
-					}
-					else {
+					if (parentOrganizationId > 0) {
 						OrganizationPermissionUtil.check(
 							PermissionThreadLocal.getPermissionChecker(),
 							parentOrganizationId, ActionKeys.ADD_ORGANIZATION);
+					}
+					else {
+						PortalPermissionUtil.check(
+							PermissionThreadLocal.getPermissionChecker(),
+							ActionKeys.ADD_ORGANIZATION);
 					}
 				}
 			}

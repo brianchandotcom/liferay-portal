@@ -6,31 +6,31 @@
 	"fieldValues": [
 		{
 			"instanceId": "wxey",
-			"name": "name",
+			"name": "property",
 			"nestedFieldValues": [
 				{
 					"instanceId": "ozcs",
-					"name": "value",
+					"name": "content",
 					"value": {
-						"en_US": "value1"
+						"en_US": "content1"
 					}
 				}
 			],
-			"value": "name1"
+			"value": "property1"
 		},
 		{
 			"instanceId": "wxey",
-			"name": "name",
+			"name": "property",
 			"nestedFieldValues": [
 				{
 					"instanceId": "ozcs",
-					"name": "value",
+					"name": "content",
 					"value": {
-						"en_US": "value2"
+						"en_US": "content2"
 					}
 				}
 			],
-			"value": "name2"
+			"value": "property2"
 		}
 	]
 }

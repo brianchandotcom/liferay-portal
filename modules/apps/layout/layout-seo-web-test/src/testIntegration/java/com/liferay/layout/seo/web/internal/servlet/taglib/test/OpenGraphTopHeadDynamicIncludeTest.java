@@ -181,8 +181,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "name1", "value1");
-		_assertMetaTag(document, "name2", "value2");
+		_assertMetaTag(document, "property1", "content1");
+		_assertMetaTag(document, "property2", "content2");
 	}
 
 	@Test

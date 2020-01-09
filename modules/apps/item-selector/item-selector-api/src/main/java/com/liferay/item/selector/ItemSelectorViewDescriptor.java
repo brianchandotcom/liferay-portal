@@ -31,6 +31,14 @@ public interface ItemSelectorViewDescriptor<T> {
 
 	public SearchContainer getSearchContainer();
 
+	public default boolean isShowBreadcrumb() {
+		return true;
+	}
+
+	public default boolean isShowManagementToolbar() {
+		return true;
+	}
+
 	public interface ItemDescriptor {
 
 		public String getIcon();

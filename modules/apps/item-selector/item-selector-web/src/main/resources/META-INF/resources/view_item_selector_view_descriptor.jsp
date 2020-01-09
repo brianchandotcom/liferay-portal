@@ -24,14 +24,18 @@ ItemSelectorViewDescriptor itemSelectorViewDescriptor = itemSelectorViewDescript
 SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer();
 %>
 
-<clay:management-toolbar
-	displayContext="<%= new ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext(itemSelectorViewDescriptor, request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
-/>
+<c:if test="<%= itemSelectorViewDescriptor.isShowManagementToolbar() %>">
+	<clay:management-toolbar
+		displayContext="<%= new ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext(itemSelectorViewDescriptor, request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
+	/>
+</c:if>
 
 <div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />entriesContainer">
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= itemSelectorViewDescriptorRendererDisplayContext.getBreadcrumbEntries(currentURLObj, request, liferayPortletResponse) %>"
-	/>
+	<c:if test="<%= itemSelectorViewDescriptor.isShowBreadcrumb() %>">
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= itemSelectorViewDescriptorRendererDisplayContext.getBreadcrumbEntries(currentURLObj, request, liferayPortletResponse) %>"
+		/>
+	</c:if>
 
 	<liferay-ui:search-container
 		id="entries"

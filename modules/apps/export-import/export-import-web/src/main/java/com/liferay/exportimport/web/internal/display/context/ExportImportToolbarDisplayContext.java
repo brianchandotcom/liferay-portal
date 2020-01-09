@@ -49,13 +49,13 @@ public class ExportImportToolbarDisplayContext {
 
 	public ExportImportToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse portletResponse) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
 
-		_portletResponse = portletResponse;
+		_liferayPortletResponse = liferayPortletResponse;
 
-		Portlet portlet = portletResponse.getPortlet();
+		Portlet portlet = liferayPortletResponse.getPortlet();
 
 		_portletNamespace = PortalUtil.getPortletNamespace(
 			portlet.getRootPortletId());
@@ -253,7 +253,7 @@ public class ExportImportToolbarDisplayContext {
 	}
 
 	protected PortletURL getRenderURL() {
-		return _portletResponse.createRenderURL();
+		return _liferayPortletResponse.createRenderURL();
 	}
 
 	private List<DropdownItem> _getFilterNavigatioDropdownItems() {
@@ -440,7 +440,7 @@ public class ExportImportToolbarDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final String _portletNamespace;
-	private final LiferayPortletResponse _portletResponse;
 
 }

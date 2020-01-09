@@ -396,10 +396,10 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public String getSortingURL() throws PortletException {
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_workflowDefinitionLinkRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
 			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);

@@ -523,8 +523,8 @@ public class InvokerPortletImpl
 	}
 
 	protected void invoke(
-			LiferayPortletRequest portletRequest,
-			LiferayPortletResponse portletResponse, String lifecycle,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, String lifecycle,
 			List<? extends PortletFilter> filters)
 		throws IOException, PortletException {
 
@@ -547,9 +547,9 @@ public class InvokerPortletImpl
 				servletContext.getRequestDispatcher(path);
 
 			HttpServletRequest httpServletRequest =
-				portletRequest.getHttpServletRequest();
+				liferayPortletRequest.getHttpServletRequest();
 			HttpServletResponse httpServletResponse =
-				portletResponse.getHttpServletResponse();
+				liferayPortletResponse.getHttpServletResponse();
 
 			httpServletRequest.setAttribute(
 				JavaConstants.JAVAX_PORTLET_PORTLET, _portlet);
@@ -584,12 +584,14 @@ public class InvokerPortletImpl
 		}
 		else {
 			PortletFilterUtil.doFilter(
-				portletRequest, portletResponse, lifecycle, filterChain);
+				liferayPortletRequest, liferayPortletResponse, lifecycle,
+				filterChain);
 		}
 
-		portletResponse.transferMarkupHeadElements();
+		liferayPortletResponse.transferMarkupHeadElements();
 
-		Map<String, String[]> properties = portletResponse.getProperties();
+		Map<String, String[]> properties =
+			liferayPortletResponse.getProperties();
 
 		if (MapUtil.isNotEmpty(properties) && (_expCache != null)) {
 			String[] expCache = properties.get(RenderResponse.EXPIRATION_CACHE);
@@ -606,13 +608,14 @@ public class InvokerPortletImpl
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest portletRequest =
+		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(actionRequest);
-		LiferayPortletResponse portletResponse =
+		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(actionResponse);
 
 		invoke(
-			portletRequest, portletResponse, PortletRequest.ACTION_PHASE,
+			liferayPortletRequest, liferayPortletResponse,
+			PortletRequest.ACTION_PHASE,
 			_invokerFilterContainer.getActionFilters());
 	}
 
@@ -620,13 +623,14 @@ public class InvokerPortletImpl
 			EventRequest eventRequest, EventResponse eventResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest portletRequest =
+		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(eventRequest);
-		LiferayPortletResponse portletResponse =
+		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(eventResponse);
 
 		invoke(
-			portletRequest, portletResponse, PortletRequest.EVENT_PHASE,
+			liferayPortletRequest, liferayPortletResponse,
+			PortletRequest.EVENT_PHASE,
 			_invokerFilterContainer.getEventFilters());
 	}
 
@@ -634,14 +638,15 @@ public class InvokerPortletImpl
 			HeaderRequest headerRequest, HeaderResponse headerResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest portletRequest =
+		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(headerRequest);
-		LiferayPortletResponse portletResponse =
+		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(headerResponse);
 
 		try {
 			invoke(
-				portletRequest, portletResponse, PortletRequest.HEADER_PHASE,
+				liferayPortletRequest, liferayPortletResponse,
+				PortletRequest.HEADER_PHASE,
 				_invokerFilterContainer.getHeaderFilters());
 		}
 		catch (Exception e) {
@@ -655,14 +660,15 @@ public class InvokerPortletImpl
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest portletRequest =
+		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(renderRequest);
-		LiferayPortletResponse portletResponse =
+		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(renderResponse);
 
 		try {
 			invoke(
-				portletRequest, portletResponse, PortletRequest.RENDER_PHASE,
+				liferayPortletRequest, liferayPortletResponse,
+				PortletRequest.RENDER_PHASE,
 				_invokerFilterContainer.getRenderFilters());
 		}
 		catch (Exception e) {
@@ -681,26 +687,27 @@ public class InvokerPortletImpl
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest portletRequest =
+		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(resourceRequest);
-		LiferayPortletResponse portletResponse =
+		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(resourceResponse);
 
 		invoke(
-			portletRequest, portletResponse, PortletRequest.RESOURCE_PHASE,
+			liferayPortletRequest, liferayPortletResponse,
+			PortletRequest.RESOURCE_PHASE,
 			_invokerFilterContainer.getResourceFilters());
 	}
 
 	protected void processException(
-		Exception exception, PortletRequest portletRequest,
-		PortletResponse portletResponse) {
+		Exception exception, PortletRequest liferayPortletRequest,
+		PortletResponse liferayPortletResponse) {
 
-		if (portletResponse instanceof StateAwareResponseImpl) {
+		if (liferayPortletResponse instanceof StateAwareResponseImpl) {
 
 			// PLT.5.4.7, TCK xxiii and PLT.15.2.6, cxlvi
 
 			StateAwareResponseImpl stateAwareResponseImpl =
-				(StateAwareResponseImpl)portletResponse;
+				(StateAwareResponseImpl)liferayPortletResponse;
 
 			stateAwareResponseImpl.reset();
 		}
@@ -722,14 +729,14 @@ public class InvokerPortletImpl
 		}
 
 		if (exception instanceof PortletException) {
-			if ((portletResponse instanceof StateAwareResponseImpl) &&
+			if ((liferayPortletResponse instanceof StateAwareResponseImpl) &&
 				!(exception instanceof UnavailableException)) {
 
 				return;
 			}
 
-			if (!(portletRequest instanceof RenderRequest)) {
-				portletRequest.setAttribute(_errorKey, exception);
+			if (!(liferayPortletRequest instanceof RenderRequest)) {
+				liferayPortletRequest.setAttribute(_errorKey, exception);
 			}
 		}
 		else {

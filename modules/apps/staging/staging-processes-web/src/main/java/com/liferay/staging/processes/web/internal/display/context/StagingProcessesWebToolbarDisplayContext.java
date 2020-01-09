@@ -44,14 +44,14 @@ public class StagingProcessesWebToolbarDisplayContext {
 
 	public StagingProcessesWebToolbarDisplayContext(
 		HttpServletRequest httpServletRequest, PageContext pageContext,
-		LiferayPortletResponse portletResponse) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_pageContext = pageContext;
 
-		_portletResponse = portletResponse;
+		_liferayPortletResponse = liferayPortletResponse;
 
-		Portlet portlet = portletResponse.getPortlet();
+		Portlet portlet = liferayPortletResponse.getPortlet();
 
 		_portletNamespace = PortalUtil.getPortletNamespace(
 			portlet.getRootPortletId());
@@ -111,7 +111,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 								}
 
 								dropdownItem.setHref(
-									_portletResponse.createRenderURL(),
+									_liferayPortletResponse.createRenderURL(),
 									"mvcRenderCommandName", "publishLayouts",
 									Constants.CMD, cmd,
 									"exportImportConfigurationId",
@@ -133,7 +133,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 							}
 
 							dropdownItem.setHref(
-								_portletResponse.createRenderURL(),
+								_liferayPortletResponse.createRenderURL(),
 								"mvcRenderCommandName", "publishLayouts",
 								Constants.CMD, cmd, "groupId",
 								String.valueOf(stagingGroupId), "privateLayout",
@@ -188,7 +188,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		PortletURL portletURL = _portletResponse.createRenderURL();
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
@@ -276,7 +276,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	private PortletURL _getStagingRenderURL() {
-		PortletURL renderURL = _portletResponse.createRenderURL();
+		PortletURL renderURL = _liferayPortletResponse.createRenderURL();
 
 		renderURL.setParameter(
 			"navigation",
@@ -306,8 +306,8 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PageContext _pageContext;
 	private final String _portletNamespace;
-	private final LiferayPortletResponse _portletResponse;
 
 }

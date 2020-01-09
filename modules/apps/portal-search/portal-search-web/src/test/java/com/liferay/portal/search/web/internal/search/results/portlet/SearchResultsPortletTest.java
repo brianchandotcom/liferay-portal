@@ -188,15 +188,15 @@ public class SearchResultsPortletTest {
 	}
 
 	protected RenderResponse createRenderResponse() {
-		RenderResponse renderRequest = Mockito.mock(RenderResponse.class);
+		RenderResponse renderResponse = Mockito.mock(RenderResponse.class);
 
 		Mockito.doReturn(
 			Mockito.mock(RenderURL.class)
 		).when(
-			renderRequest
+			renderResponse
 		).createRenderURL();
 
-		return renderRequest;
+		return renderResponse;
 	}
 
 	protected SearchResultsPortlet createSearchResultsPortlet()

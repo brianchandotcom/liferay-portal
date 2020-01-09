@@ -137,7 +137,7 @@ public class WorkflowDefinitionDisplayContext {
 			return null;
 		}
 
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
 
 		return new JSPCreationMenu(pageContext) {
@@ -145,7 +145,7 @@ public class WorkflowDefinitionDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							response.createRenderURL(), "mvcPath",
+							liferayPortletResponse.createRenderURL(), "mvcPath",
 							"/definition/edit_workflow_definition.jsp");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
@@ -434,10 +434,10 @@ public class WorkflowDefinitionDisplayContext {
 		String orderByType = ParamUtil.getString(
 			httpServletRequest, "orderByType", "asc");
 
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
 			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
@@ -596,10 +596,10 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	protected PortletURL getWorkflowDefinitionLinkPortletURL() {
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createLiferayPortletURL(
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.RENDER_PHASE);
 
@@ -628,10 +628,10 @@ public class WorkflowDefinitionDisplayContext {
 	}
 
 	protected PortletURL getWorkflowInstancesPortletURL() {
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createLiferayPortletURL(
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
 			PortletRequest.RENDER_PHASE);
 

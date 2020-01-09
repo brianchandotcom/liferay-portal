@@ -747,10 +747,10 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	protected PortletURL getWorkflowDefinitionLinkPortletURL() {
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_kaleoDesignerRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createLiferayPortletURL(
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.RENDER_PHASE);
 
@@ -762,10 +762,10 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	protected PortletURL getWorkflowInstancesPortletURL() {
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_kaleoDesignerRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createLiferayPortletURL(
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW_INSTANCE,
 			PortletRequest.RENDER_PHASE);
 

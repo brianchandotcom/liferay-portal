@@ -337,10 +337,10 @@ public class WorkflowInstanceViewDisplayContext
 		String orderByType = ParamUtil.getString(
 			httpServletRequest, "orderByType", "asc");
 
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			workflowInstanceRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
 			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");

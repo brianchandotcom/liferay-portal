@@ -76,10 +76,10 @@ public class DepotEntryURLUtil {
 
 	public static PortletURL getEditDepotEntryPortletURL(
 		Group group, String redirect,
-		LiferayPortletRequest httpServletRequest) {
+		LiferayPortletRequest liferayPortletRequest) {
 
 		PortletURL editDepotEntryURL = PortalUtil.getControlPanelPortletURL(
-			httpServletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
+			liferayPortletRequest, group, DepotPortletKeys.DEPOT_ADMIN, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		editDepotEntryURL.setParameter(

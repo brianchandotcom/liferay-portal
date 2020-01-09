@@ -400,10 +400,10 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public String getSortingURL() {
-		LiferayPortletResponse response =
+		LiferayPortletResponse liferayPortletResponse =
 			_workflowTaskRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = response.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tabs1", _getTabs1());
 		portletURL.setParameter("orderByCol", _getOrderByCol());

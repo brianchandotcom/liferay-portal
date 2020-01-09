@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -39,8 +38,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
-import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
-import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import java.text.ParseException;
 
@@ -205,7 +202,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	@Override
 	protected void reindex(long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			_kaleoInstanceLocalService.getActionableDynamicQuery();
+			kaleoInstanceLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -230,7 +227,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				kaleoInstance.getClassName(), kaleoInstance.getClassPK());
 
 			if (assetRenderer != null) {
-				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				AssetEntry assetEntry = assetEntryLocalService.getEntry(
 					assetRenderer.getClassName(), assetRenderer.getClassPK());
 
 				return LocalizationUtil.populateLocalizationMap(
@@ -299,12 +296,6 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InstanceWorkflowMetricsIndexer.class);
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer

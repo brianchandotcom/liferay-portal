@@ -14,6 +14,8 @@
 
 package com.liferay.sharing.filter;
 
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+
 import java.util.Locale;
 
 /**
@@ -38,6 +40,8 @@ public interface SharedAssetsFilterItem {
 	 *
 	 * @return the label
 	 */
-	public String getLabel(Locale locale);
+	public default String getLabel(Locale locale) {
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
 
 }

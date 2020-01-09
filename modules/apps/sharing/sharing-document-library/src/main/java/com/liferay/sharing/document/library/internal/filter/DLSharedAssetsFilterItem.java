@@ -15,13 +15,9 @@
 package com.liferay.sharing.document.library.internal.filter;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.sharing.filter.SharedAssetsFilterItem;
 
-import java.util.Locale;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -36,13 +32,5 @@ public class DLSharedAssetsFilterItem implements SharedAssetsFilterItem {
 	public String getClassName() {
 		return DLFileEntry.class.getName();
 	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "documents");
-	}
-
-	@Reference
-	private Language _language;
 
 }

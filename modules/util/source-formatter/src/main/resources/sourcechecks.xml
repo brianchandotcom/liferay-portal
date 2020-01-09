@@ -349,6 +349,7 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="JSPFunctionNameCheck" />
 		<check name="JSPLanguageKeysCheck" />
 		<check name="JSPLogParametersCheck" />
 		<check name="JSPMissingTaglibsCheck" />

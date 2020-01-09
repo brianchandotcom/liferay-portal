@@ -23,6 +23,9 @@ const BACKGROUND_COLOR_CSS_CLASS_SELECTOR = 'backgroundColorCssClass';
 
 export const BackgroundColorConfigurationPanel = ({item}) => {
 	const dispatch = useContext(DispatchContext);
+	const {
+		config: {backgroundColorCssClass}
+	} = item;
 
 	const handleSelectValueChanged = value =>
 		dispatch(
@@ -41,6 +44,7 @@ export const BackgroundColorConfigurationPanel = ({item}) => {
 				label={Liferay.Language.get('background-color')}
 				onClear={() => handleSelectValueChanged('')}
 				onColorSelect={handleSelectValueChanged}
+				selectedColor={backgroundColorCssClass}
 			></ColorPalette>
 		</ClayForm.Group>
 	);

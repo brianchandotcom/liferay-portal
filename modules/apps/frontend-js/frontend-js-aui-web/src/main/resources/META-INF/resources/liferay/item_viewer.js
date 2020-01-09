@@ -132,7 +132,7 @@ AUI.add(
 			'<dt class="{dtClassName}">{dt}</dt><dd class="{ddClassName}">{dd}</dd>';
 
 		var TPL_INFO_TAB_TITLE =
-			'<li><a aria-expanded="false" class="{className}" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
+			'<li><a aria-expanded="false" class="{className}" data-toggle="liferay-tab" href="#{tabId}">{tabTitle}</a></li>';
 
 		var LiferayItemViewer = A.Component.create({
 			ATTRS: {

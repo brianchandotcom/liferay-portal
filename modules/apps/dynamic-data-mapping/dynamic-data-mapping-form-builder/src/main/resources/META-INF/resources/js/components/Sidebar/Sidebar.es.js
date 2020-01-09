@@ -998,7 +998,7 @@ class Sidebar extends Component {
 					<a
 						aria-controls="sidebarLightDetails"
 						class={style}
-						data-toggle="tab"
+						data-toggle="liferay-tab"
 						href="javascript:;"
 						role="tab"
 					>

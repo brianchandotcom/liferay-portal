@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -16,4 +18,16 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+}
+
+mergeLang {
+	setting("../../users-admin/users-admin-web/src/main/resources/content") {
+		transformKey "alerts-and-announcements-delivery", "alerts-and-announcements-delivery"
+		transformKey "edit-user-x", "edit-user-x"
+	}
+
+	sourceDirs = [
+		"../../users-admin/users-admin-web/src/main/resources/content",
+		"src/main/resources/content"
+	]
 }

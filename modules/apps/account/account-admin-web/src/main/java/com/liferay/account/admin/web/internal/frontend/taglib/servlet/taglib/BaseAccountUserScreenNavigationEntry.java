@@ -22,12 +22,15 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -50,7 +53,7 @@ public abstract class BaseAccountUserScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getEntryKey());
+		return LanguageUtil.get(getResourceBundle(locale), getEntryKey());
 	}
 
 	@Override
@@ -94,6 +97,14 @@ public abstract class BaseAccountUserScreenNavigationEntry
 		jspRenderer.renderJSP(
 			servletContext, dynamicServletRequest, httpServletResponse,
 			"/edit_user_navigation.jsp");
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return new AggregateResourceBundle(
+			resourceBundle, portal.getResourceBundle(locale));
 	}
 
 	protected boolean isShowControls() {

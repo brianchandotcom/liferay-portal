@@ -73,7 +73,7 @@ public class SLATaskResultWorkflowMetricsIndexer
 		document.addKeyword("deleted", false);
 		document.addKeyword(
 			"instanceCompleted",
-			workflowMetricsSLATaskResult.getCompletionLocalDateTime() != null);
+			workflowMetricsSLATaskResult.isInstanceCompleted());
 		document.addKeyword(
 			"instanceId", workflowMetricsSLATaskResult.getInstanceId());
 		document.addDateSortable(

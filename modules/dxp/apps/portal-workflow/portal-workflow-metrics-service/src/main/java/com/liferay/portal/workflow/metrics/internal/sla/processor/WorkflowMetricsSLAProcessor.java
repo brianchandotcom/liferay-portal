@@ -537,7 +537,8 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	private WorkflowMetricsSLATaskResult _createWorkflowMetricsSLATaskResult(
-		Document document, LocalDateTime nowLocalDateTime,
+		Document document, boolean instanceCompleted,
+		LocalDateTime nowLocalDateTime,
 		WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
 		return new WorkflowMetricsSLATaskResult() {
@@ -561,6 +562,7 @@ public class WorkflowMetricsSLAProcessor {
 					setCompletionUserId(document.getLong("completionUserId"));
 				}
 
+				setInstanceCompleted(instanceCompleted);
 				setInstanceId(workflowMetricsSLAInstanceResult.getInstanceId());
 				setLastCheckLocalDateTime(
 					workflowMetricsSLAInstanceResult.
@@ -585,14 +587,16 @@ public class WorkflowMetricsSLAProcessor {
 
 	private List<WorkflowMetricsSLATaskResult>
 		_createWorkflowMetricsSLATaskResults(
-			List<Document> documents, LocalDateTime nowLocalDateTime,
+			List<Document> documents, boolean instanceCompleted,
+			LocalDateTime nowLocalDateTime,
 			WorkflowMetricsSLAInstanceResult workflowMetricsSLAInstanceResult) {
 
 		Stream<Document> stream = documents.stream();
 
 		return stream.map(
 			document -> _createWorkflowMetricsSLATaskResult(
-				document, nowLocalDateTime, workflowMetricsSLAInstanceResult)
+				document, instanceCompleted, nowLocalDateTime,
+				workflowMetricsSLAInstanceResult)
 		).collect(
 			Collectors.toList()
 		);

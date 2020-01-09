@@ -1103,46 +1103,6 @@
 			});
 		},
 
-		selectEntityHandler(container, selectEventName, disableButton) {
-			container = $(container);
-
-			var openingLiferay = Util.getOpener().Liferay;
-
-			var selectorButtons = container.find('.selector-button');
-
-			container.on('click', '.selector-button', event => {
-				var target = $(event.target);
-
-				if (!target.attr('data-prevent-selection')) {
-					var currentTarget = $(event.currentTarget);
-
-					var confirmSelection =
-						currentTarget.attr('data-confirm-selection') === 'true';
-					var confirmSelectionMessage = currentTarget.attr(
-						'data-confirm-selection-message'
-					);
-
-					if (!confirmSelection || confirm(confirmSelectionMessage)) {
-						if (disableButton !== false) {
-							selectorButtons.prop('disabled', false);
-
-							currentTarget.prop('disabled', true);
-						}
-
-						var result = Util.getAttributes(currentTarget, 'data-');
-
-						openingLiferay.fire(selectEventName, result);
-
-						Util.getWindow().hide();
-					}
-				}
-			});
-
-			openingLiferay.on('entitySelectionRemoved', () => {
-				selectorButtons.prop('disabled', false);
-			});
-		},
-
 		selectFolder(folderData, namespace) {
 			const folderDataElement = document.getElementById(
 				namespace + folderData.idString
@@ -1628,6 +1588,73 @@
 					}
 				}
 			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		Util,
+		'selectEntityHandler',
+		(containerSelector, selectEventName, disableButton) => {
+			const container = A.one(containerSelector);
+
+			if (!container) {
+				return;
+			}
+
+			const openingLiferay = Util.getOpener().Liferay;
+
+			const selectorButtons = container
+				.getDOM()
+				.querySelectorAll('.selector-button');
+
+			container.delegate(
+				EVENT_CLICK,
+				event => {
+					const currentTarget = event.currentTarget.getDOM();
+
+					if (
+						currentTarget.disabled ||
+						currentTarget.dataset['preventSelection']
+					) {
+						return;
+					}
+
+					const confirmSelection =
+						currentTarget.dataset['confirmSelection'] === 'true';
+
+					if (
+						!confirmSelection ||
+						confirm(
+							currentTarget.dataset['confirmSelectionMessage']
+						)
+					) {
+						if (disableButton) {
+							selectorButtons.forEach(selectorButton => {
+								selectorButton.disabled = false;
+							});
+
+							currentTarget.disabled = true;
+						}
+
+						const result = Util.getAttributes(
+							currentTarget,
+							'data-'
+						);
+
+						openingLiferay.fire(selectEventName, result);
+
+						Util.getWindow().hide();
+					}
+				},
+				'.selector-button'
+			);
+
+			openingLiferay.on('entitySelectionRemoved', () => {
+				selectorButtons.forEach(selectorButton => {
+					selectorButton.disabled = false;
+				});
+			});
 		},
 		['aui-base']
 	);

@@ -21,7 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -34,17 +33,16 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.output.stream.container.constants.OutputStreamContainerConstants;
-import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorThreadLocal;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -54,7 +52,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -64,8 +61,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {
 		"osgi.command.function=check", "osgi.command.function=execute",
 		"osgi.command.function=executeAll", "osgi.command.function=list",
@@ -245,21 +241,8 @@ public class ReleaseManagerOSGiCommands {
 	}
 
 	@Activate
-	protected void activate(
-		final BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(final BundleContext bundleContext) {
 		DB db = DBManagerUtil.getDB();
-
-		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
-			serviceTrackerMapListener = null;
-
-		_releaseManagerConfiguration = ConfigurableUtil.createConfigurable(
-			ReleaseManagerConfiguration.class, properties);
-
-		if (_releaseManagerConfiguration.autoUpgrade()) {
-			serviceTrackerMapListener =
-				new UpgradeInfoServiceTrackerMapListener();
-		}
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, UpgradeStep.class,
@@ -272,25 +255,30 @@ public class ReleaseManagerOSGiCommands {
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<UpgradeStep>(
 					"upgrade.from.schema.version")),
-			serviceTrackerMapListener);
+			new UpgradeInfoServiceTrackerMapListener());
 
-		if (_releaseManagerConfiguration.autoUpgrade()) {
-			Set<String> upgradedBundleSymbolicNames = new HashSet<>();
+		Set<String> upgradedBundleSymbolicNames = new HashSet<>();
 
-			Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
+		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
 
-			while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
-				for (String bundleSymbolicName : bundleSymbolicNames) {
-					List<UpgradeInfo> upgradeSteps =
-						_serviceTrackerMap.getService(bundleSymbolicName);
+		while (upgradedBundleSymbolicNames.addAll(bundleSymbolicNames)) {
+			for (String bundleSymbolicName : bundleSymbolicNames) {
+				if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN &&
+					(_releaseLocalService.fetchRelease(bundleSymbolicName) !=
+						null)) {
 
-					_upgradeExecutor.execute(
-						bundleSymbolicName, upgradeSteps,
-						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+					continue;
 				}
 
-				bundleSymbolicNames = _serviceTrackerMap.keySet();
+				List<UpgradeInfo> upgradeSteps = _serviceTrackerMap.getService(
+					bundleSymbolicName);
+
+				_upgradeExecutor.execute(
+					bundleSymbolicName, upgradeSteps,
+					OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
 			}
+
+			bundleSymbolicNames = _serviceTrackerMap.keySet();
 		}
 
 		_activated = true;
@@ -395,7 +383,6 @@ public class ReleaseManagerOSGiCommands {
 
 	private boolean _activated;
 	private ReleaseLocalService _releaseLocalService;
-	private ReleaseManagerConfiguration _releaseManagerConfiguration;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
 
 	@Reference
@@ -496,7 +483,10 @@ public class ReleaseManagerOSGiCommands {
 			final String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled()) {
+			if (_activated && UpgradeStepRegistratorThreadLocal.isEnabled() &&
+				(PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
+				 (_releaseLocalService.fetchRelease(key) == null))) {
+
 				_upgradeExecutor.execute(key, upgradeInfos, null);
 			}
 		}

@@ -132,7 +132,16 @@ public class StartupAction extends SimpleAction {
 
 		// Check required schema version
 
-		StartupHelperUtil.verifyRequiredSchemaVersion();
+		if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Auto upgrading is configured but it is not supported " +
+						"for a production environment, use the Upgrade Tool " +
+							"instead");
+			}
+
+			StartupHelperUtil.verifyRequiredSchemaVersion();
+		}
 
 		DLFileEntryTypeLocalServiceUtil.getBasicDocumentDLFileEntryType();
 
@@ -188,6 +197,12 @@ public class StartupAction extends SimpleAction {
 		}
 
 		ResourceActionLocalServiceUtil.checkResourceActions();
+
+		// Upgrade
+
+		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			DBUpgrader.upgrade();
+		}
 
 		// Verify
 

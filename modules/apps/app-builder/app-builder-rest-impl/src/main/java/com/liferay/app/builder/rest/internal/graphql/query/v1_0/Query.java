@@ -15,9 +15,9 @@
 package com.liferay.app.builder.rest.internal.graphql.query.v1_0;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
-import com.liferay.app.builder.rest.dto.v1_0.DataModelPermission;
+import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
+import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
-import com.liferay.app.builder.rest.resource.v1_0.DataModelPermissionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -56,12 +56,12 @@ public class Query {
 			appResourceComponentServiceObjects;
 	}
 
-	public static void setDataModelPermissionResourceComponentServiceObjects(
-		ComponentServiceObjects<DataModelPermissionResource>
-			dataModelPermissionResourceComponentServiceObjects) {
+	public static void setAppModelPermissionResourceComponentServiceObjects(
+		ComponentServiceObjects<AppModelPermissionResource>
+			appModelPermissionResourceComponentServiceObjects) {
 
-		_dataModelPermissionResourceComponentServiceObjects =
-			dataModelPermissionResourceComponentServiceObjects;
+		_appModelPermissionResourceComponentServiceObjects =
+			appModelPermissionResourceComponentServiceObjects;
 	}
 
 	/**
@@ -124,18 +124,18 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataModelPermissions(roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {appModelPermissions(roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public DataModelPermissionPage dataModelPermissions(
+	public AppModelPermissionPage appModelPermissions(
 			@GraphQLName("roleNames") String roleNames)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_dataModelPermissionResourceComponentServiceObjects,
+			_appModelPermissionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dataModelPermissionResource -> new DataModelPermissionPage(
-				dataModelPermissionResource.getDataModelPermissionsPage(
+			appModelPermissionResource -> new AppModelPermissionPage(
+				appModelPermissionResource.getAppModelPermissionsPage(
 					roleNames)));
 	}
 
@@ -167,19 +167,19 @@ public class Query {
 
 	}
 
-	@GraphQLName("DataModelPermissionPage")
-	public class DataModelPermissionPage {
+	@GraphQLName("AppModelPermissionPage")
+	public class AppModelPermissionPage {
 
-		public DataModelPermissionPage(Page dataModelPermissionPage) {
-			items = dataModelPermissionPage.getItems();
-			lastPage = dataModelPermissionPage.getLastPage();
-			page = dataModelPermissionPage.getPage();
-			pageSize = dataModelPermissionPage.getPageSize();
-			totalCount = dataModelPermissionPage.getTotalCount();
+		public AppModelPermissionPage(Page appModelPermissionPage) {
+			items = appModelPermissionPage.getItems();
+			lastPage = appModelPermissionPage.getLastPage();
+			page = appModelPermissionPage.getPage();
+			pageSize = appModelPermissionPage.getPageSize();
+			totalCount = appModelPermissionPage.getTotalCount();
 		}
 
 		@GraphQLField
-		protected java.util.Collection<DataModelPermission> items;
+		protected java.util.Collection<AppModelPermission> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -226,23 +226,23 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
-			DataModelPermissionResource dataModelPermissionResource)
+			AppModelPermissionResource appModelPermissionResource)
 		throws Exception {
 
-		dataModelPermissionResource.setContextAcceptLanguage(_acceptLanguage);
-		dataModelPermissionResource.setContextCompany(_company);
-		dataModelPermissionResource.setContextHttpServletRequest(
+		appModelPermissionResource.setContextAcceptLanguage(_acceptLanguage);
+		appModelPermissionResource.setContextCompany(_company);
+		appModelPermissionResource.setContextHttpServletRequest(
 			_httpServletRequest);
-		dataModelPermissionResource.setContextHttpServletResponse(
+		appModelPermissionResource.setContextHttpServletResponse(
 			_httpServletResponse);
-		dataModelPermissionResource.setContextUriInfo(_uriInfo);
-		dataModelPermissionResource.setContextUser(_user);
+		appModelPermissionResource.setContextUriInfo(_uriInfo);
+		appModelPermissionResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<AppResource>
 		_appResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DataModelPermissionResource>
-		_dataModelPermissionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AppModelPermissionResource>
+		_appModelPermissionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;

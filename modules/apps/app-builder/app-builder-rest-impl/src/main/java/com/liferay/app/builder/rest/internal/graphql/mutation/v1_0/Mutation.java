@@ -15,9 +15,9 @@
 package com.liferay.app.builder.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
-import com.liferay.app.builder.rest.dto.v1_0.DataModelPermission;
+import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
+import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
-import com.liferay.app.builder.rest.resource.v1_0.DataModelPermissionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -49,12 +49,12 @@ public class Mutation {
 			appResourceComponentServiceObjects;
 	}
 
-	public static void setDataModelPermissionResourceComponentServiceObjects(
-		ComponentServiceObjects<DataModelPermissionResource>
-			dataModelPermissionResourceComponentServiceObjects) {
+	public static void setAppModelPermissionResourceComponentServiceObjects(
+		ComponentServiceObjects<AppModelPermissionResource>
+			appModelPermissionResourceComponentServiceObjects) {
 
-		_dataModelPermissionResourceComponentServiceObjects =
-			dataModelPermissionResourceComponentServiceObjects;
+		_appModelPermissionResourceComponentServiceObjects =
+			appModelPermissionResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -105,17 +105,17 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updateDataModelPermission(
-			@GraphQLName("dataModelPermissions") DataModelPermission[]
-				dataModelPermissions)
+	public boolean updateAppModelPermission(
+			@GraphQLName("appModelPermissions") AppModelPermission[]
+				appModelPermissions)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
-			_dataModelPermissionResourceComponentServiceObjects,
+			_appModelPermissionResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dataModelPermissionResource ->
-				dataModelPermissionResource.putDataModelPermission(
-					dataModelPermissions));
+			appModelPermissionResource ->
+				appModelPermissionResource.putAppModelPermission(
+					appModelPermissions));
 
 		return true;
 	}
@@ -170,23 +170,23 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			DataModelPermissionResource dataModelPermissionResource)
+			AppModelPermissionResource appModelPermissionResource)
 		throws Exception {
 
-		dataModelPermissionResource.setContextAcceptLanguage(_acceptLanguage);
-		dataModelPermissionResource.setContextCompany(_company);
-		dataModelPermissionResource.setContextHttpServletRequest(
+		appModelPermissionResource.setContextAcceptLanguage(_acceptLanguage);
+		appModelPermissionResource.setContextCompany(_company);
+		appModelPermissionResource.setContextHttpServletRequest(
 			_httpServletRequest);
-		dataModelPermissionResource.setContextHttpServletResponse(
+		appModelPermissionResource.setContextHttpServletResponse(
 			_httpServletResponse);
-		dataModelPermissionResource.setContextUriInfo(_uriInfo);
-		dataModelPermissionResource.setContextUser(_user);
+		appModelPermissionResource.setContextUriInfo(_uriInfo);
+		appModelPermissionResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<AppResource>
 		_appResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DataModelPermissionResource>
-		_dataModelPermissionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AppModelPermissionResource>
+		_appModelPermissionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

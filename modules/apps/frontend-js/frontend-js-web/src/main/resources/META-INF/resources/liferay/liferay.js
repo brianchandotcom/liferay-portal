@@ -47,16 +47,6 @@ Liferay = window.Liferay || {};
 		return obj;
 	};
 
-	var jqueryInit = $.prototype.init;
-
-	$.prototype.init = function(selector, context, root) {
-		if (selector === '#') {
-			selector = '';
-		}
-
-		return new jqueryInit(selector, context, root);
-	};
-
 	/**
 	 * OPTIONS
 	 *

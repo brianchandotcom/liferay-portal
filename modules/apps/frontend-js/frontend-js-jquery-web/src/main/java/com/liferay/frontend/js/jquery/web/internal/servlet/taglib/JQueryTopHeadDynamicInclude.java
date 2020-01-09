@@ -125,7 +125,7 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String[] _FILE_NAMES = {
-		"/jquery/jquery.min.js", "/jquery/ajax.js",
+		"/jquery/jquery.min.js", "/jquery/init.js", "/jquery/ajax.js",
 		"/jquery/bootstrap.bundle.min.js", "/jquery/collapsible_search.js",
 		"/jquery/fm.js", "/jquery/form.js", "/jquery/popper.min.js",
 		"/jquery/side_navigation.js"

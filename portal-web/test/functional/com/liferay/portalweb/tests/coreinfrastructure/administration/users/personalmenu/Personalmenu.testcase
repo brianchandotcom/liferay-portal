@@ -298,4 +298,50 @@ definition {
 		MyAccount.view();
 	}
 
+	@priority = "4"
+	test ViewMyOrganizations {
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "user1",
+			userLastName = "user1",
+			userScreenName = "user1");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "user1@liferay.com",
+			userScreenName = "user1");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Organization1 Name",
+			organizationSite = "true");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Organization2 Name",
+			organizationSite = "true");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization1 Name",
+			userEmailAddress = "user1@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user1@liferay.com",
+			userLoginFullName = "user1 user1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "My Organizations");
+
+		AssertElementPresent.assertElementPresent(locator1 = "UsersAndOrganizations#MY_ORGANIZATION_PORTLET");
+
+		LexiconEntry.viewEntryName(rowEntry = "Organization1 Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Organization2 Name");
+	}
+
 }

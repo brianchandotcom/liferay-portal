@@ -14,7 +14,7 @@ import React from 'react';
 
 import ListHeadItem from '../../shared/components/list/ListHeadItem.es';
 import {formatDuration} from '../../shared/util/duration.es';
-import {getFormattedPercentage} from '../../shared/util/util.es';
+import {getFormattedPercentage, isValidNumber} from '../../shared/util/util.es';
 
 const Item = ({
 	breachedInstanceCount,
@@ -35,7 +35,10 @@ const Item = ({
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className="text-right" data-testid="stepSla">
-				{breachedInstanceCount} ({formattedPercentage})
+				{isValidNumber(breachedInstanceCount)
+					? breachedInstanceCount
+					: 0}{' '}
+				({formattedPercentage})
 			</ClayTable.Cell>
 
 			<ClayTable.Cell

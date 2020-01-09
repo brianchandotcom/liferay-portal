@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.nio.charset.Charset;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -146,11 +148,49 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		return false;
 	}
 
+	protected void updateConfigurationProperties(
+		long companyId, String configurationPropertyName, String modelId) {
+
+		Dictionary<String, Object> configurationProperties =
+			analyticsConfigurationTracker.getAnalyticsConfigurationProperties(
+				companyId);
+
+		if (configurationProperties == null) {
+			return;
+		}
+
+		String[] ids = (String[])configurationProperties.get(
+			configurationPropertyName);
+
+		if (!ArrayUtil.contains(ids, modelId)) {
+			return;
+		}
+
+		configurationProperties.put(
+			configurationPropertyName, ArrayUtil.remove(ids, modelId));
+
+		try {
+			configurationProvider.saveCompanyConfiguration(
+				AnalyticsConfiguration.class, companyId,
+				configurationProperties);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to update configuration for company ID " +
+						companyId);
+			}
+		}
+	}
+
 	@Reference
 	protected AnalyticsConfigurationTracker analyticsConfigurationTracker;
 
 	@Reference
 	protected AnalyticsMessageLocalService analyticsMessageLocalService;
+
+	@Reference
+	protected ConfigurationProvider configurationProvider;
 
 	@Reference
 	protected UserLocalService userLocalService;

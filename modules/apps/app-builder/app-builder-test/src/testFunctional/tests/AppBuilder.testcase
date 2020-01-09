@@ -1454,9 +1454,23 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		AppBuilderAdmin.searchByItem(itemName = "First");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Third App");
 
-		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "First");
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "First App");
+
+		AppBuilderAdmin.searchByItem(itemName = "App");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Third App");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "First App");
 
 		AppBuilderAdmin.clearSearch();
 
@@ -1466,11 +1480,33 @@ definition {
 			rowNumber = "1",
 			title = "Third App");
 
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "First App");
+
+		AppBuilderAdmin.searchByItem(itemName = "First");
+
+		AppBuilderAdmin.validateIfSearchItemIsFound(itemName = "First");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "First App");
+
+		AppBuilderAdmin.clearSearch();
+
 		AppBuilderAdmin.searchByItem(itemName = "!@#");
 
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
 
 		AppBuilderAdmin.clearSearch();
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Third App");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "First App");
 	}
 
 	@description = "Search for an object in the object list"

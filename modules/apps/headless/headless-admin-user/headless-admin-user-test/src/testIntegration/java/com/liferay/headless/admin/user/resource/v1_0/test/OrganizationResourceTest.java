@@ -58,6 +58,12 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testDeleteOrganizationBatch() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetOrganizationOrganizationsPageWithSortString() {
 	}
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.VerifyThreadLocal;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -38,24 +37,6 @@ public class TreePathUtil {
 			long companyId, long parentPrimaryKey, String parentTreePath,
 			TreeModelTasks<?> treeModelTasks)
 		throws PortalException {
-
-		if (VerifyThreadLocal.isVerifyInProgress() &&
-			_VERIFY_DATABASE_TRANSACTIONS_DISABLED) {
-
-			ForkJoinPool forkJoinPool = new ForkJoinPool();
-
-			try {
-				forkJoinPool.invoke(
-					new RecursiveRebuildTreeTask(
-						treeModelTasks, companyId, parentPrimaryKey,
-						parentTreePath, 0L));
-			}
-			finally {
-				forkJoinPool.shutdown();
-			}
-
-			return;
-		}
 
 		Deque<Object[]> traces = new LinkedList<>();
 

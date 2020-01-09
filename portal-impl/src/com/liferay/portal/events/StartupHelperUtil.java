@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.verify.VerifyException;
-import com.liferay.portal.verify.VerifyProcessUtil;
 
 import java.sql.Connection;
 
@@ -84,10 +82,6 @@ public class StartupHelperUtil {
 
 	public static boolean isUpgrading() {
 		return _upgrading;
-	}
-
-	public static boolean isVerified() {
-		return _verified;
 	}
 
 	public static void printPatchLevel() {
@@ -176,15 +170,6 @@ public class StartupHelperUtil {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				VerifyProcessUtil#verifyProcess()}
-	 */
-	@Deprecated
-	public static void verifyProcess(boolean verified) throws VerifyException {
-		_verified = VerifyProcessUtil.verifyProcess(_upgraded, verified);
-	}
-
 	public static void verifyRequiredSchemaVersion() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check the portal's required schema version");
@@ -246,6 +231,5 @@ public class StartupHelperUtil {
 	private static boolean _startupFinished;
 	private static boolean _upgraded;
 	private static boolean _upgrading;
-	private static boolean _verified;
 
 }

@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 import {ConfigContext} from '../config/index';
 
-export function AssetSelectionPanel({
+export default function InfoItemSelectionPanel({
 	backgroundImageTitle = Liferay.Language.get('none'),
 	onItemSelectorChanged
 }) {

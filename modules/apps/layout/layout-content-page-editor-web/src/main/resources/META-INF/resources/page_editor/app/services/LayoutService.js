@@ -19,8 +19,10 @@ export default {
 	 * Adds an item to layoutData
 	 * @param {object} options
 	 * @param {object} options.config Application config
+	 * @param {object} options.itemConfig item config
 	 * @param {string} options.itemType item type
-	 * @param {object} options.parentItemId A parent to be added
+	 * @param {object} options.parentItemId Parent to be added to
+	 * @param {object} options.position Position to be added to
 	 * @param {object} options.segmentsExperienceId
 	 * @return {Promise<object>}
 	 */

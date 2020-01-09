@@ -76,6 +76,21 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			kaleoInstance.getKaleoInstanceId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 
+		retryAssertCount(
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", true, "instanceId",
+			kaleoInstance.getKaleoInstanceId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId());
+		retryAssertCount(
+			0, "workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", false, "instanceId",
+			kaleoInstance.getKaleoInstanceId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId());
+
 		_workflowMetricsSLADefinition =
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(

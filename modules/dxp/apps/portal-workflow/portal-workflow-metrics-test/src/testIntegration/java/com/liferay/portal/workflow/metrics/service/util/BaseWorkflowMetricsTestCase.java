@@ -148,7 +148,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 			}
 
 			IdempotentRetryAssert.retryAssert(
-				15, TimeUnit.SECONDS,
+				15, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 				() -> {
 					CountSearchRequest countSearchRequest =
 						new CountSearchRequest();

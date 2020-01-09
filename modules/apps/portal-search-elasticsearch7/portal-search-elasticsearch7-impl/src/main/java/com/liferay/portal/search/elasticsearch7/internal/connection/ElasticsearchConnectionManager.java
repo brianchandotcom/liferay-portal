@@ -133,33 +133,11 @@ public class ElasticsearchConnectionManager
 	}
 
 	public void setOperationMode(OperationMode operationMode) {
-		if (operationMode == _operationMode) {
-			return;
-		}
-
-		for (Map.Entry<String, ElasticsearchConnection> entry :
-				_elasticsearchConnections.entrySet()) {
-
-			ElasticsearchConnection elasticsearchConnection = entry.getValue();
-
-			if (!Objects.equals(
-					EmbeddedElasticsearchConnection.CONNECTION_ID,
-					entry.getKey())) {
-
-				if (operationMode == OperationMode.REMOTE) {
-					elasticsearchConnection.connect();
-				}
-				else {
-					elasticsearchConnection.close();
-				}
-			}
-		}
-
 		_operationMode = operationMode;
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(operation.mode=REMOTE)",
@@ -168,17 +146,15 @@ public class ElasticsearchConnectionManager
 	public void setRemoteElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
 
-		if (_operationMode == OperationMode.REMOTE) {
+		if (elasticsearchConnection.isActive()) {
 			elasticsearchConnection.connect();
 		}
 
-		ElasticsearchConnection oldElasticsearchConnection =
-			_elasticsearchConnections.put(
-				elasticsearchConnection.getConnectionId(),
-				elasticsearchConnection);
+		String connectionId = elasticsearchConnection.getConnectionId();
 
-		if (oldElasticsearchConnection != null) {
-			oldElasticsearchConnection.close();
+		if (connectionId != null) {
+			_elasticsearchConnections.put(
+				connectionId, elasticsearchConnection);
 		}
 	}
 
@@ -191,19 +167,16 @@ public class ElasticsearchConnectionManager
 
 		elasticsearchConnection.close();
 
-		_elasticsearchConnections.remove(
-			elasticsearchConnection.getConnectionId());
+		String connectionId = elasticsearchConnection.getConnectionId();
+
+		if (connectionId != null) {
+			_elasticsearchConnections.remove(connectionId);
+		}
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
-
-		setOperationMode(
-			translate(_elasticsearchConfiguration.operationMode()));
-		LogUtil.setRestClientLoggerLevel(
-			_elasticsearchConfiguration.restClientLoggerLevel());
+		setConfiguration(properties);
 	}
 
 	protected synchronized void createCompanyIndexes() {
@@ -265,16 +238,19 @@ public class ElasticsearchConnectionManager
 
 	@Modified
 	protected synchronized void modified(Map<String, Object> properties) {
+		setConfiguration(properties);
+
+		createCompanyIndexes();
+	}
+
+	protected void setConfiguration(Map<String, Object> properties) {
 		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
 		setOperationMode(
 			translate(_elasticsearchConfiguration.operationMode()));
-
 		LogUtil.setRestClientLoggerLevel(
 			_elasticsearchConfiguration.restClientLoggerLevel());
-
-		createCompanyIndexes();
 	}
 
 	protected OperationMode translate(

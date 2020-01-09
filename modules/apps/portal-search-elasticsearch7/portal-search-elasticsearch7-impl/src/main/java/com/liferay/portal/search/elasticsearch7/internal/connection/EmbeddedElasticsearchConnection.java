@@ -160,6 +160,11 @@ public class EmbeddedElasticsearchConnection
 		return OperationMode.EMBEDDED;
 	}
 
+	@Override
+	public boolean isActive() {
+		return true;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(

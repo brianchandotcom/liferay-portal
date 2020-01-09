@@ -31,4 +31,6 @@ public interface ElasticsearchConnection {
 
 	public RestHighLevelClient getRestHighLevelClient();
 
+	public boolean isActive();
+
 }

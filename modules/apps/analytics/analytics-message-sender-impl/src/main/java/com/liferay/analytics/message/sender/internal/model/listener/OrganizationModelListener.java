@@ -16,6 +16,7 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -39,6 +40,15 @@ public class OrganizationModelListener
 	@Override
 	public List<String> getAttributeNames() {
 		return _attributeNames;
+	}
+
+	@Override
+	public void onAfterRemove(Organization organization)
+		throws ModelListenerException {
+
+		updateConfigurationProperties(
+			organization.getCompanyId(), "syncedOrganizationIds",
+			String.valueOf(organization.getOrganizationId()), null);
 	}
 
 	@Override

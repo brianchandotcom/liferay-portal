@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 import {deleteMessage} from '../utils/client.es';
@@ -25,16 +25,21 @@ export default ({comment, commentChange}) => {
 	};
 
 	return (
-		<div className="question-comment autofit-row autofit-padded">
+		<div className="autofit-padded autofit-row question-comment">
 			<div className="autofit-col question-reply-icon-row">
-				<ClayIcon className="question-reply-icon" symbol="reply"/>
+				<ClayIcon className="question-reply-icon" symbol="reply" />
 			</div>
 			<div className="autofit-col autofit-col-expand">
-				<hr style={{marginLeft: 0, marginRight: 0}}/>
+				<hr className="question-comment-separator" />
 				<p>
-					{comment.articleBody} - <strong>{comment.creator.name}</strong>
+					{comment.articleBody} -{' '}
+					<strong>{comment.creator.name}</strong>
 				</p>
-				<ClayButton onClick={deleteComment} displayType="unstyled">{Liferay.Language.get('delete')}</ClayButton>
+				<p>
+					<ClayButton displayType="unstyled" onClick={deleteComment}>
+						{Liferay.Language.get('delete')}
+					</ClayButton>
+				</p>
 			</div>
 		</div>
 	);

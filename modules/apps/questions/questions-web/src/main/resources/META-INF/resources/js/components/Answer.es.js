@@ -88,6 +88,7 @@ export default ({answer}) => {
 				commentsChange={_commentsChange}
 				entityId={answer.id}
 				showNewComment={showNewComment}
+				showNewCommentChange={value => setShowNewComment(value)}
 			/>
 		</>
 	);

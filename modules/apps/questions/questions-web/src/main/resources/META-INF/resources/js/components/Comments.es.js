@@ -12,19 +12,27 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
 import React, {useCallback, useState} from 'react';
 
 import {createComment} from '../utils/client.es';
 import lang from '../utils/lang.es';
 import Comment from './Comment.es';
 
-export default ({comments, commentsChange, entityId, showNewComment}) => {
+export default ({
+	comments,
+	commentsChange,
+	entityId,
+	showNewComment,
+	showNewCommentChange
+}) => {
 	const [comment, setComment] = useState('');
 
 	const postComment = () => {
 		return createComment(comment, entityId).then(data => {
 			setComment('');
-			showNewComment = false;
+			showNewCommentChange(false);
 			commentsChange([...comments, data]);
 		});
 	};
@@ -52,41 +60,59 @@ export default ({comments, commentsChange, entityId, showNewComment}) => {
 			))}
 
 			{showNewComment && (
-				<>
-					<div className="autofit-padded autofit-row">
-						<div className="autofit-col autofit-col-expand">
-							<textarea
-								onChange={event =>
-									setComment(event.target.value)
-								}
-								value={comment}
-							/>
+				<div
+					className="autofit-padded autofit-row"
+					style={{paddingLeft: '5em'}}
+				>
+					<div className="autofit-col autofit-col-expand">
+						<hr className="question-comment-separator" />
+
+						<div>
+							<ClayForm.Group className="form-group-sm">
+								<textarea
+									className="form-control"
+									onChange={event =>
+										setComment(event.target.value)
+									}
+									value={comment}
+								/>
+							</ClayForm.Group>
 						</div>
-						<div className="autofit-col">
-							<button
-								className="btn btn-primary"
-								disabled={comment.length < 15}
-								onClick={postComment}
-							>
-								{Liferay.Language.get('add-comment')}
-							</button>
+
+						<div className="autofit-row">
+							<ClayButton.Group spaced={true}>
+								<ClayButton
+									disabled={comment.length < 15}
+									displayType="primary"
+									onClick={postComment}
+									small={true}
+								>
+									{Liferay.Language.get('reply')}
+								</ClayButton>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => showNewCommentChange(false)}
+									small={true}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+							</ClayButton.Group>
+
+							<div className="autofit-col autofit-col-expand question-comment-validation">
+								{comment.length < 15 && (
+									<span>
+										{lang.sub(
+											Liferay.Language.get(
+												'x-characters-left'
+											),
+											[15 - comment.length]
+										)}
+									</span>
+								)}
+							</div>
 						</div>
 					</div>
-					<div className="autofit-padded autofit-row">
-						<div className="autofit-col">
-							{comment.length < 15 && (
-								<span>
-									{lang.sub(
-										Liferay.Language.get(
-											'enter-at-least-x-characters'
-										),
-										[15 - comment.length]
-									)}
-								</span>
-							)}
-						</div>
-					</div>
-				</>
+				</div>
 			)}
 		</div>
 	);

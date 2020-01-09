@@ -74,7 +74,7 @@ export default ({
 					<div className="autofit-col autofit-col-expand">
 						<div className="autofit-section">
 							<div className="autofit-row">
-								<div className="autofit-col-expand autofit-column">
+								<div className="autofit-col-expand">
 									<h1 className="question-headline">
 										{question.headline}
 									</h1>
@@ -124,10 +124,10 @@ export default ({
 							className="autofit-row"
 							style={{alignItems: 'center'}}
 						>
-							<div className="autofit-col-expand autofit-column">
+							<div className="autofit-col-expand">
 								<hr />
 							</div>
-							<div className="autofit-column">
+							<div>
 								<CreatorRow question={question} />
 							</div>
 						</div>
@@ -175,9 +175,7 @@ export default ({
 										disabled={!articleBody}
 										onClick={postAnswer}
 									>
-										{Liferay.Language.get(
-											'post-your-answer'
-										)}
+										{Liferay.Language.get('post-answer')}
 									</button>
 								</div>
 							</div>

@@ -207,6 +207,9 @@ public class LayoutStructure {
 			return Collections.emptyList();
 		}
 
+		layoutStructureItem.updateItemConfigJSONObject(
+			JSONUtil.put("numberOfColumns", numberOfColumns));
+
 		if (childrenItemIdsSize < numberOfColumns) {
 			for (int i = 0; i < childrenItemIdsSize; i++) {
 				String childrenItemId = childrenItemIds.get(i);

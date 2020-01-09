@@ -30,7 +30,13 @@ import templates from './Captcha.soy.js';
 class Captcha extends Component {
 	rendered() {
 		if (window.grecaptcha) {
-			window.grecaptcha.reset();
+			window.grecaptcha.ready(() => {
+				try {
+					window.grecaptcha.reset();
+				} catch (e) {
+					console.warn('Could not reset reCAPTCHA.');
+				}
+			});
 		}
 	}
 

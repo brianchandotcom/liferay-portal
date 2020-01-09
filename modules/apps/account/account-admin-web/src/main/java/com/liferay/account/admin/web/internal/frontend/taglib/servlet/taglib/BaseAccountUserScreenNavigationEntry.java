@@ -16,14 +16,21 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
+import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -70,8 +77,22 @@ public abstract class BaseAccountUserScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			AccountWebKeys.SHOW_TITLE, isShowTitle());
 
+		PortletURL redirect = portal.getControlPanelPortletURL(
+			httpServletRequest, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
+			PortletRequest.RENDER_PHASE);
+
+		redirect.setParameter(
+			"mvcPath", "/account_users_admin/edit_account_user.jsp");
+		redirect.setParameter(
+			"p_u_i_d", ParamUtil.getString(httpServletRequest, "p_u_i_d"));
+
+		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
+			httpServletRequest);
+
+		dynamicServletRequest.appendParameter("redirect", redirect.toString());
+
 		jspRenderer.renderJSP(
-			servletContext, httpServletRequest, httpServletResponse,
+			servletContext, dynamicServletRequest, httpServletResponse,
 			"/edit_user_navigation.jsp");
 	}
 
@@ -85,6 +106,9 @@ public abstract class BaseAccountUserScreenNavigationEntry
 
 	@Reference
 	protected JSPRenderer jspRenderer;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.users.admin.web)")
 	protected ServletContext servletContext;

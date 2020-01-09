@@ -64,6 +64,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface SeparatorDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
+	@DDMFormField(predefinedValue = "")
+	@Override
+	public String dataType();
+
 	@DDMFormField(
 		label = "%style", properties = "displayStyle=multiline", type = "text"
 	)

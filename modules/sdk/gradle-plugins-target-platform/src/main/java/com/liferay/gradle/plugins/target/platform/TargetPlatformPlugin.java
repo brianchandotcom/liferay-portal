@@ -23,6 +23,8 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.gradle.api.Action;
@@ -78,7 +80,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
 					TargetPlatformPluginUtil.configureTargetPlatform(
-						project, targetPlatformBomsConfiguration);
+						project, _configurationNames,
+						targetPlatformBomsConfiguration);
 				}
 
 			});
@@ -168,7 +171,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		}
 
 		TargetPlatformPluginUtil.configureTargetPlatform(
-			afterProject, targetPlatformBomsConfiguration);
+			afterProject, _configurationNames, targetPlatformBomsConfiguration);
 
 		Spec<Project> resolveSpec = targetPlatformExtension.getResolveOnlyIf();
 
@@ -205,5 +208,13 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		resolveTask.setGroup("verification");
 		resolveTask.setReportOptional(false);
 	}
+
+	private static final List<String> _configurationNames = Arrays.asList(
+		"compile", "compileClasspath", "compileInclude", "compileOnly",
+		"default", "implementation", "originalModule", "parentThemes",
+		"portalCommonCSS", "runtime", "runtimeClasspath",
+		"runtimeImplementation", "runtimeOnly", "testCompileClasspath",
+		"testCompileOnly", "testIntegration", "testImplementation",
+		"testRuntime", "testRuntimeClasspath", "testRuntimeOnly");
 
 }

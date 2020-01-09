@@ -150,7 +150,7 @@ public class TargetPlatformExtension {
 				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
 
 		TargetPlatformPluginUtil.configureTargetPlatform(
-			_project, targetPlatformBomsConfiguration);
+			_project, configurationNames, targetPlatformBomsConfiguration);
 
 		return this;
 	}

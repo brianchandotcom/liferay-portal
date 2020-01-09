@@ -14,6 +14,10 @@
 
 package com.liferay.gradle.plugins.target.platform.internal.util;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -28,11 +32,23 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 public class TargetPlatformPluginUtil {
 
 	public static void configureTargetPlatform(
-		final Project project,
+		final Project project, Iterable<?> configurationNames,
 		final Configuration targetPlatformBomsConfiguration) {
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
+
+		List<String> configurationNamesList = new ArrayList<>();
+
+		Iterator<?> iterator = configurationNames.iterator();
+
+		while (iterator.hasNext()) {
+			Object obj = iterator.next();
+
+			if (obj instanceof String) {
+				configurationNamesList.add((String)obj);
+			}
+		}
 
 		final DependencyHandler dependencyHandler = project.getDependencies();
 
@@ -43,7 +59,7 @@ public class TargetPlatformPluginUtil {
 				public void execute(Configuration configuration) {
 					String name = configuration.getName();
 
-					if (name.startsWith("targetPlatform")) {
+					if (!configurationNamesList.contains(name)) {
 						return;
 					}
 

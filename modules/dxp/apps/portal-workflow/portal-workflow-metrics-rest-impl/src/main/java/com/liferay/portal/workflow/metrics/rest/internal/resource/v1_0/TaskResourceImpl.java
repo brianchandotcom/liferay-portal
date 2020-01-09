@@ -120,9 +120,9 @@ public class TaskResourceImpl
 		boolean completed, Date dateEnd, Date dateStart, long processId,
 		Set<String> taskNames) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery filterBooleanQuery = _queries.booleanQuery();
 
-		booleanQuery.setMinimumShouldMatch(1);
+		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		BooleanQuery slaTaskResultsBooleanQuery = _queries.booleanQuery();
 
@@ -140,8 +140,9 @@ public class TaskResourceImpl
 			_createTokensBooleanQuery(
 				completed, dateEnd, dateStart, processId, taskNames));
 
-		return booleanQuery.addShouldQueryClauses(
-			slaTaskResultsBooleanQuery, tokensBooleanQuery);
+		return filterBooleanQuery.addFilterQueryClauses(
+			booleanQuery.addShouldQueryClauses(
+				slaTaskResultsBooleanQuery, tokensBooleanQuery));
 	}
 
 	private BooleanQuery _createBooleanQuery(

@@ -130,9 +130,7 @@ if (analyticsConfiguration != null) {
 				<portlet:param name="configurationScreenKey" value="synced-contacts" />
 			</liferay-portlet:renderURL>
 
-			<a href="<%= selectContactsURL.toString() %>">
-				<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-contacts" />
-			</a>
+			<aui:button disabled="<%= !connected %>" href="<%= selectContactsURL.toString() %>" primary="<%= true %>" value="select-contacts" />
 		</aui:button-row>
 	</aui:fieldset>
 
@@ -157,9 +155,7 @@ if (analyticsConfiguration != null) {
 				<portlet:param name="configurationScreenKey" value="synced-sites" />
 			</liferay-portlet:renderURL>
 
-			<a href="<%= selectSitesURL.toString() %>">
-				<aui:button disabled="<%= !connected %>" primary="<%= true %>" value="select-sites" />
-			</a>
+			<aui:button disabled="<%= !connected %>" href="<%= selectSitesURL.toString() %>" primary="<%= true %>" value="select-sites" />
 		</aui:button-row>
 	</aui:fieldset>
 </div>

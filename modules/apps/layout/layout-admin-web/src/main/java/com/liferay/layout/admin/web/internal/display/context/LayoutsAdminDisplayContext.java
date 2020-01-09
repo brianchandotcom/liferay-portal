@@ -999,6 +999,15 @@ public class LayoutsAdminDisplayContext {
 			privateLayout, _themeDisplay.getLocale());
 	}
 
+	public PortletURL getScreenNavigationPortletURL() {
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "/layout/edit_layout");
+		portletURL.setParameter("selPlid", String.valueOf(getSelPlid()));
+
+		return portletURL;
+	}
+
 	public String getSelectLayoutPageTemplateEntryURL(boolean privateLayout)
 		throws PortalException {
 

@@ -58,5 +58,5 @@ renderResponse.setTitle(selLayout.getName(locale));
 	key="<%= LayoutScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_LAYOUT %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"
-	portletURL="<%= currentURLObj %>"
+	portletURL="<%= layoutsAdminDisplayContext.getScreenNavigationPortletURL() %>"
 />

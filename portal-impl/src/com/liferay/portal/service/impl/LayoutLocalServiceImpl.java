@@ -3204,14 +3204,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutLocalService.getLayout(plid);
 
+		layout.setStatus(status);
+
 		User user = userLocalService.getUser(userId);
 
-		Date now = new Date();
-
-		layout.setStatus(status);
 		layout.setStatusByUserId(user.getUserId());
 		layout.setStatusByUserName(user.getFullName());
-		layout.setStatusDate(serviceContext.getModifiedDate(now));
+
+		layout.setStatusDate(serviceContext.getModifiedDate(new Date()));
+
+		layout = layoutPersistence.update(layout);
 
 		// Asset
 
@@ -3221,7 +3223,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layout.getStatusDate(), null, true, false);
 		}
 
-		return layoutPersistence.update(layout);
+		return layout;
 	}
 
 	@Override

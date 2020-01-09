@@ -65,19 +65,23 @@ public class ArchetyperArchetypeArtifactManager
 			try {
 				if (archetypesFile.isDirectory()) {
 					for (File file : archetypesFile.listFiles()) {
-						String bundleVersion = FileUtil.getManifestProperty(
-							file, "Bundle-Version");
+						try {
+							String bundleVersion = FileUtil.getManifestProperty(
+								file, "Bundle-Version");
 
-						String bundleSymbolicName =
-							FileUtil.getManifestProperty(
-								file, "Bundle-SymbolicName");
+							String bundleSymbolicName =
+								FileUtil.getManifestProperty(
+									file, "Bundle-SymbolicName");
 
-						if (bundleVersion.equals(version) &&
-							bundleSymbolicName.equals(artifactId)) {
+							if (bundleVersion.equals(version) &&
+								bundleSymbolicName.equals(artifactId)) {
 
-							archetypeFile = file;
+								archetypeFile = file;
 
-							break;
+								break;
+							}
+						}
+						catch (IOException ioe) {
 						}
 					}
 				}

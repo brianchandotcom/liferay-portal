@@ -41,6 +41,7 @@ function destroyEditor(element) {
  * @param {string} value Any needed content to update the element. This type
  *  may vary between processors (ex. image elements may use an object for src
  *  and alt descriptions).
+ * @param {object} config config Editable value's config object
  */
 function render(element, value) {
 	element.innerHTML = value;

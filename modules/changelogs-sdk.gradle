@@ -56,12 +56,29 @@ buildChangelogs {
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 			exec {
-				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${commitRange}", "--", "modules/sdk/${projectName}/build.gradle"
+				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "--date=short", "${commitRange}", "--", "modules/sdk/${projectName}/"
 				standardOutput = standardOutputByteArrayOutputStream
 				workingDir = projectDir.parentFile
 			}
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
+
+			Map commitDetails = [:]
+
+			Closure<Void> setCommitDetails = {
+				String gitLogLine ->
+
+				gitLogLine.eachMatch(/([a-f0-9]+):.+:((?:.*)(?<![A-Z])(?:[A-Z]+-\d+))(.*)/) {
+					all, sha, ticketNumber, commitMessage ->
+
+					if (ticketNumber.startsWith("Revert")) {
+						commitDetails = ["SHA" : sha, "TICKET-NUMBER" : "", "COMMIT-MESSAGE" : ticketNumber + commitMessage]
+					}
+					else {
+						commitDetails = ["SHA" : sha, "TICKET-NUMBER" : ticketNumber, "COMMIT-MESSAGE" : commitMessage]
+					}
+				}
+			}
 
 			String commits = ""
 			String dependencies = ""
@@ -72,30 +89,46 @@ buildChangelogs {
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				matcher = gitLogLine =~ /([a-f0-9]+):.+:[^A-Z]*([A-Z]+-\d+)(.*)/
+				setCommitDetails(gitLogLine)
 
-				if (matcher.find()) {
-					ticket = matcher.group(2)
-
-					if (matcher.group(3) ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
-						commits = commits + """\
-							|
-							|- [${ticket}]: ${matcher.group(3).trim()} (${matcher.group(1).substring(0, 10)})""".stripMargin()
-					}
+				if (commitDetails["COMMIT-MESSAGE"] ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
+					commits = commits + """\
+						|
+						|- [${commitDetails["TICKET-NUMBER"]}]: ${commitDetails["COMMIT-MESSAGE"]} (${commitDetails["SHA"].substring(0, 10)})""".stripMargin()
 				}
 
 				commits = commits.replace("  ", " ")
+			}
 
-				matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+			standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
-				if (matcher.find()) {
-					String dependencyName = matcher.group(1)
-					String dependencyVersion = matcher.group(2)
+			exec {
+				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "--date=short", "-p", "${commitRange}", "--", "modules/sdk/${projectName}/build.gradle"
+				standardOutput = standardOutputByteArrayOutputStream
+				workingDir = projectDir.parentFile
+			}
 
-					dependencies = dependencies + """\
-						|
-						|- [${ticket}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
+			gitLogOutput = standardOutputByteArrayOutputStream.toString()
+
+			gitLogOutput.eachLine {
+				String gitLogLine ->
+
+				if (gitLogLine ==~ /([a-f0-9]+):.+:(.*)/) {
+					setCommitDetails(gitLogLine)
 				}
+				else {
+					matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
+
+					if (matcher.find()) {
+						String dependencyName = matcher.group(1)
+						String dependencyVersion = matcher.group(2)
+
+						dependencies = dependencies + """\
+							|
+							|- [${commitDetails["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
+					}
+				}
+				dependencies = dependencies.replace("  ", " ")
 			}
 
 			if (changelogDescriptionsFile.exists()) {

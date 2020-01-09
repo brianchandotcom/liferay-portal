@@ -43,6 +43,10 @@ public interface ItemSelectorViewDescriptor<T> {
 
 		public String getTitle();
 
+		public default boolean isCompact() {
+			return false;
+		}
+
 	}
 
 }

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Default Dependencies
+Bundle-SymbolicName: com.liferay.default.dependencies
+Bundle-Version: 1.0.0

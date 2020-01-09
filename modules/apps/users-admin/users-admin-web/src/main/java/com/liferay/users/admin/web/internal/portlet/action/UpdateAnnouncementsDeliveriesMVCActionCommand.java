@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -67,6 +68,13 @@ public class UpdateAnnouncementsDeliveriesMVCActionCommand
 			_announcementsDeliveryService.updateDelivery(
 				user.getUserId(), announcementsDelivery.getType(),
 				announcementsDelivery.isEmail(), announcementsDelivery.isSms());
+		}
+
+		String redirect = _portal.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		if (Validator.isNotNull(redirect)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
 

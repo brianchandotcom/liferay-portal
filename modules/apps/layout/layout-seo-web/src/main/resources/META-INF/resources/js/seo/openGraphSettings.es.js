@@ -43,6 +43,9 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 	const openGraphImageAltFieldDefaultLocale = document.getElementById(
 		`${namespace}openGraphImageAlt_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
+	const openGraphImageAltLabel = document.querySelector(
+		`[for="${namespace}openGraphImageAlt"`
+	);
 
 	itemSelectorDialog.on('selectedItemChange', event => {
 		const selectedItem = event.selectedItem;
@@ -59,6 +62,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 				openGraphImageAltFieldDefaultLocale,
 				false
 			);
+			Liferay.Util.toggleDisabled(openGraphImageAltLabel, false);
 
 			openGraphPreviewImage.classList.remove('hide');
 		}
@@ -80,6 +84,7 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 		Liferay.Util.toggleDisabled(openGraphImageAltField, true);
 		Liferay.Util.toggleDisabled(openGraphImageAltFieldDefaultLocale, true);
+		Liferay.Util.toggleDisabled(openGraphImageAltLabel, true);
 
 		openGraphPreviewImage.classList.add('hide');
 	});

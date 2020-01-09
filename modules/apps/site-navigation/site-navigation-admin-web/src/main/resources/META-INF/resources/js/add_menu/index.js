@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useState} from 'react';
 
 function AddMenu({dropdownItems, portletId}) {
 	const [active, setActive] = useState(false);
@@ -57,18 +57,21 @@ function AddMenu({dropdownItems, portletId}) {
 			active={active}
 			onActiveChange={newVal => setActive(newVal)}
 			trigger={
-				<ClayButton>
+				<ClayButton
+					className={
+						'btn btn-primary dropdown-toggle nav-btn nav-btn-monospaced'
+					}
+				>
 					<ClayIcon symbol="plus" />
 				</ClayButton>
 			}
 		>
 			<ClayDropDown.ItemList>
-				{dropdownItems.map(({href, label, ...otherProps}) => (
+				{dropdownItems.map(({href, label}) => (
 					<ClayDropDown.Item
 						data-href={href}
 						key={href}
 						onClick={handleItemClick}
-						{...otherProps}
 					>
 						{label}
 					</ClayDropDown.Item>

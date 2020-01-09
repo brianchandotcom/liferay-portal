@@ -38,12 +38,15 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				</li>
 				<li class="nav-item">
 					<div class="dropdown">
-						<button class="dropdown-toggle btn nav-btn nav-btn-monospaced btn-primary" type="button">
-							<clay:icon symbol="plus" />
+						<button class="btn btn-primary dropdown-toggle nav-btn nav-btn-monospaced" type="button">
+							<clay:icon
+								symbol="plus"
+							/>
 						</button>
 
 						<%
 						Map<String, Object> data = new HashMap<>();
+
 						data.put("dropdownItems", siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems());
 						%>
 
@@ -102,21 +105,28 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 <c:if test="<%= siteNavigationAdminDisplayContext.hasUpdatePermission() %>">
 	<div>
-
 		<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent" var="editSiteNavigationMenuItemParentURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:actionURL>
 
-		<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="editSiteNavigationMenuItemURL">
+		<portlet:renderURL var="editSiteNavigationMenuItemURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 			<portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" />
+		</portlet:renderURL>
+
+		<portlet:renderURL var="editSiteNavigationMenuSettingsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+			<portlet:param name="mvcPath" value="/site_navigation_menu_settings.jsp" />
 		</portlet:renderURL>
 
 		<%
 		Map<String, Object> data = new HashMap<>();
-		data.put("editSiteNavigationMenuItemURL", editSiteNavigationMenuItemURL.toString());
+
 		data.put("editSiteNavigationMenuItemParentURL", editSiteNavigationMenuItemParentURL.toString());
-		data.put("id", renderResponse.getNamespace() + "sidebar" );
+		data.put("editSiteNavigationMenuItemURL", editSiteNavigationMenuItemURL.toString());
+		data.put("editSiteNavigationMenuSettingsURL", editSiteNavigationMenuSettingsURL.toString());
+		data.put("id", renderResponse.getNamespace() + "sidebar");
 		data.put("redirect", currentURL);
+		data.put("siteNavigationMenuId", siteNavigationAdminDisplayContext.getSiteNavigationMenuId());
+		data.put("siteNavigationMenuName", siteNavigationAdminDisplayContext.getSiteNavigationMenuName());
 		%>
 
 		<react:component

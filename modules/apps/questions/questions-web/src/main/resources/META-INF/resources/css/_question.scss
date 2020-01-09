@@ -33,10 +33,20 @@
 }
 
 .question-reply-icon-row {
-	margin-top: 0.5rem;
+	margin-top: 1.5rem;
 }
 
 .question-reply-icon {
+	color: $secondary-l2;
 	transform: rotate(-180deg);
-	color: $secondary-l2
+}
+
+.question-comment-separator {
+	margin: 0 0 1rem;
+}
+
+.question-comment-validation {
+	& span {
+		align-self: flex-end;
+	}
 }

@@ -36,37 +36,40 @@ export default () => {
 			<div className="container">
 				<div className="row">
 					{keywords.items &&
-					 keywords.items.map(keyword => (
-						 <div className="col-md-3 question-keywords" key={keyword.id}>
-							 <ClayCardWithNavigation>
-								 <ClayCard.Body>
-									 <ClayCard.Description displayType="title">
-										 #{keyword.name}
-									 </ClayCard.Description>
-									 <ClayCard.Description displayType="text">
-										 {lang.sub(
-											 Liferay.Language.get(
-												 'used-x-times'
-											 ),
-											 [keyword.keywordUsageCount]
-										 )}
-									 </ClayCard.Description>
-									 <ClayCard.Description displayType="text">
-										 {lang.sub(
-											 Liferay.Language.get(
-												 'latest-usage'
-											 ),
-											 [
-												 dateToInternationalHuman(
-													 keyword.dateCreated
-												 )
-											 ]
-										 )}
-									 </ClayCard.Description>
-								 </ClayCard.Body>
-							 </ClayCardWithNavigation>
-						 </div>
-					 ))}
+						keywords.items.map(keyword => (
+							<div
+								className="col-md-3 question-keywords"
+								key={keyword.id}
+							>
+								<ClayCardWithNavigation>
+									<ClayCard.Body>
+										<ClayCard.Description displayType="title">
+											#{keyword.name}
+										</ClayCard.Description>
+										<ClayCard.Description displayType="text">
+											{lang.sub(
+												Liferay.Language.get(
+													'used-x-times'
+												),
+												[keyword.keywordUsageCount]
+											)}
+										</ClayCard.Description>
+										<ClayCard.Description displayType="text">
+											{lang.sub(
+												Liferay.Language.get(
+													'latest-usage'
+												),
+												[
+													dateToInternationalHuman(
+														keyword.dateCreated
+													)
+												]
+											)}
+										</ClayCard.Description>
+									</ClayCard.Body>
+								</ClayCardWithNavigation>
+							</div>
+						))}
 				</div>
 			</div>
 			{keywords.lastPage > 1 && (

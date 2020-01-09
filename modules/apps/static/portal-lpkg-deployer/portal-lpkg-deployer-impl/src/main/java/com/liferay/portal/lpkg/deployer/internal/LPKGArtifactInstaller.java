@@ -75,6 +75,30 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 			return;
 		}
 
+		_install(file, properties);
+	}
+
+	@Override
+	public void uninstall(File file) throws Exception {
+		Bundle bundle = _bundleContext.getBundle(
+			LPKGLocationUtil.getLPKGLocation(file));
+
+		if (bundle != null) {
+			bundle.uninstall();
+		}
+	}
+
+	@Override
+	public void update(File file) throws Exception {
+		_update(file, _readMarketplaceProperties(file));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private void _install(File file, Properties properties) throws Exception {
 		String canonicalPath = LPKGLocationUtil.getLPKGLocation(file);
 
 		Bundle existingBundle = _bundleContext.getBundle(canonicalPath);
@@ -113,26 +137,6 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 					be);
 			}
 		}
-	}
-
-	@Override
-	public void uninstall(File file) throws Exception {
-		Bundle bundle = _bundleContext.getBundle(
-			LPKGLocationUtil.getLPKGLocation(file));
-
-		if (bundle != null) {
-			bundle.uninstall();
-		}
-	}
-
-	@Override
-	public void update(File file) throws Exception {
-		_update(file, _readMarketplaceProperties(file));
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
 	}
 
 	private void _logRestartRequired(String canonicalPath) {

@@ -16,6 +16,7 @@ package com.liferay.analytics.settings.internal.configuration;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,7 +92,7 @@ public class AnalyticsConfigurationTrackerImpl
 
 		try {
 			Configuration configuration = _configurationAdmin.getConfiguration(
-				pid, "?");
+				pid, StringPool.QUESTION);
 
 			return configuration.getProperties();
 		}

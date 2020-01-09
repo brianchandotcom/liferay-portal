@@ -16,6 +16,7 @@ package com.liferay.analytics.settings.web.internal.portlet.action;
 
 import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -121,7 +122,8 @@ public class EditSyncedSitesMVCActionCommand
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 		unicodeProperties.setProperty(
-			"liferayAnalyticsGroupIds", StringUtil.merge(syncedGroupIds, ","));
+			"liferayAnalyticsGroupIds",
+			StringUtil.merge(syncedGroupIds, StringPool.COMMA));
 
 		_companyService.updatePreferences(
 			themeDisplay.getCompanyId(), unicodeProperties);

@@ -70,7 +70,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 		<label><liferay-ui:message key="preview" /></label>
 
 		<div class="preview-seo preview-seo-og" dir="ltr">
-			<div class="aspect-ratio aspect-ratio-191-to-100 bg-light preview-seo-image">
+			<div class="aspect-ratio aspect-ratio-191-to-100 bg-light mb-0 preview-seo-image">
 				<div class="preview-seo-placeholder" id="<portlet:namespace />openGraphPreviewPlaceholder">
 					<liferay-ui:icon
 						icon="picture"

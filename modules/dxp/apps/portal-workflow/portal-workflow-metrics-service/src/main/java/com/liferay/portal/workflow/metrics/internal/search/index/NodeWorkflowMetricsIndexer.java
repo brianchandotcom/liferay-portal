@@ -184,6 +184,7 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 		document.addKeyword("completed", false);
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", 0);
+		document.addKeyword("instanceCompleted", false);
 		document.addKeyword("processId", processId);
 		document.addKeyword("taskId", taskId);
 		document.addKeyword("taskName", taskName);

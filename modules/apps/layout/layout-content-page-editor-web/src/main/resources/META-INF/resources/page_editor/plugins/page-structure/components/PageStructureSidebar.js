@@ -89,7 +89,7 @@ export default function PageStructureSidebar() {
 				{Liferay.Language.get('page-structure')}
 			</SidebarPanelHeader>
 
-			<div className="page-editor__page-structure px-3">
+			<div className="page-editor__page-structure px-4">
 				<Treeview NodeComponent={StructureTreeNode} nodes={nodes} />
 			</div>
 		</>

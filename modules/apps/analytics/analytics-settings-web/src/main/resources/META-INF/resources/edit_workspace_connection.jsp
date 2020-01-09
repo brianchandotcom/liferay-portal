@@ -74,13 +74,36 @@ if (analyticsConfiguration != null) {
 		</c:if>
 
 		<aui:fieldset>
-			<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" value="<%= token %>" />
+			<c:if test="<%= !connected %>">
+				<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" value="<%= token %>" wrapperCssClass="mb-1" />
 
-			<div class="form-text">
-				<liferay-ui:message key="analytics-cloud-token-help" />
-			</div>
+				<div class="form-text">
+					<liferay-ui:message key="analytics-cloud-token-help" />
+				</div>
+			</c:if>
 
-			<aui:button-row>
+			<c:if test="<%= connected %>">
+				<label class="control-label d-block mb-2">
+					<liferay-ui:message key="analytics-cloud-token" />
+				</label>
+
+				<label class="control-label d-block">
+					<liferay-ui:message key="your-dxp-instance-is-connected-to-analytics-cloud" />
+				</label>
+			</c:if>
+
+			<aui:button-row cssClass="mt-2">
+				<c:if test="<%= connected %>">
+					<a class="btn btn-primary mr-2" href="<%= analyticsConfiguration.liferayAnalyticsURL() %>" target="_blank">
+						<span class="lfr-btn-label"><liferay-ui:message key="go-to-workspace" /></span>
+
+						<liferay-ui:icon
+							icon="shortcut"
+							markupView="lexicon"
+						/>
+					</a>
+				</c:if>
+
 				<aui:button primary="<%= connected ? false : true %>" type="submit" value='<%= connected ? "disconnect" : "connect" %>' />
 			</aui:button-row>
 		</aui:fieldset>

@@ -588,12 +588,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				List::stream
 			).map(
 				SearchHit::getSourcesMap
-			).filter(
-				sourcesMap -> GetterUtil.getString(
-					sourcesMap.get("uid")
-				).startsWith(
-					"WorkflowMetricsInstance"
-				)
 			).findFirst(
 			).map(
 				this::_createInstance

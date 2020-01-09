@@ -18,19 +18,21 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import {globalEval} from 'metal-dom';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 
 import SiteNavigationMenuEditor from './SiteNavigationMenuEditor';
 
 function ContextualSidebar({
+	editSiteNavigationMenuItemParentURL,
 	editSiteNavigationMenuItemURL,
 	editSiteNavigationMenuSettingsURL,
 	portletId,
 	redirect,
-	siteNavigationMenuEditor,
 	siteNavigationMenuId,
 	siteNavigationMenuName
 }) {
+	const siteNavigationMenuEditorRef = useRef();
+
 	const [body, setBody] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [title, setTitle] = useState('');
@@ -61,7 +63,14 @@ function ContextualSidebar({
 	);
 
 	useEffect(() => {
-		const handle = siteNavigationMenuEditor.on(
+		if (!siteNavigationMenuEditorRef.current) {
+			siteNavigationMenuEditorRef.current = new SiteNavigationMenuEditor({
+				editSiteNavigationMenuItemParentURL,
+				namespace
+			});
+		}
+
+		const handle = siteNavigationMenuEditorRef.current.on(
 			'selectedMenuItemChanged',
 			event => {
 				const {siteNavigationMenuItemId, title} = event.newVal.dataset;
@@ -73,12 +82,16 @@ function ContextualSidebar({
 			}
 		);
 
-		return () => handle.removeListener();
+		return () => {
+			handle.removeListener();
+			siteNavigationMenuEditorRef.current.dispose();
+		};
 	}, [
+		editSiteNavigationMenuItemParentURL,
 		editSiteNavigationMenuItemURL,
+		namespace,
 		openSidebar,
-		redirect,
-		siteNavigationMenuEditor
+		redirect
 	]);
 
 	useEffect(() => {
@@ -181,16 +194,5 @@ class SidebarBody extends React.Component {
 }
 
 export default function(props) {
-	const siteNavigationMenuEditor = new SiteNavigationMenuEditor({
-		editSiteNavigationMenuItemParentURL:
-			props.editSiteNavigationMenuItemParentURL,
-		namespace: Liferay.Util.getPortletNamespace(props.portletId)
-	});
-
-	return (
-		<ContextualSidebar
-			{...props}
-			siteNavigationMenuEditor={siteNavigationMenuEditor}
-		/>
-	);
+	return <ContextualSidebar {...props} />;
 }

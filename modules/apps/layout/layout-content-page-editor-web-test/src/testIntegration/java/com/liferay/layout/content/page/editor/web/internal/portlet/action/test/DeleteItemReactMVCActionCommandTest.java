@@ -100,7 +100,11 @@ public class DeleteItemReactMVCActionCommandTest {
 			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
-		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
+			"items");
 
 		Assert.assertEquals(1, itemsJSONObject.length());
 
@@ -138,7 +142,11 @@ public class DeleteItemReactMVCActionCommandTest {
 			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
-		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
+			"items");
 
 		Assert.assertEquals(1, itemsJSONObject.length());
 
@@ -180,7 +188,11 @@ public class DeleteItemReactMVCActionCommandTest {
 			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
-		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
+			"items");
 
 		Assert.assertEquals(1, itemsJSONObject.length());
 
@@ -237,7 +249,11 @@ public class DeleteItemReactMVCActionCommandTest {
 			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
-		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
+			"items");
 
 		Assert.assertEquals(1, itemsJSONObject.length());
 
@@ -295,7 +311,11 @@ public class DeleteItemReactMVCActionCommandTest {
 			_group.getCompanyId(), _group.getGroupId(), "newItemId",
 			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 
-		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
+			"items");
 
 		Assert.assertEquals(1, itemsJSONObject.length());
 

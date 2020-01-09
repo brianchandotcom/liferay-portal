@@ -28,7 +28,7 @@ import {StoreContext} from '../../../../../../src/main/resources/META-INF/resour
 import AppContext from '../../../../../../src/main/resources/META-INF/resources/page_editor/core/AppContext';
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
-	EDIT_SEGMENTS_EXPERIENCE,
+	UPDATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
 import ExperienceToolbarSection from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/components/ExperienceToolbarSection';
@@ -474,7 +474,7 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
-				type: EDIT_SEGMENTS_EXPERIENCE
+				type: UPDATE_SEGMENTS_EXPERIENCE
 			})
 		);
 	});

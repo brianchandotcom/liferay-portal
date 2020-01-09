@@ -31,8 +31,12 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.nio.charset.Charset;
 
@@ -149,7 +153,8 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	}
 
 	protected void updateConfigurationProperties(
-		long companyId, String configurationPropertyName, String modelId) {
+		long companyId, String configurationPropertyName, String modelId,
+		String preferencePropertyName) {
 
 		Dictionary<String, Object> configurationProperties =
 			analyticsConfigurationTracker.getAnalyticsConfigurationProperties(
@@ -166,8 +171,27 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			return;
 		}
 
-		configurationProperties.put(
-			configurationPropertyName, ArrayUtil.remove(ids, modelId));
+		ids = ArrayUtil.remove(ids, modelId);
+
+		if (Validator.isNotNull(preferencePropertyName)) {
+			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+			unicodeProperties.setProperty(
+				preferencePropertyName, StringUtil.merge(ids, ","));
+
+			try {
+				companyService.updatePreferences(companyId, unicodeProperties);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to update preferences for company ID " +
+							companyId);
+				}
+			}
+		}
+
+		configurationProperties.put(configurationPropertyName, ids);
 
 		try {
 			configurationProvider.saveCompanyConfiguration(
@@ -188,6 +212,9 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	@Reference
 	protected AnalyticsMessageLocalService analyticsMessageLocalService;
+
+	@Reference
+	protected CompanyService companyService;
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;

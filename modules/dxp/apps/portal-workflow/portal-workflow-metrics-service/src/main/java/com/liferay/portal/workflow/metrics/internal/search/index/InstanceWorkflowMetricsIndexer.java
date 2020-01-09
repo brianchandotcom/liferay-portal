@@ -163,7 +163,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 							}
 						}
 
-						addKeyword("instanceCompleted", true);
+						addKeyword("instanceCompleted", Boolean.TRUE);
 						addKeyword(
 							Field.UID, documentImpl.getString(Field.UID));
 					}
@@ -173,7 +173,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
 				documentImpl -> new DocumentImpl() {
 					{
-						addKeyword("instanceCompleted", true);
+						addKeyword("instanceCompleted", Boolean.TRUE);
 						addKeyword(
 							Field.UID, documentImpl.getString(Field.UID));
 					}
@@ -183,7 +183,7 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 			_tokenWorkflowMetricsIndexer.updateDocuments(
 				documentImpl -> new DocumentImpl() {
 					{
-						addKeyword("instanceCompleted", true);
+						addKeyword("instanceCompleted", Boolean.TRUE);
 						addKeyword(
 							Field.UID, documentImpl.getString(Field.UID));
 					}

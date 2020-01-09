@@ -93,10 +93,6 @@ public class TreePathUtil {
 			PropsUtil.get(
 				PropsKeys.MODEL_TREE_REBUILD_QUERY_RESULTS_BATCH_SIZE));
 
-	private static final boolean _VERIFY_DATABASE_TRANSACTIONS_DISABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.VERIFY_DATABASE_TRANSACTIONS_DISABLED));
-
 	private static class RecursiveRebuildTreeTask extends RecursiveAction {
 
 		@Override

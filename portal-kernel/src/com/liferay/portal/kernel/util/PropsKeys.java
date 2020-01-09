@@ -3322,9 +3322,6 @@ public interface PropsKeys {
 	public static final String VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED =
 		"value.object.mvcc.entity.cache.enabled";
 
-	public static final String VERIFY_DATABASE_TRANSACTIONS_DISABLED =
-		"verify.database.transactions.disabled";
-
 	public static final String VERIFY_PATCH_LEVELS_DISABLED =
 		"verify.patch.levels.disabled";
 

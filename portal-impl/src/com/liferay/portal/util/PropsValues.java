@@ -2947,10 +2947,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED));
 
-	public static final boolean VERIFY_DATABASE_TRANSACTIONS_DISABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.VERIFY_DATABASE_TRANSACTIONS_DISABLED));
-
 	public static final boolean VERIFY_PATCH_LEVELS_DISABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.VERIFY_PATCH_LEVELS_DISABLED));

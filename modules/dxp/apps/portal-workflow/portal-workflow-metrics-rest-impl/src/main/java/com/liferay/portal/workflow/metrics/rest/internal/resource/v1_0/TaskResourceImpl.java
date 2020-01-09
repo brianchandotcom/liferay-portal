@@ -307,6 +307,7 @@ public class TaskResourceImpl
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("completed", completed),
 			_queries.term("deleted", Boolean.FALSE),
+			_queries.term("instanceCompleted", completed),
 			_queries.term("processId", processId));
 	}
 

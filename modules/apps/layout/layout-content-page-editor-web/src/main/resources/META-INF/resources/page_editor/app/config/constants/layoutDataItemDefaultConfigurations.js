@@ -16,7 +16,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from './layoutDataItemTypes';
 
 const ROW_INITIAL_VALUES = {
 	gutters: true,
-	numberOfColumns: 0,
+	numberOfColumns: 3,
 	paddingHorizontal: 3,
 	paddingVertical: 3,
 	type: 'fixed'

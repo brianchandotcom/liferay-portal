@@ -15,7 +15,7 @@
 package com.liferay.app.builder.rest.client.dto.v1_0;
 
 import com.liferay.app.builder.rest.client.function.UnsafeSupplier;
-import com.liferay.app.builder.rest.client.serdes.v1_0.DataModelPermissionSerDes;
+import com.liferay.app.builder.rest.client.serdes.v1_0.AppModelPermissionSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DataModelPermission {
+public class AppModelPermission {
 
 	public String[] getActionIds() {
 		return actionIds;
@@ -76,13 +76,13 @@ public class DataModelPermission {
 			return true;
 		}
 
-		if (!(object instanceof DataModelPermission)) {
+		if (!(object instanceof AppModelPermission)) {
 			return false;
 		}
 
-		DataModelPermission dataModelPermission = (DataModelPermission)object;
+		AppModelPermission appModelPermission = (AppModelPermission)object;
 
-		return Objects.equals(toString(), dataModelPermission.toString());
+		return Objects.equals(toString(), appModelPermission.toString());
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class DataModelPermission {
 	}
 
 	public String toString() {
-		return DataModelPermissionSerDes.toJSON(this);
+		return AppModelPermissionSerDes.toJSON(this);
 	}
 
 }

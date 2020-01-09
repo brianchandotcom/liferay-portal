@@ -17,20 +17,20 @@
 							"fieldNamespace": "ddm",
 							"indexType": "keyword",
 							"label": {
-								"[$LOCALE_DEFAULT$]": "Name"
+								"[$LOCALE_DEFAULT$]": "Property"
 							},
 							"localizable": false,
-							"name": "name",
+							"name": "property",
 							"nestedFields": [
 								{
 									"dataType": "string",
 									"fieldNamespace": "ddm",
 									"indexType": "keyword",
 									"label": {
-										"[$LOCALE_DEFAULT$]": "Value"
+										"[$LOCALE_DEFAULT$]": "Content"
 									},
 									"localizable": true,
-									"name": "value",
+									"name": "content",
 									"predefinedValue": {
 										"[$LOCALE_DEFAULT$]": ""
 									},
@@ -75,7 +75,7 @@
 								{
 									"columns": [
 										{
-											"fieldNames": ["name", "value"],
+											"fieldNames": ["property", "content"],
 											"size": 12
 										}
 									]

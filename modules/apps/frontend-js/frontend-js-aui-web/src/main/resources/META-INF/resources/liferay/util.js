@@ -1144,15 +1144,29 @@
 		},
 
 		selectFolder(folderData, namespace) {
-			$('#' + namespace + folderData.idString).val(folderData.idValue);
+			const folderDataElement = document.getElementById(
+				namespace + folderData.idString
+			);
 
-			var name = Liferay.Util.unescape(folderData.nameValue);
+			if (folderDataElement) {
+				folderDataElement.value = folderData.idValue;
+			}
 
-			$('#' + namespace + folderData.nameString).val(name);
+			const folderNameElement = document.getElementById(
+				namespace + folderData.nameString
+			);
 
-			var button = $('#' + namespace + 'removeFolderButton');
+			if (folderNameElement) {
+				folderNameElement.value = this.unescape(folderData.nameValue);
+			}
 
-			Liferay.Util.toggleDisabled(button, false);
+			const removeFolderButton = document.getElementById(
+				`${namespace}removeFolderButton`
+			);
+
+			if (removeFolderButton) {
+				this.toggleDisabled(removeFolderButton, false);
+			}
 		},
 
 		setCursorPosition(el, position) {

@@ -24,6 +24,14 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
+	containerConfiguration: {
+		icon: 'cog',
+		id: 'container_configuration',
+		panelId: 'container_configuration',
+		title: Liferay.Language.get('container-configuration'),
+		type: 'panel'
+	},
+
 	duplicateFragment: {
 		icon: 'paste',
 		id: 'duplicate_fragment',
@@ -92,14 +100,6 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		id: 'row_configuration',
 		panelId: 'row_configuration',
 		title: Liferay.Language.get('row'),
-		type: 'panel'
-	},
-
-	spacing: {
-		icon: 'table',
-		id: 'spacing',
-		panelId: 'spacing',
-		title: Liferay.Language.get('spacing'),
 		type: 'panel'
 	}
 };

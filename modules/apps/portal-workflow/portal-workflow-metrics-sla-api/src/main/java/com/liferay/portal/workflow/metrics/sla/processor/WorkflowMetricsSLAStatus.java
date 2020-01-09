@@ -19,6 +19,6 @@ package com.liferay.portal.workflow.metrics.sla.processor;
  */
 public enum WorkflowMetricsSLAStatus {
 
-	COMPLETED, EXPIRED, NEW, PAUSED, RUNNING, STOPPED
+	COMPLETED, NEW, PAUSED, RUNNING, STOPPED
 
 }

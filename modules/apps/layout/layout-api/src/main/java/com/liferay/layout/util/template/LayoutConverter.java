@@ -26,7 +26,11 @@ public interface LayoutConverter {
 
 	public LayoutData convert(Layout layout);
 
-	public LayoutConversionResult convert(Layout layout, Locale locale);
+	public default LayoutConversionResult convert(
+		Layout layout, Locale locale) {
+
+		return LayoutConversionResult.of(convert(layout), new String[0]);
+	}
 
 	public default boolean isConvertible(Layout layout) {
 		if (LayoutConstants.TYPE_CONTENT.equals(layout.getType())) {

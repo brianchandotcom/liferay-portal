@@ -12,20 +12,42 @@
  * details.
  */
 
-function disableEditor(element) {
-	element.contenteditable = false;
+/**
+ * @param {HTMLElement} element HTMLElement where the editor
+ *  should be applied to.
+ * @param {function} changeCallback Function that should be called whenever the
+ *  editor produces a change. It must receive a string with
+ *  the new editable value.
+ * @param {function} destroyCallback Function that should be called if
+ *  the editor is destroyed for any internal reason. This function does NOT need
+ *  to be called if the editor is destroyed with destroyEditor function.
+ * @param {object} config Application configuration object.
+ */
+function createEditor(element) {
+	element.setAttribute('contenteditable', 'true');
+	element.contentEditable = 'true';
 }
 
-function enableEditor(element) {
-	element.contenteditable = true;
+/**
+ * @param {HTMLElement} element HTMLElement where the editor has been created.
+ */
+function destroyEditor(element) {
+	element.removeAttribute('contenteditable');
 }
 
+/**
+ * @param {HTMLElement} element HTMLElement that should be mutated with the
+ *  given value.
+ * @param {string} value Any needed content to update the element. This type
+ *  may vary between processors (ex. image elements may use an object for src
+ *  and alt descriptions).
+ */
 function render(element, value) {
 	element.innerHTML = value;
 }
 
 export default {
-	disableEditor,
-	enableEditor,
+	createEditor,
+	destroyEditor,
 	render
 };

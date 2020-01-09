@@ -66,7 +66,7 @@ public class OpenAPIResourceImpl {
 		{
 			add(AppResourceImpl.class);
 
-			add(DataModelPermissionResourceImpl.class);
+			add(AppModelPermissionResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

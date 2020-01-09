@@ -14,10 +14,10 @@
 
 package com.liferay.app.builder.rest.client.resource.v1_0;
 
-import com.liferay.app.builder.rest.client.dto.v1_0.DataModelPermission;
+import com.liferay.app.builder.rest.client.dto.v1_0.AppModelPermission;
 import com.liferay.app.builder.rest.client.http.HttpInvoker;
 import com.liferay.app.builder.rest.client.pagination.Page;
-import com.liferay.app.builder.rest.client.serdes.v1_0.DataModelPermissionSerDes;
+import com.liferay.app.builder.rest.client.serdes.v1_0.AppModelPermissionSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -33,26 +33,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface DataModelPermissionResource {
+public interface AppModelPermissionResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<DataModelPermission> getDataModelPermissionsPage(
+	public Page<AppModelPermission> getAppModelPermissionsPage(String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getAppModelPermissionsPageHttpResponse(
 			String roleNames)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getDataModelPermissionsPageHttpResponse(
-			String roleNames)
+	public void putAppModelPermission(AppModelPermission[] appModelPermissions)
 		throws Exception;
 
-	public void putDataModelPermission(
-			DataModelPermission[] dataModelPermissions)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse putDataModelPermissionHttpResponse(
-			DataModelPermission[] dataModelPermissions)
+	public HttpInvoker.HttpResponse putAppModelPermissionHttpResponse(
+			AppModelPermission[] appModelPermissions)
 		throws Exception;
 
 	public static class Builder {
@@ -64,8 +62,8 @@ public interface DataModelPermissionResource {
 			return this;
 		}
 
-		public DataModelPermissionResource build() {
-			return new DataModelPermissionResourceImpl(this);
+		public AppModelPermissionResource build() {
+			return new AppModelPermissionResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -108,15 +106,15 @@ public interface DataModelPermissionResource {
 
 	}
 
-	public static class DataModelPermissionResourceImpl
-		implements DataModelPermissionResource {
+	public static class AppModelPermissionResourceImpl
+		implements AppModelPermissionResource {
 
-		public Page<DataModelPermission> getDataModelPermissionsPage(
+		public Page<AppModelPermission> getAppModelPermissionsPage(
 				String roleNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDataModelPermissionsPageHttpResponse(roleNames);
+				getAppModelPermissionsPageHttpResponse(roleNames);
 
 			String content = httpResponse.getContent();
 
@@ -126,10 +124,10 @@ public interface DataModelPermissionResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			return Page.of(content, DataModelPermissionSerDes::toDTO);
+			return Page.of(content, AppModelPermissionSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getDataModelPermissionsPageHttpResponse(
+		public HttpInvoker.HttpResponse getAppModelPermissionsPageHttpResponse(
 				String roleNames)
 			throws Exception {
 
@@ -161,7 +159,7 @@ public interface DataModelPermissionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder/v1.0/data-model-permissions");
+						"/o/app-builder/v1.0/app-model-permissions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -169,12 +167,12 @@ public interface DataModelPermissionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putDataModelPermission(
-				DataModelPermission[] dataModelPermissions)
+		public void putAppModelPermission(
+				AppModelPermission[] appModelPermissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putDataModelPermissionHttpResponse(dataModelPermissions);
+				putAppModelPermissionHttpResponse(appModelPermissions);
 
 			String content = httpResponse.getContent();
 
@@ -185,15 +183,15 @@ public interface DataModelPermissionResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 		}
 
-		public HttpInvoker.HttpResponse putDataModelPermissionHttpResponse(
-				DataModelPermission[] dataModelPermissions)
+		public HttpInvoker.HttpResponse putAppModelPermissionHttpResponse(
+				AppModelPermission[] appModelPermissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
 				Stream.of(
-					dataModelPermissions
+					appModelPermissions
 				).map(
 					value -> String.valueOf(value)
 				).collect(
@@ -223,7 +221,7 @@ public interface DataModelPermissionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder/v1.0/data-model-permissions");
+						"/o/app-builder/v1.0/app-model-permissions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -231,12 +229,12 @@ public interface DataModelPermissionResource {
 			return httpInvoker.invoke();
 		}
 
-		private DataModelPermissionResourceImpl(Builder builder) {
+		private AppModelPermissionResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			DataModelPermissionResource.class.getName());
+			AppModelPermissionResource.class.getName());
 
 		private Builder _builder;
 

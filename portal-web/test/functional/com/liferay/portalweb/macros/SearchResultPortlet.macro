@@ -101,7 +101,7 @@ definition {
 
 		if (isSet(entryDate)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
+				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC_DATE",
 				value1 = "${entryDate}");
 		}
 

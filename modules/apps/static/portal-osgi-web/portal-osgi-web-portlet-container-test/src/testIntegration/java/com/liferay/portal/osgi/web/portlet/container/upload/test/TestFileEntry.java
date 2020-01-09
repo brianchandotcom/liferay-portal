@@ -296,21 +296,6 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
-	public long getVersionUserId() {
-		return 0;
-	}
-
-	@Override
-	public String getVersionUserName() {
-		return RandomTestUtil.randomString();
-	}
-
-	@Override
-	public String getVersionUserUuid() {
-		return RandomTestUtil.randomString();
-	}
-
-	@Override
 	public boolean hasLock() {
 		return false;
 	}

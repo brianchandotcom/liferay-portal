@@ -54,13 +54,6 @@ const isTranslated = (editableValue, languageId, segmentExperienceId) =>
 	(segmentExperienceId in editableValue &&
 		editableValue[segmentExperienceId][languageId]);
 
-const SEGMENT_EXPERIENCE_ID_PREFIX = 'segments-experience-id-';
-
-const prefixSegmentsExperienceId = segmentsExperienceId =>
-	segmentsExperienceId === undefined || segmentsExperienceId === ''
-		? undefined
-		: SEGMENT_EXPERIENCE_ID_PREFIX + segmentsExperienceId;
-
 const getTranslationStatus = ({
 	editableValuesLength,
 	isDefault,
@@ -152,11 +145,7 @@ export default function Translation({
 		}).map(languageId => ({
 			languageId,
 			values: editableValues.filter(editableValue =>
-				isTranslated(
-					editableValue,
-					languageId,
-					prefixSegmentsExperienceId(segmentsExperienceId, null)
-				)
+				isTranslated(editableValue, languageId, segmentsExperienceId)
 			)
 		}));
 	}, [

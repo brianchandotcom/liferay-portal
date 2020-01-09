@@ -156,7 +156,7 @@ public class SoyPortletRequestFactory {
 		throws Exception {
 
 		return RenderResponseFactory.create(
-			renderRequest, PortalUtil.getHttpServletResponse(resourceResponse));
+			PortalUtil.getHttpServletResponse(resourceResponse), renderRequest);
 	}
 
 	private final Portlet _portlet;

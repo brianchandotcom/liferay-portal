@@ -148,7 +148,7 @@ LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(request,
 
 BufferCacheServletResponse bufferCacheServletResponse = new BufferCacheServletResponse(response);
 
-LiferayRenderResponse liferayRenderResponse = RenderResponseFactory.create(liferayRenderRequest, bufferCacheServletResponse);
+LiferayRenderResponse liferayRenderResponse = RenderResponseFactory.create(bufferCacheServletResponse, liferayRenderRequest);
 
 if (stateMin) {
 	liferayRenderResponse.setUseDefaultTemplate(true);

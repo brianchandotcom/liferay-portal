@@ -40,7 +40,6 @@ import org.apache.felix.fileinstall.ArtifactInstaller;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.Version;
@@ -117,23 +116,18 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 			return;
 		}
 
-		for (Bundle bundle : _lpkgDeployer.deploy(_bundleContext, file)) {
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
+		List<Bundle> bundles = _lpkgDeployer.deploy(_bundleContext, file);
 
-			String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-			if (fragmentHost != null) {
-				continue;
-			}
+		if (!bundles.isEmpty()) {
+			Bundle lpkgBundle = bundles.get(0);
 
 			try {
-				bundle.start();
+				lpkgBundle.start();
 			}
 			catch (BundleException be) {
 				_log.error(
 					StringBundler.concat(
-						"Unable to start ", bundle, " for ", file),
+						"Unable to start ", lpkgBundle, " for ", file),
 					be);
 			}
 		}

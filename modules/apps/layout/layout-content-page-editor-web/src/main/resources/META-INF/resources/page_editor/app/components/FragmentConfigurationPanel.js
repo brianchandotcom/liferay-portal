@@ -20,10 +20,9 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../config/constants/fragmentConfigurationFieldTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
+import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
 import {StoreContext} from '../store/index';
 import updateFragmentConfiguration from '../thunks/updateFragmentConfiguration';
-
-const SEGMENT_EXPERIENCE_ID_PREFIX = 'segments-experience-id-';
 
 const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 	return (
@@ -53,12 +52,13 @@ const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 export const FragmentConfigurationPanel = ({item}) => {
 	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
-	const {fragmentEntryLinks, segmentsExperienceId} = useContext(StoreContext);
+	const store = useContext(StoreContext);
+
+	const {fragmentEntryLinks} = useContext(StoreContext);
 
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
-	const prefixedSegmentsExperienceId =
-		SEGMENT_EXPERIENCE_ID_PREFIX + segmentsExperienceId;
+	const segmentsExperienceId = selectPrefixedSegmentsExperienceId(store);
 
 	const configuration = fragmentEntryLink.configuration;
 	const defaultConfigurationValues =
@@ -68,7 +68,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 		...defaultConfigurationValues,
 		...fragmentEntryLink.editableValues[
 			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		][prefixedSegmentsExperienceId]
+		][segmentsExperienceId]
 	};
 
 	const onRestoreButtonClick = () => {
@@ -77,7 +77,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 				config,
 				configurationValues: defaultConfigurationValues,
 				fragmentEntryLink,
-				segmentsExperienceId: prefixedSegmentsExperienceId
+				segmentsExperienceId
 			})
 		);
 	};
@@ -93,7 +93,7 @@ export const FragmentConfigurationPanel = ({item}) => {
 				config,
 				configurationValues: nextConfigurationValues,
 				fragmentEntryLink,
-				segmentsExperienceId: prefixedSegmentsExperienceId
+				segmentsExperienceId
 			})
 		);
 	};

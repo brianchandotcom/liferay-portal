@@ -189,7 +189,8 @@ public class AccountRoleLocalServiceImpl
 
 		return new BaseModelSearchResult<>(
 			accountRoles,
-			(int)roleLocalService.dynamicQueryCount(roleDynamicQuery));
+			(int)roleLocalService.dynamicQueryCount(
+				_getRoleDynamicQuery(accountEntryId, keywords, null)));
 	}
 
 	@Override

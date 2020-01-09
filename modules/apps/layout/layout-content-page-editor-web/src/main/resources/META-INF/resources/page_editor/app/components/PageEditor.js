@@ -66,7 +66,7 @@ const Container = React.forwardRef(({children, item}, ref) => {
 					container: type === 'fixed',
 					'container-fluid': type === 'fluid',
 					empty: !item.children.length,
-					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3,
+					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
 				}
 			)}
 			ref={ref}
@@ -185,7 +185,7 @@ const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.container]: [
 		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.backgroundColor,
 		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
 	],
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
 		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment,

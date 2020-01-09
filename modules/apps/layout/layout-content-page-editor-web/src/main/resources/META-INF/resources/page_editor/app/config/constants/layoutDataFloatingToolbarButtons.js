@@ -16,14 +16,6 @@
  * FloatingToolbar panels
  */
 export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
-	backgroundColor: {
-		icon: 'color-picker',
-		id: 'background_color',
-		panelId: 'background_color',
-		title: Liferay.Language.get('background-color'),
-		type: 'panel'
-	},
-
 	containerConfiguration: {
 		icon: 'cog',
 		id: 'container_configuration',

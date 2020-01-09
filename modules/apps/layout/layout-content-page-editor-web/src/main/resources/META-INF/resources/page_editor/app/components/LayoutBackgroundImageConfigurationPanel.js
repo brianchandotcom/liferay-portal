@@ -16,8 +16,11 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useState} from 'react';
 
 import addMappedInfoItem from '../actions/addMappedInfoItem';
-import updateItemConfig from '../actions/updateItemConfig';
+import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
+import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
+import {StoreContext} from '../store/index';
+import updateItemConfig from '../thunks/updateItemConfig';
 import InfoItemSelectionPanel from './InfoItemSelectionPanel';
 import {ManualSelectionPanel} from './ManualSelectionPanel';
 
@@ -30,7 +33,11 @@ const IMAGE_SOURCE = {
  * Renders Layout Background Image Configuration Panel.
  */
 export const LayoutBackgroundImageConfigurationPanel = ({item}) => {
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
+	const segmentsExperienceId = selectPrefixedSegmentsExperienceId(
+		useContext(StoreContext)
+	);
 	const {
 		config: {backgroundImageTitle},
 		itemId
@@ -46,11 +53,13 @@ export const LayoutBackgroundImageConfigurationPanel = ({item}) => {
 	const handleBackgroundImageConfig = ({imageTitle, imageURL}) =>
 		dispatch(
 			updateItemConfig({
-				config: {
+				config,
+				itemConfig: {
 					backgroundImage: imageURL,
 					backgroundImageTitle: imageTitle
 				},
-				itemId
+				itemId,
+				segmentsExperienceId
 			})
 		);
 

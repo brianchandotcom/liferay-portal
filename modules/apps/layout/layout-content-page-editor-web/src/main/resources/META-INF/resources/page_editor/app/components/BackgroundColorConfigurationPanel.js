@@ -17,20 +17,29 @@ import React, {useContext} from 'react';
 
 import {DispatchContext} from '../../app/reducers/index';
 import ColorPalette from '../../common/components/ColorPalette';
-import updateItemConfig from '../actions/updateItemConfig';
+import {ConfigContext} from '../config/index';
+import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
+import {StoreContext} from '../store/index';
+import updateItemConfig from '../thunks/updateItemConfig';
 
 const BACKGROUND_COLOR_CSS_CLASS_SELECTOR = 'backgroundColorCssClass';
 
 export const BackgroundColorConfigurationPanel = ({item}) => {
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
+	const segmentsExperienceId = selectPrefixedSegmentsExperienceId(
+		useContext(StoreContext)
+	);
 
 	const handleSelectValueChanged = value =>
 		dispatch(
 			updateItemConfig({
-				config: {
+				config,
+				itemConfig: {
 					[BACKGROUND_COLOR_CSS_CLASS_SELECTOR]: value
 				},
-				itemId: item.itemId
+				itemId: item.itemId,
+				segmentsExperienceId
 			})
 		);
 

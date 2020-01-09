@@ -13,11 +13,13 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import CKEditor from 'ckeditor4-react';
 import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {createQuestion} from '../../utils/client.es';
+import {getCKEditorConfig} from '../../utils/utils.es';
 
 export default withRouter(({history}) => {
 	const context = useContext(AppContext);
@@ -63,13 +65,19 @@ export default withRouter(({history}) => {
 					<label htmlFor="basicInput">
 						{Liferay.Language.get('body')}
 					</label>
-					<textarea
-						className="form-control"
-						onChange={event => setArticleBody(event.target.value)}
-						placeholder={Liferay.Language.get('description')}
+
+					<CKEditor
+						config={getCKEditorConfig()}
+						onBeforeLoad={CKEDITOR => {
+							CKEDITOR.disableAutoInline = true;
+						}}
+						onChange={event =>
+							setArticleBody(event.editor.getData())
+						}
 						required
 						value={articleBody}
 					/>
+
 					<ClayForm.FeedbackGroup>
 						<ClayForm.FeedbackItem>
 							{Liferay.Language.get(

@@ -14,6 +14,7 @@
 
 import ClayForm from '@clayui/form';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
+import CKEditor from 'ckeditor4-react';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import Answer from '../../components/Answer.es';
@@ -27,7 +28,10 @@ import {
 	markAsAnswerMessageBoardMessage
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {dateToBriefInternationalHuman} from '../../utils/utils.es';
+import {
+	dateToBriefInternationalHuman,
+	getCKEditorConfig
+} from '../../utils/utils.es';
 
 export default ({
 	match: {
@@ -197,12 +201,16 @@ export default ({
 								<label htmlFor="basicInput">
 									{Liferay.Language.get('your-answer')}
 								</label>
-								<textarea
-									className="form-control"
+
+								<CKEditor
+									config={getCKEditorConfig()}
+									data={articleBody}
+									onBeforeLoad={CKEDITOR => {
+										CKEDITOR.disableAutoInline = true;
+									}}
 									onChange={event =>
-										setArticleBody(event.target.value)
+										setArticleBody(event.editor.getData())
 									}
-									value={articleBody}
 								/>
 							</ClayForm.Group>
 						</ClayForm>

@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import parser from 'bbcode-to-react';
 import classnames from 'classnames';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
@@ -96,7 +97,8 @@ export default ({answer, answerChange, creatorId, deleteAnswer}) => {
 								</strong>
 							</p>
 						)}
-						<p>{answer.articleBody}</p>
+
+						<p>{parser.toReact(answer.articleBody)}</p>
 
 						<ClayButton.Group spaced={true}>
 							<ClayButton

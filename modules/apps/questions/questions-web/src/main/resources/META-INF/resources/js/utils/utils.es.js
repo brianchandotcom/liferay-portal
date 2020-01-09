@@ -17,6 +17,28 @@ import {useRef} from 'react';
 
 import lang from './lang.es';
 
+export function getCKEditorConfig() {
+	const config = {};
+	config.extraPlugins = 'bbcode';
+	config.toolbarGroups = [
+		{groups: ['basicstyles', 'cleanup'], name: 'basicstyles'},
+		{
+			groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'],
+			name: 'paragraph'
+		},
+		{groups: ['links'], name: 'links'},
+		{groups: ['clipboard', 'undo'], name: 'clipboard'},
+		{groups: ['mode', 'document', 'doctools'], name: 'document'},
+		{
+			groups: ['find', 'selection', 'spellchecker', 'editing'],
+			name: 'editing'
+		}
+	];
+	config.removeButtons =
+		'About,Anchor,BGColor,BidiLtr,BidiRtl,Button,Checkbox,CopyFormatting,Find,Flash,Font,FontSize,Form,Format,HiddenField,HorizontalRule,Iframe,Image,ImageButton,JustifyBlock,JustifyCenter,JustifyLeft,JustifyRight,Language,Maximize,NewPage,PageBreak,PasteFromWord,PasteText,Preview,Print,Radio,RemoveFormat,Replace,Save,Select,SelectAll,ShowBlocks,Smiley,SpecialChar,Styles,Subscript,Superscript,Table,Templates,TextColor,TextField,Textarea';
+	return config;
+}
+
 export function dateToInternationalHuman(
 	ISOString,
 	localeKey = navigator.language

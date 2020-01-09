@@ -1253,6 +1253,37 @@ public class GraphQLServletExtender {
 		GraphQLScalarType.Builder objectBuilder =
 			new GraphQLScalarType.Builder();
 
+		_mapGraphQLType = objectBuilder.name(
+			"Map"
+		).description(
+			"Any kind of object supported by a Map"
+		).coercing(
+			new Coercing<Object, Object>() {
+
+				@Override
+				public Object parseLiteral(Object value)
+					throws CoercingParseLiteralException {
+
+					return value;
+				}
+
+				@Override
+				public Object parseValue(Object value)
+					throws CoercingParseValueException {
+
+					return value;
+				}
+
+				@Override
+				public Object serialize(Object value)
+					throws CoercingSerializeException {
+
+					return value;
+				}
+
+			}
+		).build();
+
 		_objectGraphQLScalarType = objectBuilder.name(
 			"Object"
 		).description(
@@ -1322,37 +1353,6 @@ public class GraphQLServletExtender {
 
 					throw new CoercingSerializeException(
 						"Unable to parse " + value);
-				}
-
-				@Override
-				public Object parseValue(Object value)
-					throws CoercingParseValueException {
-
-					return value;
-				}
-
-				@Override
-				public Object serialize(Object value)
-					throws CoercingSerializeException {
-
-					return value;
-				}
-
-			}
-		).build();
-
-		_mapGraphQLType = objectBuilder.name(
-			"Map"
-		).description(
-			"Any kind of object supported by a Map"
-		).coercing(
-			new Coercing<Object, Object>() {
-
-				@Override
-				public Object parseLiteral(Object value)
-					throws CoercingParseLiteralException {
-
-					return value;
 				}
 
 				@Override

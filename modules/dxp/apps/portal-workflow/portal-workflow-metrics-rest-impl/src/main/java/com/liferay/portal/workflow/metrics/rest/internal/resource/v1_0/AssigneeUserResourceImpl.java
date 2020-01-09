@@ -227,9 +227,7 @@ public class AssigneeUserResourceImpl
 		else {
 			booleanQuery.addMustNotQueryClauses(
 				_queries.term(
-					"status", WorkflowMetricsSLAStatus.COMPLETED.name()),
-				_queries.term(
-					"status", WorkflowMetricsSLAStatus.EXPIRED.name()));
+					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
 		}
 
 		if (taskKeys.length > 0) {

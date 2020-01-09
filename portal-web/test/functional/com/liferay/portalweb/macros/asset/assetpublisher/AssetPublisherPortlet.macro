@@ -374,9 +374,14 @@ definition {
 
 	macro configureManualAssetSelectionPG {
 		if ("${contentPage}" == "true") {
-			Click.clickNoWaitForVisible(
+			MouseOver(
 				key_portletName = "Asset Publisher",
-				locator1 = "PageEditor#WIDGETS_OPTIONS_ICON");
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
+
+			Click(
+				key_fragmentName = "Asset Publisher",
+				locator1 = "Fragment#FRAGMENT_COG");
+
 			SelectFrame(locator1 = "IFrame#DIALOG");
 		}
 		else {

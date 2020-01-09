@@ -15,52 +15,16 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ItemSelectorDialog} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
+import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 import {ConfigContext} from '../config/index';
 
 export function AssetSelectionPanel({
 	backgroundImageTitle = Liferay.Language.get('none'),
 	onItemSelectorChanged
 }) {
-	const {infoItemSelectorURL, portletNamespace} = useContext(ConfigContext);
-
-	const openInfoItemSelector = (callback, destroyedCallback = null) => {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: `${portletNamespace}selectInfoItem`,
-			singleSelect: true,
-			title: Liferay.Language.get('select'),
-			url: infoItemSelectorURL
-		});
-
-		itemSelectorDialog.on('selectedItemChange', event => {
-			const selectedItem = event.selectedItem;
-
-			if (selectedItem && selectedItem.value) {
-				const infoItem = JSON.parse(selectedItem.value);
-
-				callback({
-					className: infoItem.className,
-					classNameId: infoItem.classNameId,
-					classPK: infoItem.classPK,
-					title: infoItem.title
-				});
-			}
-		});
-
-		itemSelectorDialog.on('visibleChange', event => {
-			if (
-				!event.newVal &&
-				destroyedCallback &&
-				typeof destroyedCallback === 'function'
-			) {
-				destroyedCallback();
-			}
-		});
-
-		itemSelectorDialog.open();
-	};
+	const config = useContext(ConfigContext);
 
 	return (
 		<>
@@ -80,11 +44,12 @@ export function AssetSelectionPanel({
 					<ClayButton.Group>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => {
-								openInfoItemSelector(selectedInfoItem => {
-									onItemSelectorChanged(selectedInfoItem);
-								});
-							}}
+							onClick={() =>
+								openInfoItemSelector(
+									onItemSelectorChanged,
+									config
+								)
+							}
 							small
 						>
 							<ClayIcon symbol="plus" />

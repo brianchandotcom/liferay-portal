@@ -2532,7 +2532,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					String name = externalModuleDependency.getName();
 
 					String compatVersion = GradleUtil.getProperty(
-						project, "build.compat.version." + name, (String)null);
+						project, "compat." + name + ".version", (String)null);
 
 					if (Validator.isNull(compatVersion)) {
 						return;

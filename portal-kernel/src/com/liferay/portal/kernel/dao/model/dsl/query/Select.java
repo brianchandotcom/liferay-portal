@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 public class Select extends BaseASTNode implements FromStep, Query {
 
-	public Select(boolean distinct, Expression<?>[] expressions) {
+	public Select(boolean distinct, Expression<?>... expressions) {
 		_distinct = distinct;
 		_expressions = Objects.requireNonNull(expressions);
 	}

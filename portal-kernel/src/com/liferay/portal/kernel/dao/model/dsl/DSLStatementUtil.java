@@ -32,17 +32,12 @@ import java.util.List;
 public class DSLStatementUtil {
 
 	public static Select count() {
-		return new Select(
-			false,
-			new Expression[] {AggregateExpression.COUNT_STAR_COUNT_VALUE});
+		return new Select(false, AggregateExpression.COUNT_STAR_COUNT_VALUE);
 	}
 
 	public static Select countDistinct(Expression<?> expression) {
 		return new Select(
-			false,
-			new Expression[] {
-				new AggregateExpression<>(true, expression, "count")
-			});
+			false, new AggregateExpression<>(true, expression, "count"));
 	}
 
 	public static SQLQuery createSynchronizedSQLQuery(

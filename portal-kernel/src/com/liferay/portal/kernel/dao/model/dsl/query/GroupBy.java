@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 public class GroupBy
 	extends BaseASTNode implements LimitStep, OrderByStep, Query {
 
-	public GroupBy(GroupByStep groupByStep, Expression[] expressions) {
+	public GroupBy(GroupByStep groupByStep, Expression<?>... expressions) {
 		super(groupByStep);
 
 		if (expressions.length == 0) {
@@ -39,7 +39,7 @@ public class GroupBy
 	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
 		sb.append("group by ");
 
-		for (Expression expression : _expressions) {
+		for (Expression<?> expression : _expressions) {
 			expression.toSQL(sb, astNodeListener);
 
 			sb.append(", ");
@@ -48,10 +48,10 @@ public class GroupBy
 		sb.setIndex(sb.index() - 1);
 	}
 
-	public Expression[] getExpressions() {
+	public Expression<?>[] getExpressions() {
 		return _expressions;
 	}
 
-	private final Expression[] _expressions;
+	private final Expression<?>[] _expressions;
 
 }

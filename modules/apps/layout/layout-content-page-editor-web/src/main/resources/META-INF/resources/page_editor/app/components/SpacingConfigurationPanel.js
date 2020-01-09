@@ -12,20 +12,14 @@
  * details.
  */
 
-import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
-import React, {useContext, useState} from 'react';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import React, {useContext} from 'react';
 
 import {DispatchContext} from '../../app/reducers/index';
-import createColumn from '../actions/createColumn';
-import removeColumn from '../actions/removeColumn';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
 import {StoreContext} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
-
-const NUMBER_OF_COLUMNS_OPTIONS = ['0', '1', '2', '3', '4', '5', '6'];
 
 const PADDING_OPTIONS = [
 	{
@@ -59,81 +53,10 @@ const PADDING_OPTIONS = [
 ];
 
 const SELECTORS = {
-	gutters: 'gutters',
-	numberOfColumns: 'numberOfColumns',
 	paddingHorizontal: 'paddingHorizontal',
 	paddingVertical: 'paddingVertical',
 	type: 'type'
 };
-
-const ClayCheckboxWithState = ({onChange, ...otherProps}) => {
-	const [value, setValue] = useState(false);
-
-	return (
-		<ClayCheckbox
-			checked={value}
-			onChange={event => {
-				onChange(event);
-				setValue(val => !val);
-			}}
-			{...otherProps}
-		/>
-	);
-};
-
-function initializeColumn() {
-	const uuid = Math.random()
-		.toString(36)
-		.substr(2, 8);
-	const itemType = LAYOUT_DATA_ITEM_TYPES.column;
-	const config = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[itemType];
-	const itemId = `column-${uuid}`;
-
-	return {
-		config,
-		itemId,
-		itemType
-	};
-}
-
-function updateColumns(item, newNumberOfColumns, dispatchFn) {
-	const currentNumberOfColumns = item.config.numberOfColumns;
-
-	if (item && item.itemId && dispatchFn) {
-		const columnsToBeAdded = newNumberOfColumns - currentNumberOfColumns;
-
-		if (columnsToBeAdded === 0) {
-			return;
-		}
-
-		if (columnsToBeAdded > 0) {
-			for (let index = 0; index < columnsToBeAdded; index++) {
-				const {config, itemId, itemType} = initializeColumn();
-
-				dispatchFn(
-					createColumn({
-						config,
-						itemId,
-						itemType,
-						newNumberOfColumns,
-						rowItemId: item.itemId
-					})
-				);
-			}
-
-			return;
-		}
-
-		for (let index = 0; index < Math.abs(columnsToBeAdded); index++) {
-			dispatchFn(
-				removeColumn({
-					newNumberOfColumns,
-					rowItemId: item.itemId
-				})
-			);
-		}
-	}
-}
 
 export const SpacingConfigurationPanel = ({item}) => {
 	const config = useContext(ConfigContext);
@@ -153,34 +76,10 @@ export const SpacingConfigurationPanel = ({item}) => {
 				segmentsExperienceId
 			})
 		);
-
-		if (identifier === SELECTORS.numberOfColumns) {
-			updateColumns(item, value, dispatch);
-		}
 	};
 
 	return (
 		<div className="floating-toolbar-spacing-panel">
-			<ClayForm.Group>
-				<label htmlFor="floatingToolbarSpacingPanelNumberOfColumnsOption">
-					{Liferay.Language.get('number-of-columns')}
-				</label>
-				<ClaySelectWithOption
-					aria-label={Liferay.Language.get('number-of-columns')}
-					id="floatingToolbarSpacingPanelNumberOfColumnsOption"
-					onChange={({target: {value}}) => {
-						handleSelectValueChanged(
-							SELECTORS.numberOfColumns,
-							Number(value)
-						);
-					}}
-					options={NUMBER_OF_COLUMNS_OPTIONS.map(value => ({
-						label: value,
-						value
-					}))}
-					value={String(item.config.numberOfColumns)}
-				/>
-			</ClayForm.Group>
 			<ClayForm.Group>
 				<label htmlFor="floatingToolbarSpacingPanelContainerTypeOption">
 					{Liferay.Language.get('container')}
@@ -241,24 +140,6 @@ export const SpacingConfigurationPanel = ({item}) => {
 					/>
 				</div>
 			</ClayForm.Group>
-
-			{item.config.numberOfColumns > 1 && (
-				<ClayForm.Group>
-					<ClayCheckboxWithState
-						aria-label={Liferay.Language.get(
-							'space-between-columns'
-						)}
-						label={Liferay.Language.get('space-between-columns')}
-						onChange={({target: {value}}) =>
-							handleSelectValueChanged(
-								SELECTORS.gutters,
-								value === 'true'
-							)
-						}
-						value={item.config.gutters}
-					/>
-				</ClayForm.Group>
-			)}
 		</div>
 	);
 };

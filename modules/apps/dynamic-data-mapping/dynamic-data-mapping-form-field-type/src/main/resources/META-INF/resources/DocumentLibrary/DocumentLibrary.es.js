@@ -36,8 +36,11 @@ class DocumentLibrary extends Component {
 			try {
 				const fileEntry = JSON.parse(value);
 
+				if (fileEntry.url) {
+					fileEntryURL = fileEntry.url;
+				}
+
 				fileEntryTitle = fileEntry.title;
-				fileEntryURL = fileEntry.url;
 			} catch (e) {
 				console.warn('Unable to parse JSON', value);
 			}

@@ -170,13 +170,17 @@ public class TaskResourceImpl
 	private BooleanQuery _createCompletionDateBooleanQuery(
 		Date dateEnd, Date dateStart) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery shouldBooleanQuery = _queries.booleanQuery();
 
-		return booleanQuery.addShouldQueryClauses(
-			_queries.rangeTerm(
-				"completionDate", true, true,
-				_resourceHelper.formatDate(dateStart),
-				_resourceHelper.formatDate(dateEnd)),
+		BooleanQuery mustBooleanQuery = _queries.booleanQuery();
+
+		return shouldBooleanQuery.addShouldQueryClauses(
+			mustBooleanQuery.addMustQueryClauses(
+				_queries.rangeTerm(
+					"completionDate", true, true,
+					_resourceHelper.formatDate(dateStart),
+					_resourceHelper.formatDate(dateEnd)),
+				_queries.term("instanceCompleted", true)),
 			_queries.term("slaDefinitionId", 0));
 	}
 

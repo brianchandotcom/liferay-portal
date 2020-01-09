@@ -52,7 +52,6 @@ const Container = React.forwardRef(({children, item}, ref) => {
 	const {
 		backgroundColorCssClass,
 		backgroundImage,
-		gutters,
 		paddingHorizontal,
 		paddingVertical,
 		type
@@ -68,7 +67,6 @@ const Container = React.forwardRef(({children, item}, ref) => {
 					'container-fluid': type === 'fluid',
 					empty: !item.children.length,
 					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3,
-					'no-gutters': gutters
 				}
 			)}
 			ref={ref}
@@ -92,15 +90,11 @@ const Row = React.forwardRef(({children, item, layoutData}, ref) => {
 	const parent = layoutData.items[item.parentId];
 
 	const {
-		config: {gutters, paddingHorizontal, paddingVertical, type}
+		config: {gutters}
 	} = item;
 
 	const ROW_CLASSES = {
-		container: type === 'fixed',
-		'container-fluid': type === 'fluid',
-		[`py-${paddingVertical}`]: paddingVertical,
-		[`px-${paddingHorizontal}`]: paddingHorizontal > 0,
-		'no-gutters': gutters
+		'no-gutters': !gutters
 	};
 
 	const rowContent = (
@@ -205,7 +199,9 @@ const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {
 		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
 	],
 	[LAYOUT_DATA_ITEM_TYPES.root]: [],
-	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing]
+	[LAYOUT_DATA_ITEM_TYPES.row]: [
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
+	]
 };
 
 const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {

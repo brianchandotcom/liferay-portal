@@ -1189,7 +1189,7 @@ public class GraphQLServletExtender {
 	}
 
 	private static final GraphQLScalarType _dateGraphQLScalarType;
-	private static final GraphQLType _mapScalarType;
+	private static final GraphQLType _mapGraphQLType;
 	private static final GraphQLScalarType _objectGraphQLScalarType;
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
@@ -1341,7 +1341,7 @@ public class GraphQLServletExtender {
 			}
 		).build();
 
-		_mapScalarType = objectBuilder.name(
+		_mapGraphQLType = objectBuilder.name(
 			"Map"
 		).description(
 			"Any kind of object supported by a Map"
@@ -1693,7 +1693,7 @@ public class GraphQLServletExtender {
 			boolean input, Class<?> clazz, AnnotatedType annotatedType,
 			ProcessingElementsContainer processingElementsContainer) {
 
-			return _mapScalarType;
+			return _mapGraphQLType;
 		}
 
 		@Override

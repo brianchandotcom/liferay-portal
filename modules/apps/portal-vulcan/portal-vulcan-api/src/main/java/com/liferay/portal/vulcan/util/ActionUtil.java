@@ -38,17 +38,17 @@ public class ActionUtil {
 		String actionName, Class clazz, GroupedModel groupedModel,
 		String methodName, UriInfo uriInfo) {
 
-		Class<? extends GroupedModel> groupedClass = groupedModel.getClass();
+		Class<? extends GroupedModel> groupedModelClass =
+			groupedModel.getClass();
 
-		Class<?> superClass = groupedClass.getSuperclass();
+		Class<?> superClass = groupedModelClass.getSuperclass();
 
 		Class<?>[] interfaceClasses = superClass.getInterfaces();
 
-		String permissionName = interfaceClasses[0].getName();
-
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			methodName, permissionName, groupedModel.getGroupId(), uriInfo);
+			methodName, interfaceClasses[0].getName(),
+			groupedModel.getGroupId(), uriInfo);
 	}
 
 	public static Map<String, String> addAction(

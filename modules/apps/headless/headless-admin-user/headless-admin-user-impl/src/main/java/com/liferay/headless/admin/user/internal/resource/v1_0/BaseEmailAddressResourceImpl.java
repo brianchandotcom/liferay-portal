@@ -20,7 +20,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.util.PermissionsUtil;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -157,7 +157,7 @@ public abstract class BaseEmailAddressResourceImpl
 	protected Map<String, String> addAction(
 		String actionName, GroupedModel groupedModel, String methodName) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), groupedModel, methodName, contextUriInfo);
 	}
 
@@ -165,7 +165,7 @@ public abstract class BaseEmailAddressResourceImpl
 		String actionName, Long id, String methodName, String permissionName,
 		Long siteId) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), id, methodName, permissionName, siteId,
 			contextUriInfo);
 	}

@@ -11,11 +11,11 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_APP_BUILDER_APP</action-key>
+				<action-key>ADD_APP</action-key>
 				<action-key>MANAGE</action-key>
 			</supports>
 			<guest-unsupported>
-				<action-key>ADD_APP_BUILDER_APP</action-key>
+				<action-key>ADD_APP</action-key>
 				<action-key>MANAGE</action-key>
 			</guest-unsupported>
 		</permissions>

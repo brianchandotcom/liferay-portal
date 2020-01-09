@@ -88,6 +88,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ENTRY_TABLE_TYPE_SPECIFIC_DATE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(.,'${key_searchAssetType}')]/../span[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY</td>
 	<td>xpath=(//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')])span[2]</td>
 	<td></td>

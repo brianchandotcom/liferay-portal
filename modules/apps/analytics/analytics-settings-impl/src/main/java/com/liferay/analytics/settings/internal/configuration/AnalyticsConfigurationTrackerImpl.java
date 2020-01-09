@@ -17,6 +17,8 @@ package com.liferay.analytics.settings.internal.configuration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -94,6 +96,11 @@ public class AnalyticsConfigurationTrackerImpl
 			return configuration.getProperties();
 		}
 		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get configuration for company ID " + companyId);
+			}
+
 			return null;
 		}
 	}
@@ -140,6 +147,9 @@ public class AnalyticsConfigurationTrackerImpl
 			_analyticsConfigurations.remove(companyId);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsConfigurationTrackerImpl.class);
 
 	private final Map<Long, AnalyticsConfiguration> _analyticsConfigurations =
 		new ConcurrentHashMap<>();

@@ -160,6 +160,7 @@
 		<column name="nameIdFormat" type="String" />
 		<column name="signAuthnRequest" type="boolean" />
 		<column name="userAttributeMappings" type="String" />
+		<column name="unknownUsersAreStrangers" type="boolean" />
 
 		<!-- Finder methods -->
 

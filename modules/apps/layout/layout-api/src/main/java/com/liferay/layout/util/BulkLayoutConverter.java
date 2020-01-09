@@ -14,8 +14,11 @@
 
 package com.liferay.layout.util;
 
+import com.liferay.layout.util.template.LayoutConversionResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+
+import java.util.Locale;
 
 /**
  * @author Rubén Pulido
@@ -63,6 +66,10 @@ public interface BulkLayoutConverter {
 	public long[] convertLayouts(long[] plids);
 
 	public Layout generatePreviewLayout(long plid) throws Exception;
+
+	public LayoutConversionResult generatePreviewLayout(
+			long plid, Locale locale)
+		throws Exception;
 
 	/**
 	 * Returns the plids of the convertible layouts in the group

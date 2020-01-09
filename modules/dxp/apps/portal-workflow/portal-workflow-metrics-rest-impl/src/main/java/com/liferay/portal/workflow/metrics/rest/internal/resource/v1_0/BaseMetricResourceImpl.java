@@ -15,7 +15,9 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.util.PermissionsUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
@@ -27,6 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -111,6 +114,30 @@ public abstract class BaseMetricResourceImpl implements MetricResource {
 		com.liferay.portal.kernel.model.User contextUser) {
 
 		this.contextUser = contextUser;
+	}
+
+	protected Map<String, String> addAction(
+		String actionName, GroupedModel groupedModel, String methodName) {
+
+		return PermissionsUtil.addAction(
+			actionName, getClass(), groupedModel, methodName, contextUriInfo);
+	}
+
+	protected Map<String, String> addAction(
+		String actionName, Long id, String methodName, String permissionName,
+		Long siteId) {
+
+		return PermissionsUtil.addAction(
+			actionName, getClass(), id, methodName, permissionName, siteId,
+			contextUriInfo);
+	}
+
+	protected Map<String, String> addAction(
+		String actionName, String methodName, String permissionName,
+		Long siteId) {
+
+		return addAction(
+			actionName, siteId, methodName, permissionName, siteId);
 	}
 
 	protected void preparePatch(Metric metric, Metric existingMetric) {

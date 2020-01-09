@@ -18,6 +18,9 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -59,17 +62,31 @@ public class UpdateItemConfigReactMVCActionCommand
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
-		JSONObject jsonObject =
-			LayoutStructureUtil.updateLayoutPageTemplateData(
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			jsonObject = LayoutStructureUtil.updateLayoutPageTemplateData(
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
 				layoutStructure -> layoutStructure.updateItemConfig(
 					JSONFactoryUtil.createJSONObject(itemConfig), itemId));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpdateItemConfigReactMVCActionCommand.class);
 
 }

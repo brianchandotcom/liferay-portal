@@ -250,8 +250,11 @@ public class TaskResourceImpl
 		}
 		else {
 			booleanQuery.addMustNotQueryClauses(
+				_queries.exists("completionDate"),
 				_queries.term(
 					"status", WorkflowMetricsSLAStatus.COMPLETED.name()));
+			booleanQuery.addMustQueryClauses(
+				_queries.term("instanceCompleted", Boolean.FALSE));
 		}
 
 		TermsQuery termsQuery = _queries.terms("taskName");

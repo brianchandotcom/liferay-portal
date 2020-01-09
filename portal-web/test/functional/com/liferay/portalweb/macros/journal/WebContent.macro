@@ -1007,6 +1007,53 @@ definition {
 		}
 	}
 
+	macro editViaContentPanel {
+		PageEditor.gotoTab(tabName = "Contents");
+
+		LexiconEntry.gotoFragmentEllipsisMenuItem(
+			menuItem = "Edit",
+			webContentTitle = "${webContentTitleEdit}");
+
+		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
+
+		if (isSet(webContentContentEdit)) {
+			AlloyEditor.addContent(content = "${webContentContentEdit}");
+		}
+
+		if (isSet(webContentSelectWCFile)) {
+			AssertClick(
+				key_fieldName = "${fieldName}",
+				locator1 = "Button#SELECT_CONTENT",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertClick.assertPartialTextClickAt(
+				key_listEntry = "${webContentSelectWCFile}",
+				locator1 = "LexiconList#LIST_ENTRY",
+				value1 = "${webContentSelectWCFile}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		if ("${saveAsDraft}" == "true") {
+			PortletEntry.saveAsDraft();
+
+			AssertTextEquals.assertPartialText(
+				key_status = "Draft",
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+				value1 = "Draft");
+		}
+		else {
+			if ("${changeListEnabled}" == "true") {
+				Button.clickPublishToChangeList();
+			}
+			else {
+				PortletEntry.publish();
+			}
+		}
+	}
+
 	macro expireCP {
 		for (var webContentTitle : list "${webContentTitleList}") {
 			Check(

@@ -225,7 +225,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			if (themeDisplay.isSecure()) {
 				printWriter.println(
 					_getOpenGraphTag(
-						"og:image:url_secure",
+						"og:image:secure_url",
 						_dlurlHelper.getImagePreviewURL(
 							fileEntry, themeDisplay)));
 			}

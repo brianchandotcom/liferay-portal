@@ -78,6 +78,34 @@ public abstract class BaseWorkflowMetricsIndexer {
 		searchEngineAdapter.execute(indexDocumentRequest);
 	}
 
+	public void addDocuments(List<Document> documents) {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		documents.forEach(
+			document -> bulkDocumentRequest.addBulkableDocumentRequest(
+				new IndexDocumentRequest(
+					getIndexName(), document.getUID(), document) {
+
+					{
+						setType(getIndexType());
+					}
+				}));
+
+		if (ListUtil.isNotEmpty(
+				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			if (PortalRunMode.isTestMode()) {
+				bulkDocumentRequest.setRefresh(true);
+			}
+
+			searchEngineAdapter.execute(bulkDocumentRequest);
+		}
+	}
+
 	public void deleteDocument(Document document) {
 		document.addKeyword("deleted", true);
 

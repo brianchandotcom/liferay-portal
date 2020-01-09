@@ -22,11 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.app.builder.rest.client.dto.v1_0.DataModelPermission;
+import com.liferay.app.builder.rest.client.dto.v1_0.AppModelPermission;
 import com.liferay.app.builder.rest.client.http.HttpInvoker;
 import com.liferay.app.builder.rest.client.pagination.Page;
-import com.liferay.app.builder.rest.client.resource.v1_0.DataModelPermissionResource;
-import com.liferay.app.builder.rest.client.serdes.v1_0.DataModelPermissionSerDes;
+import com.liferay.app.builder.rest.client.resource.v1_0.AppModelPermissionResource;
+import com.liferay.app.builder.rest.client.serdes.v1_0.AppModelPermissionSerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -79,7 +79,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseDataModelPermissionResourceTestCase {
+public abstract class BaseAppModelPermissionResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -100,12 +100,12 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_dataModelPermissionResource.setContextCompany(testCompany);
+		_appModelPermissionResource.setContextCompany(testCompany);
 
-		DataModelPermissionResource.Builder builder =
-			DataModelPermissionResource.builder();
+		AppModelPermissionResource.Builder builder =
+			AppModelPermissionResource.builder();
 
-		dataModelPermissionResource = builder.locale(
+		appModelPermissionResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -134,14 +134,14 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 			}
 		};
 
-		DataModelPermission dataModelPermission1 = randomDataModelPermission();
+		AppModelPermission appModelPermission1 = randomAppModelPermission();
 
-		String json = objectMapper.writeValueAsString(dataModelPermission1);
+		String json = objectMapper.writeValueAsString(appModelPermission1);
 
-		DataModelPermission dataModelPermission2 =
-			DataModelPermissionSerDes.toDTO(json);
+		AppModelPermission appModelPermission2 = AppModelPermissionSerDes.toDTO(
+			json);
 
-		Assert.assertTrue(equals(dataModelPermission1, dataModelPermission2));
+		Assert.assertTrue(equals(appModelPermission1, appModelPermission2));
 	}
 
 	@Test
@@ -161,10 +161,10 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 			}
 		};
 
-		DataModelPermission dataModelPermission = randomDataModelPermission();
+		AppModelPermission appModelPermission = randomAppModelPermission();
 
-		String json1 = objectMapper.writeValueAsString(dataModelPermission);
-		String json2 = DataModelPermissionSerDes.toJSON(dataModelPermission);
+		String json1 = objectMapper.writeValueAsString(appModelPermission);
+		String json2 = AppModelPermissionSerDes.toJSON(appModelPermission);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -174,48 +174,48 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		DataModelPermission dataModelPermission = randomDataModelPermission();
+		AppModelPermission appModelPermission = randomAppModelPermission();
 
-		dataModelPermission.setRoleName(regex);
+		appModelPermission.setRoleName(regex);
 
-		String json = DataModelPermissionSerDes.toJSON(dataModelPermission);
+		String json = AppModelPermissionSerDes.toJSON(appModelPermission);
 
 		Assert.assertFalse(json.contains(regex));
 
-		dataModelPermission = DataModelPermissionSerDes.toDTO(json);
+		appModelPermission = AppModelPermissionSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, dataModelPermission.getRoleName());
+		Assert.assertEquals(regex, appModelPermission.getRoleName());
 	}
 
 	@Test
-	public void testGetDataModelPermissionsPage() throws Exception {
-		Page<DataModelPermission> page =
-			dataModelPermissionResource.getDataModelPermissionsPage(
+	public void testGetAppModelPermissionsPage() throws Exception {
+		Page<AppModelPermission> page =
+			appModelPermissionResource.getAppModelPermissionsPage(
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		DataModelPermission dataModelPermission1 =
-			testGetDataModelPermissionsPage_addDataModelPermission(
-				randomDataModelPermission());
+		AppModelPermission appModelPermission1 =
+			testGetAppModelPermissionsPage_addAppModelPermission(
+				randomAppModelPermission());
 
-		DataModelPermission dataModelPermission2 =
-			testGetDataModelPermissionsPage_addDataModelPermission(
-				randomDataModelPermission());
+		AppModelPermission appModelPermission2 =
+			testGetAppModelPermissionsPage_addAppModelPermission(
+				randomAppModelPermission());
 
-		page = dataModelPermissionResource.getDataModelPermissionsPage(null);
+		page = appModelPermissionResource.getAppModelPermissionsPage(null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(dataModelPermission1, dataModelPermission2),
-			(List<DataModelPermission>)page.getItems());
+			Arrays.asList(appModelPermission1, appModelPermission2),
+			(List<AppModelPermission>)page.getItems());
 		assertValid(page);
 	}
 
-	protected DataModelPermission
-			testGetDataModelPermissionsPage_addDataModelPermission(
-				DataModelPermission dataModelPermission)
+	protected AppModelPermission
+			testGetAppModelPermissionsPage_addAppModelPermission(
+				AppModelPermission appModelPermission)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -223,12 +223,12 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDataModelPermissionsPage() throws Exception {
+	public void testGraphQLGetAppModelPermissionsPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPutDataModelPermission() throws Exception {
+	public void testPutAppModelPermission() throws Exception {
 		Assert.assertTrue(false);
 	}
 
@@ -241,45 +241,45 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	}
 
 	protected void assertEquals(
-		DataModelPermission dataModelPermission1,
-		DataModelPermission dataModelPermission2) {
+		AppModelPermission appModelPermission1,
+		AppModelPermission appModelPermission2) {
 
 		Assert.assertTrue(
-			dataModelPermission1 + " does not equal " + dataModelPermission2,
-			equals(dataModelPermission1, dataModelPermission2));
+			appModelPermission1 + " does not equal " + appModelPermission2,
+			equals(appModelPermission1, appModelPermission2));
 	}
 
 	protected void assertEquals(
-		List<DataModelPermission> dataModelPermissions1,
-		List<DataModelPermission> dataModelPermissions2) {
+		List<AppModelPermission> appModelPermissions1,
+		List<AppModelPermission> appModelPermissions2) {
 
 		Assert.assertEquals(
-			dataModelPermissions1.size(), dataModelPermissions2.size());
+			appModelPermissions1.size(), appModelPermissions2.size());
 
-		for (int i = 0; i < dataModelPermissions1.size(); i++) {
-			DataModelPermission dataModelPermission1 =
-				dataModelPermissions1.get(i);
-			DataModelPermission dataModelPermission2 =
-				dataModelPermissions2.get(i);
+		for (int i = 0; i < appModelPermissions1.size(); i++) {
+			AppModelPermission appModelPermission1 = appModelPermissions1.get(
+				i);
+			AppModelPermission appModelPermission2 = appModelPermissions2.get(
+				i);
 
-			assertEquals(dataModelPermission1, dataModelPermission2);
+			assertEquals(appModelPermission1, appModelPermission2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<DataModelPermission> dataModelPermissions1,
-		List<DataModelPermission> dataModelPermissions2) {
+		List<AppModelPermission> appModelPermissions1,
+		List<AppModelPermission> appModelPermissions2) {
 
 		Assert.assertEquals(
-			dataModelPermissions1.size(), dataModelPermissions2.size());
+			appModelPermissions1.size(), appModelPermissions2.size());
 
-		for (DataModelPermission dataModelPermission1 : dataModelPermissions1) {
+		for (AppModelPermission appModelPermission1 : appModelPermissions1) {
 			boolean contains = false;
 
-			for (DataModelPermission dataModelPermission2 :
-					dataModelPermissions2) {
+			for (AppModelPermission appModelPermission2 :
+					appModelPermissions2) {
 
-				if (equals(dataModelPermission1, dataModelPermission2)) {
+				if (equals(appModelPermission1, appModelPermission2)) {
 					contains = true;
 
 					break;
@@ -287,20 +287,20 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				dataModelPermissions2 + " does not contain " +
-					dataModelPermission1,
+				appModelPermissions2 + " does not contain " +
+					appModelPermission1,
 				contains);
 		}
 	}
 
 	protected void assertEqualsJSONArray(
-		List<DataModelPermission> dataModelPermissions, JSONArray jsonArray) {
+		List<AppModelPermission> appModelPermissions, JSONArray jsonArray) {
 
-		for (DataModelPermission dataModelPermission : dataModelPermissions) {
+		for (AppModelPermission appModelPermission : appModelPermissions) {
 			boolean contains = false;
 
 			for (Object object : jsonArray) {
-				if (equalsJSONObject(dataModelPermission, (JSONObject)object)) {
+				if (equalsJSONObject(appModelPermission, (JSONObject)object)) {
 					contains = true;
 
 					break;
@@ -308,19 +308,19 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				jsonArray + " does not contain " + dataModelPermission,
+				jsonArray + " does not contain " + appModelPermission,
 				contains);
 		}
 	}
 
-	protected void assertValid(DataModelPermission dataModelPermission) {
+	protected void assertValid(AppModelPermission appModelPermission) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("actionIds", additionalAssertFieldName)) {
-				if (dataModelPermission.getActionIds() == null) {
+				if (appModelPermission.getActionIds() == null) {
 					valid = false;
 				}
 
@@ -328,7 +328,7 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 			}
 
 			if (Objects.equals("roleName", additionalAssertFieldName)) {
-				if (dataModelPermission.getRoleName() == null) {
+				if (appModelPermission.getRoleName() == null) {
 					valid = false;
 				}
 
@@ -343,13 +343,13 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<DataModelPermission> page) {
+	protected void assertValid(Page<AppModelPermission> page) {
 		boolean valid = false;
 
-		java.util.Collection<DataModelPermission> dataModelPermissions =
+		java.util.Collection<AppModelPermission> appModelPermissions =
 			page.getItems();
 
-		int size = dataModelPermissions.size();
+		int size = appModelPermissions.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -382,10 +382,10 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	}
 
 	protected boolean equals(
-		DataModelPermission dataModelPermission1,
-		DataModelPermission dataModelPermission2) {
+		AppModelPermission appModelPermission1,
+		AppModelPermission appModelPermission2) {
 
-		if (dataModelPermission1 == dataModelPermission2) {
+		if (appModelPermission1 == appModelPermission2) {
 			return true;
 		}
 
@@ -394,8 +394,8 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 
 			if (Objects.equals("actionIds", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dataModelPermission1.getActionIds(),
-						dataModelPermission2.getActionIds())) {
+						appModelPermission1.getActionIds(),
+						appModelPermission2.getActionIds())) {
 
 					return false;
 				}
@@ -405,8 +405,8 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 
 			if (Objects.equals("roleName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						dataModelPermission1.getRoleName(),
-						dataModelPermission2.getRoleName())) {
+						appModelPermission1.getRoleName(),
+						appModelPermission2.getRoleName())) {
 
 					return false;
 				}
@@ -423,12 +423,12 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	}
 
 	protected boolean equalsJSONObject(
-		DataModelPermission dataModelPermission, JSONObject jsonObject) {
+		AppModelPermission appModelPermission, JSONObject jsonObject) {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("roleName", fieldName)) {
 				if (!Objects.deepEquals(
-						dataModelPermission.getRoleName(),
+						appModelPermission.getRoleName(),
 						jsonObject.getString("roleName"))) {
 
 					return false;
@@ -447,13 +447,13 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_dataModelPermissionResource instanceof EntityModelResource)) {
+		if (!(_appModelPermissionResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_dataModelPermissionResource;
+			(EntityModelResource)_appModelPermissionResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -483,7 +483,7 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		DataModelPermission dataModelPermission) {
+		AppModelPermission appModelPermission) {
 
 		StringBundler sb = new StringBundler();
 
@@ -502,7 +502,7 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 
 		if (entityFieldName.equals("roleName")) {
 			sb.append("'");
-			sb.append(String.valueOf(dataModelPermission.getRoleName()));
+			sb.append(String.valueOf(appModelPermission.getRoleName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -529,30 +529,30 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 		return httpResponse.getContent();
 	}
 
-	protected DataModelPermission randomDataModelPermission() throws Exception {
-		return new DataModelPermission() {
+	protected AppModelPermission randomAppModelPermission() throws Exception {
+		return new AppModelPermission() {
 			{
 				roleName = RandomTestUtil.randomString();
 			}
 		};
 	}
 
-	protected DataModelPermission randomIrrelevantDataModelPermission()
+	protected AppModelPermission randomIrrelevantAppModelPermission()
 		throws Exception {
 
-		DataModelPermission randomIrrelevantDataModelPermission =
-			randomDataModelPermission();
+		AppModelPermission randomIrrelevantAppModelPermission =
+			randomAppModelPermission();
 
-		return randomIrrelevantDataModelPermission;
+		return randomIrrelevantAppModelPermission;
 	}
 
-	protected DataModelPermission randomPatchDataModelPermission()
+	protected AppModelPermission randomPatchAppModelPermission()
 		throws Exception {
 
-		return randomDataModelPermission();
+		return randomAppModelPermission();
 	}
 
-	protected DataModelPermissionResource dataModelPermissionResource;
+	protected AppModelPermissionResource appModelPermissionResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -616,7 +616,7 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseDataModelPermissionResourceTestCase.class);
+		BaseAppModelPermissionResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -634,7 +634,7 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 
 	@Inject
 	private
-		com.liferay.app.builder.rest.resource.v1_0.DataModelPermissionResource
-			_dataModelPermissionResource;
+		com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource
+			_appModelPermissionResource;
 
 }

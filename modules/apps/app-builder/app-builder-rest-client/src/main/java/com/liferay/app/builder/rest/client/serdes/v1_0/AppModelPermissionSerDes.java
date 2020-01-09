@@ -14,7 +14,7 @@
 
 package com.liferay.app.builder.rest.client.serdes.v1_0;
 
-import com.liferay.app.builder.rest.client.dto.v1_0.DataModelPermission;
+import com.liferay.app.builder.rest.client.dto.v1_0.AppModelPermission;
 import com.liferay.app.builder.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class DataModelPermissionSerDes {
+public class AppModelPermissionSerDes {
 
-	public static DataModelPermission toDTO(String json) {
-		DataModelPermissionJSONParser dataModelPermissionJSONParser =
-			new DataModelPermissionJSONParser();
+	public static AppModelPermission toDTO(String json) {
+		AppModelPermissionJSONParser appModelPermissionJSONParser =
+			new AppModelPermissionJSONParser();
 
-		return dataModelPermissionJSONParser.parseToDTO(json);
+		return appModelPermissionJSONParser.parseToDTO(json);
 	}
 
-	public static DataModelPermission[] toDTOs(String json) {
-		DataModelPermissionJSONParser dataModelPermissionJSONParser =
-			new DataModelPermissionJSONParser();
+	public static AppModelPermission[] toDTOs(String json) {
+		AppModelPermissionJSONParser appModelPermissionJSONParser =
+			new AppModelPermissionJSONParser();
 
-		return dataModelPermissionJSONParser.parseToDTOs(json);
+		return appModelPermissionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(DataModelPermission dataModelPermission) {
-		if (dataModelPermission == null) {
+	public static String toJSON(AppModelPermission appModelPermission) {
+		if (appModelPermission == null) {
 			return "null";
 		}
 
@@ -55,7 +55,7 @@ public class DataModelPermissionSerDes {
 
 		sb.append("{");
 
-		if (dataModelPermission.getActionIds() != null) {
+		if (appModelPermission.getActionIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -64,16 +64,14 @@ public class DataModelPermissionSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < dataModelPermission.getActionIds().length;
-				 i++) {
+			for (int i = 0; i < appModelPermission.getActionIds().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(appModelPermission.getActionIds()[i]));
 
 				sb.append("\"");
 
-				sb.append(_escape(dataModelPermission.getActionIds()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < dataModelPermission.getActionIds().length) {
+				if ((i + 1) < appModelPermission.getActionIds().length) {
 					sb.append(", ");
 				}
 			}
@@ -81,7 +79,7 @@ public class DataModelPermissionSerDes {
 			sb.append("]");
 		}
 
-		if (dataModelPermission.getRoleName() != null) {
+		if (appModelPermission.getRoleName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -90,7 +88,7 @@ public class DataModelPermissionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(dataModelPermission.getRoleName()));
+			sb.append(_escape(appModelPermission.getRoleName()));
 
 			sb.append("\"");
 		}
@@ -101,68 +99,67 @@ public class DataModelPermissionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		DataModelPermissionJSONParser dataModelPermissionJSONParser =
-			new DataModelPermissionJSONParser();
+		AppModelPermissionJSONParser appModelPermissionJSONParser =
+			new AppModelPermissionJSONParser();
 
-		return dataModelPermissionJSONParser.parseToMap(json);
+		return appModelPermissionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		DataModelPermission dataModelPermission) {
+		AppModelPermission appModelPermission) {
 
-		if (dataModelPermission == null) {
+		if (appModelPermission == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (dataModelPermission.getActionIds() == null) {
+		if (appModelPermission.getActionIds() == null) {
 			map.put("actionIds", null);
 		}
 		else {
 			map.put(
-				"actionIds",
-				String.valueOf(dataModelPermission.getActionIds()));
+				"actionIds", String.valueOf(appModelPermission.getActionIds()));
 		}
 
-		if (dataModelPermission.getRoleName() == null) {
+		if (appModelPermission.getRoleName() == null) {
 			map.put("roleName", null);
 		}
 		else {
 			map.put(
-				"roleName", String.valueOf(dataModelPermission.getRoleName()));
+				"roleName", String.valueOf(appModelPermission.getRoleName()));
 		}
 
 		return map;
 	}
 
-	public static class DataModelPermissionJSONParser
-		extends BaseJSONParser<DataModelPermission> {
+	public static class AppModelPermissionJSONParser
+		extends BaseJSONParser<AppModelPermission> {
 
 		@Override
-		protected DataModelPermission createDTO() {
-			return new DataModelPermission();
+		protected AppModelPermission createDTO() {
+			return new AppModelPermission();
 		}
 
 		@Override
-		protected DataModelPermission[] createDTOArray(int size) {
-			return new DataModelPermission[size];
+		protected AppModelPermission[] createDTOArray(int size) {
+			return new AppModelPermission[size];
 		}
 
 		@Override
 		protected void setField(
-			DataModelPermission dataModelPermission, String jsonParserFieldName,
+			AppModelPermission appModelPermission, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "actionIds")) {
 				if (jsonParserFieldValue != null) {
-					dataModelPermission.setActionIds(
+					appModelPermission.setActionIds(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleName")) {
 				if (jsonParserFieldValue != null) {
-					dataModelPermission.setRoleName(
+					appModelPermission.setRoleName(
 						(String)jsonParserFieldValue);
 				}
 			}

@@ -32,6 +32,7 @@ page import="com.liferay.item.selector.ItemSelectorViewRenderer" %><%@
 page import="com.liferay.item.selector.web.internal.display.context.ItemSelectorViewDescriptorRendererDisplayContext" %><%@
 page import="com.liferay.item.selector.web.internal.display.context.ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext" %><%@
 page import="com.liferay.item.selector.web.internal.portlet.LocalizedItemSelectorRendering" %><%@
+page import="com.liferay.item.selector.web.internal.servlet.taglib.clay.ItemDescriptorHorizontalCard" %><%@
 page import="com.liferay.item.selector.web.internal.servlet.taglib.clay.ItemDescriptorVerticalCard" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

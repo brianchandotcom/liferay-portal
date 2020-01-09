@@ -508,7 +508,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			organizationResource.deleteOrganizationBatchHttpResponse(
-				null, null));
+				null, JSONUtil.put("id", organization.getId())));
 	}
 
 	protected Organization testDeleteOrganizationBatch_addOrganization()

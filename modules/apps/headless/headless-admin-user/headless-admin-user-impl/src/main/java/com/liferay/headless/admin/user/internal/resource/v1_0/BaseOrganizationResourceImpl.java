@@ -163,6 +163,9 @@ public abstract class BaseOrganizationResourceImpl
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates the organization with the information sent in the request body. Fields not present in the request body are left unchanged."
+	)
 	@PATCH
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
@@ -225,6 +228,9 @@ public abstract class BaseOrganizationResourceImpl
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
 	@PUT
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}

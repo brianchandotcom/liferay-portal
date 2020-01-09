@@ -20,21 +20,24 @@ import React, {useCallback, useState} from 'react';
 function AddMenu({dropdownItems, portletId}) {
 	const [active, setActive] = useState(false);
 
-	const handleItemClick = useCallback(event => {
-		event.currentTarget = event.target;
+	const handleItemClick = useCallback(
+		event => {
+			event.currentTarget = event.target;
 
-		Liferay.Util.openInDialog(event.nativeEvent || event, {
-			dialog: {
-				destroyOnHide: true
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
-			},
-			id: `_${portletId}_addMenuItem`,
-			title: event.target.title || event.target.innerText,
-			uri: event.data.item.href || event.target.dataset.href
-		});
-	}, []);
+			Liferay.Util.openInDialog(event.nativeEvent || event, {
+				dialog: {
+					destroyOnHide: true
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: `_${portletId}_addMenuItem`,
+				title: event.target.title || event.target.innerText,
+				uri: event.target.dataset.href
+			});
+		},
+		[portletId]
+	);
 
 	if (!Liferay.component(adaptiveMediaProgressComponentId)) {
 		class AddMenuDefaultEventHandler {

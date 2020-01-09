@@ -12,20 +12,24 @@
  * details.
  */
 
-import {fetch, objectToFormData} from 'frontend-js-web';
-import {globalEval} from 'metal-dom';
-import {useIsMounted} from 'frontend-js-react-web';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useIsMounted} from 'frontend-js-react-web';
+import {fetch, objectToFormData} from 'frontend-js-web';
+import {globalEval} from 'metal-dom';
 import React, {useEffect, useState} from 'react';
+
 import SiteNavigationMenuEditor from './SiteNavigationMenuEditor';
 
 function ContextualSidebar({
 	editSiteNavigationMenuItemURL,
+	editSiteNavigationMenuSettingsURL,
 	portletId,
 	redirect,
-	siteNavigationMenuEditor
+	siteNavigationMenuEditor,
+	siteNavigationMenuId,
+	siteNavigationMenuName
 }) {
 	const [body, setBody] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -65,7 +69,62 @@ function ContextualSidebar({
 		);
 
 		return () => handle.removeListener();
-	}, []);
+	}, [
+		editSiteNavigationMenuItemURL,
+		isMounted,
+		namespace,
+		redirect,
+		siteNavigationMenuEditor
+	]);
+
+	useEffect(() => {
+		const handleSettingButtonClick = () => {
+			if (visible) {
+				return;
+			}
+
+			setLoading(true);
+			setTitle(siteNavigationMenuName);
+			setVisible(true);
+
+			fetch(editSiteNavigationMenuSettingsURL, {
+				body: objectToFormData(
+					Liferay.Util.ns(namespace, {
+						redirect,
+						siteNavigationMenuId
+					})
+				),
+				method: 'POST'
+			})
+				.then(response => response.text())
+				.then(responseContent => {
+					if (isMounted()) {
+						setBody(responseContent);
+						setLoading(false);
+					}
+				});
+		};
+
+		const settingsButton = document.getElementById(
+			`${namespace}showSiteNavigationMenuSettings`
+		);
+
+		settingsButton.addEventListener('click', handleSettingButtonClick);
+
+		return () =>
+			settingsButton.removeEventListener(
+				'click',
+				handleSettingButtonClick
+			);
+	}, [
+		editSiteNavigationMenuSettingsURL,
+		isMounted,
+		namespace,
+		redirect,
+		siteNavigationMenuId,
+		siteNavigationMenuName,
+		visible
+	]);
 
 	return (
 		<div
@@ -85,9 +144,9 @@ function ContextualSidebar({
 					</div>
 					<div className="autofit-col">
 						<ClayButton
+							displayType="unstyled"
 							monospaced
 							onClick={() => setVisible(false)}
-							displayType="unstyled"
 						>
 							<ClayIcon symbol="times" />
 						</ClayButton>

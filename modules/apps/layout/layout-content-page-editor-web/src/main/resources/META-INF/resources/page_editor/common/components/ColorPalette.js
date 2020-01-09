@@ -19,8 +19,8 @@ import React, {useContext} from 'react';
 import {ConfigContext} from '../../app/config/index';
 
 export default function ColorPalette({
-	clearButton,
 	label,
+	onClear,
 	onColorSelect,
 	selectedColor
 }) {
@@ -56,8 +56,8 @@ export default function ColorPalette({
 				</ul>
 			</div>
 
-			{clearButton && (
-				<ClayButton displayType="secondary" small>
+			{onClear && (
+				<ClayButton displayType="secondary" onClick={onClear} small>
 					{Liferay.Language.get('clear')}
 				</ClayButton>
 			)}

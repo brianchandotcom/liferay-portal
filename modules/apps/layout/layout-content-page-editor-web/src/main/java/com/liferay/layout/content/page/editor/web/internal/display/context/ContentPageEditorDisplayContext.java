@@ -318,6 +318,9 @@ public class ContentPageEditorDisplayContext {
 				"renderFragmentEntryURL",
 				editorSoyContext.get("renderFragmentEntryURL")
 			).put(
+				"selectedMappingTypes",
+				editorSoyContext.get("selectedMappingTypes")
+			).put(
 				"sidebarPanels", editorSoyContext.get("sidebarPanels")
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()

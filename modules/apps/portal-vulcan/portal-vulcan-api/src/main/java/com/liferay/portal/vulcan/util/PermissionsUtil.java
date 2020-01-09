@@ -76,8 +76,6 @@ public class PermissionsUtil {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		String httpMethodName = _getHttpMethodName(clazz, methodName);
-
 		if (!modelResourceActions.contains(actionName) ||
 			permissionChecker.hasPermission(
 				siteId, permissionName, id, actionName)) {
@@ -102,7 +100,7 @@ public class PermissionsUtil {
 				clazz.getSuperclass(), methodName
 			).toTemplate()
 		).put(
-			"method", httpMethodName
+			"method", _getHttpMethodName(clazz, methodName)
 		).build();
 	}
 

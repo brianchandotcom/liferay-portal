@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
@@ -29,7 +28,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -157,8 +155,5 @@ public class SLATaskResultWorkflowMetricsIndexer
 	protected String getIndexType() {
 		return "WorkflowMetricsSLATaskResultType";
 	}
-
-	@Reference
-	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 }

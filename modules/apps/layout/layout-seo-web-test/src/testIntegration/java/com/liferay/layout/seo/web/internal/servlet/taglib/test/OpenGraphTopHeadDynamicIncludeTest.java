@@ -514,6 +514,39 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeSecureURL() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		FileEntry layoutOpenGraphImageFileEntry = _addImageFileEntry(
+			"image.jpg",
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			false, Collections.emptyMap(), Collections.emptyMap(),
+			layoutOpenGraphImageFileEntry.getFileEntryId(), false,
+			Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(
+			document, "og:image:secure_url",
+			_dlurlHelper.getImagePreviewURL(
+				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
+	}
+
+	@Test
 	public void testIncludeSiteName() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -826,6 +859,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
 		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
 		themeDisplay.setPortalDomain("localhost");
+		themeDisplay.setSecure(true);
 		themeDisplay.setServerName("localhost");
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setSiteGroupId(_group.getGroupId());

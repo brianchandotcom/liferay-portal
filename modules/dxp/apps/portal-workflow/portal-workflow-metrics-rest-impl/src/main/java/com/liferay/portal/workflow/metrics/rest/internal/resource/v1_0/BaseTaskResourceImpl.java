@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.PermissionsUtil;
+import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
@@ -131,7 +131,7 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 	protected Map<String, String> addAction(
 		String actionName, GroupedModel groupedModel, String methodName) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), groupedModel, methodName, contextUriInfo);
 	}
 
@@ -139,7 +139,7 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 		String actionName, Long id, String methodName, String permissionName,
 		Long siteId) {
 
-		return PermissionsUtil.addAction(
+		return ActionUtil.addAction(
 			actionName, getClass(), id, methodName, permissionName, siteId,
 			contextUriInfo);
 	}

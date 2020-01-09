@@ -19,6 +19,7 @@
 <%@ page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 

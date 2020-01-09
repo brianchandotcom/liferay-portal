@@ -26,7 +26,7 @@
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>
-	<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
 
 	<c:choose>
 		<c:when test="<%= fileShortcut != null %>">

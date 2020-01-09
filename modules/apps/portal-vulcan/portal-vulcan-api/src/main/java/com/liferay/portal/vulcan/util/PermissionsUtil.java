@@ -56,46 +56,54 @@ public class PermissionsUtil {
 		String permissionName, Long siteId, UriInfo uriInfo) {
 
 		try {
-			List<String> modelResourceActions =
-				ResourceActionsUtil.getModelResourceActions(permissionName);
-
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			String httpMethodName = _getHttpMethodName(clazz, methodName);
-
-			if (!modelResourceActions.contains(actionName) ||
-				permissionChecker.hasPermission(
-					siteId, permissionName, id, actionName)) {
-
-				return null;
-			}
-
-			List<String> matchedURIs = uriInfo.getMatchedURIs();
-
-			String version = "";
-
-			if (!matchedURIs.isEmpty()) {
-				version = matchedURIs.get(matchedURIs.size() - 1);
-			}
-
-			return HashMapBuilder.put(
-				"href",
-				uriInfo.getBaseUriBuilder(
-				).path(
-					version
-				).path(
-					clazz.getSuperclass(), methodName
-				).toTemplate()
-			).put(
-				"method", httpMethodName
-			).build();
+			return _addAction(
+				actionName, clazz, id, methodName, permissionName, siteId,
+				uriInfo);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
 
-		return null;
+	private static Map<String, String> _addAction(
+			String actionName, Class clazz, Long id, String methodName,
+			String permissionName, Long siteId, UriInfo uriInfo)
+		throws Exception {
+
+		List<String> modelResourceActions =
+			ResourceActionsUtil.getModelResourceActions(permissionName);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		String httpMethodName = _getHttpMethodName(clazz, methodName);
+
+		if (!modelResourceActions.contains(actionName) ||
+			permissionChecker.hasPermission(
+				siteId, permissionName, id, actionName)) {
+
+			return null;
+		}
+
+		List<String> matchedURIs = uriInfo.getMatchedURIs();
+
+		String version = "";
+
+		if (!matchedURIs.isEmpty()) {
+			version = matchedURIs.get(matchedURIs.size() - 1);
+		}
+
+		return HashMapBuilder.put(
+			"href",
+			uriInfo.getBaseUriBuilder(
+			).path(
+				version
+			).path(
+				clazz.getSuperclass(), methodName
+			).toTemplate()
+		).put(
+			"method", httpMethodName
+		).build();
 	}
 
 	private static String _getHttpMethodName(Class clazz, String methodName)
@@ -115,8 +123,8 @@ public class PermissionsUtil {
 				Class<? extends Annotation> annotationType =
 					annotation.annotationType();
 
-				Annotation[] annotations =
-					annotationType.getAnnotationsByType(HttpMethod.class);
+				Annotation[] annotations = annotationType.getAnnotationsByType(
+					HttpMethod.class);
 
 				if (annotations.length > 0) {
 					HttpMethod httpMethod = (HttpMethod)annotations[0];

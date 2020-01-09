@@ -18,7 +18,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from 'frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import {globalEval} from 'metal-dom';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
 import SiteNavigationMenuEditor from './SiteNavigationMenuEditor';
 
@@ -39,61 +39,14 @@ function ContextualSidebar({
 
 	const namespace = Liferay.Util.getPortletNamespace(portletId);
 
-	useEffect(() => {
-		const handle = siteNavigationMenuEditor.on(
-			'selectedMenuItemChanged',
-			event => {
-				const {siteNavigationMenuItemId, title} = event.newVal.dataset;
-
-				setLoading(true);
-				setTitle(title);
-				setVisible(true);
-
-				fetch(editSiteNavigationMenuItemURL, {
-					body: objectToFormData(
-						Liferay.Util.ns(namespace, {
-							redirect,
-							siteNavigationMenuItemId
-						})
-					),
-					method: 'POST'
-				})
-					.then(response => response.text())
-					.then(responseContent => {
-						if (isMounted()) {
-							setBody(responseContent);
-							setLoading(false);
-						}
-					});
-			}
-		);
-
-		return () => handle.removeListener();
-	}, [
-		editSiteNavigationMenuItemURL,
-		isMounted,
-		namespace,
-		redirect,
-		siteNavigationMenuEditor
-	]);
-
-	useEffect(() => {
-		const handleSettingButtonClick = () => {
-			if (visible) {
-				return;
-			}
-
+	const openSidebar = useCallback(
+		(title, url, requestBody) => {
 			setLoading(true);
-			setTitle(siteNavigationMenuName);
+			setTitle(title);
 			setVisible(true);
 
-			fetch(editSiteNavigationMenuSettingsURL, {
-				body: objectToFormData(
-					Liferay.Util.ns(namespace, {
-						redirect,
-						siteNavigationMenuId
-					})
-				),
+			fetch(url, {
+				body: objectToFormData(Liferay.Util.ns(namespace, requestBody)),
 				method: 'POST'
 			})
 				.then(response => response.text())
@@ -103,6 +56,41 @@ function ContextualSidebar({
 						setLoading(false);
 					}
 				});
+		},
+		[isMounted, namespace]
+	);
+
+	useEffect(() => {
+		const handle = siteNavigationMenuEditor.on(
+			'selectedMenuItemChanged',
+			event => {
+				const {siteNavigationMenuItemId, title} = event.newVal.dataset;
+
+				openSidebar(title, editSiteNavigationMenuItemURL, {
+					redirect,
+					siteNavigationMenuItemId
+				});
+			}
+		);
+
+		return () => handle.removeListener();
+	}, [
+		editSiteNavigationMenuItemURL,
+		openSidebar,
+		redirect,
+		siteNavigationMenuEditor
+	]);
+
+	useEffect(() => {
+		const handleSettingButtonClick = () => {
+			openSidebar(
+				siteNavigationMenuName,
+				editSiteNavigationMenuSettingsURL,
+				{
+					redirect,
+					siteNavigationMenuId
+				}
+			);
 		};
 
 		const settingsButton = document.getElementById(
@@ -118,8 +106,8 @@ function ContextualSidebar({
 			);
 	}, [
 		editSiteNavigationMenuSettingsURL,
-		isMounted,
 		namespace,
+		openSidebar,
 		redirect,
 		siteNavigationMenuId,
 		siteNavigationMenuName,

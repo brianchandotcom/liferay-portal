@@ -42,9 +42,9 @@ public class PermissionsUtil {
 
 		Class<?> superClass = groupedClass.getSuperclass();
 
-		Class<?>[] interfaces = superClass.getInterfaces();
+		Class<?>[] interfaceClasses = superClass.getInterfaces();
 
-		String permissionName = interfaces[0].getName();
+		String permissionName = interfaceClasses[0].getName();
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
@@ -100,24 +100,26 @@ public class PermissionsUtil {
 		throws NoSuchMethodException {
 
 		for (Method method : clazz.getMethods()) {
-			if (methodName.equals(method.getName())) {
-				Class<?> superclass = clazz.getSuperclass();
+			if (!methodName.equals(method.getName())) {
+				continue;
+			}
 
-				Method superMethod = superclass.getMethod(
-					method.getName(), method.getParameterTypes());
+			Class<?> superclass = clazz.getSuperclass();
 
-				for (Annotation annotation : superMethod.getAnnotations()) {
-					Class<? extends Annotation> annotationType =
-						annotation.annotationType();
+			Method superMethod = superclass.getMethod(
+				method.getName(), method.getParameterTypes());
 
-					Annotation[] annotations =
-						annotationType.getAnnotationsByType(HttpMethod.class);
+			for (Annotation annotation : superMethod.getAnnotations()) {
+				Class<? extends Annotation> annotationType =
+					annotation.annotationType();
 
-					if (annotations.length > 0) {
-						HttpMethod httpMethod = (HttpMethod)annotations[0];
+				Annotation[] annotations =
+					annotationType.getAnnotationsByType(HttpMethod.class);
 
-						return httpMethod.value();
-					}
+				if (annotations.length > 0) {
+					HttpMethod httpMethod = (HttpMethod)annotations[0];
+
+					return httpMethod.value();
 				}
 			}
 		}

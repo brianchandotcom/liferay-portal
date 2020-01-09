@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_COG</td>
+	<td>//div[contains(*,'${key_fragmentName}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-cog')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_IMAGE</td>
 	<td>//div[contains(@class,'layout-content')]//section[${key_position}]//*[contains(@class,'fragment-${key_fragmentClass}')]//img[contains(@src,'${key_image}')]</td>
 	<td></td>

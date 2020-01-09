@@ -84,7 +84,7 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 							ActionKeys.ADD_ORGANIZATION);
 					}
 					else {
-						OrganizationPermissionUtil.contains(
+						OrganizationPermissionUtil.check(
 							PermissionThreadLocal.getPermissionChecker(),
 							parentOrganizationId, ActionKeys.ADD_ORGANIZATION);
 					}

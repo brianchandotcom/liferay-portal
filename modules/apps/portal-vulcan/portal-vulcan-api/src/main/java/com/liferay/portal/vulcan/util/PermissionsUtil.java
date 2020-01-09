@@ -64,30 +64,32 @@ public class PermissionsUtil {
 
 			String httpMethodName = _getHttpMethodName(clazz, methodName);
 
-			if (modelResourceActions.contains(actionName) &&
+			if (!modelResourceActions.contains(actionName) ||
 				permissionChecker.hasPermission(
 					siteId, permissionName, id, actionName)) {
 
-				List<String> matchedURIs = uriInfo.getMatchedURIs();
-
-				String version = "";
-
-				if (!matchedURIs.isEmpty()) {
-					version = matchedURIs.get(matchedURIs.size() - 1);
-				}
-
-				return HashMapBuilder.put(
-					"href",
-					uriInfo.getBaseUriBuilder(
-					).path(
-						version
-					).path(
-						clazz.getSuperclass(), methodName
-					).toTemplate()
-				).put(
-					"method", httpMethodName
-				).build();
+				return null;
 			}
+
+			List<String> matchedURIs = uriInfo.getMatchedURIs();
+
+			String version = "";
+
+			if (!matchedURIs.isEmpty()) {
+				version = matchedURIs.get(matchedURIs.size() - 1);
+			}
+
+			return HashMapBuilder.put(
+				"href",
+				uriInfo.getBaseUriBuilder(
+				).path(
+					version
+				).path(
+					clazz.getSuperclass(), methodName
+				).toTemplate()
+			).put(
+				"method", httpMethodName
+			).build();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

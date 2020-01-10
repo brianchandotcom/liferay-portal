@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  * @author Alessio Antonio Rendina
  */
-public interface DispatchTriggerSchedulerEntryTracker {
+public interface DispatchAdvisor {
 
 	public void addScheduledTask(
 			long dispatchTriggerId, String cronExpression, Date startDate,

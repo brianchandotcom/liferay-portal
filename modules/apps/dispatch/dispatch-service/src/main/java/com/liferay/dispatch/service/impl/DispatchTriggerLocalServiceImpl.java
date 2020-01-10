@@ -14,12 +14,12 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.advisor.DispatchAdvisor;
 import com.liferay.dispatch.exception.DispatchTriggerEndDateException;
 import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.advisor.DispatchTriggerSchedulerEntryTracker;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -96,7 +96,7 @@ public class DispatchTriggerLocalServiceImpl
 		resourceLocalService.deleteResource(
 			dispatchTrigger, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		_dispatchTriggerSchedulerEntryTracker.deleteScheduledTask(
+		_dispatchAdvisor.deleteScheduledTask(
 			dispatchTrigger.getDispatchTriggerId());
 
 		return dispatchTrigger;
@@ -164,13 +164,12 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
 		if (active) {
-			_dispatchTriggerSchedulerEntryTracker.addScheduledTask(
+			_dispatchAdvisor.addScheduledTask(
 				dispatchTriggerId, cronExpression,
 				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate());
 		}
 		else {
-			_dispatchTriggerSchedulerEntryTracker.deleteScheduledTask(
-				dispatchTriggerId);
+			_dispatchAdvisor.deleteScheduledTask(dispatchTriggerId);
 		}
 
 		return dispatchTrigger;
@@ -222,8 +221,7 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Reference
-	private DispatchTriggerSchedulerEntryTracker
-		_dispatchTriggerSchedulerEntryTracker;
+	private DispatchAdvisor _dispatchAdvisor;
 
 	@Reference
 	private Portal _portal;

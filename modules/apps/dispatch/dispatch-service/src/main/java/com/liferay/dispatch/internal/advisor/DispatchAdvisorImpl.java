@@ -14,8 +14,8 @@
 
 package com.liferay.dispatch.internal.advisor;
 
+import com.liferay.dispatch.advisor.DispatchAdvisor;
 import com.liferay.dispatch.constants.DispatchConstants;
-import com.liferay.dispatch.advisor.DispatchTriggerSchedulerEntryTracker;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -35,11 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	immediate = true, service = DispatchTriggerSchedulerEntryTracker.class
-)
-public class DispatchTriggerSchedulerEntryTrackerImpl
-	implements DispatchTriggerSchedulerEntryTracker {
+@Component(immediate = true, service = DispatchAdvisor.class)
+public class DispatchAdvisorImpl implements DispatchAdvisor {
 
 	@Override
 	public void addScheduledTask(
@@ -122,7 +119,7 @@ public class DispatchTriggerSchedulerEntryTrackerImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchTriggerSchedulerEntryTrackerImpl.class);
+		DispatchAdvisorImpl.class);
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

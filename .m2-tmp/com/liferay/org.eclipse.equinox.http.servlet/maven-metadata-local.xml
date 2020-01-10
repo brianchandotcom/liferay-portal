@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.liferay</groupId>
+  <artifactId>org.eclipse.equinox.http.servlet</artifactId>
+  <versioning>
+    <release>1.2.2.v20191207-1631-LIFERAY-CACHED</release>
+    <versions>
+      <version>1.2.2.v20191207-1631-LIFERAY-CACHED</version>
+    </versions>
+    <lastUpdated>20200110193534</lastUpdated>
+  </versioning>
+</metadata>

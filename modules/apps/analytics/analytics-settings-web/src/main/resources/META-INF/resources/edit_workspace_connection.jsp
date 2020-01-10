@@ -75,7 +75,7 @@ if (analyticsConfiguration != null) {
 
 		<aui:fieldset>
 			<c:if test="<%= !connected %>">
-				<aui:input label="analytics-cloud-token" name="token" oninput='<%= renderResponse.getNamespace() + "validateTokenButton();" %>' placeholder="paste-token-here" value="<%= token %>" wrapperCssClass="mb-1" />
+				<aui:input autocomplete="off" label="analytics-cloud-token" name="token" oninput='<%= renderResponse.getNamespace() + "validateTokenButton();" %>' placeholder="paste-token-here" value="<%= token %>" wrapperCssClass="mb-1" />
 
 				<div class="form-text">
 					<liferay-ui:message key="analytics-cloud-token-help" />

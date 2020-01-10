@@ -46,10 +46,12 @@
 			content: '';
 			display: block;
 			height: 100%;
+			left: 0;
 			pointer-events: none;
 			position: absolute;
 			top: 0;
 			transition: box-shadow ease 0.3s;
+			width: 100%;
 			will-change: box-shadow;
 			z-index: 1;
 		}

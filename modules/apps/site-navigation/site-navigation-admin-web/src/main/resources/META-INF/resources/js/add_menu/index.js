@@ -24,6 +24,10 @@ function AddMenu({dropdownItems, portletId}) {
 		event => {
 			event.currentTarget = event.target;
 
+			const uri = event.data
+				? event.data.item.href
+				: event.target.dataset.href;
+
 			Liferay.Util.openInDialog(event.nativeEvent || event, {
 				dialog: {
 					destroyOnHide: true
@@ -33,7 +37,7 @@ function AddMenu({dropdownItems, portletId}) {
 				},
 				id: `_${portletId}_addMenuItem`,
 				title: event.target.title || event.target.innerText,
-				uri: event.target.dataset.href
+				uri
 			});
 		},
 		[portletId]

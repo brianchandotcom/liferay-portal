@@ -67,34 +67,36 @@ public class LayoutLocalServiceUtil {
 	 * @param classPK the primary key of the entity
 	 * @param nameMap the layout's locales and localized names
 	 * @param titleMap the layout's locales and localized titles
-	 * @param descriptionMap the layout's locales and localized descriptions
+	 * @param descriptionMap the layout's locales and localized
+	 descriptions
 	 * @param keywordsMap the layout's locales and localized keywords
 	 * @param robotsMap the layout's locales and localized robots
 	 * @param type the layout's type (optionally {@link
-	 LayoutConstants#TYPE_PORTLET}). The possible types can be found
-	 in {@link LayoutConstants}.
-	 * @param typeSettings the settings to load the unicode properties object.
-	 See {@link UnicodeProperties #fastLoad(String)}.
+	 LayoutConstants#TYPE_PORTLET}). The possible types can be
+	 found in {@link LayoutConstants}.
+	 * @param typeSettings the settings to load the unicode properties
+	 object. See {@link UnicodeProperties #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
 	 * @param system whether the layout is of system type
 	 * @param masterLayoutPlid the primary key of the master layout
-	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
-	 To see how the URL is normalized when accessed, see {@link
+	 * @param friendlyURLMap the layout's locales and localized friendly
+	 URLs. To see how the URL is normalized when accessed, see
+	 {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 String)}.
-	 * @param serviceContext the service context to be applied. Must set the
-	 UUID for the layout. Can set the creation date, modification
-	 date, and expando bridge attributes for the layout. For layouts
-	 that belong to a layout set prototype, an attribute named
-	 <code>layoutUpdateable</code> can be set to specify whether site
-	 administrators can modify this page within their site. For
-	 layouts that are created from a layout prototype, attributes
-	 named <code>layoutPrototypeUuid</code> and
-	 <code>layoutPrototypeLinkedEnabled</code> can be specified to
-	 provide the unique identifier of the source prototype and a
-	 boolean to determine whether a link to it should be enabled to
-	 activate propagation of changes made to the linked page in the
-	 prototype.
+	 * @param serviceContext the service context to be applied. Must set
+	 the UUID for the layout. Can set the creation date,
+	 modification date, and expando bridge attributes for the
+	 layout. For layouts that belong to a layout set prototype, an
+	 attribute named <code>layoutUpdateable</code> can be set to
+	 specify whether site administrators can modify this page
+	 within their site. For layouts that are created from a layout
+	 prototype, attributes named <code>layoutPrototypeUuid</code>
+	 and <code>layoutPrototypeLinkedEnabled</code> can be
+	 specified to provide the unique identifier of the source
+	 prototype and a boolean to determine whether a link to it
+	 should be enabled to activate propagation of changes made to
+	 the linked page in the prototype.
 	 * @return the layout
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link #addLayout(long,
@@ -1664,40 +1666,43 @@ public class LayoutLocalServiceUtil {
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param layoutId the layout ID of the layout
-	 * @param parentLayoutId the layout ID of the layout's new parent layout
+	 * @param parentLayoutId the layout ID of the layout's new parent
+	 layout
 	 * @param nameMap the locales and localized names to merge (optionally
 	 <code>null</code>)
-	 * @param titleMap the locales and localized titles to merge (optionally
-	 <code>null</code>)
-	 * @param descriptionMap the locales and localized descriptions to merge
+	 * @param titleMap the locales and localized titles to merge
 	 (optionally <code>null</code>)
+	 * @param descriptionMap the locales and localized descriptions to
+	 merge (optionally <code>null</code>)
 	 * @param keywordsMap the locales and localized keywords to merge
 	 (optionally <code>null</code>)
-	 * @param robotsMap the locales and localized robots to merge (optionally
-	 <code>null</code>)
+	 * @param robotsMap the locales and localized robots to merge
+	 (optionally <code>null</code>)
 	 * @param type the layout's new type (optionally {@link
 	 LayoutConstants#TYPE_PORTLET})
 	 * @param hidden whether the layout is hidden
-	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
-	 To see how the URL is normalized when accessed, see {@link
+	 * @param friendlyURLMap the layout's locales and localized friendly
+	 URLs. To see how the URL is normalized when accessed, see
+	 {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 String)}.
 	 * @param hasIconImage whether the icon image will be updated
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param serviceContext the service context to be applied. Can set the
-	 modification date and expando bridge attributes for the layout.
-	 For layouts that are linked to a layout prototype, attributes
-	 named <code>layoutPrototypeUuid</code> and
+	 modification date and expando bridge attributes for the
+	 layout. For layouts that are linked to a layout prototype,
+	 attributes named <code>layoutPrototypeUuid</code> and
 	 <code>layoutPrototypeLinkedEnabled</code> can be specified to
 	 provide the unique identifier of the source prototype and a
-	 boolean to determine whether a link to it should be enabled to
-	 activate propagation of changes made to the linked page in the
-	 prototype.
+	 boolean to determine whether a link to it should be enabled
+	 to activate propagation of changes made to the linked page in
+	 the prototype.
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #updateLayout(
-	 long, boolean, long, long, Map, Map, Map, Map, Map, String,
-	 boolean, Map, boolean, byte[], long, ServiceContext)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateLayout(long, boolean, long, long, Map, Map, Map, Map,
+	 Map, String, boolean, Map, boolean, byte[], long,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.model.Layout updateLayout(

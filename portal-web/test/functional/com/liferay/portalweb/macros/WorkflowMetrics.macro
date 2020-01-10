@@ -565,9 +565,9 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_TASK_COUNT",
 			value1 = "${taskCount}");
 
-		AssertTextEquals(
+		AssertTextNotEquals(
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_AVG_COMPLETION_TIME",
-			value1 = "${avgCompletionTime}");
+			value1 = "0min");
 	}
 
 	macro viewUserWorkloadByStepOnAllItems {

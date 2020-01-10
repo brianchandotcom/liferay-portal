@@ -29,8 +29,7 @@ public class DSLFunctionUtil {
 	public static <N extends Number> Function<N> add(
 		Expression<N> expression1, Expression<N> expression2) {
 
-		return new Function<>(
-			FunctionType.ADDITION, new Expression[] {expression1, expression2});
+		return new Function<>(FunctionType.ADDITION, expression1, expression2);
 	}
 
 	public static <N extends Number> Function<N> add(
@@ -43,8 +42,7 @@ public class DSLFunctionUtil {
 		Expression<Long> expression1, Expression<Long> expression2) {
 
 		return new Function<>(
-			FunctionType.BITWISE_AND,
-			new Expression[] {expression1, expression2});
+			FunctionType.BITWISE_AND, expression1, expression2);
 	}
 
 	public static Function<Long> bitAnd(
@@ -66,18 +64,15 @@ public class DSLFunctionUtil {
 	}
 
 	public static Function<String> castClobText(Expression<?> expression) {
-		return new Function<>(
-			FunctionType.CAST_CLOB_TEXT, new Expression[] {expression});
+		return new Function<>(FunctionType.CAST_CLOB_TEXT, expression);
 	}
 
 	public static Function<Long> castLong(Expression<?> expression) {
-		return new Function<>(
-			FunctionType.CAST_LONG, new Expression[] {expression});
+		return new Function<>(FunctionType.CAST_LONG, expression);
 	}
 
 	public static Function<String> castText(Expression<?> expression) {
-		return new Function<>(
-			FunctionType.CAST_TEXT, new Expression[] {expression});
+		return new Function<>(FunctionType.CAST_TEXT, expression);
 	}
 
 	@SafeVarargs
@@ -88,8 +83,7 @@ public class DSLFunctionUtil {
 	public static <N extends Number> Function<N> divide(
 		Expression<N> expression1, Expression<N> expression2) {
 
-		return new Function<>(
-			FunctionType.DIVISION, new Expression[] {expression1, expression2});
+		return new Function<>(FunctionType.DIVISION, expression1, expression2);
 	}
 
 	public static <N extends Number> Function<N> divide(
@@ -99,16 +93,14 @@ public class DSLFunctionUtil {
 	}
 
 	public static Function<String> lower(Expression<String> expression) {
-		return new Function<>(
-			FunctionType.LOWER, new Expression[] {expression});
+		return new Function<>(FunctionType.LOWER, expression);
 	}
 
 	public static <N extends Number> Function<N> multiply(
 		Expression<N> expression1, Expression<N> expression2) {
 
 		return new Function<>(
-			FunctionType.MULTIPLICATION,
-			new Expression[] {expression1, expression2});
+			FunctionType.MULTIPLICATION, expression1, expression2);
 	}
 
 	public static <N extends Number> Function<N> multiply(
@@ -121,8 +113,7 @@ public class DSLFunctionUtil {
 		Expression<N> expression1, Expression<N> expression2) {
 
 		return new Function<>(
-			FunctionType.SUBTRACTION,
-			new Expression[] {expression1, expression2});
+			FunctionType.SUBTRACTION, expression1, expression2);
 	}
 
 	public static <N extends Number> Function<N> subtract(

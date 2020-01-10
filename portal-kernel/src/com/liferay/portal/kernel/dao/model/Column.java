@@ -15,13 +15,13 @@
 package com.liferay.portal.kernel.dao.model;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -92,11 +92,13 @@ public class Column<T extends Table<T>, C>
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append(_table.getName());
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		sb.append(".");
-		sb.append(_columnName);
+		consumer.accept(_table.getName());
+
+		consumer.accept(".");
+		consumer.accept(_columnName);
 	}
 
 	private final String _columnName;

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -54,23 +54,25 @@ public class AggregateExpression<T>
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append(_name);
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		sb.append("(");
+		consumer.accept(_name);
+
+		consumer.accept("(");
 
 		if (_distinct) {
-			sb.append("distinct ");
+			consumer.accept("distinct ");
 		}
 
 		if (_expression == null) {
-			sb.append("*");
+			consumer.accept("*");
 		}
 		else {
-			_expression.toSQL(sb, astNodeListener);
+			_expression.toSQL(consumer, astNodeListener);
 		}
 
-		sb.append(")");
+		consumer.accept(")");
 	}
 
 	private final boolean _distinct;

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.joins;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 import com.liferay.portal.kernel.dao.model.dsl.query.WhereStep;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -43,16 +43,18 @@ public class Join
 	}
 
 	@Override
-	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append(_joinType);
+	public void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		sb.append(" join ");
+		consumer.accept(String.valueOf(_joinType));
 
-		_table.toSQL(sb, astNodeListener);
+		consumer.accept(" join ");
 
-		sb.append(" on ");
+		_table.toSQL(consumer, astNodeListener);
 
-		_onPredicate.toSQL(sb, astNodeListener);
+		consumer.accept(" on ");
+
+		_onPredicate.toSQL(consumer, astNodeListener);
 	}
 
 	public JoinType getJoinType() {

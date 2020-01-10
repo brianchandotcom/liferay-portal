@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -41,11 +41,13 @@ public class Select extends BaseASTNode implements FromStep, Query {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("select ");
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept("select ");
 
 		if (_distinct) {
-			sb.append("distinct ");
+			consumer.accept("distinct ");
 		}
 
 		if (_expressions.length > 0) {
@@ -57,20 +59,20 @@ public class Select extends BaseASTNode implements FromStep, Query {
 
 					Expression<?> unwrappedExpression = alias.getExpression();
 
-					unwrappedExpression.toSQL(sb, astNodeListener);
+					unwrappedExpression.toSQL(consumer, astNodeListener);
 
-					sb.append(" ");
+					consumer.accept(" ");
 				}
 
-				expression.toSQL(sb, astNodeListener);
+				expression.toSQL(consumer, astNodeListener);
 
 				if (i < (_expressions.length - 1)) {
-					sb.append(", ");
+					consumer.accept(", ");
 				}
 			}
 		}
 		else {
-			sb.append("*");
+			consumer.accept("*");
 		}
 	}
 

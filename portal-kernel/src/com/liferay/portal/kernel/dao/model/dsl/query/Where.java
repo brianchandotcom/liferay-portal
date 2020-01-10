@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -34,10 +34,12 @@ public class Where
 	}
 
 	@Override
-	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("where ");
+	public void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_predicate.toSQL(sb, astNodeListener);
+		consumer.accept("where ");
+
+		_predicate.toSQL(consumer, astNodeListener);
 	}
 
 	public Predicate getPredicate() {

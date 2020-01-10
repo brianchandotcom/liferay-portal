@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.dao.model.dsl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 import com.liferay.portal.kernel.dao.model.dsl.query.AggregateExpression;
@@ -43,15 +42,12 @@ public class DSLStatementUtil {
 	public static SQLQuery createSynchronizedSQLQuery(
 		Session session, Query query) {
 
-		StringBundler sb = new StringBundler();
-
 		DefaultASTNodeListener defaultASTNodeListener =
 			new DefaultASTNodeListener();
 
-		query.toSQL(sb, defaultASTNodeListener);
-
 		SQLQuery q = session.createSynchronizedSQLQuery(
-			sb.toString(), true, defaultASTNodeListener.getTableNames());
+			query.toSQL(defaultASTNodeListener), true,
+			defaultASTNodeListener.getTableNames());
 
 		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
 

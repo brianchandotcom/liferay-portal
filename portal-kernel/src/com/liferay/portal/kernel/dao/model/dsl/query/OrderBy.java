@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
+
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -36,14 +37,16 @@ public class OrderBy extends BaseASTNode implements LimitStep, Query {
 	}
 
 	@Override
-	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("order by ");
+	public void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept("order by ");
 
 		for (int i = 0; i < _orderByExpressions.length; i++) {
-			_orderByExpressions[i].doToSQL(sb, astNodeListener);
+			_orderByExpressions[i].doToSQL(consumer, astNodeListener);
 
 			if (i < (_orderByExpressions.length - 1)) {
-				sb.append(", ");
+				consumer.accept(", ");
 			}
 		}
 	}

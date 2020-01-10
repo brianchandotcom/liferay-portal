@@ -14,10 +14,11 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
+
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -36,14 +37,16 @@ public class GroupBy
 	}
 
 	@Override
-	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("group by ");
+	public void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept("group by ");
 
 		for (int i = 0; i < _expressions.length; i++) {
-			_expressions[i].toSQL(sb, astNodeListener);
+			_expressions[i].toSQL(consumer, astNodeListener);
 
 			if (i < (_expressions.length - 1)) {
-				sb.append(", ");
+				consumer.accept(", ");
 			}
 		}
 	}

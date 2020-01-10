@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.joins.JoinStep;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -36,10 +36,12 @@ public class From
 	}
 
 	@Override
-	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("from ");
+	public void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_table.toSQL(sb, astNodeListener);
+		consumer.accept("from ");
+
+		_table.toSQL(consumer, astNodeListener);
 	}
 
 	public Table<?> getTable() {

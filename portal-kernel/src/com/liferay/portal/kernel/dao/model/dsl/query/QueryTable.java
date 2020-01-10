@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.Table;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+
+import java.util.function.Consumer;
 
 /**
  * @author Shuyang Zhou
@@ -32,14 +33,16 @@ public class QueryTable extends Table<QueryTable> {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("(");
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_query.toSQL(sb, astNodeListener);
+		consumer.accept("(");
 
-		sb.append(") ");
+		_query.toSQL(consumer, astNodeListener);
 
-		sb.append(getAlias());
+		consumer.accept(") ");
+
+		consumer.accept(getAlias());
 	}
 
 	private final Query _query;

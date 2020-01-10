@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.operands.Operand;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -74,21 +74,23 @@ public class Predicate extends BaseASTNode implements Expression<Boolean> {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
 		if (_wrapParentheses) {
-			sb.append("(");
+			consumer.accept("(");
 		}
 
-		_leftExpression.toSQL(sb, astNodeListener);
+		_leftExpression.toSQL(consumer, astNodeListener);
 
-		sb.append(" ");
-		sb.append(_operand);
-		sb.append(" ");
+		consumer.accept(" ");
+		consumer.accept(String.valueOf(_operand));
+		consumer.accept(" ");
 
-		_rightExpression.toSQL(sb, astNodeListener);
+		_rightExpression.toSQL(consumer, astNodeListener);
 
 		if (_wrapParentheses) {
-			sb.append(")");
+			consumer.accept(")");
 		}
 	}
 

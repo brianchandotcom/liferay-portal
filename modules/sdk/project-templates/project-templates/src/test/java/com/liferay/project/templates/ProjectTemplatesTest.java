@@ -20,7 +20,6 @@ import aQute.bnd.osgi.Domain;
 
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.extensions.util.FileUtil;
-import com.liferay.project.templates.extensions.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.extensions.util.Validator;
 import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
@@ -38,11 +37,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -2954,34 +2951,25 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 	@Test
 	public void testListTemplatesWithCustomArchetypesDir() throws Exception {
-		Properties archetypesProperties =
-			ProjectTemplatesUtil.getProjectTemplateJarVersionsProperties();
-
-		Set<String> artifactIds = archetypesProperties.stringPropertyNames();
-
-		Iterator<String> artifactIdIterator = artifactIds.iterator();
-
-		String artifactId = artifactIdIterator.next();
-
-		File templateFile = ProjectTemplatesUtil.getArchetypeFile(artifactId);
-
-		Path templateFilePath = templateFile.toPath();
-
 		File customArchetypesDir = temporaryFolder.newFolder();
 
 		Path customArchetypesDirPath = customArchetypesDir.toPath();
 
-		Files.copy(
-			templateFilePath,
-			customArchetypesDirPath.resolve(
-				"custom.name.project.templates.foo.bar-1.2.3.jar"));
+		String jarName = "custom.template.jar";
+
+		Files.write(
+			customArchetypesDirPath.resolve(jarName),
+			FileTestUtil.readAllBytes(
+				"com/liferay/project/templates/dependencies/" + jarName));
 
 		Map<String, String> customTemplatesMap = ProjectTemplates.getTemplates(
 			Collections.singletonList(customArchetypesDir));
 
 		Map<String, String> templatesMap = ProjectTemplates.getTemplates();
 
-		Assert.assertEquals(customTemplatesMap.size(), templatesMap.size() + 1);
+		Assert.assertEquals(
+			customTemplatesMap.toString(), templatesMap.size() + 1,
+			customTemplatesMap.size());
 	}
 
 	@Rule

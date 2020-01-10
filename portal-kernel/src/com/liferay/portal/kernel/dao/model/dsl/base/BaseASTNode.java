@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 /**
  * @author Shuyang Zhou
  */
-public abstract class BaseASTNode implements ASTNode {
+public abstract class BaseASTNode implements ASTNode, Cloneable {
 
 	public BaseASTNode() {
 		_childASTNode = null;
@@ -31,6 +31,10 @@ public abstract class BaseASTNode implements ASTNode {
 
 	public BaseASTNode(ASTNode childASTNode) {
 		_childASTNode = Objects.requireNonNull(childASTNode);
+	}
+
+	public ASTNode getChild() {
+		return _childASTNode;
 	}
 
 	@Override
@@ -55,9 +59,22 @@ public abstract class BaseASTNode implements ASTNode {
 		return toSQL(null);
 	}
 
+	public <T extends BaseASTNode> T withNewChild(ASTNode astNode) {
+		try {
+			BaseASTNode baseASTNode = (BaseASTNode)clone();
+
+			baseASTNode._childASTNode = astNode;
+
+			return (T)baseASTNode;
+		}
+		catch (CloneNotSupportedException cnse) {
+			throw new RuntimeException(cnse);
+		}
+	}
+
 	protected abstract void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener);
 
-	private final ASTNode _childASTNode;
+	private ASTNode _childASTNode;
 
 }

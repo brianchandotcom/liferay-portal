@@ -1294,25 +1294,37 @@ public class JenkinsResultsParserUtil {
 		String baseInvocationURL, int invokedBatchSize) {
 
 		return getMostAvailableMasterURL(
-			baseInvocationURL, invokedBatchSize,
+			baseInvocationURL, null, invokedBatchSize,
 			JenkinsMaster.SLAVE_RAM_DEFAULT);
 	}
 
 	public static String getMostAvailableMasterURL(
-		String baseInvocationURL, int invokedBatchSize, int minimumRAM) {
+		String baseInvocationURL, String blacklist, int invokedBatchSize,
+		int minimumRAM) {
 
-		String loadBalancerServiceURL =
-			_URL_LOAD_BALANCER_SERVICE_TEMPLATE.replace(
-				"${baseInvocationURL}", baseInvocationURL);
+		StringBuilder sb = new StringBuilder();
 
-		loadBalancerServiceURL = loadBalancerServiceURL.replace(
-			"${invokedBatchSize}", String.valueOf(invokedBatchSize));
+		sb.append(_URL_LOAD_BALANCER);
+		sb.append("?baseInvocationURL=");
+		sb.append(baseInvocationURL);
 
-		loadBalancerServiceURL = loadBalancerServiceURL.replace(
-			"${minimumRAM}", String.valueOf(minimumRAM));
+		if (blacklist != null) {
+			sb.append("&blacklist=");
+			sb.append(blacklist);
+		}
+
+		if (invokedBatchSize > 0) {
+			sb.append("&invokedJobBatchSize=");
+			sb.append(invokedBatchSize);
+		}
+
+		if (minimumRAM > 0) {
+			sb.append("&minimumRAM=");
+			sb.append(minimumRAM);
+		}
 
 		try {
-			JSONObject jsonObject = toJSONObject(loadBalancerServiceURL);
+			JSONObject jsonObject = toJSONObject(sb.toString());
 
 			return jsonObject.getString("mostAvailableMasterURL");
 		}
@@ -1330,7 +1342,7 @@ public class JenkinsResultsParserUtil {
 			List<JenkinsMaster> availableJenkinsMasters =
 				LoadBalancerUtil.getAvailableJenkinsMasters(
 					LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
-					minimumRAM, buildProperties);
+					blacklist, minimumRAM, buildProperties);
 
 			Random random = new Random(System.currentTimeMillis());
 
@@ -3142,10 +3154,8 @@ public class JenkinsResultsParserUtil {
 
 	private static final int _SECONDS_RETRY_PERIOD_DEFAULT = 5;
 
-	private static final String _URL_LOAD_BALANCER_SERVICE_TEMPLATE = combine(
-		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/",
-		"load_balancer?baseInvocationURL=${baseInvocationURL}",
-		"&invokedJobBatchSize=${invokedBatchSize}&minimumRAM=${minimumRAM}");
+	private static final String _URL_LOAD_BALANCER =
+		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";
 
 	private static Hashtable<Object, Object> _buildProperties;
 	private static String[] _buildPropertiesURLs;

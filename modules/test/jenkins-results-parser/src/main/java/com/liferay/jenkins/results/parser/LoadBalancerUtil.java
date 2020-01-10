@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.StringReader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -34,15 +35,16 @@ import java.util.regex.Pattern;
 public class LoadBalancerUtil {
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, int minimumRAM, Properties properties) {
+		String masterPrefix, String blacklistString, int minimumRAM,
+		Properties properties) {
 
 		return getAvailableJenkinsMasters(
-			masterPrefix, minimumRAM, properties, true);
+			masterPrefix, blacklistString, minimumRAM, properties, true);
 	}
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, int minimumRAM, Properties properties,
-		boolean verbose) {
+		String masterPrefix, String blacklistString, int minimumRAM,
+		Properties properties, boolean verbose) {
 
 		List<JenkinsMaster> allJenkinsMasters = null;
 
@@ -56,7 +58,14 @@ public class LoadBalancerUtil {
 			allJenkinsMasters = _jenkinsMasters.get(masterPrefix);
 		}
 
-		List<String> blacklist = _getBlacklist(properties, verbose);
+		List<String> blacklist;
+
+		if ((blacklistString != null) && !blacklistString.isEmpty()) {
+			blacklist = Arrays.asList(blacklistString.split(","));
+		}
+		else {
+			blacklist = _getBlacklist(properties, verbose);
+		}
 
 		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
@@ -106,6 +115,8 @@ public class LoadBalancerUtil {
 					return baseInvocationURL;
 				}
 
+				String blacklistString = properties.getProperty("blacklist");
+
 				Integer minimumRAM = JenkinsMaster.SLAVE_RAM_DEFAULT;
 
 				String minimumRAMString = properties.getProperty("minimum.ram");
@@ -117,7 +128,8 @@ public class LoadBalancerUtil {
 				}
 
 				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
-					masterPrefix, minimumRAM, properties, verbose);
+					masterPrefix, blacklistString, minimumRAM, properties,
+					verbose);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
 					masterPrefix);

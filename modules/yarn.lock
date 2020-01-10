@@ -11758,10 +11758,10 @@ liferay-npm-bundler@2.16.2:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-npm-scripts@17.0.2:
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-17.0.2.tgz#fb6a7540c368ee173cd1f4286afd03cbda990561"
-  integrity sha512-FBz4xafS5yyJ25InrqWwOCEbWPMsw9ILXe0dKnlpCI9Xt9zTUC5JFhL/9NKFFlqhESWxuS+lYcpRrFhCODf42Q==
+liferay-npm-scripts@17.0.4:
+  version "17.0.4"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-17.0.4.tgz#80598408aedfd1853faeda51ef88603e1f0b2f30"
+  integrity sha512-5SM36AfGs68YBUR/6Uk8a3ouewkbUuK4x/U5321zgYZoxvT8D/QsbjpiuP5WK8lNazBbX8QqiTl6YiuVeTNBYw==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -11800,6 +11800,7 @@ liferay-npm-scripts@17.0.2:
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"
     prettier "1.18.2"
+    resolve "^1.14.2"
     rimraf "^2.6.2"
     sass-loader "^7.1.0"
     style-loader "^0.23.1"
@@ -16004,6 +16005,13 @@ resolve@^1.13.1:
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.13.1.tgz#be0aa4c06acd53083505abb35f4d66932ab35d16"
   integrity sha512-CxqObCX8K8YtAhOBRg+lrcdn+LK+WYOS8tSjqSFbjtrI5PnS63QPhZl4+yKfrU9tdsbMu9Anr/amegT87M9Z6w==
+  dependencies:
+    path-parse "^1.0.6"
+
+resolve@^1.14.2:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.14.2.tgz#dbf31d0fa98b1f29aa5169783b9c290cb865fea2"
+  integrity sha512-EjlOBLBO1kxsUxsKjLt7TAECyKW6fOh1VRkykQkKGzcBbjjPIxBqGh0jf7GJ3k/f5mxMqW3htMD3WdTUVtW8HQ==
   dependencies:
     path-parse "^1.0.6"
 

@@ -14,20 +14,14 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
-import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -52,7 +46,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,7 +79,8 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _duplicateFragmentEntryLink(actionRequest);
+		JSONObject jsonObject = _duplicateFragmentEntryLink(
+			actionRequest, actionResponse);
 
 		hideDefaultSuccessMessage(actionRequest);
 
@@ -138,7 +132,7 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 	}
 
 	private JSONObject _duplicateFragmentEntryLink(
-		ActionRequest actionRequest) {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
@@ -191,94 +185,32 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 					editableValuesJSONObject.toString(), StringUtil.randomId(),
 					0, fragmentEntryLink.getRendererKey(), serviceContext);
 
-			DefaultFragmentRendererContext fragmentRendererContext =
-				new DefaultFragmentRendererContext(duplicateFragmentEntryLink);
-
-			fragmentRendererContext.setLocale(serviceContext.getLocale());
-			fragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
-
-			FragmentEntry fragmentEntry =
-				FragmentEntryLinkUtil.getFragmentEntry(
-					fragmentEntryLink.getGroupId(),
-					_fragmentCollectionContributorTracker,
-					fragmentEntryLink.getRendererKey(),
-					serviceContext.getLocale());
-
-			String fragmentEntryKey = null;
-			String name = null;
-
-			if (fragmentEntry != null) {
-				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
-				name = fragmentEntry.getName();
-			}
-			else {
-				String rendererKey = fragmentEntryLink.getRendererKey();
-
-				if (Validator.isNull(rendererKey)) {
-					rendererKey =
-						FragmentRendererConstants.
-							FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY;
-				}
-
-				FragmentRenderer fragmentRenderer =
-					_fragmentRendererTracker.getFragmentRenderer(rendererKey);
-
-				fragmentEntryKey = fragmentRenderer.getKey();
-
-				name = fragmentRenderer.getLabel(serviceContext.getLocale());
-
-				if (Validator.isNotNull(portletId)) {
-					name = _portal.getPortletTitle(
-						portletId, serviceContext.getLocale());
-				}
-			}
-
 			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
 
 			jsonObject = JSONUtil.put(
 				"fragmentEntryLink",
-				JSONUtil.put(
-					"configuration",
-					JSONFactoryUtil.createJSONObject(
-						_fragmentRendererController.getConfiguration(
-							fragmentRendererContext))
-				).put(
-					"content",
-					_fragmentRendererController.render(
-						fragmentRendererContext, serviceContext.getRequest(),
-						serviceContext.getResponse())
-				).put(
-					"defaultConfigurationValues",
-					FragmentEntryConfigUtil.
-						getConfigurationDefaultValuesJSONObject(
-							duplicateFragmentEntryLink.getConfiguration())
-				).put(
-					"editableValues",
-					JSONFactoryUtil.createJSONObject(
-						duplicateFragmentEntryLink.getEditableValues())
-				).put(
-					"fragmentEntryKey", fragmentEntryKey
-				).put(
-					"fragmentEntryLinkId",
-					duplicateFragmentEntryLink.getFragmentEntryLinkId()
-				).put(
-					"name", name
-				)
+				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
+					actionRequest, actionResponse,
+					_fragmentEntryConfigurationParser,
+					duplicateFragmentEntryLink,
+					_fragmentCollectionContributorTracker,
+					_fragmentRendererController, _fragmentRendererTracker,
+					portletId)
 			).put(
 				"layoutData",
 				_addDuplicateFragmentEntryLinkToLayoutDataJSONObject(
 					actionRequest, duplicateFragmentEntryLink)
 			);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			String errorMessage = "an-unexpected-error-occurred";
 
-			if (pe instanceof NoSuchEntryLinkException) {
+			if (e instanceof NoSuchEntryLinkException) {
 				errorMessage =
 					"the-section-could-not-be-duplicated-because-it-has-been-" +
 						"deleted";
 			}
-			else if (pe instanceof PortletIdException) {
+			else if (e instanceof PortletIdException) {
 				errorMessage = "uninstanceable-widget-cannot-be-duplicated";
 			}
 
@@ -298,22 +230,19 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 		_fragmentCollectionContributorTracker;
 
 	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

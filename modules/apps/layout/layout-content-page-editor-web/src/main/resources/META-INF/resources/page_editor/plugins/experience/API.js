@@ -22,8 +22,8 @@ export default function API({
 	addSegmentsExperienceURL,
 	classNameId,
 	classPK,
+	deleteSegmentsExperienceURL,
 	portletNamespace,
-	removeSegmentsExperienceURL: _removeSegmentsExperienceURL,
 	updateSegmentsExperiencePriorityURL,
 	updateSegmentsExperienceURL
 }) {
@@ -43,10 +43,16 @@ export default function API({
 		segmentsExperienceId,
 		_fragmentEntryLinkIds = []
 	) {
-		// TODO actual call to server
-		return new Promise(resolve => {
-			setTimeout(() => resolve(), 1000);
-		});
+		const body = {
+			_fragmentEntryLinkIds,
+			segmentsExperienceId
+		};
+
+		return serviceFetch(
+			{portletNamespace},
+			deleteSegmentsExperienceURL,
+			body
+		);
 	}
 
 	function updateExperiencePriority({newPriority, segmentsExperienceId}) {

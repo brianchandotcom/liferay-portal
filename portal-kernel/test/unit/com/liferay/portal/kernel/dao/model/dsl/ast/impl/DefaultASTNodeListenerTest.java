@@ -44,7 +44,6 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -95,14 +94,15 @@ public class DefaultASTNodeListenerTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"select case when MainExample.mainExampleId = 1 then ? when ",
-				"MainExample.mainExampleId = 2 then ? when MainExample.",
-				"mainExampleId = 3 then ? else ? end number from MainExample ",
+				"select case when MainExample.mainExampleId = ? then ? when ",
+				"MainExample.mainExampleId = ? then ? when MainExample.",
+				"mainExampleId = ? then ? else ? end number from MainExample ",
 				"where number != ?"),
 			query.toSQL(defaultASTNodeListener));
 
 		Assert.assertEquals(
-			Arrays.asList("one", "two", "three", "unknown", "unknown"),
+			Arrays.asList(
+				1L, "one", 2L, "two", 3L, "three", "unknown", "unknown"),
 			defaultASTNodeListener.getScalarValues());
 	}
 
@@ -231,11 +231,11 @@ public class DefaultASTNodeListenerTest {
 	@Test
 	public void testFunctions() {
 		Assert.assertEquals(
-			"MainExample.mainExampleId + 2",
+			"MainExample.mainExampleId + ?",
 			String.valueOf(
 				DSLFunctionUtil.add(MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
-			"BITAND(MainExample.mainExampleId, 2)",
+			"BITAND(MainExample.mainExampleId, ?)",
 			String.valueOf(
 				DSLFunctionUtil.bitAnd(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
@@ -263,17 +263,17 @@ public class DefaultASTNodeListenerTest {
 			"LOWER(MainExample.name)",
 			String.valueOf(DSLFunctionUtil.lower(MainExampleTable.TABLE.name)));
 		Assert.assertEquals(
-			"MainExample.mainExampleId / 2",
+			"MainExample.mainExampleId / ?",
 			String.valueOf(
 				DSLFunctionUtil.divide(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
-			"MainExample.mainExampleId * 2",
+			"MainExample.mainExampleId * ?",
 			String.valueOf(
 				DSLFunctionUtil.multiply(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
-			"MainExample.mainExampleId - 2",
+			"MainExample.mainExampleId - ?",
 			String.valueOf(
 				DSLFunctionUtil.subtract(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
@@ -391,19 +391,20 @@ public class DefaultASTNodeListenerTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select count(*) COUNT_VALUE from MainExample where ",
-				"MainExample.mainExampleId >= 1 and (MainExample.name = ? or ",
-				"MainExample.name = null)"),
+				"MainExample.mainExampleId >= ? and (MainExample.name = ? or ",
+				"MainExample.name = ?)"),
 			query.toSQL(defaultASTNodeListener));
 
 		Assert.assertEquals(
-			Arrays.asList("test"), defaultASTNodeListener.getScalarValues());
+			Arrays.asList(1L, "test", null),
+			defaultASTNodeListener.getScalarValues());
 	}
 
 	@Test
 	public void testSelect1() {
 		Query query = DSLStatementUtil.select(new Scalar<>(1));
 
-		Assert.assertEquals("select 1", query.toString());
+		Assert.assertEquals("select ?", query.toString());
 	}
 
 	@Test
@@ -420,7 +421,7 @@ public class DefaultASTNodeListenerTest {
 
 		Assert.assertEquals(
 			"select distinct mainTable.name from MainExample mainTable where " +
-				"mainTable.flag in (1, 2)",
+				"mainTable.flag in (?, ?)",
 			query.toString());
 
 		query = from.where(
@@ -435,13 +436,13 @@ public class DefaultASTNodeListenerTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select distinct mainTable.name from MainExample mainTable ",
-				"where mainTable.mainExampleId in (1, 2, null) order by ",
+				"where mainTable.mainExampleId in (?, ?, ?) order by ",
 				"mainTable.name asc"),
 			query.toSQL(defaultASTNodeListener));
 
-		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
-
-		Assert.assertTrue(scalarValues.toString(), scalarValues.isEmpty());
+		Assert.assertEquals(
+			Arrays.asList(1L, 2L, null),
+			defaultASTNodeListener.getScalarValues());
 
 		String[] strings = {"1", "2", "3"};
 
@@ -522,14 +523,14 @@ public class DefaultASTNodeListenerTest {
 		predicate = predicate.and(MainExampleTable.TABLE.mainExampleId.gt(0L));
 
 		Assert.assertEquals(
-			"MainExample.name = ? and MainExample.mainExampleId > 0",
+			"MainExample.name = ? and MainExample.mainExampleId > ?",
 			predicate.toString());
 
 		Where where = from.where(predicate);
 
 		Assert.assertEquals(
 			"select * from MainExample where MainExample.name = ? and " +
-				"MainExample.mainExampleId > 0",
+				"MainExample.mainExampleId > ?",
 			where.toString());
 
 		OrderByExpression orderByExpression =
@@ -546,7 +547,7 @@ public class DefaultASTNodeListenerTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from MainExample where MainExample.name = ? and ",
-				"MainExample.mainExampleId > 0 order by ",
+				"MainExample.mainExampleId > ? order by ",
 				"MainExample.mainExampleId desc"),
 			orderBy.toSQL(defaultASTNodeListener));
 
@@ -556,7 +557,7 @@ public class DefaultASTNodeListenerTest {
 			new String[] {MainExampleTable.TABLE.getTableName()}, tableNames);
 
 		Assert.assertEquals(
-			Collections.singletonList("test"),
+			Arrays.asList("test", 0L),
 			defaultASTNodeListener.getScalarValues());
 
 		Assert.assertEquals(
@@ -570,7 +571,7 @@ public class DefaultASTNodeListenerTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from MainExample where MainExample.name = ? and ",
-				"MainExample.mainExampleId > 0 order by ",
+				"MainExample.mainExampleId > ? order by ",
 				"MainExample.mainExampleId desc "),
 			limit.toSQL(defaultASTNodeListener));
 
@@ -585,7 +586,7 @@ public class DefaultASTNodeListenerTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from MainExample where MainExample.name = ? and ",
-				"MainExample.mainExampleId > 0 order by ",
+				"MainExample.mainExampleId > ? order by ",
 				"MainExample.mainExampleId desc "),
 			limit.toSQL(defaultASTNodeListener));
 

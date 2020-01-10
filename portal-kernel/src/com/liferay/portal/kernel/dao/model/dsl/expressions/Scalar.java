@@ -25,16 +25,6 @@ import java.util.function.Consumer;
  */
 public class Scalar<T> extends BaseASTNode implements Expression<T> {
 
-	public static boolean isScalarValue(Object value) {
-		if (value instanceof Integer || value instanceof Long ||
-			(value == null)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	public Scalar(T value) {
 		_value = value;
 	}
@@ -47,12 +37,7 @@ public class Scalar<T> extends BaseASTNode implements Expression<T> {
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		if (isScalarValue(_value)) {
-			consumer.accept(StringPool.QUESTION);
-		}
-		else {
-			consumer.accept(String.valueOf(_value));
-		}
+		consumer.accept(StringPool.QUESTION);
 	}
 
 	private final T _value;

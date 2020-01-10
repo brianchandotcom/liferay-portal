@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.model.dsl.query.Limit;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,20 +60,12 @@ public class DefaultASTNodeListener implements ASTNodeListener {
 		else if (astNode instanceof Scalar) {
 			Scalar<?> scalar = (Scalar)astNode;
 
-			Object value = scalar.getValue();
-
-			if (Scalar.isScalarValue(value)) {
-				_scalarValues.add(value);
-			}
+			_scalarValues.add(scalar.getValue());
 		}
 		else if (astNode instanceof ScalarList) {
 			ScalarList<?> scalarList = (ScalarList)astNode;
 
-			for (Object value : scalarList.getValues()) {
-				if (Scalar.isScalarValue(value)) {
-					_scalarValues.add(value);
-				}
-			}
+			Collections.addAll(_scalarValues, scalarList.getValues());
 		}
 		else if (astNode instanceof Table) {
 			Table<?> table = (Table)astNode;

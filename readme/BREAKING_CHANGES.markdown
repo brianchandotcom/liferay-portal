@@ -261,3 +261,28 @@ depends on it, you would need to implement it by yourself.
 This change was made to avoid security issues.
 
 ---------------------------------------
+
+### Removed liferay-frontend:cards-treeview tag
+- **Date:** 2020-Jan-10
+- **JIRA Ticket:** [LPS-106899](https://issues.liferay.com/browse/LPS-106899)
+
+#### What changed?
+
+The liferay-frontend:cards-treeview tag has been removed.
+
+#### Who is affected?
+
+This affects anyone using the tag from a jsp or some of its components inside
+a SOY (Closure Templates) template.
+
+#### How should I update my code?
+
+There's no direct replacement for the removed feature. If you have code that
+depends on it, you would need to implement it by yourself.
+
+#### Why was this change made?
+
+This change was made because the UI tag was mostly internal and very specific
+and local usage did not grant keeping it around
+
+---------------------------------------

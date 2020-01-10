@@ -5662,8 +5662,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		attributes.put(
-			Field.GROUP_ID, (Long)params.getOrDefault("usersGroups", 0L));
+		if (params != null) {
+			attributes.put(
+				Field.GROUP_ID, (Long)params.getOrDefault("usersGroups", 0L));
+
+			String keywords = (String)params.remove("keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				searchContext.setKeywords(keywords);
+			}
+		}
+
 		attributes.put("city", city);
 		attributes.put("country", country);
 		attributes.put("emailAddress", emailAddress);
@@ -5682,14 +5691,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-
-		if (params != null) {
-			String keywords = (String)params.remove("keywords");
-
-			if (Validator.isNotNull(keywords)) {
-				searchContext.setKeywords(keywords);
-			}
-		}
 
 		if (sorts != null) {
 			searchContext.setSorts(sorts);

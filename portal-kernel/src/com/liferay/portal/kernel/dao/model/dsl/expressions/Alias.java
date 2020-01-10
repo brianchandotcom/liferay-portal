@@ -30,14 +30,12 @@ public class Alias<T> extends BaseASTNode implements Expression<T> {
 		_name = Objects.requireNonNull(name);
 	}
 
-	@Override
-	public String getAlias() {
-		return _name;
+	public Expression<T> getExpression() {
+		return _expression;
 	}
 
-	@Override
-	public Expression<T> unwrapAlias() {
-		return _expression;
+	public String getName() {
+		return _name;
 	}
 
 	@Override

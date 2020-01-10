@@ -97,7 +97,7 @@ public class ContentPageToolbarPortlet extends MVCPortlet {
 			contentPageEditorDisplayContext =
 				_contentPageEditorDisplayContextProvider.
 					getContentPageEditorDisplayContext(
-						httpServletRequest, renderResponse);
+						httpServletRequest, renderResponse, renderRequest);
 
 			httpServletRequest.setAttribute(
 				ContentPageEditorWebKeys.

@@ -37,7 +37,6 @@ export {default as updateEditableValues} from './updateEditableValues';
 export {
 	default as updateFragmentEntryLinkContent
 } from './updateFragmentEntryLinkContent';
-export {default as updateItemConfig} from './updateItemConfig';
 export {default as updateLanguageId} from './updateLanguageId';
 export {default as updateLayoutData} from './updateLayoutData';
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.scheduler;
+package com.liferay.dispatch.advisor;
 
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;

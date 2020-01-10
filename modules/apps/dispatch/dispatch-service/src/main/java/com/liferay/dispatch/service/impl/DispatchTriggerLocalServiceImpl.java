@@ -19,7 +19,7 @@ import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.scheduler.DispatchTriggerSchedulerEntryTracker;
+import com.liferay.dispatch.advisor.DispatchTriggerSchedulerEntryTracker;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;

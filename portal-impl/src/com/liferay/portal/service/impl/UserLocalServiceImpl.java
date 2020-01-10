@@ -5664,7 +5664,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (params != null) {
 			attributes.put(
-				Field.GROUP_ID, (Long)params.getOrDefault("usersGroups", 0l));
+				Field.GROUP_ID, (Long)params.getOrDefault("usersGroups", 0L));
 
 			String keywords = (String)params.remove("keywords");
 

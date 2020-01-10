@@ -110,7 +110,7 @@ public class CsrfValidationInterceptor implements Serializable {
 						proceed = true;
 					}
 					catch (PrincipalException pe) {
-						_log.error("Invalid CSRF token");
+						_log.error("Invalid CSRF token", pe);
 					}
 				}
 				else {

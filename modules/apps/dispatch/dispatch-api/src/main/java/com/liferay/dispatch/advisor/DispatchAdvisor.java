@@ -14,29 +14,25 @@
 
 package com.liferay.dispatch.advisor;
 
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 public interface DispatchAdvisor {
 
-	public void addScheduledTask(
-			long dispatchTriggerId, String cronExpression, Date startDate,
-			Date endDate)
-		throws SchedulerException;
+	public void addDispatch(
+		long dispatchTriggerId, String cronExpression, Date startDate,
+		Date endDate);
 
-	public void deleteScheduledTask(long dispatchTriggerId)
-		throws SchedulerException;
+	public void deleteDispatch(long dispatchTriggerId);
 
-	public Date getNextFireDate(long dispatchTriggerId);
+	public Optional<Dispatch> getDispatch(long dispatchTriggerId);
 
-	public Date getPreviousFireDate(long dispatchTriggerId);
+	public Optional<Date> getNextFireDate(long dispatchTriggerId);
 
-	public SchedulerResponse getSchedulerResponse(long dispatchTriggerId)
-		throws SchedulerException;
+	public Optional<Date> getPreviousFireDate(long dispatchTriggerId);
 
 }

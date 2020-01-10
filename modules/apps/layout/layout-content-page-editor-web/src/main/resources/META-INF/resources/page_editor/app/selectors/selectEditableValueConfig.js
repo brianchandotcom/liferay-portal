@@ -14,7 +14,7 @@
 
 import selectEditableValue from './selectEditableValue';
 
-export default function selectEditableValueContent(
+export default function selectEditableValueConfig(
 	state,
 	fragmentEntryLinkId,
 	editableId

@@ -277,8 +277,69 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		long companyId = permissionChecker.getCompanyId();
 
-		if (_skipReplace(companyId, className, groupIds)) {
-			return true;
+		if (groupIds.length == 1) {
+			long groupId = groupIds[0];
+
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group != null) {
+				long[] roleIds = getRoleIds(groupId);
+
+				try {
+					if (_resourcePermissionLocalService.hasResourcePermission(
+						companyId, className, ResourceConstants.SCOPE_GROUP,
+							String.valueOf(groupId), roleIds,
+							ActionKeys.VIEW) ||
+						_resourcePermissionLocalService.hasResourcePermission(
+							companyId, className,
+							ResourceConstants.SCOPE_GROUP_TEMPLATE,
+							String.valueOf(
+								GroupConstants.DEFAULT_PARENT_GROUP_ID),
+							roleIds, ActionKeys.VIEW)) {
+
+						return true;
+					}
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Unable to get resource permissions for ",
+								className, " with group ", groupId),
+							portalException);
+					}
+				}
+			}
+		}
+		else {
+			for (long groupId : groupIds) {
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				if ((group != null) && (group.getCompanyId() != companyId)) {
+					throw new IllegalArgumentException(
+						"Permission queries across multiple portal instances " +
+							"are not supported");
+				}
+			}
+		}
+
+		try {
+			if (_resourcePermissionLocalService.hasResourcePermission(
+				companyId, className, ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(companyId), getRoleIds(0),
+					ActionKeys.VIEW)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get resource permissions for ", className,
+						" with company ", companyId),
+					portalException);
+			}
 		}
 
 		return false;
@@ -333,77 +394,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	protected void modified(Map<String, Object> properties) {
 		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(
 			InlinePermissionConfiguration.class, properties);
-	}
-
-	private boolean _skipReplace(
-		long companyId, String className, long[] groupIds) {
-
-		if (groupIds.length == 1) {
-			long groupId = groupIds[0];
-
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if (group != null) {
-				long[] roleIds = getRoleIds(groupId);
-
-				try {
-					if (_resourcePermissionLocalService.hasResourcePermission(
-							companyId, className, ResourceConstants.SCOPE_GROUP,
-							String.valueOf(groupId), roleIds,
-							ActionKeys.VIEW) ||
-						_resourcePermissionLocalService.hasResourcePermission(
-							companyId, className,
-							ResourceConstants.SCOPE_GROUP_TEMPLATE,
-							String.valueOf(
-								GroupConstants.DEFAULT_PARENT_GROUP_ID),
-							roleIds, ActionKeys.VIEW)) {
-
-						return true;
-					}
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Unable to get resource permissions for ",
-								className, " with group ", groupId),
-							portalException);
-					}
-				}
-			}
-		}
-		else {
-			for (long groupId : groupIds) {
-				Group group = _groupLocalService.fetchGroup(groupId);
-
-				if ((group != null) && (group.getCompanyId() != companyId)) {
-					throw new IllegalArgumentException(
-						"Permission queries across multiple portal instances " +
-							"are not supported");
-				}
-			}
-		}
-
-		try {
-			if (_resourcePermissionLocalService.hasResourcePermission(
-					companyId, className, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(companyId), getRoleIds(0),
-					ActionKeys.VIEW)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to get resource permissions for ", className,
-						" with company ", companyId),
-					portalException);
-			}
-		}
-
-		return false;
 	}
 
 	private void _appendPermissionSQL(

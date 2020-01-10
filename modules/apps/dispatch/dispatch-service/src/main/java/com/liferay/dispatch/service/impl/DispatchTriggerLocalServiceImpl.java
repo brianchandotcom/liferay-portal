@@ -96,8 +96,7 @@ public class DispatchTriggerLocalServiceImpl
 		resourceLocalService.deleteResource(
 			dispatchTrigger, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		_dispatchAdvisor.deleteScheduledTask(
-			dispatchTrigger.getDispatchTriggerId());
+		_dispatchAdvisor.deleteDispatch(dispatchTrigger.getDispatchTriggerId());
 
 		return dispatchTrigger;
 	}
@@ -164,12 +163,12 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
 		if (active) {
-			_dispatchAdvisor.addScheduledTask(
+			_dispatchAdvisor.addDispatch(
 				dispatchTriggerId, cronExpression,
 				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate());
 		}
 		else {
-			_dispatchAdvisor.deleteScheduledTask(dispatchTriggerId);
+			_dispatchAdvisor.deleteDispatch(dispatchTriggerId);
 		}
 
 		return dispatchTrigger;

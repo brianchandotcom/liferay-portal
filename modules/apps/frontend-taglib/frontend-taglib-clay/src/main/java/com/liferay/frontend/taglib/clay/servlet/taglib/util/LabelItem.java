@@ -24,10 +24,6 @@ import java.util.Map;
  */
 public class LabelItem extends HashMap<String, Object> {
 
-	public static String getStyleFromWorkflowStatus(int status) {
-		return WorkflowConstants.getStyleFromWorkflowStatus(status);
-	}
-
 	public LabelItem() {
 		put("closeable", false);
 	}
@@ -59,7 +55,7 @@ public class LabelItem extends HashMap<String, Object> {
 	public void setStatus(int status) {
 		setLabel(WorkflowConstants.getStatusLabel(status));
 
-		setStyle(getStyleFromWorkflowStatus(status));
+		setStyle(WorkflowConstants.getStyleFromWorkflowStatus(status));
 	}
 
 	public void setStyle(String style) {

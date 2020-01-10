@@ -116,14 +116,9 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 
 	return (
 		<div
-			className={classNames(
-				className,
-				'page-editor__row-outline',
-				'col',
-				{
-					[`col-${size}`]: size
-				}
-			)}
+			className={classNames(className, 'page-editor__col', 'col', {
+				[`col-${size}`]: size
+			})}
 			ref={ref}
 		>
 			{children}

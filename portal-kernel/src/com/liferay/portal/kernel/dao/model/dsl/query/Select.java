@@ -49,7 +49,9 @@ public class Select extends BaseASTNode implements FromStep, Query {
 		}
 
 		if (_expressions.length > 0) {
-			for (Expression<?> expression : _expressions) {
+			for (int i = 0; i < _expressions.length; i++) {
+				Expression<?> expression = _expressions[i];
+
 				if (expression instanceof Alias) {
 					Alias<?> alias = (Alias<?>)expression;
 
@@ -62,10 +64,10 @@ public class Select extends BaseASTNode implements FromStep, Query {
 
 				expression.toSQL(sb, astNodeListener);
 
-				sb.append(", ");
+				if (i < (_expressions.length - 1)) {
+					sb.append(", ");
+				}
 			}
-
-			sb.setIndex(sb.index() - 1);
 		}
 		else {
 			sb.append("*");

@@ -39,13 +39,13 @@ public class OrderBy extends BaseASTNode implements LimitStep, Query {
 	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
 		sb.append("order by ");
 
-		for (OrderByExpression orderByExpression : _orderByExpressions) {
-			orderByExpression.doToSQL(sb, astNodeListener);
+		for (int i = 0; i < _orderByExpressions.length; i++) {
+			_orderByExpressions[i].doToSQL(sb, astNodeListener);
 
-			sb.append(", ");
+			if (i < (_orderByExpressions.length - 1)) {
+				sb.append(", ");
+			}
 		}
-
-		sb.setIndex(sb.index() - 1);
 	}
 
 	public OrderByExpression[] getOrderByExpressions() {

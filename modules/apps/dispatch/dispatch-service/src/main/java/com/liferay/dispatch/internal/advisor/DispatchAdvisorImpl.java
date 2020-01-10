@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @Component(immediate = true, service = DispatchAdvisor.class)
 public class DispatchAdvisorImpl implements DispatchAdvisor {
@@ -118,34 +119,32 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 
 	@Override
 	public Optional<Date> getNextFireDate(long dispatchTriggerId) {
-		Date nextFireDate = null;
-
 		try {
-			nextFireDate = _schedulerEngineHelper.getNextFireTime(
-				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+			return Optional.ofNullable(
+				_schedulerEngineHelper.getNextFireTime(
+					_getJobName(dispatchTriggerId),
+					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
 		}
 		catch (SchedulerException se) {
 			_log.error(se, se);
 		}
 
-		return Optional.ofNullable(nextFireDate);
+		return Optional.empty();
 	}
 
 	@Override
 	public Optional<Date> getPreviousFireDate(long dispatchTriggerId) {
-		Date nextFireDate = null;
-
 		try {
-			nextFireDate = _schedulerEngineHelper.getPreviousFireTime(
-				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+			return Optional.ofNullable(
+				_schedulerEngineHelper.getPreviousFireTime(
+					_getJobName(dispatchTriggerId),
+					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
 		}
 		catch (SchedulerException se) {
 			_log.error(se, se);
 		}
 
-		return Optional.ofNullable(nextFireDate);
+		return Optional.empty();
 	}
 
 	protected DispatchAdvisorImpl(

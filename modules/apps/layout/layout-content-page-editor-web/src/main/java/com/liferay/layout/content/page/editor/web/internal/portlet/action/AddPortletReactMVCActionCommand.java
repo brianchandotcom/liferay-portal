@@ -14,14 +14,17 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkService;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +41,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -200,33 +204,18 @@ public class AddPortletReactMVCActionCommand
 				editableValueJSONObject.toString(), StringPool.BLANK, 0, null,
 				serviceContext);
 
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
-
-		JSONObject jsonObject = JSONUtil.put(
-			"content",
-			_fragmentRendererController.render(
-				defaultFragmentRendererContext,
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse))
-		).put(
-			"editableValues", fragmentEntryLink.getEditableValues()
-		).put(
-			"fragmentEntryLinkId",
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
-		).put(
-			"name", _portal.getPortletTitle(portletId, themeDisplay.getLocale())
-		);
-
-		JSONObject layoutDataJSONObject = addFragmentEntryLinkToLayoutData(
-			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
-
 		return JSONUtil.put(
-			"fragmentEntryLink", jsonObject
+			"fragmentEntryLink",
+			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
+				actionRequest, actionResponse,
+				_fragmentEntryConfigurationParser, fragmentEntryLink,
+				_fragmentCollectionContributorTracker,
+				_fragmentRendererController, _fragmentRendererTracker,
+				portletId)
 		).put(
-			"layoutData", layoutDataJSONObject
+			"layoutData",
+			addFragmentEntryLinkToLayoutData(
+				actionRequest, fragmentEntryLink.getFragmentEntryLinkId())
 		);
 	}
 
@@ -277,7 +266,17 @@ public class AddPortletReactMVCActionCommand
 		AddPortletReactMVCActionCommand.class);
 
 	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
@@ -289,6 +288,9 @@ public class AddPortletReactMVCActionCommand
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -296,6 +298,9 @@ public class AddPortletReactMVCActionCommand
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

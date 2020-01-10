@@ -217,8 +217,11 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		return JSONUtil.put(
 			"fragmentEntryLink",
 			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-				actionRequest, actionResponse, fragmentEntryLink,
-				_fragmentEntryConfigurationParser, _fragmentRendererController)
+				actionRequest, actionResponse,
+				_fragmentEntryConfigurationParser, fragmentEntryLink,
+				_fragmentCollectionContributorTracker,
+				_fragmentRendererController, _fragmentRendererTracker,
+				StringPool.BLANK)
 		).put(
 			"layoutData",
 			_addFragmentEntryLinkToLayoutDataJSONObject(

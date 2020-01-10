@@ -20,7 +20,10 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -120,9 +123,12 @@ public class FragmentEntryLinkUtil {
 
 	public static JSONObject getFragmentEntryLinkJSONObject(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-			FragmentRendererController fragmentRendererController)
+			FragmentEntryLink fragmentEntryLink,
+			FragmentCollectionContributorTracker
+				fragmentCollectionContributorTracker,
+			FragmentRendererController fragmentRendererController,
+			FragmentRendererTracker fragmentRendererTracker, String portletId)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -138,6 +144,40 @@ public class FragmentEntryLinkUtil {
 
 		String configuration = fragmentRendererController.getConfiguration(
 			defaultFragmentRendererContext);
+
+		FragmentEntry fragmentEntry = getFragmentEntry(
+			fragmentEntryLink.getGroupId(),
+			fragmentCollectionContributorTracker,
+			fragmentEntryLink.getRendererKey(), themeDisplay.getLocale());
+
+		String fragmentEntryKey = null;
+		String name = null;
+
+		if (fragmentEntry != null) {
+			fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
+			name = fragmentEntry.getName();
+		}
+		else {
+			String rendererKey = fragmentEntryLink.getRendererKey();
+
+			if (Validator.isNull(rendererKey)) {
+				rendererKey =
+					FragmentRendererConstants.
+						FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY;
+			}
+
+			FragmentRenderer fragmentRenderer =
+				fragmentRendererTracker.getFragmentRenderer(rendererKey);
+
+			fragmentEntryKey = fragmentRenderer.getKey();
+
+			name = fragmentRenderer.getLabel(themeDisplay.getLocale());
+
+			if (Validator.isNotNull(portletId)) {
+				name = PortalUtil.getPortletTitle(
+					portletId, themeDisplay.getLocale());
+			}
+		}
 
 		return JSONUtil.put(
 			"configuration", JSONFactoryUtil.createJSONObject(configuration)
@@ -156,8 +196,12 @@ public class FragmentEntryLinkUtil {
 			JSONFactoryUtil.createJSONObject(
 				fragmentEntryLink.getEditableValues())
 		).put(
+			"fragmentEntryKey", fragmentEntryKey
+		).put(
 			"fragmentEntryLinkId",
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+		).put(
+			"name", name
 		);
 	}
 

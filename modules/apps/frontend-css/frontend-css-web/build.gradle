@@ -14,7 +14,7 @@ buildAlloyTheme {
 buildCSS {
 	dependsOn buildAlloyTheme
 	imports = [
-		new File(npmInstall.nodeModulesDir, "clay-css/src/scss")
+		new File(npmInstall.nodeModulesDir, "@clayui/css/src/scss")
 	]
 }
 

@@ -39,9 +39,9 @@ const reducer = (state, action) => {
 		if (multiSelect && itemId) {
 			nextState = {
 				...nextState,
-				selectedItemsIds: state.selectedItemsIds
-					.filter(id => id !== itemId)
-					.concat([itemId])
+				selectedItemsIds: state.selectedItemsIds.includes(itemId)
+					? state.selectedItemsIds.filter(id => id !== itemId)
+					: state.selectedItemsIds.concat([itemId])
 			};
 		} else if (itemId) {
 			nextState = {...nextState, selectedItemsIds: [itemId]};

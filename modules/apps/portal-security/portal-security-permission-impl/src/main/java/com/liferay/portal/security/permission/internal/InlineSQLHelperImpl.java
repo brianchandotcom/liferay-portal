@@ -250,101 +250,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			resourcePermissionSQL);
 	}
 
-	private boolean _skipReplace(
-		String sql, PermissionChecker permissionChecker, String className,
-		String classPKField, long[] groupIds) {
-
-		if (!isEnabled(groupIds)) {
-			return true;
-		}
-
-		if (Validator.isNull(className)) {
-			throw new IllegalArgumentException("className is null");
-		}
-
-		if (Objects.equals(className, AssetTag.class.getName())) {
-			throw new IllegalArgumentException(
-				"AssetTag does not support inline permissions. See LPS-82433.");
-		}
-
-		if (Validator.isNull(sql)) {
-			return true;
-		}
-
-		if (Validator.isNull(classPKField)) {
-			throw new IllegalArgumentException("classPKField is null");
-		}
-
-		long companyId = permissionChecker.getCompanyId();
-
-		if (groupIds.length == 1) {
-			long groupId = groupIds[0];
-
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if (group != null) {
-				long[] roleIds = getRoleIds(groupId);
-
-				try {
-					if (_resourcePermissionLocalService.hasResourcePermission(
-						companyId, className, ResourceConstants.SCOPE_GROUP,
-							String.valueOf(groupId), roleIds,
-							ActionKeys.VIEW) ||
-						_resourcePermissionLocalService.hasResourcePermission(
-							companyId, className,
-							ResourceConstants.SCOPE_GROUP_TEMPLATE,
-							String.valueOf(
-								GroupConstants.DEFAULT_PARENT_GROUP_ID),
-							roleIds, ActionKeys.VIEW)) {
-
-						return true;
-					}
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Unable to get resource permissions for ",
-								className, " with group ", groupId),
-							portalException);
-					}
-				}
-			}
-		}
-		else {
-			for (long groupId : groupIds) {
-				Group group = _groupLocalService.fetchGroup(groupId);
-
-				if ((group != null) && (group.getCompanyId() != companyId)) {
-					throw new IllegalArgumentException(
-						"Permission queries across multiple portal instances " +
-							"are not supported");
-				}
-			}
-		}
-
-		try {
-			if (_resourcePermissionLocalService.hasResourcePermission(
-				companyId, className, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(companyId), getRoleIds(0),
-					ActionKeys.VIEW)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to get resource permissions for ", className,
-						" with company ", companyId),
-					portalException);
-			}
-		}
-
-		return false;
-	}
-
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
@@ -590,6 +495,101 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return sb.toString();
+	}
+
+	private boolean _skipReplace(
+		String sql, PermissionChecker permissionChecker, String className,
+		String classPKField, long[] groupIds) {
+
+		if (!isEnabled(groupIds)) {
+			return true;
+		}
+
+		if (Validator.isNull(className)) {
+			throw new IllegalArgumentException("className is null");
+		}
+
+		if (Objects.equals(className, AssetTag.class.getName())) {
+			throw new IllegalArgumentException(
+				"AssetTag does not support inline permissions. See LPS-82433.");
+		}
+
+		if (Validator.isNull(sql)) {
+			return true;
+		}
+
+		if (Validator.isNull(classPKField)) {
+			throw new IllegalArgumentException("classPKField is null");
+		}
+
+		long companyId = permissionChecker.getCompanyId();
+
+		if (groupIds.length == 1) {
+			long groupId = groupIds[0];
+
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group != null) {
+				long[] roleIds = getRoleIds(groupId);
+
+				try {
+					if (_resourcePermissionLocalService.hasResourcePermission(
+							companyId, className, ResourceConstants.SCOPE_GROUP,
+							String.valueOf(groupId), roleIds,
+							ActionKeys.VIEW) ||
+						_resourcePermissionLocalService.hasResourcePermission(
+							companyId, className,
+							ResourceConstants.SCOPE_GROUP_TEMPLATE,
+							String.valueOf(
+								GroupConstants.DEFAULT_PARENT_GROUP_ID),
+							roleIds, ActionKeys.VIEW)) {
+
+						return true;
+					}
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Unable to get resource permissions for ",
+								className, " with group ", groupId),
+							portalException);
+					}
+				}
+			}
+		}
+		else {
+			for (long groupId : groupIds) {
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				if ((group != null) && (group.getCompanyId() != companyId)) {
+					throw new IllegalArgumentException(
+						"Permission queries across multiple portal instances " +
+							"are not supported");
+				}
+			}
+		}
+
+		try {
+			if (_resourcePermissionLocalService.hasResourcePermission(
+					companyId, className, ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(companyId), getRoleIds(0),
+					ActionKeys.VIEW)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get resource permissions for ", className,
+						" with company ", companyId),
+					portalException);
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";

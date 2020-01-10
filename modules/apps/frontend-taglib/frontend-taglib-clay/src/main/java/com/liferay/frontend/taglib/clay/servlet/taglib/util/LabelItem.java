@@ -25,35 +25,7 @@ import java.util.Map;
 public class LabelItem extends HashMap<String, Object> {
 
 	public static String getStyleFromWorkflowStatus(int status) {
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			return "success";
-		}
-		else if (status == WorkflowConstants.STATUS_DENIED) {
-			return "danger";
-		}
-		else if (status == WorkflowConstants.STATUS_DRAFT) {
-			return "secondary";
-		}
-		else if (status == WorkflowConstants.STATUS_EXPIRED) {
-			return "danger";
-		}
-		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			return "info";
-		}
-		else if (status == WorkflowConstants.STATUS_INACTIVE) {
-			return "secondary";
-		}
-		else if (status == WorkflowConstants.STATUS_INCOMPLETE) {
-			return "warning";
-		}
-		else if (status == WorkflowConstants.STATUS_PENDING) {
-			return "info";
-		}
-		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
-			return "info";
-		}
-
-		return "secondary";
+		return WorkflowConstants.getStyleFromWorkflowStatus(status);
 	}
 
 	public LabelItem() {

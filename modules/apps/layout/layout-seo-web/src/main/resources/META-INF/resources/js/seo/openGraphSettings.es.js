@@ -98,15 +98,24 @@ export default function({namespace, uploadOpenGraphImageURL}) {
 
 	openGraphEnabledCheck.addEventListener('click', event => {
 		const disabled = !event.target.checked;
+		const openGraphImageAltDisabled =
+			disabled || !openGraphImageTitle.value;
 
 		Liferay.Util.toggleDisabled(openGraphImageTitle, disabled);
 		Liferay.Util.toggleDisabled(openGraphImageButton, disabled);
 		Liferay.Util.toggleDisabled(openGraphClearImageButton, disabled);
 
-		Liferay.Util.toggleDisabled(openGraphImageAltField, disabled);
+		Liferay.Util.toggleDisabled(
+			openGraphImageAltField,
+			openGraphImageAltDisabled
+		);
 		Liferay.Util.toggleDisabled(
 			openGraphImageAltFieldDefaultLocale,
-			disabled
+			openGraphImageAltDisabled
+		);
+		Liferay.Util.toggleDisabled(
+			openGraphImageAltLabel,
+			openGraphImageAltDisabled
 		);
 
 		openGraphSettings.classList.toggle('disabled');

@@ -78,7 +78,7 @@ export default function StructureTreeNode({node}) {
 			onClick={event => {
 				event.stopPropagation();
 
-				selectItem(node.id);
+				selectItem(node.id, {multiSelect: event.shiftKey});
 			}}
 			onMouseLeave={event => {
 				event.stopPropagation();

@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,8 +46,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		List<String> enforceVersionArtifacts = getAttributeValues(
 			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
 
-		content = _enforceDependencyVersions(
-			absolutePath, content, enforceVersionArtifacts);
+		content = _enforceDependencyVersions(content, enforceVersionArtifacts);
 
 		Matcher matcher = _artifactPattern.matcher(content);
 
@@ -74,21 +72,11 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 	}
 
 	private String _enforceDependencyVersions(
-		String absolutePath, String content,
-		List<String> enforceVersionArtifacts) {
-
-		boolean testModule = _isTestModule(absolutePath);
-		boolean testUtilModule = _isTestUtilModule(absolutePath);
+		String content, List<String> enforceVersionArtifacts) {
 
 		for (String artifact : enforceVersionArtifacts) {
 			String[] artifactParts = StringUtil.split(
 				artifact, StringPool.COLON);
-
-			if ((testModule || testUtilModule) &&
-				Objects.equals(artifactParts[0], "com.liferay.portal")) {
-
-				continue;
-			}
 
 			Pattern pattern = Pattern.compile(
 				StringBundler.concat(
@@ -205,14 +193,6 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		else if (!version.equals("default") &&
 				 !_isMasterOnlyFile(absolutePath)) {
 
-			for (String enforceVersionArtifact : enforceVersionArtifacts) {
-				if (enforceVersionArtifact.startsWith(
-						"com.liferay.portal:" + name + ":")) {
-
-					return content;
-				}
-			}
-
 			return StringUtil.replaceFirst(content, version, "default", pos);
 		}
 
@@ -283,20 +263,6 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 				return true;
 			}
 		}
-	}
-
-	private boolean _isTestModule(String absolutePath) {
-		int x = absolutePath.lastIndexOf(StringPool.SLASH);
-
-		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
-
-		String moduleName = absolutePath.substring(y + 1, x);
-
-		if (!moduleName.endsWith("-test")) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean _isTestUtilModule(String absolutePath) {

@@ -209,7 +209,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 							"fragmentEntryLinkIds", JSONUtil.put("drop-zone")
 						).put(
 							"size", 12
-						)))));
+						))
+				).put(
+					"config", JSONUtil.put("isDropZone", true)
+				)));
 	}
 
 	private long _getPreviewClassNameId() {

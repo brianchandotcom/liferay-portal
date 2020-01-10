@@ -382,7 +382,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 
-		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''og:image:url,og:image:url_secure,og:image:type,og:image:width,og:image:height''');
+		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''og:image:url,og:image:secure_url,og:image:type,og:image:width,og:image:height''');
 	}
 
 	@description = "This ensures that users can introduce an alternative text for the image."
@@ -448,7 +448,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''og:image:url,og:image:url_secure,og:image:type,og:image:width,og:image:height''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''og:image:url,og:image:secure_url,og:image:type,og:image:width,og:image:height''');
 	}
 
 	@description = "This ensures that the users can introduce an alternative text with translated language for the image."

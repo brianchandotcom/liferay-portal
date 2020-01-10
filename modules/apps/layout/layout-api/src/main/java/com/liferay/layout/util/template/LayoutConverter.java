@@ -24,6 +24,10 @@ import java.util.Locale;
  */
 public interface LayoutConverter {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #convert(Layout, Locale)}
+	 */
 	@Deprecated
 	public LayoutData convert(Layout layout);
 

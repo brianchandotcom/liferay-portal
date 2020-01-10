@@ -65,6 +65,10 @@ public interface BulkLayoutConverter {
 	 */
 	public long[] convertLayouts(long[] plids);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #generatePreviewLayout(long, Locale)}
+	 */
 	@Deprecated
 	public Layout generatePreviewLayout(long plid) throws Exception;
 

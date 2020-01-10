@@ -292,6 +292,12 @@ public class AnalyticsMessageLocalServiceWrapper
 	}
 
 	@Override
+	public int getAnalyticsMessagesCount(long companyId) {
+		return _analyticsMessageLocalService.getAnalyticsMessagesCount(
+			companyId);
+	}
+
+	@Override
 	public
 		com.liferay.analytics.message.storage.model.
 			AnalyticsMessageBodyBlobModel getBodyBlobModel(

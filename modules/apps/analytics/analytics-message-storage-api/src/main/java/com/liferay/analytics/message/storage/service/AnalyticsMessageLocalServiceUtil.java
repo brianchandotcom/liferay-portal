@@ -267,6 +267,10 @@ public class AnalyticsMessageLocalServiceUtil {
 		return getService().getAnalyticsMessagesCount();
 	}
 
+	public static int getAnalyticsMessagesCount(long companyId) {
+		return getService().getAnalyticsMessagesCount(companyId);
+	}
+
 	public static
 		com.liferay.analytics.message.storage.model.
 			AnalyticsMessageBodyBlobModel getBodyBlobModel(

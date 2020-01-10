@@ -25,16 +25,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 
 import java.nio.charset.Charset;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -52,52 +55,50 @@ public class AnalyticsMessageSenderClientImpl
 
 	@Override
 	public Object send(String body, long companyId) throws Exception {
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build()) {
-
-			AnalyticsConfiguration analyticsConfiguration =
-				_analyticsConfigurationTracker.getAnalyticsConfiguration(
-					companyId);
-
-			if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
-				return null;
-			}
-
-			HttpPost httpPost = new HttpPost(
-				analyticsConfiguration.liferayAnalyticsEndpointURL() +
-					"/dxp-entities");
-
-			httpPost.setEntity(new StringEntity(body));
-			httpPost.setHeader("Content-Type", "application/json");
-			httpPost.setHeader(
-				"OSB-Asah-Faro-Backend-Security-Signature",
-				analyticsConfiguration.
-					liferayAnalyticsFaroBackendSecuritySignature());
-
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpPost);
-
-			StatusLine statusLine = closeableHttpResponse.getStatusLine();
-
-			if (statusLine.getStatusCode() != HttpStatus.SC_FORBIDDEN) {
-				return closeableHttpResponse;
-			}
-
-			HttpEntity httpEntity = closeableHttpResponse.getEntity();
-
-			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-				EntityUtils.toString(httpEntity, Charset.defaultCharset()));
-
-			String message = responseJSONObject.getString("message");
-
-			if (message.equals("INVALID_TOKEN")) {
-				_disconnectDataSource(companyId);
-			}
-
-			return closeableHttpResponse;
+		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
+			return null;
 		}
+
+		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
+			body,
+			analyticsConfiguration.
+				liferayAnalyticsFaroBackendSecuritySignature(),
+			HttpMethods.POST,
+			analyticsConfiguration.liferayAnalyticsEndpointURL() +
+				"/dxp-entities");
+
+		return _execute(companyId, httpUriRequest);
+	}
+
+	private HttpUriRequest _buildHttpUriRequest(
+			String body, String liferayAnalyticsFaroBackendSecuritySignature,
+			String method, String url)
+		throws Exception {
+
+		HttpUriRequest httpUriRequest = null;
+
+		if (method.equals(HttpMethods.GET)) {
+			httpUriRequest = new HttpGet(url);
+		}
+		else if (method.equals(HttpMethods.POST)) {
+			HttpPost httpPost = new HttpPost(url);
+
+			if (Validator.isNotNull(body)) {
+				httpPost.setEntity(new StringEntity(body));
+			}
+
+			httpUriRequest = httpPost;
+		}
+
+		httpUriRequest.setHeader("Content-Type", "application/json");
+		httpUriRequest.setHeader(
+			"OSB-Asah-Faro-Backend-Security-Signature",
+			liferayAnalyticsFaroBackendSecuritySignature);
+
+		return httpUriRequest;
 	}
 
 	private void _disconnectDataSource(long companyId) {
@@ -137,6 +138,39 @@ public class AnalyticsMessageSenderClientImpl
 					"Unable to remove analytics configuration for company " +
 						companyId);
 			}
+		}
+	}
+
+	private CloseableHttpResponse _execute(
+			long companyId, HttpUriRequest httpUriRequest)
+		throws Exception {
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build()) {
+
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpUriRequest);
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() != HttpStatus.SC_FORBIDDEN) {
+				return closeableHttpResponse;
+			}
+
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+				EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset()));
+
+			String message = responseJSONObject.getString("message");
+
+			if (message.equals("INVALID_TOKEN")) {
+				_disconnectDataSource(companyId);
+			}
+
+			return closeableHttpResponse;
 		}
 	}
 

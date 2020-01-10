@@ -88,6 +88,7 @@ describe('ImageProcessor', () => {
 
 			expect(anchor.getAttribute('href')).toBe('http://localpie');
 			expect(anchor.getAttribute('target')).toBe('_blank');
+			expect(image.getAttribute('src')).toBe('apple-pie.webp');
 		});
 
 		it('wraps everything with an anchor if the editable element is not a link', () => {
@@ -106,6 +107,7 @@ describe('ImageProcessor', () => {
 				'http://localpie'
 			);
 			expect(image.parentElement.getAttribute('target')).toBe('_blank');
+			expect(image.getAttribute('src')).toBe('apple-pie.webp');
 		});
 	});
 });

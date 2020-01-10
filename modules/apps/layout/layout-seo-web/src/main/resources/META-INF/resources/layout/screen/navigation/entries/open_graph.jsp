@@ -76,10 +76,10 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			%>
 
 			<div id="<portlet:namespace />openGraphSettings">
+				<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
+
 				<c:choose>
 					<c:when test="<%= selLayoutSEOEntry != null %>">
-						<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
-
 						<aui:input disabled="<%= Validator.isNull(layoutsSEODisplayContext.getOpenGraphImageTitle()) %>" helpMessage="open-graph-image-alt-description-help" label="open-graph-image-alt-description" localized="<%= true %>" name="openGraphImageAlt" placeholder="open-graph-alt-description" />
 
 						<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-open-graph-title" name="openGraphTitleEnabled" type="checkbox" wrapperCssClass="mb-1" />

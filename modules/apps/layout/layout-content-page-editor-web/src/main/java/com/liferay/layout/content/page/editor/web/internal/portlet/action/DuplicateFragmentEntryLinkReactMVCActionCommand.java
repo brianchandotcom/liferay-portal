@@ -29,6 +29,7 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -56,9 +57,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-
-import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -199,9 +197,12 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 			fragmentRendererContext.setLocale(serviceContext.getLocale());
 			fragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
 
-			FragmentEntry fragmentEntry = _getFragmentEntry(
-				fragmentEntryLink.getFragmentEntryId(),
-				fragmentEntryLink.getRendererKey(), serviceContext);
+			FragmentEntry fragmentEntry =
+				FragmentEntryLinkUtil.getFragmentEntry(
+					fragmentEntryLink.getGroupId(),
+					_fragmentCollectionContributorTracker,
+					fragmentEntryLink.getRendererKey(),
+					serviceContext.getLocale());
 
 			String fragmentEntryKey = null;
 			String name = null;
@@ -290,30 +291,6 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 		}
 
 		return jsonObject;
-	}
-
-	private FragmentEntry _getContributedFragmentEntry(
-		String fragmentEntryKey, Locale locale) {
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
-
-		return fragmentEntries.get(fragmentEntryKey);
-	}
-
-	private FragmentEntry _getFragmentEntry(
-		long fragmentEntryId, String rendererKey,
-		ServiceContext serviceContext) {
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		return _getContributedFragmentEntry(
-			rendererKey, serviceContext.getLocale());
 	}
 
 	@Reference

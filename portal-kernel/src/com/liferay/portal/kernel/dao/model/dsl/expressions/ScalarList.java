@@ -40,18 +40,20 @@ public class ScalarList<T> extends BaseASTNode implements Expression<T> {
 	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
 		sb.append("(");
 
-		for (Object value : _values) {
-			if (Scalar.isScalarValue(value)) {
+		for (int i = 0; i < _values.length; i++) {
+			if (Scalar.isScalarValue(_values[i])) {
 				sb.append(StringPool.QUESTION);
 			}
 			else {
-				sb.append(value);
+				sb.append(_values[i]);
 			}
 
-			sb.append(", ");
+			if (i < (_values.length - 1)) {
+				sb.append(", ");
+			}
 		}
 
-		sb.setStringAt(")", sb.index() - 1);
+		sb.append(")");
 	}
 
 	private final T[] _values;

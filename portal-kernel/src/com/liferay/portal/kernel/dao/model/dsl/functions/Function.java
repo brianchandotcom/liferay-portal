@@ -48,13 +48,15 @@ public class Function<T> extends BaseASTNode implements Expression<T> {
 	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
 		sb.append(_functionType.getPrefix());
 
-		for (Expression<?> expression : _expressions) {
-			expression.toSQL(sb, astNodeListener);
+		for (int i = 0; i < _expressions.length; i++) {
+			_expressions[i].toSQL(sb, astNodeListener);
 
-			sb.append(_functionType.getDelimiter());
+			if (i < (_expressions.length - 1)) {
+				sb.append(_functionType.getDelimiter());
+			}
 		}
 
-		sb.setStringAt(_functionType.getPostfix(), sb.index() - 1);
+		sb.append(_functionType.getPostfix());
 	}
 
 	private final Expression<?>[] _expressions;

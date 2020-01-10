@@ -39,13 +39,13 @@ public class GroupBy
 	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
 		sb.append("group by ");
 
-		for (Expression<?> expression : _expressions) {
-			expression.toSQL(sb, astNodeListener);
+		for (int i = 0; i < _expressions.length; i++) {
+			_expressions[i].toSQL(sb, astNodeListener);
 
-			sb.append(", ");
+			if (i < (_expressions.length - 1)) {
+				sb.append(", ");
+			}
 		}
-
-		sb.setIndex(sb.index() - 1);
 	}
 
 	public Expression<?>[] getExpressions() {

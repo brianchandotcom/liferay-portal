@@ -194,6 +194,12 @@ public class StartupAction extends SimpleAction {
 		// Upgrade
 
 		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Auto upgrading is not supported for a production " +
+						"environment, use the Upgrade Tool instead");
+			}
+
 			DBUpgrader.upgrade();
 		}
 

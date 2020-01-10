@@ -231,8 +231,8 @@ request.setAttribute("view_user.jsp-user", user2);
 
 									groupParams.put("site", Boolean.TRUE);
 
-									if (group.isUser()) {
-										groupParams.put("usersGroups", Long.valueOf(group.getClassPK()));
+									if (scopeGroup.isUser()) {
+										groupParams.put("usersGroups", Long.valueOf(scopeGroup.getClassPK()));
 									}
 									else {
 										groupParams.put("usersGroups", Long.valueOf(themeDisplay.getUserId()));
@@ -240,7 +240,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 									groupParams.put("active", Boolean.TRUE);
 
-									if (group.isUser() && (themeDisplay.getUserId() != group.getClassPK())) {
+									if (scopeGroup.isUser() && (themeDisplay.getUserId() != scopeGroup.getClassPK())) {
 										List<Integer> types = new ArrayList<Integer>();
 
 										types.add(GroupConstants.TYPE_SITE_OPEN);
@@ -273,7 +273,7 @@ request.setAttribute("view_user.jsp-user", user2);
 											</c:when>
 											<c:otherwise>
 												<div class="empty">
-													<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), group.getDescriptiveName(locale))) %>" key="x-does-not-belong-to-any-sites" translateArguments="<%= false %>" />
+													<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), scopeGroup.getDescriptiveName(locale))) %>" key="x-does-not-belong-to-any-sites" translateArguments="<%= false %>" />
 												</div>
 											</c:otherwise>
 										</c:choose>
@@ -331,7 +331,7 @@ request.setAttribute("view_user.jsp-user", user2);
 											</div>
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), group.getDescriptiveName(locale))) %>" key="x-does-not-have-any-tags" translateArguments="<%= false %>" />
+											<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(user2.getUserId(), scopeGroup.getDescriptiveName(locale))) %>" key="x-does-not-have-any-tags" translateArguments="<%= false %>" />
 										</c:otherwise>
 									</c:choose>
 								</c:if>

@@ -254,7 +254,7 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 					fragmentEntryLink.getEditableValues())
 			).put(
 				"fragmentEntryLinkId",
-				fragmentEntryLink.getFragmentEntryLinkId()
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
 			)
 		).put(
 			"layoutData",

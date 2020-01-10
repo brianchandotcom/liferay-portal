@@ -214,7 +214,8 @@ public class AddPortletReactMVCActionCommand
 		).put(
 			"editableValues", fragmentEntryLink.getEditableValues()
 		).put(
-			"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId()
+			"fragmentEntryLinkId",
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
 		).put(
 			"name", _portal.getPortletTitle(portletId, themeDisplay.getLocale())
 		);

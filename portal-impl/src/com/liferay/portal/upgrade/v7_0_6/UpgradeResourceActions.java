@@ -24,7 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * @author     Michael Bowerman
+ * @author Michael Bowerman
  */
 public class UpgradeResourceActions extends UpgradeProcess {
 

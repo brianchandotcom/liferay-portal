@@ -334,6 +334,21 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		long companyId = permissionChecker.getCompanyId();
 
+		if (_skipReplace(companyId, className, groupIds)) {
+			return sql;
+		}
+
+		String resourcePermissionSQL = _getResourcePermissionSQL(
+			permissionChecker, className, userIdField, groupIds, bridgeJoin);
+
+		return _insertResourcePermissionSQL(
+			sql, className, classPKField, userIdField, groupIdField, groupIds,
+			resourcePermissionSQL);
+	}
+
+	private boolean _skipReplace(
+		long companyId, String className, long[] groupIds) {
+
 		if (groupIds.length == 1) {
 			long groupId = groupIds[0];
 
@@ -354,7 +369,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 								GroupConstants.DEFAULT_PARENT_GROUP_ID),
 							roleIds, ActionKeys.VIEW)) {
 
-						return sql;
+						return true;
 					}
 				}
 				catch (PortalException portalException) {
@@ -386,7 +401,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					String.valueOf(companyId), getRoleIds(0),
 					ActionKeys.VIEW)) {
 
-				return sql;
+				return true;
 			}
 		}
 		catch (PortalException portalException) {
@@ -399,12 +414,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			}
 		}
 
-		String resourcePermissionSQL = _getResourcePermissionSQL(
-			permissionChecker, className, userIdField, groupIds, bridgeJoin);
-
-		return _insertResourcePermissionSQL(
-			sql, className, classPKField, userIdField, groupIdField, groupIds,
-			resourcePermissionSQL);
+		return false;
 	}
 
 	private void _appendPermissionSQL(

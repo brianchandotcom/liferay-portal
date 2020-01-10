@@ -34,7 +34,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<portlet:actionURL name="/layout/edit_open_graph" var="editOpenGraphURL" />
+<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/layout/edit_open_graph" var="editOpenGraphURL" />
 
 <aui:form action="<%= editOpenGraphURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

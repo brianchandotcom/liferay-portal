@@ -36,7 +36,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<portlet:actionURL name="/layout/edit_seo" var="editSEOURL" />
+<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/layout/edit_seo" var="editSEOURL" />
 
 <aui:form action="<%= editSEOURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

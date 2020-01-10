@@ -103,14 +103,14 @@ definition {
 			var key_searchAssetTitle = "${searchAssetTitle}";
 
 			AssertTextEquals(
-				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+				locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE",
 				value1 = "${searchAssetTitle}");
 		}
 
 		for (var searchAssetTitle : list "Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title") {
 			var key_searchAssetTitle = "${searchAssetTitle}";
 
-			AssertElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+			AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
 		}
 
 		ClassicSearch.viewAssetTypeFacetPG(
@@ -126,14 +126,14 @@ definition {
 			var key_searchAssetTitle = "${searchAssetTitle}";
 
 			AssertTextEquals(
-				locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+				locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE",
 				value1 = "${searchAssetTitle}");
 		}
 
 		for (var searchAssetTitle : list "Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title") {
 			var key_searchAssetTitle = "${searchAssetTitle}";
 
-			AssertElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+			AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
 		}
 	}
 

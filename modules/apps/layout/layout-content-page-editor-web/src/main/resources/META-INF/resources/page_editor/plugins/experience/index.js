@@ -24,34 +24,10 @@ import {
 } from './actions';
 import ExperienceToolbarSection from './components/ExperienceToolbarSection';
 import createExperienceReducer from './reducers/createExperience';
+import deleteExperienceReducer from './reducers/deleteExperience';
 import selectExperienceReducer from './reducers/selectExperience';
 import updateExperienceReducer from './reducers/updateExperience';
 import updateExperiencePriorityReducer from './reducers/updateExperiencePriority';
-
-function deleteExperienceReducer(state, payload) {
-	let nextState = state;
-	const {defaultExperienceId, segmentsExperienceId} = payload;
-
-	const availableSegmentsExperiences = {
-		...nextState.availableSegmentsExperiences
-	};
-
-	delete availableSegmentsExperiences[segmentsExperienceId];
-
-	nextState = {
-		...nextState,
-		availableSegmentsExperiences
-	};
-
-	if (nextState.segmentsExperienceId === segmentsExperienceId) {
-		nextState = {
-			...nextState,
-			segmentsExperienceId: defaultExperienceId
-		};
-	}
-
-	return nextState;
-}
 
 function renderExperiencesSection() {
 	const {Component} = this;

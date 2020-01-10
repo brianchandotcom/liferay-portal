@@ -90,8 +90,6 @@ public class ReferredSegmentsEntryProviderTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 
-		Thread.sleep(2000);
-
 		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 				segmentsEntry3.getSegmentsEntryId());
@@ -124,8 +122,6 @@ public class ReferredSegmentsEntryProviderTest {
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
-
-		Thread.sleep(2000);
 
 		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
@@ -174,8 +170,6 @@ public class ReferredSegmentsEntryProviderTest {
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 
-		Thread.sleep(2000);
-
 		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 				segmentsEntry3.getSegmentsEntryId());
@@ -221,8 +215,6 @@ public class ReferredSegmentsEntryProviderTest {
 		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
-
-		Thread.sleep(2000);
 
 		int segmentsEntryClassPKsCount =
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(

@@ -24,7 +24,7 @@ import updateRowColumns from '../thunks/updateRowColumns';
 
 const NUMBER_OF_COLUMNS_OPTIONS = ['0', '1', '2', '3', '4', '5', '6'];
 
-const SELECTORS = {
+const ROW_CONFIGURATION_IDENTIFIERS = {
 	gutters: 'gutters',
 	numberOfColumns: 'numberOfColumns'
 };
@@ -51,8 +51,8 @@ export const RowConfigurationPanel = ({item}) => {
 		useContext(StoreContext)
 	);
 
-	const handleSelectValueChanged = (identifier, value) => {
-		if (identifier === SELECTORS.numberOfColumns) {
+	const handleConfigurationValueChanged = (identifier, value) => {
+		if (identifier === ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns) {
 			const currentNumberOfColumns = item.config.numberOfColumns;
 			const newNumberOfColumns = value;
 
@@ -93,15 +93,15 @@ export const RowConfigurationPanel = ({item}) => {
 	return (
 		<>
 			<ClayForm.Group>
-				<label htmlFor="floatingToolbarSpacingPanelNumberOfColumnsOption">
+				<label htmlFor="rowNumberOfColumns">
 					{Liferay.Language.get('number-of-columns')}
 				</label>
 				<ClaySelectWithOption
 					aria-label={Liferay.Language.get('number-of-columns')}
-					id="floatingToolbarSpacingPanelNumberOfColumnsOption"
+					id="rowNumberOfColumns"
 					onChange={({target: {value}}) => {
-						handleSelectValueChanged(
-							SELECTORS.numberOfColumns,
+						handleConfigurationValueChanged(
+							ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns,
 							Number(value)
 						);
 					}}
@@ -119,7 +119,10 @@ export const RowConfigurationPanel = ({item}) => {
 						checked={item.config.gutters}
 						label={Liferay.Language.get('columns-gutter')}
 						onValueChange={value =>
-							handleSelectValueChanged(SELECTORS.gutters, value)
+							handleConfigurationValueChanged(
+								ROW_CONFIGURATION_IDENTIFIERS.gutters,
+								value
+							)
 						}
 					/>
 				</ClayForm.Group>

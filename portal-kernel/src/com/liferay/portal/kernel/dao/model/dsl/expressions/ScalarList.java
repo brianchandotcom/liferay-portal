@@ -44,12 +44,7 @@ public class ScalarList<T> extends BaseASTNode implements Expression<T> {
 		consumer.accept("(");
 
 		for (int i = 0; i < _values.length; i++) {
-			if (Scalar.isScalarValue(_values[i])) {
-				consumer.accept(StringPool.QUESTION);
-			}
-			else {
-				consumer.accept(String.valueOf(_values[i]));
-			}
+			consumer.accept(StringPool.QUESTION);
 
 			if (i < (_values.length - 1)) {
 				consumer.accept(", ");

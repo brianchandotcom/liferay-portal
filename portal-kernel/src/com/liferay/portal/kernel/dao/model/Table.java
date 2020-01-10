@@ -70,6 +70,19 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 		return _columnMap.get(columnName);
 	}
 
+	@SuppressWarnings("unchecked")
+	public <C> Column<T, C> getColumn(String columnName, Class<C> clazz) {
+		Column<T, ?> column = _columnMap.get(columnName);
+
+		if ((column == null) ||
+			!clazz.isAssignableFrom(column.getColumnType())) {
+
+			return null;
+		}
+
+		return (Column<T, C>)column;
+	}
+
 	public Collection<Column<T, ?>> getColumns() {
 		return Collections.unmodifiableCollection(_columnMap.values());
 	}

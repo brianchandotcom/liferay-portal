@@ -349,7 +349,7 @@ definition {
 
 		Refresh();
 
-		Click(locator1 = "Message#EMPTY_INFO_TAGLIB");
+		Click(locator1 = "Message#NO_PAGES");
 
 		Click(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 

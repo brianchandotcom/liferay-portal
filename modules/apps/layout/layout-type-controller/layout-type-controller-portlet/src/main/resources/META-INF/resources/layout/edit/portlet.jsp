@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/html/portal/layout/edit/init.jsp" %>
 
 <%
 LayoutTypePortlet selLayoutTypePortlet = null;

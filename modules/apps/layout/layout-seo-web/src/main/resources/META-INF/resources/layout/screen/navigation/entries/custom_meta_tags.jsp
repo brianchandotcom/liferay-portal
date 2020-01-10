@@ -46,6 +46,17 @@ if (Validator.isNull(backURL)) {
 			</p>
 		</div>
 
+		<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
+
+		<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
+
+			<%
+			DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
 		<liferay-ddm:html
 			classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 			classPK="<%= layoutsSEODisplayContext.getDDMStructurePrimaryKey() %>"

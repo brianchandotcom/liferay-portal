@@ -14,6 +14,7 @@
 
 package com.liferay.layout.seo.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -107,50 +109,60 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 			canonicalURLMap = layoutSEOEntry.getCanonicalURLMap();
 		}
 
-		_layoutSEOEntryService.updateLayoutSEOEntry(
-			groupId, privateLayout, layoutId, canonicalURLEnabled,
-			canonicalURLMap, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openGraphImageAltMap,
-			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,
-			serviceContext);
-
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
-
-		if (draftLayout != null) {
+		try {
 			_layoutSEOEntryService.updateLayoutSEOEntry(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				canonicalURLEnabled, canonicalURLMap,
-				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageAltMap, openGraphImageFileEntryId,
-				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+				groupId, privateLayout, layoutId, canonicalURLEnabled,
+				canonicalURLMap, openGraphDescriptionEnabled,
+				openGraphDescriptionMap, openGraphImageAltMap,
+				openGraphImageFileEntryId, openGraphTitleEnabled,
+				openGraphTitleMap, serviceContext);
+
+			Layout draftLayout = _layoutLocalService.fetchLayout(
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+			if (draftLayout != null) {
+				_layoutSEOEntryService.updateLayoutSEOEntry(
+					groupId, privateLayout, draftLayout.getLayoutId(),
+					canonicalURLEnabled, canonicalURLMap,
+					openGraphDescriptionEnabled, openGraphDescriptionMap,
+					openGraphImageAltMap, openGraphImageFileEntryId,
+					openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			}
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			EventsProcessorUtil.process(
+				PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
+				layoutTypePortlet.getConfigurationActionUpdate(),
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse));
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNull(redirect)) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				redirect = _portal.getLayoutFullURL(layout, themeDisplay);
+			}
+
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			MultiSessionMessages.add(
+				actionRequest, portletResource + "layoutUpdated", layout);
+
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
+		catch (Throwable ddmfve) {
+			if (ddmfve instanceof DDMFormValuesValidationException) {
+				SessionErrors.add(actionRequest, ddmfve.getClass(), ddmfve);
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		EventsProcessorUtil.process(
-			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
-			layoutTypePortlet.getConfigurationActionUpdate(),
-			_portal.getHttpServletRequest(actionRequest),
-			_portal.getHttpServletResponse(actionResponse));
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			redirect = _portal.getLayoutFullURL(layout, themeDisplay);
+				sendRedirect(actionRequest, actionResponse);
+			}
 		}
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		MultiSessionMessages.add(
-			actionRequest, portletResource + "layoutUpdated", layout);
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	@Reference

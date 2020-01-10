@@ -24,4 +24,6 @@ public interface AnalyticsMessageSenderClient {
 
 	public Object send(String body, long companyId) throws Exception;
 
+	public void validateConnection(long companyId) throws Exception;
+
 }

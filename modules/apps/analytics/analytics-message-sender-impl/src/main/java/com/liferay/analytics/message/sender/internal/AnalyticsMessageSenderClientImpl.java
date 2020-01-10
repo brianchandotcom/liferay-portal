@@ -73,6 +73,27 @@ public class AnalyticsMessageSenderClientImpl
 		return _execute(companyId, httpUriRequest);
 	}
 
+	@Override
+	public void validateConnection(long companyId) throws Exception {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
+			return;
+		}
+
+		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
+			null,
+			analyticsConfiguration.
+				liferayAnalyticsFaroBackendSecuritySignature(),
+			HttpMethods.GET,
+			analyticsConfiguration.liferayAnalyticsEndpointURL() +
+				"/api/1.0/data-sources/" +
+					analyticsConfiguration.liferayAnalyticsDataSourceId());
+
+		_execute(companyId, httpUriRequest);
+	}
+
 	private HttpUriRequest _buildHttpUriRequest(
 			String body, String liferayAnalyticsFaroBackendSecuritySignature,
 			String method, String url)

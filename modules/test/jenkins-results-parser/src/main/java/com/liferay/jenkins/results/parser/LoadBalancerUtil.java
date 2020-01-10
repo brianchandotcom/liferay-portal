@@ -58,13 +58,10 @@ public class LoadBalancerUtil {
 			allJenkinsMasters = _jenkinsMasters.get(masterPrefix);
 		}
 
-		List<String> blacklist;
+		List<String> blacklist = _getBlacklist(properties, verbose);
 
 		if ((blacklistString != null) && !blacklistString.isEmpty()) {
 			blacklist = Arrays.asList(blacklistString.split(","));
-		}
-		else {
-			blacklist = _getBlacklist(properties, verbose);
 		}
 
 		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(

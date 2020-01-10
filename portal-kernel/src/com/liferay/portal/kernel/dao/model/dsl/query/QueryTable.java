@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
  */
 public class QueryTable extends Table<QueryTable> {
 
-	public QueryTable(String tableName, Query query) {
-		super(tableName, () -> new QueryTable(tableName, query));
+	public QueryTable(String name, Query query) {
+		super(null, () -> new QueryTable(name, query));
+
+		setAlias(name);
 
 		_query = query;
 	}
@@ -37,7 +39,7 @@ public class QueryTable extends Table<QueryTable> {
 
 		sb.append(") ");
 
-		sb.append(getTableName());
+		sb.append(getAlias());
 	}
 
 	private final Query _query;

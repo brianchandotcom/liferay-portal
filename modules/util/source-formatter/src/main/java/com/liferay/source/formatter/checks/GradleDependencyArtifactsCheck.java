@@ -48,15 +48,21 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 		content = _enforceDependencyVersions(content, enforceVersionArtifacts);
 
+		List<String> enforceGroupPortalVersionArtifacts = getAttributeValues(
+			_ENFORCE_GROUP_PORTAL_VERSION_ARTIFACTS_KEY, absolutePath);
+
 		Matcher matcher = _artifactPattern.matcher(content);
 
 		while (matcher.find()) {
-			String name = matcher.group(3);
-			String version = matcher.group(4);
+			String configurationName = matcher.group(2);
+			String dependency = matcher.group(3);
+			String name = matcher.group(4);
+			String version = matcher.group(5);
 
 			content = _formatVersion(
-				fileName, absolutePath, content, matcher.group(2), name,
-				version, matcher.start(3), enforceVersionArtifacts);
+				fileName, absolutePath, content, dependency, configurationName,
+				name, version, matcher.start(4),
+				enforceGroupPortalVersionArtifacts, enforceVersionArtifacts);
 
 			if ((isSubrepository() || absolutePath.contains("/modules/apps/") ||
 				 absolutePath.contains("/modules/dxp/apps/") ||
@@ -138,7 +144,9 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 	private String _formatVersion(
 			String fileName, String absolutePath, String content,
-			String dependency, String name, String version, int pos,
+			String dependency, String configurationName, String name,
+			String version, int pos,
+			List<String> enforceGroupPortalVersionArtifacts,
 			List<String> enforceVersionArtifacts)
 		throws IOException {
 
@@ -190,8 +198,22 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 					getLineNumber(content, pos));
 			}
 		}
-		else if (!version.equals("default") &&
-				 !_isMasterOnlyFile(absolutePath)) {
+		else if (!_isMasterOnlyFile(absolutePath)) {
+			if (!configurationName.startsWith("test") &&
+				!_isTestModule(absolutePath) &&
+				!_isTestUtilModule(absolutePath) &&
+				!absolutePath.contains("/modules/test/")) {
+
+				for (String artifact : enforceGroupPortalVersionArtifacts) {
+					String[] artifactParts = StringUtil.split(
+						artifact, StringPool.COLON);
+
+					if (name.equals(artifactParts[0])) {
+						return StringUtil.replaceFirst(
+							content, version, artifactParts[1], pos);
+					}
+				}
+			}
 
 			return StringUtil.replaceFirst(content, version, "default", pos);
 		}
@@ -265,6 +287,20 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		}
 	}
 
+	private boolean _isTestModule(String absolutePath) {
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+		String moduleName = absolutePath.substring(y + 1, x);
+
+		if (!moduleName.endsWith("-test")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _isTestUtilModule(String absolutePath) {
 		int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
@@ -305,13 +341,16 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String _ENFORCE_GROUP_PORTAL_VERSION_ARTIFACTS_KEY =
+		"enforceGroupPortalVersionArtifacts";
+
 	private static final String _ENFORCE_VERSION_ARTIFACTS_KEY =
 		"enforceVersionArtifacts";
 
 	private static final String _RENAME_ARTIFACTS_KEY = "renameArtifacts";
 
 	private static final Pattern _artifactPattern = Pattern.compile(
-		"\n\t*(.* (group: \"[^\"]+\", name: \"([^\"]+)\", " +
+		"\n\t*(\\s+(\\S+)\\s+(group: \"[^\"]+\", name: \"([^\"]+)\", " +
 			"version: \"([^\"]+)\"))");
 	private static final Pattern _bndConditionalPackagePattern =
 		Pattern.compile(

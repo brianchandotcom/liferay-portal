@@ -714,9 +714,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
-
-		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_GET_INSTANCE_ID");
+		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		WorkflowMetrics.validateInstanceDetails(
 			assetTitle = "Blogs Entry Title",
@@ -751,8 +749,6 @@ definition {
 			workflowFilterOption = "COMPLETED",
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
-
-		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		WorkflowMetrics.validateInstanceDetails(processStatus = "Completed");
 	}

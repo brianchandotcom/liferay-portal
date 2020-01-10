@@ -94,13 +94,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WORKFLOW_GET_INSTANCE_ID</td>
-	<td>//td[contains(@class,'table-title')]/a[@data-testid='instanceIdLink']/strong</td>
-	<td></td>
-</tr>
-<tr>
 	<td>WORKFLOW_INSTANCE_ID</td>
-	<td>//td[contains(@class,'table-title')]//strong</td>
+	<td>//td[contains(@class,'table-title')]//strong | //span[contains(@data-testid,'instanceIdLink')]//strong</td>
 	<td></td>
 </tr>
 <tr>

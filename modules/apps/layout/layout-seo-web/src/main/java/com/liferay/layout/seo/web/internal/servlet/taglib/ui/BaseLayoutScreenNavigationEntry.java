@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -77,9 +76,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		Group group = groupLocalService.fetchGroup(layout.getGroupId());
+		Group group = layout.getGroup();
 
-		if ((group != null) && group.isLayoutPrototype()) {
+		if (group.isLayoutPrototype()) {
 			return false;
 		}
 
@@ -137,9 +136,6 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected DLURLHelper dlurlHelper;
-
-	@Reference
-	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected ItemSelector itemSelector;

@@ -23,4 +23,9 @@
 		background-color: #fff;
 		color: #6b6c7e !important;
 	}
+
+	body.open & {
+		left: 320px;
+		width: calc(100% - 320px);
+	}
 }

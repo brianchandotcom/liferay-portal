@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
@@ -42,7 +41,7 @@ public class OrderByExpression {
 	public String toString() {
 		StringBundler sb = new StringBundler();
 
-		_expression.accept(new DefaultASTNodeVisitor(sb));
+		_expression.toSQL(sb, null);
 
 		if (_ascending) {
 			sb.append(" asc");

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 import java.util.Objects;
 
@@ -24,16 +24,11 @@ import java.util.Objects;
  * @author Preston Crary
  */
 public class CaseWhenThen<T>
-	implements ASTNode, ElseEndStep<T>, WhenThenStep<T> {
+	extends BaseASTNode implements ElseEndStep<T>, WhenThenStep<T> {
 
 	public CaseWhenThen(Predicate predicate, Expression<T> thenExpression) {
 		_predicate = Objects.requireNonNull(predicate);
 		_thenExpression = Objects.requireNonNull(thenExpression);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	public Predicate getPredicate() {
@@ -45,12 +40,14 @@ public class CaseWhenThen<T>
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("case when ");
 
-		astNodeVisitor.visit(this);
+		_predicate.toSQL(sb, astNodeListener);
 
-		return astNodeVisitor.toString();
+		sb.append(" then ");
+
+		_thenExpression.toSQL(sb, astNodeListener);
 	}
 
 	private final Predicate _predicate;

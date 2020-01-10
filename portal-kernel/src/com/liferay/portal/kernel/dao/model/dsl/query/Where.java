@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 
@@ -32,13 +33,15 @@ public class Where
 		_predicate = Objects.requireNonNull(predicate);
 	}
 
-	public Predicate getPredicate() {
-		return _predicate;
+	@Override
+	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("where ");
+
+		_predicate.toSQL(sb, astNodeListener);
 	}
 
-	@Override
-	protected void doAccept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
+	public Predicate getPredicate() {
+		return _predicate;
 	}
 
 	private final Predicate _predicate;

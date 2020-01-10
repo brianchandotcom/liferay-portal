@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,7 +26,8 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class AggregateExpression<T> implements Expression<T> {
+public class AggregateExpression<T>
+	extends BaseASTNode implements Expression<T> {
 
 	public static final Alias<Long> COUNT_STAR_COUNT_VALUE = new Alias<>(
 		new AggregateExpression<>(false, null, "count"),
@@ -37,11 +39,6 @@ public class AggregateExpression<T> implements Expression<T> {
 		_distinct = distinct;
 		_expression = expression;
 		_name = Objects.requireNonNull(name);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	public Expression<?> getExpression() {
@@ -57,12 +54,23 @@ public class AggregateExpression<T> implements Expression<T> {
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append(_name);
 
-		astNodeVisitor.visit(this);
+		sb.append("(");
 
-		return astNodeVisitor.toString();
+		if (_distinct) {
+			sb.append("distinct ");
+		}
+
+		if (_expression == null) {
+			sb.append("*");
+		}
+		else {
+			_expression.toSQL(sb, astNodeListener);
+		}
+
+		sb.append(")");
 	}
 
 	private final boolean _distinct;

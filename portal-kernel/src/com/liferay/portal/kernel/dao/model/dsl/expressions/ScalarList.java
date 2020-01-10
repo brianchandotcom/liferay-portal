@@ -14,13 +14,15 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 /**
  * @author Preston Crary
  */
-public class ScalarList<T> implements Expression<T> {
+public class ScalarList<T> extends BaseASTNode implements Expression<T> {
 
 	public ScalarList(T[] values) {
 		if (values.length == 0) {
@@ -30,22 +32,26 @@ public class ScalarList<T> implements Expression<T> {
 		_values = values;
 	}
 
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
-	}
-
 	public T[] getValues() {
 		return _values;
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("(");
 
-		astNodeVisitor.visit(this);
+		for (Object value : _values) {
+			if (Scalar.isScalarValue(value)) {
+				sb.append(StringPool.QUESTION);
+			}
+			else {
+				sb.append(value);
+			}
 
-		return astNodeVisitor.toString();
+			sb.append(", ");
+		}
+
+		sb.setStringAt(")", sb.index() - 1);
 	}
 
 	private final T[] _values;

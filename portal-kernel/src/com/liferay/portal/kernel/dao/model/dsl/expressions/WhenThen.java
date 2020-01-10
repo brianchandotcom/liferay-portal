@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 import java.util.Objects;
@@ -35,17 +36,23 @@ public class WhenThen<T>
 		_thenExpression = Objects.requireNonNull(thenExpression);
 	}
 
+	@Override
+	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("when ");
+
+		_predicate.toSQL(sb, astNodeListener);
+
+		sb.append(" then ");
+
+		_thenExpression.toSQL(sb, astNodeListener);
+	}
+
 	public Predicate getPredicate() {
 		return _predicate;
 	}
 
 	public Expression<T> getThenExpression() {
 		return _thenExpression;
-	}
-
-	@Override
-	protected void doAccept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	private final Predicate _predicate;

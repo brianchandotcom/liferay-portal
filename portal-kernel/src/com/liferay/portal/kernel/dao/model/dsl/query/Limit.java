@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 /**
@@ -38,8 +39,7 @@ public class Limit extends BaseASTNode implements Query {
 	}
 
 	@Override
-	protected void doAccept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
 	}
 
 	private final int _end;

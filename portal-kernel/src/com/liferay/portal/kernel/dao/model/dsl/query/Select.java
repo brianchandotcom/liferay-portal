@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
@@ -23,16 +24,11 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class Select implements FromStep, Query {
+public class Select extends BaseASTNode implements FromStep, Query {
 
 	public Select(boolean distinct, Expression<?>[] expressions) {
 		_distinct = distinct;
 		_expressions = Objects.requireNonNull(expressions);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	public Expression<?>[] getExpressions() {
@@ -44,12 +40,34 @@ public class Select implements FromStep, Query {
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("select ");
 
-		astNodeVisitor.visit(this);
+		if (_distinct) {
+			sb.append("distinct ");
+		}
 
-		return astNodeVisitor.toString();
+		if (_expressions.length > 0) {
+			for (Expression<?> expression : _expressions) {
+				Expression<?> unwrappedExpression = expression.unwrapAlias();
+
+				unwrappedExpression.toSQL(sb, astNodeListener);
+
+				String alias = expression.getAlias();
+
+				if (alias != null) {
+					sb.append(" ");
+					sb.append(alias);
+				}
+
+				sb.append(", ");
+			}
+
+			sb.setIndex(sb.index() - 1);
+		}
+		else {
+			sb.append("*");
+		}
 	}
 
 	private final boolean _distinct;

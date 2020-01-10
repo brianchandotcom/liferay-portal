@@ -14,40 +14,47 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.base;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 
 import java.util.Objects;
 
 /**
- * @author Preston Crary
+ * @author Shuyang Zhou
  */
 public abstract class BaseASTNode implements ASTNode {
+
+	public BaseASTNode() {
+		_childASTNode = null;
+	}
 
 	public BaseASTNode(ASTNode childASTNode) {
 		_childASTNode = Objects.requireNonNull(childASTNode);
 	}
 
 	@Override
-	public final void accept(ASTNodeVisitor astNodeVisitor) {
-		_childASTNode.accept(astNodeVisitor);
+	public void toSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		if (astNodeListener != null) {
+			astNodeListener.process(this);
+		}
 
-		astNodeVisitor.visited(_childASTNode);
+		if (_childASTNode != null) {
+			_childASTNode.toSQL(sb, astNodeListener);
 
-		doAccept(astNodeVisitor);
+			sb.append(" ");
+		}
+
+		doToSQL(sb, astNodeListener);
 	}
 
 	@Override
 	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
-
-		accept(astNodeVisitor);
-
-		return astNodeVisitor.toString();
+		return toSQL(null);
 	}
 
-	protected abstract void doAccept(ASTNodeVisitor astNodeVisitor);
+	protected abstract void doToSQL(
+		StringBundler sb, ASTNodeListener astNodeListener);
 
 	private final ASTNode _childASTNode;
 

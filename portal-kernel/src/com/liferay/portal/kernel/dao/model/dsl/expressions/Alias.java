@@ -14,23 +14,20 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 import java.util.Objects;
 
 /**
  * @author Preston Crary
  */
-public class Alias<T> implements Expression<T> {
+public class Alias<T> extends BaseASTNode implements Expression<T> {
 
 	public Alias(Expression<T> expression, String name) {
 		_expression = Objects.requireNonNull(expression);
 		_name = Objects.requireNonNull(name);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	@Override
@@ -39,13 +36,13 @@ public class Alias<T> implements Expression<T> {
 	}
 
 	@Override
-	public String toString() {
-		return _name;
+	public Expression<T> unwrapAlias() {
+		return _expression;
 	}
 
 	@Override
-	public Expression<T> unwrapAlias() {
-		return _expression;
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append(_name);
 	}
 
 	private final Expression<T> _expression;

@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
@@ -34,13 +35,21 @@ public class GroupBy
 		_expressions = expressions;
 	}
 
-	public Expression[] getExpressions() {
-		return _expressions;
+	@Override
+	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("group by ");
+
+		for (Expression expression : _expressions) {
+			expression.toSQL(sb, astNodeListener);
+
+			sb.append(", ");
+		}
+
+		sb.setIndex(sb.index() - 1);
 	}
 
-	@Override
-	protected void doAccept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
+	public Expression[] getExpressions() {
+		return _expressions;
 	}
 
 	private final Expression[] _expressions;

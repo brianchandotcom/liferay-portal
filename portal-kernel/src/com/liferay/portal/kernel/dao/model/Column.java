@@ -15,8 +15,9 @@
 package com.liferay.portal.kernel.dao.model;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
@@ -25,7 +26,8 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class Column<T extends Table, C> implements Expression<C> {
+public class Column<T extends Table, C>
+	extends BaseASTNode implements Expression<C> {
 
 	public static <T extends Table, C> Column<T, C> create(
 		T table, String columnName, Class<C> columnType, int sqlType) {
@@ -33,11 +35,6 @@ public class Column<T extends Table, C> implements Expression<C> {
 		return new Column<>(
 			Objects.requireNonNull(table), Objects.requireNonNull(columnName),
 			Objects.requireNonNull(columnType), sqlType);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	@Override
@@ -91,12 +88,11 @@ public class Column<T extends Table, C> implements Expression<C> {
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append(_table.getName());
 
-		astNodeVisitor.visit(this);
-
-		return astNodeVisitor.toString();
+		sb.append(".");
+		sb.append(_columnName);
 	}
 
 	private Column(

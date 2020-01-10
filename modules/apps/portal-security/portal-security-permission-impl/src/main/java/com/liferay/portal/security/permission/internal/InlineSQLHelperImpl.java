@@ -329,7 +329,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			throw new IllegalArgumentException("classPKField is null");
 		}
 
-		long companyId = 0;
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long companyId = permissionChecker.getCompanyId();
 
 		if (groupIds.length == 1) {
 			long groupId = groupIds[0];
@@ -337,8 +340,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group != null) {
-				companyId = group.getCompanyId();
-
 				long[] roleIds = getRoleIds(groupId);
 
 				try {
@@ -371,29 +372,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			for (long groupId : groupIds) {
 				Group group = _groupLocalService.fetchGroup(groupId);
 
-				if (group == null) {
-					continue;
-				}
-
-				if (companyId == 0) {
-					companyId = group.getCompanyId();
-
-					continue;
-				}
-
-				if (group.getCompanyId() != companyId) {
+				if ((group != null) && (group.getCompanyId() != companyId)) {
 					throw new IllegalArgumentException(
 						"Permission queries across multiple portal instances " +
 							"are not supported");
 				}
 			}
-		}
-
-		if (companyId == 0) {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			companyId = permissionChecker.getCompanyId();
 		}
 
 		try {
@@ -416,7 +400,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		String resourcePermissionSQL = _getResourcePermissionSQL(
-			companyId, className, userIdField, groupIds, bridgeJoin);
+			permissionChecker, className, userIdField, groupIds, bridgeJoin);
 
 		return _insertResourcePermissionSQL(
 			sql, className, classPKField, userIdField, groupIdField, groupIds,
@@ -505,11 +489,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private String _getResourcePermissionSQL(
-		long companyId, String className, String userIdField, long[] groupIds,
-		String bridgeJoin) {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		PermissionChecker permissionChecker, String className,
+		String userIdField, long[] groupIds, String bridgeJoin) {
 
 		String resourcePermissionSQL = _customSQL.get(
 			getClass(), FIND_BY_RESOURCE_PERMISSION);
@@ -566,8 +547,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
 			},
 			new String[] {
-				className, String.valueOf(companyId), String.valueOf(scope),
-				roleIdsOrOwnerIdSQL
+				className, String.valueOf(permissionChecker.getCompanyId()),
+				String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
 
 		return resourcePermissionSQL;

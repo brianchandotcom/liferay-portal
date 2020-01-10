@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl;
 
-import com.liferay.portal.kernel.dao.model.Table;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 import com.liferay.portal.kernel.dao.model.dsl.query.AggregateExpression;
 import com.liferay.portal.kernel.dao.model.dsl.query.Query;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Preston Crary
@@ -49,25 +48,17 @@ public class DSLStatementUtil {
 	public static SQLQuery createSynchronizedSQLQuery(
 		Session session, Query query) {
 
-		DefaultASTNodeVisitor defaultASTNodeVisitor =
-			new DefaultASTNodeVisitor();
+		StringBundler sb = new StringBundler();
 
-		query.accept(defaultASTNodeVisitor);
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
 
-		Set<Table<?>> tables = defaultASTNodeVisitor.getTables();
-
-		String[] tableNames = new String[tables.size()];
-
-		int i = 0;
-
-		for (Table<?> table : tables) {
-			tableNames[i++] = table.getTableName();
-		}
+		query.toSQL(sb, defaultASTNodeListener);
 
 		SQLQuery q = session.createSynchronizedSQLQuery(
-			defaultASTNodeVisitor.toString(), true, tableNames);
+			sb.toString(), true, defaultASTNodeListener.getTableNames());
 
-		List<Object> scalarValues = defaultASTNodeVisitor.getScalarValues();
+		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
 
 		if (!scalarValues.isEmpty()) {
 			QueryPos queryPos = QueryPos.getInstance(q);

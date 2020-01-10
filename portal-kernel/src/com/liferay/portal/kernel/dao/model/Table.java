@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 
 import java.util.Collection;
@@ -28,16 +29,12 @@ import java.util.function.Supplier;
 /**
  * @author Preston Crary
  */
-public abstract class Table<T extends Table> implements TableClause {
+public abstract class Table<T extends Table>
+	extends BaseASTNode implements TableClause {
 
 	public Table(String tableName, Supplier<T> tableSupplier) {
 		_tableName = Objects.requireNonNull(tableName);
 		_tableSupplier = Objects.requireNonNull(tableSupplier);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	public T as(String alias) {
@@ -99,15 +96,6 @@ public abstract class Table<T extends Table> implements TableClause {
 		return _tableName.hashCode();
 	}
 
-	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
-
-		astNodeVisitor.visit(this);
-
-		return astNodeVisitor.toString();
-	}
-
 	@SuppressWarnings("unchecked")
 	protected <C> Column<T, C> aliasColumn(Column<T, C> column, String alias) {
 		T table = _tableSupplier.get();
@@ -125,6 +113,16 @@ public abstract class Table<T extends Table> implements TableClause {
 		return Column.create(
 			table, column.getColumnName(), column.getColumnType(),
 			column.getSQLType());
+	}
+
+	@Override
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append(_tableName);
+
+		if (_alias != null) {
+			sb.append(" ");
+			sb.append(_alias);
+		}
 	}
 
 	@SafeVarargs

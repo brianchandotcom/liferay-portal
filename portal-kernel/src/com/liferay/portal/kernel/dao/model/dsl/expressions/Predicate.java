@@ -14,28 +14,25 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.clause.PredicateClause;
 import com.liferay.portal.kernel.dao.model.dsl.operands.Operand;
+import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 
 import java.util.Objects;
 
 /**
  * @author Preston Crary
  */
-public class Predicate implements Expression<Boolean> {
+public class Predicate extends BaseASTNode implements Expression<Boolean> {
 
 	public Predicate(
 		Expression<?> leftExpression, Operand operand,
 		PredicateClause predicateClause) {
 
 		this(leftExpression, operand, predicateClause, false);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	public Predicate and(Expression<Boolean> expression) {
@@ -79,12 +76,31 @@ public class Predicate implements Expression<Boolean> {
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		if (_wrapParentheses) {
+			sb.append("(");
+		}
 
-		astNodeVisitor.visit(this);
+		_leftExpression.toSQL(sb, astNodeListener);
 
-		return astNodeVisitor.toString();
+		sb.append(" ");
+		sb.append(_operand);
+		sb.append(" ");
+
+		if (_predicateClause instanceof Query) {
+			sb.append("(");
+
+			_predicateClause.toSQL(sb, astNodeListener);
+
+			sb.append(")");
+		}
+		else {
+			_predicateClause.toSQL(sb, astNodeListener);
+		}
+
+		if (_wrapParentheses) {
+			sb.append(")");
+		}
 	}
 
 	private Predicate(

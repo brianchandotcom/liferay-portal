@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 
 import java.util.Objects;
@@ -23,16 +24,11 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class NamedQuery implements TableClause {
+public class NamedQuery extends BaseASTNode implements TableClause {
 
 	public NamedQuery(Query query, String name) {
 		_query = Objects.requireNonNull(query);
 		_name = Objects.requireNonNull(name);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	@Override
@@ -45,12 +41,14 @@ public class NamedQuery implements TableClause {
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("(");
 
-		astNodeVisitor.visit(this);
+		_query.toSQL(sb, astNodeListener);
 
-		return astNodeVisitor.toString();
+		sb.append(") ");
+
+		sb.append(_name);
 	}
 
 	private final String _name;

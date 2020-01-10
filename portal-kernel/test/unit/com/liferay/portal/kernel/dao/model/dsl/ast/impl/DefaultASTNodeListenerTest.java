@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -55,7 +54,7 @@ import org.junit.Test;
 /**
  * @author Preston Crary
  */
-public class DefaultASTNodeVisitorTest {
+public class DefaultASTNodeListenerTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -91,10 +90,8 @@ public class DefaultASTNodeVisitorTest {
 			numberAlias.neq("unknown")
 		);
 
-		DefaultASTNodeVisitor defaultASTNodeVisitor =
-			new DefaultASTNodeVisitor();
-
-		query.accept(defaultASTNodeVisitor);
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -102,11 +99,11 @@ public class DefaultASTNodeVisitorTest {
 				"MainExample.mainExampleId = 2 then ? when MainExample.",
 				"mainExampleId = 3 then ? else ? end number from MainExample ",
 				"where number != ?"),
-			defaultASTNodeVisitor.toString());
+			query.toSQL(defaultASTNodeListener));
 
 		Assert.assertEquals(
 			Arrays.asList("one", "two", "three", "unknown", "unknown"),
-			defaultASTNodeVisitor.getScalarValues());
+			defaultASTNodeListener.getScalarValues());
 	}
 
 	@Test
@@ -133,7 +130,7 @@ public class DefaultASTNodeVisitorTest {
 		List<String> argsList = new ArrayList<>(3);
 
 		SQLQuery sqlQuery = (SQLQuery)ProxyUtil.newProxyInstance(
-			DefaultASTNodeVisitorTest.class.getClassLoader(),
+			DefaultASTNodeListenerTest.class.getClassLoader(),
 			new Class<?>[] {SQLQuery.class},
 			(proxy, method, args) -> {
 				Assert.assertEquals(
@@ -149,7 +146,7 @@ public class DefaultASTNodeVisitorTest {
 			});
 
 		Session session = (Session)ProxyUtil.newProxyInstance(
-			DefaultASTNodeVisitorTest.class.getClassLoader(),
+			DefaultASTNodeListenerTest.class.getClassLoader(),
 			new Class<?>[] {Session.class},
 			(proxy, method, args) -> {
 				Assert.assertEquals(
@@ -381,20 +378,18 @@ public class DefaultASTNodeVisitorTest {
 			)
 		);
 
-		DefaultASTNodeVisitor defaultASTNodeVisitor =
-			new DefaultASTNodeVisitor();
-
-		query.accept(defaultASTNodeVisitor);
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select count(*) COUNT_VALUE from MainExample where ",
 				"MainExample.mainExampleId >= 1 and (MainExample.name = ? or ",
 				"MainExample.name = null)"),
-			defaultASTNodeVisitor.toString());
+			query.toSQL(defaultASTNodeListener));
 
 		Assert.assertEquals(
-			Arrays.asList("test"), defaultASTNodeVisitor.getScalarValues());
+			Arrays.asList("test"), defaultASTNodeListener.getScalarValues());
 	}
 
 	@Test
@@ -446,20 +441,18 @@ public class DefaultASTNodeVisitorTest {
 			mainTable.name.ascending()
 		);
 
-		DefaultASTNodeVisitor defaultASTNodeVisitor =
-			new DefaultASTNodeVisitor();
-
-		query.accept(defaultASTNodeVisitor);
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select distinct mainTable.name from MainExample mainTable ",
 				"where CAST_TEXT(mainTable.mainExampleId) in (?, ?, ?) order ",
 				"by mainTable.name asc"),
-			defaultASTNodeVisitor.toString());
+			query.toSQL(defaultASTNodeListener));
 
 		Assert.assertEquals(
-			Arrays.asList(strings), defaultASTNodeVisitor.getScalarValues());
+			Arrays.asList(strings), defaultASTNodeListener.getScalarValues());
 	}
 
 	@Test
@@ -534,66 +527,57 @@ public class DefaultASTNodeVisitorTest {
 
 		OrderBy orderBy = where.orderBy(orderByExpression);
 
-		DefaultASTNodeVisitor defaultASTNodeVisitor =
-			new DefaultASTNodeVisitor();
-
-		orderBy.accept(defaultASTNodeVisitor);
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from MainExample where MainExample.name = ? and ",
 				"MainExample.mainExampleId > 0 order by ",
 				"MainExample.mainExampleId desc"),
-			defaultASTNodeVisitor.toString());
+			orderBy.toSQL(defaultASTNodeListener));
 
-		Set<Table<?>> tables = defaultASTNodeVisitor.getTables();
+		String[] tableNames = defaultASTNodeListener.getTableNames();
 
-		Assert.assertEquals(tables.toString(), 1, tables.size());
-
-		for (Table<?> table : tables) {
-			Assert.assertSame(MainExampleTable.TABLE, table);
-		}
+		Assert.assertArrayEquals(
+			new String[] {MainExampleTable.TABLE.getTableName()}, tableNames);
 
 		Assert.assertEquals(
 			Collections.singletonList("test"),
-			defaultASTNodeVisitor.getScalarValues());
+			defaultASTNodeListener.getScalarValues());
 
 		Assert.assertEquals(
-			QueryUtil.ALL_POS, defaultASTNodeVisitor.getStart());
-		Assert.assertEquals(QueryUtil.ALL_POS, defaultASTNodeVisitor.getEnd());
+			QueryUtil.ALL_POS, defaultASTNodeListener.getStart());
+		Assert.assertEquals(QueryUtil.ALL_POS, defaultASTNodeListener.getEnd());
 
 		Limit limit = orderBy.limit(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		defaultASTNodeVisitor = new DefaultASTNodeVisitor();
-
-		limit.accept(defaultASTNodeVisitor);
+		defaultASTNodeListener = new DefaultASTNodeListener();
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from MainExample where MainExample.name = ? and ",
 				"MainExample.mainExampleId > 0 order by ",
 				"MainExample.mainExampleId desc "),
-			defaultASTNodeVisitor.toString());
+			limit.toSQL(defaultASTNodeListener));
 
 		Assert.assertEquals(
-			QueryUtil.ALL_POS, defaultASTNodeVisitor.getStart());
-		Assert.assertEquals(QueryUtil.ALL_POS, defaultASTNodeVisitor.getEnd());
+			QueryUtil.ALL_POS, defaultASTNodeListener.getStart());
+		Assert.assertEquals(QueryUtil.ALL_POS, defaultASTNodeListener.getEnd());
 
 		limit = orderBy.limit(10, 30);
 
-		defaultASTNodeVisitor = new DefaultASTNodeVisitor();
-
-		limit.accept(defaultASTNodeVisitor);
+		defaultASTNodeListener = new DefaultASTNodeListener();
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from MainExample where MainExample.name = ? and ",
 				"MainExample.mainExampleId > 0 order by ",
 				"MainExample.mainExampleId desc "),
-			defaultASTNodeVisitor.toString());
+			limit.toSQL(defaultASTNodeListener));
 
-		Assert.assertEquals(10, defaultASTNodeVisitor.getStart());
-		Assert.assertEquals(30, defaultASTNodeVisitor.getEnd());
+		Assert.assertEquals(10, defaultASTNodeListener.getStart());
+		Assert.assertEquals(30, defaultASTNodeListener.getEnd());
 	}
 
 	@Test

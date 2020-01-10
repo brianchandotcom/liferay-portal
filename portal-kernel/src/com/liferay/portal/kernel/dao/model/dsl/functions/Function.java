@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.functions;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
@@ -23,7 +24,7 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class Function<T> implements Expression<T> {
+public class Function<T> extends BaseASTNode implements Expression<T> {
 
 	public Function(FunctionType functionType, Expression<?>[] expressions) {
 		_functionType = Objects.requireNonNull(functionType);
@@ -35,11 +36,6 @@ public class Function<T> implements Expression<T> {
 		_expressions = expressions;
 	}
 
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
-	}
-
 	public Expression<?>[] getExpressions() {
 		return _expressions;
 	}
@@ -49,12 +45,16 @@ public class Function<T> implements Expression<T> {
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append(_functionType.getPrefix());
 
-		astNodeVisitor.visit(this);
+		for (Expression<?> expression : _expressions) {
+			expression.toSQL(sb, astNodeListener);
 
-		return astNodeVisitor.toString();
+			sb.append(_functionType.getDelimiter());
+		}
+
+		sb.setStringAt(_functionType.getPostfix(), sb.index() - 1);
 	}
 
 	private final Expression<?>[] _expressions;

@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 import com.liferay.portal.kernel.dao.model.dsl.joins.JoinStep;
@@ -34,13 +35,15 @@ public class From
 		_tableClause = Objects.requireNonNull(tableClause);
 	}
 
-	public TableClause getTableClause() {
-		return _tableClause;
+	@Override
+	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("from ");
+
+		_tableClause.toSQL(sb, astNodeListener);
 	}
 
-	@Override
-	protected void doAccept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
+	public TableClause getTableClause() {
+		return _tableClause;
 	}
 
 	private final TableClause _tableClause;

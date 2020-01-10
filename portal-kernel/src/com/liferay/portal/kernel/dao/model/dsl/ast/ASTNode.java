@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.ast;
 
+import com.liferay.petra.string.StringBundler;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -22,9 +24,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ASTNode {
 
-	public void accept(ASTNodeVisitor astNodeVisitor);
+	public default String toSQL(ASTNodeListener astNodeListener) {
+		StringBundler sb = new StringBundler();
 
-	@Override
-	public String toString();
+		toSQL(sb, astNodeListener);
+
+		return sb.toString();
+	}
+
+	public void toSQL(StringBundler sb, ASTNodeListener astNodeListener);
 
 }

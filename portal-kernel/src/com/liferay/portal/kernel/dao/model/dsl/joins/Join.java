@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.joins;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.clause.TableClause;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
@@ -41,6 +42,19 @@ public class Join
 		_onPredicate = Objects.requireNonNull(onPredicate);
 	}
 
+	@Override
+	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append(_joinType);
+
+		sb.append(" join ");
+
+		_tableClause.toSQL(sb, astNodeListener);
+
+		sb.append(" on ");
+
+		_onPredicate.toSQL(sb, astNodeListener);
+	}
+
 	public JoinType getJoinType() {
 		return _joinType;
 	}
@@ -51,11 +65,6 @@ public class Join
 
 	public TableClause getTableClause() {
 		return _tableClause;
-	}
-
-	@Override
-	protected void doAccept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	private final JoinType _joinType;

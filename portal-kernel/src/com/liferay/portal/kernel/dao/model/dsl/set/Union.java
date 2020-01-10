@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.set;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
+import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 
 import java.util.Objects;
@@ -23,17 +24,12 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class Union implements Query {
+public class Union extends BaseASTNode implements Query {
 
 	public Union(Query leftQuery, boolean all, Query rightQuery) {
 		_leftQuery = Objects.requireNonNull(leftQuery);
 		_all = all;
 		_rightQuery = Objects.requireNonNull(rightQuery);
-	}
-
-	@Override
-	public void accept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
 	}
 
 	public Query getLeftQuery() {
@@ -49,12 +45,17 @@ public class Union implements Query {
 	}
 
 	@Override
-	public String toString() {
-		ASTNodeVisitor astNodeVisitor = new DefaultASTNodeVisitor();
+	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		_leftQuery.toSQL(sb, astNodeListener);
 
-		astNodeVisitor.visit(this);
+		if (_all) {
+			sb.append(" union all ");
+		}
+		else {
+			sb.append(" union ");
+		}
 
-		return astNodeVisitor.toString();
+		_rightQuery.toSQL(sb, astNodeListener);
 	}
 
 	private final boolean _all;

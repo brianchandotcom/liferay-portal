@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeVisitor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 import java.util.Objects;
@@ -30,13 +31,17 @@ public class ElseEnd<T> extends BaseASTNode implements Expression<T> {
 		_elseExpression = Objects.requireNonNull(elseExpression);
 	}
 
-	public Expression<T> getElseExpression() {
-		return _elseExpression;
+	@Override
+	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+		sb.append("else ");
+
+		_elseExpression.toSQL(sb, astNodeListener);
+
+		sb.append(" end");
 	}
 
-	@Override
-	protected void doAccept(ASTNodeVisitor astNodeVisitor) {
-		astNodeVisitor.visit(this);
+	public Expression<T> getElseExpression() {
+		return _elseExpression;
 	}
 
 	private final Expression<T> _elseExpression;

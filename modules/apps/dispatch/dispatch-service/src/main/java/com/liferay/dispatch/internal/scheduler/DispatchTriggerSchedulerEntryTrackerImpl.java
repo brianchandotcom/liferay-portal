@@ -15,7 +15,7 @@
 package com.liferay.dispatch.internal.scheduler;
 
 import com.liferay.dispatch.constants.DispatchConstants;
-import com.liferay.dispatch.scheduler.DispatchTriggerSchedulerEntryTracker;
+import com.liferay.dispatch.advisor.DispatchTriggerSchedulerEntryTracker;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;

@@ -34,7 +34,7 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: {},
 
 	[LAYOUT_DATA_ITEM_TYPES.row]: {
-		gutters: false,
+		gutters: true,
 		numberOfColumns: 3
 	}
 };

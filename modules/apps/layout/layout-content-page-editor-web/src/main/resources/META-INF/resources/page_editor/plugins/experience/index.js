@@ -25,32 +25,8 @@ import {
 import ExperienceToolbarSection from './components/ExperienceToolbarSection';
 import createExperienceReducer from './reducers/createExperience';
 import selectExperienceReducer from './reducers/selectExperience';
-
-function editExperienceReducer(state, payload) {
-	let nextState = state;
-
-	const updatedExperience = payload;
-
-	const experience =
-		state.availableSegmentsExperiences[
-			updatedExperience.segmentsExperienceId
-		];
-
-	if (experience) {
-		nextState = {
-			...nextState,
-			availableSegmentsExperiences: {
-				...nextState.availableSegmentsExperiences,
-				[experience.segmentsExperienceId]: {
-					...updatedExperience,
-					priority: experience.priority
-				}
-			}
-		};
-	}
-
-	return nextState;
-}
+import updateExperienceReducer from './reducers/updateExperience';
+import updateExperiencePriorityReducer from './reducers/updateExperiencePriority';
 
 function deleteExperienceReducer(state, payload) {
 	let nextState = state;
@@ -77,30 +53,6 @@ function deleteExperienceReducer(state, payload) {
 	return nextState;
 }
 
-function updateExperiencePriorityReducer(state, {subtarget, target}) {
-	const experiences = state.availableSegmentsExperiences;
-
-	const targetExperience = {
-		...experiences[target.segmentsExperienceId],
-		priority: target.priority
-	};
-	const subtargetExperience = {
-		...experiences[subtarget.segmentsExperienceId],
-		priority: subtarget.priority
-	};
-
-	const updatedExperiences = {
-		...experiences,
-		[target.segmentsExperienceId]: targetExperience,
-		[subtarget.segmentsExperienceId]: subtargetExperience
-	};
-
-	return {
-		...state,
-		availableSegmentsExperiences: updatedExperiences
-	};
-}
-
 function renderExperiencesSection() {
 	const {Component} = this;
 
@@ -125,7 +77,7 @@ function experiencesActivate() {
 				nextState = deleteExperienceReducer(nextState, action.payload);
 				break;
 			case UPDATE_SEGMENTS_EXPERIENCE:
-				nextState = editExperienceReducer(nextState, action.payload);
+				nextState = updateExperienceReducer(nextState, action.payload);
 				break;
 			case SELECT_SEGMENTS_EXPERIENCE:
 				nextState = selectExperienceReducer(nextState, action.payload);

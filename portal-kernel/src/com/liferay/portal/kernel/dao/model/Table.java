@@ -31,16 +31,14 @@ import java.util.function.Supplier;
 public abstract class Table<T extends Table<T>> extends BaseASTNode {
 
 	public Table(String tableName, Supplier<T> tableSupplier) {
-		_tableName = Objects.requireNonNull(tableName);
+		_tableName = tableName;
 		_tableSupplier = Objects.requireNonNull(tableSupplier);
 	}
 
 	public T as(String alias) {
 		T table = _tableSupplier.get();
 
-		Table<T> castTable = table;
-
-		castTable._alias = alias;
+		table.setAlias(alias);
 
 		return table;
 	}
@@ -96,15 +94,13 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 	protected <C> Column<T, C> aliasColumn(Column<T, C> column, String alias) {
 		T table = _tableSupplier.get();
 
-		Table<T> castTable = table;
-
-		castTable._alias = _alias;
+		table.setAlias(alias);
 
 		column = new Column<>(
 			table, column.getColumnName(), column.getColumnType(),
 			column.getSQLType());
 
-		castTable._columnMap.put(alias, column);
+		putColumn(alias, column);
 
 		return column;
 	}
@@ -129,6 +125,14 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 			sb.append(" ");
 			sb.append(_alias);
 		}
+	}
+
+	protected <C> void putColumn(String columnName, Column<T, C> column) {
+		_columnMap.put(columnName, column);
+	}
+
+	protected void setAlias(String alias) {
+		_alias = alias;
 	}
 
 	private String _alias;

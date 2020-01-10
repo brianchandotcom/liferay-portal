@@ -77,7 +77,11 @@ public class DefaultASTNodeListener implements ASTNodeListener {
 		else if (astNode instanceof Table) {
 			Table<?> table = (Table)astNode;
 
-			_tableNames.add(table.getTableName());
+			String tableName = table.getTableName();
+
+			if (tableName != null) {
+				_tableNames.add(tableName);
+			}
 		}
 	}
 

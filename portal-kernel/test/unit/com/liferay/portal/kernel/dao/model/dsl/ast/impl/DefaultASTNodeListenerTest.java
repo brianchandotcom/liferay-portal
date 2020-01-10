@@ -210,6 +210,9 @@ public class DefaultASTNodeListenerTest {
 			ReferenceExampleTable.TABLE.name.ascending()
 		);
 
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
+
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select * from MainExample left join (select ",
@@ -218,7 +221,11 @@ public class DefaultASTNodeListenerTest {
 				"ReferenceExample.name) referenceExample on ",
 				"referenceExample.mainExampleId = MainExample.mainExampleId ",
 				"order by ReferenceExample.name asc"),
-			query.toString());
+			query.toSQL(defaultASTNodeListener));
+
+		Assert.assertArrayEquals(
+			new String[] {"MainExample", "ReferenceExample"},
+			defaultASTNodeListener.getTableNames());
 	}
 
 	@Test

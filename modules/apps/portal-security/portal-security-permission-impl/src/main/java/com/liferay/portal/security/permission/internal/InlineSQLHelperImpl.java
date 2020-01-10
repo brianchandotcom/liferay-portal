@@ -316,19 +316,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return ArrayUtil.toLongArray(roleIds);
 	}
 
-	protected long getUserId() {
-		long userId = 0;
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker != null) {
-			userId = permissionChecker.getUserId();
-		}
-
-		return userId;
-	}
-
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(

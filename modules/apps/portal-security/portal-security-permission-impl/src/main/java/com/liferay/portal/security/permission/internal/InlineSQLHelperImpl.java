@@ -243,9 +243,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (Objects.equals(className, AssetTag.class.getName())) {
 			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"Class ", className,
-					" does  not support inline permissions. See LPS-82433."));
+				"AssetTag does not support inline permissions. See LPS-82433.");
 		}
 
 		if (Validator.isNull(sql)) {

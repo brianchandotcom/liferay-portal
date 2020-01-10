@@ -57,6 +57,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -73,11 +74,12 @@ public class ContentPageLayoutEditorDisplayContext
 		CommentManager commentManager,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
 		FragmentRendererController fragmentRendererController,
-		StagingGroupHelper stagingGroupHelper) {
+		PortletRequest portletRequest, StagingGroupHelper stagingGroupHelper) {
 
 		super(
 			httpServletRequest, renderResponse, commentManager,
-			contentPageEditorSidebarPanels, fragmentRendererController);
+			contentPageEditorSidebarPanels, fragmentRendererController,
+			portletRequest);
 
 		_stagingGroupHelper = stagingGroupHelper;
 	}

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 public class ContentPageEditorDisplayContextProvider {
 
 	public ContentPageEditorDisplayContext getContentPageEditorDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
+		PortletRequest portletRequest) {
 
 		String className = (String)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.CLASS_NAME);
@@ -59,7 +61,8 @@ public class ContentPageEditorDisplayContextProvider {
 			return new ContentPageLayoutEditorDisplayContext(
 				httpServletRequest, renderResponse, _commentManager,
 				_getContentPageEditorSidebarPanels(),
-				_fragmentRendererController, _stagingGroupHelper);
+				_fragmentRendererController, portletRequest,
+				_stagingGroupHelper);
 		}
 
 		long classPK = GetterUtil.getLong(
@@ -81,7 +84,7 @@ public class ContentPageEditorDisplayContextProvider {
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
 			httpServletRequest, renderResponse, pageIsDisplayPage,
 			_commentManager, _getContentPageEditorSidebarPanels(),
-			_fragmentRendererController);
+			_fragmentRendererController, portletRequest);
 	}
 
 	@Activate

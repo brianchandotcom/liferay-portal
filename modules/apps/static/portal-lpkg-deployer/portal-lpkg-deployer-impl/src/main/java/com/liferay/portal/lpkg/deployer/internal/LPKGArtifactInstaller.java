@@ -26,6 +26,7 @@ import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
@@ -97,7 +98,9 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 		_bundleContext = bundleContext;
 	}
 
-	private void _install(File file, Properties properties) throws Exception {
+	private List<Bundle> _install(File file, Properties properties)
+		throws Exception {
+
 		String canonicalPath = LPKGLocationUtil.getLPKGLocation(file);
 
 		Bundle existingBundle = _bundleContext.getBundle(canonicalPath);
@@ -113,24 +116,28 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 				_logRestartRequired(canonicalPath);
 			}
 
-			return;
+			return Collections.emptyList();
 		}
 
 		List<Bundle> bundles = _lpkgDeployer.deploy(_bundleContext, file);
 
-		if (!bundles.isEmpty()) {
-			Bundle lpkgBundle = bundles.get(0);
-
-			try {
-				lpkgBundle.start();
-			}
-			catch (BundleException be) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to start ", lpkgBundle, " for ", file),
-					be);
-			}
+		if (bundles.isEmpty()) {
+			return Collections.emptyList();
 		}
+
+		Bundle lpkgBundle = bundles.get(0);
+
+		try {
+			lpkgBundle.start();
+		}
+		catch (BundleException be) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to start ", lpkgBundle, " for ", file),
+				be);
+		}
+
+		return bundles;
 	}
 
 	private void _logRestartRequired(String canonicalPath) {

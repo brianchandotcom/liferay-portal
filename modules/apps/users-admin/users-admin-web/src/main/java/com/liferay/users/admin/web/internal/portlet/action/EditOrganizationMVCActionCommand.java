@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.Collections;
@@ -115,7 +116,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 					organization.getOrganizationId());
 			}
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			String mvcPath = "/edit_organization.jsp";

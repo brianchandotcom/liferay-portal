@@ -130,7 +130,7 @@ boolean showTags = PrefsParamUtil.getBoolean(portletPreferences, request, "showT
 boolean showUsersInformation = PrefsParamUtil.getBoolean(portletPreferences, request, "showUsersInformation", true);
 boolean showWebsites = PrefsParamUtil.getBoolean(portletPreferences, request, "showWebsites", true);
 
-Group group = themeDisplay.getScopeGroup();
+Group scopeGroup = themeDisplay.getScopeGroup();
 
-Layout embeddedPersonalApplicationLayout = PersonalApplicationURLUtil.getOrAddEmbeddedPersonalApplicationLayout(themeDisplay.getDefaultUser(), group, layout.isPrivateLayout());
+Layout embeddedPersonalApplicationLayout = PersonalApplicationURLUtil.getOrAddEmbeddedPersonalApplicationLayout(themeDisplay.getDefaultUser(), scopeGroup, layout.isPrivateLayout());
 %>

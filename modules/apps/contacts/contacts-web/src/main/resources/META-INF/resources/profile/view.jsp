@@ -17,10 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= group.isUser() %>">
+	<c:when test="<%= scopeGroup.isUser() %>">
 
 		<%
-		User user2 = UserLocalServiceUtil.getUserById(group.getClassPK());
+		User user2 = UserLocalServiceUtil.getUserById(scopeGroup.getClassPK());
 
 		request.setAttribute(ContactsWebKeys.CONTACTS_USER, user2);
 		%>

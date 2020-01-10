@@ -422,12 +422,19 @@ public class DefaultASTNodeListenerTest {
 			mainTable.name.ascending()
 		);
 
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
+
 		Assert.assertEquals(
 			StringBundler.concat(
 				"select distinct mainTable.name from MainExample mainTable ",
 				"where mainTable.mainExampleId in (1, 2, null) order by ",
 				"mainTable.name asc"),
-			query.toString());
+			query.toSQL(defaultASTNodeListener));
+
+		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
+
+		Assert.assertTrue(scalarValues.toString(), scalarValues.isEmpty());
 
 		String[] strings = {"1", "2", "3"};
 
@@ -441,8 +448,7 @@ public class DefaultASTNodeListenerTest {
 			mainTable.name.ascending()
 		);
 
-		DefaultASTNodeListener defaultASTNodeListener =
-			new DefaultASTNodeListener();
+		defaultASTNodeListener = new DefaultASTNodeListener();
 
 		Assert.assertEquals(
 			StringBundler.concat(

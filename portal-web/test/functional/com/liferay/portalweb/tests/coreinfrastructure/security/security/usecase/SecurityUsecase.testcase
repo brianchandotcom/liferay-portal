@@ -216,7 +216,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 			portlet = "Roles");
 
 		Role.definePermissionCmdCP(
-			permissionDefinitionKeys = "CONTROL_PANEL_USERS_ROLES_RESOURCE_PERMISSIONS_ROLE_VIEW_CHECKBOX",
+			permissionDefinitionKeys = "CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_VIEW_CHECKBOX",
 			permissionDefinitionValue = "View",
 			roleTitle = "User");
 

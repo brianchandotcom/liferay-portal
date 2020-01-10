@@ -117,6 +117,17 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 	@Override
 	public Layout generatePreviewLayout(long plid) throws Exception {
+		LayoutConversionResult layoutConversionResult = generatePreviewLayout(
+			plid, LocaleUtil.getSiteDefault());
+
+		return layoutConversionResult.getDraftLayout();
+	}
+
+	@Override
+	public LayoutConversionResult generatePreviewLayout(
+			long plid, Locale locale)
+		throws Exception {
+
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
@@ -133,8 +144,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		Layout draftLayout = _getOrCreateDraftLayout(layout, serviceContext);
 
 		LayoutConversionResult layoutConversionResult =
-			_getLayoutConversionResult(
-				draftLayout, LocaleUtil.getSiteDefault());
+			_getLayoutConversionResult(draftLayout, locale);
 
 		_addOrUpdateLayoutPageTemplateStructure(
 			draftLayout, layoutConversionResult.getLayoutData(),
@@ -148,7 +158,9 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 		_updatePortletDecorator(draftLayout);
 
-		return draftLayout;
+		return LayoutConversionResult.of(
+			null, layoutConversionResult.getConversionWarningMessages(),
+			draftLayout);
 	}
 
 	@Override

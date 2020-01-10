@@ -23,11 +23,11 @@ public interface ItemSelectorViewDescriptor<T> {
 
 	public ItemDescriptor getItemDescriptor(T t);
 
+	public ItemSelectorReturnType getItemSelectorReturnType();
+
 	public default String[] getOrderByKeys() {
 		return null;
 	}
-
-	public ItemSelectorReturnType getReturnType();
 
 	public SearchContainer getSearchContainer();
 

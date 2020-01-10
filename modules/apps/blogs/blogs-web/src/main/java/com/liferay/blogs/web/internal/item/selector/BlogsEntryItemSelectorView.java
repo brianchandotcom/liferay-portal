@@ -229,13 +229,13 @@ public class BlogsEntryItemSelectorView
 		}
 
 		@Override
-		public String[] getOrderByKeys() {
-			return new String[] {"title", "display-date"};
+		public ItemSelectorReturnType getItemSelectorReturnType() {
+			return new InfoItemItemSelectorReturnType();
 		}
 
 		@Override
-		public ItemSelectorReturnType getReturnType() {
-			return new InfoItemItemSelectorReturnType();
+		public String[] getOrderByKeys() {
+			return new String[] {"title", "display-date"};
 		}
 
 		@Override

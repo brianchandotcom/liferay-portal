@@ -70,7 +70,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 
 	public String getReturnType() {
 		ItemSelectorReturnType itemSelectorReturnType =
-			_itemSelectorViewDescriptor.getReturnType();
+			_itemSelectorViewDescriptor.getItemSelectorReturnType();
 
 		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
 			itemSelectorReturnType.getClass();

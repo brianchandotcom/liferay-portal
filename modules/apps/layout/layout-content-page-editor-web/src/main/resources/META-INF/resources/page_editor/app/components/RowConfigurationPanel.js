@@ -116,11 +116,11 @@ export const RowConfigurationPanel = ({item}) => {
 				<ClayForm.Group>
 					<ClayCheckboxWithState
 						aria-label={Liferay.Language.get('columns-gutter')}
+						checked={item.config.gutters}
 						label={Liferay.Language.get('columns-gutter')}
 						onValueChange={value =>
 							handleSelectValueChanged(SELECTORS.gutters, value)
 						}
-						value={item.config.gutters}
 					/>
 				</ClayForm.Group>
 			)}

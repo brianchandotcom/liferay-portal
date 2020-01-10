@@ -21,6 +21,8 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
@@ -79,6 +81,14 @@ public abstract class BaseLayoutScreenNavigationEntry
 		Group group = layout.getGroup();
 
 		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+			return false;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
 			return false;
 		}
 
@@ -145,6 +155,10 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;
+
+	@Reference
+	protected LayoutPageTemplateEntryLocalService
+		layoutPageTemplateEntryLocalService;
 
 	@Reference
 	protected LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider;

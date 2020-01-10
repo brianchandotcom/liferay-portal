@@ -16,21 +16,6 @@ import {TYPES} from '../actions/index';
 
 export default function layoutDataReducer(state, action) {
 	switch (action.type) {
-		case TYPES.UPDATE_ITEM_CONFIG:
-			return {
-				...state,
-				items: {
-					...state.items,
-					[action.itemId]: {
-						...state.items[action.itemId],
-						config: {
-							...state.items[action.itemId].config,
-							...action.config
-						}
-					}
-				}
-			};
-
 		case TYPES.UPDATE_LAYOUT_DATA:
 		case TYPES.ADD_FRAGMENT_ENTRY_LINK:
 			return action.layoutData;

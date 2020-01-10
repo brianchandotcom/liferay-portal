@@ -132,8 +132,9 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 		Layout draftLayout = _getOrCreateDraftLayout(layout, serviceContext);
 
-		LayoutConversionResult layoutConversionResult = _getLayoutData(
-			draftLayout, LocaleUtil.getSiteDefault());
+		LayoutConversionResult layoutConversionResult =
+			_getLayoutConversionResult(
+				draftLayout, LocaleUtil.getSiteDefault());
 
 		_addOrUpdateLayoutPageTemplateStructure(
 			draftLayout, layoutConversionResult.getLayoutData(),
@@ -249,8 +250,8 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 			_updatePortletDecorator(layout);
 
-			LayoutConversionResult layoutConversionResult = _getLayoutData(
-				layout, LocaleUtil.getSiteDefault());
+			LayoutConversionResult layoutConversionResult =
+				_getLayoutConversionResult(layout, LocaleUtil.getSiteDefault());
 
 			_addOrUpdateLayoutPageTemplateStructure(
 				layout, layoutConversionResult.getLayoutData(), serviceContext);
@@ -296,7 +297,8 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		return defaultPortletDecorator.getPortletDecoratorId();
 	}
 
-	private LayoutConversionResult _getLayoutData(Layout layout, Locale locale)
+	private LayoutConversionResult _getLayoutConversionResult(
+			Layout layout, Locale locale)
 		throws LayoutConvertException {
 
 		UnicodeProperties typeSettingsProperties =

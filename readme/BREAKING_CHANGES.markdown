@@ -179,6 +179,7 @@ The `asset:asset-tags-selector` and its components have been migrated to React,
 making the old tag and its soy infrastructure unnecessary.
 
 ---------------------------------------
+
 ### Removed liferay.frontend.Slider
 - **Date:** 2019-Oct-10
 - **JIRA Ticket:** [LPS-100124](https://issues.liferay.com/browse/LPS-100124)
@@ -262,6 +263,30 @@ This change was made to avoid security issues.
 
 ---------------------------------------
 
+### Removed support for auto deploying EXT plugins
+- **Date:** 2019-Dec-31
+- **JIRA Ticket:** [LPS-106008](https://issues.liferay.com/browse/LPS-106008)
+
+#### What changed?
+
+The support for deploying EXT plugins using Auto Deployer (via
+liferay-home/deploy folder) has been removed. EXT plugins copied to the deploy
+folder will not be recognized any more.
+
+#### Who is affected?
+
+This affects who is deploying EXT plugins via the Auto Deployer.
+
+#### How should I update my code?
+
+There's no direct replacement for the removed feature. If you have EXT plugin,
+you would need to deploy it manually or using [`ant direct-deploy`](https://github.com/liferay/liferay-plugins-ee/blob/7.0.x/ext/build-common-ext.xml#L211).
+
+#### Why was this change made?
+
+This feature has been deprecated since 7.1.
+
+---------------------------------------
 ### Removed liferay-frontend:cards-treeview tag
 - **Date:** 2020-Jan-10
 - **JIRA Ticket:** [LPS-106899](https://issues.liferay.com/browse/LPS-106899)

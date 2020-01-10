@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dispatch.internal.scheduler;
+package com.liferay.dispatch.internal.advisor;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.advisor.DispatchTriggerSchedulerEntryTracker;

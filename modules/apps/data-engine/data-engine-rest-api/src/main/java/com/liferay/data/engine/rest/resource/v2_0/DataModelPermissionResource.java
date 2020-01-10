@@ -54,7 +54,7 @@ public interface DataModelPermissionResource {
 	public void putDataModelPermission(
 			DataModelPermission[] dataModelPermissions)
 		throws Exception;
-
+  
 	public Page<DataModelPermission>
 			getDataRecordCollectionDataModelPermissionsPage(
 				Long dataRecordCollectionId, String roleNames)

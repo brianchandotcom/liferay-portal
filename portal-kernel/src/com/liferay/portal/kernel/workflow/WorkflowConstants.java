@@ -212,7 +212,7 @@ public class WorkflowConstants {
 		return LABEL_ANY;
 	}
 
-	public static String getStyleFromWorkflowStatus(int status) {
+	public static String getStatusStyle(int status) {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			return "success";
 		}

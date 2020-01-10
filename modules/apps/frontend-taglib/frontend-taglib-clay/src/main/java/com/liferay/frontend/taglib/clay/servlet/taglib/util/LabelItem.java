@@ -55,7 +55,7 @@ public class LabelItem extends HashMap<String, Object> {
 	public void setStatus(int status) {
 		setLabel(WorkflowConstants.getStatusLabel(status));
 
-		setStyle(WorkflowConstants.getStyleFromWorkflowStatus(status));
+		setStyle(WorkflowConstants.getStatusStyle(status));
 	}
 
 	public void setStyle(String style) {

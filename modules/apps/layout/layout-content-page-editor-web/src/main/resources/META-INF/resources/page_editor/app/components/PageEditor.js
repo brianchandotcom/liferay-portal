@@ -89,21 +89,14 @@ const Container = React.forwardRef(({children, item}, ref) => {
 const Row = React.forwardRef(({children, item, layoutData}, ref) => {
 	const parent = layoutData.items[item.parentId];
 
-	const {
-		config: {gutters}
-	} = item;
-
-	const ROW_CLASSES = {
-		'no-gutters': !gutters
-	};
-
 	const rowContent = (
 		<div className="page-editor__row-outline" ref={ref}>
 			<div
 				className={classNames('page-editor__row row', {
 					empty: !item.children.some(
 						childId => layoutData.items[childId].children.length
-					)
+					),
+					'no-gutters': !item.config.gutters
 				})}
 			>
 				{children}
@@ -112,7 +105,7 @@ const Row = React.forwardRef(({children, item, layoutData}, ref) => {
 	);
 
 	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
-		<div className={classNames(ROW_CLASSES)}>{rowContent}</div>
+		<div className="container-fluid">{rowContent}</div>
 	) : (
 		rowContent
 	);

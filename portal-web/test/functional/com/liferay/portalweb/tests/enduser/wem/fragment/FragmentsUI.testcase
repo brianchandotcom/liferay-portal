@@ -135,6 +135,8 @@ definition {
 			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 		}
 
+		Pause(locator1 = "1000");
+
 		task ("Assert the edits to the section fragment persist by asserting that the preview displays the Title fragment") {
 			FragmentsEditor.assertFragmentPreview(
 				fragmentLocator = "//div[@class='fragment-header']/h1[@class='title']",

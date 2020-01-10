@@ -116,6 +116,10 @@ public class WorkflowMetricsSLAProcessor {
 
 		LocalDateTime endLocalDateTime = nowLocalDateTime;
 
+		if (completionLocalDateTime != null) {
+			endLocalDateTime = completionLocalDateTime;
+		}
+
 		if (!workflowMetricsSLAStopwatch.isEmpty()) {
 			List<TaskInterval> taskIntervals = _toTaskIntervals(
 				documents, lastCheckLocalDateTime, nowLocalDateTime);
@@ -130,6 +134,29 @@ public class WorkflowMetricsSLAProcessor {
 
 			workflowMetricsSLAStatus =
 				workflowMetricsSLAStopwatch.getWorkflowMetricsSLAStatus();
+
+			if (Objects.equals(
+					workflowMetricsSLAStatus,
+					WorkflowMetricsSLAStatus.RUNNING)) {
+
+				Duration duration = workflowMetricsSLACalendar.getDuration(
+					endLocalDateTime, nowLocalDateTime);
+
+				elapsedTime += duration.toMillis();
+
+				endLocalDateTime = nowLocalDateTime;
+			}
+			else if (Objects.equals(
+						workflowMetricsSLAStatus,
+						WorkflowMetricsSLAStatus.COMPLETED)) {
+
+				Duration duration = workflowMetricsSLACalendar.getDuration(
+					endLocalDateTime, completionLocalDateTime);
+
+				elapsedTime += duration.toMillis();
+
+				endLocalDateTime = completionLocalDateTime;
+			}
 		}
 
 		return Optional.of(
@@ -668,7 +695,13 @@ public class WorkflowMetricsSLAProcessor {
 			return WorkflowMetricsSLAStatus.NEW;
 		}
 
-		if (GetterUtil.getBoolean(document.getBoolean("completed"))) {
+		if (GetterUtil.getBoolean(document.getBoolean("completed")) ||
+			(workflowMetricsSLAInstanceResult.getCompletionLocalDateTime() !=
+				null) ||
+			Objects.equals(
+				workflowMetricsSLAInstanceResult.getWorkflowMetricsSLAStatus(),
+				WorkflowMetricsSLAStatus.COMPLETED)) {
+
 			return WorkflowMetricsSLAStatus.COMPLETED;
 		}
 

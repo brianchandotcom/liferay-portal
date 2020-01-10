@@ -48,6 +48,12 @@ for (String analyticsType : analyticsTypes) {
 			%>
 
 			<aui:input helpMessage="set-the-google-analytics-id-that-is-used-for-this-set-of-pages" label="google-analytics-id" name="googleAnalyticsId" type="text" value="<%= googleAnalyticsId %>" />
+
+			<%
+			String googleAnalyticsCustomConfiguration = PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsCustomConfiguration");
+			%>
+
+			<aui:input helpMessage="set-the-google-analytics-custom-options-that-are-used-for-this-set-of-pages" label="google-analytics-custom-configuration" name="googleAnalyticsCustomConfiguration" type="textarea" value="<%= googleAnalyticsCustomConfiguration %>" />
 		</c:when>
 		<c:otherwise>
 

@@ -14,7 +14,9 @@
 
 package com.liferay.layout.internal.workflow;
 
+import com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -39,13 +41,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
 @Component(
+	configurationPid = "com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration",
 	property = "model.class.name=com.liferay.portal.kernel.model.Layout",
 	service = WorkflowHandler.class
 )
@@ -82,7 +87,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 	@Override
 	public boolean isVisible() {
-		return false;
+		return _layoutConverterConfiguration.enabled();
 	}
 
 	@Override
@@ -129,6 +134,16 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		return _layoutLocalService.updateStatus(
 			userId, classPK, status, serviceContext);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_layoutConverterConfiguration = ConfigurableUtil.createConfigurable(
+			LayoutWorkflowHandlerConfiguration.class, properties);
+	}
+
+	private volatile LayoutWorkflowHandlerConfiguration
+		_layoutConverterConfiguration;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

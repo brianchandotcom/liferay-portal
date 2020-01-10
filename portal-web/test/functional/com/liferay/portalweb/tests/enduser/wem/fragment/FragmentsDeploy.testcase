@@ -124,7 +124,7 @@ definition {
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "imported",
-				scope = "Liferay");
+				scope = "Default");
 
 			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
 
@@ -134,7 +134,7 @@ definition {
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "imported",
-				scope = "Test Site Name");
+				scope = "Default");
 
 			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
 
@@ -148,7 +148,7 @@ definition {
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "imported",
-				scope = "Test Future Site");
+				scope = "Default");
 
 			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
 
@@ -175,7 +175,7 @@ definition {
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "imported",
-				scope = "Liferay");
+				scope = "Default");
 
 			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
 
@@ -206,7 +206,7 @@ definition {
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "imported",
-				scope = "www.able.com");
+				scope = "Default");
 
 			AssertElementPresent(locator1 = "//div[@class='autofit-col' and contains(.,'imported (System)')]");
 

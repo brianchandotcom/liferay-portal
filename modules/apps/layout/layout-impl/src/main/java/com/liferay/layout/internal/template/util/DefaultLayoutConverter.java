@@ -33,8 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -131,43 +129,37 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 		List<String> conversionWarningMessages = new ArrayList<>();
 
-		List<String> conversionWarningKeys = new ArrayList<>();
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
 
 		if (LayoutTypeSettingsInspectorUtil.hasNestedPortletsPortlet(
 				layout.getTypeSettingsProperties())) {
 
-			conversionWarningKeys.add(
-				"the-page-uses-nested-applications-widgets.-they-have-been-" +
-					"placed-in-a-single-column-and-may-require-manual-" +
-						"reorganization");
+			conversionWarningMessages.add(
+				LanguageUtil.get(
+					resourceBundle,
+					"the-page-uses-nested-applications-widgets.-they-have-" +
+						"been-placed-in-a-single-column-and-may-require-" +
+							"manual-reorganization"));
 		}
 
 		if (LayoutTypeSettingsInspectorUtil.isCustomizableLayout(
 				layout.getTypeSettingsProperties())) {
 
-			conversionWarningKeys.add(
-				"the-page-has-customizable-columns.-this-capability-will-be-" +
-					"lost-if-the-conversion-takes-place");
+			conversionWarningMessages.add(
+				LanguageUtil.get(
+					resourceBundle,
+					"the-page-has-customizable-columns.-this-capability-will-" +
+						"be-lost-if-the-conversion-takes-place"));
 		}
 
 		if (!_isLayoutTemplateParseable(layout)) {
-			conversionWarningKeys.add(
-				"the-page-uses-a-non-standard-page-layout.-all-widgets-have-" +
-					"been-placed-in-a-single-column-and-will-require-manual-" +
-						"reorganization");
-		}
-
-		if (!conversionWarningKeys.isEmpty()) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				locale, getClass());
-
-			Stream<String> stream = conversionWarningKeys.stream();
-
-			conversionWarningMessages = stream.map(
-				key -> LanguageUtil.get(resourceBundle, key)
-			).collect(
-				Collectors.toList()
-			);
+			conversionWarningMessages.add(
+				LanguageUtil.get(
+					resourceBundle,
+					"the-page-uses-a-non-standard-page-layout.-all-widgets-" +
+						"have-been-placed-in-a-single-column-and-will-" +
+							"require-manual-reorganization"));
 		}
 
 		return conversionWarningMessages.toArray(new String[0]);

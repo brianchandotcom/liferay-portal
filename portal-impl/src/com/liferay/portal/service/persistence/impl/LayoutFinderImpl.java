@@ -91,10 +91,9 @@ public class LayoutFinderImpl
 					Layout.TABLE.companyId
 				).and(
 					Group.TABLE.classNameId.eq(
-						PortalUtil.getClassNameId(Layout.class)
-					).and(
-						Group.TABLE.classPK.eq(Layout.TABLE.plid)
-					)
+						PortalUtil.getClassNameId(Layout.class))
+				).and(
+					Group.TABLE.classPK.eq(Layout.TABLE.plid)
 				)
 			).where(
 				Layout.TABLE.groupId.eq(groupId)

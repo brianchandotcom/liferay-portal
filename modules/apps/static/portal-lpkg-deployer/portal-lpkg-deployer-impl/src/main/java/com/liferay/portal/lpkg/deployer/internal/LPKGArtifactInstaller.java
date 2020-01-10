@@ -180,6 +180,8 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 		if (existingBundle != null) {
 			_update(file, properties);
+
+			return Collections.emptyList();
 		}
 
 		if (GetterUtil.getBoolean(

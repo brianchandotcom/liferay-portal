@@ -37,14 +37,6 @@ public class Predicate extends BaseASTNode implements Expression<Boolean> {
 		return new Predicate(this, Operand.AND, expression);
 	}
 
-	public Predicate andParentheses(Predicate predicate) {
-		return new Predicate(
-			this, Operand.AND,
-			new Predicate(
-				predicate._leftExpression, predicate._operand,
-				predicate._rightExpression, true));
-	}
-
 	public Expression<?> getLeftExpression() {
 		return _leftExpression;
 	}
@@ -65,12 +57,12 @@ public class Predicate extends BaseASTNode implements Expression<Boolean> {
 		return new Predicate(this, Operand.OR, expression);
 	}
 
-	public Predicate orParentheses(Predicate predicate) {
-		return new Predicate(
-			this, Operand.OR,
-			new Predicate(
-				predicate._leftExpression, predicate._operand,
-				predicate._rightExpression, true));
+	public Predicate withParentheses() {
+		if (_wrapParentheses) {
+			return this;
+		}
+
+		return new Predicate(_leftExpression, _operand, _rightExpression, true);
 	}
 
 	@Override

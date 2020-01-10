@@ -376,12 +376,12 @@ public class DefaultASTNodeListenerTest {
 		).where(
 			MainExampleTable.TABLE.mainExampleId.gte(
 				1L
-			).andParentheses(
+			).and(
 				MainExampleTable.TABLE.name.eq(
 					"test"
 				).or(
 					MainExampleTable.TABLE.name.eq((String)null)
-				)
+				).withParentheses()
 			)
 		);
 

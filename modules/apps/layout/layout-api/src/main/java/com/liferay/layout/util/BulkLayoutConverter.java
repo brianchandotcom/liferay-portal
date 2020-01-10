@@ -65,6 +65,7 @@ public interface BulkLayoutConverter {
 	 */
 	public long[] convertLayouts(long[] plids);
 
+	@Deprecated
 	public Layout generatePreviewLayout(long plid) throws Exception;
 
 	public default LayoutConversionResult generatePreviewLayout(

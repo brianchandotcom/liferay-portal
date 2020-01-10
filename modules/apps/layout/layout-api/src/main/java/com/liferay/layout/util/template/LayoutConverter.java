@@ -24,6 +24,7 @@ import java.util.Locale;
  */
 public interface LayoutConverter {
 
+	@Deprecated
 	public LayoutData convert(Layout layout);
 
 	public default LayoutConversionResult convert(

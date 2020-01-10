@@ -14,6 +14,8 @@
 
 package com.liferay.layout.seo.web.internal.servlet.taglib.ui;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -30,6 +32,28 @@ import org.mockito.Mockito;
  * @author Adolfo Pérez
  */
 public class BaseLayoutScreenNavigationEntryTest {
+
+	@Test
+	public void testIsVisibleLayoutPageTemplate() {
+		LayoutPageTemplateEntryLocalService
+			layoutPageTemplateEntryLocalService = Mockito.mock(
+				LayoutPageTemplateEntryLocalService.class);
+
+		Mockito.when(
+			layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(LayoutPageTemplateEntry.class)
+		);
+
+		TestLayoutScreenNavigationEntry testLayoutScreenNavigationEntry =
+			new TestLayoutScreenNavigationEntry(
+				layoutPageTemplateEntryLocalService);
+
+		Assert.assertFalse(
+			testLayoutScreenNavigationEntry.isVisible(
+				Mockito.mock(User.class), _getLayout(null)));
+	}
 
 	@Test
 	public void testIsVisibleLayoutPrototype() {
@@ -69,9 +93,6 @@ public class BaseLayoutScreenNavigationEntryTest {
 				true
 			);
 		}
-		else {
-			throw new IllegalArgumentException();
-		}
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -86,6 +107,18 @@ public class BaseLayoutScreenNavigationEntryTest {
 
 	private static class TestLayoutScreenNavigationEntry
 		extends BaseLayoutScreenNavigationEntry {
+
+		public TestLayoutScreenNavigationEntry() {
+			this(null);
+		}
+
+		public TestLayoutScreenNavigationEntry(
+			LayoutPageTemplateEntryLocalService
+				layoutPageTemplateEntryLocalService) {
+
+			this.layoutPageTemplateEntryLocalService =
+				layoutPageTemplateEntryLocalService;
+		}
 
 		@Override
 		public String getEntryKey() {

@@ -1,27 +1,4 @@
-buildscript {
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "2.2.2"
-	}
-
-	repositories {
-		File dir = rootProject.projectDir
-
-		while (dir != null) {
-			File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
-
-			if (tmpMavenRepositoryDir.exists()) {
-				maven {
-					url tmpMavenRepositoryDir
-				}
-			}
-
-			dir = dir.getParentFile();
-		}
-
-		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-		}
-	}
-}
-
-apply plugin: "com.liferay.workspace"
+include "modules:foo-api"
+include "modules:foo-portlet"
+include "modules:foo-rule"
+include "modules:foo-service"

@@ -1,34 +1,3 @@
-buildscript {
-	dependencies {
-		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.2.0"
-		classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "2.2.2") {
-			exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
-			exclude group: "biz.aQute.bnd", module: "biz.aQute.bndlib"
-			exclude group: "biz.aQute.bnd", module: "biz.aQute.gradle"
-			exclude group: "biz.aQute.bnd", module: "biz.aQute.repository"
-			exclude group: "biz.aQute.bnd", module: "biz.aQute.resolve"
-		}
-	}
-
-	repositories {
-		File dir = rootProject.projectDir
-
-		while (dir != null) {
-			File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
-
-			if (tmpMavenRepositoryDir.exists()) {
-				maven {
-					url tmpMavenRepositoryDir
-				}
-			}
-
-			dir = dir.getParentFile();
-		}
-
-		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-		}
-	}
-}
-
-apply plugin: "com.liferay.workspace"
+include "modules:foo-api"
+include "modules:foo-portlet"
+include "modules:foo-service"

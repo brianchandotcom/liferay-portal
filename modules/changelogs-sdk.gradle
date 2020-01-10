@@ -75,7 +75,7 @@ buildChangelogs {
 						commitDetails = ["SHA" : sha, "TICKET-NUMBER" : "", "COMMIT-MESSAGE" : ticketNumber + commitMessage]
 					}
 					else {
-						commitDetails = ["SHA" : sha, "TICKET-NUMBER" : ticketNumber, "COMMIT-MESSAGE" : commitMessage]
+						commitDetails = ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]
 					}
 				}
 			}

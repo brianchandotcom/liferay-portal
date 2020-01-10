@@ -36,6 +36,9 @@ public interface ResourcePermission
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ResourcePermissionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ResourcePermissionTable TABLE =
+		ResourcePermissionTable.INSTANCE;
+
 	public static final Accessor<ResourcePermission, Long>
 		RESOURCE_PERMISSION_ID_ACCESSOR =
 			new Accessor<ResourcePermission, Long>() {

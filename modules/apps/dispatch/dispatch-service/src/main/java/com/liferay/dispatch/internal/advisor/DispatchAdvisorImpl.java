@@ -17,8 +17,6 @@ package com.liferay.dispatch.internal.advisor;
 import com.liferay.dispatch.advisor.Dispatch;
 import com.liferay.dispatch.advisor.DispatchAdvisor;
 import com.liferay.dispatch.constants.DispatchConstants;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -43,18 +41,10 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 	public DispatchAdvisorImpl() {
 	}
 
-	protected DispatchAdvisorImpl(
-		SchedulerEngineHelper schedulerEngineHelper,
-		TriggerFactory triggerFactory) {
-
-		_schedulerEngineHelper = schedulerEngineHelper;
-		_triggerFactory = triggerFactory;
-	}
-
 	@Override
 	public void addDispatch(
-			long dispatchTriggerId, String cronExpression, Date startDate,
-			Date endDate) {
+		long dispatchTriggerId, String cronExpression, Date startDate,
+		Date endDate) {
 
 		deleteDispatch(dispatchTriggerId);
 
@@ -66,8 +56,7 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 			_schedulerEngineHelper.schedule(
 				trigger, StorageType.PERSISTED, null,
 				DispatchConstants.EXECUTOR_DESTINATION_NAME,
-				_getPayload(dispatchTriggerId),
-				1000);
+				_getPayload(dispatchTriggerId), 1000);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -96,6 +85,35 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 					dispatchTriggerId,
 				se);
 		}
+	}
+
+	@Override
+	public Optional<Dispatch> getDispatch(long dispatchTriggerId) {
+		try {
+			SchedulerResponse schedulerResponse =
+				_schedulerEngineHelper.getScheduledJob(
+					_getJobName(dispatchTriggerId),
+					_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+
+			if (schedulerResponse == null) {
+				return Optional.empty();
+			}
+
+			StorageType storageType = schedulerResponse.getStorageType();
+
+			return Optional.of(
+				new Dispatch(
+					dispatchTriggerId, schedulerResponse.getGroupName(),
+					schedulerResponse.getJobName(), storageType.name()));
+		}
+		catch (SchedulerException se) {
+			_log.error(
+				"Unable to resolve dispatch object for dispatch trigger ID " +
+					dispatchTriggerId,
+				se);
+		}
+
+		return Optional.empty();
 	}
 
 	@Override
@@ -130,33 +148,12 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 		return Optional.ofNullable(nextFireDate);
 	}
 
-	@Override
-	public Optional<Dispatch> getDispatch(long dispatchTriggerId) {
-		try {
-			SchedulerResponse schedulerResponse =
-				_schedulerEngineHelper.getScheduledJob(
-					_getJobName(dispatchTriggerId),
-					_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+	protected DispatchAdvisorImpl(
+		SchedulerEngineHelper schedulerEngineHelper,
+		TriggerFactory triggerFactory) {
 
-			if (schedulerResponse == null) {
-				return Optional.empty();
-			}
-
-			StorageType storageType = schedulerResponse.getStorageType();
-
-			return Optional.of(
-				new Dispatch(
-					dispatchTriggerId, schedulerResponse.getGroupName(),
-					schedulerResponse.getJobName(), storageType.name()));
-		}
-		catch (SchedulerException se) {
-			_log.error(
-				"Unable to resolve dispatch object for dispatch trigger ID " +
-					dispatchTriggerId,
-				se);
-		}
-
-		return Optional.empty();
+		_schedulerEngineHelper = schedulerEngineHelper;
+		_triggerFactory = triggerFactory;
 	}
 
 	private String _getGroupName(long dispatchTriggerId) {
@@ -168,7 +165,7 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 	}
 
 	private String _getPayload(long dispatchTriggerId) {
-return String.format("{\"dispatchTriggerId\"= %d}", dispatchTriggerId);
+		return String.format("{\"dispatchTriggerId\"= %d}", dispatchTriggerId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

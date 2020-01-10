@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_asset_tags_navigation_web_portlet_AssetTagsCloudPortlet_INSTANCE_ZMfzBN8M92Ea" root-portlet-id="com_liferay_asset_tags_navigation_web_portlet_AssetTagsCloudPortlet" scope-group-id="40208" private-layout="true" self-path="/group/40208/portlet/com_liferay_asset_tags_navigation_web_portlet_AssetTagsCloudPortlet_INSTANCE_ZMfzBN8M92Ea/26/portlet.xml">
+	<portlet-preferences path="/group/40208/portlet/com_liferay_asset_tags_navigation_web_portlet_AssetTagsCloudPortlet_INSTANCE_ZMfzBN8M92Ea/preferences/layout/0/26/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+</portlet>

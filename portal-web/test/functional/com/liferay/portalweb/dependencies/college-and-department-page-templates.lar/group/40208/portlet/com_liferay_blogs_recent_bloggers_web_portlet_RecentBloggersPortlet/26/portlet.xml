@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_blogs_recent_bloggers_web_portlet_RecentBloggersPortlet" root-portlet-id="com_liferay_blogs_recent_bloggers_web_portlet_RecentBloggersPortlet" scope-group-id="40208" private-layout="true" self-path="/group/40208/portlet/com_liferay_blogs_recent_bloggers_web_portlet_RecentBloggersPortlet/26/portlet.xml"/>

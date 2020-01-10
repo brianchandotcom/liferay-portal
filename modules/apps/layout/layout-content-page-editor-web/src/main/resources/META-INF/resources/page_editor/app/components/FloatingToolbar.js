@@ -18,20 +18,10 @@ import {Align} from 'metal-position';
 import React, {useLayoutEffect, useRef, useState, useEffect} from 'react';
 import {createPortal} from 'react-dom';
 
+import useWindowScroll from '../../core/hooks/useWindowScroll';
 import useWindowWidth from '../../core/hooks/useWindowWidth';
 import ConfigurationPanel from './ConfigurationPanel';
 import {useFloatingToolbar, useIsActive} from './Controls';
-
-const ALIGNMENTS_MAP = {
-	bottom: Align.Bottom,
-	'bottom-left': Align.BottomLeft,
-	'bottom-right': Align.BottomRight,
-	left: Align.Left,
-	right: Align.Right,
-	top: Align.Top,
-	'top-left': Align.TopLeft,
-	'top-right': Align.TopRight
-};
 
 export default function FloatingToolbar({
 	buttons,
@@ -49,17 +39,29 @@ export default function FloatingToolbar({
 	);
 
 	const windowWidth = useWindowWidth();
+	const {scrollX, scrollY} = useWindowScroll();
 
 	useLayoutEffect(() => {
 		if (show && itemRef.current && popoverRef.current) {
+			const suggestedAlign = Align.suggestAlignBestRegion(
+				popoverRef.current,
+				itemRef.current,
+				Align.BottomRight
+			);
+
+			const bestPosition =
+				suggestedAlign.position !== Align.BottomRight
+					? Align.TopRight
+					: Align.BottomRight;
+
 			Align.align(
 				popoverRef.current,
 				itemRef.current,
-				ALIGNMENTS_MAP['bottom-right'],
+				bestPosition,
 				false
 			);
 		}
-	}, [show, itemRef, popoverRef, windowWidth]);
+	}, [show, itemRef, popoverRef, windowWidth, scrollX, scrollY]);
 
 	useEffect(() => {
 		if (!show) {
@@ -73,7 +75,7 @@ export default function FloatingToolbar({
 		show &&
 		buttons.length &&
 		createPortal(
-			<div className="position-absolute pr-2 pt-2" ref={popoverRef}>
+			<div className="pb-2 position-absolute pr-2 pt-2" ref={popoverRef}>
 				<ClayPopover
 					alignPosition={false}
 					className="position-static"

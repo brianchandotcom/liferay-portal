@@ -252,9 +252,25 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			return sql;
 		}
 
-		return replacePermissionCheckJoin(
+		if (Validator.isNull(classPKField)) {
+			throw new IllegalArgumentException("classPKField is null");
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long companyId = permissionChecker.getCompanyId();
+
+		if (_skipReplace(companyId, className, groupIds)) {
+			return sql;
+		}
+
+		String resourcePermissionSQL = _getResourcePermissionSQL(
+			permissionChecker, className, userIdField, groupIds, bridgeJoin);
+
+		return _insertResourcePermissionSQL(
 			sql, className, classPKField, userIdField, groupIdField, groupIds,
-			bridgeJoin);
+			resourcePermissionSQL);
 	}
 
 	@Activate
@@ -319,31 +335,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	protected void modified(Map<String, Object> properties) {
 		_inlinePermissionConfiguration = ConfigurableUtil.createConfigurable(
 			InlinePermissionConfiguration.class, properties);
-	}
-
-	protected String replacePermissionCheckJoin(
-		String sql, String className, String classPKField, String userIdField,
-		String groupIdField, long[] groupIds, String bridgeJoin) {
-
-		if (Validator.isNull(classPKField)) {
-			throw new IllegalArgumentException("classPKField is null");
-		}
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		long companyId = permissionChecker.getCompanyId();
-
-		if (_skipReplace(companyId, className, groupIds)) {
-			return sql;
-		}
-
-		String resourcePermissionSQL = _getResourcePermissionSQL(
-			permissionChecker, className, userIdField, groupIds, bridgeJoin);
-
-		return _insertResourcePermissionSQL(
-			sql, className, classPKField, userIdField, groupIdField, groupIds,
-			resourcePermissionSQL);
 	}
 
 	private boolean _skipReplace(

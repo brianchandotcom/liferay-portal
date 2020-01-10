@@ -15,11 +15,14 @@
 package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -91,6 +96,26 @@ public class FragmentEntryLinkUtil {
 		LayoutClassedModelUsageLocalServiceUtil.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLinkId),
 			PortalUtil.getClassNameId(FragmentEntryLink.class), plid);
+	}
+
+	public static FragmentEntry getFragmentEntry(
+		long groupId,
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		String fragmentEntryKey, Locale locale) {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				groupId, fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		Map<String, FragmentEntry> fragmentEntries =
+			fragmentCollectionContributorTracker.getFragmentEntries(locale);
+
+		return fragmentEntries.get(fragmentEntryKey);
 	}
 
 	public static JSONObject getFragmentEntryLinkJSONObject(

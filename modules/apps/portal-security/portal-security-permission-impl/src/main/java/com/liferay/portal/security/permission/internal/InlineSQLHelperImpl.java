@@ -302,50 +302,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return ArrayUtil.toLongArray(roleIds);
 	}
 
-	protected String getRoleIdsOrOwnerIdSQL(
-		PermissionChecker permissionChecker, long[] groupIds,
-		String userIdField) {
-
-		StringBundler sb = new StringBundler(9);
-
-		long[] roleIds = getRoleIds(groupIds);
-
-		if (roleIds.length > 0) {
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append("ResourcePermission.roleId IN (");
-			sb.append(StringUtil.merge(roleIds));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-
-		if (permissionChecker.isSignedIn()) {
-			if (roleIds.length > 0) {
-				sb.append(" OR ");
-			}
-			else {
-				sb.append(StringPool.OPEN_PARENTHESIS);
-			}
-
-			long userId = permissionChecker.getUserId();
-
-			if (Validator.isNull(userIdField)) {
-				sb.append("ResourcePermission.ownerId = ");
-				sb.append(userId);
-			}
-			else {
-				sb.append(userIdField);
-				sb.append(" = ");
-				sb.append(userId);
-			}
-
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-		else if (roleIds.length > 0) {
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-		}
-
-		return sb.toString();
-	}
-
 	protected long getUserId() {
 		long userId = 0;
 
@@ -562,8 +518,44 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			resourcePermissionSQL = bridgeJoin.concat(resourcePermissionSQL);
 		}
 
-		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
-			permissionChecker, groupIds, userIdField);
+		StringBundler sb = new StringBundler(9);
+
+		long[] roleIds = getRoleIds(groupIds);
+
+		if (roleIds.length > 0) {
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append("ResourcePermission.roleId IN (");
+			sb.append(StringUtil.merge(roleIds));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (permissionChecker.isSignedIn()) {
+			if (roleIds.length > 0) {
+				sb.append(" OR ");
+			}
+			else {
+				sb.append(StringPool.OPEN_PARENTHESIS);
+			}
+
+			long userId = permissionChecker.getUserId();
+
+			if (Validator.isNull(userIdField)) {
+				sb.append("ResourcePermission.ownerId = ");
+				sb.append(userId);
+			}
+			else {
+				sb.append(userIdField);
+				sb.append(" = ");
+				sb.append(userId);
+			}
+
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+		else if (roleIds.length > 0) {
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		String roleIdsOrOwnerIdSQL = sb.toString();
 
 		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
 

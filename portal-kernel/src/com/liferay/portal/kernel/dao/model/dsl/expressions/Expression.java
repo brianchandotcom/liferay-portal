@@ -47,10 +47,6 @@ public interface Expression<T> extends ASTNode {
 		return eq(new Scalar<>(value));
 	}
 
-	public default String getAlias() {
-		return null;
-	}
-
 	public default Predicate gt(Expression<T> expression) {
 		return new Predicate(this, Operand.GREATER_THAN, expression);
 	}
@@ -119,10 +115,6 @@ public interface Expression<T> extends ASTNode {
 
 	public default Predicate neq(T value) {
 		return neq(new Scalar<>(value));
-	}
-
-	public default Expression<T> unwrapAlias() {
-		return this;
 	}
 
 }

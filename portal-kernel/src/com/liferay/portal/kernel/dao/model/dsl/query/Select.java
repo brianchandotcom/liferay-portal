@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.dao.model.dsl.query;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
+import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
@@ -49,16 +50,17 @@ public class Select extends BaseASTNode implements FromStep, Query {
 
 		if (_expressions.length > 0) {
 			for (Expression<?> expression : _expressions) {
-				Expression<?> unwrappedExpression = expression.unwrapAlias();
+				if (expression instanceof Alias) {
+					Alias<?> alias = (Alias<?>)expression;
 
-				unwrappedExpression.toSQL(sb, astNodeListener);
+					Expression<?> unwrappedExpression = alias.getExpression();
 
-				String alias = expression.getAlias();
+					unwrappedExpression.toSQL(sb, astNodeListener);
 
-				if (alias != null) {
 					sb.append(" ");
-					sb.append(alias);
 				}
+
+				expression.toSQL(sb, astNodeListener);
 
 				sb.append(", ");
 			}

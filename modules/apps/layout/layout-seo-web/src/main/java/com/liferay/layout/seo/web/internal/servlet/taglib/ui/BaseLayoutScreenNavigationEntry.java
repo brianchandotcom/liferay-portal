@@ -78,7 +78,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 	public boolean isVisible(User user, Layout layout) {
 		Group group = layout.getGroup();
 
-		if (group.isLayoutPrototype()) {
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 			return false;
 		}
 

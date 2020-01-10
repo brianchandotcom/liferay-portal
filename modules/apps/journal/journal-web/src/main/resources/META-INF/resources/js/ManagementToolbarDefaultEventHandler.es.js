@@ -90,7 +90,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		let entrySelectorNodes = document.querySelectorAll('.entry-selector');
 
 		if (entrySelectorNodes.length === 0){
-			entrySelectorNodes = document.querySelectorAll('.custom-control-input');
+			entrySelectorNodes = document.querySelectorAll('.entry-card input[type="checkbox"]');
 		}
 
 		entrySelectorNodes.forEach(node => {

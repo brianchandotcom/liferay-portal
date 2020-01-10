@@ -21,6 +21,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -155,7 +156,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 					LayoutTypeControllerTracker.getLayoutTypeController(type);
 
 				return layoutTypeController.isInstanceable() &&
-					   !layoutTypeController.isPrimaryType();
+					   !Objects.equals(type, LayoutConstants.TYPE_CONTENT);
 			});
 
 		return _types;

@@ -23,7 +23,6 @@ import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import duplicateFragment from '../thunks/duplicateFragment';
-import updateLayoutData from '../thunks/updateLayoutData';
 import {useIsActive} from './Controls';
 import DragPreview from './DragPreview';
 import FragmentContent from './FragmentContent';
@@ -277,31 +276,14 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 };
 
 export default function PageEditor() {
-	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
 	const {
 		fragmentEntryLinks,
 		layoutData,
-		segmentsExperienceId,
 		sidebarOpen,
 		sidebarPanelId
 	} = useContext(StoreContext);
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
-
-	const isMounted = useIsMounted();
-
-	useEffect(() => {
-		if (isMounted()) {
-			dispatch(
-				updateLayoutData({
-					config,
-					layoutData,
-					segmentsExperienceId
-				})
-			);
-		}
-	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 
 	return (
 		<div

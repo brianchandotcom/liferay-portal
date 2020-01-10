@@ -23,6 +23,7 @@ import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.rest.constant.v1_0.DeploymentAction;
 import com.liferay.app.builder.rest.dto.v1_0.App;
 import com.liferay.app.builder.rest.dto.v1_0.AppDeployment;
+import com.liferay.app.builder.rest.internal.constants.AppBuilderActionKeys;
 import com.liferay.app.builder.rest.internal.jaxrs.exception.InvalidAppException;
 import com.liferay.app.builder.rest.internal.jaxrs.exception.NoSuchDataListViewException;
 import com.liferay.app.builder.rest.internal.odata.entity.v1_0.AppBuilderAppEntityModel;
@@ -41,12 +42,18 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -87,11 +94,15 @@ public class AppResourceImpl
 
 	@Override
 	public void deleteApp(Long appId) throws Exception {
+		_checkPermissions(appId, ActionKeys.DELETE);
+
 		_appBuilderAppLocalService.deleteAppBuilderApp(appId);
 	}
 
 	@Override
 	public App getApp(Long appId) throws Exception {
+		_checkPermissions(appId, ActionKeys.VIEW);
+
 		return _toApp(_appBuilderAppLocalService.getAppBuilderApp(appId));
 	}
 
@@ -223,6 +234,8 @@ public class AppResourceImpl
 	public App postDataDefinitionApp(Long dataDefinitionId, App app)
 		throws Exception {
 
+		_checkPortletPermissions();
+
 		_validate(
 			app.getDataLayoutId(), app.getDataListViewId(), app.getName(),
 			app.getStatus());
@@ -254,11 +267,18 @@ public class AppResourceImpl
 			appDeployer.deploy(app.getId());
 		}
 
+		_resourceLocalService.addResources(
+			contextCompany.getCompanyId(), contextCompany.getGroupId(),
+			contextUser.getUserId(), AppBuilderApp.class.getName(),
+			appBuilderApp.getPrimaryKey(), false, false, false);
+
 		return _toApp(appBuilderApp);
 	}
 
 	@Override
 	public App putApp(Long appId, App app) throws Exception {
+		_checkPermissions(appId, ActionKeys.UPDATE);
+
 		_validate(
 			app.getDataLayoutId(), app.getDataListViewId(), app.getName(),
 			app.getStatus());
@@ -313,6 +333,8 @@ public class AppResourceImpl
 			Long appId, DeploymentAction deploymentAction)
 		throws Exception {
 
+		_checkPermissions(appId, ActionKeys.UPDATE);
+
 		List<AppBuilderAppDeployment> appBuilderAppDeployments =
 			_appBuilderAppDeploymentLocalService.getAppBuilderAppDeployments(
 				appId);
@@ -336,6 +358,43 @@ public class AppResourceImpl
 		Response.ResponseBuilder responseBuilder = Response.accepted();
 
 		return responseBuilder.build();
+	}
+
+	private void _checkPermissions(long appId, String actionId)
+		throws PortalException {
+
+		if (_portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				contextCompany.getGroupId(), ActionKeys.MANAGE)) {
+
+			return;
+		}
+
+		_modelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), appId, actionId);
+	}
+
+	private void _checkPortletPermissions() throws PortalException {
+		if (_portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				contextCompany.getGroupId(), ActionKeys.MANAGE)) {
+
+			return;
+		}
+
+		_portletResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getGroupId(), AppBuilderActionKeys.ADD_APP);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.app.builder.model.AppBuilderApp)",
+		unbind = "-"
+	)
+	private void _setModelResourcePermission(
+		ModelResourcePermission<AppBuilderApp> modelResourcePermission) {
+
+		_modelResourcePermission = modelResourcePermission;
 	}
 
 	private App _toApp(AppBuilderApp appBuilderApp) throws Exception {
@@ -489,7 +548,15 @@ public class AppResourceImpl
 	@Reference
 	private DEDataListViewLocalService _deDataListViewLocalService;
 
+	private ModelResourcePermission<AppBuilderApp> _modelResourcePermission;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=com.liferay.app.builder)")
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

@@ -274,6 +274,51 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataModelPermissionsPage() throws Exception {
+		Page<DataModelPermission> page =
+			dataModelPermissionResource.getDataModelPermissionsPage(
+				RandomTestUtil.randomString());
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		DataModelPermission dataModelPermission1 =
+			testGetDataModelPermissionsPage_addDataModelPermission(
+				randomDataModelPermission());
+
+		DataModelPermission dataModelPermission2 =
+			testGetDataModelPermissionsPage_addDataModelPermission(
+				randomDataModelPermission());
+
+		page = dataModelPermissionResource.getDataModelPermissionsPage(null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(dataModelPermission1, dataModelPermission2),
+			(List<DataModelPermission>)page.getItems());
+		assertValid(page);
+	}
+
+	protected DataModelPermission
+			testGetDataModelPermissionsPage_addDataModelPermission(
+				DataModelPermission dataModelPermission)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetDataModelPermissionsPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutDataModelPermission() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetDataRecordCollectionDataModelPermissionsPage()
 		throws Exception {
 

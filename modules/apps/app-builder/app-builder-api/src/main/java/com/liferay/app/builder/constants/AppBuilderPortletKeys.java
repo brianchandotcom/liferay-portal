@@ -12,12 +12,15 @@
  * details.
  */
 
-package com.liferay.app.builder.web.internal.constants;
+package com.liferay.app.builder.constants;
 
 /**
  * @author Bruno Farache
  */
 public class AppBuilderPortletKeys {
+
+	public static final String APP_BUILDER =
+		"com_liferay_app_builder_web_internal_portlet_AppBuilderPortlet";
 
 	public static final String CUSTOM_OBJECTS =
 		"com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet";

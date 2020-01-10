@@ -47,6 +47,14 @@ public interface DataModelPermissionResource {
 			Long dataDefinitionId, DataModelPermission[] dataModelPermissions)
 		throws Exception;
 
+	public Page<DataModelPermission> getDataModelPermissionsPage(
+			String roleNames)
+		throws Exception;
+
+	public void putDataModelPermission(
+			DataModelPermission[] dataModelPermissions)
+		throws Exception;
+
 	public Page<DataModelPermission>
 			getDataRecordCollectionDataModelPermissionsPage(
 				Long dataRecordCollectionId, String roleNames)

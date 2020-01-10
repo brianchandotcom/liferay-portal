@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
+import com.liferay.data.engine.constants.DataEngineConstants;
 import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
 import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
 import com.liferay.data.engine.rest.internal.model.InternalDataRecordCollection;
@@ -83,6 +84,27 @@ public class DataModelPermissionResourceImpl
 						InternalDataDefinition.class.getName()),
 					_portal.getClassName(ddmStructure.getClassNameId()),
 					role)));
+	}
+
+	@Override
+	public Page<DataModelPermission> getDataModelPermissionsPage(
+			String roleNames)
+		throws Exception {
+
+		DataEnginePermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, _groupLocalService,
+			contextCompany.getGroupId());
+
+		return Page.of(
+			transform(
+				DataEnginePermissionUtil.getRoles(
+					contextCompany, _roleLocalService,
+					StringUtil.split(roleNames)),
+				role -> _toDataModelPermission(
+					contextCompany.getCompanyId(), contextCompany.getGroupId(),
+					_resourceActionLocalService.getResourceActions(
+						DataEngineConstants.RESOURCE_NAME),
+					DataEngineConstants.RESOURCE_NAME, role)));
 	}
 
 	@Override
@@ -161,6 +183,21 @@ public class DataModelPermissionResourceImpl
 			_getModelPermissions(
 				ddmStructure.getCompanyId(), dataModelPermissions,
 				dataDefinitionId, resourceName));
+	}
+
+	@Override
+	public void putDataModelPermission(
+			DataModelPermission[] dataModelPermissions)
+		throws Exception {
+
+		long siteGroupId = _portal.getSiteGroupId(contextCompany.getGroupId());
+
+		_resourcePermissionLocalService.updateResourcePermissions(
+			contextCompany.getCompanyId(), siteGroupId,
+			DataEngineConstants.RESOURCE_NAME, String.valueOf(siteGroupId),
+			_getModelPermissions(
+				contextCompany.getCompanyId(), dataModelPermissions,
+				siteGroupId, DataEngineConstants.RESOURCE_NAME));
 	}
 
 	@Override

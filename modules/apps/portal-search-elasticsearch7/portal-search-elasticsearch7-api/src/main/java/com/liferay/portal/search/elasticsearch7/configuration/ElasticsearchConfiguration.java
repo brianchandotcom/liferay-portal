@@ -36,7 +36,7 @@ public interface ElasticsearchConfiguration {
 	public OperationMode operationMode();
 
 	@Meta.AD(
-		deflt = "remote", description = "remote-cluster-connection-id-help",
+		description = "remote-cluster-connection-id-help",
 		name = "remote-cluster-connection-id", required = false
 	)
 	public String remoteClusterConnectionId();

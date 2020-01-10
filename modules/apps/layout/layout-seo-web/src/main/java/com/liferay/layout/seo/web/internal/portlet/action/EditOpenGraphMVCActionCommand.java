@@ -156,9 +156,9 @@ public class EditOpenGraphMVCActionCommand extends BaseMVCActionCommand {
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
-		catch (Throwable ddmfve) {
-			if (ddmfve instanceof DDMFormValuesValidationException) {
-				SessionErrors.add(actionRequest, ddmfve.getClass(), ddmfve);
+		catch (Throwable t) {
+			if (t instanceof DDMFormValuesValidationException) {
+				SessionErrors.add(actionRequest, t.getClass(), t);
 
 				sendRedirect(actionRequest, actionResponse);
 			}

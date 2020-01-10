@@ -60,7 +60,7 @@ const Container = React.forwardRef(({children, item}, ref) => {
 	return (
 		<div
 			className={classNames(
-				`container page-editor__container py-${paddingVertical}`,
+				`page-editor__container py-${paddingVertical}`,
 				{
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
 					container: type === 'fixed',

@@ -153,7 +153,7 @@ data.put("qa-id", "customizations");
 						<aui:a cssClass="btn btn-primary" href="<%= toggleCustomizationViewURL %>" label="<%= toggleCustomizedViewMessage %>" />
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-							<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+							<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="liferay-dropdown" type="button">
 								<span class="caret"></span>
 
 								<span class="sr-only"><liferay-ui:message key="toggle-dropdown" /></span>

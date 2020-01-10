@@ -36,7 +36,7 @@ if (Validator.isNotNull(keywords)) {
 
 <div class="display-style-bar">
 	<span class="dropdown" id="<portlet:namespace />numItemsContainer">
-		<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+		<a aria-expanded="true" class="dropdown-toggle" data-toggle="liferay-dropdown" href="javascript:;">
 			<span class="item-title"><%= delta %></span>
 
 			<liferay-ui:icon

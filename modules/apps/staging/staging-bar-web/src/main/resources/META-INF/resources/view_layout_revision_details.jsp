@@ -155,7 +155,7 @@ else {
 
 	<li class="control-menu-nav-item">
 		<div class="d-none d-sm-block dropdown">
-			<a class="dropdown-toggle taglib-icon" data-toggle="dropdown" href="javascript:;">
+			<a class="dropdown-toggle taglib-icon" data-toggle="liferay-dropdown" href="javascript:;">
 				<aui:icon cssClass="icon-monospaced" image="ellipsis-v" markupView="lexicon" />
 
 				<span class="sr-only">

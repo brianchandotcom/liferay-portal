@@ -34,7 +34,7 @@ export default class DropDownHeader extends React.Component {
 						aria-expanded="false"
 						aria-haspopup="true"
 						className="direction-right dropdown-toggle icon-monospaced"
-						data-toggle="dropdown"
+						data-toggle="liferay-dropdown"
 						href="javascript:;"
 						role="button"
 						title="Options"

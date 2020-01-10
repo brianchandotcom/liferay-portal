@@ -57,20 +57,6 @@ Liferay = window.Liferay || {};
 		return new jqueryInit(selector, context, root);
 	};
 
-	$(document).on('show.bs.dropdown', () => {
-		Liferay.fire('dropdownShow', {
-			src: 'BootstrapDropdown'
-		});
-	});
-
-	Liferay.on('dropdownShow', event => {
-		if (event.src !== 'BootstrapDropdown') {
-			$(
-				'.dropdown.show .dropdown-toggle[data-toggle="dropdown"]'
-			).dropdown('toggle');
-		}
-	});
-
 	/**
 	 * OPTIONS
 	 *

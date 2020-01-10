@@ -78,7 +78,7 @@ class SLAListItem extends React.Component {
 							aria-expanded="false"
 							aria-haspopup="true"
 							className="component-action dropdown-toggle"
-							data-toggle="dropdown"
+							data-toggle="liferay-dropdown"
 							href="#1"
 							id="dropdownAction1"
 							role="button"

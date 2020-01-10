@@ -55,7 +55,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 	</c:when>
 	<c:otherwise>
 		<div class="add-menu btn-action-secondary <%= inline ? StringPool.BLANK : "btn-bottom-right" %> dropdown">
-			<button aria-expanded="false" class="btn btn-primary" data-qa-id="addButton" data-toggle="dropdown" type="button">
+			<button aria-expanded="false" class="btn btn-primary" data-qa-id="addButton" data-toggle="liferay-dropdown" type="button">
 				<aui:icon image="plus" markupView="lexicon" />
 			</button>
 

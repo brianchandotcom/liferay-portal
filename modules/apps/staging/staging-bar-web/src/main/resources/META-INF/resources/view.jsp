@@ -37,7 +37,7 @@ if (liveLayout != null) {
 	<c:if test="<%= liveGroup != null %>">
 		<ul class="control-menu-nav">
 			<li class="control-menu-nav-item d-block d-sm-none dropdown staging-options-toggle">
-				<a class="control-menu-icon dropdown-toggle" data-toggle="dropdown" href="javascript:;" value="staging">
+				<a class="control-menu-icon dropdown-toggle" data-toggle="liferay-dropdown" href="javascript:;" value="staging">
 					<span class="control-menu-icon-label">
 						<c:choose>
 							<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">

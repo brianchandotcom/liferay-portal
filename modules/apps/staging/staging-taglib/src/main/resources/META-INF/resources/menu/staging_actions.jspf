@@ -143,7 +143,7 @@
 						</button>
 
 						<c:if test="<%= branchingEnabled %>">
-							<button aria-expanded="false" class="btn btn-primary btn-sm d-block d-sm-none dropdown-toggle" data-toggle="dropdown" type="button">
+							<button aria-expanded="false" class="btn btn-primary btn-sm d-block d-sm-none dropdown-toggle" data-toggle="liferay-dropdown" type="button">
 								<aui:icon image="angle-down" markupView="lexicon" />
 
 								<span class="sr-only">

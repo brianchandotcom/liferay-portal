@@ -5663,7 +5663,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(
-			Field.GROUP_ID, (Long)params.getOrDefault("usersGroups", 0));
+			Field.GROUP_ID, (Long)params.getOrDefault("usersGroups", 0L));
 		attributes.put("city", city);
 		attributes.put("country", country);
 		attributes.put("emailAddress", emailAddress);

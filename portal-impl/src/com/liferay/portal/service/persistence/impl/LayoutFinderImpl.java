@@ -181,13 +181,13 @@ public class LayoutFinderImpl
 			).where(
 				Layout.TABLE.companyId.eq(
 					companyId
-				).andParentheses(
+				).and(
 					PortletPreferences.TABLE.portletId.eq(
 						portletId
 					).or(
 						PortletPreferences.TABLE.portletId.like(
 							portletId.concat("_INSTANCE_%"))
-					)
+					).withParentheses()
 				).and(
 					DSLFunctionUtil.castClobText(
 						PortletPreferences.TABLE.preferences

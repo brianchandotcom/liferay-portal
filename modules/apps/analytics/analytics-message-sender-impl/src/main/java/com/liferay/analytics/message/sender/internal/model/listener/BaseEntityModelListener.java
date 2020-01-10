@@ -165,21 +165,21 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			return;
 		}
 
-		String[] ids = (String[])configurationProperties.get(
+		String[] modelIds = (String[])configurationProperties.get(
 			configurationPropertyName);
 
-		if (!ArrayUtil.contains(ids, modelId)) {
+		if (!ArrayUtil.contains(modelIds, modelId)) {
 			return;
 		}
 
-		ids = ArrayUtil.remove(ids, modelId);
+		modelIds = ArrayUtil.remove(modelIds, modelId);
 
 		if (Validator.isNotNull(preferencePropertyName)) {
 			UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 			unicodeProperties.setProperty(
 				preferencePropertyName,
-				StringUtil.merge(ids, StringPool.COMMA));
+				StringUtil.merge(modelIds, StringPool.COMMA));
 
 			try {
 				companyService.updatePreferences(companyId, unicodeProperties);
@@ -193,7 +193,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			}
 		}
 
-		configurationProperties.put(configurationPropertyName, ids);
+		configurationProperties.put(configurationPropertyName, modelIds);
 
 		try {
 			configurationProvider.saveCompanyConfiguration(

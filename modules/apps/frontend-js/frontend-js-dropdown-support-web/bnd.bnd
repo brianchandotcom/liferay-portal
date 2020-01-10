@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend JS Dropdown Support Web
+Bundle-SymbolicName: com.liferay.frontend.js.dropdown.support.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /frontend-js-dropdown-support-web

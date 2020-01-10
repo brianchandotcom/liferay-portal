@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"dom-align": "1.10.4",
+		"metal-dom": "2.16.8"
+	},
+	"name": "frontend-js-dropdown-support-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

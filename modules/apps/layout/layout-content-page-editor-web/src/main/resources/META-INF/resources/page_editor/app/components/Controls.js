@@ -34,19 +34,31 @@ const reducer = (state, action) => {
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
 		nextState = {...nextState, hoveredItemId: itemId};
 	} else if (type === SELECT_ITEM) {
-		nextState = {...state, activeItemId: itemId};
-
 		if (multiSelect && itemId) {
+			const wasSelected = state.selectedItemsIds.includes(itemId);
+
 			nextState = {
 				...nextState,
-				selectedItemsIds: state.selectedItemsIds.includes(itemId)
+				activeItemId: wasSelected ? null : itemId,
+				selectedItemsIds: wasSelected
 					? state.selectedItemsIds.filter(id => id !== itemId)
 					: state.selectedItemsIds.concat([itemId])
 			};
-		} else if (itemId) {
-			nextState = {...nextState, selectedItemsIds: [itemId]};
-		} else if (nextState.selectedItemsIds.length) {
-			nextState = {...nextState, selectedItemsIds: []};
+		} else if (itemId && itemId !== nextState.activeItemId) {
+			nextState = {
+				...nextState,
+				activeItemId: itemId,
+				selectedItemsIds: [itemId]
+			};
+		} else if (
+			nextState.activeItemId ||
+			nextState.selectedItemsIds.length
+		) {
+			nextState = {
+				...nextState,
+				activeItemId: null,
+				selectedItemsIds: []
+			};
 		}
 	} else if (type === FLOATING_TOOLBAR_REFERENCE) {
 		nextState = {...state, floatingToolbarRef};

@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPopover from '@clayui/popover';
+import classNames from 'classnames';
 import {Align} from 'metal-position';
 import React, {useLayoutEffect, useRef, useState, useEffect} from 'react';
 import {createPortal} from 'react-dom';
@@ -111,11 +112,23 @@ export default function FloatingToolbar({
 	);
 }
 
-function FloatingToolbarButton({active, icon, id, onClick, panelId}) {
+function FloatingToolbarButton({
+	active,
+	icon,
+	id,
+	onClick,
+	panelId,
+	title,
+	...otherProps
+}) {
 	return (
 		<ClayButtonWithIcon
 			borderless
-			className={active && 'active'}
+			className={classNames({
+				active,
+				'lfr-portal-tooltip': title
+			})}
+			data-title={title}
 			displayType="secondary"
 			onClick={() => {
 				if (onClick) {
@@ -124,6 +137,7 @@ function FloatingToolbarButton({active, icon, id, onClick, panelId}) {
 			}}
 			small
 			symbol={icon}
+			{...otherProps}
 		/>
 	);
 }

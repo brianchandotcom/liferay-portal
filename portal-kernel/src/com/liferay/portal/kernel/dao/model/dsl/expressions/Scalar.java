@@ -14,10 +14,11 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
+
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -43,12 +44,14 @@ public class Scalar<T> extends BaseASTNode implements Expression<T> {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
 		if (isScalarValue(_value)) {
-			sb.append(StringPool.QUESTION);
+			consumer.accept(StringPool.QUESTION);
 		}
 		else {
-			sb.append(_value);
+			consumer.accept(String.valueOf(_value));
 		}
 	}
 

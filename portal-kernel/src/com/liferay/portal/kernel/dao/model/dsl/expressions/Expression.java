@@ -15,9 +15,12 @@
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
+import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.operands.Operand;
 import com.liferay.portal.kernel.dao.model.dsl.query.OrderByExpression;
 import com.liferay.portal.kernel.dao.model.dsl.query.Query;
+
+import java.util.function.Consumer;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -66,10 +69,20 @@ public interface Expression<T> extends ASTNode {
 	public default Predicate in(Query query) {
 		return new Predicate(
 			this, Operand.IN,
-			(sb, astNodeListener) -> {
-				sb.append("(");
-				query.toSQL(sb, astNodeListener);
-				sb.append(")");
+			new Expression<Object>() {
+
+				@Override
+				public void toSQL(
+					Consumer<String> consumer,
+					ASTNodeListener astNodeListener) {
+
+					consumer.accept("(");
+
+					query.toSQL(consumer, astNodeListener);
+
+					consumer.accept(")");
+				}
+
 			});
 	}
 

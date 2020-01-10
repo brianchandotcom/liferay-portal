@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.set;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -45,17 +45,19 @@ public class Union extends BaseASTNode implements Query {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		_leftQuery.toSQL(sb, astNodeListener);
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		_leftQuery.toSQL(consumer, astNodeListener);
 
 		if (_all) {
-			sb.append(" union all ");
+			consumer.accept(" union all ");
 		}
 		else {
-			sb.append(" union ");
+			consumer.accept(" union ");
 		}
 
-		_rightQuery.toSQL(sb, astNodeListener);
+		_rightQuery.toSQL(consumer, astNodeListener);
 	}
 
 	private final boolean _all;

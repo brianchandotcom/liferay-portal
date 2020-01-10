@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -40,14 +40,16 @@ public class CaseWhenThen<T>
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("case when ");
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_predicate.toSQL(sb, astNodeListener);
+		consumer.accept("case when ");
 
-		sb.append(" then ");
+		_predicate.toSQL(consumer, astNodeListener);
 
-		_thenExpression.toSQL(sb, astNodeListener);
+		consumer.accept(" then ");
+
+		_thenExpression.toSQL(consumer, astNodeListener);
 	}
 
 	private final Predicate _predicate;

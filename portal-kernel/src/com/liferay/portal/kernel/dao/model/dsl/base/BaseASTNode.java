@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.base;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Shuyang Zhou
@@ -34,18 +34,20 @@ public abstract class BaseASTNode implements ASTNode {
 	}
 
 	@Override
-	public void toSQL(StringBundler sb, ASTNodeListener astNodeListener) {
+	public void toSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
 		if (astNodeListener != null) {
 			astNodeListener.process(this);
 		}
 
 		if (_childASTNode != null) {
-			_childASTNode.toSQL(sb, astNodeListener);
+			_childASTNode.toSQL(consumer, astNodeListener);
 
-			sb.append(" ");
+			consumer.accept(" ");
 		}
 
-		doToSQL(sb, astNodeListener);
+		doToSQL(consumer, astNodeListener);
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public abstract class BaseASTNode implements ASTNode {
 	}
 
 	protected abstract void doToSQL(
-		StringBundler sb, ASTNodeListener astNodeListener);
+		Consumer<String> consumer, ASTNodeListener astNodeListener);
 
 	private final ASTNode _childASTNode;
 

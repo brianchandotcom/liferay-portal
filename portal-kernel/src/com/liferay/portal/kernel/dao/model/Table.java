@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.dao.model;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
@@ -23,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -118,12 +118,14 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append(_tableName);
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept(_tableName);
 
 		if (_alias != null) {
-			sb.append(" ");
-			sb.append(_alias);
+			consumer.accept(" ");
+			consumer.accept(_alias);
 		}
 	}
 

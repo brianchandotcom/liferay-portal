@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -32,12 +32,14 @@ public class ElseEnd<T> extends BaseASTNode implements Expression<T> {
 	}
 
 	@Override
-	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("else ");
+	public void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_elseExpression.toSQL(sb, astNodeListener);
+		consumer.accept("else ");
 
-		sb.append(" end");
+		_elseExpression.toSQL(consumer, astNodeListener);
+
+		consumer.accept(" end");
 	}
 
 	public Expression<T> getElseExpression() {

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.query;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -40,14 +40,16 @@ public class OrderByExpression extends BaseASTNode {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		_expression.toSQL(sb, astNodeListener);
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		_expression.toSQL(consumer, astNodeListener);
 
 		if (_ascending) {
-			sb.append(" asc");
+			consumer.accept(" asc");
 		}
 		else {
-			sb.append(" desc");
+			consumer.accept(" desc");
 		}
 	}
 

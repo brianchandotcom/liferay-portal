@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.functions;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -45,18 +45,20 @@ public class Function<T> extends BaseASTNode implements Expression<T> {
 	}
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append(_functionType.getPrefix());
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept(_functionType.getPrefix());
 
 		for (int i = 0; i < _expressions.length; i++) {
-			_expressions[i].toSQL(sb, astNodeListener);
+			_expressions[i].toSQL(consumer, astNodeListener);
 
 			if (i < (_expressions.length - 1)) {
-				sb.append(_functionType.getDelimiter());
+				consumer.accept(_functionType.getDelimiter());
 			}
 		}
 
-		sb.append(_functionType.getPostfix());
+		consumer.accept(_functionType.getPostfix());
 	}
 
 	private final Expression<?>[] _expressions;

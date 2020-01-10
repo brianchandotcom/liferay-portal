@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -37,14 +37,16 @@ public class WhenThen<T>
 	}
 
 	@Override
-	public void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("when ");
+	public void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_predicate.toSQL(sb, astNodeListener);
+		consumer.accept("when ");
 
-		sb.append(" then ");
+		_predicate.toSQL(consumer, astNodeListener);
 
-		_thenExpression.toSQL(sb, astNodeListener);
+		consumer.accept(" then ");
+
+		_thenExpression.toSQL(consumer, astNodeListener);
 	}
 
 	public Predicate getPredicate() {

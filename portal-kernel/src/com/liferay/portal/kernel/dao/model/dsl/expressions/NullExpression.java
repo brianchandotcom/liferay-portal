@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.dao.model.dsl.expressions;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
+
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
@@ -26,8 +27,10 @@ public class NullExpression extends BaseASTNode implements Expression<Void> {
 	public static final NullExpression INSTANCE = new NullExpression();
 
 	@Override
-	protected void doToSQL(StringBundler sb, ASTNodeListener astNodeListener) {
-		sb.append("NULL");
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept("NULL");
 	}
 
 	private NullExpression() {

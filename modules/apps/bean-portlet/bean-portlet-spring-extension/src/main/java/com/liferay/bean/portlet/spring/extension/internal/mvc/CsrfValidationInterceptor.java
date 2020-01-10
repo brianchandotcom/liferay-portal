@@ -106,7 +106,7 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 						proceed = true;
 					}
 					catch (PrincipalException pe) {
-						_log.error("Invalid CSRF token");
+						_log.error("Invalid CSRF token", pe);
 					}
 				}
 				else {

@@ -29,8 +29,10 @@ definition {
 	test ImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
 		property apacheds.enabled = "true";
+		property app.server.types = "tomcat";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "false";
+		property operating.system.types = "centos";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LDAP#ImportLDAPUserWithBlankPassword";
 

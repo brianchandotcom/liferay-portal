@@ -124,7 +124,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 									</span>
 								</c:if>
 
-								<span class="label label-<%= LabelItem.getStyleFromWorkflowStatus(curArticle.getStatus()) %> text-uppercase">
+								<span class="label label-<%= WorkflowConstants.getStyleFromWorkflowStatus(curArticle.getStatus()) %> text-uppercase">
 									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
 								</span>
 							</span>
@@ -194,7 +194,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 								</span>
 							</c:if>
 
-							<span class="label label-<%= LabelItem.getStyleFromWorkflowStatus(curArticle.getStatus()) %> text-uppercase">
+							<span class="label label-<%= WorkflowConstants.getStyleFromWorkflowStatus(curArticle.getStatus()) %> text-uppercase">
 								<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
 							</span>
 						</liferay-ui:search-container-column-text>

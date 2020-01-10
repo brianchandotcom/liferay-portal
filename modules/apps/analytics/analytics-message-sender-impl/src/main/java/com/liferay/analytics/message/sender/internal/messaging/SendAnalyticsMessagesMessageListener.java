@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -93,6 +94,20 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 			_analyticsMessageLocalService.deleteAnalyticsMessages(companyId);
 
 			return;
+		}
+
+		if (!analyticsConfiguration.syncAllContacts() &&
+			ArrayUtil.isEmpty(analyticsConfiguration.syncedOrganizationIds()) &&
+			ArrayUtil.isEmpty(analyticsConfiguration.syncedUserGroupIds())) {
+
+			int count = _analyticsMessageLocalService.getAnalyticsMessagesCount(
+				companyId);
+
+			if (count == 0) {
+				_analyticsMessageSenderClient.validateConnection(companyId);
+
+				return;
+			}
 		}
 
 		while (true) {

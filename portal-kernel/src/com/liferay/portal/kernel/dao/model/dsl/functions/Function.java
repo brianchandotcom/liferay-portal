@@ -26,7 +26,7 @@ import java.util.function.Consumer;
  */
 public class Function<T> extends BaseASTNode implements Expression<T> {
 
-	public Function(FunctionType functionType, Expression<?>[] expressions) {
+	public Function(FunctionType functionType, Expression<?>... expressions) {
 		_functionType = Objects.requireNonNull(functionType);
 
 		if (expressions.length == 0) {

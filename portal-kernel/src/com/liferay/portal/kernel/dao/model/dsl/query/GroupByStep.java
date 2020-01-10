@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GroupByStep extends ASTNode {
 
-	public default GroupBy groupBy(Expression... expressions) {
+	public default GroupBy groupBy(Expression<?>... expressions) {
 		return new GroupBy(this, expressions);
 	}
 

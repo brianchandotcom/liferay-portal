@@ -84,6 +84,11 @@ public class AnalyticsMessageLocalServiceImpl
 	}
 
 	@Override
+	public int getAnalyticsMessagesCount(long companyId) {
+		return analyticsMessagePersistence.countByCompanyId(companyId);
+	}
+
+	@Override
 	public List<Long> getCompanyIds() {
 		DynamicQuery dynamicQuery = dynamicQuery();
 

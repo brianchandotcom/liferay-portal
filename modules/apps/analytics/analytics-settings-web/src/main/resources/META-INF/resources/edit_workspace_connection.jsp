@@ -74,14 +74,14 @@ if (analyticsConfiguration != null) {
 		</c:if>
 
 		<aui:fieldset>
-			<aui:input label="analytics-cloud-token" name="token" placeholder="paste-token-here" value="<%= token %>" />
+			<aui:input label="analytics-cloud-token" name="token" oninput='<%= renderResponse.getNamespace() + "validateTokenButton();" %>' placeholder="paste-token-here" value="<%= token %>" />
 
 			<div class="form-text">
 				<liferay-ui:message key="analytics-cloud-token-help" />
 			</div>
 
 			<aui:button-row>
-				<aui:button primary="<%= connected ? false : true %>" type="submit" value='<%= connected ? "disconnect" : "connect" %>' />
+				<aui:button id="tokenButton" primary="<%= connected ? false : true %>" type="submit" value='<%= connected ? "disconnect" : "connect" %>' />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>
@@ -153,4 +153,15 @@ if (analyticsConfiguration != null) {
 			}
 		</c:if>
 	}
+
+	function <portlet:namespace />validateTokenButton() {
+		const input = document.getElementById("<portlet:namespace />token");
+		const button = document.getElementById("<portlet:namespace />tokenButton");
+
+		const value = input.value;
+
+		button.disabled = value.length === 0;
+	}
+
+	<portlet:namespace />validateTokenButton();
 </script>

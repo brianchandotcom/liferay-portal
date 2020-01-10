@@ -15,7 +15,7 @@
 package com.liferay.multi.factor.authentication.email.otp.web.internal.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.multi.factor.authentication.email.otp.web.internal.configuration.EmailOTPConfiguration;
+import com.liferay.multi.factor.authentication.email.otp.web.internal.configuration.MFAEmailOTPConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -95,7 +95,7 @@ public class SaveEmailOTPConfigurationMVCActionCommand
 				"emailTemplateSubject", subjectProperties.toString());
 
 			ConfigurationProviderUtil.saveCompanyConfiguration(
-				EmailOTPConfiguration.class, companyId, properties);
+				MFAEmailOTPConfiguration.class, companyId, properties);
 		}
 		catch (ConfigurationException ce) {
 			if (_log.isWarnEnabled()) {

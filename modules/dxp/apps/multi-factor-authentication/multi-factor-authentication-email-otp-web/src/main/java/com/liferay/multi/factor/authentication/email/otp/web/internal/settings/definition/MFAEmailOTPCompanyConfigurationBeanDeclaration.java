@@ -14,7 +14,7 @@
 
 package com.liferay.multi.factor.authentication.email.otp.web.internal.settings.definition;
 
-import com.liferay.multi.factor.authentication.email.otp.web.internal.configuration.EmailOTPConfiguration;
+import com.liferay.multi.factor.authentication.email.otp.web.internal.configuration.MFAEmailOTPConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class EmailOTPCompanyConfigurationBeanDeclaration
+public class MFAEmailOTPCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return EmailOTPConfiguration.class;
+		return MFAEmailOTPConfiguration.class;
 	}
 
 }

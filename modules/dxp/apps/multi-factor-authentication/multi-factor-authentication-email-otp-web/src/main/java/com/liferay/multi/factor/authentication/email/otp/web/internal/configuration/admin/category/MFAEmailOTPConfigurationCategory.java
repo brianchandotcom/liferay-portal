@@ -22,8 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(service = ConfigurationCategory.class)
-public class MultiFactorAuthenticationConfigurationCategory
-	implements ConfigurationCategory {
+public class MFAEmailOTPConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {

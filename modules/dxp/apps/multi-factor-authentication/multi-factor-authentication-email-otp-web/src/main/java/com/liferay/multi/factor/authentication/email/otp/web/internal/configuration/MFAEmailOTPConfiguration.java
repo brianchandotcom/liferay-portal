@@ -20,10 +20,10 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Tomas Polesovsky
  */
 @Meta.OCD(
-	id = "com.liferay.multi.factor.authentication.email.otp.web.internal.configuration.EmailOTPConfiguration",
-	localization = "content/Language", name = "email-otp-configuration-name"
+	id = "com.liferay.multi.factor.authentication.email.otp.web.internal.configuration.MFAEmailOTPConfiguration",
+	localization = "content/Language", name = "mfa-email-otp-configuration-name"
 )
-public interface EmailOTPConfiguration {
+public interface MFAEmailOTPConfiguration {
 
 	@Meta.AD(deflt = "-1", name = "retry-timeout", required = false)
 	public long retryTimeout();

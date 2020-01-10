@@ -17,21 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EmailOTPConfiguration emailOTPConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(EmailOTPConfiguration.class, themeDisplay.getCompanyId());
+MFAEmailOTPConfiguration mfaEmailOTPConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(MFAEmailOTPConfiguration.class, themeDisplay.getCompanyId());
 %>
 
 <aui:fieldset>
-	<aui:input name="enabled" type="toggle-switch" value="<%= emailOTPConfiguration.enabled() %>" />
+	<aui:input name="enabled" type="toggle-switch" value="<%= mfaEmailOTPConfiguration.enabled() %>" />
 
-	<aui:input helpMessage="retry-timeout-description" label="retry-timeout" name="retryTimeout" type="text" value="<%= emailOTPConfiguration.retryTimeout() %>" />
+	<aui:input helpMessage="retry-timeout-description" label="retry-timeout" name="retryTimeout" type="text" value="<%= mfaEmailOTPConfiguration.retryTimeout() %>" />
 
-	<aui:input helpMessage="resend-email-timeout-description" label="resend-email-timeout" name="resendEmailTimeout" type="text" value="<%= emailOTPConfiguration.resendEmailTimeout() %>" />
+	<aui:input helpMessage="resend-email-timeout-description" label="resend-email-timeout" name="resendEmailTimeout" type="text" value="<%= mfaEmailOTPConfiguration.resendEmailTimeout() %>" />
 
-	<aui:input helpMessage="validation-expiration-time-description" label="validation-expiration-time" name="validationExpirationTime" type="text" value="<%= emailOTPConfiguration.validationExpirationTime() %>" />
+	<aui:input helpMessage="validation-expiration-time-description" label="validation-expiration-time" name="validationExpirationTime" type="text" value="<%= mfaEmailOTPConfiguration.validationExpirationTime() %>" />
 
-	<aui:input helpMessage="email-template-from-sender-description" label="email-template-from-sender" name="emailTemplateFromName" type="text" value="<%= emailOTPConfiguration.emailTemplateFromName() %>" />
+	<aui:input helpMessage="email-template-from-sender-description" label="email-template-from-sender" name="emailTemplateFromName" type="text" value="<%= mfaEmailOTPConfiguration.emailTemplateFromName() %>" />
 
-	<aui:input helpMessage="email-template-from-description" label="email-template-from" name="emailTemplateFrom" type="text" value="<%= emailOTPConfiguration.emailTemplateFrom() %>" />
+	<aui:input helpMessage="email-template-from-description" label="email-template-from" name="emailTemplateFrom" type="text" value="<%= mfaEmailOTPConfiguration.emailTemplateFrom() %>" />
 
 	<liferay-frontend:email-notification-settings
 		emailBodyLocalizedValuesMap='<%= (LocalizedValuesMap)request.getAttribute("bodyLocalizedValuesMap") %>'
@@ -40,7 +40,7 @@ EmailOTPConfiguration emailOTPConfiguration = ConfigurationProviderUtil.getCompa
 		showEmailEnabled="<%= false %>"
 	/>
 
-	<aui:input helpMessage="failed-attempts-allowed-description" label="failed-attempts-allowed" name="failedAttemptsAllowed" type="text" value="<%= emailOTPConfiguration.failedAttemptsAllowed() %>" />
+	<aui:input helpMessage="failed-attempts-allowed-description" label="failed-attempts-allowed" name="failedAttemptsAllowed" type="text" value="<%= mfaEmailOTPConfiguration.failedAttemptsAllowed() %>" />
 
-	<aui:input helpMessage="otp-size-description" label="otp-size" name="otpSize" type="text" value="<%= emailOTPConfiguration.otpSize() %>" />
+	<aui:input helpMessage="otp-size-description" label="otp-size" name="otpSize" type="text" value="<%= mfaEmailOTPConfiguration.otpSize() %>" />
 </aui:fieldset>

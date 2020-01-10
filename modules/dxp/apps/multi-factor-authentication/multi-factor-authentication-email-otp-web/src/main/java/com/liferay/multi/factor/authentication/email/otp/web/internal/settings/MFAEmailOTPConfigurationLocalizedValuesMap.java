@@ -23,10 +23,10 @@ import java.util.Map;
 /**
  * @author Marta Medio
  */
-public class EmailOTPConfigurationLocalizedValuesMap
+public class MFAEmailOTPConfigurationLocalizedValuesMap
 	extends LocalizedValuesMap {
 
-	public EmailOTPConfigurationLocalizedValuesMap(
+	public MFAEmailOTPConfigurationLocalizedValuesMap(
 		String defaultValue, UnicodeProperties properties) {
 
 		super(defaultValue);

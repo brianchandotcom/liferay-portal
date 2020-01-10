@@ -73,7 +73,7 @@ if (structureJSONArray != null) {
 								String size = columnJSONObject.getString("size");
 							%>
 
-								<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : "col-md" %>">
+								<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : StringPool.BLANK %>">
 
 									<%
 									JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");

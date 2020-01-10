@@ -41,7 +41,7 @@ definition {
 		var key_searchAssetTitle = "${searchAssetTitle}";
 
 		AssertClick(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE",
 			value1 = "${searchAssetTitle}");
 	}
 
@@ -118,12 +118,12 @@ definition {
 	macro viewSearchNoPG {
 		var key_searchAssetTitle = "${searchAssetTitle}";
 
-		AssertElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+		AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
 
-		AssertElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE");
+		AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TYPE");
 
 		if (isSet(searchAssetSummary)) {
-			AssertElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_SUMMARY");
+			AssertElementNotPresent(locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_SUMMARY");
 		}
 
 		if ("${searchNoResults}" == "true") {
@@ -138,16 +138,16 @@ definition {
 		var key_searchAssetType = "${searchAssetType}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
+			locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
 			value1 = "${searchAssetTitle}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
+			locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
 			value1 = "${searchAssetType}");
 
 		if (isSet(searchAssetSummary)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchResults#ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC",
+				locator1 = "SearchResults#CLASSIC_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC",
 				value1 = "${searchAssetSummary}");
 		}
 	}

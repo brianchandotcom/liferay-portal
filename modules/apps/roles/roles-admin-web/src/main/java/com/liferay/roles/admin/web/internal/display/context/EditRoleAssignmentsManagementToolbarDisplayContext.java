@@ -117,7 +117,7 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 					StringBundler.concat(
 						"javascript:", _renderResponse.getNamespace(),
 						"unsetRoleAssignments();"));
-				dropdownItem.setIcon("trash");
+				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "remove"));
 				dropdownItem.setQuickAction(true);

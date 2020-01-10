@@ -29,6 +29,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -223,11 +224,9 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		defaultFragmentRendererContext.setSegmentsExperienceIds(
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 
-		String configuration = _fragmentRendererController.getConfiguration(
-			defaultFragmentRendererContext);
-
 		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
-			configuration);
+			_fragmentRendererController.getConfiguration(
+				defaultFragmentRendererContext));
 
 		FragmentEntryLinkItemSelectorUtil.addFragmentEntryLinkFieldsSelectorURL(
 			_itemSelector, _portal.getHttpServletRequest(actionRequest),
@@ -236,26 +235,9 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 
 		return JSONUtil.put(
 			"fragmentEntryLink",
-			JSONUtil.put(
-				"configuration", configurationJSONObject
-			).put(
-				"content",
-				_fragmentRendererController.render(
-					defaultFragmentRendererContext,
-					_portal.getHttpServletRequest(actionRequest),
-					_portal.getHttpServletResponse(actionResponse))
-			).put(
-				"defaultConfigurationValues",
-				_fragmentEntryConfigurationParser.
-					getConfigurationDefaultValuesJSONObject(configuration)
-			).put(
-				"editableValues",
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues())
-			).put(
-				"fragmentEntryLinkId",
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
-			)
+			FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
+				actionRequest, actionResponse, fragmentEntryLink,
+				_fragmentEntryConfigurationParser, _fragmentRendererController)
 		).put(
 			"layoutData",
 			_addFragmentEntryLinkToLayoutDataJSONObject(

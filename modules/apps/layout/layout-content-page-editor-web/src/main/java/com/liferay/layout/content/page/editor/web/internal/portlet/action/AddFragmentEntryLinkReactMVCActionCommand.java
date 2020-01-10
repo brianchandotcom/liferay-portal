@@ -53,9 +53,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
-import java.util.Locale;
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -133,8 +130,9 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		FragmentEntry fragmentEntry = _getFragmentEntry(
-			groupId, fragmentEntryKey, serviceContext.getLocale());
+		FragmentEntry fragmentEntry = FragmentEntryLinkUtil.getFragmentEntry(
+			groupId, _fragmentCollectionContributorTracker, fragmentEntryKey,
+			serviceContext.getLocale());
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
@@ -187,23 +185,6 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			themeDisplay.getPlid(),
 			layoutStructure -> layoutStructure.addFragmentLayoutStructureItem(
 				fragmentEntryLinkId, parentItemId, position));
-	}
-
-	private FragmentEntry _getFragmentEntry(
-		long groupId, String fragmentEntryKey, Locale locale) {
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				groupId, fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
-
-		return fragmentEntries.get(fragmentEntryKey);
 	}
 
 	private JSONObject _processAddFragmentEntryLink(

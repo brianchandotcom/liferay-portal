@@ -11,13 +11,13 @@ definition {
 	}
 
 	macro clickCard {
-		Click(
+		Click.waitForMenuToggleJSClick(
 			key_card = "${card}",
 			locator1 = "LexiconCard#CARD");
 	}
 
 	macro clickCardTitle {
-		Click(
+		Click.waitForMenuToggleJSClick(
 			key_card = "${card}",
 			locator1 = "LexiconCard#CARD_TITLE");
 	}

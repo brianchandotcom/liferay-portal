@@ -23,7 +23,7 @@ String name = ParamUtil.getString(request, "name");
 
 boolean userPublicPage = false;
 
-if (group.isUser() && layout.isPublicLayout()) {
+if (scopeGroup.isUser() && layout.isPublicLayout()) {
 	userPublicPage = true;
 }
 
@@ -32,14 +32,14 @@ LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 params.put("inherit", Boolean.TRUE);
 
 if (userPublicPage) {
-	params.put("socialRelation", new Long[] {group.getClassPK()});
+	params.put("socialRelation", new Long[] {scopeGroup.getClassPK()});
 }
 else if (filterBy.startsWith(ContactsConstants.FILTER_BY_TYPE)) {
 	params.put("socialRelationType", new Long[] {themeDisplay.getUserId(), ContactsUtil.getSocialRelationType(filterBy)});
 }
 
 if (showOnlySiteMembers) {
-	params.put("usersGroups", Long.valueOf(group.getGroupId()));
+	params.put("usersGroups", Long.valueOf(scopeGroup.getGroupId()));
 }
 else if (filterBy.startsWith(ContactsConstants.FILTER_BY_GROUP)) {
 	params.put("usersGroups", ContactsUtil.getGroupId(filterBy));
@@ -49,10 +49,10 @@ List<BaseModel<?>> contacts = null;
 int contactsCount = 0;
 
 if (userPublicPage) {
-	List<User> users = UserLocalServiceUtil.getSocialUsers(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL, 0, ContactsConstants.MAX_RESULT_COUNT, new UserLastNameComparator(true));
+	List<User> users = UserLocalServiceUtil.getSocialUsers(scopeGroup.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL, 0, ContactsConstants.MAX_RESULT_COUNT, new UserLastNameComparator(true));
 
 	contacts = new ArrayList<BaseModel<?>>(users);
-	contactsCount = UserLocalServiceUtil.getSocialUsersCount(group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL);
+	contactsCount = UserLocalServiceUtil.getSocialUsersCount(scopeGroup.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION, StringPool.EQUAL);
 }
 else if (showOnlySiteMembers || !filterBy.equals(ContactsConstants.FILTER_BY_DEFAULT)) {
 	List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), name, WorkflowConstants.STATUS_APPROVED, params, 0, ContactsConstants.MAX_RESULT_COUNT, new UserLastNameComparator(true));
@@ -75,7 +75,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 		<aui:row>
 			<aui:col cssClass="contacts-center-home" width="<%= 100 %>">
 				<h3 class="header-title">
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), String.valueOf(contactsCount)} %>" key='<%= userPublicPage ? "x-has-no-connections" : "x-has-no-contacts" %>' translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(scopeGroup.getDescriptiveName(locale)), String.valueOf(contactsCount)} %>" key='<%= userPublicPage ? "x-has-no-connections" : "x-has-no-contacts" %>' translateArguments="<%= false %>" />
 				</h3>
 			</aui:col>
 		</aui:row>

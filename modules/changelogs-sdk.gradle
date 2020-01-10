@@ -68,7 +68,7 @@ buildChangelogs {
 			Closure<Void> setCommitDetails = {
 				String gitLogLine ->
 
-				gitLogLine.eachMatch(/([a-f0-9]+):.+:((?:.*?)(?<![A-Z])(?:[A-Z]+-\d+))(.*)/) {
+				gitLogLine.eachMatch(/([a-f0-9]+):.+:((?:.*?)(?<![A-Z])(?:[A-Z]+-\d+(?:[^A-Za-z0-9]+[A-Z]+-\d+)*))(.*)/) {
 					all, sha, ticketNumber, commitMessage ->
 
 					if (ticketNumber.startsWith("Revert")) {

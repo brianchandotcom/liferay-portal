@@ -41,21 +41,19 @@ export default function FragmentEntryLinksWithComments() {
 					comments.some(({resolved}) => !resolved))
 		);
 
-	const setActiveFragmentEntryLink = fragmentEntryLinkId => () => {
-		selectItem(
-			Object.values(layoutData.items).find(
-				item => item.config.fragmentEntryLinkId === fragmentEntryLinkId
-			).itemId
+	const findItemId = fragmentEntryLinkId => {
+		const item = Object.values(layoutData.items).find(
+			item => item.config.fragmentEntryLinkId === fragmentEntryLinkId
 		);
+
+		return item ? item.itemId : null;
 	};
 
-	const setHoveredFragmentEntryLink = fragmentEntryLinkId => () => {
-		hoverItem(
-			Object.values(layoutData.items).find(
-				item => item.config.fragmentEntryLinkId === fragmentEntryLinkId
-			).itemId
-		);
-	};
+	const setActiveFragmentEntryLink = fragmentEntryLinkId => () =>
+		selectItem(findItemId(fragmentEntryLinkId));
+
+	const setHoveredFragmentEntryLink = fragmentEntryLinkId => () =>
+		hoverItem(findItemId(fragmentEntryLinkId));
 
 	const getFragmentEntryLinkItem = ({
 		comments,

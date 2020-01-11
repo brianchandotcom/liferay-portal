@@ -31,9 +31,9 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		var portalURL = PropsUtil.get("portal.url");
-
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/home");
+
+		var portalURL = PropsUtil.get("portal.url");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/home");
 

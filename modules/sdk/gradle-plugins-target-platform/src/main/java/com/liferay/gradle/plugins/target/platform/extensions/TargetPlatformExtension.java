@@ -22,8 +22,11 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.gradle.api.Project;
@@ -141,8 +144,20 @@ public class TargetPlatformExtension {
 				_project,
 				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
 
+		List<String> configurationNamesList = new ArrayList<>();
+
+		Iterator<?> iterator = configurationNames.iterator();
+
+		while (iterator.hasNext()) {
+			Object obj = iterator.next();
+
+			if (obj instanceof String) {
+				configurationNamesList.add((String)obj);
+			}
+		}
+
 		TargetPlatformPluginUtil.configureTargetPlatform(
-			_project, configurationNames, targetPlatformBomsConfiguration);
+			_project, configurationNamesList, targetPlatformBomsConfiguration);
 
 		return this;
 	}

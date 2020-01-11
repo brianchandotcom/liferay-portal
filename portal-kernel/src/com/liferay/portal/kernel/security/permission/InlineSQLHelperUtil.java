@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import com.liferay.portal.kernel.dao.model.Column;
+import com.liferay.portal.kernel.dao.model.Table;
+import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -36,6 +39,14 @@ public class InlineSQLHelperUtil {
 
 	public static boolean isEnabled(long[] groupIds) {
 		return _inlineSQLPermission.isEnabled(groupIds);
+	}
+
+	public static <T extends Table<T>> Query replacePermissionCheck(
+		Query query, Class<?> modelClass, Column<T, Long> classPKColumn,
+		long... groupIds) {
+
+		return _inlineSQLPermission.replacePermissionCheck(
+			query, modelClass, classPKColumn, groupIds);
 	}
 
 	public static String replacePermissionCheck(

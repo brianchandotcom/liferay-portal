@@ -17,9 +17,15 @@ package com.liferay.portal.security.permission.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.model.dsl.DSLSelectUtil;
+import com.liferay.portal.kernel.dao.model.dsl.query.From;
+import com.liferay.portal.kernel.dao.model.dsl.query.Query;
+import com.liferay.portal.kernel.dao.model.dsl.query.Where;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -275,6 +281,71 @@ public class InlineSQLHelperImplTest {
 
 		Assert.assertFalse(_inlineSQLHelper.isEnabled(_groupOne.getGroupId()));
 		Assert.assertTrue(_inlineSQLHelper.isEnabled(_groupTwo.getGroupId()));
+	}
+
+	@Test
+	public void testReplaceQuery() throws Exception {
+		_addGroupRole(_groupOne, RoleConstants.SITE_ADMINISTRATOR);
+		_addGroupRole(_groupTwo, RoleConstants.SITE_MEMBER);
+
+		_setPermissionChecker();
+
+		From from = DSLSelectUtil.select(
+		).from(
+			Layout.TABLE
+		);
+
+		Query query = _inlineSQLHelper.replacePermissionCheck(
+			from, Layout.class, Layout.TABLE.plid, _groupIds);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from Layout where Layout.plid in (select distinct ",
+				"ResourcePermission.primKeyId from ResourcePermission where ",
+				"ResourcePermission.companyId = ? and ResourcePermission.name ",
+				"= ? and ResourcePermission.scope = ? and ",
+				"ResourcePermission.viewActionId = ? and ",
+				"(ResourcePermission.roleId in (?, ?, ?, ?) or Layout.userId ",
+				"= ?)) or Layout.groupId in (?)"),
+			query.toString());
+
+		Where where = from.innerJoinON(
+			PortletPreferences.TABLE,
+			PortletPreferences.TABLE.plid.eq(Layout.TABLE.plid)
+		).where(
+			Layout.TABLE.companyId.eq(0L)
+		);
+
+		query = _inlineSQLHelper.replacePermissionCheck(
+			where, Layout.class, Layout.TABLE.plid, _groupIds);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from Layout inner join PortletPreferences on ",
+				"PortletPreferences.plid = Layout.plid where Layout.companyId ",
+				"= ? and (Layout.plid in (select distinct ",
+				"ResourcePermission.primKeyId from ResourcePermission where ",
+				"ResourcePermission.companyId = ? and ResourcePermission.name ",
+				"= ? and ResourcePermission.scope = ? and ",
+				"ResourcePermission.viewActionId = ? and ",
+				"(ResourcePermission.roleId in (?, ?, ?, ?) or Layout.userId ",
+				"= ?)) or Layout.groupId in (?))"),
+			query.toString());
+
+		query = _inlineSQLHelper.replacePermissionCheck(
+			where, Layout.class, Layout.TABLE.plid);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"select * from Layout inner join PortletPreferences on ",
+				"PortletPreferences.plid = Layout.plid where Layout.companyId ",
+				"= ? and (Layout.plid in (select distinct ",
+				"ResourcePermission.primKeyId from ResourcePermission where ",
+				"ResourcePermission.companyId = ? and ResourcePermission.name ",
+				"= ? and ResourcePermission.scope = ? and ",
+				"ResourcePermission.viewActionId = ? and ",
+				"(ResourcePermission.roleId in (?, ?) or Layout.userId = ?)))"),
+			query.toString());
 	}
 
 	@Test

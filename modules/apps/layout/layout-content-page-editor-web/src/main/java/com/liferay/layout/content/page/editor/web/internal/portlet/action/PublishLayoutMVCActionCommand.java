@@ -37,11 +37,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
-import java.io.Serializable;
-
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -117,15 +114,13 @@ public class PublishLayoutMVCActionCommand
 				layout.getCompanyId(), layout.getGroupId(),
 				Layout.class.getName())) {
 
-			Map<String, Serializable> workflowContext = new HashMap<>();
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				layout.getCompanyId(), layout.getGroupId(), layout.getUserId(),
 				Layout.class.getName(), layout.getPlid(), layout,
-				serviceContext, workflowContext);
+				serviceContext, Collections.emptyMap());
 		}
 		else {
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);

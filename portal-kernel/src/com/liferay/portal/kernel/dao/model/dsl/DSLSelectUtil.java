@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.dao.model.dsl.query.Select;
 /**
  * @author Preston Crary
  */
-public class DSLStatementUtil {
+public class DSLSelectUtil {
 
 	public static Select count() {
 		return new Select(false, AggregateExpression.COUNT_STAR_COUNT_VALUE);

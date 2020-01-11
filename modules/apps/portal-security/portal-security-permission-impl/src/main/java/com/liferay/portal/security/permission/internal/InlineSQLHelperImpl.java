@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.model.Column;
 import com.liferay.portal.kernel.dao.model.Table;
-import com.liferay.portal.kernel.dao.model.dsl.DSLStatementUtil;
+import com.liferay.portal.kernel.dao.model.dsl.DSLSelectUtil;
 import com.liferay.portal.kernel.dao.model.dsl.ast.ASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.base.BaseASTNode;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
@@ -512,7 +512,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				roleIdsOrOwnerIdsPredicate.withParentheses());
 		}
 
-		return DSLStatementUtil.selectDistinct(
+		return DSLSelectUtil.selectDistinct(
 			ResourcePermission.TABLE.primKeyId
 		).from(
 			ResourcePermission.TABLE

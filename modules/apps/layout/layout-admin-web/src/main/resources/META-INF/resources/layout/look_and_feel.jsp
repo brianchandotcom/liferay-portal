@@ -125,7 +125,7 @@ else {
 }
 %>
 
-<div class="sheet-section <%= (selLayout.getMasterLayoutPlid() <= 0) ? StringPool.BLANK : "hide" %>">
+<div class="sheet-section <%= (selLayout.getMasterLayoutPlid() <= 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeContainer">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
 
 	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
@@ -166,6 +166,20 @@ else {
 			'<portlet:namespace />changeMasterLayoutButton'
 		);
 
+		var editMasterLayoutButton = document.getElementById(
+			'<portlet:namespace />editMasterLayoutButton'
+		);
+
+		var masterLayoutPlid = document.getElementById(
+			'<portlet:namespace />masterLayoutPlid'
+		);
+
+		var oldMasterLayoutPlid = masterLayoutPlid.value;
+
+		var themeContainer = document.getElementById(
+			'<portlet:namespace />themeContainer'
+		);
+
 		var changeMasterLayoutButtonEventListener = changeMasterLayoutButton.addEventListener(
 			'click',
 			function(event) {
@@ -189,18 +203,25 @@ else {
 
 						masterLayoutName.innerHTML = selectedItem.name;
 
-						var masterLayoutPlid = document.getElementById(
-							'<portlet:namespace />masterLayoutPlid'
-						);
-
 						masterLayoutPlid.value = selectedItem.plid;
+
+						if (masterLayoutPlid.value == 0) {
+							themeContainer.classList.remove('hide');
+						} else {
+							themeContainer.classList.add('hide');
+						}
+
+						if (
+							masterLayoutPlid.value == oldMasterLayoutPlid &&
+							masterLayoutPlid.value != 0
+						) {
+							editMasterLayoutButton.classList.remove('hide');
+						} else {
+							editMasterLayoutButton.classList.add('hide');
+						}
 					}
 				});
 			}
-		);
-
-		var editMasterLayoutButton = document.getElementById(
-			'<portlet:namespace />editMasterLayoutButton'
 		);
 
 		<%

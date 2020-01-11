@@ -2,6 +2,8 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="ChainingCheck" files="modules/apps/portal-security/portal-security-permission-impl/src/main/java/com/liferay/portal/security/permission/internal/InlineSQLHelperImpl\.java" />
+		<suppress checks="ChainingCheck" files="modules/apps/portal-security/portal-security-permission-test/src/testIntegration/java/com/liferay/portal/security/permission/test/InlineSQLHelperImplTest\.java" />
 		<suppress checks="StaticVariableNameCheck" files="modules/apps/portal-security/portal-security-service-access-policy-api/src/main/java/com/liferay/portal/security/service/access/policy/constants/SAPActionKeys\.java" />
 	</checkstyle>
 </suppressions>

@@ -73,15 +73,22 @@ if ((Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Object
 		</p>
 
 		<div class="button-holder">
-			<c:if test="<%= masterLayoutPageTemplateEntry != null %>">
-				<clay:button
-					elementClasses="btn-secondary"
-					id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
-					label='<%= LanguageUtil.get(request, "edit-master") %>'
-					size="sm"
-					style="<%= false %>"
-				/>
-			</c:if>
+
+			<%
+			String elementClasses = "btn-secondary";
+
+			if (masterLayoutPageTemplateEntry == null) {
+				elementClasses = "btn-secondary hide";
+			}
+			%>
+
+			<clay:button
+				elementClasses="<%= elementClasses %>"
+				id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
+				label='<%= LanguageUtil.get(request, "edit-master") %>'
+				size="sm"
+				style="<%= false %>"
+			/>
 
 			<clay:button
 				elementClasses="btn-secondary"
@@ -94,95 +101,64 @@ if ((Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Object
 	</div>
 </c:if>
 
-<c:if test="<%= selLayout.getMasterLayoutPlid() <= 0 %>">
-	<liferay-util:buffer
-		var="rootNodeNameLink"
-	>
-		<c:choose>
-			<c:when test="<%= themeDisplay.isStateExclusive() %>">
-				<%= HtmlUtil.escape(rootNodeName) %>
-			</c:when>
-			<c:otherwise>
-				<aui:a href="<%= redirectURL.toString() %>"><%= HtmlUtil.escape(rootNodeName) %></aui:a>
-			</c:otherwise>
-		</c:choose>
-	</liferay-util:buffer>
+<liferay-util:buffer
+	var="rootNodeNameLink"
+>
+	<c:choose>
+		<c:when test="<%= themeDisplay.isStateExclusive() %>">
+			<%= HtmlUtil.escape(rootNodeName) %>
+		</c:when>
+		<c:otherwise>
+			<aui:a href="<%= redirectURL.toString() %>"><%= HtmlUtil.escape(rootNodeName) %></aui:a>
+		</c:otherwise>
+	</c:choose>
+</liferay-util:buffer>
 
-	<%
-	String taglibLabel = null;
+<%
+String taglibLabel = null;
 
-	if (group.isLayoutPrototype()) {
-		taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
-	}
-	else {
-		taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
-	}
-	%>
+if (group.isLayoutPrototype()) {
+	taglibLabel = LanguageUtil.get(request, "use-the-same-look-and-feel-of-the-pages-in-which-this-template-is-used");
+}
+else {
+	taglibLabel = LanguageUtil.format(request, "use-the-same-look-and-feel-of-the-x", rootNodeNameLink, false);
+}
+%>
 
-	<div class="sheet-section">
-		<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
+<div class="sheet-section <%= (selLayout.getMasterLayoutPlid() <= 0) ? StringPool.BLANK : "hide" %>">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
 
-		<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
+	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
 
-		<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
+	<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
 
-		<c:if test="<%= !group.isLayoutPrototype() %>">
-			<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
-				<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
-					<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
-					<liferay-util:param name="themeId" value="<%= rootTheme.getThemeId() %>" />
-				</liferay-util:include>
-			</div>
-		</c:if>
-
-		<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
-			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
+	<c:if test="<%= !group.isLayoutPrototype() %>">
+		<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
+			<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
+				<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
+				<liferay-util:param name="themeId" value="<%= rootTheme.getThemeId() %>" />
+			</liferay-util:include>
 		</div>
+	</c:if>
+
+	<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
+		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
-</c:if>
+</div>
 
-<c:choose>
-	<c:when test="<%= selLayout.getMasterLayoutPlid() <= 0 %>">
-		<aui:script>
-			Liferay.Util.toggleRadio(
-				'<portlet:namespace />regularInheritLookAndFeel',
-				'<portlet:namespace />inheritThemeOptions',
-				'<portlet:namespace />themeOptions'
-			);
-			Liferay.Util.toggleRadio(
-				'<portlet:namespace />regularUniqueLookAndFeel',
-				'<portlet:namespace />themeOptions',
-				'<portlet:namespace />inheritThemeOptions'
-			);
-		</aui:script>
-	</c:when>
-	<c:otherwise>
-
-		<%
-		Layout masterLayout = LayoutLocalServiceUtil.getLayout(selLayout.getMasterLayoutPlid());
-
-		Layout masterDraftLayout = LayoutLocalServiceUtil.fetchLayout(PortalUtil.getClassNameId(Layout.class), masterLayout.getPlid());
-
-		String editLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", ParamUtil.getString(request, "redirect"));
-
-		String editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterDraftLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
-		%>
-
-		<aui:script>
-			var editMasterLayoutButton = document.getElementById(
-				'<portlet:namespace />editMasterLayoutButton'
-			);
-
-			var editMasterLayoutButtonEventListener = editMasterLayoutButton.addEventListener(
-				'click',
-				function(event) {
-					Liferay.Util.navigate('<%= editMasterLayoutURL %>');
-				}
-			);
-		</aui:script>
-	</c:otherwise>
-</c:choose>
+<aui:script>
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />regularInheritLookAndFeel',
+		'<portlet:namespace />inheritThemeOptions',
+		'<portlet:namespace />themeOptions'
+	);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />regularUniqueLookAndFeel',
+		'<portlet:namespace />themeOptions',
+		'<portlet:namespace />inheritThemeOptions'
+	);
+</aui:script>
 
 <c:if test="<%= allowEditMasterLayout %>">
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
@@ -220,6 +196,31 @@ if ((Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Object
 						masterLayoutPlid.value = selectedItem.plid;
 					}
 				});
+			}
+		);
+
+		var editMasterLayoutButton = document.getElementById(
+			'<portlet:namespace />editMasterLayoutButton'
+		);
+
+		<%
+		String editMasterLayoutURL = StringPool.BLANK;
+
+		if (selLayout.getMasterLayoutPlid() > 0) {
+			Layout masterLayout = LayoutLocalServiceUtil.getLayout(selLayout.getMasterLayoutPlid());
+
+			Layout masterDraftLayout = LayoutLocalServiceUtil.fetchLayout(PortalUtil.getClassNameId(Layout.class), masterLayout.getPlid());
+
+			String editLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", ParamUtil.getString(request, "redirect"));
+
+			editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterDraftLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
+		}
+		%>
+
+		var editMasterLayoutButtonEventListener = editMasterLayoutButton.addEventListener(
+			'click',
+			function(event) {
+				Liferay.Util.navigate('<%= editMasterLayoutURL %>');
 			}
 		);
 	</aui:script>

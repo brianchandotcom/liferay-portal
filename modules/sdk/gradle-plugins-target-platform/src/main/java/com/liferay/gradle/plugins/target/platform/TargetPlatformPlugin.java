@@ -214,7 +214,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		"default", "implementation", "originalModule", "parentThemes",
 		"portalCommonCSS", "runtime", "runtimeClasspath",
 		"runtimeImplementation", "runtimeOnly", "testCompileClasspath",
-		"testCompileOnly", "testIntegration", "testImplementation",
+		"testCompileOnly", "testImplementation", "testIntegration",
 		"testRuntime", "testRuntimeClasspath", "testRuntimeOnly");
 
 }

@@ -77,7 +77,7 @@ if (layoutPageTemplateEntry == null) {
 				/>
 			</c:if>
 
-			<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) %>">
+			<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Objects.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
 				<clay:button
 					elementClasses="btn-secondary"
 					id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
@@ -180,7 +180,7 @@ if (layoutPageTemplateEntry == null) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) && ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) %>">
+<c:if test="<%= (Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Objects.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) && ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) %>">
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 		var changeMasterLayoutButton = document.getElementById(
 			'<portlet:namespace />changeMasterLayoutButton'

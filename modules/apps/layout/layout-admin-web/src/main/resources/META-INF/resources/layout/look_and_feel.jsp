@@ -47,9 +47,15 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalSe
 if (layoutPageTemplateEntry == null) {
 	layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(selLayout.getClassPK());
 }
+
+boolean allowEditMasterLayout = false;
+
+if ((Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Objects.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) && ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT))) {
+	allowEditMasterLayout = true;
+}
 %>
 
-<c:if test="<%= (layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) %>">
+<c:if test="<%= allowEditMasterLayout %>">
 
 	<%
 	LayoutPageTemplateEntry masterLayoutPageTemplateEntry = null;
@@ -77,15 +83,13 @@ if (layoutPageTemplateEntry == null) {
 				/>
 			</c:if>
 
-			<c:if test="<%= Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Objects.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
-				<clay:button
-					elementClasses="btn-secondary"
-					id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
-					label='<%= LanguageUtil.get(request, "change-master") %>'
-					size="sm"
-					style="<%= false %>"
-				/>
-			</c:if>
+			<clay:button
+				elementClasses="btn-secondary"
+				id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
+				label='<%= LanguageUtil.get(request, "change-master") %>'
+				size="sm"
+				style="<%= false %>"
+			/>
 		</div>
 	</div>
 </c:if>
@@ -180,7 +184,7 @@ if (layoutPageTemplateEntry == null) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= (Objects.equals(selLayout.getType(), LayoutConstants.TYPE_CONTENT) || Objects.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) && ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) %>">
+<c:if test="<%= allowEditMasterLayout %>">
 	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 		var changeMasterLayoutButton = document.getElementById(
 			'<portlet:namespace />changeMasterLayoutButton'

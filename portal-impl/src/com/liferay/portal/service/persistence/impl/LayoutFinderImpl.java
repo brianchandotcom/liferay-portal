@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.model.dsl.DSLFunctionUtil;
 import com.liferay.portal.kernel.dao.model.dsl.DSLStatementUtil;
+import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -77,86 +78,19 @@ public class LayoutFinderImpl
 
 	@Override
 	public List<Layout> findByScopeGroup(long groupId) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = DSLStatementUtil.select(
-			).from(
-				Layout.TABLE
-			).innerJoinON(
-				Group.TABLE,
-				Group.TABLE.companyId.eq(
-					Layout.TABLE.companyId
-				).and(
-					Group.TABLE.classNameId.eq(
-						PortalUtil.getClassNameId(Layout.class))
-				).and(
-					Group.TABLE.classPK.eq(Layout.TABLE.plid)
-				)
-			).where(
-				Layout.TABLE.groupId.eq(groupId)
-			);
-
-			query = InlineSQLHelperUtil.replacePermissionCheck(
-				query, Layout.class, Layout.TABLE.plid, groupId);
-
-			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
-				session, query);
-
-			q.addEntity("Layout", LayoutImpl.class);
-
-			return q.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _findByScopeGroup(
+			Layout.TABLE.groupId.eq(groupId), groupId, true);
 	}
 
 	@Override
 	public List<Layout> findByScopeGroup(long groupId, boolean privateLayout) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
-				session,
-				DSLStatementUtil.select(
-				).from(
-					Layout.TABLE
-				).innerJoinON(
-					Group.TABLE,
-					Group.TABLE.companyId.eq(
-						Layout.TABLE.companyId
-					).and(
-						Group.TABLE.classNameId.eq(
-							PortalUtil.getClassNameId(Layout.class))
-					).and(
-						Group.TABLE.classPK.eq(Layout.TABLE.plid)
-					)
-				).where(
-					Layout.TABLE.groupId.eq(
-						groupId
-					).and(
-						Layout.TABLE.privateLayout.eq(privateLayout)
-					)
-				));
-
-			q.addEntity("Layout", LayoutImpl.class);
-
-			return q.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _findByScopeGroup(
+			Layout.TABLE.groupId.eq(
+				groupId
+			).and(
+				Layout.TABLE.privateLayout.eq(privateLayout)
+			),
+			groupId, false);
 	}
 
 	@Override
@@ -223,6 +157,51 @@ public class LayoutFinderImpl
 			}
 
 			return layoutReferences;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private List<Layout> _findByScopeGroup(
+		Predicate wherePredicate, long groupId, boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = DSLStatementUtil.select(
+			).from(
+				Layout.TABLE
+			).innerJoinON(
+				Group.TABLE,
+				Group.TABLE.companyId.eq(
+					Layout.TABLE.companyId
+				).and(
+					Group.TABLE.classNameId.eq(
+						PortalUtil.getClassNameId(Layout.class))
+				).and(
+					Group.TABLE.classPK.eq(Layout.TABLE.plid)
+				)
+			).where(
+				wherePredicate
+			);
+
+			if (inlineSQLHelper) {
+				query = InlineSQLHelperUtil.replacePermissionCheck(
+					query, Layout.class, Layout.TABLE.plid, groupId);
+			}
+
+			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
+				session, query);
+
+			q.addEntity("Layout", LayoutImpl.class);
+
+			return q.list(true);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

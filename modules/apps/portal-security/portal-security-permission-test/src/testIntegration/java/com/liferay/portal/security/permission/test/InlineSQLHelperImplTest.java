@@ -315,7 +315,7 @@ public class InlineSQLHelperImplTest {
 
 		_assertValidSql(sql);
 
-		sql = _replacePermissionCheckJoin(_SQL_PLAIN + _SQL_WHERE);
+		sql = _replacePermissionCheckJoin(_SQL_PLAIN + _SQL_WHERE, _groupIds);
 
 		_assertWhereClause(sql, _CLASS_PK_FIELD);
 
@@ -380,12 +380,7 @@ public class InlineSQLHelperImplTest {
 	}
 
 	private String _replacePermissionCheckJoin(String sql, long... groupIds) {
-		return ReflectionTestUtil.invoke(
-			_inlineSQLHelper, "replacePermissionCheckJoin",
-			new Class<?>[] {
-				String.class, String.class, String.class, String.class,
-				String.class, long[].class, String.class
-			},
+		return _inlineSQLHelper.replacePermissionCheck(
 			sql, _CLASS_NAME, _CLASS_PK_FIELD, _USER_ID_FIELD, _GROUP_ID_FIELD,
 			groupIds, null);
 	}

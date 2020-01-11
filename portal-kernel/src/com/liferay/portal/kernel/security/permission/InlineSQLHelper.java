@@ -14,12 +14,23 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Provides utility methods for filtering SQL queries by the user's permissions.
  *
  * @author Raymond Augé
  */
+@ProviderType
 public interface InlineSQLHelper {
+
+	public <T extends Table<T>> Predicate getPermissionWherePredicate(
+		Class<?> modelClass, Column<T, Long> classPKColumn, long... groupIds);
 
 	/**
 	 * Returns <code>true</code> if the inline SQL helper is enabled.
@@ -59,6 +70,10 @@ public interface InlineSQLHelper {
 	 *         groups; <code>false</code> otherwise
 	 */
 	public boolean isEnabled(long[] groupIds);
+
+	public <T extends Table<T>> DSLQuery replacePermissionCheck(
+		DSLQuery dslQuery, Class<?> modelClass, Column<T, Long> classPKColumn,
+		long... groupIds);
 
 	/**
 	 * Modifies the SQL query to only match resources that the user has

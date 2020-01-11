@@ -17,6 +17,16 @@ package com.liferay.portal.security.permission.internal;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.WhereStep;
+import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.spi.query.Where;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -28,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -40,7 +51,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.portal.security.permission.internal.configuration.InlinePermissionConfiguration;
 
+import java.util.Deque;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -66,6 +80,28 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	public static final String FIND_BY_RESOURCE_PERMISSION =
 		InlineSQLHelper.class.getName() + ".findByResourcePermission";
+
+	@Override
+	public <T extends Table<T>> Predicate getPermissionWherePredicate(
+		Class<?> modelClass, Column<T, Long> classPKColumn, long... groupIds) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((groupIds == null) || (groupIds.length == 0)) {
+			groupIds = new long[] {0};
+		}
+
+		if (_skipReplace(
+				permissionChecker, modelClass.getName(), classPKColumn,
+				groupIds)) {
+
+			return null;
+		}
+
+		return _getPermissionPredicate(
+			permissionChecker, modelClass, classPKColumn, groupIds);
+	}
 
 	@Override
 	public boolean isEnabled() {
@@ -124,6 +160,21 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		return false;
+	}
+
+	@Override
+	public <T extends Table<T>> DSLQuery replacePermissionCheck(
+		DSLQuery dslQuery, Class<?> modelClass, Column<T, Long> classPKColumn,
+		long... groupIds) {
+
+		Predicate permissionPredicate = getPermissionWherePredicate(
+			modelClass, classPKColumn, groupIds);
+
+		if (permissionPredicate == null) {
+			return dslQuery;
+		}
+
+		return _insertResourcePermissionQuery(dslQuery, permissionPredicate);
 	}
 
 	@Override
@@ -236,8 +287,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (_skipReplace(
-				sql, permissionChecker, className, classPKField, groupIds)) {
+		if ((sql == null) ||
+			_skipReplace(
+				permissionChecker, className, classPKField, groupIds)) {
 
 			return sql;
 		}
@@ -382,6 +434,109 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 	}
 
+	private <T extends Table<T>> Predicate _getPermissionPredicate(
+		PermissionChecker permissionChecker, Class<?> modelClass,
+		Column<T, Long> classPKColumn, long[] groupIds) {
+
+		T table = classPKColumn.getTable();
+
+		Column<T, Long> userIdColumn = table.getColumn("userId", Long.class);
+
+		DSLQuery resourcePermissionDSLQuery = _getResourcePermissionQuery(
+			permissionChecker, modelClass, userIdColumn, groupIds);
+
+		Predicate permissionPredicate = classPKColumn.in(
+			resourcePermissionDSLQuery);
+
+		Set<Long> groupIdSet = null;
+
+		for (long groupId : groupIds) {
+			if (!isEnabled(groupId)) {
+				if (groupIdSet == null) {
+					groupIdSet = new LinkedHashSet<>();
+				}
+
+				groupIdSet.add(groupId);
+			}
+		}
+
+		if (groupIdSet != null) {
+			Column<T, Long> groupIdColumn = table.getColumn(
+				"groupId", Long.class);
+
+			if (groupIdColumn == null) {
+				throw new IllegalArgumentException(
+					"No groupId column for table " + table.getTableName());
+			}
+
+			permissionPredicate = permissionPredicate.or(
+				groupIdColumn.in(groupIdSet.toArray(new Long[0])));
+
+			permissionPredicate = permissionPredicate.withParentheses();
+		}
+
+		return permissionPredicate;
+	}
+
+	private DSLQuery _getResourcePermissionQuery(
+		PermissionChecker permissionChecker, Class<?> modelClass,
+		Column<?, Long> userIdColumn, long[] groupIds) {
+
+		Predicate roleIdsOrOwnerIdsPredicate = null;
+
+		long[] roleIds = getRoleIds(groupIds);
+
+		if (roleIds.length > 0) {
+			roleIdsOrOwnerIdsPredicate =
+				ResourcePermissionTable.INSTANCE.roleId.in(
+					ArrayUtil.toLongArray(roleIds));
+		}
+
+		if (permissionChecker.isSignedIn()) {
+			Expression<Long> ownerIdExpression =
+				ResourcePermissionTable.INSTANCE.ownerId;
+
+			if (userIdColumn != null) {
+				ownerIdExpression = userIdColumn;
+			}
+
+			Predicate ownerIdPredicate = ownerIdExpression.eq(
+				permissionChecker.getUserId());
+
+			if (roleIdsOrOwnerIdsPredicate == null) {
+				roleIdsOrOwnerIdsPredicate = ownerIdPredicate;
+			}
+			else {
+				roleIdsOrOwnerIdsPredicate = roleIdsOrOwnerIdsPredicate.or(
+					ownerIdPredicate);
+			}
+		}
+
+		Predicate predicate = ResourcePermissionTable.INSTANCE.companyId.eq(
+			permissionChecker.getCompanyId()
+		).and(
+			ResourcePermissionTable.INSTANCE.name.eq(modelClass.getName())
+		).and(
+			ResourcePermissionTable.INSTANCE.scope.eq(
+				ResourceConstants.SCOPE_INDIVIDUAL)
+		).and(
+			ResourcePermissionTable.INSTANCE.viewActionId.eq(true)
+		);
+
+		if (roleIdsOrOwnerIdsPredicate != null) {
+			predicate = predicate.and(
+				roleIdsOrOwnerIdsPredicate.withParentheses());
+		}
+
+		return DSLQueryFactoryUtil.selectDistinct(
+			ResourcePermissionTable.INSTANCE.primKeyId
+		).from(
+			ResourcePermissionTable.INSTANCE
+		).where(
+			predicate
+		);
+	}
+
 	private String _getResourcePermissionSQL(
 		PermissionChecker permissionChecker, String className,
 		String userIdField, long[] groupIds, String bridgeJoin) {
@@ -448,6 +603,69 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return resourcePermissionSQL;
 	}
 
+	private DSLQuery _insertResourcePermissionQuery(
+		DSLQuery dslQuery, Predicate permissionPredicate) {
+
+		if (dslQuery instanceof WhereStep) {
+			WhereStep whereStep = (WhereStep)dslQuery;
+
+			return whereStep.where(permissionPredicate);
+		}
+
+		WhereStep whereStep = null;
+
+		Where where = null;
+
+		Deque<BaseASTNode> baseASTNodes = new LinkedList<>();
+
+		ASTNode astNode = dslQuery;
+
+		while (astNode instanceof BaseASTNode) {
+			BaseASTNode baseASTNode = (BaseASTNode)astNode;
+
+			if (baseASTNode instanceof WhereStep) {
+				whereStep = (WhereStep)baseASTNode;
+
+				break;
+			}
+
+			if (baseASTNode instanceof Where) {
+				where = (Where)baseASTNode;
+			}
+			else {
+				baseASTNodes.push(baseASTNode);
+			}
+
+			astNode = baseASTNode.getChild();
+		}
+
+		if (whereStep == null) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Unable to replace permission check for \"", dslQuery,
+					"\", if this is a union pass in the left or right queries ",
+					"separately"));
+		}
+
+		ASTNode childASTNode = null;
+
+		if (where == null) {
+			childASTNode = whereStep.where(permissionPredicate);
+		}
+		else {
+			Predicate predicate = where.getPredicate();
+
+			childASTNode = new Where(
+				whereStep, predicate.and(permissionPredicate));
+		}
+
+		for (BaseASTNode baseASTNode : baseASTNodes) {
+			childASTNode = baseASTNode.withNewChild(childASTNode);
+		}
+
+		return (DSLQuery)childASTNode;
+	}
+
 	private String _insertResourcePermissionSQL(
 		String sql, String className, String classPKField, String userIdField,
 		String groupIdField, long[] groupIds, String permissionSQL) {
@@ -498,8 +716,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private boolean _skipReplace(
-		String sql, PermissionChecker permissionChecker, String className,
-		String classPKField, long[] groupIds) {
+		PermissionChecker permissionChecker, String className,
+		Object classPKField, long[] groupIds) {
 
 		if (!isEnabled(groupIds)) {
 			return true;
@@ -512,10 +730,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (Objects.equals(className, AssetTag.class.getName())) {
 			throw new IllegalArgumentException(
 				"AssetTag does not support inline permissions. See LPS-82433.");
-		}
-
-		if (Validator.isNull(sql)) {
-			return true;
 		}
 
 		if (Validator.isNull(classPKField)) {

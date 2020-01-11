@@ -14,11 +14,18 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import com.liferay.portal.kernel.dao.model.Column;
+import com.liferay.portal.kernel.dao.model.Table;
+import com.liferay.portal.kernel.dao.model.dsl.query.Query;
+
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Provides utility methods for filtering SQL queries by the user's permissions.
  *
  * @author Raymond Augé
  */
+@ProviderType
 public interface InlineSQLHelper {
 
 	/**
@@ -59,6 +66,10 @@ public interface InlineSQLHelper {
 	 *         groups; <code>false</code> otherwise
 	 */
 	public boolean isEnabled(long[] groupIds);
+
+	public <T extends Table<T>> Query replacePermissionCheck(
+		Query query, Class<?> modelClass, Column<T, Long> classPKColumn,
+		long... groupIds);
 
 	/**
 	 * Modifies the SQL query to only match resources that the user has

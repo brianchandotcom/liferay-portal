@@ -99,11 +99,11 @@ public class LayoutFinderImpl
 				Layout.TABLE.groupId.eq(groupId)
 			);
 
-			String sql = InlineSQLHelperUtil.replacePermissionCheck(
-				query.toString(), Layout.class.getName(), "Layout.plid",
-				groupId);
+			query = InlineSQLHelperUtil.replacePermissionCheck(
+				query, Layout.class, Layout.TABLE.plid, groupId);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
+				session, query);
 
 			q.addEntity("Layout", LayoutImpl.class);
 

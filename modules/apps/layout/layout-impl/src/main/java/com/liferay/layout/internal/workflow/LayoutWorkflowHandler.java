@@ -101,35 +101,38 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		Layout layout = _layoutLocalService.getLayout(classPK);
-
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			Layout draftLayout = _layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class), layout.getPlid());
-
-			try {
-				layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
-			}
-			catch (Exception e) {
-				throw new PortalException(e);
-			}
-
-			UnicodeProperties typeSettingsProperties =
-				draftLayout.getTypeSettingsProperties();
-
-			typeSettingsProperties.setProperty("published", "true");
-
-			_layoutLocalService.updateLayout(
-				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-				draftLayout.getLayoutId(), typeSettingsProperties.toString());
-
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), new Date());
+		if (status != WorkflowConstants.STATUS_APPROVED) {
+			return _layoutLocalService.updateStatus(
+				userId, classPK, status, serviceContext);
 		}
+
+		Layout layout = _layoutLocalService.getLayout(classPK);
+
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
+
+		try {
+			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+
+		UnicodeProperties typeSettingsProperties =
+			draftLayout.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty("published", "true");
+
+		_layoutLocalService.updateLayout(
+			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+			draftLayout.getLayoutId(), typeSettingsProperties.toString());
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			new Date());
 
 		return _layoutLocalService.updateStatus(
 			userId, classPK, status, serviceContext);

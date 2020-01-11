@@ -311,3 +311,39 @@ This change was made because the UI tag was mostly internal and very specific
 and local usage did not grant keeping it around
 
 ---------------------------------------
+
+### Replace OSGi configuration autoUpgrade by portal property
+### upgrade.database.auto.run
+- **Date:** 2020-Jan-03
+- **JIRA Ticket:** [LPS-102842](https://issues.liferay.com/browse/LPS-102842)
+
+#### What changed?
+
+The OSGi property `autoUpgrade` defined in
+`com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config`
+has been replaced by the portal property `upgrade.database.auto.run`.
+
+Unlike the old property, which only controlled the upgrade processes in
+modules, the new one also affects to Core upgrade processes. The default value
+is now false so upgrade processes won't run on startup or module deployment.
+Remember that you can execute module upgrade processes anytime via Gogo
+console.
+
+#### Who is affected?
+
+This only affects development environments where we don't want to run the
+upgrade anytime we deploy a new process. Setting this property as true in
+production environments is not supported. In these cases the use of the
+upgrade tool to execute minor and major schema version changes is mandatory.
+
+#### How should I update my code?
+
+It does not impact your code.
+
+#### Why was this change made?
+
+To unify the auto-upgrade feature between the Core and modules. The default
+value has also changed to avoid the execution of new upgrade processes on
+startup in production environments.
+
+---------------------------------------

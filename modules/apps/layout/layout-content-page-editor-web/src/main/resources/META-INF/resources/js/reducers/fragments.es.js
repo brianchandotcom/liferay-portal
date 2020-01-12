@@ -501,8 +501,9 @@ function updateEditableValueReducer(state, action) {
 /**
  * @param {object} state
  * @param {object} action
- * @param {string} action.type
+ * @param {string} action.allowNewFragmentEntries
  * @param {object} action.fragmentEntryKeys
+ * @param {string} action.type
  * @return {object}
  * @review
  */
@@ -511,6 +512,7 @@ function updateFragmentEntryKeysReducer(state, action) {
 		...state,
 		layoutData: {
 			...state.layoutData,
+			allowNewFragmentEntries: action.allowNewFragmentEntries,
 			fragmentEntryKeys: action.fragmentEntryKeys
 		}
 	};

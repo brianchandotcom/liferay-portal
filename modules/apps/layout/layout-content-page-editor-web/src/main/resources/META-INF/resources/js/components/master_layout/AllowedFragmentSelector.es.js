@@ -20,6 +20,24 @@ import React, {useState} from 'react';
 import useSelector from '../../store/hooks/useSelector.es';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
+const getSelectedNodeIds = (
+	allowNewFragmentEntries,
+	fragmentEntryKeys,
+	fragmentEntryKeysArray
+) => {
+	let newFragmentEntryKeys = fragmentEntryKeys;
+
+	if (allowNewFragmentEntries) {
+		newFragmentEntryKeys = fragmentEntryKeysArray.filter(
+			fragmentEntryKey =>
+				!fragmentEntryKeys ||
+				!fragmentEntryKeys.includes(fragmentEntryKey)
+		);
+	}
+
+	return newFragmentEntryKeys;
+};
+
 const toNodes = collections => {
 	return [
 		{
@@ -62,8 +80,14 @@ const toFragmentEntryKeysArray = collections => {
 };
 
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
-	const allowedFragmentEntryKeys = useSelector(
-		state => state.layoutData.allowedFragmentEntryKeys
+	const initialAllowNewFragmentEntries = useSelector(state =>
+		state.layoutData.allowNewFragmentEntries
+			? state.layoutData.allowNewFragmentEntries
+			: true
+	);
+
+	const initialFragmentEntryKeys = useSelector(
+		state => state.layoutData.fragmentEntryKeys
 	);
 
 	const elements = useSelector(state => state.elements);
@@ -87,7 +111,11 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 			<Treeview
 				filterQuery={filter}
 				inheritSelection
-				initialSelectedNodeIds={allowedFragmentEntryKeys}
+				initialSelectedNodeIds={getSelectedNodeIds(
+					initialAllowNewFragmentEntries,
+					initialFragmentEntryKeys,
+					fragmentEntryKeysArray
+				)}
 				NodeComponent={AllowedFragmentTreeNode}
 				nodes={nodes}
 				onSelectedNodesChange={onSelectedFragment}
@@ -97,7 +125,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 				aria-label={Liferay.Language.get(
 					'make-allowed-all-new-fragments-created'
 				)}
-				checked={allowNewFragmentEntries}
+				checked={initialAllowNewFragmentEntries}
 				label={Liferay.Language.get(
 					'make-allowed-all-new-fragments-created'
 				)}

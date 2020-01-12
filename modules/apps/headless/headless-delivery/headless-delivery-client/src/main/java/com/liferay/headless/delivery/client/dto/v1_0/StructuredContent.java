@@ -61,6 +61,27 @@ public class StructuredContent {
 
 	}
 
+	public Map<String, Map> getActions() {
+		return actions;
+	}
+
+	public void setActions(Map<String, Map> actions) {
+		this.actions = actions;
+	}
+
+	public void setActions(
+		UnsafeSupplier<Map<String, Map>, Exception> actionsUnsafeSupplier) {
+
+		try {
+			actions = actionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Map> actions;
+
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}

@@ -65,6 +65,16 @@ public class KnowledgeBaseArticleSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (knowledgeBaseArticle.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(knowledgeBaseArticle.getActions()));
+		}
+
 		if (knowledgeBaseArticle.getAggregateRating() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -424,6 +434,14 @@ public class KnowledgeBaseArticleSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (knowledgeBaseArticle.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put(
+				"actions", String.valueOf(knowledgeBaseArticle.getActions()));
+		}
+
 		if (knowledgeBaseArticle.getAggregateRating() == null) {
 			map.put("aggregateRating", null);
 		}
@@ -630,7 +648,14 @@ public class KnowledgeBaseArticleSerDes {
 			KnowledgeBaseArticle knowledgeBaseArticle,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseArticle.setActions(
+						(Map)KnowledgeBaseArticleSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setAggregateRating(
 						AggregateRatingSerDes.toDTO(

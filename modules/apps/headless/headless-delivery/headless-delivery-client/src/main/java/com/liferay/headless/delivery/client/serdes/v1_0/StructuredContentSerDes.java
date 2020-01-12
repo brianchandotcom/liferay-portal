@@ -67,6 +67,16 @@ public class StructuredContentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (structuredContent.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(structuredContent.getActions()));
+		}
+
 		if (structuredContent.getAggregateRating() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -518,6 +528,13 @@ public class StructuredContentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (structuredContent.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(structuredContent.getActions()));
+		}
+
 		if (structuredContent.getAggregateRating() == null) {
 			map.put("aggregateRating", null);
 		}
@@ -756,7 +773,14 @@ public class StructuredContentSerDes {
 			StructuredContent structuredContent, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setActions(
+						(Map)StructuredContentSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setAggregateRating(
 						AggregateRatingSerDes.toDTO(

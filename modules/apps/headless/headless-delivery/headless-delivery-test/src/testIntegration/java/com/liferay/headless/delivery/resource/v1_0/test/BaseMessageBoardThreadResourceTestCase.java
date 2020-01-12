@@ -1865,6 +1865,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (messageBoardThread.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (messageBoardThread.getAggregateRating() == null) {
 					valid = false;
@@ -2039,6 +2047,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (rating.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (rating.getBestRating() == null) {
 					valid = false;
@@ -2120,6 +2136,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread1.getActions(),
+						messageBoardThread2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2343,6 +2370,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalRatingAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						rating1.getActions(), rating2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("bestRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2590,6 +2627,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("aggregateRating")) {
 			throw new IllegalArgumentException(

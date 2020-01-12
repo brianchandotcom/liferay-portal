@@ -63,6 +63,16 @@ public class WikiPageSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (wikiPage.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(wikiPage.getActions()));
+		}
+
 		if (wikiPage.getAggregateRating() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -358,6 +368,13 @@ public class WikiPageSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (wikiPage.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(wikiPage.getActions()));
+		}
+
 		if (wikiPage.getAggregateRating() == null) {
 			map.put("aggregateRating", null);
 		}
@@ -518,7 +535,14 @@ public class WikiPageSerDes {
 			WikiPage wikiPage, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					wikiPage.setActions(
+						(Map)WikiPageSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setAggregateRating(
 						AggregateRatingSerDes.toDTO(

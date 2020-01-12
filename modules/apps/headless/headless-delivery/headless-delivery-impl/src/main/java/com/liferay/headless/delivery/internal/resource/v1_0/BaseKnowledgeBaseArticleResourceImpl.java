@@ -143,6 +143,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		KnowledgeBaseArticle existingKnowledgeBaseArticle =
 			getKnowledgeBaseArticle(knowledgeBaseArticleId);
 
+		if (knowledgeBaseArticle.getActions() != null) {
+			existingKnowledgeBaseArticle.setActions(
+				knowledgeBaseArticle.getActions());
+		}
+
 		if (knowledgeBaseArticle.getArticleBody() != null) {
 			existingKnowledgeBaseArticle.setArticleBody(
 				knowledgeBaseArticle.getArticleBody());

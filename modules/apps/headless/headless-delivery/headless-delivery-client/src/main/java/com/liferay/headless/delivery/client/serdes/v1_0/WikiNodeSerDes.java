@@ -59,6 +59,16 @@ public class WikiNodeSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (wikiNode.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(wikiNode.getActions()));
+		}
+
 		if (wikiNode.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -202,6 +212,13 @@ public class WikiNodeSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (wikiNode.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(wikiNode.getActions()));
+		}
+
 		if (wikiNode.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -288,7 +305,14 @@ public class WikiNodeSerDes {
 			WikiNode wikiNode, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "creator")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					wikiNode.setActions(
+						(Map)WikiNodeSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					wikiNode.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

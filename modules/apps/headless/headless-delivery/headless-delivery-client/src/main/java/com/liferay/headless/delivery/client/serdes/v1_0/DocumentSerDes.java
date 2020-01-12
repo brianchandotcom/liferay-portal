@@ -64,6 +64,16 @@ public class DocumentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (document.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(document.getActions()));
+		}
+
 		if (document.getAdaptedImages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -383,6 +393,13 @@ public class DocumentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (document.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(document.getActions()));
+		}
+
 		if (document.getAdaptedImages() == null) {
 			map.put("adaptedImages", null);
 		}
@@ -552,7 +569,14 @@ public class DocumentSerDes {
 			Document document, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "adaptedImages")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					document.setActions(
+						(Map)DocumentSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "adaptedImages")) {
 				if (jsonParserFieldValue != null) {
 					document.setAdaptedImages(
 						Stream.of(

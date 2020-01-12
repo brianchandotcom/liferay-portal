@@ -64,6 +64,16 @@ public class MessageBoardThreadSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (messageBoardThread.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(messageBoardThread.getActions()));
+		}
+
 		if (messageBoardThread.getAggregateRating() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -350,6 +360,13 @@ public class MessageBoardThreadSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (messageBoardThread.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(messageBoardThread.getActions()));
+		}
+
 		if (messageBoardThread.getAggregateRating() == null) {
 			map.put("aggregateRating", null);
 		}
@@ -527,7 +544,14 @@ public class MessageBoardThreadSerDes {
 			MessageBoardThread messageBoardThread, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setActions(
+						(Map)MessageBoardThreadSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setAggregateRating(
 						AggregateRatingSerDes.toDTO(

@@ -136,6 +136,10 @@ public abstract class BaseBlogPostingResourceImpl
 
 		BlogPosting existingBlogPosting = getBlogPosting(blogPostingId);
 
+		if (blogPosting.getActions() != null) {
+			existingBlogPosting.setActions(blogPosting.getActions());
+		}
+
 		if (blogPosting.getAlternativeHeadline() != null) {
 			existingBlogPosting.setAlternativeHeadline(
 				blogPosting.getAlternativeHeadline());

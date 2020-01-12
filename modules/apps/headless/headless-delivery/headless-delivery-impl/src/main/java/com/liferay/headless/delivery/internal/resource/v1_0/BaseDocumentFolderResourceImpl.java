@@ -136,6 +136,10 @@ public abstract class BaseDocumentFolderResourceImpl
 		DocumentFolder existingDocumentFolder = getDocumentFolder(
 			documentFolderId);
 
+		if (documentFolder.getActions() != null) {
+			existingDocumentFolder.setActions(documentFolder.getActions());
+		}
+
 		if (documentFolder.getDateCreated() != null) {
 			existingDocumentFolder.setDateCreated(
 				documentFolder.getDateCreated());

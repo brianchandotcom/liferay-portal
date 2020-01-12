@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -91,6 +91,19 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 				NodeComponent={AllowedFragmentTreeNode}
 				nodes={nodes}
 				onSelectedNodesChange={onSelectedFragment}
+			/>
+
+			<ClayCheckbox
+				aria-label={Liferay.Language.get(
+					'make-allowed-all-new-fragments-created'
+				)}
+				checked={allowNewFragmentEntries}
+				label={Liferay.Language.get(
+					'make-allowed-all-new-fragments-created'
+				)}
+				onChange={() => {
+					//
+				}}
 			/>
 		</>
 	);

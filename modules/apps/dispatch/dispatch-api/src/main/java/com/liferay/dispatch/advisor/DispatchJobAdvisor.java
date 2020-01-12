@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author Alessio Antonio Rendina
  * @author Igor Beslic
  */
-public interface DispatchAdvisor {
+public interface DispatchJobAdvisor {
 
 	public void deleteDispatchJob(long dispatchTriggerId);
 

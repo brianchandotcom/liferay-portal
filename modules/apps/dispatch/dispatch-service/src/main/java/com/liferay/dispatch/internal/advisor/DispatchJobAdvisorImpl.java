@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.internal.advisor;
 
-import com.liferay.dispatch.advisor.DispatchAdvisor;
+import com.liferay.dispatch.advisor.DispatchJobAdvisor;
 import com.liferay.dispatch.advisor.DispatchJobProperties;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.portal.kernel.log.Log;
@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Igor Beslic
  */
-@Component(immediate = true, service = DispatchAdvisor.class)
-public class DispatchAdvisorImpl implements DispatchAdvisor {
+@Component(immediate = true, service = DispatchJobAdvisor.class)
+public class DispatchJobAdvisorImpl implements DispatchJobAdvisor {
 
-	public DispatchAdvisorImpl() {
+	public DispatchJobAdvisorImpl() {
 	}
 
 	@Override
@@ -149,7 +149,7 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 		}
 	}
 
-	protected DispatchAdvisorImpl(
+	protected DispatchJobAdvisorImpl(
 		SchedulerEngineHelper schedulerEngineHelper,
 		TriggerFactory triggerFactory) {
 
@@ -170,7 +170,7 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchAdvisorImpl.class);
+		DispatchJobAdvisorImpl.class);
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

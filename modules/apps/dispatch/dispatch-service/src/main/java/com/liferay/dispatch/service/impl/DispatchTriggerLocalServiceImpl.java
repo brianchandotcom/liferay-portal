@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.service.impl;
 
-import com.liferay.dispatch.advisor.DispatchAdvisor;
+import com.liferay.dispatch.advisor.DispatchJobAdvisor;
 import com.liferay.dispatch.exception.DispatchTriggerEndDateException;
 import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
@@ -221,7 +221,7 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Reference
-	private DispatchAdvisor _dispatchAdvisor;
+	private DispatchJobAdvisor _dispatchAdvisor;
 
 	@Reference
 	private Portal _portal;

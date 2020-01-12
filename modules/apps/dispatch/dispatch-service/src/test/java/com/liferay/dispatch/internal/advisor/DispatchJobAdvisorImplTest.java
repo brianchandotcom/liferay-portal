@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.internal.advisor;
 
-import com.liferay.dispatch.advisor.DispatchAdvisor;
+import com.liferay.dispatch.advisor.DispatchJobAdvisor;
 import com.liferay.dispatch.advisor.DispatchJobProperties;
 
 import java.util.Date;
@@ -26,18 +26,19 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class DispatchAdvisorImplTest {
+public class DispatchJobAdvisorImplTest {
 
 	@Test
 	public void testAddDispatch() {
-		DispatchAdvisor dispatchAdvisor = new DispatchAdvisorImpl(
+		DispatchJobAdvisor dispatchJobAdvisor = new DispatchJobAdvisorImpl(
 			new MockSchedulerEngineHelperImpl(), new MockTriggerFactoryImpl());
 
-		dispatchAdvisor.submitDispatchJob(
+		dispatchJobAdvisor.submitDispatchJob(
 			_TEST_DISPATCH_TRIGGER_ID, "1 2 4 * M", new Date(), new Date());
 
 		Optional<DispatchJobProperties> dispatchOptional =
-			dispatchAdvisor.getDispatchJobProperties(_TEST_DISPATCH_TRIGGER_ID);
+			dispatchJobAdvisor.getDispatchJobProperties(
+				_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertTrue("Dispatch exists", dispatchOptional.isPresent());
 
@@ -50,20 +51,21 @@ public class DispatchAdvisorImplTest {
 
 	@Test
 	public void testDeleteDispatch() {
-		DispatchAdvisor dispatchAdvisor = new DispatchAdvisorImpl(
+		DispatchJobAdvisor dispatchJobAdvisor = new DispatchJobAdvisorImpl(
 			new MockSchedulerEngineHelperImpl(), new MockTriggerFactoryImpl());
 
-		dispatchAdvisor.submitDispatchJob(
+		dispatchJobAdvisor.submitDispatchJob(
 			_TEST_DISPATCH_TRIGGER_ID, "1 2 4 * M", new Date(), new Date());
 
 		Optional<DispatchJobProperties> dispatchOptional =
-			dispatchAdvisor.getDispatchJobProperties(_TEST_DISPATCH_TRIGGER_ID);
+			dispatchJobAdvisor.getDispatchJobProperties(
+				_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertTrue("Dispatch exists", dispatchOptional.isPresent());
 
-		dispatchAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
+		dispatchJobAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
 
-		dispatchOptional = dispatchAdvisor.getDispatchJobProperties(
+		dispatchOptional = dispatchJobAdvisor.getDispatchJobProperties(
 			_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertFalse("Dispatch exists", dispatchOptional.isPresent());
@@ -71,51 +73,52 @@ public class DispatchAdvisorImplTest {
 
 	@Test
 	public void testDeleteDispatchIfNoSuchDispatchScheduled() {
-		DispatchAdvisor dispatchAdvisor = new DispatchAdvisorImpl(
+		DispatchJobAdvisor dispatchJobAdvisor = new DispatchJobAdvisorImpl(
 			new MockSchedulerEngineHelperImpl(), new MockTriggerFactoryImpl());
 
 		Optional<DispatchJobProperties> dispatchOptional =
-			dispatchAdvisor.getDispatchJobProperties(_TEST_DISPATCH_TRIGGER_ID);
+			dispatchJobAdvisor.getDispatchJobProperties(
+				_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertFalse("Dispatch exists", dispatchOptional.isPresent());
 
-		dispatchAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
+		dispatchJobAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
 	}
 
 	@Test
 	public void testGetNextFireTime() {
-		DispatchAdvisor dispatchAdvisor = new DispatchAdvisorImpl(
+		DispatchJobAdvisor dispatchJobAdvisor = new DispatchJobAdvisorImpl(
 			new MockSchedulerEngineHelperImpl(), new MockTriggerFactoryImpl());
 
 		Date triggerStartDate = new Date();
 		Date triggerEndDate = new Date();
 
-		dispatchAdvisor.submitDispatchJob(
+		dispatchJobAdvisor.submitDispatchJob(
 			_TEST_DISPATCH_TRIGGER_ID, "1 2 4 * M", triggerStartDate,
 			triggerEndDate);
 
 		Date expectedNextFireTime = new Date(triggerStartDate.getTime() + 1000);
 
-		Optional<Date> nextFireTime = dispatchAdvisor.getNextFireDate(
+		Optional<Date> nextFireTime = dispatchJobAdvisor.getNextFireDate(
 			_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertEquals(
 			"Dispatch trigger next fire date", expectedNextFireTime,
 			nextFireTime.get());
 
-		dispatchAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
+		dispatchJobAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
 
-		nextFireTime = dispatchAdvisor.getNextFireDate(
+		nextFireTime = dispatchJobAdvisor.getNextFireDate(
 			_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertFalse(
 			"Dispatch trigger next fire date does not exist",
 			nextFireTime.isPresent());
 
-		dispatchAdvisor.submitDispatchJob(
+		dispatchJobAdvisor.submitDispatchJob(
 			_TEST_DISPATCH_TRIGGER_ID, null, triggerStartDate, triggerEndDate);
 
-		nextFireTime = dispatchAdvisor.getNextFireDate(
+		nextFireTime = dispatchJobAdvisor.getNextFireDate(
 			_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertFalse(
@@ -125,39 +128,39 @@ public class DispatchAdvisorImplTest {
 
 	@Test
 	public void testGetPreviousFireTime() {
-		DispatchAdvisor dispatchAdvisor = new DispatchAdvisorImpl(
+		DispatchJobAdvisor dispatchJobAdvisor = new DispatchJobAdvisorImpl(
 			new MockSchedulerEngineHelperImpl(), new MockTriggerFactoryImpl());
 
 		Date triggerStartDate = new Date();
 		Date triggerEndDate = new Date();
 
-		dispatchAdvisor.submitDispatchJob(
+		dispatchJobAdvisor.submitDispatchJob(
 			_TEST_DISPATCH_TRIGGER_ID, "1 2 4 * M", triggerStartDate,
 			triggerEndDate);
 
 		Date expectedPreviousFireTime = new Date(
 			triggerEndDate.getTime() - 1000);
 
-		Optional<Date> previousFireTime = dispatchAdvisor.getPreviousFireDate(
-			_TEST_DISPATCH_TRIGGER_ID);
+		Optional<Date> previousFireTime =
+			dispatchJobAdvisor.getPreviousFireDate(_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertEquals(
 			"Dispatch trigger next fire date", expectedPreviousFireTime,
 			previousFireTime.get());
 
-		dispatchAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
+		dispatchJobAdvisor.deleteDispatchJob(_TEST_DISPATCH_TRIGGER_ID);
 
-		previousFireTime = dispatchAdvisor.getPreviousFireDate(
+		previousFireTime = dispatchJobAdvisor.getPreviousFireDate(
 			_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertFalse(
 			"Dispatch trigger previous fire date does not exist",
 			previousFireTime.isPresent());
 
-		dispatchAdvisor.submitDispatchJob(
+		dispatchJobAdvisor.submitDispatchJob(
 			_TEST_DISPATCH_TRIGGER_ID, null, triggerStartDate, triggerEndDate);
 
-		previousFireTime = dispatchAdvisor.getPreviousFireDate(
+		previousFireTime = dispatchJobAdvisor.getPreviousFireDate(
 			_TEST_DISPATCH_TRIGGER_ID);
 
 		Assert.assertFalse(

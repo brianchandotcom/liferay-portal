@@ -14,8 +14,8 @@
 
 package com.liferay.dispatch.internal.advisor;
 
-import com.liferay.dispatch.advisor.Dispatch;
 import com.liferay.dispatch.advisor.DispatchAdvisor;
+import com.liferay.dispatch.advisor.DispatchJobProperties;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,38 +43,7 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 	}
 
 	@Override
-	public void addDispatch(
-		long dispatchTriggerId, String cronExpression, Date startDate,
-		Date endDate) {
-
-		deleteDispatch(dispatchTriggerId);
-
-		Trigger trigger = _triggerFactory.createTrigger(
-			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
-			startDate, endDate, cronExpression);
-
-		try {
-			_schedulerEngineHelper.schedule(
-				trigger, StorageType.PERSISTED, null,
-				DispatchConstants.EXECUTOR_DESTINATION_NAME,
-				_getPayload(dispatchTriggerId), 1000);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Dispatch scheduled for dispatch trigger ID " +
-						dispatchTriggerId);
-			}
-		}
-		catch (SchedulerException se) {
-			_log.error(
-				"Unable to schedule dispatch for dispatch trigger ID " +
-					dispatchTriggerId,
-				se);
-		}
-	}
-
-	@Override
-	public void deleteDispatch(long dispatchTriggerId) {
+	public void deleteDispatchJob(long dispatchTriggerId) {
 		try {
 			_schedulerEngineHelper.delete(
 				_getJobName(dispatchTriggerId),
@@ -89,7 +58,9 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 	}
 
 	@Override
-	public Optional<Dispatch> getDispatch(long dispatchTriggerId) {
+	public Optional<DispatchJobProperties> getDispatchJobProperties(
+		long dispatchTriggerId) {
+
 		try {
 			SchedulerResponse schedulerResponse =
 				_schedulerEngineHelper.getScheduledJob(
@@ -103,7 +74,7 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 			StorageType storageType = schedulerResponse.getStorageType();
 
 			return Optional.of(
-				new Dispatch(
+				new DispatchJobProperties(
 					dispatchTriggerId, schedulerResponse.getGroupName(),
 					schedulerResponse.getJobName(), storageType.name()));
 		}
@@ -145,6 +116,37 @@ public class DispatchAdvisorImpl implements DispatchAdvisor {
 		}
 
 		return Optional.empty();
+	}
+
+	@Override
+	public void submitDispatchJob(
+		long dispatchTriggerId, String cronExpression, Date startDate,
+		Date endDate) {
+
+		deleteDispatchJob(dispatchTriggerId);
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
+			startDate, endDate, cronExpression);
+
+		try {
+			_schedulerEngineHelper.schedule(
+				trigger, StorageType.PERSISTED, null,
+				DispatchConstants.EXECUTOR_DESTINATION_NAME,
+				_getPayload(dispatchTriggerId), 1000);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Dispatch scheduled for dispatch trigger ID " +
+						dispatchTriggerId);
+			}
+		}
+		catch (SchedulerException se) {
+			_log.error(
+				"Unable to schedule dispatch for dispatch trigger ID " +
+					dispatchTriggerId,
+				se);
+		}
 	}
 
 	protected DispatchAdvisorImpl(

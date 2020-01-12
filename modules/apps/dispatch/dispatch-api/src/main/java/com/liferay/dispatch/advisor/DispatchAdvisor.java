@@ -23,16 +23,17 @@ import java.util.Optional;
  */
 public interface DispatchAdvisor {
 
-	public void addDispatch(
-		long dispatchTriggerId, String cronExpression, Date startDate,
-		Date endDate);
+	public void deleteDispatchJob(long dispatchTriggerId);
 
-	public void deleteDispatch(long dispatchTriggerId);
-
-	public Optional<Dispatch> getDispatch(long dispatchTriggerId);
+	public Optional<DispatchJobProperties> getDispatchJobProperties(
+		long dispatchTriggerId);
 
 	public Optional<Date> getNextFireDate(long dispatchTriggerId);
 
 	public Optional<Date> getPreviousFireDate(long dispatchTriggerId);
+
+	public void submitDispatchJob(
+		long dispatchTriggerId, String cronExpression, Date startDate,
+		Date endDate);
 
 }

@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 /**
  * @author Igor Beslic
  */
-public class Dispatch {
+public class DispatchJobProperties {
 
-	public Dispatch(
+	public DispatchJobProperties(
 		long dispatchTriggerId, String groupName, String jobName,
 		String storageTypeName) {
 

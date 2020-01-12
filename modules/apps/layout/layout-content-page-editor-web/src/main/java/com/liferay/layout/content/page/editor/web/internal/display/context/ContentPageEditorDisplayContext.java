@@ -1762,13 +1762,48 @@ public class ContentPageEditorDisplayContext {
 	private boolean _isAllowedFragmentEntryKey(String fragmentEntryKey) {
 		List<String> fragmentEntryKeys = _getFragmentEntryKeys();
 
-		if (ListUtil.isEmpty(fragmentEntryKeys) ||
+		if (_isAllowNewFragmentEntries()) {
+			if (ListUtil.isEmpty(fragmentEntryKeys) ||
+				!fragmentEntryKeys.contains(fragmentEntryKey)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		if (ListUtil.isNotEmpty(fragmentEntryKeys) &&
 			fragmentEntryKeys.contains(fragmentEntryKey)) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	private boolean _isAllowNewFragmentEntries() {
+		if (_allowNewFragmentEntries != null) {
+			return _allowNewFragmentEntries;
+		}
+
+		String masterLayoutData = _getMasterLayoutData();
+
+		try {
+			JSONObject masterLayoutDataJSONObject =
+				JSONFactoryUtil.createJSONObject(masterLayoutData);
+
+			_allowNewFragmentEntries = masterLayoutDataJSONObject.getBoolean(
+				"allowNewFragmentEntries", true);
+
+			return _allowNewFragmentEntries;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get structure JSON array", e);
+			}
+		}
+
+		return _allowNewFragmentEntries;
 	}
 
 	private boolean _isMasterUsed() throws PortalException {
@@ -1815,6 +1850,7 @@ public class ContentPageEditorDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
+	private Boolean _allowNewFragmentEntries;
 	private final CommentManager _commentManager;
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;

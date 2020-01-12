@@ -45,6 +45,22 @@ const toNodes = collections => {
 	];
 };
 
+const toFragmentEntryKeysArray = collections => {
+	const fragmentEntryKeysArray = [];
+
+	collections.map(collection => {
+		collection.fragmentEntries.map(fragmentEntry =>
+			fragmentEntryKeysArray.push(fragmentEntry.fragmentEntryKey)
+		);
+
+		fragmentEntryKeysArray.push(collection.fragmentCollectionId);
+	});
+
+	fragmentEntryKeysArray.push('lfr-all-fragments-id');
+
+	return fragmentEntryKeysArray;
+};
+
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	const allowedFragmentEntryKeys = useSelector(
 		state => state.layoutData.allowedFragmentEntryKeys
@@ -55,6 +71,8 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	const [filter, setFilter] = useState('');
 
 	const nodes = toNodes(elements);
+
+	const fragmentEntryKeysArray = toFragmentEntryKeysArray(elements);
 
 	return (
 		<>

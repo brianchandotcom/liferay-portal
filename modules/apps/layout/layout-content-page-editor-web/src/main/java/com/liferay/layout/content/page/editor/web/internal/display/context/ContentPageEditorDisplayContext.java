@@ -689,51 +689,6 @@ public class ContentPageEditorDisplayContext {
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final ThemeDisplay themeDisplay;
 
-	private List<String> _getAllowedFragmentEntryKeys() {
-		if (_allowedFragmentEntryKeys != null) {
-			return _allowedFragmentEntryKeys;
-		}
-
-		String masterLayoutData = _getMasterLayoutData();
-
-		if (Validator.isNull(masterLayoutData)) {
-			_allowedFragmentEntryKeys = Collections.emptyList();
-
-			return _allowedFragmentEntryKeys;
-		}
-
-		try {
-			List<String> allowedFragmentEntryKeys = new ArrayList<>();
-
-			JSONObject masterLayoutDataJSONObject =
-				JSONFactoryUtil.createJSONObject(masterLayoutData);
-
-			JSONArray allowedFragmentEntryKeysJSONArray =
-				masterLayoutDataJSONObject.getJSONArray(
-					"allowedFragmentEntryKeys");
-
-			Iterator<String> iteratorAllowedFragmentEntryKeys =
-				allowedFragmentEntryKeysJSONArray.iterator();
-
-			iteratorAllowedFragmentEntryKeys.forEachRemaining(
-				fragmentEntryKey -> allowedFragmentEntryKeys.add(
-					fragmentEntryKey));
-
-			_allowedFragmentEntryKeys = allowedFragmentEntryKeys;
-
-			return _allowedFragmentEntryKeys;
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get structure JSON array", e);
-			}
-		}
-
-		_allowedFragmentEntryKeys = Collections.emptyList();
-
-		return _allowedFragmentEntryKeys;
-	}
-
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
@@ -1048,6 +1003,49 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return soyContexts;
+	}
+
+	private List<String> _getFragmentEntryKeys() {
+		if (_fragmentEntryKeys != null) {
+			return _fragmentEntryKeys;
+		}
+
+		String masterLayoutData = _getMasterLayoutData();
+
+		if (Validator.isNull(masterLayoutData)) {
+			_fragmentEntryKeys = Collections.emptyList();
+
+			return _fragmentEntryKeys;
+		}
+
+		try {
+			List<String> fragmentEntryKeys = new ArrayList<>();
+
+			JSONObject masterLayoutDataJSONObject =
+				JSONFactoryUtil.createJSONObject(masterLayoutData);
+
+			JSONArray fragmentEntryKeysJSONArray =
+				masterLayoutDataJSONObject.getJSONArray("fragmentEntryKeys");
+
+			Iterator<String> iteratorFragmentEntryKeys =
+				fragmentEntryKeysJSONArray.iterator();
+
+			iteratorFragmentEntryKeys.forEachRemaining(
+				fragmentEntryKey -> fragmentEntryKeys.add(fragmentEntryKey));
+
+			_fragmentEntryKeys = fragmentEntryKeys;
+
+			return _fragmentEntryKeys;
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get structure JSON array", e);
+			}
+		}
+
+		_fragmentEntryKeys = Collections.emptyList();
+
+		return _fragmentEntryKeys;
 	}
 
 	private JSONArray _getFragmentEntryLinkCommentsJSONArray(
@@ -1762,10 +1760,10 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private boolean _isAllowedFragmentEntryKey(String fragmentEntryKey) {
-		List<String> allowedFragmentEntryKeys = _getAllowedFragmentEntryKeys();
+		List<String> fragmentEntryKeys = _getFragmentEntryKeys();
 
-		if (ListUtil.isEmpty(allowedFragmentEntryKeys) ||
-			allowedFragmentEntryKeys.contains(fragmentEntryKey)) {
+		if (ListUtil.isEmpty(fragmentEntryKeys) ||
+			fragmentEntryKeys.contains(fragmentEntryKey)) {
 
 			return true;
 		}
@@ -1817,7 +1815,6 @@ public class ContentPageEditorDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
-	private List<String> _allowedFragmentEntryKeys;
 	private final CommentManager _commentManager;
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;
@@ -1829,6 +1826,7 @@ public class ContentPageEditorDisplayContext {
 		_fragmentCollectionContributorTracker;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
+	private List<String> _fragmentEntryKeys;
 	private final FragmentRendererController _fragmentRendererController;
 	private final FragmentRendererTracker _fragmentRendererTracker;
 	private Long _groupId;

@@ -484,24 +484,6 @@ function removeFragmentEntryLinkReducer(state, action) {
  * @param {object} state
  * @param {object} action
  * @param {string} action.type
- * @param {object} action.allowedFragmentEntryKeys
- * @return {object}
- * @review
- */
-function updateAllowedFragmentEntryKeysReducer(state, action) {
-	return {
-		...state,
-		layoutData: {
-			...state.layoutData,
-			allowedFragmentEntryKeys: action.allowedFragmentEntryKeys
-		}
-	};
-}
-
-/**
- * @param {object} state
- * @param {object} action
- * @param {string} action.type
  * @param {string} action.fragmentEntryLinkId
  * @param {string} action.editableValues
  * @param {Date} action.date
@@ -514,6 +496,24 @@ function updateEditableValueReducer(state, action) {
 		['fragmentEntryLinks', action.fragmentEntryLinkId, 'editableValues'],
 		action.editableValues
 	);
+}
+
+/**
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.type
+ * @param {object} action.fragmentEntryKeys
+ * @return {object}
+ * @review
+ */
+function updateFragmentEntryKeysReducer(state, action) {
+	return {
+		...state,
+		layoutData: {
+			...state.layoutData,
+			fragmentEntryKeys: action.fragmentEntryKeys
+		}
+	};
 }
 
 /**
@@ -870,7 +870,7 @@ export {
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	toggleShowResolvedCommentsReducer,
-	updateAllowedFragmentEntryKeysReducer,
+	updateFragmentEntryKeysReducer,
 	updateEditableValueReducer,
 	updateFragmentEntryLinkConfigReducer,
 	updateFragmentEntryLinkCommentReducer,

@@ -12,26 +12,26 @@
  * details.
  */
 
-import {UPDATE_ALLOWED_FRAGMENT_ENTRY_KEYS} from './actions.es';
+import {UPDATE_FRAGMENT_ENTRY_KEYS} from './actions.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
 
 /**
- * @param {string} allowedFragmentEntryKeys
+ * @param {string} fragmentEntryKeys
  * @review
  */
-function updateAllowedFragmentEntryKeys(allowedFragmentEntryKeys) {
+function updateFragmentEntryKeys(fragmentEntryKeys) {
 	return function(dispatch) {
-		dispatch(_updateAllowedFragmentEntryKeys(allowedFragmentEntryKeys));
+		dispatch(_updateAllowedFragmentEntryKeys(fragmentEntryKeys));
 
 		return dispatch(updatePageEditorLayoutDataAction());
 	};
 }
 
-function _updateAllowedFragmentEntryKeys(allowedFragmentEntryKeys) {
+function _updateAllowedFragmentEntryKeys(fragmentEntryKeys) {
 	return {
-		allowedFragmentEntryKeys,
-		type: UPDATE_ALLOWED_FRAGMENT_ENTRY_KEYS
+		fragmentEntryKeys,
+		type: UPDATE_FRAGMENT_ENTRY_KEYS
 	};
 }
 
-export {updateAllowedFragmentEntryKeys};
+export {updateFragmentEntryKeys};

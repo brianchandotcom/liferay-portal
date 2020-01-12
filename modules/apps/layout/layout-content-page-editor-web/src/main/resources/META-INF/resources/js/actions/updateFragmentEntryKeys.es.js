@@ -16,19 +16,29 @@ import {UPDATE_FRAGMENT_ENTRY_KEYS} from './actions.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
 
 /**
+ * @param {boolean} allowNewFragmentEntries
  * @param {string} fragmentEntryKeys
  * @review
  */
-function updateFragmentEntryKeys(fragmentEntryKeys) {
+function updateFragmentEntryKeys(allowNewFragmentEntries, fragmentEntryKeys) {
 	return function(dispatch) {
-		dispatch(_updateAllowedFragmentEntryKeys(fragmentEntryKeys));
+		dispatch(
+			_updateAllowedFragmentEntryKeys(
+				allowNewFragmentEntries,
+				fragmentEntryKeys
+			)
+		);
 
 		return dispatch(updatePageEditorLayoutDataAction());
 	};
 }
 
-function _updateAllowedFragmentEntryKeys(fragmentEntryKeys) {
+function _updateAllowedFragmentEntryKeys(
+	allowNewFragmentEntries,
+	fragmentEntryKeys
+) {
 	return {
+		allowNewFragmentEntries,
 		fragmentEntryKeys,
 		type: UPDATE_FRAGMENT_ENTRY_KEYS
 	};

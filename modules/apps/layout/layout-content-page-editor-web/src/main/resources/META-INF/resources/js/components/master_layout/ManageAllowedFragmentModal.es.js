@@ -24,13 +24,20 @@ import AllowedFragmentSelector from './AllowedFragmentSelector.es';
 const ManageAllowedFragmentModal = ({observer, onClose}) => {
 	const dispatch = useDispatch();
 
+	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
+		true
+	);
 	const [selectedFragments, setSelectedFragments] = useState(new Set([]));
 	const [loading, setLoading] = useState();
 
 	const handleSaveClick = () => {
 		setLoading(true);
 
-		dispatch(updateFragmentEntryKeys([...selectedFragments])).done(() => {
+		dispatch(
+			updateFragmentEntryKeys(allowNewFragmentEntries, [
+				...selectedFragments
+			])
+		).done(() => {
 			setLoading(true);
 			onClose();
 		});
@@ -53,7 +60,14 @@ const ManageAllowedFragmentModal = ({observer, onClose}) => {
 					)}
 				</p>
 				<AllowedFragmentSelector
-					onSelectedFragment={setSelectedFragments}
+					onSelectedFragment={(
+						allowNewFragmentEntries,
+						selectedFragments
+					) => {
+						setAllowNewFragmentEntries(allowNewFragmentEntries);
+
+						setSelectedFragments(selectedFragments);
+					}}
 				/>
 			</ClayModal.Body>
 

@@ -98,6 +98,18 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 
 	const fragmentEntryKeysArray = toFragmentEntryKeysArray(elements);
 
+	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
+		initialAllowNewFragmentEntries
+	);
+
+	const [fragmentEntryKeys, setFragmentEntryKeys] = useState(
+		getSelectedNodeIds(
+			allowNewFragmentEntries,
+			initialFragmentEntryKeys,
+			fragmentEntryKeysArray
+		)
+	);
+
 	return (
 		<>
 			<ClayInput
@@ -111,26 +123,50 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 			<Treeview
 				filterQuery={filter}
 				inheritSelection
-				initialSelectedNodeIds={getSelectedNodeIds(
-					initialAllowNewFragmentEntries,
-					initialFragmentEntryKeys,
-					fragmentEntryKeysArray
-				)}
+				initialSelectedNodeIds={fragmentEntryKeys}
 				NodeComponent={AllowedFragmentTreeNode}
 				nodes={nodes}
-				onSelectedNodesChange={onSelectedFragment}
+				onSelectedNodesChange={selectedNodeIds => {
+					const newFragmentEntryKeys = getSelectedNodeIds(
+						allowNewFragmentEntries,
+						Array.from(selectedNodeIds),
+						fragmentEntryKeysArray
+					);
+
+					setFragmentEntryKeys(newFragmentEntryKeys);
+
+					onSelectedFragment(
+						allowNewFragmentEntries,
+						newFragmentEntryKeys
+					);
+				}}
 			/>
 
 			<ClayCheckbox
 				aria-label={Liferay.Language.get(
 					'make-allowed-all-new-fragments-created'
 				)}
-				checked={initialAllowNewFragmentEntries}
+				checked={allowNewFragmentEntries}
 				label={Liferay.Language.get(
 					'make-allowed-all-new-fragments-created'
 				)}
-				onChange={() => {
-					//
+				onChange={event => {
+					const newAllowNewFragmentEntries = event.target.checked;
+
+					setAllowNewFragmentEntries(newAllowNewFragmentEntries);
+
+					const newFragmentEntryKeys = getSelectedNodeIds(
+						newAllowNewFragmentEntries,
+						fragmentEntryKeys,
+						fragmentEntryKeysArray
+					);
+
+					setFragmentEntryKeys(newFragmentEntryKeys);
+
+					onSelectedFragment(
+						newAllowNewFragmentEntries,
+						newFragmentEntryKeys
+					);
 				}}
 			/>
 		</>

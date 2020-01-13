@@ -19,6 +19,7 @@ import React, {useContext, useEffect, useRef} from 'react';
 import FloatingToolbar from '../components/FloatingToolbar';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import duplicateFragment from '../thunks/duplicateFragment';
@@ -104,8 +105,8 @@ function Root({children, item, layoutData}, ref) {
 			]}
 			active={false}
 			item={item}
-			name={Liferay.Language.get('root')}
 			layoutData={layoutData}
+			name={Liferay.Language.get('root')}
 		>
 			{({canDrop, isOver}) => (
 				<div
@@ -148,8 +149,8 @@ function Container({children, item, layoutData}, ref) {
 			]}
 			active
 			item={item}
-			name={Liferay.Language.get('container')}
 			layoutData={layoutData}
+			name={Liferay.Language.get('container')}
 		>
 			{() => (
 				<div
@@ -214,8 +215,8 @@ function Row({children, item, layoutData}, ref) {
 			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
 			active
 			item={item}
-			name={Liferay.Language.get('row')}
 			layoutData={layoutData}
+			name={Liferay.Language.get('row')}
 		>
 			{() => (
 				<>
@@ -249,8 +250,8 @@ function Column({children, className, item, layoutData}, ref) {
 			]}
 			active={false}
 			item={item}
-			name={Liferay.Language.get('column')}
 			layoutData={layoutData}
+			name={Liferay.Language.get('column')}
 		>
 			{() => (
 				<div
@@ -267,8 +268,11 @@ function Column({children, className, item, layoutData}, ref) {
 }
 
 function Fragment({item, layoutData}, ref) {
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
-	const {fragmentEntryLinks} = useContext(StoreContext);
+	const store = useContext(StoreContext);
+
+	const {fragmentEntryLinks} = store;
 
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
@@ -291,8 +295,8 @@ function Fragment({item, layoutData}, ref) {
 			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
 			active
 			item={item}
-			name={fragmentEntryLink.name}
 			layoutData={layoutData}
+			name={fragmentEntryLink.name}
 		>
 			{() => (
 				<>

@@ -36,6 +36,10 @@ public class GroupBy
 		_expressions = expressions;
 	}
 
+	public Expression<?>[] getExpressions() {
+		return _expressions;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
@@ -49,10 +53,6 @@ public class GroupBy
 				consumer.accept(", ");
 			}
 		}
-	}
-
-	public Expression<?>[] getExpressions() {
-		return _expressions;
 	}
 
 	private final Expression<?>[] _expressions;

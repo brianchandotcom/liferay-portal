@@ -31,6 +31,10 @@ public class ElseEnd<T> extends BaseASTNode implements Expression<T> {
 		_elseExpression = Objects.requireNonNull(elseExpression);
 	}
 
+	public Expression<T> getElseExpression() {
+		return _elseExpression;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
@@ -40,10 +44,6 @@ public class ElseEnd<T> extends BaseASTNode implements Expression<T> {
 		_elseExpression.toSQL(consumer, astNodeListener);
 
 		consumer.accept(" end");
-	}
-
-	public Expression<T> getElseExpression() {
-		return _elseExpression;
 	}
 
 	private final Expression<T> _elseExpression;

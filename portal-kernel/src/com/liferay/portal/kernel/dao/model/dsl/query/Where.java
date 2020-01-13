@@ -33,6 +33,10 @@ public class Where
 		_predicate = Objects.requireNonNull(predicate);
 	}
 
+	public Predicate getPredicate() {
+		return _predicate;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
@@ -40,10 +44,6 @@ public class Where
 		consumer.accept("where ");
 
 		_predicate.toSQL(consumer, astNodeListener);
-	}
-
-	public Predicate getPredicate() {
-		return _predicate;
 	}
 
 	private final Predicate _predicate;

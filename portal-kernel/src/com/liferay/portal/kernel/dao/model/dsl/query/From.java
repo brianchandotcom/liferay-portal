@@ -35,6 +35,10 @@ public class From
 		_table = Objects.requireNonNull(table);
 	}
 
+	public Table<?> getTable() {
+		return _table;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
@@ -42,10 +46,6 @@ public class From
 		consumer.accept("from ");
 
 		_table.toSQL(consumer, astNodeListener);
-	}
-
-	public Table<?> getTable() {
-		return _table;
 	}
 
 	private final Table<?> _table;

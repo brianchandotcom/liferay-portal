@@ -36,6 +36,10 @@ public class OrderBy extends BaseASTNode implements LimitStep, Query {
 		_orderByExpressions = orderByExpressions;
 	}
 
+	public OrderByExpression[] getOrderByExpressions() {
+		return _orderByExpressions;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
@@ -49,10 +53,6 @@ public class OrderBy extends BaseASTNode implements LimitStep, Query {
 				consumer.accept(", ");
 			}
 		}
-	}
-
-	public OrderByExpression[] getOrderByExpressions() {
-		return _orderByExpressions;
 	}
 
 	private final OrderByExpression[] _orderByExpressions;

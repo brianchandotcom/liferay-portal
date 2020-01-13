@@ -36,6 +36,14 @@ public class WhenThen<T>
 		_thenExpression = Objects.requireNonNull(thenExpression);
 	}
 
+	public Predicate getPredicate() {
+		return _predicate;
+	}
+
+	public Expression<T> getThenExpression() {
+		return _thenExpression;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
@@ -47,14 +55,6 @@ public class WhenThen<T>
 		consumer.accept(" then ");
 
 		_thenExpression.toSQL(consumer, astNodeListener);
-	}
-
-	public Predicate getPredicate() {
-		return _predicate;
-	}
-
-	public Expression<T> getThenExpression() {
-		return _thenExpression;
 	}
 
 	private final Predicate _predicate;

@@ -41,10 +41,16 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -257,9 +263,6 @@ public class JournalArticleIndexVersionsTest {
 	protected void assertSearchCount(long expectedCount, boolean head)
 		throws Exception {
 
-		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
-			JournalArticle.class);
-
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
 
@@ -271,11 +274,34 @@ public class JournalArticleIndexVersionsTest {
 
 		searchContext.setGroupIds(new long[] {_group.getGroupId()});
 
-		Hits results = indexer.search(searchContext);
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+				searchContext
+			).modelIndexerClasses(
+				JournalArticle.class
+			).build());
 
 		Assert.assertEquals(
-			results.toString(), expectedCount, results.getLength());
+			searchResponse.getRequestString() + "->" +
+				_toString(searchResponse.getDocumentsStream()),
+			expectedCount, searchResponse.getCount());
 	}
+
+	private String _toString(Stream<Document> stream) {
+		return stream.map(
+			Document::getFields
+		).map(
+			String::valueOf
+		).collect(
+			Collectors.joining()
+		);
+	}
+
+	@Inject
+	private static Searcher _searcher;
+
+	@Inject
+	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@DeleteAfterTestRun
 	private Group _group;

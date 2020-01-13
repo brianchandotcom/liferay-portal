@@ -28,6 +28,7 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "commons-configuration", name: "commons-configuration", version: "1.10"

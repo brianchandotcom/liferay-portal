@@ -76,6 +76,16 @@ public interface SamlSpIdpConnectionLocalService
 	public SamlSpIdpConnection addSamlSpIdpConnection(
 			String samlIdpEntityId, boolean assertionSignatureRequired,
 			long clockSkew, boolean enabled, boolean forceAuthn,
+			boolean ldapImportEnabled, boolean unknownUsersAreStrangers,
+			String metadataUrl, InputStream metadataXmlInputStream, String name,
+			String nameIdFormat, boolean signAuthnRequest,
+			String userAttributeMappings, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Deprecated
+	public SamlSpIdpConnection addSamlSpIdpConnection(
+			String samlIdpEntityId, boolean assertionSignatureRequired,
+			long clockSkew, boolean enabled, boolean forceAuthn,
 			boolean ldapImportEnabled, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
 			String nameIdFormat, boolean signAuthnRequest,
@@ -267,6 +277,17 @@ public interface SamlSpIdpConnectionLocalService
 	public void updateMetadata(long samlSpIdpConnectionId)
 		throws PortalException;
 
+	public SamlSpIdpConnection updateSamlSpIdpConnection(
+			long samlSpIdpConnectionId, String samlIdpEntityId,
+			boolean assertionSignatureRequired, long clockSkew, boolean enabled,
+			boolean forceAuthn, boolean ldapImportEnabled,
+			boolean unknownUsersAreStrangers, String metadataUrl,
+			InputStream metadataXmlInputStream, String name,
+			String nameIdFormat, boolean signAuthnRequest,
+			String userAttributeMappings, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Deprecated
 	public SamlSpIdpConnection updateSamlSpIdpConnection(
 			long samlSpIdpConnectionId, String samlIdpEntityId,
 			boolean assertionSignatureRequired, long clockSkew, boolean enabled,

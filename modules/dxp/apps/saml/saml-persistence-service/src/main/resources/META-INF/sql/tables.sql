@@ -70,7 +70,8 @@ create table SamlSpIdpConnection (
 	name VARCHAR(75) null,
 	nameIdFormat VARCHAR(1024) null,
 	signAuthnRequest BOOLEAN,
-	userAttributeMappings STRING null
+	userAttributeMappings STRING null,
+	unknownUsersAreStrangers BOOLEAN
 );
 
 create table SamlSpMessage (

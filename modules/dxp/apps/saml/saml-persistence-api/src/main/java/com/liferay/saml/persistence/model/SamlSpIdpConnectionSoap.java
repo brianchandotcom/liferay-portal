@@ -53,6 +53,8 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 		soapModel.setNameIdFormat(model.getNameIdFormat());
 		soapModel.setSignAuthnRequest(model.isSignAuthnRequest());
 		soapModel.setUserAttributeMappings(model.getUserAttributeMappings());
+		soapModel.setUnknownUsersAreStrangers(
+			model.isUnknownUsersAreStrangers());
 
 		return soapModel;
 	}
@@ -289,6 +291,18 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 		_userAttributeMappings = userAttributeMappings;
 	}
 
+	public boolean getUnknownUsersAreStrangers() {
+		return _unknownUsersAreStrangers;
+	}
+
+	public boolean isUnknownUsersAreStrangers() {
+		return _unknownUsersAreStrangers;
+	}
+
+	public void setUnknownUsersAreStrangers(boolean unknownUsersAreStrangers) {
+		_unknownUsersAreStrangers = unknownUsersAreStrangers;
+	}
+
 	private long _samlSpIdpConnectionId;
 	private long _companyId;
 	private long _userId;
@@ -308,5 +322,6 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 	private String _nameIdFormat;
 	private boolean _signAuthnRequest;
 	private String _userAttributeMappings;
+	private boolean _unknownUsersAreStrangers;
 
 }

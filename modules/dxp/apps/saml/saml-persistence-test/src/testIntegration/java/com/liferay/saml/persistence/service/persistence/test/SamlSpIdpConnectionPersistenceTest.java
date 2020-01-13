@@ -168,6 +168,9 @@ public class SamlSpIdpConnectionPersistenceTest {
 		newSamlSpIdpConnection.setUserAttributeMappings(
 			RandomTestUtil.randomString());
 
+		newSamlSpIdpConnection.setUnknownUsersAreStrangers(
+			RandomTestUtil.randomBoolean());
+
 		_samlSpIdpConnections.add(_persistence.update(newSamlSpIdpConnection));
 
 		SamlSpIdpConnection existingSamlSpIdpConnection =
@@ -234,6 +237,9 @@ public class SamlSpIdpConnectionPersistenceTest {
 		Assert.assertEquals(
 			existingSamlSpIdpConnection.getUserAttributeMappings(),
 			newSamlSpIdpConnection.getUserAttributeMappings());
+		Assert.assertEquals(
+			existingSamlSpIdpConnection.isUnknownUsersAreStrangers(),
+			newSamlSpIdpConnection.isUnknownUsersAreStrangers());
 	}
 
 	@Test
@@ -285,7 +291,8 @@ public class SamlSpIdpConnectionPersistenceTest {
 			"assertionSignatureRequired", true, "clockSkew", true, "enabled",
 			true, "forceAuthn", true, "ldapImportEnabled", true, "metadataUrl",
 			true, "metadataUpdatedDate", true, "name", true, "nameIdFormat",
-			true, "signAuthnRequest", true, "userAttributeMappings", true);
+			true, "signAuthnRequest", true, "userAttributeMappings", true,
+			"unknownUsersAreStrangers", true);
 	}
 
 	@Test
@@ -579,6 +586,9 @@ public class SamlSpIdpConnectionPersistenceTest {
 
 		samlSpIdpConnection.setUserAttributeMappings(
 			RandomTestUtil.randomString());
+
+		samlSpIdpConnection.setUnknownUsersAreStrangers(
+			RandomTestUtil.randomBoolean());
 
 		_samlSpIdpConnections.add(_persistence.update(samlSpIdpConnection));
 

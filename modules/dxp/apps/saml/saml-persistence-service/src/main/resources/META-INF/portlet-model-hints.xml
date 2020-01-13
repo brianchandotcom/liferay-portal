@@ -103,6 +103,7 @@
 		<field name="userAttributeMappings" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="unknownUsersAreStrangers" type="boolean" />
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlSpMessage">
 		<field name="samlSpMessageId" type="long" />

@@ -14,6 +14,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>dataDefinitionId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Long</type>
+		</attribute>
+		<attribute>
 			<name>dataDefinitionInputId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

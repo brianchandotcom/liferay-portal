@@ -63,25 +63,24 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-			Map commitDetails = [:]
-
-			Closure<Void> setCommitDetails = {
+			Closure<Void> getCommitDetails = {
 				String gitLogLine ->
 
 				Matcher gitLogMatcher = gitLogLine =~ /([a-f0-9]+):.+:((?:.*?)(?<![A-Z])(?:[A-Z]+-\d+(?:[^A-Za-z0-9]+[A-Z]+-\d+)*))(.*)/
 
-				if (gitLogMatcher.find()) {
-					String sha = gitLogMatcher.group(1)
-					String ticketNumber = gitLogMatcher.group(2)
-					String commitMessage = gitLogMatcher.group(3)
-
-					if (ticketNumber.startsWith("Revert")) {
-						commitDetails = ["SHA" : sha, "TICKET-NUMBER" : "", "COMMIT-MESSAGE" : ticketNumber + commitMessage]
-					}
-					else {
-						commitDetails = ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]
-					}
+				if (!gitLogMatcher.find()) {
+					return [:]
 				}
+
+				String sha = gitLogMatcher.group(1)
+				String ticketNumber = gitLogMatcher.group(2)
+				String commitMessage = gitLogMatcher.group(3)
+
+				if (ticketNumber.startsWith("Revert")) {
+					return ["SHA" : sha, "TICKET-NUMBER" : "", "COMMIT-MESSAGE" : ticketNumber + commitMessage]
+				}
+
+				return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]
 			}
 
 			String commits = ""
@@ -89,7 +88,7 @@ buildChangelogs {
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				setCommitDetails(gitLogLine)
+				Map<String, String> commitDetails = getCommitDetails(gitLogLine)
 
 				if (commitDetails["COMMIT-MESSAGE"] ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
 					commits = commits + """\
@@ -112,11 +111,13 @@ buildChangelogs {
 
 			gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
+			Map<String, String> commitDetails = [:]
+
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
 				if (gitLogLine ==~ /([a-f0-9]+):.+:(.*)/) {
-					setCommitDetails(gitLogLine)
+					commitDetails = getCommitDetails(gitLogLine)
 				}
 				else {
 					matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/

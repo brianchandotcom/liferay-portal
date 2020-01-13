@@ -31,6 +31,7 @@ import com.liferay.portal.search.similar.results.web.internal.builder.SimilarRes
 import com.liferay.portal.search.similar.results.web.internal.constants.SimilarResultsPortletKeys;
 import com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferences;
 import com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferencesImpl;
+import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaHelper;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
@@ -203,13 +204,17 @@ public class SimilarResultsPortletSearchContributor
 		String fields = similarResultsPortletPreferences.getFields();
 
 		if (!Validator.isBlank(fields)) {
-			moreLikeThisQuery.addFields(fields);
+			moreLikeThisQuery.addFields(
+				SearchStringUtil.splitAndUnquote(
+					SearchStringUtil.maybe(fields)));
 		}
 
 		String stopWords = similarResultsPortletPreferences.getStopWords();
 
 		if (!Validator.isBlank(stopWords)) {
-			moreLikeThisQuery.addStopWords(StringUtil.toLowerCase(stopWords));
+			moreLikeThisQuery.addStopWords(
+				SearchStringUtil.splitAndUnquote(
+					SearchStringUtil.maybe(StringUtil.toLowerCase(stopWords))));
 		}
 
 		moreLikeThisQuery.setAnalyzer(

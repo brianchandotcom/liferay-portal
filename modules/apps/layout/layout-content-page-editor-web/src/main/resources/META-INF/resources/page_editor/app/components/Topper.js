@@ -63,8 +63,7 @@ export default function Topper({
 	active: activeTopper,
 	children,
 	item,
-	layoutData,
-	name
+	layoutData
 }) {
 	const [edge, setEdge] = useState(null);
 	const containerRef = useRef(null);
@@ -105,7 +104,6 @@ export default function Topper({
 		},
 		item: {
 			...item,
-			name,
 			type: LAYOUT_DATA_ITEM_TYPES[item.type]
 		}
 	});
@@ -257,6 +255,24 @@ export default function Topper({
 
 	const commentsPanelId = sidebarPanels.comments.sidebarPanelId;
 
+	const fragmentEntryLinks = store.fragmentEntryLinks;
+
+	const getName = (item, fragmentEntryLinks) => {
+		let name;
+
+		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+			name = Liferay.Language.get('container');
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
+			name = Liferay.Language.get('column');
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
+			name = Liferay.Language.get('row');
+		}
+
+		return name;
+	};
+
 	return (
 		<div
 			className={classNames(styles)}
@@ -308,7 +324,8 @@ export default function Topper({
 						className="page-editor-topper__title"
 						expand
 					>
-						{name || Liferay.Language.get('element')}
+						{getName(item, fragmentEntryLinks) ||
+							Liferay.Language.get('element')}
 					</TopperListItem>
 					<TopperListItem>
 						<ClayButton

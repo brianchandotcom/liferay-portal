@@ -217,6 +217,7 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstance.getFormInstanceId(), 0);
 
 		// LPS-97208
+		// See DDMFormInstanceRecordSearchTest#testBasicSearchWithDefaultUser
 
 		deleteDDMFormInstance(ddmFormInstance);
 	}

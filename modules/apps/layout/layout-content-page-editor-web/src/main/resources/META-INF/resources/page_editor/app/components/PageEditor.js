@@ -28,27 +28,29 @@ import DragPreview from './DragPreview';
 import FragmentContent from './FragmentContent';
 import Topper from './Topper';
 
-const Root = React.forwardRef(({canDrop, children, isOver}, ref) => (
-	<div
-		className={classNames('page-editor__root', {
-			'page-editor__root--active': isOver && canDrop
-		})}
-		ref={ref}
-	>
-		{React.Children.count(children) ? (
-			children
-		) : (
-			<div className="taglib-empty-result-message">
-				<div className="taglib-empty-result-message-header"></div>
-				<div className="text-center text-muted">
-					{Liferay.Language.get('place-fragments-here')}
+function Root({canDrop, children, isOver}, ref) {
+	return (
+		<div
+			className={classNames('page-editor__root', {
+				'page-editor__root--active': isOver && canDrop
+			})}
+			ref={ref}
+		>
+			{React.Children.count(children) ? (
+				children
+			) : (
+				<div className="taglib-empty-result-message">
+					<div className="taglib-empty-result-message-header"></div>
+					<div className="text-center text-muted">
+						{Liferay.Language.get('place-fragments-here')}
+					</div>
 				</div>
-			</div>
-		)}
-	</div>
-));
+			)}
+		</div>
+	);
+}
 
-const Container = React.forwardRef(({children, item}, ref) => {
+function Container({children, item}, ref) {
 	const {
 		backgroundColorCssClass,
 		backgroundImage,
@@ -84,9 +86,9 @@ const Container = React.forwardRef(({children, item}, ref) => {
 			<div className="page-editor__container-outline">{children}</div>
 		</div>
 	);
-});
+}
 
-const Row = React.forwardRef(({children, item, layoutData}, ref) => {
+function Row({children, item, layoutData}, ref) {
 	const parent = layoutData.items[item.parentId];
 
 	const rowContent = (
@@ -109,9 +111,9 @@ const Row = React.forwardRef(({children, item, layoutData}, ref) => {
 	) : (
 		rowContent
 	);
-});
+}
 
-const Column = React.forwardRef(({children, className, item}, ref) => {
+function Column({children, className, item}, ref) {
 	const {size} = item.config;
 
 	return (
@@ -124,23 +126,23 @@ const Column = React.forwardRef(({children, className, item}, ref) => {
 			{children}
 		</div>
 	);
-});
+}
 
-const Fragment = React.forwardRef(({item}, ref) => {
+function Fragment({item}, ref) {
 	const {fragmentEntryLinks} = useContext(StoreContext);
 
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
 	return <FragmentContent fragmentEntryLink={fragmentEntryLink} ref={ref} />;
-});
+}
 
 const LAYOUT_DATA_ITEMS = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
-	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
-	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
-	[LAYOUT_DATA_ITEM_TYPES.row]: Row
+	[LAYOUT_DATA_ITEM_TYPES.column]: React.forwardRef(Column),
+	[LAYOUT_DATA_ITEM_TYPES.container]: React.forwardRef(Container),
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: React.forwardRef(Fragment),
+	[LAYOUT_DATA_ITEM_TYPES.root]: React.forwardRef(Root),
+	[LAYOUT_DATA_ITEM_TYPES.row]: React.forwardRef(Row)
 };
 
 const LAYOUT_DATA_ACCEPT_DROP_TYPES = {
@@ -187,7 +189,7 @@ const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {
 	]
 };
 
-const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
+function LayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
 	const floatingToolbarButtons =
 		LAYOUT_DATA_FLOATING_TOOLBAR_TYPES[item.type];
@@ -270,7 +272,7 @@ const LayoutDataItem = ({fragmentEntryLinks, item, layoutData}) => {
 			)}
 		</Topper>
 	);
-};
+}
 
 export default function PageEditor() {
 	const {

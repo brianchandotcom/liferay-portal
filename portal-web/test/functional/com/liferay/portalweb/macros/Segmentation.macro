@@ -1,5 +1,5 @@
 definition {
-
+	
 	macro _deleteAllSegments {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
@@ -8,6 +8,17 @@ definition {
 
 			Alert.viewSuccessMessage();
 		}
+	}
+	
+	macro addMoreProperties {
+		var key_propertyOption = "${propertyOption}";
+
+		Click(locator1 = "Segmentation#PROPERTIES_SEARCH");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			locator1 = "Segmentation#ADD_FIELD_TYPE",
+			locator2 = "Segmentation#DRAG_AND_DROP_EDIT",
+			value1 = "${propertyOption}");
 	}
 
 	macro addProperties {
@@ -31,6 +42,10 @@ definition {
 			value1 = "${criterionInputOption}");
 	}
 
+	macro deleteProperties {
+		Click(locator1 = "Segmentation#DELETE_SEGMENT");
+	}
+
 	macro editSegment {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Edit");
@@ -51,6 +66,10 @@ definition {
 		Type(
 			locator1 = "Segmentation#TITLE_FIELD",
 			value1 = "${titleField}");
+	}
+
+	macro selectOrganization {
+		Click(locator1 = "Segmentation#ORGANIZATION_MENU");
 	}
 
 	macro tearDown {

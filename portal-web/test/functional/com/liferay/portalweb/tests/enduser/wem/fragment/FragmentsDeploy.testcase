@@ -29,6 +29,8 @@ definition {
 	@description = "This is a test for LPS-105110. A system administrator can deploy a zip file of fragments in the deploy folder to a specific site. Fragments deployed to a specific site are not available in other sites."
 	@priority = "5"
 	test DeployFragmentsToSpecificSite {
+		property test.name.skip.portal.instance = "FragmentsDeploy#DeployFragmentsToSpecificSite";
+
 		task ("Deploy fragments zip to Test Site Name") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "card.zip");
 		}

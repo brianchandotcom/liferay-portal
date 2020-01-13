@@ -18,13 +18,19 @@ import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
 import {openInfoItemSelector} from '../../core/openInfoItemSelector';
+import addMappedInfoItem from '../actions/addMappedInfoItem';
 import {ConfigContext} from '../config/index';
+import {DispatchContext} from '../reducers/index';
 
 export default function InfoItemSelectionPanel({
-	backgroundImageTitle = Liferay.Language.get('none'),
-	onItemSelectorChanged
+	backgroundImageTitle = Liferay.Language.get('none')
 }) {
 	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+
+	const onItemSelectorChanged = item => {
+		dispatch(addMappedInfoItem(item));
+	};
 
 	return (
 		<>

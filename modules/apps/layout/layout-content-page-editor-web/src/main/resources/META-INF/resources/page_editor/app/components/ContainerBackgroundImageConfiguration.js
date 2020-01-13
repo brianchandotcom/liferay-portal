@@ -13,10 +13,8 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import addMappedInfoItem from '../actions/addMappedInfoItem';
-import {DispatchContext} from '../reducers/index';
 import InfoItemSelectionPanel from './InfoItemSelectionPanel';
 import {ManualSelectionPanel} from './ManualSelectionPanel';
 
@@ -29,14 +27,9 @@ export const ContainerBackgroundImageConfiguration = ({
 	backgroundImageTitle,
 	onValueChange
 }) => {
-	const dispatch = useContext(DispatchContext);
-
 	const [imageSource, setImageSource] = useState(
 		IMAGE_SOURCE.manualSelection
 	);
-
-	const handleBackgroundImageItemChanged = image =>
-		dispatch(addMappedInfoItem(image));
 
 	return (
 		<>
@@ -80,7 +73,6 @@ export const ContainerBackgroundImageConfiguration = ({
 			) : (
 				<InfoItemSelectionPanel
 					backgroundImageTitle={backgroundImageTitle}
-					onItemSelectorChanged={handleBackgroundImageItemChanged}
 				/>
 			)}
 		</>

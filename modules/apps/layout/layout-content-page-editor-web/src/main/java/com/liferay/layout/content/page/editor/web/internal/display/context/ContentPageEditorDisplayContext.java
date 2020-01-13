@@ -50,6 +50,7 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.Content
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.LayoutDataConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -1352,8 +1353,16 @@ public class ContentPageEditorDisplayContext {
 					PortalUtil.getClassNameId(Layout.class.getName()),
 					themeDisplay.getPlid(), true);
 
-		_layoutData = layoutPageTemplateStructure.getData(
+		String layoutData = layoutPageTemplateStructure.getData(
 			getSegmentsExperienceId());
+
+		if (Objects.equals(
+				_contentPageEditorTypeConfiguration.type(), "react")) {
+
+			layoutData = LayoutDataConverter.convert(layoutData);
+		}
+
+		_layoutData = layoutData;
 
 		return _layoutData;
 	}
@@ -1439,8 +1448,16 @@ public class ContentPageEditorDisplayContext {
 						PortalUtil.getClassNameId(Layout.class.getName()),
 						masterLayoutPageTemplateEntry.getPlid(), true);
 
-			return layoutPageTemplateStructure.getData(
+			String layoutData = layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT);
+
+			if (Objects.equals(
+					_contentPageEditorTypeConfiguration.type(), "react")) {
+
+				layoutData = LayoutDataConverter.convert(layoutData);
+			}
+
+			return layoutData;
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

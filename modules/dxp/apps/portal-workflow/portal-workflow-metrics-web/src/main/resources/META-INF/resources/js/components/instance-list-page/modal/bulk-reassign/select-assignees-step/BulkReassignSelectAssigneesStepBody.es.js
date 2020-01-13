@@ -56,7 +56,7 @@ const LoadingView = () => {
 			<LoadingState
 				className="border-0 pb-8 pt-8"
 				message={Liferay.Language.get(
-					'retreiving-all-possible-assignees'
+					'retrieving-all-possible-assignees'
 				)}
 				messageClassName="small"
 			/>

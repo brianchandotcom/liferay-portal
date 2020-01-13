@@ -215,7 +215,7 @@ describe('The BulkReassignModal component should', () => {
 		expect(checkbox[1].checked).toBe(false);
 		expect(selectAll.checked).toBe(false);
 
-		fireEvent.click(getByTestId('selectRemaningItems'));
+		fireEvent.click(getByTestId('selectRemainingItems'));
 
 		expect(checkbox[0].checked).toBe(true);
 		expect(checkbox[1].checked).toBe(true);
@@ -341,7 +341,7 @@ describe('The BulkReassignModal component should', () => {
 		expect(nextBtn).toHaveAttribute('disabled');
 	});
 
-	test('Render "Select assignees" step with reasignee fetch error and retrying', async () => {
+	test('Render "Select assignees" step with reassignee fetch error and retrying', async () => {
 		const alertError = getByTestId('alertError');
 		const nextBtn = getByTestId('nextButton');
 

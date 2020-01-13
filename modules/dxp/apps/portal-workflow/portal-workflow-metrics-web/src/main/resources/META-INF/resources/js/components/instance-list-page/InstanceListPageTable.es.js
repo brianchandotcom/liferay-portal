@@ -19,7 +19,7 @@ const Table = ({items}) => {
 		<ClayTable>
 			<ClayTable.Head>
 				<ClayTable.Row>
-					<ClayTable.Cell headingCell />
+					<ClayTable.Cell headingCell style={{width: '3%'}} />
 					<ClayTable.Cell headingCell style={{width: '8%'}}>
 						{Liferay.Language.get('id')}
 					</ClayTable.Cell>
@@ -39,14 +39,11 @@ const Table = ({items}) => {
 					<ClayTable.Cell headingCell style={{width: '17%'}}>
 						{Liferay.Language.get('created-by')}
 					</ClayTable.Cell>
-					<ClayTable.Cell
-						headingCell
-						style={{textAlign: 'right', width: '18%'}}
-					>
+					<ClayTable.Cell headingCell style={{width: '18%'}}>
 						{Liferay.Language.get('creation-date')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell />
+					<ClayTable.Cell headingCell style={{width: '5%'}} />
 				</ClayTable.Row>
 			</ClayTable.Head>
 

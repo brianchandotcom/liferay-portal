@@ -26,7 +26,7 @@ function ItemDetail({processId}) {
 		if (instanceId) {
 			fetchData(instanceId, processId).then(data => setInstance(data));
 		}
-	}, [fetchData, instanceId, processId]);
+	}, [instanceId, processId]);
 
 	const fetchData = (instanceId, processId) => {
 		return client

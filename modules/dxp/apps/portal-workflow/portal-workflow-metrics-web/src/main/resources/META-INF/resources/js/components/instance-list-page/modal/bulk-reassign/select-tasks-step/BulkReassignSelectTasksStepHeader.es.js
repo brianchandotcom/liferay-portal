@@ -113,13 +113,13 @@ const Header = ({items, totalCount}) => {
 							<ClayManagementToolbar.Item>
 								<button
 									className="btn btn-link btn-sm font-weight-bold pl-0 text-primary"
-									data-testid="selectRemaningItems"
+									data-testid="selectRemainingItems"
 									onClick={() => {
 										handleSelectAll(true);
 									}}
 								>
 									{Liferay.Language.get(
-										'select-all-remanining-items'
+										'select-all-remaining-items'
 									)}
 								</button>
 							</ClayManagementToolbar.Item>

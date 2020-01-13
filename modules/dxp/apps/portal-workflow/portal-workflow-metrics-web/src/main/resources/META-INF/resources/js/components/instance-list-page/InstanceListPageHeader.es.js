@@ -225,7 +225,7 @@ const Header = () => {
 										}}
 									>
 										{Liferay.Language.get(
-											'select-all-remanining-items'
+											'select-all-remaining-items'
 										)}
 									</button>
 								</ClayManagementToolbar.Item>

@@ -28,115 +28,6 @@ import DragPreview from './DragPreview';
 import FragmentContent from './FragmentContent';
 import Topper from './Topper';
 
-function Root({canDrop, children, isOver}, ref) {
-	return (
-		<div
-			className={classNames('page-editor__root', {
-				'page-editor__root--active': isOver && canDrop
-			})}
-			ref={ref}
-		>
-			{React.Children.count(children) ? (
-				children
-			) : (
-				<div className="taglib-empty-result-message">
-					<div className="taglib-empty-result-message-header"></div>
-					<div className="text-center text-muted">
-						{Liferay.Language.get('place-fragments-here')}
-					</div>
-				</div>
-			)}
-		</div>
-	);
-}
-
-function Container({children, item}, ref) {
-	const {
-		backgroundColorCssClass,
-		backgroundImage,
-		paddingBottom,
-		paddingHorizontal,
-		paddingTop,
-		type
-	} = item.config;
-
-	return (
-		<div
-			className={classNames(
-				`page-editor__container pb-${paddingBottom} pt-${paddingTop} px-${paddingHorizontal}`,
-				{
-					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					container: type === 'fixed',
-					'container-fluid': type === 'fluid',
-					empty: !item.children.length
-				}
-			)}
-			ref={ref}
-			style={
-				backgroundImage
-					? {
-							backgroundImage: `url(${backgroundImage})`,
-							backgroundPosition: '50% 50%',
-							backgroundRepeat: 'no-repeat',
-							backgroundSize: 'cover'
-					  }
-					: {}
-			}
-		>
-			<div className="page-editor__container-outline">{children}</div>
-		</div>
-	);
-}
-
-function Row({children, item, layoutData}, ref) {
-	const parent = layoutData.items[item.parentId];
-
-	const rowContent = (
-		<div className="page-editor__row-outline" ref={ref}>
-			<div
-				className={classNames('page-editor__row row', {
-					empty: !item.children.some(
-						childId => layoutData.items[childId].children.length
-					),
-					'no-gutters': !item.config.gutters
-				})}
-			>
-				{children}
-			</div>
-		</div>
-	);
-
-	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
-		<div className="container-fluid">{rowContent}</div>
-	) : (
-		rowContent
-	);
-}
-
-function Column({children, className, item}, ref) {
-	const {size} = item.config;
-
-	return (
-		<div
-			className={classNames(className, 'page-editor__col', 'col', {
-				[`col-${size}`]: size
-			})}
-			ref={ref}
-		>
-			{children}
-		</div>
-	);
-}
-
-function Fragment({item}, ref) {
-	const {fragmentEntryLinks} = useContext(StoreContext);
-
-	const fragmentEntryLink =
-		fragmentEntryLinks[item.config.fragmentEntryLinkId];
-
-	return <FragmentContent fragmentEntryLink={fragmentEntryLink} ref={ref} />;
-}
-
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: React.forwardRef(Column),
 	[LAYOUT_DATA_ITEM_TYPES.container]: React.forwardRef(Container),
@@ -145,49 +36,48 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: React.forwardRef(Row)
 };
 
-const LAYOUT_DATA_ACCEPT_DROP_TYPES = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.fragment],
-	[LAYOUT_DATA_ITEM_TYPES.container]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.row
-	],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.row
-	],
-	[LAYOUT_DATA_ITEM_TYPES.root]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.row
-	],
-	[LAYOUT_DATA_ITEM_TYPES.row]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.row
-	]
-};
+export default function PageEditor() {
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+	const {
+		fragmentEntryLinks,
+		layoutData,
+		segmentsExperienceId,
+		sidebarOpen,
+		sidebarPanelId
+	} = useContext(StoreContext);
 
-const LAYOUT_DATA_TOPPER_ACTIVE = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: false,
-	[LAYOUT_DATA_ITEM_TYPES.container]: true,
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: true,
-	[LAYOUT_DATA_ITEM_TYPES.root]: false,
-	[LAYOUT_DATA_ITEM_TYPES.row]: true
-};
+	const mainItem = layoutData.items[layoutData.rootItems.main];
 
-const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: [],
-	[LAYOUT_DATA_ITEM_TYPES.container]: [
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
-	],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment,
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
-	],
-	[LAYOUT_DATA_ITEM_TYPES.root]: [],
-	[LAYOUT_DATA_ITEM_TYPES.row]: [
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
-	]
-};
+	const isMounted = useIsMounted();
+
+	useEffect(() => {
+		if (isMounted()) {
+			dispatch(
+				updateLayoutData({
+					config,
+					layoutData,
+					segmentsExperienceId
+				})
+			);
+		}
+	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
+
+	return (
+		<div
+			className={classNames('page-editor', 'page-editor--with-sidebar', {
+				'page-editor--with-sidebar-open': sidebarPanelId && sidebarOpen
+			})}
+		>
+			<DragPreview fragmentEntryLinks={fragmentEntryLinks} />
+			<LayoutDataItem
+				fragmentEntryLinks={fragmentEntryLinks}
+				item={mainItem}
+				layoutData={layoutData}
+			/>
+		</div>
+	);
+}
 
 function LayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
@@ -274,28 +164,153 @@ function LayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 	);
 }
 
-export default function PageEditor() {
-	const {
-		fragmentEntryLinks,
-		layoutData,
-		sidebarOpen,
-		sidebarPanelId
-	} = useContext(StoreContext);
+const LAYOUT_DATA_ACCEPT_DROP_TYPES = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.fragment],
+	[LAYOUT_DATA_ITEM_TYPES.container]: [
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.row
+	],
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.row
+	],
+	[LAYOUT_DATA_ITEM_TYPES.root]: [
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.container,
+		LAYOUT_DATA_ITEM_TYPES.row
+	],
+	[LAYOUT_DATA_ITEM_TYPES.row]: [
+		LAYOUT_DATA_ITEM_TYPES.fragment,
+		LAYOUT_DATA_ITEM_TYPES.row
+	]
+};
 
-	const mainItem = layoutData.items[layoutData.rootItems.main];
+const LAYOUT_DATA_TOPPER_ACTIVE = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: false,
+	[LAYOUT_DATA_ITEM_TYPES.container]: true,
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: true,
+	[LAYOUT_DATA_ITEM_TYPES.root]: false,
+	[LAYOUT_DATA_ITEM_TYPES.row]: true
+};
+
+const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: [],
+	[LAYOUT_DATA_ITEM_TYPES.container]: [
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.backgroundColor,
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
+	],
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration,
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
+	],
+	[LAYOUT_DATA_ITEM_TYPES.root]: [],
+	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing]
+};
+
+function Root({canDrop, children, isOver}, ref) {
+	return (
+		<div
+			className={classNames('page-editor__root', {
+				'page-editor__root--active': isOver && canDrop
+			})}
+			ref={ref}
+		>
+			{React.Children.count(children) ? (
+				children
+			) : (
+				<div className="taglib-empty-result-message">
+					<div className="taglib-empty-result-message-header"></div>
+					<div className="text-center text-muted">
+						{Liferay.Language.get('place-fragments-here')}
+					</div>
+				</div>
+			)}
+		</div>
+	);
+}
+
+function Container({children, item}, ref) {
+	const {
+		backgroundColorCssClass,
+		backgroundImage,
+		paddingBottom,
+		paddingHorizontal,
+		paddingTop,
+		type
+	} = item.config;
 
 	return (
 		<div
-			className={classNames('page-editor', 'page-editor--with-sidebar', {
-				'page-editor--with-sidebar-open': sidebarPanelId && sidebarOpen
-			})}
+			className={classNames(
+				`page-editor__container pb-${paddingBottom} pt-${paddingTop} px-${paddingHorizontal}`,
+				{
+					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
+					container: type === 'fixed',
+					'container-fluid': type === 'fluid',
+					empty: !item.children.length
+				}
+			)}
+			ref={ref}
+			style={
+				backgroundImage
+					? {
+							backgroundImage: `url(${backgroundImage})`,
+							backgroundPosition: '50% 50%',
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: 'cover'
+					  }
+					: {}
+			}
 		>
-			<DragPreview />
-			<LayoutDataItem
-				fragmentEntryLinks={fragmentEntryLinks}
-				item={mainItem}
-				layoutData={layoutData}
-			/>
+			<div className="page-editor__container-outline">{children}</div>
 		</div>
 	);
+}
+
+function Row({children, item, layoutData}, ref) {
+	const parent = layoutData.items[item.parentId];
+
+	const rowContent = (
+		<div className="page-editor__row-outline" ref={ref}>
+			<div
+				className={classNames('page-editor__row row', {
+					empty: !item.children.some(
+						childId => layoutData.items[childId].children.length
+					),
+					'no-gutters': !item.config.gutters
+				})}
+			>
+				{children}
+			</div>
+		</div>
+	);
+
+	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
+		<div className="container-fluid p-0">{rowContent}</div>
+	) : (
+		rowContent
+	);
+}
+
+function Column({children, className, item}, ref) {
+	const {size} = item.config;
+
+	return (
+		<div
+			className={classNames(className, 'col', {[`col-${size}`]: size})}
+			ref={ref}
+		>
+			{children}
+		</div>
+	);
+}
+
+function Fragment({item}, ref) {
+	const {fragmentEntryLinks} = useContext(StoreContext);
+
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+	return <FragmentContent fragmentEntryLink={fragmentEntryLink} ref={ref} />;
 }

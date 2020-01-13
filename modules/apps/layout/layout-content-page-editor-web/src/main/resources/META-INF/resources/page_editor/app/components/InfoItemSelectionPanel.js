@@ -12,20 +12,14 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useContext} from 'react';
 
-import {openInfoItemSelector} from '../../core/openInfoItemSelector';
+import ItemSelector from '../../common/components/ItemSelector';
 import addMappedInfoItem from '../actions/addMappedInfoItem';
-import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 
-export default function InfoItemSelectionPanel({
-	backgroundImageTitle = Liferay.Language.get('none')
-}) {
-	const config = useContext(ConfigContext);
+export default function InfoItemSelectionPanel({selectedItem = {}}) {
 	const dispatch = useContext(DispatchContext);
 
 	const onItemSelectorChanged = item => {
@@ -35,35 +29,13 @@ export default function InfoItemSelectionPanel({
 	return (
 		<>
 			<ClayForm.Group small>
-				<label htmlFor="itemSelectorInput">
-					{Liferay.Language.get('content')}
-				</label>
-				<div className="d-flex">
-					<ClayInput
-						className="mr-2"
-						id="itemSelectorInput"
-						readOnly
-						type="text"
-						value={backgroundImageTitle}
-					/>
-
-					<ClayButton.Group>
-						<ClayButton
-							displayType="secondary"
-							onClick={() =>
-								openInfoItemSelector(
-									onItemSelectorChanged,
-									config
-								)
-							}
-							small
-						>
-							<ClayIcon symbol="plus" />
-						</ClayButton>
-					</ClayButton.Group>
-				</div>
+				<ItemSelector
+					label={Liferay.Language.get('content')}
+					onItemSelect={onItemSelectorChanged}
+					selectedItem={selectedItem}
+				/>
 			</ClayForm.Group>
-			<ClayForm.Group small>
+			<ClayForm.Group>
 				<label htmlFor="containerBackgroundImageFieldSelect">
 					{Liferay.Language.get('field')}
 				</label>

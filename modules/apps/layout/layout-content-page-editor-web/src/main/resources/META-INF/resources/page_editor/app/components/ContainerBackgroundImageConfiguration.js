@@ -71,9 +71,7 @@ export const ContainerBackgroundImageConfiguration = ({
 					}
 				/>
 			) : (
-				<InfoItemSelectionPanel
-					backgroundImageTitle={backgroundImageTitle}
-				/>
+				<InfoItemSelectionPanel />
 			)}
 		</>
 	);

@@ -14,10 +14,6 @@
 
 import React from 'react';
 
-// Commented out to avoid lint errors
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-
 const INITIAL_STATE = {
 	/**
 	 * A collection of dynamically loaded reducers that may be loaded from
@@ -66,25 +62,6 @@ export function getInitialState([data, config]) {
 }
 
 function transformServerData(data, config) {
-	let layoutData = data.layoutData;
-
-	if (!layoutData.version) {
-		layoutData = {
-			items: {
-				main: {
-					children: [],
-					config: {...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root},
-					itemId: 'main',
-					parentId: null,
-					type: LAYOUT_DATA_ITEM_TYPES.root
-				}
-			},
-
-			rootItems: {main: 'main'},
-			version: 1
-		};
-	}
-
 	const {panels} = config;
 
 	// By default, show first panel of first section.
@@ -92,7 +69,7 @@ function transformServerData(data, config) {
 
 	return {
 		...data,
-		layoutData,
+		layoutData: data.layoutData,
 		sidebarPanelId
 	};
 }

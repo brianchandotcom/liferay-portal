@@ -22,9 +22,15 @@ export default (pages, properties) => {
 		pageVisitor.mapFields(field => {
 			const matches = field.name === fieldInstance.name;
 
+			let displayErrors = false;
+
+			if (matches && field.required && fieldInstance.value == '') {
+				displayErrors = true;
+			}
+
 			return {
 				...field,
-				displayErrors: field.displayErrors || matches,
+				displayErrors: !!field.displayErrors || displayErrors,
 				focused: matches ? false : field.focused
 			};
 		})

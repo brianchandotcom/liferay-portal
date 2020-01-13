@@ -17,13 +17,9 @@ import dom from 'metal-dom';
 import {useEffect, useCallback, useContext} from 'react';
 import {useDrop} from 'react-dnd';
 
-import {
-	DRAG_CUSTOM_OBJECT_FIELD,
-	DRAG_FIELD_TYPE
-} from '../../utils/dragTypes.es';
-import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
-import FormViewContext from './FormViewContext.es';
-import {dropCustomObjectField, dropLayoutBuilderField} from './actions.es';
+import AppContext from '../AppContext.es';
+import {dropCustomObjectField, dropLayoutBuilderField} from '../actions.es';
+import {DRAG_DATA_DEFINITION_FIELD, DRAG_FIELD_TYPE} from './dragTypes.es';
 
 const replaceColumn = node => {
 	if (node.parentNode) {
@@ -31,9 +27,8 @@ const replaceColumn = node => {
 	}
 };
 
-export default ({node}) => {
-	const [{dataDefinition}] = useContext(FormViewContext);
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+export default ({dataLayoutBuilder, node}) => {
+	const [{dataDefinition}] = useContext(AppContext);
 	const onDrop = useCallback(
 		({data, type}) => {
 			const addedToPlaceholder = !!dom.closest(node, '.placeholder');
@@ -49,7 +44,7 @@ export default ({node}) => {
 						indexes
 					})
 				);
-			} else if (type === DRAG_CUSTOM_OBJECT_FIELD) {
+			} else if (type === DRAG_DATA_DEFINITION_FIELD) {
 				dataLayoutBuilder.dispatch(
 					'fieldAdded',
 					dropCustomObjectField({
@@ -66,7 +61,7 @@ export default ({node}) => {
 		[dataDefinition, dataLayoutBuilder, node]
 	);
 	const [{canDrop, overTarget}, dropColumn] = useDrop({
-		accept: [DRAG_CUSTOM_OBJECT_FIELD, DRAG_FIELD_TYPE],
+		accept: [DRAG_DATA_DEFINITION_FIELD, DRAG_FIELD_TYPE],
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver()

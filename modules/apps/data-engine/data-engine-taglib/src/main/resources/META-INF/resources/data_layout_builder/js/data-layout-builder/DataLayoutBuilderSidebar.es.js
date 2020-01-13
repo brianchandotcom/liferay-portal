@@ -14,7 +14,6 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {isEmptyRow} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import React, {
 	useEffect,
@@ -24,21 +23,21 @@ import React, {
 	useLayoutEffect
 } from 'react';
 
-import Button from '../../components/button/Button.es';
-import FieldTypeList from '../../components/field-types/FieldTypeList.es';
-import Sidebar from '../../components/sidebar/Sidebar.es';
-import {useSidebarContent} from '../../hooks/index.es';
-import isClickOutside from '../../utils/clickOutside.es';
-import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
-import FormViewContext from './FormViewContext.es';
+import AppContext from '../AppContext.es';
 import {
 	dropLayoutBuilderField,
-	EDIT_CUSTOM_OBJECT_FIELD,
-	EVALUATION_ERROR
-} from './actions.es';
+	EVALUATION_ERROR,
+	EDIT_CUSTOM_OBJECT_FIELD
+} from '../actions.es';
+import Button from '../components/button/Button.es';
+import FieldTypeList from '../components/field-types/FieldTypeList.es';
+import Sidebar from '../components/sidebar/Sidebar.es';
+import {useSidebarContent} from '../hooks/index.es';
+import isClickOutside from '../utils/clickOutside.es';
 import renderSettingsForm, {
 	getFilteredSettingsContext
-} from './renderSettingsForm.es';
+} from '../utils/renderSettingsForm.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 const DefaultSidebarBody = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
@@ -55,16 +54,7 @@ const DefaultSidebarBody = ({keywords}) => {
 				indexes: {
 					columnIndex: 0,
 					pageIndex: activePage,
-					rowIndex: pages[activePage].rows.reduce(
-						(lastEmptyRowIndex, row, rowIndex) => {
-							if (isEmptyRow(pages, activePage, rowIndex)) {
-								return rowIndex;
-							}
-
-							return lastEmptyRowIndex;
-						},
-						pages[activePage].rows.length
-					)
+					rowIndex: pages[activePage].rows.length
 				}
 			})
 		);
@@ -95,7 +85,7 @@ const DefaultSidebarBody = ({keywords}) => {
 
 const SettingsSidebarBody = () => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [state, dispatch] = useContext(FormViewContext);
+	const [state, dispatch] = useContext(AppContext);
 	const {focusedCustomObjectField, focusedField} = state;
 	const {
 		settingsContext: customObjectFieldSettingsContext
@@ -132,9 +122,9 @@ const SettingsSidebarBody = () => {
 				)
 			);
 		} else {
-			const {pages} = filteredSettingsContext;
+			const {pages, rules} = filteredSettingsContext;
 
-			form.setState({pages}, () => {
+			form.setState({pages, rules}, () => {
 				let evaluableForm = false;
 				const visitor = new PagesVisitor(pages);
 
@@ -160,6 +150,7 @@ const SettingsSidebarBody = () => {
 	}, [
 		dataLayoutBuilder,
 		dispatch,
+		focusedField,
 		form,
 		formRef,
 		hasFocusedCustomObjectField,
@@ -168,11 +159,9 @@ const SettingsSidebarBody = () => {
 
 	useEffect(() => {
 		return () => form && form.dispose();
-	}, [form, hasFocusedCustomObjectField]);
+	}, [form]);
 
-	const focusedFieldName = hasFocusedCustomObjectField
-		? focusedCustomObjectField.name
-		: focusedField.name;
+	const focusedFieldName = focusedField.name;
 
 	useLayoutEffect(() => {
 		if (!form) {
@@ -199,7 +188,7 @@ const SettingsSidebarBody = () => {
 
 const SettingsSidebarHeader = () => {
 	const [{fieldTypes, focusedCustomObjectField, focusedField}] = useContext(
-		FormViewContext
+		AppContext
 	);
 	let {settingsContext} = focusedField;
 
@@ -260,25 +249,27 @@ const SettingsSidebarHeader = () => {
 	);
 };
 
-export default ({dataLayoutBuilderElementId}) => {
+export default () => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [{focusedCustomObjectField, focusedField}] = useContext(
-		FormViewContext
-	);
+	const [{focusedCustomObjectField, focusedField}] = useContext(AppContext);
 	const [keywords, setKeywords] = useState('');
 	const [sidebarClosed, setSidebarClosed] = useState(false);
 
-	const builderElementRef = useRef(
-		document.querySelector(`#${dataLayoutBuilderElementId}`)
-	);
-
-	useSidebarContent(builderElementRef, sidebarClosed);
+	useSidebarContent(dataLayoutBuilder.containerRef, sidebarClosed);
 
 	const sidebarRef = useRef();
 
 	useEffect(() => {
 		const eventHandler = ({target}) => {
-			if (isClickOutside(target, sidebarRef.current, '.dropdown-menu')) {
+			if (
+				isClickOutside(
+					target,
+					sidebarRef.current,
+					'.data-layout-builder-sidebar',
+					'.ddm-form-builder',
+					'.dropdown-menu'
+				)
+			) {
 				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
 			}
 		};

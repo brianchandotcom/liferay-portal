@@ -21,8 +21,8 @@ import React, {useEffect, useState} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import Button from '../../components/button/Button.es';
-import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
+import {DRAG_FIELD_TYPE} from '../../drag-and-drop/dragTypes.es';
+import Button from '../button/Button.es';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';
 
 const ICONS = {
@@ -118,7 +118,7 @@ export default props => {
 				})}
 			>
 				<ClaySticker
-					className="app-builder-field-sticker"
+					className="data-layout-builder-field-sticker"
 					displayType="light"
 					size="md"
 				>

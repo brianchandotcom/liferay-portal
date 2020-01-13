@@ -12,20 +12,8 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import useKeyDown from './useKeyDown.es';
+import useRequest from './useRequest.es';
+import useSidebarContent from './useSidebarContent.es';
 
-export default (ref, isClosed) => {
-	useEffect(() => {
-		const {classList} = ref.current;
-
-		classList.add('app-builder-sidebar-content');
-
-		if (isClosed) {
-			classList.add('closed');
-		} else {
-			classList.remove('closed');
-		}
-
-		return () => classList.remove('app-builder-sidebar-content', 'closed');
-	}, [ref, isClosed]);
-};
+export {useKeyDown, useRequest, useSidebarContent};

@@ -12,20 +12,73 @@
  * details.
  */
 
-import FormBuilder from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
-import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
-import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
+import FormBuilderWithLayoutProvider from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import core from 'metal';
-import Component, {Config} from 'metal-jsx';
+import React from 'react';
+
+import EventEmitter from './EventEmitter.es';
 
 /**
  * Data Layout Builder.
- * @extends Component
+ * @extends React.Component
  */
-class DataLayoutBuilder extends Component {
-	attached() {
-		const {localizable} = this.props;
+class DataLayoutBuilder extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.containerRef = React.createRef();
+		this.eventEmitter = new EventEmitter();
+	}
+
+	componentDidMount() {
+		const {
+			dataLayoutBuilderId,
+			defaultLanguageId,
+			editingLanguageId,
+			fieldTypes,
+			localizable,
+			portletNamespace,
+			spritemap
+		} = this.props;
+
+		const context = this._setContext(this.props.context);
+
+		const layoutProviderProps = {
+			...this.props,
+			context,
+			defaultLanguageId,
+			editingLanguageId,
+			events: {
+				pagesChanged: this._handlePagesChanged.bind(this)
+			},
+			initialPages: context.pages,
+			initialPaginationMode: context.paginationMode,
+			ref: 'layoutProvider'
+		};
+
+		this.formBuilderWithLayoutProvider = new FormBuilderWithLayoutProvider(
+			{
+				events: {
+					attached: () => {
+						this.props.onLoad(this);
+
+						Liferay.component(dataLayoutBuilderId, this);
+					}
+				},
+				formBuilderProps: {
+					defaultLanguageId,
+					editingLanguageId,
+					fieldTypes,
+					paginationMode: 'wizard',
+					portletNamespace,
+					ref: 'builder',
+					spritemap
+				},
+				layoutProviderProps
+			},
+			this.containerRef.current
+		);
 
 		if (localizable) {
 			Liferay.componentReady('translationManager').then(
@@ -40,7 +93,21 @@ class DataLayoutBuilder extends Component {
 							}
 						),
 						translationManager.on('editingLocale', ({newValue}) => {
-							this.props.editingLanguageId = newValue;
+							// this.props.editingLanguageId = newValue;
+
+							// const {
+							// 	editingLanguageId
+							// } = this.props;
+
+							this.setState({
+								editingLanguageId: newValue
+							});
+
+							// metalFormBuilder.props.editg = mewLa
+
+							// useEffect(() => {
+							// 	metal.props.editingLocale = editingLanguageId
+							// }, [editingLanguageId])
 						}),
 						translationManager.on(
 							'availableLocales',
@@ -53,13 +120,54 @@ class DataLayoutBuilder extends Component {
 	}
 
 	dispatch(event, payload) {
-		this.refs.layoutProvider.dispatch(event, payload);
+		const layoutProvider = this.getLayoutProvider();
+
+		if (layoutProvider && layoutProvider.dispatch) {
+			layoutProvider.dispatch(event, payload);
+		}
 	}
 
-	disposed() {
+	dispatchAction(action) {
+		const {appContext} = this.props;
+		const [, dispatch] = appContext;
+
+		if (dispatch) {
+			dispatch(action);
+		}
+	}
+
+	getState() {
+		const {appContext} = this.props;
+		const [state] = appContext;
+
+		return state;
+	}
+
+	on(eventName, listener) {
+		this.eventEmitter.on(eventName, listener);
+	}
+
+	removeEventListener(eventName, listener) {
+		this.eventEmitter.removeListener(eventName, listener);
+	}
+
+	emit(event, payload, error = false) {
+		this.eventEmitter.emit(event, payload, error);
+	}
+
+	componentWillUnmount() {
+		const {dataLayoutBuilderId} = this.props;
+		const {formBuilderWithLayoutProvider} = this;
+
+		if (formBuilderWithLayoutProvider) {
+			formBuilderWithLayoutProvider.dispose();
+		}
+
 		if (this._translationManagerHandles) {
 			this._translationManagerHandles.forEach(handle => handle.detach());
 		}
+
+		Liferay.destroyComponent(dataLayoutBuilderId);
 	}
 
 	getDefinitionField({settingsContext}) {
@@ -190,19 +298,21 @@ class DataLayoutBuilder extends Component {
 		return fieldTypes;
 	}
 
-	getProvider() {
-		return this.refs.layoutProvider;
+	getLayoutProvider() {
+		const {layoutProvider} = this.formBuilderWithLayoutProvider.refs;
+
+		return layoutProvider;
 	}
 
 	getStore() {
+		const layoutProvider = this.getLayoutProvider();
+
 		return {
-			...this.refs.layoutProvider.state
+			...layoutProvider.state
 		};
 	}
 
 	onAvailableLocalesRemoved({newValue, previousValue}) {
-		const {layoutProvider} = this.refs;
-
 		const removedItems = new Map();
 
 		previousValue.forEach((value, key) => {
@@ -212,7 +322,7 @@ class DataLayoutBuilder extends Component {
 		});
 
 		if (removedItems.size > 0) {
-			layoutProvider.emit(
+			this.dispatch(
 				'languageIdDeleted',
 				removedItems.values().next().value
 			);
@@ -220,43 +330,8 @@ class DataLayoutBuilder extends Component {
 	}
 
 	render() {
-		const {
-			context,
-			defaultLanguageId,
-			editingLanguageId,
-			fieldTypes,
-			portletNamespace,
-			spritemap
-		} = this.props;
-
-		const layoutProviderProps = {
-			...this.props,
-			defaultLanguageId,
-			editingLanguageId,
-			events: {
-				pagesChanged: this._handlePagesChanged.bind(this)
-			},
-			initialPages: context.pages,
-			initialPaginationMode: context.paginationMode,
-			ref: 'layoutProvider'
-		};
-
-		const LayoutProviderTag = LayoutProvider;
-
 		return (
-			<div class={'ddm-form-builder'}>
-				<LayoutProviderTag {...layoutProviderProps}>
-					<FormBuilder
-						defaultLanguageId={defaultLanguageId}
-						editingLanguageId={editingLanguageId}
-						fieldTypes={fieldTypes}
-						paginationMode={'wizard'}
-						portletNamespace={portletNamespace}
-						ref="builder"
-						spritemap={spritemap}
-					/>
-				</LayoutProviderTag>
-			</div>
+			<div className={'ddm-form-builder'} ref={this.containerRef}></div>
 		);
 	}
 
@@ -397,30 +472,6 @@ class DataLayoutBuilder extends Component {
 		};
 	}
 }
-
-DataLayoutBuilder.PROPS = {
-	availableLanguageIds: Config.array(),
-	componentId: Config.string(),
-	context: Config.shapeOf({
-		pages: Config.arrayOf(pageStructure),
-		paginationMode: Config.string(),
-		rules: Config.array()
-	})
-		.required()
-		.setter('_setContext'),
-	dataDefinitionInputId: Config.string(),
-	dataLayoutInputId: Config.string(),
-	defaultLanguageId: Config.string().value(
-		themeDisplay.getDefaultLanguageId()
-	),
-	editingLanguageId: Config.string().value(
-		themeDisplay.getDefaultLanguageId()
-	),
-	fieldTypes: Config.array().value([]),
-	localizable: Config.bool().value(false),
-	portletNamespace: Config.string().required(),
-	spritemap: Config.string().required()
-};
 
 export default DataLayoutBuilder;
 export {DataLayoutBuilder};

@@ -12,18 +12,12 @@
  * details.
  */
 
+import {DataLayoutBuilderActions, DataLayoutVisitor} from 'data-engine-taglib';
 import React, {useEffect, useContext} from 'react';
 
-import {getFieldNameFromIndexes} from '../../utils/dataLayoutVisitor.es';
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
-import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
-import {
-	DELETE_DATA_LAYOUT_FIELD,
-	UPDATE_FIELD_TYPES,
-	UPDATE_FOCUSED_FIELD,
-	UPDATE_PAGES
-} from './actions.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
 import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
@@ -37,7 +31,7 @@ export default ({children, dataLayoutBuilder}) => {
 	});
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getProvider();
+		const provider = dataLayoutBuilder.getLayoutProvider();
 
 		provider.props.fieldActions = [
 			{
@@ -47,14 +41,14 @@ export default ({children, dataLayoutBuilder}) => {
 			},
 			{
 				action: indexes => {
-					const fieldName = getFieldNameFromIndexes(
+					const fieldName = DataLayoutVisitor.getFieldNameFromIndexes(
 						dataLayout,
 						indexes
 					);
 
 					dispatch({
 						payload: {fieldName},
-						type: DELETE_DATA_LAYOUT_FIELD
+						type: DataLayoutBuilderActions.DELETE_DATA_LAYOUT_FIELD
 					});
 
 					dataLayoutBuilder.dispatch('fieldDeleted', {indexes});
@@ -64,7 +58,7 @@ export default ({children, dataLayoutBuilder}) => {
 			},
 			{
 				action: indexes => {
-					const fieldName = getFieldNameFromIndexes(
+					const fieldName = DataLayoutVisitor.getFieldNameFromIndexes(
 						dataLayout,
 						indexes
 					);
@@ -78,44 +72,11 @@ export default ({children, dataLayoutBuilder}) => {
 	}, [dataLayout, dataLayoutBuilder, dispatch, onDeleteDefinitionField]);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getProvider();
+		const provider = dataLayoutBuilder.getLayoutProvider();
 
 		provider.props.fieldNameGenerator = desiredFieldName =>
 			generateDataDefinitionFieldName(dataDefinition, desiredFieldName);
 	}, [dataDefinition, dataLayoutBuilder]);
-
-	useEffect(() => {
-		const provider = dataLayoutBuilder.getProvider();
-
-		const eventHandler = provider.on('focusedFieldChanged', ({newVal}) => {
-			provider.once('rendered', () => {
-				dispatch({
-					payload: {focusedField: newVal},
-					type: UPDATE_FOCUSED_FIELD
-				});
-			});
-		});
-
-		return () => eventHandler.removeListener();
-	}, [dataLayoutBuilder, dispatch]);
-
-	useEffect(() => {
-		const provider = dataLayoutBuilder.getProvider();
-
-		const eventHandler = provider.on('pagesChanged', ({newVal}) => {
-			provider.once('rendered', () => {
-				dispatch({payload: {pages: newVal}, type: UPDATE_PAGES});
-			});
-		});
-
-		return () => eventHandler.removeListener();
-	}, [dataLayoutBuilder, dispatch]);
-
-	useEffect(() => {
-		const fieldTypes = dataLayoutBuilder.getFieldTypes();
-
-		dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
-	}, [dataLayoutBuilder, dispatch]);
 
 	return (
 		<DataLayoutBuilderContext.Provider

@@ -18,12 +18,13 @@ import classNames from 'classnames';
 import React, {useState, useEffect} from 'react';
 
 import Button from '../button/Button.es';
-import SearchInput from '../management-toolbar/search/SearchInput.es';
+import SearchInput from '../search-input/SearchInput.es';
 
 const Sidebar = React.forwardRef(
 	(
 		{
 			children,
+			className,
 			closeable = true,
 			closed = false,
 			onSearch = null,
@@ -44,11 +45,15 @@ const Sidebar = React.forwardRef(
 		}, [closed]);
 
 		return (
-			<div ref={ref}>
+			<div className={className} ref={ref}>
 				<div
-					className={classNames('app-builder-sidebar', 'main', {
-						closed: isClosed
-					})}
+					className={classNames(
+						'data-layout-builder-sidebar',
+						'main',
+						{
+							closed: isClosed
+						}
+					)}
 				>
 					<div className="sidebar sidebar-light">
 						{(closeable || onSearch) && (
@@ -67,9 +72,13 @@ const Sidebar = React.forwardRef(
 				</div>
 				{closeable && (
 					<div
-						className={classNames('app-builder-sidebar', 'mini', {
-							closed: !isClosed
-						})}
+						className={classNames(
+							'data-layout-builder-sidebar',
+							'mini',
+							{
+								closed: !isClosed
+							}
+						)}
 					>
 						<Button
 							displayType="secondary"

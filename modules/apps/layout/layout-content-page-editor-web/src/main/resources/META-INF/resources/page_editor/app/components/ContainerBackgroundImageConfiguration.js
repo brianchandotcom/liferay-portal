@@ -39,15 +39,15 @@ export const ContainerBackgroundImageConfiguration = ({
 		dispatch(addMappedInfoItem(image));
 
 	return (
-		<div className="floating-toolbar-layout-background-image-panel">
+		<>
 			<ClayForm.Group small>
-				<label htmlFor="floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect">
+				<label htmlFor="containerBackgroundImage">
 					{Liferay.Language.get('image-source')}
 				</label>
 				<ClaySelectWithOption
 					aria-label={Liferay.Language.get('image-source')}
 					defaultValue={IMAGE_SOURCE.manualSelection}
-					id="floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect"
+					id="containerBackgroundImage"
 					onChange={({target: {value}}) => setImageSource(value)}
 					options={[
 						{
@@ -83,6 +83,6 @@ export const ContainerBackgroundImageConfiguration = ({
 					onItemSelectorChanged={handleBackgroundImageItemChanged}
 				/>
 			)}
-		</div>
+		</>
 	);
 };

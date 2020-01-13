@@ -28,10 +28,7 @@ export default function InfoItemSelectionPanel({
 
 	return (
 		<>
-			<ClayForm.Group
-				className="floating-toolbar-layout-background-image-panel__asset-select"
-				small
-			>
+			<ClayForm.Group small>
 				<label htmlFor="itemSelectorInput">
 					{Liferay.Language.get('content')}
 				</label>
@@ -61,13 +58,13 @@ export default function InfoItemSelectionPanel({
 				</div>
 			</ClayForm.Group>
 			<ClayForm.Group small>
-				<label htmlFor="floatingToolbarLayoutBackgroundImagePanelFieldSelect">
+				<label htmlFor="containerBackgroundImageFieldSelect">
 					{Liferay.Language.get('field')}
 				</label>
 				<ClaySelectWithOption
 					aria-label={Liferay.Language.get('field')}
 					disabled
-					id="floatingToolbarLayoutBackgroundImagePanelFieldSelect"
+					id="containerBackgroundImageFieldSelect"
 					onChange={({target: {value}}) => value}
 					options={[
 						{

@@ -29,11 +29,11 @@ export function ManualSelectionPanel({
 	return (
 		<>
 			<ClayForm.Group small>
-				<label htmlFor="floatingToolbarLayoutBackgroundImagePanelOption">
+				<label htmlFor="containerBackgroundImageTitle">
 					{Liferay.Language.get('image')}
 				</label>
 				<ClayInput
-					id="floatingToolbarLayoutBackgroundImagePanelOption"
+					id="containerBackgroundImageTitle"
 					placeholder={Liferay.Language.get('none')}
 					readOnly
 					sizing="sm"

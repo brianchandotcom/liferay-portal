@@ -117,12 +117,10 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 				(ThemeDisplay)liferayPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(_layout.getPlid());
-
 			if (_layout.getStatus() == WorkflowConstants.STATUS_PENDING) {
 				Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
 					PortalUtil.getClassNameId(Layout.class.getName()),
-					layout.getPlid());
+					_layout.getPlid());
 
 				String previewURL = PortalUtil.getLayoutFriendlyURL(
 					draftLayout, themeDisplay);
@@ -131,7 +129,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 					previewURL, "p_l_back_url", themeDisplay.getURLCurrent());
 			}
 
-			return PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+			return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

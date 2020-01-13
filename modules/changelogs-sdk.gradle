@@ -99,7 +99,9 @@ buildChangelogs {
 				if (Validator.isNotNull(sha)) {
 					String commitMessage = gitLogAttributes["COMMIT-MESSAGE"].trim()
 
-					if (commitMessage ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
+					if (!commitMessage.matches(".*[Pp]rep next.*") &&
+						!commitMessage.matches(".*[Uu]se (\\d+\\.\\d+\\.\\d+|latest).*")) {
+
 						commits = commits + """\
 							|
 							|- [${gitLogAttributes["TICKET-NUMBER"]}]: ${commitMessage} (${sha.substring(0, 10)})""".stripMargin()

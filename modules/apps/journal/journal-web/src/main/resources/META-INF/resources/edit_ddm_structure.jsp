@@ -98,90 +98,98 @@ if (ddmStructure != null) {
 
 	<div class="contextual-sidebar-content">
 		<div class="container-fluid container-fluid-max-xl container-view">
-			<div class="sheet">
-				<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
+			<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 
-				<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
+			<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
 
-					<%
-					DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
-					%>
+				<%
+				DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
+				%>
 
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
+			<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
 
-				<liferay-ui:error exception="<%= DDMFormValidationException.MustNotDuplicateFieldName.class %>">
+			<liferay-ui:error exception="<%= DDMFormValidationException.MustNotDuplicateFieldName.class %>">
 
-					<%
-					DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
-					%>
+				<%
+				DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
+				%>
 
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(mndfn.getFieldName()) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(mndfn.getFieldName()) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
+			<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
 
-				<liferay-ui:error exception="<%= DDMFormValidationException.MustSetOptionsForField.class %>">
+			<liferay-ui:error exception="<%= DDMFormValidationException.MustSetOptionsForField.class %>">
 
-					<%
-					DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
-					%>
+				<%
+				DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
+				%>
 
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(msoff.getFieldName()) %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(msoff.getFieldName()) %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
+			<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
 
-					<%
-					DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
-					%>
+				<%
+				DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
+				%>
 
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
-				</liferay-ui:error>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= LocaleException.class %>">
+			<liferay-ui:error exception="<%= LocaleException.class %>">
 
-					<%
-					LocaleException le = (LocaleException)errorException;
-					%>
+				<%
+				LocaleException le = (LocaleException)errorException;
+				%>
 
-					<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
-						<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
-					</c:if>
-				</liferay-ui:error>
-
-				<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
-				<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
-				<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
-
-				<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
-					<div class="alert alert-warning">
-						<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-					</div>
+				<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
+					<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
 				</c:if>
+			</liferay-ui:error>
 
-				<c:if test="<%= (journalEditDDMStructuresDisplayContext.getDDMStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
-					</div>
-				</c:if>
+			<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
+			<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
+			<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
-				<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
-					<div class="alert alert-warning">
-						<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
-					</div>
-				</c:if>
+			<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
+				<div class="alert alert-warning">
+					<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
+				</div>
+			</c:if>
 
-				<c:choose>
-					<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
-					</c:when>
-					<c:otherwise>
+			<c:if test="<%= (journalEditDDMStructuresDisplayContext.getDDMStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
+				</div>
+			</c:if>
+
+			<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
+				<div class="alert alert-warning">
+					<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
+				</div>
+			</c:if>
+
+			<c:choose>
+				<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
+					<liferay-data-engine:data-layout-builder
+						componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
+						dataDefinitionInputId="dataDefinition"
+						dataLayoutId="<%= 0L %>"
+						dataLayoutInputId="dataLayout"
+						namespace="<%= renderResponse.getNamespace() %>"
+					>
+					</liferay-data-engine:data-layout-builder>
+				</c:when>
+				<c:otherwise>
+					<div class="sheet">
 						<%@ include file="/ddm_form_builder.jspf" %>
-					</c:otherwise>
-				</c:choose>
-			</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </aui:form>

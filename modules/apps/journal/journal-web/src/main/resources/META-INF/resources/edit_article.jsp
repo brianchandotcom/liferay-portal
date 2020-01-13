@@ -244,6 +244,11 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				<div class="article-content-content">
 					<c:choose>
 						<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
+							<liferay-data-engine:data-layout-renderer
+								containerId="reportId"
+								dataLayoutId="<%= 0L %>"
+								namespace="<%= renderResponse.getNamespace() %>"
+							/>
 						</c:when>
 						<c:otherwise>
 							<liferay-ddm:html

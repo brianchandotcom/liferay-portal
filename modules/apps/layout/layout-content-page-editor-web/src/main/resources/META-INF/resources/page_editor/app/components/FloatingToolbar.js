@@ -36,7 +36,7 @@ export default function FloatingToolbar({
 	buttons,
 	item,
 	itemRef,
-	onButtonClick
+	onButtonClick = () => {}
 }) {
 	const isActive = useIsActive();
 	const popoverRef = useRef(null);
@@ -81,9 +81,7 @@ export default function FloatingToolbar({
 							active={button.panelId === activeConfigurationPanel}
 							key={button.panelId}
 							onClick={(id, panelId) => {
-								if (onButtonClick) {
-									onButtonClick(id);
-								}
+								onButtonClick(id);
 
 								if (panelId) {
 									if (activeConfigurationPanel === panelId) {

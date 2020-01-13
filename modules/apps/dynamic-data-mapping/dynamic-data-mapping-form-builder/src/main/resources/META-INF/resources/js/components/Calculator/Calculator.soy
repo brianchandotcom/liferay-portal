@@ -13,6 +13,7 @@
 	{@param? disableNumbers: bool}
 	{@param? disableOperators: bool}
 	{@param? expression: string}
+	{@param? placeholder: string}
 	{@param? repeatableFields: list<?>}
 	{@param? showOnlyRepeatableFields: bool}
 
@@ -101,9 +102,7 @@
 							{param name: 'calculator-expression' /}
 							{param readOnly: true /}
 							{param displayStyle: 'multiline' /}
-							{param placeholder kind="text"}
-								{msg desc=""}the-expression-will-be-displayed-here{/msg}
-							{/param}
+							{param placeholder: $placeholder /}
 							{param showLabel: false /}
 							{param spritemap: $spritemap /}
 							{param value: $expression /}

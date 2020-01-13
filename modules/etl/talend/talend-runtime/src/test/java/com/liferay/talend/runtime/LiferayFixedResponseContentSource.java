@@ -49,11 +49,12 @@ public class LiferayFixedResponseContentSource extends LiferaySource {
 
 		if (!matcher.matches()) {
 			throw new UnsupportedOperationException(
-				"Unable to extract file name from given resource URL");
+				"Unable to extract file name from given resource URL " +
+					resourceURL);
 		}
 
-		String fileName = matcher.group(3);
-		String fileNumber = matcher.group(4);
+		String fileName = matcher.group(2);
+		String fileNumber = matcher.group(3);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -68,7 +69,6 @@ public class LiferayFixedResponseContentSource extends LiferaySource {
 	private BaseTestCase _baseTestCase;
 	private final JsonObject _jsonObject;
 	private Pattern _resourceURLPattern = Pattern.compile(
-		"https?://.+(:\\d+)?/o/.+/v\\d+(.\\d+)*/([^/\\s]+)/.+\\?.*(page=\\d+)" +
-			".*");
+		"/o/.+/v\\d+(.\\d+)*/([^/\\s]+)/.+\\?.*(page=\\d+).*");
 
 }

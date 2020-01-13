@@ -21,6 +21,7 @@ import React, {useContext, useRef, useState} from 'react';
 
 import {getDataDefinitionField} from '../../utils/dataDefinition.es';
 import EditTableViewContext, {
+	REMOVE_FILTER_VALUE,
 	UPDATE_FILTER_VALUE
 } from './EditTableViewContext.es';
 
@@ -47,10 +48,17 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 			newValue = [...values, optionValue];
 		}
 
-		dispatch({
-			payload: {fieldName, value: newValue},
-			type: UPDATE_FILTER_VALUE
-		});
+		if (newValue.length) {
+			dispatch({
+				payload: {fieldName, value: newValue},
+				type: UPDATE_FILTER_VALUE
+			});
+		} else {
+			dispatch({
+				payload: {fieldName},
+				type: REMOVE_FILTER_VALUE
+			});
+		}
 	};
 
 	const alignElementRef = useRef();
@@ -61,11 +69,8 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 
 	const onClickClear = () => {
 		dispatch({
-			payload: {
-				fieldName,
-				value: []
-			},
-			type: UPDATE_FILTER_VALUE
+			payload: {fieldName},
+			type: REMOVE_FILTER_VALUE
 		});
 	};
 

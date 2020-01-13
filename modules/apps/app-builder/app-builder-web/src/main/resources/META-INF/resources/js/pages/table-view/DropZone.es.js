@@ -12,14 +12,16 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {DragTypes} from 'data-engine-taglib';
-import React, {useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useRef, useState, useContext} from 'react';
 import {useDrop} from 'react-dnd';
 
 import Table from '../../components/table/Table.es';
 import ColumnOverlay from './ColumnOverlay.es';
 import DropZonePlaceholder from './DropZonePlaceholder.es';
+import EditTableViewContext from './EditTableViewContext.es';
 
 const generateItems = (columns, rows = 10) => {
 	const items = [];
@@ -62,6 +64,12 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 		}
 	}, [empty]);
 
+	const [
+		{
+			dataListView: {appliedFilters}
+		}
+	] = useContext(EditTableViewContext);
+
 	if (empty) {
 		return (
 			<div className="p-4 sheet">
@@ -88,14 +96,22 @@ const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 			<Table
 				actions={[]}
 				checkable={true}
-				columns={fields.map(({label}) => ({
+				columns={fields.map(({label, name}) => ({
 					key: label,
 					value: (
 						<div className="container p-0">
 							<div className="align-items-center row">
-								<div className="col">
+								<div className="autofit-col-expand col">
 									{label ? label.en_US : ''}
 								</div>
+								{Object.prototype.hasOwnProperty.call(
+									appliedFilters,
+									name
+								) && (
+									<div className="col text-right">
+										<ClayIcon symbol="filter" />
+									</div>
+								)}
 							</div>
 						</div>
 					)

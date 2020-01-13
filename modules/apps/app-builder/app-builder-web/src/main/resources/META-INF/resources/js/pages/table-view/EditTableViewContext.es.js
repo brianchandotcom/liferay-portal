@@ -16,6 +16,7 @@ import {createContext} from 'react';
 
 export const ADD_DATA_LIST_VIEW_FIELD = 'ADD_DATA_LIST_VIEW_FIELD';
 export const REMOVE_DATA_LIST_VIEW_FIELD = 'REMOVE_DATA_LIST_VIEW_FIELD';
+export const REMOVE_FILTER_VALUE = 'REMOVE_FILTER_VALUE';
 export const UPDATE_DATA_DEFINITION = 'UPDATE_DATA_DEFINITION';
 export const UPDATE_DATA_LIST_VIEW = 'UPDATE_DATA_LIST_VIEW';
 export const UPDATE_DATA_LIST_VIEW_NAME = 'UPDATE_DATA_LIST_VIEW_NAME';
@@ -70,6 +71,22 @@ export const reducer = (state = initialState, action) => {
 					fieldNames: dataListView.fieldNames.filter(
 						name => name != fieldName
 					)
+				},
+				focusedColumn: null
+			};
+		}
+		case REMOVE_FILTER_VALUE: {
+			const {fieldName} = action.payload;
+			const {dataListView} = state;
+			const appliedFilters = {...dataListView.appliedFilters};
+
+			delete appliedFilters[fieldName];
+
+			return {
+				...state,
+				dataListView: {
+					...dataListView,
+					appliedFilters
 				}
 			};
 		}

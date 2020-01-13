@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -440,10 +439,7 @@ public class JournalArticleAssetRenderer
 		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 		sb.append(_article.getUrlTitle(themeDisplay.getLocale()));
 
-		String portletId = (String)liferayPortletRequest.getAttribute(
-			WebKeys.PORTLET_ID);
-
-		if (portletId.startsWith(PortletKeys.MY_WORKFLOW_TASK)) {
+		if (!_article.isApproved()) {
 			sb.append(StringPool.SLASH);
 			sb.append(_article.getVersion());
 		}

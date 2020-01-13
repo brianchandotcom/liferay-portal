@@ -64,6 +64,8 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 			uploadPortletRequest, "assertionSignatureRequired");
 		long clockSkew = ParamUtil.getLong(uploadPortletRequest, "clockSkew");
 		boolean enabled = ParamUtil.getBoolean(uploadPortletRequest, "enabled");
+		boolean unknownUsersAreStrangers = ParamUtil.getBoolean(
+			uploadPortletRequest, "unknownUsersAreStrangers");
 		boolean forceAuthn = ParamUtil.getBoolean(
 			uploadPortletRequest, "forceAuthn");
 		boolean ldapImportEnabled = ParamUtil.getBoolean(
@@ -86,17 +88,17 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 		if (samlSpIdpConnectionId <= 0) {
 			_samlSpIdpConnectionLocalService.addSamlSpIdpConnection(
 				samlIdpEntityId, assertionSignatureRequired, clockSkew, enabled,
-				forceAuthn, ldapImportEnabled, metadataUrl,
-				metadataXmlInputStream, name, nameIdFormat, signAuthnRequest,
-				userAttributeMappings, serviceContext);
+				forceAuthn, ldapImportEnabled, unknownUsersAreStrangers,
+				metadataUrl, metadataXmlInputStream, name, nameIdFormat,
+				signAuthnRequest, userAttributeMappings, serviceContext);
 		}
 		else {
 			_samlSpIdpConnectionLocalService.updateSamlSpIdpConnection(
 				samlSpIdpConnectionId, samlIdpEntityId,
 				assertionSignatureRequired, clockSkew, enabled, forceAuthn,
-				ldapImportEnabled, metadataUrl, metadataXmlInputStream, name,
-				nameIdFormat, signAuthnRequest, userAttributeMappings,
-				serviceContext);
+				ldapImportEnabled, unknownUsersAreStrangers, metadataUrl,
+				metadataXmlInputStream, name, nameIdFormat, signAuthnRequest,
+				userAttributeMappings, serviceContext);
 		}
 	}
 

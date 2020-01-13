@@ -90,7 +90,7 @@ networks:
 				replace="network \&quot;${analytics.cloud.project.name}_default\&quot;"
 			/>
 
-			<echo file="${analytics.cloud.asah.dir}/local.env">OSB_ASAH_PUBLISHER_URL=http://osbasahpublisher:8080</echo>
+			<echo file="${analytics.cloud.asah.dir}/local.env">OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}</echo>
 
 			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />

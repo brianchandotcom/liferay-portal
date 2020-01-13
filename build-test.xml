@@ -12136,7 +12136,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							./gradlew cleanNPM npmInstall
 
 							./gradlew \
-								-Danalytics.cloud.url=http://${analytics.cloud.faro.container.name}:8080 \
+								-Danalytics.cloud.url=${analytics.cloud.faro.frontend.url} \
 								-Dbrowser.chrome.bin.args=${browser.chrome.bin.args} \
 								-Dbrowser.chrome.bin.file=${browser.chrome.bin.file} \
 								-Dbrowser.type=chrome \

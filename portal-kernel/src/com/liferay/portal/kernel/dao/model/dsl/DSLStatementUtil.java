@@ -14,16 +14,9 @@
 
 package com.liferay.portal.kernel.dao.model.dsl;
 
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeListener;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Expression;
 import com.liferay.portal.kernel.dao.model.dsl.query.AggregateExpression;
-import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 import com.liferay.portal.kernel.dao.model.dsl.query.Select;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
-import com.liferay.portal.kernel.dao.orm.Session;
-
-import java.util.List;
 
 /**
  * @author Preston Crary
@@ -37,29 +30,6 @@ public class DSLStatementUtil {
 	public static Select countDistinct(Expression<?> expression) {
 		return new Select(
 			false, new AggregateExpression<>(true, expression, "count"));
-	}
-
-	public static SQLQuery createSynchronizedSQLQuery(
-		Session session, Query query) {
-
-		DefaultASTNodeListener defaultASTNodeListener =
-			new DefaultASTNodeListener();
-
-		SQLQuery q = session.createSynchronizedSQLQuery(
-			query.toSQL(defaultASTNodeListener), true,
-			defaultASTNodeListener.getTableNames());
-
-		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
-
-		if (!scalarValues.isEmpty()) {
-			QueryPos queryPos = QueryPos.getInstance(q);
-
-			for (Object value : scalarValues) {
-				queryPos.add(value);
-			}
-		}
-
-		return q;
 	}
 
 	public static Select select(Expression<?>... expressions) {

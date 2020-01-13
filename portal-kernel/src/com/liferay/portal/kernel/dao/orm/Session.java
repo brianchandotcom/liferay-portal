@@ -43,6 +43,10 @@ public interface Session {
 	public SQLQuery createSQLQuery(String queryString, boolean strictName)
 		throws ORMException;
 
+	public SQLQuery createSynchronizedSQLQuery(
+			com.liferay.portal.kernel.dao.model.dsl.query.Query query)
+		throws ORMException;
+
 	public SQLQuery createSynchronizedSQLQuery(String queryString)
 		throws ORMException;
 

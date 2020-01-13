@@ -176,6 +176,29 @@ public class ClassLoaderSession implements Session {
 	}
 
 	@Override
+	public SQLQuery createSynchronizedSQLQuery(
+			com.liferay.portal.kernel.dao.model.dsl.query.Query query)
+		throws ORMException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(_classLoader);
+			}
+
+			return _session.createSynchronizedSQLQuery(query);
+		}
+		finally {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	@Override
 	public SQLQuery createSynchronizedSQLQuery(String queryString)
 		throws ORMException {
 

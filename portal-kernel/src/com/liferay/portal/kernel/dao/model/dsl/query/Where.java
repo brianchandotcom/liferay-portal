@@ -34,7 +34,7 @@ public class Where
 	}
 
 	@Override
-	public void doToSQL(
+	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
 		consumer.accept("where ");

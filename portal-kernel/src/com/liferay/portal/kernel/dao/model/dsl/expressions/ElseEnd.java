@@ -32,7 +32,7 @@ public class ElseEnd<T> extends BaseASTNode implements Expression<T> {
 	}
 
 	@Override
-	public void doToSQL(
+	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
 		consumer.accept("else ");

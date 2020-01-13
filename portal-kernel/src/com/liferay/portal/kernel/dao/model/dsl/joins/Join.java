@@ -43,7 +43,7 @@ public class Join
 	}
 
 	@Override
-	public void doToSQL(
+	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
 		consumer.accept(String.valueOf(_joinType));

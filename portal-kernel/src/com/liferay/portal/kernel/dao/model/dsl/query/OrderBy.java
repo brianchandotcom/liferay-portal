@@ -37,7 +37,7 @@ public class OrderBy extends BaseASTNode implements LimitStep, Query {
 	}
 
 	@Override
-	public void doToSQL(
+	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
 		consumer.accept("order by ");

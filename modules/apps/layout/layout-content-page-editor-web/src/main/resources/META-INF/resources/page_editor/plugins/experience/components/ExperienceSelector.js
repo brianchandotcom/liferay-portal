@@ -256,7 +256,9 @@ const ExperienceSelector = ({
 	};
 
 	const deleteExperience = id => {
-		removeExperience(id)
+		// TODO find fragment entry links that are unique to the layoutData associated to the experience to remove
+		const fragmentEntryLinks = [];
+		removeExperience(id, fragmentEntryLinks)
 			.then(() =>
 				dispatch({
 					payload: {

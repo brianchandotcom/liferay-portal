@@ -1,3 +1,11 @@
+import {
+	selectExperience,
+	deleteExperienceById,
+	removeLayoutDataItemById,
+	switchLayoutData,
+	setExperienceLock
+} from './utils';
+
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -16,23 +24,22 @@ function deleteExperienceReducer(state, payload) {
 	let nextState = state;
 	const {defaultExperienceId, segmentsExperienceId} = payload;
 
-	const availableSegmentsExperiences = {
-		...nextState.availableSegmentsExperiences
-	};
-
-	delete availableSegmentsExperiences[segmentsExperienceId];
-
-	nextState = {
-		...nextState,
-		availableSegmentsExperiences
-	};
-
 	if (nextState.segmentsExperienceId === segmentsExperienceId) {
-		nextState = {
-			...nextState,
-			segmentsExperienceId: defaultExperienceId
-		};
+		nextState = selectExperience(nextState, defaultExperienceId);
+		nextState = setExperienceLock(
+			nextState,
+			nextState.availableSegmentsExperiences[defaultExperienceId]
+		);
+		nextState = switchLayoutData(nextState, {
+			currentExperienceId: segmentsExperienceId,
+			targetExperienceId: defaultExperienceId
+		});
 	}
+
+	nextState = removeLayoutDataItemById(nextState, segmentsExperienceId);
+	nextState = deleteExperienceById(nextState, segmentsExperienceId);
+
+	// TODO setWidgets
 
 	return nextState;
 }

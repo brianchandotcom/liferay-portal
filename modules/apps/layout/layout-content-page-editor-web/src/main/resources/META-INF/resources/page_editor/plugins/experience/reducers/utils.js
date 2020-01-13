@@ -143,8 +143,35 @@ function updateFragmentEntryLinksEditableValues(
 	};
 }
 
+function deleteExperienceById(state, segmentsExperienceId) {
+	const experiences = state.availableSegmentsExperiences;
+
+	delete experiences[segmentsExperienceId];
+
+	return {
+		...state,
+		availableSegmentsExperiences: experiences
+	};
+}
+
+function removeLayoutDataItemById(state, segmentsExperienceId) {
+	const layoutDataList = state.layoutDataList;
+
+	const updatedLayoutDataList = layoutDataList.filter(
+		layoutDataItem =>
+			layoutDataItem.segmentsExperienceId !== segmentsExperienceId
+	);
+
+	return {
+		...state,
+		layoutDataList: updatedLayoutDataList
+	};
+}
+
 export {
 	addExperience,
+	deleteExperienceById,
+	removeLayoutDataItemById,
 	selectExperience,
 	setExperienceLock,
 	storeNewLayoutData,

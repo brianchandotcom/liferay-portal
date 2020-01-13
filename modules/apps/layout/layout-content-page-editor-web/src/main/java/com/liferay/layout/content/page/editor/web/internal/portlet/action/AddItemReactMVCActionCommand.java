@@ -99,8 +99,8 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject = addItemToLayoutData(actionRequest);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
 			}
 
 			String errorMessage = "an-unexpected-error-occurred";

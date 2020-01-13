@@ -106,8 +106,8 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 			);
 		}
 		catch (Throwable t) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(t, t);
+			if (_log.isDebugEnabled()) {
+				_log.debug(t, t);
 			}
 
 			_handleException(themeDisplay, t, jsonObject);
@@ -271,8 +271,8 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 				image.getType(), bytes, serviceContext);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
 			}
 
 			throw new StorageFieldValueException(

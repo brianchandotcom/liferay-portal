@@ -174,12 +174,14 @@ if (analyticsConfiguration != null) {
 	}
 
 	function <portlet:namespace />validateTokenButton() {
-		const input = document.getElementById("<portlet:namespace />token");
-		const button = document.getElementById("<portlet:namespace />tokenButton");
+		var token = document.getElementById('<portlet:namespace />token');
+		var tokenButton = document.getElementById(
+			'<portlet:namespace />tokenButton'
+		);
 
-		const value = input.value;
+		var value = token.value;
 
-		button.disabled = value.length === 0;
+		tokenButton.disabled = value.length === 0;
 	}
 
 	<portlet:namespace />validateTokenButton();

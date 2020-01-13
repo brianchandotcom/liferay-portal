@@ -16,8 +16,7 @@ package com.liferay.talend.runtime;
 
 import com.liferay.talend.properties.batch.LiferayBatchFileProperties;
 import com.liferay.talend.properties.batch.LiferayBatchOutputProperties;
-import com.liferay.talend.properties.connection.LiferayConnectionProperties;
-import com.liferay.talend.runtime.client.RESTClient;
+import com.liferay.talend.runtime.client.LiferayClient;
 import com.liferay.talend.runtime.reader.LiferayBatchFileReader;
 import com.liferay.talend.tliferaybatchfile.TLiferayBatchFileDefinition;
 
@@ -25,7 +24,6 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.apache.avro.Schema;
 
@@ -35,13 +33,13 @@ import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.components.api.properties.ComponentReferenceProperties;
 import org.talend.daikon.NamedThing;
-import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
 
 /**
  * @author Igor Beslic
  */
-public class LiferayBatchOutputSink implements Source {
+public class LiferayBatchOutputSink
+	extends LiferaySourceOrSink implements Source {
 
 	@Override
 	public Reader createReader(RuntimeContainer container) {
@@ -69,7 +67,7 @@ public class LiferayBatchOutputSink implements Source {
 		RuntimeContainer runtimeContainer,
 		ComponentProperties componentProperties) {
 
-		Objects.requireNonNull(componentProperties);
+		super.initialize(runtimeContainer, componentProperties);
 
 		ValidationResult validationResult = _initializeBatchFile(
 			componentProperties);
@@ -78,42 +76,13 @@ public class LiferayBatchOutputSink implements Source {
 			return validationResult;
 		}
 
-		LiferayConnectionProperties liferayConnectionProperties = null;
-
-		if (componentProperties instanceof LiferayConnectionProperties) {
-			liferayConnectionProperties =
-				(LiferayConnectionProperties)componentProperties;
-		}
-		else {
-			Properties properties = componentProperties.getProperties(
-				"connection");
-
-			if (properties instanceof LiferayConnectionProperties) {
-				liferayConnectionProperties =
-					(LiferayConnectionProperties)properties;
-			}
-		}
-
-		if (liferayConnectionProperties == null) {
-			return new ValidationResult(
-				ValidationResult.Result.ERROR,
-				"Unable to locate connection properties");
-		}
-
-		liferayConnectionProperties =
-			liferayConnectionProperties.
-				getEffectiveLiferayConnectionProperties();
-
-		_restClient = new RESTClient(
-			liferayConnectionProperties,
-			_getBatchOutputURL(
-				liferayConnectionProperties.getApplicationBaseHref()));
-
 		return ValidationResult.OK;
 	}
 
 	public void submit(File batchFile) {
-		_restClient.executePostRequest(batchFile);
+		LiferayClient liferayClient = getLiferayClient();
+
+		liferayClient.executePostRequest(_getBatchOutputURL(), batchFile);
 	}
 
 	@Override
@@ -121,15 +90,13 @@ public class LiferayBatchOutputSink implements Source {
 		return ValidationResult.OK;
 	}
 
-	private String _getBatchOutputURL(String base) {
+	private String _getBatchOutputURL() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(base);
-		sb.append("/");
+		sb.append("/o/headless-batch-engine/v1.0/");
 		sb.append(_entityClass);
 		sb.append("/");
 		sb.append(_entityVersion);
-		sb.append("/");
 
 		return sb.toString();
 	}
@@ -174,6 +141,5 @@ public class LiferayBatchOutputSink implements Source {
 	private transient String _batchFilePath;
 	private transient String _entityClass;
 	private transient String _entityVersion;
-	private RESTClient _restClient;
 
 }

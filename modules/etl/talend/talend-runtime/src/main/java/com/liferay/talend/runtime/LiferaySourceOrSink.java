@@ -17,8 +17,7 @@ package com.liferay.talend.runtime;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.properties.connection.LiferayConnectionProperties;
-import com.liferay.talend.properties.resource.LiferayResourceProperties;
-import com.liferay.talend.runtime.client.RESTClient;
+import com.liferay.talend.runtime.client.LiferayClient;
 import com.liferay.talend.runtime.client.ResponseHandler;
 import com.liferay.talend.runtime.client.exception.ResponseContentClientException;
 
@@ -55,31 +54,33 @@ import org.talend.daikon.properties.ValidationResult;
 public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 
 	public JsonObject doDeleteRequest(String resourceURL) {
-		RESTClient restClient = getRestClient(resourceURL);
+		LiferayClient liferayClient = getLiferayClient();
 
-		return _getResponseContentJsonObject(restClient.executeDeleteRequest());
+		return _getResponseContentJsonObject(
+			liferayClient.executeDeleteRequest(resourceURL));
 	}
 
 	public JsonObject doGetRequest(String resourceURL) {
-		RESTClient restClient = getRestClient(resourceURL);
+		LiferayClient liferayClient = getLiferayClient();
 
-		return _getResponseContentJsonObject(restClient.executeGetRequest());
+		return _getResponseContentJsonObject(
+			liferayClient.executeGetRequest(resourceURL));
 	}
 
 	public JsonObject doPatchRequest(
 		String resourceURL, JsonObject jsonObject) {
 
-		RESTClient restClient = getRestClient(resourceURL);
+		LiferayClient liferayClient = getLiferayClient();
 
 		return _getResponseContentJsonObject(
-			restClient.executePatchRequest(jsonObject));
+			liferayClient.executePatchRequest(resourceURL, jsonObject));
 	}
 
 	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject) {
-		RESTClient restClient = getRestClient(resourceURL);
+		LiferayClient liferayClient = getLiferayClient();
 
 		return _responseHandler.asJsonObject(
-			restClient.executePostRequest(jsonObject));
+			liferayClient.executePostRequest(resourceURL, jsonObject));
 	}
 
 	@Override
@@ -87,6 +88,46 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		RuntimeContainer runtimeContainer, String endpoint) {
 
 		return null;
+	}
+
+	public LiferayClient getLiferayClient() {
+		if (_liferayClient != null) {
+			return _liferayClient;
+		}
+
+		LiferayClient.Builder liferayClientBuilder =
+			new LiferayClient.Builder();
+
+		liferayClientBuilder.setConnectionTimeoutMills(
+			_liferayConnectionProperties.getConnectTimeout() * 1000);
+
+		if (_liferayConnectionProperties.isOAuth2Authorization()) {
+			liferayClientBuilder.setAuthorizationIdentityId(
+				_liferayConnectionProperties.getOAuthClientId());
+			liferayClientBuilder.setAuthorizationIdentitySecret(
+				_liferayConnectionProperties.getOAuthClientSecret());
+		}
+		else {
+			liferayClientBuilder.setAuthorizationIdentityId(
+				_liferayConnectionProperties.getUserId());
+			liferayClientBuilder.setAuthorizationIdentitySecret(
+				_liferayConnectionProperties.getPassword());
+		}
+
+		liferayClientBuilder.setFollowRedirects(
+			_liferayConnectionProperties.isFollowRedirects());
+		liferayClientBuilder.setForceHttps(
+			_liferayConnectionProperties.isForceHttps());
+		liferayClientBuilder.setHostURL(
+			_liferayConnectionProperties.getHostURL());
+		liferayClientBuilder.setOAuthAuthorization(
+			_liferayConnectionProperties.isOAuth2Authorization());
+		liferayClientBuilder.setRadTimeoutMills(
+			_liferayConnectionProperties.getReadTimeout() * 1000);
+
+		_liferayClient = liferayClientBuilder.build();
+
+		return _liferayClient;
 	}
 
 	/**
@@ -103,24 +144,6 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 	@Override
 	public JsonObject getOASJsonObject(String oasUrl) {
 		return doGetRequest(oasUrl);
-	}
-
-	public RESTClient getRestClient(String resourceURL) {
-		if ((resourceURL == null) || resourceURL.isEmpty()) {
-			if (restClient != null) {
-				return restClient;
-			}
-
-			restClient = new RESTClient(_liferayConnectionProperties);
-
-			return restClient;
-		}
-
-		if ((restClient != null) && restClient.matches(resourceURL)) {
-			return restClient;
-		}
-
-		return new RESTClient(_liferayConnectionProperties, resourceURL);
 	}
 
 	@Override
@@ -176,7 +199,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 				getEffectiveLiferayConnectionProperties();
 
 		try {
-			getRestClient(_getTarget(componentProperties));
+			getLiferayClient();
 
 			return ValidationResult.OK;
 		}
@@ -217,7 +240,9 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 
 	public ValidationResult validateConnection() {
 		try {
-			doGetRequest(null);
+			LiferayClient liferayClient = getLiferayClient();
+
+			liferayClient.executeGetRequest("/");
 
 			return new ValidationResult(
 				ValidationResult.Result.OK,
@@ -266,8 +291,6 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 			LiferaySourceOrSink.class);
 	}
 
-	protected RESTClient restClient;
-
 	private JsonObject _getResponseContentJsonObject(Response response) {
 		if (!_responseHandler.isSuccess(response)) {
 			throw new ResponseContentClientException(
@@ -288,22 +311,12 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		return _responseHandler.asJsonObject(response);
 	}
 
-	private String _getTarget(ComponentProperties componentProperties) {
-		if (!(componentProperties instanceof LiferayResourceProperties)) {
-			return null;
-		}
-
-		LiferayResourceProperties liferayResourceProperties =
-			(LiferayResourceProperties)componentProperties;
-
-		return liferayResourceProperties.getOpenAPIUrl();
-	}
-
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferaySourceOrSink.class);
 
 	private static final long serialVersionUID = 3109815759807236523L;
 
+	private transient LiferayClient _liferayClient;
 	private transient LiferayConnectionProperties _liferayConnectionProperties;
 	private final ResponseHandler _responseHandler = new ResponseHandler();
 

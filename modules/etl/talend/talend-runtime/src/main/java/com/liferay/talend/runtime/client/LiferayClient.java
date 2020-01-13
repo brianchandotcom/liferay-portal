@@ -1,0 +1,454 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.talend.runtime.client;
+
+import com.liferay.talend.common.util.StringUtil;
+import com.liferay.talend.runtime.client.exception.ClientException;
+import com.liferay.talend.runtime.client.exception.ConnectionClientException;
+import com.liferay.talend.runtime.client.exception.OAuth2AuthorizationClientException;
+import com.liferay.talend.runtime.client.exception.RemoteExecutionClientException;
+
+import java.io.File;
+import java.io.StringWriter;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.util.Base64;
+import java.util.List;
+import java.util.Objects;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonWriter;
+
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.HttpUrlConnectorProvider;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @author Igor Beslic
+ */
+public class LiferayClient {
+
+	public Response executeDeleteRequest(String targetUri)
+		throws ClientException {
+
+		return _execute(HttpMethod.DELETE, _createBuilder(_toURI(targetUri)));
+	}
+
+	public Response executeGetRequest(String targetUri) throws ClientException {
+		return _execute(HttpMethod.GET, _createBuilder(_toURI(targetUri)));
+	}
+
+	public Response executePatchRequest(String targetUri, JsonObject jsonObject)
+		throws ClientException {
+
+		return _execute(
+			HttpMethod.PATCH, _createBuilder(_toURI(targetUri)),
+			Entity.json(_jsonObjectToPrettyString(jsonObject)));
+	}
+
+	public Response executePostRequest(String targetUri, File file)
+		throws ClientException {
+
+		FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+
+		formDataMultiPart.bodyPart(
+			new FileDataBodyPart(
+				"file", file, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+
+		return _execute(
+			HttpMethod.POST, _createBuilder(_toURI(targetUri)),
+			Entity.entity(
+				formDataMultiPart, MediaType.MULTIPART_FORM_DATA_TYPE));
+	}
+
+	public Response executePostRequest(String targetUri, JsonObject jsonObject)
+		throws ClientException {
+
+		return _execute(
+			HttpMethod.POST, _createBuilder(_toURI(targetUri)),
+			Entity.json(_jsonObjectToPrettyString(jsonObject)));
+	}
+
+	public Response executePutRequest(String targetUri, JsonObject jsonObject)
+		throws ClientException {
+
+		return _execute(
+			HttpMethod.PUT, _createBuilder(_toURI(targetUri)),
+			Entity.json(_jsonObjectToPrettyString(jsonObject)));
+	}
+
+	public static class Builder {
+
+		public LiferayClient build() {
+			if (StringUtil.isEmpty(_authorizationIdentityId) ||
+				StringUtil.isEmpty(_authorizationIdentitySecret)) {
+
+				throw new ClientException(
+					"Authorization credentials identity ID and identity " +
+						"secret missing");
+			}
+
+			return new LiferayClient(this);
+		}
+
+		public Builder setAuthorizationIdentityId(
+			String authorizationIdentityId) {
+
+			_authorizationIdentityId = authorizationIdentityId;
+
+			return this;
+		}
+
+		public Builder setAuthorizationIdentitySecret(
+			String authorizationIdentitySecret) {
+
+			_authorizationIdentitySecret = authorizationIdentitySecret;
+
+			return this;
+		}
+
+		public Builder setConnectionTimeoutMills(int connectionTimeoutMills) {
+			_connectionTimeoutMills = connectionTimeoutMills;
+
+			return this;
+		}
+
+		public Builder setFollowRedirects(boolean followRedirects) {
+			_followRedirects = followRedirects;
+
+			return this;
+		}
+
+		public Builder setForceHttps(boolean forceHttps) {
+			_forceHttps = forceHttps;
+
+			return this;
+		}
+
+		public Builder setHostURL(String hostURL) {
+			_hostURL = hostURL;
+
+			return this;
+		}
+
+		public Builder setOAuthAuthorization(boolean oAuthAuthorization) {
+			_oAuthAuthorization = oAuthAuthorization;
+
+			return this;
+		}
+
+		public Builder setRadTimeoutMills(int readTimeoutMills) {
+			_readTimeoutMills = readTimeoutMills;
+
+			return this;
+		}
+
+		private String _authorizationIdentityId;
+		private String _authorizationIdentitySecret;
+		private int _connectionTimeoutMills;
+		private boolean _followRedirects;
+		private boolean _forceHttps;
+		private String _hostURL;
+		private boolean _oAuthAuthorization;
+		private int _readTimeoutMills;
+
+	}
+
+	private LiferayClient(Builder builder) {
+		_authorizationIdentityId = builder._authorizationIdentityId;
+		_authorizationIdentitySecret = builder._authorizationIdentitySecret;
+		_forceHttps = builder._forceHttps;
+		_followRedirects = builder._followRedirects;
+
+		_hostURL = _toRequiredHttpScheme(builder._hostURL);
+
+		_readTimeoutMills = builder._readTimeoutMills;
+		_connectionTimeoutMills = builder._connectionTimeoutMills;
+		_oAuthAuthorization = builder._oAuthAuthorization;
+
+		_client = ClientBuilder.newClient(_getClientConfig());
+
+		_client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
+
+		_client.register(MultiPartFeature.class);
+
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Created new Liferay Client for {}", _hostURL);
+		}
+	}
+
+	private Invocation.Builder _createBuilder(URI targetURI)
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
+
+		WebTarget webTarget = _client.target(targetURI);
+
+		if (_logger.isDebugEnabled()) {
+			_logger.debug("Target: {}", targetURI);
+		}
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
+
+		builder.header("Authorization", _getAuthorizationHeader());
+
+		return builder;
+	}
+
+	private Response _execute(String httpMethod, Invocation.Builder builder) {
+		return _execute(httpMethod, builder, null);
+	}
+
+	private Response _execute(
+			String httpMethod, Invocation.Builder builder, Entity<?> entity)
+		throws ConnectionClientException {
+
+		Response response = _processRedirects(
+			builder.method(httpMethod, entity));
+
+		if (_responseHandler.isSuccess(response)) {
+			return response;
+		}
+
+		String responseBody = "No response body available";
+
+		if (response.hasEntity()) {
+			responseBody = _responseHandler.asText(response);
+		}
+
+		throw new RemoteExecutionClientException(
+			String.format(
+				"Request failed with HTTP status %d and response %s",
+				response.getStatus(), responseBody),
+			response.getStatus());
+	}
+
+	private Response _executeAccessTokenPostRequest()
+		throws ConnectionClientException {
+
+		WebTarget webTarget = _client.target(
+			_hostURL + _LIFERAY_OAUTH2_ACCESS_TOKEN_ENDPOINT);
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
+
+		XWWWFormURLEncoder xWWWFormURLEncoder = new XWWWFormURLEncoder();
+
+		Entity<Form> entity = Entity.form(
+			xWWWFormURLEncoder.toForm(
+				"client_id", _authorizationIdentityId, "client_secret",
+				_authorizationIdentitySecret, "grant_type",
+				"client_credentials", "response_type", "code"));
+
+		return _execute(HttpMethod.POST, builder, entity);
+	}
+
+	private String _getAuthorizationHeader()
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
+
+		if (_oAuthAuthorization) {
+			return "Bearer " + _getBearerToken();
+		}
+
+		return "Basic " + _getBasicToken();
+	}
+
+	private String _getBasicToken() {
+		Base64.Encoder base64Encoder = Base64.getEncoder();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_authorizationIdentityId);
+		sb.append(":");
+		sb.append(_authorizationIdentitySecret);
+
+		String base64Seed = sb.toString();
+
+		return new String(base64Encoder.encode(base64Seed.getBytes()));
+	}
+
+	private String _getBearerToken()
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
+
+		JsonObject authorizationJsonObject = _requestAuthorizationJsonObject();
+
+		String tokenType = authorizationJsonObject.getString("token_type");
+
+		if (!Objects.equals(tokenType, "Bearer")) {
+			throw new OAuth2AuthorizationClientException(
+				"Unexpected token type received " + tokenType);
+		}
+
+		return authorizationJsonObject.getString("access_token");
+	}
+
+	private ClientConfig _getClientConfig() {
+		ClientConfig clientConfig = new ClientConfig();
+
+		clientConfig = clientConfig.property(
+			ClientProperties.CONNECT_TIMEOUT, _connectionTimeoutMills);
+
+		clientConfig = clientConfig.property(
+			ClientProperties.READ_TIMEOUT, _readTimeoutMills);
+
+		return clientConfig;
+	}
+
+	private String _jsonObjectToPrettyString(JsonObject jsonObject) {
+		StringWriter stringWriter = new StringWriter();
+
+		JsonWriter jsonWriter = Json.createWriter(stringWriter);
+
+		jsonWriter.writeObject(jsonObject);
+
+		stringWriter.flush();
+
+		return stringWriter.toString();
+	}
+
+	private Response _processRedirects(Response response)
+		throws ConnectionClientException {
+
+		if (!_followRedirects) {
+			return response;
+		}
+
+		int count = 0;
+		Response currentResponse = response;
+
+		while (_responseHandler.isRedirect(currentResponse) && (count < 3)) {
+			String location = currentResponse.getHeaderString(
+				HttpHeaders.LOCATION);
+
+			if (StringUtil.isEmpty(location)) {
+				return currentResponse;
+			}
+
+			if (_logger.isDebugEnabled()) {
+				_logger.debug("Redirect {}# to {}", count, location);
+			}
+
+			currentResponse.close();
+
+			try {
+				Invocation.Builder builder = _createBuilder(new URI(location));
+
+				currentResponse = builder.get();
+			}
+			catch (URISyntaxException urise) {
+				throw new ConnectionClientException(
+					"Unable to redirect to location " + location,
+					response.getStatus(), urise);
+			}
+		}
+
+		return currentResponse;
+	}
+
+	private JsonObject _requestAuthorizationJsonObject()
+		throws ConnectionClientException, OAuth2AuthorizationClientException {
+
+		Response response = _executeAccessTokenPostRequest();
+
+		if (response == null) {
+			throw new OAuth2AuthorizationClientException(
+				"Authorization request failed for unresponsive OAuth 2.0 " +
+					"endpoint");
+		}
+
+		if (response.getStatus() != 200) {
+			throw new OAuth2AuthorizationClientException(
+				String.format(
+					"OAuth 2.0 check failed with response status {%s}",
+					response.getStatus()),
+				response.getStatus());
+		}
+
+		if (_responseHandler.isApplicationJsonContentType(response)) {
+			return _responseHandler.asJsonObject(response);
+		}
+
+		List<String> contentTypeValues = _responseHandler.getContentType(
+			response);
+
+		throw new OAuth2AuthorizationClientException(
+			String.format(
+				"Unable to extract OAuth 2.0 credentials from response " +
+					"content type {%s}",
+				contentTypeValues.get(0)),
+			response.getStatus());
+	}
+
+	private String _toRequiredHttpScheme(String targetUrl) {
+		if (_forceHttps && !targetUrl.startsWith(_HTTPS)) {
+			return targetUrl.replace(_HTTP, _HTTPS);
+		}
+
+		return targetUrl;
+	}
+
+	private URI _toURI(String targetUri) {
+		try {
+			return new URI(_hostURL + targetUri);
+		}
+		catch (URISyntaxException urise) {
+			_logger.error(
+				"Unable to parse {} as a URI reference", _hostURL + targetUri);
+		}
+
+		return null;
+	}
+
+	private static final String _HTTP = "http://";
+
+	private static final String _HTTPS = "https://";
+
+	private static final String _LIFERAY_OAUTH2_ACCESS_TOKEN_ENDPOINT =
+		"/o/oauth2/token";
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		LiferayClient.class);
+
+	private final String _authorizationIdentityId;
+	private final String _authorizationIdentitySecret;
+	private final Client _client;
+	private final int _connectionTimeoutMills;
+	private final boolean _followRedirects;
+	private final boolean _forceHttps;
+	private final String _hostURL;
+	private final boolean _oAuthAuthorization;
+	private final int _readTimeoutMills;
+	private final ResponseHandler _responseHandler = new ResponseHandler();
+
+}

@@ -124,7 +124,7 @@ const SettingsSidebarBody = () => {
 		} else {
 			const {pages, rules} = filteredSettingsContext;
 
-			form.setState({pages, rules}, () => {
+			form.setState({activePage: 0, pages, rules}, () => {
 				let evaluableForm = false;
 				const visitor = new PagesVisitor(pages);
 

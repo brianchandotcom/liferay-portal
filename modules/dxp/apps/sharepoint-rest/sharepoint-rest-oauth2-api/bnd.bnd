@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sharepoint REST OAuth 2 API
 Bundle-SymbolicName: com.liferay.sharepoint.rest.oauth2.api
-Bundle-Version: 4.0.1
+Bundle-Version: 4.1.0
 Export-Package:\
 	com.liferay.sharepoint.rest.oauth2.exception,\
 	com.liferay.sharepoint.rest.oauth2.model,\

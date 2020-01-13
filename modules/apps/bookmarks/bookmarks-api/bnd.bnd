@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Bookmarks API
 Bundle-SymbolicName: com.liferay.bookmarks.api
-Bundle-Version: 5.0.3
+Bundle-Version: 5.1.0
 Export-Package:\
 	com.liferay.bookmarks.configuration,\
 	com.liferay.bookmarks.configuration.definition,\

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security WeDeploy Auth API
 Bundle-SymbolicName: com.liferay.portal.security.wedeploy.auth.api
-Bundle-Version: 4.0.2
+Bundle-Version: 4.1.0
 Export-Package:\
 	com.liferay.portal.security.wedeploy.auth.configuration,\
 	com.liferay.portal.security.wedeploy.auth.constants,\

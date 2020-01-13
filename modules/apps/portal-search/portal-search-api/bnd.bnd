@@ -36,6 +36,7 @@ Export-Package:\
 	com.liferay.portal.search.legacy.searcher,\
 	com.liferay.portal.search.legacy.stats,\
 	com.liferay.portal.search.localization,\
+	com.liferay.portal.search.model.uid,\
 	com.liferay.portal.search.permission,\
 	com.liferay.portal.search.query,\
 	com.liferay.portal.search.query.field,\

@@ -58,58 +58,56 @@ public class EditLayoutControlMenuDisplayContext {
 	}
 
 	public List<DropdownItem> getDropdownItems() throws Exception {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_themeDisplay.getLocale(), getClass());
-
 		return new DropdownItemList() {
 			{
-				Layout layout = _themeDisplay.getLayout();
-
-				if (layout.getClassNameId() == PortalUtil.getClassNameId(
-						Layout.class)) {
-
-					layout = LayoutLocalServiceUtil.fetchLayout(
-						layout.getClassPK());
-				}
-
-				PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
-					_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-					PortletRequest.RENDER_PHASE);
-
-				editPageURL.setParameter(
-					"mvcRenderCommandName", "/layout/edit_layout");
-				editPageURL.setParameter(
-					"redirect", _themeDisplay.getURLCurrent());
-				editPageURL.setParameter(
-					"backURL", _themeDisplay.getURLCurrent());
-
-				if (layout.isSystem()) {
-					editPageURL.setParameter(
-						"portletResource",
-						LayoutPageTemplateAdminPortletKeys.
-							LAYOUT_PAGE_TEMPLATES);
-				}
-
-				editPageURL.setParameter(
-					"groupId", String.valueOf(layout.getGroupId()));
-				editPageURL.setParameter(
-					"selPlid", String.valueOf(layout.getPlid()));
-				editPageURL.setParameter(
-					"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(editPageURL.toString());
-						dropdownItem.setLabel(
-							HtmlUtil.escape(
-								LanguageUtil.get(
-									resourceBundle, "configure-page")));
-					});
+				add(_getConfigurationActionUnsafeConsumer());
 
 				if (_isShowPermissionsAction()) {
 					add(_getPermissionsActionUnsafeConsumer());
 				}
 			}
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getConfigurationActionUnsafeConsumer() {
+
+		Layout layout = _themeDisplay.getLayout();
+
+		if (layout.getClassNameId() == PortalUtil.getClassNameId(
+				Layout.class)) {
+
+			layout = LayoutLocalServiceUtil.fetchLayout(layout.getClassPK());
+		}
+
+		PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
+			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		editPageURL.setParameter("mvcRenderCommandName", "/layout/edit_layout");
+		editPageURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		editPageURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+
+		if (layout.isSystem()) {
+			editPageURL.setParameter(
+				"portletResource",
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
+		}
+
+		editPageURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+		editPageURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
+		return dropdownItem -> {
+			dropdownItem.setHref(editPageURL.toString());
+			dropdownItem.setLabel(
+				HtmlUtil.escape(
+					LanguageUtil.get(resourceBundle, "configure-page")));
 		};
 	}
 

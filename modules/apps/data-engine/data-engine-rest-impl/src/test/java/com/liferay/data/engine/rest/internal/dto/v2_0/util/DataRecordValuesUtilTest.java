@@ -318,7 +318,8 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
-		Assert.assertEquals(2, ddmFormFieldValuesMap.size());
+		Assert.assertEquals(
+			ddmFormFieldValuesMap.toString(), 2, ddmFormFieldValuesMap.size());
 		Assert.assertTrue(ddmFormFieldValuesMap.containsKey("field1"));
 		Assert.assertTrue(ddmFormFieldValuesMap.containsKey("field2"));
 
@@ -386,7 +387,8 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
-		Assert.assertEquals(2, ddmFormFieldValuesMap.size());
+		Assert.assertEquals(
+			ddmFormFieldValuesMap.toString(), 2, ddmFormFieldValuesMap.size());
 		Assert.assertTrue(ddmFormFieldValuesMap.containsKey("field1"));
 		Assert.assertTrue(ddmFormFieldValuesMap.containsKey("field2"));
 
@@ -407,6 +409,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 
 		Assert.assertEquals(
 			availableLocales.toString(), 1, availableLocales.size());
+
 		Assert.assertEquals(
 			"Valor 1", localizedValue.getString(LocaleUtil.BRAZIL));
 

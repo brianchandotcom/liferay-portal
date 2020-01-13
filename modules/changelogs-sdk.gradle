@@ -63,7 +63,7 @@ buildChangelogs {
 
 			String gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-			Closure<Void> getCommitDetails = {
+			Closure<Void> getGitLogAttributes = {
 				String gitLogLine ->
 
 				Matcher gitLogMatcher = gitLogLine =~ /([a-f0-9]+):.+:((?:.*?)(?<![A-Z])(?:[A-Z]+-\d+(?:[^A-Za-z0-9]+[A-Z]+-\d+)*))(.*)/
@@ -74,13 +74,13 @@ buildChangelogs {
 
 				String sha = gitLogMatcher.group(1)
 				String ticketNumber = gitLogMatcher.group(2)
-				String commitMessage = gitLogMatcher.group(3)
+				String ticketMessage = gitLogMatcher.group(3)
 
 				if (ticketNumber.startsWith("Revert")) {
-					return ["SHA" : sha, "TICKET-NUMBER" : "", "COMMIT-MESSAGE" : ticketNumber + commitMessage]
+					return ["SHA" : sha, "TICKET-NUMBER" : "", "COMMIT-MESSAGE" : ticketNumber + ticketMessage]
 				}
 
-				return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]
+				return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : ticketMessage]
 			}
 
 			String commits = ""
@@ -88,12 +88,12 @@ buildChangelogs {
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
-				Map<String, String> commitDetails = getCommitDetails(gitLogLine)
+				Map<String, String> gitLogAttributes = getGitLogAttributes(gitLogLine)
 
-				if (commitDetails["COMMIT-MESSAGE"] ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
+				if (gitLogAttributes["COMMIT-MESSAGE"] ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
 					commits = commits + """\
 						|
-						|- [${commitDetails["TICKET-NUMBER"]}]: ${commitDetails["COMMIT-MESSAGE"]} (${commitDetails["SHA"].substring(0, 10)})""".stripMargin()
+						|- [${gitLogAttributes["TICKET-NUMBER"]}]: ${gitLogAttributes["COMMIT-MESSAGE"]} (${gitLogAttributes["SHA"].substring(0, 10)})""".stripMargin()
 				}
 
 				commits = commits.replace("  ", " ")
@@ -111,13 +111,13 @@ buildChangelogs {
 
 			gitLogOutput = standardOutputByteArrayOutputStream.toString()
 
-			Map<String, String> commitDetails = [:]
+			Map<String, String> gitLogAttributes = [:]
 
 			gitLogOutput.eachLine {
 				String gitLogLine ->
 
 				if (gitLogLine ==~ /([a-f0-9]+):.+:(.*)/) {
-					commitDetails = getCommitDetails(gitLogLine)
+					gitLogAttributes = getGitLogAttributes(gitLogLine)
 				}
 				else {
 					matcher = gitLogLine =~ /\+\s*.+ group: .*, name: \"(.+)", version: \"(\d+\.\d+\.\d+)\"/
@@ -128,7 +128,7 @@ buildChangelogs {
 
 						dependencies = dependencies + """\
 							|
-							|- [${commitDetails["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
+							|- [${gitLogAttributes["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 					}
 				}
 

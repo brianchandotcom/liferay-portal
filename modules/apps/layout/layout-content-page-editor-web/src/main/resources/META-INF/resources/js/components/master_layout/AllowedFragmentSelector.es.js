@@ -15,7 +15,7 @@
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import useSelector from '../../store/hooks/useSelector.es';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
@@ -110,6 +110,24 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 		)
 	);
 
+	useEffect(() => {
+		const newFragmentEntryKeys = getSelectedNodeIds(
+			allowNewFragmentEntries,
+			[...fragmentEntryKeys],
+			fragmentEntryKeysArray
+		);
+
+		onSelectedFragment({
+			allowNewFragmentEntries,
+			selectedFragments: newFragmentEntryKeys
+		});
+	}, [
+		fragmentEntryKeys,
+		allowNewFragmentEntries,
+		fragmentEntryKeysArray,
+		onSelectedFragment
+	]);
+
 	return (
 		<>
 			<ClayInput
@@ -126,20 +144,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 				initialSelectedNodeIds={fragmentEntryKeys}
 				NodeComponent={AllowedFragmentTreeNode}
 				nodes={nodes}
-				onSelectedNodesChange={selectedNodeIds => {
-					const newFragmentEntryKeys = getSelectedNodeIds(
-						allowNewFragmentEntries,
-						Array.from(selectedNodeIds),
-						fragmentEntryKeysArray
-					);
-
-					setFragmentEntryKeys(newFragmentEntryKeys);
-
-					onSelectedFragment(
-						allowNewFragmentEntries,
-						newFragmentEntryKeys
-					);
-				}}
+				onSelectedNodesChange={setFragmentEntryKeys}
 			/>
 
 			<ClayCheckbox
@@ -151,22 +156,7 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 					'make-allowed-all-new-fragments-created'
 				)}
 				onChange={event => {
-					const newAllowNewFragmentEntries = event.target.checked;
-
-					setAllowNewFragmentEntries(newAllowNewFragmentEntries);
-
-					const newFragmentEntryKeys = getSelectedNodeIds(
-						newAllowNewFragmentEntries,
-						fragmentEntryKeys,
-						fragmentEntryKeysArray
-					);
-
-					setFragmentEntryKeys(newFragmentEntryKeys);
-
-					onSelectedFragment(
-						newAllowNewFragmentEntries,
-						newFragmentEntryKeys
-					);
+					setAllowNewFragmentEntries(event.target.checked);
 				}}
 			/>
 		</>

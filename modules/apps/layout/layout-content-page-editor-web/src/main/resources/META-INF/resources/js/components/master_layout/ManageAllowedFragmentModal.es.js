@@ -60,12 +60,11 @@ const ManageAllowedFragmentModal = ({observer, onClose}) => {
 					)}
 				</p>
 				<AllowedFragmentSelector
-					onSelectedFragment={(
+					onSelectedFragment={({
 						allowNewFragmentEntries,
 						selectedFragments
-					) => {
+					}) => {
 						setAllowNewFragmentEntries(allowNewFragmentEntries);
-
 						setSelectedFragments(selectedFragments);
 					}}
 				/>

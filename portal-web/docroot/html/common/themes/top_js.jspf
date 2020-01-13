@@ -464,7 +464,9 @@ for (String analyticsType : analyticsTypes) {
 					%>
 
 					<c:if test="<%= Validator.isNotNull(googleAnalyticsCustomConfiguration) %>">
-						<%= googleAnalyticsCustomConfiguration %>
+						(function(ga) {
+							<%= googleAnalyticsCustomConfiguration %>
+						})(ga);
 					</c:if>
 
 					ga('send', 'pageview');

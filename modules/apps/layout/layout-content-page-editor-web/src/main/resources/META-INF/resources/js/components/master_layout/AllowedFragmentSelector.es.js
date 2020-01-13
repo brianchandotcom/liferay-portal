@@ -61,8 +61,8 @@ const toNodes = collections => {
 const toFragmentEntryKeysArray = collections => {
 	const fragmentEntryKeysArray = [];
 
-	collections.map(collection => {
-		collection.fragmentEntries.map(fragmentEntry =>
+	collections.forEach(collection => {
+		collection.fragmentEntries.forEach(fragmentEntry =>
 			fragmentEntryKeysArray.push(fragmentEntry.fragmentEntryKey)
 		);
 

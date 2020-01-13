@@ -25,8 +25,10 @@ import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageT
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 
@@ -84,6 +87,13 @@ public class MasterLayoutActionDropdownItemsProvider {
 					add(_getRenameMasterLayoutActionUnsafeConsumer());
 
 					add(_getCopyMasterLayoutActionUnsafeConsumer());
+				}
+
+				if (LayoutPageTemplateEntryPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_layoutPageTemplateEntry, ActionKeys.PERMISSIONS)) {
+
+					add(_getPermissionsMasterLayoutActionUnsafeConsumer());
 				}
 
 				if (LayoutPageTemplateEntryPermission.contains(
@@ -232,6 +242,26 @@ public class MasterLayoutActionDropdownItemsProvider {
 			itemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getPermissionsMasterLayoutActionUnsafeConsumer()
+		throws Exception {
+
+		String permissionsMasterLayoutURL = PermissionsURLTag.doTag(
+			StringPool.BLANK, LayoutPageTemplateEntry.class.getName(),
+			_layoutPageTemplateEntry.getName(), null,
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "permissionsMasterLayout");
+			dropdownItem.putData(
+				"permissionsMasterLayoutURL", permissionsMasterLayoutURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

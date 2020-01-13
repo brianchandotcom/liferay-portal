@@ -38,6 +38,20 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 		this._send(itemData.deleteMasterLayoutPreviewURL);
 	}
 
+	permissionsMasterLayout(itemData) {
+		Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				modal: true
+			},
+			dialogIframe: {
+				bodyCssClass: 'dialog-with-footer'
+			},
+			title: Liferay.Language.get('permissions'),
+			uri: itemData.permissionsMasterLayoutURL
+		});
+	}
+
 	renameMasterLayout(itemData) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-master-page'),

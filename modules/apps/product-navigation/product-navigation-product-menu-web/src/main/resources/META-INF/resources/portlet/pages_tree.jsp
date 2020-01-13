@@ -57,15 +57,18 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					</a>
 
 					<ul class="dropdown-menu dropdown-menu-left" role="menu">
-						<li>
-							<button class="autofit-row dropdown-item layout-action" data-action="addChildPage" data-plid="{plid}">
-								<span class="autofit-col autofit-col-expand">
-									<span class="autofit-section text-left">
-										<liferay-ui:message key="add-child-page" />
+						<c:if test="<%= (stagingGroup == null) || Objects.equals(scopeGroupId, stagingGroupId) %>">
+							<li>
+								<button class="autofit-row dropdown-item layout-action" data-action="addChildPage" data-plid="{plid}">
+									<span class="autofit-col autofit-col-expand">
+										<span class="autofit-section text-left">
+											<liferay-ui:message key="add-child-page" />
+										</span>
 									</span>
-								</span>
-							</button>
-						</li>
+								</button>
+							</li>
+						</c:if>
+
 						<li>
 							<button class="autofit-row dropdown-item layout-action" data-action="configure" data-plid="{plid}">
 								<span class="autofit-col autofit-col-expand">
@@ -82,7 +85,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	</liferay-util:buffer>
 
 	<%
-	Group group = themeDisplay.getSiteGroup();
+	Group siteGroup = themeDisplay.getSiteGroup();
 	%>
 
 	<liferay-layout:layouts-tree
@@ -90,7 +93,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		linkTemplate="<%= linkTemplate %>"
 		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
 		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
-		rootNodeName="<%= group.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
+		rootNodeName="<%= siteGroup.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
 		selPlid="<%= plid %>"
 		treeId="pagesTree"
 	/>

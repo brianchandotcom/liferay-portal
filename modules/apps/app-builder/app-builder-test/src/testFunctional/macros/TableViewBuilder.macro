@@ -13,7 +13,6 @@ definition {
 	}
 
 	macro addColumnByDoubleClick {
-
 		var key_fieldType = "${fieldType}";
 
 		DoubleClick(locator1 = "FormViewBuilder#ADD_FIELD_TYPE");
@@ -21,8 +20,6 @@ definition {
 		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
 
 		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
-
-		TableViewBuilder.closeColumnSidebar();
 	}
 
 	macro closeColumnSidebar {

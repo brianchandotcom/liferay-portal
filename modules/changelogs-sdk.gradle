@@ -99,7 +99,9 @@ buildChangelogs {
 				if (Validator.isNotNull(sha)) {
 					String commitMessage = gitLogAttributes["COMMIT-MESSAGE"].trim()
 
-					if (!commitMessage.matches(".*[Pp]rep next.*") &&
+					if (!commitMessage.equalsIgnoreCase("Auto SF") &&
+						!commitMessage.equalsIgnoreCase("SF") &&
+						!commitMessage.matches(".*[Pp]rep next.*") &&
 						!commitMessage.matches(".*[Uu]se (\\d+\\.\\d+\\.\\d+|latest).*")) {
 
 						commits = commits + """\

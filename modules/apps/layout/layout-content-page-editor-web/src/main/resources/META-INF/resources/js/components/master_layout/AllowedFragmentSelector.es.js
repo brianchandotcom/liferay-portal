@@ -75,10 +75,8 @@ const toFragmentEntryKeysArray = collections => {
 };
 
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
-	const initialAllowNewFragmentEntries = useSelector(state =>
-		state.layoutData.allowNewFragmentEntries
-			? state.layoutData.allowNewFragmentEntries
-			: true
+	const initialAllowNewFragmentEntries = useSelector(
+		state => !!state.layoutData.allowNewFragmentEntries
 	);
 
 	const initialFragmentEntryKeys = useSelector(

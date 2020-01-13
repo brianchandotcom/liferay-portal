@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,8 +73,5 @@ public class DepotAdminPanelApp extends BasePanelApp {
 
 	@Reference
 	private DepotSupportChecker _depotSupportChecker;
-
-	@Reference
-	private Portal _portal;
 
 }

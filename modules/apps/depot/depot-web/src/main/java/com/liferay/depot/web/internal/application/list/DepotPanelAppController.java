@@ -61,7 +61,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = DepotPanelAppController.class)
 public class DepotPanelAppController {
 
-	public boolean isShow(PanelApp panelApp) {
+	public boolean isShow(PanelApp panelApp, long groupId)
+		throws PortalException {
+
 		String portletId = panelApp.getPortletId();
 
 		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||
@@ -72,7 +74,7 @@ public class DepotPanelAppController {
 			return true;
 		}
 
-		return _depotApplicationController.isEnabled(portletId);
+		return _depotApplicationController.isEnabled(portletId, groupId);
 	}
 
 	@Activate
@@ -258,7 +260,8 @@ public class DepotPanelAppController {
 			throws PortalException {
 
 			if ((group.getType() == GroupConstants.TYPE_DEPOT) &&
-				!DepotPanelAppController.this.isShow(_panelApp)) {
+				!DepotPanelAppController.this.isShow(
+					_panelApp, group.getGroupId())) {
 
 				return false;
 			}

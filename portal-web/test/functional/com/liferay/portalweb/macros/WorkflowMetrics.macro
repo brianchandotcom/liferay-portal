@@ -112,7 +112,10 @@ definition {
 	}
 
 	macro createUsersAndAssignInstances {
-		WorkflowMetrics.executeWorkflowScript(scriptName = "addUsersWithRoles.groovy");
+		var iterator = "1";
+		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
+
+		WorkflowMetrics.createUsersGroovy(numberOfUsers = "${numberOfUsers}");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -123,39 +126,32 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		for (var count : list "1,2,3,4") {
+		while ("${iterator}" != "${numberOfBlogInstances}") {
 			JSONBlog.addEntry(
-				entryContent = "Blogs Entry ${count} Content",
-				entryTitle = "Blogs Entry Title ${count}");
+				entryContent = "Blogs Entry ${iterator} Content",
+				entryTitle = "Blogs Entry Title ${iterator}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
 		}
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+		Workflow.assignBlogEntriesToUsers(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
+	}
 
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+	macro createUsersGroovy {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration");
 
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 1",
-			assetType = "Blogs Entry",
-			assigneeName = "1user user1",
-			workflowTask = "Review");
+		var scriptContent = TestCase.getFileContent(fileName = "addUsersWithRoles.groovy");
 
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 2",
-			assetType = "Blogs Entry",
-			assigneeName = "2user user2",
-			workflowTask = "Review");
+		var scriptContent = StringUtil.regexReplaceFirst("${scriptContent}","numberOfUsers = 0","numberOfUsers = ${numberOfUsers}");
 
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 3",
-			assetType = "Blogs Entry",
-			assigneeName = "3user user3",
-			workflowTask = "Review");
-
-		Workflow.assignTaskToUser(
-			assetTitle = "Blogs Entry Title 4",
-			assetType = "Blogs Entry",
-			assigneeName = "1user user1",
-			workflowTask = "Review");
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${scriptContent}");
 	}
 
 	macro executeWorkflowScript {

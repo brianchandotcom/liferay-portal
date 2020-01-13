@@ -141,6 +141,33 @@ definition {
 			workflowTask = "${workflowTask}");
 	}
 
+	macro assignBlogEntriesToUsers {
+		var iterator = "1";
+		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
+		var numberOfUsers = MathUtil.sum("${numberOfUsers}", "1");
+		var userCount = "1";
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		while ("${iterator}" != "${numberOfBlogInstances}") {
+
+			if ("${userCount}" == "${numberOfUsers}") {
+				var userCount = "1";
+			}
+
+			Workflow.assignTaskToUser(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry",
+				assigneeName = "${userCount}user user${userCount}",
+				workflowTask = "Review");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+			var userCount = MathUtil.sum("${userCount}", "1");
+		}
+	}
+
 	macro assignByDetails {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to...");
 

@@ -115,7 +115,9 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		WorkflowMetrics.createUsersAndAssignInstances();
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -244,7 +246,9 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsListByAssigneeName";
 
-		WorkflowMetrics.createUsersAndAssignInstances();
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -324,7 +328,9 @@ definition {
 	test SearchAndFilterOnPerformanceByStepPage {
 		property test.name.skip.portal.instance = "WorkflowMetrics#SearchAndFilterOnPerformanceByStepPage";
 
-		WorkflowMetrics.createUsersAndAssignInstances();
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
 
@@ -636,7 +642,9 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
 
-		WorkflowMetrics.createUsersAndAssignInstances();
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -759,7 +767,9 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 
-		WorkflowMetrics.createUsersAndAssignInstances();
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -812,7 +822,9 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
 
-		WorkflowMetrics.createUsersAndAssignInstances();
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "4",
+			numberOfUsers = "3");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 

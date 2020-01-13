@@ -139,7 +139,7 @@ public class SessionImpl implements Session {
 		DefaultASTNodeListener defaultASTNodeListener =
 			new DefaultASTNodeListener();
 
-		SQLQuery q = createSynchronizedSQLQuery(
+		SQLQuery q = _createSynchronizedSQLQuery(
 			query.toSQL(defaultASTNodeListener), true,
 			defaultASTNodeListener.getTableNames());
 
@@ -168,29 +168,9 @@ public class SessionImpl implements Session {
 			String queryString, boolean strictName)
 		throws ORMException {
 
-		return createSynchronizedSQLQuery(
+		return _createSynchronizedSQLQuery(
 			queryString, strictName,
 			SQLQueryTableNamesUtil.getTableNames(queryString));
-	}
-
-	@Override
-	public SQLQuery createSynchronizedSQLQuery(
-			String queryString, boolean strictName, String[] tableNames)
-		throws ORMException {
-
-		try {
-			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
-
-			SQLQuery sqlQuery = new SQLQueryImpl(
-				_session.createSQLQuery(queryString), strictName);
-
-			sqlQuery.addSynchronizedQuerySpaces(tableNames);
-
-			return sqlQuery;
-		}
-		catch (Exception exception) {
-			throw ExceptionTranslator.translate(exception);
-		}
 	}
 
 	@Override
@@ -321,6 +301,25 @@ public class SessionImpl implements Session {
 			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
 
 			return new QueryImpl(_session.createQuery(queryString), strictName);
+		}
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
+		}
+	}
+
+	private SQLQuery _createSynchronizedSQLQuery(
+			String queryString, boolean strictName, String[] tableNames)
+		throws ORMException {
+
+		try {
+			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
+
+			SQLQuery sqlQuery = new SQLQueryImpl(
+				_session.createSQLQuery(queryString), strictName);
+
+			sqlQuery.addSynchronizedQuerySpaces(tableNames);
+
+			return sqlQuery;
 		}
 		catch (Exception exception) {
 			throw ExceptionTranslator.translate(exception);

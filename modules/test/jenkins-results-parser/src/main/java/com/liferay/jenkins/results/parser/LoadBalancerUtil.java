@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.StringReader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +60,13 @@ public class LoadBalancerUtil {
 		List<String> blacklist = _getBlacklist(properties, verbose);
 
 		if ((blacklistString != null) && !blacklistString.isEmpty()) {
-			blacklist = Arrays.asList(blacklistString.split(","));
+			blacklistString = blacklistString.toLowerCase();
+
+			for (String blacklistItem : blacklistString.split("\\s*,\\s*")) {
+				if (!blacklist.contains(blacklistItem)) {
+					blacklist.add(blacklistItem);
+				}
+			}
 		}
 
 		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(

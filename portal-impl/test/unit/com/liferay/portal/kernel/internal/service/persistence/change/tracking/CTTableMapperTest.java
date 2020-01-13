@@ -1797,10 +1797,10 @@ public class CTTableMapperTest {
 						ctCollectionId));
 			}
 
-			Boolean changeType = (Boolean)params[4];
+			Boolean ctChangeType = (Boolean)params[4];
 
 			_mappingStore.put(
-				leftPrimaryKey, rightPrimaryKey, ctCollectionId, changeType);
+				leftPrimaryKey, rightPrimaryKey, ctCollectionId, ctChangeType);
 
 			return 1;
 		}
@@ -1953,14 +1953,14 @@ public class CTTableMapperTest {
 
 			Long ctCollectionId = (Long)params[2];
 
-			Boolean changeType = (Boolean)_mappingStore.get(
+			Boolean ctChangeType = (Boolean)_mappingStore.get(
 				leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
 			boolean inProduction = _mappingStore.containsKey(
 				leftPrimaryKey, rightPrimaryKey, 0L);
 
-			if (((changeType != null) && changeType) ||
-				(inProduction && (changeType == null))) {
+			if (((ctChangeType != null) && ctChangeType) ||
+				(inProduction && (ctChangeType == null))) {
 
 				return Collections.singletonList(1);
 			}
@@ -2187,13 +2187,13 @@ public class CTTableMapperTest {
 				if (rightPrimaryKey.equals(multiKey.getKey(1))) {
 					Long leftPrimaryKey = (Long)multiKey.getKey(0);
 
-					Boolean changeType = (Boolean)_mappingStore.get(
+					Boolean ctChangeType = (Boolean)_mappingStore.get(
 						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 					boolean inProduction = _mappingStore.containsKey(
 						leftPrimaryKey, rightPrimaryKey, 0L);
 
-					if ((((changeType != null) && changeType) ||
-						 (inProduction && (changeType == null))) &&
+					if ((((ctChangeType != null) && ctChangeType) ||
+						 (inProduction && (ctChangeType == null))) &&
 						!leftPrimaryKeysList.contains(leftPrimaryKey)) {
 
 						leftPrimaryKeysList.add(leftPrimaryKey);
@@ -2252,13 +2252,13 @@ public class CTTableMapperTest {
 				if (leftPrimaryKey.equals(multiKey.getKey(0))) {
 					Long rightPrimaryKey = (Long)multiKey.getKey(1);
 
-					Boolean changeType = (Boolean)_mappingStore.get(
+					Boolean ctChangeType = (Boolean)_mappingStore.get(
 						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 					boolean inProduction = _mappingStore.containsKey(
 						leftPrimaryKey, rightPrimaryKey, 0L);
 
-					if ((((changeType != null) && changeType) ||
-						 (inProduction && (changeType == null))) &&
+					if ((((ctChangeType != null) && ctChangeType) ||
+						 (inProduction && (ctChangeType == null))) &&
 						!rightPrimaryKeysList.contains(rightPrimaryKey)) {
 
 						rightPrimaryKeysList.add(rightPrimaryKey);
@@ -2397,11 +2397,11 @@ public class CTTableMapperTest {
 						"SELECT * FROM ", _TABLE_NAME, " WHERE ",
 						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
 						" = ? AND (ctCollectionId = 0 OR ctCollectionId = ?) ",
-						"AND (changeType is NULL or changeType = true) AND ",
-						"NOT EXISTS (SELECT * FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
-						" = ? AND ctCollectionId = ? AND changeType = ",
-						"false)"))) {
+						"AND (ctChangeType is NULL or ctChangeType = true) ",
+						"AND NOT EXISTS (SELECT * FROM ", _TABLE_NAME,
+						" WHERE ", _LEFT_COLUMN_NAME, " = ? AND ",
+						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
+						"ctChangeType = false)"))) {
 
 				return (MappingSqlQuery<T>)
 					new MockContainsCTTableMappingSQLQuery(
@@ -2415,8 +2415,8 @@ public class CTTableMapperTest {
 						" = ? AND ", _LEFT_COLUMN_NAME, " NOT IN (SELECT ",
 						_LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
 						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
-						"changeType = false) AND ctCollectionId = 0) OR ",
-						"(ctCollectionId = ? AND changeType = true)"))) {
+						"ctChangeType = false) AND ctCollectionId = 0) OR ",
+						"(ctCollectionId = ? AND ctChangeType = true)"))) {
 
 				return (MappingSqlQuery<T>)new MockGetCTLeftPrimaryKeysSqlQuery(
 					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
@@ -2429,8 +2429,8 @@ public class CTTableMapperTest {
 						_RIGHT_COLUMN_NAME, " NOT IN (SELECT ",
 						_RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
 						_LEFT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
-						"changeType = false) AND ctCollectionId = 0) OR ",
-						"(ctCollectionId = ? AND changeType = true)"))) {
+						"ctChangeType = false) AND ctCollectionId = 0) OR ",
+						"(ctCollectionId = ? AND ctChangeType = true)"))) {
 
 				return (MappingSqlQuery<T>)
 					new MockGetCTRightPrimaryKeysSqlQuery(
@@ -2452,7 +2452,7 @@ public class CTTableMapperTest {
 					StringBundler.concat(
 						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
 						", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
-						", ctCollectionId, changeType) VALUES (?, ?, ?, ?, ",
+						", ctCollectionId, ctChangeType) VALUES (?, ?, ?, ?, ",
 						"?)"))) {
 
 				return new MockAddCTTableMappingSqlUpdate(dataSource);
@@ -2498,7 +2498,7 @@ public class CTTableMapperTest {
 
 			if (sql.equals(
 					StringBundler.concat(
-						"UPDATE ", _TABLE_NAME, " SET changeType = ? WHERE ",
+						"UPDATE ", _TABLE_NAME, " SET ctChangeType = ? WHERE ",
 						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
 						" = ? AND ctCollectionId = ?"))) {
 
@@ -2526,7 +2526,7 @@ public class CTTableMapperTest {
 			Long leftPrimaryKey = (Long)params[0];
 			Long rightPrimaryKey = (Long)params[1];
 			Long ctCollectionId = (Long)params[2];
-			Boolean changeType = (Boolean)params[3];
+			Boolean ctChangeType = (Boolean)params[3];
 
 			if (_mappingStore.containsKey(
 					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
@@ -2534,10 +2534,10 @@ public class CTTableMapperTest {
 				Boolean currentChangeType = (Boolean)_mappingStore.get(
 					leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
-				if (currentChangeType != changeType) {
+				if (currentChangeType != ctChangeType) {
 					_mappingStore.put(
 						leftPrimaryKey, rightPrimaryKey, ctCollectionId,
-						changeType);
+						ctChangeType);
 
 					return 1;
 				}

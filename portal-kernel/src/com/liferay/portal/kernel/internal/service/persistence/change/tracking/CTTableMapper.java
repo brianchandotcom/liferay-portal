@@ -363,7 +363,7 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 			StringBundler.concat(
 				"INSERT INTO ", tableName, " (", companyColumnName, ", ",
 				leftColumnName, ", ", rightColumnName,
-				", ctCollectionId, changeType) VALUES (?, ?, ?, ?, ?)"),
+				", ctCollectionId, ctChangeType) VALUES (?, ?, ?, ?, ?)"),
 			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
 			ParamSetter.BIGINT, _booleanParamSetter);
 
@@ -376,11 +376,11 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 					"SELECT * FROM ", tableName, " WHERE ", leftColumnName,
 					" = ? AND ", rightColumnName,
 					" = ? AND (ctCollectionId = 0 OR ctCollectionId = ?) AND ",
-					"(changeType is NULL or changeType = ",
+					"(ctChangeType is NULL or ctChangeType = ",
 					db.getTemplateTrue(), ") AND NOT EXISTS (SELECT * FROM ",
 					tableName, " WHERE ", leftColumnName, " = ? AND ",
 					rightColumnName,
-					" = ? AND ctCollectionId = ? AND changeType = ",
+					" = ? AND ctCollectionId = ? AND ctChangeType = ",
 					db.getTemplateFalse(), ")"),
 				RowMapper.COUNT, ParamSetter.BIGINT, ParamSetter.BIGINT,
 				ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
@@ -394,9 +394,9 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 					" WHERE (", rightColumnName, " = ? AND ", leftColumnName,
 					" NOT IN (SELECT ", leftColumnName, " FROM ", tableName,
 					" WHERE ", rightColumnName, " = ? AND ctCollectionId = ? ",
-					"AND changeType = ", db.getTemplateFalse(), ") AND ",
+					"AND ctChangeType = ", db.getTemplateFalse(), ") AND ",
 					"ctCollectionId = 0) OR (ctCollectionId = ? AND ",
-					"changeType = ", db.getTemplateTrue(), ")"),
+					"ctChangeType = ", db.getTemplateTrue(), ")"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT, ParamSetter.BIGINT,
 				ParamSetter.BIGINT, ParamSetter.BIGINT);
 		_getCTRightPrimaryKeysSqlQuery =
@@ -407,16 +407,16 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 					" WHERE (", leftColumnName, " = ? AND ", rightColumnName,
 					" NOT IN (SELECT ", rightColumnName, " FROM ", tableName,
 					" WHERE ", leftColumnName, " = ? AND ctCollectionId = ? ",
-					"AND changeType = ", db.getTemplateFalse(), ") AND ",
+					"AND ctChangeType = ", db.getTemplateFalse(), ") AND ",
 					"ctCollectionId = 0) OR (ctCollectionId = ? AND ",
-					"changeType = ", db.getTemplateTrue(), ")"),
+					"ctChangeType = ", db.getTemplateTrue(), ")"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT, ParamSetter.BIGINT,
 				ParamSetter.BIGINT, ParamSetter.BIGINT);
 
 		_updateCTTableMappingSqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
 			dataSource,
 			StringBundler.concat(
-				"UPDATE ", tableName, " SET changeType = ? WHERE ",
+				"UPDATE ", tableName, " SET ctChangeType = ? WHERE ",
 				leftColumnName, " = ? AND ", rightColumnName,
 				" = ? AND ctCollectionId = ?"),
 			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
@@ -516,16 +516,16 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	private void _addTableMapping(
 		long companyId, long leftPrimaryKey, long rightPrimaryKey,
-		long ctCollectionId, boolean changeType) {
+		long ctCollectionId, boolean ctChangeType) {
 
 		try {
 			int count = _updateCTTableMappingSqlUpdate.update(
-				leftPrimaryKey, rightPrimaryKey, ctCollectionId, changeType);
+				leftPrimaryKey, rightPrimaryKey, ctCollectionId, ctChangeType);
 
 			if (count == 0) {
 				_addCTTableMappingSqlUpdate.update(
 					companyId, leftPrimaryKey, rightPrimaryKey, ctCollectionId,
-					changeType);
+					ctChangeType);
 			}
 		}
 		catch (Exception e) {

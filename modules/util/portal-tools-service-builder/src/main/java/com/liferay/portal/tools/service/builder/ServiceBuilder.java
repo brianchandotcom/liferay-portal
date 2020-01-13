@@ -4719,7 +4719,7 @@ public class ServiceBuilder {
 			entities[2].isChangeTrackingEnabled()) {
 
 			sb.append("\tctCollectionId LONG default 0 not null,\n");
-			sb.append("\tchangeType BOOLEAN,\n");
+			sb.append("\tctChangeType BOOLEAN,\n");
 		}
 
 		sb.append("\tprimary key (");

@@ -106,12 +106,12 @@ public class CTTableMapperHelper {
 						StringBundler.concat(
 							"insert into ", _tableName, " (companyId, ",
 							_leftColumnName, ", ", _rightColumnName,
-							", ctCollectionId, changeType) select ",
+							", ctCollectionId, ctChangeType) select ",
 							"t1.companyId, t1.", _leftColumnName, ", t1.",
 							_rightColumnName, ", ", toCTCollectionId,
-							" as ctCollectionId, ? as changeType from ",
+							" as ctCollectionId, ? as ctChangeType from ",
 							_tableName, " t1 where t1.ctCollectionId = ",
-							fromCTCollectionId, " and t1.changeType = ?"))) {
+							fromCTCollectionId, " and t1.ctChangeType = ?"))) {
 
 					ps.setBoolean(1, true);
 					ps.setBoolean(2, false);
@@ -160,7 +160,7 @@ public class CTTableMapperHelper {
 				StringBundler.concat(
 					"select ", _leftColumnName, ", ", _rightColumnName,
 					" from ", _tableName, " where ctCollectionId = ",
-					ctCollectionId, " and changeType = ?"))) {
+					ctCollectionId, " and ctChangeType = ?"))) {
 
 			ps.setBoolean(1, false);
 
@@ -213,7 +213,7 @@ public class CTTableMapperHelper {
 					_leftColumnName, " = t1.", _leftColumnName, " and t2.",
 					_rightColumnName, " = t1.", _rightColumnName,
 					" where t1.ctCollectionId = ", ctCollectionId,
-					" and t1.changeType = ?"))) {
+					" and t1.ctChangeType = ?"))) {
 
 			ps.setBoolean(1, true);
 

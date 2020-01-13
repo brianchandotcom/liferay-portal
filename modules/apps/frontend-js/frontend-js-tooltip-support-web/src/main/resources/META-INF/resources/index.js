@@ -104,6 +104,46 @@ const TooltipProvider = () => {
 		return dispose;
 	}, [delay, state]);
 
+	const getContent = element => {
+		if (element) {
+			const title = element.getAttribute('title');
+
+			if (title) {
+				element.setAttribute('data-restore-title', title);
+				element.removeAttribute('title');
+			} else if (element.tagName === 'svg') {
+				const titleTag = element.querySelector('title');
+
+				if (titleTag) {
+					element.setAttribute(
+						'data-restore-title',
+						titleTag.innerHTML
+					);
+					titleTag.remove();
+				}
+			}
+		}
+	};
+
+	const restoreTitle = element => {
+		if (element) {
+			const title = element.getAttribute('data-restore-title');
+
+			if (title) {
+				if (element.tagName === 'svg') {
+					const titleTag = document.createElement('title');
+					titleTag.innerHTML = title;
+
+					element.appendChild(titleTag);
+				} else {
+					element.setAttribute('title', title);
+				}
+
+				element.removeAttribute('data-restore-title');
+			}
+		}
+	};
+
 	useEffect(() => {
 		const TRIGGER_SHOW_HANDLES = TRIGGER_SHOW_EVENTS.map(eventName => {
 			return dom.delegate(
@@ -119,7 +159,10 @@ const TooltipProvider = () => {
 				document.body,
 				eventName,
 				SELECTOR_TRIGGER,
-				() => dispatch({type: 'hide'})
+				() => {
+					dispatch({type: 'hide'});
+					restoreTitle(state.target);
+				}
 			);
 		});
 
@@ -156,6 +199,8 @@ const TooltipProvider = () => {
 					Align.BottomCenter
 				)
 			);
+
+			getContent(state.target);
 		}
 	}, [state]);
 
@@ -167,7 +212,10 @@ const TooltipProvider = () => {
 		>
 			<div
 				dangerouslySetInnerHTML={{
-					__html: state.target.title || state.target.dataset.title
+					__html:
+						state.target.title ||
+						state.target.dataset.restoreTitle ||
+						state.target.dataset.title
 				}}
 			/>
 		</ClayTooltip>

@@ -57,6 +57,10 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 
 		Value value = ddmFormFieldValue.getValue();
 
+		if (value == null) {
+			return createJSONArray("[]");
+		}
+
 		return createJSONArray(value.getString(locale));
 	}
 

@@ -114,6 +114,15 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-follower-elasticsearch-properties">
+		<sequential>
+			<echo append="true" file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
+cluster.name: LiferayElasticsearchClusterTwo
+http.port: 9202
+xpack.ml.enabled: false</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-kibana-properties">
 		<sequential>
 			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.hosts: "http://localhost:9200"

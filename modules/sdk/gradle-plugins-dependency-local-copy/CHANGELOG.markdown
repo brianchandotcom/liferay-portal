@@ -2,6 +2,10 @@
 
 ## 1.0.1 - 2018-08-01
 
+### Commits
+- [LPS-84027]: Detached configurations are not affected by the Spring plugin
+(5da82d5d97)
+
 ### Description
 - [LPS-84027]: Fix compatibility with the [Gradle Dependency Management] plugin.
 
@@ -28,6 +32,9 @@
 ## 1.0.4 - 2019-11-19
 
 ### Commits
+- [LPS-100515]: Check .m2-tmp repository (7e54299419)
+- [LPS-100515]: The task name must not contain a colon or forward slash
+(202125c648)
 - [LPS-85609]: Simplify gradleTest (a8b0feff31)
 - [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
 

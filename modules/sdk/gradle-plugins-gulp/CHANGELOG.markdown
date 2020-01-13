@@ -2,11 +2,19 @@
 
 ## 1.0.1 - 2016-01-26
 
+### Commits
+- [LPS-62504]: Reuse new base task class (79c971e738)
+- [LPS-61088]: Remove classes and resources dir from Include-Resource
+(1b0e1275bc)
+
 ### Dependencies
 - [LPS-62504]: Update the com.liferay.gradle.plugins.node dependency to version
 1.0.11.
 
 ## 1.0.2 - 2016-01-28
+
+### Commits
+- [LPS-61848]: An empty settings.gradle is enough (2e5eb90e23)
 
 ### Dependencies
 - [LPS-62671]: Update the com.liferay.gradle.plugins.node dependency to version
@@ -15,6 +23,8 @@
 ## 1.0.3 - 2016-06-07
 
 ### Commits
+- [LPS-64816]: Update Gradle plugin samples (3331002e5d)
+- [LPS-61099]: Delete build.xml in modules (c9a7e1d370)
 - [LPS-63943]: This is done automatically now (f1e42382d9)
 - [LPS-62833]: Update build-buildscript.gradle (56106ab47b)
 
@@ -65,6 +75,7 @@
 ## 1.0.10 - 2016-08-27
 
 ### Commits
+- [LPS-67658]: Convert gradle-plugins-gulp sample into a smoke test (1926e55d12)
 - [LPS-67658]: Configure GradleTest in gradle-plugins-gulp (bf5a06ee22)
 - [LPS-67658]: Need "compileOnly" to keep dependencies out of "compile"
 (4a3cd0bc9d)
@@ -73,6 +84,12 @@
 ### Dependencies
 - [LPS-67023]: Update the com.liferay.gradle.plugins.node dependency to version
 1.0.22.
+
+## 1.0.11 - 2016-09-20
+
+### Commits
+- [LPS-67573]: Add missing override annotation (3604cd853f)
+- [LPS-67573]: Make methods private to reduce API surface (0bf4bdb787)
 
 ## 2.0.0 - 2016-09-20
 
@@ -94,6 +111,15 @@
 
 ## 2.0.2 - 2016-10-10
 
+### Commits
+- [LPS-68618]: Update README (bf4681d92d)
+- [LPS-68618]: Remove unnecessary dependencies in the Gradle scripts
+(781eee434f)
+- [LPS-68618]: Make Gulp tasks depend on "npmInstall" (87101a1834)
+- [LPS-66709]: Wordsmithing READMEs for consistency (a3cc8c4c6b)
+- [LPS-66709]: Edit gradle-plugins-gulp README (4f2bcef262)
+- [LPS-66709]: Add README for gradle-plugins-gulp (7e17abce34)
+
 ### Description
 - [LPS-68618]: All `ExecuteGulpTask` instances now depend on `npmInstall`.
 
@@ -114,6 +140,10 @@
 1.4.0.
 
 ## 2.0.5 - 2016-12-08
+
+### Commits
+- [LPS-66709]: README typo (283446e516)
+- [LPS-66709]: Add supported Gradle versions in READMEs (e0d9458520)
 
 ### Dependencies
 - [LPS-69618]: Update the com.liferay.gradle.plugins.node dependency to version
@@ -153,6 +183,10 @@
 2.0.0.
 
 ## 2.0.11 - 2017-03-09
+
+### Commits
+- [LPS-66709]: Update supported Gradle versions in READMEs (06e315582b)
+- [LPS-67573]: Enable semantic versioning check on CI (63d7f4993f)
 
 ### Dependencies
 - [LPS-70634]: Update the com.liferay.gradle.plugins.node dependency to version
@@ -220,6 +254,9 @@
 
 ## 2.0.22 - 2018-01-02
 
+### Commits
+- [LPS-76644]: Add description to Gradle plugins (5cb7b30e6f)
+
 ### Dependencies
 - [LPS-74904]: Update the com.liferay.gradle.plugins.node dependency to version
 4.0.1.
@@ -236,6 +273,9 @@
 4.0.2.
 
 ## 2.0.24 - 2018-02-08
+
+### Commits
+- [LRDOCS-4129]: Fix Gradle plugin README links (4592b9f829)
 
 ### Dependencies
 - [LPS-69802]: Update the com.liferay.gradle.plugins.node dependency to version
@@ -300,6 +340,8 @@
 
 ### Commits
 - [LPS-71117]: Test plugins with Gradle up to 3.5.1 (c3e12d1cf3)
+- [LPS-71117]: Update supported Gradle versions in READMEs (fdcc16c0d4)
+- [LPS-67658]: Fix gradleTest for windows (ac64c1134d)
 
 ### Dependencies
 - [LPS-85959]: Update the com.liferay.gradle.plugins.node dependency to version
@@ -313,6 +355,9 @@
 
 ## 2.0.35 - 2018-10-22
 
+### Commits
+- [LPS-86576]: Simplify gradle tests (use Node.js 5.5.0) (3cfaed9d50)
+
 ### Dependencies
 - [LPS-86576]: Update the com.liferay.gradle.plugins.node dependency to version
 4.4.3.
@@ -324,6 +369,8 @@
 - [LPS-87192]: Add variable gradleVersion (no logic changes) (2f7c0b2fe4)
 - [LPS-85609]: Fix for CI (test only 4.10.2) (4eed005731)
 - [LPS-85609]: Test plugins up to Gradle 4.10.2 (60905bc960)
+- [LPS-85609]: Update supported Gradle versions (d79b89682b)
+- [LPS-86589]: Update readme (4280a3d596)
 - [LPS-86589]: Test Gradle plugins from Gradle 2.14.1 to 3.5.1 (6df521a506)
 
 ### Dependencies
@@ -335,6 +382,7 @@
 ## 2.0.37 - 2019-01-07
 
 ### Commits
+- [LPS-85609]: Update readme (c182ff396d)
 - [LPS-85609]: Simplify gradleTest (a8b0feff31)
 - [LPS-85609]: Use Gradle 4.10.2 (9aa90f8961)
 
@@ -442,6 +490,9 @@
 
 ## 2.0.58 - 2019-06-10
 
+### Commits
+- [LPS-96376]: Update to liferay-npm-scripts v2.1.0 (prettier) (7930ab3625)
+
 ### Dependencies
 - [LPS-93220]: Update the com.liferay.gradle.plugins.node dependency to version
 4.6.17.
@@ -477,6 +528,9 @@
 4.8.0.
 
 ## 2.0.64 - 2019-08-24
+
+### Commits
+- [LPS-100168]: Fix gradleTest (55ca3f97c1)
 
 ### Dependencies
 - [LPS-100168]: Update the com.liferay.gradle.plugins.node dependency to version

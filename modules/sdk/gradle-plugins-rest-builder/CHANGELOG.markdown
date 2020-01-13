@@ -4,6 +4,7 @@
 
 ### Commits
 - [LPS-89415]: Update Gradle tags (15c28ce1bd)
+- [LPS-89415]: Update tests (fbe2e9c690)
 
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -13,6 +14,11 @@ version 1.0.1.
 - [LPS-89415]: Added `model` FreeMarker Java template.
 
 ## 1.0.2 - 2019-01-24
+
+### Commits
+- [LPS-89415]: Update tests (49f8e37517)
+- [LPS-89415]: Add properties (8aa56471de)
+- [LPS-89415]: Update task name to buildREST (a3b5e3bcb5)
 
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -24,17 +30,27 @@ version 1.0.2.
 
 ## 1.0.3 - 2019-01-24
 
+### Commits
+- [LPS-89415]: Make the copyright configurable (85ad472990)
+
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.3.
 
 ## 1.0.4 - 2019-01-25
 
+### Commits
+- [LPS-89415]: Update args (copyright.file, rest.config.file, rest.openapi.file)
+(170da107c5)
+
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.4.
 
 ## 1.0.5 - 2019-01-27
+
+### Commits
+- [LPS-89415]: Add rest-config.yaml (87a1ce0e3a)
 
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -47,6 +63,11 @@ version 1.0.5.
 version 1.0.6.
 
 ## 1.0.7 - 2019-02-07
+
+### Commits
+- [LPS-89415]: Update buildREST arguments to parse multiple OpenAPI definitions
+(29c9e1e6c3)
+- [LPS-89415]: Update examples (62ac329dab)
 
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -68,11 +89,17 @@ version 1.0.10.
 
 ## 1.0.10 - 2019-02-27
 
+### Commits
+- [LPS-89415]: Fix gradleTest (f8e0796091)
+
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.11.
 
 ## 1.0.11 - 2019-03-01
+
+### Commits
+- [LPS-84119]: Fix violations on master (70bf53270f)
 
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -116,6 +143,9 @@ version 1.0.18.
 
 ## 1.0.18 - 2019-04-17
 
+### Commits
+- [LPS-89415]: Use new REST builder arguments (3311064e0e)
+
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.19.
@@ -128,11 +158,19 @@ version 1.0.20.
 
 ## 1.0.20 - 2019-05-03
 
+### Commits
+- [LPS-89415]: Add readme (ea8cd40c47)
+- [LPS-89415]: Automatically apply the java plugin (360f7b426f)
+
 ### Dependencies
 - [LPS-89415]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.21.
 
 ## 1.0.21 - 2019-05-17
+
+### Commits
+- [LRDOCS-6650]: Remove false links (de14351d82)
+- [LRDOCS-6650]: README minor edits (86660dd428)
 
 ### Dependencies
 - [LPS-95723]: Update the com.liferay.portal.tools.rest.builder dependency to
@@ -183,6 +221,11 @@ version 1.0.30.
 
 ## 1.0.29 - 2019-10-28
 
+### Commits
+- []: Revert "LPS-101995 document right version of the rest builder"
+(5841370d87)
+- [LPS-101995]: document right version of the rest builder (30efa95255)
+
 ### Dependencies
 - [LPS-103743]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.31.
@@ -216,6 +259,11 @@ version 1.0.35.
 - [LPS-102721]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.36.
 
+## 1.0.35 - 2019-11-07
+
+### Commits
+- [LPS-102481]: Configure buildREST to run the baseline task (6ff9212931)
+
 ## 1.0.36 - 2019-11-11
 
 ### Dependencies
@@ -237,6 +285,7 @@ version 1.0.39.
 ## 1.0.39 - 2019-12-03
 
 ### Commits
+- [LPS-100515]: Update README.markdown (694b3791de)
 - [LPS-100515]: Update plugins Gradle version (448efac158)
 
 ### Dependencies
@@ -246,8 +295,8 @@ version 1.0.40.
 ## 1.0.40 - 2019-12-04
 
 ### Dependencies
-- [LPS-105304]: Update the com.liferay.portal.tools.rest.builder dependency to
-version 1.0.41.
+- [LPS-105304 LPS-105231]: Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.41.
 
 ## 1.0.41 - 2019-12-09
 
@@ -261,6 +310,12 @@ version 1.0.42.
 - [LPS-105237]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.43.
 
+## 1.0.43 - 2019-12-10
+
+### Commits
+- [LPS-103547]: Configure the api project to load the baseline task (dae4f805ad)
+- [LPS-103547]: Set ignoreFailures to true (5c6d6740f1)
+
 ## 1.0.44 - 2019-12-12
 
 ### Dependencies
@@ -270,8 +325,8 @@ version 1.0.44.
 ## 1.0.45 - 2019-12-16
 
 ### Dependencies
-- [LPS-105719]: Update the com.liferay.portal.tools.rest.builder dependency to
-version 1.0.45.
+- [LPS-105719 LPS-100427]: Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.45.
 
 ## 1.0.46 - 2019-12-18
 
@@ -288,11 +343,17 @@ version 1.0.47.
 ## 1.0.48 - 2019-12-24
 
 ### Dependencies
-- [LPS-102577]: Update the com.liferay.portal.tools.rest.builder dependency to
-version 1.0.48.
+- [LPS-102577 LPS-106317]: Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.48.
 
 ## 1.0.49 - 2019-12-24
 
 ### Dependencies
 - [LPS-105228]: Update the com.liferay.portal.tools.rest.builder dependency to
 version 1.0.49.
+
+## 1.0.50 - 2020-01-09
+
+### Dependencies
+- [LPS-98387]: Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.50.

@@ -1,12 +1,5 @@
 {
-	"plugins": [
-		[
-			"incremental-dom", {
-				"components": true,
-				"namespaceAttributes": true,
-				"prefix": "IncrementalDOM",
-				"runtime": "iDOMHelpers"
-			}
-		]
+	"presets": [
+		"@babel/preset-react", "@babel/preset-env"
 	]
 }

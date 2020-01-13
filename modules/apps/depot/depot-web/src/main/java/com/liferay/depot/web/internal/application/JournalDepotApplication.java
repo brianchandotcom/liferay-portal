@@ -16,6 +16,9 @@ package com.liferay.depot.web.internal.application;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,8 +29,18 @@ import org.osgi.service.component.annotations.Component;
 public class JournalDepotApplication implements DepotApplication {
 
 	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "layout.types.article");
+	}
+
+	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL;
+	}
+
+	@Override
+	public boolean isCustomizable() {
+		return true;
 	}
 
 }

@@ -16,6 +16,9 @@ package com.liferay.depot.web.internal.application;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.depot.application.DepotApplication;
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,8 +29,19 @@ import org.osgi.service.component.annotations.Component;
 public class AssetCategoriesAdminDepotApplication implements DepotApplication {
 
 	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(
+			locale, "model.resource.com.liferay.asset.categories");
+	}
+
+	@Override
 	public String getPortletId() {
 		return AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN;
+	}
+
+	@Override
+	public boolean isCustomizable() {
+		return true;
 	}
 
 }

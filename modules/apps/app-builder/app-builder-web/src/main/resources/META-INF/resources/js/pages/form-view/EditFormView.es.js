@@ -12,14 +12,13 @@
  * details.
  */
 
+import {withDragAndDropContext} from 'data-engine-taglib';
 import React, {useState, useContext} from 'react';
 import {createPortal} from 'react-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {ControlMenuBase} from '../../components/control-menu/ControlMenu.es';
 import CustomObjectSidebar from './CustomObjectSidebar.es';
-import DataLayoutBuilderDragAndDrop from './DataLayoutBuilderDragAndDrop.es';
-import DataLayoutBuilderSidebar from './DataLayoutBuilderSidebar.es';
 import FormViewContextProvider from './FormViewContextProvider.es';
 import FormViewUpperToolbar from './FormViewUpperToolbar.es';
 
@@ -41,12 +40,11 @@ const FormViewControlMenu = ({backURL, dataLayoutId}) => {
 	);
 };
 
-const EditFormView = props => {
+const EditFormView = withDragAndDropContext(props => {
 	const {
 		customObjectSidebarElementId,
 		dataDefinitionId,
 		dataLayoutBuilder,
-		dataLayoutBuilderElementId,
 		dataLayoutId,
 		newCustomObject
 	} = parseProps(props);
@@ -72,23 +70,12 @@ const EditFormView = props => {
 			<FormViewUpperToolbar newCustomObject={newCustomObject} />
 
 			{createPortal(
-				<CustomObjectSidebar
-					customObjectSidebarElementId={customObjectSidebarElementId}
-				/>,
+				<CustomObjectSidebar />,
 				document.querySelector(`#${customObjectSidebarElementId}`)
 			)}
-
-			<DataLayoutBuilderSidebar
-				dataLayoutBuilder={dataLayoutBuilder}
-				dataLayoutBuilderElementId={dataLayoutBuilderElementId}
-			/>
-
-			<DataLayoutBuilderDragAndDrop
-				dataLayoutBuilder={dataLayoutBuilder}
-			/>
 		</FormViewContextProvider>
 	);
-};
+});
 
 export default ({dataLayoutBuilderId, ...props}) => {
 	const [dataLayoutBuilder, setDataLayoutBuilder] = useState();

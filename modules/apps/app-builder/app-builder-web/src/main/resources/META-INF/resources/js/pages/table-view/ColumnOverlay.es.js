@@ -111,7 +111,7 @@ export default ({container, fields, onRemoveFieldName}) => {
 				isClickOutside(
 					target,
 					container,
-					'.app-builder-sidebar',
+					'.data-layout-builder-sidebar',
 					'.dropdown-menu'
 				)
 			) {

@@ -15,10 +15,10 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {SearchInput} from 'data-engine-taglib';
 import React, {useState, useEffect} from 'react';
 
 import ManagementToolbar from '../../components/management-toolbar/ManagementToolbar.es';
-import SearchInput from '../../components/management-toolbar/search/SearchInput.es';
 import Table from '../../components/table/Table.es';
 import {getItem, updateItem} from '../../utils/client.es';
 

@@ -153,9 +153,12 @@ const EditTableView = withRouter(({history}) => {
 				/>
 
 				<div
-					className={classNames('app-builder-sidebar-content', {
-						closed: isSidebarClosed
-					})}
+					className={classNames(
+						'data-layout-builder-sidebar-content',
+						{
+							closed: isSidebarClosed
+						}
+					)}
 				>
 					<div className="container table-view-container">
 						<DropZone

@@ -14,23 +14,19 @@
 
 import {ClayModalProvider} from '@clayui/modal';
 import React from 'react';
-import {DragDropContext as dragDropContext} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 import {AppContextProvider} from '../../AppContext.es';
 import EditFormView from './EditFormView.es';
 
-const EditFormViewApp = dragDropContext(HTML5Backend)(
-	({basePortletURL, ...props}) => {
-		return (
-			<AppContextProvider basePortletURL={basePortletURL}>
-				<ClayModalProvider>
-					<EditFormView {...props} />
-				</ClayModalProvider>
-			</AppContextProvider>
-		);
-	}
-);
+const EditFormViewApp = ({basePortletURL, ...props}) => {
+	return (
+		<AppContextProvider basePortletURL={basePortletURL}>
+			<ClayModalProvider>
+				<EditFormView {...props} />
+			</ClayModalProvider>
+		</AppContextProvider>
+	);
+};
 
 export default function(props) {
 	return <EditFormViewApp {...props} />;

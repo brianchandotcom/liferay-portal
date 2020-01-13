@@ -12,10 +12,10 @@
  * details.
  */
 
+import {DataLayoutVisitor} from 'data-engine-taglib';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {useContext} from 'react';
 
-import {getIndexesFromFieldName} from '../../utils/dataLayoutVisitor.es';
 import FormViewContext from './FormViewContext.es';
 import {deleteDefinitionField} from './actions.es';
 
@@ -27,7 +27,10 @@ export default ({dataLayoutBuilder}) => {
 		const visitor = new PagesVisitor(pages);
 
 		if (visitor.containsField(fieldName)) {
-			const indexes = getIndexesFromFieldName(dataLayout, fieldName);
+			const indexes = DataLayoutVisitor.getIndexesFromFieldName(
+				dataLayout,
+				fieldName
+			);
 
 			dataLayoutBuilder.dispatch('fieldDeleted', {indexes});
 		} else {

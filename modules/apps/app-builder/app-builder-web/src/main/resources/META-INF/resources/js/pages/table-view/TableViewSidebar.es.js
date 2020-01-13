@@ -12,12 +12,10 @@
  * details.
  */
 
+import {DragTypes, FieldType, FieldTypeList, Sidebar} from 'data-engine-taglib';
 import React, {useState, useContext} from 'react';
 
 import Button from '../../components/button/Button.es';
-import FieldType from '../../components/field-types/FieldType.es';
-import FieldTypeList from '../../components/field-types/FieldTypeList.es';
-import Sidebar from '../../components/sidebar/Sidebar.es';
 import {
 	getFieldLabel,
 	getDataDefinitionField
@@ -41,22 +39,27 @@ const FiltersSidebarHeader = () => {
 
 	return (
 		<Sidebar.Header className="d-flex table-view-filters-sidebar-header">
-			<Button
-				className="mr-2"
-				displayType="secondary"
-				monospaced={false}
-				onClick={onClickBack}
-				symbol="angle-left"
-			/>
-
-			<FieldType
-				description={getFieldTypeLabel(fieldTypes, fieldType)}
-				dragAlignment="none"
-				draggable={false}
-				icon={fieldType}
-				label={getFieldLabel(dataDefinition, focusedColumn)}
-				name={focusedColumn}
-			/>
+			<div className="align-items-center autofit-row">
+				<div className="autofit-col">
+					<Button
+						className="mr-2"
+						displayType="secondary"
+						monospaced={false}
+						onClick={onClickBack}
+						symbol="angle-left"
+					/>
+				</div>
+				<div className="autofit-col-expand">
+					<FieldType
+						description={getFieldTypeLabel(fieldTypes, fieldType)}
+						dragAlignment="none"
+						draggable={false}
+						icon={fieldType}
+						label={getFieldLabel(dataDefinition, focusedColumn)}
+						name={focusedColumn}
+					/>
+				</div>
+			</div>
 		</Sidebar.Header>
 	);
 };
@@ -72,6 +75,7 @@ const FieldsTabContent = ({keywords, onAddFieldName}) => {
 
 	return (
 		<FieldTypeList
+			dragType={DragTypes.DRAG_FIELD_TYPE}
 			fieldTypes={dataDefinitionFields.map(
 				({fieldType, label: {en_US: label}, name}) => ({
 					description: getFieldTypeLabel(fieldTypes, fieldType),
@@ -121,6 +125,7 @@ export default ({onAddFieldName, onClose}) => {
 
 	return (
 		<Sidebar
+			className="app-builder-sidebar"
 			closeable={!displayFieldFilters || sidebarClosed}
 			closed={sidebarClosed}
 			onSearch={displayFieldFilters ? false : setKeywords}

@@ -16,9 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {SearchInput} from 'data-engine-taglib';
 import React, {useContext, useRef, useState} from 'react';
 
-import SearchInput from '../../components/management-toolbar/search/SearchInput.es';
 import {
 	getDataDefinitionField,
 	getOptionLabel

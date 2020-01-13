@@ -12,18 +12,12 @@
  * details.
  */
 
-export const ADD_CUSTOM_OBJECT_FIELD = 'ADD_CUSTOM_OBJECT_FIELD';
-export const DELETE_DATA_DEFINITION_FIELD = 'DELETE_DATA_DEFINITION_FIELD';
-export const DELETE_DATA_LAYOUT_FIELD = 'DELETE_DATA_LAYOUT_FIELD';
-export const EDIT_CUSTOM_OBJECT_FIELD = 'EDIT_CUSTOM_OBJECT_FIELD';
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
+
 export const EVALUATION_ERROR = 'EVALUATION_ERROR';
-export const UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD =
-	'UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD';
 export const UPDATE_DATA_DEFINITION = 'UPDATE_DATA_DEFINITION';
 export const UPDATE_DATA_LAYOUT = 'UPDATE_DATA_LAYOUT';
-export const UPDATE_DATA_LAYOUT_NAME = 'UPDATE_DATA_LAYOUT_NAME';
 export const UPDATE_FIELD_TYPES = 'UPDATE_FIELD_TYPES';
-export const UPDATE_FOCUSED_FIELD = 'UPDATE_FOCUSED_FIELD';
 export const UPDATE_IDS = 'UPDATE_IDS';
 export const UPDATE_PAGES = 'UPDATE_PAGES';
 
@@ -74,5 +68,5 @@ export const dropLayoutBuilderField = ({
 
 export const deleteDefinitionField = fieldName => ({
 	payload: {fieldName},
-	type: DELETE_DATA_DEFINITION_FIELD
+	type: DataLayoutBuilderActions.DELETE_DATA_DEFINITION_FIELD
 });

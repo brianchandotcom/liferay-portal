@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import {DragTypes} from 'data-engine-taglib';
 import React, {useLayoutEffect, useState} from 'react';
 import {useDrop} from 'react-dnd';
 
@@ -64,7 +65,7 @@ const getStyle = (container, index, total) => {
 
 const Placeholder = ({container, index, onAddFieldName, total}) => {
 	const [{canDrop, overTarget}, drop] = useDrop({
-		accept: 'fieldType',
+		accept: DragTypes.DRAG_FIELD_TYPE,
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver()

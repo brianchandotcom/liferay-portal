@@ -12,10 +12,10 @@
  * details.
  */
 
+import {SearchInputWithForm} from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
 import SearchContext from './SearchContext.es';
-import {SearchInputWithForm} from './SearchInput.es';
 import SearchSort from './SearchSort.es';
 
 export default ({columns, totalCount}) => {

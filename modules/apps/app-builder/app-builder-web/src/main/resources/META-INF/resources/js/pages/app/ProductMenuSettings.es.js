@@ -15,9 +15,9 @@
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
+import {SearchInput} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
-import SearchInput from '../../components/management-toolbar/search/SearchInput.es';
 import {getItem} from '../../utils/client.es';
 import EditAppContext, {
 	PRODUCT_MENU,

@@ -14,6 +14,5 @@
 
 import useKeyDown from './useKeyDown.es';
 import useRequest from './useRequest.es';
-import useSidebarContent from './useSidebarContent.es';
 
-export {useKeyDown, useRequest, useSidebarContent};
+export {useKeyDown, useRequest};

@@ -12,69 +12,39 @@
  * details.
  */
 
-import React, {useEffect, useReducer} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
-import {getItem} from '../../utils/client.es';
-import DataLayoutBuilderContextProvider from './DataLayoutBuilderContextProvider.es';
-import FormViewContext, {
-	initialState,
-	createReducer
-} from './FormViewContext.es';
-import {
-	UPDATE_DATA_DEFINITION,
-	UPDATE_DATA_LAYOUT,
-	UPDATE_IDS
-} from './actions.es';
+import DataLayoutBuilderInstanceProvider from './DataLayoutBuilderInstanceProvider.es';
+import FormViewContext from './FormViewContext.es';
 
-export default ({
-	children,
-	dataDefinitionId,
-	dataLayoutBuilder,
-	dataLayoutId
-}) => {
-	const reducer = createReducer(dataLayoutBuilder);
-	const [state, dispatch] = useReducer(reducer, initialState);
+export default ({children, dataLayoutBuilder}) => {
+	const [state, setState] = useState(dataLayoutBuilder.getState());
 
 	useEffect(() => {
-		dispatch({
-			payload: {
-				dataDefinitionId,
-				dataLayoutId
-			},
-			type: UPDATE_IDS
-		});
-	}, [dataDefinitionId, dataLayoutId, dispatch]);
+		const callback = () => {
+			setState(dataLayoutBuilder.getState());
+		};
 
-	useEffect(() => {
-		if (dataLayoutId) {
-			getItem(`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`).then(
-				dataLayout =>
-					dispatch({
-						payload: {dataLayout},
-						type: UPDATE_DATA_LAYOUT
-					})
-			);
-		}
-	}, [dataLayoutId, dispatch]);
+		dataLayoutBuilder.on('contextUpdated', callback);
 
-	useEffect(() => {
-		getItem(
-			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-		).then(dataDefinition =>
-			dispatch({
-				payload: {dataDefinition},
-				type: UPDATE_DATA_DEFINITION
-			})
-		);
-	}, [dataDefinitionId, dispatch]);
+		return () =>
+			dataLayoutBuilder.removeEventListener('contextUpdated', callback);
+	}, [dataLayoutBuilder]);
+
+	const dispatch = useCallback(
+		action => {
+			dataLayoutBuilder.dispatchAction(action);
+		},
+		[dataLayoutBuilder]
+	);
 
 	return (
 		<FormViewContext.Provider value={[state, dispatch]}>
-			<DataLayoutBuilderContextProvider
+			<DataLayoutBuilderInstanceProvider
 				dataLayoutBuilder={dataLayoutBuilder}
 			>
 				{children}
-			</DataLayoutBuilderContextProvider>
+			</DataLayoutBuilderInstanceProvider>
 		</FormViewContext.Provider>
 	);
 };

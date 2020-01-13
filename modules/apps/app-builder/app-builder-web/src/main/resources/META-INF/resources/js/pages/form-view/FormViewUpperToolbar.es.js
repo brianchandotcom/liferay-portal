@@ -12,12 +12,12 @@
  * details.
  */
 
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import FormViewContext from './FormViewContext.es';
-import {UPDATE_DATA_LAYOUT_NAME} from './actions.es';
 import saveFormView from './saveFormView.es';
 
 export default ({newCustomObject}) => {
@@ -40,7 +40,7 @@ export default ({newCustomObject}) => {
 
 		dispatch({
 			payload: {name: {en_US: value}},
-			type: UPDATE_DATA_LAYOUT_NAME
+			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_NAME
 		});
 	};
 

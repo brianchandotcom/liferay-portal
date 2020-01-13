@@ -17,6 +17,11 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {
+	DataLayoutBuilderActions,
+	SearchInput,
+	Sidebar
+} from 'data-engine-taglib';
 import React, {
 	useRef,
 	useState,
@@ -26,16 +31,10 @@ import React, {
 	useLayoutEffect
 } from 'react';
 
-import SearchInput from '../../components/management-toolbar/search/SearchInput.es';
-import Sidebar from '../../components/sidebar/Sidebar.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import CustomObjectFieldsList from './CustomObjectFieldsList.es';
 import FormViewContext from './FormViewContext.es';
-import {
-	ADD_CUSTOM_OBJECT_FIELD,
-	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
-} from './actions.es';
 
 const DropDown = () => {
 	const [{fieldTypes}, dispatch] = useContext(FormViewContext);
@@ -49,7 +48,10 @@ const DropDown = () => {
 
 	const onClickFieldType = fieldTypeName => {
 		setActive(false);
-		dispatch({payload: {fieldTypeName}, type: ADD_CUSTOM_OBJECT_FIELD});
+		dispatch({
+			payload: {fieldTypeName},
+			type: DataLayoutBuilderActions.ADD_CUSTOM_OBJECT_FIELD
+		});
 	};
 
 	useLayoutEffect(() => {
@@ -212,7 +214,8 @@ export default () => {
 		if (Object.keys(focusedCustomObjectField).length > 0) {
 			dispatch({
 				payload: {dataDefinitionField: {}},
-				type: UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+				type:
+					DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
 			});
 		}
 	}, 27);
@@ -220,11 +223,16 @@ export default () => {
 	useEffect(() => {
 		const eventHandler = ({target}) => {
 			if (
-				isClickOutside(target, '.app-builder-sidebar', '.dropdown-menu')
+				isClickOutside(
+					target,
+					'.data-layout-builder-sidebar',
+					'.dropdown-menu'
+				)
 			) {
 				dispatch({
 					payload: {dataDefinitionField: {}},
-					type: UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+					type:
+						DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
 				});
 			}
 		};

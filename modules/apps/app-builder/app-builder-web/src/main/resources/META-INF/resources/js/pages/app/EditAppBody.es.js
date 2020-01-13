@@ -12,9 +12,9 @@
  * details.
  */
 
+import {SearchInput} from 'data-engine-taglib';
 import React, {useState} from 'react';
 
-import SearchInput from '../../components/management-toolbar/search/SearchInput.es';
 import {useRequest} from '../../hooks/index.es';
 import ListItems from './ListItems.es';
 

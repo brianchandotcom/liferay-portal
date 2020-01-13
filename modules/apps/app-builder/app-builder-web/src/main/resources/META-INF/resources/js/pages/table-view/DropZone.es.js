@@ -13,11 +13,11 @@
  */
 
 import classNames from 'classnames';
+import {DragTypes} from 'data-engine-taglib';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 import {useDrop} from 'react-dnd';
 
 import Table from '../../components/table/Table.es';
-import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
 import ColumnOverlay from './ColumnOverlay.es';
 import DropZonePlaceholder from './DropZonePlaceholder.es';
 
@@ -42,7 +42,7 @@ const generateItem = columns =>
 
 const DropZone = ({fields, onAddFieldName, onRemoveFieldName}) => {
 	const [{canDrop, overTarget}, drop] = useDrop({
-		accept: DRAG_FIELD_TYPE,
+		accept: DragTypes.DRAG_FIELD_TYPE,
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver()

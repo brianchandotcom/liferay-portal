@@ -12,17 +12,17 @@
  * details.
  */
 
+import {
+	DataLayoutBuilderActions,
+	DataLayoutVisitor,
+	DragTypes,
+	FieldTypeList
+} from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
-import FieldTypeList from '../../components/field-types/FieldTypeList.es';
-import {containsField} from '../../utils/dataLayoutVisitor.es';
-import {DRAG_CUSTOM_OBJECT_FIELD} from '../../utils/dragTypes.es';
-import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
-import {
-	dropCustomObjectField,
-	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
-} from './actions.es';
+import {dropCustomObjectField} from './actions.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
 import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
@@ -44,9 +44,9 @@ const getFieldTypes = ({
 			active: name === focusedCustomObjectField.name,
 			className: 'custom-object-field',
 			description: fieldTypeSettings.label,
-			disabled: containsField(dataLayoutPages, name),
+			disabled: DataLayoutVisitor.containsField(dataLayoutPages, name),
 			dragAlignment: 'right',
-			dragType: DRAG_CUSTOM_OBJECT_FIELD,
+			dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
 			icon: fieldTypeSettings.icon,
 			label: label.en_US,
 			name
@@ -67,7 +67,7 @@ export default ({keywords}) => {
 
 		dispatch({
 			payload: {dataDefinitionField},
-			type: UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+			type: DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
 		});
 	};
 	const onDoubleClick = ({name}) => {

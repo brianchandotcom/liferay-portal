@@ -112,14 +112,13 @@ export const reducer = (state = initialState, action) => {
 		}
 		case UPDATE_FILTER_VALUE: {
 			const {fieldName, value} = action.payload;
-			const {appliedFilters} = state;
 
 			return {
 				...state,
 				dataListView: {
 					...state.dataListView,
 					appliedFilters: {
-						...appliedFilters,
+						...state.dataListView.appliedFilters,
 						[fieldName]: value
 					}
 				}

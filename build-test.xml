@@ -12128,6 +12128,12 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 						<propertycopy from="browser.chrome.bin.file[${browser.chrome.version}]" name="browser.chrome.bin.file" override="true" />
 
+						<get-ip-address />
+
+						<echo file="${analytics.cloud.faro.dir}/osb-faro-functional-test/src/testIntegration/resources/ngrok.properties">
+ip=${ip.address}
+url=${env.HOSTNAME}:8080</echo>
+
 						<prepare-chrome-driver />
 
 						<echo file="${analytics.cloud.test.sh}">

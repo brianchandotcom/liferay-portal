@@ -19,7 +19,6 @@ import React, {useContext, useEffect, useRef} from 'react';
 import FloatingToolbar from '../components/FloatingToolbar';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 import duplicateFragment from '../thunks/duplicateFragment';
@@ -37,31 +36,14 @@ const LAYOUT_DATA_ITEMS = {
 };
 
 export default function PageEditor() {
-	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
 	const {
 		fragmentEntryLinks,
 		layoutData,
-		segmentsExperienceId,
 		sidebarOpen,
 		sidebarPanelId
 	} = useContext(StoreContext);
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
-
-	const isMounted = useIsMounted();
-
-	useEffect(() => {
-		if (isMounted()) {
-			dispatch(
-				updateLayoutData({
-					config,
-					layoutData,
-					segmentsExperienceId
-				})
-			);
-		}
-	}, [config, dispatch, isMounted, layoutData, segmentsExperienceId]);
 
 	return (
 		<div
@@ -69,7 +51,8 @@ export default function PageEditor() {
 				'page-editor--with-sidebar-open': sidebarPanelId && sidebarOpen
 			})}
 		>
-			<DragPreview fragmentEntryLinks={fragmentEntryLinks} />
+			<DragPreview />
+
 			<LayoutDataItem
 				fragmentEntryLinks={fragmentEntryLinks}
 				item={mainItem}
@@ -82,13 +65,8 @@ export default function PageEditor() {
 function LayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
 	const isActive = useIsActive()(item.itemId);
-	const isActiveTopper = LAYOUT_DATA_TOPPER_ACTIVE[item.type];
 	const isMounted = useIsMounted();
 	const componentRef = useRef(null);
-
-	const fragmentEntryLink = fragmentEntryLinks[
-		item.config.fragmentEntryLinkId
-	] || {name: item.type};
 
 	useEffect(() => {
 		if (isActive && componentRef.current && isMounted()) {
@@ -101,89 +79,58 @@ function LayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 	}, [componentRef, isActive, isMounted]);
 
 	return (
+		<Component item={item} layoutData={layoutData} ref={componentRef}>
+			{item.children.map(childId => {
+				return (
+					<LayoutDataItem
+						fragmentEntryLinks={fragmentEntryLinks}
+						item={layoutData.items[childId]}
+						key={childId}
+						layoutData={layoutData}
+					/>
+				);
+			})}
+		</Component>
+	);
+}
+
+function Root({children, item, layoutData}, ref) {
+	return (
 		<Topper
-			acceptDrop={LAYOUT_DATA_ACCEPT_DROP_TYPES[item.type]}
-			active={isActiveTopper}
+			acceptDrop={[
+				LAYOUT_DATA_ITEM_TYPES.fragment,
+				LAYOUT_DATA_ITEM_TYPES.container,
+				LAYOUT_DATA_ITEM_TYPES.row
+			]}
+			active={false}
 			item={item}
+			name={Liferay.Language.get('root')}
 			layoutData={layoutData}
-			name={fragmentEntryLink.name}
 		>
 			{({canDrop, isOver}) => (
-				<Component
-					canDrop={canDrop}
-					isOver={isOver}
-					item={item}
-					layoutData={layoutData}
-					ref={componentRef}
-				>
-					{item.children.map(childId => {
-						return (
-							<LayoutDataItem
-								fragmentEntryLinks={fragmentEntryLinks}
-								item={layoutData.items[childId]}
-								key={childId}
-								layoutData={layoutData}
-							/>
-						);
+				<div
+					className={classNames('page-editor__root', {
+						'page-editor__root--active': isOver && canDrop
 					})}
-				</Component>
+					ref={ref}
+				>
+					{React.Children.count(children) ? (
+						children
+					) : (
+						<div className="taglib-empty-result-message">
+							<div className="taglib-empty-result-message-header"></div>
+							<div className="text-center text-muted">
+								{Liferay.Language.get('place-fragments-here')}
+							</div>
+						</div>
+					)}
+				</div>
 			)}
 		</Topper>
 	);
 }
 
-const LAYOUT_DATA_ACCEPT_DROP_TYPES = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: [LAYOUT_DATA_ITEM_TYPES.fragment],
-	[LAYOUT_DATA_ITEM_TYPES.container]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.row
-	],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.row
-	],
-	[LAYOUT_DATA_ITEM_TYPES.root]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.container,
-		LAYOUT_DATA_ITEM_TYPES.row
-	],
-	[LAYOUT_DATA_ITEM_TYPES.row]: [
-		LAYOUT_DATA_ITEM_TYPES.fragment,
-		LAYOUT_DATA_ITEM_TYPES.row
-	]
-};
-
-const LAYOUT_DATA_TOPPER_ACTIVE = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: false,
-	[LAYOUT_DATA_ITEM_TYPES.container]: true,
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: true,
-	[LAYOUT_DATA_ITEM_TYPES.root]: false,
-	[LAYOUT_DATA_ITEM_TYPES.row]: true
-};
-
-function Root({canDrop, children, isOver}, ref) {
-	return (
-		<div
-			className={classNames('page-editor__root', {
-				'page-editor__root--active': isOver && canDrop
-			})}
-			ref={ref}
-		>
-			{React.Children.count(children) ? (
-				children
-			) : (
-				<div className="taglib-empty-result-message">
-					<div className="taglib-empty-result-message-header"></div>
-					<div className="text-center text-muted">
-						{Liferay.Language.get('place-fragments-here')}
-					</div>
-				</div>
-			)}
-		</div>
-	);
-}
-
-function Container({children, item}, ref) {
+function Container({children, item, layoutData}, ref) {
 	const {
 		backgroundColorCssClass,
 		backgroundImage,
@@ -194,40 +141,53 @@ function Container({children, item}, ref) {
 	} = item.config;
 
 	return (
-		<div
-			className={classNames(
-				`page-editor__container pb-${paddingBottom} pt-${paddingTop} px-${paddingHorizontal}`,
-				{
-					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					container: type === 'fixed',
-					'container-fluid': type === 'fluid',
-					empty: !item.children.length
-				}
-			)}
-			ref={ref}
-			style={
-				backgroundImage
-					? {
-							backgroundImage: `url(${backgroundImage})`,
-							backgroundPosition: '50% 50%',
-							backgroundRepeat: 'no-repeat',
-							backgroundSize: 'cover'
-					  }
-					: {}
-			}
+		<Topper
+			acceptDrop={[
+				LAYOUT_DATA_ITEM_TYPES.fragment,
+				LAYOUT_DATA_ITEM_TYPES.row
+			]}
+			active
+			item={item}
+			name={Liferay.Language.get('container')}
+			layoutData={layoutData}
 		>
-			<FloatingToolbar
-				buttons={[
-					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.container,
-					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
-					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
-				]}
-				item={item}
-				itemRef={ref}
-			/>
+			{() => (
+				<div
+					className={classNames(
+						`page-editor__container pb-${paddingBottom} pt-${paddingTop} px-${paddingHorizontal}`,
+						{
+							[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
+							container: type === 'fixed',
+							'container-fluid': type === 'fluid',
+							empty: !item.children.length
+						}
+					)}
+					ref={ref}
+					style={
+						backgroundImage
+							? {
+									backgroundImage: `url(${backgroundImage})`,
+									backgroundPosition: '50% 50%',
+									backgroundRepeat: 'no-repeat',
+									backgroundSize: 'cover'
+							  }
+							: {}
+					}
+				>
+					<FloatingToolbar
+						buttons={[
+							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
+						]}
+						item={item}
+						itemRef={ref}
+					/>
 
-			<div className="page-editor__container-outline">{children}</div>
-		</div>
+					<div className="page-editor__container-outline">
+						{children}
+					</div>
+				</div>
+			)}
+		</Topper>
 	);
 }
 
@@ -249,67 +209,109 @@ function Row({children, item, layoutData}, ref) {
 		</div>
 	);
 
-	return !parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
-		<div className="container-fluid p-0">{rowContent}</div>
-	) : (
-		rowContent
+	return (
+		<Topper
+			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
+			active
+			item={item}
+			name={Liferay.Language.get('row')}
+			layoutData={layoutData}
+		>
+			{() => (
+				<>
+					<FloatingToolbar
+						buttons={[
+							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
+						]}
+						item={item}
+						itemRef={ref}
+					/>
+
+					{!parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
+						<div className="container-fluid p-0">{rowContent}</div>
+					) : (
+						rowContent
+					)}
+				</>
+			)}
+		</Topper>
 	);
 }
 
-function Column({children, className, item}, ref) {
+function Column({children, className, item, layoutData}, ref) {
 	const {size} = item.config;
 
 	return (
-		<div
-			className={classNames(className, 'col', {[`col-${size}`]: size})}
-			ref={ref}
+		<Topper
+			acceptDrop={[
+				LAYOUT_DATA_ITEM_TYPES.fragment,
+				LAYOUT_DATA_ITEM_TYPES.row
+			]}
+			active={false}
+			item={item}
+			name={Liferay.Language.get('column')}
+			layoutData={layoutData}
 		>
-			<FloatingToolbar
-				buttons={[LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing]}
-				item={item}
-				itemRef={ref}
-			/>
-
-			{children}
-		</div>
+			{() => (
+				<div
+					className={classNames(className, 'col', {
+						[`col-${size}`]: size
+					})}
+					ref={ref}
+				>
+					{children}
+				</div>
+			)}
+		</Topper>
 	);
 }
 
-function Fragment({item}, ref) {
+function Fragment({item, layoutData}, ref) {
+	const dispatch = useContext(DispatchContext);
 	const {fragmentEntryLinks} = useContext(StoreContext);
 
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-	return (
-		<>
-			<FloatingToolbar
-				buttons={[
-					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration,
-					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
-				]}
-				item={item}
-				itemRef={ref}
-				onButtonClick={id => {
-					if (
-						id ===
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
-							.id
-					) {
-						dispatch(
-							duplicateFragment({
-								config,
-								fragmentEntryLinkId:
-									item.config.fragmentEntryLinkId,
-								itemId: item.itemId,
-								store
-							})
-						);
-					}
-				}}
-			/>
+	const handleButtonClick = id => {
+		if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment.id) {
+			dispatch(
+				duplicateFragment({
+					config,
+					fragmentEntryLinkId: item.config.fragmentEntryLinkId,
+					itemId: item.itemId,
+					store
+				})
+			);
+		}
+	};
 
-			<FragmentContent fragmentEntryLink={fragmentEntryLink} ref={ref} />
-		</>
+	return (
+		<Topper
+			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
+			active
+			item={item}
+			name={fragmentEntryLink.name}
+			layoutData={layoutData}
+		>
+			{() => (
+				<>
+					<FloatingToolbar
+						buttons={[
+							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment,
+							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
+						]}
+						item={item}
+						itemRef={ref}
+						onButtonClick={handleButtonClick}
+					/>
+
+					<FragmentContent
+						fragmentEntryLink={fragmentEntryLink}
+						ref={ref}
+					/>
+				</>
+			)}
+		</Topper>
 	);
 }

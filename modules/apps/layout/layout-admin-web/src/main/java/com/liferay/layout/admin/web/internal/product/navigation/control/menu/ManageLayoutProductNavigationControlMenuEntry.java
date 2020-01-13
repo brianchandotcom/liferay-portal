@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
+import com.liferay.layout.admin.web.internal.display.context.EditLayoutControlMenuDisplayContext;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -86,6 +87,17 @@ public class ManageLayoutProductNavigationControlMenuEntry
 
 		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon())) {
+
+			return false;
+		}
+
+		EditLayoutControlMenuDisplayContext
+			editLayoutControlMenuDisplayContext =
+				new EditLayoutControlMenuDisplayContext(httpServletRequest);
+
+		if (!editLayoutControlMenuDisplayContext.
+				isShowConfigurationPageAction() &&
+			editLayoutControlMenuDisplayContext.isShowPermissionsAction()) {
 
 			return false;
 		}

@@ -61,15 +61,43 @@ public class EditLayoutControlMenuDisplayContext {
 	public List<DropdownItem> getDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				if (_isShowConfigurationPageAction()) {
+				if (isShowConfigurationPageAction()) {
 					add(_getConfigurationActionUnsafeConsumer());
 				}
 
-				if (_isShowPermissionsAction()) {
+				if (isShowPermissionsAction()) {
 					add(_getPermissionsActionUnsafeConsumer());
 				}
 			}
 		};
+	}
+
+	public boolean isShowConfigurationPageAction() throws PortalException {
+		return LayoutPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
+	}
+
+	public boolean isShowPermissionsAction() {
+		if (StagingUtil.isIncomplete(_themeDisplay.getLayout())) {
+			return false;
+		}
+
+		Group selGroup = _themeDisplay.getScopeGroup();
+
+		if (selGroup.isLayoutPrototype()) {
+			return false;
+		}
+
+		try {
+			return LayoutPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
+				ActionKeys.PERMISSIONS);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -133,34 +161,6 @@ public class EditLayoutControlMenuDisplayContext {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
-	}
-
-	private boolean _isShowConfigurationPageAction() throws PortalException {
-		return LayoutPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
-	}
-
-	private boolean _isShowPermissionsAction() {
-		if (StagingUtil.isIncomplete(_themeDisplay.getLayout())) {
-			return false;
-		}
-
-		Group selGroup = _themeDisplay.getScopeGroup();
-
-		if (selGroup.isLayoutPrototype()) {
-			return false;
-		}
-
-		try {
-			return LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
-				ActionKeys.PERMISSIONS);
-		}
-		catch (Exception e) {
-		}
-
-		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

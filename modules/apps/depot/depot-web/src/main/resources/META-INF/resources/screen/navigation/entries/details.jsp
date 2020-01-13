@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+DepotAdminApplicationsDisplayContext depotAdminApplicationsDisplayContext = (DepotAdminApplicationsDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_ADMIN_APPLICATIONS_DISPLAY_CONTEXT);
+
 DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 
 Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
@@ -25,15 +27,43 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupKeyException.class %>" message="please-enter-a-valid-name" />
 
-<liferay-frontend:fieldset
-	collapsible="false"
-	label='<%= LanguageUtil.get(request, "details") %>'
->
-	<aui:model-context bean="<%= group %>" model="<%= Group.class %>" />
+<liferay-frontend:fieldset-group>
+	<liferay-frontend:fieldset
+		collapsible="false"
+		label='<%= LanguageUtil.get(request, "details") %>'
+	>
+		<aui:model-context bean="<%= group %>" model="<%= Group.class %>" />
 
-	<aui:input name="repositoryId" type="resource" value="<%= String.valueOf(depotEntry.getDepotEntryId()) %>" />
+		<aui:input name="repositoryId" type="resource" value="<%= String.valueOf(depotEntry.getDepotEntryId()) %>" />
 
-	<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= String.valueOf(group.getName(locale)) %>" />
+		<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= String.valueOf(group.getName(locale)) %>" />
 
-	<aui:input name="description" placeholder="description" />
-</liferay-frontend:fieldset>
+		<aui:input name="description" placeholder="description" />
+	</liferay-frontend:fieldset>
+
+	<liferay-frontend:fieldset
+		collapsible="true"
+		label='<%= LanguageUtil.get(request, "applications") %>'
+	>
+		<aui:fieldset cssClass="default-language ">
+			<p class="text-muted">
+				<liferay-ui:message key="repository-applications-description" />
+			</p>
+		</aui:fieldset>
+
+		<aui:fieldset cssClass="default-language ">
+
+			<%
+			for (DepotApplication depotApplication : depotAdminApplicationsDisplayContext.getDepotApplications()) {
+				boolean isEnabled = depotAdminApplicationsDisplayContext.isEnabled(depotApplication.getPortletId(), depotEntry.getGroupId());
+			%>
+
+				<aui:input disabled="<%= false %>" label="<%= depotApplication.getLabel(locale) %>" name="<%= depotApplication.getPortletId() %>" type="checkbox" value="<%= isEnabled %>" />
+
+			<%
+			}
+			%>
+
+		</aui:fieldset>
+	</liferay-frontend:fieldset>
+</liferay-frontend:fieldset-group>

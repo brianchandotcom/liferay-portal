@@ -16,8 +16,10 @@ package com.liferay.depot.web.internal.portlet;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.depot.web.internal.display.context.DepotAdminApplicationsDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.DynamicRenderRequest;
@@ -76,6 +78,11 @@ public class DepotSettingsPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				DepotAdminWebKeys.ITEM_SELECTOR, _itemSelector);
 
+			renderRequest.setAttribute(
+				DepotAdminWebKeys.DEPOT_ADMIN_APPLICATIONS_DISPLAY_CONTEXT,
+				new DepotAdminApplicationsDisplayContext(
+					_depotApplicationController));
+
 			super.doView(
 				new DynamicRenderRequest(
 					renderRequest,
@@ -91,6 +98,9 @@ public class DepotSettingsPortlet extends MVCPortlet {
 			throw new PortletException(pe);
 		}
 	}
+
+	@Reference
+	private DepotApplicationController _depotApplicationController;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

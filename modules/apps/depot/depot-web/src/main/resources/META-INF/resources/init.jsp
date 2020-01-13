@@ -25,12 +25,14 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.depot.exception.DepotEntryNameException" %><%@
+<%@ page import="com.liferay.depot.application.DepotApplication" %><%@
+page import="com.liferay.depot.exception.DepotEntryNameException" %><%@
 page import="com.liferay.depot.model.DepotEntry" %><%@
 page import="com.liferay.depot.model.DepotEntryGroupRel" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotAdminWebKeys" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotPortletKeys" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConstants" %><%@
+page import="com.liferay.depot.web.internal.display.context.DepotAdminApplicationsDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminSitesDisplayContext" %><%@

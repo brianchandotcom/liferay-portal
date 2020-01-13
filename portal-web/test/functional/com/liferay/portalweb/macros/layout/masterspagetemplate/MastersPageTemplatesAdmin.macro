@@ -8,6 +8,8 @@ definition {
 		Button.clickSave();
 
 		PageEditor.assertFragmentSidebarLoaded();
+
+		PageEditor.clickPublish();
 	}
 
 	macro gotoMastersEllipsisItem {

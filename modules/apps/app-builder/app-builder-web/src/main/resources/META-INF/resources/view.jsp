@@ -20,6 +20,10 @@
 String appBuilderRootElementId = renderResponse.getNamespace() + "-app-builder-root";
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/data-engine-taglib/data_layout_builder/css/main.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
 <portlet:renderURL var="basePortletURL" />
 
 <div id="<%= appBuilderRootElementId %>">

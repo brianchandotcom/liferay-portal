@@ -20,6 +20,9 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -90,13 +93,33 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = addItemToLayoutData(actionRequest);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			jsonObject = addItemToLayoutData(actionRequest);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			String errorMessage = "an-unexpected-error-occurred";
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					_portal.getHttpServletRequest(actionRequest),
+					errorMessage));
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddItemReactMVCActionCommand.class);
 
 	@Reference
 	private Portal _portal;

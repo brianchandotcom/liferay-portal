@@ -14,44 +14,21 @@
 
 package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.taglib.aui.IconTag;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
-import com.liferay.taglib.ui.SuccessTag;
-
-import java.io.IOException;
-import java.io.Writer;
 
 import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,7 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 	service = ProductNavigationControlMenuEntry.class
 )
 public class ManageLayoutProductNavigationControlMenuEntry
-	extends BaseProductNavigationControlMenuEntry {
+	extends BaseJSPProductNavigationControlMenuEntry {
+
+	@Override
+	public String getIconJspPath() {
+		return "/control/menu/edit_layout_control_menu_entry_icon.jsp";
+	}
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -78,89 +60,6 @@ public class ManageLayoutProductNavigationControlMenuEntry
 	@Override
 	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
-	}
-
-	@Override
-	public boolean includeIcon(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.getClassNameId() == _portal.getClassNameId(Layout.class)) {
-			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
-
-		PortletURL editPageURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		editPageURL.setParameter("mvcRenderCommandName", "/layout/edit_layout");
-
-		String currentURL = _portal.getCurrentURL(httpServletRequest);
-
-		editPageURL.setParameter("redirect", currentURL);
-		editPageURL.setParameter("backURL", currentURL);
-
-		if (layout.isSystem()) {
-			editPageURL.setParameter(
-				"portletResource",
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES);
-		}
-
-		editPageURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-		editPageURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		Map<String, String> values = HashMapBuilder.put(
-			"configurePage",
-			_html.escape(_language.get(resourceBundle, "configure-page"))
-		).put(
-			"editPageURL", editPageURL.toString()
-		).build();
-
-		try {
-			IconTag iconTag = new IconTag();
-
-			iconTag.setCssClass("icon-monospaced");
-			iconTag.setImage("cog");
-			iconTag.setMarkupView("lexicon");
-
-			PageContext pageContext = PageContextFactoryUtil.create(
-				httpServletRequest, httpServletResponse);
-
-			values.put("iconCog", iconTag.doTagAsString(pageContext));
-
-			SuccessTag successTag = new SuccessTag();
-
-			successTag.setKey("layoutUpdated");
-			successTag.setMessage(
-				_language.get(
-					resourceBundle, "the-page-was-updated-succesfully"));
-			successTag.setTargetNode("#controlMenuAlertsContainer");
-
-			values.put(
-				"layoutUpdatedMessage", successTag.doTagAsString(pageContext));
-		}
-		catch (JspException je) {
-			ReflectionUtil.throwException(je);
-		}
-
-		Writer writer = httpServletResponse.getWriter();
-
-		writer.write(StringUtil.replace(_TMPL_CONTENT, "${", "}", values));
-
-		return true;
 	}
 
 	@Override
@@ -194,6 +93,15 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	private boolean _isMasterLayout(Layout layout) {
 		if (layout.getMasterLayoutPlid() > 0) {
 			return false;
@@ -219,25 +127,8 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		return true;
 	}
 
-	private static final String _TMPL_CONTENT = StringUtil.read(
-		ManageLayoutProductNavigationControlMenuEntry.class,
-		"/META-INF/resources/control/menu/edit_layout_control_menu_entry_" +
-			"icon.tmpl");
-
-	@Reference
-	private Html _html;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

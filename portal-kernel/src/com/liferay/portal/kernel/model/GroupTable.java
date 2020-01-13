@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.dao.model.Column;
-import com.liferay.portal.kernel.dao.model.Table;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 
 import java.sql.Types;
 

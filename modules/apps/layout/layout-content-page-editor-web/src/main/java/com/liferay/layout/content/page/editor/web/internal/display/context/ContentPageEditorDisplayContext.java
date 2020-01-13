@@ -1360,6 +1360,13 @@ public class ContentPageEditorDisplayContext {
 				_contentPageEditorTypeConfiguration.type(), "react")) {
 
 			layoutData = LayoutDataConverter.convert(layoutData);
+
+			LayoutPageTemplateStructureLocalServiceUtil.
+				updateLayoutPageTemplateStructure(
+					themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					themeDisplay.getPlid(), getSegmentsExperienceId(),
+					layoutData);
 		}
 
 		_layoutData = layoutData;
@@ -1461,6 +1468,13 @@ public class ContentPageEditorDisplayContext {
 					_contentPageEditorTypeConfiguration.type(), "react")) {
 
 				layoutData = LayoutDataConverter.convert(layoutData);
+
+				LayoutPageTemplateStructureLocalServiceUtil.
+					updateLayoutPageTemplateStructure(
+						themeDisplay.getScopeGroupId(),
+						PortalUtil.getClassNameId(Layout.class.getName()),
+						themeDisplay.getPlid(),
+						SegmentsExperienceConstants.ID_DEFAULT, layoutData);
 			}
 
 			_masterLayoutData = layoutData;

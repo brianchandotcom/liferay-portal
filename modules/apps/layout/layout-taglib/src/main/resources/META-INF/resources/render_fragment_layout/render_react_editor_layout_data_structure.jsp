@@ -93,12 +93,13 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(childItemConfigJSONObject);
 			boolean columnSpacing = childItemConfigJSONObject.getBoolean("columnSpacing", true);
 			String containerType = childItemConfigJSONObject.getString("containerType");
+			long paddingBottom = childItemConfigJSONObject.getLong("paddingBottom", -1L);
 			long paddingHorizontal = childItemConfigJSONObject.getLong("paddingHorizontal", -1L);
-			long paddingVertical = childItemConfigJSONObject.getLong("paddingVertical", -1L);
+			long paddingTop = childItemConfigJSONObject.getLong("paddingTop", -1L);
 			%>
 
 			<section class="<%= Validator.isNotNull(backgroundColorCssClass) ? "bg-" + backgroundColorCssClass : "" %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-				<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingVertical != -1L) ? "py-" + paddingVertical : "" %>">
+				<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "" %> <%= (paddingBottom != -1L) ? "pb-" + paddingBottom : "" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingTop != -1L) ? "pt-" + paddingTop : "" %>">
 					<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
 
 						<%

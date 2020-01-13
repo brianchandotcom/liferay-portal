@@ -1,5 +1,5 @@
 definition {
-	
+
 	macro _deleteAllSegments {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
 			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
@@ -9,7 +9,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 	}
-	
+
 	macro addMoreProperties {
 		var key_propertyOption = "${propertyOption}";
 

@@ -22,7 +22,7 @@
 
 			<replaceregexp
 				file="${analytics.cloud.docker.test.yaml}"
-				match="image: liferay/com-liferay-osb-faro:\s+"
+				match="image: liferay\/com-liferay-osb-faro\:asah-local-latest"
 				replace="image: ${analytics.cloud.faro.image.name}"
 			/>
 

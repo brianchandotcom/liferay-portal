@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -157,7 +157,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 			conversionWarningMessages.add(
 				LanguageUtil.get(
 					resourceBundle,
-					"the-page-uses-nested-applications-widgets.-they-have-" +
+					"this-page-uses-nested-applications-widgets.-they-have-" +
 						"been-placed-in-a-single-column-and-may-require-" +
 							"manual-reorganization"));
 		}
@@ -168,8 +168,9 @@ public class DefaultLayoutConverter implements LayoutConverter {
 			conversionWarningMessages.add(
 				LanguageUtil.get(
 					resourceBundle,
-					"the-page-has-customizable-columns.-this-capability-will-" +
-						"be-lost-if-the-conversion-takes-place"));
+					"this-page-has-customizable-columns.-this-capability-is-" +
+						"not-supported-for-content-pages-and-will-be-lost-if-" +
+							"the-conversion-draft-is-published"));
 		}
 
 		if (_isLayoutTemplateParseable(layout) &&
@@ -181,8 +182,8 @@ public class DefaultLayoutConverter implements LayoutConverter {
 			conversionWarningMessages.add(
 				LanguageUtil.get(
 					resourceBundle,
-					"the-page-uses-a-non-standard-page-layout.-a-best-effort-" +
-						"conversion-has-been-performed.-verify-the-" +
+					"this-page-uses-a-non-standard-page-layout.-a-best-" +
+						"effort-conversion-has-been-performed.-verify-the-" +
 							"conversion-draft-before-publishing-it"));
 		}
 
@@ -190,7 +191,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 			conversionWarningMessages.add(
 				LanguageUtil.get(
 					resourceBundle,
-					"the-page-uses-a-non-standard-page-layout.-all-widgets-" +
+					"this-page-uses-a-non-standard-page-layout.-all-widgets-" +
 						"have-been-placed-in-a-single-column-and-will-" +
 							"require-manual-reorganization"));
 		}

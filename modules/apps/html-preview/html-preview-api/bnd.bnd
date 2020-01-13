@@ -1,6 +1,6 @@
 Bundle-Name: Liferay HTML Preview API
 Bundle-SymbolicName: com.liferay.html.preview.api
-Bundle-Version: 3.0.1
+Bundle-Version: 3.1.0
 Export-Package:\
 	com.liferay.html.preview.exception,\
 	com.liferay.html.preview.model,\

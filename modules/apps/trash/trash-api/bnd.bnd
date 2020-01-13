@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Trash API
 Bundle-SymbolicName: com.liferay.trash.api
-Bundle-Version: 3.0.1
+Bundle-Version: 3.1.0
 Export-Package:\
 	com.liferay.trash,\
 	com.liferay.trash.exception,\

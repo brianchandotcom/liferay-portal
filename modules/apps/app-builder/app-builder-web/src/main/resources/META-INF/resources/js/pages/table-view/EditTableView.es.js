@@ -25,8 +25,7 @@ import DropZone from './DropZone.es';
 import EditTableViewContext, {
 	ADD_DATA_LIST_VIEW_FIELD,
 	REMOVE_DATA_LIST_VIEW_FIELD,
-	UPDATE_DATA_LIST_VIEW_NAME,
-	UPDATE_FOCUSED_COLUMN
+	UPDATE_DATA_LIST_VIEW_NAME
 } from './EditTableViewContext.es';
 import EditTableViewContextProvider from './EditTableViewContextProvider.es';
 import TableViewSidebar from './TableViewSidebar.es';
@@ -97,8 +96,6 @@ const EditTableView = withRouter(({history}) => {
 			payload: {fieldName, index},
 			type: ADD_DATA_LIST_VIEW_FIELD
 		});
-
-		dispatch({payload: {fieldName}, type: UPDATE_FOCUSED_COLUMN});
 	};
 
 	const onCloseSidebar = closed => setSidebarClosed(closed);

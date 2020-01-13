@@ -238,15 +238,15 @@ export default function Topper({
 			}
 
 			return React.cloneElement(child, {
-				className: classNames(child.className, styles),
+				...child.props,
+				className: classNames(child.props.className, styles),
 				ref: node => {
 					containerRef.current = node;
 					drop(node);
 
 					// Call the original ref, if any.
-					const {ref} = child;
-					if (typeof ref === 'function') {
-						ref(node);
+					if (typeof child.props.ref === 'function') {
+						child.props.ref(node);
 					}
 				}
 			});

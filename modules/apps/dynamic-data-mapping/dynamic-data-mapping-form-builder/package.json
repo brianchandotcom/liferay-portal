@@ -34,6 +34,7 @@
 			"Sidebar"
 		]
 	},
+	"main": "js/index.es.js",
 	"name": "dynamic-data-mapping-form-builder",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

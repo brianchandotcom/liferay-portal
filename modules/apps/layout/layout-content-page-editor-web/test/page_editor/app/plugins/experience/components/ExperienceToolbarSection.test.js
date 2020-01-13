@@ -35,6 +35,7 @@ import ExperienceToolbarSection from '../../../../../../src/main/resources/META-
 
 import '@testing-library/jest-dom/extend-expect';
 
+const MOCK_DELETE_URL = 'delete-experience-test-url';
 const MOCK_CREATE_URL = 'create-experience-test-url';
 const MOCK_UPDATE_PRIORITY_URL = 'update-experience-priority-test-url';
 const MOCK_UPDATE_URL = 'update-experience-test-url';
@@ -75,7 +76,7 @@ const mockState = {
 			segmentsExperimentStatus: undefined,
 			segmentsExperimentURL: 'https//:default-experience.com'
 		},
-		'test-segment-id-01': {
+		'test-experience-id-01': {
 			active: true,
 			hasLockedSegmentsExperiment: false,
 			name: 'Experience #1',
@@ -85,7 +86,7 @@ const mockState = {
 			segmentsExperimentStatus: undefined,
 			segmentsExperimentURL: 'https//:experience-1.com'
 		},
-		'test-segment-id-02': {
+		'test-experience-id-02': {
 			active: true,
 			hasLockedSegmentsExperiment: false,
 			name: 'Experience #2',
@@ -113,6 +114,7 @@ const mockConfig = {
 	},
 	classPK: 'test-classPK',
 	defaultSegmentsExperienceId: '0',
+	deleteSegmentsExperienceURL: MOCK_DELETE_URL,
 	hasEditSegmentsEntryPermission: true,
 	hasUpdatePermissions: true,
 	updateSegmentsExperiencePriorityURL: MOCK_UPDATE_PRIORITY_URL,
@@ -475,6 +477,139 @@ describe('ExperienceToolbarSection', () => {
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
 				type: UPDATE_SEGMENTS_EXPERIENCE
+			})
+		);
+	});
+
+	it('calls the backend to delete experience', async () => {
+		serviceFetch.mockImplementation(() => Promise.resolve());
+
+		/**
+		 * Auto confirm deletion
+		 */
+		window.confirm = jest.fn(() => true);
+
+		const mockDispatch = jest.fn(() => {});
+
+		const mockStateForDelete = {
+			...mockState,
+			layoutData: {
+				items: {
+					'00001': {
+						config: {
+							fragmentEntryLinkId: 1000
+						},
+						type: 'fragment'
+					},
+					'00004': {
+						config: {
+							fragmentEntryLinkId: 4000 // latest version of layoutData is not in layoutDataList
+						},
+						type: 'fragment'
+					}
+				}
+			},
+			layoutDataList: [
+				{
+					layoutData: {
+						items: {
+							'00001': {
+								config: {
+									fragmentEntryLinkId: 10000
+								},
+								type: 'fragment'
+							}
+						}
+					},
+					segmentsExperienceId: 'test-experience-id-00'
+				},
+				{
+					layoutData: {
+						items: {
+							'00001': {
+								config: {
+									fragmentEntryLinkId: 1000
+								},
+								type: 'fragment'
+							},
+							'0002': {
+								config: {
+									fragmentEntryLinkId: 2000
+								},
+								type: 'fragment' // unique to the experience we delete
+							},
+							'0004': {
+								config: {
+									fragmentEntryLinkId: 4000
+								},
+								type: 'fragment'
+							}
+						}
+					},
+					segmentsExperienceId: 'test-experience-id-01'
+				},
+				{
+					layoutData: {
+						items: {
+							'00001': {
+								config: {
+									fragmentEntryLinkId: 1000
+								},
+								type: 'fragment'
+							},
+							'0003': {
+								config: {
+									fragmentEntryLinkId: 3000
+								},
+								type: 'fragment'
+							}
+						}
+					},
+					segmentsExperienceId: 'test-experience-id-02'
+				}
+			]
+		};
+
+		const {
+			getAllByRole,
+			getByLabelText,
+			getByRole
+		} = renderExperienceToolbarSection(
+			mockStateForDelete,
+			mockConfig,
+			mockDispatch
+		);
+
+		const dropDownButton = getByLabelText('experience');
+
+		userEvent.click(dropDownButton);
+
+		await waitForElement(() => getByRole('list'));
+
+		const experienceItems = getAllByRole('listitem');
+
+		expect(experienceItems.length).toBe(3);
+
+		expect(
+			within(experienceItems[0]).getByText('Experience #1')
+		).toBeInTheDocument();
+
+		const deleteExperienceButton = within(experienceItems[0]).getByTitle(
+			'delete-experience'
+		);
+
+		userEvent.click(deleteExperienceButton);
+
+		await wait(() => expect(window.confirm).toHaveBeenCalledTimes(1));
+
+		await wait(() => expect(serviceFetch).toHaveBeenCalledTimes(1));
+
+		expect(serviceFetch).toHaveBeenCalledWith(
+			expect.objectContaining({}),
+			expect.stringContaining(MOCK_DELETE_URL),
+			expect.objectContaining({
+				fragmentEntryLinkIds: '[2000]',
+				segmentsExperienceId: 'test-experience-id-01'
 			})
 		);
 	});

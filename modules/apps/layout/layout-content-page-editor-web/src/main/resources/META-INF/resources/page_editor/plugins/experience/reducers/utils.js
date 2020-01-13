@@ -144,7 +144,7 @@ function updateFragmentEntryLinksEditableValues(
 }
 
 function deleteExperienceById(state, segmentsExperienceId) {
-	const experiences = state.availableSegmentsExperiences;
+	const experiences = {...state.availableSegmentsExperiences};
 
 	delete experiences[segmentsExperienceId];
 

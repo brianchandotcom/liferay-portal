@@ -15,6 +15,8 @@
 import {cancelDebounce, debounce} from 'frontend-js-web';
 import {useRef} from 'react';
 
+import {LAYOUT_DATA_ITEM_TYPES} from '../../app/config/constants/layoutDataItemTypes';
+
 export function useDebounceCallback(callback, milliseconds) {
 	const callbackRef = useRef(debounce(callback, milliseconds));
 
@@ -59,4 +61,73 @@ export function recoverModalExperienceState() {
 	}
 
 	return null;
+}
+
+function distinct(element, index, array) {
+	return array.indexOf(element) === index;
+}
+
+function onlyFragmentType(element) {
+	return element.type === LAYOUT_DATA_ITEM_TYPES.fragment;
+}
+
+function notInArray(arrayToSearch) {
+	return function(element) {
+		return arrayToSearch.indexOf(element) === -1;
+	};
+}
+
+export function getUniqueFragmentEntryLinks({
+	experienceIdToExclude,
+	layoutData,
+	layoutDataList,
+	selectedExperienceId
+}) {
+	const layoutDataToCompare =
+		selectedExperienceId === experienceIdToExclude
+			? layoutData
+			: layoutDataList.find(
+					i => i.segmentsExperienceId === experienceIdToExclude
+			  ).layoutData;
+
+	const fragmentEntryLinkIdsInLayout = Object.entries(
+		layoutDataToCompare.items
+	)
+		.map(([, value]) => value)
+		.filter(value => onlyFragmentType(value))
+		.map(({config}) => config.fragmentEntryLinkId);
+
+	const layoutDatasWithoutExcluded = layoutDataList
+		.filter(({segmentsExperienceId: id}) => {
+			return id !== experienceIdToExclude;
+		})
+		.map(({layoutData: layout}) => {
+			if (selectedExperienceId) {
+				/**
+				 * Updated layoutData
+				 */
+				return layoutData;
+			}
+			return layout;
+		});
+
+	const fragmentEntryLinksIdsInNotExcluded = layoutDatasWithoutExcluded
+		.map(layoutData => layoutData.items)
+		.reduce(
+			(prevItems, items) => [...prevItems, ...Object.values(items)],
+			[]
+		)
+		.filter(onlyFragmentType)
+		.map(({config}) => config.fragmentEntryLinkId)
+		.filter(distinct);
+
+	const notInOtherLayoutsFilter = notInArray(
+		fragmentEntryLinksIdsInNotExcluded
+	);
+
+	const uniqueFragmentEntryLinkIdsToLayout = fragmentEntryLinkIdsInLayout.filter(
+		notInOtherLayoutsFilter
+	);
+
+	return uniqueFragmentEntryLinkIdsToLayout;
 }

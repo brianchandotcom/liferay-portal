@@ -20,6 +20,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
+import {StoreContext} from '../../../app/store/index';
 import AppContext from '../../../core/AppContext';
 import {APIContext} from '../API';
 import {
@@ -29,6 +30,7 @@ import {
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../actions';
 import {
+	getUniqueFragmentEntryLinks,
 	storeModalExperienceState,
 	recoverModalExperienceState,
 	useDebounceCallback
@@ -87,6 +89,7 @@ const ExperienceSelector = ({
 		selectedSegmentsEntryId
 	} = useContext(ConfigContext);
 	const {dispatch} = useContext(AppContext);
+	const {layoutData, layoutDataList} = useContext(StoreContext);
 	const {
 		createExperience,
 		removeExperience,
@@ -256,9 +259,14 @@ const ExperienceSelector = ({
 	};
 
 	const deleteExperience = id => {
-		// TODO find fragment entry links that are unique to the layoutData associated to the experience to remove
-		const fragmentEntryLinks = [];
-		removeExperience(id, fragmentEntryLinks)
+		const uniqueFragmentEntryLinks = getUniqueFragmentEntryLinks({
+			experienceIdToExclude: id,
+			layoutData,
+			layoutDataList,
+			selectedExperienceId: selectedExperience.segmentsExperienceId
+		});
+
+		removeExperience(id, uniqueFragmentEntryLinks)
 			.then(() =>
 				dispatch({
 					payload: {

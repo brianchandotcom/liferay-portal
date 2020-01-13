@@ -30,6 +30,7 @@ export default function ExperienceToolbarSection({selectId}) {
 		classNameId,
 		classPK,
 		defaultSegmentsEntryId,
+		deleteSegmentsExperienceURL,
 		editSegmentsEntryURL,
 		portletNamespace,
 		updateSegmentsExperiencePriorityURL,
@@ -62,8 +63,8 @@ export default function ExperienceToolbarSection({selectId}) {
 			addSegmentsExperienceURL,
 			classNameId,
 			classPK,
+			deleteSegmentsExperienceURL,
 			portletNamespace,
-			removeSegmentsExperienceURL: '/',
 			updateSegmentsExperiencePriorityURL,
 			updateSegmentsExperienceURL
 		});
@@ -71,6 +72,7 @@ export default function ExperienceToolbarSection({selectId}) {
 		addSegmentsExperienceURL,
 		classNameId,
 		classPK,
+		deleteSegmentsExperienceURL,
 		portletNamespace,
 		updateSegmentsExperiencePriorityURL,
 		updateSegmentsExperienceURL

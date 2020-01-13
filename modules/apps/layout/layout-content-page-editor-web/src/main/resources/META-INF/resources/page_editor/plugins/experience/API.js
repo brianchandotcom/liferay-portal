@@ -39,12 +39,10 @@ export default function API({
 		return serviceFetch({portletNamespace}, addSegmentsExperienceURL, body);
 	}
 
-	function removeExperience(
-		segmentsExperienceId,
-		_fragmentEntryLinkIds = []
-	) {
+	function removeExperience(segmentsExperienceId, fragmentEntryLinkIds = []) {
 		const body = {
-			_fragmentEntryLinkIds,
+			deleteSegmentsExperience: true,
+			fragmentEntryLinkIds: JSON.stringify(fragmentEntryLinkIds),
 			segmentsExperienceId
 		};
 

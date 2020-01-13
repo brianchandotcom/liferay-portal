@@ -81,10 +81,6 @@ buildChangelogs {
 			}
 
 			String commits = ""
-			String dependencies = ""
-			String descriptions = ""
-			String publishDate = ""
-			String ticket = ""
 
 			gitLogOutput.eachLine {
 				String gitLogLine ->
@@ -99,6 +95,8 @@ buildChangelogs {
 
 				commits = commits.replace("  ", " ")
 			}
+
+			String dependencies = ""
 
 			standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
@@ -128,8 +126,11 @@ buildChangelogs {
 							|- [${commitDetails["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 					}
 				}
+
 				dependencies = dependencies.replace("  ", " ")
 			}
+
+			String descriptions = ""
 
 			if (changelogDescriptionsFile.exists()) {
 				matcher = changelogDescriptionsFile.text =~ /(?s)${version}:description(.+?)(?:(?=\d+\.\d+\.\d+:description)|$)/
@@ -149,7 +150,7 @@ buildChangelogs {
 				workingDir = projectDir.parentFile
 			}
 
-			publishDate = standardOutputByteArrayOutputStream.toString().split(":")[1]
+			String publishDate = standardOutputByteArrayOutputStream.toString().split(":")[1]
 
 			if ((commits.length() > 0) || (dependencies.length() > 0) || (descriptions.length() > 0)) {
 				text += """\

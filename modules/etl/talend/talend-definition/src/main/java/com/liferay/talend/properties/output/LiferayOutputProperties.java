@@ -43,14 +43,14 @@ public class LiferayOutputProperties
 	}
 
 	public LiferayOutputProperties(
-		String name, Operation operation, String openAPIModule,
-		String apiSpecURL, String endpoint, List<String> parameterNamesColumn,
+		String name, Operation operation, String openAPIModule, String hostURL,
+		String endpoint, List<String> parameterNamesColumn,
 		List<String> parameterLocationsColumn,
 		List<String> parameterValuesColumn) {
 
 		super(name);
 
-		resource.connection.apiSpecURL.setValue(apiSpecURL);
+		resource.connection.hostURL.setValue(hostURL);
 
 		resource.endpoint.setValue(endpoint);
 

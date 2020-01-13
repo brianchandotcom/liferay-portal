@@ -61,12 +61,8 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public String getApiSpecURL() {
-		return _getValue(apiSpecURL);
-	}
-
 	public String getApplicationBaseHref() {
-		URL openAPISpecURL = URIUtil.toURL(_getValue(apiSpecURL));
+		URL openAPISpecURL = URIUtil.toURL(_getValue(hostURL));
 
 		URL serverURL = URIUtil.extractServerURL(openAPISpecURL);
 		String jaxRSAppBase = URIUtil.extractJaxRSAppBasePathSegment(
@@ -94,14 +90,8 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		return this;
 	}
 
-	public String getHostUrl() {
-		URL openAPISpecURL = URIUtil.toURL(_getValue(apiSpecURL));
-
-		URL serverURL = URIUtil.extractServerURL(openAPISpecURL);
-
-		String serverHref = serverURL.toExternalForm();
-
-		return serverHref.concat("/o");
+	public String getHostURL() {
+		return _getValue(hostURL);
 	}
 
 	public int getItemsPerPage() {
@@ -171,7 +161,7 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 			hidden = true;
 		}
 
-		Widget widget = form.getWidget(apiSpecURL.getName());
+		Widget widget = form.getWidget(hostURL.getName());
 
 		if (widget != null) {
 			widget.setHidden(hidden);
@@ -251,7 +241,7 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 	public void setupProperties() {
 		super.setupProperties();
 
-		apiSpecURL.setValue(_COMMERCE_CATALOG_OAS_URL);
+		hostURL.setValue(_LIFERAY_URL);
 
 		followRedirects.setValue(true);
 
@@ -283,8 +273,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 	}
 
 	public PresentationItem advanced = new PresentationItem("advanced");
-	public Property<String> apiSpecURL = PropertyFactory.newString(
-		"apiSpecURL");
 	public BasicAuthorizationProperties basicAuthorizationProperties =
 		new BasicAuthorizationProperties("basicAuthorizationProperties");
 	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
@@ -293,6 +281,7 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		"followRedirects");
 	public Property<Boolean> forceHttps = PropertyFactory.newBoolean(
 		"forceHttps");
+	public Property<String> hostURL = PropertyFactory.newString("hostURL");
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
 		"itemsPerPage", _ITEMS_PER_PAGE);
 	public Property<LoginType> loginType = PropertyFactory.newEnum(
@@ -396,7 +385,7 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 			form.addRow(referencedComponentWidget);
 		}
 
-		form.addRow(apiSpecURL);
+		form.addRow(hostURL);
 
 		return form;
 	}
@@ -420,13 +409,11 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		return property.getValue();
 	}
 
-	private static final String _COMMERCE_CATALOG_OAS_URL =
-		"\"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0" +
-			"/openapi.json\"";
-
 	private static final int _CONNECT_TIMEOUT = 30;
 
 	private static final int _ITEMS_PER_PAGE = 100;
+
+	private static final String _LIFERAY_URL = "\"http://localhost:8080\"";
 
 	private static final int _READ_TIMEOUT = 60;
 

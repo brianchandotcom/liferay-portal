@@ -282,11 +282,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	private String _getEndpointBase() {
 		StringBuilder sb = new StringBuilder();
 
-		LiferayConnectionProperties liferayConnectionProperties =
-			getLiferayConnectionProperties();
-
-		sb.append(liferayConnectionProperties.getHostUrl());
-
+		sb.append("/o");
 		sb.append(openAPIModule.getValue());
 
 		return sb.toString();

@@ -56,7 +56,7 @@ buildChangelogs {
 			ByteArrayOutputStream standardOutputByteArrayOutputStream = new ByteArrayOutputStream()
 
 			exec {
-				commandLine "git", "--no-pager", "log", "--follow", "--pretty=format:%H:%cd:%s", "--date=short", "${commitRange}", "--", "modules/sdk/${projectName}/"
+				commandLine "git", "--no-pager", "log", "--pretty=format:%H:%cd:%s", "--date=short", "${commitRange}", "--", "modules/sdk/${projectName}/", ":(exclude,glob)**/CHANGELOG.*"
 				standardOutput = standardOutputByteArrayOutputStream
 				workingDir = projectDir.parentFile
 			}

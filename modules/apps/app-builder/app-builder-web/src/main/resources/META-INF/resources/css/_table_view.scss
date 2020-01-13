@@ -1,7 +1,5 @@
 .app-builder-table-view {
-	.app-builder-sidebar {
-		margin-top: $upperToolbarHeight;
-
+	.data-layout-builder-sidebar {
 		.sidebar-header {
 			padding-bottom: 1rem;
 
@@ -72,10 +70,6 @@
 		}
 	}
 
-	.app-builder-sidebar-content {
-		padding-top: 1.5rem;
-	}
-
 	.column-drop-zone-right {
 		border-right-width: 2px;
 		position: absolute;
@@ -137,6 +131,11 @@
 				margin-right: 5px;
 			}
 		}
+	}
+
+	.data-layout-builder-sidebar-content {
+		margin-top: 3.5rem;
+		padding-top: 1.5rem;
 	}
 
 	.empty-drop-zone {

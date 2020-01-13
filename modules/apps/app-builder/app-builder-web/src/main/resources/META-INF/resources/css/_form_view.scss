@@ -50,8 +50,8 @@
 	}
 }
 
-.app-builder-form-view-app .app-builder-sidebar {
-	margin-top: $upperToolbarHeight;
+.app-builder-form-view-app .data-layout-builder-sidebar {
+	top: 7rem;
 
 	.lfr-ddm-form-container .ddm-field-options-container .ddm-options-target {
 		margin: 2px 0;
@@ -61,10 +61,11 @@
 .app-builder-form-view-body {
 	display: flex;
 
-	.app-builder-custom-object-sidebar .app-builder-sidebar {
+	.app-builder-custom-object-sidebar .data-layout-builder-sidebar {
 		background-color: transparent;
 		margin-top: $upperToolbarHeight;
 		right: auto;
+		top: auto;
 		width: 280px;
 
 		.custom-object-sidebar-header {
@@ -153,9 +154,10 @@
 		}
 	}
 
-	.app-builder-sidebar-content {
+	.data-layout-builder-sidebar-content {
 		flex-direction: column;
 		flex-grow: 1;
+		margin-top: 3.5rem;
 		padding-left: 306px;
 
 		.ddm-form-builder {

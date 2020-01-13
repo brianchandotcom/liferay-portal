@@ -1425,10 +1425,16 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getMasterLayoutData() {
+		if (_masterLayoutData != null) {
+			return _masterLayoutData;
+		}
+
+		_masterLayoutData = StringPool.BLANK;
+
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.getMasterLayoutPlid() <= 0) {
-			return null;
+			return _masterLayoutData;
 		}
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -1437,7 +1443,7 @@ public class ContentPageEditorDisplayContext {
 					layout.getMasterLayoutPlid());
 
 		if (masterLayoutPageTemplateEntry == null) {
-			return null;
+			return _masterLayoutData;
 		}
 
 		try {
@@ -1457,7 +1463,9 @@ public class ContentPageEditorDisplayContext {
 				layoutData = LayoutDataConverter.convert(layoutData);
 			}
 
-			return layoutData;
+			_masterLayoutData = layoutData;
+
+			return _masterLayoutData;
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -1465,7 +1473,7 @@ public class ContentPageEditorDisplayContext {
 			}
 		}
 
-		return null;
+		return _masterLayoutData;
 	}
 
 	private int _getPageType() throws PortalException {
@@ -1852,6 +1860,7 @@ public class ContentPageEditorDisplayContext {
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
+	private String _masterLayoutData;
 	private Integer _pageType;
 	private final PortletRequest _portletRequest;
 	private Layout _publishedLayout;

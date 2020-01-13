@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -34,6 +35,14 @@ public class SearchStringUtil {
 		}
 
 		return Optional.of(s);
+	}
+
+	public static String requireEquals(String expected, String actual) {
+		if (!Objects.equals(expected, actual)) {
+			throw new RuntimeException(actual + " != " + expected);
+		}
+
+		return actual;
 	}
 
 	public static String[] splitAndUnquote(Optional<String> optional) {

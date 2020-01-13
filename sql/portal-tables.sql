@@ -110,7 +110,7 @@ create table AssetEntries_AssetCategories (
 	categoryId LONG not null,
 	entryId LONG not null,
 	ctCollectionId LONG default 0 not null,
-	changeType BOOLEAN,
+	ctChangeType BOOLEAN,
 	primary key (categoryId, entryId, ctCollectionId)
 );
 
@@ -119,7 +119,7 @@ create table AssetEntries_AssetTags (
 	entryId LONG not null,
 	tagId LONG not null,
 	ctCollectionId LONG default 0 not null,
-	changeType BOOLEAN,
+	ctChangeType BOOLEAN,
 	primary key (entryId, tagId, ctCollectionId)
 );
 

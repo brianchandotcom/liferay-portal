@@ -195,7 +195,7 @@ public class SubscriptionSender implements Serializable {
 
 			_runtimeSubscribersOVPs.clear();
 
-			if (bulk) {
+			if (bulk && (_bulkAddresses != null)) {
 				Locale locale = LocaleUtil.getDefault();
 
 				MailTemplateContext mailTemplateContext =

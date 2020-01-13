@@ -14,6 +14,12 @@
 				<required>false</required>
 			</attribute>
 			<attribute>
+				<name>dataDefinitionId</name>
+				<inputType>java.lang.Long</inputType>
+				<outputType>java.lang.Long</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>dataDefinitionInputId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

@@ -76,19 +76,21 @@ function PageTypeSelector(props) {
 					}
 				>
 					<ClayDropDown.ItemList>
-						<ClayDropDown.Item
-							className="autofit-row"
-							data-value={Liferay.Language.get('add-page')}
-							key={Liferay.Language.get('add-page')}
-							onClick={handleOnAddPageClick}
-							title={Liferay.Language.get('add-page')}
-						>
-							<span className="autofit-col autofit-col-expand">
-								<span className="autofit-section">
-									{Liferay.Language.get('add-page')}
+						{props.addLayoutURL !== '' && (
+							<ClayDropDown.Item
+								className="autofit-row"
+								data-value={Liferay.Language.get('add-page')}
+								key={Liferay.Language.get('add-page')}
+								onClick={handleOnAddPageClick}
+								title={Liferay.Language.get('add-page')}
+							>
+								<span className="autofit-col autofit-col-expand">
+									<span className="autofit-section">
+										{Liferay.Language.get('add-page')}
+									</span>
 								</span>
-							</span>
-						</ClayDropDown.Item>
+							</ClayDropDown.Item>
+						)}
 						<ClayDropDown.Item
 							className="autofit-row"
 							data-value={Liferay.Language.get('configure')}

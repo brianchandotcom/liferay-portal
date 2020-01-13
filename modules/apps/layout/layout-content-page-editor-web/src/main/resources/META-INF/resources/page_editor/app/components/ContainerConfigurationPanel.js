@@ -21,7 +21,10 @@ import {StoreContext} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import {ContainerBackgroundColorConfiguration} from './ContainerBackgroundColorConfiguration';
 import {ContainerBackgroundImageConfiguration} from './ContainerBackgroundImageConfiguration';
-import {ContainerPaddingConfiguration} from './ContainerPaddingConfiguration';
+import {
+	ContainerPaddingHorizontalConfiguration,
+	ContainerPaddingVerticalConfiguration
+} from './ContainerPaddingConfiguration';
 import {ContainerTypeConfiguration} from './ContainerTypeConfiguration';
 
 export const ContainerConfigurationPanel = ({item}) => {
@@ -48,10 +51,14 @@ export const ContainerConfigurationPanel = ({item}) => {
 				containerType={item.config.type}
 				onValueChange={handleConfigurationValueChanged}
 			/>
-			<ContainerPaddingConfiguration
+			<ContainerPaddingVerticalConfiguration
+				onValueChange={handleConfigurationValueChanged}
+				paddingBottom={item.config.paddingBottom}
+				paddingTop={item.config.paddingTop}
+			/>
+			<ContainerPaddingHorizontalConfiguration
 				onValueChange={handleConfigurationValueChanged}
 				paddingHorizontal={item.config.paddingHorizontal}
-				paddingVertical={item.config.paddingVertical}
 			/>
 			<ContainerBackgroundColorConfiguration
 				backgroundColor={item.config.backgroundColorCssClass}

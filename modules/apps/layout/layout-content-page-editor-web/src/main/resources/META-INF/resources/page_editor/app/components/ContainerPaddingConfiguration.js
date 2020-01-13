@@ -47,41 +47,68 @@ const PADDING_OPTIONS = [
 ];
 
 const CONTAINER_PADDING_IDENTIFIERS = {
+	paddingBottom: 'paddingBottom',
 	paddingHorizontal: 'paddingHorizontal',
-	paddingVertical: 'paddingVertical'
+	paddingTop: 'paddingTop'
 };
 
-export const ContainerPaddingConfiguration = ({
+export const ContainerPaddingVerticalConfiguration = ({
 	onValueChange,
-	paddingHorizontal,
-	paddingVertical
+	paddingBottom,
+	paddingTop
 }) => (
 	<ClayForm.Group className="form-group-autofit">
 		<div className="form-group-item">
-			<label htmlFor="containerPaddingVertical">
-				{Liferay.Language.get('padding-v')}
+			<label htmlFor="containerPaddingTop">
+				{Liferay.Language.get('padding-top')}
 			</label>
 			<ClaySelectWithOption
-				aria-label={Liferay.Language.get('padding-v')}
-				id="containerPaddingVertical"
+				aria-label={Liferay.Language.get('padding-top')}
+				id="containerPaddingTop"
 				onChange={({target: {value}}) =>
 					onValueChange({
-						[CONTAINER_PADDING_IDENTIFIERS.paddingVertical]: Number(
+						[CONTAINER_PADDING_IDENTIFIERS.paddingTop]: Number(
 							value
 						)
 					})
 				}
 				options={PADDING_OPTIONS}
-				value={String(paddingVertical)}
+				value={String(paddingTop)}
 			/>
 		</div>
 
 		<div className="form-group-item">
-			<label htmlFor="containerPaddingHorizontal">
-				{Liferay.Language.get('padding-h')}
+			<label htmlFor="containerPaddingBottom">
+				{Liferay.Language.get('padding-bottom')}
 			</label>
 			<ClaySelectWithOption
-				aria-label={Liferay.Language.get('padding-h')}
+				aria-label={Liferay.Language.get('padding-bottom')}
+				id="containerPaddingBottom"
+				onChange={({target: {value}}) =>
+					onValueChange({
+						[CONTAINER_PADDING_IDENTIFIERS.paddingBottom]: Number(
+							value
+						)
+					})
+				}
+				options={PADDING_OPTIONS}
+				value={String(paddingBottom)}
+			/>
+		</div>
+	</ClayForm.Group>
+);
+
+export const ContainerPaddingHorizontalConfiguration = ({
+	onValueChange,
+	paddingHorizontal
+}) => (
+	<ClayForm.Group className="form-group-autofit">
+		<div className="form-group-item">
+			<label htmlFor="containerPaddingHorizontal">
+				{Liferay.Language.get('padding-horizontal')}
+			</label>
+			<ClaySelectWithOption
+				aria-label={Liferay.Language.get('padding-horizontal')}
 				id="containerPaddingHorizontal"
 				onChange={({target: {value}}) =>
 					onValueChange({

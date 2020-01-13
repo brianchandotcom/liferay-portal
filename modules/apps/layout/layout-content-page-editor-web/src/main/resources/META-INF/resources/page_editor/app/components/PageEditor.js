@@ -52,23 +52,23 @@ const Container = React.forwardRef(({children, item}, ref) => {
 	const {
 		backgroundColorCssClass,
 		backgroundImage,
+		paddingBottom,
 		paddingHorizontal,
-		paddingVertical,
+		paddingTop,
 		type
 	} = item.config;
 
 	return (
 		<div
-			className={classNames(
-				`page-editor__container py-${paddingVertical}`,
-				{
-					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					container: type === 'fixed',
-					'container-fluid': type === 'fluid',
-					empty: !item.children.length,
-					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
-				}
-			)}
+			className={classNames(`page-editor__container`, {
+				[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
+				container: type === 'fixed',
+				'container-fluid': type === 'fluid',
+				empty: !item.children.length,
+				[`pb-${paddingBottom}`]: paddingBottom !== 3,
+				[`pt-${paddingTop}`]: paddingTop !== 3,
+				[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
+			})}
 			ref={ref}
 			style={
 				backgroundImage

@@ -15,36 +15,7 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
-const PADDING_OPTIONS = [
-	{
-		label: '0',
-		value: '0'
-	},
-	{
-		label: '1',
-		value: '3'
-	},
-	{
-		label: '2',
-		value: '4'
-	},
-	{
-		label: '4',
-		value: '5'
-	},
-	{
-		label: '6',
-		value: '6'
-	},
-	{
-		label: '8',
-		value: '7'
-	},
-	{
-		label: '10',
-		value: '8'
-	}
-];
+import {PADDING_OPTIONS} from '../../../js/utils/rowConstants';
 
 const CONTAINER_PADDING_IDENTIFIERS = {
 	paddingBottom: 'paddingBottom',

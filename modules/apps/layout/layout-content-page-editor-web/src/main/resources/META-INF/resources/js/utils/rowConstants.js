@@ -84,31 +84,31 @@ export const NUMBER_OF_COLUMNS_OPTIONS = [
 export const PADDING_OPTIONS = [
 	{
 		label: '0',
-		paddingSize: '0'
+		value: '0'
 	},
 	{
 		label: '1',
-		paddingSize: '3'
+		value: '3'
 	},
 	{
 		label: '2',
-		paddingSize: '4'
+		value: '4'
 	},
 	{
 		label: '4',
-		paddingSize: '5'
+		value: '5'
 	},
 	{
 		label: '6',
-		paddingSize: '6'
+		value: '6'
 	},
 	{
 		label: '8',
-		paddingSize: '7'
+		value: '7'
 	},
 	{
 		label: '10',
-		paddingSize: '8'
+		value: '8'
 	}
 ];
 

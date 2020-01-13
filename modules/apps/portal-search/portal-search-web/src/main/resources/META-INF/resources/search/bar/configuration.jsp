@@ -17,17 +17,25 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences" %><%@
+page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl" %><%@
+page import="com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration" %><%@
 page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUtil" %>
 
 <portlet:defineObjects />
 
 <%
-SearchBarPortletPreferences searchBarPortletPreferences = new com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+SearchBarPortletDisplayContext searchBarPortletDisplayContext = new SearchBarPortletDisplayContext(request);
+
+SearchBarPortletInstanceConfiguration searchBarPortletInstanceConfiguration = searchBarPortletDisplayContext.getSearchBarPortletInstanceConfiguration();
+
+SearchBarPortletPreferences searchBarPortletPreferences = new SearchBarPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -44,7 +52,23 @@ SearchBarPortletPreferences searchBarPortletPreferences = new com.liferay.portal
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
-			<aui:fieldset>
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="display-settings"
+			>
+				<liferay-ddm:template-selector
+					className="<%= SearchBarPortletDisplayContext.class.getName() %>"
+					displayStyle="<%= searchBarPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= searchBarPortletDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+					showEmptyOption="<%= true %>"
+				/>
+			</liferay-frontend:fieldset>
+
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="advanced-configuration"
+			>
 				<aui:input label="keywords-parameter-name" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_KEYWORDS_PARAMETER_NAME) %>" value="<%= searchBarPortletPreferences.getKeywordsParameterName() %>" />
 
 				<aui:select label="scope" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= searchBarPortletPreferences.getSearchScopePreferenceString() %>">
@@ -62,7 +86,7 @@ SearchBarPortletPreferences searchBarPortletPreferences = new com.liferay.portal
 				<aui:input helpMessage="invisible-help" label="invisible" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_INVISIBLE) %>" type="checkbox" value="<%= searchBarPortletPreferences.isInvisible() %>" />
 
 				<aui:input helpMessage="federated-search-key-help" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= searchBarPortletPreferences.getFederatedSearchKeyString() %>" />
-			</aui:fieldset>
+			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

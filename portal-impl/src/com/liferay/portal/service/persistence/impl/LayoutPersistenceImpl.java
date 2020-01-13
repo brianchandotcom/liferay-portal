@@ -7395,9 +7395,9 @@ public class LayoutPersistenceImpl
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_MLP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -7528,9 +7528,9 @@ public class LayoutPersistenceImpl
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_MLP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -7764,9 +7764,9 @@ public class LayoutPersistenceImpl
 
 		query.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		query.append(_FINDER_COLUMN_G_MLP_GROUPID_2_SQL);
+		query.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2_SQL);
+		query.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			query.toString(), Layout.class.getName(),
@@ -7803,14 +7803,8 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_MLP_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_MLP_GROUPID_2_SQL =
-		"layout.groupId = ? AND ";
-
 	private static final String _FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2 =
-		"layout.masterLayoutPlid = ? AND layout.system = [$FALSE$]";
-
-	private static final String _FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2_SQL =
-		"layout.masterLayoutPlid = ? AND layout.system_ = [$FALSE$]";
+		"layout.masterLayoutPlid = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;

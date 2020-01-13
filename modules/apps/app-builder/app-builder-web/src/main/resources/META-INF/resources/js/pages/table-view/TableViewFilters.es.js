@@ -19,10 +19,7 @@ import classNames from 'classnames';
 import {SearchInput} from 'data-engine-taglib';
 import React, {useContext, useRef, useState} from 'react';
 
-import {
-	getDataDefinitionField,
-	getOptionLabel
-} from '../../utils/dataDefinition.es';
+import {getDataDefinitionField} from '../../utils/dataDefinition.es';
 import EditTableViewContext, {
 	UPDATE_FILTER_VALUE
 } from './EditTableViewContext.es';
@@ -55,10 +52,6 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 			type: UPDATE_FILTER_VALUE
 		});
 	};
-
-	const labels = values.filter(optionValue =>
-		getOptionLabel(localizedOptions, optionValue)
-	);
 
 	const alignElementRef = useRef();
 	const dropdownMenuRef = useRef();
@@ -118,7 +111,10 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 				<span className="multiple-select-filter-values">
 					{values.length === 0
 						? Liferay.Language.get('choose-options')
-						: labels.join(', ')}
+						: localizedOptions
+								.filter(({value}) => values.includes(value))
+								.map(({label, value}) => label || value)
+								.join(', ')}
 				</span>
 
 				<ClayIcon symbol="caret-bottom" />

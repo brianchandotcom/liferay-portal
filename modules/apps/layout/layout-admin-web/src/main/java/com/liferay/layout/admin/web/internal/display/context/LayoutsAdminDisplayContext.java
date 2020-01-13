@@ -93,7 +93,6 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -653,18 +652,11 @@ public class LayoutsAdminDisplayContext {
 				Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
 					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
-				Date modifiedDate = draftLayout.getModifiedDate();
-
-				Date publishDate = layout.getPublishDate();
-
-				if (publishDate == null) {
-					publishDate = modifiedDate;
-				}
-
 				layoutJSONObject.put(
 					"conversionPreview", false
 				).put(
-					"draft", modifiedDate.getTime() > publishDate.getTime()
+					"draft",
+					draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT
 				);
 			}
 			else {

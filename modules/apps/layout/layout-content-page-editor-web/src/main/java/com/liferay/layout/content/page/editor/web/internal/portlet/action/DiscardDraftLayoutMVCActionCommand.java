@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -125,7 +126,7 @@ public class DiscardDraftLayoutMVCActionCommand
 
 		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
 
-		draftLayout.setModifiedDate(layout.getPublishDate());
+		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		_layoutLocalService.updateLayout(draftLayout);
 

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -116,7 +115,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			_portal.getClassNameId(Layout.class), layout.getPlid());
 
 		try {
-			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
@@ -131,9 +130,9 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 			draftLayout.getLayoutId(), typeSettingsProperties.toString());
 
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			new Date());
+		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		_layoutLocalService.updateLayout(draftLayout);
 
 		return _layoutLocalService.updateStatus(
 			userId, classPK, status, serviceContext);

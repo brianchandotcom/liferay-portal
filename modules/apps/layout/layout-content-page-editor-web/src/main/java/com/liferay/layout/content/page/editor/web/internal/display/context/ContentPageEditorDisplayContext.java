@@ -118,7 +118,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -558,16 +557,8 @@ public class ContentPageEditorDisplayContext {
 
 		Layout layout = _getPublishedLayout();
 
-		Date modifiedDate = draftLayout.getModifiedDate();
-
-		Date publishDate = layout.getPublishDate();
-
-		if (publishDate == null) {
-			publishDate = modifiedDate;
-		}
-
 		soyContext.put(
-			"draft", modifiedDate.after(publishDate)
+			"draft", draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT
 		).put(
 			"lastSaveDate", StringPool.BLANK
 		).put(

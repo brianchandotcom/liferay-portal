@@ -35,10 +35,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.util.Collections;
-import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -123,24 +123,20 @@ public class PublishLayoutMVCActionCommand
 				serviceContext, Collections.emptyMap());
 		}
 		else {
-			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
-
-			layout.setType(draftLayout.getType());
-
-			layout = _layoutLocalService.updateLayout(layout);
+			_layoutCopyHelper.copyLayout(draftLayout, layout);
 
 			UnicodeProperties typeSettingsProperties =
 				draftLayout.getTypeSettingsProperties();
 
 			typeSettingsProperties.setProperty("published", "true");
 
-			_layoutLocalService.updateLayout(
+			draftLayout = _layoutLocalService.updateLayout(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
 				draftLayout.getLayoutId(), typeSettingsProperties.toString());
 
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), new Date());
+			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+			_layoutLocalService.updateLayout(draftLayout);
 		}
 
 		String portletId = _portal.getPortletId(actionRequest);

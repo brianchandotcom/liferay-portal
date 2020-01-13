@@ -593,7 +593,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					<os family="windows" />
 					<then>
 						<move
-							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86"
+							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86_64"
 							tofile="${elastic.kibana.dir}"
 						/>
 					</then>

@@ -22,20 +22,15 @@ import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
 const getSelectedNodeIds = (
 	allowNewFragmentEntries,
-	fragmentEntryKeys,
+	fragmentEntryKeys = [],
 	fragmentEntryKeysArray
 ) => {
-	let newFragmentEntryKeys = fragmentEntryKeys;
-
-	if (allowNewFragmentEntries) {
-		newFragmentEntryKeys = fragmentEntryKeysArray.filter(
-			fragmentEntryKey =>
-				!fragmentEntryKeys ||
-				!fragmentEntryKeys.includes(fragmentEntryKey)
-		);
-	}
-
-	return newFragmentEntryKeys;
+	return allowNewFragmentEntries
+		? fragmentEntryKeysArray.filter(
+				fragmentEntryKey =>
+					!fragmentEntryKeys.includes(fragmentEntryKey)
+		  )
+		: fragmentEntryKeys;
 };
 
 const toNodes = collections => {

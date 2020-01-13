@@ -65,6 +65,25 @@ public class DepotAdminSitesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
+						ActionURL updateSearchableActionURL =
+							DepotEntryURLUtil.getUpdateSearchableActionURL(
+								depotEntryGroupRel.getDepotEntryGroupRelId(),
+								!depotEntryGroupRel.isSearchable(),
+								_currentURL.toString(),
+								_liferayPortletResponse);
+
+						dropdownItem.setHref(
+							updateSearchableActionURL.toString());
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								PortalUtil.getHttpServletRequest(
+									_liferayPortletRequest),
+								_getUpdateSearchableKey(depotEntryGroupRel)));
+					});
+
+				add(
+					dropdownItem -> {
 						ActionURL disconnectSiteActionURL =
 							DepotEntryURLUtil.getDisconnectSiteActionURL(
 								depotEntryGroupRel.getDepotEntryGroupRelId(),
@@ -84,25 +103,6 @@ public class DepotAdminSitesDisplayContext {
 								PortalUtil.getHttpServletRequest(
 									_liferayPortletRequest),
 								"disconnect"));
-					});
-
-				add(
-					dropdownItem -> {
-						ActionURL updateSearchableActionURL =
-							DepotEntryURLUtil.getUpdateSearchableActionURL(
-								depotEntryGroupRel.getDepotEntryGroupRelId(),
-								!depotEntryGroupRel.isSearchable(),
-								_currentURL.toString(),
-								_liferayPortletResponse);
-
-						dropdownItem.setHref(
-							updateSearchableActionURL.toString());
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								PortalUtil.getHttpServletRequest(
-									_liferayPortletRequest),
-								_getUpdateSearchableKey(depotEntryGroupRel)));
 					});
 			}
 		};

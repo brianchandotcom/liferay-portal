@@ -608,13 +608,9 @@ public class InvokerPortletImpl
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest liferayPortletRequest =
-			PortalUtil.getLiferayPortletRequest(actionRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(actionResponse);
-
 		invoke(
-			liferayPortletRequest, liferayPortletResponse,
+			PortalUtil.getLiferayPortletRequest(actionRequest),
+			PortalUtil.getLiferayPortletResponse(actionResponse),
 			PortletRequest.ACTION_PHASE,
 			_invokerFilterContainer.getActionFilters());
 	}
@@ -623,13 +619,9 @@ public class InvokerPortletImpl
 			EventRequest eventRequest, EventResponse eventResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest liferayPortletRequest =
-			PortalUtil.getLiferayPortletRequest(eventRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(eventResponse);
-
 		invoke(
-			liferayPortletRequest, liferayPortletResponse,
+			PortalUtil.getLiferayPortletRequest(eventRequest),
+			PortalUtil.getLiferayPortletResponse(eventResponse),
 			PortletRequest.EVENT_PHASE,
 			_invokerFilterContainer.getEventFilters());
 	}
@@ -687,13 +679,9 @@ public class InvokerPortletImpl
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		LiferayPortletRequest liferayPortletRequest =
-			PortalUtil.getLiferayPortletRequest(resourceRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(resourceResponse);
-
 		invoke(
-			liferayPortletRequest, liferayPortletResponse,
+			PortalUtil.getLiferayPortletRequest(resourceRequest),
+			PortalUtil.getLiferayPortletResponse(resourceResponse),
 			PortletRequest.RESOURCE_PHASE,
 			_invokerFilterContainer.getResourceFilters());
 	}

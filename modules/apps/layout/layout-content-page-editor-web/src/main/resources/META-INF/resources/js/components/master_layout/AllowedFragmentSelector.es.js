@@ -15,7 +15,7 @@
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 
 import useSelector from '../../store/hooks/useSelector.es';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
@@ -87,9 +87,12 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 
 	const [filter, setFilter] = useState('');
 
-	const nodes = toNodes(elements);
+	const nodes = useMemo(() => toNodes(elements), [elements]);
 
-	const fragmentEntryKeysArray = toFragmentEntryKeysArray(elements);
+	const fragmentEntryKeysArray = useMemo(
+		() => toFragmentEntryKeysArray(elements),
+		[elements]
+	);
 
 	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
 		initialAllowNewFragmentEntries

@@ -42,6 +42,18 @@ public class Join
 		_onPredicate = Objects.requireNonNull(onPredicate);
 	}
 
+	public JoinType getJoinType() {
+		return _joinType;
+	}
+
+	public Predicate getOnPredicate() {
+		return _onPredicate;
+	}
+
+	public Table<?> getTable() {
+		return _table;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
@@ -55,18 +67,6 @@ public class Join
 		consumer.accept(" on ");
 
 		_onPredicate.toSQL(consumer, astNodeListener);
-	}
-
-	public JoinType getJoinType() {
-		return _joinType;
-	}
-
-	public Predicate getOnPredicate() {
-		return _onPredicate;
-	}
-
-	public Table<?> getTable() {
-		return _table;
 	}
 
 	private final JoinType _joinType;

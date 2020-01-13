@@ -112,24 +112,24 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (_layout.getStatus() == WorkflowConstants.STATUS_PENDING) {
-				Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-					PortalUtil.getClassNameId(Layout.class.getName()),
-					_layout.getPlid());
-
-				String previewURL = PortalUtil.getLayoutFriendlyURL(
-					draftLayout, themeDisplay);
-
-				return HttpUtil.addParameter(
-					previewURL, "p_l_back_url", themeDisplay.getURLCurrent());
+			if (_layout.getStatus() != WorkflowConstants.STATUS_PENDING) {
+				return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
 			}
 
-			return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
+			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
+				PortalUtil.getClassNameId(Layout.class.getName()),
+				_layout.getPlid());
+
+			String previewURL = PortalUtil.getLayoutFriendlyURL(
+				draftLayout, themeDisplay);
+
+			return HttpUtil.addParameter(
+				previewURL, "p_l_back_url", themeDisplay.getURLCurrent());
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

@@ -11,4 +11,5 @@ dependencies {
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:social:social-activity-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 }

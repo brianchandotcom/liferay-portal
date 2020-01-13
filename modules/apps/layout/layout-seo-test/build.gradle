@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-seo-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

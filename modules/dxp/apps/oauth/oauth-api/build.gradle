@@ -7,5 +7,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:static:osgi:osgi-util")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

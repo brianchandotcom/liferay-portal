@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:trash:trash-api")
 	testIntegrationCompile project(":apps:trash:trash-test-util")
+	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

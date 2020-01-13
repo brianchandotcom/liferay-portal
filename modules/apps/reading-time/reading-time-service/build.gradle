@@ -14,5 +14,6 @@ dependencies {
 	compileOnly project(":apps:reading-time:reading-time-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

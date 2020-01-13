@@ -6,5 +6,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-chart")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-util")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

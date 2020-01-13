@@ -8,6 +8,7 @@ dependencies {
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "junit", name: "junit", version: "4.12"

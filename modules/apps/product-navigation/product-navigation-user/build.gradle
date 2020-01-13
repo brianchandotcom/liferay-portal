@@ -8,5 +8,6 @@ dependencies {
 	compileOnly project(":apps:application-list:application-list-taglib")
 	compileOnly project(":apps:product-navigation:product-navigation-product-menu-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

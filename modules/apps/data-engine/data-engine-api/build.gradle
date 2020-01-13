@@ -6,4 +6,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 }

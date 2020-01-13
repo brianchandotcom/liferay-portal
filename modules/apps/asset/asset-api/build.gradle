@@ -7,5 +7,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

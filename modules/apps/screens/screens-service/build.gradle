@@ -20,5 +20,6 @@ dependencies {
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:screens:screens-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

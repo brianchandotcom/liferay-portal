@@ -16,5 +16,6 @@ dependencies {
 	compileOnly project(":apps:text-localizer:text-localizer-taglib")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

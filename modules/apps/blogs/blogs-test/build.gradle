@@ -9,6 +9,7 @@ dependencies {
 	testCompile project(":apps:blogs:blogs-test-util")
 	testCompile project(":apps:blogs:blogs-web")
 	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-sql-dsl-api")
 	testCompile project(":core:petra:petra-string")
 	testCompile project(":core:registry-api")
 

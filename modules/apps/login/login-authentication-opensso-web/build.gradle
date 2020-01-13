@@ -6,6 +6,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:portal-security-sso:portal-security-sso-opensso-api")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 }
 
 findSecurityBugs {

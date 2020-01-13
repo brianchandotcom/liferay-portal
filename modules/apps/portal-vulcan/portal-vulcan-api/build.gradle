@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-liferay-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

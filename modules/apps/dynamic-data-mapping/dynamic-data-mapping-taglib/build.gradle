@@ -24,5 +24,6 @@ dependencies {
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

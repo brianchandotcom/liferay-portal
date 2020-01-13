@@ -1,4 +1,5 @@
 dependencies {
 	testIntegrationCompile project(":apps:html-preview:html-preview-api")
+	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -12,4 +12,5 @@ dependencies {
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:portal-settings:portal-settings-lang")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 }

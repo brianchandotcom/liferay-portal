@@ -2,5 +2,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:marketplace:marketplace-api")
 	testIntegrationCompile project(":apps:marketplace:marketplace-service")
+	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

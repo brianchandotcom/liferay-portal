@@ -12,4 +12,5 @@ dependencies {
 	compileOnly project(":apps:product-navigation:product-navigation-simulation-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-reflect")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 }

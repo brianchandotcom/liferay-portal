@@ -7,5 +7,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:site-navigation:site-navigation-api")
 	compileOnly project(":apps:site-navigation:site-navigation-menu-item-api")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

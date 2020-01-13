@@ -7,6 +7,7 @@ dependencies {
 	testCompile project(":apps:export-import:export-import-service")
 	testCompile project(":apps:portal:portal-aop-api")
 	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-sql-dsl-api")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "org.apache.poi", name: "poi", version: "3.15"

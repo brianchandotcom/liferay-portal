@@ -35,6 +35,7 @@ dependencies {
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-reflect")
+	testCompile project(":core:petra:petra-sql-dsl-api")
 	testCompile project(":core:petra:petra-string")
 
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"

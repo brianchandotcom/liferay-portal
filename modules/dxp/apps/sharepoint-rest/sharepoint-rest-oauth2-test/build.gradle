@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":dxp:apps:sharepoint-rest:sharepoint-rest-oauth2-api");
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

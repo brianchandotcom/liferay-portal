@@ -7,5 +7,6 @@ dependencies {
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

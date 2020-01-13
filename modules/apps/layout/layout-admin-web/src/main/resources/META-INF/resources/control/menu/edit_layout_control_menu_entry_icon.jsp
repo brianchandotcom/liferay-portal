@@ -21,9 +21,15 @@ EditLayoutControlMenuDisplayContext editLayoutControlMenuDisplayContext = new Ed
 %>
 
 <clay:dropdown-menu
+	defaultEventHandler="editLayoutControlMenuDropdownDefaultEventHandler"
 	dropdownItems="<%= editLayoutControlMenuDisplayContext.getDropdownItems() %>"
 	icon="cog"
 	triggerCssClasses="icon-monospaced"
+/>
+
+<liferay-frontend:component
+	componentId="editLayoutControlMenuDropdownDefaultEventHandler"
+	module="js/EditLayoutControlMenuDropdownDefaultEventHandler.es"
 />
 
 <liferay-ui:success key="layoutUpdated" message="the-page-was-updated-succesfully" targetNode="#controlMenuAlertsContainer" />

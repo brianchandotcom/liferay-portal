@@ -14,18 +14,26 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -49,7 +57,10 @@ public class EditLayoutControlMenuDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getDropdownItems() {
+	public List<DropdownItem> getDropdownItems() throws Exception {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_themeDisplay.getLocale(), getClass());
+
 		return new DropdownItemList() {
 			{
 				Layout layout = _themeDisplay.getLayout();
@@ -89,18 +100,60 @@ public class EditLayoutControlMenuDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(editPageURL.toString());
-
-						ResourceBundle resourceBundle =
-							ResourceBundleUtil.getBundle(
-								_themeDisplay.getLocale(), getClass());
-
 						dropdownItem.setLabel(
 							HtmlUtil.escape(
 								LanguageUtil.get(
 									resourceBundle, "configure-page")));
 					});
+
+				if (_isShowPermissionsAction()) {
+					add(_getPermissionsActionUnsafeConsumer());
+				}
 			}
 		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+			_getPermissionsActionUnsafeConsumer()
+		throws Exception {
+
+		Layout layout = _themeDisplay.getLayout();
+
+		String permissionURL = PermissionsURLTag.doTag(
+			StringPool.BLANK, Layout.class.getName(),
+			HtmlUtil.escape(layout.getName(_themeDisplay.getLocale())), null,
+			String.valueOf(layout.getPlid()),
+			LiferayWindowState.POP_UP.toString(), null,
+			_themeDisplay.getRequest());
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "permissions");
+			dropdownItem.putData("permissionsURL", permissionURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "permissions"));
+		};
+	}
+
+	private boolean _isShowPermissionsAction() {
+		if (StagingUtil.isIncomplete(_themeDisplay.getLayout())) {
+			return false;
+		}
+
+		Group selGroup = _themeDisplay.getScopeGroup();
+
+		if (selGroup.isLayoutPrototype()) {
+			return false;
+		}
+
+		try {
+			return LayoutPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
+				ActionKeys.PERMISSIONS);
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

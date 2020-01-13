@@ -126,35 +126,41 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 
 	return (
 		<>
-			<ClayInput
-				className="mb-4"
-				onChange={event => setFilter(event.target.value)}
-				placeholder={`${Liferay.Language.get('search')}...`}
-				sizing="sm"
-				type="text"
-			/>
+			<div className="px-4">
+				<ClayInput
+					className="mb-4"
+					onChange={event => setFilter(event.target.value)}
+					placeholder={`${Liferay.Language.get('search')}...`}
+					sizing="sm"
+					type="text"
+				/>
 
-			<Treeview
-				filterQuery={filter}
-				inheritSelection
-				initialSelectedNodeIds={fragmentEntryKeys}
-				NodeComponent={AllowedFragmentTreeNode}
-				nodes={nodes}
-				onSelectedNodesChange={setFragmentEntryKeys}
-			/>
+				<div className="fragments-editor__allowed-fragment__tree">
+					<Treeview
+						filterQuery={filter}
+						inheritSelection
+						initialSelectedNodeIds={fragmentEntryKeys}
+						NodeComponent={AllowedFragmentTreeNode}
+						nodes={nodes}
+						onSelectedNodesChange={setFragmentEntryKeys}
+					/>
+				</div>
+			</div>
 
-			<ClayCheckbox
-				aria-label={Liferay.Language.get(
-					'make-allowed-all-new-fragments-created'
-				)}
-				checked={allowNewFragmentEntries}
-				label={Liferay.Language.get(
-					'make-allowed-all-new-fragments-created'
-				)}
-				onChange={event => {
-					setAllowNewFragmentEntries(event.target.checked);
-				}}
-			/>
+			<div className="fragments-editor__allowed-fragment__new-fragments-checkbox">
+				<ClayCheckbox
+					aria-label={Liferay.Language.get(
+						'make-allowed-all-new-fragments-created'
+					)}
+					checked={allowNewFragmentEntries}
+					label={Liferay.Language.get(
+						'make-allowed-all-new-fragments-created'
+					)}
+					onChange={event => {
+						setAllowNewFragmentEntries(event.target.checked);
+					}}
+				/>
+			</div>
 		</>
 	);
 };

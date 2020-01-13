@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -129,7 +130,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 				Metadata metadata = new Metadata();
 
-				metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+				metadata.set(
+					Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
 
 				MediaType mediaType = _detector.detect(
 					tikaInputStream, metadata);
@@ -176,7 +178,8 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 			if (ContentTypes.APPLICATION_OCTET_STREAM.equals(contentType)) {
 				Metadata metadata = new Metadata();
 
-				metadata.set(Metadata.RESOURCE_NAME_KEY, fileName);
+				metadata.set(
+					Metadata.RESOURCE_NAME_KEY, HtmlUtil.escapeURL(fileName));
 
 				MediaType mediaType = _detector.detect(null, metadata);
 

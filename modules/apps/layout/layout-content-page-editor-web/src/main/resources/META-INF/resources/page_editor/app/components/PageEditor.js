@@ -81,15 +81,10 @@ export default function PageEditor() {
 
 function LayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];
-	const floatingToolbarButtons =
-		LAYOUT_DATA_FLOATING_TOOLBAR_TYPES[item.type];
 	const isActive = useIsActive()(item.itemId);
 	const isActiveTopper = LAYOUT_DATA_TOPPER_ACTIVE[item.type];
 	const isMounted = useIsMounted();
 	const componentRef = useRef(null);
-	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
 
 	const fragmentEntryLink = fragmentEntryLinks[
 		item.config.fragmentEntryLinkId
@@ -114,51 +109,24 @@ function LayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 			name={fragmentEntryLink.name}
 		>
 			{({canDrop, isOver}) => (
-				<>
-					{floatingToolbarButtons.length > 0 && (
-						<FloatingToolbar
-							buttons={floatingToolbarButtons}
-							item={item}
-							itemRef={componentRef}
-							onButtonClick={id => {
-								if (
-									id ===
-									LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS
-										.duplicateFragment.id
-								) {
-									dispatch(
-										duplicateFragment({
-											config,
-											fragmentEntryLinkId:
-												item.config.fragmentEntryLinkId,
-											itemId: item.itemId,
-											store
-										})
-									);
-								}
-							}}
-						/>
-					)}
-
-					<Component
-						canDrop={canDrop}
-						isOver={isOver}
-						item={item}
-						layoutData={layoutData}
-						ref={componentRef}
-					>
-						{item.children.map(childId => {
-							return (
-								<LayoutDataItem
-									fragmentEntryLinks={fragmentEntryLinks}
-									item={layoutData.items[childId]}
-									key={childId}
-									layoutData={layoutData}
-								/>
-							);
-						})}
-					</Component>
-				</>
+				<Component
+					canDrop={canDrop}
+					isOver={isOver}
+					item={item}
+					layoutData={layoutData}
+					ref={componentRef}
+				>
+					{item.children.map(childId => {
+						return (
+							<LayoutDataItem
+								fragmentEntryLinks={fragmentEntryLinks}
+								item={layoutData.items[childId]}
+								key={childId}
+								layoutData={layoutData}
+							/>
+						);
+					})}
+				</Component>
 			)}
 		</Topper>
 	);
@@ -191,21 +159,6 @@ const LAYOUT_DATA_TOPPER_ACTIVE = {
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: true,
 	[LAYOUT_DATA_ITEM_TYPES.root]: false,
 	[LAYOUT_DATA_ITEM_TYPES.row]: true
-};
-
-const LAYOUT_DATA_FLOATING_TOOLBAR_TYPES = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: [],
-	[LAYOUT_DATA_ITEM_TYPES.container]: [
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.backgroundColor,
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
-	],
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: [
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration,
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
-	],
-	[LAYOUT_DATA_ITEM_TYPES.root]: [],
-	[LAYOUT_DATA_ITEM_TYPES.row]: [LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing]
 };
 
 function Root({canDrop, children, isOver}, ref) {
@@ -263,6 +216,16 @@ function Container({children, item}, ref) {
 					: {}
 			}
 		>
+			<FloatingToolbar
+				buttons={[
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.container,
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage,
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing
+				]}
+				item={item}
+				itemRef={ref}
+			/>
+
 			<div className="page-editor__container-outline">{children}</div>
 		</div>
 	);
@@ -301,6 +264,12 @@ function Column({children, className, item}, ref) {
 			className={classNames(className, 'col', {[`col-${size}`]: size})}
 			ref={ref}
 		>
+			<FloatingToolbar
+				buttons={[LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.spacing]}
+				item={item}
+				itemRef={ref}
+			/>
+
 			{children}
 		</div>
 	);
@@ -312,5 +281,35 @@ function Fragment({item}, ref) {
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-	return <FragmentContent fragmentEntryLink={fragmentEntryLink} ref={ref} />;
+	return (
+		<>
+			<FloatingToolbar
+				buttons={[
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration,
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
+				]}
+				item={item}
+				itemRef={ref}
+				onButtonClick={id => {
+					if (
+						id ===
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
+							.id
+					) {
+						dispatch(
+							duplicateFragment({
+								config,
+								fragmentEntryLinkId:
+									item.config.fragmentEntryLinkId,
+								itemId: item.itemId,
+								store
+							})
+						);
+					}
+				}}
+			/>
+
+			<FragmentContent fragmentEntryLink={fragmentEntryLink} ref={ref} />
+		</>
+	);
 }

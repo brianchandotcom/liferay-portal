@@ -155,10 +155,13 @@ public class LayoutDataConverter {
 					"backgroundImage",
 					inputRowConfigJSONObject.getJSONObject("backgroundImage")
 				).put(
+					"paddingBottom",
+					inputRowConfigJSONObject.getInt("paddingVertical")
+				).put(
 					"paddingHorizontal",
 					inputRowConfigJSONObject.getInt("paddingHorizontal")
 				).put(
-					"paddingVertical",
+					"paddingTop",
 					inputRowConfigJSONObject.getInt("paddingVertical")
 				).put(
 					"type",

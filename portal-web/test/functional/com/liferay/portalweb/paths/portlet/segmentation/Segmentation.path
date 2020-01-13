@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_FIELD_POSITION</td>
-	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-root')]/div[1]</td>
+	<td>//*[contains(@class, 'criteria-group-item-root')]//*[contains(@class, 'empty-drop-zone-root')]/div[1] | //*[contains(@class, 'edit-container')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,11 +31,6 @@
 <tr>
 	<td>DELETE_SEGMENT</td>
 	<td>//*[contains(@class, 'lexicon-icon-times-circle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAG_AND_DROP_EDIT</td>
-	<td>//*[contains(@class, 'edit-container')]</td>
 	<td></td>
 </tr>
 <tr>

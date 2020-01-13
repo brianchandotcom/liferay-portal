@@ -56,7 +56,7 @@ definition {
 		Segmentation.deleteProperties();
 		Segmentation.selectOrganization();
 		Segmentation.addProperties(propertyOption = "Country");
-		Segmentation.addMoreProperties(propertyOption = "Region");
+		Segmentation.addProperties(propertyOption = "Region");
 
 		Button.clickSave();
 	}

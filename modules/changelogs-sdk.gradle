@@ -66,21 +66,25 @@ buildChangelogs {
 			Closure<Void> getGitLogAttributes = {
 				String gitLogLine ->
 
+				String commitMessage = ""
+				String sha = ""
+				String ticketNumber = ""
+
 				Matcher gitLogMatcher = gitLogLine =~ /([a-f0-9]+):.+:((?:.*?)(?<![A-Z])(?:[A-Z]+-\d+(?:[^A-Za-z0-9]+[A-Z]+-\d+)*))(.*)/
 
-				if (!gitLogMatcher.find()) {
-					return [:]
+				if (gitLogMatcher.find()) {
+					commitMessage = gitLogMatcher.group(3)
+					sha = gitLogMatcher.group(1)
+					ticketNumber = gitLogMatcher.group(2)
 				}
-
-				String sha = gitLogMatcher.group(1)
-				String ticketNumber = gitLogMatcher.group(2)
-				String ticketMessage = gitLogMatcher.group(3)
 
 				if (ticketNumber.startsWith("Revert")) {
-					return ["SHA" : sha, "TICKET-NUMBER" : "", "COMMIT-MESSAGE" : ticketNumber + ticketMessage]
+					commitMessage = ticketNumber + commitMessage
+
+					ticketNumber = ""
 				}
 
-				return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : ticketMessage]
+				return ["SHA" : sha, "TICKET-NUMBER" : ticketNumber.replaceAll(".*?([A-Z]+-\\d+.*)", "\$1"), "COMMIT-MESSAGE" : commitMessage]
 			}
 
 			String commits = ""
@@ -90,13 +94,17 @@ buildChangelogs {
 
 				Map<String, String> gitLogAttributes = getGitLogAttributes(gitLogLine)
 
-				if (gitLogAttributes["COMMIT-MESSAGE"] ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
-					commits = commits + """\
-						|
-						|- [${gitLogAttributes["TICKET-NUMBER"]}]: ${gitLogAttributes["COMMIT-MESSAGE"]} (${gitLogAttributes["SHA"].substring(0, 10)})""".stripMargin()
-				}
+				String sha = gitLogAttributes["SHA"]
 
-				commits = commits.replace("  ", " ")
+				if (Validator.isNotNull(sha)) {
+					String commitMessage = gitLogAttributes["COMMIT-MESSAGE"].trim()
+
+					if (commitMessage ==~ /(?!.*([Pp]rep next|[Uu]se (\d+\.\d+\.\d+|latest))).*/) {
+						commits = commits + """\
+							|
+							|- [${gitLogAttributes["TICKET-NUMBER"]}]: ${commitMessage} (${sha.substring(0, 10)})""".stripMargin()
+					}
+				}
 			}
 
 			String dependencies = ""
@@ -131,8 +139,6 @@ buildChangelogs {
 							|- [${gitLogAttributes["TICKET-NUMBER"]}]: Update the ${dependencyName} dependency to version ${dependencyVersion}.""".stripMargin()
 					}
 				}
-
-				dependencies = dependencies.replace("  ", " ")
 			}
 
 			String descriptions = ""
@@ -194,7 +200,7 @@ buildChangelogs {
 
 		File changelogMarkdownFile = file("sdk/" + projectName + "/CHANGELOG.markdown")
 
-		changelogMarkdownFile.text = text.replaceAll(/(?=.{81,})(.{1,81})(?:[ \t])/, "\$1\n")
+		changelogMarkdownFile.text = text.replace("  ", " ").replaceAll(/(?=.{81,})(.{1,81})(?:[ \t])/, "\$1\n")
 
 		logger.lifecycle "Updated '{}'", changelogMarkdownFile
 	}

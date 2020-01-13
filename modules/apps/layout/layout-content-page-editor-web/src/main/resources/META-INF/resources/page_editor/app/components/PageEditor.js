@@ -60,15 +60,15 @@ const Container = React.forwardRef(({children, item}, ref) => {
 
 	return (
 		<div
-			className={classNames(`page-editor__container`, {
-				[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-				container: type === 'fixed',
-				'container-fluid': type === 'fluid',
-				empty: !item.children.length,
-				[`pb-${paddingBottom}`]: paddingBottom !== 3,
-				[`pt-${paddingTop}`]: paddingTop !== 3,
-				[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
-			})}
+			className={classNames(
+				`page-editor__container pb-${paddingBottom} pt-${paddingTop} px-${paddingHorizontal}`,
+				{
+					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
+					container: type === 'fixed',
+					'container-fluid': type === 'fluid',
+					empty: !item.children.length
+				}
+			)}
 			ref={ref}
 			style={
 				backgroundImage

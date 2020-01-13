@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.model.dsl.DSLStatementUtil;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Alias;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
 import com.liferay.portal.kernel.dao.model.dsl.expressions.Scalar;
-import com.liferay.portal.kernel.dao.model.dsl.joins.Join;
 import com.liferay.portal.kernel.dao.model.dsl.query.From;
 import com.liferay.portal.kernel.dao.model.dsl.query.Limit;
 import com.liferay.portal.kernel.dao.model.dsl.query.OrderBy;
@@ -32,17 +31,13 @@ import com.liferay.portal.kernel.dao.model.dsl.query.Select;
 import com.liferay.portal.kernel.dao.model.dsl.query.Where;
 import com.liferay.portal.kernel.dao.model.dsl.set.Union;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -110,78 +105,6 @@ public class DefaultASTNodeListenerTest {
 	public void testConstructors() {
 		new DSLFunctionUtil();
 		new DSLStatementUtil();
-	}
-
-	@Test
-	public void testCreateSynchronizedSQLQuery() {
-		String[] inValues = {"1", "2", "3"};
-
-		Join join = DSLStatementUtil.select(
-		).from(
-			MainExampleTable.TABLE
-		).innerJoinON(
-			ReferenceExampleTable.TABLE,
-			ReferenceExampleTable.TABLE.mainExampleId.eq(
-				MainExampleTable.TABLE.mainExampleId)
-		);
-
-		String[] queryStringHolder = {join.toString()};
-
-		List<String> argsList = new ArrayList<>(3);
-
-		SQLQuery sqlQuery = (SQLQuery)ProxyUtil.newProxyInstance(
-			DefaultASTNodeListenerTest.class.getClassLoader(),
-			new Class<?>[] {SQLQuery.class},
-			(proxy, method, args) -> {
-				Assert.assertEquals(
-					SQLQuery.class.getMethod(
-						"setString", int.class, String.class),
-					method);
-
-				Assert.assertEquals(Arrays.toString(args), 2, args.length);
-
-				argsList.add((int)args[0], (String)args[1]);
-
-				return null;
-			});
-
-		Session session = (Session)ProxyUtil.newProxyInstance(
-			DefaultASTNodeListenerTest.class.getClassLoader(),
-			new Class<?>[] {Session.class},
-			(proxy, method, args) -> {
-				Assert.assertEquals(
-					Session.class.getMethod(
-						"createSynchronizedSQLQuery", String.class,
-						boolean.class, String[].class),
-					method);
-
-				Assert.assertEquals(args[0], queryStringHolder[0]);
-				Assert.assertEquals(args[1], true);
-				Assert.assertArrayEquals(
-					(String[])args[2],
-					new String[] {
-						MainExampleTable.TABLE.getTableName(),
-						ReferenceExampleTable.TABLE.getTableName()
-					});
-
-				return sqlQuery;
-			});
-
-		Assert.assertSame(
-			sqlQuery,
-			DSLStatementUtil.createSynchronizedSQLQuery(session, join));
-
-		Assert.assertTrue(argsList.toString(), argsList.isEmpty());
-
-		Query query = join.where(MainExampleTable.TABLE.name.in(inValues));
-
-		queryStringHolder[0] = query.toString();
-
-		Assert.assertSame(
-			sqlQuery,
-			DSLStatementUtil.createSynchronizedSQLQuery(session, query));
-
-		Assert.assertEquals(Arrays.asList(inValues), argsList);
 	}
 
 	@Test

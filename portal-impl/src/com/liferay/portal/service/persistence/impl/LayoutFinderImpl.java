@@ -51,8 +51,7 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
-				session,
+			SQLQuery q = session.createSynchronizedSQLQuery(
 				DSLStatementUtil.select(
 				).from(
 					Layout.TABLE
@@ -132,8 +131,7 @@ public class LayoutFinderImpl
 				)
 			);
 
-			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
-				session, query);
+			SQLQuery q = session.createSynchronizedSQLQuery(query);
 
 			q.addScalar("layoutPlid", Type.LONG);
 			q.addScalar("preferencesPortletId", Type.STRING);
@@ -196,8 +194,7 @@ public class LayoutFinderImpl
 					query, Layout.class, Layout.TABLE.plid, groupId);
 			}
 
-			SQLQuery q = DSLStatementUtil.createSynchronizedSQLQuery(
-				session, query);
+			SQLQuery q = session.createSynchronizedSQLQuery(query);
 
 			q.addEntity("Layout", LayoutImpl.class);
 

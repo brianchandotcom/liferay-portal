@@ -16,15 +16,19 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeListener;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 
 import java.io.Serializable;
 
 import java.sql.Connection;
+
+import java.util.List;
 
 import org.hibernate.LockOptions;
 
@@ -125,6 +129,31 @@ public class SessionImpl implements Session {
 		catch (Exception exception) {
 			throw ExceptionTranslator.translate(exception);
 		}
+	}
+
+	@Override
+	public SQLQuery createSynchronizedSQLQuery(
+			com.liferay.portal.kernel.dao.model.dsl.query.Query query)
+		throws ORMException {
+
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
+
+		SQLQuery q = createSynchronizedSQLQuery(
+			query.toSQL(defaultASTNodeListener), true,
+			defaultASTNodeListener.getTableNames());
+
+		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
+
+		if (!scalarValues.isEmpty()) {
+			QueryPos queryPos = QueryPos.getInstance(q);
+
+			for (Object value : scalarValues) {
+				queryPos.add(value);
+			}
+		}
+
+		return q;
 	}
 
 	@Override

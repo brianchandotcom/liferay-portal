@@ -51,8 +51,14 @@ export const EditEntry = ({
 				dataRecordValues: {}
 			};
 
-			visitor.mapFields(({fieldName, value}) => {
-				dataRecord.dataRecordValues[fieldName] = value;
+			visitor.mapFields(({fieldName, localizable, value}) => {
+				if (localizable) {
+					dataRecord.dataRecordValues[fieldName] = {
+						[themeDisplay.getLanguageId()]: value
+					};
+				} else {
+					dataRecord.dataRecordValues[fieldName] = value;
+				}
 			});
 
 			const openSuccessToast = isNew => {

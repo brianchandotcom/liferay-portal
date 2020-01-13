@@ -210,6 +210,10 @@ export const FieldValuePreview = ({
 
 	const value = dataRecordValues[fieldName];
 
+	if (dataDefinitionField.localizable) {
+		return <Renderer value={value[themeDisplay.getLanguageId()]} />;
+	}
+
 	return <Renderer value={value} />;
 };
 

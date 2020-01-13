@@ -147,7 +147,7 @@ public class MasterLayoutVerticalCard
 			_layoutPageTemplateEntry.getPlid());
 
 		return LanguageUtil.format(
-			_httpServletRequest, "used-in-x-pages", layoutsCount);
+			_httpServletRequest, "x-usages", layoutsCount);
 	}
 
 	@Override

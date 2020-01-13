@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Petra SQL DSL
+Bundle-SymbolicName: com.liferay.petra.sql.dsl
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.petra.sql.dsl,\
+	com.liferay.petra.sql.dsl.ast,\
+	com.liferay.petra.sql.dsl.base,\
+	com.liferay.petra.sql.dsl.expressions,\
+	com.liferay.petra.sql.dsl.functions,\
+	com.liferay.petra.sql.dsl.joins,\
+	com.liferay.petra.sql.dsl.operands,\
+	com.liferay.petra.sql.dsl.query,\
+	com.liferay.petra.sql.dsl.set

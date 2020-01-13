@@ -177,7 +177,7 @@ public class ClassLoaderSession implements Session {
 
 	@Override
 	public SQLQuery createSynchronizedSQLQuery(
-			com.liferay.portal.kernel.dao.model.dsl.query.Query query)
+			com.liferay.petra.sql.dsl.query.Query query)
 		throws ORMException {
 
 		Thread currentThread = Thread.currentThread();

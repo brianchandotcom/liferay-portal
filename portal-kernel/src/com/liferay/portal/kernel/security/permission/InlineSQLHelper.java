@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.kernel.dao.model.Column;
-import com.liferay.portal.kernel.dao.model.Table;
-import com.liferay.portal.kernel.dao.model.dsl.query.Query;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.query.Query;
 
 import org.osgi.annotation.versioning.ProviderType;
 

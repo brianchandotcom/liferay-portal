@@ -44,7 +44,7 @@ public interface Session {
 		throws ORMException;
 
 	public SQLQuery createSynchronizedSQLQuery(
-			com.liferay.portal.kernel.dao.model.dsl.query.Query query)
+			com.liferay.petra.sql.dsl.query.Query query)
 		throws ORMException;
 
 	public SQLQuery createSynchronizedSQLQuery(String queryString)

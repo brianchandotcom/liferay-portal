@@ -14,9 +14,9 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.sql.dsl.ast.DefaultASTNodeListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.kernel.dao.model.dsl.ast.impl.DefaultASTNodeListener;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -133,7 +133,7 @@ public class SessionImpl implements Session {
 
 	@Override
 	public SQLQuery createSynchronizedSQLQuery(
-			com.liferay.portal.kernel.dao.model.dsl.query.Query query)
+			com.liferay.petra.sql.dsl.query.Query query)
 		throws ORMException {
 
 		DefaultASTNodeListener defaultASTNodeListener =

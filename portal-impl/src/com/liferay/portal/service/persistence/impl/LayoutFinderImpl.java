@@ -14,11 +14,11 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.petra.sql.dsl.DSLFunctionUtil;
+import com.liferay.petra.sql.dsl.DSLSelectUtil;
+import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.query.Query;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.model.dsl.DSLFunctionUtil;
-import com.liferay.portal.kernel.dao.model.dsl.DSLSelectUtil;
-import com.liferay.portal.kernel.dao.model.dsl.expressions.Predicate;
-import com.liferay.portal.kernel.dao.model.dsl.query.Query;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;

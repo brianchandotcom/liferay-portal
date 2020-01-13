@@ -15,12 +15,12 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.sql.dsl.DSLSelectUtil;
+import com.liferay.petra.sql.dsl.query.From;
+import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.Where;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.model.dsl.DSLSelectUtil;
-import com.liferay.portal.kernel.dao.model.dsl.query.From;
-import com.liferay.portal.kernel.dao.model.dsl.query.Query;
-import com.liferay.portal.kernel.dao.model.dsl.query.Where;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;

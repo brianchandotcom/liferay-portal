@@ -21,6 +21,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -60,7 +61,9 @@ public class EditLayoutControlMenuDisplayContext {
 	public List<DropdownItem> getDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				add(_getConfigurationActionUnsafeConsumer());
+				if (_isShowConfigurationPageAction()) {
+					add(_getConfigurationActionUnsafeConsumer());
+				}
 
 				if (_isShowPermissionsAction()) {
 					add(_getPermissionsActionUnsafeConsumer());
@@ -130,6 +133,12 @@ public class EditLayoutControlMenuDisplayContext {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
+	}
+
+	private boolean _isShowConfigurationPageAction() throws PortalException {
+		return LayoutPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
 	}
 
 	private boolean _isShowPermissionsAction() {

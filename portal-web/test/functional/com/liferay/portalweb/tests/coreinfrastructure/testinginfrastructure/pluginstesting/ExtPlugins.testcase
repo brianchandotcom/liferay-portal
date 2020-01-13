@@ -24,43 +24,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewSampleExtPluginValidationViaDeploy {
-		Portlet.assertServerStartup();
-
-		Portlet.shutdownServer();
-
-		Portlet.assertServerShutdown();
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Portlet.assertServerStartup();
-
-		AssertConsoleTextPresent(value1 = "EXT_ATOM_SERVLET_INSTALLED");
-
-		AssertConsoleTextPresent(value1 = "EXT_WEB_SERVLET_INSTALLED");
-
-		User.firstLoginPG();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#INFO",
-			value1 = "ext_portal_impl_installed_");
-
-		AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
-
-		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
-
-		Pause(locator1 = "120000");
-
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-			value1 = "DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
-
-		Refresh();
-
-		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
-	}
-
-	@priority = "5"
 	test ViewSampleExtPluginValidationViaDirectDeploy {
 		property direct.deploy.enabled = "true";
 

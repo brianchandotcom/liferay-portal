@@ -263,7 +263,11 @@ export default function Topper({
 			onClick={event => {
 				event.stopPropagation();
 
-				if (!acceptDrop.length || isDragging) {
+				if (
+					!acceptDrop.length ||
+					isDragging ||
+					floatingToolbarRef.current
+				) {
 					return;
 				}
 

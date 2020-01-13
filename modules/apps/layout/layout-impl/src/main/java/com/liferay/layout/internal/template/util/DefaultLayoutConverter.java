@@ -14,6 +14,7 @@
 
 package com.liferay.layout.internal.template.util;
 
+import com.liferay.layout.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.util.template.LayoutColumn;
 import com.liferay.layout.util.template.LayoutConversionResult;
 import com.liferay.layout.util.template.LayoutConverter;
@@ -21,6 +22,7 @@ import com.liferay.layout.util.template.LayoutData;
 import com.liferay.layout.util.template.LayoutRow;
 import com.liferay.layout.util.template.LayoutTypeSettingsInspectorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.jsoup.Jsoup;
@@ -39,12 +42,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Rubén Pulido
  */
 @Component(
+	configurationPid = "com.liferay.layout.internal.configuration.LayoutConverterConfiguration",
 	immediate = true, property = "layout.template.id=default",
 	service = LayoutConverter.class
 )
@@ -122,6 +128,13 @@ public class DefaultLayoutConverter implements LayoutConverter {
 			LayoutData.of(
 				layout, rowUnsafeConsumers.toArray(new UnsafeConsumer[0])),
 			conversionWarningMessages);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_layoutConverterConfiguration = ConfigurableUtil.createConfigurable(
+			LayoutConverterConfiguration.class, properties);
 	}
 
 	private String[] _getConversionWarningMessages(
@@ -224,5 +237,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 	}
 
 	private static final String _CSS_CLASS_COLUMN_PREFIX = "col-md-";
+
+	private volatile LayoutConverterConfiguration _layoutConverterConfiguration;
 
 }

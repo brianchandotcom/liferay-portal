@@ -116,7 +116,7 @@ public class DepotPanelAppControllerTest {
 			PermissionThreadLocal.getPermissionChecker(),
 			_groupLocalService.getGroup(_depotEntry.getGroupId()));
 
-		Assert.assertEquals(panelApps.toString(), 2, panelApps.size());
+		Assert.assertEquals(panelApps.toString(), 3, panelApps.size());
 
 		_assertPanelAppsContain(
 			panelApps, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);

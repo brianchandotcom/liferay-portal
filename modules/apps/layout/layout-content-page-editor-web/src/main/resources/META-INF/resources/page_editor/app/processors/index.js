@@ -12,7 +12,14 @@
  * details.
  */
 
-export {default as fallback} from './FallbackProcessor';
-export {default as html} from './HTMLProcessor';
-export {default as image} from './ImageProcessor';
-export {default as text} from './TextProcessor';
+import FallbackProcessor from './FallbackProcessor';
+import HTMLProcessor from './HTMLProcessor';
+import ImageProcessor from './ImageProcessor';
+import TextProcessor from './TextProcessor';
+
+export default {
+	fallback: FallbackProcessor,
+	html: HTMLProcessor,
+	image: ImageProcessor,
+	text: TextProcessor
+};

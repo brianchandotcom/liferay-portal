@@ -30,7 +30,7 @@ export function ManualSelectionPanel({
 		<>
 			<ClayForm.Group small>
 				<label htmlFor="floatingToolbarLayoutBackgroundImagePanelOption">
-					{Liferay.Language.get('background-image')}
+					{Liferay.Language.get('image')}
 				</label>
 				<ClayInput
 					id="floatingToolbarLayoutBackgroundImagePanelOption"

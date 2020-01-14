@@ -25,7 +25,6 @@ export const ContainerBackgroundColorConfiguration = ({
 }) => (
 	<ClayForm.Group small>
 		<ColorPalette
-			label={Liferay.Language.get('background-color')}
 			onClear={() =>
 				onValueChange({
 					[CONTAINER_BACKGROUND_COLOR_IDENTIFIER]: ''

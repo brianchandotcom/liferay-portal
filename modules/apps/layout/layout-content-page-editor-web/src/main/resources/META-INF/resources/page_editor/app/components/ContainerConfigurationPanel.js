@@ -47,6 +47,9 @@ export const ContainerConfigurationPanel = ({item}) => {
 
 	return (
 		<>
+			<p className="mb-3 sheet-subtitle">
+				{Liferay.Language.get('layout')}
+			</p>
 			<ContainerTypeConfiguration
 				containerType={item.config.type}
 				onValueChange={handleConfigurationValueChanged}
@@ -60,10 +63,16 @@ export const ContainerConfigurationPanel = ({item}) => {
 				onValueChange={handleConfigurationValueChanged}
 				paddingHorizontal={item.config.paddingHorizontal}
 			/>
+			<p className="mb-3 sheet-subtitle">
+				{Liferay.Language.get('background-color')}
+			</p>
 			<ContainerBackgroundColorConfiguration
 				backgroundColor={item.config.backgroundColorCssClass}
 				onValueChange={handleConfigurationValueChanged}
 			/>
+			<p className="mb-3 sheet-subtitle">
+				{Liferay.Language.get('background-image')}
+			</p>
 			<ContainerBackgroundImageConfiguration
 				backgroundImageTitle={item.config.backgroundImageTitle}
 				onValueChange={handleConfigurationValueChanged}

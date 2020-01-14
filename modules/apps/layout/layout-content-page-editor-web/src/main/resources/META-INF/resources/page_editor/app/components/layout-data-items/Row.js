@@ -1,0 +1,51 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import classNames from 'classnames';
+import React from 'react';
+
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+
+const Row = React.forwardRef(
+	({children, className, item, layoutData, ...props}, ref) => {
+		const parent = layoutData.items[item.parentId];
+
+		const rowContent = (
+			<div
+				className={classNames(className, 'row', {
+					empty: !item.children.some(
+						childId => layoutData.items[childId].children.length
+					),
+					'no-gutters': !item.config.gutters
+				})}
+				ref={ref}
+				{...props}
+			>
+				{children}
+			</div>
+		);
+
+		return (
+			<>
+				{!parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
+					<div className="container-fluid p-0">{rowContent}</div>
+				) : (
+					rowContent
+				)}
+			</>
+		);
+	}
+);
+
+export default Row;

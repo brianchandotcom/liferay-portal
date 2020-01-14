@@ -26,33 +26,16 @@
  * details.
  */
 
-import classNames from 'classnames';
 import React from 'react';
 
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
+import Row from './Row';
 
 const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const parent = layoutData.items[item.parentId];
-
-		const rowContent = (
-			<div className="page-editor__row-outline" ref={ref}>
-				<div
-					className={classNames('page-editor__row row', {
-						empty: !item.children.some(
-							childId => layoutData.items[childId].children.length
-						),
-						'no-gutters': !item.config.gutters
-					})}
-				>
-					{children}
-				</div>
-			</div>
-		);
-
 		return (
 			<Topper
 				acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
@@ -62,7 +45,12 @@ const RowWithControls = React.forwardRef(
 				name={Liferay.Language.get('row')}
 			>
 				{() => (
-					<>
+					<Row
+						className="page-editor__row"
+						item={item}
+						layoutData={layoutData}
+						ref={ref}
+					>
 						<FloatingToolbar
 							buttons={[
 								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
@@ -71,15 +59,8 @@ const RowWithControls = React.forwardRef(
 							itemRef={ref}
 						/>
 
-						{!parent ||
-						parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
-							<div className="container-fluid p-0">
-								{rowContent}
-							</div>
-						) : (
-							rowContent
-						)}
-					</>
+						{children}
+					</Row>
 				)}
 			</Topper>
 		);

@@ -26,16 +26,14 @@
  * details.
  */
 
-import classNames from 'classnames';
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import Topper from '../Topper';
+import Column from './Column';
 
 const ColumnWithControls = React.forwardRef(
-	({children, className, item, layoutData}, ref) => {
-		const {size} = item.config;
-
+	({children, item, layoutData}, ref) => {
 		return (
 			<Topper
 				acceptDrop={[
@@ -48,18 +46,9 @@ const ColumnWithControls = React.forwardRef(
 				name={Liferay.Language.get('column')}
 			>
 				{() => (
-					<div
-						className={classNames(
-							className,
-							'col page-editor__col',
-							{
-								[`col-${size}`]: size
-							}
-						)}
-						ref={ref}
-					>
+					<Column className="page-editor__col" item={item} ref={ref}>
 						{children}
-					</div>
+					</Column>
 				)}
 			</Topper>
 		);

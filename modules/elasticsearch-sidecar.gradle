@@ -91,7 +91,7 @@ startElasticsearch {
 				project.exec {
 					workingDir = new File(elasticsearchSidecarClusterDir, "node-${i}/bin")
 
-					args "-c sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'"
+					args "-c", "sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'"
 					executable "/bin/sh"
 				}
 			}
@@ -104,7 +104,7 @@ startElasticsearch {
 				project.exec {
 					workingDir = new File(elasticsearchSidecarClusterDir, "node-${i}/bin")
 
-					args "-c ./elasticsearch -d -p pid-elasticsearch"
+					args "-c", "./elasticsearch -d -p pid-elasticsearch"
 					executable "/bin/sh"
 				}
 			}
@@ -145,13 +145,13 @@ stopElasticsearch {
 				workingDir = new File(elasticsearchSidecarClusterDir, "node-${i}")
 
 				if (OSDetector.isWindows()) {
-					args "/c for /f %x in (pid-elasticsearch) do taskkill /f /pid %x"
+					args "/c", "for /f %x in (pid-elasticsearch) do taskkill /f /pid %x"
 					executable "cmd.exe"
 				}
 				else {
 					File pidElasticsearchFile = new File(workingDir, "pid-elasticsearch")
 
-					args "-c kill " + pidElasticsearchFile.text
+					args "-c", "kill " + pidElasticsearchFile.text
 					executable "/bin/sh"
 				}
 			}
@@ -196,11 +196,11 @@ class InstallPluginTask extends Exec {
 		FileUtil.get(project, pluginURL, pluginFile, false, true)
 
 		if (OSDetector.isWindows()) {
-			args "/c elasticsearch-plugin install file:///" + pluginFile
+			args "/c", "elasticsearch-plugin install file:///" + pluginFile
 			executable "cmd.exe"
 		}
 		else {
-			args "-c ./elasticsearch-plugin install file:///" + pluginFile
+			args "-c", "./elasticsearch-plugin install file:///" + pluginFile
 			executable "/bin/sh"
 		}
 

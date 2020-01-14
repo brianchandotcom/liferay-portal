@@ -3,6 +3,7 @@
 		"@clayui/button": "^3.0.3",
 		"@clayui/form": "^3.2.1",
 		"@clayui/icon": "^3.0.1",
+		"@clayui/label": "^3.0.1",
 		"@clayui/table": "^3.0.4",
 		"frontend-js-web": "*",
 		"metal": "2.16.8",

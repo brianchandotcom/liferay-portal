@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -37,7 +38,9 @@ const Languages = ({availableLocales, defaultUserLocale, inheritLocales}) => {
 					{displayName}
 					<span className="hide"> {localeId} </span>
 					{isDefaultLanguage && (
-						<span> DEFAULT!! </span>
+						<ClayLabel displayType="info">
+					        {Liferay.Language.get('default')}
+						</ClayLabel>
 					)}
 				</ClayTable.Cell>
 				{ showActions && (

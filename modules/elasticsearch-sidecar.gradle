@@ -69,11 +69,11 @@ setupElasticsearch {
 
 		File configFile = file("${project.'liferay.home'}/osgi/configs/com.liferay.portal.search.elasticsearch${project.'elasticsearch.sidecar.major.version'}.configuration.ElasticsearchConfiguration.config")
 
-		configFile.text = project.properties["elasticsearch.configs.osgi"].split(',').sort().join('\n')
+		configFile.text = project.properties["elasticsearch.configs.osgi"].replace("\\\"", "\"").split(',').sort().join('\n')
 
 		File ymlFile = file("${elasticsearchSidecarDir}/config/elasticsearch.yml")
 
-		ymlFile.append '\n' + project.properties["elasticsearch.configs.sidecar"].split(',').sort().join('\n')
+		ymlFile.append '\n' + project.properties["elasticsearch.configs.sidecar"].replace("\\\"", "\"").split(',').sort().join('\n')
 	}
 
 	doLast {

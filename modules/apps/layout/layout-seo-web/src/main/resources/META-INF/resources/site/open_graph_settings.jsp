@@ -63,7 +63,7 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageFileEntryId() %>" />
 
 	<div class="form-group">
-		<label><liferay-ui:message key="preview" /></label>
+		<label><liferay-ui:message key="preview" /> <liferay-ui:icon-help message="preview-help" /></label>
 
 		<div class="preview-seo preview-seo-og" dir="ltr">
 			<div class="aspect-ratio aspect-ratio-191-to-100 bg-light mb-0 preview-seo-image">

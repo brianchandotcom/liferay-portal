@@ -27,17 +27,17 @@ export const ConfigContext = React.createContext(DEFAULT_CONFIG);
  * the app, so we can safely store is as a variable.
  */
 export function getConfig(config) {
-	const {plugin_root, portletNamespace, sidebarPanels} = config;
+	const {pluginsRootPath, portletNamespace, sidebarPanels} = config;
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
-	const augmentedPanels = augmentPanelData(plugin_root, sidebarPanels);
+	const augmentedPanels = augmentPanelData(pluginsRootPath, sidebarPanels);
 
 	const syntheticItems = {
 		panels: generatePanels(augmentedPanels),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,
-		toolbarPlugins: getToolbarPlugins(plugin_root, toolbarId)
+		toolbarPlugins: getToolbarPlugins(pluginsRootPath, toolbarId)
 	};
 
 	return {
@@ -58,7 +58,7 @@ const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
 	lookAndFeel: 'look-and-feel'
 };
 
-function augmentPanelData(plugin_root, sidebarPanels) {
+function augmentPanelData(pluginsRootPath, sidebarPanels) {
 	return sidebarPanels.map(panel => {
 		if (isSeparator(panel)) {
 			return panel;
@@ -72,7 +72,7 @@ function augmentPanelData(plugin_root, sidebarPanels) {
 			...panel,
 
 			// https://github.com/liferay/liferay-js-toolkit/issues/324
-			pluginEntryPoint: `${plugin_root}/${sidebarPanelId}/index`,
+			pluginEntryPoint: `${pluginsRootPath}/${sidebarPanelId}/index`,
 
 			rendersSidebarContent: rendersSidebarContent(sidebarPanelId),
 
@@ -100,7 +100,7 @@ function generatePanels(sidebarPanels) {
  * server data. In the future we may choose to encapsulate it better and
  * deal with it inside the plugin.
  */
-function getToolbarPlugins(plugin_root, toolbarId) {
+function getToolbarPlugins(pluginsRootPath, toolbarId) {
 	const toolbarPluginId = 'experience';
 	const selectId = `${toolbarId}_${toolbarPluginId}`;
 
@@ -116,7 +116,7 @@ function getToolbarPlugins(plugin_root, toolbarId) {
 					</select>
 				</div>
 			`,
-			pluginEntryPoint: `${plugin_root}/experience/index`,
+			pluginEntryPoint: `${pluginsRootPath}/experience/index`,
 			toolbarPluginId: 'experience'
 		}
 	];

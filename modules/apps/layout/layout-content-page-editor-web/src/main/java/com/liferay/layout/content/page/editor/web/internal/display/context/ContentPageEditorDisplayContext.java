@@ -320,7 +320,8 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/move_fragment_entry_link_react")
 			).put(
-				"plugin_root", npmResolvedPackageName + "/page_editor/plugins"
+				"pluginsRootPath",
+				npmResolvedPackageName + "/page_editor/plugins"
 			).put(
 				"portletNamespace", editorSoyContext.get("portletNamespace")
 			).put(

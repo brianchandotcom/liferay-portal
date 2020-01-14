@@ -16,10 +16,31 @@ import {debounce} from 'frontend-js-web';
 
 const KEY_ENTER = 13;
 
+const defaultGetEditorWrapper = element => {
+	const wrapper = document.createElement('div');
+
+	wrapper.innerHTML = element.innerHTML;
+	element.innerHTML = '';
+	element.appendChild(wrapper);
+
+	return wrapper;
+};
+
+const defaultRender = (element, value) => {
+	element.innerHTML = value;
+};
+
 /**
  * @param {'text'|'rich-text'} editorConfigurationName
+ * @param {function} [getEditorWrapper=defaultGetEditorWrapper] Optionally
+ *  override getEditorWrapper function, where the editor will be instanciated
+ * @param {function} [render=defaultRender] Optionally override render function
  */
-export default function getAllowEditorProcessor(editorConfigurationName) {
+export default function getAllowEditorProcessor(
+	editorConfigurationName,
+	getEditorWrapper = defaultGetEditorWrapper,
+	render = defaultRender
+) {
 	let _editor;
 	let _eventHandlers;
 	let _element;
@@ -32,14 +53,10 @@ export default function getAllowEditorProcessor(editorConfigurationName) {
 				editorConfigurationName
 			];
 
-			const wrapper = document.createElement('div');
-			wrapper.innerHTML = element.innerHTML;
-			element.innerHTML = '';
-			element.appendChild(wrapper);
 			_element = element;
 
 			const editorName = `${portletNamespace}FragmentEntryLinkEditable_${element.id}`;
-			_editor = AlloyEditor.editable(wrapper, {
+			_editor = AlloyEditor.editable(getEditorWrapper(element), {
 				...editorConfig,
 
 				filebrowserImageBrowseLinkUrl: editorConfig.filebrowserImageBrowseLinkUrl.replace(
@@ -119,7 +136,7 @@ export default function getAllowEditorProcessor(editorConfigurationName) {
 		 */
 		render: (element, value) => {
 			if (element !== _element) {
-				element.innerHTML = value;
+				render(element, value);
 			}
 		}
 	};

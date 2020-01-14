@@ -110,12 +110,17 @@ function FragmentContent({fragmentEntryLink}, ref) {
 
 			activeEditable.current = editable;
 
-			initProcessor(
-				editable,
-				editable.getAttribute('type'),
+			initProcessor({
 				config,
-				dispatch
-			);
+				editableConfig: selectEditableValueConfig(
+					state,
+					fragmentEntryLinkId,
+					editable.getAttribute('id')
+				),
+				editableType: editable.getAttribute('type'),
+				element: editable
+			});
+
 			selectItem(editableId);
 			setHasEditableActive(true);
 		} else {
@@ -133,13 +138,13 @@ function FragmentContent({fragmentEntryLink}, ref) {
 		}
 	};
 
-	const initProcessor = (element, editableType, config) => {
+	const initProcessor = ({config, editableConfig, editableType, element}) => {
 		const processor = Processors[editableType] || Processors.fallback;
 
 		processor.createEditor(
 			element,
 			value => {
-				processor.render(element, value, {});
+				processor.render(element, value, editableConfig);
 
 				const {editableValues} = fragmentEntryLink;
 				const editableValue =
@@ -163,7 +168,7 @@ function FragmentContent({fragmentEntryLink}, ref) {
 					})
 				);
 			},
-			() => processor.destroyEditor(),
+			() => processor.destroyEditor(element, editableConfig),
 			config
 		);
 	};

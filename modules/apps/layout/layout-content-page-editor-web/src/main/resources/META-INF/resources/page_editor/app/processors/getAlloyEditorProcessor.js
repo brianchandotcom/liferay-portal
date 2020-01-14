@@ -113,7 +113,7 @@ export default function getAllowEditorProcessor(
 
 		/**
 		 */
-		destroyEditor: () => {
+		destroyEditor: (element, editableConfig) => {
 			if (_editor) {
 				const lastValue = _editor.get('nativeEditor').getData();
 
@@ -123,7 +123,7 @@ export default function getAllowEditorProcessor(
 					handler.removeListener();
 				});
 
-				render(_element, lastValue);
+				render(_element, lastValue, editableConfig);
 
 				_editor = null;
 				_eventHandlers = null;
@@ -135,10 +135,11 @@ export default function getAllowEditorProcessor(
 		 * @param {HTMLElement} element HTMLElement that should be mutated with the
 		 *  given value.
 		 * @param {string} value Element content
+		 * @param {Object} editableConfig
 		 */
-		render: (element, value) => {
+		render: (element, value, editableConfig) => {
 			if (element !== _element) {
-				render(element, value);
+				render(element, value, editableConfig);
 			}
 		}
 	};

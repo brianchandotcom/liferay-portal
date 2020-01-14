@@ -23,10 +23,10 @@ import {processStatusConstants} from '../filter/ProcessStatusFilter.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
 import {isValidDate} from '../filter/util/timeRangeUtil.es';
 import {Header} from './InstanceListPageHeader.es';
-import {ItemDetail} from './InstanceListPageItemDetail.es';
 import {Table} from './InstanceListPageTable.es';
 import {ModalContext} from './modal/ModalContext.es';
 import {BulkReassignModal} from './modal/bulk-reassign/BulkReassignModal.es';
+import {InstanceDetailsModal} from './modal/instance-details/InstanceDetailsModal.es';
 import {SingleReassignModal} from './modal/single-reassign/SingleReassignModal.es';
 import {InstanceListProvider} from './store/InstanceListPageStore.es';
 
@@ -48,7 +48,19 @@ const InstanceListPage = ({routeParams}) => {
 		visible: false
 	});
 
-	const modalState = {bulkModal, setBulkModal, setSingleModal, singleModal};
+	const [instanceDetailsModal, setInstanceDetailsModal] = useState({
+		processId,
+		visible: false
+	});
+
+	const modalState = {
+		bulkModal,
+		instanceDetailsModal,
+		setBulkModal,
+		setInstanceDetailsModal,
+		setSingleModal,
+		singleModal
+	};
 
 	useProcessTitle(processId, Liferay.Language.get('all-items'));
 
@@ -180,12 +192,9 @@ const Body = ({data, filtered, routeParams}) => {
 					/>
 				</PromisesResolver.Rejected>
 			</div>
-
 			<InstanceListPage.SingleReassignModal />
-
 			<InstanceListPage.BulkReassignModal />
-
-			<ItemDetail processId={routeParams.processId} />
+			<InstanceListPage.InstanceDetailsModal />
 		</>
 	);
 };
@@ -194,6 +203,7 @@ InstanceListPage.Body = Body;
 InstanceListPage.Body.Table = Table;
 InstanceListPage.BulkReassignModal = BulkReassignModal;
 InstanceListPage.Header = Header;
+InstanceListPage.InstanceDetailsModal = InstanceDetailsModal;
 InstanceListPage.SingleReassignModal = SingleReassignModal;
 
 export default InstanceListPage;

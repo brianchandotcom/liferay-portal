@@ -47,6 +47,10 @@ const Item = taskItem => {
 	const {selectedItems = [], setInstanceId, setSelectedItems} = useContext(
 		InstanceListContext
 	);
+	const {instanceDetailsModal, setInstanceDetailsModal} = useContext(
+		ModalContext
+	);
+
 	const [checked, setChecked] = useState(false);
 
 	const {
@@ -87,8 +91,6 @@ const Item = taskItem => {
 		}
 	};
 
-	const updateInstanceId = () => setInstanceId(id);
-
 	return (
 		<ClayTable.Row
 			className={checked ? 'table-active' : ''}
@@ -119,10 +121,15 @@ const Item = taskItem => {
 			<ClayTable.Cell>
 				<span
 					className="link-text"
-					data-target="#instanceDetailModal"
 					data-testid="instanceIdLink"
-					data-toggle="modal"
-					onClick={updateInstanceId}
+					onClick={() => {
+						setInstanceId(id);
+
+						setInstanceDetailsModal(() => ({
+							...instanceDetailsModal,
+							visible: true
+						}));
+					}}
 					tabIndex="-1"
 				>
 					<strong>{id}</strong>

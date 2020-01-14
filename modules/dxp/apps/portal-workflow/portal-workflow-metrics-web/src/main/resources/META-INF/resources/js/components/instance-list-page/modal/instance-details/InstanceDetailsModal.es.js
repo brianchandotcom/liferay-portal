@@ -10,17 +10,25 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
 import React, {useContext, useEffect, useState} from 'react';
 
-import Icon from '../../shared/components/Icon.es';
-import moment from '../../shared/util/moment.es';
-import {AppContext} from '../AppContext.es';
-import {InstanceListContext} from './store/InstanceListPageStore.es';
+import moment from '../../../../shared/util/moment.es';
+import {AppContext} from '../../../AppContext.es';
+import {InstanceListContext} from '../../store/InstanceListPageStore.es';
+import {ModalContext} from '../ModalContext.es';
 
-const ItemDetail = ({processId}) => {
-	const {client} = useContext(AppContext);
+const InstanceDetailsModal = () => {
 	const [instance, setInstance] = useState({});
+
+	const {client} = useContext(AppContext);
 	const {instanceId} = useContext(InstanceListContext);
+	const {instanceDetailsModal, setInstanceDetailsModal} = useContext(
+		ModalContext
+	);
+
+	const {processId, visible} = instanceDetailsModal;
 
 	useEffect(() => {
 		if (instanceId) {
@@ -73,44 +81,38 @@ const ItemDetail = ({processId}) => {
 		iconTitleName = 'exclamation-circle';
 	}
 
+	const {observer} = useModal({
+		onClose: () => {
+			setInstanceDetailsModal({
+				...instanceDetailsModal,
+				visible: false
+			});
+		}
+	});
+
 	return (
-		<div
-			aria-labelledby="instanceDetailModalLabel"
-			className="fade modal"
-			id="instanceDetailModal"
-			role="dialog"
-			style={{display: 'none'}}
-			tabIndex="-1"
-		>
-			<div className="modal-dialog modal-lg">
-				<div className="modal-content">
-					<div className="modal-header">
-						<div
-							className="font-weight-medium modal-title"
-							id="instanceDetailModalLabel"
-						>
+		<>
+			{visible && (
+				<ClayModal
+					className="instance-details-modal"
+					observer={observer}
+					size="lg"
+				>
+					<ClayModal.Header>
+						<div className="font-weight-medium">
 							<span
 								className={`modal-title-indicator ${styleName}`}
 							>
-								<Icon iconName={iconTitleName} />
+								<ClayIcon symbol={iconTitleName} />
 							</span>
 
 							{`${Liferay.Language.get('item')} #${instanceId}`}
 						</div>
-						<button
-							aria-labelledby="Close"
-							className="close"
-							data-dismiss="modal"
-							role="button"
-							type="button"
-						>
-							<Icon iconName="times" />
-						</button>
-					</div>
-					<div className="modal-body">
-						<ItemDetail.SectionTitle>
+					</ClayModal.Header>
+					<ClayModal.Body>
+						<InstanceDetailsModal.SectionTitle>
 							{Liferay.Language.get('due-date-by-sla')}
-						</ItemDetail.SectionTitle>
+						</InstanceDetailsModal.SectionTitle>
 
 						{slaResults.length === 0 && (
 							<p>
@@ -123,45 +125,51 @@ const ItemDetail = ({processId}) => {
 						)}
 
 						{!!slaOpen.length && (
-							<ItemDetail.SectionSubTitle>
+							<InstanceDetailsModal.SectionSubTitle>
 								{`${Liferay.Language.get(
 									'open'
 								).toUpperCase()} (${slaOpen.length})`}
-							</ItemDetail.SectionSubTitle>
+							</InstanceDetailsModal.SectionSubTitle>
 						)}
 
 						{slaOpen.map(item => (
-							<ItemDetail.Item key={item.id} {...item} />
+							<InstanceDetailsModal.Item
+								key={item.id}
+								{...item}
+							/>
 						))}
 
 						{!!slaResolved.length && (
-							<ItemDetail.SectionSubTitle>
+							<InstanceDetailsModal.SectionSubTitle>
 								{`${Liferay.Language.get(
 									'resolved'
 								).toUpperCase()} (${slaResolved.length})`}
-							</ItemDetail.SectionSubTitle>
+							</InstanceDetailsModal.SectionSubTitle>
 						)}
 
 						{slaResolved.map(item => (
-							<ItemDetail.Item key={item.id} {...item} />
+							<InstanceDetailsModal.Item
+								key={item.id}
+								{...item}
+							/>
 						))}
 
-						<ItemDetail.SectionTitle className="mt-5">
+						<InstanceDetailsModal.SectionTitle className="mt-5">
 							{Liferay.Language.get('process-details')}
-						</ItemDetail.SectionTitle>
+						</InstanceDetailsModal.SectionTitle>
 
-						<ItemDetail.SectionAttribute
+						<InstanceDetailsModal.SectionAttribute
 							description={Liferay.Language.get('process-status')}
 							detail={status}
 						/>
 
-						<ItemDetail.SectionAttribute
+						<InstanceDetailsModal.SectionAttribute
 							description={Liferay.Language.get('created-by')}
 							detail={creatorUser ? creatorUser.name : ''}
 						/>
 
 						{!!dateCreated && (
-							<ItemDetail.SectionAttribute
+							<InstanceDetailsModal.SectionAttribute
 								description={Liferay.Language.get(
 									'creation-date'
 								)}
@@ -173,18 +181,18 @@ const ItemDetail = ({processId}) => {
 							/>
 						)}
 
-						<ItemDetail.SectionAttribute
+						<InstanceDetailsModal.SectionAttribute
 							description={Liferay.Language.get('asset-type')}
 							detail={assetType}
 						/>
 
-						<ItemDetail.SectionAttribute
+						<InstanceDetailsModal.SectionAttribute
 							description={Liferay.Language.get('asset-title')}
 							detail={assetTitle}
 						/>
 
 						{!completed && (
-							<ItemDetail.SectionAttribute
+							<InstanceDetailsModal.SectionAttribute
 								description={Liferay.Language.get(
 									'current-step'
 								)}
@@ -193,7 +201,7 @@ const ItemDetail = ({processId}) => {
 						)}
 
 						{completed && !!dateCompletion && (
-							<ItemDetail.SectionAttribute
+							<InstanceDetailsModal.SectionAttribute
 								description={Liferay.Language.get('end-date')}
 								detail={moment
 									.utc(dateCompletion)
@@ -204,7 +212,7 @@ const ItemDetail = ({processId}) => {
 						)}
 
 						{!completed && (
-							<ItemDetail.SectionAttribute
+							<InstanceDetailsModal.SectionAttribute
 								description={Liferay.Language.get(
 									'current-assignee'
 								)}
@@ -226,13 +234,13 @@ const ItemDetail = ({processId}) => {
 							{Liferay.Language.get('go-to-submission-page')}
 
 							<span className="inline-item inline-item-after">
-								<Icon iconName="shortcut" />
+								<ClayIcon symbol="shortcut" />
 							</span>
 						</a>
-					</div>
-				</div>
-			</div>
-		</div>
+					</ClayModal.Body>
+				</ClayModal>
+			)}
+		</>
 	);
 };
 
@@ -284,7 +292,7 @@ const Item = ({dateOverdue, name, onTime, remainingTime, status}) => {
 				style={{height: '1.5rem', width: '1.5rem'}}
 			>
 				<span className="inline-item" style={{fontSize: '10px'}}>
-					<Icon elementClasses={iconClassName} iconName={iconName} />
+					<ClayIcon className={iconClassName} symbol={iconName} />
 				</span>
 			</span>
 
@@ -323,9 +331,9 @@ const SectionAttribute = ({description, detail}) => {
 	);
 };
 
-ItemDetail.Item = Item;
-ItemDetail.SectionTitle = SectionTitle;
-ItemDetail.SectionSubTitle = SectionSubTitle;
-ItemDetail.SectionAttribute = SectionAttribute;
+InstanceDetailsModal.Item = Item;
+InstanceDetailsModal.SectionTitle = SectionTitle;
+InstanceDetailsModal.SectionSubTitle = SectionSubTitle;
+InstanceDetailsModal.SectionAttribute = SectionAttribute;
 
-export {ItemDetail};
+export {InstanceDetailsModal};

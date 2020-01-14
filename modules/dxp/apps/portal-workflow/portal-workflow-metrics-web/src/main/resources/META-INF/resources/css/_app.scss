@@ -18,16 +18,6 @@
 		}
 	}
 
-	.modal {
-		.modal-dialog.modal-lg {
-			max-width: 800px;
-		}
-
-		&.show {
-			display: block;
-		}
-	}
-
 	.navbar-nav .nav-link.active {
 		pointer-events: none;
 	}

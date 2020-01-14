@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -56,8 +59,19 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
-		return super.includeEditContent(
-			httpServletRequest, httpServletResponse, layout);
+		RequestDispatcher requestDispatcher =
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
+				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+					servletContext, getEditPage()));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
+
+		requestDispatcher.include(httpServletRequest, pipingServletResponse);
+
+		return unsyncStringWriter.toString();
 	}
 
 	@Override
@@ -73,8 +87,28 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
 			_infoDisplayContributorTracker);
 
-		return super.includeLayoutContent(
-			httpServletRequest, httpServletResponse, layout);
+		RequestDispatcher requestDispatcher =
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
+				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+					servletContext, getViewPage()));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			httpServletResponse, unsyncStringWriter);
+
+		String contentType = pipingServletResponse.getContentType();
+
+		requestDispatcher.include(httpServletRequest, pipingServletResponse);
+
+		if (contentType != null) {
+			httpServletResponse.setContentType(contentType);
+		}
+
+		httpServletRequest.setAttribute(
+			WebKeys.LAYOUT_CONTENT, unsyncStringWriter.getStringBundler());
+
+		return false;
 	}
 
 	@Override

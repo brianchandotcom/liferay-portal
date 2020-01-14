@@ -242,12 +242,10 @@ public class ReferredSegmentsEntryProviderTest {
 		throws Exception {
 
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
-
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), User.class.getName(), _user1.getUserId());
-
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), User.class.getName(), _user2.getUserId());
 

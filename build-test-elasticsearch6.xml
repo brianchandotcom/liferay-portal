@@ -822,7 +822,7 @@ xpack.monitoring.collection.enabled: true</echo>
 				<lstopwatch action="total" name="start.elasticsearch" />
 			</then>
 			<else>
-				<waitfor maxwait="20" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+				<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
 					<http url="http://localhost:9200/" />
 				</waitfor>
 

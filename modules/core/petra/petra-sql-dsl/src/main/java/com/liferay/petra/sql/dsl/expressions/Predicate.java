@@ -76,7 +76,7 @@ public class Predicate extends BaseASTNode implements Expression<Boolean> {
 		_leftExpression.toSQL(consumer, astNodeListener);
 
 		consumer.accept(" ");
-		consumer.accept(String.valueOf(_operand));
+		consumer.accept(_operand.toString());
 		consumer.accept(" ");
 
 		_rightExpression.toSQL(consumer, astNodeListener);

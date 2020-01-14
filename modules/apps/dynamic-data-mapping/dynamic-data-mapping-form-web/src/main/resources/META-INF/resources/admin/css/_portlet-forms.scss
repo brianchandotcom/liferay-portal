@@ -83,13 +83,13 @@
 	}
 
 	.liferay-ddm-form-field-paragraph {
+		blockquote {
+			margin: 1em 40px;
+		}
+
 		p {
 			margin-top: 14px;
 			word-wrap: break-word;
-		}
-
-		blockquote {
-			margin: 1em 40px;
 		}
 	}
 

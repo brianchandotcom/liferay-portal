@@ -163,7 +163,7 @@ function FragmentContent({fragmentEntryLink}, ref) {
 					})
 				);
 			},
-			() => {},
+			() => processor.destroyEditor(),
 			config
 		);
 	};

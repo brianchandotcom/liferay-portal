@@ -32,28 +32,35 @@ import com.liferay.portal.kernel.transaction.Transactional;
  *
  * @author Brian Wing Shun Chan
  * @see FooServiceUtil
- * @see com.example.sample.service.base.FooServiceBaseImpl
- * @see com.example.sample.service.impl.FooServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(property =  {
-	"json.web.service.context.name=sample", "json.web.service.context.path=Foo"}, service = FooService.class)
+@OSGiBeanProperties(
+	property = {
+		"json.web.service.context.name=sample",
+		"json.web.service.context.path=Foo"
+	},
+	service = FooService.class
+)
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface FooService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link FooServiceUtil} to access the foo remote service. Add custom service methods to {@link com.example.sample.service.impl.FooServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link FooServiceUtil} to access the foo remote service. Add custom service methods to <code>com.example.sample.service.impl.FooServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
+	public String getOSGiServiceIdentifier();
+
 }

@@ -14,8 +14,6 @@
 
 package com.example.sample.service.util;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -27,6 +25,7 @@ import java.util.Properties;
  * @generated
  */
 public class ServiceProps {
+
 	public static void addProperties(Properties properties) {
 		_instance._configuration.addProperties(properties);
 	}
@@ -64,11 +63,12 @@ public class ServiceProps {
 	}
 
 	private ServiceProps() {
-		_configuration = ConfigurationFactoryUtil.getConfiguration(getClass()
-																	   .getClassLoader(),
-				"service");
+		_configuration = ConfigurationFactoryUtil.getConfiguration(
+			getClass().getClassLoader(), "service");
 	}
 
 	private static ServiceProps _instance = new ServiceProps();
+
 	private Configuration _configuration;
+
 }

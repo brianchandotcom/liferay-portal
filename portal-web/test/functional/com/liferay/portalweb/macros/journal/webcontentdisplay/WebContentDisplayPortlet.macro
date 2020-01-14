@@ -316,9 +316,17 @@ definition {
 
 	macro selectWebContent {
 		if ("${contentPage}" == "true") {
-			Click.clickNoWaitForVisible(
-				key_portletName = "Web Content Display",
-				locator1 = "PageEditor#WIDGETS_OPTIONS_ICON");
+			MouseOver(
+				key_infoMessage = "Select Web Content to make it visible",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Click(
+				key_fragmentName = "Web Content Display",
+				locator1 = "Fragment#FRAGMENT_ELLIPSIS_ICON");
+
+			Click(
+				key_menuItem = "Configuration",
+				locator1 = "Fragment#FRAGMENT_FLOATING_MENU_ITEM");
 		}
 		else {
 			Portlet.gotoPortletOptions(

@@ -380,7 +380,11 @@ definition {
 
 			Click(
 				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_COG");
+				locator1 = "Fragment#FRAGMENT_ELLIPSIS_ICON");
+
+			Click(
+				key_menuItem = "Configuration",
+				locator1 = "Fragment#FRAGMENT_FLOATING_MENU_ITEM");
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 		}

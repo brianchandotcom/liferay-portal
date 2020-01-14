@@ -71,6 +71,9 @@ public interface DepotAppCustomizationLocalService
 	public DepotAppCustomization addDepotAppCustomization(
 		DepotAppCustomization depotAppCustomization);
 
+	public DepotAppCustomization addDepotAppCustomization(
+		long depotEntryId, String portletId, boolean enabled);
+
 	/**
 	 * Creates a new depot app customization with the primary key. Does not add the depot app customization to the database.
 	 *
@@ -179,6 +182,10 @@ public interface DepotAppCustomizationLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DepotAppCustomization fetchDepotAppCustomization(
 		long depotAppCustomizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotAppCustomization fetchDepotAppCustomization(
+		long depotEntryId, String portletId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

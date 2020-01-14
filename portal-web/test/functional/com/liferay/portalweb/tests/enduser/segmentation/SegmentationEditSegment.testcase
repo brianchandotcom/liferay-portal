@@ -61,15 +61,18 @@ definition {
 		Button.clickSave();
 	}
 
-	@description = "Validate if the user can edit a segment with Properties User and Email Segment with Contains to Equals Option"
+	@description = "Validate if the user can edit a segment with Properties Session Hostname"
 	@priority = "5"
-	test EditSegmentUserEmailAddressContainsToEquals {
+	test EditSegmentUserBySessionHostname {
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation.editSegment();
 		}
 
-		Segmentation.fillTitle(titleField = "EditSegmentUserEmailAddressContainsToEquals Test");
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.fillTitle(titleField = "EditSegmentUserBySessionHostname Test");
+		Segmentation.deleteProperties();
+		Segmentation.selectSession();
+		Segmentation.addProperties(propertyOption = "Hostname");
+		Segmentation.fillProperty(PropertyField = "Liferay");
 
 		Button.clickSave();
 	}
@@ -90,19 +93,17 @@ definition {
 		Button.clickSave();
 	}
 
-	@description = "Validate if the user can edit a segment with Properties Session Hostname"
+	@description = "Validate if the user can edit a segment with Properties User and Email Segment with Contains to Equals Option"
 	@priority = "5"
-	test EditSegmentUserBySessionHostname {
+	test EditSegmentUserEmailAddressContainsToEquals {
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation.editSegment();
 		}
 
-		Segmentation.fillTitle(titleField = "EditSegmentUserBySessionHostname Test");
-		Segmentation.deleteProperties();
-		Segmentation.selectSession();
-		Segmentation.addProperties(propertyOption = "Hostname");
-		Segmentation.fillProperty(PropertyField = "Liferay");
+		Segmentation.fillTitle(titleField = "EditSegmentUserEmailAddressContainsToEquals Test");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
 
 		Button.clickSave();
 	}
+
 }

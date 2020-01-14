@@ -17,6 +17,7 @@ package com.liferay.petra.sql.dsl.query;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -27,9 +28,9 @@ public class QueryTable extends Table<QueryTable> {
 	public QueryTable(String name, Query query) {
 		super(null, () -> new QueryTable(name, query));
 
-		setAlias(name);
+		setAlias(Objects.requireNonNull(name));
 
-		_query = query;
+		_query = Objects.requireNonNull(query);
 	}
 
 	@Override

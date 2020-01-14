@@ -61,11 +61,10 @@ public class DDMFormInstanceRecordModelPreFilterContributor
 		}
 
 		long ddmFormInstanceId = GetterUtil.getLong(
-			searchContext.getAttribute("ddmFormInstanceId"));
+			searchContext.getAttribute("formInstanceId"));
 
 		if (ddmFormInstanceId > 0) {
-			booleanFilter.addRequiredTerm(
-				"ddmFormInstanceId", ddmFormInstanceId);
+			booleanFilter.addRequiredTerm("formInstanceId", ddmFormInstanceId);
 		}
 
 		addSearchClassTypeIds(booleanFilter, searchContext);

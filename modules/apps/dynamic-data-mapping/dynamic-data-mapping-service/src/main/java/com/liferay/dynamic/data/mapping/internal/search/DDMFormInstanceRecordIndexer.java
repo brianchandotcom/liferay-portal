@@ -118,11 +118,11 @@ public class DDMFormInstanceRecordIndexer
 		}
 
 		long ddmFormInstanceId = GetterUtil.getLong(
-			searchContext.getAttribute("ddmFormInstanceId"));
+			searchContext.getAttribute("formInstanceId"));
 
 		if (ddmFormInstanceId > 0) {
 			contextBooleanFilter.addRequiredTerm(
-				"ddmFormInstanceId", ddmFormInstanceId);
+				"formInstanceId", ddmFormInstanceId);
 		}
 
 		addSearchClassTypeIds(contextBooleanFilter, searchContext);

@@ -87,7 +87,15 @@ setupElasticsearch {
 startElasticsearch {
 	doFirst {
 		for (int i = 1; i <= elasticsearchSidecarClusterSize; i++) {
-			if (OSDetector.isWindows()) {
+			if (System.getenv("JENKINS_HOME")) {
+				project.exec {
+					workingDir = new File(elasticsearchSidecarClusterDir, "node-${i}/bin")
+
+					args "-c sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'"
+					executable "/bin/sh"
+				}
+			}
+			else if (OSDetector.isWindows()) {
 				ant.exec(dir: new File(elasticsearchSidecarClusterDir, "node-${i}/bin"), executable: "cmd.exe", spawn: true) {
 					arg(value: "/c elasticsearch -d -p pid-elasticsearch")
 				}

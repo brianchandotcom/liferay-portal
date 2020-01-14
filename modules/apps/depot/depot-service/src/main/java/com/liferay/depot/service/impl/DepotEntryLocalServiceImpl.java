@@ -78,6 +78,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setCompanyId(serviceContext.getCompanyId());
 		depotEntry.setUserId(serviceContext.getUserId());
 
+		resourceLocalService.addResources(
+			serviceContext.getCompanyId(), 0, serviceContext.getUserId(),
+			DepotEntry.class.getName(), depotEntry.getDepotEntryId(), false,
+			false, false);
+
 		return depotEntryPersistence.update(depotEntry);
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.internal.resource;
+package com.liferay.depot.internal.security.permission.resource;
 
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;

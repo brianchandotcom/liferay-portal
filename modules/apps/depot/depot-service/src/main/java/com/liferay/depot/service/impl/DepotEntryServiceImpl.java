@@ -20,6 +20,8 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.base.DepotEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -62,17 +64,29 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	public DepotEntry deleteDepotEntry(long depotEntryId)
 		throws PortalException {
 
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryId, ActionKeys.DELETE);
+
 		return depotEntryLocalService.deleteDepotEntry(depotEntryId);
 	}
 
 	@Override
 	public DepotEntry getDepotEntry(long depotEntryId) throws PortalException {
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryId, ActionKeys.VIEW);
+
 		return depotEntryLocalService.getDepotEntry(depotEntryId);
 	}
 
 	@Override
 	public DepotEntry getGroupDepotEntry(long groupId) throws PortalException {
-		return depotEntryLocalService.getGroupDepotEntry(groupId);
+		DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
+			groupId);
+
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntry, ActionKeys.VIEW);
+
+		return depotEntry;
 	}
 
 	@Override
@@ -83,10 +97,21 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryId, ActionKeys.UPDATE);
+
 		return depotEntryLocalService.updateDepotEntry(
 			depotEntryId, nameMap, descriptionMap, typeSettingsProperties,
 			serviceContext);
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.depot.model.DepotEntry)"
+	)
+	private volatile ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

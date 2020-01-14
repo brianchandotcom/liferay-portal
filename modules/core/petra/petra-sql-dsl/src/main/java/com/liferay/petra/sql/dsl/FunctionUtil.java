@@ -24,7 +24,7 @@ import com.liferay.petra.sql.dsl.functions.FunctionType;
 /**
  * @author Preston Crary
  */
-public class DSLFunctionUtil {
+public class FunctionUtil {
 
 	public static <N extends Number> Function<N> add(
 		Expression<N> expression1, Expression<N> expression2) {

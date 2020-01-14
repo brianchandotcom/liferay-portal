@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.DSLSelectUtil;
+import com.liferay.petra.sql.dsl.SelectUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.base.BaseASTNode;
@@ -512,7 +512,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				roleIdsOrOwnerIdsPredicate.withParentheses());
 		}
 
-		return DSLSelectUtil.selectDistinct(
+		return SelectUtil.selectDistinct(
 			ResourcePermission.TABLE.primKeyId
 		).from(
 			ResourcePermission.TABLE

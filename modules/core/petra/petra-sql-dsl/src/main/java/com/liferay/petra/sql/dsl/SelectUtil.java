@@ -21,7 +21,7 @@ import com.liferay.petra.sql.dsl.query.Select;
 /**
  * @author Preston Crary
  */
-public class DSLSelectUtil {
+public class SelectUtil {
 
 	public static Select count() {
 		return new Select(false, AggregateExpression.COUNT_STAR_COUNT_VALUE);

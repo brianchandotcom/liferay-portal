@@ -15,7 +15,7 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.sql.dsl.DSLSelectUtil;
+import com.liferay.petra.sql.dsl.SelectUtil;
 import com.liferay.petra.sql.dsl.query.From;
 import com.liferay.petra.sql.dsl.query.Query;
 import com.liferay.petra.sql.dsl.query.Where;
@@ -290,7 +290,7 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		From from = DSLSelectUtil.select(
+		From from = SelectUtil.select(
 		).from(
 			Layout.TABLE
 		);

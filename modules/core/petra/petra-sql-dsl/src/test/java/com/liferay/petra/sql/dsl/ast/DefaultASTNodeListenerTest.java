@@ -15,8 +15,8 @@
 package com.liferay.petra.sql.dsl.ast;
 
 import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.DSLFunctionUtil;
-import com.liferay.petra.sql.dsl.DSLSelectUtil;
+import com.liferay.petra.sql.dsl.FunctionUtil;
+import com.liferay.petra.sql.dsl.SelectUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expressions.Alias;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
@@ -53,15 +53,15 @@ public class DefaultASTNodeListenerTest {
 
 			@Override
 			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(DSLFunctionUtil.class);
-				assertClasses.add(DSLSelectUtil.class);
+				assertClasses.add(FunctionUtil.class);
+				assertClasses.add(SelectUtil.class);
 			}
 
 		};
 
 	@Test
 	public void testCaseSelect() {
-		Alias<String> numberAlias = DSLFunctionUtil.casesWhenThen(
+		Alias<String> numberAlias = FunctionUtil.casesWhenThen(
 			MainExampleTable.TABLE.mainExampleId.eq(1L), "one"
 		).whenThen(
 			MainExampleTable.TABLE.mainExampleId.eq(2L), "two"
@@ -73,7 +73,7 @@ public class DefaultASTNodeListenerTest {
 			"number"
 		);
 
-		Query query = DSLSelectUtil.select(
+		Query query = SelectUtil.select(
 			numberAlias
 		).from(
 			MainExampleTable.TABLE
@@ -100,8 +100,8 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testConstructors() {
-		new DSLFunctionUtil();
-		new DSLSelectUtil();
+		new FunctionUtil();
+		new SelectUtil();
 	}
 
 	@Test
@@ -109,11 +109,11 @@ public class DefaultASTNodeListenerTest {
 		ReferenceExampleTable referenceExampleTable =
 			ReferenceExampleTable.TABLE.as("referenceExample");
 
-		Query query = DSLSelectUtil.select(
+		Query query = SelectUtil.select(
 		).from(
 			MainExampleTable.TABLE
 		).leftJoinOn(
-			DSLSelectUtil.select(
+			SelectUtil.select(
 				ReferenceExampleTable.TABLE.mainExampleId,
 				ReferenceExampleTable.TABLE.name
 			).from(
@@ -153,55 +153,55 @@ public class DefaultASTNodeListenerTest {
 		Assert.assertEquals(
 			"MainExample.mainExampleId + ?",
 			String.valueOf(
-				DSLFunctionUtil.add(MainExampleTable.TABLE.mainExampleId, 2L)));
+				FunctionUtil.add(MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
 			"BITAND(MainExample.mainExampleId, ?)",
 			String.valueOf(
-				DSLFunctionUtil.bitAnd(
+				FunctionUtil.bitAnd(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
 			"CAST_CLOB_TEXT(MainExample.mainExampleId)",
 			String.valueOf(
-				DSLFunctionUtil.castClobText(
+				FunctionUtil.castClobText(
 					MainExampleTable.TABLE.mainExampleId)));
 		Assert.assertEquals(
 			"CAST_LONG(MainExample.name)",
 			String.valueOf(
-				DSLFunctionUtil.castLong(MainExampleTable.TABLE.name)));
+				FunctionUtil.castLong(MainExampleTable.TABLE.name)));
 		Assert.assertEquals(
 			"CAST_TEXT(MainExample.mainExampleId)",
 			String.valueOf(
-				DSLFunctionUtil.castText(
+				FunctionUtil.castText(
 					MainExampleTable.TABLE.mainExampleId)));
 		Assert.assertEquals(
 			"CONCAT(MainExample.name, ?, ReferenceExample.name)",
 			String.valueOf(
-				DSLFunctionUtil.concat(
+				FunctionUtil.concat(
 					MainExampleTable.TABLE.name, new Scalar<>("__delimiter__"),
 					ReferenceExampleTable.TABLE.name)));
 		Assert.assertEquals(
 			"LOWER(MainExample.name)",
-			String.valueOf(DSLFunctionUtil.lower(MainExampleTable.TABLE.name)));
+			String.valueOf(FunctionUtil.lower(MainExampleTable.TABLE.name)));
 		Assert.assertEquals(
 			"MainExample.mainExampleId / ?",
 			String.valueOf(
-				DSLFunctionUtil.divide(
+				FunctionUtil.divide(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
 			"MainExample.mainExampleId * ?",
 			String.valueOf(
-				DSLFunctionUtil.multiply(
+				FunctionUtil.multiply(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
 			"MainExample.mainExampleId - ?",
 			String.valueOf(
-				DSLFunctionUtil.subtract(
+				FunctionUtil.subtract(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 	}
 
 	@Test
 	public void testGroupBy() {
-		Query query = DSLSelectUtil.select(
+		Query query = SelectUtil.select(
 			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -219,7 +219,7 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testJoinCount() {
-		Query query = DSLSelectUtil.countDistinct(
+		Query query = SelectUtil.countDistinct(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -242,7 +242,7 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testLeftJoin() {
-		Query query = DSLSelectUtil.select(
+		Query query = SelectUtil.select(
 			MainExampleTable.TABLE.mainExampleId
 		).from(
 			MainExampleTable.TABLE
@@ -269,7 +269,7 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testOrderByComparatorAdaptor() {
-		Query query = DSLSelectUtil.select(
+		Query query = SelectUtil.select(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -300,7 +300,7 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testPredicateParentheses() {
-		Query query = DSLSelectUtil.count(
+		Query query = SelectUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		).where(
@@ -332,7 +332,7 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testSelect1() {
-		Query query = DSLSelectUtil.select(new Scalar<>(1));
+		Query query = SelectUtil.select(new Scalar<>(1));
 
 		Assert.assertEquals("select ?", query.toString());
 	}
@@ -341,7 +341,7 @@ public class DefaultASTNodeListenerTest {
 	public void testSelectDistinctWhereInWithAlias() {
 		MainExampleTable mainTable = MainExampleTable.TABLE.as("mainTable");
 
-		From from = DSLSelectUtil.selectDistinct(
+		From from = SelectUtil.selectDistinct(
 			mainTable.name
 		).from(
 			mainTable
@@ -377,7 +377,7 @@ public class DefaultASTNodeListenerTest {
 		String[] strings = {"1", "2", "3"};
 
 		query = from.where(
-			DSLFunctionUtil.castText(
+			FunctionUtil.castText(
 				mainTable.mainExampleId
 			).in(
 				strings
@@ -404,7 +404,7 @@ public class DefaultASTNodeListenerTest {
 		MainExampleTable tempMainExample = MainExampleTable.TABLE.as(
 			"tempMainExample");
 
-		Query query = DSLSelectUtil.select(
+		Query query = SelectUtil.select(
 			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -427,7 +427,7 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testSimpleCount() {
-		Query query = DSLSelectUtil.count(
+		Query query = SelectUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		);
@@ -438,7 +438,7 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testSimpleSelect() {
-		Select select = DSLSelectUtil.select();
+		Select select = SelectUtil.select();
 
 		Assert.assertEquals("select *", select.toString());
 
@@ -524,12 +524,12 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testSubqueryCount() {
-		Query query = DSLSelectUtil.count(
+		Query query = SelectUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		).where(
 			MainExampleTable.TABLE.mainExampleId.in(
-				DSLSelectUtil.select(
+				SelectUtil.select(
 					ReferenceExampleTable.TABLE.mainExampleId
 				).from(
 					ReferenceExampleTable.TABLE
@@ -549,14 +549,14 @@ public class DefaultASTNodeListenerTest {
 
 	@Test
 	public void testUnionSelect() {
-		Query query = DSLSelectUtil.select(
+		Query query = SelectUtil.select(
 			MainExampleTable.TABLE.name.as("name")
 		).from(
 			MainExampleTable.TABLE
 		);
 
 		Union union = query.union(
-			DSLSelectUtil.select(
+			SelectUtil.select(
 				ReferenceExampleTable.TABLE.name.as("name")
 			).from(
 				ReferenceExampleTable.TABLE
@@ -568,7 +568,7 @@ public class DefaultASTNodeListenerTest {
 			union.toString());
 
 		union = query.unionAll(
-			DSLSelectUtil.select(
+			SelectUtil.select(
 				ReferenceExampleTable.TABLE.name.as("name")
 			).from(
 				ReferenceExampleTable.TABLE

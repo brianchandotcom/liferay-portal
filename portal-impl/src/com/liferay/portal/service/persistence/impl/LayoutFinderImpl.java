@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.sql.dsl.DSLFunctionUtil;
-import com.liferay.petra.sql.dsl.DSLSelectUtil;
+import com.liferay.petra.sql.dsl.FunctionUtil;
+import com.liferay.petra.sql.dsl.SelectUtil;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
 import com.liferay.petra.sql.dsl.query.Query;
 import com.liferay.petra.string.StringBundler;
@@ -52,7 +52,7 @@ public class LayoutFinderImpl
 			session = openSession();
 
 			SQLQuery q = session.createSynchronizedSQLQuery(
-				DSLSelectUtil.select(
+				SelectUtil.select(
 				).from(
 					Layout.TABLE
 				).where(
@@ -102,7 +102,7 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			Query query = DSLSelectUtil.selectDistinct(
+			Query query = SelectUtil.selectDistinct(
 				Layout.TABLE.plid.as("layoutPlid"),
 				PortletPreferences.TABLE.portletId.as("preferencesPortletId")
 			).from(
@@ -121,7 +121,7 @@ public class LayoutFinderImpl
 							portletId.concat("_INSTANCE_%"))
 					).withParentheses()
 				).and(
-					DSLFunctionUtil.castClobText(
+					FunctionUtil.castClobText(
 						PortletPreferences.TABLE.preferences
 					).like(
 						StringBundler.concat(
@@ -172,7 +172,7 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			Query query = DSLSelectUtil.select(
+			Query query = SelectUtil.select(
 			).from(
 				Layout.TABLE
 			).innerJoinON(

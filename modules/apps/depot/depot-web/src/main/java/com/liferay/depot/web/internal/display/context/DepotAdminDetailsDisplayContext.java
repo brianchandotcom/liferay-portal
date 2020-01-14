@@ -15,9 +15,17 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.application.DepotApplication;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
+import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Cristina González
@@ -25,19 +33,54 @@ import java.util.Collection;
 public class DepotAdminDetailsDisplayContext {
 
 	public DepotAdminDetailsDisplayContext(
-		DepotApplicationController depotApplicationController) {
+		DepotApplicationController depotApplicationController,
+		PortletRequest portletRequest) {
 
 		_depotApplicationController = depotApplicationController;
+		_portletRequest = portletRequest;
 	}
 
 	public Collection<DepotApplication> getDepotApplications() {
 		return _depotApplicationController.getCustomizableDepotApplications();
 	}
 
-	public boolean isEnabled(String portletId, long groupId) {
-		return _depotApplicationController.isEnabled(portletId, groupId);
+	public long getDepotEntryId() {
+		DepotEntry depotEntry = (DepotEntry)_portletRequest.getAttribute(
+			DepotAdminWebKeys.DEPOT_ENTRY);
+
+		return depotEntry.getDepotEntryId();
+	}
+
+	public String getDepotName(Locale locale) {
+		Group group = getGroup();
+
+		return group.getName(locale);
+	}
+
+	public Group getGroup() {
+		if (_group == null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_group = themeDisplay.getScopeGroup();
+		}
+
+		return _group;
+	}
+
+	public boolean isEnabled(String portletId) {
+		return _depotApplicationController.isEnabled(portletId, _getGroupId());
+	}
+
+	private long _getGroupId() {
+		Group group = getGroup();
+
+		return group.getGroupId();
 	}
 
 	private final DepotApplicationController _depotApplicationController;
+	private Group _group;
+	private final PortletRequest _portletRequest;
 
 }

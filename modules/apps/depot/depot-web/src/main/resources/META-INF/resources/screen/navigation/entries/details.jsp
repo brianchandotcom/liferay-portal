@@ -17,11 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DepotAdminDetailsDisplayContext depotAdminApplicationsDisplayContext = (DepotAdminDetailsDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_ADMIN_APPLICATIONS_DISPLAY_CONTEXT);
-
-DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
-
-Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
+DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDetailsDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_ADMIN_DETAILS_DISPLAY_CONTEXT);
 %>
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
@@ -32,11 +28,11 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 		collapsible="false"
 		label='<%= LanguageUtil.get(request, "details") %>'
 	>
-		<aui:model-context bean="<%= group %>" model="<%= Group.class %>" />
+		<aui:model-context bean="<%= depotAdminDetailsDisplayContext.getGroup() %>" model="<%= Group.class %>" />
 
-		<aui:input name="repositoryId" type="resource" value="<%= String.valueOf(depotEntry.getDepotEntryId()) %>" />
+		<aui:input name="repositoryId" type="resource" value="<%= String.valueOf(depotAdminDetailsDisplayContext.getDepotEntryId()) %>" />
 
-		<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= String.valueOf(group.getName(locale)) %>" />
+		<aui:input name="name" placeholder="name" required="<%= true %>" value="<%= depotAdminDetailsDisplayContext.getDepotName(locale) %>" />
 
 		<aui:input name="description" placeholder="description" />
 	</liferay-frontend:fieldset>
@@ -54,10 +50,10 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 		<aui:fieldset>
 
 			<%
-			for (DepotApplication depotApplication : depotAdminApplicationsDisplayContext.getDepotApplications()) {
+			for (DepotApplication depotApplication : depotAdminDetailsDisplayContext.getDepotApplications()) {
 			%>
 
-				<aui:input label="<%= depotApplication.getLabel(locale) %>" name="<%= depotApplication.getPortletId() %>" type="checkbox" value="<%= depotAdminApplicationsDisplayContext.isEnabled(depotApplication.getPortletId(), depotEntry.getGroupId()) %>" />
+				<aui:input label="<%= depotApplication.getLabel(locale) %>" name="<%= depotApplication.getPortletId() %>" type="checkbox" value="<%= depotAdminDetailsDisplayContext.isEnabled(depotApplication.getPortletId()) %>" />
 
 			<%
 			}

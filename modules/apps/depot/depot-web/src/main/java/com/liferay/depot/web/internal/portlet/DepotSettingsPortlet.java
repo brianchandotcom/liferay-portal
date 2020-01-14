@@ -81,7 +81,7 @@ public class DepotSettingsPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				DepotAdminWebKeys.DEPOT_ADMIN_DETAILS_DISPLAY_CONTEXT,
 				new DepotAdminDetailsDisplayContext(
-					_depotApplicationController));
+					_depotApplicationController, renderRequest));
 
 			super.doView(
 				new DynamicRenderRequest(

@@ -63,7 +63,8 @@ public class DepotAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			DepotAdminWebKeys.DEPOT_ADMIN_DETAILS_DISPLAY_CONTEXT,
-			new DepotAdminDetailsDisplayContext(_depotApplicationController));
+			new DepotAdminDetailsDisplayContext(
+				_depotApplicationController, renderRequest));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

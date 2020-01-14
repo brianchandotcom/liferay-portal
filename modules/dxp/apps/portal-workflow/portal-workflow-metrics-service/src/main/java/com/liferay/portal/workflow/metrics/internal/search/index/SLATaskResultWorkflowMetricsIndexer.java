@@ -102,17 +102,17 @@ public class SLATaskResultWorkflowMetricsIndexer
 	}
 
 	@Override
-	public void reindex(long companyId) {
-	}
-
-	@Override
-	protected String getIndexName() {
+	public String getIndexName() {
 		return "workflow-metrics-sla-task-results";
 	}
 
 	@Override
-	protected String getIndexType() {
+	public String getIndexType() {
 		return "WorkflowMetricsSLATaskResultType";
+	}
+
+	@Override
+	public void reindex(long companyId) {
 	}
 
 }

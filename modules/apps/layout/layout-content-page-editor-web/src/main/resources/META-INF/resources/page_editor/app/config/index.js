@@ -27,17 +27,17 @@ export const ConfigContext = React.createContext(DEFAULT_CONFIG);
  * the app, so we can safely store is as a variable.
  */
 export function getConfig(config) {
-	const {portletNamespace, sidebarPanels} = config;
+	const {plugin_root, portletNamespace, sidebarPanels} = config;
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
-	const augmentedPanels = augmentPanelData(sidebarPanels);
+	const augmentedPanels = augmentPanelData(plugin_root, sidebarPanels);
 
 	const syntheticItems = {
 		panels: generatePanels(augmentedPanels),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,
-		toolbarPlugins: getToolbarPlugins(toolbarId)
+		toolbarPlugins: getToolbarPlugins(plugin_root, toolbarId)
 	};
 
 	return {
@@ -58,18 +58,7 @@ const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
 	lookAndFeel: 'look-and-feel'
 };
 
-/**
- * Until we decompose the layout-content-page-editor module into a
- * set of smaller OSGi plugins, we "fake" it here to show how we would
- * lazily-load components from elsewhere by injecting an additional
- * "pluginEntryPoint" property.
- *
- * Note that in the final version we'll be using NPMResolver to obtain these
- * paths dynamically.
- */
-const PLUGIN_ROOT = 'layout-content-page-editor-web@2.0.0/page_editor/plugins';
-
-function augmentPanelData(sidebarPanels) {
+function augmentPanelData(plugin_root, sidebarPanels) {
 	return sidebarPanels.map(panel => {
 		if (isSeparator(panel)) {
 			return panel;
@@ -83,7 +72,7 @@ function augmentPanelData(sidebarPanels) {
 			...panel,
 
 			// https://github.com/liferay/liferay-js-toolkit/issues/324
-			pluginEntryPoint: `${PLUGIN_ROOT}/${sidebarPanelId}/index`,
+			pluginEntryPoint: `${plugin_root}/${sidebarPanelId}/index`,
 
 			rendersSidebarContent: rendersSidebarContent(sidebarPanelId),
 
@@ -111,7 +100,7 @@ function generatePanels(sidebarPanels) {
  * server data. In the future we may choose to encapsulate it better and
  * deal with it inside the plugin.
  */
-function getToolbarPlugins(toolbarId) {
+function getToolbarPlugins(plugin_root, toolbarId) {
 	const toolbarPluginId = 'experience';
 	const selectId = `${toolbarId}_${toolbarPluginId}`;
 
@@ -127,7 +116,7 @@ function getToolbarPlugins(toolbarId) {
 					</select>
 				</div>
 			`,
-			pluginEntryPoint: `${PLUGIN_ROOT}/experience/index`,
+			pluginEntryPoint: `${plugin_root}/experience/index`,
 			toolbarPluginId: 'experience'
 		}
 	];

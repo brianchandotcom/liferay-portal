@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DepotAdminApplicationsDisplayContext depotAdminApplicationsDisplayContext = (DepotAdminApplicationsDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_ADMIN_APPLICATIONS_DISPLAY_CONTEXT);
+DepotAdminDetailsDisplayContext depotAdminApplicationsDisplayContext = (DepotAdminDetailsDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_ADMIN_APPLICATIONS_DISPLAY_CONTEXT);
 
 DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 

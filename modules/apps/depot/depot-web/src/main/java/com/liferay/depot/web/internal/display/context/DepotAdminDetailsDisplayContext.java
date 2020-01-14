@@ -16,16 +16,15 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Collection;
 
 /**
  * @author Cristina González
  */
-public class DepotAdminApplicationsDisplayContext {
+public class DepotAdminDetailsDisplayContext {
 
-	public DepotAdminApplicationsDisplayContext(
+	public DepotAdminDetailsDisplayContext(
 		DepotApplicationController depotApplicationController) {
 
 		_depotApplicationController = depotApplicationController;

@@ -15,11 +15,8 @@
 package com.liferay.depot.web.internal.application.controller;
 
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +25,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín

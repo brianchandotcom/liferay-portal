@@ -17,7 +17,7 @@ package com.liferay.depot.web.internal.portlet;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
-import com.liferay.depot.web.internal.display.context.DepotAdminApplicationsDisplayContext;
+import com.liferay.depot.web.internal.display.context.DepotAdminDetailsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -62,9 +62,8 @@ public class DepotAdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			DepotAdminWebKeys.DEPOT_ADMIN_APPLICATIONS_DISPLAY_CONTEXT,
-			new DepotAdminApplicationsDisplayContext(
-				_depotApplicationController));
+			DepotAdminWebKeys.DEPOT_ADMIN_DETAILS_DISPLAY_CONTEXT,
+			new DepotAdminDetailsDisplayContext(_depotApplicationController));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

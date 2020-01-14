@@ -49,192 +49,162 @@ public class MimeTypesImplTest {
 	}
 
 	@Test
-	public void testDoc() throws Exception {
-		String validContentType = "application/msword";
-
-		String contentTypeStream = getContentType("test.doc", true);
-		String contentTypeName = getContentType("test.doc", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testDoc() {
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_MSWORD, _getContentType("test.doc", true));
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_MSWORD,
+			_getContentType("test.doc", false));
 	}
 
 	@Test
-	public void testDocx() throws Exception {
+	public void testDocx() {
 		String validContentType =
 			"application" +
 				"/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
-		String contentTypeStream = getContentType("test-2007.docx", true);
-		String contentTypeName = getContentType("test-2007.docx", false);
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2007.docx", true));
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2007.docx", false));
 
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
-
-		contentTypeStream = getContentType("test-2010.docx", true);
-		contentTypeName = getContentType("test-2010.docx", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2010.docx", true));
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2010.docx", false));
 	}
 
 	@Test
-	public void testHtml() throws Exception {
-		String validContentType = "text/html";
-
-		String contentTypeStream = getContentType("test.html", true);
-		String contentTypeName = getContentType("test.html", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testHtml() {
+		Assert.assertEquals(
+			ContentTypes.TEXT_HTML, _getContentType("test.html", true));
+		Assert.assertEquals(
+			ContentTypes.TEXT_HTML, _getContentType("test.html", false));
 	}
 
 	@Test
-	public void testJpg() throws Exception {
-		String validContentType = "image/jpeg";
-
-		String contentTypeStream = getContentType("test.jpg", true);
-		String contentTypeName = getContentType("test.jpg", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testJpg() {
+		Assert.assertEquals(
+			ContentTypes.IMAGE_JPEG, _getContentType("test.jpg", true));
+		Assert.assertEquals(
+			ContentTypes.IMAGE_JPEG, _getContentType("test.jpg", false));
 	}
 
 	@Test
-	public void testLar() throws Exception {
-		String validContentType = "application/zip";
-
-		String contentTypeStream = getContentType("test.lar", true);
-		String contentTypeName = getContentType("test.lar", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testLar() {
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_ZIP, _getContentType("test.lar", true));
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_ZIP, _getContentType("test.lar", false));
 	}
 
 	@Test
-	public void testOdt() throws Exception {
+	public void testOdt() {
 		String validContentType = "application/vnd.oasis.opendocument.text";
 
-		String contentTypeStream = getContentType("test.odt", true);
-		String contentTypeName = getContentType("test.odt", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+		Assert.assertEquals(
+			validContentType, _getContentType("test.odt", true));
+		Assert.assertEquals(
+			validContentType, _getContentType("test.odt", false));
 	}
 
 	@Test
-	public void testPdf() throws Exception {
-		String validContentType = "application/pdf";
+	public void testPdf() {
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_PDF, _getContentType("test.pdf", true));
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_PDF, _getContentType("test.pdf", false));
 
-		String contentTypeStream = getContentType("test.pdf", true);
-		String contentTypeName = getContentType("test.pdf", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
-
-		contentTypeStream = getContentType("test-2010.pdf", true);
-		contentTypeName = getContentType("test-2010.pdf", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_PDF,
+			_getContentType("test-2010.pdf", true));
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_PDF,
+			_getContentType("test-2010.pdf", false));
 	}
 
 	@Test
-	public void testPpt() throws Exception {
-		String validContentType = "application/vnd.ms-powerpoint";
-
-		String contentTypeStream = getContentType("test.ppt", true);
-		String contentTypeName = getContentType("test.ppt", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testPpt() {
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_VND_MS_POWERPOINT,
+			_getContentType("test.ppt", true));
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_VND_MS_POWERPOINT,
+			_getContentType("test.ppt", false));
 	}
 
 	@Test
-	public void testPptx() throws Exception {
+	public void testPptx() {
 		String validContentType =
 			"application/vnd.openxmlformats-officedocument.presentationml." +
 				"presentation";
 
-		String contentTypeStream = getContentType("test-2010.pptx", true);
-		String contentTypeName = getContentType("test-2010.pptx", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2010.pptx", true));
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2010.pptx", false));
 	}
 
 	@Test
-	public void testRtf() throws Exception {
+	public void testRtf() {
 		String validContentType = "application/rtf";
 
-		String contentTypeStream = getContentType("test.rtf", true);
-		String contentTypeName = getContentType("test.rtf", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+		Assert.assertEquals(
+			validContentType, _getContentType("test.rtf", true));
+		Assert.assertEquals(
+			validContentType, _getContentType("test.rtf", false));
 	}
 
 	@Test
-	public void testSvg() throws Exception {
-		String validContentType = ContentTypes.IMAGE_SVG_XML;
-
-		String contentTypeStream = getContentType("test_#.svg", true);
-		String contentTypeName = getContentType("test_#.svg", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testSvg() {
+		Assert.assertEquals(
+			ContentTypes.IMAGE_SVG_XML, _getContentType("test_#.svg", true));
+		Assert.assertEquals(
+			ContentTypes.IMAGE_SVG_XML, _getContentType("test_#.svg", false));
 	}
 
 	@Test
-	public void testTxt() throws Exception {
-		String validContentType = "text/plain";
-
-		String contentTypeStream = getContentType("test.txt", true);
-		String contentTypeName = getContentType("test.txt", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testTxt() {
+		Assert.assertEquals(
+			ContentTypes.TEXT_PLAIN, _getContentType("test.txt", true));
+		Assert.assertEquals(
+			ContentTypes.TEXT_PLAIN, _getContentType("test.txt", false));
 	}
 
 	@Test
-	public void testXls() throws Exception {
-		String validContentType = "application/vnd.ms-excel";
-
-		String contentTypeStream = getContentType("test.xls", true);
-		String contentTypeName = getContentType("test.xls", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+	public void testXls() {
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_VND_MS_EXCEL,
+			_getContentType("test.xls", true));
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_VND_MS_EXCEL,
+			_getContentType("test.xls", false));
 	}
 
 	@Test
-	public void testXlsx() throws Exception {
+	public void testXlsx() {
 		String validContentType =
 			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-		String contentTypeStream = getContentType("test-2010.xlsx", true);
-		String contentTypeName = getContentType("test-2010.xlsx", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2010.xlsx", true));
+		Assert.assertEquals(
+			validContentType, _getContentType("test-2010.xlsx", false));
 	}
 
 	@Test
-	public void testXml() throws Exception {
+	public void testXml() {
 		String validContentType = "application/xml";
 
-		String contentTypeStream = getContentType("test.xml", true);
-		String contentTypeName = getContentType("test.xml", false);
-
-		Assert.assertEquals(validContentType, contentTypeStream);
-		Assert.assertEquals(validContentType, contentTypeName);
+		Assert.assertEquals(
+			validContentType, _getContentType("test.xml", true));
+		Assert.assertEquals(
+			validContentType, _getContentType("test.xml", false));
 	}
 
-	protected String getContentType(String fileName, boolean checkStream)
-		throws Exception {
-
+	private String _getContentType(String fileName, boolean checkStream) {
 		if (checkStream) {
-			InputStream inputStream = getInputStream(fileName);
+			InputStream inputStream = _getInputStream(fileName);
 
 			return _mimeTypes.getContentType(inputStream, fileName);
 		}
@@ -242,7 +212,7 @@ public class MimeTypesImplTest {
 		return _mimeTypes.getContentType(fileName);
 	}
 
-	protected InputStream getInputStream(String fileName) throws Exception {
+	private InputStream _getInputStream(String fileName) {
 		Class<?> clazz = getClass();
 
 		return clazz.getResourceAsStream("dependencies/" + fileName);

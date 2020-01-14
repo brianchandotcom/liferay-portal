@@ -340,16 +340,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setRobotsMap(robotsMap);
 		layout.setType(type);
 
-		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			if (Validator.isNull(layoutTypePortlet.getLayoutTemplateId())) {
-				layoutTypePortlet.setLayoutTemplateId(
-					0, PropsValues.LAYOUT_DEFAULT_TEMPLATE_ID, false);
-			}
-		}
-
 		boolean layoutUpdateable = ParamUtil.getBoolean(
 			serviceContext, Sites.LAYOUT_UPDATEABLE, true);
 
@@ -366,6 +356,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		validateTypeSettingsProperties(layout, typeSettingsProperties);
 
 		layout.setTypeSettingsProperties(typeSettingsProperties);
+
+		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			if (Validator.isNull(layoutTypePortlet.getLayoutTemplateId())) {
+				layoutTypePortlet.setLayoutTemplateId(
+					0, PropsValues.LAYOUT_DEFAULT_TEMPLATE_ID, false);
+			}
+		}
 
 		layout.setHidden(hidden);
 		layout.setSystem(system);

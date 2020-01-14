@@ -109,8 +109,6 @@ networks:
 				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
 				<then>
 					<execute dir="${analytics.cloud.faro.dir}">
-						./gradlew cleanNPM npmInstall
-
 						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=asah-local
 
 						docker rm ${analytics.cloud.faro.container.name}

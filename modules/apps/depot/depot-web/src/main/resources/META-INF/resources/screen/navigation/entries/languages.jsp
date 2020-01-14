@@ -166,6 +166,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 			<%
 				Map<String, Object> data = new HashMap<>();
 				data.put("defaultLanguage", "test");
+				data.put("inheritLocales", inheritLocales);
 				data.put("languages", leftList);
 			%>
 

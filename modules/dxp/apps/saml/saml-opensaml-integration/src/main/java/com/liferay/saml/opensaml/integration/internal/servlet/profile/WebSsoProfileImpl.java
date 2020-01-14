@@ -915,7 +915,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSelfEntityContext.getEntityId(), assertionConsumerService,
 			singleSignOnService, nameIDPolicy);
 
-		authnRequest.setForceAuthn(samlSpIdpConnection.isForceAuthn());
+		HttpSession session = httpServletRequest.getSession();
+
+		String error = (String)session.getAttribute(SamlWebKeys.SAML_SSO_ERROR);
+
+		if (Validator.isBlank(error)) {
+			authnRequest.setForceAuthn(samlSpIdpConnection.isForceAuthn());
+		}
+		else {
+			authnRequest.setForceAuthn(true);
+		}
+
 		authnRequest.setID(generateIdentifier(20));
 
 		outboundMessageContext.setMessage(authnRequest);

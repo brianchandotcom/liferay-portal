@@ -61,7 +61,7 @@ if (structureJSONArray != null) {
 				%>
 
 				<section class="<%= Validator.isNotNull(backgroundColorCssClass) ? "bg-" + backgroundColorCssClass : "" %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-					<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingVertical != -1L) ? "py-" + paddingVertical : "" %>">
+					<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "container" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingVertical != -1L) ? "py-" + paddingVertical : "" %>">
 						<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
 
 							<%

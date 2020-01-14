@@ -58,12 +58,13 @@ const Container = React.forwardRef(({children, item, layoutData}, ref) => {
 			{() => (
 				<div
 					className={classNames(
-						`page-editor__container pb-${paddingBottom} pt-${paddingTop} px-${paddingHorizontal}`,
+						`page-editor__container pb-${paddingBottom} pt-${paddingTop}`,
 						{
 							[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
 							container: type === 'fixed',
 							'container-fluid': type === 'fluid',
-							empty: !item.children.length
+							empty: !item.children.length,
+							[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
 						}
 					)}
 					ref={ref}

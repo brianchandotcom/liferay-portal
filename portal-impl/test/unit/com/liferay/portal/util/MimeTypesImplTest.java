@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
@@ -168,6 +169,17 @@ public class MimeTypesImplTest {
 
 		String contentTypeStream = getContentType("test.rtf", true);
 		String contentTypeName = getContentType("test.rtf", false);
+
+		Assert.assertEquals(validContentType, contentTypeStream);
+		Assert.assertEquals(validContentType, contentTypeName);
+	}
+
+	@Test
+	public void testSvg() throws Exception {
+		String validContentType = ContentTypes.IMAGE_SVG_XML;
+
+		String contentTypeStream = getContentType("test_#.svg", true);
+		String contentTypeName = getContentType("test_#.svg", false);
 
 		Assert.assertEquals(validContentType, contentTypeStream);
 		Assert.assertEquals(validContentType, contentTypeName);

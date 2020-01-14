@@ -304,6 +304,7 @@ public interface DepotEntryLocalService
 	public DepotEntry updateDepotEntry(
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException;

@@ -381,14 +381,15 @@ public class DepotEntryLocalServiceWrapper
 	public com.liferay.depot.model.DepotEntry updateDepotEntry(
 			long depotEntryId, java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
+			java.util.Map<String, Boolean> depotAppCustomizationMap,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _depotEntryLocalService.updateDepotEntry(
-			depotEntryId, nameMap, descriptionMap, typeSettingsProperties,
-			serviceContext);
+			depotEntryId, nameMap, descriptionMap, depotAppCustomizationMap,
+			typeSettingsProperties, serviceContext);
 	}
 
 	@Override

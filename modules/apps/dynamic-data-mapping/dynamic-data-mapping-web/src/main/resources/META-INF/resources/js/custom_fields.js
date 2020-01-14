@@ -1126,8 +1126,6 @@ AUI.add(
 
 				var translationManager = builder.translationManager;
 
-				var defaultLocale = translationManager.get('defaultLocale');
-
 				var availableLocales = translationManager.get(
 					'availableLocales'
 				);
@@ -1141,34 +1139,11 @@ AUI.add(
 					fieldOption.label = {};
 
 					availableLocales.forEach(locale => {
-						var label = A.Object.getValue(localizationMap, [
+						var label = instance._getLocaleValue(
+							localizationMap,
 							locale,
 							'label'
-						]);
-
-						if (!isValue(label)) {
-							label = A.Object.getValue(localizationMap, [
-								defaultLocale,
-								'label'
-							]);
-
-							if (!isValue(label)) {
-								for (var localizationMapLocale in localizationMap) {
-									label = A.Object.getValue(localizationMap, [
-										localizationMapLocale,
-										'label'
-									]);
-
-									if (isValue(label)) {
-										break;
-									}
-								}
-							}
-
-							if (!isValue(label)) {
-								label = STR_BLANK;
-							}
-						}
+						);
 
 						fieldOption.label[
 							locale
@@ -1211,37 +1186,12 @@ AUI.add(
 
 			var translationManager = builder.translationManager;
 
-			var defaultLocale = translationManager.get('defaultLocale');
-
 			translationManager.get('availableLocales').forEach(locale => {
-				var value = A.Object.getValue(localizationMap, [
+				var value = instance._getLocaleValue(
+					localizationMap,
 					locale,
 					attribute
-				]);
-
-				if (!isValue(value)) {
-					value = A.Object.getValue(localizationMap, [
-						defaultLocale,
-						attribute
-					]);
-
-					if (!isValue(value)) {
-						for (var localizationMapLocale in localizationMap) {
-							value = A.Object.getValue(localizationMap, [
-								localizationMapLocale,
-								attribute
-							]);
-
-							if (isValue(value)) {
-								break;
-							}
-						}
-					}
-
-					if (!isValue(value)) {
-						value = STR_BLANK;
-					}
-				}
+				);
 
 				localizedValue[locale] = LiferayFormBuilderUtil.normalizeValue(
 					value
@@ -1249,6 +1199,48 @@ AUI.add(
 			});
 
 			return localizedValue;
+		};
+
+		SerializableFieldSupport.prototype._getLocaleValue = function(
+			localizationMap,
+			locale,
+			attribute
+		) {
+			var instance = this;
+
+			var builder = instance.get('builder');
+
+			var translationManager = builder.translationManager;
+
+			var defaultLocale = translationManager.get('defaultLocale');
+
+			var value = A.Object.getValue(localizationMap, [locale, attribute]);
+
+			if (!isValue(value)) {
+				value = A.Object.getValue(localizationMap, [
+					defaultLocale,
+					attribute
+				]);
+
+				if (!isValue(value)) {
+					for (var localizationMapLocale in localizationMap) {
+						value = A.Object.getValue(localizationMap, [
+							localizationMapLocale,
+							attribute
+						]);
+
+						if (isValue(value)) {
+							break;
+						}
+					}
+				}
+
+				if (!isValue(value)) {
+					value = STR_BLANK;
+				}
+			}
+
+			return value;
 		};
 
 		SerializableFieldSupport.prototype.serialize = function() {

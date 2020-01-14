@@ -703,9 +703,6 @@ public class ServiceBuilder {
 				}
 			}
 
-			_modelTable = GetterUtil.getBoolean(
-				rootElement.attributeValue("model-table"));
-
 			_mvccEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("mvcc-enabled"));
 
@@ -5681,8 +5678,7 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
-		boolean modelTable = GetterUtil.getBoolean(
-			entityElement.attributeValue("model-table"), _modelTable);
+		boolean modelTable = isVersionGTE_7_3_0();
 
 		String finderClassName = "";
 
@@ -7503,7 +7499,6 @@ public class ServiceBuilder {
 	private String _implDirName;
 	private Map<String, JavaClass> _javaClasses = new HashMap<>();
 	private String _modelHintsFileName;
-	private boolean _modelTable;
 	private Set<String> _modifiedFileNames = new HashSet<>();
 	private boolean _mvccEnabled;
 	private String _oldServiceOutputPath;

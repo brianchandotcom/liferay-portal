@@ -161,23 +161,54 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 			rightTitle="available"
 		/>
 
-
-		<div class="site-languages">
-			<%
-				Map<String, Object> data = new HashMap<>();
-				data.put("defaultLanguage", "test");
-				data.put("inheritLocales", inheritLocales);
-				data.put("languages", leftList);
-			%>
-
-			<react:component
-				data="<%= data %>"
-				module="js/Languages.es"
-			/>
-		</div>
-
 	</aui:fieldset>
 </aui:fieldset>
+
+<div class="site-languages">
+	<%
+		Map<String, Object> data = new HashMap<>();
+
+		User defaultUser = company.getDefaultUser();
+		Locale defaultLocale = defaultUser.getLocale();
+
+		JSONObject defaultUserLocaleObject = JSONUtil.put(
+			"country", defaultLocale.getCountry()
+		).put(
+			"displayName", defaultLocale.getDisplayName(locale)
+		).put(
+			"language", defaultLocale.getLanguage()
+		).put(
+			"languageId", LocaleUtil.toLanguageId(defaultLocale)
+		);
+
+
+		JSONArray availableLanguagesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
+			JSONObject languageObject = JSONUtil.put(
+				"country", availableLocale.getCountry()
+			).put(
+				"displayName", availableLocale.getDisplayName(locale)
+			).put(
+				"language", availableLocale.getLanguage()
+			).put(
+				"localeId", LocaleUtil.toLanguageId(availableLocale)
+			);
+
+			availableLanguagesJSONArray.put(languageObject);
+		}
+
+		data.put("availableLocales", availableLanguagesJSONArray);
+		data.put("defaultUserLocale", defaultUserLocaleObject);
+		data.put("inheritLocales", inheritLocales);
+		//data.put("languages", LanguageUtil.getAvailableLocales());//TODO remove
+	%>
+
+	<react:component
+		data="<%= data %>"
+		module="js/Languages.es"
+	/>
+</div>
 
 <script>
 	Liferay.Util.toggleRadio(

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Mariano Álvaro Sáiz
  */
-@Component(immediate = true, service = ResourceBundleServiceListener.class)
+@Component(service = {})
 public class ResourceBundleServiceListener implements ServiceListener {
 
 	@Override

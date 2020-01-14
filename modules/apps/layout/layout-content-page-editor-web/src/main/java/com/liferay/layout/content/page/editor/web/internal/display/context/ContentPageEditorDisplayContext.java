@@ -170,7 +170,7 @@ public class ContentPageEditorDisplayContext {
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_contentPageEditorTypeConfiguration =
+		contentPageEditorTypeConfiguration =
 			(ContentPageEditorTypeConfiguration)httpServletRequest.getAttribute(
 				ContentPageEditorTypeConfiguration.class.getName());
 		_fragmentCollectionContributorTracker =
@@ -543,7 +543,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	public String getEditorType() {
-		return _contentPageEditorTypeConfiguration.type();
+		return contentPageEditorTypeConfiguration.type();
 	}
 
 	public SoyContext getFragmentsEditorToolbarSoyContext()
@@ -691,6 +691,8 @@ public class ContentPageEditorDisplayContext {
 		return _sidebarPanelSoyContexts;
 	}
 
+	protected final ContentPageEditorTypeConfiguration
+		contentPageEditorTypeConfiguration;
 	protected final HttpServletRequest httpServletRequest;
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final ThemeDisplay themeDisplay;
@@ -1360,7 +1362,7 @@ public class ContentPageEditorDisplayContext {
 			getSegmentsExperienceId());
 
 		if (Objects.equals(
-				_contentPageEditorTypeConfiguration.type(), "react")) {
+				contentPageEditorTypeConfiguration.type(), "react")) {
 
 			layoutData = LayoutDataConverter.convert(layoutData);
 
@@ -1468,7 +1470,7 @@ public class ContentPageEditorDisplayContext {
 				SegmentsExperienceConstants.ID_DEFAULT);
 
 			if (Objects.equals(
-					_contentPageEditorTypeConfiguration.type(), "react")) {
+					contentPageEditorTypeConfiguration.type(), "react")) {
 
 				layoutData = LayoutDataConverter.convert(layoutData);
 
@@ -1898,8 +1900,6 @@ public class ContentPageEditorDisplayContext {
 	private final CommentManager _commentManager;
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;
-	private final ContentPageEditorTypeConfiguration
-		_contentPageEditorTypeConfiguration;
 	private Map<String, Object> _defaultConfigurations;
 	private SoyContext _editorSoyContext;
 	private final FragmentCollectionContributorTracker

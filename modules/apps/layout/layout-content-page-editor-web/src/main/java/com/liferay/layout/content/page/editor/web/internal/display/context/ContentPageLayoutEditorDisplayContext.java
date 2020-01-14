@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.content.page.editor.web.internal.util.LayoutDataConverter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -55,6 +56,7 @@ import com.liferay.staging.StagingGroupHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.PortletRequest;
@@ -339,10 +341,25 @@ public class ContentPageLayoutEditorDisplayContext
 
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
+			String layoutData = layoutPageTemplateStructureRel.getData();
+
+			if (Objects.equals(
+					contentPageEditorTypeConfiguration.type(), "react")) {
+
+				layoutData = LayoutDataConverter.convert(layoutData);
+
+				LayoutPageTemplateStructureLocalServiceUtil.
+					updateLayoutPageTemplateStructure(
+						themeDisplay.getScopeGroupId(),
+						PortalUtil.getClassNameId(Layout.class.getName()),
+						themeDisplay.getPlid(),
+						layoutPageTemplateStructureRel.
+							getSegmentsExperienceId(),
+						layoutData);
+			}
+
 			soyContext.put(
-				"layoutData",
-				JSONFactoryUtil.createJSONObject(
-					layoutPageTemplateStructureRel.getData())
+				"layoutData", JSONFactoryUtil.createJSONObject(layoutData)
 			).put(
 				"segmentsExperienceId",
 				layoutPageTemplateStructureRel.getSegmentsExperienceId()

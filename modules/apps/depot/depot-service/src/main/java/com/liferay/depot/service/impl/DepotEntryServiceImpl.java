@@ -93,6 +93,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	public DepotEntry updateDepotEntry(
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -101,8 +102,8 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 			getPermissionChecker(), depotEntryId, ActionKeys.UPDATE);
 
 		return depotEntryLocalService.updateDepotEntry(
-			depotEntryId, nameMap, descriptionMap, typeSettingsProperties,
-			serviceContext);
+			depotEntryId, nameMap, descriptionMap, depotAppCustomizationMap,
+			typeSettingsProperties, serviceContext);
 	}
 
 	@Reference(

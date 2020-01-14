@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -235,7 +236,25 @@ public class SearchResultsPortletTest {
 			protected HttpServletRequest getHttpServletRequest(
 				RenderRequest renderRequest) {
 
-				return Mockito.mock(HttpServletRequest.class);
+				ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+				Mockito.when(
+					themeDisplay.getPortletDisplay()
+				).thenReturn(
+					Mockito.mock(PortletDisplay.class)
+				);
+
+				HttpServletRequest httpServletRequest = Mockito.mock(
+					HttpServletRequest.class);
+
+				Mockito.when(
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)
+				).thenReturn(
+					themeDisplay
+				);
+
+				return httpServletRequest;
 			}
 
 			@Override

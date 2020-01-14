@@ -207,6 +207,15 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	}
 
 	@Override
+	public int getTagsCount(long[] groupIds, String name) {
+		if (Validator.isNull(name)) {
+			return assetTagPersistence.countByGroupId(groupIds);
+		}
+
+		return assetTagPersistence.countByG_LikeN(groupIds, name);
+	}
+
+	@Override
 	public int getVisibleAssetsTagsCount(
 		long groupId, long classNameId, String name) {
 

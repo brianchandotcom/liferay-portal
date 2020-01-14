@@ -32,7 +32,7 @@ public class DepotAdminApplicationsDisplayContext {
 	}
 
 	public Collection<DepotApplication> getDepotApplications() {
-		return _depotApplicationController.getDepotApplications();
+		return _depotApplicationController.getCustomizableDepotApplications();
 	}
 
 	public boolean isEnabled(String portletId, long groupId)

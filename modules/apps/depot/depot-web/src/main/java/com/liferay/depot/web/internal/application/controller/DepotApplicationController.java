@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DepotApplicationController.class)
 public class DepotApplicationController {
 
-	public Collection<DepotApplication> getDepotApplications() {
+	public Collection<DepotApplication> getCustomizableDepotApplications() {
 		Collection<DepotApplication> depotApplications = new ArrayList<>();
 
 		for (DepotApplication depotApplication : _serviceTrackerMap.values()) {

@@ -20,8 +20,8 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.test.util.BookmarksTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -42,11 +42,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -82,11 +80,9 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
-			TestPropsValues.getUserId(), StringUtil.randomString(), true,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		_bookmarksEntry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
 
-		addAssetLink(_journalArticle, _blogsEntry, 1);
+		addAssetLink(_journalArticle, _bookmarksEntry, 1);
 	}
 
 	@Test
@@ -133,12 +129,13 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertNull(_journalArticle);
 
-		// Blogs entry should not be in the LAR
+		// BookmarksE etry should not be in the LAR
 
-		_blogsEntry = (BlogsEntry)portletDataContext.getZipEntryAsObject(
-			ExportImportPathUtil.getModelPath(_blogsEntry));
+		_bookmarksEntry =
+			(BookmarksEntry)portletDataContext.getZipEntryAsObject(
+				ExportImportPathUtil.getModelPath(_bookmarksEntry));
 
-		Assert.assertNull(_blogsEntry);
+		Assert.assertNull(_bookmarksEntry);
 
 		importLayouts(getImportParameterMap());
 	}
@@ -174,12 +171,13 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertNotNull(_journalArticle);
 
-		// Blogs entry should not be in the LAR
+		// Bookmarks entry should not be in the LAR
 
-		_blogsEntry = (BlogsEntry)portletDataContext.getZipEntryAsObject(
-			ExportImportPathUtil.getModelPath(_blogsEntry));
+		_bookmarksEntry =
+			(BookmarksEntry)portletDataContext.getZipEntryAsObject(
+				ExportImportPathUtil.getModelPath(_bookmarksEntry));
 
-		Assert.assertNull(_blogsEntry);
+		Assert.assertNull(_bookmarksEntry);
 
 		importLayouts(getImportParameterMap());
 	}
@@ -196,12 +194,10 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			stagingGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
-			TestPropsValues.getUserId(), StringUtil.randomString(), true,
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId()));
+		BookmarksEntry bookmarksEntry = BookmarksTestUtil.addEntry(
+			stagingGroup.getGroupId(), true);
 
-		addAssetLink(article, blogsEntry, 1);
+		addAssetLink(article, bookmarksEntry, 1);
 
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactoryUtil.
@@ -295,7 +291,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			userIdStrategy, ZipReaderFactoryUtil.getZipReader(larFile));
 	}
 
-	private BlogsEntry _blogsEntry;
+	private BookmarksEntry _bookmarksEntry;
 	private JournalArticle _journalArticle;
 
 }

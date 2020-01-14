@@ -158,6 +158,11 @@ public class AssetTagServiceWrapper
 	}
 
 	@Override
+	public int getTagsCount(long[] groupIds, String name) {
+		return _assetTagService.getTagsCount(groupIds, name);
+	}
+
+	@Override
 	public int getVisibleAssetsTagsCount(
 		long groupId, long classNameId, String name) {
 

@@ -45,20 +45,19 @@ Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
 		collapsible="true"
 		label='<%= LanguageUtil.get(request, "applications") %>'
 	>
-		<aui:fieldset cssClass="default-language ">
+		<aui:fieldset>
 			<p class="text-muted">
 				<liferay-ui:message key="repository-applications-description" />
 			</p>
 		</aui:fieldset>
 
-		<aui:fieldset cssClass="default-language ">
+		<aui:fieldset>
 
 			<%
 			for (DepotApplication depotApplication : depotAdminApplicationsDisplayContext.getDepotApplications()) {
-				boolean isEnabled = depotAdminApplicationsDisplayContext.isEnabled(depotApplication.getPortletId(), depotEntry.getGroupId());
 			%>
 
-				<aui:input disabled="<%= false %>" label="<%= depotApplication.getLabel(locale) %>" name="<%= depotApplication.getPortletId() %>" type="checkbox" value="<%= isEnabled %>" />
+				<aui:input label="<%= depotApplication.getLabel(locale) %>" name="<%= depotApplication.getPortletId() %>" type="checkbox" value="<%= depotAdminApplicationsDisplayContext.isEnabled(depotApplication.getPortletId(), depotEntry.getGroupId()) %>" />
 
 			<%
 			}

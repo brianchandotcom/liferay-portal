@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Metrics SLA API
 Bundle-SymbolicName: com.liferay.portal.workflow.metrics.sla.api
-Bundle-Version: 2.0.1
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.portal.workflow.metrics.sla.calendar,\
 	com.liferay.portal.workflow.metrics.sla.processor

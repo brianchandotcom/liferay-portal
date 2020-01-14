@@ -47,7 +47,7 @@ public class OrderBy extends BaseASTNode implements LimitStep, Query {
 		consumer.accept("order by ");
 
 		for (int i = 0; i < _orderByExpressions.length; i++) {
-			_orderByExpressions[i].doToSQL(consumer, astNodeListener);
+			_orderByExpressions[i].toSQL(consumer, astNodeListener);
 
 			if (i < (_orderByExpressions.length - 1)) {
 				consumer.accept(", ");

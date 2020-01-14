@@ -113,7 +113,7 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 			table, column.getColumnName(), column.getColumnType(),
 			column.getSQLType());
 
-		putColumn(alias, column);
+		table.putColumn(alias, column);
 
 		return column;
 	}

@@ -69,9 +69,10 @@ import javax.servlet.http.HttpServletRequest;
 public class SharedAssetsViewDisplayContext {
 
 	public SharedAssetsViewDisplayContext(
-		GroupLocalService groupLocalService,
+		GroupLocalService groupLocalService, ItemSelector itemSelector,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		SharedAssetsFilterItemTracker sharedAssetsFilterItemTracker,
 		SharingConfigurationFactory sharingConfigurationFactory,
 		Function<SharingEntry, SharingEntryInterpreter>
 			sharingEntryInterpreterFunction,
@@ -79,12 +80,13 @@ public class SharedAssetsViewDisplayContext {
 		SharingEntryMenuItemContributorRegistry
 			sharingEntryMenuItemContributorRegistry,
 		SharingMenuItemFactory sharingMenuItemFactory,
-		SharingPermission sharingPermission, ItemSelector itemSelector,
-		SharedAssetsFilterItemTracker sharedAssetsFilterItemTracker) {
+		SharingPermission sharingPermission) {
 
 		_groupLocalService = groupLocalService;
+		_itemSelector = itemSelector;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_sharedAssetsFilterItemTracker = sharedAssetsFilterItemTracker;
 		_sharingConfigurationFactory = sharingConfigurationFactory;
 		_sharingEntryInterpreterFunction = sharingEntryInterpreterFunction;
 		_sharingEntryLocalService = sharingEntryLocalService;
@@ -92,8 +94,6 @@ public class SharedAssetsViewDisplayContext {
 			sharingEntryMenuItemContributorRegistry;
 		_sharingMenuItemFactory = sharingMenuItemFactory;
 		_sharingPermission = sharingPermission;
-		_itemSelector = itemSelector;
-		_sharedAssetsFilterItemTracker = sharedAssetsFilterItemTracker;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);

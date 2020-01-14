@@ -132,13 +132,13 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return new SharedAssetsViewDisplayContext(
-			_groupLocalService, _portal.getLiferayPortletRequest(renderRequest),
+			_groupLocalService, _itemSelector,
+			_portal.getLiferayPortletRequest(renderRequest),
 			_portal.getLiferayPortletResponse(renderResponse),
-			_sharingConfigurationFactory,
+			_sharedAssetsFilterItemTracker, _sharingConfigurationFactory,
 			_sharingEntryInterpreterProvider::getSharingEntryInterpreter,
 			_sharingEntryLocalService, _sharingEntryMenuItemContributorRegistry,
-			_sharingMenuItemFactory, _sharingPermission, _itemSelector,
-			_sharedAssetsFilterItemTracker);
+			_sharingMenuItemFactory, _sharingPermission);
 	}
 
 	private SharingEntry _getSharingEntry(

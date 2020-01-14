@@ -168,40 +168,26 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	<%
 		Map<String, Object> data = new HashMap<>();
 
+		//default Locale
+
 		User defaultUser = company.getDefaultUser();
 		Locale defaultLocale = defaultUser.getLocale();
 
-		JSONObject defaultUserLocaleObject = JSONUtil.put(
-			"country", defaultLocale.getCountry()
-		).put(
-			"displayName", defaultLocale.getDisplayName(locale)
-		).put(
-			"language", defaultLocale.getLanguage()
-		).put(
-			"languageId", LocaleUtil.toLanguageId(defaultLocale)
-		);
-
-
-		JSONArray availableLanguagesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 			JSONObject languageObject = JSONUtil.put(
-				"country", availableLocale.getCountry()
-			).put(
 				"displayName", availableLocale.getDisplayName(locale)
-			).put(
-				"language", availableLocale.getLanguage()
 			).put(
 				"localeId", LocaleUtil.toLanguageId(availableLocale)
 			);
 
-			availableLanguagesJSONArray.put(languageObject);
+			availableLocalesJSONArray.put(languageObject);
 		}
 
-		data.put("availableLocales", availableLanguagesJSONArray);
-		data.put("defaultUserLocale", defaultUserLocaleObject);
+		data.put("availableLocales", availableLocalesJSONArray);
+		data.put("defaultLocaleId", LocaleUtil.toLanguageId(defaultLocale));
 		data.put("inheritLocales", inheritLocales);
-		//data.put("languages", LanguageUtil.getAvailableLocales());//TODO remove
 	%>
 
 	<react:component

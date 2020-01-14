@@ -20,24 +20,24 @@ import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const defaultLocales = 'defaultLocales';
-const customLocales = 'customLocales';
-
 /**
  * @class Languages
  */
-const Languages = ({availableLocales, defaultUserLocale, inheritLocales}) => {
+const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false}) => {
+	const defaultOption = 'defaultOption';
+	const customOption = 'customOption';
+
 	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
-		inheritLocales ? defaultLocales : customLocales
+		inheritLocales ? defaultOption : customOption
 	);
 
-	const Language = ({isDefaultLanguage, localeId, displayName, showActions}) => {
+	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		return (
 			<ClayTable.Row>
 				<ClayTable.Cell>
 					{displayName}
 					<span className="hide"> {localeId} </span>
-					{isDefaultLanguage && (
+					{isDefault && (
 						<ClayLabel displayType="info">
 					        {Liferay.Language.get('default')}
 						</ClayLabel>
@@ -52,7 +52,7 @@ const Languages = ({availableLocales, defaultUserLocale, inheritLocales}) => {
 		);
 	};
 
-	const LanguagesList = ({defaultLanguage, languages, showActions}) => {
+	const LanguagesList = ({defaultLocaleId, locales, showActions}) => {
 		return (
 			<ClayTable borderless>
 				<ClayTable.Head>
@@ -70,10 +70,9 @@ const Languages = ({availableLocales, defaultUserLocale, inheritLocales}) => {
 				</ClayTable.Head>
 
 				<ClayTable.Body>
-					{languages.map(locale => {
-						console.log(locale);
+					{locales.map(locale => {
 						return <Language {...locale}
-							isDefaultLanguage = {locale.country === defaultLanguage.country && locale.language == defaultLanguage.language}
+							isDefault =  {defaultLocaleId === locale.localeId}
 							key={locale.localeId}
 							showActions={showActions}
 						/>;
@@ -92,20 +91,20 @@ const Languages = ({availableLocales, defaultUserLocale, inheritLocales}) => {
 			>
 				<ClayRadio
 					label={Liferay.Language.get('use-the-default-language-options')}
-					value={defaultLocales}
+					value={defaultOption}
 				/>
 
 				<ClayRadio
 					label={Liferay.Language.get('define-a-custom-default-language-and-additional-available-languages-for-this-repository')}
-					value={customLocales}
+					value={customOption}
 				/>
 			</ClayRadioGroup>
 
-			{selectedRadioGroupValue ===  defaultLocales && (
-				<LanguagesList defaultLanguage={defaultUserLocale} languages={availableLocales} showActions={false} />
+			{selectedRadioGroupValue ===  defaultOption && (
+				<LanguagesList defaultLocaleId={defaultLocaleId} locales={availableLocales} showActions={false} />
 			)}
 
-			{selectedRadioGroupValue ===  customLocales && (
+			{selectedRadioGroupValue ===  customOption && (
 				<span> customLocales </span>
 			)}
 		</div>
@@ -113,17 +112,17 @@ const Languages = ({availableLocales, defaultUserLocale, inheritLocales}) => {
 }
 
 Languages.propTypes = {
-	availableLocales: PropTypes.array,
-	defaultUserLocale: PropTypes.shape({
-		country: PropTypes.string,
-		displayName: PropTypes.string,
-		language: PropTypes.string,
-		localeId: PropTypes.string
-	}),
+	availableLocales: PropTypes.arrayOf(
+		PropTypes.shape({
+			displayName: PropTypes.string,
+			localeId: PropTypes.string
+		})
+	).isRequired,
+	defaultLocaleId: PropTypes.string.isRequired,
 	inheritLocales: PropTypes.bool,
 };
 
 export default function(props) {
-	console.log(props);
+	//console.log(props);
 	return <Languages {...props} />;
 }

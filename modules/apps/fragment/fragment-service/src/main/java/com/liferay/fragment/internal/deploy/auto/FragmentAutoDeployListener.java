@@ -197,16 +197,16 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 	private JSONObject _getDeployJSONObject(File file)
 		throws IOException, JSONException {
 
-		ZipFile zipFile = new ZipFile(file);
+		try (ZipFile zipFile = new ZipFile(file)) {
+			ZipEntry zipEntry = _getDeployZipEntry(zipFile);
 
-		ZipEntry zipEntry = _getDeployZipEntry(zipFile);
+			if (zipEntry == null) {
+				return null;
+			}
 
-		if (zipEntry == null) {
-			return null;
+			return JSONFactoryUtil.createJSONObject(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
 		}
-
-		return JSONFactoryUtil.createJSONObject(
-			StringUtil.read(zipFile.getInputStream(zipEntry)));
 	}
 
 	private ZipEntry _getDeployZipEntry(ZipFile zipFile) {

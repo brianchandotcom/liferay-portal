@@ -90,78 +90,79 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 		_invalidFragmentEntriesNames = new ArrayList<>();
 
-		ZipFile zipFile = new ZipFile(file);
+		try (ZipFile zipFile = new ZipFile(file)) {
+			_isValidFile(zipFile);
 
-		_isValidFile(zipFile);
+			Map<String, String> orphanFragmentEntries = new HashMap<>();
 
-		Map<String, String> orphanFragmentEntries = new HashMap<>();
+			Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
+				_getFragmentCollectionFolderMap(
+					zipFile, groupId, orphanFragmentEntries);
 
-		Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
-			_getFragmentCollectionFolderMap(
-				zipFile, groupId, orphanFragmentEntries);
+			for (Map.Entry<String, FragmentCollectionFolder> entry :
+					fragmentCollectionFolderMap.entrySet()) {
 
-		for (Map.Entry<String, FragmentCollectionFolder> entry :
-				fragmentCollectionFolderMap.entrySet()) {
+				FragmentCollectionFolder fragmentCollectionFolder =
+					entry.getValue();
 
-			FragmentCollectionFolder fragmentCollectionFolder =
-				entry.getValue();
+				String name = entry.getKey();
+				String description = StringPool.BLANK;
 
-			String name = entry.getKey();
-			String description = StringPool.BLANK;
+				String collectionJSON = _getContent(
+					zipFile, fragmentCollectionFolder.getFileName());
 
-			String collectionJSON = _getContent(
-				zipFile, fragmentCollectionFolder.getFileName());
+				if (Validator.isNotNull(collectionJSON)) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						collectionJSON);
 
-			if (Validator.isNotNull(collectionJSON)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					collectionJSON);
-
-				name = jsonObject.getString("name");
-				description = jsonObject.getString("description");
-			}
-
-			if (Validator.isNull(name)) {
-				throw new FragmentCollectionNameException();
-			}
-
-			FragmentCollection fragmentCollection = _addFragmentCollection(
-				groupId, entry.getKey(), name, description, overwrite);
-
-			_importResources(
-				userId, groupId, fragmentCollection.getFragmentCollectionId(),
-				fragmentCollection.getResourcesFolderId(), zipFile);
-
-			_importFragmentEntries(
-				userId, groupId, zipFile,
-				fragmentCollection.getFragmentCollectionId(),
-				fragmentCollectionFolder.getFragmentEntries(), overwrite);
-		}
-
-		if (MapUtil.isNotEmpty(orphanFragmentEntries)) {
-			if (fragmentCollectionId <= 0) {
-				FragmentCollection fragmentCollection =
-					_fragmentCollectionLocalService.fetchFragmentCollection(
-						groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY);
-
-				if (fragmentCollection == null) {
-					Locale locale = _portal.getSiteDefaultLocale(groupId);
-
-					fragmentCollection =
-						_fragmentCollectionService.addFragmentCollection(
-							groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY,
-							LanguageUtil.get(
-								locale, _DEFAULT_FRAGMENT_COLLECTION_KEY),
-							StringPool.BLANK,
-							ServiceContextThreadLocal.getServiceContext());
+					name = jsonObject.getString("name");
+					description = jsonObject.getString("description");
 				}
 
-				fragmentCollectionId =
-					fragmentCollection.getFragmentCollectionId();
+				if (Validator.isNull(name)) {
+					throw new FragmentCollectionNameException();
+				}
+
+				FragmentCollection fragmentCollection = _addFragmentCollection(
+					groupId, entry.getKey(), name, description, overwrite);
+
+				_importResources(
+					userId, groupId,
+					fragmentCollection.getFragmentCollectionId(),
+					fragmentCollection.getResourcesFolderId(), zipFile);
+
+				_importFragmentEntries(
+					userId, groupId, zipFile,
+					fragmentCollection.getFragmentCollectionId(),
+					fragmentCollectionFolder.getFragmentEntries(), overwrite);
 			}
 
-			_importFragmentEntries(
-				userId, groupId, zipFile, fragmentCollectionId,
-				orphanFragmentEntries, overwrite);
+			if (MapUtil.isNotEmpty(orphanFragmentEntries)) {
+				if (fragmentCollectionId <= 0) {
+					FragmentCollection fragmentCollection =
+						_fragmentCollectionLocalService.fetchFragmentCollection(
+							groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY);
+
+					if (fragmentCollection == null) {
+						Locale locale = _portal.getSiteDefaultLocale(groupId);
+
+						fragmentCollection =
+							_fragmentCollectionService.addFragmentCollection(
+								groupId, _DEFAULT_FRAGMENT_COLLECTION_KEY,
+								LanguageUtil.get(
+									locale, _DEFAULT_FRAGMENT_COLLECTION_KEY),
+								StringPool.BLANK,
+								ServiceContextThreadLocal.getServiceContext());
+					}
+
+					fragmentCollectionId =
+						fragmentCollection.getFragmentCollectionId();
+				}
+
+				_importFragmentEntries(
+					userId, groupId, zipFile, fragmentCollectionId,
+					orphanFragmentEntries, overwrite);
+			}
 		}
 
 		return _invalidFragmentEntriesNames;

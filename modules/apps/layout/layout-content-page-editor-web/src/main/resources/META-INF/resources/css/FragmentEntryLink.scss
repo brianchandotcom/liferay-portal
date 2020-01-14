@@ -42,8 +42,11 @@
 		}
 	}
 
-	.master-fragment-entry-link .portlet-topper-toolbar .lfr-icon-item {
-		display: none;
+	.master-fragment-entry-link .portlet-topper-toolbar {
+		.lfr-icon-item,
+		.portlet-options {
+			display: none;
+		}
 	}
 
 	.fragment-entry-link-content {

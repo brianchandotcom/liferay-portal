@@ -16,14 +16,14 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import React, {useContext, useEffect, useState, useRef} from 'react';
 
-import {ConfigContext} from '../config/index';
-import * as Processors from '../processors/index';
-import selectEditableValueConfig from '../selectors/selectEditableValueConfig';
-import selectEditableValueContent from '../selectors/selectEditableValueContent';
-import {StoreContext} from '../store/index';
-import {useSelectItem} from './Controls';
-import UnsafeHTML from './UnsafeHTML';
-import {showFloatingToolbar} from './showFloatingToolbar';
+import {ConfigContext} from '../../config/index';
+import * as Processors from '../../processors/index';
+import selectEditableValueConfig from '../../selectors/selectEditableValueConfig';
+import selectEditableValueContent from '../../selectors/selectEditableValueContent';
+import {StoreContext} from '../../store/index';
+import {useSelectItem} from '../Controls';
+import UnsafeHTML from '../UnsafeHTML';
+import {showFloatingToolbar} from '../showFloatingToolbar';
 
 const resolveEditableValue = (state, config, fragmentEntryLinkId, editableId) =>
 	new Promise(resolve => {

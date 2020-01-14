@@ -41,25 +41,26 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 		collapsible="true"
 		label='<%= LanguageUtil.get(request, "applications") %>'
 	>
-		<aui:fieldset>
-			<p class="text-muted">
-				<liferay-ui:message key="repository-applications-description" />
-			</p>
-		</aui:fieldset>
+		<p class="text-muted">
+			<liferay-ui:message key="repository-applications-description" />
+		</p>
 
-		<aui:fieldset>
+		<div class="row">
 
 			<%
 			for (DepotApplication depotApplication : depotAdminDetailsDisplayContext.getDepotApplications()) {
 			%>
 
-				<aui:input label="<%= depotApplication.getLabel(locale) %>" name="<%= depotApplication.getPortletId() %>" type="checkbox" value="<%= depotAdminDetailsDisplayContext.isEnabled(depotApplication.getPortletId()) %>" />
+				<div class="col-md-6">
+					<aui:input label="<%= depotApplication.getLabel(locale) %>" name='<%= "DepotAppCustomization--" + depotApplication.getPortletId() + "--" %>' type="checkbox" value="<%= depotAdminDetailsDisplayContext.isEnabled(depotApplication.getPortletId()) %>" />
+				</div>
 
 			<%
 			}
 			%>
 
-		</aui:fieldset>
+		</div>
+
 	</liferay-frontend:fieldset>
 
 	<liferay-frontend:fieldset

@@ -141,7 +141,7 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 			boolean columnSpacing = childItemConfigJSONObject.getBoolean("columnSpacing", true);
 			%>
 
-			<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
+			<div class="row <%= columnSpacing ? "no-gutters" : StringPool.BLANK %>">
 
 				<%
 				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));

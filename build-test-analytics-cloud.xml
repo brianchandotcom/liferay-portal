@@ -96,9 +96,9 @@ networks:
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
 				<then>
 					<execute dir="${analytics.cloud.asah.dir}">
-						./gradlew jar
+						./gradlew jar -Dliferay.ci=true
 
-						./gradlew clean assemble
+						./gradlew clean assemble -Dliferay.ci=true
 
 						docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
 					</execute>
@@ -109,7 +109,7 @@ networks:
 				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
 				<then>
 					<execute dir="${analytics.cloud.faro.dir}">
-						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=asah-local
+						./gradlew createDocker -Pcom.liferay.osb.faro.environment.name=asah-local -Dliferay.ci=true
 
 						docker rm ${analytics.cloud.faro.container.name}
 					</execute>

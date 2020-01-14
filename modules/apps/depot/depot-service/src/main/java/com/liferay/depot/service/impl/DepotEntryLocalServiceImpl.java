@@ -15,7 +15,9 @@
 package com.liferay.depot.service.impl;
 
 import com.liferay.depot.exception.DepotEntryNameException;
+import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -99,6 +101,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	public DepotEntry updateDepotEntry(
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -146,6 +149,24 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 
 		_groupLocalService.updateGroup(
 			group.getGroupId(), currentTypeSettingsProperties.toString());
+
+		for (String portletId : depotAppCustomizationMap.keySet()) {
+			DepotAppCustomization depotAppCustomization =
+				_depotAppCustomizationLocalService.fetchDepotAppCustomization(
+					depotEntryId, portletId);
+
+			if (depotAppCustomization != null) {
+				depotAppCustomization.setEnabled(
+					depotAppCustomizationMap.get(portletId));
+
+				_depotAppCustomizationLocalService.updateDepotAppCustomization(
+					depotAppCustomization);
+			}
+
+			_depotAppCustomizationLocalService.addDepotAppCustomization(
+				depotEntryId, portletId,
+				depotAppCustomizationMap.get(portletId));
+		}
 
 		return depotEntryPersistence.update(depotEntry);
 	}
@@ -204,6 +225,10 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 					depotEntry.getGroupId());
 		}
 	}
+
+	@Reference
+	private DepotAppCustomizationLocalService
+		_depotAppCustomizationLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

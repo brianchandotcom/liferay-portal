@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -147,7 +148,11 @@ public final class DLValidatorImpl implements DLValidator {
 
 			if (StringPool.STAR.equals(fileExtension) ||
 				StringUtil.equals(
-					fileNameExtension, StringUtil.toLowerCase(fileExtension))) {
+					fileNameExtension,
+					StringUtil.toLowerCase(
+						StringUtil.replace(
+							fileExtension, CharPool.PERIOD,
+							StringPool.BLANK)))) {
 
 				validFileExtension = true;
 

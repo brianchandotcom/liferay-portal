@@ -34,15 +34,9 @@ public class DLValidatorImplTest {
 	public void setUp() {
 		DLValidatorImpl dlValidatorImpl = new DLValidatorImpl();
 
-		DLConfiguration dlConfiguration = Mockito.mock(DLConfiguration.class);
+		_dlConfiguration = Mockito.mock(DLConfiguration.class);
 
-		Mockito.when(
-			dlConfiguration.fileExtensions()
-		).thenReturn(
-			new String[] {"gif"}
-		);
-
-		dlValidatorImpl.setDLConfiguration(dlConfiguration);
+		dlValidatorImpl.setDLConfiguration(_dlConfiguration);
 
 		_dlValidator = dlValidatorImpl;
 
@@ -53,24 +47,45 @@ public class DLValidatorImplTest {
 
 	@Test(expected = FileExtensionException.class)
 	public void testInvalidExtension() throws Exception {
-		_dlValidator.validateFileExtension("test.gıf");
+		_validateFileExtension("test.gıf");
 	}
 
 	@Test
 	public void testValidLowerCaseExtension() throws Exception {
-		_dlValidator.validateFileExtension("test.gif");
+		_validateFileExtension("test.gif");
 	}
 
 	@Test
 	public void testValidMixedCaseExtension() throws Exception {
-		_dlValidator.validateFileExtension("test.GiF");
+		_validateFileExtension("test.GiF");
 	}
 
 	@Test
 	public void testValidUpperCaseExtension() throws Exception {
-		_dlValidator.validateFileExtension("test.GIF");
+		_validateFileExtension("test.GIF");
 	}
 
+	private void _validateFileExtension(String fileName)
+		throws FileExtensionException {
+
+		Mockito.when(
+			_dlConfiguration.fileExtensions()
+		).thenReturn(
+			new String[] {".gif"}
+		);
+
+		_dlValidator.validateFileExtension(fileName);
+
+		Mockito.when(
+			_dlConfiguration.fileExtensions()
+		).thenReturn(
+			new String[] {"gif"}
+		);
+
+		_dlValidator.validateFileExtension(fileName);
+	}
+
+	private DLConfiguration _dlConfiguration;
 	private DLValidator _dlValidator;
 
 }

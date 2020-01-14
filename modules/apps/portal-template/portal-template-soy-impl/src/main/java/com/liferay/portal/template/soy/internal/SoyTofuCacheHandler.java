@@ -72,7 +72,7 @@ public class SoyTofuCacheHandler {
 			SoyTofuCacheBag soyTofuCacheBag = _portalCache.get(key);
 
 			if (soyTofuCacheBag != null) {
-				soyTofuCacheBag.remove(locale);
+				soyTofuCacheBag.removeMessageBundle(locale);
 			}
 		}
 	}

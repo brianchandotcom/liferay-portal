@@ -2,8 +2,19 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.depot.model.DepotAppCustomization" />
 	<import class="com.liferay.depot.model.DepotEntry" />
 	<import class="com.liferay.depot.model.DepotEntryGroupRel" />
+	<class dynamic-update="true" name="com.liferay.depot.model.impl.DepotAppCustomizationImpl" table="DepotAppCustomization">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="depotAppCustomizationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="depotEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="enabled" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
 	<class dynamic-update="true" name="com.liferay.depot.model.impl.DepotEntryImpl" table="DepotEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="depotEntryId" type="long">
 			<generator class="assigned" />

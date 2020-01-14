@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.depot.model.DepotAppCustomization">
+		<field name="mvccVersion" type="long" />
+		<field name="depotAppCustomizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="depotEntryId" type="long" />
+		<field name="enabled" type="boolean" />
+		<field name="portletId" type="String" />
+	</model>
 	<model name="com.liferay.depot.model.DepotEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

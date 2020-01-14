@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.metrics.internal.search.index;
+package com.liferay.portal.workflow.metrics.internal.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -40,6 +40,11 @@ import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.workflow.metrics.internal.search.index.BaseWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.InstanceWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.ProcessWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.TokenWorkflowMetricsIndexer;
 
 import java.util.Locale;
 
@@ -68,24 +73,96 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 	@Activate
 	protected void activate() throws Exception {
-		_createIndices(
-			_instanceWorkflowMetricsIndexer, _nodeWorkflowMetricsIndexer,
-			_processWorkflowMetricsIndexer,
-			_slaInstanceResultWorkflowMetricsIndexer,
-			_slaTaskResultWorkflowMetricsIndexer, _tokenWorkflowMetricsIndexer);
+		createIndices(
+			instanceWorkflowMetricsIndexer, nodeWorkflowMetricsIndexer,
+			processWorkflowMetricsIndexer, tokenWorkflowMetricsIndexer);
 
 		if (!_INDEX_ON_STARTUP) {
-			for (Company company : _companyLocalService.getCompanies()) {
-				_instanceWorkflowMetricsIndexer.reindex(company.getCompanyId());
-				_nodeWorkflowMetricsIndexer.reindex(company.getCompanyId());
-				_processWorkflowMetricsIndexer.reindex(company.getCompanyId());
-				_tokenWorkflowMetricsIndexer.reindex(company.getCompanyId());
-
-				_slaInstanceResultWorkflowMetricsIndexer.reindex(
-					company.getCompanyId());
-				_slaTaskResultWorkflowMetricsIndexer.reindex(
-					company.getCompanyId());
+			for (Company company : companyLocalService.getCompanies()) {
+				instanceWorkflowMetricsIndexer.reindex(company.getCompanyId());
+				nodeWorkflowMetricsIndexer.reindex(company.getCompanyId());
+				processWorkflowMetricsIndexer.reindex(company.getCompanyId());
+				tokenWorkflowMetricsIndexer.reindex(company.getCompanyId());
 			}
+		}
+	}
+
+	protected void createIndices(
+			BaseWorkflowMetricsIndexer... baseWorkflowMetricsIndexers)
+		throws PortalException {
+
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		for (BaseWorkflowMetricsIndexer baseWorkflowMetricsIndexer :
+				baseWorkflowMetricsIndexers) {
+
+			if (_hasIndex(baseWorkflowMetricsIndexer.getIndexName())) {
+				continue;
+			}
+
+			CreateIndexRequest createIndexRequest = new CreateIndexRequest(
+				baseWorkflowMetricsIndexer.getIndexName());
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(getClass(), "/META-INF/search/mappings.json"));
+
+			createIndexRequest.setSource(
+				JSONUtil.put(
+					"mappings",
+					JSONUtil.put(
+						baseWorkflowMetricsIndexer.getIndexType(),
+						jsonObject.get(
+							baseWorkflowMetricsIndexer.getIndexType()))
+				).put(
+					"settings",
+					JSONFactoryUtil.createJSONObject(
+						StringUtil.read(
+							getClass(), "/META-INF/search/settings.json"))
+				).toString());
+
+			searchEngineAdapter.execute(createIndexRequest);
+		}
+	}
+
+	protected void deleteIndices(
+			long companyId,
+			BaseWorkflowMetricsIndexer... baseWorkflowMetricsIndexers)
+		throws PortalException {
+
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		for (BaseWorkflowMetricsIndexer baseWorkflowMetricsIndexer :
+				baseWorkflowMetricsIndexers) {
+
+			if (!_hasIndex(baseWorkflowMetricsIndexer.getIndexName())) {
+				continue;
+			}
+
+			BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+			BooleanFilter booleanFilter = new BooleanFilter();
+
+			booleanFilter.add(
+				new TermFilter("companyId", String.valueOf(companyId)),
+				BooleanClauseOccur.MUST);
+
+			booleanQuery.setPreBooleanFilter(booleanFilter);
+
+			DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
+				new DeleteByQueryDocumentRequest(
+					booleanQuery, baseWorkflowMetricsIndexer.getIndexName());
+
+			if (PortalRunMode.isTestMode()) {
+				deleteByQueryDocumentRequest.setRefresh(true);
+			}
+
+			searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 		}
 	}
 
@@ -124,130 +201,32 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		_deleteIndices(
-			companyId, _instanceWorkflowMetricsIndexer,
-			_nodeWorkflowMetricsIndexer, _processWorkflowMetricsIndexer,
-			_slaInstanceResultWorkflowMetricsIndexer,
-			_slaTaskResultWorkflowMetricsIndexer, _tokenWorkflowMetricsIndexer);
+		deleteIndices(
+			companyId, instanceWorkflowMetricsIndexer,
+			nodeWorkflowMetricsIndexer, processWorkflowMetricsIndexer,
+			tokenWorkflowMetricsIndexer);
 
-		_createIndices(
-			_instanceWorkflowMetricsIndexer, _nodeWorkflowMetricsIndexer,
-			_processWorkflowMetricsIndexer,
-			_slaInstanceResultWorkflowMetricsIndexer,
-			_slaTaskResultWorkflowMetricsIndexer, _tokenWorkflowMetricsIndexer);
+		createIndices(
+			instanceWorkflowMetricsIndexer, nodeWorkflowMetricsIndexer,
+			processWorkflowMetricsIndexer, tokenWorkflowMetricsIndexer);
 
-		_instanceWorkflowMetricsIndexer.reindex(companyId);
-		_nodeWorkflowMetricsIndexer.reindex(companyId);
-		_processWorkflowMetricsIndexer.reindex(companyId);
-		_tokenWorkflowMetricsIndexer.reindex(companyId);
-
-		_slaInstanceResultWorkflowMetricsIndexer.reindex(companyId);
-		_slaTaskResultWorkflowMetricsIndexer.reindex(companyId);
+		instanceWorkflowMetricsIndexer.reindex(companyId);
+		nodeWorkflowMetricsIndexer.reindex(companyId);
+		processWorkflowMetricsIndexer.reindex(companyId);
+		tokenWorkflowMetricsIndexer.reindex(companyId);
 	}
 
-	private void _createIndices(
-			BaseWorkflowMetricsIndexer... baseWorkflowMetricsIndexers)
-		throws PortalException {
-
-		if (_searchEngineAdapter == null) {
-			return;
-		}
-
-		for (BaseWorkflowMetricsIndexer baseWorkflowMetricsIndexer :
-				baseWorkflowMetricsIndexers) {
-
-			if (_hasIndex(baseWorkflowMetricsIndexer.getIndexName())) {
-				continue;
-			}
-
-			CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-				baseWorkflowMetricsIndexer.getIndexName());
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				StringUtil.read(getClass(), "/META-INF/search/mappings.json"));
-
-			createIndexRequest.setSource(
-				JSONUtil.put(
-					"mappings",
-					JSONUtil.put(
-						baseWorkflowMetricsIndexer.getIndexType(),
-						jsonObject.get(
-							baseWorkflowMetricsIndexer.getIndexType()))
-				).put(
-					"settings",
-					JSONFactoryUtil.createJSONObject(
-						StringUtil.read(
-							getClass(), "/META-INF/search/settings.json"))
-				).toString());
-
-			_searchEngineAdapter.execute(createIndexRequest);
-		}
-	}
-
-	private void _deleteIndices(
-			long companyId,
-			BaseWorkflowMetricsIndexer... baseWorkflowMetricsIndexers)
-		throws PortalException {
-
-		if (_searchEngineAdapter == null) {
-			return;
-		}
-
-		for (BaseWorkflowMetricsIndexer baseWorkflowMetricsIndexer :
-				baseWorkflowMetricsIndexers) {
-
-			if (!_hasIndex(baseWorkflowMetricsIndexer.getIndexName())) {
-				continue;
-			}
-
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-
-			BooleanFilter booleanFilter = new BooleanFilter();
-
-			booleanFilter.add(
-				new TermFilter("companyId", String.valueOf(companyId)),
-				BooleanClauseOccur.MUST);
-
-			booleanQuery.setPreBooleanFilter(booleanFilter);
-
-			DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-				new DeleteByQueryDocumentRequest(
-					booleanQuery, baseWorkflowMetricsIndexer.getIndexName());
-
-			if (PortalRunMode.isTestMode()) {
-				deleteByQueryDocumentRequest.setRefresh(true);
-			}
-
-			_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
-		}
-	}
-
-	private boolean _hasIndex(String indexName) {
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			_searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		return indicesExistsIndexResponse.isExists();
-	}
-
-	private static final boolean _INDEX_ON_STARTUP = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
+	@Reference
+	protected CompanyLocalService companyLocalService;
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
+	protected InstanceWorkflowMetricsIndexer instanceWorkflowMetricsIndexer;
 
 	@Reference
-	private InstanceWorkflowMetricsIndexer _instanceWorkflowMetricsIndexer;
+	protected NodeWorkflowMetricsIndexer nodeWorkflowMetricsIndexer;
 
 	@Reference
-	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
-
-	@Reference
-	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
+	protected ProcessWorkflowMetricsIndexer processWorkflowMetricsIndexer;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -255,17 +234,22 @@ public class WorkflowMetricsIndexer extends BaseIndexer<Object> {
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(search.engine.impl=Elasticsearch)"
 	)
-	private volatile SearchEngineAdapter _searchEngineAdapter;
+	protected volatile SearchEngineAdapter searchEngineAdapter;
 
 	@Reference
-	private SLAInstanceResultWorkflowMetricsIndexer
-		_slaInstanceResultWorkflowMetricsIndexer;
+	protected TokenWorkflowMetricsIndexer tokenWorkflowMetricsIndexer;
 
-	@Reference
-	private SLATaskResultWorkflowMetricsIndexer
-		_slaTaskResultWorkflowMetricsIndexer;
+	private boolean _hasIndex(String indexName) {
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
 
-	@Reference
-	private TokenWorkflowMetricsIndexer _tokenWorkflowMetricsIndexer;
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
+	private static final boolean _INDEX_ON_STARTUP = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
 
 }

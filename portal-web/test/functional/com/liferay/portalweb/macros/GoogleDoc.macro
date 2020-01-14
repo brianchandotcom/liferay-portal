@@ -79,6 +79,8 @@ definition {
 			locator1 = "Button#ANY",
 			value1 = "Save and Return to ${siteName}");
 
+		Pause(locator1 = "5000");
+
 		Navigator.openURL();
 	}
 

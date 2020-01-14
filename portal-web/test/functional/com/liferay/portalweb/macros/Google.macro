@@ -24,7 +24,7 @@ definition {
 
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
-			Pause(locator1 = "3000");
+			Pause(locator1 = "5000");
 		}
 
 		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {

@@ -59,6 +59,41 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_META_TAGS_CONTENT</td>
+	<td>//div[label[contains(.,'Content')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_META_TAGS_CONTENT_EDITOR</td>
+	<td>//div[label[contains(.,'Content')]]/input[@type='text' and @value='${key_customContent}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_META_TAGS_LAST_CONTENT</td>
+	<td>xpath=(//div[label[contains(.,'Content')]]/input[@type='text'])[last()]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_META_TAGS_LAST_PROPERTY</td>
+	<td>xpath=(//div[label[contains(.,'Property')]]/input[@type='text'])[last()]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_META_TAGS_PROPERTY</td>
+	<td>//div[label[contains(.,'Property')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_META_TAGS_PROPERTY_DISABLED</td>
+	<td>//div[label[contains(.,'Property')]]/input[@type='text' and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_META_TAGS_PROPERTY_EDITOR</td>
+	<td>//div[label[contains(.,'Property')]]/input[@type='text' and @value='${key_customProperty}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_TITLE</td>
 	<td>//input[contains(@id,'customTitle')]</td>
 	<td></td>

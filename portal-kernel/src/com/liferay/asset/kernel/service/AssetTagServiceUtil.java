@@ -157,6 +157,10 @@ public class AssetTagServiceUtil {
 		return getService().getTagsCount(groupId, name);
 	}
 
+	public static int getTagsCount(long[] groupIds, String name) {
+		return getService().getTagsCount(groupIds, name);
+	}
+
 	public static int getVisibleAssetsTagsCount(
 		long groupId, long classNameId, String name) {
 

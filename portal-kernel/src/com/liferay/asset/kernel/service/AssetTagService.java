@@ -123,6 +123,9 @@ public interface AssetTagService extends BaseService {
 	public int getTagsCount(long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTagsCount(long[] groupIds, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVisibleAssetsTagsCount(
 		long groupId, long classNameId, String name);
 

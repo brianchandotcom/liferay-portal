@@ -23,6 +23,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
+import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportLayoutPageTemplateConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -56,6 +57,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -105,6 +107,11 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 					add(
 						_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer());
+				}
+
+				if (ExportImportLayoutPageTemplateConfigurationUtil.enabled()) {
+					add(
+						_getExportLayoutPageTemplateEntryActionUnsafeConsumer());
 				}
 
 				if (LayoutPageTemplateEntryPermission.contains(
@@ -256,6 +263,30 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExportLayoutPageTemplateEntryActionUnsafeConsumer() {
+
+		ResourceURL exportLayoutPageTemplateURL =
+			_renderResponse.createResourceURL();
+
+		exportLayoutPageTemplateURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
+		exportLayoutPageTemplateURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		exportLayoutPageTemplateURL.setResourceID(
+			"/layout_page_template/export_layout_page_template_entry");
+
+		return dropdownItem -> {
+			dropdownItem.setHref(exportLayoutPageTemplateURL);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "export"));
 		};
 	}
 

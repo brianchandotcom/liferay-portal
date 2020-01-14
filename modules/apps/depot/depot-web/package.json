@@ -3,7 +3,8 @@
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
 		"metal-component": "2.16.8",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"react": "^16.12.0"
 	},
 	"name": "depot-web",
 	"scripts": {

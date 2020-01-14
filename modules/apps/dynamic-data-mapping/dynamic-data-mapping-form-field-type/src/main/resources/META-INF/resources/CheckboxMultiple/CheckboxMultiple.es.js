@@ -147,9 +147,7 @@ CheckboxMultiple.STATE = {
 	 * @type {?string}
 	 */
 
-	predefinedValue: Config.oneOfType([Config.array(), Config.object()])
-		.setter(setJSONArrayValue)
-		.value([]),
+	predefinedValue: Config.setter(setJSONArrayValue).value([]),
 
 	/**
 	 * @default false

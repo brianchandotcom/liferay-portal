@@ -17,5 +17,5 @@ export const setJSONArrayValue = value => {
 		return value.JSONArray;
 	}
 
-	return value;
+	return value || [];
 };

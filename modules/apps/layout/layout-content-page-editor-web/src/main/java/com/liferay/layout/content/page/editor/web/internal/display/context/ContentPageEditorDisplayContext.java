@@ -50,12 +50,12 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.Content
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.LayoutDataConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;

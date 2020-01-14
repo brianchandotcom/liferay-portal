@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 
 import {updateFragmentEntryKeys} from '../../actions/updateFragmentEntryKeys.es';
 import useDispatch from '../../store/hooks/useDispatch.es';
@@ -43,6 +43,14 @@ const ManageAllowedFragmentModal = ({observer, onClose}) => {
 		});
 	};
 
+	const onSelectedFragment = useCallback(
+		({allowNewFragmentEntries, selectedFragments}) => {
+			setAllowNewFragmentEntries(allowNewFragmentEntries);
+			setSelectedFragments(selectedFragments);
+		},
+		[]
+	);
+
 	return (
 		<ClayModal
 			className="fragments-editor__allowed-fragment__modal"
@@ -60,13 +68,7 @@ const ManageAllowedFragmentModal = ({observer, onClose}) => {
 					)}
 				</p>
 				<AllowedFragmentSelector
-					onSelectedFragment={({
-						allowNewFragmentEntries,
-						selectedFragments
-					}) => {
-						setAllowNewFragmentEntries(allowNewFragmentEntries);
-						setSelectedFragments(selectedFragments);
-					}}
+					onSelectedFragment={onSelectedFragment}
 				/>
 			</ClayModal.Body>
 

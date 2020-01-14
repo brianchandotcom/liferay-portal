@@ -33,6 +33,12 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 	public void run() {
 		retirePreviousBuilds();
 
+		if (_allowConcurrentBuilds()) {
+			super.run();
+
+			return;
+		}
+
 		S buildData = getBuildData();
 
 		if (_previousBuildHasCurrentSHA()) {
@@ -169,6 +175,24 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		buildData.setBuildDescription(sb.toString());
 
 		updateBuildDescription();
+	}
+
+	private boolean _allowConcurrentBuilds() {
+		String allowConcurrentBuildsString = System.getenv(
+			"ALLOW_CONCURRENT_BUILDS");
+
+		if (allowConcurrentBuildsString == null) {
+			return false;
+		}
+
+		allowConcurrentBuildsString = allowConcurrentBuildsString.toLowerCase();
+		allowConcurrentBuildsString = allowConcurrentBuildsString.trim();
+
+		if (!allowConcurrentBuildsString.equals("true")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private String _getPortalBranchAbbreviatedSHA() {

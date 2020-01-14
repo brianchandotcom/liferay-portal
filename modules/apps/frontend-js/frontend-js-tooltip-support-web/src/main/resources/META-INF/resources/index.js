@@ -42,16 +42,21 @@ const SELECTOR_TRIGGER = `
 	.lfr-portal-tooltip,
 	.manage-collaborators-dialog .lexicon-icon[data-title]:not(.lfr-portal-tooltip),
 	.manage-collaborators-dialog .lexicon-icon[title]:not(.lfr-portal-tooltip),
+	.manage-collaborators-dialog [data-restore-title],
 	.management-bar [data-title]:not(.lfr-portal-tooltip),
 	.management-bar [title]:not(.lfr-portal-tooltip),
+	.management-bar [data-restore-title],
 	.preview-toolbar-container [data-title]:not(.lfr-portal-tooltip),
 	.preview-toolbar-container [title]:not(.lfr-portal-tooltip),
+	.preview-tooltbar-containter [data-restore-title],
 	.progress-container[data-title],
 	.source-editor__fixed-text__help[data-title],
 	.taglib-discussion [data-title]:not(.lfr-portal-tooltip),
 	.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""]),
+	.taglib-discussion [data-restore-title],
 	.upper-tbar [data-title]:not(.lfr-portal-tooltip),
-	.upper-tbar [title]:not(.lfr-portal-tooltip)
+	.upper-tbar [title]:not(.lfr-portal-tooltip),
+	.upper-tbar [data-restore-title]
 `;
 
 const TRIGGER_HIDE_EVENTS = [

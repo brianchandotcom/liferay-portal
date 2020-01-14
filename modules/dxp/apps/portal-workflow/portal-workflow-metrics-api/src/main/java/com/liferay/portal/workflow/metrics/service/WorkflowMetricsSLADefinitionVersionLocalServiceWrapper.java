@@ -387,6 +387,22 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceWrapper
 				companyId, createDate, processId, status);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.portal.workflow.metrics.model.
+			WorkflowMetricsSLADefinitionVersion>
+				getWorkflowMetricsSLADefinitionVersions(
+					long workflowMetricsSLADefinitionId,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.portal.workflow.metrics.model.
+							WorkflowMetricsSLADefinitionVersion>
+								orderByComparator) {
+
+		return _workflowMetricsSLADefinitionVersionLocalService.
+			getWorkflowMetricsSLADefinitionVersions(
+				workflowMetricsSLADefinitionId, orderByComparator);
+	}
+
 	/**
 	 * Returns all the workflow metrics sla definition versions matching the UUID and company.
 	 *

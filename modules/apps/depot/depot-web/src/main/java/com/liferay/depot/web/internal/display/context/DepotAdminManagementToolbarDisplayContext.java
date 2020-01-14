@@ -15,6 +15,7 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.constants.DepotActionKeys;
+import com.liferay.depot.web.internal.resource.DepotEntryPermission;
 import com.liferay.depot.web.internal.resource.DepotPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -198,21 +198,21 @@ public class DepotAdminManagementToolbarDisplayContext
 
 		List<String> availableActions = new ArrayList<>();
 
-		if (_hasDeleteGroupPermission(group)) {
+		if (_hasDeleteDepotEntryPermission(group)) {
 			availableActions.add("deleteSelectedDepotEntries");
 		}
 
 		return availableActions;
 	}
 
-	private boolean _hasDeleteGroupPermission(Group group)
+	private boolean _hasDeleteDepotEntryPermission(Group group)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), group,
+		if (!DepotEntryPermission.contains(
+				themeDisplay.getPermissionChecker(), group.getClassPK(),
 				ActionKeys.DELETE)) {
 
 			return false;

@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.servlet.taglib.util;
 
+import com.liferay.depot.web.internal.resource.DepotEntryPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -104,8 +104,8 @@ public class DepotActionDropdownItemsProvider {
 
 	private boolean _hasDeletePermission() {
 		try {
-			if (!GroupPermissionUtil.contains(
-					_themeDisplay.getPermissionChecker(), _group,
+			if (!DepotEntryPermission.contains(
+					_themeDisplay.getPermissionChecker(), _group.getClassPK(),
 					ActionKeys.DELETE)) {
 
 				return false;
@@ -120,8 +120,8 @@ public class DepotActionDropdownItemsProvider {
 
 	private boolean _hasUpdatePermission() {
 		try {
-			return GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), _group,
+			return DepotEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), _group.getClassPK(),
 				ActionKeys.UPDATE);
 		}
 		catch (PortalException pe) {

@@ -152,9 +152,13 @@ const AllowedFragmentSelector = ({onSelectedFragment}) => {
 
 			<div className="fragments-editor__allowed-fragment__new-fragments-checkbox">
 				<ClayCheckbox
-					aria-label={Liferay.Language.get('allow-new-fragments')}
+					aria-label={Liferay.Language.get(
+						'select-new-fragments-automatically'
+					)}
 					checked={allowNewFragmentEntries}
-					label={Liferay.Language.get('allow-new-fragments')}
+					label={Liferay.Language.get(
+						'select-new-fragments-automatically'
+					)}
 					onChange={event => {
 						setAllowNewFragmentEntries(event.target.checked);
 					}}

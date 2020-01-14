@@ -255,7 +255,7 @@ function Column({children, className, item, layoutData}, ref) {
 		>
 			{() => (
 				<div
-					className={classNames(className, 'col', {
+					className={classNames(className, 'col page-editor__col', {
 						[`col-${size}`]: size
 					})}
 					ref={ref}

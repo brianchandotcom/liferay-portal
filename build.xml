@@ -992,8 +992,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			<arg value="-Pelasticsearch.plugins.analysis-smartcn.zip.url=${elasticsearch.plugins.analysis-smartcn.zip.url}" />
 			<arg value="-Pelasticsearch.plugins.analysis-stempel.zip.name=${elasticsearch.plugins.analysis-stempel.zip.name}" />
 			<arg value="-Pelasticsearch.plugins.analysis-stempel.zip.url=${elasticsearch.plugins.analysis-stempel.zip.url}" />
-			<arg value="-Pelasticsearch.plugins.ltr.zip.name=${elasticsearch.plugins.ltr.zip.name}" />
-			<arg value="-Pelasticsearch.plugins.ltr.zip.url=${elasticsearch.plugins.ltr.zip.url}" />
 			<arg value="-Pelasticsearch.sidecar.cluster.size=${elasticsearch.sidecar.cluster.size}" />
 			<arg value="-Pelasticsearch.sidecar.major.version=${elasticsearch.sidecar.major.version}" />
 			<arg value="-Pelasticsearch.sidecar.version=${elasticsearch.sidecar.version}" />

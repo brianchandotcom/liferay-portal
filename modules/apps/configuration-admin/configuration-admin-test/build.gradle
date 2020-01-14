@@ -5,5 +5,7 @@ dependencies {
 	testIntegrationCompile project(":apps:configuration-admin:configuration-admin-api")
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	testIntegrationCompile project(":core:petra:petra-function")
+	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

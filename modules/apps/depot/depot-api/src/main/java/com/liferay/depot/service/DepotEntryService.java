@@ -78,6 +78,7 @@ public interface DepotEntryService extends BaseService {
 	public DepotEntry updateDepotEntry(
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap,
 			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException;

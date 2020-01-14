@@ -1216,31 +1216,31 @@ AUI.add(
 
 			var value = A.Object.getValue(localizationMap, [locale, attribute]);
 
-			if (!isValue(value)) {
+			if (isValue(value)) {
+				return value;
+			}
+
+			value = A.Object.getValue(localizationMap, [
+				defaultLocale,
+				attribute
+			]);
+
+			if (isValue(value)) {
+				return value;
+			}
+
+			for (var localizationMapLocale in localizationMap) {
 				value = A.Object.getValue(localizationMap, [
-					defaultLocale,
+					localizationMapLocale,
 					attribute
 				]);
 
-				if (!isValue(value)) {
-					for (var localizationMapLocale in localizationMap) {
-						value = A.Object.getValue(localizationMap, [
-							localizationMapLocale,
-							attribute
-						]);
-
-						if (isValue(value)) {
-							break;
-						}
-					}
-				}
-
-				if (!isValue(value)) {
-					value = STR_BLANK;
+				if (isValue(value)) {
+					return value;
 				}
 			}
 
-			return value;
+			return STR_BLANK;
 		};
 
 		SerializableFieldSupport.prototype.serialize = function() {

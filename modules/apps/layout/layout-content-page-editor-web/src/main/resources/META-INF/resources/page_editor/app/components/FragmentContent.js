@@ -74,13 +74,13 @@ function FragmentContent({fragmentEntryLink}, ref) {
 					config,
 					fragmentEntryLinkId,
 					editable.getAttribute('id')
-				).then(([value, config]) => {
+				).then(([value, editableConfig]) => {
 					if (element) {
 						const processor =
 							Processors[editable.getAttribute('type')] ||
 							Processors.fallback;
 
-						processor.render(editable, value, config);
+						processor.render(editable, value, editableConfig);
 					}
 				});
 			}

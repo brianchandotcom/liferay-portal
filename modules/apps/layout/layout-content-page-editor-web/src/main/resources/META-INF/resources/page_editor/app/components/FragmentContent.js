@@ -16,11 +16,15 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import React, {useContext, useEffect, useState, useRef} from 'react';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../config/index';
-import * as Processors from '../processors/index';
+import Processors from '../processors/index';
+import {DispatchContext} from '../reducers/index';
 import selectEditableValueConfig from '../selectors/selectEditableValueConfig';
 import selectEditableValueContent from '../selectors/selectEditableValueContent';
+import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
 import {StoreContext} from '../store/index';
+import updateEditableValues from '../thunks/updateEditableValues';
 import {useSelectItem} from './Controls';
 import UnsafeHTML from './UnsafeHTML';
 import {showFloatingToolbar} from './showFloatingToolbar';
@@ -44,6 +48,7 @@ function FragmentContent({fragmentEntryLink}, ref) {
 	const {fragmentEntryLinkId} = fragmentEntryLink;
 	const isMounted = useIsMounted();
 	const state = useContext(StoreContext);
+	const dispatch = useContext(DispatchContext);
 
 	const selectItem = useSelectItem();
 	const activeEditable = useRef(null);
@@ -69,13 +74,13 @@ function FragmentContent({fragmentEntryLink}, ref) {
 					config,
 					fragmentEntryLinkId,
 					editable.getAttribute('id')
-				).then(([value, config]) => {
+				).then(([value, editableConfig]) => {
 					if (element) {
 						const processor =
 							Processors[editable.getAttribute('type')] ||
 							Processors.fallback;
 
-						processor.render(editable, value, config);
+						processor.render(editable, value, editableConfig);
 					}
 				});
 			}
@@ -105,7 +110,17 @@ function FragmentContent({fragmentEntryLink}, ref) {
 
 			activeEditable.current = editable;
 
-			initProcessor(editable, editable.getAttribute('type'), config);
+			initProcessor({
+				config,
+				editableConfig: selectEditableValueConfig(
+					state,
+					fragmentEntryLinkId,
+					editable.getAttribute('id')
+				),
+				editableType: editable.getAttribute('type'),
+				element: editable
+			});
+
 			selectItem(editableId);
 			setHasEditableActive(true);
 		} else {
@@ -123,6 +138,47 @@ function FragmentContent({fragmentEntryLink}, ref) {
 		}
 	};
 
+	const initProcessor = ({config, editableConfig, editableType, element}) => {
+		const processor = Processors[editableType] || Processors.fallback;
+
+		processor.createEditor(
+			element,
+			value => {
+				processor.render(element, value, editableConfig);
+
+				const {editableValues} = fragmentEntryLink;
+				const editableValue =
+					editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+						element.id
+					];
+				const segmentsExperienceId = selectPrefixedSegmentsExperienceId(
+					state
+				);
+
+				editableValue[segmentsExperienceId] = {
+					[state.languageId]: value
+				};
+
+				dispatch(
+					updateEditableValues({
+						config,
+						editableValues,
+						fragmentEntryLinkId,
+						segmentsExperienceId
+					})
+				);
+			},
+			() => processor.destroyEditor(element, editableConfig),
+			config
+		);
+	};
+
+	const destroyProcessor = (element, editableType) => {
+		const processor = Processors[editableType] || Processors.fallback;
+
+		processor.destroyEditor(element);
+	};
+
 	return (
 		<>
 			{hasEditableActive &&
@@ -134,23 +190,6 @@ function FragmentContent({fragmentEntryLink}, ref) {
 			/>
 		</>
 	);
-}
-
-function initProcessor(element, editableType, config) {
-	const processor = Processors[editableType] || Processors.fallback;
-
-	processor.createEditor(
-		element,
-		value => processor.render(element, value, {}),
-		() => {},
-		config
-	);
-}
-
-function destroyProcessor(element, editableType) {
-	const processor = Processors[editableType] || Processors.fallback;
-
-	processor.destroyEditor(element);
 }
 
 export default React.forwardRef(FragmentContent);

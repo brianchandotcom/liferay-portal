@@ -12,18 +12,28 @@
  * details.
  */
 
-import FallbackProcessor from './FallbackProcessor';
-import HTMLProcessor from './HTMLProcessor';
-import ImageProcessor from './ImageProcessor';
-import LinkProcessor from './LinkProcessor';
-import RichTextProcessor from './RichTextProcessor';
-import TextProcessor from './TextProcessor';
+import updateEditableValuesAction from '../actions/updateEditableValues';
+import FragmentService from '../services/FragmentService';
 
-export default {
-	fallback: FallbackProcessor,
-	html: HTMLProcessor,
-	image: ImageProcessor,
-	link: LinkProcessor,
-	'rich-text': RichTextProcessor,
-	text: TextProcessor
-};
+export default function updateEditableValues({
+	config,
+	editableValues,
+	fragmentEntryLinkId,
+	segmentsExperienceId
+}) {
+	return dispatch => {
+		FragmentService.updateEditableValues({
+			config,
+			editableValues,
+			fragmentEntryLinkId
+		}).then(() => {
+			dispatch(
+				updateEditableValuesAction({
+					editableValues,
+					fragmentEntryLinkId,
+					segmentsExperienceId
+				})
+			);
+		});
+	};
+}

@@ -41,12 +41,12 @@ definition {
 		}
 	}
 
-	macro fillEmailAddress {
-		Click(locator1 = "Segmentation#EMAIL_ADDRESS_FIELD");
+	macro fillProperty {
+		Click(locator1 = "Segmentation#PROPERTY_FIELD");
 
 		Type(
-			locator1 = "Segmentation#EMAIL_ADDRESS_FIELD",
-			value1 = "${emailAddressField}");
+			locator1 = "Segmentation#PROPERTY_FIELD",
+			value1 = "${PropertyField}");
 	}
 
 	macro fillTitle {
@@ -59,6 +59,10 @@ definition {
 
 	macro selectOrganization {
 		Click(locator1 = "Segmentation#ORGANIZATION_MENU");
+	}
+
+	macro selectSession {
+		Click(locator1 = "Segmentation#SESSION_MENU");
 	}
 
 	macro tearDown {

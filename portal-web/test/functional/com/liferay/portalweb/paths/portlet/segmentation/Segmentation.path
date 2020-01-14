@@ -34,7 +34,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>PROPERTY_FIELD</td>
 	<td>//div[@class='criterion'][1]//*[@data-testid='simple-string']</td>
 	<td></td>
 </tr>
@@ -51,6 +51,11 @@
 <tr>
 	<td>SEGMENT_LIST</td>
 	<td>//*[@id='_com_liferay_segments_web_internal_portlet_SegmentsPortlet_segmentsEntriesSearchContainer']//td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_MENU</td>
+	<td>//*[contains(@class, 'd-flex justify-content-between sidebar-collapse-header') and contains(text(),'Session')]</td>
 	<td></td>
 </tr>
 <tr>

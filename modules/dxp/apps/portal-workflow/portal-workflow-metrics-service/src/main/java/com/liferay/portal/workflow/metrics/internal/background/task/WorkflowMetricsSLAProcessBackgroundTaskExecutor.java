@@ -60,6 +60,7 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVer
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
+import com.liferay.portal.workflow.metrics.util.comparator.WorkflowMetricsSLADefinitionVersionComparator;
 
 import java.text.DateFormat;
 
@@ -69,6 +70,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -128,8 +130,19 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		_processRunningInstances(
 			0, startNodeId, workflowMetricsSLADefinitionVersion);
 
-		_processCompletedInstances(
-			0, startNodeId, workflowMetricsSLADefinitionVersion);
+		if (MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "reindex")) {
+			_processCompletedInstances(
+				startNodeId, workflowMetricsSLADefinitionId);
+		}
+		else {
+			_processCompletedInstances(
+				workflowMetricsSLADefinition.getCompanyId(), null, 0,
+				workflowMetricsSLADefinition.getProcessId(),
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId(),
+				workflowMetricsSLADefinition.getCreateDate(), startNodeId,
+				workflowMetricsSLADefinitionVersion);
+		}
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -147,7 +160,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private BooleanQuery _createBooleanQuery(
-		long companyId, Date createDate, long processId, long slaDefinitionId) {
+		long companyId, Date endDate, long processId, long slaDefinitionId,
+		Date startDate) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -157,7 +171,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("_index", "workflow-metrics-instances"));
 		instancesBooleanQuery.addMustQueryClauses(
 			_createInstancesBooleanQuery(
-				companyId, true, createDate, processId));
+				companyId, true, endDate, processId, startDate));
 
 		BooleanQuery slaInstanceResultsBooleanQuery = _queries.booleanQuery();
 
@@ -204,17 +218,22 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		long companyId, boolean completed, Date createDate, long processId) {
+		long companyId, boolean completed, Date endDate, long processId,
+		Date startDate) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
 
-		if (createDate != null) {
+		if (startDate != null) {
 			RangeTermQuery rangeTermQuery = _queries.rangeTerm(
-				"completionDate", true, true);
+				"completionDate", true, false);
 
-			rangeTermQuery.setLowerBound(_formatDate(createDate));
+			rangeTermQuery.setLowerBound(_formatDate(startDate));
+
+			if (endDate != null) {
+				rangeTermQuery.setUpperBound(_formatDate(endDate));
+			}
 
 			booleanQuery.addMustQueryClauses(rangeTermQuery);
 		}
@@ -294,7 +313,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	}
 
 	private void _processCompletedInstances(
-		int from, long startNodeId,
+		long companyId, Date endDate, int from, long processId,
+		long slaDefinitionId, Date startDate, long startNodeId,
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion) {
 
@@ -330,11 +350,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
 				_createBooleanQuery(
-					workflowMetricsSLADefinitionVersion.getCompanyId(),
-					workflowMetricsSLADefinitionVersion.getCreateDate(),
-					workflowMetricsSLADefinitionVersion.getProcessId(),
-					workflowMetricsSLADefinitionVersion.
-						getWorkflowMetricsSLADefinitionId())));
+					companyId, endDate, processId, slaDefinitionId,
+					startDate)));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -343,7 +360,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		if (count > 10000) {
 			_processCompletedInstances(
-				from + 10000, startNodeId, workflowMetricsSLADefinitionVersion);
+				companyId, endDate, from + 10000, processId, slaDefinitionId,
+				startDate, startNodeId, workflowMetricsSLADefinitionVersion);
 		}
 
 		List<Document> slaInstanceResultDocuments = new ArrayList<>();
@@ -418,6 +436,51 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			slaTaskResultDocuments);
 	}
 
+	private void _processCompletedInstances(
+		long startNodeId, long workflowMetricsSLADefinitionId) {
+
+		List<WorkflowMetricsSLADefinitionVersion>
+			workflowMetricsSLADefinitionVersions =
+				_workflowMetricsSLADefinitionVersionLocalService.
+					getWorkflowMetricsSLADefinitionVersions(
+						workflowMetricsSLADefinitionId,
+						new WorkflowMetricsSLADefinitionVersionComparator(
+							true));
+
+		Iterator<WorkflowMetricsSLADefinitionVersion> iterator =
+			workflowMetricsSLADefinitionVersions.iterator();
+
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion = iterator.next();
+
+		Date startDate = workflowMetricsSLADefinitionVersion.getCreateDate();
+
+		while (startDate != null) {
+			Date endDate = null;
+
+			WorkflowMetricsSLADefinitionVersion
+				nextWorkflowMetricsSLADefinitionVersion = null;
+
+			if (iterator.hasNext()) {
+				nextWorkflowMetricsSLADefinitionVersion = iterator.next();
+
+				endDate =
+					nextWorkflowMetricsSLADefinitionVersion.getCreateDate();
+			}
+
+			_processCompletedInstances(
+				workflowMetricsSLADefinitionVersion.getCompanyId(), endDate, 0,
+				workflowMetricsSLADefinitionVersion.getProcessId(),
+				workflowMetricsSLADefinitionVersion.
+					getWorkflowMetricsSLADefinitionId(),
+				startDate, startNodeId, workflowMetricsSLADefinitionVersion);
+
+			startDate = endDate;
+			workflowMetricsSLADefinitionVersion =
+				nextWorkflowMetricsSLADefinitionVersion;
+		}
+	}
+
 	private void _processRunningInstances(
 		int from, long startNodeId,
 		WorkflowMetricsSLADefinitionVersion
@@ -446,7 +509,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
 					workflowMetricsSLADefinitionVersion.getCompanyId(), false,
-					null, workflowMetricsSLADefinitionVersion.getProcessId())));
+					null, workflowMetricsSLADefinitionVersion.getProcessId(),
+					null)));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);

@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -98,10 +99,6 @@ public class WorkflowMetricsSLAProcessMessageListener
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Property activeProperty = PropertyFactoryUtil.forName("active");
-
-				dynamicQuery.add(activeProperty.eq(true));
-
 				Property statusProperty = PropertyFactoryUtil.forName("status");
 
 				dynamicQuery.add(
@@ -124,6 +121,8 @@ public class WorkflowMetricsSLAProcessMessageListener
 					HashMapBuilder.<String, Serializable>put(
 						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
 						true
+					).put(
+						"reindex", _isReindex(message)
 					).put(
 						"workflowMetricsSLADefinitionId",
 						workflowMetricsSLADefinition.getPrimaryKey()
@@ -153,6 +152,16 @@ public class WorkflowMetricsSLAProcessMessageListener
 			WorkflowMetricsSLAProcessMessageListener.class.getSimpleName(), "-",
 			workflowMetricsSLADefinition.getProcessId(),
 			workflowMetricsSLADefinition.getPrimaryKey());
+	}
+
+	private boolean _isReindex(Message message) {
+		JSONObject payloadJSONObject = (JSONObject)message.getPayload();
+
+		if (payloadJSONObject == null) {
+			return false;
+		}
+
+		return payloadJSONObject.getBoolean("reindex", false);
 	}
 
 	@Reference

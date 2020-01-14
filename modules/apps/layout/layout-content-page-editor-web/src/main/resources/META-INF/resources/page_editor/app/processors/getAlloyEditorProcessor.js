@@ -115,13 +115,15 @@ export default function getAllowEditorProcessor(
 		 */
 		destroyEditor: () => {
 			if (_editor) {
-				_element.innerHTML = _editor.get('nativeEditor').getData();
+				const lastValue = _editor.get('nativeEditor').getData();
 
 				_editor.destroy();
 
 				_eventHandlers.forEach(handler => {
 					handler.removeListener();
 				});
+
+				render(_element, lastValue);
 
 				_editor = null;
 				_eventHandlers = null;

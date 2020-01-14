@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -56,7 +57,7 @@ public class DepotActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
+		List<DropdownItem> dropdownItems = new DropdownItemList() {
 			{
 				if (_hasUpdatePermission()) {
 					add(
@@ -93,6 +94,12 @@ public class DepotActionDropdownItemsProvider {
 				}
 			}
 		};
+
+		if (ListUtil.isEmpty(dropdownItems)) {
+			return null;
+		}
+
+		return dropdownItems;
 	}
 
 	private boolean _hasDeletePermission() {

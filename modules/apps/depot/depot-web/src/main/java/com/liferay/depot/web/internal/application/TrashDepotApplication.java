@@ -15,10 +15,7 @@
 package com.liferay.depot.web.internal.application;
 
 import com.liferay.depot.application.DepotApplication;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.trash.constants.TrashPortletKeys;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,11 +24,6 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = DepotApplication.class)
 public class TrashDepotApplication implements DepotApplication {
-
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "recycle-bin");
-	}
 
 	@Override
 	public String getPortletId() {

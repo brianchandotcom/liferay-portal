@@ -76,7 +76,7 @@
 							<fileset
 								dir="${liferay.faces.portal.dir}"
 								excludes="**/target/com.liferay.faces.test.setup.hook*.war"
-								includes="**/target/*.war"
+								includes="**/configs/*.config,**/target/*.war"
 							/>
 						</copy>
 

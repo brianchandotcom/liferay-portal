@@ -50,6 +50,7 @@ import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.internal.background.task.SegmentsEntryRelIndexerBackgroundTaskExecutor;
+import com.liferay.segments.internal.criteria.contributor.SegmentsEntrySegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
@@ -541,6 +542,7 @@ public class SegmentsEntryLocalServiceImpl
 		throws PortalException {
 
 		_reindexSegmentsEntryRels(segmentsEntry);
+		_reindexReferredSegmentsEntryRels(segmentsEntry);
 	}
 
 	protected void validateKey(
@@ -565,6 +567,30 @@ public class SegmentsEntryLocalServiceImpl
 		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
 			throw new SegmentsEntryNameException(
 				"Name is null for locale " + defaultLocale.getDisplayName());
+		}
+	}
+
+	private void _reindexReferredSegmentsEntryRels(SegmentsEntry segmentsEntry)
+		throws PortalException {
+
+		List<SegmentsEntry> referredSegmentsEntries =
+			segmentsEntryPersistence.findBySource(
+				SegmentsEntryConstants.SOURCE_REFERRED);
+
+		for (SegmentsEntry referredSegmentsEntry : referredSegmentsEntries) {
+			Criteria criteria = referredSegmentsEntry.getCriteriaObj();
+
+			Criteria.Criterion criterion = criteria.getCriterion(
+				SegmentsEntrySegmentsCriteriaContributor.KEY);
+
+			String filterString = criterion.getFilterString();
+
+			if (Validator.isNotNull(filterString) &&
+				filterString.contains(
+					String.valueOf(segmentsEntry.getSegmentsEntryId()))) {
+
+				_reindexSegmentsEntryRels(referredSegmentsEntry);
+			}
 		}
 	}
 

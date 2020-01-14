@@ -12,16 +12,5 @@
  * details.
  */
 
-import FallbackProcessor from './FallbackProcessor';
-import HTMLProcessor from './HTMLProcessor';
-import ImageProcessor from './ImageProcessor';
-import RichTextProcessor from './RichTextProcessor';
-import TextProcessor from './TextProcessor';
-
-export default {
-	fallback: FallbackProcessor,
-	html: HTMLProcessor,
-	image: ImageProcessor,
-	'rich-text': RichTextProcessor,
-	text: TextProcessor
-};
+import getAllowEditorProcessor from './getAlloyEditorProcessor';
+export default getAllowEditorProcessor('rich-text');

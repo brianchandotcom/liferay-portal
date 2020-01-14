@@ -540,21 +540,7 @@ public class SegmentsEntryLocalServiceImpl
 	protected void reindexSegmentsEntryRels(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap =
-			HashMapBuilder.<String, Serializable>put(
-				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
-			).put(
-				"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
-			).put(
-				"type", segmentsEntry.getType()
-			).build();
-
-		_backgroundTaskManager.addBackgroundTask(
-			segmentsEntry.getUserId(), segmentsEntry.getGroupId(),
-			SegmentsEntryRelIndexerBackgroundTaskExecutor.getBackgroundTaskName(
-				segmentsEntry.getSegmentsEntryId()),
-			SegmentsEntryRelIndexerBackgroundTaskExecutor.class.getName(),
-			taskContextMap, new ServiceContext());
+		_reindexSegmentsEntryRels(segmentsEntry);
 	}
 
 	protected void validateKey(
@@ -580,6 +566,26 @@ public class SegmentsEntryLocalServiceImpl
 			throw new SegmentsEntryNameException(
 				"Name is null for locale " + defaultLocale.getDisplayName());
 		}
+	}
+
+	private void _reindexSegmentsEntryRels(SegmentsEntry segmentsEntry)
+		throws PortalException {
+
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
+			).put(
+				"segmentsEntryId", segmentsEntry.getSegmentsEntryId()
+			).put(
+				"type", segmentsEntry.getType()
+			).build();
+
+		_backgroundTaskManager.addBackgroundTask(
+			segmentsEntry.getUserId(), segmentsEntry.getGroupId(),
+			SegmentsEntryRelIndexerBackgroundTaskExecutor.getBackgroundTaskName(
+				segmentsEntry.getSegmentsEntryId()),
+			SegmentsEntryRelIndexerBackgroundTaskExecutor.class.getName(),
+			taskContextMap, new ServiceContext());
 	}
 
 	@Reference

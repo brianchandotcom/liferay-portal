@@ -61,7 +61,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = DepotPanelAppController.class)
 public class DepotPanelAppController {
 
-	public boolean isShow(PanelApp panelApp, long groupId) {
+	public boolean isShow(PanelApp panelApp, long groupId)
+		throws PortalException {
+
 		String portletId = panelApp.getPortletId();
 
 		if (portletId.equals(DepotPortletKeys.DEPOT_ADMIN) ||

@@ -61,8 +61,10 @@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
+page import="java.util.Map" %><%@
 page import="java.util.Set" %>
 
 <liferay-frontend:defineObjects />

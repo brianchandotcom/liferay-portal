@@ -160,6 +160,21 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 			rightList="<%= rightList %>"
 			rightTitle="available"
 		/>
+
+
+		<div class="site-languages">
+			<%
+				Map<String, Object> data = new HashMap<>();
+				data.put("defaultLanguage", "test");
+				data.put("languages", leftList);
+			%>
+
+			<react:component
+				data="<%= data %>"
+				module="js/Languages.es"
+			/>
+		</div>
+
 	</aui:fieldset>
 </aui:fieldset>
 

@@ -18,7 +18,7 @@ import React, {useContext, useEffect, useState, useRef} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../config/index';
-import * as Processors from '../processors/index';
+import Processors from '../processors/index';
 import {DispatchContext} from '../reducers/index';
 import selectEditableValueConfig from '../selectors/selectEditableValueConfig';
 import selectEditableValueContent from '../selectors/selectEditableValueContent';

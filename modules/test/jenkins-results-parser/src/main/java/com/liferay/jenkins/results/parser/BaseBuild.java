@@ -1400,10 +1400,6 @@ public abstract class BaseBuild implements Build {
 
 		JenkinsSlave jenkinsSlave = getJenkinsSlave();
 
-		if ((jenkinsSlave == null) || jenkinsSlave.isOffline()) {
-			return;
-		}
-
 		String message = JenkinsResultsParserUtil.combine(
 			slaveOfflineRule.getName(), " failure detected at ", getBuildURL(),
 			". ", jenkinsSlave.getName(), " will be taken offline.\n\n",
@@ -1509,7 +1505,15 @@ public abstract class BaseBuild implements Build {
 						return;
 					}
 
-					if (!fromArchive) {
+					JenkinsSlave jenkinsSlave = getJenkinsSlave();
+
+					if (jenkinsSlave != null) {
+						jenkinsSlave.update();
+					}
+
+					if (!fromArchive && (jenkinsSlave != null) &&
+						!jenkinsSlave.isOffline()) {
+
 						for (SlaveOfflineRule slaveOfflineRule :
 								slaveOfflineRules) {
 

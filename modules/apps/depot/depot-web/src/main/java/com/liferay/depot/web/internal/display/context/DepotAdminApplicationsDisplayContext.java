@@ -35,9 +35,7 @@ public class DepotAdminApplicationsDisplayContext {
 		return _depotApplicationController.getCustomizableDepotApplications();
 	}
 
-	public boolean isEnabled(String portletId, long groupId)
-		throws PortalException {
-
+	public boolean isEnabled(String portletId, long groupId) {
 		return _depotApplicationController.isEnabled(portletId, groupId);
 	}
 

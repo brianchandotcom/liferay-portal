@@ -48,21 +48,15 @@ public class DepotApplicationController {
 		return depotApplications;
 	}
 
-	public boolean isEnabled(String portletId, long groupId)
-		throws PortalException {
-
+	public boolean isEnabled(String portletId, long groupId) {
 		DepotApplication depotApplication = _serviceTrackerMap.getService(
 			portletId);
 
-		if (depotApplication != null) {
-			DepotEntry groupDepotEntry =
-				_depotEntryLocalService.getGroupDepotEntry(groupId);
-
-			return _depotApplicationEnabled(
-				groupDepotEntry.getDepotEntryId(), depotApplication);
+		if ((depotApplication == null) || !depotApplication.isCustomizable()) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Activate
@@ -83,19 +77,6 @@ public class DepotApplicationController {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
-
-	private boolean _depotApplicationEnabled(
-		long depotEntryId, DepotApplication depotApplication) {
-
-		if (depotEntryId <= 0) {
-			return false;
-		}
-
-		return depotApplication.isCustomizable();
-	}
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	private ServiceTrackerMap<String, DepotApplication> _serviceTrackerMap;
 

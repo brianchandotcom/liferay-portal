@@ -3,6 +3,32 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.depot">
 	<namespace>Depot</namespace>
+	<entity local-service="true" name="DepotAppCustomization" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="depotAppCustomizationId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="depotEntryId" type="long" />
+		<column name="enabled" type="boolean" />
+		<column name="portletId" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="DepotEntryId" return-type="Collection">
+			<finder-column name="depotEntryId" />
+		</finder>
+		<finder name="D_PI" return-type="DepotAppCustomization" unique="true">
+			<finder-column name="depotEntryId" />
+			<finder-column name="portletId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="DepotEntry" remote-service="true" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->

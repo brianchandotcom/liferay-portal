@@ -75,10 +75,10 @@ public class UpgradeRegistryTest {
 	@After
 	public void tearDown() throws Exception {
 		if (!_PREVIOUS_UPGRADE_DATABASE_AUTO_RUN) {
-			_modifiersField.setAccessible(false);
-
 			_upgradeDatabaseAutoRunField.set(
 				null, _PREVIOUS_UPGRADE_DATABASE_AUTO_RUN);
+
+			_modifiersField.setAccessible(false);
 
 			_upgradeDatabaseAutoRunField.setAccessible(false);
 		}

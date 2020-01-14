@@ -17,8 +17,11 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -747,6 +750,58 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			_log.debug("SAML authenticated user " + nameID.getValue());
 		}
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			User user = _userResolver.resolveUser(
+				new UserResolverSAMLContextImpl(messageContext),
+				serviceContext);
+
+			serviceContext.setUserId(user.getUserId());
+		}
+		catch (PortalException pe) {
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			HttpSession session = originalHttpServletRequest.getSession();
+
+			if (pe instanceof ContactNameException) {
+				session.setAttribute(
+					SamlWebKeys.SAML_SSO_ERROR,
+					ContactNameException.class.getSimpleName());
+			}
+			else if (pe instanceof UserEmailAddressException) {
+				session.setAttribute(
+					SamlWebKeys.SAML_SSO_ERROR,
+					UserEmailAddressException.class.getSimpleName());
+			}
+			else if (pe instanceof UserScreenNameException) {
+				session.setAttribute(
+					SamlWebKeys.SAML_SSO_ERROR,
+					UserScreenNameException.class.getSimpleName());
+			}
+			else {
+				Class<?> clazz = pe.getClass();
+
+				session.setAttribute(
+					SamlWebKeys.SAML_SSO_ERROR, clazz.getSimpleName());
+			}
+
+			session.setAttribute(
+				SamlWebKeys.SAML_SUBJECT_SCREEN_NAME, nameID.getValue());
+
+			httpServletResponse.sendRedirect(
+				getAuthRedirectURL(
+					messageContext, httpServletRequest, themeDisplay));
+
+			return;
+		}
+
 		String assertionXml = OpenSamlUtil.marshall(assertion);
 
 		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
@@ -754,14 +809,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		AuthnStatement authnStatement = authnStatements.get(0);
 
 		String sessionIndex = authnStatement.getSessionIndex();
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
-		User user = _userResolver.resolveUser(
-			new UserResolverSAMLContextImpl(messageContext), serviceContext);
-
-		serviceContext.setUserId(user.getUserId());
 
 		HttpSession session = httpServletRequest.getSession();
 
@@ -794,29 +841,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlWebKeys.SAML_SP_SESSION_KEY,
 			samlSpSession.getSamlSpSessionKey(), -1);
 
-		StringBundler sb = new StringBundler(3);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		sb.append(themeDisplay.getPathMain());
-
-		sb.append("/portal/saml/auth_redirect?redirect=");
-
-		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
-			SAMLBindingContext.class);
-
-		String relayState = portal.escapeRedirect(
-			samlBindingContext.getRelayState());
-
-		if (Validator.isNull(relayState)) {
-			relayState = portal.getHomeURL(httpServletRequest);
-		}
-
-		sb.append(URLCodec.encodeURL(relayState));
-
-		httpServletResponse.sendRedirect(sb.toString());
+		httpServletResponse.sendRedirect(
+			getAuthRedirectURL(
+				messageContext, httpServletRequest, themeDisplay));
 	}
 
 	protected void doSendAuthnRequest(
@@ -923,6 +950,32 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			serviceContext);
 
 		sendSamlMessage(messageContext, httpServletResponse);
+	}
+
+	protected String getAuthRedirectURL(
+			MessageContext<?> messageContext,
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(themeDisplay.getPathMain());
+
+		sb.append("/portal/saml/auth_redirect?redirect=");
+
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		String relayState = portal.escapeRedirect(
+			samlBindingContext.getRelayState());
+
+		if (Validator.isNull(relayState)) {
+			relayState = portal.getHomeURL(httpServletRequest);
+		}
+
+		sb.append(URLCodec.encodeURL(relayState));
+
+		return sb.toString();
 	}
 
 	protected Assertion getSuccessAssertion(
@@ -2031,6 +2084,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private Decrypter _decrypter;
 
 	private NameIdResolverRegistry _nameIdResolverRegistry;
+
+	@Reference
+	private Portal _portal;
+
 	private SamlConfiguration _samlConfiguration;
 
 	@Reference

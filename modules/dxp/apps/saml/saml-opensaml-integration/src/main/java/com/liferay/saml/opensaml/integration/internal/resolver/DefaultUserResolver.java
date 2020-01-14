@@ -18,11 +18,14 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -34,7 +37,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.saml.opensaml.integration.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
+import com.liferay.saml.persistence.model.SamlSpIdpConnection;
+import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
+import com.liferay.saml.runtime.exception.SubjectException;
 
 import java.io.Serializable;
 
@@ -130,6 +136,7 @@ public class DefaultUserResolver implements UserResolver {
 
 	protected User addUser(
 			long companyId, Map<String, List<Serializable>> attributesMap,
+			UserResolverSAMLContext userResolverSAMLContext,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -137,6 +144,27 @@ public class DefaultUserResolver implements UserResolver {
 			_log.debug(
 				"Adding user with attributes map " +
 					MapUtil.toString(attributesMap));
+		}
+
+		SamlSpIdpConnection samlSpIdpConnection =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				companyId, userResolverSAMLContext.resolvePeerEntityId());
+
+		Company company = _companyLocalService.getCompany(companyId);
+		String emailAddress = getValueAsString("emailAddress", attributesMap);
+
+		if (samlSpIdpConnection.isUnknownUsersAreStrangers()) {
+			if (!company.isStrangers()) {
+				throw new SubjectException(
+					"User is not known to the portal and company " + companyId +
+						" does not allow strangers to create accounts");
+			}
+			else if (!company.isStrangersWithMx() &&
+					 company.hasCompanyMx(emailAddress)) {
+
+				throw new UserEmailAddressException.MustNotUseCompanyMx(
+					emailAddress);
+			}
 		}
 
 		long creatorUserId = 0;
@@ -148,7 +176,6 @@ public class DefaultUserResolver implements UserResolver {
 
 		boolean autoScreenName = false;
 		String screenName = getValueAsString("screenName", attributesMap);
-		String emailAddress = getValueAsString("emailAddress", attributesMap);
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
 		Locale locale = serviceContext.getLocale();
@@ -375,7 +402,9 @@ public class DefaultUserResolver implements UserResolver {
 			user = updateUser(companyId, user, attributesMap, serviceContext);
 		}
 		else {
-			user = addUser(companyId, attributesMap, serviceContext);
+			user = addUser(
+				companyId, attributesMap, userResolverSAMLContext,
+				serviceContext);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Added user " + user.toString());
@@ -503,8 +532,15 @@ public class DefaultUserResolver implements UserResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultUserResolver.class);
 
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	private MetadataManager _metadataManager;
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
+
+	@Reference
+	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
 	private UserImporter _userImporter;
 	private UserLocalService _userLocalService;
 

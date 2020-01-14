@@ -58,6 +58,8 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 		<aui:input helpMessage="saml-sp-clock-skew-description" label="saml-sp-clock-skew" name="clockSkew" value="<%= String.valueOf(clockSkew) %>" />
 
 		<aui:input helpMessage="force-authn-help" name="forceAuthn" />
+
+		<aui:input helpMessage="unknown-users-are-strangers-help" name="unknownUsersAreStrangers" />
 	</aui:fieldset>
 
 	<aui:fieldset helpMessage="identity-provider-metadata-help" label="metadata">

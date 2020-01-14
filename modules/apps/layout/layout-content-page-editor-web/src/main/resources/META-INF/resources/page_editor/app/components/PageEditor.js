@@ -51,6 +51,7 @@ export default function PageEditor() {
 			className={classNames('page-editor', 'page-editor--with-sidebar', {
 				'page-editor--with-sidebar-open': sidebarPanelId && sidebarOpen
 			})}
+			id="page-editor"
 		>
 			<DragPreview />
 

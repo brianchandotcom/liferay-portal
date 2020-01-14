@@ -1,0 +1,186 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "SEO";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a Page via JSON") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+	}
+
+	@description = "This ensures that the custom meta tag can be added with escape characters."
+	@priority = "3"
+	test AddTagWithEscapeCharacters {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "&amp; content",
+			customProperty = "&amp; property");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="&amp; property" content="&amp; content"''');
+	}
+
+	@description = "This ensures that the custom meta tag can be eidted."
+	@priority = "5"
+	test EditTag {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property");
+
+		CustomMetaTags.editTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property",
+			newCustomContent = "custom meta content edit",
+			newCustomProperty = "custom meta property edit");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property edit" content="custom meta content edit"''');
+	}
+
+	@description = "This ensures that users can add multiple translated custom meta tags."
+	@priority = "5"
+	test ViewMultipleTranslatedTags {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom Tag 1 content",
+			customProperty = "custom Tag 1 property");
+
+		CustomMetaTags.addMultipleTags(customTagsList = "custom Tag 2,custom Tag 3");
+
+		CustomMetaTags.changeLocale(locale = "ca-ES");
+
+		CustomMetaTags.editMultipleTags(
+			customContentsList = "custom Tag 1 content,custom Tag 2 content,custom Tag 3 content",
+			newCustomContent = "contenido de metaetiqueta personalizado");
+
+		CustomMetaTags.removeTag(tagNum = "1");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 2 property" content="contenido de metaetiqueta personalizado",property="custom Tag 3 property" content="contenido de metaetiqueta personalizado"''');
+
+		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom Tag 1 property" content="contenido de metaetiqueta personalizado"''');
+	}
+
+	@description = "This ensures that the required fields when adding a custom meta tag."
+	@priority = "5"
+	test ViewRequiredFields {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property");
+
+		CustomMetaTags.editTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property",
+			newCustomContent = "",
+			newCustomProperty = "custom meta property edit");
+
+		Alert.viewRequiredField();
+
+		CustomMetaTags.editTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property",
+			newCustomContent = "custom meta content edit",
+			newCustomProperty = "");
+
+		Alert.viewRequiredField();
+
+		CustomMetaTags.changeLocale(locale = "ca-ES");
+
+		Button.click(button = "Save");
+
+		Alert.viewErrorMessage(errorMessage = "Error: No value is defined for field property.");
+	}
+
+	@description = "This ensures that the translated tag inherit the default property and content."
+	@priority = "4"
+	test ViewTranslatedTagWithDefaultValue {
+		var portalURL = PropsUtil.get("portal.url");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.addTag(
+			customContent = "custom meta content",
+			customProperty = "custom meta property");
+
+		CustomMetaTags.changeLocale(locale = "ca-ES");
+
+		AssertElementPresent(locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY_DISABLED");
+
+		AssertElementPresent(
+			key_customContent = "custom meta content",
+			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT_EDITOR");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/ca/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom meta property" content="custom meta content"''');
+	}
+
+}

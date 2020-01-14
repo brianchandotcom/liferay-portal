@@ -14,8 +14,8 @@
 
 import Component from 'metal-jsx';
 
-import FormBuilder from './FormBuilder.es';
 import LayoutProvider from '../LayoutProvider/LayoutProvider.es';
+import FormBuilder from './FormBuilder.es';
 
 /**
  * LayoutProvider listens to your children's events to

@@ -29,41 +29,61 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
 
-const Column = React.forwardRef(
-	({children, className, item, layoutData}, ref) => {
-		const {size} = item.config;
+const RowWithControls = React.forwardRef(
+	({children, item, layoutData}, ref) => {
+		const parent = layoutData.items[item.parentId];
+
+		const rowContent = (
+			<div className="page-editor__row-outline" ref={ref}>
+				<div
+					className={classNames('page-editor__row row', {
+						empty: !item.children.some(
+							childId => layoutData.items[childId].children.length
+						),
+						'no-gutters': !item.config.gutters
+					})}
+				>
+					{children}
+				</div>
+			</div>
+		);
 
 		return (
 			<Topper
-				acceptDrop={[
-					LAYOUT_DATA_ITEM_TYPES.fragment,
-					LAYOUT_DATA_ITEM_TYPES.row
-				]}
-				active={false}
+				acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
+				active
 				item={item}
 				layoutData={layoutData}
-				name={Liferay.Language.get('column')}
+				name={Liferay.Language.get('row')}
 			>
 				{() => (
-					<div
-						className={classNames(
-							className,
-							'col page-editor__col',
-							{
-								[`col-${size}`]: size
-							}
+					<>
+						<FloatingToolbar
+							buttons={[
+								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
+							]}
+							item={item}
+							itemRef={ref}
+						/>
+
+						{!parent ||
+						parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
+							<div className="container-fluid p-0">
+								{rowContent}
+							</div>
+						) : (
+							rowContent
 						)}
-						ref={ref}
-					>
-						{children}
-					</div>
+					</>
 				)}
 			</Topper>
 		);
 	}
 );
 
-export default Column;
+export default RowWithControls;

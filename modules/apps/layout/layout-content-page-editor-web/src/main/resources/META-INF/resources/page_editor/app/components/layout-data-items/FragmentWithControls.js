@@ -26,59 +26,69 @@
  * details.
  */
 
-import classNames from 'classnames';
-import React from 'react';
+import React, {useContext} from 'react';
 
-import FloatingToolbar from '../../components/FloatingToolbar';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../../config/index';
+import {DispatchContext} from '../../reducers/index';
+import {StoreContext} from '../../store/index';
+import duplicateFragment from '../../thunks/duplicateFragment';
+import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
+import FragmentContent from './FragmentContent';
 
-const Row = React.forwardRef(({children, item, layoutData}, ref) => {
-	const parent = layoutData.items[item.parentId];
+const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+	const store = useContext(StoreContext);
 
-	const rowContent = (
-		<div className="page-editor__row-outline" ref={ref}>
-			<div
-				className={classNames('page-editor__row row', {
-					empty: !item.children.some(
-						childId => layoutData.items[childId].children.length
-					),
-					'no-gutters': !item.config.gutters
-				})}
-			>
-				{children}
-			</div>
-		</div>
-	);
+	const {fragmentEntryLinks} = store;
+
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+	const handleButtonClick = id => {
+		if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment.id) {
+			dispatch(
+				duplicateFragment({
+					config,
+					fragmentEntryLinkId: item.config.fragmentEntryLinkId,
+					itemId: item.itemId,
+					store
+				})
+			);
+		}
+	};
 
 	return (
 		<Topper
-			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
+			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
 			active
 			item={item}
 			layoutData={layoutData}
-			name={Liferay.Language.get('row')}
+			name={fragmentEntryLink.name}
 		>
 			{() => (
 				<>
 					<FloatingToolbar
 						buttons={[
-							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
+							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment,
+							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
 						]}
 						item={item}
 						itemRef={ref}
+						onButtonClick={handleButtonClick}
 					/>
 
-					{!parent || parent.type === LAYOUT_DATA_ITEM_TYPES.root ? (
-						<div className="container-fluid p-0">{rowContent}</div>
-					) : (
-						rowContent
-					)}
+					<FragmentContent
+						fragmentEntryLink={fragmentEntryLink}
+						ref={ref}
+					/>
 				</>
 			)}
 		</Topper>
 	);
 });
 
-export default Row;
+export default FragmentWithControls;

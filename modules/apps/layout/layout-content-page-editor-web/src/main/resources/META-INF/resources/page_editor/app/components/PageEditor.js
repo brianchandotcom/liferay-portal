@@ -21,19 +21,19 @@ import {StoreContext} from '../store/index';
 import {useIsActive} from './Controls';
 import DragPreview from './DragPreview';
 import {
-	Column,
-	Container,
-	Fragment,
+	ColumnWithControls,
+	ContainerWithControls,
+	FragmentWithControls,
 	Root,
-	Row
+	RowWithControls
 } from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
-	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
+	[LAYOUT_DATA_ITEM_TYPES.column]: ColumnWithControls,
+	[LAYOUT_DATA_ITEM_TYPES.container]: ContainerWithControls,
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: FragmentWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
-	[LAYOUT_DATA_ITEM_TYPES.row]: Row
+	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls
 };
 
 export default function PageEditor() {

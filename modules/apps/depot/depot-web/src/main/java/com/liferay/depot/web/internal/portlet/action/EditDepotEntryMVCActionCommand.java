@@ -26,10 +26,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,12 +67,27 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		Group group = _groupService.getGroup(depotEntry.getGroupId());
 
 		try {
+			UnicodeProperties depotAppCustomizationProperties =
+				PropertiesParamUtil.getProperties(
+					actionRequest, "DepotAppCustomization--");
+
+			Map<String, Boolean> depotAppCustomizationMap = new HashMap<>();
+
+			for (String portletId : depotAppCustomizationProperties.keySet()) {
+				depotAppCustomizationMap.put(
+					portletId,
+					GetterUtil.getBoolean(
+						depotAppCustomizationProperties.getProperty(
+							portletId)));
+			}
+
 			_depotEntryService.updateDepotEntry(
 				depotEntryId,
 				LocalizationUtil.getLocalizationMap(
 					actionRequest, "name", group.getNameMap()),
 				LocalizationUtil.getLocalizationMap(
 					actionRequest, "description", group.getDescriptionMap()),
+				depotAppCustomizationMap,
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--"),
 				ServiceContextFactory.getInstance(

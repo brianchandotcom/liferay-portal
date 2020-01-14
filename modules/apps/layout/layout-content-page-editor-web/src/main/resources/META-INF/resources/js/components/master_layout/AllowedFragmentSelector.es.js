@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect, useMemo} from 'react';
 
 import useSelector from '../../store/hooks/useSelector.es';
+import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
 const getSelectedNodeIds = (
@@ -75,24 +76,26 @@ const toFragmentEntryKeysArray = collections => {
 };
 
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
-	const initialAllowNewFragmentEntries = useSelector(
-		state => !!state.layoutData.allowNewFragmentEntries
-	);
-
-	const initialFragmentEntryKeys = useSelector(
-		state => state.layoutData.fragmentEntryKeys
-	);
-
 	const elements = useSelector(state => state.elements);
-
-	const [filter, setFilter] = useState('');
-
-	const nodes = useMemo(() => toNodes(elements), [elements]);
 
 	const fragmentEntryKeysArray = useMemo(
 		() => toFragmentEntryKeysArray(elements),
 		[elements]
 	);
+
+	const initialAllowNewFragmentEntries = useSelector(state =>
+		isNullOrUndefined(state.layoutData.allowNewFragmentEntries)
+			? true
+			: state.layoutData.allowNewFragmentEntries
+	);
+
+	const initialFragmentEntryKeys = useSelector(
+		state => state.layoutData.fragmentEntryKeys || []
+	);
+
+	const [filter, setFilter] = useState('');
+
+	const nodes = useMemo(() => toNodes(elements), [elements]);
 
 	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
 		initialAllowNewFragmentEntries

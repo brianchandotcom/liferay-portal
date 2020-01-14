@@ -211,7 +211,11 @@ export const FieldValuePreview = ({
 	const value = dataRecordValues[fieldName];
 
 	if (dataDefinitionField.localizable) {
-		return <Renderer value={value ? value[themeDisplay.getLanguageId()] : null} />;
+		return (
+			<Renderer
+				value={value ? value[themeDisplay.getLanguageId()] : undefined}
+			/>
+		);
 	}
 
 	return <Renderer value={value} />;

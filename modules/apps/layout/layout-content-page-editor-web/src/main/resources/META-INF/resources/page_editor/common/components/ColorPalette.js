@@ -28,7 +28,7 @@ export default function ColorPalette({
 
 	return (
 		<>
-			<label htmlFor="colorPalette">{label}</label>
+			{label && <label htmlFor="colorPalette">{label}</label>}
 
 			<div className="palette-container" id="colorPalette">
 				<ul className="list-unstyled palette-items-container">

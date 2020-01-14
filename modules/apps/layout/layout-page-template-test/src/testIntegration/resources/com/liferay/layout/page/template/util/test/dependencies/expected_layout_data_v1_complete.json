@@ -10,8 +10,9 @@
 					"title": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938",
 					"url": "https://media.gettyimages.com/photos/three-lions-running-zimbabwe-picture-id974056938"
 				},
+				"paddingBottom": 4,
 				"paddingHorizontal": 4,
-				"paddingVertical": 4,
+				"paddingTop": 4,
 				"type": "fluid"
 			},
 			"itemId": "CONTAINER0-UUID",
@@ -24,8 +25,9 @@
 			],
 			"config": {
 				"backgroundColorCssClass": "success",
+				"paddingBottom": 3,
 				"paddingHorizontal": 3,
-				"paddingVertical": 3
+				"paddingTop": 3
 			},
 			"itemId": "CONTAINER1-UUID",
 			"parentId": "MAIN-UUID",
@@ -40,8 +42,9 @@
 					"title": "pexels-photo-255379.jpeg",
 					"url": "/documents/20118/0/pexels-photo-255379.jpeg/cfbc6f74-db17-9786-6102-d94835d8ef23?version=1.0&t=1573045173699&download=true"
 				},
+				"paddingBottom": 3,
 				"paddingHorizontal": 3,
-				"paddingVertical": 3
+				"paddingTop": 3
 			},
 			"itemId": "CONTAINER2-UUID",
 			"parentId": "MAIN-UUID",
@@ -57,8 +60,9 @@
 					"classPK": "38526",
 					"fieldId": "smallImage"
 				},
+				"paddingBottom": 3,
 				"paddingHorizontal": 3,
-				"paddingVertical": 3
+				"paddingTop": 3
 			},
 			"itemId": "CONTAINER3-UUID",
 			"parentId": "MAIN-UUID",

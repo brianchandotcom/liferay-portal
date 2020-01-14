@@ -56,6 +56,55 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
+		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_CONTAINER) %>">
+
+			<%
+			String backgroundColorCssClass = childItemConfigJSONObject.getString("backgroundColorCssClass");
+			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(childItemConfigJSONObject);
+			String containerType = childItemConfigJSONObject.getString("containerType");
+			long paddingBottom = childItemConfigJSONObject.getLong("paddingBottom", -1L);
+			long paddingHorizontal = childItemConfigJSONObject.getLong("paddingHorizontal", -1L);
+			long paddingTop = childItemConfigJSONObject.getLong("paddingTop", -1L);
+
+			StringBundler cssClasses = new StringBundler();
+
+			if (Validator.isNotNull(backgroundColorCssClass)) {
+				cssClasses.append("bg-");
+				cssClasses.append(backgroundColorCssClass);
+			}
+
+			if (Objects.equals(containerType, "fluid")) {
+				cssClasses.append(" container-fluid");
+			}
+			else {
+				cssClasses.append(" container");
+			}
+
+			if (paddingBottom != -1L) {
+				cssClasses.append(" pb-");
+				cssClasses.append(paddingBottom);
+			}
+
+			if (paddingHorizontal != -1L) {
+				cssClasses.append(" px-");
+				cssClasses.append(paddingHorizontal);
+			}
+
+			if (paddingTop != -1L) {
+				cssClasses.append(" pt-");
+				cssClasses.append(paddingTop);
+			}
+			%>
+
+			<div class="<%= cssClasses.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
+
+				<%
+				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+				%>
+
+				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
+		</c:when>
 		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT) %>">
 
 			<%
@@ -89,27 +138,17 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_ROW) %>">
 
 			<%
-			String backgroundColorCssClass = childItemConfigJSONObject.getString("backgroundColorCssClass");
-			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(childItemConfigJSONObject);
 			boolean columnSpacing = childItemConfigJSONObject.getBoolean("columnSpacing", true);
-			String containerType = childItemConfigJSONObject.getString("containerType");
-			long paddingBottom = childItemConfigJSONObject.getLong("paddingBottom", -1L);
-			long paddingHorizontal = childItemConfigJSONObject.getLong("paddingHorizontal", -1L);
-			long paddingTop = childItemConfigJSONObject.getLong("paddingTop", -1L);
 			%>
 
-			<section class="<%= Validator.isNotNull(backgroundColorCssClass) ? "bg-" + backgroundColorCssClass : "" %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-				<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "" %> <%= (paddingBottom != -1L) ? "pb-" + paddingBottom : "" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingTop != -1L) ? "pt-" + paddingTop : "" %>">
-					<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
+			<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
 
-						<%
-						request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
-						%>
+				<%
+				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+				%>
 
-						<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
-					</div>
-				</div>
-			</section>
+				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
 		</c:when>
 	</c:choose>
 

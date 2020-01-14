@@ -27,6 +27,7 @@ page import="com.liferay.layout.page.template.service.LayoutPageTemplateStructur
 page import="com.liferay.layout.taglib.internal.display.context.RenderFragmentLayoutDisplayContext" %><%@
 page import="com.liferay.layout.taglib.internal.util.RenderFragmentLayoutTagUtil" %><%@
 page import="com.liferay.layout.util.constants.LayoutDataItemTypeConstants" %><%@
+page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@

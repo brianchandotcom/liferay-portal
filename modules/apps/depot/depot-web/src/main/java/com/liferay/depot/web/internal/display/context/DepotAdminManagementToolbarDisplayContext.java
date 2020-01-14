@@ -14,6 +14,8 @@
 
 package com.liferay.depot.web.internal.display.context;
 
+import com.liferay.depot.constants.DepotActionKeys;
+import com.liferay.depot.web.internal.resource.DepotPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -27,7 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -114,13 +115,6 @@ public class DepotAdminManagementToolbarDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!PortalPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionKeys.ADD_COMMUNITY)) {
-
-			return null;
-		}
-
 		try {
 			PortletURL addDepotEntryURL =
 				DepotEntryURLUtil.getAddDepotEntryActionURL(
@@ -174,14 +168,9 @@ public class DepotAdminManagementToolbarDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PortalPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionKeys.ADD_COMMUNITY)) {
-
-			return true;
-		}
-
-		return false;
+		return DepotPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			DepotActionKeys.ADD_DEPOT_ENTRY);
 	}
 
 	@Override

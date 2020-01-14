@@ -133,6 +133,36 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
+	public String getIndexName() {
+		return "workflow-metrics-instances";
+	}
+
+	@Override
+	public String getIndexType() {
+		return "WorkflowMetricsInstanceType";
+	}
+
+	@Override
+	public void reindex(long companyId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			kaleoInstanceLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(KaleoInstance kaleoInstance) ->
+				workflowMetricsPortalExecutor.execute(
+					() -> addDocument(createDocument(kaleoInstance))));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Override
 	public void updateDocument(Document document) {
 		super.updateDocument(document);
 
@@ -187,36 +217,6 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				},
 				booleanQuery);
 		}
-	}
-
-	@Override
-	protected String getIndexName() {
-		return "workflow-metrics-instances";
-	}
-
-	@Override
-	protected String getIndexType() {
-		return "WorkflowMetricsInstanceType";
-	}
-
-	@Override
-	protected void reindex(long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			kaleoInstanceLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoInstance kaleoInstance) ->
-				workflowMetricsPortalExecutor.execute(
-					() -> addDocument(createDocument(kaleoInstance))));
-
-		actionableDynamicQuery.performActions();
 	}
 
 	private Map<Locale, String> _createAssetTitleLocalizationMap(

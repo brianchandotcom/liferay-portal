@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -101,22 +103,30 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	}
 
 	@Override
-	protected String getIndexName() {
+	public String getIndexName() {
 		return "workflow-metrics-sla-instance-results";
 	}
 
 	@Override
-	protected String getIndexType() {
+	public String getIndexType() {
 		return "WorkflowMetricsSLAInstanceResultType";
 	}
 
 	@Override
-	protected void reindex(long companyId) throws PortalException {
+	public void reindex(long companyId) throws PortalException {
 		if (workflowMetricsSLAProcessMessageListener == null) {
 			return;
 		}
 
-		workflowMetricsSLAProcessMessageListener.receive(new Message());
+		Message message = new Message();
+
+		JSONObject payloadJSONObject = _jsonFactory.createJSONObject();
+
+		payloadJSONObject.put("reindex", Boolean.TRUE);
+
+		message.setPayload(payloadJSONObject);
+
+		workflowMetricsSLAProcessMessageListener.receive(message);
 	}
 
 	@Reference(
@@ -126,5 +136,8 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 	)
 	protected volatile WorkflowMetricsSLAProcessMessageListener
 		workflowMetricsSLAProcessMessageListener;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

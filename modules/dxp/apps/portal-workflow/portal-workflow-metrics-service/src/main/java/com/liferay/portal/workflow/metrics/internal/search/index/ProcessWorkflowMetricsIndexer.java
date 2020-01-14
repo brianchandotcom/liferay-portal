@@ -119,17 +119,17 @@ public class ProcessWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	protected String getIndexName() {
+	public String getIndexName() {
 		return "workflow-metrics-processes";
 	}
 
 	@Override
-	protected String getIndexType() {
+	public String getIndexType() {
 		return "WorkflowMetricsProcessType";
 	}
 
 	@Override
-	protected void reindex(long companyId) throws PortalException {
+	public void reindex(long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			kaleoDefinitionLocalService.getActionableDynamicQuery();
 

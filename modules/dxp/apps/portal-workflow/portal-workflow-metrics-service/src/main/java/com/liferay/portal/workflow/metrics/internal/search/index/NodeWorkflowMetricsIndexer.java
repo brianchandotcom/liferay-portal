@@ -118,17 +118,17 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
-	protected String getIndexName() {
+	public String getIndexName() {
 		return "workflow-metrics-nodes";
 	}
 
 	@Override
-	protected String getIndexType() {
+	public String getIndexType() {
 		return "WorkflowMetricsNodeType";
 	}
 
 	@Override
-	protected void reindex(long companyId) throws PortalException {
+	public void reindex(long companyId) throws PortalException {
 		_reindexIndexWithKaleoNode(companyId);
 		_reindexIndexWithKaleoTask(companyId);
 	}

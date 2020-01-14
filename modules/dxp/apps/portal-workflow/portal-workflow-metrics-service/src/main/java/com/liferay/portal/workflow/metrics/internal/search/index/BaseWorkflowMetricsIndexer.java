@@ -112,6 +112,12 @@ public abstract class BaseWorkflowMetricsIndexer {
 		_updateDocument(document);
 	}
 
+	public abstract String getIndexName();
+
+	public abstract String getIndexType();
+
+	public abstract void reindex(long companyId) throws PortalException;
+
 	public void updateDocument(Document document) {
 		_updateDocument(document);
 	}
@@ -125,10 +131,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		return DigestUtils.sha256Hex(sb.toString());
 	}
-
-	protected abstract String getIndexName();
-
-	protected abstract String getIndexType();
 
 	protected KaleoDefinition getKaleoDefinition(
 		long kaleoDefinitionVersionId) {
@@ -154,8 +156,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 		return kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
 			kaleoDefinitionVersionId);
 	}
-
-	protected abstract void reindex(long companyId) throws PortalException;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(

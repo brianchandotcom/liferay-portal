@@ -141,6 +141,36 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	}
 
 	@Override
+	public String getIndexName() {
+		return "workflow-metrics-tokens";
+	}
+
+	@Override
+	public String getIndexType() {
+		return "WorkflowMetricsTokenType";
+	}
+
+	@Override
+	public void reindex(long companyId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			kaleoTaskInstanceTokenLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(KaleoTaskInstanceToken kaleoTaskInstanceToken) ->
+				workflowMetricsPortalExecutor.execute(
+					() -> addDocument(createDocument(kaleoTaskInstanceToken))));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Override
 	public void updateDocument(Document document) {
 		super.updateDocument(document);
 
@@ -193,36 +223,6 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				}
 			},
 			booleanQuery);
-	}
-
-	@Override
-	protected String getIndexName() {
-		return "workflow-metrics-tokens";
-	}
-
-	@Override
-	protected String getIndexType() {
-		return "WorkflowMetricsTokenType";
-	}
-
-	@Override
-	protected void reindex(long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			kaleoTaskInstanceTokenLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoTaskInstanceToken kaleoTaskInstanceToken) ->
-				workflowMetricsPortalExecutor.execute(
-					() -> addDocument(createDocument(kaleoTaskInstanceToken))));
-
-		actionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

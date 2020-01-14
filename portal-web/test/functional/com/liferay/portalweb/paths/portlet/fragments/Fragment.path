@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_COG</td>
-	<td>//div[contains(*,'${key_fragmentName}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-cog')]]</td>
+	<td>FRAGMENT_ELLIPSIS_ICON</td>
+	<td>//div[contains(*,'${key_fragmentName}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

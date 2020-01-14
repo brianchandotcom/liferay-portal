@@ -980,7 +980,12 @@ public class OrganizationFinderImpl
 
 				if (!organizationsTree.isEmpty()) {
 					for (Organization organization : organizationsTree) {
-						StringBundler sb = new StringBundler(4);
+						StringBundler sb = new StringBundler(5);
+
+						sb.append(StringPool.PERCENT);
+						sb.append(StringPool.SLASH);
+						sb.append(organization.getOrganizationId());
+						sb.append(StringPool.SLASH);
 
 						if ((permissionChecker != null) &&
 							(permissionChecker.isOrganizationAdmin(
@@ -988,16 +993,7 @@ public class OrganizationFinderImpl
 							 permissionChecker.isOrganizationOwner(
 								 organization.getOrganizationId()))) {
 
-							sb.append(StringPool.SLASH);
-							sb.append(organization.getOrganizationId());
-							sb.append(StringPool.SLASH);
 							sb.append(StringPool.PERCENT);
-						}
-						else {
-							sb.append(StringPool.PERCENT);
-							sb.append(StringPool.SLASH);
-							sb.append(organization.getOrganizationId());
-							sb.append(StringPool.SLASH);
 						}
 
 						qPos.add(sb.toString());

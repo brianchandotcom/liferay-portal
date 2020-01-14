@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.page.template.internal.util;
+package com.liferay.layout.page.template.util.test;
 
+import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

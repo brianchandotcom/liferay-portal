@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_META_TAG_DELETE</td>
+	<td>//div[contains(@class,'field-wrapper')][${key_tagNum}]//*[*[name()='svg'][contains(@class,'icon-hr')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEACTIVATE</td>
 	<td>//button[@data-title='Deactivate' or @title='Deactivate']</td>
 	<td></td>
@@ -181,6 +186,16 @@
 <tr>
 	<td>PRINT</td>
 	<td>//span/a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS</td>
+	<td>//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS_LAST</td>
+	<td>xpath=(//*[*[name()='svg'][contains(@class,'icon-plus')]])[last()]</td>
 	<td></td>
 </tr>
 <tr>

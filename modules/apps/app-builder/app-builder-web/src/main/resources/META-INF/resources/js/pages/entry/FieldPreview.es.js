@@ -121,7 +121,7 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 					</ClayButton.Group>
 				</ClayTooltipProvider>
 			) : (
-				<StringRenderer value={' - '} />
+				<StringRenderer />
 			)}
 		</>
 	);
@@ -130,7 +130,7 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 const OptionsRenderer = ({displayType, options, values = []}) => {
 	const labels = values.map(value => getOptionLabel(options, value));
 
-	if (displayType === 'list') {
+	if (displayType === 'list' || labels.length === 0) {
 		return <StringRenderer value={labels.join(', ')} />;
 	}
 

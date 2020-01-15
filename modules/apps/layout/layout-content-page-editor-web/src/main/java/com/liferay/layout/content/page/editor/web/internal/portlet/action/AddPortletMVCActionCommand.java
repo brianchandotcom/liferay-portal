@@ -18,7 +18,6 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
-import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -56,9 +55,6 @@ import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -87,17 +83,6 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
-	}
-
-	private String _getPortletFragmentEntryLinkHTML(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String portletId,
-			String instanceId)
-		throws Exception {
-
-		return _fragmentPortletRenderer.renderPortlet(
-			httpServletRequest, httpServletResponse, portletId, instanceId,
-			StringPool.BLANK);
 	}
 
 	private String _getPortletInstanceId(
@@ -162,14 +147,10 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 				layout, portletId,
 				ParamUtil.getLong(actionRequest, "segmentsExperienceId"));
 
-			String html = _getPortletFragmentEntryLinkHTML(
-				serviceContext.getRequest(),
-				_portal.getHttpServletResponse(actionResponse), portletId,
-				instanceId);
-
 			JSONObject editableValueJSONObject =
 				_fragmentEntryProcessorRegistry.
-					getDefaultEditableValuesJSONObject(html, StringPool.BLANK);
+					getDefaultEditableValuesJSONObject(
+						StringPool.BLANK, StringPool.BLANK);
 
 			editableValueJSONObject.put(
 				"instanceId", instanceId
@@ -241,9 +222,6 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private FragmentPortletRenderer _fragmentPortletRenderer;
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;

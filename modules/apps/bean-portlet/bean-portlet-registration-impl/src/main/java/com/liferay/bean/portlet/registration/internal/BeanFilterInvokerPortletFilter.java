@@ -176,9 +176,6 @@ public class BeanFilterInvokerPortletFilter
 
 			throw new PortletException(cause);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
 	}
 
 	private void _invokeMethodWithActiveScopes(

@@ -110,7 +110,11 @@ describe('The instance list item should', () => {
 		const {getByTestId} = render(
 			<InstanceListContext.Provider value={contextMock}>
 				<ModalContext.Provider
-					value={{setSingleModal: () => {}, singleModal: false}}
+					value={{
+						setInstanceDetailsModal: () => {},
+						setSingleModal: () => {},
+						singleModal: false
+					}}
 				>
 					<Table.Item {...instance} />
 				</ModalContext.Provider>
